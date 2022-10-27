@@ -23,11 +23,10 @@ namespace CalRemix.Items.Accessories
         {
             SacrificeTotal = 1;
             DisplayName.SetDefault("Magna Core");
-            Tooltip.SetDefault("'Most drink the wine to lose focus, while others transcend...\n" +
-            "30% increased ranged damage, 25% increased ranged critical strike chance, and 100% reduced ammo usage\n" +
-            "15 increased defense, 2 increased life regen, and 35% increased pick speed\n" +
-            "You are surrounded by 4 demonic portals that buff ranged projectiles that intersect them\n" +
-            "Skull targets occasionally appear on enemies which increase damage taken when hit");
+            Tooltip.SetDefault("30% increased magic damage, 25% increased magic critical strike chance, and 100% decreased mana usage\n"+
+            "+ 250 max mana\n"+
+            "Increases pickup range for mana stars\n" +
+            "Using a Mana Potion causes a burst of granite energy to assault enemies");
         }
 
         public override void SetDefaults()
