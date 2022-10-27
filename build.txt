@@ -1,4 +1,4 @@
 displayName = Calamity Community Remix
-author = YuH, MisterGoodLuck, The Purified
+author = YuH, MisterGoodLuck, and The Purified
 version = 0.1
 modReferences = CalamityMod
