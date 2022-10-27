@@ -1,0 +1,4 @@
+displayName = Calamity Community Remix
+author = YuH
+version = 0.1
+modReferences = CalamityMod
