@@ -77,6 +77,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<SupremeManaPotion>(20).
                 AddIngredient(ItemID.GraniteBlock, 50).
                 AddIngredient(ItemID.MarbleBlock, 50).
+                AddIngredient<AshesofAnnihilation>(5).
                 AddTile<CosmicAnvil>().
                 Register();
         }

@@ -58,8 +58,8 @@ namespace CalRemix
 			}
 			if (eclipseaura != -1)
             {
-				aura = new StrongBloom(Player.Center, Player.velocity, Color.Purple * 1.1f, 1f + Main.rand.NextFloat(0f, 1.5f) * 1.5f, 40);
-				ring = new BloomRing(Player.Center, Player.velocity, Color.Yellow * 1.2f, 1.5f, 40);
+				aura = new StrongBloom(Player.Center, Player.velocity, Color.Purple * 0.6f, 1f + Main.rand.NextFloat(0f, 1.5f) * 1.5f, 40);
+				ring = new BloomRing(Player.Center, Player.velocity, Color.Yellow * 0.4f, 1.5f, 40);
 				if (ring != null)
 				{
 					ring.Position = Player.Center;

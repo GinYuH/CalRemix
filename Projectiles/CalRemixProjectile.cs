@@ -27,7 +27,7 @@ namespace CalRemix
 			Player player = Main.LocalPlayer;
 			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
 			if (modPlayer.brimPortal && nihilicArrow)
-				CalamityMod.CalamityUtils.HomeInOnNPC(projectile, false, 500, 10f, 1);
+				CalamityMod.CalamityUtils.HomeInOnNPC(projectile, false, 2500, 10f, 1);
 		}
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
