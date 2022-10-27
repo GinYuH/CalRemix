@@ -9,6 +9,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod;
 using Terraria.ModLoader.IO;
 
 namespace CalRemix
@@ -17,11 +18,15 @@ namespace CalRemix
 	{
 		public bool brimPortal;
 		public bool arcanumHands;
+		public bool marnite;
+		public int marnitetimer = 1200;
 
 		public override void ResetEffects()
 		{
 			brimPortal = false;
 			arcanumHands = false;
+			marnite = false;
+			marnitetimer = 0;
 		}
-	}
+    }
 }

@@ -26,7 +26,7 @@ namespace CalRemix.Projectiles
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, 0.1f, 0.2f, 0.2f);
+            Lighting.AddLight(Projectile.Center, 1f, 0.2f, 0.2f);
             Projectile.rotation += 1.8f;
         }
     }

@@ -167,10 +167,12 @@ namespace CalRemix.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<ElementalQuiver>(1).
-                AddIngredient<QuiverofNihility>(1).
-                AddIngredient<DaawnlightSpiritOrigin>(1).
-                AddIngredient<RedWine>(5).
+                AddIngredient<HeartoftheElements>(1).
+                AddIngredient<HowlsHeart>(1).
+                AddIngredient<MutatedTruffle>(1).
+                AddIngredient<GladiatorsLocket>(1).
+                AddIngredient<Nucleogenesis>(1).
+                AddIngredient<DarkSunRing>(1).
                 AddIngredient<AshesofAnnihilation>(5).
                 AddTile<CosmicAnvil>().
                 Register();
