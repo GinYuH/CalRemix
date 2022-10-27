@@ -71,8 +71,10 @@ namespace CalRemix
 				}
 				for (int i = 0; i < 5; i++)
                 {
-					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), type, 20, 0);
-                }
+					Projectile p = Main.projectile[Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), type, 20, 0)];
+					p.DamageType = ModContent.GetInstance<RogueDamageClass>();
+
+				}
 			}
         }
     }
