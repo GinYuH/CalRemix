@@ -16,10 +16,12 @@ namespace CalRemix
 	public class CalRemixPlayer : ModPlayer
 	{
 		public bool brimPortal;
+		public bool arcanumHands;
 
 		public override void ResetEffects()
 		{
 			brimPortal = false;
+			arcanumHands = false;
 		}
 	}
 }

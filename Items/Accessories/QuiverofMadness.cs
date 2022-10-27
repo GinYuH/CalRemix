@@ -21,7 +21,7 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            DisplayName.SetDefault("Quiver of Nihility");
+            DisplayName.SetDefault("Quiver of Madness");
             Tooltip.SetDefault("'Most drink the wine to lose focus, while others transcend...\n"+
             "30% increased ranged damage, 25% increased ranged critical strike chance, and 100% reduced ammo usage\n"+
             "15 increased defense, 2 increased life regen, and 35% increased pick speed\n"+
