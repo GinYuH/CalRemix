@@ -10,7 +10,7 @@ using CalamityMod.Items.Materials;
 
 namespace CalRemix
 {
-    public class ExampleRecipes : ModSystem
+    public class Recipes : ModSystem
     {
         public override void PostAddRecipes()
         {
