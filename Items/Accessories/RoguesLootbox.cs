@@ -59,7 +59,6 @@ namespace CalRemix.Items.Accessories
             player.GetDamage<ThrowingDamageClass>() += 0.06f;
             player.aggro -= 700;
             player.buffImmune[ModContent.BuffType<Dragonfire>()] = true;
-            modPlayer.spectralVeil = true;
             player.luck += 0.2f;
             player.Calamity().thiefsDime = true;
             player.GetModPlayer<CalRemixPlayer>().roguebox = true;
