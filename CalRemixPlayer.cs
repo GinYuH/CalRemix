@@ -19,6 +19,7 @@ namespace CalRemix
 		public bool brimPortal;
 		public bool arcanumHands;
 		public bool marnite;
+		public bool roguebox;
 		public int marnitetimer = 1200;
 
 		public override void ResetEffects()
@@ -26,6 +27,7 @@ namespace CalRemix
 			brimPortal = false;
 			arcanumHands = false;
 			marnite = false;
+			roguebox = false;
 			marnitetimer = 0;
 		}
     }

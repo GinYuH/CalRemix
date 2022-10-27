@@ -3,6 +3,8 @@ using CalamityMod;
 using Terraria;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles;
+using CalamityMod.Projectiles.Rogue;
+using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Buffs.DamageOverTime;
 using static Terraria.ModLoader.ModContent;
 
@@ -11,6 +13,7 @@ namespace CalRemix
 	public class CalRemixProjectile : GlobalProjectile
 	{
 		public bool nihilicArrow = false;
+		public bool rogueclone = false;
 		public override bool InstancePerEntity
 		{
 			get
@@ -39,7 +42,39 @@ namespace CalRemix
 				if (proj.WithinBounds(Main.maxProjectiles))
 					Main.projectile[proj].DamageType = DamageClass.Summon;
 			}
+			if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().roguebox && projectile.Calamity().stealthStrike && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<DarksunTornado>()] <= 1)
+			{
+				int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ModContent.ProjectileType<DarksunTornado>(), 20000, 0, Main.LocalPlayer.whoAmI);
+				if (p.WithinBounds(Main.maxProjectiles))
+				{
+					Main.projectile[p].originalDamage = 20000;
+				}
+			}
 		}
 
+		public override void Kill(Projectile projectile, int timeLeft)
+		{
+			if (rogueclone)
+			{
+				int type = Main.rand.Next(0, 3);
+				switch (type)
+				{
+					case 0:
+						type = ProjectileType<JewelSpike>();
+						break;
+					case 1:
+						type = ProjectileType<LostSoulFriendly>();
+						break;
+					case 2:
+						type = ProjectileType<DragonShit>();
+						break;
+				}
+				for (int i = 0; i < 5; i++)
+                {
+					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), type, 20, 0);
+                }
+			}
+        }
     }
 }
+
