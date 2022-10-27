@@ -16,13 +16,10 @@ namespace CalRemix
 	{
 		public override void PostAI(NPC npc)
 		{
-				for (int i = 0; i < Main.npc.Length - 1; i++)
-				{
 					if (Main.npc[i].type == ModContent.NPCType<FAP>())
 					{
 							Main.npc[i].active = false;
-					}
-				}		
+					}	
 		 }
-    }
+        }
 }
