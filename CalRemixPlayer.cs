@@ -23,6 +23,7 @@ namespace CalRemix
 		public bool roguebox;
 		public int eclipseaura = -1;
 		public int marnitetimer = 1200;
+		public bool soldier;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -109,6 +110,7 @@ namespace CalRemix
 			arcanumHands = false;
 			marnite = false;
 			roguebox = false;
+			soldier = false;
 			marnitetimer = 0;
 		}
     }
