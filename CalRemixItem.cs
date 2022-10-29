@@ -37,7 +37,7 @@ namespace CalRemix
         {
             if (item.type == ItemID.Apple)
             {
-                if (item.wet && !item.lavaWet && Main.bloodMoon)
+                if (item.wet && !item.lavaWet && Main.bloodMoon && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                 {
                     item.type = ModContent.ItemType<BloodOrange>();
                 }
