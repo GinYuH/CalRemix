@@ -27,8 +27,12 @@ namespace CalRemix
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             if (modPlayer.roguebox && item.CountsAsClass<RogueDamageClass>())
             {
-                int p = Projectile.NewProjectile(source, new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y - 400), new Vector2(0, 20), type, (int)(damage * 0.33f), knockback);
-                Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().rogueclone = true;
+                int p = Projectile.NewProjectile(source, new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y - 400), new Vector2(0, 20), type, (int)(damage * 0.33f), knockback, player.whoAmI);
+                {
+                    Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().rogueclone = true;
+                    if (p.WithinBounds(Main.maxProjectiles))
+                        Main.projectile[p].originalDamage = (int)(damage * 0.33f);
+                }
             }
             return true;
         }
