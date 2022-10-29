@@ -126,12 +126,12 @@ namespace CalRemix.Projectiles
                     if ((!Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, Projectile.height)) || target.Center.Distance(Projectile.Center) > 300)
                     {
                         MissTimer++;
-                    }
-                    if (MissTimer > 180)
-                    {
-                        gun = 0;
-                        AIState = 3;
-                        MissTimer = 0;
+                        if (MissTimer > 180)
+                        {
+                            gun = 0;
+                            AIState = 3;
+                            MissTimer = 0;
+                        }
                     }
                     Gravity();
                     Projectile.velocity.X = 0;
