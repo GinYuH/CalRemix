@@ -12,6 +12,8 @@ using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.Particles;
 using Terraria.ModLoader.IO;
+using System.Collections.Generic;
+using CalamityMod.Items.PermanentBoosters;
 
 namespace CalRemix
 {
@@ -113,5 +115,16 @@ namespace CalRemix
 			soldier = false;
 			marnitetimer = 0;
 		}
+        public override void GetDyeTraderReward(List<int> rewardPool)
+        {
+			if (CalamityMod.DownedBossSystem.downedProvidence)
+			{
+				if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().eBerry)
+				{
+					rewardPool.Clear();
+				}
+				rewardPool.Add(ModContent.ItemType<Elderberry>());
+			}
+        }
     }
 }

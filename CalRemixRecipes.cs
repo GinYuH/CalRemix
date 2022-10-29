@@ -7,7 +7,10 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.Materials;
-using CalRemix.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Ammo;
 
 namespace CalRemix
 {
@@ -35,10 +38,38 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()))
-		{
-			shard.type = ModContent.ItemType<ParchedScale>();
-		}
+                /*if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()))
+		        {
+			        shard.type = ModContent.ItemType<ParchedScale>();
+                }*/
+                if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<MiracleFruit>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<Dragonfruit>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<BloodOrange>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<CometShard>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<EtherealCore>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<PhantomHeart>()))
+                {
+                    recipe.DisableRecipe();
+                }
             }
         }
     }

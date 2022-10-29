@@ -7,12 +7,21 @@ using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.ItemDropRules;
+using CalamityMod.Items.PermanentBoosters;
 using CalamityMod;
 
 namespace CalRemix
 {
 	public class CalRemixItem : GlobalItem
 	{
+        public override void UpdateInventory(Item item, Player player)
+        {
+            if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
+            {
+                item.stack = 1;
+            }
+        }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
@@ -23,5 +32,28 @@ namespace CalRemix
             }
             return true;
         }
-	}
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            if (item.type == ItemID.Apple)
+            {
+                if (item.wet && !item.lavaWet && Main.bloodMoon)
+                {
+                    item.type = ModContent.ItemType<BloodOrange>();
+                }
+            }
+            if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
+            {
+                item.stack = 1;
+            }
+        }
+        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
+        {
+            if (item.type == ItemID.FloatingIslandFishingCrate || item.type == ItemID.FloatingIslandFishingCrateHard)
+            {
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
+            }
+        }
+    }
 }
