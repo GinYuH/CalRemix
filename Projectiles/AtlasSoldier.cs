@@ -123,7 +123,7 @@ namespace CalRemix.Projectiles
                         }
                         gun = 0;
                     }
-                    if ((!Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, Projectile.height)) || target.Center.Distance(Projectile.Center) > 300)
+                    if (target.Center.Distance(Projectile.Center) > 600)
                     {
                         MissTimer++;
                         if (MissTimer > 180)
