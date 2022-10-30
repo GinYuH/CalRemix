@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using CalRemix.Items.Materials;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
@@ -18,11 +19,11 @@ namespace CalRemix
     {
         public override void AddRecipes() 
         {
-		Recipe recipe = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
-			recipe.AddIngredient<DesertFeather>(3)
-			.AddIngredient<LifeAlloy>()
-                	.AddTile(TileID.LunarCraftingStation)
-			.Register();
+		    Recipe recipe = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
+			    recipe.AddIngredient<DesertFeather>(3)
+			    .AddIngredient<LifeAlloy>()
+                .AddTile(TileID.LunarCraftingStation)
+			    .Register();
         }
         public override void PostAddRecipes()
         {
@@ -38,10 +39,10 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                /*if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()))
+                if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()))
 		        {
 			        shard.type = ModContent.ItemType<ParchedScale>();
-                }*/
+                }
                 if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
                 {
                     recipe.DisableRecipe();

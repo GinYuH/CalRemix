@@ -7,7 +7,6 @@ using CalamityMod.Projectiles.Typeless;
 using CalamityMod;
 using CalamityMod.Rarities;
 using CalamityMod.Items;
-using CalamityMod;
 using CalRemix.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
