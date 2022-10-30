@@ -73,6 +73,7 @@ namespace CalRemix.Projectiles
             if (Projectile.ai[0] == 0)
 			{
                 int projIn = Projectile.NewProjectile(source, Projectile.Center, new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2)), ModContent.ProjectileType<ExobeamSlash>(), Projectile.damage / 2, 0, Main.LocalPlayer.whoAmI);
+                Main.projectile[projIn].DamageType = DamageClass.Ranged;
                 Main.projectile[projIn].scale = 0.4f;
                 Main.projectile[projIn].CritChance = 0;
                 if (crit)
