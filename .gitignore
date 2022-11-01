@@ -15,3 +15,5 @@ obj/Debug/net6.0/CalRemix.csproj.FileListAbsolute.txt
 *.config
 .vs/CalRemix/v17/.suo
 *.v2
+*.v1
+*.sln
