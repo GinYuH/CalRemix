@@ -1,3 +1,4 @@
+using CalRemix.NPCs;
 using Terraria.ModLoader;
 
 namespace CalRemix
@@ -7,6 +8,7 @@ namespace CalRemix
         public override void PostSetupContent()
         {
             ModLoader.GetMod("CalamityMod").Call("RegisterModCooldowns", this);
+            ModLoader.GetMod("CalamityMod").Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
         }
     }
 }

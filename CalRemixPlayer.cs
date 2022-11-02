@@ -28,6 +28,7 @@ namespace CalRemix
 		public int eclipseaura = -1;
 		public int marnitetimer = 1200;
 		public bool soldier;
+		public bool noxusFumes;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -42,7 +43,27 @@ namespace CalRemix
 				}
 			}
 		}
-
+        public override void UpdateBadLifeRegen()
+        {
+            if (noxusFumes)
+            {
+                if (Player.lifeRegen > 0)
+                {
+                    Player.lifeRegen = 0;
+                }
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 42;
+            }
+        }
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (noxusFumes)
+            {
+                r = 2.5f;
+                g = 0f;
+                b = 3.5f;
+            }
+        }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
             if (eclipseaura > 0)
@@ -51,7 +72,6 @@ namespace CalRemix
             }
 			return true;
         }
-
         public override void PostUpdateMiscEffects()
 		{
 			if (ring2 != null)
@@ -116,7 +136,8 @@ namespace CalRemix
 			roguebox = false;
 			soldier = false;
 			marnitetimer = 0;
-		}
+            noxusFumes = false;
+        }
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
 			if (CalamityMod.DownedBossSystem.downedProvidence)

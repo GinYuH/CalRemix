@@ -7,6 +7,7 @@ using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Buffs.DamageOverTime;
 using static Terraria.ModLoader.ModContent;
+using CalamityMod.Projectiles.Boss;
 
 namespace CalRemix
 {
@@ -21,8 +22,51 @@ namespace CalRemix
 				return true;
 			}
 		}
+        public override void SetDefaults(Projectile projectile)
+        {
+            if (projectile.type == ModContent.ProjectileType<BrimstoneBall>())
+            {
+                projectile.Name = "Calamity Fireball";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneBarrage>())
+            {
+                projectile.Name = "Calamity Barrage";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneFire>())
+            {
+                projectile.Name = "Calamity Fire";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneHellblast>())
+            {
+                projectile.Name = "Calamity Hellblast";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneHellblast2>())
+            {
+                projectile.Name = "Calamity Hellblast";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneHellfireball>())
+            {
+                projectile.Name = "Calamity Hellfireball";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneMonster>())
+            {
+                projectile.Name = "Calamity Monster";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneRay>())
+            {
+                projectile.Name = "Calamity Ray";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneTargetRay>())
+            {
+                projectile.Name = "Calamity Ray";
+            }
+            else if (projectile.type == ModContent.ProjectileType<BrimstoneWave>())
+            {
+                projectile.Name = "Calamity Flame Skull";
+            }
+        }
 
-		public override void AI(Projectile projectile)
+        public override void AI(Projectile projectile)
         {
 			Player player = Main.LocalPlayer;
 			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
