@@ -2,10 +2,13 @@ using Terraria;
 using Terraria.ModLoader;
 using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Items.Materials;
+using CalRemix.Tiles;
+using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
 using CalamityMod.NPCs.AdultEidolonWyrm;
 using CalamityMod.NPCs.BrimstoneElemental;
+using CalamityMod.NPCs.Ravager;
 using CalamityMod.NPCs.SupremeCalamitas;
 
 namespace CalRemix
@@ -47,6 +50,18 @@ namespace CalRemix
             {
                 npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34));
             }
+        }
+
+        public override bool PreKill(NPC npc)
+        {
+            if (!CalamityMod.DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())
+            {
+                CalamityUtils.SpawnOre(ModContent.TileType<LifeOreTile>(), 1E-05, 0.65f, 0.9f, 20, 30);
+
+                Color messageColor = Color.Lime;
+                CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);
+            }
+            return true;
         }
     }
 }

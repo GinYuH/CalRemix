@@ -39,20 +39,20 @@ namespace CalRemix.NPCs
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			AnimationType = NPCID.BlueSlime;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<Biomes.LifeBiome>().Type };
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			bestiaryEntry.Info.AddRange(new System.Collections.Generic.List<IBestiaryInfoElement>
 			{
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 				new FlavorTextBestiaryInfoElement("When a slime and a life ore love each other very much, they produce this.")
 			});
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (CalamityMod.DownedBossSystem.downedRavager)
+			if (CalamityMod.DownedBossSystem.downedRavager && spawnInfo.Player.InModBiome(ModContent.GetInstance<Biomes.LifeBiome>()))
 			{
-				return SpawnCondition.Cavern.Chance * 0.1f;
+				return SpawnCondition.Cavern.Chance * 8f;
             }
 			else
 			{

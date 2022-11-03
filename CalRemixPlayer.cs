@@ -32,6 +32,7 @@ namespace CalRemix
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
+        public bool ZoneLife;
 
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
