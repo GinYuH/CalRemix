@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using CalRemix.Items;
 using CalRemix.Items.Materials;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.Materials;
@@ -24,6 +25,9 @@ namespace CalRemix
 			    .AddIngredient<LifeAlloy>()
                 .AddTile(TileID.LunarCraftingStation)
 			    .Register();
+            Recipe coin = Recipe.Create(ItemID.PlatinumCoin, 100);
+                 coin.AddIngredient<CosmiliteCoin>(1);
+                 coin.Register();
         }
         public override void PostAddRecipes()
         {
