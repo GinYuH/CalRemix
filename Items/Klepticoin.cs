@@ -25,7 +25,6 @@ namespace CalRemix.Items
             Item.width = 28;
             Item.height = 34;
             Item.maxStack = 9999; // how would you even get this much money?????
-            Item.rare = 8;
         }
 
         public override void AddRecipes()

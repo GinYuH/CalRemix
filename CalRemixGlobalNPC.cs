@@ -56,7 +56,7 @@ namespace CalRemix
         {
             if (!CalamityMod.DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())
             {
-                CalamityUtils.SpawnOre(ModContent.TileType<LifeOreTile>(), 1E-05, 0.65f, 0.9f, 20, 30);
+                CalamityUtils.SpawnOre(ModContent.TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
 
                 Color messageColor = Color.Lime;
                 CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);

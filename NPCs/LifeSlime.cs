@@ -37,6 +37,7 @@ namespace CalRemix.NPCs
 			NPC.defense = 12;
 			NPC.lifeMax = 2400;
 			NPC.HitSound = SoundID.NPCHit1;
+			NPC.rarity = 2;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			AnimationType = NPCID.BlueSlime;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<Biomes.LifeBiome>().Type };

@@ -29,6 +29,8 @@ namespace CalRemix
 		public int marnitetimer = 1200;
 		public bool soldier;
 		public bool noxusFumes;
+		public bool astEffigy;
+		public bool halEffigy;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -128,7 +130,32 @@ namespace CalRemix
 			{
 				Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(20));
 			}
-        }
+			if (halEffigy)
+			{
+				Player.moveSpeed += 0.25f;
+				Player.GetCritChance<GenericDamageClass>() += 25;
+				Player.GetDamage<GenericDamageClass>() += 0.25f;
+				Player.statDefense += 20;
+				Player.endurance += 0.08f;
+				Player.AddCooldown(CalamityMod.Cooldowns.ChaosState.ID, 20);
+			}
+			if (astEffigy)
+			{
+				if (Player.InSpace())
+				{
+					Player.gravity = Player.defaultGravity;
+					if (Player.wet)
+					{
+						if (Player.honeyWet)
+							Player.gravity = 0.1f;
+						else if (Player.merman)
+							Player.gravity = 0.3f;
+						else
+							Player.gravity = 0.2f;
+					}
+				}
+			}
+		}
         public override void ResetEffects()
 		{
 			brimPortal = false;
@@ -138,7 +165,11 @@ namespace CalRemix
 			soldier = false;
 			marnitetimer = 0;
             noxusFumes = false;
-        }
+			astEffigy = false;
+			halEffigy = false; 
+			if (astEffigy)
+				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
+		}
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
 			if (CalamityMod.DownedBossSystem.downedProvidence)

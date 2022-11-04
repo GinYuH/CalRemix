@@ -24,7 +24,6 @@ namespace CalRemix.Items
             Item.width = 14;
             Item.height = 22;
             Item.maxStack = 9999;
-            Item.rare = ModContent.RarityType<Violet>();
         }
 
         public override void AddRecipes()
