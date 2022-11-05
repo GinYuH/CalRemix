@@ -10,6 +10,8 @@ using CalamityMod.NPCs.AdultEidolonWyrm;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.Ravager;
 using CalamityMod.NPCs.SupremeCalamitas;
+using CalamityMod.NPCs.SulphurousSea;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -17,6 +19,10 @@ namespace CalRemix
 	{
         public override void AI(NPC npc)
         {
+            if (npc.type == ModContent.NPCType<MicrobialCluster>() && npc.catchItem == 0)
+            {
+                npc.catchItem = ModContent.ItemType<DisgustingSeawater>();
+            }
             if (npc.type == ModContent.NPCType<FAP>()) // MURDER the drunk princess
             {
                 npc.active = false;

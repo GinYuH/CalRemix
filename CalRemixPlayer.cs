@@ -31,6 +31,7 @@ namespace CalRemix
 		public bool noxusFumes;
 		public bool astEffigy;
 		public bool halEffigy;
+		public bool nothing;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -166,7 +167,8 @@ namespace CalRemix
 			marnitetimer = 0;
             noxusFumes = false;
 			astEffigy = false;
-			halEffigy = false; 
+			halEffigy = false;
+			nothing = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 		}
