@@ -22,30 +22,21 @@ namespace CalRemix
     public class CalRemixWorld : ModSystem
     {
         public static int lifeTiles;
-        public int ShrineTimer = 1200;
-        public bool GeneratedShrines = false;
+        public static int ShrineTimer = -20;
 
         public override void PostUpdateWorld()
         {
-            if (Main.hardMode)
+            if (ShrineTimer == 0)
             {
-                if (ShrineTimer <= 0)
-                {
-                    if (!GeneratedShrines)
-                    {
-                        HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), TileID.Pearlstone, 21);
-                        HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), ModContent.TileType<AstralStone>(), 46);
+                HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), TileID.Pearlstone, 21);
+                HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), ModContent.TileType<AstralStone>(), 46);
 
-                        Color messageColor = Color.Magenta;
-                        CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
-
-                        GeneratedShrines = true;
-                    }
-                }
-                else
-                {
-                    ShrineTimer--;
-                }
+                Color messageColor = Color.Magenta;
+                CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+            }
+            if (ShrineTimer > -20)
+            {
+                ShrineTimer--;
             }
         }
 

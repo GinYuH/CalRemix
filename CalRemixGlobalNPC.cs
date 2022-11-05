@@ -67,6 +67,10 @@ namespace CalRemix
                 Color messageColor = Color.Lime;
                 CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);
             }
+            if (npc.type == Terraria.ID.NPCID.WallofFlesh && !Main.hardMode)
+            {
+                CalRemixWorld.ShrineTimer = 6000;
+            }
             return true;
         }
     }
