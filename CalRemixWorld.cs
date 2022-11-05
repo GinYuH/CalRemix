@@ -10,6 +10,8 @@ using System;
 using CalamityMod.Items.Materials;
 using CalRemix.Tiles;
 using CalamityMod.Tiles.Astral;
+using CalamityMod.Tiles.AstralDesert;
+using CalamityMod.Tiles.AstralSnow;
 using CalamityMod.Tiles.FurnitureMonolith;
 using CalRemix.Items.Placeables;
 using CalamityMod.Walls;
@@ -24,12 +26,30 @@ namespace CalRemix
         public static int lifeTiles;
         public static int ShrineTimer = -20;
 
+        List<int> hallowlist = new List<int>
+        {
+            TileID.Pearlstone,
+            TileID.HallowedIce,
+            TileID.HallowHardenedSand,
+            TileID.HallowSandstone
+        };
+        List<int> astrallist = new List<int>
+        {
+            ModContent.TileType<AstralStone>(),
+            ModContent.TileType<AstralSandstone>(),
+            ModContent.TileType<HardenedAstralSand>(),
+            ModContent.TileType<CelestialRemains>(),
+            ModContent.TileType<NovaeSlag>(),
+            ModContent.TileType<AstralDirt>(),
+            ModContent.TileType<AstralIce>(),
+            ModContent.TileType<AstralSnow>(),
+        };
         public override void PostUpdateWorld()
         {
             if (ShrineTimer == 0)
             {
-                HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), TileID.Pearlstone, 21);
-                HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), ModContent.TileType<AstralStone>(), 46);
+                HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);
+                HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), astrallist, 46);
 
                 Color messageColor = Color.Magenta;
                 CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
@@ -50,18 +70,18 @@ namespace CalRemix
             lifeTiles = tileCounts[TileType<LifeOreTile>()];
         }
 
-        public static void HMChest(int block1, int block2, int wall, int loot, int anchor, int chest)
+        public static void HMChest(int block1, int block2, int wall, int loot, List<int> anchor, int chest)
         {
             int x = Main.maxTilesX;
             int y = Main.maxTilesY;
             for (int k = 0; k < (int)(x * y * 100E-05); k++)
             {
                 int tilesX = WorldGen.genRand.Next(0, x);
-                int tilesY = WorldGen.genRand.Next((int)(y * 0.35f), (int)(y * 0.5f));
+                int tilesY = WorldGen.genRand.Next((int)(y * 0.35f), (int)(y * 0.8f));
 
-                if (Main.tile[tilesX, tilesY].TileType == anchor)
+                if (anchor.Contains(Main.tile[tilesX, tilesY].TileType))
                 {
-                    UndergroundShrines.SpecialHut((ushort)block1, (ushort)block2, (ushort)wall, UndergroundShrines.UndergroundShrineType.Surface, tilesX, tilesY);
+                    UndergroundShrines.SpecialHut((ushort)block1, (ushort)Main.tile[tilesX, tilesY].TileType, (ushort)wall, UndergroundShrines.UndergroundShrineType.Surface, tilesX, tilesY);
                     for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
                     {
                         Chest cheste = Main.chest[chestIndex];

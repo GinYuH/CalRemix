@@ -6,12 +6,14 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
+using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.Ravager;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.SulphurousSea;
 using CalRemix.Items;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix
 {
@@ -55,6 +57,10 @@ namespace CalRemix
             else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
                 npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34));
+            }
+            else if (npc.type == ModContent.NPCType<NuclearTerror>())
+            {
+                npcLoot.Add(ModContent.ItemType<Microxodonta>(), 3);
             }
         }
 
