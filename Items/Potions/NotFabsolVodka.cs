@@ -31,7 +31,7 @@ namespace CalRemix.Items.Potions
                 AddIngredient(ItemID.Ale, 1).
                 AddIngredient(ItemID.UnicornHorn, 1).
                 AddIngredient<BloodOrb>(40).
-                AddTile(TileID.Bottles).
+                AddTile(TileID.AlchemyTable).
                 Register();
             CreateRecipe().
                 AddIngredient(ItemID.Ale, 1).
