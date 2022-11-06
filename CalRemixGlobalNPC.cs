@@ -11,21 +11,123 @@ using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.BrimstoneElemental;
+using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Ravager;
+using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.SulphurousSea;
+using CalRemix.NPCs;
 using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.Bumblebirb;
+using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 
 namespace CalRemix
 {
-	public class CalRemixGlobalNPC : GlobalNPC
-	{
+    public class CalRemixGlobalNPC : GlobalNPC
+    {
+        bool SlimeBoost = false;
+        public override bool InstancePerEntity
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public List<int> BossSlimes = new List<int> 
+        { 
+            NPCID.KingSlime,
+            NPCID.QueenSlimeBoss,
+            ModContent.NPCType<AstrumAureus>(),
+            ModContent.NPCType<EbonianSlimeGod>(),
+            ModContent.NPCType<CrimulanSlimeGod>(),
+            ModContent.NPCType<SplitEbonianSlimeGod>(),
+            ModContent.NPCType<SplitCrimulanSlimeGod>(),
+            ModContent.NPCType<SlimeGodCore>(),
+            ModContent.NPCType<LifeSlime>(),
+            ModContent.NPCType<CragmawMire>()
+        };
+
+        public List<int> Slimes = new List<int>
+        {
+            1, 16, 59, 71, 81, 138, 121, 122, 141, 147, 183, 184, 204, 225, 244, 302, 333, 335, 334, 336, 537,
+            NPCID.SlimeSpiked,
+            NPCID.QueenSlimeMinionBlue,
+            NPCID.QueenSlimeMinionPink,
+            NPCID.QueenSlimeMinionPurple,
+            ModContent.NPCType<AeroSlime>(),
+            ModContent.NPCType<CalamityMod.NPCs.Astral.AstralSlime>(),
+            ModContent.NPCType<CalamityMod.NPCs.PlagueEnemies.PestilentSlime>(),
+            ModContent.NPCType<BloomSlime>(),
+            ModContent.NPCType<CalamityMod.NPCs.Crags.CharredSlime>(),
+            ModContent.NPCType<PerennialSlime>(),
+            ModContent.NPCType<CryoSlime>(),
+            ModContent.NPCType<GammaSlime>(),
+            ModContent.NPCType<IrradiatedSlime>(),
+            ModContent.NPCType<AuricSlime>(),
+            ModContent.NPCType<CorruptSlimeSpawn>(),
+            ModContent.NPCType<CorruptSlimeSpawn2>(),
+            ModContent.NPCType<CrimsonSlimeSpawn>(),
+            ModContent.NPCType<CrimsonSlimeSpawn2>()
+        };
+
+        public override bool PreAI(NPC npc)
+        {
+            if (Slimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel)
+            {
+                if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
+                {
+                    npc.lifeMax = (int)(npc.lifeMax * 6f);
+                    npc.damage = (int)(npc.damage * 12f);
+                    npc.life = npc.lifeMax;
+                    npc.chaseable = false;
+                    npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = true;
+                }
+                if (Main.LocalPlayer.MinionAttackTargetNPC > 0 && !Slimes.Contains(Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].type))
+                {
+                    Vector2 direction = Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].position - npc.position;
+                    direction.Normalize();
+                    npc.velocity = direction * 20;
+                    npc.noTileCollide = true;
+                }
+                else
+                {
+                    npc.noTileCollide = false;
+                }
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC target = Main.npc[i];
+                    Rectangle thisrect = npc.getRect();
+                    Rectangle theirrect = target.getRect();
+                    if (thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type))
+                    {
+                        target.StrikeNPC(npc.damage, 0, 0);
+                        npc.StrikeNPC(target.damage, 0, 0);
+                    }
+
+                }
+            }
+            if (BossSlimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            {
+                npc.damage = 0;
+                if (npc.type == ModContent.NPCType<SlimeGodCore>() && NPC.CountNPCS(ModContent.NPCType<CrimulanSlimeGod>()) < 1
+                    && NPC.CountNPCS(ModContent.NPCType<SplitCrimulanSlimeGod>()) < 1
+                    && NPC.CountNPCS(ModContent.NPCType<EbonianSlimeGod>()) < 1
+                    && NPC.CountNPCS(ModContent.NPCType<SplitEbonianSlimeGod>()) < 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
         public override void AI(NPC npc)
         {
+            CalRemixPlayer modPlayer = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (npc.type == ModContent.NPCType<MicrobialCluster>() && npc.catchItem == 0)
             {
                 npc.catchItem = ModContent.ItemType<DisgustingSeawater>();
@@ -38,7 +140,7 @@ namespace CalRemix
             {
                 npc.localAI[1] = 0;
             }
-            if (npc.type == ModContent.NPCType<AureusSpawn>() && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().nuclegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            if (npc.type == ModContent.NPCType<AureusSpawn>() && modPlayer.nuclegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;
             }
