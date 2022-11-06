@@ -6,16 +6,20 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using CalRemix.Items;
+using CalRemix.Items.Accessories;
 using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Fishing.AstralCatches;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Placeables;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Ammo;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Materials;
+using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.SummonItems;
@@ -141,6 +145,71 @@ namespace CalRemix
                     recipe.AddIngredient(ItemID.SoulofNight, 5);
                     recipe.AddIngredient(ItemID.PinkPricklyPear);
                     recipe.AddTile(TileID.MythrilAnvil);
+                }
+                if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
+                {
+                    recipe.AddIngredient<MirageJellyItem>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<TheAbsorber>()))
+                {
+                    recipe.AddIngredient<Regenator>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<TheSponge>()))
+                {
+                    recipe.AddIngredient<AquaticHeart>();
+                    recipe.AddIngredient<FlameLickedShell>();
+                    recipe.AddIngredient<TrinketofChi>();
+                    recipe.AddIngredient<AmidiasSpark>();
+                    recipe.AddIngredient<UrsaSergeant>();
+                    recipe.AddIngredient<PermafrostsConcoction>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<RampartofDeities>()))
+                {
+                    recipe.AddIngredient<RustyMedallion>();
+                    recipe.AddIngredient<AmidiasPendant>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<ElysianTracers>()))
+                {
+                    recipe.AddIngredient<GravistarSabaton>();
+                    recipe.AddIngredient<Microxodonta>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<AmbrosialAmpoule>()))
+                {
+                    recipe.AddIngredient<ArchaicPowder>();
+                    recipe.AddIngredient<HoneyDew>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<AbyssalDivingGear>()))
+                {
+                    recipe.AddIngredient<OceanCrest>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<AbyssalDivingSuit>()))
+                {
+                    recipe.AddIngredient<AquaticEmblem>();
+                    recipe.AddIngredient<SpelunkersAmulet>();
+                    recipe.AddIngredient<AlluringBait>();
+                    recipe.AddIngredient<LumenousAmulet>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<TheAmalgam>()))
+                {
+                    recipe.AddIngredient<GiantPearl>();
+                    recipe.AddIngredient<ManaPolarizer>();
+                    recipe.AddIngredient<FrostFlare>();
+                    recipe.AddIngredient<CorrosiveSpine>();
+                    recipe.AddIngredient<VoidofExtinction>();
+                    recipe.AddIngredient<LeviathanAmbergris>();
+                    recipe.AddIngredient(ItemID.SporeSac);
+                    recipe.AddIngredient<TheCamper>();
+                    recipe.AddIngredient<PlagueHive>();
+                    recipe.AddIngredient<AstralArcanum>();
+                    recipe.AddIngredient<DynamoStemCells>();
+                    recipe.AddIngredient<BlazingCore>();
+                    recipe.AddIngredient<TheEvolution>();
+                    recipe.AddIngredient<Affliction>();
+                    recipe.AddIngredient<OldDukeScales>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<PlagueHive>()))
+                {
+                    recipe.AddIngredient<ToxicHeart>();
                 }
             }
         }

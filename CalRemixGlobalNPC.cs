@@ -6,6 +6,7 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
+using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
 using CalamityMod.NPCs.BrimstoneElemental;
@@ -16,6 +17,7 @@ using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.Bumblebirb;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix
 {
@@ -88,6 +90,10 @@ namespace CalRemix
             {
                 npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<DesertFeather>(), 11, 17, 34));
             }
+            else if (npc.type == ModContent.NPCType<MirageJelly>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<MirageJellyItem>(), 7, 5));
+            }
             else if (npc.type == ModContent.NPCType<NuclearTerror>())
             {
                 npcLoot.Add(ModContent.ItemType<Microxodonta>(), 3);
@@ -105,7 +111,7 @@ namespace CalRemix
             }
             if (npc.type == Terraria.ID.NPCID.WallofFlesh && !Main.hardMode)
             {
-                CalRemixWorld.ShrineTimer = 6000;
+                CalRemixWorld.ShrineTimer = 3000;
             }
             return true;
         }

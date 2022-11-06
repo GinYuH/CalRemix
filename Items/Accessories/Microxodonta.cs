@@ -34,7 +34,7 @@ namespace CalRemix.Items.Accessories
         {
             var source = player.GetSource_Accessory(Item);
             player.moveSpeed += 0.92f;
-            if (player.wingTime > 0 && player.controlJump)
+            if (player.wingTime > 0 && player.controlJump && Main.rand.NextBool(2))
             {
                 if (player.whoAmI == Main.myPlayer)
                 {

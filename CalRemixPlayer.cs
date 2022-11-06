@@ -32,6 +32,13 @@ namespace CalRemix
 		public bool astEffigy;
 		public bool halEffigy;
 		public bool nothing;
+		public bool miragel;
+		public bool godfather;
+		public bool tvo;
+		public bool nuclegel;
+		public bool assortegel;
+		public bool amalgel;
+		public bool verboten;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -78,6 +85,7 @@ namespace CalRemix
         }
         public override void PostUpdateMiscEffects()
 		{
+			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (ring2 != null)
 			{
 				ring2.Position = Player.Center;
@@ -156,6 +164,26 @@ namespace CalRemix
 					}
 				}
 			}
+			if (tvo) //Verboten one
+			{
+				StealthCut(0.995f);
+			}
+			else if (godfather) //Godfather
+			{
+				StealthCut(0.01f);
+			}
+			else if (calplayer.sponge) //Sponge
+			{
+				StealthCut(0.02f);
+			}
+			else if (calplayer.absorber) //Absorber
+			{
+				StealthCut(0.03f);
+			}
+			else if (miragel) //Mirage Jelly & Grand Gelatin
+            {
+				StealthCut(0.05f);
+            }
 		}
         public override void ResetEffects()
 		{
@@ -165,10 +193,16 @@ namespace CalRemix
 			roguebox = false;
 			soldier = false;
 			marnitetimer = 0;
-            noxusFumes = false;
+			noxusFumes = false;
 			astEffigy = false;
 			halEffigy = false;
 			nothing = false;
+			miragel = false;
+			nuclegel = false;
+			assortegel = false;
+			amalgel = false;
+			godfather = false;
+			tvo = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 		}
@@ -198,5 +232,14 @@ namespace CalRemix
                 Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
             }
         }
+		public void StealthCut(float amt)
+		{
+			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			int sstealth = (int)(calplayer.rogueStealthMax * amt);
+			if (calplayer.rogueStealth == 0)
+			{
+				calplayer.rogueStealth = sstealth;
+			}
+		}
     }
 }
