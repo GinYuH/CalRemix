@@ -14,6 +14,8 @@ using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.SulphurousSea;
 using CalRemix.Items;
 using CalRemix.Items.Accessories;
+using CalamityMod.Items.Materials;
+using CalamityMod.NPCs.Bumblebirb;
 
 namespace CalRemix
 {
@@ -29,12 +31,24 @@ namespace CalRemix
             {
                 npc.active = false;
             }
+            if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
+            {
+                npc.localAI[1] = 0;
+            }
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)
         {
             if (npc.type == ModContent.NPCType<WITCH>())
             {
                 typeName = "Calamity Witch";
+            }
+            else if (npc.type == ModContent.NPCType<BrimstoneElemental>())
+            {
+                typeName = "Calamity Elemental";
+            }
+            else if (npc.type == ModContent.NPCType<BrimstoneHeart>())
+            {
+                typeName = "Calamity Heart";
             }
         }
         public override void SetDefaults(NPC npc)
@@ -47,6 +61,18 @@ namespace CalRemix
             {
                 npc.GivenName = "Calamity Heart";
             }
+            else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            {
+                npc.damage = 80;
+                npc.lifeMax = 58500;
+                npc.defense = 20;
+                npc.value = Item.buyPrice(gold: 10);
+            }
+            else if (npc.type == ModContent.NPCType<Bumblefuck2>())
+            {
+                npc.damage = 60;
+                npc.lifeMax = 3375;
+            }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
@@ -57,6 +83,10 @@ namespace CalRemix
             else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
                 npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34));
+            }
+            else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            {
+                npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<DesertFeather>(), 11, 17, 34));
             }
             else if (npc.type == ModContent.NPCType<NuclearTerror>())
             {

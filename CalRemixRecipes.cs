@@ -18,7 +18,7 @@ using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-
+using CalamityMod.Items.SummonItems;
 
 namespace CalRemix
 {
@@ -27,8 +27,8 @@ namespace CalRemix
         public override void AddRecipes() 
         {
             {
-                Recipe recipe = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
-                recipe.AddIngredient<DesertFeather>(3)
+                Recipe feather = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
+                feather.AddIngredient<DesertFeather>(3)
                 .AddIngredient<LifeAlloy>()
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
@@ -95,6 +95,10 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
+                if (recipe.HasResult(ModContent.ItemType<ShadowspecBar>()))
+                {
+                    recipe.AddIngredient<SubnauticalPlate>();
+                }
                 if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()))
 		        {
 			        shard.type = ModContent.ItemType<ParchedScale>();
@@ -126,6 +130,17 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<PhantomHeart>()))
                 {
                     recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
+                    recipe.RemoveIngredient(ItemID.FragmentSolar);
+                    recipe.RemoveTile(TileID.LunarCraftingStation);
+                    recipe.AddIngredient(ModContent.ItemType<UnholyCore>(), 5);
+                    recipe.AddIngredient(ItemID.SoulofLight, 5);
+                    recipe.AddIngredient(ItemID.SoulofNight, 5);
+                    recipe.AddIngredient(ItemID.PinkPricklyPear);
+                    recipe.AddTile(TileID.MythrilAnvil);
                 }
             }
         }
