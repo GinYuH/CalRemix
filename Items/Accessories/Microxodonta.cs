@@ -39,7 +39,11 @@ namespace CalRemix.Items.Accessories
                 if (player.whoAmI == Main.myPlayer)
                 {
                     int microbeDamage = (int)player.GetBestClassDamage().ApplyTo(300);
-                    Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<MicrobeParticle>(), microbeDamage, 0f, player.whoAmI, 0f, 0f);
+                    int p = Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<MicrobeParticle>(), microbeDamage, 0f, player.whoAmI, 0f, 0f);
+                    if (p.WithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[p].originalDamage = microbeDamage;
+                    }
                 }
             }
         }

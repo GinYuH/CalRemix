@@ -77,19 +77,27 @@ namespace CalRemix
 
         public override bool PreAI(NPC npc)
         {
-            if (Slimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel)
+            if (Slimes.Contains(npc.type) && (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel || Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel))
             {
                 if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
                 {
-                    npc.lifeMax = (int)(npc.lifeMax * 6f);
-                    npc.damage = (int)(npc.damage * 12f);
+                    if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel)
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * 22f);
+                        npc.damage = (int)(npc.damage * 12f);
+                    }
+                    else
+                    {
+                        npc.lifeMax = (int)(npc.lifeMax * 6f);
+                        npc.damage = (int)(npc.damage * 12f);
+                    }
                     npc.life = npc.lifeMax;
                     npc.chaseable = false;
                     npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = true;
                 }
                 if (Main.LocalPlayer.MinionAttackTargetNPC > 0 && !Slimes.Contains(Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].type))
                 {
-                    Vector2 direction = Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].position - npc.position;
+                    Vector2 direction = Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].Center - npc.Center;
                     direction.Normalize();
                     npc.velocity = direction * 20;
                     npc.noTileCollide = true;
@@ -105,13 +113,62 @@ namespace CalRemix
                     Rectangle theirrect = target.getRect();
                     if (thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type))
                     {
-                        target.StrikeNPC(npc.damage, 0, 0);
-                        npc.StrikeNPC(target.damage, 0, 0);
+                        if (BossSlimes.Contains(target.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel)
+                        {
+
+                        }
+                        else
+                        {
+                            target.StrikeNPC(npc.damage, 0, 0);
+                            if (target.damage > 0)
+                                npc.StrikeNPC(target.damage, 0, 0);
+                        }
                     }
 
                 }
             }
-            if (BossSlimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            if (BossSlimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            {
+                if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
+                {
+                    npc.boss = false;
+                    npc.friendly = true;
+                    npc.lifeMax = (int)(npc.lifeMax * 22f);
+                    npc.damage = (int)(npc.damage * 12f);
+                    npc.life = npc.lifeMax;
+                    npc.chaseable = false;
+                    npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = true;
+                }
+                if (Main.LocalPlayer.MinionAttackTargetNPC > 0 && !Slimes.Contains(Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].type) && !BossSlimes.Contains(Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].type))
+                {
+                    Vector2 direction = Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].Center - npc.Center;
+                    direction.Normalize();
+                    npc.velocity = direction * 20;
+                    npc.noTileCollide = true;
+                }
+                else
+                {
+                    npc.velocity.X *= 0.98f;
+                    if (npc.velocity.Y < 10)
+                    npc.velocity.Y += 1;
+                    npc.noTileCollide = false;
+                }
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC target = Main.npc[i];
+                    Rectangle thisrect = npc.getRect();
+                    Rectangle theirrect = target.getRect();
+                    if (thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !BossSlimes.Contains(target.type))
+                    {
+                        target.StrikeNPC(npc.damage, 0, 0);
+                        if (target.damage > 0)
+                        npc.StrikeNPC(target.damage, 0, 0);
+                    }
+
+                }
+                return false;
+            }
+            else if (BossSlimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.damage = 0;
                 if (npc.type == ModContent.NPCType<SlimeGodCore>() && NPC.CountNPCS(ModContent.NPCType<CrimulanSlimeGod>()) < 1

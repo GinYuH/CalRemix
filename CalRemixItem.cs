@@ -7,6 +7,7 @@ using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.CalPlayer;
+using CalRemix.Items.Accessories;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Projectiles.Ranged;
 using Microsoft.Xna.Framework;
@@ -173,7 +174,7 @@ namespace CalRemix
                 player.npcTypeNoAggro[NPCID.Crab] = true;
                 player.npcTypeNoAggro[NPCID.Squid] = true;
             }
-            if (item.type == ModContent.ItemType<TheAmalgam>())
+            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>())
             {
                 calplayer.giantPearl = true;
                 if (!hideVisual)
@@ -210,9 +211,13 @@ namespace CalRemix
                                 break;
                         }
                         int p = Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, choice, microbeDamage, 0f, player.whoAmI, 0f, 0f);
-                        Main.projectile[p].DamageType = DamageClass.Generic;
-                        Main.projectile[p].usesLocalNPCImmunity = true;
-                        Main.projectile[p].localNPCHitCooldown = 10;
+                        if (p.WithinBounds(Main.maxProjectiles))
+                        {
+                            Main.projectile[p].DamageType = DamageClass.Generic;
+                            Main.projectile[p].usesLocalNPCImmunity = true;
+                            Main.projectile[p].localNPCHitCooldown = 10;
+                            Main.projectile[p].originalDamage = microbeDamage;
+                        }
                     }
                 }
                 CalamityPlayer modPlayer = player.Calamity();
