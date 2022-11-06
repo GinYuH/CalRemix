@@ -16,8 +16,10 @@ namespace CalRemix.Projectiles
             Projectile.CloneDefaults(ProjectileID.VilethornBase);
             Projectile.friendly = false;
 			Projectile.hostile = true;
+            Projectile.timeLeft = 600;
 			Projectile.DamageType = DamageClass.Default;
             AIType = ProjectileID.VilethornBase;
+            Projectile.aiStyle = 4;
         }
 	}
 }

@@ -70,6 +70,7 @@ namespace CalRemix.NPCs
 		{
 			bool flag = false;
             var source = NPC.GetSource_FromAI();
+            int projdam = 50;
             Player target = Main.player[NPC.target];
 
             if (NPC.life != NPC.lifeMax || target.InModBiome<LifeBiome>())
@@ -81,22 +82,22 @@ namespace CalRemix.NPCs
                 if (NPC.ai[0] == -2100)
                 {
                     SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
-                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center) * 8f, ModContent.ProjectileType<LifeMeteor>(), NPC.damage, 0);
+                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center) * 6f, ModContent.ProjectileType<LifeMeteor>(), projdam, 0);
                 }
                 else if (NPC.ai[0] == -1020 || NPC.ai[0] == -1080)
-                {
+                { 
                     SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
-                    Projectile.NewProjectile(source, new Vector2(target.Center.X, target.Center.Y + target.height), new Vector2(0, -64), ModContent.ProjectileType<LifeThorn>(), NPC.damage / 2, 0);
+                    Projectile.NewProjectile(source, new Vector2(target.Center.X, target.Center.Y + 300), new Vector2(0, -40f), ModContent.ProjectileType<LifeThorn>(), projdam, 0, Main.myPlayer, 0f, 0f);
                 }
                 else if (NPC.ai[0] == -60 || NPC.ai[0] == -150)
                 {
                     SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
-                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center) * 12f, ModContent.ProjectileType<LifeIcicle>(), NPC.damage, 0);
-                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center).RotatedBy(MathHelper.ToRadians(25f)) * 12f, ModContent.ProjectileType<LifeIcicle>(), NPC.damage, 0);
-                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center).RotatedBy(MathHelper.ToRadians(25f)) * 12f, ModContent.ProjectileType<LifeIcicle>(), NPC.damage, 0);
+                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center) * 12f, ModContent.ProjectileType<LifeIcicle>(), projdam, 0);
+                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center).RotatedBy(MathHelper.ToRadians(25f)) * 12f, ModContent.ProjectileType<LifeIcicle>(), projdam, 0);
+                    Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center).RotatedBy(MathHelper.ToRadians(25f)) * 12f, ModContent.ProjectileType<LifeIcicle>(), projdam, 0);
                     for (int i = 0; i < 3; i++)
                     {
-                        Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center).RotatedByRandom(MathHelper.ToRadians(45f)) * 12f, ModContent.ProjectileType<LifeIcicle>(), NPC.damage, 0);
+                        Projectile.NewProjectile(source, new Vector2(NPC.Center.X, NPC.Center.Y - NPC.height), Vector2.Normalize(target.Center - NPC.Center).RotatedByRandom(MathHelper.ToRadians(45f)) * 12f, ModContent.ProjectileType<LifeIcicle>(), projdam, 0);
                     }
                 }
             }
