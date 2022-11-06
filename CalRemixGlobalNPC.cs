@@ -9,6 +9,7 @@ using CalamityMod;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
+using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.Ravager;
 using CalamityMod.NPCs.SupremeCalamitas;
@@ -36,6 +37,10 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
             {
                 npc.localAI[1] = 0;
+            }
+            if (npc.type == ModContent.NPCType<AureusSpawn>() && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().nuclegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            {
+                npc.active = false;
             }
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)
@@ -93,6 +98,12 @@ namespace CalRemix
             else if (npc.type == ModContent.NPCType<MirageJelly>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<MirageJellyItem>(), 7, 5));
+            }
+            else if (npc.type == ModContent.NPCType<CragmawMire>())
+            {
+                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => DownedBossSystem.downedPolterghast);
+                postPolter.Add(ModContent.ItemType<NucleateGello>(), 10, hideLootReport: !DownedBossSystem.downedPolterghast);
+                postPolter.AddFail(ModContent.ItemType<NucleateGello>(), hideLootReport: DownedBossSystem.downedPolterghast);
             }
             else if (npc.type == ModContent.NPCType<NuclearTerror>())
             {
