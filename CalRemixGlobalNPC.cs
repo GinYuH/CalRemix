@@ -77,6 +77,11 @@ namespace CalRemix
 
         public override bool PreAI(NPC npc)
         {
+            if (SlimeBoost && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel)
+            {
+                npc.active = false;
+                return false;
+            }
             if (Slimes.Contains(npc.type) && (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel || Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel))
             {
                 if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
@@ -93,6 +98,7 @@ namespace CalRemix
                     }
                     npc.life = npc.lifeMax;
                     npc.chaseable = false;
+                    npc.friendly = true;
                     npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = true;
                 }
                 if (Main.LocalPlayer.MinionAttackTargetNPC > 0 && !Slimes.Contains(Main.npc[Main.LocalPlayer.MinionAttackTargetNPC].type))
@@ -111,7 +117,7 @@ namespace CalRemix
                     NPC target = Main.npc[i];
                     Rectangle thisrect = npc.getRect();
                     Rectangle theirrect = target.getRect();
-                    if (thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type))
+                    if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type))
                     {
                         if (BossSlimes.Contains(target.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel)
                         {
@@ -120,6 +126,7 @@ namespace CalRemix
                         else
                         {
                             target.StrikeNPC(npc.damage, 0, 0);
+                            target.immune[npc.whoAmI] = 10;
                             if (target.damage > 0)
                                 npc.StrikeNPC(target.damage, 0, 0);
                         }
@@ -158,9 +165,10 @@ namespace CalRemix
                     NPC target = Main.npc[i];
                     Rectangle thisrect = npc.getRect();
                     Rectangle theirrect = target.getRect();
-                    if (thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !BossSlimes.Contains(target.type))
+                    if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !BossSlimes.Contains(target.type))
                     {
                         target.StrikeNPC(npc.damage, 0, 0);
+                        target.immune[npc.whoAmI] = 10;
                         if (target.damage > 0)
                         npc.StrikeNPC(target.damage, 0, 0);
                     }
