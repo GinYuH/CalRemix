@@ -34,7 +34,7 @@ namespace CalRemix
        
         public override void MeleeEffects(Item item, Player Player, Rectangle hitbox)
         {
-            if (item.CountsAsClass<MeleeDamageClass>() && Player.GetModPlayer<CalRemixPlayer>().godfather && Main.rand.NextBool(20))
+            if (item.CountsAsClass<MeleeDamageClass>() && item.shoot == 0 && Player.GetModPlayer<CalRemixPlayer>().godfather && Main.rand.NextBool(20))
             {
                 var source = Player.GetSource_ItemUse(item);
                 if (Player.whoAmI == Main.myPlayer)
