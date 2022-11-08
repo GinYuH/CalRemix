@@ -30,20 +30,45 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
-            if (item.damage > 0 && !item.channel && item.IsTrueMelee() && item.shoot == 0)
+        }
+       
+        public override void MeleeEffects(Item item, Player Player, Rectangle hitbox)
+        {
+            if (item.CountsAsClass<MeleeDamageClass>() && Player.GetModPlayer<CalRemixPlayer>().godfather && Main.rand.NextBool(20))
             {
-                if (player.GetModPlayer<CalRemixPlayer>().godfather)
+                var source = Player.GetSource_ItemUse(item);
+                if (Player.whoAmI == Main.myPlayer)
                 {
-                    item.shoot = ProjectileID.Mushroom;
-                }
-                else
-                {
-                    item.shoot = 0;
+                    double damageMult = item.useTime / 30D;
+                    if (damageMult < 0.35)
+                        damageMult = 0.35;
+
+                    int newDamage = (int)(item.damage * 2 * damageMult);
+
+                    int projtype = Main.rand.Next(4);
+                    switch (projtype)
+                    {
+                        case 0:
+                            projtype = ModContent.ProjectileType<BlazingSun>();
+                            break;
+                        case 1:
+                            projtype = ModContent.ProjectileType<MiniatureFolly>();
+                            break;
+                        case 2:
+                            projtype = ProjectileID.Mushroom;
+                            break;
+                        default:
+                            projtype = ModContent.ProjectileType<LuxorsGiftMagic>();
+                            break;
+                    }
+                    Vector2 mousedir = Main.MouseWorld - Player.Center;
+                    mousedir.Normalize();
+                    Projectile.NewProjectile(source, Player.Center, mousedir * 6, projtype, newDamage, 0f, Player.whoAmI, 0f, 0f);
+                    
                 }
             }
         }
 
-        
 
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -90,10 +115,6 @@ namespace CalRemix
                         int projectile = Projectile.NewProjectile(source, position, velocity * 1.25f, projtype, newDamage, 2f, player.whoAmI);
                         if (projectile.WithinBounds(Main.maxProjectiles))
                             Main.projectile[projectile].DamageType = DamageClass.Generic;
-                    }
-                    if (item.shoot == ProjectileID.Mushroom)
-                    {
-                        return false;
                     }
                 }
 

@@ -173,6 +173,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<DeepDiver>().
                 AddIngredient<HideofAstrumDeus>().
                 AddIngredient<TheTransformer>().
+                AddIngredient<BlunderBooster>().
                 AddIngredient<NebulousCore>().
                 AddIngredient<MiracleMatter>().
                 AddTile<DraedonsForge>().
