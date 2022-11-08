@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -11,6 +10,10 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.CalPlayer;
+using CalamityMod.NPCs.SunkenSea;
+using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.Projectiles.Boss;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
 using Terraria.ModLoader.IO;
@@ -86,6 +89,11 @@ namespace CalRemix
         public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			if (godfather)
+            {
+				calplayer.externalAbyssLight = 10;
+				Main.LocalPlayer.breath = Main.LocalPlayer.breathMax;
+            }
 			if (ring2 != null)
 			{
 				ring2.Position = Player.Center;
@@ -241,5 +249,35 @@ namespace CalRemix
 				calplayer.rogueStealth = sstealth;
 			}
 		}
-    }
+
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        {
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+        {
+			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			if (godfather)
+			{
+				if (npc.type == NPCID.BlueJellyfish || npc.type == NPCID.PinkJellyfish || npc.type == NPCID.GreenJellyfish ||
+					npc.type == NPCID.FungoFish || npc.type == NPCID.BloodJelly || npc.type == NPCID.AngryNimbus || npc.type == NPCID.GigaZapper ||
+					npc.type == NPCID.MartianTurret || npc.type == ModContent.NPCType<Stormlion>() || npc.type == ModContent.NPCType<GhostBell>() || npc.type == ModContent.NPCType<BoxJellyfish>())
+					calplayer.contactDamageReduction += 1;
+				var source = Main.LocalPlayer.GetSource_OnHurt(npc);
+				Vector2 playercenter = Main.LocalPlayer.Center;
+				Vector2 spawnvector = new Vector2(playercenter.X - 4, playercenter.Y - 4);
+				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
+			}
+		}
+		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+		{
+			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			if (godfather)
+			{
+				if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ModContent.ProjectileType<DestroyerElectricLaser>() ||
+					proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
+					calplayer.projectileDamageReduction += 1;
+			}
+		}
+	}
 }

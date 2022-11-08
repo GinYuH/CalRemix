@@ -30,7 +30,21 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
+            if (item.damage > 0 && !item.channel && item.IsTrueMelee() && item.shoot == 0)
+            {
+                if (player.GetModPlayer<CalRemixPlayer>().godfather)
+                {
+                    item.shoot = ProjectileID.Mushroom;
+                }
+                else
+                {
+                    item.shoot = 0;
+                }
+            }
         }
+
+        
+
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
@@ -44,7 +58,47 @@ namespace CalRemix
                         Main.projectile[p].originalDamage = (int)(damage * 0.33f);
                 }
             }
-            if (calPlayer.amalgam)
+            if (modPlayer.godfather)
+            {
+                if (Main.rand.NextBool(20) && !item.channel)
+                {
+                    double damageMult = item.useTime / 30D;
+                    if (damageMult < 0.35)
+                        damageMult = 0.35;
+
+                    int newDamage = (int)(damage * 2 * damageMult);
+
+                    int projtype = Main.rand.Next(4);
+                    switch (projtype)
+                    {
+                        case 0:
+                            projtype = ModContent.ProjectileType<BlazingSun>();
+                            break;
+                        case 1:
+                            projtype = ModContent.ProjectileType<MiniatureFolly>();
+                            break;
+                        case 2:
+                            projtype = ProjectileID.Mushroom;
+                            break;
+                        default:
+                            projtype = ModContent.ProjectileType<LuxorsGiftMagic>();
+                            break;
+                    }
+
+                    if (player.whoAmI == Main.myPlayer)
+                    {
+                        int projectile = Projectile.NewProjectile(source, position, velocity * 1.25f, projtype, newDamage, 2f, player.whoAmI);
+                        if (projectile.WithinBounds(Main.maxProjectiles))
+                            Main.projectile[projectile].DamageType = DamageClass.Generic;
+                    }
+                    if (item.shoot == ProjectileID.Mushroom)
+                    {
+                        return false;
+                    }
+                }
+
+            }
+            else if (calPlayer.amalgam)
             {
                 if (Main.rand.NextBool(20) && !item.channel)
                 {
@@ -107,7 +161,7 @@ namespace CalRemix
                     calplayer.regenator = true;
                 }
             }
-            if (item.type == ModContent.ItemType<TheSponge>())
+            if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>())
             {
                 calplayer.regenator = true;
                 calplayer.ursaSergeant = true;
@@ -149,7 +203,7 @@ namespace CalRemix
                     player.pickSpeed -= 0.2f;
                 }
             }
-            if (item.type == ModContent.ItemType<AbyssalDivingSuit>())
+            if (item.type == ModContent.ItemType<AbyssalDivingSuit>() || item.type == ModContent.ItemType<TheGodfather>())
             {
                 calplayer.lumenousAmulet = true;
                 calplayer.abyssalAmulet = true;
@@ -174,7 +228,7 @@ namespace CalRemix
                 player.npcTypeNoAggro[NPCID.Crab] = true;
                 player.npcTypeNoAggro[NPCID.Squid] = true;
             }
-            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>())
+            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>() || item.type == ModContent.ItemType<TheGodfather>())
             {
                 calplayer.giantPearl = true;
                 if (!hideVisual)

@@ -94,6 +94,10 @@ namespace CalRemix
 					Main.projectile[p].originalDamage = 20000;
 				}
 			}
+			if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().godfather && projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.CosmicBlast>())
+            {
+				Main.player[projectile.owner].Heal(5);
+			}
 		}
 
 		public override void Kill(Projectile projectile, int timeLeft)

@@ -24,7 +24,7 @@ namespace CalRemix.Projectiles
         public override bool PreAI()
         {
             Projectile body = Main.projectile[(int)Projectile.ai[1]];
-            if (body.type != ModContent.ProjectileType<SlimeCore>() || !body.active)
+            if ((body.type != ModContent.ProjectileType<SlimeCore>() && body.type != ModContent.ProjectileType<CriticalSlimeCore>()) || !body.active)
                 Projectile.Kill();
 
             if (Main.projectile[(int)Projectile.ai[1]].active)
@@ -84,6 +84,15 @@ namespace CalRemix.Projectiles
             return false;
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            Projectile body = Main.projectile[(int)Projectile.ai[1]];
+            if ((body.type == ModContent.ProjectileType<CriticalSlimeCore>()))
+            {
+                Main.player[Projectile.owner].Heal(5);
+            }
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             if (Projectile.velocity == Vector2.Zero)
@@ -95,6 +104,11 @@ namespace CalRemix.Projectiles
             Texture2D laserHeadTexture = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Lasers/UltimaRayEnd", AssetRequestMode.ImmediateLoad).Value;
             float laserLength = Projectile.localAI[1];
             Color drawColor = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 255);
+            Projectile body = Main.projectile[(int)Projectile.ai[1]];
+            if (body.type == ModContent.ProjectileType<CriticalSlimeCore>())
+            {
+                drawColor = Color.Purple;
+            }
 
             // Laser tail logic
 
