@@ -307,6 +307,14 @@ namespace CalRemix
             {
                 npcLoot.Add(ModContent.ItemType<Microxodonta>(), 3);
             }
+            else if (npc.type == ModContent.NPCType<CosmicElemental>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CosmicStone>(), 20, 10));
+            }
+            else if (npc.type == ModContent.NPCType<Horse>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<RockStone>(), 5, 3));
+            }
         }
 
         public override bool PreKill(NPC npc)
@@ -318,7 +326,7 @@ namespace CalRemix
                 Color messageColor = Color.Lime;
                 CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);
             }
-            if (npc.type == Terraria.ID.NPCID.WallofFlesh && !Main.hardMode)
+            if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
             {
                 CalRemixWorld.ShrineTimer = 3000;
             }

@@ -42,6 +42,9 @@ namespace CalRemix
 		public bool assortegel;
 		public bool amalgel;
 		public bool verboten;
+		public bool cosmele;
+		public bool earthele;
+		public bool crystalconflict;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -210,6 +213,9 @@ namespace CalRemix
 			assortegel = false;
 			amalgel = false;
 			godfather = false;
+			cosmele = false;
+			earthele = false;
+			crystalconflict = false;
 			tvo = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
