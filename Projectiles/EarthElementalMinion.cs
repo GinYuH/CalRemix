@@ -69,10 +69,10 @@ namespace CalRemix.Projectiles
                 else if (Projectile.localAI[0] >= 300 && Projectile.localAI[0] < 600)
                 {
                     Projectile.localAI[1]++;
-                    if (Main.myPlayer == Projectile.owner && Projectile.localAI[1] <= 240)
+                    if (Main.myPlayer == Projectile.owner && Projectile.localAI[1] <= 250)
                     {
-                        float lerpx = MathHelper.Lerp(Projectile.position.X, npc.position.X, 0.2f);
-                        float lerpY = MathHelper.Lerp(Projectile.position.Y, npc.position.Y, 0.2f);
+                        float lerpx = MathHelper.Lerp(Projectile.position.X, npc.position.X + 200 * npc.direction, 0.2f);
+                        float lerpY = MathHelper.Lerp(Projectile.position.Y, npc.position.Y - 100, 0.2f);
                         Projectile.position = new Vector2(lerpx, lerpY);
                         if (Projectile.localAI[1] == 240)
                         {
@@ -87,9 +87,10 @@ namespace CalRemix.Projectiles
                             Main.projectile[p].friendly = true;
                             Main.projectile[p].hostile = false;
                             Main.projectile[p].DamageType = DamageClass.Summon;
+                            Main.projectile[p].penetrate = 1;
                             Projectile.netUpdate = true;
                         }
-                        else if (Projectile.localAI[1] % 30 == 0)
+                        else if (Projectile.localAI[1] % 20 == 0)
                         {
                             SoundEngine.PlaySound(SoundID.Item88, Projectile.Center);
                             Vector2 dest = npc.Center - Projectile.Center;
@@ -113,7 +114,7 @@ namespace CalRemix.Projectiles
                     int num412 = 1;
                     float num413 = 25f;
                     float num414 = 1.2f;
-                    float distanceX = 80f;
+                    float distanceX = 120f;
                     float yoffset = 0f;
 
                     Vector2 vector40 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
