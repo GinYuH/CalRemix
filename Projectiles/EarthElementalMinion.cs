@@ -184,7 +184,7 @@ namespace CalRemix.Projectiles
             deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/EarthElementalArm").Value);
             Rectangle deusheadsquare = new Rectangle(0, 0, deusheadsprite.Width, deusheadsprite.Height);
             Color deusheadalpha = Projectile.GetAlpha(lightColor);
-            float rotcounter = Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900 ? Projectile.localAI[0] * 0.2f : 0;
+            float rotcounter = Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900 ? -Projectile.localAI[0] * 0.2f : 0;
             Main.EntitySpriteDraw(deusheadsprite, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY - 30), deusheadsquare, deusheadalpha, Projectile.rotation + rotcounter, Utils.Size(deusheadsquare) / 2f, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
         }
 
