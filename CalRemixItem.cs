@@ -2,10 +2,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
-using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
-using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.CalPlayer;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Accessories;
@@ -16,14 +12,56 @@ using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Projectiles.Rogue;
-using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Events;
+using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.Materials;
+using System.Collections.Generic;
 
 namespace CalRemix
 {
 	public class CalRemixItem : GlobalItem
     {
+        public override void SetDefaults(Item item)
+        {
+            if (item.type == ModContent.ItemType<GildedProboscis>())
+            {
+                item.damage = item.damage / 4;
+                item.rare = ItemRarityID.LightRed;
+            }
+            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>())
+            {
+                item.damage = item.damage / 2;
+                item.rare = ItemRarityID.LightRed;
+            }
+            else if (item.type == ModContent.ItemType<PearlShard>())
+            {
+                item.SetNameOverride("Conquest Fragment");
+                item.rare = ItemRarityID.Orange;
+            }
+
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (item.type == ModContent.ItemType<PearlShard>())
+            {
+                var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
+                tooltips.Add(line);
+            }
+        }
+        public override bool CanUseItem(Item item, Player player)
+        {
+            if (item.type == ModContent.ItemType<ExoticPheromones>())
+            {
+                return player.ZoneDesert && !NPC.AnyNPCs(ModContent.NPCType<Bumblefuck>()) && !BossRushEvent.BossRushActive;
+            }
+            return true;
+        }
         public override void UpdateInventory(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
@@ -34,7 +72,7 @@ namespace CalRemix
        
         public override void MeleeEffects(Item item, Player Player, Rectangle hitbox)
         {
-            if (item.CountsAsClass<MeleeDamageClass>() && item.shoot == 0 && Player.GetModPlayer<CalRemixPlayer>().godfather && Main.rand.NextBool(20))
+            if (item.CountsAsClass<MeleeDamageClass>() && item.shoot == ProjectileID.None && Player.GetModPlayer<CalRemixPlayer>().godfather && Main.rand.NextBool(20))
             {
                 var source = Player.GetSource_ItemUse(item);
                 if (Player.whoAmI == Main.myPlayer)

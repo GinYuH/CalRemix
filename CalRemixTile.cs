@@ -12,9 +12,10 @@ using CalamityMod.Items.PermanentBoosters;
 
 namespace CalRemix
 {
-	public class HypnosGlobalTile : GlobalTile
+	public class CalRemixTile : GlobalTile
 	{
 		private int berryCount;
+        private int cosmicCount;
 
         List<int> exclusionlist = new List<int>
         {
@@ -75,6 +76,35 @@ namespace CalRemix
                         {
                             WorldGen.PlaceObject(i, j - 1, ModContent.TileType<MiracleFruitPlaced>(), true);
                         }
+                    }
+                }
+            }
+            if (tile.TileType == TileID.Stone || tile.TileType == TileID.Grass && tile.HasUnactuatedTile)
+            {
+                cosmicCount = 0;
+
+                int r = 80;
+                int xRadStart = i - r;
+                int xRadEnd = xRadStart + (r * 2);
+                int yRadStart = j - r;
+                int yRadEnd = yRadStart + (r * 2);
+
+                for (int x = xRadStart; x < xRadEnd && x < Main.maxTilesX; x++)
+                {
+                    for (int y = yRadStart; y < yRadEnd && y < Main.maxTilesY; y++)
+                    {
+                        Tile tileCount = Framing.GetTileSafely(x, y);
+
+                        if (tileCount.TileType == ModContent.TileType<CosmichidPlant>())
+                            cosmicCount++;
+                    }
+                }
+
+                if (cosmicCount < 10 && j < 100 && Main.rand.NextBool(48) && Main.hardMode)
+                {
+                    if (exclusionlist.Contains(Main.tile[i, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
+                    {
+                        WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CosmichidPlant>(), true);
                     }
                 }
             }

@@ -25,12 +25,14 @@ using System.Collections.Generic;
 using CalRemix.Projectiles;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix
 {
     public class CalRemixGlobalNPC : GlobalNPC
     {
         bool SlimeBoost = false;
+        public int bossKillcount = 0;
         public override bool InstancePerEntity
         {
             get
@@ -283,15 +285,15 @@ namespace CalRemix
         {
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
-                npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<ParchedScale>(), 1, 25, 30));
+                npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
             }
             else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
-                npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34));
+                npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
             }
             else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
-                npcLoot.Add(DropHelper.PerPlayer(ModContent.ItemType<DesertFeather>(), 11, 17, 34));
+                npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
             }
             else if (npc.type == ModContent.NPCType<MirageJelly>())
             {
@@ -315,8 +317,31 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<RockStone>(), 5, 3));
             }
+            if (npc.boss && bossKillcount > 5)
+            {
+                npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);
+            }
+            else if (!npc.SpawnedFromStatue && npc.value > 0 && NPC.killCount[npc.type] >= 25)
+            {
+                npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
+            }
+        }
+        public override void OnKill(NPC npc)
+        {
+            if (npc.boss)
+            {
+                bossKillcount++;
+            }
+        }
+        public override void LoadData(NPC npc, TagCompound tag)
+        {
+            bossKillcount = tag.GetInt("bossKillcount");
         }
 
+        public override void SaveData(NPC npc, TagCompound tag)
+        {
+            tag["bossKillcount"] = bossKillcount;
+        }
         public override bool PreKill(NPC npc)
         {
             if (!CalamityMod.DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())

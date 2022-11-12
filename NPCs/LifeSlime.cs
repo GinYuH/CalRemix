@@ -87,7 +87,8 @@ namespace CalRemix.NPCs
                 else if (NPC.ai[0] == -1020 || NPC.ai[0] == -1080)
                 { 
                     SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
-                    Projectile.NewProjectile(source, new Vector2(target.Center.X, target.Center.Y + 300), new Vector2(0, -40f), ModContent.ProjectileType<LifeThorn>(), projdam, 0, Main.myPlayer, 0f, 0f);
+                    Projectile.NewProjectile(source, new Vector2(target.Center.X + Main.rand.Next(-128, -63), target.Center.Y + 150), new Vector2(0, -40f), ModContent.ProjectileType<LifeThorn>(), projdam, 0, Main.myPlayer, 0f, 0f);
+                    Projectile.NewProjectile(source, new Vector2(target.Center.X + Main.rand.Next(64, 129), target.Center.Y + 150), new Vector2(0, -40f), ModContent.ProjectileType<LifeThorn>(), projdam, 0, Main.myPlayer, 0f, 0f);
                 }
                 else if (NPC.ai[0] == -60 || NPC.ai[0] == -150)
                 {

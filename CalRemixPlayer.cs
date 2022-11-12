@@ -19,19 +19,23 @@ using CalRemix.Projectiles;
 using Terraria.ModLoader.IO;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.UI.CalamitasEnchants;
 
 namespace CalRemix
 {
 	public class CalRemixPlayer : ModPlayer
 	{
-		public bool brimPortal;
+		public bool earthEnchant;
+		public bool amongusEnchant;
+        public float defiantBoost = 0;
+        public bool brimPortal;
 		public bool arcanumHands;
 		public bool marnite;
 		public bool roguebox;
 		public int eclipseaura = -1;
 		public int marnitetimer = 1200;
 		public bool soldier;
-		public bool noxusFumes;
 		public bool astEffigy;
 		public bool halEffigy;
 		public bool nothing;
@@ -60,27 +64,6 @@ namespace CalRemix
 				}
 			}
 		}
-        public override void UpdateBadLifeRegen()
-        {
-            if (noxusFumes)
-            {
-                if (Player.lifeRegen > 0)
-                {
-                    Player.lifeRegen = 0;
-                }
-                Player.lifeRegenTime = 0;
-                Player.lifeRegen -= 42;
-            }
-        }
-        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {
-            if (noxusFumes)
-            {
-                r = 2.5f;
-                g = 0f;
-                b = 3.5f;
-            }
-        }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
             if (eclipseaura > 0)
@@ -89,7 +72,7 @@ namespace CalRemix
             }
 			return true;
         }
-        public override void PostUpdateMiscEffects()
+		public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)
@@ -198,13 +181,15 @@ namespace CalRemix
 		}
         public override void ResetEffects()
 		{
+			earthEnchant = false;
+			amongusEnchant = false;
+			defiantBoost = 0;
 			brimPortal = false;
 			arcanumHands = false;
 			marnite = false;
 			roguebox = false;
 			soldier = false;
 			marnitetimer = 0;
-			noxusFumes = false;
 			astEffigy = false;
 			halEffigy = false;
 			nothing = false;
@@ -255,12 +240,36 @@ namespace CalRemix
 				calplayer.rogueStealth = sstealth;
 			}
 		}
-
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
-        {
+		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+		{
+            if (earthEnchant && defiantBoost < 0.075)
+            {
+				defiantBoost += 0.005f;
+            }
+			if (amongusEnchant && crit)
+			{
+				damage = (int)((float)damage * 2.5f);
+				CombatText.NewText(Player.getRect(), Color.Red, Main.LocalPlayer.statLife * 7 / 11);
+                Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
+				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+            }
+        }
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+		{
+            if (earthEnchant && defiantBoost < 0.075)
+            {
+                defiantBoost += 0.005f;
+            }
+            if (amongusEnchant && crit)
+            {
+                damage = (int)((float)damage * 2.5f);
+                CombatText.NewText(Player.getRect(), Color.Red, Main.LocalPlayer.statLife * 7 / 11);
+                Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+            }
         }
 
-        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
         {
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)

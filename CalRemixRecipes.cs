@@ -23,11 +23,38 @@ using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.SummonItems;
+using Terraria.Localization;
+using CalamityMod.Items.Fishing.FishingRods;
+using CalamityMod.Items.Placeables.Furniture.CraftingStations;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix
 {
     public class Recipes : ModSystem
     {
+        public static RecipeGroup Blinkchid, Daychid, Moonchid, Deathchid, Waterchid, Firechid, Shiverchid;
+
+        public override void Unload()
+        {
+            Blinkchid = null;
+            Daychid = null;
+            Moonchid = null;
+            Deathchid = null;
+            Waterchid = null;
+            Firechid = null;
+            Shiverchid = null;
+        }
+        public override void AddRecipeGroups()
+        {
+            CosmichidGroup(Blinkchid, "Blinkchid", ItemID.Blinkroot);
+            CosmichidGroup(Daychid, "Daychid", ItemID.Daybloom);
+            CosmichidGroup(Moonchid, "Moonchid", ItemID.Moonglow);
+            CosmichidGroup(Deathchid, "Deathchid", ItemID.Deathweed);
+            CosmichidGroup(Waterchid, "Waterchid", ItemID.Waterleaf);
+            CosmichidGroup(Firechid, "Firechid", ItemID.Fireblossom);
+            CosmichidGroup(Shiverchid, "Shiverchid", ItemID.Shiverthorn);
+        }
         public override void AddRecipes() 
         {
             {
@@ -90,7 +117,15 @@ namespace CalRemix
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
                 Recipe recipe = Main.recipe[i];
-                
+
+                CosmichidChange(recipe, "Blinkchid", ItemID.Blinkroot);
+                CosmichidChange(recipe, "Daychid", ItemID.Daybloom);
+                CosmichidChange(recipe, "Moonchid", ItemID.Moonglow);
+                CosmichidChange(recipe, "Deathchid", ItemID.Deathweed);
+                CosmichidChange(recipe, "Waterchid", ItemID.Waterleaf);
+                CosmichidChange(recipe, "Firechid", ItemID.Fireblossom);
+                CosmichidChange(recipe, "Shiverchid", ItemID.Shiverthorn);
+
                 if (recipe.HasResult(ModContent.ItemType<FabsolsVodka>()))
                 {
                     recipe.DisableRecipe();
@@ -106,6 +141,10 @@ namespace CalRemix
                 if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()))
 		        {
 			        shard.type = ModContent.ItemType<ParchedScale>();
+                }
+                if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && recipe.HasResult(ModContent.ItemType<NavyFishingRod>()) || recipe.HasResult(ModContent.ItemType<EutrophicShelf>()) || recipe.HasResult(ModContent.ItemType<AquamarineStaff>()) || recipe.HasResult(ModContent.ItemType<Riptide>()) || recipe.HasResult(ModContent.ItemType<SeashineSword>()) || recipe.HasResult(ModContent.ItemType<StormSurge>()) || recipe.HasResult(ModContent.ItemType<SeafoamBomb>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<PearlShard>());
                 }
                 if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
                 {
@@ -242,6 +281,20 @@ namespace CalRemix
             recipe.AddIngredient(soul, soulnum);
             recipe.AddTile(TileID.CrystalBall);
             recipe.Register();
+        }
+        public void CosmichidGroup(RecipeGroup group, string name, int herb)
+        {
+            group = new RecipeGroup(() => $"{Lang.GetItemNameValue(herb)} or Cosmichid",
+            herb, ModContent.ItemType<Cosmichid>());
+            RecipeGroup.RegisterGroup("CalRemix:" + name, group);
+        }
+        public void CosmichidChange(Recipe recipe, string group, int herb)
+        {
+            if (recipe.TryGetIngredient(herb, out Item item))
+            {
+                recipe.AddRecipeGroup("CalRemix:" + group, item.stack);
+                recipe.RemoveIngredient(item);
+            }
         }
     }
 }
