@@ -71,9 +71,9 @@ namespace CalRemix.Projectiles
                     if (Main.myPlayer == Projectile.owner && Projectile.localAI[1] >= 30)
                     {
                         SoundEngine.PlaySound(SoundID.Item105 with { Volume = SoundID.Zombie105.Volume - 0.4f }, Projectile.position);
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CosmicBlast>(), Projectile.damage, 0f, Projectile.owner);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CosmicBlast>(), (int)(Projectile.damage * 0.2f), 0f, Projectile.owner);
                         if (Main.projectile.IndexInRange(p))
-                            Main.projectile[p].originalDamage = Projectile.originalDamage;
+                            Main.projectile[p].originalDamage = (int)(Projectile.damage * 0.2f);
                         Projectile.localAI[1] = 0;
                     }
                 }
@@ -145,10 +145,10 @@ namespace CalRemix.Projectiles
                             Vector2 direction = targetPosition - spawn;
                             direction.Normalize();
 
-                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), spawn, direction * 15, ModContent.ProjectileType<EndoIceShard>(), Projectile.damage, 0f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), spawn, direction * 15, ModContent.ProjectileType<EndoIceShard>(), (int)(Projectile.damage * 0.05f), 0f, Main.myPlayer);
                             if (p.WithinBounds(Main.maxProjectiles))
                             {
-                                Main.projectile[p].originalDamage = Projectile.damage;
+                                Main.projectile[p].originalDamage = (int)(Projectile.damage * 0.05f);
                             }
                             Projectile.localAI[1] = 0;
                         }
@@ -170,8 +170,8 @@ namespace CalRemix.Projectiles
                     {
                         if (Projectile.localAI[1] % 20 == 0)
                         {
-                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-64, 64), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DNA>(), Projectile.damage * 2, 0, Main.myPlayer, 0f, 0f);
-                            int p2 = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-16, 16), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DNA>(), Projectile.damage * 2, 0, Main.myPlayer, 0f, 0f);
+                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-64, 64), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DNA>(), (int)(Projectile.damage * 0.2f), 0, Main.myPlayer, 0f, 0f);
+                            int p2 = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-16, 16), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DNA>(), (int)(Projectile.damage * 0.2f), 0, Main.myPlayer, 0f, 0f);
                             if (Main.projectile.IndexInRange(p))
                                 Main.projectile[p].originalDamage = Projectile.originalDamage;
                             if (Main.projectile.IndexInRange(p2))
@@ -245,7 +245,7 @@ namespace CalRemix.Projectiles
                         dest.Normalize();
                         Vector2 laserVel = dest * 10;
                         Vector2 spawnloc = new Vector2(Projectile.Center.X + 120 * -Projectile.spriteDirection, Projectile.Center.Y - 60);
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnloc, laserVel, ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalileosPlanet>(), Projectile.damage * 10, 0f, Projectile.owner);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnloc, laserVel, ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalileosPlanet>(), Projectile.damage * 2, 0f, Projectile.owner);
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = Projectile.originalDamage;
                         Main.projectile[p].DamageType = DamageClass.Summon;

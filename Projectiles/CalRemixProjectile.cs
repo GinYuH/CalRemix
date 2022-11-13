@@ -136,9 +136,15 @@ namespace CalRemix
 
         public override Color? GetAlpha(Projectile projectile, Color lightColor)
         {
-			if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().crystalconflict && projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Typeless.CryonicShield>())
+			if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().crystalconflict)
 			{
+				if (projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Typeless.CryonicShield>())
 				return Color.Magenta;
+				if (projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalileosPlanet>() 
+					|| projectile.type == ProjectileType<CalamityMod.Projectiles.Summon.CosmicBlast>()
+					|| projectile.type == ProjectileType<CalamityMod.Projectiles.Summon.EndoIceShard>())
+				return Color.HotPink;
+				return null;
 			}
 			else
 			{
