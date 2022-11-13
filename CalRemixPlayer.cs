@@ -84,6 +84,10 @@ namespace CalRemix
             {
 				Main.LocalPlayer.GetDamage<GenericDamageClass>() += cosdam;
 			}
+			if (!crystalconflict)
+            {
+				cosdam = 0;
+            }
 			if (godfather)
             {
 				calplayer.externalAbyssLight = 10;

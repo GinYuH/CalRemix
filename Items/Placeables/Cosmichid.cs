@@ -42,7 +42,7 @@ namespace CalRemix.Items.Placeables
         {
             if (player.GetModPlayer<CalRemixPlayer>().crystalconflict && player.GetModPlayer<CalRemixPlayer>().cosdam <= 0.3f)
             {
-                player.GetModPlayer<CalRemixPlayer>().cosdam += 0.01f;
+                player.GetModPlayer<CalRemixPlayer>().cosdam += 0.01f * Item.stack;
                 return false;
             }
             return true;
