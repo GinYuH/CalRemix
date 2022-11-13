@@ -28,5 +28,24 @@ namespace CalRemix.Items.Placeables
             Item.value = CalamityGlobalItem.Rarity1BuyPrice;
             Item.rare = ItemRarityID.Blue;
     	}
-	}
+
+        public override bool ItemSpace(Player player)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().crystalconflict)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override bool OnPickup(Player player)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().crystalconflict && player.GetModPlayer<CalRemixPlayer>().cosdam <= 0.3f)
+            {
+                player.GetModPlayer<CalRemixPlayer>().cosdam += 0.01f;
+                return false;
+            }
+            return true;
+        }
+    }
 }

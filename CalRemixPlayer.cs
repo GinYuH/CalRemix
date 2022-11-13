@@ -53,6 +53,7 @@ namespace CalRemix
 		public Particle ring2;
 		public Particle aura;
         public bool ZoneLife;
+		public float cosdam = 0;
 
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
@@ -75,6 +76,14 @@ namespace CalRemix
 		public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			if (cosdam > 0.3f)
+            {
+				cosdam = 0.3f;
+            }
+			if (crystalconflict && cosdam > 0)
+            {
+				Main.LocalPlayer.GetDamage<GenericDamageClass>() += cosdam;
+			}
 			if (godfather)
             {
 				calplayer.externalAbyssLight = 10;

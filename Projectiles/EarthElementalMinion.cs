@@ -71,8 +71,8 @@ namespace CalRemix.Projectiles
                     Projectile.localAI[1]++;
                     if (Main.myPlayer == Projectile.owner && Projectile.localAI[1] <= 250)
                     {
-                        float lerpx = MathHelper.Lerp(Projectile.position.X, npc.position.X + 200 * npc.direction, 0.2f);
-                        float lerpY = MathHelper.Lerp(Projectile.position.Y, npc.position.Y - 100, 0.2f);
+                        float lerpx = MathHelper.Lerp(Projectile.position.X, npc.position.X + 500 * npc.direction, 0.1f);
+                        float lerpY = MathHelper.Lerp(Projectile.position.Y, npc.position.Y - 100, 0.1f);
                         Projectile.position = new Vector2(lerpx, lerpY);
                         if (Projectile.localAI[1] == 240)
                         {
@@ -110,11 +110,12 @@ namespace CalRemix.Projectiles
                 }
                 else if (Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900)
                 {
-                    Projectile.localAI[1] = 0;
+                    if (Projectile.localAI[0] == 600)
+                    Projectile.localAI[1] = Projectile.spriteDirection;
                     int num412 = 1;
                     float num413 = 25f;
                     float num414 = 1.2f;
-                    float distanceX = 120f;
+                    float distanceX = 120f * Projectile.localAI[1];
                     float yoffset = 0f;
 
                     Vector2 vector40 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
@@ -184,8 +185,9 @@ namespace CalRemix.Projectiles
             deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/EarthElementalArm").Value);
             Rectangle deusheadsquare = new Rectangle(0, 0, deusheadsprite.Width, deusheadsprite.Height);
             Color deusheadalpha = Projectile.GetAlpha(lightColor);
-            float rotcounter = Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900 ? -Projectile.localAI[0] * 0.2f : 0;
-            Main.EntitySpriteDraw(deusheadsprite, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY - 30), deusheadsquare, deusheadalpha, Projectile.rotation + rotcounter, Utils.Size(deusheadsquare) / 2f, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            float rotcounter = Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900 ? -Projectile.localAI[0] * 0.2f * Projectile.localAI[1] : 0;
+            int exoff = Projectile.spriteDirection == -1 ? 10 : 0;
+            Main.EntitySpriteDraw(deusheadsprite, Projectile.Center - Main.screenPosition + new Vector2(0f + 20 * Projectile.spriteDirection + exoff, Projectile.gfxOffY - 30), deusheadsquare, deusheadalpha, Projectile.rotation + rotcounter, Utils.Size(deusheadsquare) / 2f, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

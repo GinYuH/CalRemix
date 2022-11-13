@@ -47,7 +47,7 @@ namespace CalRemix
             Tile tile = Framing.GetTileSafely(i, j);
             Tile tile2 = Framing.GetTileSafely(i + 1, j);
 
-            if (tile.TileType == TileID.JungleGrass && tile.HasUnactuatedTile && tile2.TileType == TileID.JungleGrass && tile2.HasUnactuatedTile)
+            if (tile.TileType == TileID.JungleGrass && tile.HasUnactuatedTile && tile2.TileType == TileID.JungleGrass && tile2.HasUnactuatedTile && j < 100)
             {
                 berryCount = 0;
 
@@ -79,7 +79,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (tile.TileType == TileID.Stone || tile.TileType == TileID.Grass && tile.HasUnactuatedTile)
+            if ((tile.TileType == TileID.Stone || tile.TileType == TileID.Grass) && tile.HasUnactuatedTile && j < 100)
             {
                 cosmicCount = 0;
 

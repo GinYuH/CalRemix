@@ -98,6 +98,10 @@ namespace CalRemix
             {
 				Main.player[projectile.owner].Heal(5);
 			}
+			if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().crystalconflict && projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Typeless.CryonicShield>())
+			{
+				target.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 60);
+			}
 		}
 
 		public override void Kill(Projectile projectile, int timeLeft)
@@ -129,6 +133,18 @@ namespace CalRemix
 				}
 			}
         }
+
+        public override Color? GetAlpha(Projectile projectile, Color lightColor)
+        {
+			if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().crystalconflict && projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Typeless.CryonicShield>())
+			{
+				return Color.Magenta;
+			}
+			else
+			{
+				return null;
+			}
+		}
     }
 }
 
