@@ -34,7 +34,7 @@ namespace CalRemix
                 item.damage = item.damage / 4;
                 item.rare = ItemRarityID.LightRed;
             }
-            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>())
+            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>() || item.type == ModContent.ItemType<Swordsplosion>())
             {
                 item.damage = item.damage / 2;
                 item.rare = ItemRarityID.LightRed;
