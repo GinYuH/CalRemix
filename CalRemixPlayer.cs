@@ -51,6 +51,7 @@ namespace CalRemix
 		public bool earthele;
 		public bool crystalconflict;
 		public bool moonFist;
+		public bool cursed;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -73,6 +74,12 @@ namespace CalRemix
             {
 				return false;
             }
+			if (cursed)
+			{ 
+            damage = (int)((float)damage * 1.9f);
+			}
+			
+
 			return true;
         }
 		public override void PostUpdateMiscEffects()
@@ -217,6 +224,7 @@ namespace CalRemix
 			earthele = false;
 			crystalconflict = false;
 			moonFist = false;
+			cursed = false;
 			tvo = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);

@@ -1,76 +1,94 @@
-using CalamityMod.Items;
-using CalamityMod.Rarities;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Items.Materials;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalRemix.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.Audio;
 
-namespace CalRemix.Items.Weapons
+namespace CalRemix.Items.Weapons;
+
+public class Exosphear : ModItem
 {
-	public class Exosphear : ModItem
-	{
-		public override void SetStaticDefaults() 
-		{
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Gravitonomy Pike");
-            Tooltip.SetDefault("Fires exo pike beams that split into more beams\n" +
-                "Hitting enemies with the pike sucks in all nearby enemies\n" +
-                "Ignores immunity frames");
-            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-        }
-		public override void SetDefaults() 
-		{
-			Item.width = 82;
-			Item.height = 88;
-			Item.rare = ModContent.RarityType<Violet>();
-			Item.value = CalamityGlobalItem.Rarity15BuyPrice;
-            Item.useTime = 18; 
-			Item.useAnimation = 18;
-			Item.useStyle = ItemUseStyleID.Shoot;
-            Item.autoReuse = true;
-			Item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
-            Item.noUseGraphic = true;
-            Item.DamageType = DamageClass.MeleeNoSpeed;
-            Item.noMelee = true;
-            Item.damage = 257;
-			Item.knockBack = 9.5f;
-			Item.shoot = ModContent.ProjectileType<ExosphearSpear>();
-			Item.shootSpeed = 12f;
-        }
-        public override bool CanUseItem(Player player)
-        {
-            return player.ownedProjectileCounts[Item.shoot] < 1;
-        }
-        public override bool? UseItem(Player player)
-        {
-            if (!Main.dedServ && Item.UseSound.HasValue)
-            {
-                SoundEngine.PlaySound(Item.UseSound.Value, player.Center);
-            }
-            return null;
-        }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            Projectile.NewProjectile(source, position + Vector2.Normalize(velocity) * 120f, velocity, ModContent.ProjectileType<ExosphearBeam>(), damage, knockback, player.whoAmI);
-            return true;
-        }
-        public override void AddRecipes()
-        {
-            CreateRecipe().
-                AddIngredient<ElementalLance>(1).
-                AddIngredient<StreamGouge>(1).
-                AddIngredient<Nadir>(1).
-                AddIngredient<BansheeHook>(1).
-                AddIngredient<InsidiousImpaler>(1).
-                AddIngredient<MiracleMatter>(1).
-                AddTile<DraedonsForge>().
-                Register();
-        }
+
+    public override void SetStaticDefaults()
+    {
+
+        DisplayName.SetDefault("Gravitonomy Pike");
+        Tooltip.SetDefault("Fires homing exo pike beams that split into more beams. \n" + "Ignores immunity frames");
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        
     }
+
+    public override void SetDefaults()
+    {
+
+        Item.damage = 257;
+        Item.crit = 4;
+        Item.knockBack = 9.5f;
+        Item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+        Item.DamageType = DamageClass.Melee;
+        Item.useAnimation = 18;
+        Item.useTime = 18;
+        Item.width = 32;
+        Item.height = 32;
+        Item.UseSound = SoundID.Item1;
+        Item.rare = ItemRarityID.Purple;
+        Item.autoReuse = true;
+        Item.noUseGraphic = true; // The sword is actually a "projectile", so the item should not be visible when used
+        Item.noMelee = false; // The projectile will do the damage and not the item
+        Item.rare = ItemRarityID.Purple;
+        Item.value = Item.buyPrice(0, 80, 0, 0);
+        Item.shoot = Mod.Find<ModProjectile>("PikeSpear").Type; // The projectile is what makes a shortsword work
+        Item.shootSpeed = 3.5f; // This value bleeds into the behavior of the projectile as velocity, keep that in mind when tweaking values
+        
+    }
+    public override void AddRecipes()
+    {
+        Mod calamityMod = ModLoader.GetMod("CalamityMod");
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(calamityMod.Find<ModItem>("StreamGouge").Type);
+        recipe.AddIngredient(calamityMod.Find<ModItem>("Nadir").Type);
+        recipe.AddIngredient(calamityMod.Find<ModItem>("BansheeHook").Type);
+        recipe.AddIngredient(calamityMod.Find<ModItem>("InsidiousImpaler").Type);
+        recipe.AddIngredient(calamityMod.Find<ModItem>("MiracleMatter").Type);
+       
+        recipe.AddTile(calamityMod.Find<ModTile>("DraedonsForge").Type);
+        recipe.Register();
+    }
+
+   
+    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+    {
+
+        Mod calamityMod = ModLoader.GetMod("CalamityMod");
+
+        if (Item.active == true)
+        
+            
+        {
+            int a = Projectile.NewProjectile(spawnSource: null, position, velocity *= 1f, Mod.Find<ModProjectile>("ExoPike").Type, damage *= 1, knockback, player.whoAmI);
+            Main.projectile[a].velocity *= 5f;
+        }
+      
+    }
+
+
+    
+
+    public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+    {
+
+
+        Mod calamityMod = ModLoader.GetMod("CalamityMod");
+        target.AddBuff(calamityMod.Find<ModBuff>("ExoFreeze").Type, 150);
+        target.AddBuff(calamityMod.Find<ModBuff>("HolyFlames").Type, 150);
+        target.AddBuff(BuffID.Frostburn, 150);
+        target.AddBuff(BuffID.OnFire, 150);
+    }
+
+
+
+
+
+
 }
+

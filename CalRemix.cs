@@ -1,6 +1,8 @@
 using CalamityMod;
+using CalamityMod.Items.Accessories;
 using CalamityMod.UI.CalamitasEnchants;
 using CalRemix.NPCs;
+using CalRemix.Items.Accessories;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -20,6 +22,7 @@ namespace CalRemix
             {
                 player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
             }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
+            ModLoader.GetMod("CalamityMod").Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
         }
     }
 }
