@@ -16,6 +16,7 @@ using CalamityMod.NPCs.Abyss;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
+using CalRemix.Buffs;
 using Terraria.ModLoader.IO;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
@@ -49,6 +50,7 @@ namespace CalRemix
 		public bool cosmele;
 		public bool earthele;
 		public bool crystalconflict;
+		public bool moonFist;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
@@ -214,6 +216,7 @@ namespace CalRemix
 			cosmele = false;
 			earthele = false;
 			crystalconflict = false;
+			moonFist = false;
 			tvo = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
@@ -266,7 +269,29 @@ namespace CalRemix
                 Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
 				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
             }
-        }
+			if (moonFist && item.DamageType == DamageClass.Melee); 
+			{
+				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
+				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				
+					if(Main.rand.NextBool(10))
+						{
+						target.active = false;
+						}		
+					}
+				}
+			if (moonFist && item.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>()); //simply uses another if statement to fix an error they don't give a shit about
+				{
+				Player.AddBuff(ModContent.BuffType<MoonfistBuff>(), 1000);
+				target.AddBuff(ModContent.BuffType<Nightwither>(), 500, false);
+				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				
+					if(Main.rand.NextBool(10))
+						{
+						target.active = false;
+						}		
+					}
+				}
+			}
+
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
             if (earthEnchant && defiantBoost < 0.075)
@@ -280,6 +305,16 @@ namespace CalRemix
                 Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
                 SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
             }
+			if (moonFist && proj.DamageType == DamageClass.Melee)
+			{
+					target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
+					if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				
+					if(Main.rand.NextBool(10))
+					{
+					target.active = false;
+					}		
+				}
+			}
         }
 
 		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
