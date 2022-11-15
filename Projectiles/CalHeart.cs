@@ -45,9 +45,11 @@ namespace CalRemix.Projectiles
             Projectile.localAI[0]++;
             if (Projectile.localAI[0] >= 600)
             {
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.BrimstoneExplosionMinion>(), 6666, 0, Projectile.owner);
+                    Vector2 pos = new Vector2(Projectile.Center.X + 10, Projectile.Center.Y + 10);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.BrimstoneExplosionMinion>(), 6666, 0, Projectile.owner);
                     if (p.WithinBounds(Main.maxProjectiles))
                     {
                         Main.projectile[p].originalDamage = 6666;
@@ -56,9 +58,9 @@ namespace CalRemix.Projectiles
                 }
                 Projectile.active = false;
             }
-
+            int framra = 12 - (int)(Projectile.localAI[0] / 50);
             Projectile.frameCounter++;
-            if (Projectile.frameCounter > 12)
+            if (Projectile.frameCounter > framra)
             {
                 Projectile.frame += 1;
                 Projectile.frameCounter = 0;
@@ -82,7 +84,9 @@ namespace CalRemix.Projectiles
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.BrimstoneExplosionMinion>(), 6666, 0, Projectile.owner);
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
+                Vector2 pos = new Vector2(Projectile.Center.X + 10, Projectile.Center.Y + 10);
+                int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.BrimstoneExplosionMinion>(), 6666, 0, Projectile.owner);
                 if (p.WithinBounds(Main.maxProjectiles))
                 {
                     Main.projectile[p].originalDamage = 6666;

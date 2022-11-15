@@ -229,7 +229,7 @@ namespace CalRemix
                     calplayer.regenator = true;
                 }
             }
-            if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>())
+            if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.regenator = true;
                 calplayer.ursaSergeant = true;
@@ -240,7 +240,7 @@ namespace CalRemix
                 calplayer.aquaticHeart = true;
                 calplayer.roverDrive = true;
             }
-            if (item.type == ModContent.ItemType<AmbrosialAmpoule>())
+            if (item.type == ModContent.ItemType<AmbrosialAmpoule>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.beeResist = true;
 
@@ -271,7 +271,7 @@ namespace CalRemix
                     player.pickSpeed -= 0.2f;
                 }
             }
-            if (item.type == ModContent.ItemType<AbyssalDivingSuit>() || item.type == ModContent.ItemType<TheGodfather>())
+            if (item.type == ModContent.ItemType<AbyssalDivingSuit>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.lumenousAmulet = true;
                 calplayer.abyssalAmulet = true;
@@ -296,7 +296,7 @@ namespace CalRemix
                 player.npcTypeNoAggro[NPCID.Crab] = true;
                 player.npcTypeNoAggro[NPCID.Squid] = true;
             }
-            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>() || item.type == ModContent.ItemType<TheGodfather>())
+            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.giantPearl = true;
                 if (!hideVisual)
