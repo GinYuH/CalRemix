@@ -328,6 +328,13 @@ namespace CalRemix
         }
         public override void OnKill(NPC npc)
         {
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().cart)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero, ModContent.ProjectileType<CalHeart>(), 0, 0, Main.myPlayer);
+                }
+            }
             if (npc.boss)
             {
                 bossKillcount++;

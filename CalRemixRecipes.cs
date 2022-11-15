@@ -250,6 +250,18 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<ToxicHeart>();
                 }
+                if (recipe.HasResult(ModContent.ItemType<PhantomicArtifact>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<HallowedRune>());
+                    recipe.RemoveIngredient(ModContent.ItemType<RuinousSoul>());
+                    recipe.RemoveIngredient(ModContent.ItemType<BloodOrb>());
+                    recipe.RemoveIngredient(ModContent.ItemType<ExodiumCluster>());
+                    recipe.RemoveTile(TileID.LunarCraftingStation);
+                    recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.Plates.Navyplate>(), 25);
+                    recipe.AddIngredient(ModContent.ItemType<RuinousSoul>(), 5);
+                    recipe.AddIngredient(ModContent.ItemType<ExodiumCluster>(), 25);
+                    recipe.AddTile(TileID.DemonAltar);
+                }
             }
         }
 

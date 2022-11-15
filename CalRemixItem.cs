@@ -44,6 +44,10 @@ namespace CalRemix
                 item.SetNameOverride("Conquest Fragment");
                 item.rare = ItemRarityID.Orange;
             }
+            else if (item.type == ModContent.ItemType<PhantomicArtifact>())
+            {
+                item.SetNameOverride("Phantomic Soul Artifact");
+            }
 
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -51,6 +55,11 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<PearlShard>())
             {
                 var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<PhantomicArtifact>())
+            {
+                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
                 tooltips.Add(line);
             }
         }

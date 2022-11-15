@@ -14,6 +14,7 @@ using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Summon;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
 using CalRemix.Buffs;
@@ -29,8 +30,8 @@ namespace CalRemix
 	{
 		public bool earthEnchant;
 		public bool amongusEnchant;
-        public float defiantBoost = 0;
-        public bool brimPortal;
+		public float defiantBoost = 0;
+		public bool brimPortal;
 		public bool arcanumHands;
 		public bool marnite;
 		public bool roguebox;
@@ -52,12 +53,24 @@ namespace CalRemix
 		public bool crystalconflict;
 		public bool moonFist;
 		public bool cursed;
+		public bool cart;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
-        public bool ZoneLife;
+		public bool ZoneLife;
 		public float cosdam = 0;
 
+		public int[] MinionList =
+		{
+			ModContent.ProjectileType<PlantSummon>(),
+			ModContent.ProjectileType<AtlasSoldier>(),
+			ModContent.ProjectileType<CosmilampMinion>(),
+			ModContent.ProjectileType<FieryDraconid>(),
+			ModContent.ProjectileType<SepulcherMinion>(),
+			ModContent.ProjectileType<CosmicEnergySpiral>(),
+			ModContent.ProjectileType<EndoCooperBody>(),
+			ModContent.ProjectileType<MagicUmbrella>()
+		};
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
@@ -85,6 +98,21 @@ namespace CalRemix
 		public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			if (cart)
+			{
+				for (int i = 0; i < MinionList.Length; i++)
+				{
+					if (Main.LocalPlayer.ownedProjectileCounts[MinionList[i]] > 0)
+					{
+						Main.LocalPlayer.maxMinions += Player.ownedProjectileCounts[MinionList[i]];
+
+					}
+				}
+				for (int i = 0; i < Main.maxNPCs; i++)
+                {
+					NPC np = Main.npc[i];
+                }
+			}
 			if (cosdam > 0.3f)
             {
 				cosdam = 0.3f;
@@ -102,7 +130,8 @@ namespace CalRemix
 				calplayer.externalAbyssLight = 10;
 				Main.LocalPlayer.breath = Main.LocalPlayer.breathMax;
             }
-			if (ring2 != null)
+            #region Eclipse Aura
+            if (ring2 != null)
 			{
 				ring2.Position = Player.Center;
 				ring2.Velocity = Player.velocity;
@@ -155,7 +184,8 @@ namespace CalRemix
 			{
 				Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(20));
 			}
-			if (halEffigy)
+            #endregion
+            if (halEffigy)
 			{
 				Player.moveSpeed += 0.25f;
 				Player.GetCritChance<GenericDamageClass>() += 25;
@@ -180,7 +210,8 @@ namespace CalRemix
 					}
 				}
 			}
-			if (tvo) //Verboten one
+            #region stealth cuts
+            if (tvo) //Verboten one
 			{
 				StealthCut(0.995f);
 			}
@@ -200,7 +231,8 @@ namespace CalRemix
             {
 				StealthCut(0.05f);
             }
-		}
+            #endregion
+        }
         public override void ResetEffects()
 		{
 			earthEnchant = false;
@@ -226,6 +258,7 @@ namespace CalRemix
 			moonFist = false;
 			cursed = false;
 			tvo = false;
+			cart = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 		}
