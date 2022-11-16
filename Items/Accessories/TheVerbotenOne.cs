@@ -12,11 +12,12 @@ using CalamityMod;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Rogue;
+using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Typeless;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using CalamityMod.Projectiles.Magic;
+using System.Collections.Generic;
 using CalRemix.Projectiles;
 using CalamityMod.Buffs.DamageOverTime;
 using Terraria.DataStructures;
@@ -67,6 +68,10 @@ namespace CalRemix.Items.Accessories
             modPlayer.arcanumHands = true;
             modPlayer.brimPortal = true;
             modPlayer.roguebox = true;
+            if (hideVisual)
+                modPlayer.tvohide = true;
+            else
+                modPlayer.tvohide = false;
             calPlayer.nanotech = true;
             calPlayer.draedonsHeart = true;
             calPlayer.blazingCursorDamage = true;
@@ -89,9 +94,10 @@ namespace CalRemix.Items.Accessories
             player.noFallDmg = true;
             player.blackBelt = true;
             player.spikedBoots = 2;
+            player.maxMinions += 20;
 
             player.GetDamage<GenericDamageClass>() += 0.15f;
-            player.GetArmorPenetration<GenericDamageClass>() += 15;
+            player.GetArmorPenetration<GenericDamageClass>() += 150;
 
             if (player.immune)
             {
@@ -182,7 +188,7 @@ namespace CalRemix.Items.Accessories
             {
                 int baseDamage = 600;
                 int swordDmg = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
-                if (player.ownedProjectileCounts[brimmy] < 1)
+                if (player.ownedProjectileCounts[brimmy] < 1 && !hideVisual)
                 {
                     var sword = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, brimmy, swordDmg, 2f, Main.myPlayer);
                     sword.originalDamage = baseDamage;
@@ -194,6 +200,7 @@ namespace CalRemix.Items.Accessories
             player.lifeRegen++;
             for (int i = 0; i < Main.maxBuffTypes; i++)
             {
+                if (i != 94)
                 player.buffImmune[i] = true;
             }
             if (Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
@@ -223,11 +230,12 @@ namespace CalRemix.Items.Accessories
                     {
                         Vector2 velocitye = new Vector2(0f, 10f);
                         velocitye = velocitye.RotatedBy(variance * i);
-                        int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, velocitye, ModContent.ProjectileType<MarniteOrb>(), 20000, 0, player.whoAmI);
+                        int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, velocitye, ModContent.ProjectileType<RainbowComet>(), 20000, 0, player.whoAmI);
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = 20000;
+                        Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().tvoproj = true;
                     }
-                    Main.LocalPlayer.AddCooldown(MagnaCoreCooldown.ID, CalamityUtils.SecondsToFrames(20));
+                    Main.LocalPlayer.AddCooldown(MagnaCoreCooldown.ID, CalamityUtils.SecondsToFrames(10));
                 }
             }
             player.magicQuiver = true;
@@ -238,7 +246,7 @@ namespace CalRemix.Items.Accessories
             modPlayer.brimPortal = true;
             if (player.whoAmI == Main.myPlayer)
             {
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<BrimstoneGenerator>()] < 4)
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<BrimstoneGenerator>()] < 4 && !hideVisual)
                 {
                     for (int v = 0; v < 4; v++)
                     {
@@ -247,18 +255,20 @@ namespace CalRemix.Items.Accessories
                 }
             }
             calPlayer.stealthGenStandstill += 0.25f;
-            calPlayer.rogueStealthMax += 0.1f;
+            calPlayer.rogueStealthMax += 0.5f;
             calPlayer.eclipseMirror = true;
             calPlayer.stealthStrikeHalfCost = true;
+            calPlayer.rogueStealth = calPlayer.rogueStealthMax;
             player.GetCritChance<ThrowingDamageClass>() += 6;
             player.GetDamage<ThrowingDamageClass>() += 0.06f;
-            player.aggro -= 700;
+            player.aggro -= 800;
             player.luck += 0.2f;
+            if (!hideVisual)
             player.Calamity().thiefsDime = true;
             player.GetModPlayer<CalRemixPlayer>().roguebox = true;
             if (player.whoAmI == Main.myPlayer)
             {
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<ThiefsDimeProj>()] < 1)
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<ThiefsDimeProj>()] < 1 && !hideVisual)
                 {
                     int damage = (int)player.GetTotalDamage<RogueDamageClass>().ApplyTo(290);
                     Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<ThiefsDimeProj>(), damage, 6f, Main.myPlayer, 0f, 0f);
@@ -305,7 +315,35 @@ namespace CalRemix.Items.Accessories
             int elementalDmg = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(290);
             float kBack = 2f + player.GetKnockback<SummonDamageClass>().Additive;
 
-            if (player.whoAmI == Main.myPlayer)
+            if (modPlayer.tvohide && CalamityUtils.CountProjectiles(ProjectileType<HowlsHeartCalcifer>()) > 0)
+            {
+                List<int> MinionList = new List<int>
+                {
+                    ModContent.ProjectileType<HowlsHeartCalcifer>(),
+                    ModContent.ProjectileType<HowlsHeartHowl>(),
+                    ModContent.ProjectileType<HowlsHeartTurnipHead>(),
+                    ModContent.ProjectileType<SandElementalHealer>(),
+                    ModContent.ProjectileType<BrimstoneElementalMinion>(),
+                    ModContent.ProjectileType<CloudElementalMinion>(),
+                    ModContent.ProjectileType<SandElementalMinion>(),
+                    ModContent.ProjectileType<WaterElementalMinion>(),
+                    ModContent.ProjectileType<PlaguePrincess>(),
+                    ModContent.ProjectileType<YoungDuke>(),
+                    ModContent.ProjectileType<GladiatorSword>(),
+                    ModContent.ProjectileType<GladiatorSword2>(),
+                    ModContent.ProjectileType<ThiefsDimeProj>(),
+                    ModContent.ProjectileType<CryonicShield>()
+                };
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile projectile = Main.projectile[i];
+                    if (MinionList.Contains(projectile.type))
+                    {
+                        projectile.active = false;
+                    }
+                }
+            }
+            if (player.whoAmI == Main.myPlayer && !hideVisual)
             {
                 int baseDamage = 290;
                 int swordDmg = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
@@ -376,6 +414,7 @@ namespace CalRemix.Items.Accessories
             }
 
 
+            if (!hideVisual)
             calPlayer.CryoStone = true;
             player.wingTimeMax = (int)(player.wingTimeMax * 1.5f);
             if (!hideVisual)
@@ -383,7 +422,7 @@ namespace CalRemix.Items.Accessories
             modPlayer.crystalconflict = true;
             int brimmyt = ProjectileType<CosmicConflict>();
 
-            if (player.whoAmI == Main.myPlayer)
+            if (player.whoAmI == Main.myPlayer && !hideVisual)
             {
                 int baseDamage = 4002;
                 int swordDmg = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);

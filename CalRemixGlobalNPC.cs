@@ -243,6 +243,15 @@ namespace CalRemix
                 npc.active = false;
             }
         }
+
+        public override void PostAI(NPC npc)
+        {
+            if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
+            {
+                if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura > 0)
+                    npc.AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatDebuffs.ExoFreeze>(), 60);
+            }
+        }
         public override void ModifyTypeName(NPC npc, ref string typeName)
         {
             if (npc.type == ModContent.NPCType<WITCH>())
@@ -328,7 +337,14 @@ namespace CalRemix
         }
         public override void OnKill(NPC npc)
         {
-            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().cart)
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().tvo)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero, ModContent.ProjectileType<LumChunk>(), 0, 0, Main.myPlayer);
+                }
+            }
+            else if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().cart)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {

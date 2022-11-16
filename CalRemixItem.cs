@@ -128,6 +128,10 @@ namespace CalRemix
                     Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().rogueclone = true;
                     if (p.WithinBounds(Main.maxProjectiles))
                         Main.projectile[p].originalDamage = (int)(damage * 0.33f);
+                    if (modPlayer.tvo && calPlayer.StealthStrikeAvailable())
+                    {
+                        Main.projectile[p].GetGlobalProjectile<CalamityMod.Projectiles.CalamityGlobalProjectile>().stealthStrike = true;
+                    }
                 }
             }
             if (modPlayer.godfather)
