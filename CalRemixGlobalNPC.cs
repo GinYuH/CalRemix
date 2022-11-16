@@ -85,7 +85,7 @@ namespace CalRemix
                 npc.active = false;
                 return false;
             }
-            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().godfather)
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().godfather && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 if ((Slimes.Contains(npc.type) || BossSlimes.Contains(npc.type)))
                 {
