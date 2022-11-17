@@ -22,6 +22,10 @@ using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Materials;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using CalamityMod.Items.TreasureBags;
+using CalRemix.Items.Materials;
 
 namespace CalRemix
 {
@@ -43,10 +47,19 @@ namespace CalRemix
             {
                 item.SetNameOverride("Conquest Fragment");
                 item.rare = ItemRarityID.Orange;
+                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/PearlShard");
             }
             else if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
                 item.SetNameOverride("Phantomic Soul Artifact");
+            }
+            else if (item.type == ModContent.ItemType<Nadir>())
+            {
+                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Nadir");
+            }
+            else if (item.type == ModContent.ItemType<Violence>())
+            {
+                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Violence");
             }
 
         }
@@ -62,14 +75,6 @@ namespace CalRemix
                 var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
                 tooltips.Add(line);
             }
-        }
-        public override bool CanUseItem(Item item, Player player)
-        {
-            if (item.type == ModContent.ItemType<ExoticPheromones>())
-            {
-                return player.ZoneDesert && !NPC.AnyNPCs(ModContent.NPCType<Bumblefuck>()) && !BossRushEvent.BossRushActive;
-            }
-            return true;
         }
         public override void UpdateInventory(Item item, Player player)
         {
@@ -208,6 +213,10 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
+            if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
+            {
+                item.active = false;
+            }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -215,6 +224,16 @@ namespace CalRemix
             {
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
+            }
+            else if (item.type == ModContent.ItemType<DesertScourgeBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
+                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
+            }
+            else if (item.type == ModContent.ItemType<DragonfollyBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
+                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<EffulgentFeather>(), 1, 30, 35));
             }
         }
 

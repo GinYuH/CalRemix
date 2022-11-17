@@ -26,6 +26,12 @@ using CalRemix.Projectiles;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
+using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.Events;
+using System;
+using Terraria.GameContent;
+using System.IO;
 
 namespace CalRemix
 {
@@ -33,6 +39,9 @@ namespace CalRemix
     {
         bool SlimeBoost = false;
         public int bossKillcount = 0;
+        private bool useDefenseFrames;
+        private int frameUsed;
+
         public override bool InstancePerEntity
         {
             get
@@ -289,20 +298,31 @@ namespace CalRemix
                 npc.damage = 60;
                 npc.lifeMax = 3375;
             }
+            else if (npc.type == ModContent.NPCType<SlimeGodCore>())
+            {
+                TextureAssets.Npc[npc.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/SlimeGod/SlimeGodCore");
+                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = ModContent.Request<Texture2D>("CalRemix/Resprites/SlimeGod/SlimeGodCore_Head_Boss");
+            }
+            else if (npc.type == ModContent.NPCType<Eidolist>())
+            {
+                TextureAssets.Npc[npc.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Eidolist");
+            }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
                 npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
-            }
-            else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
-            {
-                npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
+                //npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
             }
             else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
+                //npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
+            }
+            else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
+            {
+                npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
             }
             else if (npc.type == ModContent.NPCType<MirageJelly>())
             {
@@ -328,11 +348,11 @@ namespace CalRemix
             }
             if (npc.boss && bossKillcount > 5)
             {
-                npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);
+                //npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);
             }
             else if (!npc.SpawnedFromStatue && npc.value > 0 && NPC.killCount[npc.type] >= 25)
             {
-                npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
+                //npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
             }
         }
         public override void OnKill(NPC npc)
@@ -364,6 +384,189 @@ namespace CalRemix
         public override void SaveData(NPC npc, TagCompound tag)
         {
             tag["bossKillcount"] = bossKillcount;
+        }
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            binaryWriter.Write(useDefenseFrames);
+            binaryWriter.Write(frameUsed);
+           // binaryWriter.Write(DeathAnimationTimer);
+            for (int i = 0; i < 4; i++)
+            {
+                binaryWriter.Write(npc.Calamity().newAI[i]);
+            }
+        }
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            useDefenseFrames = binaryReader.ReadBoolean();
+            frameUsed = binaryReader.ReadInt32();
+          //  DeathAnimationTimer = binaryReader.ReadInt32();
+            for (int i = 0; i < 4; i++)
+            {
+                npc.Calamity().newAI[i] = binaryReader.ReadSingle();
+            }
+        }
+        public override void FindFrame(NPC npc, int frameHeight)
+        {
+            if (!Main.dayTime)
+            {
+                if (npc.ai[0] == 2f && npc.ai[0] == 5f)
+                {
+                    if (!useDefenseFrames)
+                    {
+                        
+                        useDefenseFrames = true;
+                    }
+                }
+                else
+                {
+                    if (useDefenseFrames)
+                    {
+                        useDefenseFrames = false;
+                    }
+                    if (frameUsed > 3)
+                    {
+                        frameUsed = 0;
+                    }
+                }
+            }
+        }
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
+            {
+                int DeathAnimationTimer = ModContent.GetInstance<Providence>().DeathAnimationTimer;
+                float lerpValue = Utils.GetLerpValue(0f, 45f, DeathAnimationTimer, clamped: true);
+                int num = (int)MathHelper.Lerp(1f, 30f, lerpValue);
+                for (int i = 0; i < num; i++)
+                {
+                    float num2 = MathF.PI * 2f * (float)i * 2f / (float)num;
+                    float num3 = (float)Math.Sin(num2 * 6f + Main.GlobalTimeWrappedHourly * MathF.PI);
+                    num3 *= (float)Math.Pow(lerpValue, 3.0) * 50f;
+                    Vector2 drawOffset2 = num2.ToRotationVector2() * num3;
+                    Color value = Color.White * (MathHelper.Lerp(0.4f, 0.8f, lerpValue) / (float)num * 1.5f);
+                    value.A = 0;
+                    value = Color.Lerp(Color.White, value, lerpValue);
+                    drawProvidenceInstance(drawOffset2, (num == 1) ? null : new Color?(value));
+                }
+                void drawProvidenceInstance(Vector2 drawOffset, Color? colorOverride)
+                {
+                    bool bossRushActive = BossRushEvent.BossRushActive;
+                    bool flag = !Main.dayTime || bossRushActive;
+                    string text = "CalRemix/Resprites/Providence/";
+                    string text2 = text + "Glowmasks/";
+                    string text3 = text + "Providence";
+                    string text4 = text2 + "ProvidenceGlow";
+                    string text5 = text2 + "ProvidenceGlow2";
+                    if (npc.ai[0] == 2f || npc.ai[0] == 5f)
+                    {
+                        if (useDefenseFrames)
+                        {
+                            text3 = text + "ProvidenceDefense";
+                            text4 = text2 + "ProvidenceDefenseGlow";
+                            text5 = text2 + "ProvidenceDefenseGlow2";
+                        }
+                        else
+                        {
+                            text3 = text + "ProvidenceDefenseAlt";
+                            text4 = text2 + "ProvidenceDefenseAltGlow";
+                            text5 = text2 + "ProvidenceDefenseAltGlow2";
+                        }
+                    }
+                    else if (frameUsed == 0)
+                    {
+                        text4 = text2 + "ProvidenceGlow";
+                        text5 = text2 + "ProvidenceGlow2";
+                    }
+                    else if (frameUsed == 1)
+                    {
+                        text3 = text + "ProvidenceAlt";
+                        text4 = text2 + "ProvidenceAltGlow";
+                        text5 = text2 + "ProvidenceAltGlow2";
+                    }
+                    else if (frameUsed == 2)
+                    {
+                        text3 = text + "ProvidenceAttack";
+                        text4 = text2 + "ProvidenceAttackGlow";
+                        text5 = text2 + "ProvidenceAttackGlow2";
+                    }
+                    else
+                    {
+                        text3 = text + "ProvidenceAttackAlt";
+                        text4 = text2 + "ProvidenceAttackAltGlow";
+                        text5 = text2 + "ProvidenceAttackAltGlow2";
+                    }
+                    if (flag)
+                    {
+                        text3 += "Night";
+                        text4 += "Night";
+                        text5 += "Night";
+                    }
+                    Texture2D value2 = ModContent.Request<Texture2D>(text3).Value;
+                    Texture2D value3 = ModContent.Request<Texture2D>(text4).Value;
+                    Texture2D value4 = ModContent.Request<Texture2D>(text5).Value;
+                    SpriteEffects effects = SpriteEffects.None;
+                    if (npc.spriteDirection == 1)
+                    {
+                        effects = SpriteEffects.FlipHorizontally;
+                    }
+
+                    Vector2 vector = new Vector2(TextureAssets.Npc[npc.type].Value.Width / 2, TextureAssets.Npc[npc.type].Value.Height / Main.npcFrameCount[npc.type] / 2);
+                    Color white = Color.White;
+                    float amount = 0.5f;
+                    int num4 = 5;
+                    Vector2 position2 = npc.Center - screenPos;
+                    position2 -= new Vector2(value2.Width, value2.Height / Main.npcFrameCount[npc.type]) * npc.scale / 2f;
+                    position2 += vector * npc.scale + new Vector2(0f, npc.gfxOffY) + drawOffset;
+                    spriteBatch.Draw(value2, position2, npc.frame, colorOverride ?? npc.GetAlpha(drawColor), npc.rotation, vector, npc.scale, effects, 0f);
+                    Color color = Color.Lerp(Color.White, flag ? Color.Purple : Color.Yellow, 0.5f) * npc.Opacity;
+                    Color color2 = Color.Lerp(Color.White, flag ? Color.LightGreen : Color.Violet, 0.5f) * npc.Opacity;
+                    if (colorOverride.HasValue)
+                    {
+                        color = colorOverride.Value;
+                        color2 = colorOverride.Value;
+                    }
+                    if (CalamityConfig.Instance.Afterimages)
+                    {
+                        for (int k = 1; k < num4; k++)
+                        {
+                            Color value6 = color;
+                            value6 = Color.Lerp(value6, white, amount);
+                            value6 = npc.GetAlpha(value6);
+                            value6 *= (float)(num4 - k) / 15f;
+                            if (colorOverride.HasValue)
+                            {
+                                value6 = colorOverride.Value;
+                            }
+
+                            Vector2 position3 = npc.oldPos[k] + new Vector2(npc.width, npc.height) / 2f - screenPos;
+                            position3 -= new Vector2(value3.Width, value3.Height / Main.npcFrameCount[npc.type]) * npc.scale / 2f;
+                            position3 += vector * npc.scale + new Vector2(0f, npc.gfxOffY) + drawOffset;
+                            spriteBatch.Draw(value3, position3, npc.frame, value6, npc.rotation, vector, npc.scale, effects, 0f);
+                            Color value7 = color2;
+                            value7 = Color.Lerp(value7, white, amount);
+                            value7 = npc.GetAlpha(value7);
+                            value7 *= (float)(num4 - k) / 15f;
+                            if (colorOverride.HasValue)
+                            {
+                                value7 = colorOverride.Value;
+                            }
+
+                            spriteBatch.Draw(value4, position3, npc.frame, value7, npc.rotation, vector, npc.scale, effects, 0f);
+                        }
+                    }
+                    spriteBatch.Draw(value3, position2, npc.frame, color, npc.rotation, vector, npc.scale, effects, 0f);
+                    spriteBatch.Draw(value4, position2, npc.frame, color2, npc.rotation, vector, npc.scale, effects, 0f);
+                }
+            }
         }
         public override bool PreKill(NPC npc)
         {
