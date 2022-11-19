@@ -35,6 +35,10 @@ namespace CalRemix.Projectiles
             Player player = Main.player[Projectile.owner];
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
 
+            if (modPlayer.tvohide)
+            {
+                Projectile.active = false;
+            }
             if (!modPlayer.brimPortal)
             {
                 Projectile.active = false;
@@ -61,7 +65,9 @@ namespace CalRemix.Projectiles
             for (int k = 0; k < Main.projectile.Length; k++)
             {
                 var proj = Main.projectile[k];
-                if (proj.active && proj.owner == Projectile.owner && proj.arrow && !proj.GetGlobalProjectile<CalRemixProjectile>().nihilicArrow && proj.friendly && Vector2.Distance(proj.Center, Projectile.Center) < 65)
+                bool tvo = Main.player[Projectile.owner].GetModPlayer<CalRemixPlayer>().tvo;
+                bool tvoar = tvo ? proj.friendly : proj.arrow;
+                if (proj.active && proj.owner == Projectile.owner && tvoar && !proj.GetGlobalProjectile<CalRemixProjectile>().nihilicArrow && proj.friendly && Vector2.Distance(proj.Center, Projectile.Center) < 65)
                 {
                     Main.projectile[k].damage = (int)(proj.damage * 3f);
                     proj.extraUpdates += 1;

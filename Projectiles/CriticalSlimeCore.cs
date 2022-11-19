@@ -51,53 +51,67 @@ namespace CalRemix.Projectiles
             {
                 MAXDMG = Projectile.damage * 3;
             }
+            Projectile.spriteDirection = 1;
             Player player = Main.player[Projectile.owner];
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             bool flag64 = Projectile.type == ModContent.ProjectileType<CriticalSlimeCore>();
             if (flag64)
             {
+                if (modPlayer.tvohide)
+                {
+                    Projectile.active = false;
+                }
                 if (modPlayer.godfather)
                 {
                     Projectile.timeLeft = 2;
                 }
             }
-            Projectile.localAI[0]++;
-            if (Projectile.localAI[0] > 120)
+            if (player.HasMinionAttackTargetNPC)
             {
-                if (Projectile.localAI[0] % 600 == 0) // Deathray
+                Projectile.localAI[0]++;
+                if (Projectile.localAI[0] > 120)
                 {
-                    SoundEngine.PlaySound(SoundID.Zombie102 with { Volume = SoundID.Zombie102.Volume - 0.4f}, Projectile.position);
-                    for (int i = 0; i < 5; i++)
+                    if (Projectile.localAI[0] % 600 == 0) // Deathray
                     {
-                        Vector2 direction = new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30));
-                        direction.Normalize();
-                        direction = direction.RotatedBy(MathHelper.ToRadians(30 * -laserdirection));
-                        float angularChange = (MathHelper.Pi / 180f) * 1.1f * laserdirection;
+                        SoundEngine.PlaySound(SoundID.Zombie102 with { Volume = SoundID.Zombie102.Volume - 0.4f }, Projectile.position);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Vector2 direction = new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30));
+                            direction.Normalize();
+                            direction = direction.RotatedBy(MathHelper.ToRadians(30 * -laserdirection));
+                            float angularChange = (MathHelper.Pi / 180f) * 1.1f * laserdirection;
+                            if (Main.myPlayer == Projectile.owner)
+                            {
+                                int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, direction, ModContent.ProjectileType<SlimeRay>(), Projectile.damage, 0f, Projectile.owner, angularChange, (float)Projectile.whoAmI);
+                                if (Main.projectile.IndexInRange(p))
+                                    Main.projectile[p].originalDamage = Projectile.originalDamage;
+                            }
+                            laserdirection *= -1;
+                        }
+                    }
+                    else if (Projectile.localAI[0] % 300 == 0) // Pulse
+                    {
+                        SoundEngine.PlaySound(SoundID.Item105, Projectile.position);
+                        ring2 = new BloomRing(Projectile.Center, Projectile.velocity, Color.Purple * 0.4f, 1.5f, 40);
+                        GeneralParticleHandler.SpawnParticle(ring2);
+                    }
+                    else if (Projectile.localAI[0] % 60 == 0) // Bolts
+                    {
+                        SoundEngine.PlaySound(SoundID.Item105 with { Volume = SoundID.Zombie105.Volume - 0.4f }, Projectile.position);
                         if (Main.myPlayer == Projectile.owner)
                         {
-                            int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, direction, ModContent.ProjectileType<SlimeRay>(), Projectile.damage, 0f, Projectile.owner, angularChange, (float)Projectile.whoAmI);
+                            int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CosmicBlast>(), Projectile.damage, 0f, Projectile.owner);
                             if (Main.projectile.IndexInRange(p))
                                 Main.projectile[p].originalDamage = Projectile.originalDamage;
                         }
-                        laserdirection *= -1;
                     }
                 }
-                else if (Projectile.localAI[0] % 300 == 0) // Pulse
-                {
-                    SoundEngine.PlaySound(SoundID.Item105, Projectile.position);
-                    ring2 = new BloomRing(Projectile.Center, Projectile.velocity, Color.Purple * 0.4f, 1.5f, 40);
-                    GeneralParticleHandler.SpawnParticle(ring2);
-                }
-                else if (Projectile.localAI[0] % 60 == 0) // Bolts
-                {
-                    SoundEngine.PlaySound(SoundID.Item105 with { Volume = SoundID.Zombie105.Volume - 0.4f }, Projectile.position);
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CosmicBlast>(), Projectile.damage, 0f, Projectile.owner);
-                        if (Main.projectile.IndexInRange(p))
-                            Main.projectile[p].originalDamage = Projectile.originalDamage;
-                    }
-                }
+            }
+            else
+            {
+                CalamityUtils.FloatingPetAI(Projectile, false, 0);
+                Projectile.localAI[0] = 0;
+                Projectile.localAI[1] = 0;
             }
             if (ring2 != null)
             {
@@ -157,7 +171,8 @@ namespace CalRemix.Projectiles
                     Projectile.damage += (int)(target.lifeMax * 0.05f);
                     target.active = false;
                 }
-            }
+                }
+            Projectile.spriteDirection = 1;
         }
     }
 }

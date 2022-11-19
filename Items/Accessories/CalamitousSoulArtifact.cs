@@ -1,13 +1,8 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions.Alcohol;
-using CalamityMod.Tiles.Furniture.CraftingStations;
+﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Rarities;
 using CalamityMod.Items;
-using CalamityMod;
-using CalRemix.Projectiles;
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -19,6 +14,8 @@ namespace CalRemix.Items.Accessories
 {
     public class CalamitousSoulArtifact : ModItem
     {
+        internal const float MaxBonus = 7f;
+        internal const float MaxDistance = 640f;
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
@@ -46,14 +43,59 @@ namespace CalRemix.Items.Accessories
             player.GetDamage<ThrowingDamageClass>() += 0.45f;
             player.maxMinions += 8;
             player.manaCost -= 0.75f;
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            player.GetModPlayer<CalRemixPlayer>().cart = true;
+            float bonus = CalculateBonus(player);
+            player.GetDamage<GenericDamageClass>() += bonus;
+        }
+        private static float CalculateBonus(Player player)
+        {
+            float bonus = 0f;
+
+            int closestNPC = -1;
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                Projectile projectile = Main.projectile[i];
-                if (player.whoAmI == Main.myPlayer && projectile.owner == player.whoAmI && projectile.minion && projectile.minionSlots > 1)
+                NPC nPC = Main.npc[i];
+                if (nPC.active && !nPC.friendly && (nPC.damage > 0 || nPC.boss) && !nPC.dontTakeDamage)
                 {
-                    player.maxMinions++;
+                    closestNPC = i;
+                    break;
                 }
             }
+            float distance = -1f;
+            for (int j = 0; j < Main.maxNPCs; j++)
+            {
+                NPC nPC = Main.npc[j];
+                if (nPC.active && !nPC.friendly && (nPC.damage > 0 || nPC.boss) && !nPC.dontTakeDamage)
+                {
+                    float distance2 = Math.Abs(nPC.position.X + (float)(nPC.width / 2) - (player.position.X + (float)(player.width / 2))) + Math.Abs(nPC.position.Y + (float)(nPC.height / 2) - (player.position.Y + (float)(player.height / 2)));
+                    if (distance == -1f || distance2 < distance)
+                    {
+                        distance = distance2;
+                        closestNPC = j;
+                    }
+                }
+            }
+
+            if (closestNPC != -1)
+            {
+                NPC actualClosestNPC = Main.npc[closestNPC];
+
+                float generousHitboxWidth = Math.Max(actualClosestNPC.Hitbox.Width / 2f, actualClosestNPC.Hitbox.Height / 2f);
+                float hitboxEdgeDist = actualClosestNPC.Distance(player.Center) - generousHitboxWidth;
+
+                if (hitboxEdgeDist < 0)
+                    hitboxEdgeDist = 0;
+
+                if (hitboxEdgeDist < MaxDistance)
+                {
+                    bonus = MathHelper.Lerp(0f, MaxBonus, 1f - (hitboxEdgeDist / MaxDistance));
+
+                    if (bonus > MaxBonus)
+                        bonus = MaxBonus;
+                }
+            }
+
+            return bonus;
         }
         public override void AddRecipes()
         {

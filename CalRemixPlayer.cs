@@ -14,6 +14,7 @@ using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Summon;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
 using CalRemix.Buffs;
@@ -29,8 +30,8 @@ namespace CalRemix
 	{
 		public bool earthEnchant;
 		public bool amongusEnchant;
-        public float defiantBoost = 0;
-        public bool brimPortal;
+		public float defiantBoost = 0;
+		public bool brimPortal;
 		public bool arcanumHands;
 		public bool marnite;
 		public bool roguebox;
@@ -52,12 +53,25 @@ namespace CalRemix
 		public bool crystalconflict;
 		public bool moonFist;
 		public bool cursed;
+		public bool cart;
+		public bool tvohide;
 		public Particle ring;
 		public Particle ring2;
 		public Particle aura;
-        public bool ZoneLife;
+		public bool ZoneLife;
 		public float cosdam = 0;
 
+		public int[] MinionList =
+		{
+			ModContent.ProjectileType<PlantSummon>(),
+			ModContent.ProjectileType<AtlasSoldier>(),
+			ModContent.ProjectileType<CosmilampMinion>(),
+			ModContent.ProjectileType<FieryDraconid>(),
+			ModContent.ProjectileType<SepulcherMinion>(),
+			ModContent.ProjectileType<CosmicEnergySpiral>(),
+			ModContent.ProjectileType<EndoCooperBody>(),
+			ModContent.ProjectileType<MagicUmbrella>()
+		};
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
@@ -85,6 +99,17 @@ namespace CalRemix
 		public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+			if (cart)
+			{
+				for (int i = 0; i < MinionList.Length; i++)
+				{
+					if (Main.LocalPlayer.ownedProjectileCounts[MinionList[i]] > 0)
+					{
+						Main.LocalPlayer.maxMinions += Player.ownedProjectileCounts[MinionList[i]];
+
+					}
+				}
+			}
 			if (cosdam > 0.3f)
             {
 				cosdam = 0.3f;
@@ -102,7 +127,8 @@ namespace CalRemix
 				calplayer.externalAbyssLight = 10;
 				Main.LocalPlayer.breath = Main.LocalPlayer.breathMax;
             }
-			if (ring2 != null)
+            #region Eclipse Aura
+            if (ring2 != null)
 			{
 				ring2.Position = Player.Center;
 				ring2.Velocity = Player.velocity;
@@ -111,8 +137,9 @@ namespace CalRemix
 			}
 			if (eclipseaura != -1)
             {
+				Color outerring = tvo ? Color.LightPink : Color.Yellow;
 				aura = new StrongBloom(Player.Center, Player.velocity, Color.Purple * 0.6f, 1f + Main.rand.NextFloat(0f, 1.5f) * 1.5f, 40);
-				ring = new BloomRing(Player.Center, Player.velocity, Color.Yellow * 0.4f, 1.5f, 40);
+				ring = new BloomRing(Player.Center, Player.velocity, outerring * 0.4f, 1.5f, 40);
 				if (ring != null)
 				{
 					ring.Position = Player.Center;
@@ -130,7 +157,8 @@ namespace CalRemix
 					NPC target = Main.npc[i];
 					if (Player.Center.Distance(target.Center) < 100 && !target.friendly)
                     {
-						target.StrikeNPC(200, 0, 0);
+						int dam = tvo ? 300 : 200;
+						target.StrikeNPC(dam, 0, 0);
                     }
                 }
 				if (eclipseaura % 10 == 0)
@@ -153,9 +181,11 @@ namespace CalRemix
 			}
 			if (eclipseaura == 0)
 			{
-				Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(20));
+				int duration = tvo ? 30 : 20;
+				Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(duration));
 			}
-			if (halEffigy)
+            #endregion
+            if (halEffigy)
 			{
 				Player.moveSpeed += 0.25f;
 				Player.GetCritChance<GenericDamageClass>() += 25;
@@ -180,7 +210,23 @@ namespace CalRemix
 					}
 				}
 			}
-			if (tvo) //Verboten one
+			if (tvo && calplayer.adrenalineModeActive)
+			{
+				Main.LocalPlayer.GetDamage<GenericDamageClass>() *= 3;
+			}
+			if (tvo)
+			{
+				for (int i = 0; i < Main.maxNPCs; i++)
+				{
+					NPC target = Main.npc[i];
+					if (!target.active || !target.Hitbox.Intersects(Utils.CenteredRectangle(Main.MouseWorld, new Vector2(35f, 62f))) || target.immortal || target.dontTakeDamage || target.townNPC || NPCID.Sets.ActsLikeTownNPC[target.type] || NPCID.Sets.CountsAsCritter[target.type])
+						continue;
+
+					target.AddBuff(ModContent.BuffType<DemonFlames>(), 1200);
+				}
+			}
+            #region stealth cuts
+            if (tvo) //Verboten one
 			{
 				StealthCut(0.995f);
 			}
@@ -200,7 +246,8 @@ namespace CalRemix
             {
 				StealthCut(0.05f);
             }
-		}
+            #endregion
+        }
         public override void ResetEffects()
 		{
 			earthEnchant = false;
@@ -226,6 +273,8 @@ namespace CalRemix
 			moonFist = false;
 			cursed = false;
 			tvo = false;
+			cart = false;
+			tvohide = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 		}
@@ -277,7 +326,7 @@ namespace CalRemix
                 Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
 				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
             }
-			if (moonFist && item.DamageType == DamageClass.Melee); 
+			if (moonFist && item.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
 				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				

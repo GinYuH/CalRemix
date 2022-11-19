@@ -22,6 +22,10 @@ using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Materials;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using CalamityMod.Items.TreasureBags;
+using CalRemix.Items.Materials;
 
 namespace CalRemix
 {
@@ -34,7 +38,7 @@ namespace CalRemix
                 item.damage = item.damage / 4;
                 item.rare = ItemRarityID.LightRed;
             }
-            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>())
+            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>() || item.type == ModContent.ItemType<Swordsplosion>())
             {
                 item.damage = item.damage / 2;
                 item.rare = ItemRarityID.LightRed;
@@ -43,6 +47,19 @@ namespace CalRemix
             {
                 item.SetNameOverride("Conquest Fragment");
                 item.rare = ItemRarityID.Orange;
+                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/PearlShard");
+            }
+            else if (item.type == ModContent.ItemType<PhantomicArtifact>())
+            {
+                item.SetNameOverride("Phantomic Soul Artifact");
+            }
+            else if (item.type == ModContent.ItemType<Nadir>())
+            {
+                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Nadir");
+            }
+            else if (item.type == ModContent.ItemType<Violence>())
+            {
+                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Violence");
             }
 
         }
@@ -53,14 +70,11 @@ namespace CalRemix
                 var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
                 tooltips.Add(line);
             }
-        }
-        public override bool CanUseItem(Item item, Player player)
-        {
-            if (item.type == ModContent.ItemType<ExoticPheromones>())
+            if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
-                return player.ZoneDesert && !NPC.AnyNPCs(ModContent.NPCType<Bumblefuck>()) && !BossRushEvent.BossRushActive;
+                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
+                tooltips.Add(line);
             }
-            return true;
         }
         public override void UpdateInventory(Item item, Player player)
         {
@@ -119,6 +133,10 @@ namespace CalRemix
                     Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().rogueclone = true;
                     if (p.WithinBounds(Main.maxProjectiles))
                         Main.projectile[p].originalDamage = (int)(damage * 0.33f);
+                    if (modPlayer.tvo && calPlayer.StealthStrikeAvailable())
+                    {
+                        Main.projectile[p].GetGlobalProjectile<CalamityMod.Projectiles.CalamityGlobalProjectile>().stealthStrike = true;
+                    }
                 }
             }
             if (modPlayer.godfather)
@@ -195,6 +213,10 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
+            if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
+            {
+                item.active = false;
+            }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -202,6 +224,16 @@ namespace CalRemix
             {
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
+            }
+            else if (item.type == ModContent.ItemType<DesertScourgeBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
+                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
+            }
+            else if (item.type == ModContent.ItemType<DragonfollyBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
+                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<EffulgentFeather>(), 1, 30, 35));
             }
         }
 
@@ -220,7 +252,7 @@ namespace CalRemix
                     calplayer.regenator = true;
                 }
             }
-            if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>())
+            if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.regenator = true;
                 calplayer.ursaSergeant = true;
@@ -231,7 +263,7 @@ namespace CalRemix
                 calplayer.aquaticHeart = true;
                 calplayer.roverDrive = true;
             }
-            if (item.type == ModContent.ItemType<AmbrosialAmpoule>())
+            if (item.type == ModContent.ItemType<AmbrosialAmpoule>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.beeResist = true;
 
@@ -262,7 +294,7 @@ namespace CalRemix
                     player.pickSpeed -= 0.2f;
                 }
             }
-            if (item.type == ModContent.ItemType<AbyssalDivingSuit>() || item.type == ModContent.ItemType<TheGodfather>())
+            if (item.type == ModContent.ItemType<AbyssalDivingSuit>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.lumenousAmulet = true;
                 calplayer.abyssalAmulet = true;
@@ -287,7 +319,7 @@ namespace CalRemix
                 player.npcTypeNoAggro[NPCID.Crab] = true;
                 player.npcTypeNoAggro[NPCID.Squid] = true;
             }
-            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>() || item.type == ModContent.ItemType<TheGodfather>())
+            if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
                 calplayer.giantPearl = true;
                 if (!hideVisual)

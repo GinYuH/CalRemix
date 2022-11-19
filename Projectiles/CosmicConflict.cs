@@ -49,6 +49,10 @@ namespace CalRemix.Projectiles
             bool flag64 = Projectile.type == ModContent.ProjectileType<CosmicConflict>();
             if (flag64)
             {
+                if (modPlayer.tvohide)
+                {
+                    Projectile.active = false;
+                }
                 if (player.dead)
                 {
                     modPlayer.crystalconflict = false;
@@ -74,6 +78,7 @@ namespace CalRemix.Projectiles
                         int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CosmicBlast>(), (int)(Projectile.damage * 0.2f), 0f, Projectile.owner);
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = (int)(Projectile.damage * 0.2f);
+                        Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().uniproj = true;
                         Projectile.localAI[1] = 0;
                     }
                 }
@@ -150,6 +155,7 @@ namespace CalRemix.Projectiles
                             {
                                 Main.projectile[p].originalDamage = (int)(Projectile.damage * 0.05f);
                             }
+                            Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().uniproj = true;
                             Projectile.localAI[1] = 0;
                         }
                     }
@@ -178,6 +184,8 @@ namespace CalRemix.Projectiles
                                 Main.projectile[p2].originalDamage = Projectile.originalDamage;
                             Main.projectile[p].DamageType = DamageClass.Summon;
                             Main.projectile[p2].DamageType = DamageClass.Summon;
+                            Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().uniproj = true;
+                            Main.projectile[p2].GetGlobalProjectile<CalRemixProjectile>().uniproj = true;
                         }
                     }
                     if (Projectile.localAI[1] % 60 == 0)
@@ -250,6 +258,7 @@ namespace CalRemix.Projectiles
                             Main.projectile[p].originalDamage = Projectile.originalDamage;
                         Main.projectile[p].DamageType = DamageClass.Summon;
                         Main.projectile[p].tileCollide = false;
+                        Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().uniproj = true;
                         Projectile.netUpdate = true;
                     }
                 }
