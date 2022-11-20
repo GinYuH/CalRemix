@@ -16,7 +16,7 @@ namespace CalRemix.Items
             SacrificeTotal = 1;
             DisplayName.SetDefault("The Derellect");
             Tooltip.SetDefault("A twisted mother computer created with lab-grown souls.\n" +
-            "It showed much more promise than it's predecessors- I do not know why it was abandoned so soon.");
+            "It showed much more promise than its predecessors. I am unsure why it was abandoned so soon.");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 
