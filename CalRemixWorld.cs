@@ -25,6 +25,40 @@ namespace CalRemix
     {
         public static int lifeTiles;
         public static int ShrineTimer = -20;
+        public static bool downedDerellect = false;
+
+        public static void UpdateWorldBool()
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendData(MessageID.WorldData);
+            }
+        }
+        public override void OnWorldLoad()
+        {
+            downedDerellect = false;
+        }
+        public override void OnWorldUnload()
+        {
+            downedDerellect = false;
+        }
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag["downedDerellect"] = downedDerellect;
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            downedDerellect = tag.Get<bool>("downedDerellect");
+        }
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(downedDerellect);
+        }
+        public override void NetReceive(BinaryReader reader)
+        {
+            downedDerellect = reader.ReadBoolean();
+        }
 
         List<int> hallowlist = new List<int>
         {

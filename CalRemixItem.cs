@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.DataStructures;
@@ -13,6 +14,7 @@ using CalamityMod.Projectiles.Summon;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Buffs.Pets;
 using CalamityMod;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
@@ -26,6 +28,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalamityMod.Items.TreasureBags;
 using CalRemix.Items.Materials;
+using System.Media;
+using System.IO.Pipes;
 
 namespace CalRemix
 {
@@ -236,7 +240,16 @@ namespace CalRemix
                 //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<EffulgentFeather>(), 1, 30, 35));
             }
         }
-
+        public virtual bool? UseItem(Player player)
+        {
+            if (Main.dayTime == false && player.HeldItem.type == ItemID.MechanicalWorm && player.HasBuff(ModContent.BuffType<CalamityMod.Buffs.Pets.BloodBound>()))
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.Bosses.DerellectBoss>());
+                new SoundStyle("Terraria/Sounds/Roar");
+                return true;
+                }
+            return false;
+        }
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -18,6 +19,8 @@ using CalamityMod.Projectiles.Summon;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
 using CalRemix.Buffs;
+using CalRemix.NPCs;
+using CalRemix.NPCs.Bosses;
 using Terraria.ModLoader.IO;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
@@ -72,6 +75,14 @@ namespace CalRemix
 			ModContent.ProjectileType<EndoCooperBody>(),
 			ModContent.ProjectileType<MagicUmbrella>()
 		};
+
+		public int[] abnormalEnemyList = // immune to effects like Moon Fist's instant kill
+		{
+			ModContent.NPCType<SignalDrone>(),
+			ModContent.NPCType<DerellectPlug>(),
+			ModContent.NPCType<LifeSlime>()
+		};
+
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
@@ -329,7 +340,7 @@ namespace CalRemix
 			if (moonFist && item.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
-				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				
+				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) {				
 					if(Main.rand.NextBool(10))
 						{
 						target.active = false;
@@ -340,7 +351,7 @@ namespace CalRemix
 				{
 				Player.AddBuff(ModContent.BuffType<MoonfistBuff>(), 1000);
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 500, false);
-				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				
+				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) {				
 					if(Main.rand.NextBool(10))
 						{
 						target.active = false;
