@@ -32,6 +32,8 @@ using CalamityMod.Events;
 using System;
 using Terraria.GameContent;
 using System.IO;
+using CalamityMod.NPCs.DevourerofGods;
+using CalRemix.Items.Placeables;
 
 namespace CalRemix
 {
@@ -39,6 +41,7 @@ namespace CalRemix
     {
         bool SlimeBoost = false;
         public int bossKillcount = 0;
+        public float shadowHit = 1;
         private bool useDefenseFrames;
         private int frameUsed;
 
@@ -374,6 +377,17 @@ namespace CalRemix
             if (npc.boss)
             {
                 bossKillcount++;
+            }
+        }
+        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        {
+            if (type == NPCID.Painter)
+            {
+                if (NPC.AnyNPCs(ModContent.NPCType<DevourerofGodsHead>()) && BossRushEvent.BossRushActive)
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<TrialsEnd>());
+                    ++nextSlot;
+                }
             }
         }
         public override void LoadData(NPC npc, TagCompound tag)

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.UI.CalamitasEnchants;
+using CalamityMod.Items;
 
 namespace CalRemix
 {
@@ -33,7 +34,6 @@ namespace CalRemix
 	{
 		public bool earthEnchant;
 		public bool amongusEnchant;
-		public float defiantBoost = 0;
 		public bool brimPortal;
 		public bool arcanumHands;
 		public bool marnite;
@@ -107,7 +107,28 @@ namespace CalRemix
 
 			return true;
         }
-		public override void PostUpdateMiscEffects()
+        public override void PreUpdate()
+        {
+            SpawnPhantomHeart();
+			/*
+            if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(156))
+            {
+                amongusEnchant = true;
+            }
+            else
+            {
+                amongusEnchant = false;
+            }
+            if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(157))
+            {
+                earthEnchant = true;
+            }
+            else
+            {
+                earthEnchant = false;
+            }*/
+        }
+        public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)
@@ -261,9 +282,9 @@ namespace CalRemix
         }
         public override void ResetEffects()
 		{
-			earthEnchant = false;
+
+            earthEnchant = false;
 			amongusEnchant = false;
-			defiantBoost = 0;
 			brimPortal = false;
 			arcanumHands = false;
 			marnite = false;
@@ -300,44 +321,19 @@ namespace CalRemix
 				rewardPool.Add(ModContent.ItemType<Elderberry>());
 			}
         }
-		public override void PreUpdate()
-		{
-			SpawnPhantomHeart();
-        }
-		public void SpawnPhantomHeart()
-		{
-            if (Main.rand.NextBool(6000) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && !Player.GetModPlayer<CalamityPlayer>().pHeart)
-            {
-                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
-            }
-            else if (Main.rand.NextBool(10800) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && Player.GetModPlayer<CalamityPlayer>().pHeart)
-            {
-                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
-            }
-        }
-		public void StealthCut(float amt)
-		{
-			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
-			int sstealth = (int)(calplayer.rogueStealthMax * amt);
-			if (calplayer.rogueStealth == 0)
-			{
-				calplayer.rogueStealth = sstealth;
-			}
-		}
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-            if (earthEnchant && defiantBoost < 0.075)
-            {
-				defiantBoost += 0.005f;
-            }
 			if (amongusEnchant && crit)
 			{
-				damage = (int)((float)damage * 2.5f);
-				CombatText.NewText(Player.getRect(), Color.Red, Main.LocalPlayer.statLife * 7 / 11);
-                Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
-				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damage/7);
+                Main.LocalPlayer.statLife -= damage / 7;
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+                damage = (int)((float)damage * 2.5f);
             }
-			if (moonFist && item.DamageType == DamageClass.Melee)
+            if (earthEnchant)
+            {
+            }
+            if (moonFist && item.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
 				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) {				
@@ -362,16 +358,12 @@ namespace CalRemix
 
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
-            if (earthEnchant && defiantBoost < 0.075)
-            {
-                defiantBoost += 0.005f;
-            }
             if (amongusEnchant && crit)
             {
-                damage = (int)((float)damage * 2.5f);
-                CombatText.NewText(Player.getRect(), Color.Red, Main.LocalPlayer.statLife * 7 / 11);
-                Player.statLife -= Main.LocalPlayer.statLife * 7 / 11;
+                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damage / 7);
+                Main.LocalPlayer.statLife -= damage / 7;
                 SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+                damage = (int)((float)damage * 2.5f);
             }
 			if (moonFist && proj.DamageType == DamageClass.Melee)
 			{
@@ -410,5 +402,25 @@ namespace CalRemix
 					calplayer.projectileDamageReduction += 1;
 			}
 		}
-	}
+        public void SpawnPhantomHeart()
+        {
+            if (Main.rand.NextBool(6000) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && !Player.GetModPlayer<CalamityPlayer>().pHeart)
+            {
+                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
+            }
+            else if (Main.rand.NextBool(10800) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && Player.GetModPlayer<CalamityPlayer>().pHeart)
+            {
+                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
+            }
+        }
+        public void StealthCut(float amt)
+        {
+            CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+            int sstealth = (int)(calplayer.rogueStealthMax * amt);
+            if (calplayer.rogueStealth == 0)
+            {
+                calplayer.rogueStealth = sstealth;
+            }
+        }
+    }
 }

@@ -14,22 +14,16 @@ using CalamityMod.Projectiles.Summon;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Buffs.Pets;
 using CalamityMod;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Events;
-using CalamityMod.NPCs.Bumblebirb;
-using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Materials;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalamityMod.Items.TreasureBags;
 using CalRemix.Items.Materials;
-using System.Media;
-using System.IO.Pipes;
 
 namespace CalRemix
 {
@@ -85,6 +79,10 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
             {
                 item.stack = 1;
+            }
+            if (player.GetModPlayer<CalRemixPlayer>().amongusEnchant)
+            {
+                item.crit /= 3;
             }
         }
        
