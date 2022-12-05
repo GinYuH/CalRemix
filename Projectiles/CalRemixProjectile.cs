@@ -1,8 +1,11 @@
 ﻿using Terraria.ModLoader;
 using CalamityMod;
 using Terraria;
+using Terraria.DataStructures; 
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles;
+using CalRemix.Projectiles.WulfrumExcavator;
+using CalRemix.NPCs.Bosses;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Projectiles.Magic;
@@ -18,6 +21,7 @@ using CalamityMod.Projectiles.Melee.Spears;
 using Terraria.GameContent;
 using System;
 using Terraria.Graphics.Shaders;
+using System.IO;
 
 namespace CalRemix
 {
@@ -27,10 +31,13 @@ namespace CalRemix
 		public bool rogueclone = false;
 		public bool tvoproj = false;
 		public bool uniproj = false;
+        public bool hyperCharged = false;
 		public int bladetimer = 0;
-
         private int frameX;
         private int frameY;
+        NPC exc;
+
+
         private int CurrentFrame
         {
             get
@@ -343,6 +350,23 @@ namespace CalRemix
                 }
             }
         }
+
+
+        public override void OnSpawn(Projectile projectile, IEntitySource source)
+        {
+            exc = Main.npc[1];
+            if (projectile.type == ModContent.ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfrumExcavatorHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile
+            {
+                hyperCharged = true;
+            }
+        }
+
+        public override void OnHitPlayer(Projectile projectile, Player target, int damage, bool crit)
+        {
+            if (hyperCharged)
+                target.AddBuff(ModContent.BuffType<ExoFreeze>(), 50);
+        }
+
         internal float PrimitiveWidthFunction(float completionRatio)
         {
             float num = MathHelper.SmoothStep(0f, 1f, Utils.GetLerpValue(0.01f, 0.04f, completionRatio));
@@ -359,4 +383,3 @@ namespace CalRemix
         }
     }
 }
-

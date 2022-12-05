@@ -9,22 +9,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CalRemix.Items
 {
-    public class KnowledgeDerellect : ModItem
+    public class EnergyOrb : ModItem
     {
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            DisplayName.SetDefault("The Derellect");
-            Tooltip.SetDefault("A twisted mother computer created with lab-grown souls.\n" +
-            "It showed much more promise than its predecessors. I do not know why it was abandoned so soon.");
-            ItemID.Sets.ItemNoGravity[Item.type] = true;
+            DisplayName.SetDefault("Energy Orb");
+            Tooltip.SetDefault("This is literally useless for now");
         }
 
         public override void SetDefaults()
         {
             Item.width = 26;
             Item.height = 26;
-            Item.rare = 6;
+            Item.maxStack = 9999;
         }
     }
 }

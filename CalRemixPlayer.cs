@@ -128,6 +128,25 @@ namespace CalRemix
                 earthEnchant = false;
             }*/
         }
+
+        public override bool PreItemCheck()
+        {
+	
+
+            if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
+			{ 
+                if (NPC.CountNPCS(ModContent.NPCType<DerellectBoss>()) >= 1)
+				{
+					Player.itemTime = 0;
+					Player.itemAnimation = 0;
+					return false;
+
+				}
+  				return true;                  
+			}
+			return true;
+        }
+
         public override void PostUpdateMiscEffects()
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
@@ -343,17 +362,6 @@ namespace CalRemix
 						}		
 					}
 				}
-			if (moonFist && item.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>()); //simply uses another if statement to fix an error they don't give a shit about
-				{
-				Player.AddBuff(ModContent.BuffType<MoonfistBuff>(), 1000);
-				target.AddBuff(ModContent.BuffType<Nightwither>(), 500, false);
-				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) {				
-					if(Main.rand.NextBool(10))
-						{
-						target.active = false;
-						}		
-					}
-				}
 			}
 
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
@@ -367,13 +375,14 @@ namespace CalRemix
             }
 			if (moonFist && proj.DamageType == DamageClass.Melee)
 			{
-					target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
-					if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) {				
+				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
+				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) 
+				{				
 					if(Main.rand.NextBool(10))
 					{
 					target.active = false;
 					}		
-				}
+				}		
 			}
         }
 

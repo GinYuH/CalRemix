@@ -43,7 +43,7 @@ namespace CalRemix.NPCs.Bosses
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Derellect");
-            Main.npcFrameCount[NPC.type] = 6;
+            Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -174,6 +174,11 @@ namespace CalRemix.NPCs.Bosses
             NPC.damage = (int)(NPC.damage * NPC.GetExpertDamageMultiplier());
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             LeadingConditionRule normalOnly = new LeadingConditionRule(new Conditions.NotExpert());
@@ -185,8 +190,6 @@ namespace CalRemix.NPCs.Bosses
 
             // Lore item
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !CalRemixWorld.downedDerellect), ModContent.ItemType<KnowledgeDerellect>()));
-
-            CalRemixWorld.downedDerellect = true;
         }
 
         public override void OnKill()
@@ -197,12 +200,12 @@ namespace CalRemix.NPCs.Bosses
             {
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect1").Type, 1f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect1").Type, 2f);
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect2").Type, 1f);
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect3").Type, 1f);
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect4").Type, 1f);
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect5").Type, 1f);
-                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect6").Type, 1f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Derellect6").Type, 2f);
                 }
             }
         }

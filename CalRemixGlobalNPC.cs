@@ -6,6 +6,7 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
+using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
@@ -17,6 +18,7 @@ using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.SulphurousSea;
 using CalRemix.NPCs;
+using CalRemix.NPCs.Bosses;
 using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Materials;
@@ -44,6 +46,7 @@ namespace CalRemix
         public float shadowHit = 1;
         private bool useDefenseFrames;
         private int frameUsed;
+        NPC exc;
 
         public override bool InstancePerEntity
         {
@@ -254,8 +257,19 @@ namespace CalRemix
             {
                 npc.active = false;
             }
+            if (npc.type == ModContent.NPCType<WulfrumAmplifier>())
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC exc = Main.npc[i];
+                    exc = Main.npc[1];           
+                    if (npc.Distance(exc.Center) <= npc.ai[1] && exc.ModNPC is WulfrumExcavatorHead)
+                    {
+                        exc.ModNPC<WulfrumExcavatorHead>().PylonCharged = true;
+                    }
+                }
+            }
         }
-
         public override void PostAI(NPC npc)
         {
             if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
