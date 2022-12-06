@@ -34,6 +34,7 @@ namespace CalRemix.Projectiles
         public override void AI()
         {
             Projectile.ai[0] += 1f;
+            Projectile.rotation += 0.2f * (float)Projectile.spriteDirection;
             if (Projectile.ai[0] >= 70f && Projectile.velocity != Vector2.Zero)
             {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, Main.rand.Next(-2, 3), Main.rand.Next(-2, 3));
@@ -56,7 +57,6 @@ namespace CalRemix.Projectiles
             }
             if (Projectile.velocity == Vector2.Zero)
             {
-                Projectile.rotation += 0.2f * (float)Projectile.spriteDirection;
                 if (Projectile.ai[0] % 120 == 0)
                 {
                     for (int i = 0; i < 3; i++)
