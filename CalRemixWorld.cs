@@ -28,6 +28,8 @@ namespace CalRemix
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
 
+        public static bool guideHasExisted = false;
+
         public static void UpdateWorldBool()
         {
             if (Main.netMode == NetmodeID.Server)
@@ -39,34 +41,40 @@ namespace CalRemix
         {
             downedDerellect = false;
             downedExcavator = false;
+            guideHasExisted = false;
         }
         public override void OnWorldUnload()
         {
             downedDerellect = false;
             downedExcavator = false;
+            guideHasExisted = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
             tag["downedDerellect"] = downedDerellect;
             tag["downedExcavator"] = downedExcavator;
+            tag["guideHasExisted"] = guideHasExisted;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
+            guideHasExisted = tag.Get<bool>("guideHasExisted");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(downedDerellect);
             writer.Write(downedExcavator);
+            writer.Write(guideHasExisted);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
             downedDerellect = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
+            guideHasExisted = reader.ReadBoolean();
         }
 
         List<int> hallowlist = new List<int>
@@ -89,6 +97,7 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
+            if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
             if (ShrineTimer == 0)
             {
                 HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);

@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>..\CalamityMod\bin\Debug\net6.0\CalamityMod.dll</HintPath>
+      <HintPath>D:\D\SteamLibrary\steamapps\workshop\content\1281930\2824688072\2022.9\CalamityMod\CalamityMod.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

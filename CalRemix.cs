@@ -9,12 +9,15 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 
 namespace CalRemix
 {
 	public class CalRemix : Mod
 	{
+		public static int CosmiliteCoinCurrencyId;
+		public static int KlepticoinCurrencyId;
         public override void PostSetupContent()
         {
             Mod cal = ModLoader.GetMod("CalamityMod");
@@ -64,9 +67,23 @@ namespace CalRemix
             }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
 			*/
         }
+        public override void Load()
+        {
+			CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
+			KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.KlepticoinCurrency(ModContent.ItemType<Items.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
+		}
         public static bool Enchantable(Item item)
         {
             return item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip();
         }
+		public static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
+        {
+			if (!condition || shop is null) return;
+			shop.item[nextSlot].SetDefaults(type);
+			shop.item[nextSlot].shopCustomPrice = price > 0 ? price : shop.item[nextSlot].value;
+			if (specialMoney == 1) shop.item[nextSlot].shopSpecialCurrency = CosmiliteCoinCurrencyId;
+			else if (specialMoney == 2) shop.item[nextSlot].shopSpecialCurrency = KlepticoinCurrencyId;
+			nextSlot++;
+		}
     }
 }

@@ -2,6 +2,8 @@
 using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.UI;
+using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
@@ -39,6 +41,15 @@ namespace CalRemix.Items
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 8));
             return true;
+        }
+    }
+
+    public class CosmiliteCoinCurrency : CustomCurrencySingleCoin
+    {
+        public CosmiliteCoinCurrency(int coinItemID, long currencyCap, string CurrencyTextKey) : base(coinItemID, currencyCap)
+        {
+            this.CurrencyTextKey = CurrencyTextKey;
+            CurrencyTextColor = Color.MediumPurple;
         }
     }
 }

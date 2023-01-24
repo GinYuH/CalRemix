@@ -2,6 +2,7 @@
 using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
@@ -37,6 +38,15 @@ namespace CalRemix.Items
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(12, 12));
             return true;
+        }
+    }
+
+    public class KlepticoinCurrency : CustomCurrencySingleCoin
+    {
+        public KlepticoinCurrency(int coinItemID, long currencyCap, string CurrencyTextKey) : base(coinItemID, currencyCap)
+        {
+            this.CurrencyTextKey = CurrencyTextKey;
+            CurrencyTextColor = Color.DarkGoldenrod;
         }
     }
 }
