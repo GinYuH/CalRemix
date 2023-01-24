@@ -1,4 +1,4 @@
 displayName = Calamity Community Remix
-author = YuH, MisterGoodLuck, and The Purified
+author = YuH and the Cult of Hypnos
 version = 0.1
 modReferences = CalamityMod
