@@ -17,7 +17,7 @@ namespace CalRemix.NPCs.TownNPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Celestial");
+            DisplayName.SetDefault("Starborn Princess");
             Main.npcFrameCount[NPC.type] = 25;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 4;
@@ -54,7 +54,7 @@ namespace CalRemix.NPCs.TownNPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-                new FlavorTextBestiaryInfoElement("Seemingly born from both profaned and cosmic energies, the Celestial has inherited the powers of both. Somehow, she knows how to conjure divine artifacts from nothing.")
+                new FlavorTextBestiaryInfoElement("The curious daughter of the cosmic serpent and the profaned goddess. Inheriting the powers of both, she has the ability to alter matter however she sees fit.")
             });
         }
 
