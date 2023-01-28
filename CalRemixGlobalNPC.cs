@@ -415,33 +415,36 @@ namespace CalRemix
         }
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
-            binaryWriter.Write(useDefenseFrames);
-            binaryWriter.Write(frameUsed);
-           // binaryWriter.Write(DeathAnimationTimer);
-            for (int i = 0; i < 4; i++)
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
             {
-                binaryWriter.Write(npc.Calamity().newAI[i]);
+                binaryWriter.Write(useDefenseFrames);
+                binaryWriter.Write(frameUsed);
+                for (int i = 0; i < 4; i++)
+                {
+                    binaryWriter.Write(npc.Calamity().newAI[i]);
+                }
             }
         }
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
         {
-            useDefenseFrames = binaryReader.ReadBoolean();
-            frameUsed = binaryReader.ReadInt32();
-          //  DeathAnimationTimer = binaryReader.ReadInt32();
-            for (int i = 0; i < 4; i++)
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
             {
-                npc.Calamity().newAI[i] = binaryReader.ReadSingle();
+                useDefenseFrames = binaryReader.ReadBoolean();
+                frameUsed = binaryReader.ReadInt32();
+                for (int i = 0; i < 4; i++)
+                {
+                    npc.Calamity().newAI[i] = binaryReader.ReadSingle();
+                }
             }
         }
         public override void FindFrame(NPC npc, int frameHeight)
         {
-            if (!Main.dayTime)
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
             {
                 if (npc.ai[0] == 2f && npc.ai[0] == 5f)
                 {
                     if (!useDefenseFrames)
                     {
-                        
                         useDefenseFrames = true;
                     }
                 }
@@ -456,6 +459,7 @@ namespace CalRemix
                         frameUsed = 0;
                     }
                 }
+      
             }
         }
 
