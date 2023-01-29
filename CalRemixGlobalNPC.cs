@@ -36,12 +36,18 @@ using Terraria.GameContent;
 using System.IO;
 using CalamityMod.NPCs.DevourerofGods;
 using CalRemix.Items.Placeables;
+using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.World;
+using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Dusts;
+using CalamityMod.Particles;
 
 namespace CalRemix
 {
     public class CalRemixGlobalNPC : GlobalNPC
     {
         bool SlimeBoost = false;
+        public bool vBurn = false;
         public int bossKillcount = 0;
         public float shadowHit = 1;
         private bool useDefenseFrames;
@@ -330,12 +336,12 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
                 npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
-                //npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
+                npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
             }
             else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
-                //npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
+                npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
             else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
@@ -612,6 +618,33 @@ namespace CalRemix
             if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
             {
                 CalRemixWorld.ShrineTimer = 3000;
+            }
+            return true;
+        }
+        public override void ResetEffects(NPC npc)
+        {
+            vBurn = false;
+        }
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (vBurn)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 200;
+                if (damage < 40)
+                {
+                    damage = 40;
+                }
+            }
+        }
+        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (vBurn)
+            {
+                damage *= 0.95f;
             }
             return true;
         }

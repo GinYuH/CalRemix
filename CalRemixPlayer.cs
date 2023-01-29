@@ -32,7 +32,7 @@ namespace CalRemix
 {
 	public class CalRemixPlayer : ModPlayer
 	{
-		public bool earthEnchant;
+        public bool earthEnchant;
 		public bool amongusEnchant;
 		public bool brimPortal;
 		public bool arcanumHands;
