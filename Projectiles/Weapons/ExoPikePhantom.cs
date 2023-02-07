@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons;
 // Values chosen mostly correspond to Iron Shortword
 public class ExoPikePhantom : ModProjectile
 {
-    public override string Texture => "CalRemix/Projectiles/ExoPike";
+    public override string Texture => "CalRemix/Projectiles/Weapons/ExoPike";
     public const int FadeInDuration = 7;
     public const int FadeOutDuration = 4;
 
