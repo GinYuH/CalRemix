@@ -1,10 +1,8 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using CalamityMod.Items.Pets;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using CalamityMod.Tiles.Astral;
 using CalRemix.Tiles;
 using CalamityMod;

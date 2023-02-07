@@ -3,7 +3,7 @@ using CalamityMod;
 using Terraria;
 using Terraria.DataStructures; 
 using Microsoft.Xna.Framework;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
 using CalRemix.Projectiles.WulfrumExcavator;
 using CalRemix.NPCs.Bosses;
 using CalamityMod.Projectiles.Rogue;
@@ -15,13 +15,11 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Boss;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Projectiles.Melee.Spears;
 using Terraria.GameContent;
 using System;
 using Terraria.Graphics.Shaders;
-using System.IO;
 
 namespace CalRemix
 {

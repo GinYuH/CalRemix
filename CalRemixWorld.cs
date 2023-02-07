@@ -7,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 using System.IO;
 using CalamityMod.World;
 using System;
-using CalamityMod.Items.Materials;
 using CalRemix.Tiles;
 using CalamityMod.Tiles.Astral;
 using CalamityMod.Tiles.AstralDesert;
@@ -17,7 +16,6 @@ using CalRemix.Items.Placeables;
 using CalamityMod.Walls;
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using static CalRemix.CalRemixGlobalNPC;
 
 namespace CalRemix
 {

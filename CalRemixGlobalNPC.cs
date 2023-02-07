@@ -6,7 +6,6 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
-using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
@@ -24,7 +23,8 @@ using CalRemix.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.Bumblebirb;
 using System.Collections.Generic;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
+using CalRemix.Projectiles.Weapons;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
@@ -34,13 +34,6 @@ using CalamityMod.Events;
 using System;
 using Terraria.GameContent;
 using System.IO;
-using CalamityMod.NPCs.DevourerofGods;
-using CalRemix.Items.Placeables;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.World;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Dusts;
-using CalamityMod.Particles;
 
 namespace CalRemix
 {
@@ -397,17 +390,6 @@ namespace CalRemix
             if (npc.boss)
             {
                 bossKillcount++;
-            }
-        }
-        public override void SetupShop(int type, Chest shop, ref int nextSlot)
-        {
-            if (type == NPCID.Painter)
-            {
-                if (NPC.AnyNPCs(ModContent.NPCType<DevourerofGodsHead>()) && BossRushEvent.BossRushActive)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<TrialsEnd>());
-                    ++nextSlot;
-                }
             }
         }
         public override void LoadData(NPC npc, TagCompound tag)

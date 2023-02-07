@@ -11,7 +11,7 @@ using CalamityMod;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria;
 using Microsoft.Xna.Framework;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;

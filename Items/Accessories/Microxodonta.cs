@@ -6,7 +6,7 @@ using CalamityMod;
 using CalamityMod.Items;
 using Terraria.ModLoader;
 using CalamityMod.Rarities;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
 
 namespace CalRemix.Items.Accessories
 {

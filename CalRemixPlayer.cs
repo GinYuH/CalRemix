@@ -2,12 +2,9 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.CalPlayer;
@@ -18,15 +15,12 @@ using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
-using CalRemix.Buffs;
+using CalRemix.Projectiles.Weapons;
 using CalRemix.NPCs;
 using CalRemix.NPCs.Bosses;
-using Terraria.ModLoader.IO;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.UI.CalamitasEnchants;
-using CalamityMod.Items;
 
 namespace CalRemix
 {

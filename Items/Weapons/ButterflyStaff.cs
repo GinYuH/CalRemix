@@ -1,5 +1,5 @@
 using CalamityMod;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Weapons;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
