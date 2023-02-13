@@ -103,7 +103,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.spriteDirection = Projectile.direction;
             if (Projectile.spriteDirection == -1)
                 spriteEffects = SpriteEffects.FlipHorizontally;
-            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("CalRemix/Projectiles/ShadowsDescentBall");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("CalRemix/Projectiles/Weapons/ShadowsDescentBall");
             int frameHeight = texture.Height / Main.projFrames[Projectile.type];
             int startY = frameHeight * Projectile.frame;
             Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
