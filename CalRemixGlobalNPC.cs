@@ -45,8 +45,6 @@ namespace CalRemix
         public float shadowHit = 1;
         private bool useDefenseFrames;
         private int frameUsed;
-        NPC exc;
-
         public override bool InstancePerEntity
         {
             get

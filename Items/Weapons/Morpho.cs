@@ -25,7 +25,7 @@ public class Morpho : ModItem
             + "Using RMB summons an Arbiter of Judgement that does not consume minion slots\n"
             + "Attacks from the blade and arbiter inflict Whispering Death and Valfrey Burn\n"
             + "\'Now all will witness its true power!\'");
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

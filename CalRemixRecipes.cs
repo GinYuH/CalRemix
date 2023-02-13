@@ -261,6 +261,24 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
                 }
+                if (recipe.HasResult(ModContent.ItemType<ResilientCandle>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 444);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StormfrontRazor>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
+                    recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
+                    recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
+                }
                 #region Yharim Bar Recipes
                 if (recipe.HasResult(ModContent.ItemType<AsgardianAegis>()))
                 {
@@ -311,12 +329,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 30);
                 }
-                /*
                 if (recipe.HasResult(ModContent.ItemType<HadopelagicEcho>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 2);
                 }
-                */
                 if (recipe.HasResult(ModContent.ItemType<HalibutCannon>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
@@ -330,12 +346,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 49);
                 }
-                /*
                 if (recipe.HasResult(ModContent.ItemType<Megaskeet>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
                 }
-                */
                 if (recipe.HasResult(ModContent.ItemType<Nanotech>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);

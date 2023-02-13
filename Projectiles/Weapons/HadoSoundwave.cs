@@ -1,0 +1,77 @@
+using CalamityMod;
+using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Projectiles.Magic;
+using Microsoft.Xna.Framework;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace CalRemix.Projectiles.Weapons
+{
+	public class HadoSoundwave : ModProjectile
+	{
+        public override void SetStaticDefaults() 
+        {
+			DisplayName.SetDefault("Hadopelagic Soundwave");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+        }
+		public override void SetDefaults() 
+        {
+            Projectile.CloneDefaults(ModContent.ProjectileType<EidolicWailSoundwave>());
+        }
+        public override void AI()
+        {
+            Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X);
+            if (Projectile.localAI[0] < 1f)
+            {
+                Projectile.localAI[0] += 0.05f;
+                Projectile.scale += 0.05f;
+                Projectile.width = (int)(36f * Projectile.scale);
+                Projectile.height = (int)(36f * Projectile.scale);
+            }
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (Projectile.velocity.X != oldVelocity.X)
+                Projectile.velocity.X = -oldVelocity.X;
+            if (Projectile.velocity.Y != oldVelocity.Y)
+                Projectile.velocity.Y = -oldVelocity.Y;
+            return false;
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage *= (int)Projectile.localAI[0];
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.velocity *= 0.5f;
+            target.AddBuff(ModContent.BuffType<CrushDepth>(), 240);
+            target.AddBuff(BuffID.Electrified, 240);
+            if (Projectile.owner == Main.myPlayer)
+            {
+                Projectile proj = CalamityUtils.ProjectileBarrage(Projectile.GetSource_FromThis(), Projectile.Center, target.Center, Main.rand.NextBool(), 256f, 256f, 256f, 256f, Main.rand.NextFloat(25f, 25f), ModContent.ProjectileType<EidolicWailSoundwave>(), Projectile.damage / 3, Projectile.knockBack * 0.5f, Projectile.owner);
+                proj.tileCollide = false;
+                proj.timeLeft = 60;
+                proj.scale = 1f;
+                proj.localAI[0] = 1f;
+            }
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            if (Projectile.timeLeft < 85)
+            {
+                byte color = (byte)(Projectile.timeLeft * 3);
+                byte alpha = (byte)(100f * (color / 255f));
+                return new Color(color, color, color, alpha);
+            }
+            return new Color(255, 255, 255, 100);
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor);
+            return false;
+        }
+    }
+}

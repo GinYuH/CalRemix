@@ -56,6 +56,8 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.Kill();
             else
                 Projectile.timeLeft = 2;
+
+            // Might make original code in the future
             float num460 = Projectile.position.X;
             float num461 = Projectile.position.Y;
             float num462 = 900f;
@@ -79,6 +81,10 @@ namespace CalRemix.Projectiles.Weapons
                         num460 = num464;
                         num461 = num465;
                         flag19 = true;
+                    }
+                    if (Main.rand.NextBool(100))
+                    {
+                       Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(5)) * 1.5f, ModContent.ProjectileType<CrescentSlash>(), Projectile.damage / 4, Projectile.knockBack, Projectile.owner);
                     }
                 }
                 if (!flag19)

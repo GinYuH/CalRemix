@@ -52,7 +52,8 @@ namespace CalRemix
 		public bool cursed;
 		public bool cart;
 		public bool tvohide;
-		public Particle ring;
+        public bool dreamingGhost;
+        public Particle ring;
 		public Particle ring2;
 		public Particle aura;
 		public bool ZoneLife;
@@ -302,7 +303,8 @@ namespace CalRemix
 			arcanumHands = false;
 			marnite = false;
 			roguebox = false;
-			soldier = false;
+            dreamingGhost = false;
+            soldier = false;
 			marnitetimer = 0;
 			astEffigy = false;
 			halEffigy = false;

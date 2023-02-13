@@ -1,6 +1,8 @@
 using CalamityMod;
 using CalRemix.Projectiles.Weapons;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,7 +41,11 @@ public class ButterflyStaff : ModItem
     }
     public override bool CanUseItem(Player player)
     {
-        return player.ownedProjectileCounts[ModContent.ProjectileType<ButterflyMinion>()] < 4;
+        return player.ownedProjectileCounts[ModContent.ProjectileType<ButterflyMinion>()] < 3;
+    }
+    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+    {
+        damage /= 3;
     }
     public override void AddRecipes()
     {
