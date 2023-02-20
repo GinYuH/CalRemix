@@ -19,5 +19,8 @@
 			CosmiliteCoinCurrency: cosmilite coins
 			KlepticoinCurrency: klepticoins
 		}
+		UI: {
+			TransmogrifyMenu: Transmogrify
+		}
 	}
 }

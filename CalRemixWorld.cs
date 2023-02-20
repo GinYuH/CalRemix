@@ -27,6 +27,7 @@ namespace CalRemix
         public static bool downedExcavator = false;
 
         public static bool guideHasExisted = false;
+        public static bool deusDeadInSnow = false;
 
         public static void UpdateWorldBool()
         {
@@ -40,18 +41,21 @@ namespace CalRemix
             downedDerellect = false;
             downedExcavator = false;
             guideHasExisted = false;
+            deusDeadInSnow = false;
         }
         public override void OnWorldUnload()
         {
             downedDerellect = false;
             downedExcavator = false;
             guideHasExisted = false;
+            deusDeadInSnow = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
             tag["downedDerellect"] = downedDerellect;
             tag["downedExcavator"] = downedExcavator;
             tag["guideHasExisted"] = guideHasExisted;
+            tag["deusDeadInSnow"] = deusDeadInSnow;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -59,6 +63,7 @@ namespace CalRemix
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
             guideHasExisted = tag.Get<bool>("guideHasExisted");
+            deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -66,6 +71,7 @@ namespace CalRemix
             writer.Write(downedDerellect);
             writer.Write(downedExcavator);
             writer.Write(guideHasExisted);
+            writer.Write(deusDeadInSnow);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -73,6 +79,7 @@ namespace CalRemix
             downedDerellect = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
             guideHasExisted = reader.ReadBoolean();
+            deusDeadInSnow = reader.ReadBoolean();
         }
 
         List<int> hallowlist = new List<int>

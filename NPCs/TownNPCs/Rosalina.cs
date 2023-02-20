@@ -92,31 +92,33 @@ namespace CalRemix.NPCs.TownNPCs
         {
             List<string> chat = new List<string>
             {
-                "You wonder if I will try to kill you in the future? Sounds like too much effort.",
-                "Can you go away? I was having a really good daydream before you came.",
-                "I wish I didn't have to eat. Takes too long to get the food.",
+                "Did you hear about that one artist? I think they are called something like Everquartz... well- I think they're weird personally.",
+                "I really like reading books and I like studying on how to warp myself to different timelines. If I didn't learn how to, I probably wouldn't even be here!",
+                "I hate both of my parents to be honest, they're both as bad as each other... sort of. I can't remember.",
+                "So, what's your opinion on chicken nuggets?",
+                "*starts doing the cha cha slide* Cha cha real smooth!"
             };
             if(NPC.homeless)
             {
-                chat.Add("I do like being inside.");
-                chat.Add("Can you hurry up and make me some housing? Preferably with a cozy bed.");
+                chat.Add("I could've sworn I had a house... oh well.");
+                chat.Add("Did you leave me homeless? That's a shame. To be honest, living in a house is overrated anyways!");
             }
             if (Main.LocalPlayer.ZoneHallow)
             {
-                chat.Add("It's amusing that a place of such apparent goodness can be so violent.");
-                chat.Add("You would think that a biome full of fairies and unicorns would be a little kinder.");
+                chat.Add("I think the Hallow is quite a deceiving place. It's quite unique, actually. I really do like it, but man those unicorns are lethal. Have you not seen them?!");
+                chat.Add("Man, you would think that a biome full of fairies and unicorns would be a little kinder sometimes...");
             }
-            if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp) chat.Add("Woo, I sure love parties.");
+            if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp) chat.Add("Wow! Parties are so much fun. I love jumping around and dancing and all that confetti is so fun! It's so bright and colorful! I love it!");
             if(Main.bloodMoon)
             {
-                chat.Add("There's too many pests around. I would appreciate it if you kept them out");
-                chat.Add("Go. Those pests aren't going to kill themselves.");
+                chat.Add("Why are you here?! Go on, get out of my house before you feel the wrath of my anger!");
+                chat.Add("You are lucky that I do not have contact with my parents. Shoo! Get out of here!");
             }
-            if (NPC.AnyNPCs(NPCID.Angler)) chat.Add($"I must say that everybody here has good taste in fashion. Except {Main.npc[NPC.FindFirstNPC(NPCID.Angler)].GivenName}. He needs a new hat.");
+            if (NPC.AnyNPCs(NPCID.Angler)) chat.Add($"Did you hear about {Main.npc[NPC.FindFirstNPC(NPCID.Angler)].GivenName}? Yeah, that short kid with the weird hat and stuff? Well, I don't like him.");
             if(CalamityMod.DownedBossSystem.downedDoG)
             {
-                chat.Add("Though my father's strength was great, his hubris led him to underestimate you.");
-                chat.Add("Considering how weak you originally were, I do wonder if your growth will ever reach a limit.");
+                chat.Add("I am sort of sad that my father is dead... I mean, I get he was a bad person but I just never got to spend time with him that much. I think it is for the better anyways, he didn't seem like the nicest guy around...");
+                chat.Add("Considering how weak you originally were, I do wonder if your growth will ever reach a limit. I'm curious!");
             }
             return Main.rand.Next(chat);
         }
@@ -139,6 +141,7 @@ namespace CalRemix.NPCs.TownNPCs
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button = Language.GetTextValue("LegacyInterface.28");
+            button2 = Language.GetTextValue("Mods.CalRemix.UI.TransmogrifyMenu");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -146,6 +149,9 @@ namespace CalRemix.NPCs.TownNPCs
             if (firstButton)
             {
                 shop = true;
+            } else
+            {
+                Main.npcChatText = "Ah, sorry... I forgot to tell you that this isn't implemented yet. Come back later, okay?";
             }
         }
     }
