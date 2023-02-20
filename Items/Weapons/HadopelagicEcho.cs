@@ -15,7 +15,6 @@ namespace CalRemix.Items.Weapons
 {
 	public class HadopelagicEcho : ModItem
 	{
-        public override string Texture => "CalamityMod/Items/Weapons/Magic/EidolicWail";
         public static readonly SoundStyle adultSound = new SoundStyle("CalamityMod/Sounds/Custom/EidolonWyrmRoarClose");
         public override void SetStaticDefaults() 
 		{
