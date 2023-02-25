@@ -18,7 +18,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using System.Collections.Generic;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
 using CalamityMod.Buffs.DamageOverTime;
 using Terraria.DataStructures;
 using Terraria.ID;

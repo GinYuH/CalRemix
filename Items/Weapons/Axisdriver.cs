@@ -4,7 +4,7 @@ using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Sounds;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Ranged;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

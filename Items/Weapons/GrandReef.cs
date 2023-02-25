@@ -4,7 +4,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Items.Materials;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Weapons;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

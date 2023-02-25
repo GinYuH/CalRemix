@@ -26,6 +26,7 @@ using CalRemix.Items;
 using CalRemix.Projectiles.WulfrumExcavator;
 
 using System;
+using CalRemix.Items.Materials;
 
 namespace CalRemix.NPCs.Bosses
 {

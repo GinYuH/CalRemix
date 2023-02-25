@@ -2,7 +2,7 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

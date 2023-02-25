@@ -1,10 +1,6 @@
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Placeables.Furniture;
@@ -23,11 +19,14 @@ using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.SummonItems;
-using Terraria.Localization;
 using CalamityMod.Items.Fishing.FishingRods;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Armor.Auric;
+using CalRemix.Items.Weapons;
+using CalamityMod.Items.Mounts;
+using CalamityMod.Items.Weapons.DraedonsArsenal;
 
 namespace CalRemix
 {
@@ -262,6 +261,180 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
                 }
+                if (recipe.HasResult(ModContent.ItemType<ResilientCandle>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 444);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StormfrontRazor>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
+                    recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
+                    recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
+                }
+                #region Yharim Bar Recipes
+                if (recipe.HasResult(ModContent.ItemType<AsgardianAegis>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<AuricBar>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<AuricTeslaBodyArmor>()) || recipe.HasResult(ModContent.ItemType<AuricTeslaCuisses>()) || recipe.HasResult(ModContent.ItemType<AuricTeslaHoodedFacemask>()) || recipe.HasResult(ModContent.ItemType<AuricTeslaPlumedHelm>()) || recipe.HasResult(ModContent.ItemType<AuricTeslaRoyalHelm>()) || recipe.HasResult(ModContent.ItemType<AuricTeslaSpaceHelmet>()) || recipe.HasResult(ModContent.ItemType<AuricTeslaWireHemmedVisage>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 35);
+                }
+                if (recipe.HasResult(ModContent.ItemType<CoreOfTheBloodGod>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<EclipseMirror>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<EcologicalCollapse>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<EidolonStaff>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 17);
+                }
+                if (recipe.HasResult(ModContent.ItemType<ElementalQuiver>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<ElysianTracers>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+
+                if (recipe.HasResult(ModContent.ItemType<GazeOfCrysthamyr>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 50);
+                }
+                if (recipe.HasResult(ModContent.ItemType<GodSlayerSlug>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<GrandReef>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 30);
+                }
+                if (recipe.HasResult(ModContent.ItemType<HadopelagicEcho>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 2);
+                }
+                if (recipe.HasResult(ModContent.ItemType<HalibutCannon>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                if (recipe.HasResult(ModContent.ItemType<HolyMantle>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>());
+                }
+
+                if (recipe.HasResult(ModContent.ItemType<MagnaCore>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 49);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Megaskeet>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Nanotech>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+
+                if (recipe.HasResult(ModContent.ItemType<Nucleogenesis>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<OmegaHealingPotion>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 90);
+                }
+
+                if (recipe.HasResult(ModContent.ItemType<PlasmaGrenade>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<QuiverofMadness>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<RampartofDeities>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<RoguesLootbox>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 22);
+                }
+                if (recipe.HasResult(ModContent.ItemType<ScorchedEarth>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SearedPan>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Slimelgamation>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<TheAmalgam>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                if (recipe.HasResult(ModContent.ItemType<TheDevourerofCods>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 10);
+                }
+                /*
+                if (recipe.HasResult(ModContent.ItemType<TheDreamingGhost>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
+                }
+                */
+                if (recipe.HasResult(ModContent.ItemType<TheSponge>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 100);
+                }
+                if (recipe.HasResult(ModContent.ItemType<ThrowersGauntlet>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>());
+                }
+                /*
+                if (recipe.HasResult(ModContent.ItemType<TyrantShield>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 124);
+                }
+                */
+                if (recipe.HasResult(ModContent.ItemType<UniversalStone>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 100);
+                }
+
+                if (recipe.HasResult(ItemID.Zenith))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 193);
+                }
+
+                if (recipe.HasResult(ModContent.ItemType<ZenithArcanum>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                #endregion
             }
         }
 

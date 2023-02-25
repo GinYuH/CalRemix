@@ -6,7 +6,6 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
-using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
@@ -24,7 +23,8 @@ using CalRemix.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.Bumblebirb;
 using System.Collections.Generic;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
+using CalRemix.Projectiles.Weapons;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
@@ -34,14 +34,13 @@ using CalamityMod.Events;
 using System;
 using Terraria.GameContent;
 using System.IO;
-using CalamityMod.NPCs.DevourerofGods;
-using CalRemix.Items.Placeables;
 
 namespace CalRemix
 {
     public class CalRemixGlobalNPC : GlobalNPC
     {
         bool SlimeBoost = false;
+        public bool vBurn = false;
         public int bossKillcount = 0;
         public float shadowHit = 1;
         private bool useDefenseFrames;
@@ -327,12 +326,12 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
                 npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
-                //npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
+                npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
             }
             else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
-                //npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
+                npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
             else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
@@ -390,17 +389,6 @@ namespace CalRemix
                 bossKillcount++;
             }
         }
-        public override void SetupShop(int type, Chest shop, ref int nextSlot)
-        {
-            if (type == NPCID.Painter)
-            {
-                if (NPC.AnyNPCs(ModContent.NPCType<DevourerofGodsHead>()) && BossRushEvent.BossRushActive)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<TrialsEnd>());
-                    ++nextSlot;
-                }
-            }
-        }
         public override void LoadData(NPC npc, TagCompound tag)
         {
             bossKillcount = tag.GetInt("bossKillcount");
@@ -412,33 +400,36 @@ namespace CalRemix
         }
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
-            binaryWriter.Write(useDefenseFrames);
-            binaryWriter.Write(frameUsed);
-           // binaryWriter.Write(DeathAnimationTimer);
-            for (int i = 0; i < 4; i++)
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
             {
-                binaryWriter.Write(npc.Calamity().newAI[i]);
+                binaryWriter.Write(useDefenseFrames);
+                binaryWriter.Write(frameUsed);
+                for (int i = 0; i < 4; i++)
+                {
+                    binaryWriter.Write(npc.Calamity().newAI[i]);
+                }
             }
         }
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
         {
-            useDefenseFrames = binaryReader.ReadBoolean();
-            frameUsed = binaryReader.ReadInt32();
-          //  DeathAnimationTimer = binaryReader.ReadInt32();
-            for (int i = 0; i < 4; i++)
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
             {
-                npc.Calamity().newAI[i] = binaryReader.ReadSingle();
+                useDefenseFrames = binaryReader.ReadBoolean();
+                frameUsed = binaryReader.ReadInt32();
+                for (int i = 0; i < 4; i++)
+                {
+                    npc.Calamity().newAI[i] = binaryReader.ReadSingle();
+                }
             }
         }
         public override void FindFrame(NPC npc, int frameHeight)
         {
-            if (!Main.dayTime)
+            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
             {
                 if (npc.ai[0] == 2f && npc.ai[0] == 5f)
                 {
                     if (!useDefenseFrames)
                     {
-                        
                         useDefenseFrames = true;
                     }
                 }
@@ -453,6 +444,7 @@ namespace CalRemix
                         frameUsed = 0;
                     }
                 }
+      
             }
         }
 
@@ -605,6 +597,33 @@ namespace CalRemix
             if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
             {
                 CalRemixWorld.ShrineTimer = 3000;
+            }
+            return true;
+        }
+        public override void ResetEffects(NPC npc)
+        {
+            vBurn = false;
+        }
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (vBurn)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 200;
+                if (damage < 40)
+                {
+                    damage = 40;
+                }
+            }
+        }
+        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (vBurn)
+            {
+                damage *= 0.95f;
             }
             return true;
         }

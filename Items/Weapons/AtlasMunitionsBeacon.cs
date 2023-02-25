@@ -1,14 +1,12 @@
 ﻿using Terraria.DataStructures;
-using CalamityMod.Projectiles.Summon;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using CalamityMod;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Weapons;
 
 namespace CalRemix.Items.Weapons
 {

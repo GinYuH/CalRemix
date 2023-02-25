@@ -7,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 using System.IO;
 using CalamityMod.World;
 using System;
-using CalamityMod.Items.Materials;
 using CalRemix.Tiles;
 using CalamityMod.Tiles.Astral;
 using CalamityMod.Tiles.AstralDesert;
@@ -17,7 +16,6 @@ using CalRemix.Items.Placeables;
 using CalamityMod.Walls;
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using static CalRemix.CalRemixGlobalNPC;
 
 namespace CalRemix
 {
@@ -27,6 +25,9 @@ namespace CalRemix
         public static int ShrineTimer = -20;
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
+
+        public static bool guideHasExisted = false;
+        public static bool deusDeadInSnow = false;
 
         public static void UpdateWorldBool()
         {
@@ -39,34 +40,46 @@ namespace CalRemix
         {
             downedDerellect = false;
             downedExcavator = false;
+            guideHasExisted = false;
+            deusDeadInSnow = false;
         }
         public override void OnWorldUnload()
         {
             downedDerellect = false;
             downedExcavator = false;
+            guideHasExisted = false;
+            deusDeadInSnow = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
             tag["downedDerellect"] = downedDerellect;
             tag["downedExcavator"] = downedExcavator;
+            tag["guideHasExisted"] = guideHasExisted;
+            tag["deusDeadInSnow"] = deusDeadInSnow;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
+            guideHasExisted = tag.Get<bool>("guideHasExisted");
+            deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(downedDerellect);
             writer.Write(downedExcavator);
+            writer.Write(guideHasExisted);
+            writer.Write(deusDeadInSnow);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
             downedDerellect = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
+            guideHasExisted = reader.ReadBoolean();
+            deusDeadInSnow = reader.ReadBoolean();
         }
 
         List<int> hallowlist = new List<int>
@@ -89,6 +102,7 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
+            if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
             if (ShrineTimer == 0)
             {
                 HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);

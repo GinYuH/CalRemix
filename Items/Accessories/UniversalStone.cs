@@ -1,5 +1,5 @@
 ﻿using CalamityMod.Items;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

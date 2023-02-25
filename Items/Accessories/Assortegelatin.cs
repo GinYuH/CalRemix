@@ -1,10 +1,9 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.CalPlayer;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Items.Materials;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Accessories;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

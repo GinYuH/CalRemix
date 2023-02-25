@@ -1,0 +1,26 @@
+﻿Mods: {
+	CalRemix: {
+		TownNPCMood: {
+			Celestial: {
+				Content: This is placeholder text to say I'm doing well.
+				NoHome: This is placeholder text to say I'm homeless.
+				LoveSpace: This is placeholder text to say I appreciate the space.
+				FarFromHome: This is placeholder text to say that I'm too far away from home.
+				DislikeCrowded: This is placeholder text to say that it's too crowded.
+				HateCrowded: This is placeholder text to say that it's WAY too crowded.
+				HateBiome: This is placeholder text to say that this biome sucks.
+				LikeNPC: "This is placeholder text to say that I like {NPCName}."
+				LikeNPC_Princess: "This is placeholder text to say that I like {NPCName} the Princess."
+				LoveNPC: "This is placeholder text to say that I really like {NPCName}."
+				HateNPC: "This is placeholder text to say that I really don't like {NPCName}."
+			}
+		}
+		Currencies: {
+			CosmiliteCoinCurrency: cosmilite coins
+			KlepticoinCurrency: klepticoins
+		}
+		UI: {
+			TransmogrifyMenu: Transmogrify
+		}
+	}
+}
