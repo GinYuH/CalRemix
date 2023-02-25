@@ -46,8 +46,6 @@ namespace CalRemix
         public float shadowHit = 1;
         private bool useDefenseFrames;
         private int frameUsed;
-        NPC exc;
-
         public override bool InstancePerEntity
         {
             get
@@ -253,7 +251,7 @@ namespace CalRemix
             {
                 npc.localAI[1] = 0;
             }
-            if (npc.type == ModContent.NPCType<AureusSpawn>() && modPlayer.nuclegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            if (npc.type == ModContent.NPCType<AureusSpawn>() && modPlayer.nuclegel || modPlayer.assortegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;
             }
@@ -262,7 +260,6 @@ namespace CalRemix
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC exc = Main.npc[i];
-                    exc = Main.npc[1];           
                     if (npc.Distance(exc.Center) <= npc.ai[1] && exc.ModNPC is WulfrumExcavatorHead)
                     {
                         exc.ModNPC<WulfrumExcavatorHead>().PylonCharged = true;

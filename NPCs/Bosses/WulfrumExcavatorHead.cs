@@ -573,8 +573,11 @@ namespace CalRemix.NPCs.Bosses
                 laserShootSpeed *= 1.2f;
             }
 
-            // Ensures the boss shouldn't telefrag the player
-            NPC.damage = 0;
+            // Ensures the boss shouldn't telefrag the player.
+            if (AttackTimer < damageDelay)
+            { 
+                NPC.damage = 0;
+            }
 
             // Teleport above the player on the first frame.
             if (AttackTimer == 1f)

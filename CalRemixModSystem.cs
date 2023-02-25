@@ -44,7 +44,7 @@ namespace CalRemix
             c.EmitDelegate<Func<int, Player, int>>((id, player) =>
             {
                 if (player.HasBuff(ModContent.BuffType<CalamityMod.Buffs.Pets.BloodBound>()))
-                return ModContent.NPCType<NPCs.Bosses.DerellectBoss>();
+                    return ModContent.NPCType<NPCs.Bosses.DerellectBoss>();
                 return id;
             });
 
@@ -55,7 +55,7 @@ namespace CalRemix
             c.EmitDelegate<Func<float, Player, float>>((id, player) =>
             {
                 if (player.HasBuff(ModContent.BuffType<CalamityMod.Buffs.Pets.BloodBound>()))
-                return ModContent.NPCType<NPCs.Bosses.DerellectBoss>();
+                    return ModContent.NPCType<NPCs.Bosses.DerellectBoss>();
                 return id;
             });
         }
