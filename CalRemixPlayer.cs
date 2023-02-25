@@ -17,11 +17,11 @@ using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Projectiles.Boss;
-
 using CalamityMod.Projectiles.Pets;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
 using CalRemix.Projectiles.Weapons;
+using CalRemix.Projectiles.Accessories;
 using CalRemix.NPCs;
 using CalRemix.NPCs.Bosses;
 using System.Collections.Generic;

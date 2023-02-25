@@ -7,6 +7,7 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Projectiles;
+using CalRemix.Projectiles.Weapons;
 using CalRemix.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
