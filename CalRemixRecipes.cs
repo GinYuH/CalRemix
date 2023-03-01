@@ -137,9 +137,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<SubnauticalPlate>();
                 }
-                if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item shard) && (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>())))
+                if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>())))
 		        {
-			        shard.type = ModContent.ItemType<ParchedScale>();
+                    recipe.RemoveIngredient(ModContent.ItemType<PearlShard>());
+                    recipe.AddIngredient(ModContent.ItemType<ParchedScale>());
                 }
                 if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && recipe.HasResult(ModContent.ItemType<NavyFishingRod>()) || recipe.HasResult(ModContent.ItemType<EutrophicShelf>()) || recipe.HasResult(ModContent.ItemType<AquamarineStaff>()) || recipe.HasResult(ModContent.ItemType<Riptide>()) || recipe.HasResult(ModContent.ItemType<SeashineSword>()) || recipe.HasResult(ModContent.ItemType<StormSurge>()) || recipe.HasResult(ModContent.ItemType<SeafoamBomb>()))
                 {

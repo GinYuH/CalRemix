@@ -34,6 +34,7 @@ namespace CalRemix.UI.TransmogrifyUI
             new TransmogrifyRecipe(ModContent.ItemType<CalamityMod.Items.Weapons.Rogue.ShardofAntumbra>(),
                 ItemID.SoulofLight, 5, 1200,
                 ModContent.ItemType<CalamityMod.Items.Weapons.Magic.LightGodsBrilliance>()),
+            #region The Yharim Bar Ones
             new TransmogrifyRecipe(ModContent.ItemType<Items.Materials.YharimBar>(),
                 ModContent.ItemType<CalamityMod.Items.Materials.UnholyEssence>(), 20, 1200,
                 ModContent.ItemType<CalamityMod.Items.Materials.DivineGeode>(), 20),
@@ -58,6 +59,7 @@ namespace CalRemix.UI.TransmogrifyUI
             new TransmogrifyRecipe(ModContent.ItemType<Items.Materials.YharimBar>(),
                 ModContent.ItemType<CalamityMod.Items.Materials.ExoPrism>(), 5, 12000,
                 ModContent.ItemType<CalamityMod.Items.Materials.AshesofAnnihilation>(), 5),
+            #endregion
         };
 
         public static bool CanTransmogrify(this int item)
@@ -82,9 +84,9 @@ namespace CalRemix.UI.TransmogrifyUI
         {
             foreach (TransmogrifyRecipe recipe in TransmogrifyRecipes)
             {
-                if (recipe.catalyst == item && recipe.ingredient == item2) return recipe;
+                if (recipe.ingredient == item && recipe.catalyst == item2) return recipe;
             }
-            throw new ApplicationException("No recipe found. You dumb fuck.");
+            throw new ApplicationException("Your recipe was: not found.");
         }
     }
 }
