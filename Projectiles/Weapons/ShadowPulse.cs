@@ -42,7 +42,7 @@ namespace CalRemix.Projectiles.Weapons
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<DemonFlames>(), 300);
+            target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 300);
             target.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 600);
             target.AddBuff(ModContent.BuffType<Nightwither>(), 1200);
             target.AddBuff(BuffID.ShadowFlame, 1800);
@@ -50,7 +50,7 @@ namespace CalRemix.Projectiles.Weapons
 
         public override void OnHitPvp(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<DemonFlames>(), 300);
+            target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 300);
             target.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 600);
             target.AddBuff(ModContent.BuffType<Nightwither>(), 1200);
             target.AddBuff(BuffID.ShadowFlame, 1800);

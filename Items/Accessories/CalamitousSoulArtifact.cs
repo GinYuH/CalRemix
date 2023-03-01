@@ -104,7 +104,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<DimensionalSoulArtifact>(1).
                 AddIngredient<PhantomicArtifact>(1).
                 AddIngredient<EldritchSoulArtifact>(1).
-                AddIngredient<Chaosplate>(60).
+                AddIngredient<Havocplate>(60).
                 AddIngredient<AshesofAnnihilation>(5).
                 AddIngredient<ExodiumCluster>(25).
                 AddTile(TileID.DemonAltar).

@@ -134,14 +134,6 @@ namespace CalRemix.Items.Accessories
                     if (Main.projectile.IndexInRange(p))
                         Main.projectile[p].originalDamage = 290;
                 }
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<GladiatorSword>()] < 1)
-                {
-                    var sword = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSword>(), swordDmg, 2f, Main.myPlayer);
-                    sword.originalDamage = baseDamage;
-
-                    sword = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSword2>(), swordDmg, 2f, Main.myPlayer);
-                    sword.originalDamage = baseDamage;
-                }
                 if (player.ownedProjectileCounts[ProjectileType<HowlsHeartHowl>()] < 1)
                 {
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(290);

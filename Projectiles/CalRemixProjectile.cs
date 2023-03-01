@@ -156,7 +156,7 @@ namespace CalRemix
 			}
 			if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CalamityUtils.CountProjectiles(ModContent.ProjectileType<ArmofAgony>()) < 8)
 			{
-				target.AddBuff(BuffType<DemonFlames>(), 180);
+				target.AddBuff(BuffType<BrimstoneFlames>(), 180);
 				int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(260);
 				int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<ArmofAgony>(), apparatusDamage, 4f, projectile.owner);
 				if (proj.WithinBounds(Main.maxProjectiles))
@@ -167,7 +167,7 @@ namespace CalRemix
 			}
 			if (modPlayer.tvo && projectile.type != ProjectileType<JewelSpike>())
 			{
-				target.AddBuff(BuffType<DemonFlames>(), 180);
+				target.AddBuff(BuffType<BrimstoneFlames>(), 180);
 				int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1060);
 				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<JewelSpike>()) < 3)
 				{
@@ -188,7 +188,7 @@ namespace CalRemix
 					Main.projectile[p].originalDamage = 20000;
 				}
 			}
-			if (modPlayer.tvo && projectile.type != ProjectileType<DarksunTornado>() && projectile.type != ProjectileType<NanoFlare>() && projectile.type != ProjectileType<UnstableSpark>())
+			if (modPlayer.tvo && projectile.type != ProjectileType<DarksunTornado>() && projectile.type != ProjectileType<NanoFlare>())
 			{
 				int dam = (int)(projectile.damage * 0.2f);
 				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<DarksunTornado>()) < 3)
@@ -197,14 +197,6 @@ namespace CalRemix
 					if (p.WithinBounds(Main.maxProjectiles))
 					{
 						Main.projectile[p].originalDamage = dam;
-					}
-				}
-				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<UnstableSpark>()) < 3)
-				{
-					int e = Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(5, 10)), ProjectileType<UnstableSpark>(), dam, 0, projectile.owner);
-					if (e.WithinBounds(Main.maxProjectiles))
-					{
-						Main.projectile[e].originalDamage = dam;
 					}
 				}
 				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<DarksunTornado>()) < 2)

@@ -13,6 +13,7 @@ using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Summon;
+using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Typeless;
@@ -74,7 +75,11 @@ namespace CalRemix
 			ModContent.ProjectileType<SepulcherMinion>(),
 			ModContent.ProjectileType<CosmicEnergySpiral>(),
 			ModContent.ProjectileType<EndoCooperBody>(),
-			ModContent.ProjectileType<MagicUmbrella>()
+			ModContent.ProjectileType<MagicArrow>(),
+			ModContent.ProjectileType<MagicHammer>(),
+			ModContent.ProjectileType<MagicAxe>(),
+			ModContent.ProjectileType<MagicUmbrella>(),
+			ModContent.ProjectileType<MagicRifle>(),
 		};
 
 		public int[] abnormalEnemyList = // immune to effects like Moon Fist's instant kill
@@ -499,7 +504,7 @@ namespace CalRemix
 					if (!target.active || !target.Hitbox.Intersects(Utils.CenteredRectangle(Main.MouseWorld, new Vector2(35f, 62f))) || target.immortal || target.dontTakeDamage || target.townNPC || NPCID.Sets.ActsLikeTownNPC[target.type] || NPCID.Sets.CountsAsCritter[target.type])
 						continue;
 
-					target.AddBuff(ModContent.BuffType<DemonFlames>(), 1200);
+					target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 1200);
 				}
 			}
             #region stealth cuts

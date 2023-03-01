@@ -60,9 +60,9 @@ namespace CalRemix.Items.Accessories
             player.buffImmune[ModContent.BuffType<ArmorCrunch>()] = true;
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             calPlayer.amalgam = true;
-            calPlayer.aSparkRare = true;
+            calPlayer.transformer = true;
             calPlayer.aSpark = true;
-            calPlayer.aBulwarkRare = true;
+            calPlayer.hideOfDeus = true;
             calPlayer.nCore = true;
             modPlayer.godfather = true;
             player.GetDamage<GenericDamageClass>() += 0.15f;

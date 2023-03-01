@@ -62,15 +62,6 @@ namespace CalRemix.Items.Accessories
             player.luck += 0.2f;
             player.Calamity().thiefsDime = true;
             player.GetModPlayer<CalRemixPlayer>().roguebox = true;
-            if (player.whoAmI == Main.myPlayer)
-            {
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<ThiefsDimeProj>()] < 1)
-                {
-                    var source = player.GetSource_Accessory(Item);
-                    int damage = (int)player.GetTotalDamage<RogueDamageClass>().ApplyTo(290);
-                    Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<ThiefsDimeProj>(), damage, 6f, Main.myPlayer, 0f, 0f);
-                }
-            }
         }
         public override void AddRecipes()
         {
@@ -84,7 +75,6 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<SandCloak>(1).
                 AddIngredient<ScuttlersJewel>(1).
                 AddIngredient<SpectralVeil>(1).
-                AddIngredient<ThiefsDime>(1).
                 AddIngredient<AshesofAnnihilation>(5).
                 AddTile<CosmicAnvil>().
                 Register();

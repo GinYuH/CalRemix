@@ -124,7 +124,7 @@ namespace CalRemix.Items.Weapons
                 Item.shootSpeed = 16f;
                 Item.UseSound = CommonCalamitySounds.LargeWeaponFireSound; //literally vomit out every kind of bullet projectile I can think of
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<AccelerationRoundProj>(), damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<AcidRoundProj>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<BubonicRoundProj>(), damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<AMRShot>(), damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<AstralRound>(), damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<DragonsBreathRound>(), damage, knockback, player.whoAmI);

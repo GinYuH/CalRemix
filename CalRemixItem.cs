@@ -244,6 +244,7 @@ namespace CalRemix
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
+            RoverDrivePlayer roverPlayer = player.GetModPlayer<RoverDrivePlayer>();
             CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
             if (item.type == ModContent.ItemType<GrandGelatin>())
             {
@@ -265,7 +266,9 @@ namespace CalRemix
                 calplayer.flameLickedShell = true;
                 calplayer.permafrostsConcoction = true;
                 calplayer.aquaticHeart = true;
-                calplayer.roverDrive = true;
+                roverPlayer.RoverDriveOn = true;
+                roverPlayer.ShieldVisibility = (hideVisual ? new bool?(false) : null);
+                if (roverPlayer.ProtectionMatrixDurability > 0) player.statDefense += RoverDrive.ProtectionMatrixDefenseBoost;
             }
             if (item.type == ModContent.ItemType<AmbrosialAmpoule>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
@@ -334,7 +337,7 @@ namespace CalRemix
                 calplayer.uberBees = true;
                 calplayer.alchFlask = true;
                 calplayer.astralArcanum = true;
-                calplayer.projRefRare = true;
+                calplayer.evolution = true;
                 calplayer.affliction = true;
                 calplayer.oldDukeScales = true;
                 var source = player.GetSource_Accessory(item);

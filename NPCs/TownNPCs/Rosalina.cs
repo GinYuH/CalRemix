@@ -9,6 +9,7 @@ using Terraria.Localization;
 using ReLogic.Content;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
+using CalRemix.UI.TransmogrifyUI;
 
 namespace CalRemix.NPCs.TownNPCs
 {
@@ -133,7 +134,7 @@ namespace CalRemix.NPCs.TownNPCs
             CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Materials.NightmareFuel>(), Item.buyPrice(0, 12), ref shop, ref nextSlot, CalamityMod.DownedBossSystem.downedDoG);
             CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Materials.EndothermicEnergy>(), Item.buyPrice(0, 12), ref shop, ref nextSlot, CalamityMod.DownedBossSystem.downedDoG);
             CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Materials.DarksunFragment>(), Item.buyPrice(0, 12), ref shop, ref nextSlot, CalamityMod.DownedBossSystem.downedDoG);
-            CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Accessories.ProfanedSoulCrystal>(), 10, ref shop, ref nextSlot, CalamityMod.DownedBossSystem.downedExoMechs && CalamityMod.DownedBossSystem.downedSCal, 1);
+            CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Accessories.ProfanedSoulCrystal>(), 10, ref shop, ref nextSlot, CalamityMod.DownedBossSystem.downedExoMechs && CalamityMod.DownedBossSystem.downedCalamitas, 1);
             CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Ammo.HolyFireBullet>(), Item.buyPrice(0, 0, 20), ref shop, ref nextSlot);
             CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.Ammo.ElysianArrow>(), Item.buyPrice(0, 20), ref shop, ref nextSlot);
             CalRemix.AddToShop(ModContent.ItemType<CalamityMod.Items.SummonItems.RuneofKos>(), Item.buyPrice(2), ref shop, ref nextSlot);
@@ -151,7 +152,61 @@ namespace CalRemix.NPCs.TownNPCs
                 shop = true;
             } else
             {
-                Main.npcChatText = "Ah, sorry... I forgot to tell you that this isn't implemented yet. Come back later, okay?";
+                Player player = Main.LocalPlayer;
+                if (CalRemixWorld.transmogrifyingItem >= 0 && CalRemixWorld.transmogrifyTimeLeft <= 0)
+                {
+                    Main.npcChatText = $"Alright, all transmogrified! Hopefully I'll have a UI soon?";
+                    Item.NewItem(NPC.GetSource_Loot(), player.Hitbox, CalRemixWorld.transmogrifyingItem, CalRemixWorld.transmogrifyingItemAmt);
+                    CalRemixWorld.transmogrifyingItem = -1;
+                    CalRemixWorld.transmogrifyingItemAmt = 0;
+                }
+                else if (CalRemixWorld.transmogrifyTimeLeft > 0)
+                {
+                    if (CalRemixWorld.transmogrifyTimeLeft >= 1200) Main.npcChatText = $"Your item isn't quite transmogrified yet. Check back in {CalRemixWorld.transmogrifyTimeLeft / 1200} " + (CalRemixWorld.transmogrifyTimeLeft <= 1200 ? "minute" : "minutes")
+                             + $" and {(int)((CalRemixWorld.transmogrifyTimeLeft % 1200) / 20)} " + (CalRemixWorld.transmogrifyTimeLeft >= 20 && CalRemixWorld.transmogrifyTimeLeft <= 40 ? "second" : "seconds") + ".";
+                    else Main.npcChatText = $"Your item isn't quite transmogrified yet. Check back in {CalRemixWorld.transmogrifyTimeLeft % 1200 / 20} " + (CalRemixWorld.transmogrifyTimeLeft >= 20 && CalRemixWorld.transmogrifyTimeLeft <= 40 ? "second" : "seconds") + ".";
+                }
+                else
+                {
+                    for (int i = 0; i < 58; i++)
+                    {
+                        Item item = player.inventory[i];
+                        if (item.type.CanTransmogrify())
+                        {
+                            int z = item.type;
+                            for (int j = 0; j < 58; j++)
+                            {
+                                Item catalyst = player.inventory[j];
+                                if (catalyst.type.CanServeAsCatalystFor(z))
+                                {
+                                    Main.NewText("SEX!");
+                                    TransmogrifyRecipe recipe = TransmogrifyManager.GetRecipe(z, catalyst.type);
+                                    CalRemixWorld.transmogrifyingItem = recipe.result;
+                                    CalRemixWorld.transmogrifyingItemAmt = recipe.resultAmount;
+                                    CalRemixWorld.transmogrifyTimeLeft = recipe.time;
+                                    player.ConsumeStack(z, 1);
+                                    player.ConsumeStack(catalyst.type, recipe.catalystAmount);
+                                    if (recipe.time > 0)
+                                    {
+                                        Main.npcChatText = "I'll just take those items for you... hey, don't blame me! I don't have a proper transmogrification UI set up yet. Check back later.";
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        Main.npcChatText = "Surprise! Instant transmogrification. Truly fascinating, huh? ... anyways, anything else you need?";
+                                        Item.NewItem(NPC.GetSource_Loot(), player.Hitbox, CalRemixWorld.transmogrifyingItem, CalRemixWorld.transmogrifyingItemAmt);
+                                        CalRemixWorld.transmogrifyingItem = -1;
+                                        CalRemixWorld.transmogrifyingItemAmt = 0;
+                                        return;
+                                    }
+                                }
+                            }
+                            Main.npcChatText = $"Your {item.Name} can be transmogrified, but I need a catalyst for that!";
+                            return;
+                        }
+                    }
+                    Main.npcChatText = "It doesn't look like you have anything that can be transmogrified right now...";
+                }
             }
         }
     }

@@ -29,6 +29,10 @@ namespace CalRemix
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
 
+        public static int transmogrifyingItem = -1;
+        public static int transmogrifyingItemAmt = 0;
+        public static int transmogrifyTimeLeft = 0;
+
         public static void UpdateWorldBool()
         {
             if (Main.netMode == NetmodeID.Server)
@@ -42,13 +46,21 @@ namespace CalRemix
             downedExcavator = false;
             guideHasExisted = false;
             deusDeadInSnow = false;
-        }
+
+            transmogrifyingItem = -1;
+            transmogrifyingItemAmt = 0;
+            transmogrifyTimeLeft = 0;
+    }
         public override void OnWorldUnload()
         {
             downedDerellect = false;
             downedExcavator = false;
             guideHasExisted = false;
             deusDeadInSnow = false;
+
+            transmogrifyingItem = -1;
+            transmogrifyingItemAmt = 0;
+            transmogrifyTimeLeft = 0;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -56,6 +68,10 @@ namespace CalRemix
             tag["downedExcavator"] = downedExcavator;
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
+
+            tag["transmogrifyingItem"] = transmogrifyingItem;
+            tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
+            tag["transmogrifyTimeLeft"] = transmogrifyTimeLeft;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -64,6 +80,10 @@ namespace CalRemix
             downedExcavator = tag.Get<bool>("downedExcavator");
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
+
+            transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
+            transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
+            transmogrifyTimeLeft = tag.Get<int>("transmogrifyTimeLeft");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -72,6 +92,10 @@ namespace CalRemix
             writer.Write(downedExcavator);
             writer.Write(guideHasExisted);
             writer.Write(deusDeadInSnow);
+
+            writer.Write(transmogrifyingItem);
+            writer.Write(transmogrifyingItemAmt);
+            writer.Write(transmogrifyTimeLeft);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -80,6 +104,10 @@ namespace CalRemix
             downedExcavator = reader.ReadBoolean();
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
+
+            transmogrifyingItem = reader.ReadInt32();
+            transmogrifyingItemAmt = reader.ReadInt32();
+            transmogrifyTimeLeft = reader.ReadInt32();
         }
 
         List<int> hallowlist = new List<int>
@@ -115,6 +143,8 @@ namespace CalRemix
             {
                 ShrineTimer--;
             }
+            if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
+            if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
         }
 
         public override void ResetNearbyTileEffects()

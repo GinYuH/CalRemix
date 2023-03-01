@@ -69,7 +69,7 @@ public class TheDreamingGhost : ModItem
     {
         CreateRecipe().
             AddIngredient<ResurrectionButterfly>(1).
-            AddIngredient<EnergyStaff>(1).
+            AddIngredient<SanctifiedSpark>(1).
             AddIngredient<YharonSoulFragment>(15).
             AddIngredient<CosmiliteBar>(20).
             AddTile<CosmicAnvil>().

@@ -1,6 +1,7 @@
 ﻿using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.CalPlayer;
+using CalamityMod.CalPlayer.Dashes;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Items;
 using static Terraria.ModLoader.ModContent;
@@ -59,9 +60,9 @@ namespace CalRemix.Items.Accessories
             player.statManaMax2 += 30;
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             calPlayer.amalgam = true;
-            calPlayer.aSparkRare = true;
+            calPlayer.transformer = true;
             calPlayer.aSpark = true;
-            calPlayer.aBulwarkRare = true;
+            calPlayer.hideOfDeus = true;
             calPlayer.nCore = true;
             modPlayer.godfather = true;
             modPlayer.tvo = true;
@@ -76,7 +77,13 @@ namespace CalRemix.Items.Accessories
             calPlayer.draedonsHeart = true;
             calPlayer.blazingCursorDamage = true;
             calPlayer.blazingCursorVisuals = true;
-            calPlayer.statisBeltOfCurses = true;
+            player.autoJump = true;
+            player.jumpSpeedBoost += 0.6f;
+            player.noFallDmg = true;
+            player.blackBelt = true;
+            calPlayer.DashID = StatisVoidSashDash.ID;
+            player.dashType = 0;
+            player.spikedBoots = 2;
             calPlayer.elysianAegis = true;
             calPlayer.aAmpoule = true;
             calPlayer.laudanum = true;
@@ -266,14 +273,6 @@ namespace CalRemix.Items.Accessories
             if (!hideVisual)
             player.Calamity().thiefsDime = true;
             player.GetModPlayer<CalRemixPlayer>().roguebox = true;
-            if (player.whoAmI == Main.myPlayer)
-            {
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<ThiefsDimeProj>()] < 1 && !hideVisual)
-                {
-                    int damage = (int)player.GetTotalDamage<RogueDamageClass>().ApplyTo(290);
-                    Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<ThiefsDimeProj>(), damage, 6f, Main.myPlayer, 0f, 0f);
-                }
-            }
             calPlayer.eGauntlet = true;
             player.kbGlove = true;
             player.autoReuseGlove = true;
@@ -329,9 +328,6 @@ namespace CalRemix.Items.Accessories
                     ModContent.ProjectileType<WaterElementalMinion>(),
                     ModContent.ProjectileType<PlaguePrincess>(),
                     ModContent.ProjectileType<YoungDuke>(),
-                    ModContent.ProjectileType<GladiatorSword>(),
-                    ModContent.ProjectileType<GladiatorSword2>(),
-                    ModContent.ProjectileType<ThiefsDimeProj>(),
                     ModContent.ProjectileType<CryonicShield>()
                 };
                 for (int i = 0; i < Main.maxProjectiles; i++)
@@ -382,14 +378,6 @@ namespace CalRemix.Items.Accessories
                     int p = Projectile.NewProjectile(source, player.Center, velocity, thomas, elementalDmg, kBack, player.whoAmI);
                     if (Main.projectile.IndexInRange(p))
                         Main.projectile[p].originalDamage = 290;
-                }
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<GladiatorSword>()] < 1)
-                {
-                    var sword = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSword>(), swordDmg, 2f, Main.myPlayer);
-                    sword.originalDamage = baseDamage;
-
-                    sword = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSword2>(), swordDmg, 2f, Main.myPlayer);
-                    sword.originalDamage = baseDamage;
                 }
                 if (player.ownedProjectileCounts[ProjectileType<HowlsHeartHowl>()] < 1)
                 {
