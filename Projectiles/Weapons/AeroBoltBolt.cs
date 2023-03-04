@@ -38,7 +38,7 @@ namespace CalRemix.Projectiles.Weapons
             }
             if (Projectile.velocity.Y != oldVelocity.Y)
             {
-                Projectile.velocity.X = -oldVelocity.X;
+                Projectile.velocity.Y = -oldVelocity.Y;
                 Projectile.penetrate--;
             }
             if (Projectile.penetrate < 1)
