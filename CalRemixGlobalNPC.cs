@@ -93,14 +93,27 @@ namespace CalRemix
 
         public override bool PreAI(NPC npc)
         {
-            if (SlimeBoost && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().godfather)
+            CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
+
+            bool assortgel = player.assortegel;
+            bool amalgam = player.amalgel;
+            bool godfather = player.godfather;
+            bool tvo = player.tvo;
+
+            bool bossrush = CalamityMod.Events.BossRushEvent.BossRushActive;
+            bool normalSlime = Slimes.Contains(npc.type);
+            bool bossSlime = BossSlimes.Contains(npc.type);
+
+            // Kill passive slimes if none of the accessories are on
+            if (npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost && !assortgel && !amalgam && !godfather)
             {
                 npc.active = false;
                 return false;
             }
-            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().godfather && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            // Godfather causes slimes to try to assimilate into goozma
+            if (godfather && !bossrush)
             {
-                if ((Slimes.Contains(npc.type) || BossSlimes.Contains(npc.type)))
+                if (normalSlime || bossSlime)
                 {
                     if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
                     {
@@ -125,13 +138,15 @@ namespace CalRemix
                     }
                 }
             }
+            // Behavior if you DONT have godfather
             else
             {
-                if (Slimes.Contains(npc.type) && (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel || Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel))
+                // If other passive slime accessories, and the slime isn't a boss, target the player's target
+                if (normalSlime && (assortgel || amalgam))
                 {
                     if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
                     {
-                        if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel)
+                        if (amalgam)
                         {
                             npc.lifeMax = (int)(npc.lifeMax * 22f);
                             npc.damage = (int)(npc.damage * 12f);
@@ -162,9 +177,9 @@ namespace CalRemix
                         NPC target = Main.npc[i];
                         Rectangle thisrect = npc.getRect();
                         Rectangle theirrect = target.getRect();
-                        if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type))
+                        if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !normalSlime)
                         {
-                            if (BossSlimes.Contains(target.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel)
+                            if (bossSlime && amalgam)
                             {
 
                             }
@@ -179,7 +194,8 @@ namespace CalRemix
 
                     }
                 }
-                if (BossSlimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+                // If it's a boss and you have gemalgamation, attack enemies
+                if (bossSlime && amalgam && !assortgel && !bossrush)
                 {
                     if (!npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost)
                     {
@@ -210,7 +226,7 @@ namespace CalRemix
                         NPC target = Main.npc[i];
                         Rectangle thisrect = npc.getRect();
                         Rectangle theirrect = target.getRect();
-                        if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !BossSlimes.Contains(target.type))
+                        if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !bossSlime)
                         {
                             target.StrikeNPC(npc.damage, 0, 0);
                             target.immune[npc.whoAmI] = 10;
@@ -221,17 +237,19 @@ namespace CalRemix
                     }
                     return false;
                 }
-                else if (BossSlimes.Contains(npc.type) && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().assortegel && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().amalgel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+                // if it's a boss and you have assortagelatin, do nothing and become passive
+                else if (bossSlime && assortgel && !amalgam && !bossrush)
                 {
                     npc.damage = 0;
-                    if (npc.type == ModContent.NPCType<SlimeGodCore>() && NPC.CountNPCS(ModContent.NPCType<CrimulanSlimeGod>()) < 1
-                        && NPC.CountNPCS(ModContent.NPCType<SplitCrimulanSlimeGod>()) < 1
-                        && NPC.CountNPCS(ModContent.NPCType<EbonianSlimeGod>()) < 1
-                        && NPC.CountNPCS(ModContent.NPCType<SplitEbonianSlimeGod>()) < 1)
+                    // slime god is specifically excluded because hes stupid and i hate him
+                    if (npc.type == ModContent.NPCType<SlimeGodCore>())
                     {
                         return true;
                     }
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
@@ -251,7 +269,7 @@ namespace CalRemix
             {
                 npc.localAI[1] = 0;
             }
-            if (npc.type == ModContent.NPCType<AureusSpawn>() && modPlayer.nuclegel || modPlayer.assortegel && !CalamityMod.Events.BossRushEvent.BossRushActive)
+            if (npc.type == ModContent.NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;
             }

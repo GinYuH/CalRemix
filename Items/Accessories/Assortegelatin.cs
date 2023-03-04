@@ -39,6 +39,7 @@ namespace CalRemix.Items.Accessories
             modPlayer.nuclegel = true;
             modPlayer.assortegel = true;
             calPlayer.royalGel = true;
+
             if (!CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 player.npcTypeNoAggro[NPCType<CrimsonSlimeSpawn>()] = true;

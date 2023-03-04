@@ -57,15 +57,19 @@ namespace CalRemix.Projectiles.Accessories
         {
             if (latching)
             {
+                // A valid target that can take damage and is homable
                 if (ntarget.active && ntarget != null && !ntarget.dontTakeDamage && ntarget.chaseable)
                 {
+                    // If the player has a targer that isn't the minion's target, detatch
                     if (Main.player[Projectile.owner].MinionAttackTargetNPC > 0 && Main.player[Projectile.owner].MinionAttackTargetNPC != ntarget.whoAmI)
                     {
                         latching = false;
                     }
+                    // else lock onto em!
                     Projectile.position = ntarget.Center;
                     Projectile.velocity = ntarget.velocity;
                 }
+                // else stop latching
                 else
                 {
                     latching = false;
@@ -74,6 +78,7 @@ namespace CalRemix.Projectiles.Accessories
             Player player = Main.player[Projectile.owner];
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             bool nubert = Projectile.type == ModContent.ProjectileType<NucleateGelloMinion>();
+            // you can't stack nuclegel 
             if (!modPlayer.nuclegel)
             {
                 Projectile.active = false;
@@ -90,6 +95,8 @@ namespace CalRemix.Projectiles.Accessories
                     Projectile.timeLeft = 2;
                 }
             }
+            Projectile.frame = 0;
+            Projectile.frameCounter = 0;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
