@@ -182,7 +182,7 @@ namespace CalRemix.Projectiles.Accessories
         public override void PostDraw(Color lightColor)
         {
             Texture2D deusheadsprite;
-            deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/EarthElementalArm").Value);
+            deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/EarthElementalArm").Value);
             Rectangle deusheadsquare = new Rectangle(0, 0, deusheadsprite.Width, deusheadsprite.Height);
             Color deusheadalpha = Projectile.GetAlpha(lightColor);
             float rotcounter = Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900 ? -Projectile.localAI[0] * 0.2f * Projectile.localAI[1] : 0;

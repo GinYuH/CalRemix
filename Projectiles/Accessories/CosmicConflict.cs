@@ -282,7 +282,7 @@ namespace CalRemix.Projectiles.Accessories
         {
             Texture2D deusheadsprite;
             Player player = Main.player[Projectile.owner];
-            deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/EarthElementalArm").Value);
+            deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/EarthElementalArm").Value);
             Color deusheadalpha = Color.White;
             float size = 1;
             for (int i = 0; i < 5; i++)
@@ -290,39 +290,39 @@ namespace CalRemix.Projectiles.Accessories
                 switch (i)
                 {
                     case 0:
-                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/CosmicCrystal_Air").Value);
+                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/CosmicCrystal_Air").Value);
                         if (Projectile.localAI[0] < 300 && player.HasMinionAttackTargetNPC)
                         {
                             size = 1.5f;
                         }
                         break;
                     case 1:
-                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/CosmicCrystal_Ice").Value);
+                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/CosmicCrystal_Ice").Value);
                         if (Projectile.localAI[0] >= 300 && Projectile.localAI[0] < 600 && player.HasMinionAttackTargetNPC)
                         {
                             size = 1.5f;
                         }
                         break;
                     case 2:
-                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/CosmicCrystal_Earth").Value);
+                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/CosmicCrystal_Earth").Value);
                         size = 1.25f;
                         break;
                     case 3:
-                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/CosmicCrystal_Fire").Value);
+                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/CosmicCrystal_Fire").Value);
                         if (Projectile.localAI[0] >= 900 && Projectile.localAI[0] < 1200 && player.HasMinionAttackTargetNPC)
                         {
                             size = 1.5f;
                         }
                         break;
                     case 4:
-                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/CosmicCrystal_Nature").Value);
+                        deusheadsprite = (ModContent.Request<Texture2D>("CalRemix/Projectiles/Accessories/CosmicCrystal_Nature").Value);
                         if (Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900 && player.HasMinionAttackTargetNPC)
                         {
                             size = 1.5f;
                         }
                         break;
                     default:
-                        deusheadsprite = (ModContent.Request<Texture2D>("CalamityMod/Projectiles/InvisibleProj").Value);
+                        deusheadsprite = (ModContent.Request<Texture2D>("CalamityMod/Projectiles/Accessories/InvisibleProj").Value);
                         break;
                 }
 

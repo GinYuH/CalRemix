@@ -26,7 +26,7 @@ namespace CalRemix.Items.Accessories
             "100 % increased true melee damage\n" +
             "Temporary immunity to lava\n" +
             "Increased melee knockback\n" +
-            "Triples Yoyos, spawns 5 Counterweights, and quadruples yoyo range");
+            "Yoyo bag effects");
         }
 
         public override void SetDefaults()

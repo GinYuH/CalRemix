@@ -428,6 +428,10 @@ namespace CalRemix
                     binaryWriter.Write(npc.Calamity().newAI[i]);
                 }
             }
+            if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
+            {
+                binaryWriter.Write(npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost);
+            }
         }
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
         {
@@ -439,6 +443,10 @@ namespace CalRemix
                 {
                     npc.Calamity().newAI[i] = binaryReader.ReadSingle();
                 }
+            }
+            if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
+            {
+                npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = binaryReader.ReadBoolean();
             }
         }
         public override void FindFrame(NPC npc, int frameHeight)
