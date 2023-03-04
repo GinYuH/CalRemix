@@ -85,7 +85,7 @@ namespace CalRemix.NPCs.Bosses
             NPC.frameCounter %= Main.npcFrameCount[NPC.type];
             int frame = (int)NPC.frameCounter;
             NPC.frame.Y = frame * frameHeight;
-            NPC head = Main.npc[NPC.realLife];
+            NPC head = Main.npc[CalRemixGlobalNPC.wulfyrm];
             if (head.ModNPC<WulfrumExcavatorHead>().PylonCharged == true) // Handles Pylon charge sprites.
             {
                 NPC.frame.Y = 1 * frameHeight;

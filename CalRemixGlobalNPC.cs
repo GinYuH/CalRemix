@@ -45,6 +45,7 @@ namespace CalRemix
         public float shadowHit = 1;
         private bool useDefenseFrames;
         private int frameUsed;
+        public static int wulfyrm = -1;
         public override bool InstancePerEntity
         {
             get

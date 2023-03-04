@@ -24,7 +24,7 @@ namespace CalRemix
             cal.Call("RegisterModCooldowns", this);
             cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
-            cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
+            /*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
 			{
 				Mod bossChecklist;
@@ -50,7 +50,7 @@ namespace CalRemix
 				null
 				});
 				}
-			}
+			}*/
             cal.Call("CreateEnchantment", "Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
             {
                 player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;

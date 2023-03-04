@@ -344,10 +344,13 @@ namespace CalRemix
 
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
-            exc = Main.npc[1];
-            if (projectile.type == ModContent.ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfrumExcavatorHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile
+            if (NPC.AnyNPCs(ModContent.NPCType<WulfrumExcavatorHead>()))
             {
-                hyperCharged = true;
+                NPC exc = Main.npc[CalRemixGlobalNPC.wulfyrm];
+                if (projectile.type == ModContent.ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfrumExcavatorHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile
+                {
+                    hyperCharged = true;
+                }
             }
         }
 

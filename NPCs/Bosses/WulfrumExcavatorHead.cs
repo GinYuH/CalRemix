@@ -162,6 +162,7 @@ namespace CalRemix.NPCs.Bosses
 
         public override void AI()
         {
+            CalRemixGlobalNPC.wulfyrm = NPC.whoAmI;
             if (Main.getGoodWorld)
             {
                 this.SegmentCount *= 3;
