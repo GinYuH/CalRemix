@@ -43,12 +43,27 @@ namespace CalRemix.Projectiles.Weapons
             if (Projectile.type != ModContent.ProjectileType<PinkCrystallineButterfly>())
                 return;
 
+            int frameGate = 6;
+
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > frameGate)
+            {
+                Projectile.frame++;
+                Projectile.frameCounter = 0;
+            }
+            if (Projectile.frame >= 3)
+            {
+                Projectile.frame = 0;
+            }
+
             if (Owner.dead)
                 Owner.GetModPlayer<CalRemixPlayer>().dreamingGhost = false;
             if (Owner.GetModPlayer<CalRemixPlayer>().dreamingGhost)
                 Projectile.timeLeft = 2;
             if (Owner.Center.Distance(Projectile.Center) > 450)
+            {
                 Projectile.aiStyle = ProjAIStyleID.MiniTwins;
+            }
             else
             {
                 Projectile.aiStyle = -1;
@@ -69,13 +84,6 @@ namespace CalRemix.Projectiles.Weapons
             else
             {
                 Projectile.spriteDirection = Owner.position.X - Projectile.position.X >= 0 ? -1 : 1;
-            }
-
-            Projectile.frameCounter++;
-            Projectile.frame = Projectile.frameCounter;
-            if (Projectile.frameCounter >= 3)
-            {
-                Projectile.frameCounter = 0;
             }
         }
         public override bool? CanDamage()

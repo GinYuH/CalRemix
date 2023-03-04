@@ -100,16 +100,16 @@ namespace CalRemix.Projectiles.Weapons
                 int num = Main.rand.Next(30, 47);
                 for (int i = 0; i < num; i++)
                 {
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)), ModContent.ProjectileType<CoralShard>(), Projectile.damage / 100, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 12, ModContent.ProjectileType<CoralShard>(), Projectile.damage / 100, Projectile.knockBack, Projectile.owner);
                 }
-                SoundEngine.PlaySound(SoundID.Item92, Projectile.position);
+                SoundEngine.PlaySound(CalamityMod.NPCs.SunkenSea.GiantClam.SlamSound, Projectile.position);
             }
             else if (Projectile.ai[1] < 45f && Projectile.ai[0] < 1f)
             {
                 int num = Main.rand.Next(58, 73);
                 for (int i = 0; i < num; i++)
                 {
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)), ModContent.ProjectileType<CoralShard>(), Projectile.damage / 700, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 12, ModContent.ProjectileType<CoralShard>(), Projectile.damage / 700, Projectile.knockBack, Projectile.owner);
                 }
                 SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             }
@@ -166,7 +166,7 @@ namespace CalRemix.Projectiles.Weapons
                 int num = Main.rand.Next(30, 47);
                 for (int i = 0; i < num; i++)
                 {
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)), ModContent.ProjectileType<CoralShard>(), Projectile.damage / 100, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 12, ModContent.ProjectileType<CoralShard>(), Projectile.damage / 100, Projectile.knockBack, Projectile.owner);
                 }
                 SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             }
@@ -175,9 +175,9 @@ namespace CalRemix.Projectiles.Weapons
                 int num = Main.rand.Next(58, 73);
                 for (int i = 0; i < num; i++)
                 {
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)), ModContent.ProjectileType<CoralShard>(), Projectile.damage / 700, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 12, ModContent.ProjectileType<CoralShard>(), Projectile.damage / 700, Projectile.knockBack, Projectile.owner);
                 }
-                SoundEngine.PlaySound(SoundID.Item92, Projectile.position);
+                SoundEngine.PlaySound(CalamityMod.NPCs.SunkenSea.GiantClam.SlamSound, Projectile.position);
             }
             Projectile.ai[0] = 1f;
             Projectile.netUpdate = true;

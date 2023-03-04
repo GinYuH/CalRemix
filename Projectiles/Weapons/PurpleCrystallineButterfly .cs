@@ -56,12 +56,16 @@ namespace CalRemix.Projectiles.Weapons
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(npc.Center) * 20f, ModContent.ProjectileType<SakuraBullet>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
                 }
             }
-            Projectile.spriteDirection = Projectile.direction;
+            Projectile.spriteDirection = Projectile.velocity.X > 0 ? 1 : -1;
             Projectile.frameCounter++;
-            Projectile.frame = Projectile.frameCounter;
-            if (Projectile.frameCounter >= 3)
+            if (Projectile.frameCounter > 6)
             {
+                Projectile.frame++;
                 Projectile.frameCounter = 0;
+            }
+            if (Projectile.frame >= 3)
+            {
+                Projectile.frame = 0;
             }
         }
     }
