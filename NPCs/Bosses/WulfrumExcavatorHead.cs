@@ -735,9 +735,10 @@ namespace CalRemix.NPCs.Bosses
 
             if (Main.expertMode)
             {
+                if (NPC.CountNPCS(ModContent.NPCType<WulfrumGyrator>()) + NPC.CountNPCS(ModContent.NPCType<WulfrumDrone>()) < 4 )
                 for (int i = 0; i < summonCount; i++) // Randomly chooses a wulfrum droid to spawn.
                 {
-                    int choice = Main.rand.Next(9);
+                    int choice = Main.rand.Next(10);
                     switch (choice)
                     {
                         case 0 or 1:
