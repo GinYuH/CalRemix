@@ -139,7 +139,7 @@ namespace CalRemix
                     {
                         if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= 4)
                         {
-                            if (Main.tile[x, y].TileType == TileID.Stone)
+                            if (Main.tile[x, y].TileType == TileID.Stone || Main.tile[x, y].TileType == TileID.IceBlock)
                             {
                                 Main.tile[x, y].TileType = (ushort)type;
                             }
