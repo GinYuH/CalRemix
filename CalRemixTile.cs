@@ -40,7 +40,7 @@ namespace CalRemix
 				else if (Main.rand.NextBool(20))
 					Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), Main.LocalPlayer.getRect(), ModContent.ItemType<EtherealCore>());
 			}
-            if (type == TileID.Containers)
+            if (type == TileID.Containers && Main.tile[i,j].TileFrameX == 432 || Main.tile[i,j].TileFrameX == 450)
             {
                 for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
                 {
