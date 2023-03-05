@@ -50,8 +50,12 @@ namespace CalRemix
                         if (NPC.CountNPCS(ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>()) < 1 && cheste.item[0].type == ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[0].stack == 1 && cheste.item[1].type == ItemID.None)
                         {
                             cheste.item[0].stack = 0;
-                            NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16 + 300, ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>());
-                            Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar);
+                            int guy = NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16 + 600, ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>());
+                            Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
+                            if (guy.WithinBounds(Main.maxNPCs))
+                            {
+                                Main.npc[guy].velocity.Y = -20;
+                            }
                         }
                     }
                 }
