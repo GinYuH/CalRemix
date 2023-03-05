@@ -49,10 +49,16 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.velocity *= 0.5f;
             target.AddBuff(ModContent.BuffType<CrushDepth>(), 240);
             target.AddBuff(BuffID.Electrified, 240);
+            float startDist = Main.rand.NextFloat(260f, 270f);
+            Vector2 startDir = Main.rand.NextVector2Unit();
+            Vector2 startPoint = target.Center + (startDir * startDist);
+
+            float echoSpeed = Main.rand.NextFloat(15f, 18f);
+            Vector2 velocity = startDir * (-echoSpeed);
             if (Projectile.owner == Main.myPlayer)
             {
-                Projectile proj = CalamityUtils.ProjectileBarrage(Projectile.GetSource_FromThis(), Projectile.Center, target.Center, Main.rand.NextBool(), 256f, 256f, 256f, 256f, Main.rand.NextFloat(25f, 25f), ModContent.ProjectileType<EidolicWailSoundwave>(), Projectile.damage / 3, Projectile.knockBack * 0.5f, Projectile.owner);
-                proj.tileCollide = false;
+                Projectile proj = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromAI(), startPoint, velocity, ModContent.ProjectileType<EidolicWailSoundwave>(), Projectile.damage / 3, Projectile.knockBack / 2, Projectile.owner)];
+                 proj.tileCollide = false;
                 proj.timeLeft = 60;
                 proj.scale = 1f;
                 proj.localAI[0] = 1f;
