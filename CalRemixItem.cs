@@ -31,7 +31,7 @@ namespace CalRemix
     {
         public override void SetDefaults(Item item)
         {
-            if (item.type == ModContent.ItemType<GildedProboscis>())
+            /*if (item.type == ModContent.ItemType<GildedProboscis>())
             {
                 item.damage = item.damage / 4;
                 item.rare = ItemRarityID.LightRed;
@@ -41,7 +41,7 @@ namespace CalRemix
                 item.damage = item.damage / 2;
                 item.rare = ItemRarityID.LightRed;
             }
-            else if (item.type == ModContent.ItemType<PearlShard>())
+            else*/ if (item.type == ModContent.ItemType<PearlShard>())
             {
                 item.SetNameOverride("Conquest Fragment");
                 item.rare = ItemRarityID.Orange;
@@ -63,16 +63,13 @@ namespace CalRemix
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            TooltipLine name = tooltips.FirstOrDefault(x => x.Mod == "Terraria" && x.Name == "ItemName");
             if (item.type == ModContent.ItemType<PearlShard>())
             {
-                name.Text = "Conquest Fragment";
                 var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
-                name.Text = "Phantomic Soul Artifact";
                 var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
                 tooltips.Add(line);
             }
@@ -253,10 +250,10 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
-            if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
+            /*if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
             {
                 item.active = false;
-            }
+            }*/
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -270,11 +267,11 @@ namespace CalRemix
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
                 //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
             }
-            else if (item.type == ModContent.ItemType<DragonfollyBag>())
+            /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
                 //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<EffulgentFeather>(), 1, 30, 35));
-            }
+            }*/
         }
 
 

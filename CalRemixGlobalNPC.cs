@@ -266,10 +266,10 @@ namespace CalRemix
             {
                 npc.active = false;
             }
-            if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
+            /*if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
             {
                 npc.localAI[1] = 0;
-            }
+            }*/
             if (npc.type == ModContent.NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;
@@ -319,7 +319,7 @@ namespace CalRemix
             {
                 npc.GivenName = "Calamity Heart";
             }
-            else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npc.damage = 80;
                 npc.lifeMax = 58500;
@@ -330,7 +330,7 @@ namespace CalRemix
             {
                 npc.damage = 60;
                 npc.lifeMax = 3375;
-            }
+            }*/
             else if (npc.type == ModContent.NPCType<SlimeGodCore>())
             {
                 TextureAssets.Npc[npc.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/SlimeGod/SlimeGodCore");
@@ -348,12 +348,12 @@ namespace CalRemix
                 npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
             }
-            else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
-            else if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
+            else */if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
             }
