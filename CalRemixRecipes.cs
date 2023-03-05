@@ -96,10 +96,10 @@ namespace CalRemix
             AlcoholRecipe(ModContent.ItemType<Whiskey>(), ItemID.Ale, ItemID.BottledWater, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ModContent.ItemType<WhiteWine>(), ModContent.ItemType<NotFabsolVodka>(), ItemID.Grapes, ModContent.ItemType<HallowedOre>(), 30, 1);
             // Candles
-            CandleRecipe(ModContent.ItemType<ResilientCandle>(), ItemID.SoulofNight, 445, ModContent.ItemType<EssenceofSunlight>(), 444);
+            CandleRecipe(ModContent.ItemType<ResilientCandle>(), ItemID.SoulofNight, 445, ModContent.ItemType<EssenceofBabil>(), 444);
             CandleRecipe(ModContent.ItemType<SpitefulCandle>(), ModContent.ItemType<EssenceofSunlight>(), 1098, ModContent.ItemType<EssenceofHavoc>(), 987);
             CandleRecipe(ModContent.ItemType<VigorousCandle>(), ItemID.SoulofLight, 277, ModContent.ItemType<EssenceofSunlight>(), 128);
-            CandleRecipe(ModContent.ItemType<VigorousCandle>(), ItemID.SoulofFlight, 3422, ModContent.ItemType<EssenceofEleum>(), 357);
+            CandleRecipe(ModContent.ItemType<WeightlessCandle>(), ItemID.SoulofFlight, 3422, ModContent.ItemType<EssenceofEleum>(), 357);
             // Bloody Mary exception
             {
                 Recipe recipe = Recipe.Create(ModContent.ItemType<BloodyMary>(), 5);
@@ -171,6 +171,10 @@ namespace CalRemix
                     recipe.DisableRecipe();
                 }
                 if (recipe.HasResult(ModContent.ItemType<PhantomHeart>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<DesertMedallion>()))
                 {
                     recipe.DisableRecipe();
                 }
@@ -261,10 +265,6 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<RuinousSoul>(), 5);
                     recipe.AddIngredient(ModContent.ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
-                }
-                if (recipe.HasResult(ModContent.ItemType<ResilientCandle>()))
-                {
-                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 444);
                 }
                 if (recipe.HasResult(ModContent.ItemType<StormfrontRazor>()))
                 {

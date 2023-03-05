@@ -24,7 +24,7 @@ namespace CalRemix
             cal.Call("RegisterModCooldowns", this);
             cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
-            /*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
+			/*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
 			{
 				Mod bossChecklist;
@@ -51,7 +51,32 @@ namespace CalRemix
 				});
 				}
 			}*/
-            cal.Call("CreateEnchantment", "Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
+			{
+				Mod bossChecklist;
+				ModLoader.TryGetMod("BossChecklist", out bossChecklist);
+				if (bossChecklist != null)
+				{
+					bossChecklist.Call(new object[12]
+				{
+				"AddBoss",
+				0.22f,
+				ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>(),
+				this,
+				"Wulfrum Excavator",
+				(Func<bool>)(() => CalRemixWorld.downedExcavator),
+				ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>(),
+				null,
+				new List<int>
+				{
+					ModLoader.GetMod("CalamityMod").Find<ModItem>("BloodyVein").Type
+				},
+				$"Open a [i:{Terraria.ID.ItemID.LivingWoodChest}] that has nothing inside but 1 [i:{ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>()}] in its first slot.",
+				"The old excavator has successfully harvested every player.",
+				null
+				});
+				}
+			}
+			cal.Call("CreateEnchantment", "Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
             {
                 player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
             });

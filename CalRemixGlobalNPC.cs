@@ -6,6 +6,7 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
+using CalamityMod.Items.SummonItems;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AdultEidolonWyrm;
@@ -377,6 +378,11 @@ namespace CalRemix
             else if (npc.type == ModContent.NPCType<Horse>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<RockStone>(), 5, 3));
+            }
+            else if (npc.type == ModContent.NPCType<Cnidrion>())
+            {
+                LeadingConditionRule postDS = npcLoot.DefineConditionalDropSet(() => CalRemixWorld.downedExcavator);
+                postDS.Add(ModContent.ItemType<DesertMedallion>(), 1, hideLootReport: !CalRemixWorld.downedExcavator);
             }
             if (npc.boss && bossKillcount > 5)
             {
