@@ -736,23 +736,30 @@ namespace CalRemix.NPCs.Bosses
                 if (NPC.CountNPCS(ModContent.NPCType<WulfrumGyrator>()) + NPC.CountNPCS(ModContent.NPCType<WulfrumDrone>()) < 4 )
                 for (int i = 0; i < summonCount; i++) // Randomly chooses a wulfrum droid to spawn.
                 {
+                    int type = ModContent.NPCType<WulfrumGyrator>();
                     int choice = Main.rand.Next(10);
                     switch (choice)
                     {
                         case 0 or 1:
-                            NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfrumDrone>(), NPC.whoAmI);
+                            type = ModContent.NPCType<WulfrumDrone>();
                             break;
                         case 2 or 3 or 4 or 5 or 6 or 7 or 8: // Gyrator is weighted to spawn more than the rest due to the original wiki page.
-                            NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfrumGyrator>(), NPC.whoAmI);
+                            type = ModContent.NPCType<WulfrumGyrator>();
                             break;
                         case 9: // 1/10 since 0 counts.
-                            NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfrumAmplifier>(), NPC.whoAmI);
+                            type = ModContent.NPCType<WulfrumAmplifier>();
                             break;
                         default:
-                            NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfrumGyrator>(), NPC.whoAmI);
+                            type = ModContent.NPCType<WulfrumGyrator>();
                             break;
+                        }
+                        int w = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+                        if (w.WithinBounds(Main.maxNPCs))
+                        {
+                            Main.npc[w].SpawnedFromStatue = true;
+                            Main.npc[w].dontCountMe = true;
+                        }
                     }
-                }
 
                 // Cycle through attacks based on current HP.
                 switch (AIState)
