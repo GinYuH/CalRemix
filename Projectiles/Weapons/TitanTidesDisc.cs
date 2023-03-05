@@ -44,6 +44,12 @@ namespace CalRemix.Projectiles.Weapons
             else
                 Projectile.Kill();
             Projectile.Center = Main.MouseWorld;
+
+            if (Timer == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item71);
+            }
+
             if (Timer < 270)
                 Timer++;
             Projectile.scale = Timer / 135f + 1f;
@@ -56,7 +62,7 @@ namespace CalRemix.Projectiles.Weapons
                 Dust.NewDust(new Vector2(Projectile.position.X+Projectile.width/4, Projectile.position.Y+Projectile.height/4), Projectile.width / 2, Projectile.height / 2, DustID.ShadowbeamStaff, randVector.X, randVector.Y);
             }
             Sound++;
-            if (Sound >= 12)
+            if (Sound >= 12 + System.Math.Clamp(60 - Timer, 0, 60))
             {
                 SoundEngine.PlaySound(SoundID.Item71);
                 Sound = 0;
