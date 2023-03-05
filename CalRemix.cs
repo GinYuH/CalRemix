@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ModLoader;
+using ReLogic.Content;
+using Terraria.GameContent;
+using ReLogic;
 
 namespace CalRemix
 {
@@ -54,26 +57,26 @@ namespace CalRemix
 			{
 				Mod bossChecklist;
 				ModLoader.TryGetMod("BossChecklist", out bossChecklist);
+				//private static void AddBoss(Mod bossChecklist, Mod hostMod, string name, float difficulty, List<int> npcTypes, Func<bool> downed, object summon,
+				//List<int> collection, string instructions, string despawn, Func< bool > available, Action<SpriteBatch, Rectangle, Color> portrait = null, string bossHeadTex = null)
 				if (bossChecklist != null)
 				{
-					bossChecklist.Call(new object[12]
-				{
-				"AddBoss",
-				0.22f,
-				ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>(),
-				this,
-				"Wulfrum Excavator",
-				(Func<bool>)(() => CalRemixWorld.downedExcavator),
-				ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>(),
-				null,
-				new List<int>
-				{
-					ModLoader.GetMod("CalamityMod").Find<ModItem>("BloodyVein").Type
-				},
-				$"Open a [i:{Terraria.ID.ItemID.LivingWoodChest}] that has nothing inside but 1 [i:{ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>()}] in its first slot.",
+					bossChecklist.Call(
+					"AddBoss",
+					0.22f,
+					ModContent.NPCType<WulfrumExcavatorHead>(),
+					this,
+					"WulfrumExcavator",
+					(Func<bool>)(() => CalRemixWorld.downedExcavator),
+					ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>(),
+					new List<int>() { ModContent.ItemType<Items.KnowledgeExcavator>() },
+					new List<int>() { Terraria.ID.ItemID.LesserHealingPotion },
+					$"Open a [i:{Terraria.ID.ItemID.LivingWoodChest}] that has nothing inside but 1 [i:{ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>()}] in its first slot.",
 				"The old excavator has successfully harvested every player.",
-				null
-				});
+					CalamityUtils.ColorMessage("The old excavator has successfully harvested every player.", new Microsoft.Xna.Framework.Color(108, 245, 133)),
+					"CalamityMod/NPCs/Boss/WulfrumExcavatorBossChecklist",
+					null,
+					null);
 				}
 			}
 			cal.Call("CreateEnchantment", "Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)

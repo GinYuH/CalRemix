@@ -8,7 +8,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.NPCs;
 using CalamityMod.World;
@@ -24,7 +23,6 @@ using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.NormalNPCs;
 using CalRemix.Items;
 using CalRemix.Projectiles.WulfrumExcavator;
-
 using System;
 using CalRemix.Items.Materials;
 
@@ -803,50 +801,28 @@ namespace CalRemix.NPCs.Bosses
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            LeadingConditionRule normalOnly = new LeadingConditionRule(new Conditions.NotExpert());
-            npcLoot.Add(normalOnly);
-           
-            if (Main.rand.NextBool(Main.expertMode ? 2 : 1, 5))
-            {
-                npcLoot.Add(ModContent.ItemType<WulfrumMetalScrap>(), 20 + Main.rand.Next(6));
-            }
-
-            else
-            {
-                npcLoot.Add(ModContent.ItemType<WulfrumMetalScrap>(), 16 + Main.rand.Next(4));
-            }
-            npcLoot.Add(ModContent.ItemType<EnergyCore>(), 1 + Main.rand.Next(1));
+            npcLoot.AddIf(() => !Main.expertMode, ModContent.ItemType<WulfrumMetalScrap>(), 1, 16, 20);
+            npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<WulfrumMetalScrap>(), 1, 20, 26);
+            npcLoot.Add(ModContent.ItemType<EnergyCore>(), 1, 1, 2);
             npcLoot.Add(ModContent.ItemType<EnergyOrb>());
-            int choice = Main.rand.Next(4);
-            switch (choice)
-            {
-                case 0:
-                    npcLoot.Add(ModContent.ItemType<WulfrumScrewdriver>(), 1);
-                    break;
-                case 1:
-                    npcLoot.Add(ModContent.ItemType<WulfrumBlunderbuss>(), 1);
-                    break;
-                case 2:
-                    npcLoot.Add(ModContent.ItemType<WulfrumProsthesis>(), 1);
-                    break;
-                case 3:
-                    npcLoot.Add(ModContent.ItemType<WulfrumController>(), 1);
-                    break;
-                case 4:
-                    npcLoot.Add(ModContent.ItemType<WulfrumKnife>(), 100 + Main.rand.Next(50));
-                    break;
-                default:
-                    npcLoot.Add(ModContent.ItemType<WulfrumScrewdriver>(), 1);
-                    break;
-            }
+            npcLoot.Add(ModContent.ItemType<CalamityMod.Items.Tools.WulfrumTreasurePinger>());
 
-            if (PylonCharged)
+            // Weapons
+            int[] weapons = new int[]
             {
-                npcLoot.Add(ModContent.ItemType<WulfrumRod>(), 1);
-            }
-            
+                ModContent.ItemType<WulfrumScrewdriver>(),
+                ModContent.ItemType<WulfrumBlunderbuss>(),
+                ModContent.ItemType<WulfrumProsthesis>(),
+                ModContent.ItemType<WulfrumController>(),
+                ModContent.ItemType<WulfrumKnife>(),
+            };
+            npcLoot.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
+
+            // Rod
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<WulfrumExcavatorHead>() && info.npc.ModNPC<WulfrumExcavatorHead>().PylonCharged), ModContent.ItemType<WulfrumRod>()));
+
             // Lore item
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !CalRemixWorld.downedExcavator), ModContent.ItemType<KnowledgeExcavator>()));
+            npcLoot.AddConditionalPerPlayer(() => !CalRemixWorld.downedExcavator, ModContent.ItemType<KnowledgeExcavator>(), desc: DropHelper.FirstKillText);
         }
 
         public override bool SpecialOnKill()
