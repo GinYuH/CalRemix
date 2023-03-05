@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using ReLogic.Content;
 using Terraria.GameContent;
 using ReLogic;
+using Terraria.ID;
 
 namespace CalRemix
 {
@@ -21,7 +22,19 @@ namespace CalRemix
 	{
 		public static int CosmiliteCoinCurrencyId;
 		public static int KlepticoinCurrencyId;
-        public override void PostSetupContent()
+
+		public static List<int> oreList = new List<int>
+		{
+			TileID.Copper,
+			TileID.Tin,
+			TileID.Iron,
+			TileID.Lead,
+			TileID.Silver,
+			TileID.Tungsten,
+			TileID.Gold,
+			TileID.Platinum
+		};
+		public override void PostSetupContent()
         {
             Mod cal = ModLoader.GetMod("CalamityMod");
             cal.Call("RegisterModCooldowns", this);

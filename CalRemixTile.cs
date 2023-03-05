@@ -16,6 +16,7 @@ namespace CalRemix
 		private int berryCount;
         private int cosmicCount;
 
+
         List<int> exclusionlist = new List<int>
         {
             0,
@@ -124,6 +125,25 @@ namespace CalRemix
                     if (exclusionlist.Contains(Main.tile[i, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
                     {
                         WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CosmichidPlant>(), true);
+                    }
+                }
+            }
+
+            if (CalRemix.oreList.Contains(type) && Main.rand.NextBool(2222) && CalRemixWorld.downedExcavator)
+            {
+                int LocationX = i;
+                int LocationY = j;
+                for (int x = LocationX - 4; x <= LocationX + 4; x++)
+                {
+                    for (int y = LocationY - 4; y <= LocationY + 4; y++)
+                    {
+                        if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= 4)
+                        {
+                            if (Main.tile[x, y].TileType == TileID.Stone)
+                            {
+                                Main.tile[x, y].TileType = (ushort)type;
+                            }
+                        }
                     }
                 }
             }
