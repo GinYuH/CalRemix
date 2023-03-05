@@ -53,7 +53,7 @@ namespace CalRemix.Projectiles.Weapons
             Timer++;
             if (Timer >= 20)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y + 1600f), new Vector2(0f, -8f).RotatedByRandom(MathHelper.ToRadians(5)), ModContent.ProjectileType<TenebreusTidesWaterSpear>(), Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y + 1000f), new Vector2(0f, -16f).RotatedByRandom(MathHelper.ToRadians(5)), ModContent.ProjectileType<TenebreusTidesWaterSpear>(), Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
                 Timer = 0;
             }
             Projectile.Center = Owner.Center;
