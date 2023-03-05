@@ -25,6 +25,7 @@ namespace CalRemix.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
             hit.Add(target.whoAmI);
+            Projectile.Center = target.Center;
             NPC npc = target;
             for (int i = 0; i < Main.maxNPCs; i++)
             {

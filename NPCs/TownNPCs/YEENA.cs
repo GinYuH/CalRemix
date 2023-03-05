@@ -77,7 +77,8 @@ namespace CalRemix.NPCs.TownNPCs
         }
         public override bool CanTownNPCSpawn(int numNPCs, int money)
         {
-            return CalRemixWorld.deusDeadInSnow;
+            //return CalRemixWorld.deusDeadInSnow;
+            return false;
         }
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {

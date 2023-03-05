@@ -65,7 +65,8 @@ namespace CalRemix.NPCs.TownNPCs
         }
         public override bool CanTownNPCSpawn(int numNPCs, int money)
         {
-            return CalamityMod.DownedBossSystem.downedProvidence;
+            //return CalamityMod.DownedBossSystem.downedProvidence;
+            return false;
         }
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
