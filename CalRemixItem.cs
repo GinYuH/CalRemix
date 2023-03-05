@@ -23,6 +23,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalamityMod.Items.TreasureBags;
 using CalRemix.Items.Materials;
+using System.Linq;
 
 namespace CalRemix
 {
@@ -62,14 +63,52 @@ namespace CalRemix
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            TooltipLine name = tooltips.FirstOrDefault(x => x.Mod == "Terraria" && x.Name == "ItemName");
             if (item.type == ModContent.ItemType<PearlShard>())
             {
+                name.Text = "Conquest Fragment";
                 var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
+                name.Text = "Phantomic Soul Artifact";
                 var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<GrandGelatin>())
+            {
+                var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<TheAbsorber>())
+            {
+                var line = new TooltipLine(Mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<TheSponge>())
+            {
+                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, Rover Drive, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<AmbrosialAmpoule>())
+            {
+                var line = new TooltipLine(Mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<AbyssalDivingGear>())
+            {
+                var line = new TooltipLine(Mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<AbyssalDivingSuit>())
+            {
+                var line = new TooltipLine(Mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<TheAmalgam>())
+            {
+                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Astral Arcanum, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
                 tooltips.Add(line);
             }
         }
