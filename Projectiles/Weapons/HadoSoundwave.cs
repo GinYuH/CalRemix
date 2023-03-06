@@ -31,6 +31,7 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.width = (int)(36f * Projectile.scale);
                 Projectile.height = (int)(36f * Projectile.scale);
             }
+            Projectile.localAI[1]--;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -46,22 +47,25 @@ namespace CalRemix.Projectiles.Weapons
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Projectile.velocity *= 0.5f;
             target.AddBuff(ModContent.BuffType<CrushDepth>(), 240);
             target.AddBuff(BuffID.Electrified, 240);
-            float startDist = Main.rand.NextFloat(260f, 270f);
-            Vector2 startDir = Main.rand.NextVector2Unit();
-            Vector2 startPoint = target.Center + (startDir * startDist);
-
-            float echoSpeed = Main.rand.NextFloat(15f, 18f);
-            Vector2 velocity = startDir * (-echoSpeed);
-            if (Projectile.owner == Main.myPlayer)
+            if (Projectile.localAI[1] <= 0)
             {
-                Projectile proj = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromAI(), startPoint, velocity, ModContent.ProjectileType<EidolicWailSoundwave>(), Projectile.damage / 3, Projectile.knockBack / 2, Projectile.owner)];
-                 proj.tileCollide = false;
-                proj.timeLeft = 60;
-                proj.scale = 1f;
-                proj.localAI[0] = 1f;
+                float startDist = Main.rand.NextFloat(260f, 270f);
+                Vector2 startDir = Main.rand.NextVector2Unit();
+                Vector2 startPoint = target.Center + (startDir * startDist);
+
+                float echoSpeed = Main.rand.NextFloat(15f, 18f);
+                Vector2 velocity = startDir * (-echoSpeed);
+                if (Projectile.owner == Main.myPlayer)
+                {
+                    Projectile proj = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromAI(), startPoint, velocity, ModContent.ProjectileType<EidolicWailSoundwave>(), Projectile.damage / 3, Projectile.knockBack / 2, Projectile.owner)];
+                    proj.tileCollide = false;
+                    proj.timeLeft = 60;
+                    proj.scale = 1f;
+                    proj.localAI[0] = 1f;
+                }
+                Projectile.localAI[1] = 40;
             }
         }
         public override Color? GetAlpha(Color lightColor)
