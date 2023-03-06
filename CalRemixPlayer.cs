@@ -328,10 +328,8 @@ namespace CalRemix
             }
 			if (cursed)
 			{ 
-            damage = (int)((float)damage * 1.9f);
+				damage = (int)((float)damage * 1.9f);
 			}
-			
-
 			return true;
         }
         public override void PreUpdate()
@@ -587,10 +585,11 @@ namespace CalRemix
             if (moonFist && item.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
-				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) {				
-					if(Main.rand.NextBool(10))
+				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) 
+				{				
+					if (Main.rand.NextBool(10))
 						{
-						target.active = false;
+							target.HitEffect(0, target.lifeMax * 22);
 						}		
 					}
 				}
@@ -612,7 +611,7 @@ namespace CalRemix
 				{				
 					if(Main.rand.NextBool(10))
 					{
-					target.active = false;
+						target.HitEffect(0, target.lifeMax * 22);
 					}		
 				}		
 			}
