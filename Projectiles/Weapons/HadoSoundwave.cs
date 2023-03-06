@@ -49,6 +49,7 @@ namespace CalRemix.Projectiles.Weapons
         {
             target.AddBuff(ModContent.BuffType<CrushDepth>(), 240);
             target.AddBuff(BuffID.Electrified, 240);
+            Projectile.velocity *= 0.85f;
             if (Projectile.localAI[1] <= 0)
             {
                 float startDist = Main.rand.NextFloat(260f, 270f);
@@ -65,7 +66,7 @@ namespace CalRemix.Projectiles.Weapons
                     proj.scale = 1f;
                     proj.localAI[0] = 1f;
                 }
-                Projectile.localAI[1] = 40;
+                Projectile.localAI[1] = 60;
             }
         }
         public override Color? GetAlpha(Color lightColor)
