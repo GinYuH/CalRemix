@@ -69,17 +69,17 @@ namespace CalRemix
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantSummon>(),
+			ModContent.ProjectileType<PlaguePrincess>(),
 			ModContent.ProjectileType<AtlasSoldier>(),
 			ModContent.ProjectileType<CosmilampMinion>(),
 			ModContent.ProjectileType<FieryDraconid>(),
 			ModContent.ProjectileType<SepulcherMinion>(),
 			ModContent.ProjectileType<CosmicEnergySpiral>(),
 			ModContent.ProjectileType<EndoCooperBody>(),
-			ModContent.ProjectileType<MagicArrow>(),
-			ModContent.ProjectileType<MagicHammer>(),
-			ModContent.ProjectileType<MagicAxe>(),
 			ModContent.ProjectileType<MagicUmbrella>(),
-			ModContent.ProjectileType<MagicRifle>(),
+			ModContent.ProjectileType<SiriusMinion>(),
+			ModContent.ProjectileType<SarosAura>()
+
 		};
 
 		public int[] abnormalEnemyList = // immune to effects like Moon Fist's instant kill
