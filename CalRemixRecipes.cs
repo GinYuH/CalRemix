@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Items;
 using CalRemix.Items.Accessories;
+using CalamityMod.Items.Armor.Empyrean;
+using CalamityMod.Items.Armor.Plaguebringer;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Fishing.AstralCatches;
 using CalRemix.Items.Potions;
@@ -56,13 +58,13 @@ namespace CalRemix
         }
         public override void AddRecipes() 
         {
-            {
+            /*{
                 Recipe feather = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
                 feather.AddIngredient<DesertFeather>(3)
                 .AddIngredient<LifeAlloy>()
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
-            }
+            }*/
             {
                 Recipe alloy = Recipe.Create(ModContent.ItemType<LifeAlloy>());
                 alloy.AddIngredient<LifeOre>(5)
@@ -73,6 +75,12 @@ namespace CalRemix
                 Recipe coin = Recipe.Create(ItemID.PlatinumCoin, 100);
                 coin.AddIngredient<CosmiliteCoin>(1);
                 coin.Register();
+            }
+            {
+                Recipe cell = Recipe.Create(ModContent.ItemType<PlagueCellCanister>(), 1);
+                cell.AddRecipeGroup(RecipeGroupID.IronBar);
+                cell.AddIngredient<CoyoteVenom>(1);
+                cell.Register();
             }
 
             #region DP stuff
@@ -129,13 +137,23 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                if (recipe.HasResult(ModContent.ItemType<GrandScale>()))
+                /*if (recipe.HasResult(ModContent.ItemType<GrandScale>()))
                 {
                     recipe.DisableRecipe();
-                }
+                }*/
                 if (recipe.HasResult(ModContent.ItemType<ShadowspecBar>()))
                 {
                     recipe.AddIngredient<SubnauticalPlate>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
+                    recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
+                    recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
                 }
                 if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>())))
 		        {
@@ -178,7 +196,7 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
+                /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
                     recipe.RemoveIngredient(ItemID.FragmentSolar);
@@ -188,7 +206,8 @@ namespace CalRemix
                     recipe.AddIngredient(ItemID.SoulofNight, 5);
                     recipe.AddIngredient(ItemID.PinkPricklyPear);
                     recipe.AddTile(TileID.MythrilAnvil);
-                }
+                }*/
+                #region Accessory edits
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
                 {
                     recipe.AddIngredient<MirageJellyItem>();
@@ -266,20 +285,7 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
                 }
-                if (recipe.HasResult(ModContent.ItemType<StormfrontRazor>()))
-                {
-                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 4);
-                }
-                if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
-                {
-                    recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
-                    recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
-                }
-                if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
-                {
-                    recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
-                    recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
-                }
+                #endregion
                 #region Yharim Bar Recipes
                 if (recipe.HasResult(ModContent.ItemType<AsgardianAegis>()))
                 {
@@ -434,6 +440,66 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<ZenithArcanum>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 99);
+                }
+                #endregion
+                #region Babil
+                if (recipe.HasResult(ModContent.ItemType<StormfrontRazor>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofBabil>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<CoreofEleum>()) || recipe.HasResult(ModContent.ItemType<CoreofHavoc>()) || recipe.HasResult(ModContent.ItemType<CoreofSunlight>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Ectoplasm);
+                    recipe.AddIngredient(ItemID.HallowedBar);
+                }
+                if (recipe.HasResult(ModContent.ItemType<CoreofCalamity>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<AshesofCalamity>());
+                    recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 3);
+                    recipe.AddIngredient(ModContent.ItemType<UnholyCore>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<AngelicShotgun>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<CoreofSunlight>());
+                    recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 7);
+                }
+                if (recipe.HasResult(ModContent.ItemType<DeificThunderbolt>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<CoreofSunlight>());
+                    recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<EmpyreanMask>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 2);
+                }
+                if (recipe.HasResult(ModContent.ItemType<EmpyreanCloak>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<EmpyreanCuisses>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 3);
+                }
+                #endregion
+                #region Coyote Venom
+                if (recipe.HasResult(ModContent.ItemType<EnhancedNanoRound>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<EssenceofEleum>());
+                    recipe.AddIngredient(ModContent.ItemType<CoyoteVenom>(), 1);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StarlightWings>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CoyoteVenom>(), 1);
+                }
+                if (recipe.HasResult(ModContent.ItemType<PlaguebringerPistons>()) || recipe.HasResult(ModContent.ItemType<PlaguebringerVisor>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<PlagueCellCanister>());
+                    recipe.AddIngredient(ModContent.ItemType<CoyoteVenom>(), 1);
+                }
+                if (recipe.HasResult(ModContent.ItemType<PlaguebringerCarapace>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<PlagueCellCanister>());
+                    recipe.AddIngredient(ModContent.ItemType<CoyoteVenom>(), 2);
                 }
                 #endregion
             }

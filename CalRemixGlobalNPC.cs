@@ -384,6 +384,26 @@ namespace CalRemix
                 LeadingConditionRule postDS = npcLoot.DefineConditionalDropSet(() => CalRemixWorld.downedExcavator);
                 postDS.Add(ModContent.ItemType<DesertMedallion>(), 1, hideLootReport: !CalRemixWorld.downedExcavator);
             }
+            else if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            {
+                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                hm.Add(ModContent.ItemType<EssenceofBabil>(), 4, hideLootReport: !Main.hardMode);
+            }
+            else if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            {
+                npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 3);
+            }
+            else if (npc.type == NPCID.Plantera)
+            {
+                LeadingConditionRule exp = npcLoot.DefineConditionalDropSet(() => !Main.expertMode);
+                exp.Add(ModContent.ItemType<EssenceofBabil>(), 1, 4, 8, hideLootReport: Main.expertMode);
+            }
+            else if (npc.type == NPCID.Wolf)
+            {
+                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                postPolter.Add(ModContent.ItemType<CoyoteVenom>(), 3, hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ModContent.ItemType<CoyoteVenom>(), 4, hideLootReport: Main.expertMode);
+            }
             if (npc.boss && bossKillcount > 5)
             {
                 //npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);

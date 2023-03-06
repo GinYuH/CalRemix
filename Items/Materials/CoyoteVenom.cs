@@ -9,7 +9,7 @@ namespace CalRemix.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("CoyoteVenom");
+			DisplayName.SetDefault("Coyote Venom");
       	Tooltip.SetDefault("Try not to drink it");
 			SacrificeTotal = 25;
     	}

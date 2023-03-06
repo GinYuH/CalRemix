@@ -267,6 +267,10 @@ namespace CalRemix
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
                 //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
             }
+            else if (item.type == ItemID.PlanteraBossBag)
+            {
+                itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 5, 9);
+            }
             /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
