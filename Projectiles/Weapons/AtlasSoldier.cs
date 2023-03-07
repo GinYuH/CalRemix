@@ -116,9 +116,10 @@ namespace CalRemix.Projectiles.Weapons
                         Vector2 direction = targetPosition - position;
                         direction.Normalize();
                         Terraria.Audio.SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound with { Volume = CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound.Volume - 0.1f }, Projectile.Center);
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, direction * 10, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.AstralProbeRound>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI, target.whoAmI, 0f);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, direction * 10, ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AstralRound>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI, target.whoAmI, 0f);
                         if (p.WithinBounds(Main.maxProjectiles))
                         {
+                            Main.projectile[p].DamageType = DamageClass.Summon;
                             Main.projectile[p].originalDamage = Projectile.damage;
                         }
                         gun = 0;
