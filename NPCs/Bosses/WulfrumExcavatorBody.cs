@@ -34,7 +34,7 @@ namespace CalRemix.NPCs.Bosses
             npc.height = 56;
             npc.defense = 8;
             npc.Calamity().unbreakableDR = true;
-            npc.LifeMaxNERB(3500, 5000);
+            npc.LifeMaxNERB(3500, 5000, 1500000);
 
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             npc.lifeMax += (int)(npc.lifeMax * HPBoost);

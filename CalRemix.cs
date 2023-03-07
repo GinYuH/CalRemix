@@ -35,11 +35,11 @@ namespace CalRemix
 			TileID.Platinum
 		};
 		public override void PostSetupContent()
-        {
-            Mod cal = ModLoader.GetMod("CalamityMod");
-            cal.Call("RegisterModCooldowns", this);
-            cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
-            cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
+		{
+			Mod cal = ModLoader.GetMod("CalamityMod");
+			cal.Call("RegisterModCooldowns", this);
+			cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
+			cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
 			/*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
 			{
@@ -93,9 +93,18 @@ namespace CalRemix
 				}
 			}
 			cal.Call("CreateEnchantment", "Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
-            {
-                player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
-            });
+			{
+				player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
+			});
+			List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries = (List<(int, int, Action<int>, int, bool, float, int[], int[])>)cal.Call("GetBossRushEntries");
+			int[] excIDs = { ModContent.NPCType<WulfrumExcavatorBody>(), ModContent.NPCType<WulfrumExcavatorTail>() };
+			int[] headID = { ModContent.NPCType<WulfrumExcavatorHead>() };
+			Action<int> pr = delegate (int npc) 
+			{
+				NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<WulfrumExcavatorHead>()); 
+			};
+			brEntries.Insert(0, (ModContent.NPCType<WulfrumExcavatorHead>(), -1, pr, 180, false, 0f, excIDs, headID));
+			cal.Call("SetBossRushEntries", brEntries);
 
 			/* I hate enchantments
             EnchantmentManager.EnchantmentList.Add(new Enchantment("Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", null, delegate (Player player)
@@ -107,7 +116,8 @@ namespace CalRemix
                 player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
             }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
 			*/
-        }
+		}
+
         public override void Load()
         {
 			CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
