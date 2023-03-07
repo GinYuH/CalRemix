@@ -93,7 +93,7 @@ namespace CalRemix.NPCs.Bosses
         public float LifeRatio => NPC.life / (float)NPC.lifeMax;
 
         // Define phase variables.
-        public static float BaseDifficultyScale => MathHelper.Clamp((CalamityWorld.revenge.ToInt() + Main.expertMode.ToInt()) * 0.5f, 0f, 1f);
+        public static float BaseDifficultyScale => MathHelper.Clamp((CalamityMod.Events.BossRushEvent.BossRushActive.ToInt() * 3 + CalamityWorld.revenge.ToInt() + Main.expertMode.ToInt()) * 0.5f, 0f, 1f);
 
         public static float Phase2LifeRatio => MathHelper.Lerp(0.75f, 0.6f, BaseDifficultyScale);
 
