@@ -75,6 +75,7 @@ namespace CalRemix.Projectiles.Weapons
                 int projIn = Projectile.NewProjectile(source, Projectile.Center, Vector2.Normalize(Projectile.velocity).RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<ExobeamSlash>(), Projectile.damage / 2, 0, Main.LocalPlayer.whoAmI);
                 Main.projectile[projIn].DamageType = DamageClass.Ranged;
                 Main.projectile[projIn].scale = 0.4f;
+                Main.projectile[projIn].penetrate = 1;
                 Main.projectile[projIn].CritChance = 0;
                 if (crit)
                 {

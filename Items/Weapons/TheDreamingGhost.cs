@@ -33,6 +33,7 @@ public class TheDreamingGhost : ModItem
         Item.Calamity().donorItem = true;
         Item.damage = 468;
         Item.DamageType = DamageClass.Summon;
+        Item.mana = 10;
         Item.width = 10;
         Item.height = 10;
         Item.useTime = 12;

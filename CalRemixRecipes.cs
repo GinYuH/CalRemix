@@ -29,6 +29,7 @@ using CalamityMod.Items.Armor.Auric;
 using CalRemix.Items.Weapons;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Weapons.DraedonsArsenal;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace CalRemix
 {
@@ -144,6 +145,20 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<ShadowspecBar>()))
                 {
                     recipe.AddIngredient<SubnauticalPlate>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<AcesHigh>()))
+                {
+                    recipe.AddIngredient<AcesLow>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<CosmicImmaterializer>()))
+                {
+                    recipe.AddIngredient<DarkEnergyStaff>();
+                    recipe.RemoveIngredient(ModContent.ItemType<SanctifiedSpark>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<Supernova>()))
+                {
+                    recipe.AddIngredient<UnsealedSingularity>();
+                    recipe.RemoveIngredient(ModContent.ItemType<SealedSingularity>());
                 }
                 if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
                 {

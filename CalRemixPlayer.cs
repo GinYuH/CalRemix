@@ -28,6 +28,7 @@ using CalRemix.NPCs.Bosses;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -642,6 +643,15 @@ namespace CalRemix
 					calplayer.projectileDamageReduction += 1;
 			}
 		}
+        public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+        {
+            bool inWater = !attempt.inLava && !attempt.inHoney;
+            int roll = Main.rand.Next(100);
+            if (inWater && Player.ZoneJungle && Main.hardMode && roll >= 0 && roll <= 7)
+            {
+                itemDrop = ModContent.ItemType<Babilfish>();
+            }
+        }
         public void SpawnPhantomHeart()
         {
             if (Main.rand.NextBool(6000) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && !Player.GetModPlayer<CalamityPlayer>().pHeart)
