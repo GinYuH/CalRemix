@@ -20,6 +20,7 @@ using CalamityMod.Projectiles.Melee.Spears;
 using Terraria.GameContent;
 using System;
 using Terraria.Graphics.Shaders;
+using CalamityMod.Events;
 
 namespace CalRemix
 {
@@ -36,7 +37,7 @@ namespace CalRemix
         NPC exc;
 
 
-        private int CurrentFrame
+        private int MurasamaFrame
         {
             get
             {
@@ -136,11 +137,9 @@ namespace CalRemix
             {
                 if (projectile.frameCounter % 3 == 0)
                 {
-                    CurrentFrame++;
+                    MurasamaFrame++;
                     if (frameX >= 2)
-                    {
-                        CurrentFrame = 0;
-                    }
+                        MurasamaFrame = 0;
                 }
             }
         }
@@ -273,10 +272,19 @@ namespace CalRemix
 				projectile.damage = 1000000;
 				return Color.LightBlue;
             }
-			else
+            if ((!Main.dayTime || BossRushEvent.BossRushActive) && (projectile.type == ProjectileType<HolyBlast>() || projectile.type == ProjectileType<HolyBomb>() || projectile.type == ProjectileType<HolyFire>() || projectile.type == ProjectileType<HolyFire2>() || projectile.type == ProjectileType<HolyFlare>() || projectile.type == ProjectileType<MoltenBlob>() || projectile.type == ProjectileType<MoltenBlast>()))
+            {
+                if (projectile.type == ProjectileType<HolyBlast>())
+                {
+                    return Color.DarkSlateBlue;
+                }
+                return Color.MediumPurple;
+            }
+            else
 			{
 				return null;
 			}
+
 		}
 		public override bool PreDraw(Projectile projectile, ref Color lightColor)
 		{
@@ -294,20 +302,17 @@ namespace CalRemix
 		{
             if (projectile.type == ProjectileType<MurasamaSlash>())
             {
-                Texture2D value = ModContent.Request<Texture2D>("CalRemix/Resprites/MurasamaSlash").Value;
-                Vector2 origin = value.Size() / new Vector2(2f, 7f) * 0.5f;
-                Rectangle value2 = value.Frame(2, 7, frameX, frameY);
-                Main.EntitySpriteDraw(effects: (projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, texture: value, position: projectile.Center - Main.screenPosition, sourceRectangle: value2, color: Color.White, rotation: projectile.rotation, origin: origin, scale: projectile.scale, worthless: 0);
+                Texture2D texture = Request<Texture2D>("CalRemix/Resprites/MurasamaSlash").Value;
+                Main.EntitySpriteDraw(texture, projectile.Center - Main.screenPosition, texture.Frame(2, 7, frameX, frameY), Color.White, projectile.rotation, texture.Size() / new Vector2(2f, 7f) * 0.5f, projectile.scale, (projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             }
 			if (projectile.type == ProjectileType<ViolenceThrownProjectile>())
             {
                 if (StreakDrawer == null)
                 {
-                    StreakDrawer = new PrimitiveTrail(PrimitiveWidthFunction, PrimitiveColorFunction, null, GameShaders.Misc["CalamityMod:TrailStreak"]);
+                    StreakDrawer = new PrimitiveTrail(PWF, PCF, null, GameShaders.Misc["CalamityMod:TrailStreak"]);
                 }
-
-                GameShaders.Misc["CalamityMod:TrailStreak"].SetShaderTexture(ModContent.Request<Texture2D>("CalRemix/ExtraTextures/FabstaffStreak"));
-                Texture2D value = ModContent.Request<Texture2D>("CalRemix/Resprites/Violence").Value;
+                GameShaders.Misc["CalamityMod:TrailStreak"].SetShaderTexture(Request<Texture2D>("CalamityMod/ExtraTextures/Trails/FabstaffStreak"));
+                Texture2D texture = Request<Texture2D>("CalRemix/Resprites/Violence").Value;
                 Vector2[] array = (Vector2[])projectile.oldPos.Clone();
                 Vector2 vector = (projectile.rotation - MathF.PI / 2f).ToRotationVector2();
                 if (Main.player[projectile.owner].channel)
@@ -315,18 +320,11 @@ namespace CalRemix
                     array[0] += vector * -12f;
                     array[1] = array[0] - (projectile.rotation + MathF.PI / 4f).ToRotationVector2() * Vector2.Distance(array[0], array[1]);
                 }
-
                 for (int i = 0; i < array.Length; i++)
-                {
                     array[i] -= (projectile.oldRot[i] + MathF.PI / 4f).ToRotationVector2() * projectile.height * 0.5f;
-                }
 
-                if (projectile.ai[0] > (float)projectile.oldPos.Length)
-                {
+                if (projectile.ai[0] > projectile.oldPos.Length)
                     StreakDrawer.Draw(array, projectile.Size * 0.5f - Main.screenPosition, 88);
-                }
-
-                Vector2 position = projectile.Center - Main.screenPosition;
                 for (int j = 0; j < 6; j++)
                 {
                     float num = projectile.oldRot[j] - MathF.PI / 2f;
@@ -334,9 +332,7 @@ namespace CalRemix
                     {
                         num += 0.2f;
                     }
-
-                    Color color = Color.Lerp(lightColor, Color.Transparent, 1f - (float)Math.Pow(Utils.GetLerpValue(0f, 6f, j), 1.4)) * projectile.Opacity;
-                    Main.EntitySpriteDraw(value, position, null, color, num, value.Size() * 0.5f,projectile.scale, SpriteEffects.None, 0);
+                    Main.EntitySpriteDraw(texture, projectile.Center - Main.screenPosition, null, Color.Lerp(lightColor, Color.Transparent, 1f - (float)Math.Pow(Utils.GetLerpValue(0f, 6f, j), 1.4)) * projectile.Opacity, num, texture.Size() * 0.5f,projectile.scale, SpriteEffects.None, 0);
                 }
             }
         }
@@ -360,19 +356,14 @@ namespace CalRemix
                 target.AddBuff(ModContent.BuffType<ExoFreeze>(), 50);
         }
 
-        internal float PrimitiveWidthFunction(float completionRatio)
+        internal float PWF(float ratio)
         {
-            float num = MathHelper.SmoothStep(0f, 1f, Utils.GetLerpValue(0.01f, 0.04f, completionRatio));
-            float num2 = (float)Math.Pow(Utils.GetLerpValue(1f, 0.04f, completionRatio), 0.9);
-            return (float)Math.Pow(num * num2, 0.1) * 30f;
+            return (float)Math.Pow(MathHelper.SmoothStep(0f, 1f, Utils.GetLerpValue(0.01f, 0.04f, ratio)) * (float)Math.Pow(Utils.GetLerpValue(1f, 0.04f, ratio), 0.9), 0.1) * 30f;
         }
-        internal Color PrimitiveColorFunction(float completionRatio)
+        internal Color PCF(float ratio)
         {
-            float amount = (float)Math.Cos(Main.GlobalTimeWrappedHourly * -9f + completionRatio * 6f + 2f) * 0.5f + 0.5f;
-            amount = MathHelper.Lerp(0.15f, 0.75f, amount);
-            Color value = Color.Lerp(Color.Lerp(new Color(255, 145, 115), new Color(113, 0, 159), amount), Color.DarkRed, 0.5f);
-            Color value2 = new Color(255, 145, 115);
-            return Color.Lerp(value, value2, (float)Math.Pow(completionRatio, 1.2)) * (float)Math.Pow(1f - completionRatio, 1.1);
+            Color color = new Color(255, 145, 115);
+            return Color.Lerp(Color.Lerp(Color.Lerp(color, new Color(113, 0, 159), MathHelper.Lerp(0.15f, 0.75f, (float)Math.Cos(Main.GlobalTimeWrappedHourly * -9f + ratio * 6f + 2f) * 0.5f + 0.5f)), Color.DarkRed, 0.5f), color, (float)Math.Pow(ratio, 1.2)) * (float)Math.Pow(1f - ratio, 1.1);
         }
     }
 }
