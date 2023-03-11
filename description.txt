@@ -13,7 +13,6 @@ Suffer.
 Extra Credits:
 Dominic Karma: Wulfrum Excavator
 Bloop: Gravitonomy Pike
-RegigigasSkyForm: All sprites relating to the Derellect, code snippets for Dark Statis's behavior
 XP-00 Hypnos: Started it all
 
 Multiplayer support? What's that?
