@@ -1,4 +1,4 @@
-displayName = Calamity Community Remix
-author = YuH and the Cult of Hypnos
-version = 0.1
+displayName = Calamity: Community Remix
+author = YuH, MrGoodLuck, Sploopo, The Purified, and the Cult of Hypnos
+version = 1.0
 modReferences = CalamityMod
