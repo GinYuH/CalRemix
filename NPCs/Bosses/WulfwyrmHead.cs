@@ -29,7 +29,7 @@ using CalRemix.Items.Materials;
 namespace CalRemix.NPCs.Bosses
 {
     [AutoloadBossHead]
-    public class WulfrumExcavatorHead : ModNPC
+    public class WulfwyrmHead : ModNPC
     {
 
 
@@ -123,7 +123,7 @@ namespace CalRemix.NPCs.Bosses
 
         public override void SetDefaults()
         {
-            WulfrumExcavatorBody.InitializeSegment(NPC);
+            WulfwyrmBody.InitializeSegment(NPC);
             NPC.damage = 20;
             Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/scourge of the scrapyard");
         }
@@ -248,9 +248,9 @@ namespace CalRemix.NPCs.Bosses
 
                 int nextSegmentIndex;
                 if (i < SegmentCount - 1)
-                    nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfrumExcavatorBody>(), NPC.whoAmI);
+                    nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmBody>(), NPC.whoAmI);
                 else
-                    nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfrumExcavatorTail>(), NPC.whoAmI);
+                    nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmTail>(), NPC.whoAmI);
                 Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;
                 Main.npc[nextSegmentIndex].ai[2] = NPC.whoAmI;
                 Main.npc[nextSegmentIndex].ai[1] = previousSegment;
@@ -325,7 +325,7 @@ namespace CalRemix.NPCs.Bosses
                     while (Main.npc.IndexInRange((int)previousSegment.ai[0]) && Main.npc[(int)previousSegment.ai[0]].active)
                     {
                         NPC nextSegment = Main.npc[(int)previousSegment.ai[0]];
-                        if (nextSegment.type != NPC.type && nextSegment.type != ModContent.NPCType<WulfrumExcavatorBody>())
+                        if (nextSegment.type != NPC.type && nextSegment.type != ModContent.NPCType<WulfwyrmBody>())
                             break;
 
                         segments.Add(nextSegment);
@@ -441,7 +441,7 @@ namespace CalRemix.NPCs.Bosses
                     while (Main.npc.IndexInRange((int)previousSegment.ai[0]) && Main.npc[(int)previousSegment.ai[0]].active)
                     {
                         NPC nextSegment = Main.npc[(int)previousSegment.ai[0]];
-                        if (nextSegment.type != NPC.type && nextSegment.type != ModContent.NPCType<WulfrumExcavatorBody>())
+                        if (nextSegment.type != NPC.type && nextSegment.type != ModContent.NPCType<WulfwyrmBody>())
                             break;
 
                         segments.Add(nextSegment);
@@ -585,8 +585,8 @@ namespace CalRemix.NPCs.Bosses
 
                 NPC.Center = Target.Center + new Vector2(750f, -500f);
 
-                int bodyID = ModContent.NPCType<WulfrumExcavatorBody>();
-                int tailID = ModContent.NPCType<WulfrumExcavatorTail>();
+                int bodyID = ModContent.NPCType<WulfwyrmBody>();
+                int tailID = ModContent.NPCType<WulfwyrmTail>();
 
                 // Bring the segments to the head position.
                 for (int i = 0; i < Main.maxNPCs; i++)
@@ -826,7 +826,7 @@ namespace CalRemix.NPCs.Bosses
             npcLoot.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
 
             // Rod
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<WulfrumExcavatorHead>() && info.npc.ModNPC<WulfrumExcavatorHead>().PylonCharged), ModContent.ItemType<WulfrumRod>()));
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<WulfwyrmHead>() && info.npc.ModNPC<WulfwyrmHead>().PylonCharged), ModContent.ItemType<WulfrumRod>()));
 
             // Lore item
             npcLoot.AddConditionalPerPlayer(() => !CalRemixWorld.downedExcavator, ModContent.ItemType<KnowledgeExcavator>(), desc: DropHelper.FirstKillText);
@@ -838,9 +838,9 @@ namespace CalRemix.NPCs.Bosses
             // Position to head such that it's at the closest worm segment to the target on the last frame of its existence.
             // This is done to make loot more convenient to pick up.
             int closestSegmentID = DropHelper.FindClosestWormSegment(NPC,
-                ModContent.NPCType<WulfrumExcavatorHead>(),
-                ModContent.NPCType<WulfrumExcavatorBody>(),
-                ModContent.NPCType<WulfrumExcavatorTail>());
+                ModContent.NPCType<WulfwyrmHead>(),
+                ModContent.NPCType<WulfwyrmBody>(),
+                ModContent.NPCType<WulfwyrmTail>());
     
 
 

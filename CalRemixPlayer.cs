@@ -67,6 +67,7 @@ namespace CalRemix
 		public bool ZoneLife;
 		public float cosdam = 0;
 		public int VerbotenMode = 1;
+		public int RecentChest = -1;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantSummon>(),
@@ -672,5 +673,47 @@ namespace CalRemix
                 calplayer.rogueStealth = sstealth;
             }
         }
+
+		// excavator summon, some code adapted from thorium mimic summoning
+		public override void UpdateAutopause() { RecentChest = Player.chest; }
+        public override void PreUpdateBuffs() 
+        {
+			if(Main.netMode != NetmodeID.MultiplayerClient)
+            {
+				if (Player.chest == -1 && RecentChest >= 0 && Main.chest[RecentChest] != null)
+				{
+					int i = Main.chest[RecentChest].x;
+					int j = Main.chest[RecentChest].y;
+					Chest cheste = Main.chest[RecentChest];
+					if (Main.tile[cheste.x, cheste.y].TileType == TileID.Containers && (Main.tile[i, j].TileFrameX == 432 || Main.tile[i, j].TileFrameX == 450))
+					{
+						for (int slot = 0; slot < Chest.maxItems; slot++)
+						{
+							if (!NPC.AnyNPCs(ModContent.NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+							{
+								// is the rest of the chest empty
+								int ok = 0;
+								for (int q = 0; q < Chest.maxItems; q++) ok += cheste.item[q].stack;
+								if (ok == 1)
+								{
+									cheste.item[slot].stack = 0;
+									cheste.item[slot].type = ItemID.None;
+									NPC guy = CalamityUtils.SpawnBossBetter(new Vector2(i * 16, j * 16 + 1200), ModContent.NPCType<WulfwyrmHead>());
+
+									SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
+									if (guy.whoAmI.WithinBounds(Main.maxNPCs))
+									{
+										guy.velocity.Y = -20;
+									}
+									break;
+								}
+								Main.NewText(ok);
+							}
+						}
+					}
+				}
+				RecentChest = Player.chest;
+			}
+		}
     }
 }

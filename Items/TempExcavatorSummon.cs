@@ -38,12 +38,12 @@ namespace CalRemix.Items
 
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>());
+            return !NPC.AnyNPCs(ModContent.NPCType<NPCs.Bosses.WulfwyrmHead>());
         }
 
         public override bool? UseItem(Player player)
         {
-            NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>());
+            NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.Bosses.WulfwyrmHead>());
             new SoundStyle("Terraria/Sounds/Roar");
             return true;
         }

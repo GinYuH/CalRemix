@@ -77,17 +77,17 @@ namespace CalRemix
 					bossChecklist.Call(
 					"AddBoss",
 					0.22f,
-					ModContent.NPCType<WulfrumExcavatorHead>(),
+					ModContent.NPCType<WulfwyrmHead>(),
 					this,
-					"WulfrumExcavator",
+					"Wulfrum Excavator",
 					(Func<bool>)(() => CalRemixWorld.downedExcavator),
 					ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>(),
 					new List<int>() { ModContent.ItemType<Items.KnowledgeExcavator>() },
-					new List<int>() { Terraria.ID.ItemID.LesserHealingPotion },
-					$"Open a [i:{Terraria.ID.ItemID.LivingWoodChest}] that has nothing inside but 1 [i:{ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>()}] in its first slot.",
+					new List<int>() { ItemID.LesserHealingPotion },
+					$"Place an [i:{ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>()}] inside of an empty [i:{ItemID.LivingWoodChest}]",
 				"The old excavator has successfully harvested every player.",
 					CalamityUtils.ColorMessage("The old excavator has successfully harvested every player.", new Microsoft.Xna.Framework.Color(108, 245, 133)),
-					"CalamityMod/NPCs/Boss/WulfrumExcavatorBossChecklist",
+					"CalamityMod/NPCs/Boss/WulfwyrmBossChecklist",
 					null,
 					null);
 				}
@@ -97,13 +97,13 @@ namespace CalRemix
 				player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
 			});
 			List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries = (List<(int, int, Action<int>, int, bool, float, int[], int[])>)cal.Call("GetBossRushEntries");
-			int[] excIDs = { ModContent.NPCType<WulfrumExcavatorBody>(), ModContent.NPCType<WulfrumExcavatorTail>() };
-			int[] headID = { ModContent.NPCType<WulfrumExcavatorHead>() };
+			int[] excIDs = { ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>() };
+			int[] headID = { ModContent.NPCType<WulfwyrmHead>() };
 			Action<int> pr = delegate (int npc) 
 			{
-				NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<WulfrumExcavatorHead>()); 
+				NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<WulfwyrmHead>()); 
 			};
-			brEntries.Insert(0, (ModContent.NPCType<WulfrumExcavatorHead>(), -1, pr, 180, false, 0f, excIDs, headID));
+			brEntries.Insert(0, (ModContent.NPCType<WulfwyrmHead>(), -1, pr, 180, false, 0f, excIDs, headID));
 			cal.Call("SetBossRushEntries", brEntries);
 
 			/* I hate enchantments

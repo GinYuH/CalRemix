@@ -279,9 +279,9 @@ namespace CalRemix
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC exc = Main.npc[i];
-                    if (npc.Distance(exc.Center) <= npc.ai[1] && exc.ModNPC is WulfrumExcavatorHead)
+                    if (npc.Distance(exc.Center) <= npc.ai[1] && exc.ModNPC is WulfwyrmHead)
                     {
-                        exc.ModNPC<WulfrumExcavatorHead>().PylonCharged = true;
+                        exc.ModNPC<WulfwyrmHead>().PylonCharged = true;
                     }
                 }
             }

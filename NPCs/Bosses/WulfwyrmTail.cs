@@ -8,7 +8,7 @@ using CalamityMod;
 
 namespace CalRemix.NPCs.Bosses
 {
-    public class WulfrumExcavatorTail : ModNPC
+    public class WulfwyrmTail : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ namespace CalRemix.NPCs.Bosses
 
         public override void SetDefaults()
         {
-            WulfrumExcavatorBody.InitializeSegment(NPC);
+            WulfwyrmBody.InitializeSegment(NPC);
             NPC.Size = new(52, 72f);
             NPC.damage = 5;
 
@@ -65,7 +65,7 @@ namespace CalRemix.NPCs.Bosses
             NPC.dontTakeDamage = reader.ReadBoolean();
         }
 
-        public override void AI() => WulfrumExcavatorBody.PerformSegmentingAI(NPC);
+        public override void AI() => WulfwyrmBody.PerformSegmentingAI(NPC);
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;
 
@@ -86,9 +86,9 @@ namespace CalRemix.NPCs.Bosses
             int frame = (int)NPC.frameCounter;
             NPC.frame.Y = frame * frameHeight;
             NPC head = Main.npc[CalRemixGlobalNPC.wulfyrm];
-            if (CalRemixGlobalNPC.wulfyrm < 0 || CalRemixGlobalNPC.wulfyrm >= Main.maxNPCs || Main.npc[CalRemixGlobalNPC.wulfyrm] is null || Main.npc[CalRemixGlobalNPC.wulfyrm].type != ModContent.NPCType<WulfrumExcavatorHead>())
+            if (CalRemixGlobalNPC.wulfyrm < 0 || CalRemixGlobalNPC.wulfyrm >= Main.maxNPCs || Main.npc[CalRemixGlobalNPC.wulfyrm] is null || Main.npc[CalRemixGlobalNPC.wulfyrm].type != ModContent.NPCType<WulfwyrmHead>())
                 return;
-            if (head.ModNPC<WulfrumExcavatorHead>().PylonCharged == true) // Handles Pylon charge sprites.
+            if (head.ModNPC<WulfwyrmHead>().PylonCharged == true) // Handles Pylon charge sprites.
             {
                 NPC.frame.Y = 1 * frameHeight;
             }

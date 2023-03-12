@@ -41,27 +41,6 @@ namespace CalRemix
 				else if (Main.rand.NextBool(20))
 					Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), Main.LocalPlayer.getRect(), ModContent.ItemType<EtherealCore>());
 			}
-            if (type == TileID.Containers && Main.tile[i,j].TileFrameX == 432 || Main.tile[i,j].TileFrameX == 450)
-            {
-                for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
-                {
-                    Chest cheste = Main.chest[chestIndex];
-                    if (cheste != null && Main.tile[cheste.x, cheste.y].TileType == TileID.Containers)
-                    {
-                        if (NPC.CountNPCS(ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>()) < 1 && cheste.item[0].type == ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[0].stack == 1 && cheste.item[1].type == ItemID.None)
-                        {
-                            cheste.item[0].stack = 0;
-                            NPC guy = CalamityUtils.SpawnBossBetter(new Vector2(i * 16, j * 16 + 600), ModContent.NPCType<NPCs.Bosses.WulfrumExcavatorHead>());
-
-                            Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
-                            if (guy.whoAmI.WithinBounds(Main.maxNPCs))
-                            {
-                                guy.velocity.Y = -20;
-                            }
-                        }
-                    }
-                }
-            }
         }
         public override void RandomUpdate(int i, int j, int type)
         {

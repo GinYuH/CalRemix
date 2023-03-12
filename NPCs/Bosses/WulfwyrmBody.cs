@@ -15,7 +15,7 @@ using CalamityMod;
 
 namespace CalRemix.NPCs.Bosses
 {
-    public class WulfrumExcavatorBody : ModNPC
+    public class WulfwyrmBody : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -113,9 +113,9 @@ namespace CalRemix.NPCs.Bosses
             int frame = (int)NPC.frameCounter;
             NPC.frame.Y = frame * frameHeight;
             NPC head = Main.npc[CalRemixGlobalNPC.wulfyrm];
-            if (CalRemixGlobalNPC.wulfyrm < 0 || CalRemixGlobalNPC.wulfyrm >= Main.maxNPCs || Main.npc[CalRemixGlobalNPC.wulfyrm] is null || Main.npc[CalRemixGlobalNPC.wulfyrm].type != ModContent.NPCType<WulfrumExcavatorHead>())
+            if (CalRemixGlobalNPC.wulfyrm < 0 || CalRemixGlobalNPC.wulfyrm >= Main.maxNPCs || Main.npc[CalRemixGlobalNPC.wulfyrm] is null || Main.npc[CalRemixGlobalNPC.wulfyrm].type != ModContent.NPCType<WulfwyrmHead>())
                 return;
-            if (head.ModNPC<WulfrumExcavatorHead>().PylonCharged == true) // Handles Pylon charge sprites.
+            if (head.ModNPC<WulfwyrmHead>().PylonCharged == true) // Handles Pylon charge sprites.
             {
                 NPC.frame.Y = 1 * frameHeight;
             }
