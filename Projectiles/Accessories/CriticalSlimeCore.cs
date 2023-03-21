@@ -151,17 +151,21 @@ namespace CalRemix.Projectiles.Accessories
                 ModContent.NPCType<CorruptSlimeSpawn2>(),
                 ModContent.NPCType<CrimsonSlimeSpawn>(),
                 ModContent.NPCType<CrimsonSlimeSpawn2>(),
-                ModContent.NPCType<AstrumAureus>(),
-                ModContent.NPCType<SlimeGodCore>(),
-                ModContent.NPCType<CrimulanSlimeGod>(),
-                ModContent.NPCType<EbonianSlimeGod>(),
-                ModContent.NPCType<SplitCrimulanSlimeGod>(),
-                ModContent.NPCType<SplitEbonianSlimeGod>(),
                 ModContent.NPCType<LifeSlime>(),
-                ModContent.NPCType<CragmawMire>(),
-                NPCID.KingSlime,
-                NPCID.QueenSlimeBoss
+                ModContent.NPCType<CragmawMire>()
             };
+            if (!CalamityMod.Events.BossRushEvent.BossRushActive)
+            {
+                Slimes.Add(ModContent.NPCType<AstrumAureus>());
+                Slimes.Add(ModContent.NPCType<AureusSpawn>());
+                Slimes.Add(ModContent.NPCType<CrimulanSlimeGod>());
+                Slimes.Add(ModContent.NPCType<SplitCrimulanSlimeGod>());
+                Slimes.Add(ModContent.NPCType<EbonianSlimeGod>());
+                Slimes.Add(ModContent.NPCType<SplitEbonianSlimeGod>());
+                Slimes.Add(ModContent.NPCType<SlimeGodCore>());
+                Slimes.Add(NPCID.KingSlime);
+                Slimes.Add(NPCID.QueenSlimeBoss);
+            }
             if (Projectile.damage < MAXDMG)
             for (int i = 0; i < Main.maxNPCs; i++)
             {
