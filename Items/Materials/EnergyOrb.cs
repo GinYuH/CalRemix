@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Items.Materials
@@ -10,6 +11,7 @@ namespace CalRemix.Items.Materials
             SacrificeTotal = 1;
             DisplayName.SetDefault("Energy Orb");
             Tooltip.SetDefault("This is literally useless for now");
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 
         public override void SetDefaults()

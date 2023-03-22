@@ -1,4 +1,4 @@
-﻿using CalRemix.Projectiles;
+﻿/*using CalRemix.Projectiles;
 using CalRemix.NPCs.Bosses;
 using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
@@ -50,3 +50,4 @@ namespace CalRemix.Items
 
     }
 }
+*/

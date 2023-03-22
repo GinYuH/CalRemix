@@ -17,12 +17,15 @@ namespace CalRemix.Items.Materials
       	Tooltip.SetDefault("The essence of lively creatures");
 			SacrificeTotal = 25;
 			ItemID.Sets.SortingPriorityMaterials[Type] = 71; // Soul of Light
-		}
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
+        }
 		public override void SetDefaults()
 		{
             Item.rare = ItemRarityID.Pink;
             Item.value = CalamityGlobalItem.Rarity5BuyPrice;
 			Item.maxStack = 999;
+            Item.width = 38;
+            Item.height = 24;
         }
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {

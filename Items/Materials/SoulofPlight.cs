@@ -12,7 +12,8 @@ namespace CalRemix.Items.Materials
 			DisplayName.SetDefault("Soul of Plight");
       	Tooltip.SetDefault("The artificial essence of powerful machines");
 			SacrificeTotal = 25;
-    	}
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
+		}
 		public override void SetDefaults()
 		{
             Item.rare = ItemRarityID.Lime;
