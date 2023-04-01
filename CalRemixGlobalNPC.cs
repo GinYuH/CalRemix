@@ -35,6 +35,14 @@ using CalamityMod.Events;
 using System;
 using Terraria.GameContent;
 using System.IO;
+using Terraria.DataStructures;
+using Terraria.Chat;
+using Terraria.Localization;
+using CalamityMod.NPCs.Crabulon;
+using CalamityMod.NPCs.ExoMechs;
+using CalamityMod.Items.TreasureBags;
+using CalamityMod.NPCs.ExoMechs.Artemis;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix
 {
@@ -46,6 +54,7 @@ namespace CalRemix
         public float shadowHit = 1;
         private bool useDefenseFrames;
         private int frameUsed;
+        private int say = 0;
         public static int wulfyrm = -1;
         public override bool InstancePerEntity
         {
@@ -91,7 +100,16 @@ namespace CalRemix
             ModContent.NPCType<CrimsonSlimeSpawn>(),
             ModContent.NPCType<CrimsonSlimeSpawn2>()
         };
-
+        public override void OnSpawn(NPC npc, IEntitySource source)
+        {
+            if (npc.type == ModContent.NPCType<Crabulon>())
+            {
+                if (DateTime.Today.ToString("dd/MM").Equals("01/04") && Main.rand.NextBool(100))
+                    Talk("Buy Delicious Meat! So Very Delicious! 20% Off! Buy Today!", Color.LightSkyBlue);
+                else
+                    Talk("Hello, are you here to place a delivery for my world-famous Delicious Meat, made with Frosted Pigron and Blue Truffles (now 70% bluer)?", Color.LightSkyBlue);
+            }
+        }
         public override bool PreAI(NPC npc)
         {
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
@@ -253,6 +271,19 @@ namespace CalRemix
                     }
                 }
             }
+            if (npc.type == ModContent.NPCType<Crabulon>())
+            {
+                if (say == 1 && npc.life < (npc.lifeMax * 3 / 4))
+                {
+                    Talk("You must be kidding. You're just another one of those desperate Delicious Meat fans that don't care to pay up for our hard work that was put into making these. For shame.", Color.LightSkyBlue);
+                    say = 2;
+                }
+                if (say == 2 && npc.life < (npc.lifeMax / 3))
+                {
+                    Talk("You remind me of that giant mushroom pig flying fish thing. If it could, it would easily butcher you whole, while you're blinded by your depression or whatever.", Color.LightSkyBlue);
+                    say = 3;
+                }
+            }
             return true;
         }
         public override void AI(NPC npc)
@@ -353,7 +384,8 @@ namespace CalRemix
                 npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
-            else */if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
+            else */
+            if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
             }
@@ -403,6 +435,18 @@ namespace CalRemix
                 LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
                 postPolter.Add(ModContent.ItemType<CoyoteVenom>(), 3, hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ModContent.ItemType<CoyoteVenom>(), 4, hideLootReport: Main.expertMode);
+            }
+            else if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            {
+                npcLoot.Add(ModContent.ItemType<YharimBar>(), 1, 6, 8);
+            }
+            else if (npc.type == ModContent.NPCType<Crabulon>())
+            {
+                npcLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
+            }
+            else if (npc.type == NPCID.DukeFishron)
+            {
+                npcLoot.Add(ModContent.ItemType<DeliciousMeat>(), 2, 45, 92);
             }
             if (npc.boss && bossKillcount > 5)
             {
@@ -454,6 +498,10 @@ namespace CalRemix
                     binaryWriter.Write(npc.Calamity().newAI[i]);
                 }
             }
+            if (npc.type == ModContent.NPCType<Crabulon>())
+            {
+                binaryWriter.Write(say);
+            }
             if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
             {
                 binaryWriter.Write(npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost);
@@ -469,6 +517,10 @@ namespace CalRemix
                 {
                     npc.Calamity().newAI[i] = binaryReader.ReadSingle();
                 }
+            }
+            if (npc.type == ModContent.NPCType<Crabulon>())
+            {
+                say = binaryReader.ReadInt32();
             }
             if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
             {
@@ -637,6 +689,20 @@ namespace CalRemix
                 }
             }
         }
+        public override void HitEffect(NPC npc, int hitDirection, double damage)
+        {
+            if (npc.type == ModContent.NPCType<Crabulon>() && say <= 0)
+            {
+                Talk("No? Please do be careful with that weapon, though, it looks kinda dangerous. Honestly, you seem quite... crabby. Get it?!", Color.LightSkyBlue);
+                say = 1;
+            }
+            if (npc.type == ModContent.NPCType<Crabulon>() && npc.life <= 0 && say == 3)
+            {
+                Talk("AAAAAAAAAh", Color.LightSkyBlue);
+                say = 4;
+            }
+
+        }
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (vBurn)
@@ -644,6 +710,13 @@ namespace CalRemix
                 damage *= 0.95f;
             }
             return true;
+        }
+        private static void Talk(string text, Color color)
+        {
+            if (Main.netMode == NetmodeID.Server)
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
+            else if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(text, color);
         }
     }
 }

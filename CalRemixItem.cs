@@ -24,6 +24,8 @@ using Terraria.GameContent;
 using CalamityMod.Items.TreasureBags;
 using CalRemix.Items.Materials;
 using System.Linq;
+using CalamityMod.World;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix
 {
@@ -262,7 +264,7 @@ namespace CalRemix
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
             }
-            else if (item.type == ModContent.ItemType<DesertScourgeBag>())
+            if (item.type == ModContent.ItemType<DesertScourgeBag>())
             {
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
                 //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
@@ -270,6 +272,38 @@ namespace CalRemix
             else if (item.type == ItemID.PlanteraBossBag)
             {
                 itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 5, 9);
+            }
+            else if (item.type == ModContent.ItemType<DevourerofGodsBag>() && CalamityWorld.revenge || CalamityWorld.death)
+            {
+                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 1, 3);
+            }
+            if (item.type == ModContent.ItemType<YharonBag>() && CalamityWorld.revenge || CalamityWorld.death)
+            {
+                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 6, 8);
+            }
+            else if (item.type == ModContent.ItemType<YharonBag>() && !(CalamityWorld.revenge || CalamityWorld.death))
+            {
+                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 5, 7);
+            }
+            if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>() && CalamityWorld.revenge || CalamityWorld.death)
+            {
+                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 9, 11);
+            }
+            else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>() && !(CalamityWorld.revenge || CalamityWorld.death))
+            {
+                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 7, 9);
+            }
+            else if (item.type == ModContent.ItemType<DraedonBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 6000, 8000);
+            }
+            else if (item.type == ModContent.ItemType<CrabulonBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
+            }
+            else if (item.type == ItemID.FishronBossBag)
+            {
+                itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 2, 45, 92);
             }
             /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
             {
