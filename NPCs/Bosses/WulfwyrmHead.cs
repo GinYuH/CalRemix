@@ -851,6 +851,16 @@ namespace CalRemix.NPCs.Bosses
             }
                 return false;
         }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("WulfrumExcavatorHead").Type, NPC.scale);
+                }
+            }
+        }
         
         public override bool CheckActive() => false;
 

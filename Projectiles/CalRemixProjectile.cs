@@ -210,7 +210,7 @@ namespace CalRemix
 				target.AddBuff(BuffType<GodSlayerInferno>(), 60);
 				if (modPlayer.tvo)
 				{
-					target.AddBuff(BuffType<ExoFreeze>(), 60);
+					target.AddBuff(BuffType<GlacialState>(), 60);
 				}
 			}
 		}
@@ -353,7 +353,7 @@ namespace CalRemix
         public override void OnHitPlayer(Projectile projectile, Player target, int damage, bool crit)
         {
             if (hyperCharged)
-                target.AddBuff(ModContent.BuffType<ExoFreeze>(), 50);
+                target.AddBuff(ModContent.BuffType<GlacialState>(), 50);
         }
 
         internal float PWF(float ratio)

@@ -105,6 +105,17 @@ namespace CalRemix.NPCs.Bosses
             NPC.lifeMax = (int)(NPC.lifeMax * 0.8f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * NPC.GetExpertDamageMultiplier());
         }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("WulfrumExcavatorTail1").Type, NPC.scale);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("WulfrumExcavatorTail2").Type, NPC.scale);
+                }
+            }
+        }
 
     }
 }

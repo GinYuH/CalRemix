@@ -295,6 +295,7 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<FAP>()) // MURDER the drunk princess
             {
+                CalamityMod.World.CalamityWorld.spawnedCirrus = false;
                 npc.active = false;
             }
             /*if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
@@ -322,7 +323,7 @@ namespace CalRemix
             if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
             {
                 if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura > 0)
-                    npc.AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatDebuffs.ExoFreeze>(), 60);
+                    npc.AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
             }
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)

@@ -125,7 +125,7 @@ namespace CalRemix
             ModContent.ProjectileType<YharonSonPet>(),
             ModContent.ProjectileType<BobbitHead>(),
             ModContent.ProjectileType<SerpentsBiteHook>(),
-            ModContent.ProjectileType<AstralFallingSand>(),
+            //ModContent.ProjectileType<AstralFallingSand>(),
             ModContent.ProjectileType<WulfrumHook>(),
             ModContent.ProjectileType<AstralSandgun>(),
             ModContent.ProjectileType<AeroExplosive>(),

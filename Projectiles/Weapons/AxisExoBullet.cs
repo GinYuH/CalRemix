@@ -65,10 +65,7 @@ namespace CalRemix.Projectiles.Weapons
 		{
             var source = Projectile.GetSource_FromThis();
 
-            target.AddBuff(ModContent.BuffType<ExoFreeze>(), 30);
-            target.AddBuff(ModContent.BuffType <HolyFlames>(), 120);
-            target.AddBuff(BuffID.Frostburn, 150);
-            target.AddBuff(BuffID.OnFire, 180);
+            target.AddBuff(ModContent.BuffType<MiracleBlight>(), 60);
 
             if (Projectile.ai[0] == 0)
 			{
