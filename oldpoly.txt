@@ -1,0 +1,324 @@
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Polyphemalus.Content.NPCs
+{
+	// The main part of the boss, usually refered to as "body"
+	[AutoloadBossHead] // This attribute looks for a texture called "ClassName_Head_Boss" and automatically registers it as the NPC boss head icon
+	public class polyphemalus : ModNPC
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Polyphemalus");
+
+			// Add this in for bosses that have a summon item, requires corresponding code in the item (See MinionBossSummonItem.cs)
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			// Automatically group with other bosses
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
+
+			// Specify the debuffs it is immune to
+			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[] {
+					BuffID.Confused // Most NPCs have this
+				}
+			};
+			NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+		}
+
+		public override void SetDefaults()
+		{
+			NPC.width = 302;
+			NPC.height = 318;
+			NPC.damage = 100;
+			NPC.defense = 10;
+			NPC.lifeMax = 125000;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.knockBackResist = 0f;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.value = Item.buyPrice(gold: 500);
+			NPC.SpawnWithHigherTime(30);
+			NPC.boss = true;
+			NPC.npcSlots = 10f; // Take up open spawn slots, preventing random NPCs from spawning during the fight
+
+			// Don't set immunities like this as of 1.4:
+			// NPC.buffImmune[BuffID.Confused] = true;
+			// immunities are handled via dictionaries through NPCID.Sets.DebuffImmunitySets
+
+			// Custom AI, 0 is "bound town NPC" AI which slows the NPC down and changes sprite orientation towards the target
+			NPC.aiStyle = -1;
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
+			return true;
+        }
+
+		private const int TimerMax = 60*12;
+		// This is a reference property. It lets us write FirstStageTimer as if it's NPC.localAI[1], essentially giving it our own name
+		public ref float Timer => ref NPC.localAI[1];
+
+		public override void AI()
+        {
+            // This should almost always be the first code in AI() as it is responsible for finding the proper player target
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            {
+                NPC.TargetClosest();
+            }
+
+            Player player = Main.player[NPC.target];
+
+            if (player.dead)
+            {
+                // If the targeted player is dead, flee
+                NPC.velocity.Y -= 0.04f;
+                // This method makes it so when the boss is in "despawn range" (outside of the screen), it despawns in 10 ticks
+                NPC.EncourageDespawn(10);
+                return;
+            }
+
+            ShootAI(player);
+			SpinShot();
+
+			Timer++;
+			if (Timer > TimerMax)
+			{
+				Timer = 0;
+			}
+		}
+
+        private void ShootAI(Player player)
+        {
+			Vector2 toPlayer = player.Center - NPC.Center;
+			Vector2 toPlayerNormalized = toPlayer.SafeNormalize(Vector2.UnitY);
+			float offsetX = 0f;
+			Vector2 abovePlayer = player.Top + new Vector2(NPC.direction * offsetX, -NPC.height);
+			Vector2 toAbovePlayer = abovePlayer - NPC.Center;
+			Vector2 toAbovePlayerNormalized = toAbovePlayer.SafeNormalize(Vector2.UnitY);
+			NPC.localAI[0] = 120;
+			float speed = 10f;
+			float inertia = 40f;
+			if (NPC.life > NPC.lifeMax * 0.75)
+			{
+				if (Timer < (TimerMax * 0.75))
+				{
+					TurnTowards(toPlayer.ToRotation());
+					Vector2 moveTo = toAbovePlayerNormalized * speed;
+					NPC.velocity = (NPC.velocity * (inertia - 1) + moveTo) / inertia;
+					if (NPC.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						if (Timer >= (TimerMax * 0.1) && Timer < (TimerMax * 0.5) && Timer % 30 == 0)
+						{
+							ShootRed(ProjectileID.DeathLaser, 8, 75);
+						}
+						if (Timer >= (TimerMax * 0.6) && Timer < (TimerMax * 0.7) && Timer % 5 == 0)
+						{
+
+							ShootRed(ProjectileID.DeathLaser, 6, 55);
+						}
+					}
+				}
+			}
+			else if (NPC.life > NPC.lifeMax * 0.5)
+			{
+				if (Timer < (TimerMax * 0.75))
+				{
+					TurnTowards(toPlayer.ToRotation() - MathHelper.PiOver2);
+					Vector2 moveTo = toPlayerNormalized * speed/1.5f;
+					NPC.velocity = (NPC.velocity * (inertia - 1) + moveTo) / inertia;
+					if (Timer >= (TimerMax * 0.1) && Timer < (TimerMax * 0.75) && Timer % 10 == 0)
+					{
+						ShootBlue(ProjectileID.FrostWave, 6, 75);
+					}
+
+				}
+			}
+			else if (NPC.life > NPC.lifeMax * 0.25)
+            {
+				TurnTowards(toPlayer.ToRotation() + (float)Math.PI);
+				Vector2 moveTo = toPlayerNormalized * speed;
+				NPC.velocity = (NPC.velocity * (inertia - 1) + moveTo) / inertia;
+				if (Timer >= (TimerMax * 0.1) && Timer < (TimerMax * 0.75) && Timer % 10 == 0)
+				{
+					ShootGreen(101, 8, 60);
+				}
+			}
+			else if (NPC.life > NPC.lifeMax * 0.05)
+			{
+				if (Timer < (TimerMax * 0.75))
+				{
+					TurnTowards(toPlayer.ToRotation() + MathHelper.PiOver2);
+					Vector2 moveTo = toAbovePlayerNormalized * speed;
+					NPC.velocity = (NPC.velocity * (inertia - 1) + moveTo) / inertia;
+					if (NPC.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						if (Timer >= (TimerMax * 0.1) && Timer < (TimerMax * 0.5) && Timer % 30 == 0)
+						{
+							ShootGray(ProjectileID.CultistBossFireBallClone, 8, 80);
+						}
+						if (Timer >= (TimerMax * 0.6) && Timer < (TimerMax * 0.7) && Timer % 5 == 0)
+						{
+
+							ShootGray(ProjectileID.CultistBossFireBallClone, 8, 65);
+						}
+					}
+				}
+			}
+
+		}
+        private void SpinShot()
+        {
+			if (Main.dayTime)
+            {
+				{
+					TurnTowards(Timer * (float)(Math.PI / 180) * (11.25f / 4));
+					NPC.velocity *= 0;
+					int[] projectileList = { 719, 270, 83, 926, 96, ProjectileID.DeathLaser, 101, 102, 275, 276, 277, 258, 259, 385, 873, 464, 467, ProjectileID.CultistBossFireBallClone, ProjectileID.FrostWave, 349, 329 };
+					Random rnd = new Random();
+					if (Timer % 4 == 0)
+					{
+						ShootBlue(projectileList[rnd.Next(0, projectileList.Length)], 2, 500);
+					}
+					if (Timer % 2 == 1)
+					{
+						ShootRed(projectileList[rnd.Next(0, projectileList.Length)], 4, 500);
+					}
+					if (Timer % 8 == 3)
+					{
+						ShootGray(projectileList[rnd.Next(0, projectileList.Length)], 16, 500);
+					}
+					if (Timer % 2 == 2)
+					{
+						ShootGreen(projectileList[rnd.Next(0, projectileList.Length)], 8, 500);
+					}
+					if (Timer % 60 == 0)
+					{
+						ShootGray(465, 8, 500);
+                        ShootBlue(ProjectileID.HallowBossLastingRainbow, 1, 50);
+                        ShootGreen(ProjectileID.HallowBossLastingRainbow, 1, 50);
+                        ShootGray(ProjectileID.HallowBossLastingRainbow, 1, 50);
+                        ShootRed(ProjectileID.HallowBossLastingRainbow, 1, 50);
+                    }
+				}
+			}
+			else if (NPC.life <= NPC.lifeMax * 0.05)
+            {
+				TurnTowards(Timer * (float)(Math.PI / 180) * (11.25f / 4) * 3);
+				NPC.velocity *= 0;
+				int[] projectileList = { 719, 270, 83, 926, 96, ProjectileID.DeathLaser, 101, 102, 275, 276, 277, 258, 259, 385, 873, 464, 467, ProjectileID.CultistBossFireBallClone, ProjectileID.FrostWave, 349, 329 };
+				Random rnd = new Random();
+				if (Timer % 12 == 0)
+				{
+					ShootBlue(projectileList[rnd.Next(0, projectileList.Length)], 2, 50);
+				}
+				if (Timer % 6 == 1)
+				{
+					ShootRed(projectileList[rnd.Next(0, projectileList.Length)], 4, 50);
+				}
+				if (Timer % 24 == 3)
+				{
+					ShootGray(projectileList[rnd.Next(0, projectileList.Length)], 16, 50);
+				}
+				if (Timer % 6 == 2)
+				{
+					ShootGreen(projectileList[rnd.Next(0, projectileList.Length)], 8, 50);
+				}
+				if (Timer % 240 == 0)
+				{
+					ShootGray(465, 8, 50);
+
+                }
+                if (Timer % 120 == 59)
+                {
+                    ShootBlue(ProjectileID.HallowBossLastingRainbow, 2, 50);
+                    ShootGreen(ProjectileID.HallowBossLastingRainbow, 2, 50);
+                    ShootGray(ProjectileID.HallowBossLastingRainbow, 2, 50);
+                    ShootRed(ProjectileID.HallowBossLastingRainbow, 2, 50);
+
+
+                }
+            }
+			else if (Timer >= (TimerMax*0.75)) {
+				TurnTowards(Timer*(float)(Math.PI/180)*(11.25f/2));
+				NPC.velocity = NPC.velocity * 0.99f;
+				if (Timer % 4 == 0)
+                {
+					ShootBlue(ProjectileID.FrostWave, 1, 100);
+				}
+				if (Timer % 2 == 1)
+				{
+					ShootRed(ProjectileID.DeathLaser, 8, 35);
+				}
+				if (Timer % 8 == 3)
+				{
+					ShootGray(ProjectileID.CultistBossFireBallClone, 6, 50);
+				}
+				if (Timer % 4 == 2)
+				{
+					ShootGreen(96, 5, 50);
+				}
+			}
+
+        }
+
+        private void TurnTowards(float goal, float maxSpeed = 1)
+        {
+			maxSpeed *= (float)Math.PI / 180f;
+			float rad360 = (360 * (float)Math.PI / 180f);
+			if (goal % rad360 + rad360 > NPC.rotation + rad360)
+            {
+                NPC.rotation += Math.Min((goal % rad360 + rad360) - NPC.rotation, maxSpeed+ rad360);
+            }
+			if (goal % rad360 + rad360 < NPC.rotation + rad360)
+			{
+				NPC.rotation += Math.Min((goal % rad360 + rad360) - NPC.rotation, maxSpeed+ rad360);
+			}
+		}
+		private Vector2 RadToVector(float input)
+        {
+			return new Vector2((float)Math.Cos(input), (float)Math.Sin(input));
+		}
+		private void ShootBlue(int type, float velocityMod, int damage)
+        {
+			Vector2 position = NPC.Center;
+			Vector2 Velocity = RadToVector(NPC.rotation + MathHelper.PiOver2) * velocityMod;
+			Projectile.NewProjectile(NPC.GetSource_FromAI(), position, Velocity, type, damage, 0f, Main.myPlayer);
+		}
+		private void ShootGray(int type, float velocityMod, int damage)
+		{
+			Vector2 position = NPC.Center;
+			Vector2 Velocity = RadToVector(NPC.rotation - MathHelper.PiOver2) * velocityMod;
+			Projectile.NewProjectile(NPC.GetSource_FromAI(), position, Velocity, type, damage, 0f, Main.myPlayer);
+		}
+
+		private void ShootGreen(int type, float velocityMod, int damage)
+		{
+			Vector2 position = NPC.Center;
+			Vector2 Velocity = RadToVector(NPC.rotation + (float)Math.PI) * velocityMod;
+			Projectile.NewProjectile(NPC.GetSource_FromAI(), position, Velocity, type, damage, 0f, Main.myPlayer);
+		}
+
+		private void ShootRed(int type, float velocityMod, int damage)
+		{
+			Vector2 position = NPC.Center;
+			Vector2 Velocity = RadToVector(NPC.rotation) * velocityMod;
+			Projectile.NewProjectile(NPC.GetSource_FromAI(), position, Velocity, type, damage, 0f, Main.myPlayer);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.Common(2112, 1));
+
+		}
+	}
+}
