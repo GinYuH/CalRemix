@@ -10,8 +10,8 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moon Empowerment");
-            Description.SetDefault("Hit me all you want, you can't un51 the recipe");
+            // DisplayName.SetDefault("Moon Empowerment");
+            // Description.SetDefault("Hit me all you want, you can't un51 the recipe");
         }
 
         public override void Update(Player player, ref int buffIndex)

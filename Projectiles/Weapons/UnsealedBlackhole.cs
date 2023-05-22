@@ -9,16 +9,16 @@ namespace CalRemix.Projectiles.Weapons
 {
 	public class UnsealedBlackhole : ModProjectile
 	{
-        public override string Texture => "CalamityMod/Projectiles/Rogue/ShadowBlackhole";
+        public override string Texture => "CalamityMod/Projectiles/Rogue/SealedSingularityBlackhole";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Unsealed Singularity");
+			// DisplayName.SetDefault("Unsealed Singularity");
             Main.projFrames[Projectile.type] = 7;
         }
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ModContent.ProjectileType<ShadowBlackhole>());
-            AIType = ModContent.ProjectileType<ShadowBlackhole>();
+            Projectile.CloneDefaults(ModContent.ProjectileType<SealedSingularityBlackhole>());
+            AIType = ModContent.ProjectileType<SealedSingularityBlackhole>();
             Projectile.timeLeft = 300;
         }
         public override void OnSpawn(IEntitySource source)

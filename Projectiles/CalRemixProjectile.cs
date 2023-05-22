@@ -144,7 +144,7 @@ namespace CalRemix
             }
         }
 
-        public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[projectile.owner];
 			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
@@ -350,7 +350,7 @@ namespace CalRemix
             }
         }
 
-        public override void OnHitPlayer(Projectile projectile, Player target, int damage, bool crit)
+        public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
         {
             if (hyperCharged)
                 target.AddBuff(ModContent.BuffType<GlacialState>(), 50);

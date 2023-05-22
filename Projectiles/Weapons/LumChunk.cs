@@ -11,7 +11,7 @@ namespace CalRemix.Projectiles.Weapons
         public override string Texture => "CalamityMod/Projectiles/Rogue/AbyssalMirrorProjectile";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lumenyl Shard");
+            // DisplayName.SetDefault("Lumenyl Shard");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()

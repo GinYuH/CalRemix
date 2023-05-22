@@ -21,7 +21,7 @@ namespace CalRemix.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nucleate Gello");
+            // DisplayName.SetDefault("Nucleate Gello");
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
@@ -99,7 +99,7 @@ namespace CalRemix.Projectiles.Accessories
             Projectile.frameCounter = 0;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (!latching && (target.whoAmI == Main.player[Projectile.owner].MinionAttackTargetNPC || Main.player[Projectile.owner].MinionAttackTargetNPC <= 0))
             {
@@ -191,7 +191,7 @@ namespace CalRemix.Projectiles.Accessories
             return recol;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             List<int> Slimes = new List<int>
             {
@@ -217,7 +217,7 @@ namespace CalRemix.Projectiles.Accessories
             };
             if (Slimes.Contains(target.type))
             {
-                damage = 0;
+                modifiers.SourceDamage *= 0f;
             }
         }
     }

@@ -1,6 +1,7 @@
 using CalRemix.Items.Placeables;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -18,9 +19,8 @@ namespace CalRemix.Tiles
 			Main.tileLighted[Type] = true;
 			Main.tileSpelunker[Type] = true;
 			Main.tileOreFinderPriority[Type] = 710;
-			ItemDrop = ModContent.ItemType<LifeOre>();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Life Ore");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Life Ore");
 			AddMapEntry(new Color(72, 107, 98), name);
 		}
 

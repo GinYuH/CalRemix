@@ -8,7 +8,7 @@ namespace CalRemix.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Butterfly");
+            // DisplayName.SetDefault("Butterfly");
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 1;
         }

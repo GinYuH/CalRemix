@@ -8,7 +8,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Dead Coral Shard");
+			// DisplayName.SetDefault("Dead Coral Shard");
 		}
 		public override void SetDefaults() 
         {

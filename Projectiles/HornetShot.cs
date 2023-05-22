@@ -8,11 +8,11 @@ namespace CalRemix.Projectiles
 {
 	public class HornetShot : ModProjectile
 	{
-        List<int> hit = new List<int>{ -1 };
+        List<int> hitlist = new List<int>{ -1 };
         public override string Texture => "Terraria/Images/Projectile_242";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("22 Hornet Round");
+			// DisplayName.SetDefault("22 Hornet Round");
 		}
 		public override void SetDefaults() 
         {
@@ -22,15 +22,15 @@ namespace CalRemix.Projectiles
             Projectile.penetrate = 22;
             Projectile.timeLeft = 2222;
         }
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-            hit.Add(target.whoAmI);
+            hitlist.Add(target.whoAmI);
             Projectile.Center = target.Center;
             NPC npc = target;
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC newTarget = Main.npc[i];
-                if (newTarget != npc && newTarget != null && !hit.Contains(newTarget.whoAmI) && newTarget.chaseable && !newTarget.friendly)
+                if (newTarget != npc && newTarget != null && !hitlist.Contains(newTarget.whoAmI) && newTarget.chaseable && !newTarget.friendly)
                 {
                     npc = newTarget;
                     break;

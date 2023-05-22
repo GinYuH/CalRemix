@@ -15,7 +15,7 @@ namespace CalRemix.Projectiles.Weapons
         public int finalDamage;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grand Reef");
+            // DisplayName.SetDefault("Grand Reef");
         }
 
         public override void SetDefaults()
@@ -159,7 +159,7 @@ namespace CalRemix.Projectiles.Weapons
             return true;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.ai[1] < 45f && Projectile.ai[0] < 1f)
             {

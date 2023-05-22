@@ -16,7 +16,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
 		public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Exo Bullet");
+			// DisplayName.SetDefault("Exo Bullet");
 		}
 		public override void SetDefaults() 
         {
@@ -61,7 +61,7 @@ namespace CalRemix.Projectiles.Weapons
                 }
             }
         }
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
             var source = Projectile.GetSource_FromThis();
 
@@ -74,7 +74,7 @@ namespace CalRemix.Projectiles.Weapons
                 Main.projectile[projIn].scale = 0.4f;
                 Main.projectile[projIn].penetrate = 1;
                 Main.projectile[projIn].CritChance = 0;
-                if (crit)
+                if (hit.Crit)
                 {
                     for (int i = 0; i < 5; i++)
                     {
@@ -86,7 +86,7 @@ namespace CalRemix.Projectiles.Weapons
             }
 			else
 			{
-                if (crit)
+                if (hit.Crit)
                 {
                     for (int i = 0; i < 5; i++)
                     {

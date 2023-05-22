@@ -16,11 +16,11 @@ namespace CalRemix.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Assortegelatin");
-            Tooltip.SetDefault("Summons slimes to fight for you based on your current biome\n"+
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Assortegelatin");
+            /* Tooltip.SetDefault("Summons slimes to fight for you based on your current biome\n"+
             "All wild slimes will fight for you\n"+
-            "Pacifies all slimes, even bosses");
+            "Pacifies all slimes, even bosses"); */
         }
 
         public override void SetDefaults()

@@ -12,9 +12,9 @@ namespace CalRemix.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Metamorphic Stone");
-            Tooltip.SetDefault("Summons an earth elemental to fight for you");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Metamorphic Stone");
+            // Tooltip.SetDefault("Summons an earth elemental to fight for you");
         }
 
         public override void SetDefaults()

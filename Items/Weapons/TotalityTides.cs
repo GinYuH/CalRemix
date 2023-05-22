@@ -17,10 +17,10 @@ public class TotalityTides : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Totality Tides");
-        Tooltip.SetDefault("Inundatio ex Terminus\n" +
-            "Summons a ball of exo energy on your cursor that sprays out a large amount of projectiles relative to your position");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Totality Tides");
+        /* Tooltip.SetDefault("Inundatio ex Terminus\n" +
+            "Summons a ball of exo energy on your cursor that sprays out a large amount of projectiles relative to your position"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

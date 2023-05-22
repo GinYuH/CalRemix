@@ -14,9 +14,9 @@ namespace CalRemix.Items
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Klepticoin");
-            Tooltip.SetDefault("The change of the gods");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Klepticoin");
+            // Tooltip.SetDefault("The change of the gods");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(12, 12));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }

@@ -12,7 +12,7 @@ namespace CalRemix.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tendon Tides");
+            // DisplayName.SetDefault("Tendon Tides");
         }
 
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.timeLeft = 9999;
             Projectile.DamageType = DamageClass.MeleeNoSpeed;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(10))
                 target.AddBuff(ModContent.BuffType<Shred>(), 360);

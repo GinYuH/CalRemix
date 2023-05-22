@@ -20,7 +20,7 @@ namespace CalRemix.Projectiles.Accessories
         public override SoundStyle DeathSound => SoundID.NPCDeath1;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calamitous Heart");
+            // DisplayName.SetDefault("Calamitous Heart");
             Main.projFrames[Projectile.type] = 6;
         }
 

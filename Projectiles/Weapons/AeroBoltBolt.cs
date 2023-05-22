@@ -9,7 +9,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Air Ball");
+			// DisplayName.SetDefault("Air Ball");
         }
         public override void SetDefaults()
         {

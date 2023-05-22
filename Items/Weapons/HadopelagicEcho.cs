@@ -18,10 +18,10 @@ namespace CalRemix.Items.Weapons
         public static readonly SoundStyle adultSound = new SoundStyle("CalamityMod/Sounds/Custom/EidolonWyrmRoarClose");
         public override void SetStaticDefaults() 
 		{
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Hadopelagic Echo");
-            Tooltip.SetDefault("Fires a string of bouncing sound waves that become stronger as they travel\n" +
-                                "Sound waves echo additional sound waves on enemy hits");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Hadopelagic Echo");
+            /* Tooltip.SetDefault("Fires a string of bouncing sound waves that become stronger as they travel\n" +
+                                "Sound waves echo additional sound waves on enemy hits"); */
 
         }
 		public override void SetDefaults() 

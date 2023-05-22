@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -38,13 +39,13 @@ namespace CalRemix.Tiles
             };
             TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Cosmichid");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Cosmichid");
 			AddMapEntry(new Color(156, 41, 143), name);
             TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
-            ItemDrop = ModContent.ItemType<Cosmichid>();
+            RegisterItemDrop(ModContent.ItemType<Cosmichid>());
             DustType = DustID.PinkTorch;
 		}
 

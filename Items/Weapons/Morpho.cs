@@ -20,12 +20,12 @@ public class Morpho : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Morpho Doomblade");
-        Tooltip.SetDefault("Swings a doomblade that shoots crescent slashes\n"
+        // DisplayName.SetDefault("Morpho Doomblade");
+        /* Tooltip.SetDefault("Swings a doomblade that shoots crescent slashes\n"
             + "Using RMB summons an Arbiter of Judgement that does not consume minion slots\n"
             + "Attacks from the blade and arbiter inflict Whispering Death and Valfrey Burn\n"
-            + "\'Now all will witness its true power!\'");
-        SacrificeTotal = 1;
+            + "\'Now all will witness its true power!\'"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -66,7 +66,7 @@ public class Morpho : ModItem
         if (Main.rand.NextBool(3))
             Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, DustID.Flare);
     }
-    public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
     {
         target.AddBuff(ModContent.BuffType<WhisperingDeath>(), 120);
         target.AddBuff(ModContent.BuffType<ValfreyBurn>(), 120);

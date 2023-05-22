@@ -322,17 +322,17 @@ namespace CalRemix
 				}
 			}
 		}
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
         {
             if (eclipseaura > 0)
             {
-				return false;
+				modifiers.SourceDamage *= 0f;
             }
 			if (cursed)
 			{ 
-				damage = (int)((float)damage * 1.9f);
+				modifiers.SourceDamage *= 1.9f;
 			}
-			return true;
+			
         }
         public override void PreUpdate()
         {
@@ -440,7 +440,7 @@ namespace CalRemix
 					if (Player.Center.Distance(target.Center) < 100 && !target.friendly)
                     {
 						int dam = tvo ? 300 : 200;
-						target.StrikeNPC(dam, 0, 0);
+						target.StrikeNPC(target.CalculateHitInfo(dam, 0, knockBack: 0));
                     }
                 }
 				if (eclipseaura % 10 == 0)
@@ -572,14 +572,14 @@ namespace CalRemix
 				rewardPool.Add(ModContent.ItemType<Elderberry>());
 			}
         }
-		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
 		{
-			if (amongusEnchant && crit)
+			if (amongusEnchant && hit.Crit)
 			{
-                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damage/7);
-                Main.LocalPlayer.statLife -= damage / 7;
+                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
+                Main.LocalPlayer.statLife -= damageDone / 7;
                 SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
-                damage = (int)((float)damage * 2.5f);
+				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
             }
             if (earthEnchant)
             {
@@ -597,15 +597,15 @@ namespace CalRemix
 				}
 			}
 
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
 		{
-            if (amongusEnchant && crit)
-            {
-                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damage / 7);
-                Main.LocalPlayer.statLife -= damage / 7;
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
-                damage = (int)((float)damage * 2.5f);
-            }
+			if (amongusEnchant && hit.Crit)
+			{
+				CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
+				Main.LocalPlayer.statLife -= damageDone / 7;
+				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
+			}
 			if (moonFist && proj.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
@@ -619,7 +619,7 @@ namespace CalRemix
 			}
         }
 
-		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)
@@ -634,7 +634,7 @@ namespace CalRemix
 				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
 			}
 		}
-		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)

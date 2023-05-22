@@ -19,7 +19,7 @@ namespace CalRemix.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slime Ray");
+            // DisplayName.SetDefault("Slime Ray");
         }
         public override bool PreAI()
         {
@@ -84,7 +84,7 @@ namespace CalRemix.Projectiles.Accessories
             return false;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Projectile body = Main.projectile[(int)Projectile.ai[1]];
             if ((body.type == ModContent.ProjectileType<CriticalSlimeCore>()))

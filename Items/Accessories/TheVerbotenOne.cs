@@ -33,10 +33,10 @@ namespace CalRemix.Items.Accessories
 
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("The Verboten One");
-            Tooltip.SetDefault("Ultimatum\n"+
-            "Provides all effects of its ingredients");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("The Verboten One");
+            /* Tooltip.SetDefault("Ultimatum\n"+
+            "Provides all effects of its ingredients"); */
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(500, 14f, 3.2f);
         }
 
@@ -205,11 +205,11 @@ namespace CalRemix.Items.Accessories
             player.fireWalk = true;
             player.statLifeMax2 += 40;
             player.lifeRegen++;
-            for (int i = 0; i < Main.maxBuffTypes; i++)
-            {
-                if (i != 94)
-                player.buffImmune[i] = true;
-            }
+            //for (int i = 0; i < 99; i++) HELP
+           // {
+              //  if (i != 94)
+               // player.buffImmune[i] = true;
+            //}
             if (Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
             { player.statDefense += 20; }
             if (player.wingTime < 500)

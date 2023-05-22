@@ -15,7 +15,7 @@ namespace CalRemix.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Auric Slime");
+            // DisplayName.SetDefault("Auric Slime");
             Main.npcFrameCount[NPC.type] = 2;
         }
 
@@ -59,17 +59,17 @@ namespace CalRemix.NPCs
             return SpawnCondition.Cavern.Chance * 0.04f;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, 234, hitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, 234, hit.HitDirection, -1f, 0, default, 1f);
             }
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 20; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, 234, hitDirection, -1f, 0, default, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, 234, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
         }

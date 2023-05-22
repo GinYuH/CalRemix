@@ -15,8 +15,8 @@ namespace CalRemix.Items.Potions
         public override string Texture => "CalamityMod/Items/Potions/Alcohol/FabsolsVodka";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fluorescent Vodka");
-            Tooltip.SetDefault("Boosts all damage stats by 8% but lowers defense by 10%\nIncreases immune time after being struck");
+            // DisplayName.SetDefault("Fluorescent Vodka");
+            // Tooltip.SetDefault("Boosts all damage stats by 8% but lowers defense by 10%\nIncreases immune time after being struck");
         }
 
 

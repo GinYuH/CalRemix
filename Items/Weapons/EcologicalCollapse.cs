@@ -19,11 +19,11 @@ namespace CalRemix.Items.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Ecological Collapse");
-            Tooltip.SetDefault("And there was no more ground to be seen...\n" +
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Ecological Collapse");
+            /* Tooltip.SetDefault("And there was no more ground to be seen...\n" +
                                 "Throws out up to 10 lumenous mines with lightning auras\n" +
-                                "Stealth strikes ignore the 10 mine cap, but dissipate quicker");
+                                "Stealth strikes ignore the 10 mine cap, but dissipate quicker"); */
 
         }
 		public override void SetDefaults() 

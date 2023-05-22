@@ -13,11 +13,11 @@ public class TendonTides : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Tendon Tides");
-        Tooltip.SetDefault("Inundatio ex Sanguis\n" +
+        // DisplayName.SetDefault("Tendon Tides");
+        /* Tooltip.SetDefault("Inundatio ex Sanguis\n" +
             "Throws tendon slicing disks that shred hit enemies\n" +
-            "If an enemy is critically hit, the shred effect stacks and deals more damage over time");
-        SacrificeTotal = 1;
+            "If an enemy is critically hit, the shred effect stacks and deals more damage over time"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

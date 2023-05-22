@@ -30,7 +30,7 @@ public class ExoPike : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Gravitonomy Beam");
+        // DisplayName.SetDefault("Gravitonomy Beam");
       
     }
 
@@ -58,7 +58,7 @@ public class ExoPike : ModProjectile
         GameShaders.Armor.GetShaderFromItemId(calamityMod.Find<ModItem>("ExoDye").Type);
         return true;
     }
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
 
 
@@ -89,7 +89,7 @@ public class ExoPike : ModProjectile
 
 
     }
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         Mod calamityMod = ModLoader.GetMod("CalamityMod");
         target.AddBuff(calamityMod.Find<ModBuff>("ExoFreeze").Type, 150);

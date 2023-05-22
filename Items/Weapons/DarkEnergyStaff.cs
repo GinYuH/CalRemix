@@ -16,10 +16,10 @@ public class DarkEnergyStaff : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Dark Energy Staff");
-        Tooltip.SetDefault("Summons a dark energy turret to fight for you\n" +
-                "Two can exist at once");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Dark Energy Staff");
+        /* Tooltip.SetDefault("Summons a dark energy turret to fight for you\n" +
+                "Two can exist at once"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

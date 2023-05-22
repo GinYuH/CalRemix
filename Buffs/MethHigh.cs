@@ -11,8 +11,8 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sunken Power");
-            Description.SetDefault("You feel euphoric and ready for anything");
+            // DisplayName.SetDefault("Sunken Power");
+            // Description.SetDefault("You feel euphoric and ready for anything");
         }
 
         public override void Update(Player player, ref int buffIndex)

@@ -14,9 +14,9 @@ namespace CalRemix.Items.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Arngren");
-            Tooltip.SetDefault("80% chance to not consume ammo");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Arngren");
+            // Tooltip.SetDefault("80% chance to not consume ammo");
 		}
 
 		public override void SetDefaults() 

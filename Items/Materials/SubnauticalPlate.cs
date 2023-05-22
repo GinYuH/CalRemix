@@ -12,9 +12,9 @@ namespace CalRemix.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Subnautical Plate");
-            Tooltip.SetDefault("A bioluminescent remnant, existing long before the Golden Age of Dragons");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Subnautical Plate");
+            // Tooltip.SetDefault("A bioluminescent remnant, existing long before the Golden Age of Dragons");
+			Item.ResearchUnlockCount = 25;
         }
 		public override void SetDefaults()
 		{

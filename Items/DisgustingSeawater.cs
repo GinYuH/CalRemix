@@ -11,9 +11,9 @@ namespace CalRemix.Items
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Disgusting Seawater");
-            Tooltip.SetDefault("Summons a Microbial Cluster to light your way");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Disgusting Seawater");
+            // Tooltip.SetDefault("Summons a Microbial Cluster to light your way");
         }
         public override void SetDefaults()
         {

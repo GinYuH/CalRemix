@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
@@ -27,8 +28,8 @@ namespace CalRemix.Tiles
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 2, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Hallow Effigy");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Hallow Effigy");
             AddMapEntry(new Color(232, 121, 197), name);
         }
 
@@ -42,11 +43,6 @@ namespace CalRemix.Tiles
                 player.AddBuff(ModContent.BuffType<HallowEffigyBuff>(), 20);
                 player.AddBuff(BuffID.ChaosState, 20);
             }
-        }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<HallowEffigy>());
         }
     }
 }

@@ -12,9 +12,9 @@ namespace CalRemix.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Cosmic Stone");
-            Tooltip.SetDefault("Summons a cosmic elemental to fight for you");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Cosmic Stone");
+            // Tooltip.SetDefault("Summons a cosmic elemental to fight for you");
         }
 
         public override void SetDefaults()
