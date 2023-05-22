@@ -17,6 +17,7 @@ using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Typeless;
+using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Pets;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
@@ -311,26 +312,6 @@ namespace CalRemix
             ProjectileID.AmberHook
         };
 
-    public int chainSawCharge;
-    public int chainSawHitCooldown = 0;
-    public int chainSawLevel1 = 1;
-    public int chainSawLevel2 = 30 * 5;
-    public int chainSawLevel3 = 30 * 10;
-    public int chainSawChargeCritMax = 30 * 15;
-    public int chainSawChargeMax = 30 * 20;
-
-    public bool polyShieldChargeEnabled;
-    public int polyShieldCooldown;
-    public bool polyShieldChargeKeypress;
-    public int polyShieldChargeDuration;
-    public int polyShieldChargeSpeed = 16;
-    public int polyShieldChargeDurationMax = 25;
-    public int dashBuffer = 5;
-    public int dashBufferEarly = 5;
-    public int dashBufferLate = 5;
-    public Vector2 polyShieldChargeDir = new Vector2(0,0);
-    private List<NPC> alreadyRicochet = new List<NPC>();
-
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
@@ -357,37 +338,10 @@ namespace CalRemix
         {
             SpawnPhantomHeart();
 
-            if (chainSawCharge >= chainSawLevel1)
-            {
-                Player.ClearBuff(BuffID.Darkness);
-                Player.AddBuff(BuffID.Darkness, chainSawCharge);
-            }
-            if (chainSawCharge >= chainSawLevel2)
-            {
-                Player.ClearBuff(BuffID.Blackout);
-                Player.AddBuff(BuffID.Blackout, chainSawCharge - (30 * 4));
-            }
-            if (chainSawCharge >= chainSawLevel3)
-            {
-                Player.ClearBuff(BuffID.Obstructed);
-                Player.AddBuff(BuffID.Obstructed, chainSawCharge - (30 * 10));
-            }
-
-            chainSawHitCooldown--;
-            if (chainSawHitCooldown < 0)
-            {
-                chainSawCharge--;
-                if (chainSawCharge < 0)
-                {
-                    chainSawCharge = 0;
-                }
-                chainSawHitCooldown = 0;
-            }
-
-            /*if (VerbotenMode >= 5)
+			if (VerbotenMode >= 5)
 			{
 				VerbotenMode = 1;
-			}/*
+			}
 
 			/*
             if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(156))
@@ -410,7 +364,7 @@ namespace CalRemix
 
         public override bool PreItemCheck()
         {
-            if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
+            /*if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
                 if (NPC.CountNPCS(ModContent.NPCType<DerellectBoss>()) >= 1)
 				{
@@ -420,7 +374,7 @@ namespace CalRemix
 
 				}
   				return true;                  
-			}
+			}*/
 			return true;
         }
 
@@ -604,8 +558,7 @@ namespace CalRemix
 			tvo = false;
 			cart = false;
 			tvohide = false;
-            polyShieldChargeEnabled = false;
-            if (astEffigy)
+			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 		}
         public override void GetDyeTraderReward(List<int> rewardPool)
@@ -762,137 +715,5 @@ namespace CalRemix
 				RecentChest = Player.chest;
 			}
 		}
-        public override void PreUpdateMovement()
-        {
-            if (CalRemixKeybindSystem.PolyDashKeybind.JustPressed)
-            {
-                dashBuffer = 6;
-                dashBufferEarly = dashBuffer + 5;
-                if (dashBufferLate > 0)
-                {
-                    SoundEngine.PlaySound(SoundID.Item50);
-                    dashBufferEarly = 0;
-                    dashBufferLate = 0;
-                }
-            }
-            if (dashBuffer > 0 && polyShieldChargeEnabled && Player.dashDelay == 0 && polyShieldCooldown == 0 && !Player.mount.Active && !Player.pulley && Player.grappling[0] == -1 && !Player.tongued)
-            {
-                this.polyShieldChargeKeypress = true;
-
-            }
-            if (polyShieldChargeKeypress)
-            {
-                dashBuffer = 0;
-                dashBufferEarly = 0;
-                polyShieldChargeDuration = polyShieldChargeDurationMax;
-                polyShieldChargeKeypress = false;
-                polyShieldChargeDir = DashDirectionCheck();
-                Player.timeSinceLastDashStarted = 0;
-                base.Player.dashDelay = -1;
-                polyShieldCooldown = -1;
-            }
-            if (polyShieldChargeDuration > 0)
-            {
-                PolyDashCollisionCheck();
-                Player.maxFallSpeed = 50f;
-                Player.gravity = 0;
-                Player.controlUp = false;
-                Player.velocity = polyShieldChargeDir * polyShieldChargeSpeed;
-                Player.armorEffectDrawShadow = true;
-                polyShieldChargeDuration--;
-
-                if (polyShieldChargeDuration <= 0)
-                {
-                    polyShieldCooldown = 60;
-                    base.Player.dashDelay = 30;
-                    Player.velocity /= 2;
-                    alreadyRicochet.Clear();
-                }
-            }
-            if (polyShieldCooldown > 0)
-            {
-                polyShieldCooldown--;
-                if (polyShieldCooldown == 0)
-                {
-                    SoundEngine.PlaySound(SoundID.MaxMana);
-                }
-            }
-            if (dashBuffer > 0) { dashBuffer--; }
-            if (dashBufferEarly > 0) { dashBufferEarly--; }
-            if (dashBufferLate > 0) { dashBufferLate--; }
-        }
-        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {
-            if (polyShieldChargeDuration > 0 && Player.whoAmI == Main.myPlayer)
-            {
-                drawInfo.cShield = 1;
-                r = 1;
-                b = 1f;
-                g = 1;
-            }
-            else
-            if (polyShieldCooldown > 0)
-            {
-                r = 0.8f;
-                b = 0.8f;
-                g = 0.8f;
-            }
-        }
-        public Vector2 DashDirectionCheck()
-        {
-            Vector2 x = new Vector2(0, 0);
-            if (Player.controlLeft == true) x.X -= 1;
-            if (Player.controlRight == true) x.X += 1;
-            if (Player.controlUp == true) x.Y -= 1;
-            if (Player.controlDown == true) x.Y += 1;
-            if (x == new Vector2(0, 0))
-            {
-                x.X = Player.direction;
-            }
-            x = x.SafeNormalize(Vector2.One);
-            return x;
-        }
-        public bool PolyDashCollisionCheck()
-        {
-            Rectangle hitArea = new Rectangle((int)((double)base.Player.position.X + (double)base.Player.velocity.X * 0.75 - 6.0), (int)((double)base.Player.position.Y + (double)base.Player.velocity.Y * 0.75 - 6.0), base.Player.width + 12, base.Player.height + 12);
-            for (int i = 0; i < 200; i++)
-            {
-                NPC npc = Main.npc[i];
-                if ((base.Player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type]) || !npc.active || npc.dontTakeDamage || npc.friendly || !hitArea.Intersects(npc.getRect()) || (!npc.noTileCollide && !base.Player.CanHit(npc)))
-                {
-                    continue;
-                }
-                if (alreadyRicochet.Contains(npc))
-                {
-                    Player.SetImmuneTimeForAllTypes(12);
-                }
-                else
-                {
-                    Player.ApplyDamageToNPC(npc, (int)(Player.GetDamage(DamageClass.Generic).ApplyTo(80f * (1 + alreadyRicochet.Count() * 0.5f))), 10, Player.direction, false);
-                    Player.SetImmuneTimeForAllTypes(12);
-                    polyShieldChargeDir *= -1;
-                    Player.velocity *= -1;
-                    alreadyRicochet.Add(npc);
-                    if (dashBuffer > 0)
-                    {
-                        polyShieldChargeDir = DashDirectionCheck();
-                        polyShieldChargeDuration = polyShieldChargeDurationMax;
-                        SoundEngine.PlaySound(SoundID.Item26);
-                        dashBufferEarly = 0;
-                        dashBufferLate = 0;
-                    }
-                    else if (dashBufferEarly > 0)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item49);
-                    }
-                    else
-                    {
-                        dashBufferLate = 5;
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }

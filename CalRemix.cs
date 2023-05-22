@@ -15,7 +15,6 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using ReLogic;
 using Terraria.ID;
-using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix
 {
@@ -41,7 +40,7 @@ namespace CalRemix
 			cal.Call("RegisterModCooldowns", this);
 			cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
 			cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
-			cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
+			/*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
 			{
 				Mod bossChecklist;
@@ -67,7 +66,7 @@ namespace CalRemix
 				null
 				});
 				}
-			}
+			}*/
 			{
 				Mod bossChecklist;
 				ModLoader.TryGetMod("BossChecklist", out bossChecklist);
@@ -137,32 +136,5 @@ namespace CalRemix
 			else if (specialMoney == 2) shop.item[nextSlot].shopSpecialCurrency = KlepticoinCurrencyId;
 			nextSlot++;
 		}
-
-        public class LastPolyBeaten : IItemDropRuleCondition, IProvideItemConditionDescription
-        {
-            public bool CanDrop(DropAttemptInfo info)
-            {
-
-                List<int> type = new List<int>() {
-                ModContent.NPCType<Cataractacomb>(),
-                ModContent.NPCType<Exotrexia>(),
-                ModContent.NPCType<Conjunctivirus>(),
-                ModContent.NPCType<Astigmageddon>()
-            };
-
-                type.Remove(info.npc.type);
-                foreach (var item in type)
-                {
-                    if (NPC.AnyNPCs(item))
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            public bool CanShowItemDropInUI() => true;
-            public string GetConditionDescription() => null;
-        }
-
     }
 }
