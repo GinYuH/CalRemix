@@ -136,7 +136,7 @@ namespace CalRemix.Items.Accessories
         {
             CreateRecipe().
                 AddIngredient<TheAmalgam>().
-                AddIngredient<Assortegelatin>().
+                AddIngredient<Slimelgamation>().
                 AddIngredient<YharonSoulFragment>(5).
                 AddTile<CosmicAnvil>().
                 Register();
