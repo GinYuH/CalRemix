@@ -30,7 +30,7 @@ public class PikeSpear : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Exo shiv");
+        // DisplayName.SetDefault("Exo shiv");
     }
 
     public override void SetDefaults()
@@ -126,7 +126,7 @@ public class PikeSpear : ModProjectile
     
 
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
         for (int i = 0; i < 200; i++)
         {

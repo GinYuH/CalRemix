@@ -11,12 +11,12 @@ namespace CalRemix.Projectiles.Weapons
 {
 	public class TotalityScythe : ModProjectile
     {
-        public override string Texture => "CalamityMod/Projectiles/Rogue/Celestus2";
+        public override string Texture => "CalamityMod/Projectiles/Rogue/CelestusMiniScythe";
         public ref float Timer => ref Projectile.ai[0];
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Exo Scythe");
+            // DisplayName.SetDefault("Exo Scythe");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -39,7 +39,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.rotation += 2f;
             Lighting.AddLight(Projectile.Center, Main.DiscoR * 0.5f / 255f, Main.DiscoG * 0.5f / 255f, Main.DiscoB * 0.5f / 255f);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.owner == Main.myPlayer)
             {
@@ -47,8 +47,8 @@ namespace CalRemix.Projectiles.Weapons
                 for (int i = 0; i < 4; i++)
                 {
                     double vel = num + 0.783f / 8f * (i + i * i) / 2.0 + (32f * i);
-                    int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, (float)(Math.Sin(vel) * 2.0), (float)(Math.Cos(vel) * 2.0), ModContent.ProjectileType<Celestus2>(), (int)(Projectile.damage * 0.7), Projectile.knockBack, Projectile.owner);
-                    int proj2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, (float)((0.0 - Math.Sin(vel)) * 2.0), (float)((0.0 - Math.Cos(vel)) * 2.0), ModContent.ProjectileType<Celestus2>(), (int)(Projectile.damage * 0.7), Projectile.knockBack, Projectile.owner);
+                    int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, (float)(Math.Sin(vel) * 2.0), (float)(Math.Cos(vel) * 2.0), ModContent.ProjectileType<CelestusMiniScythe>(), (int)(Projectile.damage * 0.7), Projectile.knockBack, Projectile.owner);
+                    int proj2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, (float)((0.0 - Math.Sin(vel)) * 2.0), (float)((0.0 - Math.Cos(vel)) * 2.0), ModContent.ProjectileType<CelestusMiniScythe>(), (int)(Projectile.damage * 0.7), Projectile.knockBack, Projectile.owner);
                     Main.projectile[proj].DamageType = DamageClass.MeleeNoSpeed;
                     Main.projectile[proj2].DamageType = DamageClass.MeleeNoSpeed;
                 }

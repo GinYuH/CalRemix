@@ -12,8 +12,8 @@ public class Exosphear : ModItem
     public override void SetStaticDefaults()
     {
 
-        DisplayName.SetDefault("Gravitonomy Pike");
-        Tooltip.SetDefault("Fires homing exo pike beams that split into more beams. \n" + "Ignores immunity frames");
+        // DisplayName.SetDefault("Gravitonomy Pike");
+        // Tooltip.SetDefault("Fires homing exo pike beams that split into more beams. \n" + "Ignores immunity frames");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         
     }
@@ -74,7 +74,7 @@ public class Exosphear : ModItem
 
     
 
-    public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+    public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
     {
 
 

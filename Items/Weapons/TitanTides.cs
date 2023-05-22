@@ -14,11 +14,11 @@ public class TitanTides : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Titan Tides");
-        Tooltip.SetDefault("Inundatio ex Deos\n" +
+        // DisplayName.SetDefault("Titan Tides");
+        /* Tooltip.SetDefault("Inundatio ex Deos\n" +
             "Channels a spinning cosmic aura that grows in size and spin speed over time\n" +
-            "Enemies hit by the aura are barraged with dozens of god slayer blades which shred enemies");
-        SacrificeTotal = 1;
+            "Enemies hit by the aura are barraged with dozens of god slayer blades which shred enemies"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

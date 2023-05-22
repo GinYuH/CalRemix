@@ -18,7 +18,7 @@ namespace CalRemix.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Titan Tides");
+            // DisplayName.SetDefault("Titan Tides");
         }
         public override void SetDefaults()
         {
@@ -32,7 +32,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.localNPCHitCooldown = 6;
             Projectile.DamageType = DamageClass.MeleeNoSpeed;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(10) && Timer >= 270)
                 target.AddBuff(ModContent.BuffType<Shred>(), 360);

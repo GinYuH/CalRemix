@@ -18,7 +18,7 @@ namespace CalRemix.Projectiles.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Earth Elemental");
+            // DisplayName.SetDefault("Earth Elemental");
             Main.projFrames[Projectile.type] = 6;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
@@ -190,16 +190,16 @@ namespace CalRemix.Projectiles.Accessories
             Main.EntitySpriteDraw(deusheadsprite, Projectile.Center - Main.screenPosition + new Vector2(0f + 20 * Projectile.spriteDirection + exoff, Projectile.gfxOffY - 30), deusheadsquare, deusheadalpha, Projectile.rotation + rotcounter, Utils.Size(deusheadsquare) / 2f, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900)
             target.AddBuff(ModContent.BuffType<ArmorCrunch>(), 120);
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.localAI[0] >= 600 && Projectile.localAI[0] < 900)
-                damage *= 6;
+                modifiers.SourceDamage *= 6;
         }
     }
 }

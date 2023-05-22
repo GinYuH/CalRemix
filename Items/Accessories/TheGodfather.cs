@@ -26,9 +26,9 @@ namespace CalRemix.Items.Accessories
 
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("The Godfather");
-            Tooltip.SetDefault("All effects of ingredients\n"+
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("The Godfather");
+            /* Tooltip.SetDefault("All effects of ingredients\n"+
             "Additionally:\n"+
             "Extends the duration of potion buffs by 200% and potion buffs remain active even after you die\n"+
             "Summons an evolved slime core to fight for you\n"+
@@ -37,7 +37,7 @@ namespace CalRemix.Items.Accessories
             "All weapons including true melee have a chance to fire out mini birbs, shrooms, sigils, and miniature suns\n"+
             "Removes all of the Abyss' hindering effects\n"+
             "Provides a 20% chance to revive upon dying with a cooldown of 50 seconds\n"+
-            "Immunity to electric-based attacks");
+            "Immunity to electric-based attacks"); */
         }
 
         public override void SetDefaults()

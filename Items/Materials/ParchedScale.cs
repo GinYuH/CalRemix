@@ -9,9 +9,9 @@ namespace CalRemix.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Parched Scale");
-      	Tooltip.SetDefault("Large scale of an apex predator");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Parched Scale");
+      	// Tooltip.SetDefault("Large scale of an apex predator");
+			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()
 		{

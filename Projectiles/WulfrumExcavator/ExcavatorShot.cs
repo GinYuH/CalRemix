@@ -10,7 +10,7 @@ namespace CalRemix.Projectiles.WulfrumExcavator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wulfrum Laser");
+            // DisplayName.SetDefault("Wulfrum Laser");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

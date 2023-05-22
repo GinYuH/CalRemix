@@ -23,14 +23,14 @@ namespace CalRemix.Items.Accessories
         public override string Texture => "CalamityMod/Items/Accessories/AstralArcanum";
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Zenith Arcanum");
-            Tooltip.SetDefault("'Top of the food chain'\n"+
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Zenith Arcanum");
+            /* Tooltip.SetDefault("'Top of the food chain'\n"+
             "Summons various spirits of the world to protect you\n" +
             "20 % increase to summon damage and defense\n" +
             "+ 4 life regeneration, 15 % increased pick speed, and + 8 max minions\n" +
             "Increased minion knockback\n" +
-            "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits");
+            "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits"); */
         }
 
         public override void SetDefaults()
@@ -53,7 +53,7 @@ namespace CalRemix.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage<SummonDamageClass>() += 0.2f;
-            player.statDefense = (int)(1.2 * player.statDefense);
+            player.statDefense *= 1.2f;
             player.pickSpeed = (int)(1.15 * player.pickSpeed);
             player.maxMinions += 8;
             player.lifeRegen += 4;

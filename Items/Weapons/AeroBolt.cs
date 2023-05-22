@@ -12,9 +12,9 @@ namespace CalRemix.Items.Weapons
 	{
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("Aero Bolt");
-            Tooltip.SetDefault("Casts a slow-moving mini hurricanes");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Aero Bolt");
+            // Tooltip.SetDefault("Casts a slow-moving mini hurricanes");
+            Item.ResearchUnlockCount = 1;
         }
 		public override void SetDefaults() 
 		{

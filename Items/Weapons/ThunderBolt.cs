@@ -17,9 +17,9 @@ namespace CalRemix.Items.Weapons
 	{
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("Thunder Bolt");
-            Tooltip.SetDefault("Casts a slow-moving ball of lightning");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Thunder Bolt");
+            // Tooltip.SetDefault("Casts a slow-moving ball of lightning");
+            Item.ResearchUnlockCount = 1;
         }
 		public override void SetDefaults() 
 		{

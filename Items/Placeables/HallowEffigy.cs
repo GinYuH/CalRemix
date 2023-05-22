@@ -9,11 +9,11 @@ namespace CalRemix.Items.Placeables
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Hallow Effigy");
-            Tooltip.SetDefault("When placed down nearby players have their damage, crit, and movement speed increased by 25%,\n"+
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Hallow Effigy");
+            /* Tooltip.SetDefault("When placed down nearby players have their damage, crit, and movement speed increased by 25%,\n"+
             "their defense by 20, their DR by 8%, and their health by 20%\n"+
-            "Nearby players also suffer a permanent chaos state");
+            "Nearby players also suffer a permanent chaos state"); */
         }
 
         public override void SetDefaults()

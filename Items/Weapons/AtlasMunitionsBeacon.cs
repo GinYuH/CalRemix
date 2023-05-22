@@ -14,9 +14,9 @@ namespace CalRemix.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Atlas Munitions Beacon");
-            Tooltip.SetDefault("Summons an Atlas Soldier to fight for you\n"+"Takes up 3 minion slots and only one can exist");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Atlas Munitions Beacon");
+            // Tooltip.SetDefault("Summons an Atlas Soldier to fight for you\n"+"Takes up 3 minion slots and only one can exist");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

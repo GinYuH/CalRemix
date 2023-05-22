@@ -15,7 +15,7 @@ namespace CalRemix.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Microbial Cluster");
+            // DisplayName.SetDefault("Microbial Cluster");
         }
 
         public override void SetDefaults()
@@ -40,13 +40,13 @@ namespace CalRemix.Projectiles.Accessories
             dust.scale = 1.6f;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<SulphuricPoisoning>(), 60);
             target.AddBuff(ModContent.BuffType<Irradiated>(), 120);
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<SulphuricPoisoning>(), 60);
             target.AddBuff(ModContent.BuffType<Irradiated>(), 120);

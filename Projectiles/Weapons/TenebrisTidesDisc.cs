@@ -16,7 +16,7 @@ namespace CalRemix.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tenebris Tides");
+            // DisplayName.SetDefault("Tenebris Tides");
         }
 
         public override void SetDefaults()
@@ -32,7 +32,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.DamageType = DamageClass.MeleeNoSpeed;
             Projectile.scale = 1.2f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<CrushDepth>(), 300);
             for (int i = 0; i < 3; i++)

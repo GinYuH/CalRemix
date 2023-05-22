@@ -22,7 +22,7 @@ namespace CalRemix.Biomes
 		// Use SetStaticDefaults to assign the display name
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Life Heart"); //Name subject to change
+			// DisplayName.SetDefault("Life Heart"); //Name subject to change
 		}
 
 		// Calculate when the biome is active.

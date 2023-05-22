@@ -14,7 +14,7 @@ namespace CalRemix.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spades");
+            // DisplayName.SetDefault("Spades");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -30,7 +30,7 @@ namespace CalRemix.Projectiles.Weapons
             SoundEngine.PlaySound(in SoundID.Dig, Projectile.position);
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 120);
         }

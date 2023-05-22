@@ -12,10 +12,10 @@ namespace CalRemix.Items
     {
 		public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("22 Hornet Round");
-            Tooltip.SetDefault("Pierces the hearts of gods...\n" +
-					"Ricochets up to 21 times off of hit enemies");
-            SacrificeTotal = 99;
+            // DisplayName.SetDefault("22 Hornet Round");
+            /* Tooltip.SetDefault("Pierces the hearts of gods...\n" +
+					"Ricochets up to 21 times off of hit enemies"); */
+            Item.ResearchUnlockCount = 99;
 		}
 
 		public override void SetDefaults() 

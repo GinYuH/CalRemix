@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Hadopelagic Soundwave");
+			// DisplayName.SetDefault("Hadopelagic Soundwave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -41,11 +41,11 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.velocity.Y = -oldVelocity.Y;
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage *= (int)Projectile.localAI[0];
+            modifiers.SourceDamage *= (int)Projectile.localAI[0];
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<CrushDepth>(), 240);
             target.AddBuff(BuffID.Electrified, 240);

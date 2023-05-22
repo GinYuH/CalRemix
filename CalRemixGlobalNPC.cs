@@ -204,10 +204,10 @@ namespace CalRemix
                             }
                             else
                             {
-                                target.StrikeNPC(npc.damage, 0, 0);
+                                target.StrikeNPC(npc.CalculateHitInfo(npc.damage, 0));
                                 target.immune[npc.whoAmI] = 10;
                                 if (target.damage > 0)
-                                    npc.StrikeNPC(target.damage, 0, 0);
+                                    npc.StrikeNPC(npc.CalculateHitInfo(target.damage, 0));
                             }
                         }
 
@@ -247,10 +247,10 @@ namespace CalRemix
                         Rectangle theirrect = target.getRect();
                         if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !bossSlime)
                         {
-                            target.StrikeNPC(npc.damage, 0, 0);
+                            target.StrikeNPC(target.CalculateHitInfo(npc.damage,  0));
                             target.immune[npc.whoAmI] = 10;
                             if (target.damage > 0)
-                                npc.StrikeNPC(target.damage, 0, 0);
+                                npc.StrikeNPC(npc.CalculateHitInfo(target.damage, 0));
                         }
 
                     }
@@ -690,7 +690,7 @@ namespace CalRemix
                 }
             }
         }
-        public override void HitEffect(NPC npc, int hitDirection, double damage)
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
             if (npc.type == ModContent.NPCType<Crabulon>() && say <= 0)
             {
@@ -704,13 +704,12 @@ namespace CalRemix
             }
 
         }
-        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
             if (vBurn)
             {
-                damage *= 0.95f;
+                modifiers.SourceDamage *= 0.95f;
             }
-            return true;
         }
         private static void Talk(string text, Color color)
         {

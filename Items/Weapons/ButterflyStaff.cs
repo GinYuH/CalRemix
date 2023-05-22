@@ -14,8 +14,8 @@ public class ButterflyStaff : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Wooden Butterfly Staff");
-        Tooltip.SetDefault("Summons a butterfly to attack enemies\n" + "Does not consume minion slots\n" + "Only 3 can be summoned at a time\n" + "\'The oldest in butterfly technology\'");
+        // DisplayName.SetDefault("Wooden Butterfly Staff");
+        // Tooltip.SetDefault("Summons a butterfly to attack enemies\n" + "Does not consume minion slots\n" + "Only 3 can be summoned at a time\n" + "\'The oldest in butterfly technology\'");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

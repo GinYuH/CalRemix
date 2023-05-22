@@ -8,9 +8,9 @@ namespace CalRemix.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Energy Orb");
-            Tooltip.SetDefault("This is literally useless for now");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Energy Orb");
+            // Tooltip.SetDefault("This is literally useless for now");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 

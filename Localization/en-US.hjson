@@ -1,4 +1,4 @@
-﻿Mods: {
+Mods: {
 	CalRemix: {
 		TownNPCMood: {
 			Celestial: {
@@ -9,18 +9,460 @@
 				DislikeCrowded: This is placeholder text to say that it's too crowded.
 				HateCrowded: This is placeholder text to say that it's WAY too crowded.
 				HateBiome: This is placeholder text to say that this biome sucks.
-				LikeNPC: "This is placeholder text to say that I like {NPCName}."
-				LikeNPC_Princess: "This is placeholder text to say that I like {NPCName} the Princess."
-				LoveNPC: "This is placeholder text to say that I really like {NPCName}."
-				HateNPC: "This is placeholder text to say that I really don't like {NPCName}."
+				LikeNPC: This is placeholder text to say that I like {NPCName}.
+				LikeNPC_Princess: This is placeholder text to say that I like {NPCName} the Princess.
+				LoveNPC: This is placeholder text to say that I really like {NPCName}.
+				HateNPC: This is placeholder text to say that I really don't like {NPCName}.
 			}
 		}
+
 		Currencies: {
 			CosmiliteCoinCurrency: cosmilite coins
 			KlepticoinCurrency: klepticoins
 		}
-		UI: {
-			TransmogrifyMenu: Transmogrify
+
+		UI.TransmogrifyMenu: Transmogrify
+		Biomes.LifeBiome.DisplayName: Life Biome
+
+		Tiles: {
+			AstralEffigyPlaced.MapEntry: Astral Effigy Placed
+			CosmichidPlant.MapEntry: Cosmichid Plant
+			HallowEffigyPlaced.MapEntry: Hallow Effigy Placed
+			LifeOreTile.MapEntry: Life Ore Tile
+			MiracleFruitPlaced.MapEntry: Miracle Fruit Placed
+		}
+
+		Buffs: {
+			AstralEffigyBuff: {
+				DisplayName: Astral Effigy Buff
+				Description: Mods.CalRemix.Buffs.AstralEffigyBuff.Description
+			}
+
+			AtlasSoldierBuff: {
+				DisplayName: Atlas Soldier Buff
+				Description: Mods.CalRemix.Buffs.AtlasSoldierBuff.Description
+			}
+
+			CosmicConflictBuff: {
+				DisplayName: Cosmic Conflict Buff
+				Description: Mods.CalRemix.Buffs.CosmicConflictBuff.Description
+			}
+
+			CosmicElementalBuff: {
+				DisplayName: Cosmic Elemental Buff
+				Description: Mods.CalRemix.Buffs.CosmicElementalBuff.Description
+			}
+
+			EarthElementalBuff: {
+				DisplayName: Earth Elemental Buff
+				Description: Mods.CalRemix.Buffs.EarthElementalBuff.Description
+			}
+
+			HallowEffigyBuff: {
+				DisplayName: Hallow Effigy Buff
+				Description: Mods.CalRemix.Buffs.HallowEffigyBuff.Description
+			}
+
+			MethHigh: {
+				DisplayName: Meth High
+				Description: Mods.CalRemix.Buffs.MethHigh.Description
+			}
+
+			MethLow: {
+				DisplayName: Meth Low
+				Description: Mods.CalRemix.Buffs.MethLow.Description
+			}
+
+			MicrobialClusterBuff: {
+				DisplayName: Microbial Cluster Buff
+				Description: Mods.CalRemix.Buffs.MicrobialClusterBuff.Description
+			}
+
+			MoonfistBuff: {
+				DisplayName: Moonfist Buff
+				Description: Mods.CalRemix.Buffs.MoonfistBuff.Description
+			}
+
+			TheDreamingGhostBuff: {
+				DisplayName: The Dreaming Ghost Buff
+				Description: Mods.CalRemix.Buffs.TheDreamingGhostBuff.Description
+			}
+
+			ValfreyBurn: {
+				DisplayName: Valfrey Burn
+				Description: Mods.CalRemix.Buffs.ValfreyBurn.Description
+			}
+		}
+
+		Items: {
+			Assortegelatin: {
+				DisplayName: Assortegelatin
+				Tooltip: ""
+			}
+
+			CalamitousSoulArtifact: {
+				DisplayName: Calamitous Soul Artifact
+				Tooltip: ""
+			}
+
+			CosmicStone: {
+				DisplayName: Cosmic Stone
+				Tooltip: ""
+			}
+
+			HolyMantle: {
+				DisplayName: Holy Mantle
+				Tooltip: ""
+			}
+
+			MagnaCore: {
+				DisplayName: Magna Core
+				Tooltip: ""
+			}
+
+			Microxodonta: {
+				DisplayName: Microxodonta
+				Tooltip: ""
+			}
+
+			MirageJellyItem: {
+				DisplayName: Mirage Jelly Item
+				Tooltip: ""
+			}
+
+			NucleateGello: {
+				DisplayName: Nucleate Gello
+				Tooltip: ""
+			}
+
+			QuiverofMadness: {
+				DisplayName: Quiverof Madness
+				Tooltip: ""
+			}
+
+			RockStone: {
+				DisplayName: Rock Stone
+				Tooltip: ""
+			}
+
+			RoguesLootbox: {
+				DisplayName: Rogues Lootbox
+				Tooltip: ""
+			}
+
+			Slimelgamation: {
+				DisplayName: Slimelgamation
+				Tooltip: ""
+			}
+
+			TheGodfather: {
+				DisplayName: The Godfather
+				Tooltip: ""
+			}
+
+			TheVerbotenOne: {
+				DisplayName: The Verboten One
+				Tooltip: ""
+			}
+
+			ThrowersGauntlet: {
+				DisplayName: Throwers Gauntlet
+				Tooltip: ""
+			}
+
+			UniversalStone: {
+				DisplayName: Universal Stone
+				Tooltip: ""
+			}
+
+			WarloksMoonFist: {
+				DisplayName: Warloks Moon Fist
+				Tooltip: ""
+			}
+
+			YharimsCurse: {
+				DisplayName: Yharims Curse
+				Tooltip: ""
+			}
+
+			ZenithArcanum: {
+				DisplayName: Zenith Arcanum
+				Tooltip: ""
+			}
+
+			Babilfish: {
+				DisplayName: Babilfish
+				Tooltip: ""
+			}
+
+			CosmiliteCoin: {
+				DisplayName: Cosmilite Coin
+				Tooltip: ""
+			}
+
+			DisgustingSeawater: {
+				DisplayName: Disgusting Seawater
+				Tooltip: ""
+			}
+
+			HornetRound: {
+				DisplayName: Hornet Round
+				Tooltip: ""
+			}
+
+			Klepticoin: {
+				DisplayName: Klepticoin
+				Tooltip: ""
+			}
+
+			KnowledgeExcavator: {
+				DisplayName: Knowledge Excavator
+				Tooltip: ""
+			}
+
+			CoreofBabil: {
+				DisplayName: Coreof Babil
+				Tooltip: ""
+			}
+
+			CoyoteVenom: {
+				DisplayName: Coyote Venom
+				Tooltip: ""
+			}
+
+			EnergyOrb: {
+				DisplayName: Energy Orb
+				Tooltip: ""
+			}
+
+			EssenceofBabil: {
+				DisplayName: Essenceof Babil
+				Tooltip: ""
+			}
+
+			ParchedScale: {
+				DisplayName: Parched Scale
+				Tooltip: ""
+			}
+
+			SoulofPlight: {
+				DisplayName: Soulof Plight
+				Tooltip: ""
+			}
+
+			SubnauticalPlate: {
+				DisplayName: Subnautical Plate
+				Tooltip: ""
+			}
+
+			YharimBar: {
+				DisplayName: Yharim Bar
+				Tooltip: ""
+			}
+
+			AstralEffigy: {
+				DisplayName: Astral Effigy
+				Tooltip: ""
+			}
+
+			Cosmichid: {
+				DisplayName: Cosmichid
+				Tooltip: ""
+			}
+
+			HallowEffigy: {
+				DisplayName: Hallow Effigy
+				Tooltip: ""
+			}
+
+			LifeOre: {
+				DisplayName: Life Ore
+				Tooltip: ""
+			}
+
+			Meth: {
+				DisplayName: Meth
+				Tooltip: ""
+			}
+
+			NotFabsolVodka: {
+				DisplayName: Not Fabsol Vodka
+				Tooltip: ""
+			}
+
+			AcesLow: {
+				DisplayName: Aces Low
+				Tooltip: ""
+			}
+
+			AeroBolt: {
+				DisplayName: Aero Bolt
+				Tooltip: ""
+			}
+
+			Arngren: {
+				DisplayName: Arngren
+				Tooltip: ""
+			}
+
+			AtlasMunitionsBeacon: {
+				DisplayName: Atlas Munitions Beacon
+				Tooltip: ""
+			}
+
+			Axisdriver: {
+				DisplayName: Axisdriver
+				Tooltip: ""
+			}
+
+			ButterflyStaff: {
+				DisplayName: Butterfly Staff
+				Tooltip: ""
+			}
+
+			DarkEnergyStaff: {
+				DisplayName: Dark Energy Staff
+				Tooltip: ""
+			}
+
+			EcologicalCollapse: {
+				DisplayName: Ecological Collapse
+				Tooltip: ""
+			}
+
+			Exosphear: {
+				DisplayName: Exosphear
+				Tooltip: ""
+			}
+
+			GrandReef: {
+				DisplayName: Grand Reef
+				Tooltip: ""
+			}
+
+			HadopelagicEcho: {
+				DisplayName: Hadopelagic Echo
+				Tooltip: ""
+			}
+
+			Megaskeet: {
+				DisplayName: Megaskeet
+				Tooltip: ""
+			}
+
+			Morpho: {
+				DisplayName: Morpho
+				Tooltip: ""
+			}
+
+			SDOMG: {
+				DisplayName: S D O M G
+				Tooltip: ""
+			}
+
+			ShadowsDescent: {
+				DisplayName: Shadows Descent
+				Tooltip: ""
+			}
+
+			TendonTides: {
+				DisplayName: Tendon Tides
+				Tooltip: ""
+			}
+
+			TenebrisTides: {
+				DisplayName: Tenebris Tides
+				Tooltip: ""
+			}
+
+			TheDreamingGhost: {
+				DisplayName: The Dreaming Ghost
+				Tooltip: ""
+			}
+
+			ThunderBolt: {
+				DisplayName: Thunder Bolt
+				Tooltip: ""
+			}
+
+			TitanTides: {
+				DisplayName: Titan Tides
+				Tooltip: ""
+			}
+
+			TotalityTides: {
+				DisplayName: Totality Tides
+				Tooltip: ""
+			}
+
+			UnsealedSingularity: {
+				DisplayName: Unsealed Singularity
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			AuricSlime.DisplayName: Auric Slime
+			WulfwyrmBody.DisplayName: Wulfwyrm Body
+			WulfwyrmHead.DisplayName: Wulfwyrm Head
+			WulfwyrmTail.DisplayName: Wulfwyrm Tail
+			LifeSlime.DisplayName: Life Slime
+		}
+
+		Projectiles: {
+			ArmofAgony.DisplayName: Armof Agony
+			AssortMinion.DisplayName: Assort Minion
+			BrimstoneGenerator.DisplayName: Brimstone Generator
+			CalHeart.DisplayName: Cal Heart
+			CosmicConflict.DisplayName: Cosmic Conflict
+			CosmicElementalMinion.DisplayName: Cosmic Elemental Minion
+			CriticalSlimeCore.DisplayName: Critical Slime Core
+			DarksunTornado.DisplayName: Darksun Tornado
+			EarthElementalMinion.DisplayName: Earth Elemental Minion
+			MarniteOrb.DisplayName: Marnite Orb
+			MicrobeParticle.DisplayName: Microbe Particle
+			NucleateGelloMinion.DisplayName: Nucleate Gello Minion
+			SlimeCore.DisplayName: Slime Core
+			SlimeRay.DisplayName: Slime Ray
+			FallingPhantomHeart.DisplayName: Falling Phantom Heart
+			HornetShot.DisplayName: Hornet Shot
+			LifeIcicle.DisplayName: Life Icicle
+			LifeMeteor.DisplayName: Life Meteor
+			LifeThorn.DisplayName: Life Thorn
+			MicrobialClusterPet.DisplayName: Microbial Cluster Pet
+			AcesLowCard.DisplayName: Aces Low Card
+			AeroBoltBolt.DisplayName: Aero Bolt Bolt
+			Arbiter.DisplayName: Arbiter
+			AtlasSoldier.DisplayName: Atlas Soldier
+			AxisExoBullet.DisplayName: Axis Exo Bullet
+			ButterflyMinion.DisplayName: Butterfly Minion
+			CoralShard.DisplayName: Coral Shard
+			CrescentSlash.DisplayName: Crescent Slash
+			DarkEnergySentry.DisplayName: Dark Energy Sentry
+			ExoPike.DisplayName: Exo Pike
+			ExoPikePhantom.DisplayName: Exo Pike Phantom
+			HadoSoundwave.DisplayName: Hado Soundwave
+			LumChunk.DisplayName: Lum Chunk
+			LumenousMine.DisplayName: Lumenous Mine
+			PikeSpear.DisplayName: Pike Spear
+			PinkCrystallineButterfly.DisplayName: Pink Crystalline Butterfly
+			PinkSquare.DisplayName: Pink Square
+			PurpleCrystallineButterfly.DisplayName: Purple Crystalline Butterfly
+			Reef.DisplayName: Reef
+			ShadowPulse.DisplayName: Shadow Pulse
+			ShadowsDescentBall.DisplayName: Shadows Descent Ball
+			SkeeterBullet.DisplayName: Skeeter Bullet
+			TendonTidesDisc.DisplayName: Tendon Tides Disc
+			TenebrisTidesDisc.DisplayName: Tenebris Tides Disc
+			ThunderBoltBolt.DisplayName: Thunder Bolt Bolt
+			TitanTidesDisc.DisplayName: Titan Tides Disc
+			TotalityEnergy.DisplayName: Totality Energy
+			TotalityScythe.DisplayName: Totality Scythe
+			TotalityTidesDisc.DisplayName: Totality Tides Disc
+			UnsealedBlackhole.DisplayName: Unsealed Blackhole
+			UnsealedBomb.DisplayName: Unsealed Bomb
+			ExcavatorLaser.DisplayName: Excavator Laser
+			ExcavatorShot.DisplayName: Excavator Shot
 		}
 	}
 }

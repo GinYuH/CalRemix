@@ -11,7 +11,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Lightning Ball");
+			// DisplayName.SetDefault("Lightning Ball");
         }
 		public override void SetDefaults() 
         {
@@ -31,7 +31,7 @@ namespace CalRemix.Projectiles.Weapons
                 Main.dust[dust].noGravity = true;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Electrified, 180);
         }

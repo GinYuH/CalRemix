@@ -15,8 +15,8 @@ namespace CalRemix.Items
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Cosmilite Coin");
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Cosmilite Coin");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 8));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }

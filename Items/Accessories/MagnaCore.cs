@@ -20,12 +20,12 @@ namespace CalRemix.Items.Accessories
         public override string Texture => "CalamityMod/Items/Accessories/EtherealTalisman";
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Magna Core");
-            Tooltip.SetDefault("30% increased magic damage, 25% increased magic critical strike chance, and 100% decreased mana usage\n"+
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Magna Core");
+            /* Tooltip.SetDefault("30% increased magic damage, 25% increased magic critical strike chance, and 100% decreased mana usage\n"+
             "+ 250 max mana\n"+
             "Increases pickup range for mana stars\n" +
-            "Using a Mana Potion causes a burst of granite energy to assault enemies");
+            "Using a Mana Potion causes a burst of granite energy to assault enemies"); */
         }
 
         public override void SetDefaults()

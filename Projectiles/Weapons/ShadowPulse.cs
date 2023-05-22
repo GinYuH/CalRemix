@@ -26,7 +26,7 @@ namespace CalRemix.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadow Pulse");
+            // DisplayName.SetDefault("Shadow Pulse");
         }
 
         public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.timeLeft = Lifetime;
             Projectile.DamageType = ModContent.GetInstance<RogueDamageClass>();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 300);
             target.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 600);
@@ -48,7 +48,7 @@ namespace CalRemix.Projectiles.Weapons
             target.AddBuff(BuffID.ShadowFlame, 1800);
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 300);
             target.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 600);

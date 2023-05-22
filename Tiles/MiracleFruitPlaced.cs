@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using CalamityMod.Items.PermanentBoosters;
@@ -19,14 +20,10 @@ namespace CalRemix.Tiles
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Miracle Froota");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Miracle Froota");
             AddMapEntry(new Color(66, 245, 158), name);
-        }
-
-        public override void KillMultiTile(int i, int j, int TileFrameX, int TileFrameY)
-        {
-            Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<MiracleFruit>());
+            RegisterItemDrop(ModContent.ItemType<MiracleFruit>());
         }
     }
 }

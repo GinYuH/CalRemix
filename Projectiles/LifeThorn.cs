@@ -9,7 +9,7 @@ namespace CalRemix.Projectiles
         public override string Texture => "CalamityMod/Projectiles/Melee/ThornBase";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Reaver Thorn");
+			// DisplayName.SetDefault("Reaver Thorn");
 		}
 		public override void SetDefaults() 
         {

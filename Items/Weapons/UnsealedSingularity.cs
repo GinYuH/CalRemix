@@ -18,12 +18,12 @@ namespace CalRemix.Items.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-            SacrificeTotal = 1;
-            DisplayName.SetDefault("Unsealed Singularity");
-            Tooltip.SetDefault("Cold and alone in the void..." +
+            Item.ResearchUnlockCount = 1;
+            // DisplayName.SetDefault("Unsealed Singularity");
+            /* Tooltip.SetDefault("Cold and alone in the void..." +
                 "Throws a volley of five void flasks which shatter on impact\n" +
                 "Shattered flasks summon blackholes which pull in enemies and purple void matter\n" +
-                "Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter");
+                "Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter"); */
 		}
 		public override void SetDefaults() 
 		{

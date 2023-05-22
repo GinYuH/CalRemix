@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Crescent Slash");
+			// DisplayName.SetDefault("Crescent Slash");
 		}
 		public override void SetDefaults() 
         {
@@ -40,7 +40,7 @@ namespace CalRemix.Projectiles.Weapons
                 sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<WhisperingDeath>(), 120);
             target.AddBuff(ModContent.BuffType<ValfreyBurn>(), 120);

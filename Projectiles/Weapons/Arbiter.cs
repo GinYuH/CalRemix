@@ -17,7 +17,7 @@ namespace CalRemix.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arbiter of Judgement");
+            // DisplayName.SetDefault("Arbiter of Judgement");
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 8;
         }
@@ -220,7 +220,7 @@ namespace CalRemix.Projectiles.Weapons
                 Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, ModContent.DustType<ValfreyDust>(), Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<WhisperingDeath>(), 120);
             target.AddBuff(ModContent.BuffType<ValfreyBurn>(), 120);
