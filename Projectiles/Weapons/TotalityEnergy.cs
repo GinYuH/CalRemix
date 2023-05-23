@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Exo Rammer");
+            DisplayName.SetDefault("Exo Rammer");
         }
 
         public override void SetDefaults()

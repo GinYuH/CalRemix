@@ -10,8 +10,8 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Mirage Jelly");
-            // Tooltip.SetDefault("Lowers the cost of stealth strikes by 5%");
+            DisplayName.SetDefault("Mirage Jelly");
+            Tooltip.SetDefault("Lowers the cost of stealth strikes by 5%");
         }
 
         public override void SetDefaults()

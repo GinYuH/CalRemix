@@ -16,7 +16,7 @@ namespace CalRemix.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Tenebris Tides");
+            DisplayName.SetDefault("Tenebris Tides");
         }
 
         public override void SetDefaults()

@@ -12,7 +12,7 @@ namespace CalRemix.Projectiles.Weapons
         public override string Texture => "CalamityMod/Projectiles/Rogue/SealedSingularityBlackhole";
         public override void SetStaticDefaults() 
         {
-			// DisplayName.SetDefault("Unsealed Singularity");
+			DisplayName.SetDefault("Unsealed Singularity");
             Main.projFrames[Projectile.type] = 7;
         }
         public override void SetDefaults()

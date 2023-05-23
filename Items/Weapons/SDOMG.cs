@@ -22,11 +22,11 @@ namespace CalRemix.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("SDOMG");
-            /* Tooltip.SetDefault("75% chance to not consume ammo\n" +
+            DisplayName.SetDefault("SDOMG");
+            Tooltip.SetDefault("75% chance to not consume ammo\n" +
                 "Rapidly fires a spread of bullets that close in over time\n" +
                 "Right clicking while standing still consumes a Plasma Grenade to fire a large deathray\n" +
-                "While the deathray is active, you are afflicted with slow, on fire, and oiled"); */
+                "While the deathray is active, you are afflicted with slow, on fire, and oiled"); 
 		}
 
 		public override void SetDefaults() 

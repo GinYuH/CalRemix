@@ -15,7 +15,7 @@ namespace CalRemix.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Core of Babil");
+			DisplayName.SetDefault("Core of Babil");
 			Item.ResearchUnlockCount = 25;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.SortingPriorityMaterials[Type] = 94; // Spectre Bar

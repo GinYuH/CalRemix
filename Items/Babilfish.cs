@@ -11,8 +11,8 @@ namespace CalRemix.Items
 
 		public override void SetStaticDefaults() 
 		{
-			// DisplayName.SetDefault("Babilfish");
-			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			DisplayName.SetDefault("Babilfish");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 

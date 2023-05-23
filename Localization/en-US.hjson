@@ -150,11 +150,6 @@ Mods: {
 				Tooltip: ""
 			}
 
-			Slimelgamation: {
-				DisplayName: Slimelgamation
-				Tooltip: ""
-			}
-
 			TheGodfather: {
 				DisplayName: The Godfather
 				Tooltip: ""
@@ -398,6 +393,11 @@ Mods: {
 			UnsealedSingularity: {
 				DisplayName: Unsealed Singularity
 				Tooltip: ""
+			}
+
+			Slimelgamation: {
+				Tooltip: ""
+				DisplayName: Slimelgamation
 			}
 		}
 

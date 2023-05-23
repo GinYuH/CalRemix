@@ -19,7 +19,7 @@ namespace CalRemix.NPCs
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Life Slime");
+			DisplayName.SetDefault("Life Slime");
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.BlueSlime];
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {

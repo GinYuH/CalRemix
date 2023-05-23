@@ -7,7 +7,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Hallow Effigy");
+            DisplayName.SetDefault("Hallow Effigy");
             // Description.SetDefault("The hallow empowers you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = false;

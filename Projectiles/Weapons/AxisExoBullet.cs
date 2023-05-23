@@ -16,7 +16,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
 		public override void SetStaticDefaults() 
         {
-			// DisplayName.SetDefault("Exo Bullet");
+			DisplayName.SetDefault("Exo Bullet");
 		}
 		public override void SetDefaults() 
         {

@@ -9,7 +9,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Valfrey Burn");
+            DisplayName.SetDefault("Valfrey Burn");
             // Description.SetDefault("Your power is being absorbed");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;

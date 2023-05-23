@@ -8,7 +8,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Earth Elemental");
+            DisplayName.SetDefault("Earth Elemental");
             // Description.SetDefault("The earth elemental will protect you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;

@@ -8,7 +8,7 @@ namespace CalRemix.Projectiles.Accessories
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Arm of agony");
+            DisplayName.SetDefault("Arm of agony");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
         }
 

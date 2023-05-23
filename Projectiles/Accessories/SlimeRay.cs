@@ -19,7 +19,7 @@ namespace CalRemix.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Slime Ray");
+            DisplayName.SetDefault("Slime Ray");
         }
         public override bool PreAI()
         {

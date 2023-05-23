@@ -23,10 +23,10 @@ namespace CalRemix.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Megaskeet");
-            /* Tooltip.SetDefault("50% chance to not consume ammo\n" +
+            DisplayName.SetDefault("Megaskeet");
+            Tooltip.SetDefault("50% chance to not consume ammo\n" +
                 "Fires streams of hard sunlight every other shot\n" +
-                "Fires a homing sunskater every 17 shots, which explodes into cinder shards on death"); */
+                "Fires a homing sunskater every 17 shots, which explodes into cinder shards on death"); 
 		}
 
 		public override void SetDefaults() 

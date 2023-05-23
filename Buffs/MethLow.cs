@@ -10,7 +10,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Sunken Withdrawal");
+            DisplayName.SetDefault("Sunken Withdrawal");
             // Description.SetDefault("You feel like garbage");
         }
 

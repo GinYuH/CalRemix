@@ -12,7 +12,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			// DisplayName.SetDefault("Lumenous Mine");
+			DisplayName.SetDefault("Lumenous Mine");
 		}
         public override void SetDefaults()
         {

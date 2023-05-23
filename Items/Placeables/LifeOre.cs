@@ -13,7 +13,7 @@ namespace CalRemix.Items.Placeables
 		public override void SetStaticDefaults() 
 		{
 			Item.ResearchUnlockCount = 100;
-			// DisplayName.SetDefault("Life Ore");
+			DisplayName.SetDefault("Life Ore");
 		}
 		public override void SetDefaults() 
 		{

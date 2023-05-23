@@ -18,13 +18,13 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Universal Stone");
-            /* Tooltip.SetDefault("The true potential of a lesser elemental\n"+
+            DisplayName.SetDefault("Universal Stone");
+            Tooltip.SetDefault("The true potential of a lesser elemental\n"+
             "Summons an cosmic conflict construct to fight for you\n" +
             "Summons a cosmic shield around you that inflicts God Slayer Inferno\n" +
             "Collecting Cosmichid plants boosts damage by 1 % up to 30 %\n" +
             "While the item's visibility is on, Mana Sickness is replaced with Mana Burn\n" +
-            "50 % increased flight time"); */
+            "50 % increased flight time"); 
         }
 
         public override void SetDefaults()

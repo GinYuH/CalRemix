@@ -9,7 +9,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Microbial Cluster");
+            DisplayName.SetDefault("Microbial Cluster");
             // Description.SetDefault("'Where is it?'");
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;

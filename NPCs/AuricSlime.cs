@@ -15,7 +15,7 @@ namespace CalRemix.NPCs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Auric Slime");
+            DisplayName.SetDefault("Auric Slime");
             Main.npcFrameCount[NPC.type] = 2;
         }
 

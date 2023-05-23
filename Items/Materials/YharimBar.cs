@@ -12,8 +12,8 @@ namespace CalRemix.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Yharim Bar");
-      	// Tooltip.SetDefault("You can feel the power of the Tyrant in this metal");
+			DisplayName.SetDefault("Yharim Bar");
+      	Tooltip.SetDefault("You can feel the power of the Tyrant in this metal");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

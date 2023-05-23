@@ -20,13 +20,13 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Thrower's Gauntlet");
-            /* Tooltip.SetDefault("Melee attacks and projectiles inflict a variety of debuffs\n" +
+            DisplayName.SetDefault("Thrower's Gauntlet");
+            Tooltip.SetDefault("Melee attacks and projectiles inflict a variety of debuffs\n" +
             "30 % increased melee speed, damage, and 25 % increased melee critical strike chance\n" +
             "100 % increased true melee damage\n" +
             "Temporary immunity to lava\n" +
             "Increased melee knockback\n" +
-            "Yoyo bag effects"); */
+            "Yoyo bag effects"); 
         }
 
         public override void SetDefaults()

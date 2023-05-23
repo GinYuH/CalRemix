@@ -28,7 +28,7 @@ namespace CalRemix.Projectiles.WulfrumExcavator
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Wulfrum Beam");
+            DisplayName.SetDefault("Wulfrum Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
         }
 

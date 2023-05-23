@@ -11,7 +11,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Sunken Power");
+            DisplayName.SetDefault("Sunken Power");
             // Description.SetDefault("You feel euphoric and ready for anything");
         }
 

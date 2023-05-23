@@ -15,7 +15,7 @@ namespace CalRemix.Projectiles.Weapons
         public int finalDamage;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Grand Reef");
+            DisplayName.SetDefault("Grand Reef");
         }
 
         public override void SetDefaults()

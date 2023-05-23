@@ -17,7 +17,7 @@ namespace CalRemix.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Arbiter of Judgement");
+            DisplayName.SetDefault("Arbiter of Judgement");
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 8;
         }

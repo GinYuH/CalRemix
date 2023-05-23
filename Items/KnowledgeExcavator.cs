@@ -14,9 +14,9 @@ namespace CalRemix.Items
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("The Wulfrum Excavator");
-            /* Tooltip.SetDefault("The first big project of the legendary weaponsmith, Draedon.\n" +
-            "Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns."); */
+            DisplayName.SetDefault("The Wulfrum Excavator");
+            Tooltip.SetDefault("The first big project of the legendary weaponsmith, Draedon.\n" +
+            "Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns."); 
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 

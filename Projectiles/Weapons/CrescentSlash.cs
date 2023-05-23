@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			// DisplayName.SetDefault("Crescent Slash");
+			DisplayName.SetDefault("Crescent Slash");
 		}
 		public override void SetDefaults() 
         {

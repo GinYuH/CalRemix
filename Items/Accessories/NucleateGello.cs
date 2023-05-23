@@ -15,9 +15,9 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Nucleate Gello");
-            /* Tooltip.SetDefault("Summons a nucleate to fight for you\n"+
-            "Pacifies all boss servant slimes"); */
+            DisplayName.SetDefault("Nucleate Gello");
+            Tooltip.SetDefault("Summons a nucleate to fight for you\n"+
+            "Pacifies all boss servant slimes"); 
         }
 
         public override void SetDefaults()

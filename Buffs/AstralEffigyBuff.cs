@@ -7,7 +7,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Astral Effigy");
+            DisplayName.SetDefault("Astral Effigy");
             // Description.SetDefault("The astral infection empowers you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = false;

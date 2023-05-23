@@ -9,8 +9,8 @@ namespace CalRemix.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Coyote Venom");
-      	// Tooltip.SetDefault("Try not to drink it");
+			DisplayName.SetDefault("Coyote Venom");
+      	Tooltip.SetDefault("Try not to drink it");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

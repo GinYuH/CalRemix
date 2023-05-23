@@ -20,6 +20,7 @@ namespace CalRemix
 {
 	public class CalRemix : Mod
 	{
+		public static CalRemix instance;
 		public static int CosmiliteCoinCurrencyId;
 		public static int KlepticoinCurrencyId;
 
@@ -34,6 +35,7 @@ namespace CalRemix
 			TileID.Gold,
 			TileID.Platinum
 		};
+
 		public override void PostSetupContent()
 		{
 			Mod cal = ModLoader.GetMod("CalamityMod");
@@ -120,10 +122,16 @@ namespace CalRemix
 
         public override void Load()
         {
+			instance = this;
 			CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
 			KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.KlepticoinCurrency(ModContent.ItemType<Items.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
 		}
-        public static bool Enchantable(Item item)
+		public override void Unload()
+		{
+			instance = null;
+		}
+
+		public static bool Enchantable(Item item)
         {
             return item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip();
         }

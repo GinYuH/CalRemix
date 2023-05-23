@@ -25,7 +25,7 @@ namespace CalRemix.Projectiles.Accessories
         public override string Texture => "CalamityMod/NPCs/Noxus/Noxus";
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Critical Slime Core");
+            DisplayName.SetDefault("Critical Slime Core");
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }

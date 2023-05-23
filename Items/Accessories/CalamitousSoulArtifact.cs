@@ -19,13 +19,13 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Calamitous Soul Artifact");
-            /* Tooltip.SetDefault("Pain\n" +
+            DisplayName.SetDefault("Calamitous Soul Artifact");
+            Tooltip.SetDefault("Pain\n" +
             "Killed enemies summon stationary Brimstone Hearts that explode after 10 seconds\n" +
             "The hearts can also block projectiles and can be collected for health\n" +
             "Grants a minion slot for every minion summoned that takes up multiple slots\n" +
             "Boosts melee speed by 20%, ranged velocity by 35%, rogue damage by 45%, max minions by 8, and reduces mana cost by 75%\n" +
-            "Increases damage based on proximity to enemy"); */
+            "Increases damage based on proximity to enemy"); 
         }
 
         public override void SetDefaults()

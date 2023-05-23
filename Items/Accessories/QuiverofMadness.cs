@@ -21,12 +21,12 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Quiver of Madness");
-            /* Tooltip.SetDefault("'Most drink the wine to lose focus, while others transcend...\n"+
+            DisplayName.SetDefault("Quiver of Madness");
+            Tooltip.SetDefault("'Most drink the wine to lose focus, while others transcend...\n"+
             "30% increased ranged damage, 25% increased ranged critical strike chance, and 100% reduced ammo usage\n"+
             "15 increased defense, 2 increased life regen, and 35% increased pick speed\n"+
             "You are surrounded by 4 demonic portals that buff ranged projectiles that intersect them\n" +
-            "Skull targets occasionally appear on enemies which increase damage taken when hit"); */
+            "Skull targets occasionally appear on enemies which increase damage taken when hit"); 
         }
 
         public override void SetDefaults()

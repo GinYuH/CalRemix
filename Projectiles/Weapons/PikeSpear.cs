@@ -30,7 +30,7 @@ public class PikeSpear : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        // DisplayName.SetDefault("Exo shiv");
+        DisplayName.SetDefault("Exo shiv");
     }
 
     public override void SetDefaults()

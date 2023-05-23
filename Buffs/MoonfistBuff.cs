@@ -10,7 +10,7 @@ namespace CalRemix.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Moon Empowerment");
+            DisplayName.SetDefault("Moon Empowerment");
             // Description.SetDefault("Hit me all you want, you can't un51 the recipe");
         }
 

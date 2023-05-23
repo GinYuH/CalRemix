@@ -17,7 +17,7 @@ namespace CalRemix.Projectiles.Accessories
         private int laserdirection = 1;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Slime Core");
+            DisplayName.SetDefault("Slime Core");
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }

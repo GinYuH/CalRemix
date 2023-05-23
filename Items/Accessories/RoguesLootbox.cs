@@ -22,8 +22,8 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Rogue's Lootbox");
-            /* Tooltip.SetDefault("+30 maximum stealth\n"+
+            DisplayName.SetDefault("Rogue's Lootbox");
+            Tooltip.SetDefault("+30 maximum stealth\n"+
             "12 % increased rogue damage, and 12 % increased rogue crit chance\n" +
             "Vastly reduces enemy aggression, even in the abyss\n" +
             "Stealth generates 50 % faster when standing still\n" +
@@ -36,7 +36,7 @@ namespace CalRemix.Items.Accessories
             "Grants the ability to evade attacks in a blast of darksun light, which inflicts extreme damage in a wide area\n" +
             "Evading an attack grants full stealth but has a 20 second cooldown\n" +
             "This cooldown is shared with all other dodges and reflects\n" +
-            "Hit the spectral veil key to summon an eclipse aura that nullifies damage for 5 seconds with a 20 second cooldown"); */
+            "Hit the spectral veil key to summon an eclipse aura that nullifies damage for 5 seconds with a 20 second cooldown"); 
         }
 
         public override void SetDefaults()

@@ -18,12 +18,12 @@ namespace CalRemix.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Shadow's Descent");
-            /* Tooltip.SetDefault("Shoots a shadow ball that ignores gravity and slows down after a short time." + 
+            DisplayName.SetDefault("Shadow's Descent");
+            Tooltip.SetDefault("Shoots a shadow ball that ignores gravity and slows down after a short time." + 
                 "While stationary, it shoots spirits and covers an area in a large shadow\n" + 
                 "Stealth strikes also emit dark pulses while stationary\n" + 
                 "Right click to delete all existing shadow balls\n" + 
-                "\'They didn't understand its nature, so it was sealed away...\'"); */
+                "\'They didn't understand its nature, so it was sealed away...\'"); 
 		}
 		public override void SetDefaults() 
 		{

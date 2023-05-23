@@ -20,11 +20,11 @@ public class Morpho : ModItem
 
     public override void SetStaticDefaults()
     {
-        // DisplayName.SetDefault("Morpho Doomblade");
-        /* Tooltip.SetDefault("Swings a doomblade that shoots crescent slashes\n"
+        DisplayName.SetDefault("Morpho Doomblade");
+        Tooltip.SetDefault("Swings a doomblade that shoots crescent slashes\n"
             + "Using RMB summons an Arbiter of Judgement that does not consume minion slots\n"
             + "Attacks from the blade and arbiter inflict Whispering Death and Valfrey Burn\n"
-            + "\'Now all will witness its true power!\'"); */
+            + "\'Now all will witness its true power!\'"); 
         Item.ResearchUnlockCount = 1;
     }
 

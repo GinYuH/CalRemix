@@ -19,11 +19,11 @@ namespace CalRemix.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Holy Mantle");
-            /* Tooltip.SetDefault("Delirious thoughts...\n"+
+            DisplayName.SetDefault("Holy Mantle");
+            Tooltip.SetDefault("Delirious thoughts...\n"+
             "Horizontal speed: 14\n"+
             "Acceleration multiplier: 3.2\n"+
-                "Flight time: ∞"); */
+                "Flight time: ∞"); 
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(500, 14f, 3.2f);
         }
 
