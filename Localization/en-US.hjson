@@ -22,7 +22,13 @@ Mods: {
 		}
 
 		UI.TransmogrifyMenu: Transmogrify
-		Biomes.LifeBiome.DisplayName: Life Biome
+
+		Biomes: {
+			LifeBiome: {
+				DisplayName: Life Biome
+				TownNPCDialogueName: the Life Biome
+			}
+		}
 
 		Tiles: {
 			AstralEffigyPlaced.MapEntry: Astral Effigy Placed
@@ -30,6 +36,8 @@ Mods: {
 			HallowEffigyPlaced.MapEntry: Hallow Effigy Placed
 			LifeOreTile.MapEntry: Life Ore Tile
 			MiracleFruitPlaced.MapEntry: Miracle Fruit Placed
+			DerellectMusicBoxPlaced.MapEntry: Music Box (The Derellect)
+			DerellectTrophyPlaced.MapEntry: Derellect Trophy
 		}
 
 		Buffs: {
@@ -399,6 +407,89 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Slimelgamation
 			}
+
+			PolypebralShield: {
+				DisplayName: Polypebral Shield
+				Tooltip: ""
+			}
+
+			DerellectMaskStatic.DisplayName: Derellect Mask (Static)
+
+			FusedEye: {
+				DisplayName: Fused Eye
+				Tooltip:
+					'''
+					Summons Polyphemalus
+					Enrages during the day
+					'''
+			}
+
+			KnowledgeDerellect: {
+				DisplayName: The Derellect
+				Tooltip:
+					'''
+					A twisted mother computer created with lab-grown souls.
+					It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
+					'''
+			}
+
+			DerellectMusicBox.DisplayName: Music Box (Signal Interruption)
+			DerellectTrophyInv.DisplayName: Derellect Trophy
+
+			ChainSaw: {
+				DisplayName: Chain-Saw
+				Tooltip:
+					'''
+					Hitting enemies stores charge, which progressively blinds you, but increases your crit chance.
+					Right-Click with charge to fire a projectile and consume it all
+					Does not benefit from Critical Strike Chance boosts.
+					'Chain-saw! Get it?'
+					'''
+			}
+
+			Heterochromia: {
+				DisplayName: Heterochromia
+				Tooltip:
+					'''
+					90% chance to not consume ammo
+					'I am looking respectfully.'
+					'''
+			}
+
+			Homochromia: {
+				DisplayName: Homochromia
+				Tooltip:
+					'''
+					No homo.
+					90% chance to not consume ammo
+					100% chance to turn you gay immediately
+					'''
+			}
+
+			Nystagmus: {
+				DisplayName: Nystagmus
+				Tooltip:
+					'''
+					Conjures a spiral of homing eyes
+					'I am in spain without the A'
+					'''
+			}
+
+			Prismachromancy: {
+				DisplayName: Prismachromancy
+				Tooltip: Dazzle them!
+			}
+
+			Tetrachromancy: {
+				DisplayName: Tetrachromancy
+				Tooltip:
+					'''
+					Casts a controllable Polyphe-mini
+					Once the mouse is released, or on contact with a block, it will split into four homing eyes.
+					'Now in HD color!'
+					'You feel a discreet, distant disproval towards the extra letter in this weapon's name'
+					'''
+			}
 		}
 
 		NPCs: {
@@ -407,6 +498,16 @@ Mods: {
 			WulfwyrmHead.DisplayName: Wulfwyrm Head
 			WulfwyrmTail.DisplayName: Wulfwyrm Tail
 			LifeSlime.DisplayName: Life Slime
+			Astigmageddon.DisplayName: Astigmageddon
+			Cataractacomb.DisplayName: Cataractacomb
+			Conjunctivirus.DisplayName: Conjunctivirus
+			DerellectBoss.DisplayName: The Derellect
+			DerellectPlug.DisplayName: Derellect Plug
+			Exotrexia.DisplayName: Exotrexia
+			Polyphemalus.DisplayName: Polyphemalus
+			SignalDrone.DisplayName: Signal Drone
+			Rosalina.DisplayName: Starborn Princess
+			YEENA.DisplayName: General
 		}
 
 		Projectiles: {
@@ -463,6 +564,9 @@ Mods: {
 			UnsealedBomb.DisplayName: Unsealed Bomb
 			ExcavatorLaser.DisplayName: Excavator Laser
 			ExcavatorShot.DisplayName: Excavator Shot
+			ChainSawProjectile.DisplayName: Chain-Saw
 		}
+
+		"Keybinds.Polypebral Dash.DisplayName": Polypebral  Dash
 	}
 }

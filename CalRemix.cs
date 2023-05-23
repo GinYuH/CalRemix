@@ -15,6 +15,7 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using ReLogic;
 using Terraria.ID;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix
 {
@@ -42,7 +43,7 @@ namespace CalRemix
 			cal.Call("RegisterModCooldowns", this);
 			cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
 			cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
-			/*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
+			cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
 			{
 				Mod bossChecklist;
@@ -68,7 +69,7 @@ namespace CalRemix
 				null
 				});
 				}
-			}*/
+			}
 			{
 				Mod bossChecklist;
 				ModLoader.TryGetMod("BossChecklist", out bossChecklist);
@@ -135,14 +136,46 @@ namespace CalRemix
         {
             return item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip();
         }
-		public static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
+		public static void AddToShop(int type, int price, ref NPCShop shop, bool condition = true, int specialMoney = 0)
         {
-			if (!condition || shop is null) return;
-			shop.item[nextSlot].SetDefaults(type);
-			shop.item[nextSlot].shopCustomPrice = price > 0 ? price : shop.item[nextSlot].value;
-			if (specialMoney == 1) shop.item[nextSlot].shopSpecialCurrency = CosmiliteCoinCurrencyId;
-			else if (specialMoney == 2) shop.item[nextSlot].shopSpecialCurrency = KlepticoinCurrencyId;
-			nextSlot++;
+			if (specialMoney == 0)
+				shop.AddWithCustomValue(type, price, new Condition("no u", () => condition));
+			else
+			{
+				Item shopitem = new Item();
+				shopitem.SetDefaults(type);
+				if (specialMoney == 1)
+				shopitem.shopSpecialCurrency = CosmiliteCoinCurrencyId;
+				else
+				shopitem.shopSpecialCurrency = KlepticoinCurrencyId;
+				shop.Add(shopitem, new Condition("no u", () => condition));
+			}
+
 		}
-    }
+		public class LastPolyBeaten : IItemDropRuleCondition, IProvideItemConditionDescription
+		{
+			public bool CanDrop(DropAttemptInfo info)
+			{
+
+				List<int> type = new List<int>() {
+				ModContent.NPCType<Cataractacomb>(),
+				ModContent.NPCType<Exotrexia>(),
+				ModContent.NPCType<Conjunctivirus>(),
+				ModContent.NPCType<Astigmageddon>()
+			};
+
+				type.Remove(info.npc.type);
+				foreach (var item in type)
+				{
+					if (NPC.AnyNPCs(item))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			public bool CanShowItemDropInUI() => true;
+			public string GetConditionDescription() => null;
+		}
+	}
 }

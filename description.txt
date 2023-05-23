@@ -2,7 +2,7 @@ Disclaimer: Although most of the mod's content originates from the Fandom wiki, 
 
 From the creators of the XP-00 Hypnos Mod, we bring you the Calamity: Community Remix addon!
 It contains an absolutely gorgeous array of high quality content, including (but not limited to):
--The Wulfrum Excavator boss! (With more bosses on the horizon!)
+-3 new bosses! (They're in your home!)
 -Lots of accessories! (Including the legendary Verboten One!) (Quantity AND quality!)
 -A wide array of weapons! (High-caliber!)
 -Multiple fantastic generated things, such as shrines! (Exploration!!)
@@ -14,8 +14,10 @@ Suffer.
 
 Extra Credits:
 Dominic Karma: A vast majority of the Wulfrum Excavator fight
-RegigigasSkyForm: Snippets of Dark Statis' code (literally who)
+RegigigasSkyForm: Snippets of Dark Statis' code (literally who) and owner of the Derellect
 Bloop: Gravitonomy Pike
+Dozeoze: A majority of the Polyphemalus-related code
+Bloop: Gravitonomy Pike's code
 XP-00 Hypnos: Started it all
 
 Multiplayer support? What's that?
