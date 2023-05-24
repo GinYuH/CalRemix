@@ -413,7 +413,15 @@ Mods: {
 				Tooltip: ""
 			}
 
-			DerellectMaskStatic.DisplayName: Derellect Mask (Static)
+			DerellectMaskStatic: {
+				DisplayName: Derellect Mask (Static)
+				Tooltip: ""
+			}
+
+			DerellectMask: {
+				DisplayName: Derellect Mask
+				Tooltip: ""
+			}
 
 			FusedEye: {
 				DisplayName: Fused Eye
@@ -433,8 +441,15 @@ Mods: {
 					'''
 			}
 
-			DerellectMusicBox.DisplayName: Music Box (Signal Interruption)
-			DerellectTrophyInv.DisplayName: Derellect Trophy
+			DerellectMusicBox: {
+				DisplayName: Music Box (Signal Interruption)
+				Tooltip: ""
+			}
+
+			DerellectTrophyInv: {
+				DisplayName: Derellect Trophy
+				Tooltip: ""
+			}
 
 			ChainSaw: {
 				DisplayName: Chain-Saw
@@ -506,8 +521,52 @@ Mods: {
 			Exotrexia.DisplayName: Exotrexia
 			Polyphemalus.DisplayName: Polyphemalus
 			SignalDrone.DisplayName: Signal Drone
-			Rosalina.DisplayName: Starborn Princess
-			YEENA.DisplayName: General
+
+			Rosalina: {
+				DisplayName: Starborn Princess
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LoveBiome: I love {BiomeName}.
+					LikeBiome: I like {BiomeName}.
+					DislikeBiome: I dislike {BiomeName}.
+					HateBiome: I hate {BiomeName}.
+					LoveNPC: I love {NPCName}.
+					LikeNPC: I like {NPCName}.
+					DislikeNPC: I dislike {NPCName}.
+					HateNPC: I hate {NPCName}.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+
+			YEENA: {
+				DisplayName: General
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LoveBiome: I love {BiomeName}.
+					LikeBiome: I like {BiomeName}.
+					DislikeBiome: I dislike {BiomeName}.
+					HateBiome: I hate {BiomeName}.
+					LoveNPC: I love {NPCName}.
+					LikeNPC: I like {NPCName}.
+					DislikeNPC: I dislike {NPCName}.
+					HateNPC: I hate {NPCName}.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
 		}
 
 		Projectiles: {
@@ -565,6 +624,12 @@ Mods: {
 			ExcavatorLaser.DisplayName: Excavator Laser
 			ExcavatorShot.DisplayName: Excavator Shot
 			ChainSawProjectile.DisplayName: Chain-Saw
+			NystagmusProjectileBlue.DisplayName: Nystagmus Projectile Blue
+			NystagmusProjectileGray.DisplayName: Nystagmus Projectile Gray
+			NystagmusProjectileGreen.DisplayName: Nystagmus Projectile Green
+			NystagmusProjectileRed.DisplayName: Nystagmus Projectile Red
+			PrismachromancyProjectile.DisplayName: Prismachromancy Projectile
+			TetrachromancyProjectile.DisplayName: Tetrachromancy Projectile
 		}
 
 		"Keybinds.Polypebral Dash.DisplayName": Polypebral  Dash

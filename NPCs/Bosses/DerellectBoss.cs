@@ -37,6 +37,7 @@ namespace CalRemix.NPCs.Bosses
     internal class DerellectBoss : ModNPC
     {
         public bool p2 = false;
+        public bool p3 = false;
 
         public Particle aura;
 
@@ -85,9 +86,36 @@ namespace CalRemix.NPCs.Bosses
             Main.player[Main.myPlayer].Calamity().isNearbyBoss = true;
             Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatBuffs.BossEffects>(), 10, true);
             //Handle transitioning to phase 2
-            if (NPC.CountNPCS(ModContent.NPCType<SignalDrone>()) <= 0 && NPC.ai[0] > 1)
+            if (NPC.CountNPCS(ModContent.NPCType<SignalDrone>()) <= 0 && NPC.ai[0] != 0)
             {
-                p2 = true;
+                if (!p3)
+                ChangePhase(5);
+                p3 = true;
+            }
+            Player target = Main.player[NPC.target];
+
+            // heal
+            if (NPC.AnyNPCs(ModContent.NPCType<SignalDrone>()))
+            {
+                NPC.localAI[0]++;
+                float healfactor = 60;
+                if (NPC.life < NPC.lifeMax * 0.5f)
+                {
+                    healfactor = 30;
+                }
+                if (NPC.life < NPC.lifeMax * 0.25f)
+                {
+                    healfactor = 15;
+                }
+                if (NPC.life < NPC.lifeMax * 0.1f)
+                {
+                    healfactor = 5;
+                }
+                if (NPC.localAI[0] % healfactor == 0 && NPC.life < NPC.lifeMax)
+                {
+                    NPC.HealEffect(NPC.lifeMax / 10);
+                    NPC.life += Math.Clamp(NPC.lifeMax / 10, 0, NPC.lifeMax - NPC.life);
+                }
             }
 
             switch (NPC.ai[0])
@@ -101,16 +129,141 @@ namespace CalRemix.NPCs.Bosses
                             {
                                 NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SignalDrone>(), 0, NPC.whoAmI, i);
                             }
-                        ChangePhase(1);
+                        }
+                        if (NPC.ai[1] == 10)
+                        {
+                            ChangePhase(1);
                         }
                     }
                     break;
-                case 1:
+                case 1: // lightning cage
+                    {
+                        if (NPC.ai[1] < 210)
+                        {
+                            FlyYouFool();
+                        }
+                        NPC.ai[1]++;
+                        if (NPC.ai[1] == 210)
+                        {
+                            Vector2 dist = target.Center - NPC.Center;
+                            dist.Normalize();
+                            NPC.velocity = dist * 26f;
+                            SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.DashSound, NPC.Center);
+                        }
+                        if (NPC.ai[1] >= 270)
+                        {
+                            ChangePhase(3);
+                        }
+                    }
+                    break;
+                case 2: // pool
+                    {
+                        FlyYouFool(900);
+                        NPC.ai[1]++;
+                        if (NPC.ai[1] >= 300)
+                        {
+                            ChangePhase(3);
+                        }
+                    }
+                    break;
+                case 3: // bottom clusters
+                    {
+                        FlyYouFool(specificY: -400);
+                        NPC.ai[1]++;
+                        if (NPC.ai[1] >= 480)
+                        {
+                            ChangePhase(4);
+                        }
+                    }
+                    break;
+                case 4: // snake
+                    {
+                        FlyYouFool(-700);
+                        NPC.ai[1]++;
+                        if (NPC.ai[1] >= 480)
+                        {
+                            ChangePhase(1);
+                        }
+                    }
+                    break;
+                case 5: // sputter
                     {
                         NPC.ai[1]++;
-                        if (NPC.ai[1] == 120)
+                        if (NPC.ai[1] < 90)
                         {
-                             
+                            FlyYouFool();
+                        }
+                        else if (NPC.ai[1] < 270)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            NPC.ai[2]++;
+                            if (NPC.ai[2] >= 5)
+                            {
+                                int xpseed = 26;
+                                Vector2 velocity = new Vector2(Main.rand.Next(-xpseed, xpseed), Main.rand.Next(-20, 0));
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ProjectileID.SaucerScrap, 40, 0f, Main.myPlayer);
+                                NPC.ai[2] = 0;
+                            }
+                        }
+                        else if (NPC.ai[1] >= 270)
+                        {
+                            ChangePhase(6);
+                        }
+                    }
+                    break;
+                case 6: // deathray
+                    {
+                        NPC.ai[1]++;
+                        if (NPC.ai[1] < 10)
+                        {
+                            NPC.velocity.Y = -10;
+                        }
+                        if (NPC.ai[1] == 20)
+                        {
+                            NPC.velocity.Y = 0;
+                            NPC.velocity.X = target.Center.X - NPC.Center.X > 0 ? 10 : -10;
+                            SoundEngine.PlaySound(SoundID.Zombie104, NPC.Center);
+                        }
+                        else if (NPC.ai[1] >= 180)
+                        {
+                            ChangePhase(7);
+                        }
+                        else
+                        {
+                            NPC.velocity.X = target.Center.X - NPC.Center.X > 0 ? 10 : -10;
+                        }
+                    }
+                    break;
+                case 7: // wave
+                    {
+                        float phasetime = 180;
+                        if (NPC.ai[1] < 100)
+                        {
+                            FlyYouFool(target.position.X - NPC.position.X > 0 ? -700 : 700);
+                        }
+                        if (NPC.Calamity().newAI[0] == 0)
+                        {
+                            NPC.Calamity().newAI[0] = Main.rand.Next(-2, 2);
+                        }
+                        NPC.ai[1]++;
+                        Main.NewText(NPC.ai[1]);
+                        if (NPC.ai[1] > 100)
+                        {
+                            if (NPC.ai[3] == 0)
+                            {
+                                NPC.ai[3] = target.position.X - NPC.position.X > 0 ? 1 : -1;
+                            }
+                            NPC.velocity = Vector2.Zero;
+                            NPC.ai[2]++;
+                            if (NPC.ai[2] % 5 == 0)
+                            {
+                                Vector2 velocity = new Vector2(10 * NPC.ai[3], ((NPC.ai[2] + NPC.Calamity().newAI[0]) / phasetime) * 50 - 5);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ProjectileID.DeathLaser, 62, 0, Main.myPlayer);
+                            }
+                        }
+                        if (NPC.ai[1] >= phasetime)
+                        {
+                            ChangePhase(5);
                         }
                     }
                     break;
@@ -130,12 +283,50 @@ namespace CalRemix.NPCs.Bosses
             }
             if (reset3)
             {
-                NPC.Calamity().newAI[3] = 0;
+                NPC.ai[3] = 0;
             }
-            NPC.ai[3] = 0;
+            NPC.Calamity().newAI[0] = 0;
+            NPC.Calamity().newAI[1] = 0;
+            NPC.Calamity().newAI[2] = 0;
+            NPC.Calamity().newAI[3] = 0;
             NPC.damage = 0;
             NPC.Calamity().canBreakPlayerDefense = false;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC neuron = Main.npc[i];
+                if (neuron.type == NPCType<SignalDrone>())
+                {
+                    neuron.ai[2] = 0;
+                    neuron.ai[3] = 0;
+                    neuron.Calamity().newAI[0] = 0;
+                    neuron.Calamity().newAI[1] = 0;
+                    neuron.Calamity().newAI[2] = 0;
+                    neuron.Calamity().newAI[3] = 0;
+                    neuron.ModNPC<SignalDrone>().offx = 0;
+                    neuron.ModNPC<SignalDrone>().offy = 0;
+                }
+            }
             NPC.TargetClosest();
+        }
+
+        public void FlyYouFool(int specificX = 0, int specificY = 0)
+        {
+            if (specificX != 0 || specificY != 0)
+            {
+                Vector2 playerpos = new Vector2(Main.player[NPC.target].Center.X + specificX, Main.player[NPC.target].Center.Y + specificY);
+                Vector2 distanceFromDestination = playerpos - NPC.Center;
+                CalamityUtils.SmoothMovement(NPC, 100f, distanceFromDestination, 20, 1, true);
+
+            }
+            else
+            {
+                NPC.damage = 124;
+                NPC.Calamity().canBreakPlayerDefense = true;
+                float speed = p3 ? 12f : 10f;
+                Vector2 playerpos = new Vector2(Main.player[NPC.target].Center.X, Main.player[NPC.target].Center.Y);
+                Vector2 distanceFromDestination = playerpos - NPC.Center;
+                CalamityMod.CalamityUtils.SmoothMovement(NPC, 100f, distanceFromDestination, speed, 1.01f, false);
+            }
         }
 
         public override void FindFrame(int frameHeight)
@@ -219,11 +410,13 @@ namespace CalRemix.NPCs.Bosses
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(p2);
+            writer.Write(p3);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             p2 = reader.ReadBoolean();
+            p3 = reader.ReadBoolean();
         }
     }
 }
