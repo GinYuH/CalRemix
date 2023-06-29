@@ -8,7 +8,7 @@ namespace CalRemix
     {
         public static new string ID => "MagnaCore";
         public override bool ShouldDisplay => true;
-        public override string DisplayName => ("Magna Orb Cooldown");
+        public override LocalizedText DisplayName => Language.GetOrRegister("Mods/CalRemix/UI.Cooldowns.MagnaCore");
         public override string Texture => "CalRemix/ExtraTextures/MagnaCooldown";
         public override Color OutlineColor => new Color(208, 237, 133);
         public override Color CooldownStartColor => new Color(70, 86, 110);

@@ -40,6 +40,7 @@ using Terraria.Chat;
 using Terraria.Localization;
 using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.ExoMechs;
+using CalRemix.Items.Weapons;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalamityMod.Items.Potions;
@@ -69,10 +70,10 @@ namespace CalRemix
             NPCID.KingSlime,
             NPCID.QueenSlimeBoss,
             ModContent.NPCType<AstrumAureus>(),
-            ModContent.NPCType<EbonianSlimeGod>(),
-            ModContent.NPCType<CrimulanSlimeGod>(),
-            ModContent.NPCType<SplitEbonianSlimeGod>(),
-            ModContent.NPCType<SplitCrimulanSlimeGod>(),
+            ModContent.NPCType<EbonianPaladin>(),
+            ModContent.NPCType<CrimulanPaladin>(),
+            ModContent.NPCType<SplitEbonianPaladin>(),
+            ModContent.NPCType<SplitCrimulanPaladin>(),
             ModContent.NPCType<SlimeGodCore>(),
             ModContent.NPCType<LifeSlime>(),
             ModContent.NPCType<CragmawMire>()
@@ -404,13 +405,18 @@ namespace CalRemix
             {
                 npcLoot.Add(ModContent.ItemType<Microxodonta>(), 3);
             }
-            else if (npc.type == ModContent.NPCType<CosmicElemental>())
+            else if (npc.type == NPCID.GraniteFlyer)
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CosmicStone>(), 20, 10));
             }
             else if (npc.type == ModContent.NPCType<Horse>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<RockStone>(), 5, 3));
+            }
+            else if (npc.type == ModContent.NPCType<Providence>())
+            {
+                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => !Main.expertMode);
+                hm.Add(ModContent.ItemType<ProfanedNucleus>(), 4);
             }
             else if (npc.type == ModContent.NPCType<Cnidrion>())
             {

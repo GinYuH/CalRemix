@@ -14,7 +14,6 @@ namespace CalRemix.Projectiles.Accessories
 {
     public class CosmicElementalMinion : ModProjectile
     {
-        public override string Texture => "CalamityMod/NPCs/NormalNPCs/CosmicElemental";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Elemental");

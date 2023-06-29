@@ -158,6 +158,7 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<Supernova>()))
                 {
                     recipe.AddIngredient<UnsealedSingularity>();
+                    recipe.AddIngredient<ProfanedNucleus>();
                     recipe.RemoveIngredient(ModContent.ItemType<SealedSingularity>());
                 }
                 if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))

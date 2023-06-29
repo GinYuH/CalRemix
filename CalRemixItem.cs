@@ -16,6 +16,7 @@ using CalamityMod.Items.PermanentBoosters;
 using CalamityMod;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
+using CalRemix.Items.Weapons;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using System.Collections.Generic;
@@ -273,25 +274,29 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 5, 9);
             }
-            else if (item.type == ModContent.ItemType<DevourerofGodsBag>() && CalamityWorld.revenge || CalamityWorld.death)
+            else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
-                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 1, 3);
+                itemLoot.Add(ModContent.ItemType<ProfanedNucleus>());
             }
-            if (item.type == ModContent.ItemType<YharonBag>() && CalamityWorld.revenge || CalamityWorld.death)
+            else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
-                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 6, 8);
+                itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
             }
-            else if (item.type == ModContent.ItemType<YharonBag>() && !(CalamityWorld.revenge || CalamityWorld.death))
+            if (item.type == ModContent.ItemType<YharonBag>())
             {
-                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 5, 7);
+                itemLoot.AddIf(() => !CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
             }
-            if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>() && CalamityWorld.revenge || CalamityWorld.death)
+            else if (item.type == ModContent.ItemType<YharonBag>())
             {
-                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 9, 11);
+                itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 6, 8);
             }
-            else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>() && !(CalamityWorld.revenge || CalamityWorld.death))
+            if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())
             {
-                itemLoot.Add(ModContent.ItemType<YharimBar>(), 1, 7, 9);
+                itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 9, 11);
+            }
+            else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())
+            {
+                itemLoot.AddIf(() => !CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 7, 9);
             }
             else if (item.type == ModContent.ItemType<DraedonBag>())
             {

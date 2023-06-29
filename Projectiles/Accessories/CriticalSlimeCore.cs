@@ -158,10 +158,10 @@ namespace CalRemix.Projectiles.Accessories
             {
                 Slimes.Add(ModContent.NPCType<AstrumAureus>());
                 Slimes.Add(ModContent.NPCType<AureusSpawn>());
-                Slimes.Add(ModContent.NPCType<CrimulanSlimeGod>());
-                Slimes.Add(ModContent.NPCType<SplitCrimulanSlimeGod>());
-                Slimes.Add(ModContent.NPCType<EbonianSlimeGod>());
-                Slimes.Add(ModContent.NPCType<SplitEbonianSlimeGod>());
+                Slimes.Add(ModContent.NPCType<CrimulanPaladin>());
+                Slimes.Add(ModContent.NPCType<SplitCrimulanPaladin>());
+                Slimes.Add(ModContent.NPCType<EbonianPaladin>());
+                Slimes.Add(ModContent.NPCType<SplitEbonianPaladin>());
                 Slimes.Add(ModContent.NPCType<SlimeGodCore>());
                 Slimes.Add(NPCID.KingSlime);
                 Slimes.Add(NPCID.QueenSlimeBoss);
