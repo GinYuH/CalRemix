@@ -497,10 +497,14 @@ Mods: {
 					Stealth strikes leave behind lingering patches of magma
 					'''
 			}
+
+			WrathoftheEldritch.Tooltip: Summons an eldritch pulse at the cursor that periodically summon two rings of homing spirits and occasionally a deathray
+			WrathoftheCosmos.DisplayName: Wrath of the Cosmos
+			WrathoftheCosmos.Tooltip: Summons a galactic pulse at the cursor that periodically summon two rings of homing god slayer fireballs and occasionally two cosmic guardians
 		}
 
 		Projectiles: {
-			ArmofAgony.DisplayName: Armof Agony
+			ArmofAgony.DisplayName: Arm of Agony
 			AssortMinion.DisplayName: Assort Minion
 			BrimstoneGenerator.DisplayName: Brimstone Generator
 			CalHeart.DisplayName: Cal Heart
@@ -553,7 +557,12 @@ Mods: {
 			UnsealedBomb.DisplayName: Unsealed Bomb
 			ExcavatorLaser.DisplayName: Excavator Laser
 			ExcavatorShot.DisplayName: Excavator Shot
-			Summon.SlimeRay.DisplayName: Slime Ray
+
+			Summon: {
+				SlimeRay.DisplayName: Slime Ray
+				EldritchRay.DisplayName: Eldritch Ray
+			}
+
 			ProfaneNucleus.DisplayName: Profaned Nucleus
 		}
 

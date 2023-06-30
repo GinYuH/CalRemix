@@ -166,6 +166,11 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
                     recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
                 }
+                if (recipe.HasResult(ModContent.ItemType<Apotheosis>()))
+                {
+                    recipe.RemoveIngredient(ItemID.SpellTome);
+                    recipe.AddIngredient(ModContent.ItemType<WrathoftheCosmos>());
+                }
                 if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());

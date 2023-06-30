@@ -296,7 +296,6 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<FAP>()) // MURDER the drunk princess
             {
-                CalamityMod.World.CalamityWorld.spawnedCirrus = false;
                 npc.active = false;
             }
             /*if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
