@@ -509,6 +509,15 @@ Mods: {
 				DisplayName: Wrath of the Dragons
 				Tooltip: Summons a draconic pulse at the cursor that periodically summon two rings of homing flare dust and occasionally two flare tornadoes that turn into lingering flarenadoes upon contact with an enemy
 			}
+
+			WrathoftheGods: {
+				DisplayName: Wrath of the Gods
+				Tooltip:
+					'''
+					Summons a godly pulse at the cursor that periodically summon a ring of godly fireballs and occasionally explodes into a massive star of projectile and fires a deathray to annihilate your foes
+					[c/FF3333:The End..?]
+					'''
+			}
 		}
 
 		Projectiles: {
@@ -569,6 +578,7 @@ Mods: {
 			Summon: {
 				SlimeRay.DisplayName: Slime Ray
 				EldritchRay.DisplayName: Eldritch Ray
+				RockRay.DisplayName: Rock Ray
 			}
 
 			ProfaneNucleus.DisplayName: Profaned Nucleus

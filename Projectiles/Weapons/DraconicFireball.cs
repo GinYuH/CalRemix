@@ -42,7 +42,7 @@ namespace CalRemix.Projectiles.Weapons
 
             Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + MathHelper.ToRadians(90);
             if (Main.rand.NextBool(20))
-                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, (int)CalamityMod.Dusts.CalamityDusts.BlueCosmilite, 0f, 0f, 100, default, 0.8f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, (int)CalamityMod.Dusts.CalamityDusts.ProfanedFire, 0f, 0f, 100, default, 0.8f);
 
             if (Projectile.timeLeft < 60)
                 CalamityUtils.HomeInOnNPC(Projectile, !Projectile.tileCollide, 1800f, 25f, 20f);

@@ -85,12 +85,12 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.ExpandHitboxBy(20);
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    for (int i = 0; i < 24; i++)
+                    for (int i = 0; i < 32; i++)
                     {
                         Vector2 velocity = ((MathHelper.TwoPi * i / 16f) - (MathHelper.Pi / 16f)).ToRotationVector2() * 10f;
                         int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity, ModContent.ProjectileType<DraconicFireball>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                     }
-                    for (int i = 0; i < 24; i++)
+                    for (int i = 0; i < 32; i++)
                     {
                         Vector2 velocity = ((MathHelper.TwoPi * i / 16f) - (MathHelper.Pi / 16f)).ToRotationVector2() * 18f;
                         int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity, ModContent.ProjectileType<DraconicFireball>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
