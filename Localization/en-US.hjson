@@ -518,6 +518,15 @@ Mods: {
 					[c/FF3333:The End..?]
 					'''
 			}
+
+			GrarbleObliterator.DisplayName: Grarble Obliterator
+
+			GrarbleBayonet: {
+				DisplayName: Grarble Bayonet
+				Tooltip: The gun damages enemies that touch it
+			}
+
+			GrarbleSpear.DisplayName: Grarble Spear
 		}
 
 		Projectiles: {
@@ -582,6 +591,8 @@ Mods: {
 			}
 
 			ProfaneNucleus.DisplayName: Profaned Nucleus
+			GrarbleObliteratorProj.DisplayName: Obliterator
+			Melee.GrarbleSpearProjectile.DisplayName: Spear
 		}
 
 		NPCs: {
