@@ -130,6 +130,7 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
+            CalamityMod.World.CalamityWorld.spawnedCirrus = false;
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
             if (ShrineTimer == 0)
             {

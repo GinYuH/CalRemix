@@ -245,7 +245,7 @@ namespace CalRemix
             {
                 if (item.wet && !item.lavaWet && Main.bloodMoon && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                 {
-                    item.type = ModContent.ItemType<BloodOrange>();
+                    item.SetDefaults(ModContent.ItemType<BloodOrange>());
                 }
             }
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)

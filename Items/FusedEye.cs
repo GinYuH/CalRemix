@@ -58,15 +58,5 @@ namespace CalRemix.Items
 
 			return true;
 		}
-
-		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
-		public override void AddRecipes() {
-			CreateRecipe()
-				.AddIngredient(ItemID.ChlorophyteBar, 10)
-				.AddIngredient(ItemID.SoulofNight, 5)
-				.AddIngredient(ItemID.BlackLens)
-				.AddTile(134)
-				.Register();
-		}
 	}
 }

@@ -410,7 +410,7 @@ namespace CalRemix
 
         public override bool PreItemCheck()
         {
-            if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
+           /* if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
                 if (NPC.CountNPCS(ModContent.NPCType<DerellectBoss>()) >= 1)
 				{
@@ -420,7 +420,7 @@ namespace CalRemix
 
 				}
   				return true;                  
-			}
+			}*/
 			return true;
         }
 
