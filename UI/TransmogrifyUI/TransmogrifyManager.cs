@@ -39,7 +39,7 @@ namespace CalRemix.UI.TransmogrifyUI
                 ModContent.ItemType<CalamityMod.Items.Materials.UnholyEssence>(), 20, 1200,
                 ModContent.ItemType<CalamityMod.Items.Materials.DivineGeode>(), 20),
             new TransmogrifyRecipe(ModContent.ItemType<Items.Materials.YharimBar>(),
-                ModContent.ItemType<CalamityMod.Items.Materials.Phantoplasm>(), 10, 3600,
+                ModContent.ItemType<CalamityMod.Items.Materials.Polterplasm>(), 10, 3600,
                 ModContent.ItemType<CalamityMod.Items.Materials.RuinousSoul>(), 10),
             new TransmogrifyRecipe(ModContent.ItemType<Items.Materials.YharimBar>(),
                 ModContent.ItemType<CalamityMod.Items.Materials.EndothermicEnergy>(), 20, 1200,

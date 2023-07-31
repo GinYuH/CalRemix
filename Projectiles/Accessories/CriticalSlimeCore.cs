@@ -141,7 +141,7 @@ namespace CalRemix.Projectiles.Accessories
                 ModContent.NPCType<CalamityMod.NPCs.PlagueEnemies.PestilentSlime>(),
                 ModContent.NPCType<AeroSlime>(),
                 ModContent.NPCType<BloomSlime>(),
-                ModContent.NPCType<CalamityMod.NPCs.Crags.CharredSlime>(),
+                ModContent.NPCType<CalamityMod.NPCs.Crags.InfernalCongealment>(),
                 ModContent.NPCType<PerennialSlime>(),
                 ModContent.NPCType<CryoSlime>(),
                 ModContent.NPCType<GammaSlime>(),

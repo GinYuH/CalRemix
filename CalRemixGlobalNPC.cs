@@ -9,7 +9,7 @@ using CalamityMod;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
-using CalamityMod.NPCs.AdultEidolonWyrm;
+using CalamityMod.NPCs.PrimordialWyrm;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.NormalNPCs;
@@ -90,7 +90,7 @@ namespace CalRemix
             ModContent.NPCType<CalamityMod.NPCs.Astral.AstralSlime>(),
             ModContent.NPCType<CalamityMod.NPCs.PlagueEnemies.PestilentSlime>(),
             ModContent.NPCType<BloomSlime>(),
-            ModContent.NPCType<CalamityMod.NPCs.Crags.CharredSlime>(),
+            ModContent.NPCType<CalamityMod.NPCs.Crags.InfernalCongealment>(),
             ModContent.NPCType<PerennialSlime>(),
             ModContent.NPCType<CryoSlime>(),
             ModContent.NPCType<GammaSlime>(),
@@ -386,7 +386,7 @@ namespace CalRemix
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
             else */
-            if (npc.type == ModContent.NPCType<AdultEidolonWyrmHead>())
+            if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
             }

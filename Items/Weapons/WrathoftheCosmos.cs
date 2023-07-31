@@ -46,7 +46,7 @@ namespace CalRemix.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient<WrathoftheEldritch>(1).
-                AddIngredient(ModContent.ItemType<Starfall>()).
+                AddIngredient(ModContent.ItemType<StarShower>()).
                 AddIngredient(ModContent.ItemType<CosmiliteBar>(), 12).
                 AddIngredient(ModContent.ItemType<AscendantSpiritEssence>(), 4).
                 AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 15).

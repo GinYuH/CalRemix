@@ -156,7 +156,7 @@ namespace CalRemix.Items.Accessories
                     player.npcTypeNoAggro[NPCType<CorruptSlimeSpawn2>()] = true;
                     player.npcTypeNoAggro[NPCType<AeroSlime>()] = true;
                     player.npcTypeNoAggro[NPCType<BloomSlime>()] = true;
-                    player.npcTypeNoAggro[NPCType<CalamityMod.NPCs.Crags.CharredSlime>()] = true;
+                    player.npcTypeNoAggro[NPCType<CalamityMod.NPCs.Crags.InfernalCongealment>()] = true;
                     player.npcTypeNoAggro[NPCType<CalamityMod.NPCs.Astral.AstralSlime>()] = true;
                     player.npcTypeNoAggro[NPCType<CalamityMod.NPCs.PlagueEnemies.PestilentSlime>()] = true;
                     player.npcTypeNoAggro[NPCType<CryoSlime>()] = true;
@@ -473,7 +473,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<YharimsGift>().
                 AddIngredient<OccultSkullCrown>().
                 AddIngredient<HolyMantle>().
-                AddIngredient<CalamityMod.Items.Accessories.Wings.CelestialTracers>().
+                AddIngredient<CalamityMod.Items.Accessories.Wings.TracersSeraph>().
                 AddIngredient<TheCommunity>().
                 AddIngredient<CalamitousSoulArtifact>().
                 AddIngredient<AmbrosialAmpoule>().
@@ -502,7 +502,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<YharimsGift>().
                 AddIngredient<OccultSkullCrown>().
                 AddIngredient<HolyMantle>().
-                AddIngredient<CalamityMod.Items.Accessories.Wings.CelestialTracers>().
+                AddIngredient<CalamityMod.Items.Accessories.Wings.TracersSeraph>().
                 AddIngredient<ShatteredCommunity>().
                 AddIngredient<CalamitousSoulArtifact>().
                 AddIngredient<AmbrosialAmpoule>().

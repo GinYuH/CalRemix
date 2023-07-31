@@ -8,6 +8,8 @@ using CalRemix.Tiles;
 using CalamityMod;
 using CalamityMod.Items.PermanentBoosters;
 using Microsoft.Xna.Framework;
+using CalamityMod.Tiles.Furniture;
+using CalamityMod.Items.DraedonMisc;
 
 namespace CalRemix
 {
@@ -41,6 +43,10 @@ namespace CalRemix
 				else if (Main.rand.NextBool(20))
 					Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), Main.LocalPlayer.getRect(), ModContent.ItemType<EtherealCore>());
 			}
+            if (type == ModContent.TileType<WulfrumLure>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DraedonPowerCell>())
+            {
+                Main.NewText("If you are seeing this, you are likely using the outdated Fandom wiki, please do not use it. Use wiki.gg for Calamity and the recipe browser mod for remix", Color.LightSeaGreen);
+            }
         }
         public override void RandomUpdate(int i, int j, int type)
         {

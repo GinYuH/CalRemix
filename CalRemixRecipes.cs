@@ -251,7 +251,7 @@ namespace CalRemix
                     recipe.AddIngredient<RustyMedallion>();
                     recipe.AddIngredient<AmidiasPendant>();
                 }
-                if (recipe.HasResult(ModContent.ItemType<ElysianTracers>()))
+                if (recipe.HasResult(ModContent.ItemType<TracersElysian>()))
                 {
                     recipe.AddIngredient<GravistarSabaton>();
                     recipe.AddIngredient<Microxodonta>();
@@ -340,7 +340,7 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
                 }
-                if (recipe.HasResult(ModContent.ItemType<ElysianTracers>()))
+                if (recipe.HasResult(ModContent.ItemType<TracersElysian>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<YharimBar>(), 4);
                 }
