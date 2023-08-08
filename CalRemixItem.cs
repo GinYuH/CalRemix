@@ -418,7 +418,7 @@ namespace CalRemix
                 calplayer.astralArcanum = true;
                 calplayer.evolution = true;
                 calplayer.affliction = true;
-                calplayer.oldDukeScales = true;
+                //calplayer.oldDukeScales = true;
                 var source = player.GetSource_Accessory(item);
                 if (Main.rand.NextBool(3))
                 {
