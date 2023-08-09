@@ -274,7 +274,7 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 5, 9);
             }
-            else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
+            else if (item.type == ModContent.ItemType<ProvidenceBag>())
             {
                 itemLoot.Add(ModContent.ItemType<ProfanedNucleus>());
             }
