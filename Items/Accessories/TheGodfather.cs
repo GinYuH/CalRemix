@@ -53,7 +53,6 @@ namespace CalRemix.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             CalamityPlayer calPlayer = player.Calamity();
-            calPlayer.fCarapace = true;
             calPlayer.absorber = true;
             calPlayer.sponge = true;
             player.statManaMax2 += 30;

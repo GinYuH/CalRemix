@@ -54,7 +54,6 @@ namespace CalRemix.Items.Accessories
         {
             CalamityPlayer calPlayer = player.Calamity();
             var source = player.GetSource_Accessory(Item);
-            calPlayer.fCarapace = true;
             calPlayer.absorber = true;
             calPlayer.sponge = true;
             player.statManaMax2 += 30;
