@@ -68,6 +68,8 @@ namespace CalRemix
 		public float cosdam = 0;
 		public int VerbotenMode = 1;
 		public int RecentChest = -1;
+		public bool baroclaw;
+		public Vector2 clawPosition = Vector2.Zero;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantSummon>(),
@@ -321,6 +323,14 @@ namespace CalRemix
 					Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
 				}
 			}
+			if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ModContent.ProjectileType<Claw>()) <= 0)
+			{
+				float XDist = 120;
+				clawPosition = Main.MouseWorld;
+				Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
+				int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
+				Main.projectile[p].spriteDirection *= -1;
+			}
 		}
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
         {
@@ -558,6 +568,7 @@ namespace CalRemix
 			tvo = false;
 			cart = false;
 			tvohide = false;
+			baroclaw = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 		}

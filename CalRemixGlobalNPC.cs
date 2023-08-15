@@ -57,6 +57,8 @@ namespace CalRemix
         private int frameUsed;
         private int say = 0;
         public static int wulfyrm = -1;
+        public int clawed = 0;
+        public Vector2 clawPosition = Vector2.Zero;
         public override bool InstancePerEntity
         {
             get
@@ -324,6 +326,12 @@ namespace CalRemix
             {
                 if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura > 0)
                     npc.AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
+            }
+            if (npc.GetGlobalNPC<CalRemixGlobalNPC>().clawed > 0)
+            {
+                npc.position.X = MathHelper.Lerp(npc.position.X, clawPosition.X - npc.width / 2, 0.1f);
+                npc.position.Y = MathHelper.Lerp(npc.position.Y, clawPosition.Y - npc.height / 2, 0.1f);
+                npc.velocity = Vector2.Zero;
             }
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)

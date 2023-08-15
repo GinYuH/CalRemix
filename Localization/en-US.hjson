@@ -767,6 +767,15 @@ Mods: {
 					[c/FF3333:The End..?]
 					'''
 			}
+
+			Baroclaw: {
+				DisplayName: Baroclaw
+				Tooltip:
+					'''
+					The crab secret revealed!
+					Press ; to chain a nearby enemy with crab claws
+					'''
+			}
 		}
 
 		NPCs: {
@@ -872,6 +881,7 @@ Mods: {
 			ProfaneNucleus.DisplayName: Profane Nucleus
 			Melee.GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
 			GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
+			Claw.DisplayName: Giant Claw
 		}
 
 		Tiles: {
@@ -883,5 +893,7 @@ Mods: {
 			LifeOreTile.MapEntry: Life Ore
 			MiracleFruitPlaced.MapEntry: Miracle Froota
 		}
+
+		Keybinds.Baroclaw.DisplayName: Baroclaw
 	}
 }
