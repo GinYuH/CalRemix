@@ -112,9 +112,11 @@ namespace CalRemix.NPCs.Bosses
             NPC.frameCounter %= Main.npcFrameCount[NPC.type];
             int frame = (int)NPC.frameCounter;
             NPC.frame.Y = frame * frameHeight;
-            NPC head = Main.npc[CalRemixGlobalNPC.wulfyrm];
-            if (CalRemixGlobalNPC.wulfyrm < 0 || CalRemixGlobalNPC.wulfyrm >= Main.maxNPCs || Main.npc[CalRemixGlobalNPC.wulfyrm] is null || Main.npc[CalRemixGlobalNPC.wulfyrm].type != ModContent.NPCType<WulfwyrmHead>())
+            if (CalRemixGlobalNPC.wulfyrm < 0 || CalRemixGlobalNPC.wulfyrm >= Main.maxNPCs)
                 return;
+            if (Main.npc[CalRemixGlobalNPC.wulfyrm] is null || Main.npc[CalRemixGlobalNPC.wulfyrm].type != ModContent.NPCType<WulfwyrmHead>())
+                return;
+            NPC head = Main.npc[CalRemixGlobalNPC.wulfyrm];
             if (head.ModNPC<WulfwyrmHead>().PylonCharged == true) // Handles Pylon charge sprites.
             {
                 NPC.frame.Y = 1 * frameHeight;
