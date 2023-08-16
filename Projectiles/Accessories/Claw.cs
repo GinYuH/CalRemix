@@ -38,6 +38,10 @@ namespace CalRemix.Projectiles.Accessories
 
         public override void AI()
         {
+            if (Main.player[Projectile.owner].ownedProjectileCounts[Type] < 2)
+            {
+                Projectile.Kill();
+            }
             NPC victim = Main.npc[(int)target];
             if (victim == null || !victim.active || victim.dontTakeDamage)
             {

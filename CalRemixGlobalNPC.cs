@@ -115,6 +115,11 @@ namespace CalRemix
         }
         public override bool PreAI(NPC npc)
         {
+            if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<Claw>()) <= 0)
+            {
+                clawed = 0;
+            }
+            clawed--;
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
 
             bool assortgel = player.assortegel;
