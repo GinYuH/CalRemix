@@ -43,7 +43,7 @@ namespace CalRemix.Projectiles.Accessories
                 Projectile.Kill();
             }
             NPC victim = Main.npc[(int)target];
-            if (victim == null || !victim.active || victim.dontTakeDamage)
+            if (victim == null || !victim.active || victim.dontTakeDamage || !victim.chaseable || victim.townNPC || victim.CountsAsACritter)
             {
                 victim = CalamityUtils.MinionHoming(Projectile.Center, 1000, Main.player[Projectile.owner]);
                 if (victim != null && victim.active && !victim.dontTakeDamage)
@@ -94,7 +94,6 @@ namespace CalRemix.Projectiles.Accessories
                 if (targete.GetGlobalNPC<CalRemixGlobalNPC>().clawed <= 0)
                 {
                     SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ScissorGuillotineSnapSound);
-                    Projectile.timeLeft = 300;
                 }
                 targete.GetGlobalNPC<CalRemixGlobalNPC>().clawed = 180;
                 if (Main.player[Projectile.owner].active && Main.player[Projectile.owner].GetModPlayer<CalRemixPlayer>().clawPosition != Vector2.Zero)
