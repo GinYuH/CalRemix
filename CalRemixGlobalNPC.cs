@@ -332,6 +332,8 @@ namespace CalRemix
                 npc.position.X = MathHelper.Lerp(npc.position.X, clawPosition.X - npc.width / 2, 0.1f);
                 npc.position.Y = MathHelper.Lerp(npc.position.Y, clawPosition.Y - npc.height / 2, 0.1f);
                 npc.velocity = Vector2.Zero;
+                    npc.position += new Vector2(Main.rand.NextFloat(-1f, 2f), Main.rand.NextFloat(-1f, 2f));
+                npc.frameCounter += 2;
             }
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)
