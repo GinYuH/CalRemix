@@ -122,6 +122,12 @@ namespace CalRemix
             {
                 item.crit /= 3;
             }
+            if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
+            {
+                int stack = item.stack;
+                item.SetDefaults(ModContent.ItemType<Items.Potions.NotFabsolVodka>());
+                item.stack = stack;
+            }
         }
        
         public override void MeleeEffects(Item item, Player Player, Rectangle hitbox)
@@ -246,7 +252,8 @@ namespace CalRemix
             {
                 if (item.wet && !item.lavaWet && Main.bloodMoon && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                 {
-                    item.type = ModContent.ItemType<BloodOrange>();
+                    item.SetDefaults(ModContent.ItemType<BloodOrange>());
+                    item.stack++;
                 }
             }
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)

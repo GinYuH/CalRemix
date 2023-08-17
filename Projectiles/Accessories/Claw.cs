@@ -110,6 +110,14 @@ namespace CalRemix.Projectiles.Accessories
             {
                 latched.GetGlobalNPC<CalRemixGlobalNPC>().clawed = 0;
             }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Gore.NewGore(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, ModLoader.GetMod("CalRemix").Find<ModGore>("Claw" + i + 1).Type, 1f);
+                }
+            }
+            SoundEngine.PlaySound(SoundID.DD2_SkeletonDeath, Projectile.Center);
         }
     }
 }
