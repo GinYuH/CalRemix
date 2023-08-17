@@ -25,11 +25,16 @@ using CalamityMod.Items.Fishing.FishingRods;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Typeless;
 using CalamityMod.Items.Armor.Auric;
 using CalRemix.Items.Weapons;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Weapons.DraedonsArsenal;
 using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Placeables.DraedonStructures;
+using CalamityMod.Items.Tools;
+using CalamityMod.Items.Armor.Victide;
+using CalamityMod.Items.Armor.Statigel;
 
 namespace CalRemix
 {
@@ -232,6 +237,7 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
                 {
                     recipe.AddIngredient<MirageJellyItem>();
+                    recipe.AddIngredient<AlloyBar>();
                 }
                 if (recipe.HasResult(ModContent.ItemType<TheAbsorber>()))
                 {
@@ -521,6 +527,139 @@ namespace CalRemix
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<PlagueCellCanister>());
                     recipe.AddIngredient(ModContent.ItemType<CoyoteVenom>(), 2);
+                }
+                #endregion
+                #region Alloy Bar Recipes
+                if (recipe.HasResult(ItemID.NightsEdge))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<TaintedBlade>());
+                    recipe.RemoveIngredient(ModContent.ItemType<PurifiedGel>());
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 30);
+                }
+                if (recipe.HasResult(ModContent.ItemType<OverloadedSludge>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 2);
+                }
+                if (recipe.HasResult(ModContent.ItemType<BlightedCleaver>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<DefiledGreatsword>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<UelibloomBar>());
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 800);
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 340);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Aestheticus>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<AgedLaboratoryElectricPanelItem>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<FracturedArk>()))
+                {
+                    recipe.DisableRecipe();
+                    recipe.AddIngredient(ItemID.Starfury);
+                    recipe.AddIngredient(ItemID.EnchantedSword);
+                    recipe.AddIngredient(ItemID.Gel, 5);
+                    recipe.AddIngredient(ItemID.Diamond, 10);
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 92);
+                }
+                if (recipe.HasResult(ModContent.ItemType<JellyChargedBattery>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 3);
+                }
+                if (recipe.HasResult(ItemID.LifeCrystal))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>());
+                }
+                if (recipe.HasResult(ItemID.MagicMirror))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 2);
+                }
+                if (recipe.HasResult(ItemID.MoneyTrough))
+                {
+                    recipe.DisableRecipe();
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 100);
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 2);
+                }
+                if (recipe.HasResult(ItemID.Muramasa))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 22);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Roxcalibur>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 21);
+                }
+                if (recipe.HasResult(ItemID.ShadowKey))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 22);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SunSpiritStaff>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ItemID.UltrabrightTorch))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 4);
+                }
+                if (recipe.HasResult(ModContent.ItemType<VictideBreastplate>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<GeliticBlade>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Gelpick>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Goobow>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<GunkShot>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelArmor>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<TheGodsGambit>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelGreaves>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelHeadMagic>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelHeadSummon>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelHeadRogue>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelHeadRanged>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelHeadMelee>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                if (recipe.HasIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.FurnitureStatigel.StatigelBlock>()) || recipe.HasResult(ModContent.ItemType<CalamityMod.Items.Placeables.FurnitureStatigel.StatigelBlock>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
                 }
                 #endregion
             }

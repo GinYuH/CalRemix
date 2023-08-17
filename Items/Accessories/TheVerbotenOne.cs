@@ -83,7 +83,6 @@ namespace CalRemix.Items.Accessories
             calPlayer.DashID = StatisVoidSashDash.ID;
             player.dashType = 0;
             player.spikedBoots = 2;
-            calPlayer.elysianAegis = true;
             calPlayer.aAmpoule = true;
             calPlayer.laudanum = true;
             calPlayer.heartOfDarkness = true;
