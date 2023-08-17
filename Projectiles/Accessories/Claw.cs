@@ -114,7 +114,7 @@ namespace CalRemix.Projectiles.Accessories
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Gore.NewGore(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, ModLoader.GetMod("CalRemix").Find<ModGore>("Claw" + i + 1).Type, 1f);
+                    Gore.NewGore(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, ModLoader.GetMod("CalRemix").Find<ModGore>("Claw" + (i + 1)).Type, 1f);
                 }
             }
             SoundEngine.PlaySound(SoundID.DD2_SkeletonDeath, Projectile.Center);

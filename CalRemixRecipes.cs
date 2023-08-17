@@ -743,24 +743,50 @@ namespace CalRemix
                     }
                     recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 10);
                 }
-                if (recipe.HasIngredient(ModContent.ItemType<PlagueReaperMask>()))
+                if (recipe.HasResult(ModContent.ItemType<PlagueReaperMask>()))
                 {
                     recipe.RemoveIngredient(ItemID.Nanites);
                     recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 11);
                 }
-                if (recipe.HasIngredient(ModContent.ItemType<PlagueReaperStriders>()))
+                if (recipe.HasResult(ModContent.ItemType<PlagueReaperStriders>()))
                 {
                     recipe.RemoveIngredient(ItemID.Nanites);
                     recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 17);
                 }
-                if (recipe.HasIngredient(ModContent.ItemType<PlagueReaperVest>()))
+                if (recipe.HasResult(ModContent.ItemType<PlagueReaperVest>()))
                 {
                     recipe.RemoveIngredient(ItemID.Nanites);
                     recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 19);
                 }
                 #endregion
+                #region Delicious Meat
+                if (recipe.HasResult(ModContent.ItemType<ZenPotion>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 256);
+                }
+                if (recipe.HasResult(ModContent.ItemType<ZergPotion>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 256);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SupremeHealingPotion>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 8192);
+                }
+                if (recipe.HasResult(ModContent.ItemType<DraedonsForge>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 65536);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Abaddon>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 100);
+                }
+                if (recipe.HasResult(ModContent.ItemType<RuinMedallion>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 50);
+                }
+                #endregion
             }
-        }
+            }
 
         public void AlcoholRecipe(int result, int drinkingredient, int midgredient, int lastgredient, int blorbcount, int midnum = 5)
         {

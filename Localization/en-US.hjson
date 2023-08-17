@@ -776,6 +776,28 @@ Mods: {
 					Press ; to chain a nearby enemy with crab claws
 					'''
 			}
+
+			AlloyBar.DisplayName: Alloy Bar
+
+			EssenceofCrystal: {
+				DisplayName: Essence of Crystal
+				Tooltip: '''	The essence of the rich earth'''
+			}
+
+			EssenceofLaw: {
+				DisplayName: Essence of Law
+				Tooltip: The essence of conformity
+			}
+
+			EssenceofMyst: {
+				DisplayName: Essence of Myst
+				Tooltip: The essence of a distant island
+			}
+
+			EssenceofZot: {
+				DisplayName: Essence of Zot
+				Tooltip: The essence of destruction
+			}
 		}
 
 		NPCs: {
