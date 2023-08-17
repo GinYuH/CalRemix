@@ -62,6 +62,22 @@ namespace CalRemix
             {
                 TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Violence");
             }
+            else if (item.type == ModContent.ItemType<EssenceofHavoc>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofLaw>();
+            }
+            else if (item.type == ModContent.ItemType<EssenceofEleum>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofCrystal>();
+            }
+            else if (item.type == ModContent.ItemType<EssenceofSunlight>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofMyst>();
+            }
+            else if (item.type == ModContent.ItemType<EssenceofBabil>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofZot>();
+            }
 
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

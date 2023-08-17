@@ -35,6 +35,8 @@ using CalamityMod.Items.Placeables.DraedonStructures;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Armor.Victide;
 using CalamityMod.Items.Armor.Statigel;
+using CalamityMod.Items.Armor.PlagueReaper;
+using CalamityMod.Items.Placeables;
 
 namespace CalRemix
 {
@@ -600,6 +602,7 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<SunSpiritStaff>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofZot>(), 2);
                 }
                 if (recipe.HasResult(ItemID.UltrabrightTorch))
                 {
@@ -660,6 +663,100 @@ namespace CalRemix
                 if (recipe.HasIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.FurnitureStatigel.StatigelBlock>()) || recipe.HasResult(ModContent.ItemType<CalamityMod.Items.Placeables.FurnitureStatigel.StatigelBlock>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
+                }
+                #endregion
+                #region Essences
+                // Zot
+                if (recipe.HasResult(ModContent.ItemType<AstrealDefeat>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<ContinentalGreatbow>());
+                    recipe.AddIngredient(ModContent.ItemType<DarkechoGreatbow>());
+                    recipe.AddIngredient(ModContent.ItemType<BladedgeGreatbow>());
+                    recipe.RemoveIngredient(ModContent.ItemType<AshesofCalamity>());
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofZot>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<CosmicAnvilItem>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofZot>(), 10);
+                }
+                if (recipe.HasResult(ModContent.ItemType<CosmicWorm>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofZot>(), 30);
+                }
+                if (recipe.HasResult(ModContent.ItemType<DaawnlightSpiritOrigin>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofZot>(), 4);
+                }
+                // Crystal
+                if (recipe.HasResult(ModContent.ItemType<Crystalline>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<WulfrumKnife>());
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofCrystal>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<LunicEye>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofCrystal>(), 15);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StormSurge>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.SeaPrism>());
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofZot>(), 7);
+                }
+                //Law
+                if (recipe.HasResult(ModContent.ItemType<AccelerationRound>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>());
+                }
+                if (recipe.HasResult(ModContent.ItemType<EnchantedAxe>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>(), 5);
+                }
+                if (recipe.HasResult(ItemID.EnchantedSword))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SpiritGlyph>()))
+                {
+                    recipe.DisableRecipe();
+                    recipe.AddRecipeGroup(RecipeGroupID.IronBar, 15);
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>(), 5);
+                }
+                if (recipe.HasResult(ItemID.Starfury))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>(), 3);
+                }
+                // Myst
+                if (recipe.HasResult(ModContent.ItemType<EpidemicShredder>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Nanites);
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 105);
+                }
+                if (recipe.HasResult(ModContent.ItemType<PlantationStaff>()))
+                {
+                    if (recipe.HasIngredient(ModContent.ItemType<FleshOfInfidelity>()))
+                    {
+                        recipe.DisableRecipe();
+                    }
+                    if (recipe.HasIngredient(ModContent.ItemType<EyeOfNight>()))
+                    {
+                        recipe.RemoveIngredient(ModContent.ItemType<EyeOfNight>());
+                    }
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 10);
+                }
+                if (recipe.HasIngredient(ModContent.ItemType<PlagueReaperMask>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Nanites);
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 11);
+                }
+                if (recipe.HasIngredient(ModContent.ItemType<PlagueReaperStriders>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Nanites);
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 17);
+                }
+                if (recipe.HasIngredient(ModContent.ItemType<PlagueReaperVest>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Nanites);
+                    recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 19);
                 }
                 #endregion
             }
