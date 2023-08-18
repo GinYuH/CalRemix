@@ -476,6 +476,10 @@ namespace CalRemix
             {
                 //npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
             }
+            else if (NPCID.Sets.DemonEyes[npc.type])
+            {
+                npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ModContent.ItemType<Ogscule>());
+            }
         }
         public override void OnKill(NPC npc)
         {
