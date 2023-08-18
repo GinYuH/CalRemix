@@ -346,8 +346,8 @@ namespace CalRemix
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
-            RoverDrivePlayer roverPlayer = player.GetModPlayer<RoverDrivePlayer>();
             CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
+            OldDukeScalesPlayer dukePlayer = player.GetModPlayer<OldDukeScalesPlayer>();
             if (item.type == ModContent.ItemType<GrandGelatin>())
             {
                 modplayer.miragel = true;
@@ -361,6 +361,11 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
+                calplayer.spongeShieldVisible = !hideVisual;
+                calplayer.roverDrive = true;
+                calplayer.baroclaw = true; // cringe you
+                calplayer.lifejelly = true;
+                calplayer.cleansingjelly = true;
                 calplayer.regenator = true;
                 calplayer.ursaSergeant = true;
                 calplayer.trinketOfChi = true;
@@ -368,9 +373,12 @@ namespace CalRemix
                 calplayer.flameLickedShell = true;
                 calplayer.permafrostsConcoction = true;
                 calplayer.aquaticHeart = true;
-                roverPlayer.RoverDriveOn = true;
-                roverPlayer.ShieldVisibility = (hideVisual ? new bool?(false) : null);
-                if (roverPlayer.ProtectionMatrixDurability > 0) player.statDefense += RoverDrive.ProtectionMatrixDefenseBoost;
+                dukePlayer.OldDukeScalesOn = true;
+                if (calplayer.SpongeShieldDurability > 0)
+                {
+                    player.statDefense += 30;
+                    player.endurance += 0.3f;
+                }
             }
             if (item.type == ModContent.ItemType<AmbrosialAmpoule>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {

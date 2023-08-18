@@ -781,7 +781,7 @@ Mods: {
 
 			EssenceofCrystal: {
 				DisplayName: Essence of Crystal
-				Tooltip: '''	The essence of the rich earth'''
+				Tooltip: The essence of the rich earth
 			}
 
 			EssenceofLaw: {

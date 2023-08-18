@@ -397,10 +397,9 @@ namespace CalRemix
             }
             /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
-                npcLoot.Add(ModContent.ItemType<DesertFeather>(), 11, 17, 34);
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
-            else */
+            else*/
             if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
