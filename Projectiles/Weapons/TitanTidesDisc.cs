@@ -43,7 +43,7 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.timeLeft = 2;
             else
                 Projectile.Kill();
-            Projectile.Center = Main.MouseWorld;
+            Projectile.Center = Owner.Center;
 
             if (Timer == 0)
             {
