@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using ReLogic.Content;
 using Terraria.GameContent;
 using ReLogic;
@@ -94,10 +95,12 @@ namespace CalRemix
 					null);
 				}
 			}
-			/*cal.Call("CreateEnchantment", "Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
+			LocalizedText fallacious = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Name");
+			LocalizedText fallaciousDesc = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Description");
+			cal.Call("CreateEnchantment", fallacious, fallaciousDesc, 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
 			{
 				player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
-			});*/
+			});
 			List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries = (List<(int, int, Action<int>, int, bool, float, int[], int[])>)cal.Call("GetBossRushEntries");
 			int[] excIDs = { ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>() };
 			int[] headID = { ModContent.NPCType<WulfwyrmHead>() };

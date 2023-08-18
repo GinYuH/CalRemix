@@ -353,16 +353,16 @@ namespace CalRemix
 				VerbotenMode = 1;
 			}
 
-			/*
-            if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(156))
+            /*if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityMod.Items.CalamityGlobalItem>().AppliedEnchantment.Value.Equals(156))
             {
+				Main.NewText("Polterc");
                 amongusEnchant = true;
             }
             else
             {
                 amongusEnchant = false;
             }
-            if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(157))
+            /*if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(157))
             {
                 earthEnchant = true;
             }
@@ -544,7 +544,7 @@ namespace CalRemix
 		{
 
             earthEnchant = false;
-			amongusEnchant = false;
+			//amongusEnchant = false;
 			brimPortal = false;
 			arcanumHands = false;
 			marnite = false;
@@ -571,6 +571,13 @@ namespace CalRemix
 			baroclaw = false;
 			if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
+			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)
+			{
+				if (!Player.HeldItem.Calamity().AppliedEnchantment.HasValue)
+				{
+					amongusEnchant = false;
+				}
+			}
 		}
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
@@ -588,7 +595,7 @@ namespace CalRemix
 			if (amongusEnchant && hit.Crit)
 			{
                 CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
-                Main.LocalPlayer.statLife -= damageDone / 7;
+                Main.LocalPlayer.statLife -= (int)MathHelper.Clamp(damageDone / 7, 0, Player.statLife - 1);
                 SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
 				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
             }
@@ -613,7 +620,7 @@ namespace CalRemix
 			if (amongusEnchant && hit.Crit)
 			{
 				CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
-				Main.LocalPlayer.statLife -= damageDone / 7;
+				Main.LocalPlayer.statLife -= (int)MathHelper.Clamp(damageDone / 7, 0, Player.statLife - 1);
 				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
 				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
 			}

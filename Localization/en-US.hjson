@@ -916,6 +916,13 @@ Mods: {
 			MiracleFruitPlaced.MapEntry: Miracle Froota
 		}
 
+		Enchantments: {
+			Fallacious: {
+				Name: Fallacious
+				Description: Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.
+			}
+		}
+
 		Keybinds.Baroclaw.DisplayName: Baroclaw
 	}
 }

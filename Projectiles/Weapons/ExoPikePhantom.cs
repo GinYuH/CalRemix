@@ -71,7 +71,6 @@ public class ExoPikePhantom : ModProjectile
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         Mod calamityMod = ModLoader.GetMod("CalamityMod");
-        target.AddBuff(calamityMod.Find<ModBuff>("ExoFreeze").Type, 150);
         target.AddBuff(calamityMod.Find<ModBuff>("HolyFlames").Type, 150);
         target.AddBuff(BuffID.Frostburn, 150);
         target.AddBuff(BuffID.OnFire, 150);
