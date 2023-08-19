@@ -798,6 +798,17 @@ Mods: {
 				DisplayName: Essence of Zot
 				Tooltip: The essence of destruction
 			}
+
+			Exodimus: {
+				DisplayName: Exodimus
+				Tooltip:
+					'''
+					Throws out a dagger aggressively dart towards an enemy The dagger will then explode into a cross of laser beams. 
+					Stealth strikes double the amount of beams on dissipation into an 8 pointed star
+					'''
+			}
+
+			Ogscule.DisplayName: Ogscule
 		}
 
 		NPCs: {
@@ -904,6 +915,9 @@ Mods: {
 			Melee.GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
 			GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
 			Claw.DisplayName: Giant Claw
+			dimusBEAM.DisplayName: Exodimus Beam
+			ExodimusPROJ.DisplayName: Exodiumus dagger
+			OgsculeBeam.DisplayName: Ogscule Beam
 		}
 
 		Tiles: {
