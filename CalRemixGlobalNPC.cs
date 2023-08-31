@@ -501,7 +501,10 @@ namespace CalRemix
             {
                 bossKillcount++;
             }
+            if (npc.type == ModContent.NPCType<Horse>())
+                CalRemixWorld.downedEarth = true;
         }
+
         public override void LoadData(NPC npc, TagCompound tag)
         {
             bossKillcount = tag.GetInt("bossKillcount");

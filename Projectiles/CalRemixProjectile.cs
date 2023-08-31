@@ -35,8 +35,6 @@ namespace CalRemix
         private int frameX;
         private int frameY;
         NPC exc;
-
-
         private int MurasamaFrame
         {
             get

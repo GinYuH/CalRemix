@@ -25,6 +25,7 @@ namespace CalRemix
         public static int ShrineTimer = -20;
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
+        public static bool downedEarth = false;
 
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
@@ -44,6 +45,7 @@ namespace CalRemix
         {
             downedDerellect = false;
             downedExcavator = false;
+            downedEarth = false;
             guideHasExisted = false;
             deusDeadInSnow = false;
 
@@ -55,6 +57,7 @@ namespace CalRemix
         {
             downedDerellect = false;
             downedExcavator = false;
+            downedEarth = false;
             guideHasExisted = false;
             deusDeadInSnow = false;
 
@@ -66,6 +69,7 @@ namespace CalRemix
         {
             tag["downedDerellect"] = downedDerellect;
             tag["downedExcavator"] = downedExcavator;
+            tag["downedEarth"] = downedEarth;
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
 
@@ -78,6 +82,7 @@ namespace CalRemix
         {
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
+            downedEarth = tag.Get<bool>("downedEarth");
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
 
@@ -90,6 +95,7 @@ namespace CalRemix
         {
             writer.Write(downedDerellect);
             writer.Write(downedExcavator);
+            writer.Write(downedEarth);
             writer.Write(guideHasExisted);
             writer.Write(deusDeadInSnow);
 
@@ -102,6 +108,7 @@ namespace CalRemix
         {
             downedDerellect = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
+            downedEarth = reader.ReadBoolean();
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
 

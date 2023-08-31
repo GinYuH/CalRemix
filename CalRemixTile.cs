@@ -10,6 +10,12 @@ using CalamityMod.Items.PermanentBoosters;
 using Microsoft.Xna.Framework;
 using CalamityMod.Tiles.Furniture;
 using CalamityMod.Items.DraedonMisc;
+using CalamityMod.Tiles.DraedonStructures;
+using CalRemix.NPCs;
+using Terraria.DataStructures;
+using Terraria.Audio;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace CalRemix
 {
@@ -35,17 +41,78 @@ namespace CalRemix
         };
         public override void RightClick(int i, int j, int type)
         {
-			if (type == ModContent.TileType<AstralBeacon>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>())
+            Player player = Main.LocalPlayer;
+            if (type == ModContent.TileType<AstralBeacon>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>())
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item9, Main.LocalPlayer.Center);
-                if (!Main.LocalPlayer.Calamity().eCore)
-					Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), Main.LocalPlayer.getRect(), ModContent.ItemType<EtherealCore>());
+                SoundEngine.PlaySound(SoundID.Item9, player.Center);
+                if (!player.Calamity().eCore)
+					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ModContent.ItemType<EtherealCore>());
 				else if (Main.rand.NextBool(20))
-					Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), Main.LocalPlayer.getRect(), ModContent.ItemType<EtherealCore>());
+					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ModContent.ItemType<EtherealCore>());
 			}
-            if (type == ModContent.TileType<WulfrumLure>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DraedonPowerCell>())
+            if (type == ModContent.TileType<LabHologramProjector>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>() && !NPC.AnyNPCs(ModContent.NPCType<CyberDraedon>()))
+            {
+                SoundEngine.PlaySound(SoundID.Item14, player.Center);
+                SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
+                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<CyberDraedon>());
+                if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
+                WorldGen.KillTile(i, j, noItem: true);
+                if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
+                {
+                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
+                }
+                player.ConsumeItem(ModContent.ItemType<BloodyVein>());
+            }
+            if (type == ModContent.TileType<WulfrumLure>() && player.HeldItem.type == ModContent.ItemType<DraedonPowerCell>())
             {
                 Main.NewText("If you are seeing this, you are likely using the outdated Fandom wiki, please do not use it. Use wiki.gg for Calamity and the recipe browser mod for remix", Color.LightSeaGreen);
+            }
+            if (type == ModContent.TileType<LabHologramProjector>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>() && !NPC.AnyNPCs(ModContent.NPCType<CyberDraedon>()))
+            {
+                SoundEngine.PlaySound(SoundID.Item14, player.Center);
+                SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
+                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<CyberDraedon>());
+                if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
+                WorldGen.KillTile(i, j);
+                if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
+                {
+                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
+                }
+                player.ConsumeItem(ModContent.ItemType<BloodyVein>(), true);
+            }
+            bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
+            if (type == ModContent.TileType<OnyxExcavatorTile>() && e && CalRemixWorld.downedEarth)
+            {
+                SoundEngine.PlaySound(SoundID.Item14, player.Center);
+                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<OnyxKinsman>());
+                if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
+                WorldGen.KillTile(i, j);
+                if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
+                {
+                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
+                }
+            }
+        }
+        public override void MouseOver(int i, int j, int type)
+        {
+            Player player = Main.LocalPlayer;
+            if (type == ModContent.TileType<LabHologramProjector>())
+            {
+                if (player.HeldItem.type == ModContent.ItemType<BloodyVein>())
+                {
+                    player.cursorItemIconID = ModContent.ItemType<BloodyVein>();
+                }
+                player.noThrow = 2;
+                player.cursorItemIconEnabled = true;
             }
         }
         public override void RandomUpdate(int i, int j, int type)

@@ -777,7 +777,10 @@ Mods: {
 					'''
 			}
 
-			AlloyBar.DisplayName: Alloy Bar
+			AlloyBar: {
+				DisplayName: Alloy Bar
+				Tooltip: ""
+			}
 
 			EssenceofCrystal: {
 				DisplayName: Essence of Crystal
@@ -808,7 +811,15 @@ Mods: {
 					'''
 			}
 
-			Ogscule.DisplayName: Ogscule
+			Ogscule: {
+				DisplayName: Ogscule
+				Tooltip: ""
+			}
+
+			OnyxDrill: {
+				Tooltip: ""
+				DisplayName: Onyx Drill
+			}
 		}
 
 		NPCs: {
@@ -827,6 +838,9 @@ Mods: {
 			LifeSlime.DisplayName: Life Slime
 			Rosalina.DisplayName: Starborn Princess
 			YEENA.DisplayName: General
+			OnyxKinsman.DisplayName: Onyx Kinsman
+			CyberDraedon.DisplayName: Cyber Draedon
+			Clamitas.DisplayName: Clamitas
 		}
 
 		Projectiles: {
@@ -918,6 +932,8 @@ Mods: {
 			dimusBEAM.DisplayName: Exodimus Beam
 			ExodimusPROJ.DisplayName: Exodiumus dagger
 			OgsculeBeam.DisplayName: Ogscule Beam
+			LaserSlash.DisplayName: Laser Slash
+			OnyxBullet.DisplayName: Onyx Bullet
 		}
 
 		Tiles: {
