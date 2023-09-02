@@ -20,7 +20,7 @@ namespace CalRemix.Items.Accessories
 {
     public class ZenithArcanum : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/AstralArcanum";
+        public override string Texture => "CalamityMod/Items/Accessories/TheEvolution";
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;

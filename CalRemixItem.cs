@@ -124,7 +124,7 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<TheAmalgam>())
             {
-                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Astral Arcanum, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
+                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Purity, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
                 tooltips.Add(line);
             }
         }
@@ -446,7 +446,7 @@ namespace CalRemix
                 player.strongBees = true;
                 calplayer.uberBees = true;
                 calplayer.alchFlask = true;
-                calplayer.astralArcanum = true;
+                calplayer.purity = true;
                 calplayer.evolution = true;
                 calplayer.affliction = true;
                 //calplayer.oldDukeScales = true;

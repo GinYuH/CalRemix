@@ -291,7 +291,7 @@ namespace CalRemix
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
                     recipe.AddIngredient<PlagueHive>();
-                    recipe.AddIngredient<AstralArcanum>();
+                    recipe.AddIngredient<Purity>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
                     recipe.AddIngredient<TheEvolution>();
