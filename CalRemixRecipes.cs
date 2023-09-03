@@ -492,7 +492,7 @@ namespace CalRemix
                     recipe.RemoveIngredient(ModContent.ItemType<CoreofSunlight>());
                     recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 7);
                 }
-                if (recipe.HasResult(ModContent.ItemType<DeificThunderbolt>()))
+                if (recipe.HasResult(ModContent.ItemType<TwistingThunder>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<CoreofSunlight>());
                     recipe.AddIngredient(ModContent.ItemType<CoreofBabil>(), 5);

@@ -382,8 +382,6 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<AmbrosialAmpoule>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
-                calplayer.beeResist = true;
-
                 if (player.ZoneJungle)
                 {
                     player.lifeRegen += 1;
