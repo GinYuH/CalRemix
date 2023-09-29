@@ -842,6 +842,7 @@ Mods: {
 			CyberDraedon.DisplayName: Cyber Draedon
 			Clamitas.DisplayName: Clamitas
 			PrimalAspid.DisplayName: Primal Aspid
+			OgsculianBurrower.DisplayName: Ogsculian Burrower
 		}
 
 		Projectiles: {
@@ -936,6 +937,7 @@ Mods: {
 			LaserSlash.DisplayName: Laser Slash
 			OnyxBullet.DisplayName: Onyx Bullet
 			AspidShot.DisplayName: Aspid Shot
+			OgsculeBeamHostile.DisplayName: Ogscule Beam
 		}
 
 		Tiles: {

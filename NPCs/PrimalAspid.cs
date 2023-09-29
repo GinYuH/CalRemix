@@ -123,7 +123,7 @@ namespace CalRemix.NPCs
             {
                 return 0f;
             }
-            return SpawnCondition.OverworldNightMonster.Chance * 0.04f;
+            return SpawnCondition.OverworldNightMonster.Chance * 0.4f;
         }
 
         public override void HitEffect(NPC.HitInfo hit)
@@ -150,6 +150,11 @@ namespace CalRemix.NPCs
         public override void OnKill()
         {
             CalRemixGlobalNPC.aspidCount++;
+        }
+
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+        {
+            target.AddBuff(ModContent.BuffType<VulnerabilityHex>(), 120);
         }
     }
 }
