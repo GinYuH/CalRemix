@@ -138,7 +138,7 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
-            if (CalRemixGlobalNPC.aspidCount >= 20)
+            if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {

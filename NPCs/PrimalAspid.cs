@@ -99,6 +99,7 @@ namespace CalRemix.NPCs
             {
                 NPC.velocity *= 0.98f;
             }
+            NPC.velocity.Y -= 3 + (float)System.Math.Sin(Main.GlobalTimeWrappedHourly) * 1;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
