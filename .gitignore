@@ -17,3 +17,7 @@ obj/Debug/net6.0/CalRemix.csproj.FileListAbsolute.txt
 *.v2
 *.v1
 *.sln
+*.bin
+*.vsidx
+*.vsidx
+*.lock

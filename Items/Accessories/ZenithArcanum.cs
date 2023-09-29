@@ -15,6 +15,7 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace CalRemix.Items.Accessories
 {
@@ -72,7 +73,7 @@ namespace CalRemix.Items.Accessories
             caPlayer.sandWaifu = true;
             caPlayer.sandBoobWaifu = true;
             caPlayer.cloudWaifu = true;
-            caPlayer.youngDuke = true;
+            caPlayer.MutatedTruffleBool = true;
             caPlayer.miniOldDuke = true;
             caPlayer.allWaifus = true;
             caPlayer.elementalHeart = true;
@@ -86,7 +87,7 @@ namespace CalRemix.Items.Accessories
             int sandy = ProjectileType<SandElementalMinion>();
             int cloudy = ProjectileType<CloudElementalMinion>();
             int thomas = ProjectileType<PlaguePrincess>();
-            int yd = ProjectileType<YoungDuke>();
+            int yd = ProjectileType<MutatedTruffleMinion>();
             caPlayer.gladiatorSword = true;
 
             var source = player.GetSource_Accessory(Item);
@@ -148,10 +149,10 @@ namespace CalRemix.Items.Accessories
                 {
                     Projectile.NewProjectile(source, player.Center, -Vector2.UnitY, ProjectileType<HowlsHeartTurnipHead>(), 0, 0f, player.whoAmI, 0f, 0f);
                 }
-                if (player.ownedProjectileCounts[ProjectileType<YoungDuke>()] < 1)
+                if (player.ownedProjectileCounts[ProjectileType<MutatedTruffleMinion>()] < 1)
                 {
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(290);
-                    Projectile dud = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, ProjectileType<YoungDuke>(), damage, 1f, player.whoAmI, 0f, 1f);
+                    Projectile dud = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, ProjectileType<MutatedTruffleMinion>(), damage, 1f, player.whoAmI, 0f, 1f);
                     dud.originalDamage = damage;
                 }
             }

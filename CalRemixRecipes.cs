@@ -224,6 +224,10 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
+                if (recipe.HasResult(ModContent.ItemType<CryoKey>()))
+                {
+                    recipe.DisableRecipe();
+                }
                 /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());

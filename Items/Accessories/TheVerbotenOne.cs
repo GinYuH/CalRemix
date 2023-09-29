@@ -293,7 +293,7 @@ namespace CalRemix.Items.Accessories
             calPlayer.sandWaifu = true;
             calPlayer.sandBoobWaifu = true;
             calPlayer.cloudWaifu = true;
-            calPlayer.youngDuke = true;
+            calPlayer.MutatedTruffleBool = true;
             calPlayer.miniOldDuke = true;
             calPlayer.allWaifus = true;
             calPlayer.elementalHeart = true;
@@ -305,7 +305,7 @@ namespace CalRemix.Items.Accessories
             int sandy = ProjectileType<SandElementalMinion>();
             int cloudy = ProjectileType<CloudElementalMinion>();
             int thomas = ProjectileType<PlaguePrincess>();
-            int yd = ProjectileType<YoungDuke>();
+            int yd = ProjectileType<MutatedTruffleMinion>();
             calPlayer.gladiatorSword = true;
 
             Vector2 velocity = new Vector2(0f, -1f);
@@ -325,7 +325,7 @@ namespace CalRemix.Items.Accessories
                     ModContent.ProjectileType<SandElementalMinion>(),
                     ModContent.ProjectileType<WaterElementalMinion>(),
                     ModContent.ProjectileType<PlaguePrincess>(),
-                    ModContent.ProjectileType<YoungDuke>(),
+                    ModContent.ProjectileType<MutatedTruffleMinion>(),
                     ModContent.ProjectileType<CryonicShield>()
                 };
                 for (int i = 0; i < Main.maxProjectiles; i++)
@@ -391,10 +391,10 @@ namespace CalRemix.Items.Accessories
                 {
                     Projectile.NewProjectile(source, player.Center, -Vector2.UnitY, ProjectileType<HowlsHeartTurnipHead>(), 0, 0f, player.whoAmI, 0f, 0f);
                 }
-                if (player.ownedProjectileCounts[ProjectileType<YoungDuke>()] < 1)
+                if (player.ownedProjectileCounts[ProjectileType<MutatedTruffleMinion>()] < 1)
                 {
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(290);
-                    Projectile dud = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, ProjectileType<YoungDuke>(), damage, 1f, player.whoAmI, 0f, 1f);
+                    Projectile dud = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, ProjectileType<MutatedTruffleMinion>(), damage, 1f, player.whoAmI, 0f, 1f);
                     dud.originalDamage = damage;
                 }
             }

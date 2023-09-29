@@ -72,8 +72,7 @@ namespace CalRemix
 		public Vector2 clawPosition = Vector2.Zero;
 		public int[] MinionList =
 		{
-			ModContent.ProjectileType<PlantSummon>(),
-			ModContent.ProjectileType<PlaguePrincess>(),
+			ModContent.ProjectileType<PlantationStaffSummon>(),
 			ModContent.ProjectileType<AtlasSoldier>(),
 			ModContent.ProjectileType<CosmilampMinion>(),
 			ModContent.ProjectileType<FieryDraconid>(),

@@ -16,6 +16,7 @@ using CalRemix.Items.Placeables;
 using CalamityMod.Walls;
 using CalamityMod;
 using Microsoft.Xna.Framework;
+using CalamityMod.NPCs.Cryogen;
 
 namespace CalRemix
 {
@@ -137,6 +138,14 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
+            if (CalRemixGlobalNPC.aspidCount >= 20)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
+                }
+                CalRemixGlobalNPC.aspidCount = 0;
+            }
             if (CalamityMod.World.CalamityWorld.spawnedCirrus)
             {
                 CalamityMod.World.CalamityWorld.spawnedCirrus = false;

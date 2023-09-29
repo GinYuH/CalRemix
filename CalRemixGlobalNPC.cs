@@ -58,6 +58,7 @@ namespace CalRemix
         private int say = 0;
         public static int wulfyrm = -1;
         public int clawed = 0;
+        public static int aspidCount = 0;
         public Vector2 clawPosition = Vector2.Zero;
         public override bool InstancePerEntity
         {
