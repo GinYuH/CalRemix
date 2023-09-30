@@ -50,7 +50,7 @@ namespace CalRemix.Projectiles.Weapons
                 CalamityUtils.HomeInOnNPC(Projectile, !Projectile.tileCollide, 3000f, 40f, 20f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(CalamityMod.Projectiles.Boss.HolyBlast.ImpactSound, Projectile.Center);
         }

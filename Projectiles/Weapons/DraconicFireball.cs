@@ -48,7 +48,7 @@ namespace CalRemix.Projectiles.Weapons
                 CalamityUtils.HomeInOnNPC(Projectile, !Projectile.tileCollide, 1800f, 25f, 20f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
                 float num461 = 3f;
                 num461 *= 0.7f;

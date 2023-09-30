@@ -30,7 +30,7 @@ namespace CalRemix.Projectiles.Weapons
             if (Main.rand.NextBool(10))
                 target.AddBuff(ModContent.BuffType<Shred>(), 360);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.penetrate <= 0)
             {

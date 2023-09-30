@@ -46,7 +46,7 @@ namespace CalRemix.Projectiles
             }
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Item.NewItem(Projectile.GetSource_DropAsItem(), Projectile.getRect(), ModContent.ItemType<PhantomHeart>());
         }

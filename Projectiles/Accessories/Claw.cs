@@ -103,7 +103,7 @@ namespace CalRemix.Projectiles.Accessories
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             NPC latched = Main.npc[(int)target];
             if (latched.active && latched != null && latched.GetGlobalNPC<CalRemixGlobalNPC>().clawed > 0)

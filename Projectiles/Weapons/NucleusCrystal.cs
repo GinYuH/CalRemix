@@ -29,7 +29,7 @@ namespace CalRemix.Projectiles.Weapons
             CalamityUtils.HomeInOnNPC(Projectile, true, 600f, 20f, 20f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item27, Projectile.Center);
             Vector2 spinningpoint = new Vector2(0f, -3f).RotatedByRandom(3.1415927410125732);

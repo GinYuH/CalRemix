@@ -62,7 +62,7 @@ namespace CalRemix.Projectiles.Weapons
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(CalamityMod.Projectiles.Boss.Flare.FlareSound, Projectile.Center);
             if (Projectile.owner == Main.myPlayer)

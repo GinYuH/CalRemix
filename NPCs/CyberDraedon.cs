@@ -32,7 +32,7 @@ namespace CalRemix.NPCs
             NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0);
             nPCBestiaryDrawModifiers.Scale = 0.8f;
             NPCDebuffImmunityData debuffData = new() { ImmuneToAllBuffsThatAreNotWhips = true };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            NPCID.Sets.DebuffImmunitySets/* tModPorter Removed: See the porting notes in https://github.com/tModLoader/tModLoader/pull/3453 */.Add(Type, debuffData);
         }
         public override void SetDefaults()
         {

@@ -58,7 +58,7 @@ namespace CalRemix.Projectiles.Weapons
             }
             Projectile.spriteDirection = Projectile.direction;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14);
             for (int i = 0; i < Main.rand.Next(2, 4); i++)

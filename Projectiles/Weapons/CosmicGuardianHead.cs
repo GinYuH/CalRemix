@@ -203,7 +203,7 @@ namespace CalRemix.Projectiles.Weapons
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(ModContent.BuffType<CalamityMod.Buffs.DamageOverTime.GodSlayerInferno>(), 180);
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.netMode != NetmodeID.Server)
             {

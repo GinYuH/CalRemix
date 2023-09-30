@@ -90,7 +90,7 @@ namespace CalRemix.Projectiles.Weapons
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<CosmicGuardianHead>()] > 0)
             {

@@ -213,7 +213,7 @@ namespace CalRemix
 			}
 		}
 
-		public override void Kill(Projectile projectile, int timeLeft)
+		public override void OnKill(Projectile projectile, int timeLeft)
 		{
 			if (rogueclone)
 			{

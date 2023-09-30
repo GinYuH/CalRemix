@@ -41,7 +41,7 @@ namespace CalRemix.Projectiles.Weapons
                 SoundEngine.PlaySound(SoundID.Item94);
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.Calamity().stealthStrike)
             {

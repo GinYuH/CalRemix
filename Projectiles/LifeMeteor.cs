@@ -50,7 +50,7 @@ namespace CalRemix.Projectiles
             }
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
             if (Projectile.velocity == Projectile.oldVelocity)
