@@ -17,6 +17,7 @@ using CalamityMod.Walls;
 using CalamityMod;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.Cryogen;
+using CalRemix.UI;
 
 namespace CalRemix
 {
@@ -138,6 +139,12 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
+            if (!FannyBools.start)
+            {
+                Fanny.Dialogue(FannyBools.FannyMessageID.start, time: 600);
+                FannyBools.start = true;
+                UpdateWorldBool();
+            }
             if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)

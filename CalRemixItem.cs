@@ -27,6 +27,7 @@ using CalRemix.Items.Materials;
 using System.Linq;
 using CalamityMod.World;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.SummonItems;
 
 namespace CalRemix
 {
@@ -104,7 +105,7 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<TheSponge>())
             {
-                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, Rover Drive, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
+                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<AmbrosialAmpoule>())
@@ -125,6 +126,21 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<TheAmalgam>())
             {
                 var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Purity, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<DesertMedallion>())
+            {
+                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<CryoKey>())
+            {
+                var line = new TooltipLine(Mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<EyeofDesolation>())
+            {
+                var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
                 tooltips.Add(line);
             }
         }
@@ -361,8 +377,8 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
+                calplayer.absorber = true;
                 calplayer.spongeShieldVisible = !hideVisual;
-                calplayer.roverDrive = true;
                 calplayer.baroclaw = true; // cringe you
                 calplayer.lifejelly = true;
                 calplayer.cleansingjelly = true;

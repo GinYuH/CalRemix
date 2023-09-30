@@ -5,6 +5,10 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.Potions;
+using CalamityMod.Tiles.Furniture.CraftingStations;
 
 namespace CalRemix.Items.Accessories
 {
@@ -31,6 +35,14 @@ namespace CalRemix.Items.Accessories
         {
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.baroclaw = true;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.CrabStatue, 1).
+                AddIngredient(ItemID.StoneBlock, 50).
+                AddTile(TileID.Anvils).
+                Register();
         }
     }
 }

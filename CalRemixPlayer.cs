@@ -29,6 +29,11 @@ using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Items;
+using CalamityMod.BiomeManagers;
+using CalRemix.UI;
+using CalamityMod.Items.Placeables.Furniture.CraftingStations;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix
 {
@@ -538,7 +543,40 @@ namespace CalRemix
 				StealthCut(0.05f);
             }
             #endregion
+            #region fanny
+			if (Main.hardMode && Player.InModBiome<UndergroundAstralBiome>() && !FannyBools.meld)
+			{
+				Fanny.Dialogue(FannyBools.FannyMessageID.meld);
+				FannyBools.meld = true;
+				CalRemixWorld.UpdateWorldBool();
+			}
+			List<int> hasItems = new List<int> ();
+			{
+				hasItems.Add(ModContent.ItemType<CosmicAnvilItem>());
+                hasItems.Add(ItemID.LunarCraftingStation);
+                hasItems.Add(ModContent.ItemType<AuricBar>());
+                hasItems.Add(ModContent.ItemType<ExoPrism>());
+                hasItems.Add(ModContent.ItemType<AscendantSpiritEssence>());
+            }
+			//if (CheckIfItems(hasItems) && !Player.HasItem(ModContent.ItemType<DeliciousMeat>()))
+			{
+				Fanny.Dialogue(FannyBools.FannyMessageID.draeforge, (int)Fanny.FannyAnimation.Nuhuh);
+            }
+            #endregion
         }
+
+		public bool CheckIfItems(List<int> items)
+		{
+			for (int i = 0;  i < items.Count; i++) 
+			{ 
+				if (!Player.HasItem(items[i]))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
         public override void ResetEffects()
 		{
 

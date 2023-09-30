@@ -228,6 +228,10 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
+                if (recipe.HasResult(ModContent.ItemType<EyeofDesolation>()))
+                {
+                    recipe.DisableRecipe();
+                }
                 /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
@@ -251,6 +255,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<TheSponge>()))
                 {
+                    recipe.AddIngredient<TheAbsorber>();
                     recipe.AddIngredient<AquaticHeart>();
                     recipe.AddIngredient<FlameLickedShell>();
                     recipe.AddIngredient<TrinketofChi>();

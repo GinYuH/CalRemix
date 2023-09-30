@@ -17,6 +17,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Projectiles.Weapons;
+using CalRemix.UI;
 
 namespace CalRemix.NPCs
 {
@@ -46,7 +47,7 @@ namespace CalRemix.NPCs
             NPC.lifeMax = 70;
             NPC.knockBackResist = 0f;
             NPC.Calamity().DR = 0.05f;
-            NPC.value = 1000;
+            NPC.value = 100;
             NPC.noGravity = false;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -76,7 +77,8 @@ namespace CalRemix.NPCs
                         SoundEngine.PlaySound(SoundID.Zombie104, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), eyePos, Vector2.Zero, ModContent.ProjectileType<OgsculeBeamHostile>(), Main.expertMode ? 15 : 13, 0, NPC.whoAmI, dir);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), eyePos, Vector2.Zero, ModContent.ProjectileType<OgsculeBeamHostile>(), Main.expertMode ? 15 : 13, 0, Main.myPlayer, dir);
+                            Main.projectile[p].ModProjectile<OgsculeBeamHostile>().NPCOwner = NPC.whoAmI;
                         }
                     }
                 }

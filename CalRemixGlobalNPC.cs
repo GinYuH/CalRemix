@@ -44,6 +44,7 @@ using CalRemix.Items.Weapons;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalamityMod.Items.Potions;
+using CalRemix.UI;
 
 namespace CalRemix
 {

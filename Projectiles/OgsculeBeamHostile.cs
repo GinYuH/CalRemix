@@ -27,6 +27,8 @@ public class OgsculeBeamHostile : BaseLaserbeamProjectile
     public override Color LaserOverlayColor => Color.Red;
     public override Color LightCastColor => new Color(1, 0, 0);
 
+    public int NPCOwner = -1;
+
     public override Texture2D LaserBeginTexture => ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Lasers/UltimaRayStart", AssetRequestMode.ImmediateLoad).Value;
     public override Texture2D LaserMiddleTexture => ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Lasers/UltimaRayMid", AssetRequestMode.ImmediateLoad).Value;
     public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Lasers/UltimaRayEnd", AssetRequestMode.ImmediateLoad).Value;
@@ -53,7 +55,7 @@ public class OgsculeBeamHostile : BaseLaserbeamProjectile
 
     public override bool PreAI()
     {
-        NPC npc = Main.npc[Projectile.owner];
+        NPC npc = Main.npc[NPCOwner];
         if (npc != null && npc.active)
         {
             Projectile.Center = npc.Center -Vector2.UnitY * 37;

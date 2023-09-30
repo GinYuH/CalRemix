@@ -16,6 +16,7 @@ using CalamityMod.World;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.UI;
 
 namespace CalRemix.NPCs
 {
@@ -61,6 +62,12 @@ namespace CalRemix.NPCs
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget)
             {
+                if (!FannyBools.aspid)
+                {
+                    Fanny.Dialogue(FannyBools.FannyMessageID.aspid);
+                    FannyBools.aspid = true;
+                    CalRemixWorld.UpdateWorldBool();
+                }
                 Vector2 dist = Main.player[NPC.target].Center - NPC.Center;
                 dist.Normalize();
                 NPC.velocity = dist * 4f;
