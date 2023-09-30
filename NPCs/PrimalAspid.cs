@@ -17,6 +17,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.UI;
+using CalamityMod.Buffs.StatDebuffs;
 
 namespace CalRemix.NPCs
 {
@@ -25,15 +26,9 @@ namespace CalRemix.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Primal Aspid");
-            Main.npcFrameCount[NPC.type] = 2; 
-            NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    ModContent.BuffType<VulnerabilityHex>(),
-                    ModContent.BuffType<BrimstoneFlames>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets/* tModPorter Removed: See the porting notes in https://github.com/tModLoader/tModLoader/pull/3453 */.Add(Type, debuffData);
+            Main.npcFrameCount[NPC.type] = 2;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
         }
 
         public override void SetDefaults()

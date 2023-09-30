@@ -15,6 +15,8 @@ using Terraria.Chat;
 using Terraria.Localization;
 using CalRemix.Projectiles;
 using CalamityMod.BiomeManagers;
+using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Buffs.StatDebuffs;
 
 namespace CalRemix.NPCs
 {
@@ -31,8 +33,7 @@ namespace CalRemix.NPCs
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0);
             nPCBestiaryDrawModifiers.Scale = 0.8f;
-            NPCDebuffImmunityData debuffData = new() { ImmuneToAllBuffsThatAreNotWhips = true };
-            NPCID.Sets.DebuffImmunitySets/* tModPorter Removed: See the porting notes in https://github.com/tModLoader/tModLoader/pull/3453 */.Add(Type, debuffData);
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;            
         }
         public override void SetDefaults()
         {

@@ -14,6 +14,7 @@ using System;
 using CalRemix.Projectiles;
 using Terraria.Audio;
 using CalamityMod.Tiles.DraedonStructures;
+using CalamityMod.Buffs.DamageOverTime;
 
 namespace CalRemix.NPCs
 {
@@ -28,15 +29,9 @@ namespace CalRemix.NPCs
         public override void SetStaticDefaults()
         {
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    ModContent.BuffType<ArmorCrunch>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets/* tModPorter Removed: See the porting notes in https://github.com/tModLoader/tModLoader/pull/3453 */.Add(Type, debuffData);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<ArmorCrunch>()] = true;
         }
         public override void SetDefaults()
         {

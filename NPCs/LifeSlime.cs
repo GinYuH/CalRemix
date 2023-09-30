@@ -1,4 +1,5 @@
 using CalamityMod;
+using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Biomes;
 using CalRemix.Items.Placeables;
@@ -21,15 +22,9 @@ namespace CalRemix.NPCs
 		{
 			DisplayName.SetDefault("Life Slime");
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.BlueSlime];
-            NPCID.Sets.DebuffImmunitySets/* tModPorter Removed: See the porting notes in https://github.com/tModLoader/tModLoader/pull/3453 */.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] 
-				{
-					ModContent.BuffType<KamiFlu>(),
-                    BuffID.Frostburn,
-                    BuffID.Poisoned
-				}
-            });
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
         }
 		public override void SetDefaults()
 		{ 

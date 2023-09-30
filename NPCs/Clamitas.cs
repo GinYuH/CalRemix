@@ -42,19 +42,13 @@ namespace CalRemix.NPCs
         public ref float Wait2 => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Slow,
-                    ModContent.BuffType<PearlAura>(),
-                    ModContent.BuffType<BrimstoneFlames>(),
-                    ModContent.BuffType<VulnerabilityHex>(),
-                    ModContent.BuffType<WeakBrimstoneFlames>(),
-                    ModContent.BuffType<RancorBurn>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets/* tModPorter Removed: See the porting notes in https://github.com/tModLoader/tModLoader/pull/3453 */.Add(Type, debuffData);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Slow] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<PearlAura>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<WeakBrimstoneFlames>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<RancorBurn>()] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0);
             nPCBestiaryDrawModifiers.Scale = 0.4f;
