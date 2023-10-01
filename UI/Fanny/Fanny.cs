@@ -51,15 +51,13 @@ namespace CalRemix.UI
             Awooga = 2,
             Sob = 3
         };
-        public static FannyMessage CurrentMessage()
-        {
-            return FannyManager.fannyMessages[currentMessageID];
-        }
+
+        public static FannyMessage CurrentMessage => FannyManager.fannyMessages[currentMessageID];        
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             // This prevents drawing unless we are using an ExampleCustomResourceWeapon
-            if (!Main.playerInventory && !CurrentMessage().persistent)
+            if (!Main.playerInventory && !CurrentMessage.persistent)
                 return;
 
             base.Draw(spriteBatch);
@@ -69,9 +67,9 @@ namespace CalRemix.UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             // if the current message's lifetime is up KICK IT OUT
-            if (CurrentMessage().duration <= 0)
+            if (CurrentMessage.duration <= 0)
             {
-                CurrentMessage().cooldown = CurrentMessage().cooldownMax;
+                CurrentMessage.cooldown = CurrentMessage.cooldownMax;
                 currentMessageID = FannyMessageID.none;
             }
             // initialize Fanny's default animation stats if they dont exist yet
@@ -102,7 +100,7 @@ namespace CalRemix.UI
             // finally draw Fanny
             Texture2D face = ModContent.Request<Texture2D>(fannyPath).Value;
             Rectangle nframe = face.Frame(1, fannyFrameMax, 0, (int)fanFrame);
-            if (CurrentMessage().itemID != -22)
+            if (CurrentMessage.itemID != -22)
             {
                 DrawItem();
             }
@@ -118,7 +116,7 @@ namespace CalRemix.UI
             {
                 return;
             }
-            if (currentMessageID == id && CurrentMessage().cooldown > 0)
+            if (currentMessageID == id && CurrentMessage.cooldown > 0)
             {
                 return;
             }
@@ -127,7 +125,7 @@ namespace CalRemix.UI
                 return;
             }
             currentMessageID = id;
-            CurrentMessage().duration = CurrentMessage().durationMax;
+            CurrentMessage.duration = CurrentMessage.durationMax;
         }
 
         /// <summary>
@@ -143,7 +141,7 @@ namespace CalRemix.UI
                 return;
             }
             // a shit ton of variables
-            string text = CurrentMessage().message;
+            string text = CurrentMessage.message;
             int maxCharsPerLine = 35;
             bool dueForBreak = false;
             // go through the dialogue and chop it up into lines
@@ -179,8 +177,8 @@ namespace CalRemix.UI
                     longestLine = lineList[i];
                 }
             }
-            int baseX = CurrentMessage().positionX;
-            int baseY = CurrentMessage().positionY;
+            int baseX = CurrentMessage.positionX;
+            int baseY = CurrentMessage.positionY;
             int textLength = text.Length;
             int lineAmount = textLength / maxCharsPerLine;
             int textWidth = (int)FontAssets.MouseText.Value.MeasureString(longestLine).X + 16;
@@ -198,21 +196,21 @@ namespace CalRemix.UI
 
         public void DrawItem()
         {
-            if (CurrentMessage().itemID == -22)
+            if (CurrentMessage.itemID == -22)
             {
                 return;
             }
-            Texture2D itemSprite = TextureAssets.Item[CurrentMessage().itemID].Value;
-            int count = Main.itemAnimations[CurrentMessage().itemID] != null ? Main.itemAnimations[CurrentMessage().itemID].FrameCount : 1;
+            Texture2D itemSprite = TextureAssets.Item[CurrentMessage.itemID].Value;
+            int count = Main.itemAnimations[CurrentMessage.itemID] != null ? Main.itemAnimations[CurrentMessage.itemID].FrameCount : 1;
             Rectangle nframe = itemSprite.Frame(1, count, 0, 0);
             Vector2 origin = new Vector2((float)(itemSprite.Width / 2), (float)(itemSprite.Height / count / 2));
-            Main.EntitySpriteDraw(itemSprite, new Vector2(1510 + CurrentMessage().itemX, 830 + CurrentMessage().itemY + (float)System.Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 4), nframe, Color.White, 0f, origin, CurrentMessage().itemScale, SpriteEffects.None);
+            Main.EntitySpriteDraw(itemSprite, new Vector2(1510 + CurrentMessage.itemX, 830 + CurrentMessage.itemY + (float)System.Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 4), nframe, Color.White, 0f, origin, CurrentMessage().itemScale, SpriteEffects.None);
         }
         public void DetermineAnimation()
         {
             string fanPath = "CalRemix/UI/Fanny/Fanny";
             // go through a switch case to decide which animation and frame count Fanny currently needs to use
-            switch (CurrentMessage().animation)
+            switch (CurrentMessage.animation)
             {
                 case (int)FannyAnimation.Idle:
                     fannyFrameMax = 8;
