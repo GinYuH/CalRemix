@@ -438,7 +438,7 @@ namespace CalRemix.UI
             if (currentWord != "")
                 CheckWord(currentWord, maxLineWidth, font, ref formattedSetence, ref currentLineLenght, spaceWidth);
 
-            Text = formattedSetence;
+            formattedText = formattedSetence;
         }
 
         /// <summary>
