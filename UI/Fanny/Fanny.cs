@@ -68,16 +68,15 @@ namespace CalRemix.UI
         {
 
             if (!Main.playerInventory && !UsedMessage.DisplayOutsideInventory)
-                return;
-
-            if (Speaking)
             {
-                fannySlideIn += 0.05f;
-                if (fannySlideIn > 1)
-                    fannySlideIn = 1;
-            }
-            else
                 fannySlideIn = 0;
+                return;
+            }
+
+            fannySlideIn += 0.05f;
+            if (fannySlideIn > 1)
+                fannySlideIn = 1;
+            
 
             base.Draw(spriteBatch);
         }
