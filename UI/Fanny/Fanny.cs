@@ -100,7 +100,7 @@ namespace CalRemix.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             // This prevents drawing unless we are using an ExampleCustomResourceWeapon
-            if (!Main.playerInventory && persistCountdown <= 0)
+            //if (!Main.playerInventory && persistCountdown <= 0)
                 return;
 
             base.Draw(spriteBatch);
@@ -354,23 +354,23 @@ namespace CalRemix.UI
         }
         public override void OnWorldUnload()
         {
-            start = false;
+            //start = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
-            tag["fanstart"] = start;
+            //tag["fanstart"] = start;
         }
         public override void LoadWorldData(TagCompound tag)
         {
-            start = tag.Get<bool>("fanstart");
+            //start = tag.Get<bool>("fanstart");
         }
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(start);
+            //writer.Write(start);
         }
         public override void NetReceive(BinaryReader reader)
         {
-             start = reader.ReadBoolean();
+             //start = reader.ReadBoolean();
         }
 
         public class FannyMessageID
