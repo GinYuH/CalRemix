@@ -18,6 +18,8 @@ using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.UI;
 using CalamityMod.Buffs.StatDebuffs;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CalRemix.NPCs
 {
@@ -29,6 +31,12 @@ namespace CalRemix.NPCs
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
+
+            FannyManager.LoadFannyMessage(new FannyMessage(
+                "Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!",
+                "Awooga",
+                (IEnumerable<NPC> npcs) => npcs.Any(n => n.type == Type && n.HasPlayerTarget),
+                cooldown: 3));
         }
 
         public override void SetDefaults()
@@ -57,7 +65,6 @@ namespace CalRemix.NPCs
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget)
             {
-                Fanny.Dialogue(FannyMessageID.aspid);
                 Vector2 dist = Main.player[NPC.target].Center - NPC.Center;
                 dist.Normalize();
                 NPC.velocity = dist * 4f;

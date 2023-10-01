@@ -543,41 +543,7 @@ namespace CalRemix
 				StealthCut(0.05f);
             }
             #endregion
-            #region fanny
-			if (Main.hardMode && Player.InModBiome<UndergroundAstralBiome>())
-			{
-				Fanny.Dialogue(FannyMessageID.meld);
-			}
-			List<int> hasItems = new List<int> ();
-			{
-				hasItems.Add(ModContent.ItemType<CosmicAnvilItem>());
-                hasItems.Add(ItemID.LunarCraftingStation);
-                hasItems.Add(ModContent.ItemType<AuricBar>());
-                hasItems.Add(ModContent.ItemType<ExoPrism>());
-                hasItems.Add(ModContent.ItemType<AscendantSpiritEssence>());
-            }
-			if (CheckIfItems(hasItems) && !Player.HasItem(ModContent.ItemType<DeliciousMeat>()))
-			{
-				Fanny.Dialogue(FannyMessageID.draeforge);
-            }
-			if (Player.HeldItem.type == ItemID.Bomb)
-			{
-				Fanny.Dialogue(FannyMessageID.draeforge);
-			}
-            #endregion
         }
-
-		public bool CheckIfItems(List<int> items)
-		{
-			for (int i = 0;  i < items.Count; i++) 
-			{ 
-				if (!Player.HasItem(items[i]))
-				{
-					return false;
-				}
-			}
-			return true;
-		}
 
         public override void ResetEffects()
 		{

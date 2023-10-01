@@ -28,5 +28,18 @@ namespace CalRemix
                 if (player.HasStack(itemType, stackNum)) item.stack -= stackNum;
             }
         }
+
+        public static bool HasItems(this Player player, List<int> items)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (!player.HasItem(items[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
