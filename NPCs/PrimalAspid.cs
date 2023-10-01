@@ -57,12 +57,7 @@ namespace CalRemix.NPCs
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget)
             {
-                if (!FannyBools.aspid)
-                {
-                    Fanny.Dialogue(FannyBools.FannyMessageID.aspid);
-                    FannyBools.aspid = true;
-                    CalRemixWorld.UpdateWorldBool();
-                }
+                Fanny.Dialogue(FannyMessageID.aspid);
                 Vector2 dist = Main.player[NPC.target].Center - NPC.Center;
                 dist.Normalize();
                 NPC.velocity = dist * 4f;

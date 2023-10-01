@@ -544,11 +544,9 @@ namespace CalRemix
             }
             #endregion
             #region fanny
-			if (Main.hardMode && Player.InModBiome<UndergroundAstralBiome>() && !FannyBools.meld)
+			if (Main.hardMode && Player.InModBiome<UndergroundAstralBiome>())
 			{
-				Fanny.Dialogue(FannyBools.FannyMessageID.meld);
-				FannyBools.meld = true;
-				CalRemixWorld.UpdateWorldBool();
+				Fanny.Dialogue(FannyMessageID.meld);
 			}
 			List<int> hasItems = new List<int> ();
 			{
@@ -558,10 +556,14 @@ namespace CalRemix
                 hasItems.Add(ModContent.ItemType<ExoPrism>());
                 hasItems.Add(ModContent.ItemType<AscendantSpiritEssence>());
             }
-			//if (CheckIfItems(hasItems) && !Player.HasItem(ModContent.ItemType<DeliciousMeat>()))
+			if (CheckIfItems(hasItems) && !Player.HasItem(ModContent.ItemType<DeliciousMeat>()))
 			{
-				Fanny.Dialogue(FannyBools.FannyMessageID.draeforge, (int)Fanny.FannyAnimation.Nuhuh);
+				Fanny.Dialogue(FannyMessageID.draeforge);
             }
+			if (Player.HeldItem.type == ItemID.Bomb)
+			{
+				Fanny.Dialogue(FannyMessageID.draeforge);
+			}
             #endregion
         }
 

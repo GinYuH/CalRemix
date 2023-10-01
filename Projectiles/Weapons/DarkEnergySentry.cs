@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Energy");
-            Main.projFrames[Projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 8;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

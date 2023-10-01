@@ -11,30 +11,14 @@ using System.IO;
 using CalRemix.Projectiles.Weapons;
 using System;
 using CalamityMod;
+using static System.Net.Mime.MediaTypeNames;
+using Terraria.ID;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.UI
 {
     internal class Fanny : UIState
-    {    /// <summary>
-         /// The horizontal position of the text box relative to Fanny
-         /// </summary>
-        public static int textX;
-        /// <summary>
-        /// The vertical position of the text box relative to Fanny
-        /// </summary>
-        public static int textY;
-        /// <summary>
-        /// unused
-        /// </summary>
-        public static int overrideX;
-        /// <summary>
-        /// Fanny's current dialogue
-        /// </summary>
-        public static string displayText;
-        /// <summary>
-        /// How much time left Fanny's dialogue will last
-        /// </summary>
-        public static int textDuration;
+    { 
         /// <summary>
         /// Fanny's current frame
         /// </summary>
@@ -51,37 +35,8 @@ namespace CalRemix.UI
         /// The string path to where Fanny's current animation sprite is stored
         /// </summary>
         public static string fannyPath;
-        /// <summary>
-        /// How much time left before Fanny disappears while not in the inventory
-        /// </summary>
-        public static int persistCountdown;
-        /// <summary>
-        /// What item Fanny should display. Set to 22 for nothing to display
-        /// </summary>
-        public static int itemDisplay;
-        /// <summary>
-        /// Fanny's item X offset
-        /// </summary>
-        public static int itemX;
-        /// <summary>
-        /// Fanny's item X offset
-        /// </summary>
-        public static int itemY;
-        /// <summary>
-        /// Fanny's item scale
-        /// </summary>
-        public static float itemScal;
 
-        public override void OnInitialize()
-        {
-            fannyFrameMax = 7;
-            textX = 1400;
-            textY = 800;
-            textDuration = 300;
-            displayText = "";
-            overrideX = -1;
-            itemDisplay = 22;
-        }
+        public static int currentMessageID;
 
         /// <summary>
         /// 1 = Idle
@@ -96,11 +51,15 @@ namespace CalRemix.UI
             Awooga = 2,
             Sob = 3
         };
+        public static FannyMessage CurrentMessage()
+        {
+            return FannyManager.fannyMessages[currentMessageID];
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             // This prevents drawing unless we are using an ExampleCustomResourceWeapon
-            //if (!Main.playerInventory && persistCountdown <= 0)
+            if (!Main.playerInventory && !CurrentMessage().persistent)
                 return;
 
             base.Draw(spriteBatch);
@@ -109,21 +68,17 @@ namespace CalRemix.UI
         // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            // if the current message's lifetime is up KICK IT OUT
+            if (CurrentMessage().duration <= 0)
+            {
+                CurrentMessage().cooldown = CurrentMessage().cooldownMax;
+                currentMessageID = FannyMessageID.none;
+            }
             // initialize Fanny's default animation stats if they dont exist yet
             if (fannyPath == null)
             {
                 fannyPath = "CalRemix/UI/Fanny/FannyIdle";
                 fannyFrameMax = 8;
-                itemDisplay = 22;
-            }
-            // click down the persistence counter
-            if (persistCountdown > 0 && Main.hasFocus)
-            {
-                persistCountdown--;
-            }
-            if (textDuration <= 0)
-            {
-                displayText = "";
             }
             // draw positioning
             int baseX = 1400;
@@ -147,7 +102,7 @@ namespace CalRemix.UI
             // finally draw Fanny
             Texture2D face = ModContent.Request<Texture2D>(fannyPath).Value;
             Rectangle nframe = face.Frame(1, fannyFrameMax, 0, (int)fanFrame);
-            if (itemDisplay != 22)
+            if (CurrentMessage().itemID != -22)
             {
                 DrawItem();
             }
@@ -155,54 +110,24 @@ namespace CalRemix.UI
         }
 
         /// <summary>
-        /// Causes Fanny to talk to you. 
-        /// text is the dialogue itself. 
-        /// face is the id of the animation (see the FannyAnimation enum). 
-        /// time is how long the message should display. 
-        /// baseX and baseY are the draw positions relative to Fanny
-        /// xOverride is how long Fanny should persist if the player exits their inventory
+        /// Loads the desired message into the Fanny system. Check FannyMessageID for ids.
         /// </summary>
-        public static void Dialogue(string text, int face = 0, int time = 300, int baseX = 1400, int baseY = 800, int xOverride = -1)
+        public static void Dialogue(int id)
         {
-            // set Fanny's variables
-            textDuration = time;
-            displayText = text;
-            textX = baseX;
-            textY = baseY;
-            persistCountdown = xOverride;
-            string fanPath = "CalRemix/UI/Fanny/Fanny";
-            // go through a switch case to decide which animation and frame count Fanny currently needs to use
-            switch (face)
+            if (currentMessageID != FannyMessageID.none)
             {
-                case (int)FannyAnimation.Idle:
-                    fannyFrameMax = 8;
-                    fanPath += "Idle";
-                    break;
-                case (int)FannyAnimation.Nuhuh:
-                    fannyFrameMax = 19;
-                    fanPath += "Nuhuh";
-                    break;
-                case (int)FannyAnimation.Awooga:
-                    fannyFrameMax = 4;
-                    fanPath += "Awooga";
-                    break;
-                case (int)FannyAnimation.Sob:
-                    fannyFrameMax = 4;
-                    fanPath += "Sob";
-                    break;
-                default:
-                    fannyFrameMax = 8;
-                    fanPath += "Idle";
-                    break;
+                return;
             }
-            fannyPath = fanPath;
-        }
-        public static void Item(int itemID = 22, int xPos = 0, int yPos = 0, float scale = 1f)
-        {
-            itemDisplay = itemID;
-            itemX = xPos;
-            itemY = yPos;
-            itemScal = scale;
+            if (currentMessageID == id && CurrentMessage().cooldown > 0)
+            {
+                return;
+            }
+            if (FannyManager.fannyMessages[id].cooldown > 0)
+            {
+                return;
+            }
+            currentMessageID = id;
+            CurrentMessage().duration = CurrentMessage().durationMax;
         }
 
         /// <summary>
@@ -211,18 +136,14 @@ namespace CalRemix.UI
         public void DrawText()
         {
             // if Fanny doesn't have anything to say, reset him to idle
-            if (displayText == "" || textDuration <= 0)
+            if (currentMessageID == 0)
             {
                 fannyPath = "CalRemix/UI/Fanny/FannyIdle";
                 fannyFrameMax = 8;
                 return;
             }
-            if (Main.hasFocus)
-            {
-                textDuration--;
-            }
             // a shit ton of variables
-            string text = displayText;
+            string text = CurrentMessage().message;
             int maxCharsPerLine = 35;
             bool dueForBreak = false;
             // go through the dialogue and chop it up into lines
@@ -258,8 +179,8 @@ namespace CalRemix.UI
                     longestLine = lineList[i];
                 }
             }
-            int baseX = textX;
-            int baseY = textY;
+            int baseX = CurrentMessage().positionX;
+            int baseY = CurrentMessage().positionY;
             int textLength = text.Length;
             int lineAmount = textLength / maxCharsPerLine;
             int textWidth = (int)FontAssets.MouseText.Value.MeasureString(longestLine).X + 16;
@@ -277,15 +198,44 @@ namespace CalRemix.UI
 
         public void DrawItem()
         {
-            if (itemDisplay == 22)
+            if (CurrentMessage().itemID == -22)
             {
                 return;
             }
-            Texture2D itemSprite = TextureAssets.Item[itemDisplay].Value;
-            int count = Main.itemAnimations[itemDisplay] != null ? Main.itemAnimations[itemDisplay].FrameCount : 1;
+            Texture2D itemSprite = TextureAssets.Item[CurrentMessage().itemID].Value;
+            int count = Main.itemAnimations[CurrentMessage().itemID] != null ? Main.itemAnimations[CurrentMessage().itemID].FrameCount : 1;
             Rectangle nframe = itemSprite.Frame(1, count, 0, 0);
             Vector2 origin = new Vector2((float)(itemSprite.Width / 2), (float)(itemSprite.Height / count / 2));
-            Main.EntitySpriteDraw(itemSprite, new Vector2(1510 + itemX, 830 + itemY + (float)System.Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 4), nframe, Color.White, 0f, origin, itemScal, SpriteEffects.None);
+            Main.EntitySpriteDraw(itemSprite, new Vector2(1510 + CurrentMessage().itemX, 830 + CurrentMessage().itemY + (float)System.Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 4), nframe, Color.White, 0f, origin, CurrentMessage().itemScale, SpriteEffects.None);
+        }
+        public void DetermineAnimation()
+        {
+            string fanPath = "CalRemix/UI/Fanny/Fanny";
+            // go through a switch case to decide which animation and frame count Fanny currently needs to use
+            switch (CurrentMessage().animation)
+            {
+                case (int)FannyAnimation.Idle:
+                    fannyFrameMax = 8;
+                    fanPath += "Idle";
+                    break;
+                case (int)FannyAnimation.Nuhuh:
+                    fannyFrameMax = 19;
+                    fanPath += "Nuhuh";
+                    break;
+                case (int)FannyAnimation.Awooga:
+                    fannyFrameMax = 4;
+                    fanPath += "Awooga";
+                    break;
+                case (int)FannyAnimation.Sob:
+                    fannyFrameMax = 4;
+                    fanPath += "Sob";
+                    break;
+                default:
+                    fannyFrameMax = 8;
+                    fanPath += "Idle";
+                    break;
+            }
+            fannyPath = fanPath;
         }
     }
 
@@ -327,30 +277,48 @@ namespace CalRemix.UI
         }
     }
 
-    public class FannyBools : ModSystem
+    public class FannyManager : ModSystem
     {
         public static bool start = false;
-        public static bool desertmed = false;
-        public static bool aspid = false;
-        public static bool ogsworm = false;
-        public static bool dungeon = false;
-        public static bool delicious = false;
-        public static bool draeforge = false;
-        public static bool meld = false;
         public static List<bool> fannybools = new List<bool>();
+        public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
 
         public override void OnWorldLoad()
         {
+            LoadFannyMessages();
             fannybools.Add(start);
-            fannybools.Add(desertmed);
-            fannybools.Add(aspid);
-            fannybools.Add(ogsworm);
-            fannybools.Add(dungeon);
-            fannybools.Add(delicious);
-            fannybools.Add(draeforge);
-            fannybools.Add(meld);
 
             start = false;
+        }
+        public override void PostUpdatePlayers()
+        {
+            fannyMessages[0].duration = fannyMessages[0].cooldown = 22;
+            // constantly tick down the cooldown and lifetime of every message if above 0
+            for (int i = 0; i < fannyMessages.Count; i++)
+            {
+                FannyMessage msg = fannyMessages[i];
+                // cooldown only applies if it's not the currently displayed message
+                if (Fanny.currentMessageID != i)
+                {
+                    if (msg.cooldown <= 0 || i == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        msg.cooldown--;
+                    }
+                }
+
+                if (msg.duration <= 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    msg.duration--;
+                }
+            }
         }
         public override void OnWorldUnload()
         {
@@ -372,17 +340,76 @@ namespace CalRemix.UI
         {
              //start = reader.ReadBoolean();
         }
-
-        public class FannyMessageID
+        public static void LoadFannyMessages()
         {
-            public static string start = "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!";
-            public static string desertmed = "I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.";
-            public static string aspid = "Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!";
-            public static string ogsworm = "That Ogsculian Burrower over there. A dangerous foe. The best course of action here is to jump over them to dodge their laser of doom.";
-            public static string dungeon = "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.";
-            public static string delicious = "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.";
-            public static string draeforge = "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!";
-            public static string meld = "Fear the Meld Gunk.";      
+            fannyMessages.Add(new FannyMessage(""));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.start, -1, 300, true));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.desertmed));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.aspid, 180));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.ogsworm));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.dungeon));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.delicious));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.draeforge));
+            fannyMessages.Add(new FannyMessage(FannyMessageList.meld, 7200));
+        }
+    }
+
+    public class FannyMessageID
+    {
+        public static int none = 0;
+        public static int start = 1;
+        public static int desertmed = 2;
+        public static int aspid = 3;
+        public static int ogsworm = 4;
+        public static int dungeon = 5;
+        public static int delicious = 6;
+        public static int draeforge = 7;
+        public static int meld = 8;
+    }
+
+    public class FannyMessageList
+    {
+        public static string start = "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!";
+        public static string desertmed = "I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.";
+        public static string aspid = "Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!";
+        public static string ogsworm = "That Ogsculian Burrower over there. A dangerous foe. The best course of action here is to jump over them to dodge their laser of doom.";
+        public static string dungeon = "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.";
+        public static string delicious = "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.";
+        public static string draeforge = "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!";
+        public static string meld = "Fear the Meld Gunk.";
+    }
+
+    public class FannyMessage
+    {
+        public string message { get; set; }
+        public int cooldownMax { get; set; }
+        public int duration { get; set; }
+        public int durationMax { get; set; }
+        public bool persistent { get; set; }
+        public int animation { get; set; }
+        public int positionX { get; set; }
+        public int positionY { get; set; }
+        public int itemID { get; set; }
+        public float itemScale { get; set; }
+        public int itemX { get; set; }
+        public int itemY { get; set; }
+        public int cooldown { get; set; }
+
+        public FannyMessage(string message, int cooldown = 3600, int duration = 300, bool persistent = false, int animation = 0, int posX = 1400, int posY = 800, int itemID = -22, float itemScale = 1f, int itemX = 0, int itemY = 0)
+        {
+            this.message = message;
+            this.cooldown = cooldown;
+            cooldownMax = cooldown;
+            this.duration = duration;
+            durationMax = duration;
+            this.persistent = persistent;
+            this.animation = animation;
+            positionX = posX;
+            positionY = posY;
+            this.itemID = itemID;
+            this.itemScale = itemScale;
+            this.itemX = itemX;
+            this.itemY = itemY;
         }
     }
 }

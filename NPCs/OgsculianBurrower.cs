@@ -61,6 +61,7 @@ namespace CalRemix.NPCs
                 Player targ = Main.player[NPC.target];
                 if (targ.Distance(NPC.Center) < 980 && CalamityUtils.CountProjectiles(ModContent.ProjectileType<OgsculeBeamHostile>()) < 1)
                 {
+                    Fanny.Dialogue(FannyMessageID.ogsworm);
                     NPC.ai[0] = 22;
                     NPC.dontTakeDamage = false;
                     float rotationSpeed = 0.01f;

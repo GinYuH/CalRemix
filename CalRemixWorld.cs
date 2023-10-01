@@ -139,11 +139,10 @@ namespace CalRemix
         };
         public override void PostUpdateWorld()
         {
-            if (!FannyBools.start)
+            if (!FannyManager.start)
             {
-                Fanny.Dialogue(FannyBools.FannyMessageID.start, time: 600);
-                FannyBools.start = true;
-                UpdateWorldBool();
+                Fanny.Dialogue(FannyMessageID.start);
+                FannyManager.start = true;
             }
             if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
             {
