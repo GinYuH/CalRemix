@@ -480,7 +480,7 @@ namespace CalRemix.UI
         {
             FannyPortrait portrait = new FannyPortrait(portraitName, frameCount, animationSpeed);
             //Load itself into the portrait list
-            if (FannyManager.Portraits.ContainsKey(portraitName))
+            if (!FannyManager.Portraits.ContainsKey(portraitName))
                 FannyManager.Portraits.Add(portraitName, portrait);
         }
 
