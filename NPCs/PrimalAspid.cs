@@ -35,7 +35,7 @@ namespace CalRemix.NPCs
             FannyManager.LoadFannyMessage(new FannyMessage(
                 "Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!",
                 "Awooga",
-                (IEnumerable<NPC> npcs) => npcs.Any(n => n.type == Type && n.HasPlayerTarget),
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.HasPlayerTarget),
                 cooldown: 3));
         }
 

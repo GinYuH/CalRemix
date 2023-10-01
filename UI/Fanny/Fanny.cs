@@ -26,8 +26,10 @@ namespace CalRemix.UI
 {
     internal class Fanny : UIState
     {
-        public Vector2 BasePosition => new Vector2(Main.screenWidth - 500, Main.screenHeight - 100);
+        public Vector2 BasePosition => new Vector2(Main.screenWidth - 500 * MathF.Pow(fannySlideIn, 0.4f), Main.screenHeight - 100);
 
+        //Fanny appears in a slide
+        public float fannySlideIn;
 
         /// <summary>
         /// Fanny's current frame
@@ -64,8 +66,19 @@ namespace CalRemix.UI
         #region Drawing
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             if (!Main.playerInventory && !UsedMessage.DisplayOutsideInventory)
                 return;
+
+            if (Speaking)
+            {
+                fannySlideIn += 0.05f;
+                if (fannySlideIn > 1)
+                    fannySlideIn = 1;
+            }
+            else
+                fannySlideIn = 0;
+
             base.Draw(spriteBatch);
         }
 
@@ -107,7 +120,7 @@ namespace CalRemix.UI
             var font = FontAssets.MouseText.Value;
             string text = UsedMessage.Text;
 
-            Vector2 basePosition = BasePosition;
+            Vector2 basePosition = BasePosition + Vector2.Zero; //Feel free to change the offset
             Vector2 textSize = font.MeasureString(text) + new Vector2(16, 35);
 
             int outlineThickness = 3;
@@ -225,12 +238,17 @@ namespace CalRemix.UI
             if (Fanny.Speaking)
                 return;
 
+            FannySceneMetrics scene = new FannySceneMetrics();
+
+            //Precalculate screen NPCs to avoid repeated checks over all npcs everytime
             Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
-            var onscreenNPCs = Main.npc.Where(n => n.active && n.Hitbox.Intersects(screenRect));
+            scene.onscreenNPCs = Main.npc.Where(n => n.active && n.Hitbox.Intersects(screenRect));
+
+            
 
             foreach (FannyMessage message in fannyMessages)
             {
-                if (message.CanPlayMessage() && message.Condition(onscreenNPCs))
+                if (message.CanPlayMessage() && message.Condition(scene))
                 {
                     message.PlayMessage();
                     break;
@@ -269,13 +287,13 @@ namespace CalRemix.UI
                 "NuhUh", HasDraedonForgeMaterialsButNoMeat));
 
             fannyMessages.Add(new FannyMessage("Fear the Meld Gunk.", 
-                "Idle", (IEnumerable<NPC> npcs) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), cooldown: 120));
+                "Idle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), cooldown: 120));
 
             fannyMessages.Add(new FannyMessage("Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", "Awooga",
-                (IEnumerable<NPC> npcs) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())));
+                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())));
 
             fannyMessages.Add(new FannyMessage("It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "NuhUh",
-                (IEnumerable<NPC> npcs) => Main.LocalPlayer.WithinRange(new Vector2(Main.dungeonX, Main.dungeonY), 700), onlyPlayOnce: true));
+                (FannySceneMetrics scene) => Main.LocalPlayer.WithinRange(new Vector2(Main.dungeonX, Main.dungeonY), 700), onlyPlayOnce: true));
 
             //Add a condition to this one yuh, to pass the test of knowledge...
             fannyMessages.Add(new FannyMessage("I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.", "NuhUh"));
@@ -283,7 +301,7 @@ namespace CalRemix.UI
         }
 
         #region Conditions for general messages
-        public static bool HasDraedonForgeMaterialsButNoMeat(IEnumerable<NPC> npcs)
+        public static bool HasDraedonForgeMaterialsButNoMeat(FannySceneMetrics scene)
         {
             if (Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>()))
                 return false;
@@ -303,28 +321,10 @@ namespace CalRemix.UI
     }
 
 
-    public class FannyPortrait
+    public class FannySceneMetrics
     {
-        public Asset<Texture2D> Texture;
-        public int frameCount;
-        public int animationSpeed;
-
-        public static void LoadPortrait(string portraitName, int frameCount, int animationSpeed = 12)
-        {
-            FannyPortrait portrait = new FannyPortrait(portraitName, frameCount, animationSpeed);
-            //Load itself into the portrait list
-            if (FannyManager.Portraits.ContainsKey(portraitName))
-                FannyManager.Portraits.Add(portraitName, portrait);
-        }
-
-        public FannyPortrait(string portrait, int frameCount, int animationSpeed = 12)
-        {
-            Texture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Fanny" + portrait);
-            this.frameCount = frameCount;
-            this.animationSpeed = animationSpeed;
-        }
+        public IEnumerable<NPC> onscreenNPCs;
     }
-
 
     public class FannyMessage
     {
@@ -341,9 +341,10 @@ namespace CalRemix.UI
         }
 
         #region Message Condition bases
-        public delegate bool FannyMessageCondition(IEnumerable<NPC> onscreenNPCs);
-        public static bool NeverShow(IEnumerable<NPC> onscreenNPCs) => false;
-        public static bool AlwaysShow(IEnumerable<NPC> onscreenNPCs) => true;
+
+        public delegate bool FannyMessageCondition(FannySceneMetrics sceneMetrics);
+        public static bool NeverShow(FannySceneMetrics sceneMetrics) => false;
+        public static bool AlwaysShow(FannySceneMetrics sceneMetrics) => true;
 
         public FannyMessageCondition Condition { get; set; }
         #endregion
@@ -382,7 +383,8 @@ namespace CalRemix.UI
         //Technically the TimeLeft is not needed because when its active, no other message will try to play. But just in case
         public bool CanPlayMessage()
         {
-            return CooldownTime <= 0 && TimeLeft <= 0 && (!OnlyPlayOnce || !alreadySeen);
+            //Can't play message if on cooldown, if already playing, if already played once before and we only wanted it to play once, or if the inventory is closed
+            return CooldownTime <= 0 && TimeLeft <= 0 && (!OnlyPlayOnce || !alreadySeen) && (DisplayOutsideInventory || Main.playerInventory);
         }
 
         public void PlayMessage()
@@ -467,5 +469,27 @@ namespace CalRemix.UI
             formattedSetence += " ";
         }
         #endregion
+    }
+
+    public class FannyPortrait
+    {
+        public Asset<Texture2D> Texture;
+        public int frameCount;
+        public int animationSpeed;
+
+        public static void LoadPortrait(string portraitName, int frameCount, int animationSpeed = 12)
+        {
+            FannyPortrait portrait = new FannyPortrait(portraitName, frameCount, animationSpeed);
+            //Load itself into the portrait list
+            if (FannyManager.Portraits.ContainsKey(portraitName))
+                FannyManager.Portraits.Add(portraitName, portrait);
+        }
+
+        public FannyPortrait(string portrait, int frameCount, int animationSpeed = 12)
+        {
+            Texture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Fanny" + portrait);
+            this.frameCount = frameCount;
+            this.animationSpeed = animationSpeed;
+        }
     }
 }

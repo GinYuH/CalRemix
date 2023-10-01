@@ -35,7 +35,7 @@ namespace CalRemix.NPCs
             FannyManager.LoadFannyMessage(new FannyMessage(
                 "That Ogsculian Burrower over there. A dangerous foe. The best course of action here is to jump over them to dodge their laser of doom.",
                 "Awooga",
-                (IEnumerable<NPC> npcs) => npcs.Any(n => n.type == Type)));
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
 
         public override void SetDefaults()
