@@ -21,18 +21,20 @@ using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Materials;
+using Terraria.Audio;
 
 namespace CalRemix.UI
 {
     public class Fanny : UIElement
     {
-        public Vector2 BasePosition => GetDimensions().ToRectangle().BottomLeft() - Vector2.UnitX * 200 * MathF.Pow(fadeIn, 0.4f);
-
-        //Fanny appears in a slide
-        public static float fadeIn;
+        public Vector2 BasePosition => GetDimensions().ToRectangle().Bottom();
+        public static FannyTextbox SpeechBubble;
 
         private static int fanFrame;
         private static int fanFrameCounter;
+
+        public float bounce;
+        public float tickle;
 
         public static bool needsToShake;
         public static float shakeTime;
@@ -47,6 +49,7 @@ namespace CalRemix.UI
             get => Speaking ? currentMessage : FannyManager.NoMessage;
             set {
                 currentMessage = value;
+                SpeechBubble.Recalculate();
             }
         }
 
@@ -73,13 +76,8 @@ namespace CalRemix.UI
         // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (Speaking)
-            {
-                // draw Fanny's dialogue box and if necessary, the item they're holding
-                DrawText();
-                if (UsedMessage.ItemType != -22)
-                    DrawItem();
-            }
+            if (Speaking && UsedMessage.ItemType != -22)
+                DrawItem();
 
             AnimateFanny();
 
@@ -87,6 +85,7 @@ namespace CalRemix.UI
             Texture2D fannySprite = UsedMessage.Portrait.Texture.Value;
             Rectangle frame = fannySprite.Frame(1, UsedMessage.Portrait.frameCount, 0, fanFrame);
             Vector2 position = BasePosition;
+
             if (shakeTime > 0)
             {
                 position += Main.rand.NextVector2Circular(1f, 1f) * 5f * Utils.GetLerpValue(0.6f, 1f, shakeTime, true);
@@ -95,7 +94,19 @@ namespace CalRemix.UI
                 position.Y -= Math.Abs(MathF.Sin(bounceTime * MathHelper.TwoPi)) * 62f * MathF.Pow(bounceTime, 0.6f);
             }
 
-            spriteBatch.Draw(fannySprite, position, frame, Color.White * fadeIn, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
+            else if (ContainsPoint(Main.MouseScreen) || bounce > 0)
+            {
+                if (bounce < 0)
+                    bounce = 1;
+
+                position.Y -= MathF.Pow(Math.Abs(MathF.Sin(bounce * MathHelper.Pi)), 0.6f) * 22f;
+            }
+
+            if (tickle >= 1)
+                position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
+
+
+            spriteBatch.Draw(fannySprite, position, frame, Color.White * FannyUIState.fadeIn, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
         }
 
         public void AnimateFanny()
@@ -111,38 +122,6 @@ namespace CalRemix.UI
                 fanFrame = 0;
         }
 
-        public void DrawText()
-        {
-            // a shit ton of variables
-            var font = FontAssets.MouseText.Value;
-            string text = UsedMessage.Text;
-
-            Vector2 basePosition = BasePosition - new Vector2(50, 90);
-            Vector2 textSize = font.MeasureString(text) + new Vector2(0, 0);
-
-            int outlineThickness = 3;
-            int bgPadding = 10;
-
-            Vector2 textDrawPowition = basePosition - textSize + Vector2.UnitY * MathF.Pow(1 - fadeIn, 2f) * 40;
-            textDrawPowition.Y -= MathF.Pow(Utils.GetLerpValue(30, 0, UsedMessage.TimeLeft, true), 1.6f) * 30f;
-
-            Vector2 backgroundDrawPosition = textDrawPowition - Vector2.One * bgPadding;
-            Vector2 outlineDrawPosition = backgroundDrawPosition - Vector2.One * outlineThickness;
-
-            Vector2 backgroundSize = textSize + Vector2.One * bgPadding * 2;
-            Vector2 outlineSize = backgroundSize + Vector2.One * outlineThickness * 2;
-
-            Texture2D squareTexture = TextureAssets.MagicPixel.Value;
-            float opacity = fadeIn * Utils.GetLerpValue(0, 30, UsedMessage.TimeLeft, true);
-
-
-            // draw the border as a large rectangle behind, and the inners as a slightly smaller rectangle infront
-            Main.spriteBatch.Draw(squareTexture, outlineDrawPosition, null, Color.Magenta * opacity, 0, Vector2.Zero, outlineSize / squareTexture.Size(), 0, 0);
-            Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
-            // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPowition.X, textDrawPowition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero);
-        }
-
         public void DrawItem()
         {
             Texture2D itemSprite = TextureAssets.Item[UsedMessage.ItemType].Value;
@@ -151,14 +130,92 @@ namespace CalRemix.UI
             Vector2 origin = new Vector2((float)(itemSprite.Width / 2), (float)(itemSprite.Height / count / 2));
             Vector2 itemPosition = BasePosition + new Vector2(100, 30) + UsedMessage.ItemOffset + Vector2.UnitY * MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 4;
 
-            Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * fadeIn, 0f, origin, UsedMessage.ItemScale, SpriteEffects.None);
+            Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * FannyUIState.fadeIn, 0f, origin, UsedMessage.ItemScale, SpriteEffects.None);
         }
         #endregion
+    }
+
+    public class FannyTextbox : UIElement
+    {
+        public Fanny ParentFanny;
+        public int outlineThickness = 3;
+        public int backgroundPadding = 10;
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            //Set the timeleft of the message to 30
+            if (Fanny.Speaking && FannyUIState.fadeIn == 1 && Fanny.UsedMessage.NeedsToBeClickedOff && Fanny.UsedMessage.TimeLeft > 30)
+                Fanny.UsedMessage.TimeLeft = 30;
+        }
+
+        public override void Recalculate()
+        {
+            Vector2 basePosition = ParentFanny.BasePosition - new Vector2(50, 90);
+            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(Fanny.UsedMessage.Text);
+            Vector2 cornerPosition = basePosition - textSize;
+
+            //Account for padding
+            textSize += Vector2.One * (backgroundPadding + outlineThickness) * 2;
+            cornerPosition -= Vector2.One * (backgroundPadding + outlineThickness);
+
+            //Fade out
+            cornerPosition.Y -= MathF.Pow(Utils.GetLerpValue(30, 0, Fanny.UsedMessage.TimeLeft, true), 1.6f) * 30f;
+            //Fade in
+            cornerPosition.Y += MathF.Pow(1 - FannyUIState.fadeIn, 2f) * 40;
+
+            Width.Set(textSize.X, 0);
+            Height.Set(textSize.Y, 0);
+            Left.Set(cornerPosition.X, 0);
+            Top.Set(cornerPosition.Y, 0);
+            base.Recalculate();
+        }
+
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            if (!Fanny.Speaking)
+                return;
+
+
+            // a shit ton of variables
+            var font = FontAssets.MouseText.Value;
+            string text = Fanny.UsedMessage.Text;
+
+            Rectangle dimensions = GetDimensions().ToRectangle();
+
+            Vector2 outlineDrawPosition = dimensions.TopLeft();
+            Vector2 backgroundDrawPosition = outlineDrawPosition + Vector2.One * outlineThickness;
+            Vector2 textDrawPosition = backgroundDrawPosition + Vector2.One * backgroundPadding;
+
+            Vector2 outlineSize = dimensions.Size();
+            Vector2 backgroundSize = outlineSize - Vector2.One * outlineThickness * 2;
+
+            Texture2D squareTexture = TextureAssets.MagicPixel.Value;
+            float opacity = FannyUIState.fadeIn * Utils.GetLerpValue(0, 30, Fanny.UsedMessage.TimeLeft, true);
+
+            // draw the border as a large rectangle behind, and the inners as a slightly smaller rectangle infront
+            Main.spriteBatch.Draw(squareTexture, outlineDrawPosition, null, Color.Magenta * opacity, 0, Vector2.Zero, outlineSize / squareTexture.Size(), 0, 0);
+            Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
+
+
+            if (ContainsPoint(Main.MouseScreen) && FannyUIState.fadeIn == 1 && Fanny.UsedMessage.NeedsToBeClickedOff && Fanny.UsedMessage.TimeLeft > 30)
+            {
+                Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
+                Main.LocalPlayer.mouseInterface = true;
+                Main.instance.MouseText("Thank you for the help, Fanny!");
+            }
+
+            // finally draw the text
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero);
+        }
     }
 
     public class FannyUIState : UIState 
     {
         public Fanny FannyTheFire;
+        public static float fadeIn;
 
         public override void OnInitialize()
         {
@@ -168,25 +225,48 @@ namespace CalRemix.UI
 
             FannyTheFire.Height.Set(80, 0f);
             FannyTheFire.Width.Set(80, 0f);
+            FannyTheFire.OnLeftClick += TickleTheRepugnantFuck;
+
             Append(FannyTheFire);
+
+            FannyTextbox textbox = new FannyTextbox();
+
+            textbox.Height.Set(0, 0f);
+            textbox.Width.Set(0, 0f);
+            textbox.ParentFanny = FannyTheFire;
+
+            Append(textbox);
+            Fanny.SpeechBubble = textbox;
         }
 
+        private void TickleTheRepugnantFuck(UIMouseEvent evt, UIElement listeningElement)
+        {
+            Fanny fannyMyAmigo = (listeningElement as Fanny);
+            fannyMyAmigo.tickle = Math.Max(fannyMyAmigo.tickle, 0) + 1;
+
+            SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
+        }
+
+        public bool debug;
         public override void Update(GameTime gameTime)
         {
+            FannyTheFire.Left.Set(-(80 + 240 * MathF.Pow(fadeIn, 0.4f)), 1);
+            FannyTheFire.Recalculate();
+            
             if (!Main.playerInventory && !Fanny.UsedMessage.DisplayOutsideInventory)
             {
-                Fanny.fadeIn -= 0.05f;
-                if (Fanny.fadeIn < 0)
-                    Fanny.fadeIn = 0;
+                fadeIn -= 0.05f;
+                if (fadeIn < 0)
+                    fadeIn = 0;
             }
             else
             {
-                Fanny.fadeIn += 0.05f;
-                if (Fanny.fadeIn > 1)
-                    Fanny.fadeIn = 1;
+                fadeIn += 0.05f;
+                if (fadeIn > 1)
+                    fadeIn = 1;
             }
 
-            if (Fanny.fadeIn == 1 && Fanny.needsToShake)
+            if (fadeIn == 1 && Fanny.needsToShake)
             {
                 Fanny.needsToShake = false;
 
@@ -197,12 +277,18 @@ namespace CalRemix.UI
             {
                 Fanny.shakeTime -= 1 / (60f * 1f);
             }
+
+            FannyTheFire.bounce -= 1 / (60f * 0.4f);
+
+            FannyTheFire.tickle -= 1 / (60f * 0.4f);
+            if (FannyTheFire.tickle > 4)
+                FannyTheFire.tickle -= 1 / (60f * 0.4f);
         }
 
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (Fanny.fadeIn > 0)
+            if (fadeIn > 0)
                 base.Draw(spriteBatch);
         }
     }
@@ -292,7 +378,16 @@ namespace CalRemix.UI
 
                 //Otherwise
                 else if (msg.TimeLeft > 0)
-                    msg.TimeLeft--;
+                {
+                    //Tick down only if either we don't need clicking off, or we were already clicked on (timeleft 30 and under)
+                    if (!msg.NeedsToBeClickedOff || msg.TimeLeft <= 30)
+                        msg.TimeLeft--;
+
+                    //Message stays in stasis if it needs to be clicked off
+                    if (msg.NeedsToBeClickedOff && msg.TimeLeft == 30)
+                        msg.TimeLeft = 31;
+                }
+
                 else if (Fanny.UsedMessage == msg)
                 {
                     Fanny.StopTalking();
@@ -430,9 +525,11 @@ namespace CalRemix.UI
 
         public bool DisplayOutsideInventory { get; set; }
         public bool OnlyPlayOnce { get; set; }
+        public bool NeedsToBeClickedOff { get; set; }
+
         public FannyPortrait Portrait { get; set; }
 
-        public FannyMessage(string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true)
+        public FannyMessage(string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true)
         {
             Text = message;
             Condition = condition ?? NeverShow;
@@ -446,6 +543,7 @@ namespace CalRemix.UI
 
             DisplayOutsideInventory = displayOutsideInventory;
             OnlyPlayOnce = onlyPlayOnce;
+            NeedsToBeClickedOff = needsToBeClickedOff;
 
             if (portrait == "")
                 portrait = "Idle";
