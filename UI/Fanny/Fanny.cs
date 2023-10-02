@@ -153,7 +153,7 @@ namespace CalRemix.UI
         public override void Recalculate()
         {
             Vector2 basePosition = ParentFanny.BasePosition - new Vector2(50, 90);
-            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(Fanny.UsedMessage.Text);
+            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(Fanny.UsedMessage.Text) * Fanny.UsedMessage.textSize;
             Vector2 cornerPosition = basePosition - textSize;
 
             //Account for padding
@@ -208,7 +208,7 @@ namespace CalRemix.UI
             }
 
             // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero, Fanny.UsedMessage.textSize);
         }
     }
 
@@ -545,6 +545,7 @@ namespace CalRemix.UI
         private string originalText;
         private string formattedText;
         private int maxTextWidth;
+        public float textSize;
 
         public string Text {
             get => formattedText;
@@ -572,10 +573,11 @@ namespace CalRemix.UI
 
         public FannyPortrait Portrait { get; set; }
 
-        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380)
+        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
             //Unique identifier for saving data
             Identifier = identifier;
+            textSize = fontSize;
 
             maxTextWidth = maxWidth;
             Text = message;
@@ -754,17 +756,17 @@ namespace CalRemix.UI
         private void CheckWord(string word, float maxLineWidth, DynamicSpriteFont font, ref string formattedSetence, ref float currentLineLenght, float spaceWidth)
         {
             //Get the lenght of the word
-            float wordLenght = font.MeasureString(word).X;
+            float wordLenght = font.MeasureString(word).X * textSize;
 
             //If adding the word doesn't make the line go over the max width, simply add the lenght of our last word (and the space) to the current line
             if (wordLenght + currentLineLenght <= maxLineWidth)
-                currentLineLenght += wordLenght + spaceWidth;
+                currentLineLenght += wordLenght * textSize + spaceWidth;
 
             //If adding the word goes over the max width
             else
             {
                 //Reset the line lenght to a new line (so only the word and the space
-                currentLineLenght = wordLenght + spaceWidth;
+                currentLineLenght = wordLenght * textSize + spaceWidth;
                 //Add a linebreak
                 formattedSetence += "\n";
             }
