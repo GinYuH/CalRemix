@@ -31,9 +31,13 @@ namespace CalRemix.UI
         public FannyTextbox SpeechBubble;
         public SoundStyle speakingSound;
 
+        public string textboxHoverText;
+
         public float fadeIn;
         public bool flipped;
         public bool idlesInInventory;
+
+        public float distanceFromEdge = 240;
 
         private int fanFrame;
         private int fanFrameCounter;
@@ -110,16 +114,16 @@ namespace CalRemix.UI
 
             //Slide
             if (!flipped)
-                Left.Set(-(80 + 240 * MathF.Pow(fadeIn, 0.4f)), 1);
+                Left.Set(-(80 + distanceFromEdge * MathF.Pow(fadeIn, 0.4f)), 1);
             else
-                Left.Set(240 * MathF.Pow(fadeIn, 0.4f), 0);
+                Left.Set(distanceFromEdge * MathF.Pow(fadeIn, 0.4f), 0);
 
             Recalculate();
 
 
             //Show show if there's currently a message (if it's a message only shown in the inventory, only show it there)
             //Additionally, always show with the inventory open as long as its not hidden by default
-            bool shouldShow = (currentMessage != null && (Main.playerInventory || UsedMessage.DisplayOutsideInventory)) || (Main.playerInventory && !idlesInInventory);
+            bool shouldShow = (currentMessage != null && (Main.playerInventory || UsedMessage.DisplayOutsideInventory)) || (Main.playerInventory && idlesInInventory);
 
             //Slides in and out
             if (!shouldShow)
@@ -293,7 +297,7 @@ namespace CalRemix.UI
             {
                 Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
                 Main.LocalPlayer.mouseInterface = true;
-                Main.instance.MouseText("Thank you for the help, Fanny!");
+                Main.instance.MouseText(ParentFanny.textboxHoverText);
             }
 
             // finally draw the text
@@ -303,40 +307,40 @@ namespace CalRemix.UI
 
     public class FannyUIState : UIState 
     {
-        public static Fanny FannyTheFire;
-        public static Fanny EvilFanny;
+        public static Fanny FannyTheFire = new Fanny();
+        public static Fanny EvilFanny = new Fanny();
 
         public override void OnInitialize()
         {
-            FannyTheFire = AddFanny(false, true, SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, "Idle");
-            EvilFanny = AddFanny(true, false, SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, "EvilIdle");
+            LoadFanny(FannyTheFire, "Thank you for the help, Fanny!", false, true, SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, "Idle");
+            LoadFanny(EvilFanny, "Get away, Evil Fanny!", true, false, SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, "EvilIdle");
         }
 
-        public Fanny AddFanny(bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f)
+        public Fanny LoadFanny(Fanny fanny, string hoverText, bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f)
         {
-            Fanny newFanny = new Fanny();
-            newFanny.Left.Set(-80, 1);
-            newFanny.Top.Set(-160, 1 - verticalOffset);
+            fanny.Left.Set(-80, 1);
+            fanny.Top.Set(-160, 1 - verticalOffset);
+            fanny.Height.Set(80, 0f);
+            fanny.Width.Set(80, 0f);
 
-            newFanny.Height.Set(80, 0f);
-            newFanny.Width.Set(80, 0f);
-
-            Append(newFanny);
+            Append(fanny);
 
             FannyTextbox textbox = new FannyTextbox();
 
             textbox.Height.Set(0, 0f);
             textbox.Width.Set(0, 0f);
-            textbox.ParentFanny = newFanny;
+            textbox.ParentFanny = fanny;
             Append(textbox);
-            newFanny.SpeechBubble = textbox;
+            fanny.SpeechBubble = textbox;
 
-            newFanny.flipped = flipped;
-            newFanny.idlesInInventory = idlesInInventory;
-            newFanny.speakingSound = voice;
-            newFanny.NoMessage = new FannyMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
+            fanny.textboxHoverText = hoverText;
+            fanny.flipped = flipped;
+            fanny.idlesInInventory = idlesInInventory;
+            fanny.speakingSound = voice;
+            fanny.NoMessage = new FannyMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
+            fanny.distanceFromEdge = distanceFromEdge;
 
-            return newFanny;
+            return fanny;
         }
 
         public void StopAllDialogue()
@@ -395,14 +399,65 @@ namespace CalRemix.UI
     {
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
-        
 
+
+        #region Loading
         public override void Load()
         {
             LoadFannyPortraits();
             LoadGeneralFannyMessages();
             LoadDogSpamMessages();
         }
+
+
+        public static void LoadFannyPortraits()
+        {
+            FannyPortrait.LoadPortrait("Idle", 8);
+            FannyPortrait.LoadPortrait("Awooga", 4);
+            FannyPortrait.LoadPortrait("Cryptid", 1);
+            FannyPortrait.LoadPortrait("Sob", 4);
+            FannyPortrait.LoadPortrait("Nuhuh", 19);
+
+            FannyPortrait.LoadPortrait("EvilIdle", 1);
+        }
+
+        /// <summary>
+        /// Registers a message for fanny to speak
+        /// You can either provide a condition to the message, in which case the message will automatically play when the condition is met <br/>
+        /// Alternatively, you could cache the message, and play it yourself when needed using <see cref="Fanny.TalkAbout(FannyMessage)"/>
+        /// </summary>
+        public static FannyMessage LoadFannyMessage(FannyMessage message)
+        {
+            fannyMessages.Add(message);
+            return message;
+        }
+
+        //Loads fanny messages that aren't associated with anything else in particular
+        private static void LoadGeneralFannyMessages()
+        {
+            fannyMessages.Add(new FannyMessage("Intro", "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
+                "Idle", FannyMessage.AlwaysShow, onlyPlayOnce: true, displayOutsideInventory: true));
+
+            fannyMessages.Add(new FannyMessage("Forge", "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
+                "Nuhuh", HasDraedonForgeMaterialsButNoMeat));
+
+            fannyMessages.Add(new FannyMessage("MeldGunk", "Fear the Meld Gunk.",
+                "Idle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), cooldown: 120));
+
+            fannyMessages.Add(new FannyMessage("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", "Awooga",
+                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())));
+
+            fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
+                NearDungeonEntrance, onlyPlayOnce: true));
+
+            //Add a condition to this one YUH, to pass the test of knowledge...
+            //YUH YUH YUH YUH YUH
+            fannyMessages.Add(new FannyMessage("DesertScourge", "I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.", "Nuhuh"));
+
+        }
+
+        #endregion
+
 
         public override void PostUpdateEverything()
         {
@@ -413,6 +468,10 @@ namespace CalRemix.UI
             for (int i = 0; i < fannyMessages.Count; i++)
             {
                 FannyMessage msg = fannyMessages[i];
+
+                //Fallback
+                if (msg.DesiredFanny == null)
+                    msg.DesiredFanny = FannyUIState.FannyTheFire;
 
                 if (msg.timerToPlay > 0 && msg.timeToWaitBeforePlaying > msg.timerToPlay)
                     msg.timerToPlay++;
@@ -471,52 +530,6 @@ namespace CalRemix.UI
             }
         }
 
-        public static void LoadFannyPortraits()
-        {
-            FannyPortrait.LoadPortrait("Idle", 8);
-            FannyPortrait.LoadPortrait("Awooga", 4);
-            FannyPortrait.LoadPortrait("Cryptid", 1);
-            FannyPortrait.LoadPortrait("Sob", 4);
-            FannyPortrait.LoadPortrait("Nuhuh", 19);
-
-            FannyPortrait.LoadPortrait("EvilIdle", 1);
-        }
-
-        /// <summary>
-        /// Registers a message for fanny to speak
-        /// You can either provide a condition to the message, in which case the message will automatically play when the condition is met <br/>
-        /// Alternatively, you could cache the message, and play it yourself when needed using <see cref="Fanny.TalkAbout(FannyMessage)"/>
-        /// </summary>
-        public static FannyMessage LoadFannyMessage(FannyMessage message)
-        {
-            fannyMessages.Add(message);
-            return message;
-        }
-
-
-        //Loads fanny messages that aren't associated with anything else in particular
-        private static void LoadGeneralFannyMessages()
-        {
-            fannyMessages.Add(new FannyMessage("Intro", "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
-                "Idle", FannyMessage.AlwaysShow, onlyPlayOnce:true, displayOutsideInventory: true));
-
-            fannyMessages.Add(new FannyMessage("Forge", "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
-                "Nuhuh", HasDraedonForgeMaterialsButNoMeat));
-
-            fannyMessages.Add(new FannyMessage("MeldGunk", "Fear the Meld Gunk.", 
-                "Idle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), cooldown: 120));
-
-            fannyMessages.Add(new FannyMessage("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", "Awooga",
-                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())));
-
-            fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
-                NearDungeonEntrance, onlyPlayOnce: true));
-
-            //Add a condition to this one YUH, to pass the test of knowledge...
-            //YUH YUH YUH YUH YUH
-            fannyMessages.Add(new FannyMessage("DesertScourge", "I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.", "Nuhuh"));
-           
-        }
 
         #region Conditions for general messages
         public static bool HasDraedonForgeMaterialsButNoMeat(FannySceneMetrics scene)
@@ -620,10 +633,8 @@ namespace CalRemix.UI
         public int TimeLeft { get; set; }
         private int messageDuration;
 
-        public bool evilFannyMessage;
-
         //Which fanny the message wants to be spoken by
-        public Fanny DesiredFanny => evilFannyMessage ? FannyUIState.EvilFanny : FannyUIState.FannyTheFire;
+        public Fanny DesiredFanny;
 
         //The fanny actively speaking the message. For cases where we want one fanny to say what the other fanny says
         public Fanny speakingFanny;
@@ -663,8 +674,22 @@ namespace CalRemix.UI
             if (portrait == "")
                 portrait = "Idle";
             Portrait = FannyManager.Portraits[portrait];
+
+            //default
+            DesiredFanny = FannyUIState.FannyTheFire;
         }
 
+        public FannyMessage SpokenByEvilFanny()
+        {
+            DesiredFanny = FannyUIState.EvilFanny;
+            return this;
+        }
+
+        public FannyMessage SpokenByAnotherFanny(Fanny speakingFanny)
+        {
+            DesiredFanny = speakingFanny;
+            return this;
+        }
 
         #region Message Condition stuff
 
@@ -707,7 +732,6 @@ namespace CalRemix.UI
             timerToPlay++;
         }
         #endregion
-
 
         #region Playing messages
         public event Action OnStart;

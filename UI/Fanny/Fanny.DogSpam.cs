@@ -109,8 +109,7 @@ namespace CalRemix.UI
 
 
             FannyMessage evilFannyRetort = new FannyMessage("DogRetort", "What a fucking moron. You can never get anything right, you useless fucking flicker of a flame. Kill yourself, it'll be doing the world a public service",
-                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, needsToBeClickedOff: false).AddTimerRequirement(2);
-            evilFannyRetort.evilFannyMessage = true;
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, needsToBeClickedOff: false).AddTimerRequirement(2).SpokenByEvilFanny();
             message5.AddStartEvent(() => evilFannyRetort.StartTimerToPlay());
 
             fannyMessages.Add(evilFannyRetort);
