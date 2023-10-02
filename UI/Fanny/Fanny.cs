@@ -247,7 +247,6 @@ namespace CalRemix.UI
             SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
         }
 
-        public bool debug;
         public override void Update(GameTime gameTime)
         {
             FannyTheFire.Left.Set(-(80 + 240 * MathF.Pow(fadeIn, 0.4f)), 1);
@@ -563,6 +562,9 @@ namespace CalRemix.UI
             Fanny.UsedMessage = this;
             Fanny.needsToShake = true;
             alreadySeen = true;
+
+            SoundEngine.PlaySound(SoundID.MenuOpen);
+            SoundEngine.PlaySound(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f});
         }
 
         public void StartCooldown() => CooldownTime = cooldownDuration;
