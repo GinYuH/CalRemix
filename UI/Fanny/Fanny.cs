@@ -329,7 +329,7 @@ namespace CalRemix.UI
         }
     }
 
-    public class FannyManager : ModSystem
+    public partial class FannyManager : ModSystem
     {
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
@@ -341,7 +341,7 @@ namespace CalRemix.UI
         {
             LoadFannyPortraits();
             LoadGeneralFannyMessages();
-
+            LoadDogSpamMessages();
             NoMessage = new FannyMessage("", "Idle", displayOutsideInventory: false);
         }
 
@@ -353,23 +353,27 @@ namespace CalRemix.UI
 
             Fanny.talkCooldown--;
 
-            /*
             if (Main.mouseRight && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             {
                 Fanny.StopTalking();
-                fannyMessages.Clear();
-                LoadGeneralFannyMessages();
+                for (int i = 0; i < fannyMessages.Count; i++)
+                {
+                    fannyMessages[i].alreadySeen = false;
+                    fannyMessages[i].CooldownTime = 0;
+                }
             }
-            */
 
             //Tick down message times
             for (int i = 0; i < fannyMessages.Count; i++)
             {
                 FannyMessage msg = fannyMessages[i];
 
+                if (msg.timerToPlay > 0 && msg.timeToWaitBeforePlaying > msg.timerToPlay)
+                    msg.timerToPlay++;
+
+                //Debug code
                 if (msg.CooldownTime > 100)
                     msg.CooldownTime = 100;
-
 
                 //Tick down the cooldown
                 if (msg.CooldownTime > 0)
@@ -495,24 +499,16 @@ namespace CalRemix.UI
     {
         private string originalText;
         private string formattedText;
+        private int maxTextWidth;
 
         public string Text {
             get => formattedText;
             set {
                 //Cache the original text, and format it
                 originalText = value;
-                FormatText(FontAssets.MouseText.Value);
+                FormatText(FontAssets.MouseText.Value, maxTextWidth);
             }
         }
-
-        #region Message Condition bases
-
-        public delegate bool FannyMessageCondition(FannySceneMetrics sceneMetrics);
-        public static bool NeverShow(FannySceneMetrics sceneMetrics) => false;
-        public static bool AlwaysShow(FannySceneMetrics sceneMetrics) => true;
-
-        public FannyMessageCondition Condition { get; set; }
-        #endregion
 
         public int CooldownTime { get; set; }
         private int cooldownDuration;
@@ -520,7 +516,7 @@ namespace CalRemix.UI
         public int TimeLeft { get; set; }
         private int messageDuration;
 
-        private bool alreadySeen = false;
+        public bool alreadySeen = false;
 
         public bool DisplayOutsideInventory { get; set; }
         public bool OnlyPlayOnce { get; set; }
@@ -528,8 +524,9 @@ namespace CalRemix.UI
 
         public FannyPortrait Portrait { get; set; }
 
-        public FannyMessage(string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true)
+        public FannyMessage(string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, int maxWidth = 380)
         {
+            maxTextWidth = maxWidth;
             Text = message;
             Condition = condition ?? NeverShow;
 
@@ -549,11 +546,84 @@ namespace CalRemix.UI
             Portrait = FannyManager.Portraits[portrait];
         }
 
+
+        #region Message Condition stuff
+
+        public delegate bool FannyMessageCondition(FannySceneMetrics sceneMetrics);
+        public static bool NeverShow(FannySceneMetrics sceneMetrics) => false;
+        public static bool AlwaysShow(FannySceneMetrics sceneMetrics) => true;
+
+        public FannyMessageCondition Condition { get; set; }
+
+        public int timerToPlay = 0;
+        public int timeToWaitBeforePlaying = 0;
+
+        /// <summary>
+        /// Adds a condition to the message, needing it to wait a certain amount of time before being played, if the condition is met.
+        /// The time for it to start being played can be started in <see cref="StartTimerToPlay"/>
+        /// </summary>
+        /// <param name="timer">How long, in seconds, should the message wait before playing</param>
+        public FannyMessage AddTimerRequirement(float timeToWait = 1)
+        {
+            timeToWaitBeforePlaying = (int)(timeToWait * 60);
+            return this;
+        }
+
+
+        /// <summary>
+        /// Makes it so that the message will never play on its own, and needs both its condition to be met, and <see cref="StartTimerToPlay"/> to be called for it to be read
+        /// </summary>
+        public FannyMessage AddManualRequirement()
+        {
+            timeToWaitBeforePlaying = 1;
+            return this;
+        }
+
+
+
+        /// <summary>
+        /// Starts the timer for a message until it reaches the time necessary for it to play.
+        /// That time has to be set with <see cref="AddTimerRequirement(float)"/>
+        /// </summary>
+        public void StartTimerToPlay()
+        {
+            //Increases the timer by 1, which makes it start counting up
+            timerToPlay++;
+        }
+        #endregion
+
+
+        #region Playing messages
+        public event Action OnStart;
+        public event Action OnEnd;
+
+        /// <summary>
+        /// Adds an action that happens when the message is being read
+        /// </summary>
+        public FannyMessage AddStartEvent(Action action)
+        {
+            OnStart += action;
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an action that happens when the message goes away
+        /// </summary>
+        public FannyMessage AddEndEvent(Action action)
+        {
+            OnEnd += action;
+            return this;
+        }
+
+
         //Technically the TimeLeft is not needed because when its active, no other message will try to play. But just in case
         public bool CanPlayMessage()
         {
-            //Can't play message if on cooldown, if already playing, if already played once before and we only wanted it to play once, or if the inventory is closed
-            return CooldownTime <= 0 && TimeLeft <= 0 && (!OnlyPlayOnce || !alreadySeen) && (DisplayOutsideInventory || Main.playerInventory);
+            return CooldownTime <= 0 &&                                     //Can't play messages on cooldown
+                   TimeLeft <= 0 &&                                         //Can't play messages that are already playing
+                   (!OnlyPlayOnce || !alreadySeen) &&                       //Can't play messages that are only played once, more than once
+                   (DisplayOutsideInventory || Main.playerInventory) &&     //Can't play messages that only display in the inventory outside of the inventory
+                   timeToWaitBeforePlaying <= timerToPlay;                  //Can't play messages with a timer before the timer is reached
         }
 
         public void PlayMessage()
@@ -562,14 +632,23 @@ namespace CalRemix.UI
             Fanny.UsedMessage = this;
             Fanny.needsToShake = true;
             alreadySeen = true;
+            OnStart?.Invoke();
 
             SoundEngine.PlaySound(SoundID.MenuOpen);
             SoundEngine.PlaySound(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f});
         }
 
-        public void StartCooldown() => CooldownTime = cooldownDuration;
+        public void StartCooldown()
+        {
+            OnEnd?.Invoke();
+            CooldownTime = cooldownDuration;
 
-        //Item display stuff
+            //Reset timer to play if we want to play it again later
+            timerToPlay = 0; 
+        }
+        #endregion
+
+        #region Item display
         public int ItemType { get; set; } = -22;
         public float ItemScale { get; set; } = 1f;
         public Vector2 ItemOffset { get; set; } = Vector2.Zero;
@@ -580,6 +659,7 @@ namespace CalRemix.UI
             ItemOffset = itemOffset ?? Vector2.Zero;
             return this;
         }
+        #endregion
 
         #region Text formatting
         public void FormatText(DynamicSpriteFont font, float maxLineWidth = 380)
