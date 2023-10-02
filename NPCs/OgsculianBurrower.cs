@@ -32,7 +32,7 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
 
-            FannyManager.LoadFannyMessage(new FannyMessage(
+            FannyManager.LoadFannyMessage(new FannyMessage("Ogscule",
                 "That Ogsculian Burrower over there. A dangerous foe. The best course of action here is to jump over them to dodge their laser of doom.",
                 "Awooga",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

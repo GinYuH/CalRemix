@@ -342,9 +342,8 @@ namespace CalRemix.UI
             LoadFannyPortraits();
             LoadGeneralFannyMessages();
             LoadDogSpamMessages();
-            NoMessage = new FannyMessage("", "Idle", displayOutsideInventory: false);
+            NoMessage = new FannyMessage("None", "", "Idle", displayOutsideInventory: false);
         }
-
 
         public override void PostUpdateEverything()
         {
@@ -353,6 +352,8 @@ namespace CalRemix.UI
 
             Fanny.talkCooldown--;
 
+            //Debug
+            /*
             if (Main.mouseRight && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             {
                 Fanny.StopTalking();
@@ -362,6 +363,7 @@ namespace CalRemix.UI
                     fannyMessages[i].CooldownTime = 0;
                 }
             }
+            */
 
             //Tick down message times
             for (int i = 0; i < fannyMessages.Count; i++)
@@ -370,10 +372,6 @@ namespace CalRemix.UI
 
                 if (msg.timerToPlay > 0 && msg.timeToWaitBeforePlaying > msg.timerToPlay)
                     msg.timerToPlay++;
-
-                //Debug code
-                if (msg.CooldownTime > 100)
-                    msg.CooldownTime = 100;
 
                 //Tick down the cooldown
                 if (msg.CooldownTime > 0)
@@ -444,23 +442,24 @@ namespace CalRemix.UI
         //Loads fanny messages that aren't associated with anything else in particular
         private static void LoadGeneralFannyMessages()
         {
-            fannyMessages.Add(new FannyMessage("Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
+            fannyMessages.Add(new FannyMessage("Intro", "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
                 "Idle", FannyMessage.AlwaysShow, onlyPlayOnce:true, displayOutsideInventory: true));
 
-            fannyMessages.Add(new FannyMessage("Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
+            fannyMessages.Add(new FannyMessage("Forge", "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
                 "Nuhuh", HasDraedonForgeMaterialsButNoMeat));
 
-            fannyMessages.Add(new FannyMessage("Fear the Meld Gunk.", 
+            fannyMessages.Add(new FannyMessage("MeldGunk", "Fear the Meld Gunk.", 
                 "Idle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), cooldown: 120));
 
-            fannyMessages.Add(new FannyMessage("Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", "Awooga",
+            fannyMessages.Add(new FannyMessage("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", "Awooga",
                 (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())));
 
-            fannyMessages.Add(new FannyMessage("It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
+            fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
                 NearDungeonEntrance, onlyPlayOnce: true));
 
-            //Add a condition to this one yuh, to pass the test of knowledge...
-            fannyMessages.Add(new FannyMessage("I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.", "Nuhuh"));
+            //Add a condition to this one YUH, to pass the test of knowledge...
+            //YUH YUH YUH YUH YUH
+            fannyMessages.Add(new FannyMessage("DesertScourge", "I hope you know what you've gotten yourself into... Go kill some Cnidrions instead.", "Nuhuh"));
            
         }
 
@@ -487,6 +486,52 @@ namespace CalRemix.UI
             return Main.LocalPlayer.WithinRange(new Vector2(Main.dungeonX * 16, Main.dungeonY * 16), 700);
         }
         #endregion
+
+
+        #region Saving and Loading data
+        public override void ClearWorld()
+        {
+            Fanny.StopTalking();
+            for (int i = 0; i < fannyMessages.Count; i++)
+            {
+                FannyMessage msg = fannyMessages[i];
+                msg.timerToPlay = 0;
+                msg.TimeLeft = 0;
+                msg.CooldownTime = 0;
+                msg.alreadySeen = false;
+            }
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            //Save all the ones already seen
+            for (int i = 0; i < fannyMessages.Count; i++)
+            {
+                FannyMessage msg = fannyMessages[i];
+                if (msg.alreadySeen && msg.PersistsThroughSaves)
+                    tag["FannyDialogue" + msg.Identifier] = true;
+            }
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            //Debug konami code to prevent loading
+            if (Main.mouseRight && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                SoundEngine.PlaySound(SoundID.Cockatiel);
+                SoundEngine.PlaySound(SoundID.DD2_GoblinScream);
+                SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion);
+                return;
+            }
+
+            for (int i = 0; i < fannyMessages.Count; i++)
+            {
+                FannyMessage msg = fannyMessages[i];
+                if (tag.ContainsKey("FannyDialogue" + msg.Identifier))
+                    msg.alreadySeen = true;
+            }
+        }
+        #endregion
     }
 
 
@@ -510,6 +555,8 @@ namespace CalRemix.UI
             }
         }
 
+        public string Identifier;
+
         public int CooldownTime { get; set; }
         private int cooldownDuration;
 
@@ -521,11 +568,15 @@ namespace CalRemix.UI
         public bool DisplayOutsideInventory { get; set; }
         public bool OnlyPlayOnce { get; set; }
         public bool NeedsToBeClickedOff { get; set; }
+        public bool PersistsThroughSaves { get; set; }
 
         public FannyPortrait Portrait { get; set; }
 
-        public FannyMessage(string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, int maxWidth = 380)
+        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380)
         {
+            //Unique identifier for saving data
+            Identifier = identifier;
+
             maxTextWidth = maxWidth;
             Text = message;
             Condition = condition ?? NeverShow;
@@ -540,6 +591,7 @@ namespace CalRemix.UI
             DisplayOutsideInventory = displayOutsideInventory;
             OnlyPlayOnce = onlyPlayOnce;
             NeedsToBeClickedOff = needsToBeClickedOff;
+            PersistsThroughSaves = persistsThroughSaves;
 
             if (portrait == "")
                 portrait = "Idle";
