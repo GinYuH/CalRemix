@@ -28,48 +28,131 @@ namespace CalRemix.UI
     public class Fanny : UIElement
     {
         public Vector2 BasePosition => GetDimensions().ToRectangle().Bottom();
-        public static FannyTextbox SpeechBubble;
+        public FannyTextbox SpeechBubble;
+        public SoundStyle speakingSound;
 
-        private static int fanFrame;
-        private static int fanFrameCounter;
+        public float fadeIn;
+        public bool flipped;
+        public bool idlesInInventory;
 
+        private int fanFrame;
+        private int fanFrameCounter;
+
+        //Shake wwhen saying a new message in the inventory
+        public bool needsToShake;
+        public float shakeTime;
+
+        //Bounce and tickle anims when hovered / clicked
         public float bounce;
         public float tickle;
 
-        public static bool needsToShake;
-        public static float shakeTime;
 
         //Small break between messages
-        public static int talkCooldown;
+        public int talkCooldown;
 
-        private static FannyMessage currentMessage;
-        public static bool Speaking => currentMessage != null;
+        //Default placeholder message used when not speaking
+        public FannyMessage NoMessage = new FannyMessage("None", "", "Idle", displayOutsideInventory: false);
 
-        public static FannyMessage UsedMessage {
-            get => Speaking ? currentMessage : FannyManager.NoMessage;
+        //Message currently being spoken
+        private FannyMessage currentMessage;
+
+        public bool Speaking => currentMessage != null;
+
+
+        public FannyMessage UsedMessage {
+            get => Speaking ? currentMessage : NoMessage;
             set {
                 currentMessage = value;
                 SpeechBubble.Recalculate();
             }
         }
 
+        public bool CanSpeak()
+        {
+            return !Speaking && talkCooldown <= 0;
+        }
 
-        public static void StopTalking()
+        /// <summary>
+        /// Plays the desired message, ignoring any condition the message may have
+        /// </summary>
+        public void TalkAbout(FannyMessage message)
+        {
+            if (Speaking || !message.CanPlayMessage())
+                return;
+
+            message.PlayMessage(this);
+        }
+
+        /// <summary>
+        /// Stops talking about the current message and goes on cooldown for that message
+        /// </summary>
+        public void StopTalking()
         {
             currentMessage = null;
             talkCooldown = 60;
         }
 
-
-        /// <summary>
-        /// Plays the desired message, ignoring any condition the message may have
-        /// </summary>
-        public static void TalkAbout(FannyMessage message)
+        public override void OnInitialize()
         {
-            if (Speaking || !message.CanPlayMessage())
-                return;
+            OnLeftClick += TickleTheRepugnantFuck;
+        }
 
-            message.PlayMessage();
+        private void TickleTheRepugnantFuck(UIMouseEvent evt, UIElement listeningElement)
+        {
+            tickle = Math.Max(tickle, 0) + 1;
+            SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            //Tick down the talk cooldown
+            talkCooldown--;
+
+            //Slide
+            if (!flipped)
+                Left.Set(-(80 + 240 * MathF.Pow(fadeIn, 0.4f)), 1);
+            else
+                Left.Set(240 * MathF.Pow(fadeIn, 0.4f), 0);
+
+            Recalculate();
+
+
+            //Show show if there's currently a message (if it's a message only shown in the inventory, only show it there)
+            //Additionally, always show with the inventory open as long as its not hidden by default
+            bool shouldShow = (currentMessage != null && (Main.playerInventory || UsedMessage.DisplayOutsideInventory)) || (Main.playerInventory && !idlesInInventory);
+
+            //Slides in and out
+            if (!shouldShow)
+            {
+                fadeIn -= 0.05f;
+                if (fadeIn < 0)
+                    fadeIn = 0;
+            }
+            else
+            {
+                fadeIn += 0.05f;
+                if (fadeIn > 1)
+                    fadeIn = 1;
+            }
+
+            //Shake if fanny choses a new message while already out there in the inventory
+            if (needsToShake)
+            {
+                needsToShake = false;
+                if (Main.playerInventory && fadeIn == 1)
+                    shakeTime = 1f;
+            }
+            if (shakeTime > 0)
+                shakeTime -= 1 / (60f * 1f);
+
+            //Tick down bounce & tickle anims
+            bounce -= 1 / (60f * 0.4f);
+
+            tickle -= 1 / (60f * 0.4f);
+            if (tickle > 4)
+                tickle -= 1 / (60f * 0.4f);
+
+            base.Update(gameTime);
         }
 
         #region Drawing
@@ -106,7 +189,7 @@ namespace CalRemix.UI
                 position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
 
 
-            spriteBatch.Draw(fannySprite, position, frame, Color.White * FannyUIState.fadeIn, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
+            spriteBatch.Draw(fannySprite, position, frame, Color.White * fadeIn, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
         }
 
         public void AnimateFanny()
@@ -130,7 +213,7 @@ namespace CalRemix.UI
             Vector2 origin = new Vector2((float)(itemSprite.Width / 2), (float)(itemSprite.Height / count / 2));
             Vector2 itemPosition = BasePosition + new Vector2(100, 30) + UsedMessage.ItemOffset + Vector2.UnitY * MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 4;
 
-            Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * FannyUIState.fadeIn, 0f, origin, UsedMessage.ItemScale, SpriteEffects.None);
+            Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * fadeIn, 0f, origin, UsedMessage.ItemScale, SpriteEffects.None);
         }
         #endregion
     }
@@ -146,24 +229,31 @@ namespace CalRemix.UI
             base.LeftClick(evt);
 
             //Set the timeleft of the message to 30
-            if (Fanny.Speaking && FannyUIState.fadeIn == 1 && Fanny.UsedMessage.NeedsToBeClickedOff && Fanny.UsedMessage.TimeLeft > 30)
-                Fanny.UsedMessage.TimeLeft = 30;
+            if (ParentFanny.Speaking && ParentFanny.fadeIn == 1 && ParentFanny.UsedMessage.NeedsToBeClickedOff && ParentFanny.UsedMessage.TimeLeft > 30)
+                ParentFanny.UsedMessage.TimeLeft = 30;
         }
 
         public override void Recalculate()
         {
-            Vector2 basePosition = ParentFanny.BasePosition - new Vector2(50, 90);
-            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(Fanny.UsedMessage.Text) * Fanny.UsedMessage.textSize;
+            Vector2 offset = new Vector2(50, 90);
+            if (ParentFanny.flipped)
+                offset.X *= -1;
+
+            Vector2 basePosition = ParentFanny.BasePosition - offset;
+            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(ParentFanny.UsedMessage.Text) * ParentFanny.UsedMessage.textSize;
             Vector2 cornerPosition = basePosition - textSize;
+
+            if (ParentFanny.flipped)
+                cornerPosition = basePosition - Vector2.UnitY * textSize.Y;
 
             //Account for padding
             textSize += Vector2.One * (backgroundPadding + outlineThickness) * 2;
             cornerPosition -= Vector2.One * (backgroundPadding + outlineThickness);
 
             //Fade out
-            cornerPosition.Y -= MathF.Pow(Utils.GetLerpValue(30, 0, Fanny.UsedMessage.TimeLeft, true), 1.6f) * 30f;
+            cornerPosition.Y -= MathF.Pow(Utils.GetLerpValue(30, 0, ParentFanny.UsedMessage.TimeLeft, true), 1.6f) * 30f;
             //Fade in
-            cornerPosition.Y += MathF.Pow(1 - FannyUIState.fadeIn, 2f) * 40;
+            cornerPosition.Y += MathF.Pow(1 - ParentFanny.fadeIn, 2f) * 40;
 
             Width.Set(textSize.X, 0);
             Height.Set(textSize.Y, 0);
@@ -175,13 +265,12 @@ namespace CalRemix.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (!Fanny.Speaking)
+            if (!ParentFanny.Speaking)
                 return;
-
 
             // a shit ton of variables
             var font = FontAssets.MouseText.Value;
-            string text = Fanny.UsedMessage.Text;
+            string text = ParentFanny.UsedMessage.Text;
 
             Rectangle dimensions = GetDimensions().ToRectangle();
 
@@ -193,14 +282,14 @@ namespace CalRemix.UI
             Vector2 backgroundSize = outlineSize - Vector2.One * outlineThickness * 2;
 
             Texture2D squareTexture = TextureAssets.MagicPixel.Value;
-            float opacity = FannyUIState.fadeIn * Utils.GetLerpValue(0, 30, Fanny.UsedMessage.TimeLeft, true);
+            float opacity = ParentFanny.fadeIn * Utils.GetLerpValue(0, 30, ParentFanny.UsedMessage.TimeLeft, true);
 
             // draw the border as a large rectangle behind, and the inners as a slightly smaller rectangle infront
             Main.spriteBatch.Draw(squareTexture, outlineDrawPosition, null, Color.Magenta * opacity, 0, Vector2.Zero, outlineSize / squareTexture.Size(), 0, 0);
             Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
 
 
-            if (ContainsPoint(Main.MouseScreen) && FannyUIState.fadeIn == 1 && Fanny.UsedMessage.NeedsToBeClickedOff && Fanny.UsedMessage.TimeLeft > 30)
+            if (ContainsPoint(Main.MouseScreen) && ParentFanny.fadeIn == 1 && ParentFanny.UsedMessage.NeedsToBeClickedOff && ParentFanny.UsedMessage.TimeLeft > 30)
             {
                 Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
                 Main.LocalPlayer.mouseInterface = true;
@@ -208,87 +297,60 @@ namespace CalRemix.UI
             }
 
             // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero, Fanny.UsedMessage.textSize);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero, ParentFanny.UsedMessage.textSize);
         }
     }
 
     public class FannyUIState : UIState 
     {
-        public Fanny FannyTheFire;
-        public static float fadeIn;
+        public static Fanny FannyTheFire;
+        public static Fanny EvilFanny;
 
         public override void OnInitialize()
         {
-            FannyTheFire = new Fanny();
-            FannyTheFire.Left.Set(-80, 1);
-            FannyTheFire.Top.Set(-160, 1);
+            FannyTheFire = AddFanny(false, true, SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, "Idle");
+            EvilFanny = AddFanny(true, false, SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, "EvilIdle");
+        }
 
-            FannyTheFire.Height.Set(80, 0f);
-            FannyTheFire.Width.Set(80, 0f);
-            FannyTheFire.OnLeftClick += TickleTheRepugnantFuck;
+        public Fanny AddFanny(bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f)
+        {
+            Fanny newFanny = new Fanny();
+            newFanny.Left.Set(-80, 1);
+            newFanny.Top.Set(-160, 1 - verticalOffset);
 
-            Append(FannyTheFire);
+            newFanny.Height.Set(80, 0f);
+            newFanny.Width.Set(80, 0f);
+
+            Append(newFanny);
 
             FannyTextbox textbox = new FannyTextbox();
 
             textbox.Height.Set(0, 0f);
             textbox.Width.Set(0, 0f);
-            textbox.ParentFanny = FannyTheFire;
-
+            textbox.ParentFanny = newFanny;
             Append(textbox);
-            Fanny.SpeechBubble = textbox;
+            newFanny.SpeechBubble = textbox;
+
+            newFanny.flipped = flipped;
+            newFanny.idlesInInventory = idlesInInventory;
+            newFanny.speakingSound = voice;
+            newFanny.NoMessage = new FannyMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
+
+            return newFanny;
         }
 
-        private void TickleTheRepugnantFuck(UIMouseEvent evt, UIElement listeningElement)
+        public void StopAllDialogue()
         {
-            Fanny fannyMyAmigo = (listeningElement as Fanny);
-            fannyMyAmigo.tickle = Math.Max(fannyMyAmigo.tickle, 0) + 1;
-
-            SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
+            foreach (UIElement element in Elements)
+            {
+                if (element is Fanny fanny)
+                    fanny.StopTalking();
+            }
         }
 
-        public override void Update(GameTime gameTime)
+        public bool AnyAvailableFanny()
         {
-            FannyTheFire.Left.Set(-(80 + 240 * MathF.Pow(fadeIn, 0.4f)), 1);
-            FannyTheFire.Recalculate();
-            
-            if (!Main.playerInventory && !Fanny.UsedMessage.DisplayOutsideInventory)
-            {
-                fadeIn -= 0.05f;
-                if (fadeIn < 0)
-                    fadeIn = 0;
-            }
-            else
-            {
-                fadeIn += 0.05f;
-                if (fadeIn > 1)
-                    fadeIn = 1;
-            }
-
-            if (fadeIn == 1 && Fanny.needsToShake)
-            {
-                Fanny.needsToShake = false;
-
-                if (Main.playerInventory)
-                    Fanny.shakeTime = 1f;
-            }
-            if (Fanny.shakeTime > 0)
-            {
-                Fanny.shakeTime -= 1 / (60f * 1f);
-            }
-
-            FannyTheFire.bounce -= 1 / (60f * 0.4f);
-
-            FannyTheFire.tickle -= 1 / (60f * 0.4f);
-            if (FannyTheFire.tickle > 4)
-                FannyTheFire.tickle -= 1 / (60f * 0.4f);
-        }
-
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (fadeIn > 0)
-                base.Draw(spriteBatch);
+            return Elements.Any(ui => ui is Fanny fanny && fanny.CanSpeak());
         }
     }
 
@@ -297,7 +359,7 @@ namespace CalRemix.UI
     internal class FannyUISystem : ModSystem
     {
         private UserInterface FannyInterface;
-        internal FannyUIState UIState;
+        internal static FannyUIState UIState;
 
         public override void Load()
         {
@@ -333,8 +395,6 @@ namespace CalRemix.UI
     {
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
-
-        public static FannyMessage NoMessage;
         
 
         public override void Load()
@@ -342,28 +402,12 @@ namespace CalRemix.UI
             LoadFannyPortraits();
             LoadGeneralFannyMessages();
             LoadDogSpamMessages();
-            NoMessage = new FannyMessage("None", "", "Idle", displayOutsideInventory: false);
         }
 
         public override void PostUpdateEverything()
         {
             if (Main.dedServ)
                 return;
-
-            Fanny.talkCooldown--;
-
-            //Debug
-            /*
-            if (Main.mouseRight && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
-            {
-                Fanny.StopTalking();
-                for (int i = 0; i < fannyMessages.Count; i++)
-                {
-                    fannyMessages[i].alreadySeen = false;
-                    fannyMessages[i].CooldownTime = 0;
-                }
-            }
-            */
 
             //Tick down message times
             for (int i = 0; i < fannyMessages.Count; i++)
@@ -377,7 +421,7 @@ namespace CalRemix.UI
                 if (msg.CooldownTime > 0)
                     msg.CooldownTime--;
 
-                //Otherwise
+                //Otherwise tick down the timer
                 else if (msg.TimeLeft > 0)
                 {
                     //Tick down only if either we don't need clicking off, or we were already clicked on (timeleft 30 and under)
@@ -389,31 +433,40 @@ namespace CalRemix.UI
                         msg.TimeLeft = 31;
                 }
 
-                else if (Fanny.UsedMessage == msg)
+                //Stop talking
+                else if (msg.speakingFanny != null)
                 {
-                    Fanny.StopTalking();
+                    msg.speakingFanny.StopTalking();
                     msg.StartCooldown();
                 }
             }
 
-            //Don't even try looking for a new message if speaking
-            if (Fanny.Speaking || Fanny.talkCooldown > 0)
+            //Don't even try looking for a new message if speaking already / On speak cooldown
+            if (!FannyUISystem.UIState.AnyAvailableFanny())
                 return;
 
             FannySceneMetrics scene = new FannySceneMetrics();
-
             //Precalculate screen NPCs to avoid repeated checks over all npcs everytime
             Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
             scene.onscreenNPCs = Main.npc.Where(n => n.active && n.Hitbox.Intersects(screenRect));
 
-            
-
-            foreach (FannyMessage message in fannyMessages)
+            //Split the messages per fanny speaking
+            var messageGroups = fannyMessages.GroupBy(m => m.DesiredFanny);
+            foreach (var messageGroup in messageGroups)
             {
-                if (message.CanPlayMessage() && message.Condition(scene))
+                Fanny speakingFanny = messageGroup.First().DesiredFanny;
+
+                //Check if the fanny in question can speak
+                if (!speakingFanny.CanSpeak())
+                    continue;
+
+                foreach (FannyMessage message in messageGroup)
                 {
-                    message.PlayMessage();
-                    break;
+                    if (message.CanPlayMessage() && message.Condition(scene))
+                    {
+                        message.PlayMessage(speakingFanny);
+                        break;
+                    }
                 }
             }
         }
@@ -425,6 +478,8 @@ namespace CalRemix.UI
             FannyPortrait.LoadPortrait("Cryptid", 1);
             FannyPortrait.LoadPortrait("Sob", 4);
             FannyPortrait.LoadPortrait("Nuhuh", 19);
+
+            FannyPortrait.LoadPortrait("EvilIdle", 1);
         }
 
         /// <summary>
@@ -487,15 +542,16 @@ namespace CalRemix.UI
         }
         #endregion
 
-
         #region Saving and Loading data
         public override void ClearWorld()
         {
-            Fanny.StopTalking();
+            //Stop all fannies talking, and close every dialogue
+            FannyUISystem.UIState.StopAllDialogue();
             for (int i = 0; i < fannyMessages.Count; i++)
             {
                 FannyMessage msg = fannyMessages[i];
                 msg.timerToPlay = 0;
+                msg.speakingFanny = null;
                 msg.TimeLeft = 0;
                 msg.CooldownTime = 0;
                 msg.alreadySeen = false;
@@ -564,6 +620,15 @@ namespace CalRemix.UI
         public int TimeLeft { get; set; }
         private int messageDuration;
 
+        public bool evilFannyMessage;
+
+        //Which fanny the message wants to be spoken by
+        public Fanny DesiredFanny => evilFannyMessage ? FannyUIState.EvilFanny : FannyUIState.FannyTheFire;
+
+        //The fanny actively speaking the message. For cases where we want one fanny to say what the other fanny says
+        public Fanny speakingFanny;
+
+
         public bool alreadySeen = false;
 
         public bool DisplayOutsideInventory { get; set; }
@@ -623,7 +688,6 @@ namespace CalRemix.UI
             return this;
         }
 
-
         /// <summary>
         /// Makes it so that the message will never play on its own, and needs both its condition to be met, and <see cref="StartTimerToPlay"/> to be called for it to be read
         /// </summary>
@@ -632,8 +696,6 @@ namespace CalRemix.UI
             timeToWaitBeforePlaying = 1;
             return this;
         }
-
-
 
         /// <summary>
         /// Starts the timer for a message until it reaches the time necessary for it to play.
@@ -680,22 +742,25 @@ namespace CalRemix.UI
                    timeToWaitBeforePlaying <= timerToPlay;                  //Can't play messages with a timer before the timer is reached
         }
 
-        public void PlayMessage()
+        public void PlayMessage(Fanny fanny)
         {
             TimeLeft = messageDuration;
-            Fanny.UsedMessage = this;
-            Fanny.needsToShake = true;
+
+            fanny.UsedMessage = this;
+            fanny.needsToShake = true;
+            SoundEngine.PlaySound(SoundID.MenuOpen);
+            SoundEngine.PlaySound(fanny.speakingSound);
+
+            speakingFanny = fanny;
             alreadySeen = true;
             OnStart?.Invoke();
-
-            SoundEngine.PlaySound(SoundID.MenuOpen);
-            SoundEngine.PlaySound(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f});
         }
 
         public void StartCooldown()
         {
             OnEnd?.Invoke();
             CooldownTime = cooldownDuration;
+            speakingFanny = null;
 
             //Reset timer to play if we want to play it again later
             timerToPlay = 0; 
