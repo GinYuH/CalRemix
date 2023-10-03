@@ -30,6 +30,7 @@ namespace CalRemix.UI
         public Vector2 BasePosition => GetDimensions().ToRectangle().Bottom();
         public FannyTextbox SpeechBubble;
         public SoundStyle speakingSound;
+        public FannyTextboxPalette textboxPalette;
 
         public string textboxHoverText;
 
@@ -60,8 +61,7 @@ namespace CalRemix.UI
         //Message currently being spoken
         private FannyMessage currentMessage;
 
-        public bool Speaking => currentMessage != null;
-
+        public bool Speaking => currentMessage != null && !currentMessage.InDelayPeriod;
 
         public FannyMessage UsedMessage {
             get => Speaking ? currentMessage : NoMessage;
@@ -71,17 +71,14 @@ namespace CalRemix.UI
             }
         }
 
-        public bool CanSpeak()
-        {
-            return !Speaking && talkCooldown <= 0;
-        }
+        public bool CanSpeak => currentMessage == null && talkCooldown <= 0;
 
         /// <summary>
         /// Plays the desired message, ignoring any condition the message may have
         /// </summary>
         public void TalkAbout(FannyMessage message)
         {
-            if (Speaking || !message.CanPlayMessage())
+            if (!CanSpeak || !message.CanPlayMessage())
                 return;
 
             message.PlayMessage(this);
@@ -95,6 +92,8 @@ namespace CalRemix.UI
             currentMessage = null;
             talkCooldown = 60;
         }
+
+        public FannyTextboxPalette UsedPalette => (currentMessage != null && currentMessage.paletteOverride.HasValue) ? currentMessage.paletteOverride.Value : textboxPalette;
 
         public override void OnInitialize()
         {
@@ -123,7 +122,9 @@ namespace CalRemix.UI
 
             //Show show if there's currently a message (if it's a message only shown in the inventory, only show it there)
             //Additionally, always show with the inventory open as long as its not hidden by default
-            bool shouldShow = (currentMessage != null && (Main.playerInventory || UsedMessage.DisplayOutsideInventory)) || (Main.playerInventory && idlesInInventory);
+            bool shouldShow = (Main.playerInventory && idlesInInventory) ||
+                (currentMessage != null && (Main.playerInventory || UsedMessage.DisplayOutsideInventory) && !currentMessage.InDelayPeriod);
+                
 
             //Slides in and out
             if (!shouldShow)
@@ -272,6 +273,8 @@ namespace CalRemix.UI
             if (!ParentFanny.Speaking)
                 return;
 
+            FannyTextboxPalette palette = ParentFanny.UsedPalette;
+
             // a shit ton of variables
             var font = FontAssets.MouseText.Value;
             string text = ParentFanny.UsedMessage.Text;
@@ -289,19 +292,19 @@ namespace CalRemix.UI
             float opacity = ParentFanny.fadeIn * Utils.GetLerpValue(0, 30, ParentFanny.UsedMessage.TimeLeft, true);
 
             // draw the border as a large rectangle behind, and the inners as a slightly smaller rectangle infront
-            Main.spriteBatch.Draw(squareTexture, outlineDrawPosition, null, Color.Magenta * opacity, 0, Vector2.Zero, outlineSize / squareTexture.Size(), 0, 0);
-            Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
+            Main.spriteBatch.Draw(squareTexture, outlineDrawPosition, null, palette.outline * opacity, 0, Vector2.Zero, outlineSize / squareTexture.Size(), 0, 0);
+            Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.background * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
 
 
             if (ContainsPoint(Main.MouseScreen) && ParentFanny.fadeIn == 1 && ParentFanny.UsedMessage.NeedsToBeClickedOff && ParentFanny.UsedMessage.TimeLeft > 30)
             {
-                Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, Color.SaddleBrown with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
+                Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.backgroundHover with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
                 Main.LocalPlayer.mouseInterface = true;
                 Main.instance.MouseText(ParentFanny.textboxHoverText);
             }
 
             // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, Color.Lime * (Main.mouseTextColor / 255f) * opacity, Color.DarkBlue * opacity, Vector2.Zero, ParentFanny.UsedMessage.textSize);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentFanny.UsedMessage.textSize);
         }
     }
 
@@ -313,10 +316,11 @@ namespace CalRemix.UI
         public override void OnInitialize()
         {
             LoadFanny(FannyTheFire, "Thank you for the help, Fanny!", false, true, SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, "Idle");
-            LoadFanny(EvilFanny, "Get away, Evil Fanny!", true, false, SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, "EvilIdle");
+            LoadFanny(EvilFanny, "Get away, Evil Fanny!", true, false, SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, "EvilIdle", distanceFromEdge: 120,
+                textboxPalette: new FannyTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato));
         }
 
-        public Fanny LoadFanny(Fanny fanny, string hoverText, bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f)
+        public Fanny LoadFanny(Fanny fanny, string hoverText, bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f, FannyTextboxPalette? textboxPalette = null)
         {
             fanny.Left.Set(-80, 1);
             fanny.Top.Set(-160, 1 - verticalOffset);
@@ -340,6 +344,11 @@ namespace CalRemix.UI
             fanny.NoMessage = new FannyMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
             fanny.distanceFromEdge = distanceFromEdge;
 
+            if (textboxPalette.HasValue)
+                fanny.textboxPalette = textboxPalette.Value;
+            else
+                fanny.textboxPalette = new FannyTextboxPalette();
+
             return fanny;
         }
 
@@ -354,7 +363,7 @@ namespace CalRemix.UI
 
         public bool AnyAvailableFanny()
         {
-            return Elements.Any(ui => ui is Fanny fanny && fanny.CanSpeak());
+            return Elements.Any(ui => ui is Fanny fanny && fanny.CanSpeak);
         }
     }
 
@@ -400,13 +409,13 @@ namespace CalRemix.UI
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
 
-
         #region Loading
         public override void Load()
         {
             LoadFannyPortraits();
             LoadGeneralFannyMessages();
             LoadDogSpamMessages();
+            LoadLoreComments();
         }
 
 
@@ -458,11 +467,12 @@ namespace CalRemix.UI
 
         #endregion
 
-
         public override void PostUpdateEverything()
         {
             if (Main.dedServ)
                 return;
+
+            UpdateLoreCommentTracking();
 
             //Tick down message times
             for (int i = 0; i < fannyMessages.Count; i++)
@@ -483,9 +493,7 @@ namespace CalRemix.UI
                 //Otherwise tick down the timer
                 else if (msg.TimeLeft > 0)
                 {
-                    //Tick down only if either we don't need clicking off, or we were already clicked on (timeleft 30 and under)
-                    if (!msg.NeedsToBeClickedOff || msg.TimeLeft <= 30)
-                        msg.TimeLeft--;
+                    msg.TimeLeft--;
 
                     //Message stays in stasis if it needs to be clicked off
                     if (msg.NeedsToBeClickedOff && msg.TimeLeft == 30)
@@ -498,36 +506,43 @@ namespace CalRemix.UI
                     msg.speakingFanny.StopTalking();
                     msg.StartCooldown();
                 }
+
+                //Do the start effects with a delay
+                if (msg.delayTime > 0 && msg.TimeLeft == msg.MessageDuration)
+                    msg.OnMessageStart();
             }
 
             //Don't even try looking for a new message if speaking already / On speak cooldown
-            if (!FannyUISystem.UIState.AnyAvailableFanny())
-                return;
-
-            FannySceneMetrics scene = new FannySceneMetrics();
-            //Precalculate screen NPCs to avoid repeated checks over all npcs everytime
-            Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
-            scene.onscreenNPCs = Main.npc.Where(n => n.active && n.Hitbox.Intersects(screenRect));
-
-            //Split the messages per fanny speaking
-            var messageGroups = fannyMessages.GroupBy(m => m.DesiredFanny);
-            foreach (var messageGroup in messageGroups)
+            if (FannyUISystem.UIState.AnyAvailableFanny())
             {
-                Fanny speakingFanny = messageGroup.First().DesiredFanny;
 
-                //Check if the fanny in question can speak
-                if (!speakingFanny.CanSpeak())
-                    continue;
+                FannySceneMetrics scene = new FannySceneMetrics();
+                //Precalculate screen NPCs to avoid repeated checks over all npcs everytime
+                Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+                scene.onscreenNPCs = Main.npc.Where(n => n.active && n.Hitbox.Intersects(screenRect));
 
-                foreach (FannyMessage message in messageGroup)
+                //Split the messages per fanny speaking
+                var messageGroups = fannyMessages.GroupBy(m => m.DesiredFanny);
+                foreach (var messageGroup in messageGroups)
                 {
-                    if (message.CanPlayMessage() && message.Condition(scene))
+                    Fanny speakingFanny = messageGroup.First().DesiredFanny;
+
+                    //Check if the fanny in question can speak
+                    if (!speakingFanny.CanSpeak)
+                        continue;
+
+                    foreach (FannyMessage message in messageGroup)
                     {
-                        message.PlayMessage(speakingFanny);
-                        break;
+                        if (message.CanPlayMessage() && message.Condition(scene))
+                        {
+                            message.PlayMessage(speakingFanny);
+                            break;
+                        }
                     }
                 }
             }
+
+            previousHoveredItem = Main.HoverItem.type;
         }
 
 
@@ -580,6 +595,8 @@ namespace CalRemix.UI
                 if (msg.alreadySeen && msg.PersistsThroughSaves)
                     tag["FannyDialogue" + msg.Identifier] = true;
             }
+
+            tag["FannyReadThroughDogDialogue"] = ReadAllDogTips;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -599,10 +616,12 @@ namespace CalRemix.UI
                 if (tag.ContainsKey("FannyDialogue" + msg.Identifier))
                     msg.alreadySeen = true;
             }
+
+            if (tag.TryGet<bool>("FannyReadThroughDogDialogue", out bool readDog))
+                ReadAllDogTips = readDog;
         }
         #endregion
     }
-
 
     public class FannySceneMetrics
     {
@@ -632,6 +651,7 @@ namespace CalRemix.UI
 
         public int TimeLeft { get; set; }
         private int messageDuration;
+        public int MessageDuration => messageDuration;
 
         //Which fanny the message wants to be spoken by
         public Fanny DesiredFanny;
@@ -648,6 +668,8 @@ namespace CalRemix.UI
         public bool PersistsThroughSaves { get; set; }
 
         public FannyPortrait Portrait { get; set; }
+
+        public FannyTextboxPalette? paletteOverride = null;
 
         public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
@@ -679,15 +701,30 @@ namespace CalRemix.UI
             DesiredFanny = FannyUIState.FannyTheFire;
         }
 
+        /// <summary>
+        /// Makes the message be spoken by evil fanny
+        /// </summary>
         public FannyMessage SpokenByEvilFanny()
         {
             DesiredFanny = FannyUIState.EvilFanny;
             return this;
         }
 
+        /// <summary>
+        /// Makes the message get spoken by the specified fanny
+        /// </summary>
         public FannyMessage SpokenByAnotherFanny(Fanny speakingFanny)
         {
             DesiredFanny = speakingFanny;
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a custom textbox palette override for this message
+        /// </summary>
+        public FannyMessage SetPalette(FannyTextboxPalette palette)
+        {
+            paletteOverride = palette;
             return this;
         }
 
@@ -703,33 +740,49 @@ namespace CalRemix.UI
         public int timeToWaitBeforePlaying = 0;
 
         /// <summary>
-        /// Adds a condition to the message, needing it to wait a certain amount of time before being played, if the condition is met.
-        /// The time for it to start being played can be started in <see cref="StartTimerToPlay"/>
+        /// Makes it so that the message will never play on its own, and needs both its condition to be met, and <see cref="ActivateMessage"/> to be called for it to be read
+        /// If the condition for the message isn't met, the message won't play even if activated
         /// </summary>
-        /// <param name="timer">How long, in seconds, should the message wait before playing</param>
-        public FannyMessage AddTimerRequirement(float timeToWait = 1)
-        {
-            timeToWaitBeforePlaying = (int)(timeToWait * 60);
-            return this;
-        }
-
-        /// <summary>
-        /// Makes it so that the message will never play on its own, and needs both its condition to be met, and <see cref="StartTimerToPlay"/> to be called for it to be read
-        /// </summary>
-        public FannyMessage AddManualRequirement()
+        public FannyMessage NeedsActivation()
         {
             timeToWaitBeforePlaying = 1;
             return this;
         }
 
         /// <summary>
-        /// Starts the timer for a message until it reaches the time necessary for it to play.
-        /// That time has to be set with <see cref="AddTimerRequirement(float)"/>
+        /// Makes it so that the message doesn't play on its own, and needs to be manually called by another message or event to play, using <see cref="ActivateMessage"/><br/>
+        /// If the condition for the message isn't met, the message won't play even if activated
         /// </summary>
-        public void StartTimerToPlay()
+        /// <param name="timer">Delay period after <see cref="ActivateMessage"/> is called where the message waits to play, in seconds</param>
+        public FannyMessage NeedsActivation(float delay = 1)
+        {
+            timeToWaitBeforePlaying = (int)(delay * 60);
+            return this;
+        }
+
+        /// <summary>
+        /// Manually activates a message, making it able to be played if its condition is met
+        /// To make a message need manual activation, use <see cref="NeedsActivation"/>
+        /// </summary>
+        public void ActivateMessage()
         {
             //Increases the timer by 1, which makes it start counting up
             timerToPlay++;
+        }
+
+        public int delayTime = 0;
+        public bool InDelayPeriod => TimeLeft > messageDuration;
+
+        /// <summary>
+        /// Adds a delay time before the message starts playing, when its activation condition is met<br/>
+        /// No other message can play while the delay period is started
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        public FannyMessage AddDelay(float delay = 1)
+        {
+            delayTime = (int)(delay * 60);
+            return this;
         }
         #endregion
 
@@ -768,15 +821,24 @@ namespace CalRemix.UI
 
         public void PlayMessage(Fanny fanny)
         {
-            TimeLeft = messageDuration;
-
+            TimeLeft = messageDuration + delayTime;
             fanny.UsedMessage = this;
-            fanny.needsToShake = true;
-            SoundEngine.PlaySound(SoundID.MenuOpen);
-            SoundEngine.PlaySound(fanny.speakingSound);
-
             speakingFanny = fanny;
             alreadySeen = true;
+
+            //Immediately play message start effects
+            if (delayTime == 0)
+                OnMessageStart();
+        }
+        
+        public void OnMessageStart()
+        {
+            if (speakingFanny is null)
+                return;
+
+            speakingFanny.needsToShake = true;
+            SoundEngine.PlaySound(SoundID.MenuOpen);
+            SoundEngine.PlaySound(speakingFanny.speakingSound);
             OnStart?.Invoke();
         }
 
@@ -886,6 +948,26 @@ namespace CalRemix.UI
             Texture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Fanny" + portrait);
             this.frameCount = frameCount;
             this.animationSpeed = animationSpeed;
+        }
+    }
+
+    public struct FannyTextboxPalette
+    {
+        public Color background = Color.SaddleBrown;
+        public Color backgroundHover = Color.SaddleBrown;
+        public Color outline = Color.Magenta;
+        public Color text = Color.Lime;
+        public Color textOutline = Color.DarkBlue;
+
+        public FannyTextboxPalette() { }
+
+        public FannyTextboxPalette(Color text, Color textOutline, Color background, Color backgroundHover, Color outline)
+        {
+            this.text = text;
+            this.textOutline = textOutline;
+            this.background = background;
+            this.backgroundHover = backgroundHover;
+            this.outline = outline;
         }
     }
 }
