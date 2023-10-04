@@ -10,8 +10,8 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod;
-
-
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace CalRemix.NPCs.Bosses
 {
@@ -30,8 +30,8 @@ namespace CalRemix.NPCs.Bosses
     public static void InitializeSegment(NPC npc)
         {
             npc.npcSlots = 5f;
-            npc.width = 56;
-            npc.height = 56;
+            npc.width = 40;
+            npc.height = 40;
             npc.defense = 8;
             npc.Calamity().unbreakableDR = true;
             npc.LifeMaxNERB(3500, 5000, 1500000);
@@ -104,6 +104,9 @@ namespace CalRemix.NPCs.Bosses
 
             npc.rotation = directionToNextSegment.ToRotation() + MathHelper.PiOver2;
             npc.Center = aheadSegment.Center - directionToNextSegment * npc.width * npc.scale * 0.725f;
+            npc.localAI[0] += 0.15f;
+            if (npc.localAI[0] > 3)
+                npc.localAI[0] = 0;
         }
 
         public override void FindFrame(int frameHeight)
@@ -126,7 +129,16 @@ namespace CalRemix.NPCs.Bosses
                 NPC.frame.Y = 0 * frameHeight;
             }
         }
-
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D roll = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Bosses/WulfwyrmWheels", AssetRequestMode.ImmediateLoad).Value;
+            Rectangle sourceRectangle = new Rectangle(0, (int)NPC.localAI[0] * roll.Height / 3, roll.Width, roll.Height / 3);
+            Vector2 origin = sourceRectangle.Size() / 2f;
+            Vector2 draw = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);
+            if (NPC.whoAmI % 2 != 0)
+                spriteBatch.Draw(roll, draw, sourceRectangle, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+            return true;
+        }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;
 
         public override bool CheckActive() => false;
