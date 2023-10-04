@@ -24,6 +24,7 @@ using CalamityMod.Items.Placeables.Furniture.Trophies;
 using System.Xml.Serialization;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Potions;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace CalRemix.NPCs
 {
@@ -37,7 +38,7 @@ namespace CalRemix.NPCs
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
             FannyManager.LoadFannyMessage(new FannyMessage("Green Demon",
-                "Gee wilickers! A Green Demon! These guys pack a real punch, but they are absolutely TERRIFIED of explosive frogs! So you better catch some!",
+                "Gee wilickers! A Green Demon! These guys pack a real punch, but they are absolutely TERRIFIED of radioactive toads! or was it frogs? salamanders? Well either way you better catch some!",
                 "Awooga",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
@@ -46,8 +47,8 @@ namespace CalRemix.NPCs
         {
             NPC.aiStyle = -1;
             NPC.damage = 400;
-            NPC.width = 68;
-            NPC.height = 46;
+            NPC.width = 112;
+            NPC.height = 112;
             NPC.defense = 4;
             NPC.lifeMax = 20000;
             NPC.knockBackResist = 0.6f;
@@ -234,6 +235,23 @@ namespace CalRemix.NPCs
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             NPC.life += (int)MathHelper.Lerp(hurtInfo.Damage, 0, NPC.lifeMax - NPC.life);
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.EXPLODINGFROG>() 
+                || projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.FrogGore1>()
+                || projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.FrogGore2>()
+                || projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.FrogGore3>()
+                || projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.FrogGore4>()
+                || projectile.type == ModContent.ProjectileType<CalamityMod.Projectiles.Summon.FrogGore5>()
+                )
+            {
+                modifiers.SetInstantKill();
+                if (Main.player[projectile.owner].HasItem(ModContent.ItemType<CausticCroakerStaff>()) && Main.rand.NextBool(10))
+                {
+                    Main.player[projectile.owner].ConsumeItem(ModContent.ItemType<CausticCroakerStaff>());
+                }
+            }
         }
     }
 }
