@@ -820,6 +820,38 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Onyx Drill
 			}
+
+			EssentialEssenceBar: {
+				DisplayName: Essential Essence Bar
+				Tooltip: Flowing with pure energy
+			}
+
+			GrandioseGland: {
+				DisplayName: Grandiose Gland
+				Tooltip: It's disgusting
+			}
+
+			SoulFlux: {
+				DisplayName: Soul Flux
+				Tooltip: Feels powerful and magical
+			}
+
+			Theswordisinsidethecore: {
+				DisplayName: The sword is inside the core
+				Tooltip: Needless to say, it truly is inside the core
+			}
+
+			UnholyBloodCells: {
+				DisplayName: Unholy Blood Cells
+				Tooltip: Just seeing it makes you want to puke...
+			}
+
+			GreenDemonHead: {
+				DisplayName: Green Demond Head
+				Tooltip: "\n\n\n\n\n\n\n\n"
+			}
+
+			ZumboSauce.DisplayName: Zumbo Sauce
 		}
 
 		NPCs: {
@@ -843,6 +875,7 @@ Mods: {
 			Clamitas.DisplayName: Clamitas
 			PrimalAspid.DisplayName: Primal Aspid
 			OgsculianBurrower.DisplayName: Ogsculian Burrower
+			GreenDemon.DisplayName: Green Demon
 		}
 
 		Projectiles: {
