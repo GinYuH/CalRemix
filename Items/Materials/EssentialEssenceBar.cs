@@ -28,7 +28,7 @@ namespace CalRemix.Items.Materials
             CreateRecipe().
                 AddIngredient<Theswordisinsidethecore>().
                 AddIngredient<UnholyBloodCells>(5).
-                AddIngredient<SoulFlux>(20).
+                AddIngredient<SoulFlux>(5).
                 AddIngredient<GrandioseGland>().
                 AddIngredient<GreenDemonHead>().
                 AddIngredient<AlloyBar>().
