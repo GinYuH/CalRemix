@@ -32,30 +32,8 @@ namespace CalRemix
 		public bool uniproj = false;
         public bool hyperCharged = false;
 		public int bladetimer = 0;
-        private int frameX;
-        private int frameY;
         NPC exc;
-        private int MurasamaFrame
-        {
-            get
-            {
-                return frameX * 7 + frameY;
-            }
-            set
-            {
-                frameX = value / 7;
-                frameY = value % 7;
-            }
-        }
-
-        internal PrimitiveTrail StreakDrawer;
-        public override bool InstancePerEntity
-		{
-			get
-			{
-				return true;
-			}
-		}
+        public override bool InstancePerEntity => true;
         public override void SetDefaults(Projectile projectile)
         {
             if (projectile.type == ModContent.ProjectileType<BrimstoneBall>())
@@ -98,14 +76,6 @@ namespace CalRemix
             {
                 projectile.Name = "Calamity Flame Skull";
             }
-            else if (projectile.type == ProjectileType<NadirSpear>())
-            {
-                TextureAssets.Projectile[projectile.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/NadirSpear");
-            }
-            else if (projectile.type == ProjectileType<VoidEssence>())
-            {
-				TextureAssets.Projectile[projectile.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/VoidEssence");
-            }
         }
 
         public override void AI(Projectile projectile)
@@ -130,15 +100,6 @@ namespace CalRemix
 			if (modPlayer.tvo && projectile.type == ProjectileType<SandElementalHealer>() && player.statLife < player.statLifeMax && player.ownedProjectileCounts[ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>()] < 2)
             {
 				Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>(), 0, 0, projectile.owner);
-            }
-            if (projectile.type == ProjectileType<MurasamaSlash>())
-            {
-                if (projectile.frameCounter % 3 == 0)
-                {
-                    MurasamaFrame++;
-                    if (frameX >= 2)
-                        MurasamaFrame = 0;
-                }
             }
         }
 
@@ -296,46 +257,6 @@ namespace CalRemix
             }
             return true;
 		}
-		public override void PostDraw(Projectile projectile, Color lightColor)
-		{
-            if (projectile.type == ProjectileType<MurasamaSlash>())
-            {
-                Texture2D texture = Request<Texture2D>("CalRemix/Resprites/MurasamaSlash").Value;
-                Main.EntitySpriteDraw(texture, projectile.Center - Main.screenPosition, texture.Frame(2, 7, frameX, frameY), Color.White, projectile.rotation, texture.Size() / new Vector2(2f, 7f) * 0.5f, projectile.scale, (projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            }
-			if (projectile.type == ProjectileType<ViolenceThrownProjectile>())
-            {
-                if (StreakDrawer == null)
-                {
-                    StreakDrawer = new PrimitiveTrail(PWF, PCF, null, GameShaders.Misc["CalamityMod:TrailStreak"]);
-                }
-                GameShaders.Misc["CalamityMod:TrailStreak"].SetShaderTexture(Request<Texture2D>("CalamityMod/ExtraTextures/Trails/FabstaffStreak"));
-                Texture2D texture = Request<Texture2D>("CalRemix/Resprites/Violence").Value;
-                Vector2[] array = (Vector2[])projectile.oldPos.Clone();
-                Vector2 vector = (projectile.rotation - MathF.PI / 2f).ToRotationVector2();
-                if (Main.player[projectile.owner].channel)
-                {
-                    array[0] += vector * -12f;
-                    array[1] = array[0] - (projectile.rotation + MathF.PI / 4f).ToRotationVector2() * Vector2.Distance(array[0], array[1]);
-                }
-                for (int i = 0; i < array.Length; i++)
-                    array[i] -= (projectile.oldRot[i] + MathF.PI / 4f).ToRotationVector2() * projectile.height * 0.5f;
-
-                if (projectile.ai[0] > projectile.oldPos.Length)
-                    StreakDrawer.Draw(array, projectile.Size * 0.5f - Main.screenPosition, 88);
-                for (int j = 0; j < 6; j++)
-                {
-                    float num = projectile.oldRot[j] - MathF.PI / 2f;
-                    if (Main.player[projectile.owner].channel)
-                    {
-                        num += 0.2f;
-                    }
-                    Main.EntitySpriteDraw(texture, projectile.Center - Main.screenPosition, null, Color.Lerp(lightColor, Color.Transparent, 1f - (float)Math.Pow(Utils.GetLerpValue(0f, 6f, j), 1.4)) * projectile.Opacity, num, texture.Size() * 0.5f,projectile.scale, SpriteEffects.None, 0);
-                }
-            }
-        }
-
-
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
             if (NPC.AnyNPCs(ModContent.NPCType<WulfwyrmHead>()))
@@ -352,16 +273,6 @@ namespace CalRemix
         {
             if (hyperCharged)
                 target.AddBuff(ModContent.BuffType<GlacialState>(), 50);
-        }
-
-        internal float PWF(float ratio)
-        {
-            return (float)Math.Pow(MathHelper.SmoothStep(0f, 1f, Utils.GetLerpValue(0.01f, 0.04f, ratio)) * (float)Math.Pow(Utils.GetLerpValue(1f, 0.04f, ratio), 0.9), 0.1) * 30f;
-        }
-        internal Color PCF(float ratio)
-        {
-            Color color = new Color(255, 145, 115);
-            return Color.Lerp(Color.Lerp(Color.Lerp(color, new Color(113, 0, 159), MathHelper.Lerp(0.15f, 0.75f, (float)Math.Cos(Main.GlobalTimeWrappedHourly * -9f + ratio * 6f + 2f) * 0.5f + 0.5f)), Color.DarkRed, 0.5f), color, (float)Math.Pow(ratio, 1.2)) * (float)Math.Pow(1f - ratio, 1.1);
         }
     }
 }

@@ -14,17 +14,11 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Items.Weapons.Ranged;
 using CalRemix.Items.Weapons;
-using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using CalamityMod.Items.TreasureBags;
 using CalRemix.Items.Materials;
-using System.Linq;
 using CalamityMod.World;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
@@ -49,19 +43,10 @@ namespace CalRemix
             {
                 item.SetNameOverride("Conquest Fragment");
                 item.rare = ItemRarityID.Orange;
-                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/PearlShard");
             }
             else if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
                 item.SetNameOverride("Phantomic Soul Artifact");
-            }
-            else if (item.type == ModContent.ItemType<Nadir>())
-            {
-                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Nadir");
-            }
-            else if (item.type == ModContent.ItemType<Violence>())
-            {
-                TextureAssets.Item[item.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Violence");
             }
             else if (item.type == ModContent.ItemType<EssenceofHavoc>())
             {
