@@ -191,7 +191,7 @@ namespace CalRemix.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Eclipse,
-        new FlavorTextBestiaryInfoElement("Eat your veggies :D")
+        new FlavorTextBestiaryInfoElement("Eat vegetables and fruits to become strong. LIKE ME!")
             });
         }
         public override void FindFrame(int frameHeight)
@@ -220,7 +220,7 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!Main.eclipse)
+            if (!Main.eclipse || !DownedBossSystem.downedLeviathan)
                 return 0f;
 
             return SpawnCondition.SolarEclipse.Chance * 0.4f;
