@@ -16,6 +16,9 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Tiles;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix
 {
@@ -23,6 +26,18 @@ namespace CalRemix
 	{
 		private int berryCount;
         private int cosmicCount;
+        public static FannyMessage roxm;
+        public static FannyMessage KinsmanMessage;
+
+        public override void SetStaticDefaults()
+        {
+            roxm = new FannyMessage("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "Awooga",
+                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            KinsmanMessage = new FannyMessage("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "Nuhuh",
+                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            FannyManager.LoadFannyMessage(roxm);
+            FannyManager.LoadFannyMessage(KinsmanMessage);
+        }
 
 
         List<int> exclusionlist = new List<int>
@@ -198,6 +213,27 @@ namespace CalRemix
                             }
                         }
                     }
+                }
+            }
+        }
+
+        public override void NearbyEffects(int i, int j, int type, bool closer)
+        {
+            if (!roxm.alreadySeen)
+            {
+                if (type == ModContent.TileType<RoxTile>())
+                {
+                    roxm.ActivateMessage();
+                }
+            }
+            if (!KinsmanMessage.alreadySeen)
+            {
+                if (type == ModContent.TileType<OnyxExcavatorTile>() && CalRemixWorld.downedEarth)
+                {
+                    Player player = Main.LocalPlayer;
+                    bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
+                    if (e)
+                        KinsmanMessage.ActivateMessage();
                 }
             }
         }
