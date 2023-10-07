@@ -164,9 +164,6 @@ namespace CalRemix.UI
         // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (Speaking && UsedMessage.ItemType != -22)
-                DrawItem();
-
             AnimateFanny();
 
             // finally draw Fanny
@@ -195,6 +192,9 @@ namespace CalRemix.UI
 
 
             spriteBatch.Draw(fannySprite, position, frame, Color.White * fadeIn, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
+
+            if (Speaking && UsedMessage.ItemType != -22)
+                DrawItem();
         }
 
         public void AnimateFanny()
@@ -212,13 +212,14 @@ namespace CalRemix.UI
 
         public void DrawItem()
         {
-            Texture2D itemSprite = TextureAssets.Item[UsedMessage.ItemType].Value;
+            Main.instance.LoadItem(UsedMessage.ItemType);
+            Texture2D itemSprite = TextureAssets.Item[UsedMessage.ItemType].Value; 
             int count = Main.itemAnimations[UsedMessage.ItemType] != null ? Main.itemAnimations[UsedMessage.ItemType].FrameCount : 1;
             Rectangle nframe = itemSprite.Frame(1, count, 0, 0);
-            Vector2 origin = new Vector2((float)(itemSprite.Width / 2), (float)(itemSprite.Height / count / 2));
-            Vector2 itemPosition = BasePosition + new Vector2(100, 30) + UsedMessage.ItemOffset + Vector2.UnitY * MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 4;
-
-            Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * fadeIn, 0f, origin, UsedMessage.ItemScale, SpriteEffects.None);
+            Vector2 origin = nframe.Size() / 2f;
+            Vector2 itemPosition = BasePosition + new Vector2(60 * (flipped ? -1 : 1), -60) + UsedMessage.ItemOffset + Vector2.UnitY * MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 4;
+            
+            Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * fadeIn, MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + MathHelper.PiOver2) * 0.2f, origin, UsedMessage.ItemScale, SpriteEffects.None);
         }
         #endregion
     }
@@ -515,7 +516,6 @@ namespace CalRemix.UI
             //Don't even try looking for a new message if speaking already / On speak cooldown
             if (FannyUISystem.UIState.AnyAvailableFanny())
             {
-
                 FannySceneMetrics scene = new FannySceneMetrics();
                 //Precalculate screen NPCs to avoid repeated checks over all npcs everytime
                 Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);

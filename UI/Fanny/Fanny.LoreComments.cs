@@ -38,15 +38,6 @@ namespace CalRemix.UI
         public static void UpdateLoreCommentTracking()
         {
             previousHoverTime = hoverTime;
-
-            if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
-            {
-                FannyUISystem.UIState.StopAllDialogue();
-
-                fannyMessages.RemoveAll(p => p.Identifier.StartsWith("Lore"));
-                LoadLoreComments();
-            }
-
             //Reset hover time if the player changes items theyre hovering over
             if (Main.HoverItem.type != previousHoveredItem || Main.HoverItem.ModItem == null || Main.HoverItem.ModItem is not LoreItem)
                 hoverTime = 0;
