@@ -54,8 +54,6 @@ namespace CalRemix
         public bool vBurn = false;
         public int bossKillcount = 0;
         public float shadowHit = 1;
-        private bool useDefenseFrames;
-        private int frameUsed;
         private int say = 0;
         public static int wulfyrm = -1;
         public int clawed = 0;
@@ -380,15 +378,6 @@ namespace CalRemix
                 npc.damage = 60;
                 npc.lifeMax = 3375;
             }*/
-            else if (npc.type == ModContent.NPCType<SlimeGodCore>())
-            {
-                TextureAssets.Npc[npc.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/SlimeGod/SlimeGodCore");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = ModContent.Request<Texture2D>("CalRemix/Resprites/SlimeGod/SlimeGodCore_Head_Boss");
-            }
-            else if (npc.type == ModContent.NPCType<Eidolist>())
-            {
-                TextureAssets.Npc[npc.type] = ModContent.Request<Texture2D>("CalRemix/Resprites/Eidolist");
-            }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
@@ -518,15 +507,6 @@ namespace CalRemix
         }
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
-            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
-            {
-                binaryWriter.Write(useDefenseFrames);
-                binaryWriter.Write(frameUsed);
-                for (int i = 0; i < 4; i++)
-                {
-                    binaryWriter.Write(npc.Calamity().newAI[i]);
-                }
-            }
             if (npc.type == ModContent.NPCType<Crabulon>())
             {
                 binaryWriter.Write(say);
@@ -538,15 +518,6 @@ namespace CalRemix
         }
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
         {
-            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
-            {
-                useDefenseFrames = binaryReader.ReadBoolean();
-                frameUsed = binaryReader.ReadInt32();
-                for (int i = 0; i < 4; i++)
-                {
-                    npc.Calamity().newAI[i] = binaryReader.ReadSingle();
-                }
-            }
             if (npc.type == ModContent.NPCType<Crabulon>())
             {
                 say = binaryReader.ReadInt32();
@@ -554,134 +525,6 @@ namespace CalRemix
             if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
             {
                 npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = binaryReader.ReadBoolean();
-            }
-        }
-        public override void FindFrame(NPC npc, int frameHeight)
-        {
-            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
-            {
-                if (npc.ai[0] == 2f && npc.ai[0] == 5f)
-                {
-                    if (!useDefenseFrames)
-                    {
-                        useDefenseFrames = true;
-                    }
-                }
-                else
-                {
-                    if (useDefenseFrames)
-                    {
-                        useDefenseFrames = false;
-                    }
-                    if (frameUsed > 3)
-                    {
-                        frameUsed = 0;
-                    }
-                }
-      
-            }
-        }
-
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            if (npc.type == ModContent.NPCType<Providence>() && !Main.dayTime)
-            {
-                return false;
-            }
-            return true;
-        }
-        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            if (npc.type == ModContent.NPCType<Providence>() && (!Main.dayTime || BossRushEvent.BossRushActive))
-            {
-                float lerpValue = Utils.GetLerpValue(0f, 45f, ModContent.GetInstance<Providence>().DeathAnimationTimer, true);
-                int lerps = (int)MathHelper.Lerp(1f, 30f, lerpValue);
-                for (int i = 0; i < lerps; i++)
-                {
-                    float lerps2 = MathF.PI * 2f * i * 2f / lerps;
-                    Vector2 drawOffset = lerps2.ToRotationVector2() * (float)Math.Sin(lerps2 * 6f + Main.GlobalTimeWrappedHourly * MathF.PI) * ((float)Math.Pow(lerpValue, 3.0) * 50f);
-                    Color value = Color.Lerp(Color.White, Color.White * (MathHelper.Lerp(0.4f, 0.8f, lerpValue) / lerps * 1.5f), lerpValue);
-                    value.A = 0;
-                    drawProvidenceInstance(drawOffset, lerps==1 ? null : new Color?(value));
-                }
-                void drawProvidenceInstance(Vector2 drawOffset, Color? colorOverride)
-                {
-                    string textBase = "CalRemix/Resprites/Providence/Providence";
-                    string textWings = "CalRemix/Resprites/Providence/Glowmasks/Providence";
-                    string textSpike = "CalRemix/Resprites/Providence/Glowmasks/Providence";
-                    if (npc.ai[0] == 2f || npc.ai[0] == 5f)
-                    {
-                        if (useDefenseFrames)
-                        {
-                            textBase += "DefenseNight";
-                            textWings += "DefenseGlowNight";
-                            textSpike += "DefenseGlow2Night";
-                        }
-                        else
-                        {
-                            textBase += "DefenseAltNight";
-                            textWings += "DefenseAltGlowNight";
-                            textSpike += "DefenseAltGlow2Night";
-                        }
-                    }
-                    else if (frameUsed == 0)
-                    {
-                        textWings += "GlowNight";
-                        textSpike += "Glow2Night";
-                    }
-                    else if (frameUsed == 1)
-                    {
-                        textBase += "AltNight";
-                        textWings += "AltGlowNight";
-                        textSpike += "AltGlow2Night";
-                    }
-                    else if (frameUsed == 2)
-                    {
-                        textBase += "AttackNight";
-                        textWings += "AttackGlowNight";
-                        textSpike += "AttackGlow2Night";
-                    }
-                    else
-                    {
-                        textBase += "AttackAltNight";
-                        textWings += "AttackAltGlowNight";
-                        textSpike += "AttackAltGlow2Night";
-                    }
-                    Texture2D body = ModContent.Request<Texture2D>(textBase).Value;
-                    Texture2D wings = ModContent.Request<Texture2D>(textWings).Value;
-                    Texture2D spikes = ModContent.Request<Texture2D>(textSpike).Value;
-                    SpriteEffects effects = npc.spriteDirection==1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
-                    Vector2 origin = new Vector2(TextureAssets.Npc[npc.type].Value.Width / 2, TextureAssets.Npc[npc.type].Value.Height / Main.npcFrameCount[npc.type] / 2);
-                    Vector2 textPos = (npc.Center - screenPos) - (new Vector2(body.Width, body.Height / Main.npcFrameCount[npc.type]) * npc.scale / 2f) + (origin * npc.scale + new Vector2(0f, npc.gfxOffY) + drawOffset);
-                    spriteBatch.Draw(body, textPos, npc.frame, colorOverride ?? npc.GetAlpha(drawColor), npc.rotation, origin, npc.scale, effects, 0f);
-
-                    Color color = Color.Lerp(Color.White, Color.Purple, 0.5f) * npc.Opacity;
-                    Color color2 = Color.Lerp(Color.White, Color.LightGreen, 0.5f) * npc.Opacity;
-                    if (colorOverride.HasValue)
-                    {
-                        color = colorOverride.Value;
-                        color2 = colorOverride.Value;
-                    }
-                    if (CalamityConfig.Instance.Afterimages)
-                    {
-                        for (int k = 1; k < 5; k++)
-                        {
-                            Color color3 = npc.GetAlpha(Color.Lerp(color, Color.White, 0.5f)) * ((5 - k) / 15f);
-                            Color color4 = npc.GetAlpha(Color.Lerp(color2, Color.White, 0.5f)) * ((5 - k) / 15f);
-                            if (colorOverride.HasValue)
-                            {
-                                color3 = colorOverride.Value;
-                                color4 = colorOverride.Value;
-                            }
-                            Vector2 position3 = (npc.oldPos[k] + new Vector2(npc.width, npc.height) / 2f - screenPos) - (new Vector2(wings.Width, wings.Height / Main.npcFrameCount[npc.type]) * npc.scale / 2f) + (origin * npc.scale + new Vector2(0f, npc.gfxOffY) + drawOffset);
-                            spriteBatch.Draw(wings, position3, npc.frame, color3, npc.rotation, origin, npc.scale, effects, 0f);
-                            spriteBatch.Draw(spikes, position3, npc.frame, color4, npc.rotation, origin, npc.scale, effects, 0f);
-                        }
-                    }
-                    spriteBatch.Draw(wings, textPos, npc.frame, color, npc.rotation, origin, npc.scale, effects, 0f);
-                    spriteBatch.Draw(spikes, textPos, npc.frame, color2, npc.rotation, origin, npc.scale, effects, 0f);
-                }
             }
         }
         public override bool PreKill(NPC npc)

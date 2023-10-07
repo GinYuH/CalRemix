@@ -20,7 +20,7 @@ namespace CalRemix.NPCs.Bosses
         public override void SetDefaults()
         {
             WulfwyrmBody.InitializeSegment(NPC);
-            NPC.Size = new(52, 72f);
+            NPC.Size = new(52, 52);
             NPC.damage = 5;
 
         }
@@ -29,7 +29,7 @@ namespace CalRemix.NPCs.Bosses
         {
             npc.npcSlots = 5f;
             npc.width = 52;
-            npc.height = 72;
+            npc.height = 52;
             npc.defense = 8;
             npc.Calamity().unbreakableDR = true;
             npc.LifeMaxNERB(3500, 5000);

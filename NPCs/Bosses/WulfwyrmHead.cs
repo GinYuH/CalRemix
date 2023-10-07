@@ -118,13 +118,15 @@ namespace CalRemix.NPCs.Bosses
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wulfrum Excavator");
-            Main.npcFrameCount[NPC.type] = 2;
+            Main.npcFrameCount[NPC.type] = 6;
         }
 
         public override void SetDefaults()
         {
             WulfwyrmBody.InitializeSegment(NPC);
             NPC.damage = 20;
+            NPC.width = 84;
+            NPC.height = 84;
             Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/scourge of the scrapyard");
         }
 
@@ -792,18 +794,22 @@ namespace CalRemix.NPCs.Bosses
 
         public override void FindFrame(int frameHeight)
         {
+            if (PylonCharged) // Handles Pylon charge sprites.
+            {
+                if (NPC.frameCounter > 6|| NPC.frameCounter < 3)
+                    NPC.frameCounter = 3;
+            }
+            else
+            {
+                if (NPC.frameCounter > 2 || NPC.frameCounter < 0)
+                    NPC.frameCounter = 0;
+            }
+            if (NPC.damage == 0)
+                return;
             NPC.frameCounter += 0.15f;
             NPC.frameCounter %= Main.npcFrameCount[NPC.type];
             int frame = (int)NPC.frameCounter;
             NPC.frame.Y = frame * frameHeight;
-            if (PylonCharged == true) // Handles Pylon charge sprites.
-            {
-                NPC.frame.Y = 1 * frameHeight;
-            }
-            else
-            {
-                NPC.frame.Y = 0 * frameHeight;
-            }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

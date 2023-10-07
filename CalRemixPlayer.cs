@@ -34,6 +34,7 @@ using CalRemix.UI;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Potions;
+using CalRemix.Items.Materials;
 
 namespace CalRemix
 {
@@ -674,6 +675,10 @@ namespace CalRemix
             if (inWater && Player.ZoneJungle && Main.hardMode && roll >= 0 && roll <= 7)
             {
                 itemDrop = ModContent.ItemType<Babilfish>();
+            }
+            if (inWater && Main.bloodMoon && Main.rand.NextBool(6))
+            {
+                itemDrop = ModContent.ItemType<GrandioseGland>();
             }
         }
         public void SpawnPhantomHeart()
