@@ -52,6 +52,7 @@ using CalamityMod.Projectiles.Boss;
 using CalamityMod.World;
 using System.Reflection;
 using CalamityMod.NPCs.Cryogen;
+using static Humanizer.In;
 
 namespace CalRemix
 {
@@ -293,10 +294,27 @@ namespace CalRemix
                     crabSay = 4;
                 }
             }
-            else if (npc.type == ModContent.NPCType<SlimeGodCore>() && slimeSay == 0)
+            else if (npc.type == ModContent.NPCType<SlimeGodCore>())
             {
-                Talk("Hello we have suspected you committing blasphemy against sloomes", Color.Olive);
-                slimeSay = 1;
+                bool noPals = !NPC.AnyNPCs(ModContent.NPCType<CrimulanPaladin>()) && !NPC.AnyNPCs(ModContent.NPCType<EbonianPaladin>());
+                bool none = noPals && !NPC.AnyNPCs(ModContent.NPCType<SplitCrimulanPaladin>()) && !NPC.AnyNPCs(ModContent.NPCType<SplitEbonianPaladin>());
+                bool lastCrim = noPals && NPC.CountNPCS(ModContent.NPCType<SplitCrimulanPaladin>()) < 2 && !NPC.AnyNPCs(ModContent.NPCType<SplitEbonianPaladin>());
+                bool lastEbon = noPals && NPC.CountNPCS(ModContent.NPCType<SplitEbonianPaladin>()) < 2 && !NPC.AnyNPCs(ModContent.NPCType<SplitCrimulanPaladin>());
+                if (slimeSay == 0)
+                {
+                    Talk("Hello we have suspected you committing blasphemy against sloomes", Color.Olive);
+                    slimeSay = 1;
+                }
+                else if (slimeSay == 1 && (lastCrim || lastEbon))
+                {
+                    Talk("Absurd! I can't allow you to butcher the last bean bag", Color.Olive);
+                    slimeSay = 2;
+                }
+                else if (slimeSay == 2 && none)
+                {
+                    Talk("You will not be forgiven for your sins. I'm now going to change my gender soon...", Color.Olive);
+                    slimeSay = 3;
+                }
             }
             else if (npc.type == ModContent.NPCType<ProfanedGuardianCommander>())
             {
@@ -692,7 +710,7 @@ namespace CalRemix
         }
         public override bool PreKill(NPC npc)
         {
-            if (!CalamityMod.DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())
+            if (!DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())
             {
                 CalamityUtils.SpawnOre(ModContent.TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
 
@@ -726,7 +744,6 @@ namespace CalRemix
         }
         public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
-            bool sg = (npc.type == ModContent.NPCType<EbonianPaladin>() && NPC.AnyNPCs(ModContent.NPCType<CrimulanPaladin>())) || (npc.type == ModContent.NPCType<CrimulanPaladin>() && NPC.AnyNPCs(ModContent.NPCType<EbonianPaladin>()));
             if (npc.type == ModContent.NPCType<Crabulon>() && crabSay <= 1)
             {
                 Talk("No? Please do be careful with that weapon, though, it looks kinda dangerous. Honestly, you seem quite... crabby. Get it?!", Color.LightSkyBlue);
@@ -737,17 +754,9 @@ namespace CalRemix
                 Talk("AAAAAAAAAh", Color.LightSkyBlue);
                 crabSay = 5;
             }
-            else if (npc.life <= 0 && sg)
-            {
-                Talk("Absurd! I can't allow you to butcher the last bean bag", Color.Olive);
-            }
-            else if (npc.life <= 0 && npc.type == ModContent.NPCType<SlimeGodCore>())
-            {
-                Talk("You will not be forgiven for your sins. I'm now going to change my gender soon...", Color.Olive);
-            }
             else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianCommander>())
             {
-                Talk("Guardian Commander: “MY MENTAL FORTITUDE IS FADING...", Color.Yellow);
+                Talk("Guardian Commander: MY MENTAL FORTITUDE IS FADING...", Color.Yellow);
             }
             else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianDefender>())
             {
