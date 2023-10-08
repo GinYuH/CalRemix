@@ -132,6 +132,11 @@ Mods: {
 					'''
 			}
 
+			Holy: {
+				DisplayName: Holy
+				Tooltip: ""
+			}
+
 			MagnaCore: {
 				DisplayName: Magna Core
 				Tooltip:
@@ -520,6 +525,11 @@ Mods: {
 					'''
 			}
 
+			Dark: {
+				DisplayName: Dark
+				Tooltip: ""
+			}
+
 			EcologicalCollapse: {
 				DisplayName: Ecological Collapse
 				Tooltip:
@@ -846,12 +856,55 @@ Mods: {
 				Tooltip: Just seeing it makes you want to puke...
 			}
 
+			Unholy: {
+				DisplayName: Unholy
+				Tooltip: ""
+			}
+
 			GreenDemonHead: {
 				DisplayName: Green Demond Head
 				Tooltip: "\n\n\n\n\n\n\n\n"
 			}
 
-			ZumboSauce.DisplayName: Zumbo Sauce
+			ZumboSauce: {
+				DisplayName: Zumbo Sauce
+				Tooltip: ""
+			}
+
+			Cold: {
+				DisplayName: Cold
+				Tooltip: ""
+			}
+
+			Fire: {
+				DisplayName: Fire
+				Tooltip: ""
+			}
+
+			Magic: {
+				DisplayName: Magic
+				Tooltip: ""
+			}
+
+			Poison: {
+				DisplayName: Poison
+				Tooltip: ""
+			}
+
+			Slash: {
+				DisplayName: Slash
+				Tooltip: ""
+			}
+
+			Stab: {
+				DisplayName: Stab
+				Tooltip: ""
+			}
+
+			Water: {
+				DisplayName: Water
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {

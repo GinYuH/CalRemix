@@ -22,6 +22,7 @@ using CalRemix.Items.Materials;
 using CalamityMod.World;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix
 {
@@ -43,6 +44,10 @@ namespace CalRemix
             {
                 item.SetNameOverride("Conquest Fragment");
                 item.rare = ItemRarityID.Orange;
+            }
+            else if (item.type == ModContent.ItemType<InfestedClawmerang>())
+            {
+                item.SetNameOverride("Shroomerang");
             }
             else if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
