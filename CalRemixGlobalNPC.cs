@@ -56,6 +56,7 @@ using static Humanizer.In;
 using CalamityMod.Sounds;
 using CalRemix.Items.Potions;
 using CalamityMod.NPCs.Astral;
+using CalamityMod.NPCs.SunkenSea;
 
 namespace CalRemix
 {
@@ -637,6 +638,52 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<Atlas>())
             {
                 npcLoot.Add(ModContent.ItemType<TitanFinger>(), 6);
+            }
+            else if (npc.type == ModContent.NPCType<EutrophicRay>() || npc.type == ModContent.NPCType<PrismBack>() || npc.type == ModContent.NPCType<BlindedAngler>() || npc.type == ModContent.NPCType<GhostBell>() || npc.type == ModContent.NPCType<GhostBell>())
+            {
+                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                hm.Add(ModContent.ItemType<ClamChowder>(), 50);
+            }
+            else if (npc.type == ModContent.NPCType<Clam>())
+            {
+                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                hm.Add(ModContent.ItemType<ClamChowder>(), 10);
+            }
+            else if (npc.type == ModContent.NPCType<SeaSerpent1>())
+            {
+                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                hm.Add(ModContent.ItemType<ClamChowder>(), 20);
+            }
+            else if (npc.type == ModContent.NPCType<GiantClam>())
+            {
+                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                hm.Add(ModContent.ItemType<ClamChowder>(), 2);
+            }
+            switch (npc.type)
+            {
+                case NPCID.SolarSpearman: // Drakanian
+                case NPCID.SolarSolenian: // Selenian
+                case NPCID.SolarCorite:
+                case NPCID.SolarSroller:
+                case NPCID.SolarDrakomireRider:
+                case NPCID.SolarDrakomire:
+                case NPCID.SolarCrawltipedeHead:
+                case NPCID.VortexSoldier:     // Vortexian
+                case NPCID.VortexLarva:       // Alien Larva
+                case NPCID.VortexHornet:      // Alien Hornet
+                case NPCID.VortexHornetQueen: // Alien Queen
+                case NPCID.VortexRifleman:    // Storm Diver
+                case NPCID.NebulaBrain:    // Nebula Floater
+                case NPCID.NebulaSoldier:  // Predictor
+                case NPCID.NebulaHeadcrab: // Brain Suckler
+                case NPCID.NebulaBeast:    // Evolution Beast
+                case NPCID.StardustSoldier:      // Stargazer
+                case NPCID.StardustSpiderBig:    // Twinkle Popper
+                case NPCID.StardustJellyfishBig: // Flow Invader
+                case NPCID.StardustCellBig:      // Star Cell
+                case NPCID.StardustWormHead:     // Milkyway Weaver
+                    npcLoot.Add(ModContent.ItemType<MeldChipIceCream>(), 33);
+                    break;
             }
         }
         public override void OnKill(NPC npc)
