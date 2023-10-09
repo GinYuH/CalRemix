@@ -328,7 +328,11 @@ namespace CalRemix.UI
             {
                 Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.backgroundHover with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
                 Main.LocalPlayer.mouseInterface = true;
-                Main.instance.MouseText(ParentFanny.textboxHoverText);
+
+                string hoverText = ParentFanny.textboxHoverText;
+                if (ParentFanny.UsedMessage.hoverTextOverride != "")
+                    hoverText = ParentFanny.UsedMessage.hoverTextOverride;
+                Main.instance.MouseText(hoverText);
             }
 
             // finally draw the text
@@ -947,6 +951,7 @@ namespace CalRemix.UI
         public FannyPortrait Portrait { get; set; }
 
         public FannyTextboxPalette? paletteOverride = null;
+        public string hoverTextOverride = "";
 
         public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
@@ -1002,6 +1007,12 @@ namespace CalRemix.UI
         public FannyMessage SetPalette(FannyTextboxPalette palette)
         {
             paletteOverride = palette;
+            return this;
+        }
+
+        public FannyMessage SetHoverTextOverride(string hoverTextOverride)
+        {
+            this.hoverTextOverride = hoverTextOverride;
             return this;
         }
 
