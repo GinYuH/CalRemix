@@ -15,12 +15,6 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Boss;
-using Microsoft.Xna.Framework.Graphics;
-using CalamityMod.Projectiles.Melee.Spears;
-using Terraria.GameContent;
-using System;
-using Terraria.Graphics.Shaders;
-using CalamityMod.Events;
 
 namespace CalRemix
 {
@@ -36,43 +30,43 @@ namespace CalRemix
         public override bool InstancePerEntity => true;
         public override void SetDefaults(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<BrimstoneBall>())
+            if (projectile.type == ProjectileType<BrimstoneBall>())
             {
                 projectile.Name = "Calamity Fireball";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneBarrage>())
+            else if (projectile.type == ProjectileType<BrimstoneBarrage>())
             {
                 projectile.Name = "Calamity Barrage";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneFire>())
+            else if (projectile.type == ProjectileType<BrimstoneFire>())
             {
                 projectile.Name = "Calamity Fire";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneHellblast>())
+            else if (projectile.type == ProjectileType<BrimstoneHellblast>())
             {
                 projectile.Name = "Calamity Hellblast";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneHellblast2>())
+            else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
             {
                 projectile.Name = "Calamity Hellblast";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneHellfireball>())
+            else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
             {
                 projectile.Name = "Calamity Hellfireball";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneMonster>())
+            else if (projectile.type == ProjectileType<BrimstoneMonster>())
             {
                 projectile.Name = "Calamity Monster";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneRay>())
+            else if (projectile.type == ProjectileType<BrimstoneRay>())
             {
                 projectile.Name = "Calamity Ray";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneTargetRay>())
+            else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
             {
                 projectile.Name = "Calamity Ray";
             }
-            else if (projectile.type == ModContent.ProjectileType<BrimstoneWave>())
+            else if (projectile.type == ProjectileType<BrimstoneWave>())
             {
                 projectile.Name = "Calamity Flame Skull";
             }
@@ -108,11 +102,11 @@ namespace CalRemix
 			Player player = Main.player[projectile.owner];
 			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
 			var source = projectile.GetSource_FromThis();
-			if (modPlayer.tvo && CalamityUtils.CountProjectiles(ModContent.ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
+			if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
 			{
 				projectile.active = false;
 			}
-			if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CalamityUtils.CountProjectiles(ModContent.ProjectileType<ArmofAgony>()) < 8)
+			if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CalamityUtils.CountProjectiles(ProjectileType<ArmofAgony>()) < 8)
 			{
 				target.AddBuff(BuffType<BrimstoneFlames>(), 180);
 				int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(260);
@@ -127,7 +121,7 @@ namespace CalRemix
 			{
 				target.AddBuff(BuffType<BrimstoneFlames>(), 180);
 				int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1060);
-				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<JewelSpike>()) < 3)
+				if (CalamityUtils.CountProjectiles(ProjectileType<JewelSpike>()) < 3)
 				{
 					int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<JewelSpike>(), apparatusDamage, 4f, projectile.owner);
 					if (proj.WithinBounds(Main.maxProjectiles))
@@ -140,7 +134,7 @@ namespace CalRemix
 			}
 			if (modPlayer.roguebox && projectile.Calamity().stealthStrike && player.ownedProjectileCounts[ProjectileType<DarksunTornado>()] <= 1)
 			{
-				int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ModContent.ProjectileType<DarksunTornado>(), 20000, 0, Main.LocalPlayer.whoAmI);
+				int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), 20000, 0, Main.LocalPlayer.whoAmI);
 				if (p.WithinBounds(Main.maxProjectiles))
 				{
 					Main.projectile[p].originalDamage = 20000;
@@ -149,15 +143,15 @@ namespace CalRemix
 			if (modPlayer.tvo && projectile.type != ProjectileType<DarksunTornado>() && projectile.type != ProjectileType<NanoFlare>())
 			{
 				int dam = (int)(projectile.damage * 0.2f);
-				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<DarksunTornado>()) < 3)
+				if (CalamityUtils.CountProjectiles(ProjectileType<DarksunTornado>()) < 3)
 				{
-					int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ModContent.ProjectileType<DarksunTornado>(), dam, 0, projectile.owner);
+					int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), dam, 0, projectile.owner);
 					if (p.WithinBounds(Main.maxProjectiles))
 					{
 						Main.projectile[p].originalDamage = dam;
 					}
 				}
-				if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<DarksunTornado>()) < 2)
+				if (CalamityUtils.CountProjectiles(ProjectileType<DarksunTornado>()) < 2)
 				CalamityUtils.ProjectileRain(projectile.GetSource_FromAI(), target.Center, 300, 20, -500, -800, 10, ProjectileType<NanoFlare>(), dam, 0, projectile.owner);
 			}
 			if (modPlayer.godfather && projectile.type == ProjectileType<CosmicBlast>())
@@ -231,38 +225,14 @@ namespace CalRemix
 				projectile.damage = 1000000;
 				return Color.LightBlue;
             }
-            if ((!Main.dayTime || BossRushEvent.BossRushActive) && (projectile.type == ProjectileType<HolyBlast>() || projectile.type == ProjectileType<HolyBomb>() || projectile.type == ProjectileType<HolyFire>() || projectile.type == ProjectileType<HolyFire2>() || projectile.type == ProjectileType<HolyFlare>() || projectile.type == ProjectileType<MoltenBlob>() || projectile.type == ProjectileType<MoltenBlast>()))
-            {
-                if (projectile.type == ProjectileType<HolyBlast>())
-                {
-                    return Color.DarkSlateBlue;
-                }
-                return Color.MediumPurple;
-            }
-            else
-			{
-				return null;
-			}
-
-		}
-		public override bool PreDraw(Projectile projectile, ref Color lightColor)
-		{
-            if (projectile.type == ProjectileType<ViolenceThrownProjectile>())
-            {
-				return false;
-			}
-            if (projectile.type == ProjectileType<MurasamaSlash>())
-            {
-                return false;
-            }
-            return true;
+            return null;
 		}
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<WulfwyrmHead>()))
+            if (NPC.AnyNPCs(NPCType<WulfwyrmHead>()))
             {
                 NPC exc = Main.npc[CalRemixGlobalNPC.wulfyrm];
-                if (projectile.type == ModContent.ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfwyrmHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile
+                if (projectile.type == ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfwyrmHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile
                 {
                     hyperCharged = true;
                 }
@@ -272,7 +242,7 @@ namespace CalRemix
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
         {
             if (hyperCharged)
-                target.AddBuff(ModContent.BuffType<GlacialState>(), 50);
+                target.AddBuff(BuffType<GlacialState>(), 50);
         }
     }
 }

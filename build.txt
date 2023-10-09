@@ -1,8 +1,10 @@
 displayName = Calamity: Community Remix
 author = YuH, MrGoodLuck, Sploopo, The Purified, and the Cult of Hypnos
 version = 1.1.6
+dllReferences = MMHOOK_CalamityMod
 modReferences = CalamityMod
 loadAfter = CalamityMod
 hideCode = true
 hideResources = true
 includeSource = false
+
