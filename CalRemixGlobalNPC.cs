@@ -53,6 +53,9 @@ using CalamityMod.World;
 using System.Reflection;
 using CalamityMod.NPCs.Cryogen;
 using static Humanizer.In;
+using CalamityMod.Sounds;
+using CalRemix.Items.Potions;
+using CalamityMod.NPCs.Astral;
 
 namespace CalRemix
 {
@@ -626,6 +629,14 @@ namespace CalRemix
             else if (NPCID.Sets.DemonEyes[npc.type])
             {
                 npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ModContent.ItemType<Ogscule>());
+            }
+            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound)
+            {
+                npcLoot.Add(ModContent.ItemType<TitanFinger>(), 50);
+            }
+            if (npc.type == ModContent.NPCType<Atlas>())
+            {
+                npcLoot.Add(ModContent.ItemType<TitanFinger>(), 6);
             }
         }
         public override void OnKill(NPC npc)
