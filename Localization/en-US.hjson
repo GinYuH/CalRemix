@@ -905,6 +905,41 @@ Mods: {
 				DisplayName: Water
 				Tooltip: ""
 			}
+
+			ClamChowder: {
+				DisplayName: Clam Chowder
+				Tooltip:
+					'''
+					New Ilmeris style
+					Medium improvements to all stats
+					Increases life regeneration
+					'''
+			}
+
+			MeldChipIceCream: {
+				DisplayName: Meld Chip Ice Cream
+				Tooltip:
+					'''
+					Better eat it before it melds
+					Major improvements to all stats
+					Increases life regeneration
+					'''
+			}
+
+			TitanFinger: {
+				DisplayName: Titan Finger
+				Tooltip:
+					'''
+					Contact with the nefarious anglerfish
+					Major improvements to all stats
+					Increases life regeneration
+					'''
+			}
+
+			SeafoodFood: {
+				DisplayName: Seafood
+				Tooltip: Minor improvements to all stats
+			}
 		}
 
 		NPCs: {

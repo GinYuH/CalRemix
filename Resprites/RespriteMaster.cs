@@ -37,6 +37,7 @@ using CalamityMod.Projectiles.Magic;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Systems;
+using MonoMod;
 
 namespace CalRemix.Resprites
 {

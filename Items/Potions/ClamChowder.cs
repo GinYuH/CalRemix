@@ -26,7 +26,7 @@ namespace CalRemix.Items.Potions
             Item.UseSound = SoundID.Item3;
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
-            Item.buffType = BuffID.WellFed3;
+            Item.buffType = BuffID.WellFed2;
             Item.buffTime = 28800;
         }
     }

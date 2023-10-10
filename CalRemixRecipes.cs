@@ -891,6 +891,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
                 }
+                if (recipe.HasResult(ModContent.ItemType<Seafood>()))
+                {
+                    recipe.DisableRecipe();
+                }
             }
             }
 

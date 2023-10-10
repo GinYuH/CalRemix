@@ -23,6 +23,7 @@ using CalamityMod.World;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Rogue;
+using CalRemix.Items.Potions;
 
 namespace CalRemix
 {
@@ -134,6 +135,18 @@ namespace CalRemix
                 tooltips.Add(line);
             }
         }
+        
+        public override void HoldItem(Item item, Player player)
+        {
+            if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
+            {
+                TransformItem(ref item, ModContent.ItemType<Items.Potions.NotFabsolVodka>());
+            }
+            if (item.type == ModContent.ItemType<Seafood>())
+            {
+                TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+            }
+        }
         public override void UpdateInventory(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
@@ -146,10 +159,18 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
             {
-                int stack = item.stack;
-                item.SetDefaults(ModContent.ItemType<Items.Potions.NotFabsolVodka>());
-                item.stack = stack;
+                TransformItem(ref item, ModContent.ItemType<Items.Potions.NotFabsolVodka>());
             }
+            if (item.type == ModContent.ItemType<Seafood>())
+            {
+                TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+            }
+        }
+        public static void TransformItem(ref Item item, int transformType)
+        {
+            int stack = item.stack;
+            item.SetDefaults(transformType);
+            item.stack = stack;
         }
        
         public override void MeleeEffects(Item item, Player Player, Rectangle hitbox)
