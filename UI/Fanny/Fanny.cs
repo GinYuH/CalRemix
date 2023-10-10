@@ -48,6 +48,7 @@ using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.NPCs.AstrumDeus;
 
 namespace CalRemix.UI
 {
@@ -526,13 +527,13 @@ namespace CalRemix.UI
     "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PortalGun)));
 
             fannyMessages.Add(new FannyMessage("TwentyTwo", "I love 22. My banner now.",
-    "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HornetBanner)).AddItemDisplay(ItemID.HornetBanner).AddStartEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.HornetBanner)));
+    "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HornetBanner)).AddItemDisplay(ItemID.HornetBanner).AddStartEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.HornetBanner)).SetHoverTextOverride("Thanks Fanny! That was cluttering my inventory!"));
 
             fannyMessages.Add(new FannyMessage("Shadowspec", "Please throw this thing out, it will delete your world if you have it in inventory for too long!",
-                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()));
+                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()).SetHoverTextOverride("Thank you for the help Fanny! I will!"));
 
             fannyMessages.Add(new FannyMessage("Jump", "Did you know? You can press the \"space\" button to jump!",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!"));
             
             fannyMessages.Add(new FannyMessage("TitanHeart", "You got a heart from a titan! Place it on the tower for a wacky light show!",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TitanHeart>())).AddItemDisplay(ModContent.ItemType<TitanHeart>()));
@@ -541,7 +542,7 @@ namespace CalRemix.UI
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<BloodyVein>())).AddItemDisplay(ModContent.ItemType<BloodyVein>()));
 
             fannyMessages.Add(new FannyMessage("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein from the Crimson's Perforators is way better!",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<RottingEyeball>())).AddItemDisplay(ModContent.ItemType<RottingEyeball>()));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<RottingEyeball>()) && !WorldGen.crimson).AddItemDisplay(ModContent.ItemType<RottingEyeball>()).SetHoverTextOverride("Thanks Fanny! I'll be sure to make a Crimson world next time."));
 
             fannyMessages.Add(new FannyMessage("AlloyBar", "Congratulations, you have obtained the final bar for this stage of your adventure. You should attempt making some Alloy Bars, a versatile material made of every available bar which can be used for powerful items.",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<AlloyBar>())).AddItemDisplay(ModContent.ItemType<AlloyBar>()));
@@ -551,6 +552,9 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Sponge", "Oh, is that a Sponge? Maybe avoid using it. I've heard something about the wielder dying, or something...",
                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TheSponge>())).AddItemDisplay(ModContent.ItemType<TheSponge>()));
+
+            fannyMessages.Add(new FannyMessage("Garbo", "Wowie! That scrap there is useless!",
+               "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.OldShoe) || Main.LocalPlayer.HasItem(ItemID.FishingSeaweed) || Main.LocalPlayer.HasItem(ItemID.TinCan) || Main.LocalPlayer.HasItem(ItemID.JojaCola)).AddItemDisplay(ItemID.TrashCan).SetHoverTextOverride("Thanks Fanny! I already wanted to cook it."));
 
             /*fannyMessages.Add(new FannyMessage("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
                "Nuhuh", (FannySceneMetrics scene) => ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip) && Main.LocalPlayer.talk == ModContent.NPCType<WITCH>()));*/
@@ -567,10 +571,10 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3));
 
             fannyMessages.Add(new FannyMessage("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
-                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())));
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ItemID.RodofDiscord));
             
             fannyMessages.Add(new FannyMessage("Temple", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
-                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611)));
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611)).AddItemDisplay(ItemID.WireCutter));
             
             fannyMessages.Add(new FannyMessage("Altars", "Smashing demon altars is no longer guaranteed to bless your world with ores. But it’s still worth a shot!",
                "Idle", (FannySceneMetrics scene) => (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson) && Main.hardMode && CalamityConfig.Instance.EarlyHardmodeProgressionRework && !Main.LocalPlayer.ZoneUnderworldHeight));
@@ -631,7 +635,7 @@ namespace CalRemix.UI
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<HiveTumor>() || n.type == ModContent.NPCType<PerforatorCyst>())));
             
             fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
-    "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "EverquartzAdventure", "StarbornPrincess")));
+    "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
             fannyMessages.Add(new FannyMessage("Fairy", "That thing is hurting my eyes! Kill it, quick!",
                 "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.EmpressButterfly)));
@@ -658,14 +662,22 @@ namespace CalRemix.UI
     "Awooga", (FannySceneMetrics scene) => CrossModBoss(scene, "FargowiltasSouls", "MutantBoss")));
 
             fannyMessages.Add(new FannyMessage("Goozma", "Holy cow! It's THE Goozma! An easy way to defeat this slippery menace is to lead him into shimmer.",
-                "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "CalamityHunt", "Goozma")));
+                "Awooga", (FannySceneMetrics scene) => CrossModBoss(scene, "CalamityHunt", "Goozma")));
 
             fannyMessages.Add(new FannyMessage("Astrageldon", "Woah, this boss seems a little strong for you! Maybe come back after you’ve killed the Moon Lord!",
-                "Nuhuh", (FannySceneMetrics scene) => CrossModBoss(scene, "CatalystMod", "Astrageldon")));
+                "Nuhuh", (FannySceneMetrics scene) => CrossModBoss(scene, "CatalystMod", "Astrageldon")).SetHoverTextOverride("Thanks you Fanny! I'll go kill the Moon Lord first."));
 
             fannyMessages.Add(new FannyMessage("Calclone", "It is time. The Brimstone Witch, the one behind the Calamity in this world. You will now face Supreme Witch, Calamitas and end everything once and for all!",
                "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>())));
 
+            fannyMessages.Add(new FannyMessage("Deus", "It appears that you are once again fighting a large serpentine creature. Therefore, it's advisable to do what you've done with them before and blast it with fast single target weaponry!",
+               "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumDeusHead>())));
+
+            fannyMessages.Add(new FannyMessage("DeusSplitMod", "This is getting out of hand! Now there are two of them!",
+               "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && NPC.CountNPCS(ModContent.NPCType<AstrumDeusHead>()) > 1));
+
+            fannyMessages.Add(new FannyMessage("DeusSplitModGFB", "This is getting out of hand! Now there are ten of them!",
+               "Awooga", (FannySceneMetrics scene) => Main.zenithWorld && NPC.CountNPCS(ModContent.NPCType<AstrumDeusHead>()) > 9));
 
             fannyMessages.Add(new FannyMessage("YharvelQuip", "Is it just me, or is it getting hot in here?",
                 "Awooga", YharonPhase2));
@@ -674,16 +686,16 @@ namespace CalRemix.UI
                "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Draedon>())));
 
             fannyMessages.Add(new FannyMessage("ExoMayhem", "Wow! What a mayhem! Don't panic though, if you focus on dodging, you will be less likely to get hit. A common strategy for these tin cans is to \" fall god \", which I believe means summoning other gods like the Slime God and killing them for extra health. You should also pay extra attention to Ares' red cannon, because sometimes it can sweep across the screen, ruining your dodge flow. As for the twins, keep a close eye on the right one, as it has increased fire rate. There is no saving you from Thanatos, it isn't synced and breaks the structure these guys are allegedly supposed to have. Like seriously, why do the twins and Ares hover to the sides and above you while that robo-snake just does whatever the heckle heckity heckering hecky heck he wants? It would be significantly more logical if it tried to like stay below you, but no. Anyways, good luck buddy! You're almost at the end, you can do this!",
-                "Idle", (FannySceneMetrics scene) => CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, needsToBeClickedOff: false));
+                "Idle", (FannySceneMetrics scene) => CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, needsToBeClickedOff: false, duration: 22));
 
             #endregion
 
             #region BossDeath
-            fannyMessages.Add(new FannyMessage("Hardmode", "Now why'dya have to do that, champ? You've done did it now! If I were you, I'd get started on completely purifying " + Main.worldName + " before doing anything else!",
-                "Sob", (FannySceneMetrics scene) => Main.hardMode));
+            //fannyMessages.Add(new FannyMessage("Hardmode", "Now why'dya have to do that, champ? You've done did it now! If I were you, I'd get started on completely purifying " + Main.worldName + " before doing anything else!",
+              //  "Sob", (FannySceneMetrics scene) => Main.hardMode));
 
             fannyMessages.Add(new FannyMessage("AbyssBegin", "Every 60 seconds in the Abyss a hour passes by, truly wonderful!",
-               "Nuhuh", (FannySceneMetrics scene) => NPC.downedBoss3));
+               "Nuhuh", (FannySceneMetrics scene) => NPC.downedBoss3).SetHoverTextOverride("Very interesting Fanny!"));
 
             fannyMessages.Add(new FannyMessage("DraedonExit", "Good golly! You did it! Though I'd HATE to imagine the financial losses caused by the destruction of those machines.",
                 "Awooga", (FannySceneMetrics scene) => DownedBossSystem.downedExoMechs));
@@ -697,7 +709,7 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("MoonlordeDeath", "Blegh, I think I swallowed one of that thing's bones. Well, it's time for Godseeker Mode. You will face a sequence of challenges, each more difficult than the last with little to no breathing between encounters. It's kinda like a boss rush.",
                 "Idle", (FannySceneMetrics scene) => NPC.downedMoonlord));
 
-            fannyMessages.Add(new FannyMessage("Yharore", "Looks like the caverns have been laced with auric ore! The ore veins are pretty massive, so I’d say it’s best that you get up close and go hog wild!",
+            fannyMessages.Add(new FannyMessage("Yharore", "Looks like the caverns have been laced with Auric Ore! The ore veins are pretty massive, so I’d say it’s best that you get up close and go hog wild!",
                "Idle", (FannySceneMetrics scene) => DownedBossSystem.downedYharon).AddItemDisplay(ModContent.ItemType<AuricOre>()));
 
 
@@ -705,12 +717,54 @@ namespace CalRemix.UI
 
             #region Misc
             fannyMessages.Add(new FannyMessage("LowHP", "It looks like you're low on health. If your health reaches 0, you'll die. To combat this, don't let your health reach 0!",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 300, onlyPlayOnce: false));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 300, onlyPlayOnce: false).SetHoverTextOverride("Thanks Fanny! I'll heal."));
 
             #endregion      
+
+            IntroducingEvilFanny();
         }
 
         #endregion
+
+        private static void IntroducingEvilFanny()
+        {
+
+            FannyMessage introLore = new FannyMessage("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.velocity == Vector2.Zero && Main.hardMode, 7, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(introLore);
+
+            FannyMessage introEvilLore = new FannyMessage("IntroducingEvilFanny2", "'Sup",
+                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(4f).SpokenByEvilFanny();
+
+            introLore.AddStartEvent(() => introEvilLore.ActivateMessage());
+
+            fannyMessages.Add(introEvilLore);
+
+            FannyMessage introLore2 = new FannyMessage("IntroducingEvilFanny3", "E-evil Fanny!? I thought you moved away to the Yukon!",
+                "Sob", FannyMessage.AlwaysShow, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation();
+            introLore.AddEndEvent(() => introLore2.ActivateMessage());
+
+            fannyMessages.Add(introLore2);
+
+            FannyMessage introEvilLore2 = new FannyMessage("IntroducingEvilFanny4", "Yeah. Got cold.",
+               "EvilIdle", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+               .NeedsActivation().SpokenByEvilFanny();
+
+            introEvilLore.AddEndEvent(() => introEvilLore2.ActivateMessage());
+
+            fannyMessages.Add(introEvilLore2);
+
+            FannyMessage introLore3 = new FannyMessage("IntroducingEvilFanny5", Main.LocalPlayer.name + ", it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
+               "Idle", FannyMessage.AlwaysShow, 8, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+               .NeedsActivation();
+
+            introLore2.AddEndEvent(() => introLore3.ActivateMessage());
+
+            fannyMessages.Add(introLore3);
+        }
 
         public override void PostUpdateEverything()
         {

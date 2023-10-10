@@ -25,6 +25,8 @@ using Terraria.Audio;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.Systems;
 using CalamityMod.Items.LoreItems;
+using CalamityMod.Items;
+using CalamityMod.World;
 
 namespace CalRemix.UI
 {
@@ -53,6 +55,7 @@ namespace CalRemix.UI
 
         public static void LoadLoreComments()
         {
+            #region PBG
             int pbgLoreItemType = ModContent.ItemType<LorePlaguebringerGoliath>();
             FannyMessage pbgLore = new FannyMessage("LorePBG", "I have the feeling this guy likes bees! What is he, an apiarist or something? It's fan-tastic to see people following their passion!",
                 "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == pbgLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves:false).AddDelay(0.4f);
@@ -66,6 +69,22 @@ namespace CalRemix.UI
             pbgLore.AddStartEvent(() => pbgEvilLore.ActivateMessage());
 
             fannyMessages.Add(pbgEvilLore);
+            #endregion
+            #region Deus
+            int deusLoreItemType = ModContent.ItemType<LoreAstrumDeus>();
+            FannyMessage deusLore = new FannyMessage("LoreDeus", "A giant serpent eating entire stars!? That sure sounds dangerous! It's a good thing you were able to take it down.",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == deusLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(deusLore);
+
+            FannyMessage deusEvilLore = new FannyMessage("LoreEvilDeus", "Wait so is DEUS, like the latin word for \"god\", a god or not!?",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            deusLore.AddStartEvent(() => deusEvilLore.ActivateMessage());
+
+            fannyMessages.Add(deusEvilLore);
+            #endregion
         }
 
     }
