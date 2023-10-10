@@ -1,10 +1,12 @@
 using CalamityMod;
 using CalRemix.Items.Accessories;
+using CalRemix.UI;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using System.Linq;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.NPCs
@@ -17,6 +19,15 @@ namespace CalRemix.NPCs
             Main.npcCatchable[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
+
+            FannyManager.LoadFannyMessage(new FannyMessage("Barocrab",
+                "Oooh, a Barocrab! You should go approach it and say hello! I heard they’re friendly and know of an ancient art called... the \"Crab Secret\".",
+                "Awooga",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+            FannyManager.LoadFannyMessage(new FannyMessage("BarocrabRun",
+                "Oh no it ran away! Now you'll never be able to learn the Crab Secret... Well, at least not until another one appears.",
+                "Sob",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.aiStyle == NPCAIStyleID.Worm), needsToBeClickedOff: false));
         }
 
         [JITWhenModsEnabled("CalamityMod")]
@@ -48,7 +59,7 @@ namespace CalRemix.NPCs
             bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The one who holds the crab secret."),
+                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The one who holds the Crab Secret."),
             });
         }
 
