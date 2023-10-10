@@ -52,6 +52,17 @@ namespace CalRemix.NPCs
             });
         }
 
+        public override bool PreAI()
+        {
+            NPC.TargetClosest();
+            if (Main.player[NPC.target].Distance(NPC.Center) < 160 || NPC.aiStyle == NPCAIStyleID.Worm)
+            {
+                NPC.aiStyle = NPCAIStyleID.Worm;
+                NPC.noTileCollide = true;
+                AIType = NPCID.TruffleWormDigger;
+            }
+            return true;
+        }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
