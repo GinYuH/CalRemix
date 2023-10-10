@@ -1,0 +1,65 @@
+using CalamityMod;
+using CalRemix.Items.Accessories;
+using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+//using CalamityMod.CalPlayer;
+
+namespace CalRemix.NPCs
+{
+    public class Barocrab : ModNPC
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[NPC.type] = 6;
+            Main.npcCatchable[NPC.type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.CountsAsCritter[NPC.type] = true;
+        }
+
+        [JITWhenModsEnabled("CalamityMod")]
+        public override void SetDefaults()
+        {
+            NPC.width = 312;
+            NPC.height = 196;
+            NPC.CloneDefaults(NPCID.GlowingSnail);
+            NPC.catchItem = (short)ItemType<Baroclaw>();
+            NPC.lavaImmune = false;
+            AIType = NPCID.GlowingSnail;
+            AnimationType = NPCID.GlowingSnail;
+            NPC.HitSound = SoundID.NPCDeath41;
+            NPC.DeathSound = SoundID.Item14;
+            NPC.lifeMax = 2000;
+            NPC.chaseable = false;
+            Banner = NPC.type;
+            NPC.rarity = 1;
+            NPC.Calamity().VulnerableToHeat = true;
+            NPC.Calamity().VulnerableToSickness = false;
+            NPC.Calamity().VulnerableToWater = false;
+        }
+        public override bool? CanBeHitByItem(Player player, Item item) => null;
+
+        public override bool? CanBeHitByProjectile(Projectile projectile) => null;
+
+        public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
+            bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
+                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The one who holds the crab secret."),
+            });
+        }
+
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Water && spawnInfo.Player.ZoneBeach)
+            {
+                return Terraria.ModLoader.Utilities.SpawnCondition.Ocean.Chance * 0.2f;
+            }
+            return 0f;
+        }
+    }
+}
