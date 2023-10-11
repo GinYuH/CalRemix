@@ -907,7 +907,18 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
             }
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
+                if (recipe.HasIngredient<CosmiliteBar>() && !recipe.HasIngredient<NightmareFuel>() && !recipe.HasIngredient<DarksunFragment>() && !recipe.HasIngredient<AscendantSpiritEssence>() && !recipe.HasIngredient<EndothermicEnergy>())
+                {
+                    if (recipe.createItem.damage > 1)
+                    {
+                        CalRemixItem.cosmicItems.Add(recipe.createItem.type);
+                    }
+                }
             }
+        }
 
         public void AlcoholRecipe(int result, int drinkingredient, int midgredient, int lastgredient, int blorbcount, int midnum = 5)
         {

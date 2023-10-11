@@ -26,6 +26,8 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
+using CalamityMod.Rarities;
+using rail;
 
 namespace CalRemix
 {
@@ -145,7 +147,18 @@ namespace CalRemix
                 tooltips.Add(line);
             }
         }
-        
+
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+            if (cosmicItems.Contains(item.type))
+            {
+                if (item.damage > 0)
+                {
+                    damage *= 0.7f;
+                }
+            }
+        }
+
         public override void HoldItem(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
@@ -176,6 +189,9 @@ namespace CalRemix
                 TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
             }
         }
+
+
+        public static List<int> cosmicItems = new List<int>();
         public static void TransformItem(ref Item item, int transformType)
         {
             int stack = item.stack;
