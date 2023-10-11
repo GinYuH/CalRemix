@@ -940,6 +940,8 @@ Mods: {
 				DisplayName: Seafood
 				Tooltip: Minor improvements to all stats
 			}
+
+			CosmiliteSlag.DisplayName: Cosmilite Slag
 		}
 
 		NPCs: {
@@ -964,6 +966,7 @@ Mods: {
 			PrimalAspid.DisplayName: Primal Aspid
 			OgsculianBurrower.DisplayName: Ogsculian Burrower
 			GreenDemon.DisplayName: Green Demon
+			CosmicSlime.DisplayName: Cosmilite Slime
 		}
 
 		Projectiles: {
@@ -1069,6 +1072,7 @@ Mods: {
 			HallowEffigyPlaced.MapEntry: Hallow Effigy
 			LifeOreTile.MapEntry: Life Ore
 			MiracleFruitPlaced.MapEntry: Miracle Froota
+			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
 		}
 
 		Enchantments: {

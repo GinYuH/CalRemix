@@ -92,6 +92,12 @@ namespace CalRemix
                 cell.AddIngredient<CoyoteVenom>(1);
                 cell.Register();
             }
+            {
+                Recipe bar = Recipe.Create(ModContent.ItemType<CosmiliteBar>(), 1);
+                bar.AddIngredient<CosmiliteSlag>(5);
+                bar.AddTile(TileID.LunarCraftingStation);
+                bar.Register();
+            }
 
             #region DP stuff
             // Alcohol...
@@ -894,6 +900,11 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
                     recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<MidnightSunBeacon>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
+                    recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
             }
             }

@@ -57,6 +57,7 @@ using CalamityMod.Sounds;
 using CalRemix.Items.Potions;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.SunkenSea;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace CalRemix
 {
@@ -544,13 +545,17 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
                 npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
-                npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
+                npcLoot.Remove((DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
             }
             /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
             else*/
+            if (npc.type == ModContent.NPCType<DevourerofGodsHead>())
+            {
+                npcLoot.Remove(DropHelper.PerPlayer(ModContent.ItemType<CosmiliteBar>(), 1, 45, 55));
+            }
             if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);

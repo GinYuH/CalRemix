@@ -25,6 +25,7 @@ using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix
 {
@@ -74,6 +75,10 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<TitanFinger>();
+            }
+            else if (item.type == ModContent.ItemType<CosmiliteBar>())
+            {
+                item.rare = ItemRarityID.Purple;
             }
 
         }
@@ -336,6 +341,7 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
                 itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
+                itemLoot.Remove(ItemDropRule.Common(ModContent.ItemType<CosmiliteBar>(), 1, 55, 65));
             }
             if (item.type == ModContent.ItemType<YharonBag>())
             {

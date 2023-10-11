@@ -18,6 +18,7 @@ using CalamityMod;
 using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.Cryogen;
 using CalRemix.UI;
+using CalamityMod.Tiles.Ores;
 
 namespace CalRemix
 {
@@ -31,6 +32,7 @@ namespace CalRemix
 
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
+        public static bool generatedCosmiliteSlag = false;
 
         public static int transmogrifyingItem = -1;
         public static int transmogrifyingItemAmt = 0;
@@ -50,6 +52,7 @@ namespace CalRemix
             downedEarth = false;
             guideHasExisted = false;
             deusDeadInSnow = false;
+            generatedCosmiliteSlag = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -62,6 +65,7 @@ namespace CalRemix
             downedEarth = false;
             guideHasExisted = false;
             deusDeadInSnow = false;
+            generatedCosmiliteSlag = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -74,6 +78,7 @@ namespace CalRemix
             tag["downedEarth"] = downedEarth;
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
+            tag["genSlag"] = generatedCosmiliteSlag;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -87,6 +92,7 @@ namespace CalRemix
             downedEarth = tag.Get<bool>("downedEarth");
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
+            generatedCosmiliteSlag = tag.Get<bool>("genSlag");
 
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
@@ -100,6 +106,7 @@ namespace CalRemix
             writer.Write(downedEarth);
             writer.Write(guideHasExisted);
             writer.Write(deusDeadInSnow);
+            writer.Write(generatedCosmiliteSlag);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -113,6 +120,7 @@ namespace CalRemix
             downedEarth = reader.ReadBoolean();
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
+            generatedCosmiliteSlag = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
@@ -163,6 +171,44 @@ namespace CalRemix
             if (ShrineTimer > -20)
             {
                 ShrineTimer--;
+            }
+            if (!generatedCosmiliteSlag)
+            {
+                if (NPC.downedMoonlord)
+                {
+                    bool planetsexist = false;
+                    for (int i = 0; i < Main.maxTilesX; i++)
+                    {
+                        for (int j = 0; j < Main.maxTilesY; j++)
+                        {
+                            if (Main.tile[i, j].TileType == TileType<ExodiumOre>())
+                            {
+                                planetsexist = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (planetsexist)
+                    {
+                        for (int i = 0; i < Main.maxTilesX; i++)
+                        {
+                            for (int j = 0; j < Main.maxTilesY * 0.3f; j++)
+                            {
+                                if (Main.rand.NextBool(10))
+                                {
+                                    if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
+                                    {
+                                        Main.tile[i, j].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
+                                    }
+                                }
+                            }
+                        }
+                        Color messageColor = Color.Magenta;
+                        CalamityUtils.DisplayLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
+                        generatedCosmiliteSlag = true;
+                        UpdateWorldBool();
+                    }
+                }
             }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
