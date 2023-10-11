@@ -24,6 +24,7 @@ using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items.Potions;
+using CalamityMod.Items.Weapons.Melee;
 
 namespace CalRemix
 {
@@ -69,6 +70,10 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<EssenceofBabil>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofZot>();
+            }
+            else if (item.type == ModContent.ItemType<TitanArm>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<TitanFinger>();
             }
 
         }

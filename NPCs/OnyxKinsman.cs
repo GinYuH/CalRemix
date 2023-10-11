@@ -15,6 +15,8 @@ using CalRemix.Projectiles;
 using Terraria.Audio;
 using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.NPCs
 {
@@ -32,6 +34,10 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<ArmorCrunch>()] = true;
+            FannyManager.LoadFannyMessage(new FannyMessage("KinsmenFight",
+                "Quick! Get him! He's escaping with a one of a kind item!",
+                "Awooga",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
         public override void SetDefaults()
         {

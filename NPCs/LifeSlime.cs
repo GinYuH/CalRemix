@@ -4,6 +4,7 @@ using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Biomes;
 using CalRemix.Items.Placeables;
 using CalRemix.Projectiles;
+using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -13,6 +14,8 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using System.Linq;
+using CalamityMod.Items.Materials;
 
 namespace CalRemix.NPCs
 {
@@ -25,6 +28,10 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
+            FannyManager.LoadFannyMessage(new FannyMessage("LifeBiome",
+                "The Life Heart is a joint meeting area of the elements of fire, ice, and nature. With their powers combined, they make a powerful new bar which can be used to upgrade your items! Be careful of the dreaded Life Slimes that visciously guard the place though.",
+                "Nuhuh",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)).AddItemDisplay(ModContent.ItemType<LifeAlloy>()));
         }
 		public override void SetDefaults()
 		{ 

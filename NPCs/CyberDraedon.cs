@@ -17,6 +17,8 @@ using CalRemix.Projectiles;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.NPCs
 {
@@ -33,7 +35,12 @@ namespace CalRemix.NPCs
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0);
             nPCBestiaryDrawModifiers.Scale = 0.8f;
-            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;            
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+
+            FannyManager.LoadFannyMessage(new FannyMessage("CyberDraedonFight",
+                "It appears you have alerted the high urgency security systems within that projector and summoned the nefarious Cyber Draedon. He's a real fickle foe who is able to deal percentage-based damage, meaning he'll always be a threat no matter how good your defenses and health are!",
+                "Nuhuh",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
         public override void SetDefaults()
         {
