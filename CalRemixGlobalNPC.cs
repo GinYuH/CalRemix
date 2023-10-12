@@ -58,6 +58,7 @@ using CalRemix.Items.Potions;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.DevourerofGods;
+using Terraria.UI;
 
 namespace CalRemix
 {
@@ -554,7 +555,7 @@ namespace CalRemix
             else*/
             if (npc.type == ModContent.NPCType<DevourerofGodsHead>())
             {
-                npcLoot.Remove(DropHelper.PerPlayer(ModContent.ItemType<CosmiliteBar>(), 1, 45, 55));
+                npcLoot.RemoveWhere((rule) => rule is DropHelper.PerPlayerDropRule rouxls && rouxls.itemId == ModContent.ItemType<CosmiliteBar>());
             }
             if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {

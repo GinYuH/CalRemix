@@ -357,7 +357,7 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
                 itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
-                itemLoot.Remove(ItemDropRule.Common(ModContent.ItemType<CosmiliteBar>(), 1, 55, 65));
+                itemLoot.RemoveWhere((rule) => rule is CommonDrop rouxls && rouxls.itemId == ModContent.ItemType<CosmiliteBar>());
             }
             if (item.type == ModContent.ItemType<YharonBag>())
             {
