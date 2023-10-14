@@ -1,4 +1,5 @@
-
+*.csproj
+*.sln
 *.cache
 *.json
 *.dll
