@@ -36,7 +36,7 @@ namespace CalRemix.Projectiles
                     break;
                 }
             }
-            if (npc != null && npc != target)
+            if (npc != null && npc != target && npc.active)
             {
                 Projectile.velocity = npc.velocity + Projectile.DirectionTo(npc.Center) * 22f;
             }
