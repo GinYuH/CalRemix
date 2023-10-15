@@ -432,7 +432,7 @@ namespace CalRemix.UI
                         FannyInterface.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
                         return true;
                     },
-                    InterfaceScaleType.None)
+                    InterfaceScaleType.UI)
                 );
             }
         }
