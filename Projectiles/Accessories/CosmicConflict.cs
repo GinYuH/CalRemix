@@ -62,9 +62,11 @@ namespace CalRemix.Projectiles.Accessories
                     Projectile.timeLeft = 2;
                 }
             }
-            if (player.HasMinionAttackTargetNPC)
+
+            NPC targ = CalamityUtils.MinionHoming(Projectile.Center, 22222, Main.player[Projectile.owner]);
+            if (targ != null && targ.active)
             {
-                NPC npc = Main.npc[player.MinionAttackTargetNPC];
+                NPC npc = targ;
                 Projectile.direction = npc.Center.X - Projectile.Center.X >= 0 ? -1 : 1;
                 Projectile.spriteDirection = npc.Center.X - Projectile.Center.X >= 0 ? -1 : 1;
                 Projectile.localAI[0]++;

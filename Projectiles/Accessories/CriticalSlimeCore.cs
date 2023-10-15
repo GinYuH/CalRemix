@@ -66,7 +66,8 @@ namespace CalRemix.Projectiles.Accessories
                     Projectile.timeLeft = 2;
                 }
             }
-            if (player.HasMinionAttackTargetNPC)
+            NPC targ = CalamityUtils.MinionHoming(Projectile.Center, 22222, Main.player[Projectile.owner]);
+            if (targ != null && targ.active)
             {
                 Projectile.localAI[0]++;
                 if (Projectile.localAI[0] > 120)
