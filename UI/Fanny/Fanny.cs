@@ -1074,7 +1074,7 @@ namespace CalRemix.UI
         private int cooldownDuration;
 
         public int TimeLeft { get; set; }
-        private int messageDuration;
+        internal int messageDuration;
         public int MessageDuration => messageDuration;
 
         //Which fanny the message wants to be spoken by
