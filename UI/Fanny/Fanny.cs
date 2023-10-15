@@ -1054,7 +1054,7 @@ namespace CalRemix.UI
     {
         private string originalText;
         private string formattedText;
-        private int maxTextWidth;
+        internal int maxTextWidth;
         public float textSize;
 
         public string Text

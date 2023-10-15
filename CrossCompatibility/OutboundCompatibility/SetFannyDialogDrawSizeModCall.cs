@@ -1,6 +1,7 @@
 ﻿using CalRemix.UI;
 using System;
 using System.Collections.Generic;
+using Terraria.GameContent;
 
 namespace CalRemix.CrossCompatibility.OutboundCompatibility
 {
@@ -31,8 +32,9 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
             FannyMessage message = (FannyMessage)args[0];
             int dialogWidth = (int)args[1];
             float fontSizeFactor = (float)args[2];
-            message.CooldownTime = dialogWidth;
+            message.maxTextWidth = dialogWidth;
             message.textSize = fontSizeFactor;
+            message.FormatText(FontAssets.MouseText.Value, dialogWidth);
 
             return message;
         }

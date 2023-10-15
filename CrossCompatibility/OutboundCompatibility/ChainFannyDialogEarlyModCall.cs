@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace CalRemix.CrossCompatibility.OutboundCompatibility
 {
-    public class ChainFannyDialogModCall : ModCallProvider<object>
+    public class ChainFannyDialogReplyModCall : ModCallProvider<object>
     {
         public override IEnumerable<string> CallCommands
         {
             get
             {
-                yield return "ChainFannyDialog";
+                yield return "ChainFannyDialogReply";
             }
         }
 
-        public override string Name => "ChainFannyDialog";
+        public override string Name => "ChainFannyDialogReply";
 
         public override IEnumerable<Type> InputTypes
         {
@@ -35,8 +35,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
 
             // Apply activation requirements relative to the parent message.
             message = message.NeedsActivation(appearDelay);
-            parent.AddEndEvent(message.ActivateMessage);
-
+            parent.AddStartEvent(message.ActivateMessage);
             return message;
         }
     }
