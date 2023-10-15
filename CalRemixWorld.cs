@@ -19,12 +19,19 @@ using Microsoft.Xna.Framework;
 using CalamityMod.NPCs.Cryogen;
 using CalRemix.UI;
 using CalamityMod.Tiles.Ores;
+using CalRemix.Backgrounds.Plague;
+using CalRemix.Tiles.PlaguedJungle;
+using CalRemix.Projectiles.TileTypeless;
+using CalamityMod.Tiles.Plates;
+using CalamityMod.NPCs;
 
 namespace CalRemix
 {
     public class CalRemixWorld : ModSystem
     {
         public static int lifeTiles;
+        public static int PlagueTiles;
+        public static int PlagueDesertTiles;
         public static int ShrineTimer = -20;
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
@@ -33,6 +40,7 @@ namespace CalRemix
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
         public static bool generatedCosmiliteSlag = false;
+        public static bool generatedPlague = false;
 
         public static int transmogrifyingItem = -1;
         public static int transmogrifyingItemAmt = 0;
@@ -53,6 +61,7 @@ namespace CalRemix
             guideHasExisted = false;
             deusDeadInSnow = false;
             generatedCosmiliteSlag = false;
+            generatedPlague = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -66,6 +75,7 @@ namespace CalRemix
             guideHasExisted = false;
             deusDeadInSnow = false;
             generatedCosmiliteSlag = false;
+            generatedPlague = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -79,6 +89,7 @@ namespace CalRemix
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
             tag["genSlag"] = generatedCosmiliteSlag;
+            tag["plague"] = generatedPlague;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -93,6 +104,7 @@ namespace CalRemix
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
             generatedCosmiliteSlag = tag.Get<bool>("genSlag");
+            generatedPlague = tag.Get<bool>("plague");
 
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
@@ -107,6 +119,7 @@ namespace CalRemix
             writer.Write(guideHasExisted);
             writer.Write(deusDeadInSnow);
             writer.Write(generatedCosmiliteSlag);
+            writer.Write(generatedPlague);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -121,6 +134,7 @@ namespace CalRemix
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
             generatedCosmiliteSlag = reader.ReadBoolean();
+            generatedPlague = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
@@ -210,6 +224,10 @@ namespace CalRemix
                     }
                 }
             }
+            if (!generatedPlague && NPC.downedGolemBoss)
+            {
+                GeneratePlague();
+            }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
         }
@@ -217,11 +235,23 @@ namespace CalRemix
         public override void ResetNearbyTileEffects()
         {
             lifeTiles = 0;
+            PlagueTiles = 0;
+            PlagueDesertTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
             // Life Ore tiles
             lifeTiles = tileCounts[TileType<LifeOreTile>()];
+            PlagueTiles = tileCounts[TileType<PlaguedGrass>()] +
+            tileCounts[TileType<PlaguedMud>()] +
+            tileCounts[TileType<PlaguedStone>()] +
+            tileCounts[TileType<PlaguedClay>()] +
+            tileCounts[TileType<OvergrownPlaguedStone>()] +
+            tileCounts[TileType<PlaguedSilt>()] +
+            tileCounts[TileType<Sporezol>()];
+            PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
+            Main.SceneMetrics.JungleTileCount += PlagueTiles;
+            Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
         }
 
         public static void HMChest(int block1, int block2, int wall, int loot, List<int> anchor, int chest)
@@ -261,6 +291,117 @@ namespace CalRemix
                     break;
                 }
             }
+        }
+
+        public static void GeneratePlague()
+        {
+            bool gennedplague = false;
+            int plagueX = 0;
+            int plagueY = 0;
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++) 
+                { 
+                    if (Main.tile[i,j].TileType == TileType<CalamityMod.Tiles.FurniturePlaguedPlate.PlaguedPlateBasin>() || Main.tile[i, j].TileType == TileType<CalamityMod.Tiles.FurniturePlaguedPlate.PlaguedPlateBed>())
+                    {
+                        PlaguedSpray.Convert(i, j, 222);
+                        plagueX = i;
+                        plagueY = j;
+                        gennedplague = true;
+                        break;
+                    }
+                    if (gennedplague)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (!gennedplague)
+            {
+                for (int i = 0; i < Main.maxTilesX; i++)
+                {
+                    for (int j = 0; j < Main.maxTilesY; j++)
+                    {
+                        if (Main.tile[i, j].TileType == TileID.Mud && Main.rand.NextBool(2222))
+                        {
+                            PlaguedSpray.Convert(i, j, 222);
+                            plagueX = i;
+                            plagueY = j;
+                            gennedplague = true;
+                            break;
+                        }
+                        if (gennedplague)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            if (gennedplague)
+            {
+                for (int j = 100; j < Main.maxTilesY; j++)
+                {
+                    if (Main.tile[plagueX, j].HasTile && !Main.tile[plagueX, j - 1].HasTile)
+                    {
+                        PlaguedSpray.Convert(plagueX, j, 111);
+                        break;
+                    }
+                }
+                generatedPlague = true;
+            }
+        }
+
+        public static void PlacePlague(int i, int j, int size)
+        {
+            for (int k =  i - size; k < size + 1; k++)
+            {
+                for (int l = j - size; l < size + 1; l++) 
+                {
+                    //PlaguedSpray.ConvertSingular(k, l);
+                }
+            }
+        }
+
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        {
+            if (Main.gameMenu)
+            {
+                return;
+            }
+            var player = Main.LocalPlayer;
+            var pPlayer = player.GetModPlayer<CalRemixPlayer>();
+            if (pPlayer.ZonePlague || pPlayer.ZonePlagueDesert)
+            {
+                float amount = 0.2f;
+                if (PlagueSky.Intensity < 1f)
+                {
+                    float r = backgroundColor.R / 255f;
+                    float g = backgroundColor.G / 255f;
+                    float b = backgroundColor.B / 255f;
+                    r = MathHelper.Lerp(r, amount, PlagueSky.Intensity);
+                    g = MathHelper.Lerp(g, amount, PlagueSky.Intensity);
+                    b = MathHelper.Lerp(b, amount, PlagueSky.Intensity);
+                    backgroundColor.R = (byte)(int)(r * 255f);
+                    backgroundColor.G = (byte)(int)(g * 255f);
+                    backgroundColor.B = (byte)(int)(b * 255f);
+                }
+                else
+                {
+                    byte a = (byte)(int)(amount * 255f);
+                    backgroundColor.R = 40;
+                    backgroundColor.G = 40;
+                    backgroundColor.B = 40;
+                }
+            }
+        }
+        public static bool IsTileFullySolid(int i, int j)
+        {
+            return IsTileFullySolid(Framing.GetTileSafely(i, j));
+        }
+
+        public static bool IsTileFullySolid(Tile tile)
+        {
+            return Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
         }
     }
 }

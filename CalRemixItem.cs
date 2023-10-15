@@ -146,6 +146,11 @@ namespace CalRemix
                 var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
                 tooltips.Add(line);
             }
+            if (item.type == ModContent.ItemType<Abombination>())
+            {
+                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
+                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
+            }
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)

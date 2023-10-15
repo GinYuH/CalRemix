@@ -14,5 +14,8 @@
     <Reference Include="CalamityMod">
       <HintPath>..\CalamityMod\obj\Debug\net6.0\CalamityMod.dll</HintPath>
     </Reference>
+    <Reference Include="MMHOOK_CalamityMod">
+      <HintPath>bin\Debug\net6.0\MMHOOK_CalamityMod.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

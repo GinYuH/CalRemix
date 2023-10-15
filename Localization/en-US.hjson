@@ -28,6 +28,11 @@ Mods: {
 				DisplayName: Life Heart
 				TownNPCDialogueName: the Life Biome
 			}
+
+			PlagueBiome: {
+				DisplayName: Plagued Jungle
+				TownNPCDialogueName: the Plague Biome
+			}
 		}
 
 		Buffs: {
@@ -942,6 +947,30 @@ Mods: {
 			}
 
 			CosmiliteSlag.DisplayName: Cosmilite Slag
+
+			BrownSolution: {
+				DisplayName: Brown Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Cleanses the Plague
+					'''
+			}
+
+			PlaguedSolution: {
+				DisplayName: Plagued Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads the Plague
+					'''
+			}
+
+			PlaguedFirefly.DisplayName: Plagued Firefly
+			PlaguedMudWall.DisplayName: Plagued Mud Wall
+			PlaguedPipeWall.DisplayName: Plagued Pipe Wall
+			PlaguedStoneWall.DisplayName: Plagued Stone Wall
+			PlaguedVineWall.DisplayName: Plagued Vine Wall
 		}
 
 		NPCs: {
@@ -967,6 +996,7 @@ Mods: {
 			OgsculianBurrower.DisplayName: Ogsculian Burrower
 			GreenDemon.DisplayName: Green Demon
 			CosmicSlime.DisplayName: Cosmilite Slime
+			PlaguedFirefly.DisplayName: Plagued Firefly
 		}
 
 		Projectiles: {
@@ -1062,6 +1092,7 @@ Mods: {
 			OnyxBullet.DisplayName: Onyx Bullet
 			AspidShot.DisplayName: Aspid Shot
 			OgsculeBeamHostile.DisplayName: Ogscule Beam
+			PlaguedFallingSand.DisplayName: Plagued Sand Ball
 		}
 
 		Tiles: {

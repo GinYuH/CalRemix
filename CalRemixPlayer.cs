@@ -75,7 +75,9 @@ namespace CalRemix
 		public int VerbotenMode = 1;
 		public int RecentChest = -1;
 		public bool baroclaw;
-		public Vector2 clawPosition = Vector2.Zero;
+		public bool ZonePlague;
+        public bool ZonePlagueDesert;
+        public Vector2 clawPosition = Vector2.Zero;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -349,6 +351,7 @@ namespace CalRemix
 			}
 			
         }
+
         public override void PreUpdate()
         {
             SpawnPhantomHeart();

@@ -59,6 +59,7 @@ using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.DevourerofGods;
 using Terraria.UI;
+using CalamityMod.NPCs.PlaguebringerGoliath;
 
 namespace CalRemix
 {
@@ -485,6 +486,26 @@ namespace CalRemix
                         exc.ModNPC<WulfwyrmHead>().PylonCharged = true;
                     }
                 }
+            }
+            if (npc.type == ModContent.NPCType<PlaguebringerGoliath>() && !Main.player[npc.target].GetModPlayer<CalRemixPlayer>().ZonePlague)
+            {
+                if (npc.ai[2] == 1)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Vector2 dist = npc.Center - Main.player[npc.target].Center;
+                        dist.Normalize();
+                        for (int i = 0; i < Main.rand.Next(5, 9); i++)
+                        {
+                            Vector2 velocity = dist * 16;
+                            Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / (float)(3 - 1)));
+                            perturbedSpeed += new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
+                            int type = Main.rand.NextBool(3) ? ModContent.ProjectileType<HiveBombGoliath>() : ModContent.ProjectileType<PlagueStingerGoliathV2>();
+                            int p = Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, perturbedSpeed, type, (int)(npc.damage * 0.5f), 0f);
+                        }
+                    }
+                }
+                //npc.ai[1]++;
             }
         }
         public override void PostAI(NPC npc)
