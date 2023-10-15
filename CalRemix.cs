@@ -1,6 +1,7 @@
 using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.UI.CalamitasEnchants;
+using CalRemix.CrossCompatibility.OutboundCompatibility;
 using CalRemix.NPCs;
 using CalRemix.NPCs.Bosses;
 using CalRemix.Items.Accessories;
@@ -141,6 +142,10 @@ namespace CalRemix
         {
             return item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip();
         }
+
+        // Defer mod call handling to the extraneous mod call manager.
+        public override object Call(params object[] args) => ModCallManager.Call(args);
+
 		public static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
         {
 			if (!condition || shop is null) return;
