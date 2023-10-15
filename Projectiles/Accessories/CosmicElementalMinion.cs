@@ -55,15 +55,20 @@ namespace CalRemix.Projectiles.Accessories
                     Projectile.timeLeft = 2;
                 }
             }
-            Projectile.localAI[0]++;
-            if (Projectile.localAI[0] > 120 && Projectile.localAI[0] % 120 == 0)
+
+            NPC targ = CalamityUtils.MinionHoming(Projectile.Center, 22222, Main.player[Projectile.owner]);
+            if (targ != null && targ.active)
             {
-                if (Main.myPlayer == Projectile.owner)
+                Projectile.localAI[0]++;
+                if (Projectile.localAI[0] > 120 && Projectile.localAI[0] % 120 == 0)
                 {
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalaxyStar>(), Projectile.damage, 0f, Projectile.owner);
-                    if (Main.projectile.IndexInRange(p))
-                        Main.projectile[p].originalDamage = Projectile.originalDamage;
-                    Main.projectile[p].DamageType = DamageClass.Summon;
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalaxyStar>(), Projectile.damage, 0f, Projectile.owner);
+                        if (Main.projectile.IndexInRange(p))
+                            Main.projectile[p].originalDamage = Projectile.originalDamage;
+                        Main.projectile[p].DamageType = DamageClass.Summon;
+                    }
                 }
             }
 
