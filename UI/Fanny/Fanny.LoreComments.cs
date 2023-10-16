@@ -55,6 +55,135 @@ namespace CalRemix.UI
 
         public static void LoadLoreComments()
         {
+            #region First lore
+            FannyMessage loreAny = new FannyMessage("LoreAny", "Woah? Did that thing just... whisper to us? You've got to collect more of these things, they seem to tell some interesting stories! Let me know if you find any more of these, and let me listen too!",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(loreAny);
+            #endregion
+
+
+            #region Desert
+            int desertLoreItemType = ModContent.ItemType<LoreDesertScourge>();
+            FannyMessage desertlore = new FannyMessage("LoreDesert", "Isn't this just a classic example of the 'Circle of Life' in the sea? First, we had a humble sea serpent with a taste for the tiniest fish bites, and then BOOM! Ilmeris goes up in flames, and suddenly our sea serpent thinks it's Jaws or something. But hey, remember, even the 'big bad' gets eaten eventually, just like your grandma's famous apple pie!",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == desertLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(desertlore);
+            #endregion
+
+            #region Evil biomes
+            int crimLoreItemType = ModContent.ItemType<LoreCrimson>();
+            int corLoreItemType = ModContent.ItemType<LoreCorruption>();
+            FannyMessage crimLore = new FannyMessage("LoreCorcrim", "So we've been walking around on the guts of a god this entire time? How disgusting!",
+                "Sob", (FannySceneMetrics scene) => ReadLoreItem && (previousHoveredItem == crimLoreItemType || previousHoveredItem == corLoreItemType), 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(crimLore);
+            #endregion
+
+            #region Skeletron
+            int sansLoreItemType = ModContent.ItemType<LoreSkeletron>();
+            FannyMessage skelore = new FannyMessage("LoreSkeletron", "Well, well, well! Looks like old man Jenkins made a boo-boo in the ancient cult's library. But hey, if you're into dragon-loving cults and cursed walls, this place is just oozing misguided zeal. Who needs knowledge when you've got curses, right?",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == sansLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(skelore);
+            #endregion
+
+            #region Slimepod
+            int sgLoreItemType = ModContent.ItemType<LoreSlimeGod>();
+            FannyMessage sglore = new FannyMessage("LoreSlimepod", "Ah, yes, the legendary Slime God! Back in the day, it was a real eco-warrior, but now it's just a slimy mess. It's like your friend who used to be a vegan and now they eat bacon-wrapped cheeseburgers. Such is the way of nature, my friend!",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == sgLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(sglore);
+            #endregion
+
+            #region Wof
+            int wofLoreItemType = ModContent.ItemType<LoreWallofFlesh>();
+            FannyMessage woflore = new FannyMessage("LoreWof", "Zoinks! It's like a DIY prison for a slain God, crafted with the finest foul sinew and magics that are even fouler - but hey, it did the trick! Imagine having this monstrosity in your backyard - perfect for stopping divine influence and impressing your immortal neighbors.",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == wofLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(woflore);
+            #endregion
+
+            #region Blood Moon
+            int bloodLoreItemType = ModContent.ItemType<LoreBloodMoon>();
+            FannyMessage bloodLore = new FannyMessage("LoreBlood", "Wowie! The guy writing these little blurbs must have an outdated source of information. Everyone knows Blood Moons are caused by the legendary Blood Moon Joe!",
+                "Nuhuh", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == bloodLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(bloodLore);
+
+            FannyMessage bloodEvilLore = new FannyMessage("LoreEvilBlood", "Actually, Blood Moons are caused by limited amounts of sunlight passing through the atmosphere and onto the moon you dummy.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            bloodLore.AddStartEvent(() => bloodEvilLore.ActivateMessage());
+
+            fannyMessages.Add(bloodEvilLore);
+            #endregion
+
+            #region Queer slime
+            int queenSlimeLoreItemType = ModContent.ItemType<LoreQueenSlime>();
+            FannyMessage queenSlimeLore = new FannyMessage("LoreQueenSlime", "Well, it looks like the Slime God decided to pull a fashion makeover! It's the latest trend in guardian couture. But hey, they got caught in their own power trip – I guess even gods have their bad days.",
+                "Nuhuh", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == queenSlimeLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(queenSlimeLore);
+
+            FannyMessage queenSlimeEvilLore = new FannyMessage("LoreEvilQueenSlime", "Ugh, really? The Slime God is playing dress-up now? What's next, a slime goddess? This whole scenario is as ridiculous as my patience for it.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            queenSlimeLore.AddStartEvent(() => queenSlimeEvilLore.ActivateMessage());
+
+            fannyMessages.Add(queenSlimeEvilLore);
+            #endregion
+
+            #region Cryogen
+            int cryogenLoreItemType = ModContent.ItemType<LoreArchmage>();
+            FannyMessage cryogenLore = new FannyMessage("LoreCryo", "It seems that our Archmage Permafrost is back from his icy vacation! Calamitas must have locked him in her magical freezer. Maybe now he can chill out and catch up on some reading about not-so-evil overlords.",
+                "Nuhuh", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == cryogenLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(cryogenLore);
+
+            FannyMessage cryogenEvilLore = new FannyMessage("LoreCryo", "This whole excerpt is like a bad breakup, with the added bonus of endless rambling about their frosty feud. Get a life, people.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            cryogenLore.AddStartEvent(() => cryogenEvilLore.ActivateMessage());
+
+            fannyMessages.Add(cryogenEvilLore);
+            #endregion
+
+            #region Aqua
+            int aquaLoreItemType = ModContent.ItemType<LoreAquaticScourge>();
+            FannyMessage aquaLore = new FannyMessage("LoreAq", "Oh, look at this fancy worm who's clearly mastered the art of 'living your best life.' While the other sea monsters are out there hangry and chasing scraps, this one's chilling like a villain, sipping its tea and filter feeding like a pro. Talk about being the 'cool cucumber' of the sea world, am I right?",
+                "Nuhuh", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == aquaLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(aquaLore);
+
+            FannyMessage aquaEvilLore = new FannyMessage("LoreAq", "Microorganisms evolving rapidly? Yeah, well, I evolved rapidly too, and it didn't make me any happier about this pretentious monster's good fortune.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            aquaLore.AddStartEvent(() => aquaEvilLore.ActivateMessage());
+
+            fannyMessages.Add(aquaEvilLore);
+            #endregion
+
+            #region Brim
+            int brimLoreItemType = ModContent.ItemType<LoreBrimstoneElemental>();
+            FannyMessage brimLore = new FannyMessage("LoreBrim", "Well, folks, looks like we've got a peculiar case of a city's silent matron taking a little too long of a nap, and when she woke up, boy, did she have some fiery morning breath! I guess the lesson here is, even ancient beings need their beauty sleep, or you might just end up with a burning desire to redecorate the whole city!",
+                "Nuhuh", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == brimLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(brimLore);
+
+            FannyMessage brimEvilLore = new FannyMessage("LoreBrim", "So, the city's 'silent matron' decided to throw a hissy fit, and for what? A little economic boom? Please, spare me the drama. And don't get me started on that \"sick sense of humor\" nonsense. This whole tale is just a dumpster fire of clichés and poor decisions.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            brimLore.AddStartEvent(() => brimEvilLore.ActivateMessage());
+
+            fannyMessages.Add(brimEvilLore);
+            #endregion
+
             #region PBG
             int pbgLoreItemType = ModContent.ItemType<LorePlaguebringerGoliath>();
             FannyMessage pbgLore = new FannyMessage("LorePBG", "I have the feeling this guy likes bees! What is he, an apiarist or something? It's fan-tastic to see people following their passion!",
@@ -62,7 +191,7 @@ namespace CalRemix.UI
 
             fannyMessages.Add(pbgLore);
 
-            FannyMessage pbgEvilLore = new FannyMessage("LoreEvilPBG", "Boo hoo wahh wahhh wahhh the bees wahhh so cruel wahh wahhh wahh Draedon is heartless wahhhhh vile and despicable",
+            FannyMessage pbgEvilLore = new FannyMessage("LoreEvilPBG", "Boo hoo wahh wahhh wahhh the bees wahhh so cruel wahh wahhh wahh Draedon is heartless wahhhhh vile and despicable.",
                 "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
                 .NeedsActivation(1.5f).SpokenByEvilFanny();
 
@@ -70,6 +199,7 @@ namespace CalRemix.UI
 
             fannyMessages.Add(pbgEvilLore);
             #endregion
+
             #region Deus
             int deusLoreItemType = ModContent.ItemType<LoreAstrumDeus>();
             FannyMessage deusLore = new FannyMessage("LoreDeus", "A giant serpent eating entire stars!? That sure sounds dangerous! It's a good thing you were able to take it down.",
@@ -85,6 +215,133 @@ namespace CalRemix.UI
 
             fannyMessages.Add(deusEvilLore);
             #endregion
+
+            #region Burb
+            int birbLoreItemType = ModContent.ItemType<LoreDragonfolly>();
+            FannyMessage birbLore = new FannyMessage("LoreBirb", "Ah, the Draconic Era, a time of legends, mythical creatures, and probably some pretty epic dragon family reunions! It's a shame that it's all over though.",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == birbLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(birbLore);
+
+            FannyMessage birbEvilLore = new FannyMessage("LoreEvilBirb", "I'm going to puke if I hear the word \"dragon\" one more time.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            birbLore.AddStartEvent(() => birbEvilLore.ActivateMessage());
+
+            fannyMessages.Add(birbEvilLore);
+            #endregion
+
+            #region Provi
+            int proviLoreItemType = ModContent.ItemType<LoreProvidence>();
+            FannyMessage proviLore = new FannyMessage("LoreProv", "A glorious day indeed! Deeds of valor, like finding the last piece of chocolate in the fridge, are truly legendary. I mean, I once opened the fridge and discovered half an onion. What a thrilling tale, right?",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == proviLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(proviLore);
+
+            FannyMessage proviEvilLore = new FannyMessage("LoreEvilProv", "A \"glorious day\"? More like a day wasted on pompous ramblings.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            proviLore.AddStartEvent(() => proviEvilLore.ActivateMessage());
+
+            fannyMessages.Add(proviEvilLore);
+            #endregion
+
+            #region Polt
+            int poltLoreItemType = ModContent.ItemType<LorePolterghast>();
+            FannyMessage poltLore = new FannyMessage("LorePolter", "It seems the writer here was a master of procrastination! They managed to turn an entire dungeon into a haunted house attraction, complete with a formless monster, and all because they were too lazy to get their act together. Talk about taking \"ghosting\" to a whole new level!",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == poltLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(poltLore);
+
+            FannyMessage poltEvilLore = new FannyMessage("LoreEvilPolter", "What a pathetic excuse for a leader. They're so wrapped up in their own little world of self-pity that they can't even be bothered to deal with the mess they created.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            poltLore.AddStartEvent(() => poltEvilLore.ActivateMessage());
+
+            fannyMessages.Add(poltEvilLore);
+            #endregion
+
+            #region Dog...
+            int dogLoreItemType = ModContent.ItemType<LoreDevourerofGods>();
+            FannyMessage dogLore = new FannyMessage("LoreDog", "It seems like the author here had quite a \"bite\" of an issue with this Devourer character. They got a mouthful of manipulation and a side of negligence! Talk about a bad takeout order; maybe next time, they should try a different restaurant – or universe!",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == dogLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(dogLore);
+
+            FannyMessage dogEvilLore = new FannyMessage("LoreEvilDog", "So this power-hungry idiot recruited a snake-tongued disaster and then acted all surprised when everything went to the abyss!?",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            dogLore.AddStartEvent(() => dogEvilLore.ActivateMessage());
+
+            fannyMessages.Add(dogEvilLore);
+            #endregion
+
+            #region Yharon
+            int yharonLoreItemType = ModContent.ItemType<LoreYharon>();
+            FannyMessage yharonLore = new FannyMessage("LoreYharon", "Well, folks, here we have a dramatic tale of dragons and destiny. I mean, who needs destiny, right? But, hey, at least the lava bath spa treatment gave our hero a new buddy. Friendship and fiery scars, what more could you ask for?",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == yharonLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(yharonLore);
+
+            FannyMessage yharonEvilLore = new FannyMessage("LoreEvilYharon", "Ugh, another one of these melodramatic dragon stories. Who cares about Yharon and his rebirth nonsense? And seriously, \"destiny is for the weak\"? Spare me the hero's whining. It's all just a bunch of hot air, or in this case, hot lava.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            yharonLore.AddStartEvent(() => yharonEvilLore.ActivateMessage());
+
+            fannyMessages.Add(yharonEvilLore);
+            #endregion
+
+            #region Draedon
+            int draeLoreItemType = ModContent.ItemType<LoreExoMechs>();
+            FannyMessage draeLore = new FannyMessage("LoreDraeodn", "Well, well, here we are admiring Draedon's doodads of destruction. I hear he claims his gizmos are better than any divine doohickeys, but I must say, he's never met my toaster-oven! At least that thing makes a mean grilled cheese sandwich.",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == draeLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(draeLore);
+
+            FannyMessage draeEvilLore = new FannyMessage("LoreEvilDraedon", "Oh, Draedon and his soulless contraptions, what a joy. His boasts are as insufferable as the cacophony of a million malfunctioning alarm clocks. And if you think you can \"leverage\" his knowledge, you're as delusional as he is.",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            draeLore.AddStartEvent(() => draeEvilLore.ActivateMessage());
+
+            fannyMessages.Add(draeEvilLore);
+            #endregion
+
+            #region Scal...
+            int scalLoreItemType = ModContent.ItemType<LoreCalamitas>();
+            FannyMessage scalLore = new FannyMessage("LoreScal", "Oh, Calamitas, the Brimstone Witch! She's like that spicy chili you thought was mild but then it lit your mouth on fire! I mean, I could've used her as a barbecue grill with all that brimstone and wrath. Poor girl, she really should've considered anger management classes!",
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == scalLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+            fannyMessages.Add(scalLore);
+
+            FannyMessage scalEvilLore = new FannyMessage("LoreEvilScal", "Of course, she's got a sob story, 'unfathomable, raw power,' give me a break! Sounds like a one-woman wrecking crew who can't handle her own destruction. Good riddance!",
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                .NeedsActivation(1.5f).SpokenByEvilFanny();
+
+            scalLore.AddStartEvent(() => scalEvilLore.ActivateMessage());
+
+            fannyMessages.Add(scalEvilLore);
+            #endregion
+            /* #region Does this boss even exist
+             int oldLoreItemType = ModContent.ItemType<LoreOldDuke>();
+             FannyMessage oldLore = new FannyMessage("LoreOld", "Oh my flames, what in the world is an 'Old Duke'? Sounds like someone's been fishing for ideas! X) I mean, we've already got Duke Fishron, right? Why go for a fishy sequel? Maybe it's just a fish tale that got a bit too old!",
+                 "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == deusLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+
+             fannyMessages.Add(oldLore);
+
+             FannyMessage oldEvilLore = new FannyMessage("LoreEvilOld", "Oh, for the love of flames, Fanny! You really are the dimmest ember in the fire, aren't you? This 'Old Duke' sounds like a poorly cooked idea, if you ask me. Who needs another Fishron boss? They should've called it 'Fishron: The Re-Hashed Edition.",
+                 "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                 .NeedsActivation(3).SpokenByEvilFanny();
+
+             oldLore.AddStartEvent(() => oldEvilLore.ActivateMessage());
+
+             fannyMessages.Add(oldEvilLore);
+             #endregion*/
         }
 
     }
