@@ -31,7 +31,6 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
             FannyMessage parent = (FannyMessage)args[0];
             FannyMessage message = (FannyMessage)args[1];
             float appearDelay = (float)args[2];
-            bool parentNeedsToBeClickedOff = (bool)args[3];
 
             // Apply activation requirements relative to the parent message.
             message = message.NeedsActivation(appearDelay);
