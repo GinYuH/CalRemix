@@ -266,7 +266,7 @@ namespace CalRemix.UI
 
             #region Deus
             int deusLoreItemType = ModContent.ItemType<LoreAstrumDeus>();
-            FannyMessage deusLore = new FannyMessage("LoreDeus", "A giant serpent eating entire stars!? That sure sounds dangerous! It's a good thing you were able to take it down.",
+            FannyMessage deusLore = new FannyMessage("LoreDeus", "This big, celestial dude is like the night sky's celebrity chef, chomping on stars and spitting out new ones. But here's the kicker – it's not your typical god, no siree! It got infected by some space cooties, and now it's throwing tantrums in the universe. Who knew being a star chef could be so complicated, am I right?",
                 "Awooga", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == deusLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
 
             fannyMessages.Add(deusLore);
