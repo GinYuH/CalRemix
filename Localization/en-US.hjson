@@ -1000,6 +1000,7 @@ Mods: {
 			PlaguedFirefly.DisplayName: Plagued Firefly
 			Miasmius.DisplayName: Miasmius
 			PlaguedSpidrone.DisplayName: Plagued Spidrone
+			LaRuga.DisplayName: La Ruga
 		}
 
 		Projectiles: {
