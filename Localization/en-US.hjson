@@ -95,6 +95,11 @@ Mods: {
 				DisplayName: Valfrey Burn
 				Description: Your power is being absorbed
 			}
+
+			Scorinfestation: {
+				DisplayName: Scorinfestation
+				Description: Consumed by magma
+			}
 		}
 
 		Items: {

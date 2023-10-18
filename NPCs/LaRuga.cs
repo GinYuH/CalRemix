@@ -28,6 +28,7 @@ using CalamityMod.Items.Weapons.Summon;
 using Microsoft.CodeAnalysis.Operations;
 using Newtonsoft.Json.Serialization;
 using System;
+using CalRemix.Buffs;
 
 namespace CalRemix.NPCs
 {
@@ -70,6 +71,7 @@ namespace CalRemix.NPCs
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().ShouldCloseHPBar = true;
+            NPC.rarity = 22;
             Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/LaRuga");
         }
 
@@ -271,6 +273,10 @@ namespace CalRemix.NPCs
                 }
                 float drainAmt = Main.expertMode ? 0.08f : 0.04f;
                 target.statLife -= (int)(target.statLifeMax2 * drainAmt);
+                if (Phase == (int)AttackID.hover && Main.rand.NextBool(20))
+                {
+                    target.AddBuff(ModContent.BuffType<Scorinfestation>(), 30);
+                }
             }
         }
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
