@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.Utilities;
+using Terraria.GameContent;
 
 namespace CalRemix.Backgrounds.Plague
 {
@@ -97,12 +98,13 @@ namespace CalRemix.Backgrounds.Plague
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            if (maxDepth >= float.MaxValue && minDepth < float.MaxValue)
+            if (maxDepth >= 3.40282347E+38f && minDepth < 3.40282347E+38f)
             {
                 if (Main.player[Main.myPlayer].GetModPlayer<CalRemixPlayer>().ZonePlague)
-                { 
+                {
+                    float height = (float)Math.Sin(Main.GlobalTimeWrappedHourly) * 22 + Main.screenHeight;
                     //Draw the sky box texture
-                    spriteBatch.Draw(SkyTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * Intensity);
+                    spriteBatch.Draw(ModContent.Request<Texture2D>("CalRemix/Backgrounds/Plague/PlagueSky").Value, new Rectangle(0, 0, Main.screenWidth, (int)height), Color.White * Intensity);
                 }
 
                 if (Main.player[Main.myPlayer].GetModPlayer<CalRemixPlayer>().ZonePlagueDesert)

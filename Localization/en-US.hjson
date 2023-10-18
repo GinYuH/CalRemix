@@ -971,6 +971,7 @@ Mods: {
 			PlaguedPipeWall.DisplayName: Plagued Pipe Wall
 			PlaguedStoneWall.DisplayName: Plagued Stone Wall
 			PlaguedVineWall.DisplayName: Plagued Vine Wall
+			PlaguedJungleMusicBox.DisplayName: Music Box (Plagued Jungle)
 		}
 
 		NPCs: {
@@ -997,6 +998,8 @@ Mods: {
 			GreenDemon.DisplayName: Green Demon
 			CosmicSlime.DisplayName: Cosmilite Slime
 			PlaguedFirefly.DisplayName: Plagued Firefly
+			Miasmius.DisplayName: Miasmius
+			PlaguedSpidrone.DisplayName: Plagued Spidrone
 		}
 
 		Projectiles: {
@@ -1093,6 +1096,7 @@ Mods: {
 			AspidShot.DisplayName: Aspid Shot
 			OgsculeBeamHostile.DisplayName: Ogscule Beam
 			PlaguedFallingSand.DisplayName: Plagued Sand Ball
+			PlagueSpit.DisplayName: Plague Spit
 		}
 
 		Tiles: {

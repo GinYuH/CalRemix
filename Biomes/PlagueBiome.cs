@@ -18,6 +18,8 @@ namespace CalRemix.Biomes
         public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("CalRemix/PlagueBgStyle");
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("CalRemix/PlagueUGBGStyle");
 
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PlaguedJungle");
+
         // Populate the Bestiary Filter
         public override string BestiaryIcon => "CalRemix/Biomes/LifeIcon";
 		public override string BackgroundPath => "CalRemix/Biomes/LifeMap";

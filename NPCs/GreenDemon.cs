@@ -103,7 +103,7 @@ namespace CalRemix.NPCs
                     {
                         int type = ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AMR2>();
                         int dmg = Main.expertMode ? 375 : 500;
-                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitY * 14, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
                         Main.projectile[p].hostile = true;
                         Main.projectile[p].friendly = false;
                         Main.projectile[p].DamageType = DamageClass.Generic;
@@ -155,7 +155,7 @@ namespace CalRemix.NPCs
                         {
                             int type = ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AMR2>();
                             int dmg = Main.expertMode ? 375 : 500;
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitY * 14, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
                             Main.projectile[p].hostile = true;
                             Main.projectile[p].friendly = false;
                             Main.projectile[p].DamageType = DamageClass.Generic;
@@ -178,7 +178,7 @@ namespace CalRemix.NPCs
                     {
                         int type = ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AMR2>();
                         int dmg = Main.expertMode ? 375 : 500;
-                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitY * 14, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
                         Main.projectile[p].hostile = true;
                         Main.projectile[p].friendly = false;
                         Main.projectile[p].DamageType = DamageClass.Generic;
