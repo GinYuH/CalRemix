@@ -12,6 +12,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CalRemix.Items;
 using CalRemix.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -59,6 +60,8 @@ namespace CalRemix.Buffs
                         victim.SetDefaults(ModContent.ItemType<ContinentalGreatbow>());
                     else if (victim.DamageType == DamageClass.Ranged && victim.maxStack == 1)
                         victim.SetDefaults(ModContent.ItemType<Helstorm>());
+                    else if (victim.DamageType == DamageClass.Ranged)
+                        victim.SetDefaults(ModContent.ItemType<HornetRound>());
                     else if (victim.DamageType == DamageClass.Magic)
                         victim.SetDefaults(ModContent.ItemType<ForbiddenSun>());
                     else if (victim.DamageType == ModContent.GetInstance<RogueDamageClass>() || victim.DamageType == DamageClass.Throwing)

@@ -30,6 +30,9 @@ using CalamityMod.Rarities;
 using rail;
 using CalRemix.NPCs;
 using CalRemix.Buffs;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -180,6 +183,18 @@ namespace CalRemix
                 TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
             }
         }
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (Scoriad)
+            {
+                int frameCount = Main.itemAnimations[item.type] != null ? Main.itemAnimations[item.type].FrameCount : 1;
+                Vector2 rand = new Vector2(Main.rand.Next(-4, 5), 0);
+                Color col = item.type == ModContent.ItemType<HornetRound>() ? Color.Yellow : Color.Red;
+                Main.EntitySpriteDraw(TextureAssets.Item[item.type].Value, position - new Vector2(TextureAssets.Item[item.type].Value.Width * 0.02f, TextureAssets.Item[item.type].Value.Height * 0.1f / frameCount) + rand, frame, col, 0, origin, scale * 1.4f, SpriteEffects.None);
+            }
+            return true;
+        }
+
         public override void UpdateInventory(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
