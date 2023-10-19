@@ -584,7 +584,14 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<FracturedArk>()))
                 {
-                    recipe.DisableRecipe();
+                    if (recipe.HasIngredient(ItemID.Terragrim))
+                        recipe.DisableRecipe();
+                    recipe.RemoveRecipeGroup(RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs["AnyCopperBar"]].RegisteredId);
+                    if (recipe.HasIngredient(ItemID.CopperBar))
+                        recipe.RemoveIngredient(ItemID.CopperBar);
+                    if (recipe.HasIngredient(ItemID.TinBar))
+                        recipe.RemoveIngredient(ItemID.TinBar);
+                    recipe.RemoveIngredient(ModContent.ItemType<PurifiedGel>());
                     recipe.AddIngredient(ItemID.Starfury);
                     recipe.AddIngredient(ItemID.EnchantedSword);
                     recipe.AddIngredient(ItemID.Gel, 5);
