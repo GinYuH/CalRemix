@@ -28,11 +28,16 @@ using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Rarities;
 using rail;
+using CalRemix.NPCs;
+using CalRemix.Buffs;
 
 namespace CalRemix
 {
 	public class CalRemixItem : GlobalItem
     {
+        public override bool InstancePerEntity => true;
+        public bool Scoriad = false;
+        public int NonScoria = -1;
         public override void SetDefaults(Item item)
         {
             /*if (item.type == ModContent.ItemType<GildedProboscis>())
@@ -192,6 +197,16 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<Seafood>())
             {
                 TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+            }
+            if (Scoriad)
+            {
+                if (!NPC.AnyNPCs(ModContent.NPCType<LaRuga>()) && !player.HasBuff(ModContent.BuffType<Scorinfestation>()))
+                {
+                    int stacke = item.stack;
+                    item.SetDefaults(NonScoria);
+                    item.stack = stacke;
+                    Scoriad = false;
+                }
             }
         }
 

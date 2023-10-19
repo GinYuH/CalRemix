@@ -264,18 +264,24 @@ namespace CalRemix.NPCs
             }
             else
             {
-                if (NPC.ai[3] <= 0)
-                    NPC.ai[2]++;
-                if (NPC.ai[2] >= 3)
-                {
-                    NPC.ai[2] = 22;
-                    SwitchPhase((int)AttackID.attatch);
-                }
                 float drainAmt = Main.expertMode ? 0.08f : 0.04f;
                 target.statLife -= (int)(target.statLifeMax2 * drainAmt);
-                if (Phase == (int)AttackID.hover && Main.rand.NextBool(20))
+                if (Phase == (int)AttackID.hover)
                 {
-                    target.AddBuff(ModContent.BuffType<Scorinfestation>(), 30);
+                    if (Main.rand.NextBool(20))
+                    {
+                        target.AddBuff(ModContent.BuffType<Scorinfestation>(), 30);
+                    }
+                }
+                else
+                {
+                    if (NPC.ai[3] <= 0)
+                        NPC.ai[2]++;
+                    if (NPC.ai[2] >= 3)
+                    {
+                        NPC.ai[2] = 22;
+                        SwitchPhase((int)AttackID.attatch);
+                    }
                 }
             }
         }
