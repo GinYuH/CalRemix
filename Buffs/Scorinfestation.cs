@@ -35,7 +35,7 @@ namespace CalRemix.Buffs
                 player.DelBuff(buffIndex);
                 buffIndex--;
             }
-            if (player.buffTime[buffIndex] % CalamityUtils.SecondsToFrames(20) == 0)
+            //if (player.buffTime[buffIndex] % CalamityUtils.SecondsToFrames(20) == 0)
             {
                 ScoriaDestruction(player);
             }
@@ -51,9 +51,9 @@ namespace CalRemix.Buffs
             {
                 if (!e.Scoriad)
                 {
-                    if (victim.DamageType == DamageClass.Melee && victim.useStyle == ItemUseStyleID.Swing)
+                    if ((victim.DamageType == DamageClass.Melee || victim.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>()) && victim.useStyle == ItemUseStyleID.Swing && victim.axe <= 0 && victim.pick <= 0 && victim.hammer <= 0)
                         victim.SetDefaults(ModContent.ItemType<HellfireFlamberge>());
-                    else if (victim.DamageType == DamageClass.Melee && victim.useStyle != ItemUseStyleID.Swing)
+                    else if ((victim.DamageType == DamageClass.Melee || victim.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>()) && victim.useStyle != ItemUseStyleID.Swing && victim.axe <= 0 && victim.pick <= 0 && victim.hammer <= 0)
                         victim.SetDefaults(ModContent.ItemType<VulcaniteLance>());
                     else if (victim.DamageType == DamageClass.Ranged && victim.useAmmo == AmmoID.Arrow)
                         victim.SetDefaults(ModContent.ItemType<ContinentalGreatbow>());
@@ -63,7 +63,7 @@ namespace CalRemix.Buffs
                         victim.SetDefaults(ModContent.ItemType<ForbiddenSun>());
                     else if (victim.DamageType == ModContent.GetInstance<RogueDamageClass>() || victim.DamageType == DamageClass.Throwing)
                         victim.SetDefaults(ModContent.ItemType<SubductionSlicer>());
-                    else if (victim.damage > 0)
+                    else if (victim.damage > 0 && victim.axe <= 0 && victim.pick <= 0 && victim.hammer <= 0)
                         victim.SetDefaults(ModContent.ItemType<FaultLine>());
                     else if (victim.createTile > -1 && victim.type != ModContent.ItemType<ScoriaBar>())
                         victim.SetDefaults(ModContent.ItemType<ScoriaBrick>());
