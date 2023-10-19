@@ -35,6 +35,7 @@ namespace CalRemix.Buffs
             {
                 player.DelBuff(buffIndex);
                 buffIndex--;
+                return;
             }
             if (player.buffTime[buffIndex] % CalamityUtils.SecondsToFrames(20) == 0)
             {

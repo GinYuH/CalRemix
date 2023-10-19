@@ -270,7 +270,7 @@ namespace CalRemix.NPCs
                 {
                     if (Main.rand.NextBool(20))
                     {
-                        target.AddBuff(ModContent.BuffType<Scorinfestation>(), 30);
+                        target.AddBuff(ModContent.BuffType<Scorinfestation>(), CalamityUtils.SecondsToFrames(300));
                     }
                 }
                 else
