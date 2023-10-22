@@ -24,6 +24,8 @@ using CalRemix.Tiles.PlaguedJungle;
 using CalRemix.Projectiles.TileTypeless;
 using CalamityMod.Tiles.Plates;
 using CalamityMod.NPCs;
+using CalamityMod.Tiles;
+using CalamityMod.Tiles.SunkenSea;
 
 namespace CalRemix
 {
@@ -202,28 +204,51 @@ namespace CalRemix
                             }
                         }
                     }
-                    if (planetsexist)
+                    int planetradius = 16;
+                    bool cutitNOW = false;
+                    for (int loo = 0; loo < 200; loo++)
                     {
-                        for (int i = 0; i < Main.maxTilesX; i++)
+                        if (cutitNOW)
                         {
-                            for (int j = 0; j < Main.maxTilesY * 0.3f; j++)
+                            break;
+                        }
+                        if (planetsexist)
+                        {
+                            for (int i = 0; i < Main.maxTilesX; i++)
                             {
-                                if (Main.rand.NextBool(10))
+                                for (int j = 0; j < Main.maxTilesY * 0.3f; j++)
                                 {
-                                    if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
+                                    if (Main.rand.NextBool(50))
                                     {
-                                        Main.tile[i, j].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
+                                        if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
+                                        {
+                                            for (int p = i - planetradius; p < i + planetradius; p++)
+                                            {
+                                                for (int q = j - planetradius; q < j + planetradius; q++)
+                                                {
+                                                    int dist = (p - i) * (p - i) + (q - j) * (q - j);
+                                                    if (dist > planetradius * planetradius)
+                                                        continue;
 
-                                        WorldGen.SquareTileFrame(i, j, true);
-                                        NetMessage.SendTileSquare(-1, i, j, 1);
+                                                    if (Main.tile[p, q].TileType == TileID.LunarOre || Main.tile[p, q].TileType == ModContent.TileType<ExodiumOre>())
+                                                    {
+                                                        Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
+
+                                                        WorldGen.SquareTileFrame(p, q, true);
+                                                        NetMessage.SendTileSquare(-1, p, q, 1);
+                                                        cutitNOW = true;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            Color messageColor = Color.Magenta;
+                            CalamityUtils.DisplayLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
+                            generatedCosmiliteSlag = true;
+                            UpdateWorldBool();
                         }
-                        Color messageColor = Color.Magenta;
-                        CalamityUtils.DisplayLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
-                        generatedCosmiliteSlag = true;
-                        UpdateWorldBool();
                     }
                 }
             }

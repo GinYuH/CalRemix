@@ -76,7 +76,9 @@ namespace CalRemix.Projectiles.TileTypeless
 					{
 						int type = Main.tile[k, l].TileType;
 						int wall = Main.tile[k, l].WallType;
-
+                        int dist = (k-i) * (k-i) + (l-j) * (l-j);
+						if (dist > size * size)
+							continue;
                         if (TileID.Sets.Ore[type] && ContentSamples.ItemsByType[Main.tile[k,l].GetOreItemID()].rare < ItemRarityID.Pink)
                         {
                             Main.tile[k, l].TileType = (ushort)ModContent.TileType<Tiles.PlaguedJungle.Sporezol>();
