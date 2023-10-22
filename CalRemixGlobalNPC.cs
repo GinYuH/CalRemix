@@ -514,7 +514,7 @@ namespace CalRemix
                 {
                     foreach (NPC n in Main.npc)
                     {
-                        if (n.type == ModContent.NPCType<StellarCulex>())
+                        if (n.type == ModContent.NPCType<StellarCulex>() && n.active)
                         {
                             if (n.getRect().Intersects(npc.getRect()))
                             {
