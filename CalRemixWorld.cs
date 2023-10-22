@@ -213,6 +213,9 @@ namespace CalRemix
                                     if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
                                     {
                                         Main.tile[i, j].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
+
+                                        WorldGen.SquareTileFrame(i, j, true);
+                                        NetMessage.SendTileSquare(-1, i, j, 1);
                                     }
                                 }
                             }
