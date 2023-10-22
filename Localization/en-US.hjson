@@ -990,8 +990,18 @@ Mods: {
 			Polyphemalus.DisplayName: Polyphemalus
 			SignalDrone.DisplayName: Signal Drone
 			WulfwyrmBody.DisplayName: Wulfrum Excavator
-			WulfwyrmHead.DisplayName: Wulfrum Excavator
 			WulfwyrmTail.DisplayName: Wulfrum Excavator
+
+			WulfwyrmHead: {
+				DisplayName: Wulfrum Excavator
+
+				BossChecklistIntegration: {
+					EntryName: Wulfrum Excavator
+					SpawnInfo: Put an Energy Core in an empty Living Wood Chest and close it.
+					DespawnMessage: "[c/99ffc7:The old excavator has successfully harvested every player.]"
+				}
+			}
+
 			LifeSlime.DisplayName: Life Slime
 			Rosalina.DisplayName: Starborn Princess
 			YEENA.DisplayName: General

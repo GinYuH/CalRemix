@@ -32,6 +32,8 @@ namespace CalRemix.Items.Accessories
             "+ 4 life regeneration, 15 % increased pick speed, and + 8 max minions\n" +
             "Increased minion knockback\n" +
             "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits"); 
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 10));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
         }
 
         public override void SetDefaults()
