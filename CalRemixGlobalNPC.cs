@@ -524,10 +524,15 @@ namespace CalRemix
                                 {
                                     Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
                                 }
-                                for (int i = -4; i < 4; i++)
+                                int craterRadius = 4;
+                                for (int i = -craterRadius; i < craterRadius; i++)
                                 {
-                                    for (int j = -4; j < 4; j++)
+                                    for (int j = -craterRadius; j < craterRadius; j++)
                                     {
+                                        int dist = ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) * ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) + ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j)) * ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j));
+                                        if (dist > craterRadius * craterRadius)
+                                            continue;
+
                                         Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
                                         if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
                                         {
