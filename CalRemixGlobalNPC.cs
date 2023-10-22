@@ -61,6 +61,8 @@ using CalamityMod.NPCs.DevourerofGods;
 using Terraria.UI;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Tiles.AstralSnow;
+using CalamityMod.Tiles.Ores;
 
 namespace CalRemix
 {
@@ -521,6 +523,17 @@ namespace CalRemix
                                 if (Main.netMode != NetmodeID.Server)
                                 {
                                     Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
+                                }
+                                for (int i = -4; i < 4; i++)
+                                {
+                                    for (int j = -4; j < 4; j++)
+                                    {
+                                        Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
+                                        if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
+                                        {
+                                            t.TileType = (ushort)ModContent.TileType<AstralOre>();
+                                        }
+                                    }
                                 }
                                 n.StrikeInstantKill();
                                 npc.StrikeInstantKill();
