@@ -141,7 +141,7 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<DesertMedallion>())
             {
-                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions");
+                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<CryoKey>())
@@ -152,6 +152,11 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<EyeofDesolation>())
             {
                 var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<StarbusterCore>())
+            {
+                var line = new TooltipLine(Mod, "StarbusterRemix", "Drops when a Stellar Culex touches a Unicorn");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<Abombination>())

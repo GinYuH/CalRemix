@@ -60,6 +60,7 @@ using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.DevourerofGods;
 using Terraria.UI;
 using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.Items.Accessories;
 
 namespace CalRemix
 {
@@ -507,6 +508,27 @@ namespace CalRemix
                 }
                 //npc.ai[1]++;
             }
+            if (npc.type == NPCID.Unicorn)
+            {
+                if (NPC.AnyNPCs(ModContent.NPCType<StellarCulex>()))
+                {
+                    foreach (NPC n in Main.npc)
+                    {
+                        if (n.type == ModContent.NPCType<StellarCulex>())
+                        {
+                            if (n.getRect().Intersects(npc.getRect()))
+                            {
+                                if (Main.netMode != NetmodeID.Server)
+                                {
+                                    Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
+                                }
+                                n.StrikeInstantKill();
+                                npc.StrikeInstantKill();
+                            }
+                        }
+                    }
+                }
+            }
         }
         public override void PostAI(NPC npc)
         {
@@ -658,7 +680,7 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ModContent.ItemType<Ogscule>());
             }
-            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound)
+            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == ModContent.NPCType<AstralSlime>())
             {
                 npcLoot.Add(ModContent.ItemType<TitanFinger>(), 50);
             }
@@ -685,6 +707,10 @@ namespace CalRemix
             {
                 LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
                 hm.Add(ModContent.ItemType<ClamChowder>(), 2);
+            }
+            if (npc.type == ModContent.NPCType<StellarCulex>())
+            {
+                npcLoot.RemoveWhere((rule) => rule is ItemDropWithConditionRule rouxls && rouxls.itemId == ModContent.ItemType<StarbusterCore>());
             }
             switch (npc.type)
             {
