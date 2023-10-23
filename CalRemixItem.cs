@@ -33,6 +33,7 @@ using CalRemix.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items;
+using CalamityMod.Items.Placeables.FurnitureCosmilite;
 
 namespace CalRemix
 {
@@ -368,6 +369,18 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
             {
                 item.stack = 1;
+            }
+            // i can't remove it from DoG man
+            if (item.type == ModContent.ItemType<CosmiliteBar>() && !Main.expertMode)
+            {
+                foreach (Item i in Main.item)
+                {
+                    if (i.type == ModContent.ItemType<CosmiliteBrick>() && i.active)
+                    {
+                        item.active = false;
+                        break;
+                    }
+                }
             }
             /*if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
             {

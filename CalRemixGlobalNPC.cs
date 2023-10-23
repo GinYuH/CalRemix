@@ -616,10 +616,6 @@ namespace CalRemix
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
             else*/
-            if (npc.type == ModContent.NPCType<DevourerofGodsHead>())
-            {
-                npcLoot.RemoveWhere((rule) => rule is DropHelper.PerPlayerDropRule rouxls && rouxls.itemId == ModContent.ItemType<CosmiliteBar>());
-            }
             if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
