@@ -98,6 +98,12 @@ namespace CalRemix
                 bar.AddTile(TileID.LunarCraftingStation);
                 bar.Register();
             }
+            {
+                Recipe bar = Recipe.Create(ModContent.ItemType<MidasPrime>(), 1);
+                bar.AddIngredient<MinnowsPrimeItem>();
+                bar.AddTile(TileID.CookingPots);
+                bar.Register();
+            }
 
             #region DP stuff
             // Alcohol...
