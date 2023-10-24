@@ -977,6 +977,7 @@ Mods: {
 			PlaguedStoneWall.DisplayName: Plagued Stone Wall
 			PlaguedVineWall.DisplayName: Plagued Vine Wall
 			PlaguedJungleMusicBox.DisplayName: Music Box (Plagued Jungle)
+			MinnowsPrimeItem.DisplayName: Minnows Prime
 		}
 
 		NPCs: {

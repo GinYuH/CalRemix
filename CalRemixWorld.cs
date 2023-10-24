@@ -204,23 +204,65 @@ namespace CalRemix
                             }
                         }
                     }
-                    int planetradius = 16;
                     bool cutitNOW = false;
                     for (int loo = 0; loo < 200; loo++)
                     {
+                        int minCloud = 0;
                         if (cutitNOW)
                         {
                             break;
                         }
+                        for (int i = 0; i < Main.maxTilesX; i++)
+                        {
+                            for (int j = (int)(Main.maxTilesY * 0.3f); j > 0; j--)
+                            { 
+                                if (Main.tile[i,j].TileType == TileID.Cloud)
+                                {
+                                    minCloud = j;
+                                    break;
+                                }
+                                if (minCloud != 0)
+                                    break;
+                            }
+                        }
+
                         if (planetsexist)
                         {
+                            CalamityMod.World.Planets.LuminitePlanet.GenerateLuminitePlanetoids(); // MORE
                             for (int i = 0; i < Main.maxTilesX; i++)
                             {
-                                for (int j = 0; j < Main.maxTilesY * 0.3f; j++)
+                                for (int j = 0; j < minCloud; j++)
                                 {
-                                    if (Main.rand.NextBool(50))
+                                    if (Main.rand.NextBool(75))
                                     {
                                         if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
+                                        {
+                                            int planetradius = Main.rand.Next(4, 7);
+                                            for (int p = i - planetradius; p < i + planetradius; p++)
+                                            {
+                                                for (int q = j - planetradius; q < j + planetradius; q++)
+                                                {
+                                                    int dist = (p - i) * (p - i) + (q - j) * (q - j);
+                                                    if (dist > planetradius * planetradius)
+                                                        continue;
+                                                    
+                                                    if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
+                                                    if (Main.tile[p, q].TileType == TileID.LunarOre || Main.tile[p, q].TileType == ModContent.TileType<ExodiumOre>())
+                                                    {
+                                                        Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
+
+                                                        WorldGen.SquareTileFrame(p, q, true);
+                                                        NetMessage.SendTileSquare(-1, p, q, 1);
+                                                        cutitNOW = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (Main.rand.NextBool(222))
+                                    {
+                                        int planetradius = Main.rand.Next(2, 5);
+                                        if (Main.tile[i, j].TileType == TileID.Dirt || Main.tile[i, j].TileType == TileID.Stone || Main.tile[i, j].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[i, j].TileType])
                                         {
                                             for (int p = i - planetradius; p < i + planetradius; p++)
                                             {
@@ -230,7 +272,8 @@ namespace CalRemix
                                                     if (dist > planetradius * planetradius)
                                                         continue;
 
-                                                    if (Main.tile[p, q].TileType == TileID.LunarOre || Main.tile[p, q].TileType == ModContent.TileType<ExodiumOre>())
+                                                    if (WorldGen.InWorld(p, q, 1) && Main.tile[p,q].HasTile)
+                                                    if (Main.tile[p, q].TileType == TileID.Dirt || Main.tile[p, q].TileType == TileID.Stone || Main.tile[p, q].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[p, q].TileType])
                                                     {
                                                         Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
 
