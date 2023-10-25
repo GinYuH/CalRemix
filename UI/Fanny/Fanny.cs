@@ -738,9 +738,6 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("DeusSplitMod", "This is getting out of hand! Now there are two of them!",
                "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && NPC.CountNPCS(ModContent.NPCType<AstrumDeusHead>()) > 1));
 
-            fannyMessages.Add(new FannyMessage("Poltergfb", "Return at 3 am for a surprise.",
-                "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByEvilFanny());
-
             fannyMessages.Add(new FannyMessage("YharvelQuip", "Is it just me, or is it getting hot in here?",
                 "Awooga", YharonPhase2));
 
@@ -834,6 +831,9 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("GfbStormWeaver", "You there, feeble player, prepare to be humiliated by the wrath of this insufferable sky serpent. This time, it's even longer than your list of shortcomings! Not much else to say here, just use piercing weapons or explosions.",
              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<StormWeaverHead>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbPolter", "Return at 3 am for a surprise.",
+                "EvilIdle", (FannySceneMetrics scene) => !(Main.time >= 27000 && Main.time < 30600 && Main.dayTime == false) && Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByEvilFanny());
 
             fannyMessages.Add(new FannyMessage("GfbOverdose", "It's time for the laziest, most shameless, uninspired pile of pixelated junk you've ever seen, a sorry excuse for a boss who couldn't even come up with its own look! Meet this 'brown recolor' ripoff, a pitiful imitation of an already goofy boss. And guess what? This time, they've taken to flatulence as their 'unique' attack! Get ready to hold your nose and your laughter because it's about to get 'stinky' in here. Just dodge the gas clouds, seriously, how hard can it be? Pummel this pathetic carbon copy and watch it dissolve into the pixelated void where it belongs. If you thought the original was a challenge, prepare to be underwhelmed by this trash!",
               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<OldDuke>())).SpokenByEvilFanny());
