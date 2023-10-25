@@ -566,6 +566,13 @@ namespace CalRemix
                 npc.frameCounter += 2;
             }
         }
+        public override void ModifyShop(NPCShop shop)
+        {
+            if (shop.NpcType == NPCID.Steampunker)
+            {
+                shop.Add(new NPCShop.Entry(ModContent.ItemType<PlaguedSolution>()));
+            }
+        }
         public override void ModifyTypeName(NPC npc, ref string typeName)
         {
             if (npc.type == ModContent.NPCType<WITCH>())

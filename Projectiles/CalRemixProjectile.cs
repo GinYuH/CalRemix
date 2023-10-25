@@ -15,6 +15,9 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Boss;
+using Terraria.ID;
+using CalRemix.Tiles.PlaguedJungle;
+using System;
 
 namespace CalRemix
 {
@@ -94,6 +97,158 @@ namespace CalRemix
 			if (modPlayer.tvo && projectile.type == ProjectileType<SandElementalHealer>() && player.statLife < player.statLifeMax && player.ownedProjectileCounts[ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>()] < 2)
             {
 				Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>(), 0, 0, projectile.owner);
+            }
+			if (projectile.type == ProjectileID.PureSpray)
+			{
+                PlagueToPureConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
+            }
+            if (projectile.type == ProjectileID.CorruptSpray || projectile.type == ProjectileID.CrimsonSpray || projectile.type == ProjectileID.HallowSpray || projectile.type == ModContent.ProjectileType<AstralSpray>() || projectile.type == ProjectileID.MushroomSpray)
+            {
+                PlagueToNeutralConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
+            }
+        }
+
+
+        public static void PlagueToPureConvert(int i, int j, int size = 4)
+        {
+            for (int k = i - size; k <= i + size; k++)
+            {
+                for (int l = j - size; l <= j + size; l++)
+                {
+                    if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size))
+                    {
+                        int type = Main.tile[k, l].TileType;
+                        int wall = Main.tile[k, l].WallType;
+
+                        if (type == ModContent.TileType<PlaguedGrass>())
+                        {
+                            Main.tile[k, l].TileType = TileID.JungleGrass;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedMud>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Mud;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<Sporezol>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Copper;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedStone>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Stone;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedMudWall>() || wall == ModContent.WallType<PlaguedMudWallSafe>())
+                        {
+                            Main.tile[k, l].WallType = WallID.MudUnsafe;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedHive>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Hive;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedSilt>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Silt;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedSand>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Sand;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedPipe>())
+                        {
+                            Main.tile[k, l].TileType = TileID.RichMahogany;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedPipeWall>())
+                        {
+                            Main.tile[k, l].WallType = WallID.RichMaogany;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedHiveWall>())
+                        {
+                            Main.tile[k, l].WallType = WallID.HiveUnsafe;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedStone>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Stone;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedVineWall>() || wall == ModContent.WallType<PlaguedVineWallSafe>())
+                        {
+                            Main.tile[k, l].WallType = WallID.GrassUnsafe;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedStoneWall>() || wall == ModContent.WallType<PlaguedStoneWallSafe>())
+                        {
+                            Main.tile[k, l].WallType = WallID.Stone;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedClay>())
+                        {
+                            Main.tile[k, l].TileType = TileID.ClayBlock;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public static void PlagueToNeutralConvert(int i, int j, int size = 4)
+        {
+            for (int k = i - size; k <= i + size; k++)
+            {
+                for (int l = j - size; l <= j + size; l++)
+                {
+                    if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size))
+                    {
+                        int type = Main.tile[k, l].TileType;
+                        int wall = Main.tile[k, l].WallType;
+
+                        if (type == ModContent.TileType<PlaguedMud>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Mud;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<Sporezol>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Copper;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedMudWall>() || wall == ModContent.WallType<PlaguedMudWallSafe>())
+                        {
+                            Main.tile[k, l].WallType = WallID.MudUnsafe;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedHive>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Hive;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedSilt>())
+                        {
+                            Main.tile[k, l].TileType = TileID.Silt;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (wall == ModContent.WallType<PlaguedHiveWall>())
+                        {
+                            Main.tile[k, l].WallType = WallID.HiveUnsafe;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (type == ModContent.TileType<PlaguedClay>())
+                        {
+                            Main.tile[k, l].TileType = TileID.ClayBlock;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                    }
+                }
             }
         }
 
