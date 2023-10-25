@@ -98,6 +98,12 @@ namespace CalRemix
                 bar.AddTile(TileID.LunarCraftingStation);
                 bar.Register();
             }
+            {
+                Recipe bar = Recipe.Create(ModContent.ItemType<MidasPrime>(), 1);
+                bar.AddIngredient<MinnowsPrimeItem>();
+                bar.AddTile(TileID.CookingPots);
+                bar.Register();
+            }
 
             #region DP stuff
             // Alcohol...
@@ -582,11 +588,19 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<AlloyBar>());
                 }
-                if (recipe.HasResult(ModContent.ItemType<FracturedArk>()))
+                if (recipe.HasResult(ModContent.ItemType<FracturedArk>()) && recipe.HasIngredient(ItemID.Terragrim))
                 {
                     recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<FracturedArk>()) && !recipe.HasIngredient(ItemID.Terragrim))
+                {
+                    recipe.RemoveRecipeGroup(RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs["AnyCopperBar"]].RegisteredId);
+                    if (recipe.HasIngredient(ItemID.CopperBar))
+                        recipe.RemoveIngredient(ItemID.CopperBar);
+                    if (recipe.HasIngredient(ItemID.TinBar))
+                        recipe.RemoveIngredient(ItemID.TinBar);
+                    recipe.RemoveIngredient(ModContent.ItemType<PurifiedGel>());
                     recipe.AddIngredient(ItemID.Starfury);
-                    recipe.AddIngredient(ItemID.EnchantedSword);
                     recipe.AddIngredient(ItemID.Gel, 5);
                     recipe.AddIngredient(ItemID.Diamond, 10);
                     recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 92);
@@ -605,7 +619,10 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemID.MoneyTrough))
                 {
-                    recipe.DisableRecipe();
+                    recipe.RemoveIngredient(ItemID.PiggyBank);
+                    recipe.RemoveIngredient(ItemID.GoldCoin);
+                    recipe.RemoveIngredient(ItemID.Feather);
+                    recipe.RemoveIngredient(ModContent.ItemType<BloodOrb>());
                     recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 100);
                     recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 2);
                 }
@@ -741,7 +758,8 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<SpiritGlyph>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.RemoveIngredient(ItemID.Diamond);
+                    recipe.RemoveIngredient(ItemID.Obsidian);
                     recipe.AddRecipeGroup(RecipeGroupID.IronBar, 15);
                     recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>(), 5);
                 }
@@ -757,14 +775,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<PlantationStaff>()))
                 {
-                    if (recipe.HasIngredient(ModContent.ItemType<FleshOfInfidelity>()))
-                    {
-                        recipe.DisableRecipe();
-                    }
-                    if (recipe.HasIngredient(ModContent.ItemType<EyeOfNight>()))
-                    {
-                        recipe.RemoveIngredient(ModContent.ItemType<EyeOfNight>());
-                    }
+                    recipe.RemoveIngredient(ModContent.ItemType<EyeOfNight>());
                     recipe.AddIngredient(ModContent.ItemType<EssenceofMyst>(), 10);
                 }
                 if (recipe.HasResult(ModContent.ItemType<PlagueReaperMask>()))

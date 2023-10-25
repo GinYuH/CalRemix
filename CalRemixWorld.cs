@@ -24,6 +24,9 @@ using CalRemix.Tiles.PlaguedJungle;
 using CalRemix.Projectiles.TileTypeless;
 using CalamityMod.Tiles.Plates;
 using CalamityMod.NPCs;
+using CalamityMod.Tiles;
+using CalamityMod.Tiles.SunkenSea;
+using System.Threading;
 
 namespace CalRemix
 {
@@ -45,6 +48,7 @@ namespace CalRemix
         public static int transmogrifyingItem = -1;
         public static int transmogrifyingItemAmt = 0;
         public static int transmogrifyTimeLeft = 0;
+        public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
 
         public static void UpdateWorldBool()
         {
@@ -190,43 +194,17 @@ namespace CalRemix
             {
                 if (NPC.downedMoonlord)
                 {
-                    bool planetsexist = false;
-                    for (int i = 0; i < Main.maxTilesX; i++)
+                    if (CalamityWorld.HasGeneratedLuminitePlanetoids)
                     {
-                        for (int j = 0; j < Main.maxTilesY; j++)
-                        {
-                            if (Main.tile[i, j].TileType == TileType<ExodiumOre>())
-                            {
-                                planetsexist = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (planetsexist)
-                    {
-                        for (int i = 0; i < Main.maxTilesX; i++)
-                        {
-                            for (int j = 0; j < Main.maxTilesY * 0.3f; j++)
-                            {
-                                if (Main.rand.NextBool(10))
-                                {
-                                    if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
-                                    {
-                                        Main.tile[i, j].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
-                                    }
-                                }
-                            }
-                        }
-                        Color messageColor = Color.Magenta;
-                        CalamityUtils.DisplayLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
-                        generatedCosmiliteSlag = true;
-                        UpdateWorldBool();
+                        //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
+                        GenerateCosmiliteSlag();
                     }
                 }
             }
+            //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
             if (!generatedPlague && NPC.downedGolemBoss)
             {
-                GeneratePlague();
+                ThreadPool.QueueUserWorkItem(_ => GeneratePlague(), this);
             }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
@@ -293,28 +271,114 @@ namespace CalRemix
             }
         }
 
+
+        public static void GenerateCosmiliteSlag()
+        {
+            CalamityMod.World.Planets.LuminitePlanet.GenerateLuminitePlanetoids(); // MORE
+            int minCloud = 0;
+            bool planetsexist = false;
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = (int)(Main.maxTilesY * 0.6f); j > 0; j--)
+                {
+                    if (Main.tile[i, j].TileType == TileType<ExodiumOre>())
+                    {
+                        planetsexist = true;
+                        minCloud = j;
+                        break;
+                    }
+                    if (minCloud != 0)
+                        break;
+                }
+            }
+            bool cutitNOW = false;
+            for (int loo = 0; loo < 200; loo++)
+            {
+                if (cutitNOW)
+                {
+                    break;
+                }
+
+                if (planetsexist)
+                {
+                    for (int i = 0; i < Main.maxTilesX; i++)
+                    {
+                        for (int j = 0; j < minCloud; j++)
+                        {
+                            if (Main.rand.NextBool(75))
+                            {
+                                if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
+                                {
+                                    int planetradius = Main.rand.Next(4, 7);
+                                    for (int p = i - planetradius; p < i + planetradius; p++)
+                                    {
+                                        for (int q = j - planetradius; q < j + planetradius; q++)
+                                        {
+                                            int dist = (p - i) * (p - i) + (q - j) * (q - j);
+                                            if (dist > planetradius * planetradius)
+                                                continue;
+
+                                            if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
+                                                if (Main.tile[p, q].TileType == TileID.LunarOre || Main.tile[p, q].TileType == ModContent.TileType<ExodiumOre>())
+                                                {
+                                                    Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
+
+                                                    WorldGen.SquareTileFrame(p, q, true);
+                                                    NetMessage.SendTileSquare(-1, p, q, 1);
+                                                    cutitNOW = true;
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                            if (Main.rand.NextBool(222))
+                            {
+                                int planetradius = Main.rand.Next(2, 5);
+                                if (Main.tile[i, j].TileType == TileID.Dirt || Main.tile[i, j].TileType == TileID.Stone || Main.tile[i, j].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[i, j].TileType])
+                                {
+                                    for (int p = i - planetradius; p < i + planetradius; p++)
+                                    {
+                                        for (int q = j - planetradius; q < j + planetradius; q++)
+                                        {
+                                            int dist = (p - i) * (p - i) + (q - j) * (q - j);
+                                            if (dist > planetradius * planetradius)
+                                                continue;
+
+                                            if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
+                                                if (Main.tile[p, q].TileType == TileID.Dirt || Main.tile[p, q].TileType == TileID.Stone || Main.tile[p, q].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[p, q].TileType])
+                                                {
+                                                    Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
+
+                                                    WorldGen.SquareTileFrame(p, q, true);
+                                                    NetMessage.SendTileSquare(-1, p, q, 1);
+                                                    cutitNOW = true;
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Color messageColor = Color.Magenta;
+                    CalamityUtils.DisplayLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
+                    generatedCosmiliteSlag = true;
+                    UpdateWorldBool();
+                }
+            }
+        }
+
         public static void GeneratePlague()
         {
             bool gennedplague = false;
             int plagueX = 0;
             int plagueY = 0;
-            for (int i = 0; i < Main.maxTilesX; i++)
+            int plagueY2 = 0;
+            if (CalamityWorld.JungleLabCenter != Vector2.Zero)
             {
-                for (int j = 0; j < Main.maxTilesY; j++) 
-                { 
-                    if (Main.tile[i,j].TileType == TileType<CalamityMod.Tiles.FurniturePlaguedPlate.PlaguedPlateBasin>() || Main.tile[i, j].TileType == TileType<CalamityMod.Tiles.FurniturePlaguedPlate.PlaguedPlateBed>())
-                    {
-                        PlaguedSpray.Convert(i, j, 222);
-                        plagueX = i;
-                        plagueY = j;
-                        gennedplague = true;
-                        break;
-                    }
-                    if (gennedplague)
-                    {
-                        break;
-                    }
-                }
+                PlaguedSpray.Convert((int)(CalamityWorld.JungleLabCenter.X / 16), (int)(CalamityWorld.JungleLabCenter.Y / 16), 222 * (WorldGen.GetWorldSize() + 1));
+                plagueX = (int)(CalamityWorld.JungleLabCenter.X / 16);
+                plagueY = (int)(CalamityWorld.JungleLabCenter.Y / 16);
+                gennedplague = true;
             }
             if (!gennedplague)
             {
@@ -324,7 +388,7 @@ namespace CalRemix
                     {
                         if (Main.tile[i, j].TileType == TileID.Mud && Main.rand.NextBool(2222))
                         {
-                            PlaguedSpray.Convert(i, j, 222);
+                            PlaguedSpray.Convert(i, j, 222 * (WorldGen.GetWorldSize() + 1));
                             plagueX = i;
                             plagueY = j;
                             gennedplague = true;
@@ -335,6 +399,10 @@ namespace CalRemix
                             break;
                         }
                     }
+                    if (gennedplague)
+                    {
+                        break;
+                    }
                 }
             }
             if (gennedplague)
@@ -343,8 +411,16 @@ namespace CalRemix
                 {
                     if (Main.tile[plagueX, j].HasTile && !Main.tile[plagueX, j - 1].HasTile)
                     {
-                        PlaguedSpray.Convert(plagueX, j, 111);
+                        PlaguedSpray.Convert(plagueX, j, 111 * (WorldGen.GetWorldSize() + 1));
+                        plagueY2 = j;
                         break;
+                    }
+                }
+                for (int i = plagueX - 33 * (WorldGen.GetWorldSize() + 1); i < 33 * (WorldGen.GetWorldSize() + 1) + plagueX; i++)
+                {
+                    for (int j = plagueY2; j < plagueY; j++)
+                    {
+                        PlaguedSpray.Convert(i, j, 2);
                     }
                 }
                 generatedPlague = true;

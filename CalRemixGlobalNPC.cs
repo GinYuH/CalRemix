@@ -60,6 +60,9 @@ using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.DevourerofGods;
 using Terraria.UI;
 using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Tiles.AstralSnow;
+using CalamityMod.Tiles.Ores;
 
 namespace CalRemix
 {
@@ -507,6 +510,45 @@ namespace CalRemix
                 }
                 //npc.ai[1]++;
             }
+            if (npc.type == NPCID.Unicorn)
+            {
+                if (NPC.AnyNPCs(ModContent.NPCType<StellarCulex>()))
+                {
+                    foreach (NPC n in Main.npc)
+                    {
+                        if (n.type == ModContent.NPCType<StellarCulex>() && n.active)
+                        {
+                            if (n.getRect().Intersects(npc.getRect()))
+                            {
+                                if (Main.netMode != NetmodeID.Server)
+                                {
+                                    Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
+                                }
+                                int craterRadius = 4;
+                                for (int i = -craterRadius; i < craterRadius; i++)
+                                {
+                                    for (int j = -craterRadius; j < craterRadius; j++)
+                                    {
+                                        int dist = ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) * ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) + ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j)) * ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j));
+                                        if (dist > craterRadius * craterRadius)
+                                            continue;
+
+                                        Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
+                                        if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
+                                        {
+                                            t.TileType = (ushort)ModContent.TileType<AstralOre>();
+                                            WorldGen.SquareTileFrame((int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, true);
+                                            NetMessage.SendTileSquare(-1, (int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, 1);
+                                        }
+                                    }
+                                }
+                                n.StrikeInstantKill();
+                                npc.StrikeInstantKill();
+                            }
+                        }
+                    }
+                }
+            }
         }
         public override void PostAI(NPC npc)
         {
@@ -574,10 +616,6 @@ namespace CalRemix
                 npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
             }
             else*/
-            if (npc.type == ModContent.NPCType<DevourerofGodsHead>())
-            {
-                npcLoot.RemoveWhere((rule) => rule is DropHelper.PerPlayerDropRule rouxls && rouxls.itemId == ModContent.ItemType<CosmiliteBar>());
-            }
             if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
@@ -658,7 +696,7 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ModContent.ItemType<Ogscule>());
             }
-            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound)
+            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == ModContent.NPCType<AstralSlime>())
             {
                 npcLoot.Add(ModContent.ItemType<TitanFinger>(), 50);
             }
@@ -685,6 +723,10 @@ namespace CalRemix
             {
                 LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
                 hm.Add(ModContent.ItemType<ClamChowder>(), 2);
+            }
+            if (npc.type == ModContent.NPCType<StellarCulex>())
+            {
+                npcLoot.RemoveWhere((rule) => rule is ItemDropWithConditionRule rouxls && rouxls.itemId == ModContent.ItemType<StarbusterCore>());
             }
             switch (npc.type)
             {

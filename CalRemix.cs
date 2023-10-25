@@ -21,6 +21,8 @@ using Microsoft.Xna.Framework;
 using CalRemix.Backgrounds.Plague;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;
+using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.Items.Materials;
 
 namespace CalRemix
 {
@@ -81,26 +83,18 @@ namespace CalRemix
             {
                 Mod bossChecklist;
                 ModLoader.TryGetMod("BossChecklist", out bossChecklist);
-                //private static void AddBoss(Mod bossChecklist, Mod hostMod, string name, float difficulty, List<int> npcTypes, Func<bool> downed, object summon,
-                //List<int> collection, string instructions, string despawn, Func< bool > available, Action<SpriteBatch, Rectangle, Color> portrait = null, string bossHeadTex = null)
                 if (bossChecklist != null)
                 {
-                    bossChecklist.Call(
-                    "AddBoss",
-                    0.22f,
-                    ModContent.NPCType<WulfwyrmHead>(),
-                    this,
-                    "Wulfrum Excavator",
-                    (Func<bool>)(() => CalRemixWorld.downedExcavator),
-                    ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>(),
-                    new List<int>() { ModContent.ItemType<Items.KnowledgeExcavator>() },
-                    new List<int>() { ItemID.LesserHealingPotion },
-                    $"Place an [i:{ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>()}] inside of an empty [i:{ItemID.LivingWoodChest}]",
-                "The old excavator has successfully harvested every player.",
-                    CalamityUtils.ColorMessage("The old excavator has successfully harvested every player.", new Microsoft.Xna.Framework.Color(108, 245, 133)),
-                    "CalamityMod/NPCs/Boss/WulfwyrmBossChecklist",
-                    null,
-                    null);
+                    Action<SpriteBatch, Rectangle, Color> portrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                        Texture2D texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/WulfwyrmBossChecklist").Value;
+                        Vector2 centered = new Vector2(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                        sb.Draw(texture, centered + new Vector2(420, 300), null, color, 0, centered, 0.8f, SpriteEffects.None, 1);
+                    };
+                    bossChecklist.Call("LogBoss", this, "WulfrumExcavator", 0.22f, () => CalRemixWorld.downedExcavator, ModContent.NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
+                    {
+                        ["spawnItems"] = ModContent.ItemType<EnergyCore>(),
+                        ["customPortrait"] = portrait
+                    });
                 }
             }
             LocalizedText fallacious = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Name");

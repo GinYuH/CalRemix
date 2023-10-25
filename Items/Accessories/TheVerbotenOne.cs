@@ -100,6 +100,7 @@ namespace CalRemix.Items.Accessories
             player.blackBelt = true;
             player.spikedBoots = 2;
             player.maxMinions += 20;
+            player.Calamity().infiniteFlight = true;
 
             player.GetDamage<GenericDamageClass>() += 0.15f;
             player.GetArmorPenetration<GenericDamageClass>() += 150;

@@ -54,6 +54,9 @@ using CalRemix.Items;
 using CalamityMod.NPCs.Polterghast;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
+using CalRemix.Items.Weapons;
 
 namespace CalRemix.UI
 {
@@ -552,7 +555,7 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("AlloyBar", "Congratulations, you have obtained the final bar for this stage of your adventure. You should attempt making some Alloy Bars, a versatile material made of every available bar which can be used for powerful items.",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<AlloyBar>())).AddItemDisplay(ModContent.ItemType<AlloyBar>()));
 
-            fannyMessages.Add(new FannyMessage("Murasama", "Erm, holy crap? " + Main.LocalPlayer.name + "? Is that a reference to my FAVORITE game of all time, metal gear rising revengeance? Did you know that calamity adds a custom boss health boss bar and many othe-",
+            fannyMessages.Add(new FannyMessage("Murasama", "Erm, holy crap? Is that a reference to my FAVORITE game of all time, metal gear rising revengeance? Did you know that calamity adds a custom boss health boss bar and many othe-",
                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Murasama>())));
 
             fannyMessages.Add(new FannyMessage("Sponge", "Oh, is that a Sponge? Maybe avoid using it. I've heard something about the wielder dying, or something...",
@@ -573,6 +576,11 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Onion", "I'd be weary about eating that strange plant. You can only get one, so it might be useful to hang on to it for later.",
    "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>())).AddItemDisplay(ModContent.ItemType<CelestialOnion>()));
 
+            fannyMessages.Add(new FannyMessage("Ultrakill", "Oh EM GEE! A gun from the hit first-person shooter game, \'MURDERDEATH\'!? Try throwing out some coins and hitting them with a Titanium Railgun to pull a sick railcoin maneuver!",
+   "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<MidasPrime>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<CrackshotColt>())).AddItemDisplay(ModContent.ItemType<MidasPrime>()));
+
+            fannyMessages.Add(new FannyMessage("Tofu", "Uh oh! Looks like one of your items is a reference to a smelly old game franchise known as Touhou! Do your ol\' pal Fanny a good deed and put it away.",
+   "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ScarletDevil>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<GlacialEmbrace>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<RecitationoftheBeast>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<EventHorizon>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HermitsBoxofOneHundredMedicines>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<PristineFury>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<DarkSpark>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<ResurrectionButterfly>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<FantasyTalisman>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HellsSun>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<TheDreamingGhost>())).SetHoverTextOverride("Anything for you Fanny!"));
 
             /*fannyMessages.Add(new FannyMessage("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
                "Nuhuh", (FannySceneMetrics scene) => ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip) && Main.LocalPlayer.talk == ModContent.NPCType<WITCH>()));*/
@@ -608,6 +616,12 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Sulph", "Ah the good ol' Sulphurous Sea. Just take a breathe of the fresh air here! If you see any tiny light green lights, you should use a Bug Net on it to get a fancy light pet.",
   "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur).AddItemDisplay(ModContent.ItemType<DisgustingSeawater>()));
+
+            fannyMessages.Add(new FannyMessage("Starbuster", "Trying to get a Starbuster Core? Lately those culex things have been hardening up! The only way to force their cores out of them is by running a Unicorn into them!",
+  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight)).AddItemDisplay(ModContent.ItemType<StarbusterCore>()));
+
+            fannyMessages.Add(new FannyMessage("NotBlessedApple", "A smart one ey? Unfortunately, only hostile Unicorns are able to break those astral batties open.",
+  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight) && Main.LocalPlayer.mount.Type == MountID.Unicorn));
             #endregion
 
             #region Shrine
@@ -772,7 +786,7 @@ namespace CalRemix.UI
         {
 
             FannyMessage introLore = new FannyMessage("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
-                "Idle", (FannySceneMetrics scene) => Main.hardMode, 20, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(5);
+                "Idle", (FannySceneMetrics scene) => Main.hardMode, 10, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(5);
 
             fannyMessages.Add(introLore);
 

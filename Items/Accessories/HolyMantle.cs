@@ -43,6 +43,7 @@ namespace CalRemix.Items.Accessories
                 player.wingTime = 500;
             }
             player.noFallDmg = true;
+            player.Calamity().infiniteFlight = true;
         }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)

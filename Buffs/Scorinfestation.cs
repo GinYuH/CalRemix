@@ -12,6 +12,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CalRemix.Items;
 using CalRemix.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -34,8 +35,9 @@ namespace CalRemix.Buffs
             {
                 player.DelBuff(buffIndex);
                 buffIndex--;
+                return;
             }
-            if (player.buffTime[buffIndex] % 120 == 0 && Main.rand.NextBool(2))
+            if (player.buffTime[buffIndex] % CalamityUtils.SecondsToFrames(20) == 0)
             {
                 ScoriaDestruction(player);
             }
@@ -46,39 +48,50 @@ namespace CalRemix.Buffs
             int slotToDestroy = Main.rand.Next(0, player.inventory.Length);
             Item victim = player.inventory[slotToDestroy];
             int stack = victim.stack;
-            if (victim.DamageType == DamageClass.Melee && victim.useStyle == ItemUseStyleID.Swing)
-                victim.SetDefaults(ModContent.ItemType<HellfireFlamberge>());
-            else if (victim.DamageType == DamageClass.Melee && victim.useStyle != ItemUseStyleID.Swing)
-                victim.SetDefaults(ModContent.ItemType<VulcaniteLance>());
-            else if (victim.DamageType == DamageClass.Ranged && victim.useAmmo == AmmoID.Arrow)
-                victim.SetDefaults(ModContent.ItemType<ContinentalGreatbow>());
-            else if (victim.DamageType == DamageClass.Ranged && victim.ammo <= 0)
-                victim.SetDefaults(ModContent.ItemType<Helstorm>());
-            else if (victim.DamageType == DamageClass.Magic)
-                victim.SetDefaults(ModContent.ItemType<ForbiddenSun>());
-            else if (victim.DamageType == ModContent.GetInstance<RogueDamageClass>())
-                victim.SetDefaults(ModContent.ItemType<SubductionSlicer>());
-            else if (victim.damage > 0)
-                victim.SetDefaults(ModContent.ItemType<FaultLine>());
-            else if (victim.createTile > -1 && victim.type != ModContent.ItemType<ScoriaBar>())
-                victim.SetDefaults(ModContent.ItemType<ScoriaBrick>());
-            else if (victim.createWall > -1)
-                victim.SetDefaults(ModContent.ItemType<ScoriaBrickWall>());
-            else if (victim.pick > 0 || victim.hammer > 0)
-                victim.SetDefaults(ModContent.ItemType<SeismicHampick>());
-            else if (victim.axe > 0)
-                victim.SetDefaults(ModContent.ItemType<TectonicTruncator>());
-            else if (victim.fishingPole > 0)
-                victim.SetDefaults(ModContent.ItemType<RiftReeler>());
-            else if (victim.accessory)
-                victim.SetDefaults(ModContent.ItemType<HadalMantle>());
-            else if (victim.defense > 0)
-                victim.SetDefaults(ModContent.ItemType<HydrothermicArmor>());
-            else if (victim.potion)
-                victim.SetDefaults(ModContent.ItemType<ScoriaOre>());
-            else
-                victim.SetDefaults(ModContent.ItemType<ScoriaBar>());
-            victim.stack = stack;
+            int type = victim.type;
+            if (victim.TryGetGlobalItem<CalRemixItem>(out CalRemixItem e))
+            {
+                if (!e.Scoriad)
+                {
+                    if ((victim.DamageType == DamageClass.Melee || victim.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>()) && victim.useStyle == ItemUseStyleID.Swing && victim.axe <= 0 && victim.pick <= 0 && victim.hammer <= 0)
+                        victim.SetDefaults(ModContent.ItemType<HellfireFlamberge>());
+                    else if ((victim.DamageType == DamageClass.Melee || victim.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>()) && victim.useStyle != ItemUseStyleID.Swing && victim.axe <= 0 && victim.pick <= 0 && victim.hammer <= 0)
+                        victim.SetDefaults(ModContent.ItemType<VulcaniteLance>());
+                    else if (victim.DamageType == DamageClass.Ranged && victim.useAmmo == AmmoID.Arrow)
+                        victim.SetDefaults(ModContent.ItemType<ContinentalGreatbow>());
+                    else if (victim.DamageType == DamageClass.Ranged && victim.maxStack == 1)
+                        victim.SetDefaults(ModContent.ItemType<Helstorm>());
+                    else if (victim.DamageType == DamageClass.Ranged)
+                        victim.SetDefaults(ModContent.ItemType<HornetRound>());
+                    else if (victim.DamageType == DamageClass.Magic)
+                        victim.SetDefaults(ModContent.ItemType<ForbiddenSun>());
+                    else if (victim.DamageType == ModContent.GetInstance<RogueDamageClass>() || victim.DamageType == DamageClass.Throwing)
+                        victim.SetDefaults(ModContent.ItemType<SubductionSlicer>());
+                    else if (victim.damage > 0 && victim.axe <= 0 && victim.pick <= 0 && victim.hammer <= 0)
+                        victim.SetDefaults(ModContent.ItemType<FaultLine>());
+                    else if (victim.createTile > -1 && victim.type != ModContent.ItemType<ScoriaBar>())
+                        victim.SetDefaults(ModContent.ItemType<ScoriaBrick>());
+                    else if (victim.createWall > -1)
+                        victim.SetDefaults(ModContent.ItemType<ScoriaBrickWall>());
+                    else if (victim.pick > 0 || victim.hammer > 0)
+                        victim.SetDefaults(ModContent.ItemType<SeismicHampick>());
+                    else if (victim.axe > 0)
+                        victim.SetDefaults(ModContent.ItemType<TectonicTruncator>());
+                    else if (victim.fishingPole > 0)
+                        victim.SetDefaults(ModContent.ItemType<RiftReeler>());
+                    else if (victim.accessory)
+                        victim.SetDefaults(ModContent.ItemType<HadalMantle>());
+                    else if (victim.defense > 0)
+                        victim.SetDefaults(ModContent.ItemType<HydrothermicArmor>());
+                    else if (victim.potion)
+                        victim.SetDefaults(ModContent.ItemType<ScoriaOre>());
+                    else
+                        victim.SetDefaults(ModContent.ItemType<ScoriaBar>());
+                    victim.stack = stack;
+                    victim.GetGlobalItem<CalRemixItem>().Scoriad = true;
+                    victim.GetGlobalItem<CalRemixItem>().NonScoria = type;
+                }
+            }
         }
     }
 }

@@ -98,9 +98,19 @@ namespace CalRemix.NPCs
             {
                 case (int)AttackID.idle:
                     {
+                        if (Main.rand.NextBool(120))
+                        {
+                            SoundEngine.PlaySound(SoundID.Item2 with { Pitch = SoundID.Item2.Pitch - 1f, MaxInstances = 22 }, NPC.Center);
+                        }
+                        if (Main.rand.NextBool(360))
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = SoundID.NPCDeath13.Pitch - 1f, MaxInstances = 22 }, NPC.Center);
+                        }
                         NPC.noGravity = false;
                         if (targ.Distance(NPC.Center) < 320 || NPC.life < NPC.lifeMax)
                         {
+                            SoundEngine.PlaySound(CnidarianJellyfishOnTheString.SlapSound, NPC.Center);
+                            SoundEngine.PlaySound(SoundID.ScaryScream with { Pitch = SoundID.ScaryScream.Pitch - 1f }, NPC.Center);
                             SwitchPhase((int)AttackID.alert);
                         }
                         break;
@@ -127,6 +137,8 @@ namespace CalRemix.NPCs
 
                         if (NPC.life < NPC.lifeMax * 0.5f && Main.rand.NextBool(1200))
                         {
+                            SoundEngine.PlaySound(CnidarianJellyfishOnTheString.SlapSound, NPC.Center);
+                            SoundEngine.PlaySound(SoundID.ScaryScream with { Pitch = SoundID.ScaryScream.Pitch - 1f }, NPC.Center);
                             SwitchPhase((int)AttackID.neckcrack);
                         }
                         break;
@@ -264,18 +276,24 @@ namespace CalRemix.NPCs
             }
             else
             {
-                if (NPC.ai[3] <= 0)
-                    NPC.ai[2]++;
-                if (NPC.ai[2] >= 3)
-                {
-                    NPC.ai[2] = 22;
-                    SwitchPhase((int)AttackID.attatch);
-                }
                 float drainAmt = Main.expertMode ? 0.08f : 0.04f;
                 target.statLife -= (int)(target.statLifeMax2 * drainAmt);
-                if (Phase == (int)AttackID.hover && Main.rand.NextBool(20))
+                if (Phase == (int)AttackID.hover)
                 {
-                    target.AddBuff(ModContent.BuffType<Scorinfestation>(), 30);
+                    if (Main.rand.NextBool(20))
+                    {
+                        target.AddBuff(ModContent.BuffType<Scorinfestation>(), CalamityUtils.SecondsToFrames(300));
+                    }
+                }
+                else
+                {
+                    if (NPC.ai[3] <= 0)
+                        NPC.ai[2]++;
+                    if (NPC.ai[2] >= 3)
+                    {
+                        NPC.ai[2] = 22;
+                        SwitchPhase((int)AttackID.attatch);
+                    }
                 }
             }
         }

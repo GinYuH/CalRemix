@@ -55,7 +55,7 @@ public class OgsculeBeam : BaseLaserbeamProjectile
     public override bool PreAI()
     {
         Player player = Main.player[Projectile.owner];
-        Projectile.Center = player.Center;
+        Projectile.Center = player.Center + Vector2.UnitX * player.direction * 36 + Vector2.UnitY * -30;
         return true;
     }
 

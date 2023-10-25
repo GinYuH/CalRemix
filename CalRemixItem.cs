@@ -28,11 +28,20 @@ using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Rarities;
 using rail;
+using CalRemix.NPCs;
+using CalRemix.Buffs;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using CalRemix.Items;
+using CalamityMod.Items.Placeables.FurnitureCosmilite;
 
 namespace CalRemix
 {
 	public class CalRemixItem : GlobalItem
     {
+        public override bool InstancePerEntity => true;
+        public bool Scoriad = false;
+        public int NonScoria = -1;
         public override void SetDefaults(Item item)
         {
             /*if (item.type == ModContent.ItemType<GildedProboscis>())
@@ -133,7 +142,7 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<DesertMedallion>())
             {
-                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions");
+                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<CryoKey>())
@@ -144,6 +153,11 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<EyeofDesolation>())
             {
                 var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                tooltips.Add(line);
+            }
+            if (item.type == ModContent.ItemType<StarbusterCore>())
+            {
+                var line = new TooltipLine(Mod, "StarbusterRemix", "Drops when a Stellar Culex touches a Unicorn");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<Abombination>())
@@ -175,6 +189,18 @@ namespace CalRemix
                 TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
             }
         }
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (Scoriad)
+            {
+                int frameCount = Main.itemAnimations[item.type] != null ? Main.itemAnimations[item.type].FrameCount : 1;
+                Vector2 rand = new Vector2(Main.rand.Next(-4, 5), 0);
+                Color col = item.type == ModContent.ItemType<HornetRound>() ? Color.Yellow : Color.Red;
+                Main.EntitySpriteDraw(TextureAssets.Item[item.type].Value, position - new Vector2(TextureAssets.Item[item.type].Value.Width * 0.02f, TextureAssets.Item[item.type].Value.Height * 0.1f / frameCount) + rand, frame, col, 0, origin, scale * 1.4f, SpriteEffects.None);
+            }
+            return true;
+        }
+
         public override void UpdateInventory(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
@@ -192,6 +218,16 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<Seafood>())
             {
                 TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+            }
+            if (Scoriad)
+            {
+                if (!NPC.AnyNPCs(ModContent.NPCType<LaRuga>()) && !player.HasBuff(ModContent.BuffType<Scorinfestation>()))
+                {
+                    int stacke = item.stack;
+                    item.SetDefaults(NonScoria);
+                    item.stack = stacke;
+                    Scoriad = false;
+                }
             }
         }
 
@@ -333,6 +369,18 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
             {
                 item.stack = 1;
+            }
+            // i can't remove it from DoG man
+            if (item.type == ModContent.ItemType<CosmiliteBar>() && !Main.expertMode)
+            {
+                foreach (Item i in Main.item)
+                {
+                    if (i.type == ModContent.ItemType<CosmiliteBrick>() && i.active)
+                    {
+                        item.active = false;
+                        break;
+                    }
+                }
             }
             /*if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
             {

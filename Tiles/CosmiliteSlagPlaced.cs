@@ -1,6 +1,7 @@
 using CalRemix.Items.Placeables;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -22,6 +23,8 @@ namespace CalRemix.Tiles
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Life Ore");
 			AddMapEntry(new Color(204, 114, 198), name);
+			HitSound = SoundID.Tink;
+			DustType = (int)CalamityMod.Dusts.CalamityDusts.PurpleCosmilite;
 		}
 	}
 }
