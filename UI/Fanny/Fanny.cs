@@ -1556,7 +1556,7 @@ namespace CalRemix.UI
                 int i = 0;
                 foreach (DynamicFannyTextSegment dynamicText in textSegments)
                 {
-                    baseText.Replace("$" + i.ToString(), dynamicText());
+                    baseText = baseText.Replace("$" + i.ToString(), dynamicText());
                     i++;
                 }
             }
