@@ -1007,7 +1007,7 @@ namespace CalRemix.UI
             fannyMessages.Add(babil1);
 
             FannyMessage babil2 = new FannyMessage("Babil2", "Oh you sweet summer child! The Essence of Babil is this incredible, mystical substance you can gather from jungle enemies. It's a key ingredient for crafting some seriously awesome gear. You should definitely try to collect it!",
-                "Nuhuh", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Huh, okay. So, where do I find it?").AddDelay(10).NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
+                "Nuhuh", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Huh, okay. So, where do I find it?").AddDelay(2).NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
 
             babil1.AddEndEvent(() => babil2.ActivateMessage());
 
@@ -1035,9 +1035,7 @@ namespace CalRemix.UI
             fannyMessages.Add(babil5);
 
             FannyMessage babil6 = new FannyMessage("Babil6", "Hey there, adventurer... Have you heard about the Essence of Babil? It's this... remarkable crafting material that drops from such unworthy jungle creatures. Let me grace you with some information, whether you appreciate it or not.",
-                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Umm, Essence of Babil? What's that?").NeedsActivation().AddDelay(3).SpokenByEvilFanny();
-
-            babil5.AddEndEvent(() => babil6.ActivateMessage());
+                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle, persistsThroughSaves: false).SetHoverTextOverride("Umm, Essence of Babil? What's that?").AddDelay(3).SpokenByEvilFanny();
 
             fannyMessages.Add(babil6);
 
@@ -1063,18 +1061,32 @@ namespace CalRemix.UI
             fannyMessages.Add(babil9);
 
             FannyMessage babil10 = new FannyMessage("Babil10", "Of course, you don't!!! Why would I expect any different? Essence of Babil is just a crafting material. You find it in the jungle. You use it to make \"cool\" stuff, if you're into that sort of thing. But, frankly, I couldn't care less.",
-                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").NeedsActivation().SpokenByEvilFanny().AddDelay(10);
+                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").NeedsActivation().SpokenByEvilFanny().AddDelay(2);
 
             babil9.AddEndEvent(() => babil10.ActivateMessage());
 
             fannyMessages.Add(babil10);
 
             FannyMessage babil11 = new FannyMessage("Babil11", "You think you \"get it\"? You're beyond hopeless! There, now you're truly enlightened. Enjoy your essence... of oblivion!",
-                "EvilIdle", FannyMessage.AlwaysShow, needsToBeClickedOff: false, duration: 20, persistsThroughSaves: false).NeedsActivation().SpokenByEvilFanny().AddStartEvent(()=>Main.LocalPlayer.AddBuff(ModContent.BuffType<VulnerabilityHex>(), 216000));
+                "EvilIdle", FannyMessage.AlwaysShow, needsToBeClickedOff: false, duration: 20, persistsThroughSaves: false).NeedsActivation().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny);
 
             babil10.AddEndEvent(() => babil11.ActivateMessage());
 
             fannyMessages.Add(babil11);
+        }
+
+        private static void EssenceOfOblivionEvilFanny()
+        {
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<VulnerabilityHex>(), 216000);
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<AstralInfectionDebuff>(), 216000);
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<BurningBlood>(), 216000);
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 216000);
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<HolyFlames>(), 216000);
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<MiracleBlight>(), 216000);
+            Main.LocalPlayer.statLife = Math.Max(Main.LocalPlayer.statLife, Main.LocalPlayer.statLifeMax2 / 4);
+
+            for (int i = 0; i < 5; i++)
+                SoundEngine.PlaySound(SoundID.Thunder with { MaxInstances = 0 });
         }
 
         private static void Violence()
