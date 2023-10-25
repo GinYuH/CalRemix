@@ -57,6 +57,25 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
 using CalRemix.Items.Weapons;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.NPCs.Crabulon;
+using CalamityMod.NPCs.SlimeGod;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.AquaticScourge;
+using CalamityMod.NPCs.Leviathan;
+using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.NPCs.Ravager;
+using CalamityMod.NPCs.ProfanedGuardians;
+using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.CeaselessVoid;
+using CalamityMod.NPCs.Signus;
+using CalamityMod.NPCs.StormWeaver;
+using CalamityMod.NPCs.OldDuke;
+using CalamityMod.NPCs.Other;
+using CalamityMod.NPCs.AstrumAureus;
+using CalamityMod.NPCs.BrimstoneElemental;
+using CalamityMod.NPCs.ExoMechs.Apollo;
 
 namespace CalRemix.UI
 {
@@ -482,16 +501,18 @@ namespace CalRemix.UI
             return message;
         }
 
+
+
         //Loads fanny messages that aren't associated with anything else in particular
         private static void LoadGeneralFannyMessages()
         {
             fannyMessages.Add(new FannyMessage("Intro", "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
-                "Idle", FannyMessage.AlwaysShow, displayOutsideInventory: true));
+                "Idle", (FannySceneMetrics scene) => !Main.zenithWorld, displayOutsideInventory: true));
 
             #region Passive
             fannyMessages.Add(new FannyMessage("MeldGunk", "Fear the Meld Gunk.",
                 "Idle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), onlyPlayOnce: false, cooldown: 120));
-            
+
             fannyMessages.Add(new FannyMessage("FungusGarden", "Careful when exploring the Shroom Garden. I hear some rather large crustaceans make their home there. Wouldn't want to be turned into Delicious Meat!",
     "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
 
@@ -527,10 +548,10 @@ namespace CalRemix.UI
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
             fannyMessages.Add(new FannyMessage("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!", "Nuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>()));
-            
+
             fannyMessages.Add(new FannyMessage("VoodooDoll", "Cool doll you have! i think that it will be even cooler when in lava!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.GuideVoodooDoll)));
-            
+
             fannyMessages.Add(new FannyMessage("PortalGun", "Cave Johnson here. We're fresh out of combustible lemons, but let me tell you a little bit about this thing here. These portals are only designed to stick on planetoid rock and not much else. Hope you've got a test chamber lying around that's full of that stuff!",
     "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PortalGun)));
 
@@ -542,7 +563,7 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Jump", "Did you know? You can press the \"space\" button to jump!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!"));
-            
+
             fannyMessages.Add(new FannyMessage("TitanHeart", "You got a heart from a titan! Place it on the tower for a wacky light show!",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TitanHeart>())).AddItemDisplay(ModContent.ItemType<TitanHeart>()));
 
@@ -598,19 +619,19 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ItemID.RodofDiscord));
-            
+
             fannyMessages.Add(new FannyMessage("Temple", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611)).AddItemDisplay(ItemID.WireCutter));
-            
+
             fannyMessages.Add(new FannyMessage("Altars", "Smashing demon altars is no longer guaranteed to bless your world with ores. But it’s still worth a shot!",
                "Idle", (FannySceneMetrics scene) => (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson) && Main.hardMode && CalamityConfig.Instance.EarlyHardmodeProgressionRework && !Main.LocalPlayer.ZoneUnderworldHeight));
 
             fannyMessages.Add(new FannyMessage("StupidSword", "If you kill enough Meteor Heads, you might be able to get the Divine Intervention!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneMeteor && ModLoader.HasMod("CatalystMod")));
-            
+
             fannyMessages.Add(new FannyMessage("DrowningAbyss", "Your air bubbles are disappearing at an alarming rate, you should set up an air pocket, and fast!",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.breath <= 0 && Main.LocalPlayer.Calamity().ZoneAbyss));
-            
+
             fannyMessages.Add(new FannyMessage("Jungleabyss", "I’ve heard word that there’s incredible treasures in the mysterious depths of the ocean, the one past the jungle!",
    "Nuhuh", (FannySceneMetrics scene) => !NPC.downedBoss3 && Main.LocalPlayer.ZoneJungle && Main.rand.NextBool(600)));
 
@@ -668,7 +689,7 @@ namespace CalRemix.UI
                 "That pimple thing looks useless, but it drops a very useful material. Please kill it!",
                 "Awooga",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<HiveTumor>() || n.type == ModContent.NPCType<PerforatorCyst>())));
-            
+
             fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
     "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
@@ -689,7 +710,7 @@ namespace CalRemix.UI
             #region Event
             fannyMessages.Add(new FannyMessage("InvasionDeath", "These guys are really giving us what for. It might be a good idea to step away for a bit in order to come up with a new strategy...",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.dead && Main.invasionType != InvasionID.None, cooldown: 1200));
-            
+
             fannyMessages.Add(new FannyMessage("BloodMoon", "During a blood moon, strange critters can be found hiding under rocks. They can be used for blood moon fishing, but be careful, those teeth can really hurt.",
    "Idle", (FannySceneMetrics scene) => Main.bloodMoon));
 
@@ -709,17 +730,14 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => CrossModBoss(scene, "CatalystMod", "Astrageldon")).SetHoverTextOverride("Thanks you Fanny! I'll go kill the Moon Lord first."));
 
             fannyMessages.Add(new FannyMessage("Calclone", "It is time. The Brimstone Witch, the one behind the Calamity in this world. You will now face Supreme Witch, Calamitas and end everything once and for all!",
-               "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>())));
+               "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>())));
 
             fannyMessages.Add(new FannyMessage("Deus", "It appears that you are once again fighting a large serpentine creature. Therefore, it's advisable to do what you've done with them before and blast it with fast single target weaponry!",
-               "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumDeusHead>())));
+               "Idle", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumDeusHead>())));
 
             fannyMessages.Add(new FannyMessage("DeusSplitMod", "This is getting out of hand! Now there are two of them!",
                "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && NPC.CountNPCS(ModContent.NPCType<AstrumDeusHead>()) > 1));
 
-            fannyMessages.Add(new FannyMessage("DeusSplitModGFB", "This is getting out of hand! Now there are ten of them!",
-               "Awooga", (FannySceneMetrics scene) => Main.zenithWorld && NPC.CountNPCS(ModContent.NPCType<AstrumDeusHead>()) > 9));
-            
             fannyMessages.Add(new FannyMessage("Poltergfb", "Return at 3 am for a surprise.",
                 "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByEvilFanny());
 
@@ -727,36 +745,116 @@ namespace CalRemix.UI
                 "Awooga", YharonPhase2));
 
             fannyMessages.Add(new FannyMessage("DraedonEnter", "Gee willikers! It's the real Draedon! He will soon present you with a difficult choice between three of your previous foes but with new attacks and increased difficulty. This appears to be somewhat of a common theme with this world dontcha think?",
-               "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Draedon>())));
+               "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Draedon>())));
 
             fannyMessages.Add(new FannyMessage("ExoMayhem", "Wow! What a mayhem! Don't panic though, if you focus on dodging, you will be less likely to get hit. A common strategy for these tin cans is to \" fall god \", which I believe means summoning other gods like the Slime God and killing them for extra health. You should also pay extra attention to Ares' red cannon, because sometimes it can sweep across the screen, ruining your dodge flow. As for the twins, keep a close eye on the right one, as it has increased fire rate. There is no saving you from Thanatos, it isn't synced and breaks the structure these guys are allegedly supposed to have. Like seriously, why do the twins and Ares hover to the sides and above you while that robo-snake just does whatever the heckle heckity heckering hecky heck he wants? It would be significantly more logical if it tried to like stay below you, but no. Anyways, good luck buddy! You're almost at the end, you can do this!",
-                "Idle", (FannySceneMetrics scene) => CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, needsToBeClickedOff: false, duration: 22));
-
-            fannyMessages.Add(new FannyMessage("EvilSCal", "Why are they making us fight the same boss again? Did they run out of Patreon money?",
-               "EvilIdle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SupremeCalamitas>())).SpokenByEvilFanny().AddDelay(2));
-
+                "Idle", (FannySceneMetrics scene) => !Main.zenithWorld && CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, needsToBeClickedOff: false, duration: 22));
             #endregion
 
             #region BossDeath
 
             fannyMessages.Add(new FannyMessage("AbyssBegin", "Every 60 seconds in the Abyss a hour passes by, truly wonderful!",
-               "Nuhuh", (FannySceneMetrics scene) => NPC.downedBoss3).SetHoverTextOverride("Very interesting Fanny!"));
+               "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && NPC.downedBoss3).SetHoverTextOverride("Very interesting Fanny!"));
 
             fannyMessages.Add(new FannyMessage("Cryodeath", "Ha! Snow's over, Cryogen! Wasn't that pretty cool?",
-               "Idle", (FannySceneMetrics scene) => DownedBossSystem.downedCryogen));
+               "Idle", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedCryogen));
 
             fannyMessages.Add(new FannyMessage("DraedonExit", "Good golly! You did it! Though I'd HATE to imagine the financial losses caused by the destruction of those machines.",
-                "Awooga", (FannySceneMetrics scene) => DownedBossSystem.downedExoMechs));
+                "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedExoMechs));
 
             fannyMessages.Add(new FannyMessage("SCalDie", "That was exhilarating! Though that means the end of our adventure is upon us. What a Calamity as one may say!",
-                "Awooga", (FannySceneMetrics scene) => DownedBossSystem.downedCalamitas));
+                "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedCalamitas));
 
             fannyMessages.Add(new FannyMessage("CalcloneDeath", "Oh it was just a clone.",
-                "Sob", (FannySceneMetrics scene) => DownedBossSystem.downedCalamitasClone));
+                "Sob", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedCalamitasClone));
 
             fannyMessages.Add(new FannyMessage("Yharore", "Looks like the caverns have been laced with Auric Ore! The ore veins are pretty massive, so I’d say it’s best that you get up close and go hog wild!",
-               "Idle", (FannySceneMetrics scene) => DownedBossSystem.downedYharon).AddItemDisplay(ModContent.ItemType<AuricOre>()));
+               "Idle", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedYharon).AddItemDisplay(ModContent.ItemType<AuricOre>()));
 
+            #endregion
+
+            #region GFB tips
+
+            fannyMessages.Add(new FannyMessage("GFBDesert", "The sand worm is looking a bit blue isn't he? You may find your pitiful projectiles useless, but I'll reveal a wicked trick to seize the upper hand. As you know, this monstrous beast thrives on devouring your puny attacks and converting them into life-sustaining water. How delightfully diabolical! To subdue this insatiable leviathan, you must cunningly employ your trusty melee weapons.",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<DesertScourgeHead>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GFBCrab", "This guy is making me a bit dizzy, how rude. I don't have much to say about ol' crabson here, but you may find great profits once you bash its stupid green shell in.",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Crabulon>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbHive", "Ohohoh you're gonna have fun with this one. The real kicker with the Hive Mind here is it can summon a cyst, a real game over trap, and if you're foolish enough to shatter it, you're in for a double dose of agony because another Hive Mind will spawn. So, I guess the real tip here is, don't be the idiot who rushes in without a plan, or you'll be in for a never-ending nightmare of your own incompetence.",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<HiveMind>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbPerf", "Brace yourself for a bloodcurdling challenge. This monstrous abomination will summon three nasty worms when you cut one down. The first worm, oh how annoying, burrows into its vile hive, replenishing its sorry health. The second, the pesky splitter, will break into gruesome blobs that yearn for your destruction. And the last, the sadistic laser lord, conjures deadly walls of scorching beams to trap you.",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<PerforatorHive>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbSlimeGod", "Ever felt that boss minions were too insignificant as you are? Well! In this world they will absolutely shower overwhelm you with dozens upon dozens of gel balls. My advice? Well, honestly, you're in for a world of hurt, but if you want to survive, focus on obliterating those puny slimes and evading their slimy detonations. Don't expect any mercy from this vile creation; it's only here to show you how insignificant you truly are.",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SlimeGodCore>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbCryogen", "Wow, what a joke of a boss! You expected a frozen snowflake, but you get this pathetic excuse for a fire-themed one instead. It's as uninspired as it sounds! I hope you like homing fireballs!",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Cryogen>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbAqua", "You're in for a real treat, you hapless fool, because this maggot's party trick is a nightmare! From the moment it slithers into your miserable existence, it'll wrap around you like a constricting nightmare, pelting you with projectiles aimed right at your feeble core. If you dare try to escape its lethal embrace, you'll be generously rewarded with a dose of crippling poison. So here's your precious tip: Accept your wretched fate and relish in the poison's sweet caress! Dance with this serpent of doom, dodging its toxic barrage with pinpoint precision, and strike back when it's momentarily vulnerable. Or flee, like the coward you are, and let the poison slowly consume you while it mocks your pathetic attempts to escape. The choice is yours, weakling. Enjoy your futile struggle!",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AquaticScourgeHead>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbBrimmy", "Well, isn't this a surprise? Our fiery friend here usually sticks to playing with her little flames, but today she's feeling a bit more generous, unleashing her inner multi-elemental diva. How utterly inconvenient for you! You better brace yourselves, because in addition to her fiery tantrums, she's now throwing all kinds of elements your way. Sand, clouds, water—you name it, she's got it. Here's a tip, even though you probably don't deserve it: Pay attention to the boss's body language and you'll see what element she's currently focusing.",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BrimstoneElemental>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbCalclone", "You pitiful shrimp! As if facing a mechanical eye that hurls fireballs and spawns its wretched siblings charging at you isn't challenging enough, now you find yourselves confined to a pitiful arena, your movement mercilessly restricted. Ha! Your usual tactics won't save you here. Show some wits for once, or burn like the fools you truly are!",
+               "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbAureus", "This laughable arachnid thinks it can pose a challenge, but its so-called 'strategy' is nothing more than a circus act. When it starts flailing around like a fish dropped in the desert, be ready for the pathetic display of generic projectile patterns! The only thing intimidating here is the fact that it actually believes it can defeat you. Mock it mercilessly, dodge its sad projectiles, and rain down destruction upon its pitiful mechanical frame. The only question is: Can you crush this pitiable pest before it embarrasses itself further? Show this metallic mockery what true power looks like!",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumAureus>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbFishies", "Well, well, it looks like our roles have been cruelly reversed this time, doesn't it? You'll be facing off against a gargantuan mermaid, and the so-called 'Leviathan' has been downsized to a mere annoyance. As always, remember that every challenge has a solution, but I won't be the one to hand it to you. You'll have to figure it out on your own, and you'd better do it fast, or you'll find yourself singing a sad tune at the bottom of the ocean. Good luck, or should I say, 'good riddance'!",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Leviathan>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("Gfbplague", "The Tyrant's lovely favorite bee seems to be a bit more sick than usual. Those rockets of hers? Oh, they won't just explode; they'll leave a pestilent mist lingering around to ruin your day. But, hold on, sometimes she tosses peanuts at you - yeah, you heard that right! And if you're 'lucky,' you might even see a gauss nuke or two. So, don't just stand there with your jaws agape; stay alert and dodge her garbage attacks. This boss is as unpredictable as it gets, but you better figure her out if you want any chance of survival.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<PlaguebringerGoliath>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbRavager", "Ah, what a pathetic attempt at originality! This walking corpse fortress may think it's clever, but it's nothing more than a hackneyed copycat. It shamelessly rips off Sans from Undertale, summoning those ridiculously uninspired skulls that shoot lasers at you. If you're dim-witted enough to get hit by these feeble attacks, you don't even deserve to play this game. But if you want to survive this sorry excuse for a boss battle, just dodge the lackluster lasers, and focus your attacks on the so-called 'fortress' itself. Don't be fooled by this uninspired imitation, and put it out of its misery before it realizes how utterly unoriginal it is!",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<RavagerBody>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbAstrumDeus", "Welcome, feeble player, to a cosmic encounter with a space worm beyond your meager comprehension. There's a chance you've faced it before, and it cunningly split into two to vex you. Now, in a delicious twist, it dares to multiply once again, though it'll remain a delightful secret, so I won't bother to spell it out for your primitive intellect. You'll have to guess how many offspring you're up against. Can you even count that high, imbecile? Just remember, victory may require more than your pathetic usual strategy. But don't expect me to guide you any further, it's more amusing to watch you flounder.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumDeusHead>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbDonuts", "Ah, what an utter disappointment these three pitiful constructs are! You'd think they'd be as unique as they are grotesque, but alas, you'll barely find any interesting twists here, just more mediocrity. As they clumsily lumber around with their molten bodies and clichéd flaming wings, your best bet is to stick to the basics.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<ProfanedGuardianCommander>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbBirb", "Oh, look who decided to show up in this pathetic game! Our little draconic offshoot has had a makeover, or should I say a 'downgrade.' Now, it shrieks like a demented parakeet on steroids and thinks it's cute to summon its wimpy babies only for them to EXPLODE into lightning. What a low tier boss.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Bumblefuck>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbProvidence", "Only god can help you here.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Providence>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbCeaseless", "Prepare for a rollercoaster of frustration, you miserable little adventurer. This malevolent monstrosity will gleefully toy with your feeble senses by warping the world into a nightmarish kaleidoscope of black and rainbow hues. Don't even bother trying to make sense of it; it's all just a taunting charade. To survive this despicable encounter, you'll need to navigate the disorienting chaos with the grace of a drunken clown.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CeaselessVoid>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbSignus", "This spectral jokester loves to play hide and seek, but he's got a little trick up his ethereal sleeve. When he stands still and goes all see-through, he's not just taking a break for a ghostly snack, he's charging up an attack that'll make you wish you never created a world with this seed. So, here's a tip for you, if your feeble mind can handle it: Keep a close eye on this translucent loser, and when he starts to shimmer and glow, run for cover like the coward you are. If you don't, you'll feel the full force of his otherworldly wrath, and there's no saving you from that.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Signus>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbStormWeaver", "You there, feeble player, prepare to be humiliated by the wrath of this insufferable sky serpent. This time, it's even longer than your list of shortcomings! Not much else to say here, just use piercing weapons or explosions.",
+             "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<StormWeaverHead>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbOverdose", "It's time for the laziest, most shameless, uninspired pile of pixelated junk you've ever seen, a sorry excuse for a boss who couldn't even come up with its own look! Meet this 'brown recolor' ripoff, a pitiful imitation of an already goofy boss. And guess what? This time, they've taken to flatulence as their 'unique' attack! Get ready to hold your nose and your laughter because it's about to get 'stinky' in here. Just dodge the gas clouds, seriously, how hard can it be? Pummel this pathetic carbon copy and watch it dissolve into the pixelated void where it belongs. If you thought the original was a challenge, prepare to be underwhelmed by this trash!",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<OldDuke>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbYharon", "Oh, look who's trying to play hero, facing the chicken with its fancy fiery bullet hell attacks! But here's a little evil twist for you, you pathetic weakling: this dragon can heal back all its health, just to spite you. You think you're so clever? Well, you're not. To stand a chance, you'll have to do more than just dodge its relentless onslaught – you'll need to focus on interrupting its little healing charade. Attack like your life depends on it, because it does, you fool! Don't let this dragon laugh at your misery as it regenerates its health, or you'll be nothing more than a stain on its claws.",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Yharon>())).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbExos", "As you stumble into this chaotic clash of metal monstrosities, let's address the real challenge here: the spineless nerd who's finally decided to get off his lazy behind and join the fray. The colossal skeletal abomination, the sinister fighter plane 'eyes,' and the writhing serpent spewing laser turrets are nothing compared to the pitiful attacks from their mastermind. You'll need to multitask your feeble brain, dodging the obvious and pathetic shots from the so-called 'genius' while taking down the hulking mechs. Focus on systematically disabling each colossal creation one at a time while smirking at the thought of that wannabe inventor's pathetic attempts to hinder you. Prove to them that they're nothing more than a sideshow in this battle, and leave them to wallow in their own mediocrity as you claim your victory with sheer malevolence.",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && (scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AresBody>() && n.ModNPC is CalamityMod.NPCs.ExoMechs.Ares.AresBody head && !head.exoMechdusa) || scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<ThanatosHead>() && n.ModNPC is CalamityMod.NPCs.ExoMechs.Thanatos.ThanatosHead head && !head.exoMechdusa) || scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Apollo>() && n.ModNPC is CalamityMod.NPCs.ExoMechs.Apollo.Apollo head && !head.exoMechdusa))).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("Hekate", "Behold! The most wretched amalgamation of monstrosities you've ever witnessed! The fabricational quartet has merged into a chaotic nightmare. What's this, you ask? The skeleton's got two puny probes now, shooting lasers? How quaint! To defeat this unholy amalgam, you'll need to exploit their combined idiocy. When these dimwits can't coordinate, they'll crumble under their own incompetence. Embrace the chaos and savor their impending doom!",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AresBody>() && n.ModNPC is CalamityMod.NPCs.ExoMechs.Ares.AresBody head && head.exoMechdusa)).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("GfbScal", "Well, well, you've finally reached the pinnacle of your pathetic little adventure. Meet the grand finale, the wicked witch of scarlet brimstone flames and necromancy. She's not one to follow the rules, so here's a dirty secret to make her life more miserable. When she summons that ghastly centipede made of human leftovers, don't expect it to kick the bucket easily this time. You'll need to work your sorry behind off and kill it yourself! Oh, and remember her cozy square arena? Surprise, surprise, it's all random now, like popcorn popping in hell. But here's the icing on the cake – her projectiles? All swapped out, so you can't rely on muscle memory. Have fun stumbling through this chaotic nightmare, because I'm not here to hold your hand, hero!",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SupremeCalamitas>())).SpokenByEvilFanny());
+
+            //fannyMessages.Add(new FannyMessage("CirrusBoss", "Well, congratulations, you've stumbled upon the pinnacle of this abhorrent seed - a self-indulgent, self-insert boss who's nothing more than a snobby, drunken princess. The developer's inflated ego oozes from every pixel of this farce. When this wretched spectacle begins, prepare for a relentless barrage of recycled, inferior boss fights. Yes, she'll pull out all the stops by summoning those laughable earlier bosses to do her dirty work. And as if that weren't enough, she'll pelt you with purple beams and alcohol bottles, probably echoing her own drunken stupor. But don't fret, you can still prevail. Keep your wits about you, dodge the recycled nonsense, and strike back at this embarrassing monstrosity. Let's face it, beating her is the only satisfaction this game offers.",
+            //  "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SupremeCalamitas>() && n.ModNPC is CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas head && !head.cirrus)).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("TheLorde", "Hey there, you clueless wannabe gamer! You've stumbled upon the most infuriating easter egg boss in gaming history. This abomination of an AI can't make up its damn mind and switches between the traits of every boss and enemy you've ever faced, just to make sure you can't predict a thing. So, don't even bother thinking you've got it figured out. When this wretched abomination is on its last legs, it pulls the ultimate cheat move - going invincible for a whole agonizing minute before you can finally put it out of its misery. And yeah, you'll be pulling your hair out, but remember, even this unholy mess can't escape its inevitable doom. So, gear up, slug through that excruciating minute, and claim your hollow victory, loser!",
+              "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<THELORDE>())).SpokenByEvilFanny());
 
             #endregion
 
@@ -766,7 +864,7 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Invisible", "Where did you go?",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax).SetHoverTextOverride("I'm still here Fanny!"));
-            
+
             fannyMessages.Add(new FannyMessage("GfbintroEvil", "WELCOME TO HELL!",
                 "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld).SpokenByEvilFanny());
 
