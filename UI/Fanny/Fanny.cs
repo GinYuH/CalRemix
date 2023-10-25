@@ -884,7 +884,7 @@ namespace CalRemix.UI
         {
 
             FannyMessage introLore = new FannyMessage("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
-                "Idle", (FannySceneMetrics scene) => Main.hardMode, 10, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(5);
+                "Idle", (FannySceneMetrics scene) => Main.hardMode, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(5);
 
             fannyMessages.Add(introLore);
 
