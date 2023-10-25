@@ -52,7 +52,7 @@ namespace CalRemix.NPCs
         public override void AI()
         {
             CalamityMod.NPCs.CalamityAI.PassiveSwimmingAI(NPC, Mod, 3, 150f, 0.25f, 0.15f, 6f, 6f, 0.05f);
-            NPC.spriteDirection = (NPC.direction > 0) ? 1 : -1;
+            NPC.spriteDirection = (NPC.direction > 0) ? -1 : 1;
             NPC.noGravity = true;
             bool flag14 = false;
             if (NPC.direction == 0)
@@ -207,7 +207,7 @@ namespace CalRemix.NPCs
         {
             if (spawnInfo.Player.ZoneDungeon && spawnInfo.Water && NPC.downedMoonlord)
             {
-                return SpawnCondition.CaveJellyfish.Chance * 0.6f;
+                return SpawnCondition.CaveJellyfish.Chance * 2f;
             }
             return 0f;
         }
