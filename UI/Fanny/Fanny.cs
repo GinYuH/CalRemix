@@ -1214,6 +1214,13 @@ namespace CalRemix.UI
         public FannyTextboxPalette? paletteOverride = null;
         public string hoverTextOverride = "";
 
+        public delegate string DynamicFannyTextSegment();
+        public static string GetPlayerName() => Main.LocalPlayer.name;
+        public static string GetWorldName() => Main.worldName;
+
+        public List<DynamicFannyTextSegment> textSegments = new List<DynamicFannyTextSegment>();
+
+
         public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
             //Unique identifier for saving data
@@ -1375,6 +1382,10 @@ namespace CalRemix.UI
             speakingFanny = fanny;
             alreadySeen = true;
 
+            //Recalculate the text as its played if we have dynamic text segments
+            if (textSegments.Count > 0)
+                FormatText(FontAssets.MouseText.Value, maxTextWidth);
+
             //Immediately play message start effects
             if (delayTime == 0)
                 OnMessageStart();
@@ -1427,12 +1438,22 @@ namespace CalRemix.UI
 
             //This is the setence as we are building it
             string formattedSetence = "";
+            string baseText = originalText;
+            if (textSegments.Count > 0)
+            {
+                int i = 0;
+                foreach (DynamicFannyTextSegment dynamicText in textSegments)
+                {
+                    baseText.Replace("$" + i.ToString(), dynamicText());
+                    i++;
+                }
+            }
 
 
-            for (int i = 0; i < originalText.Length; i++)
+            for (int i = 0; i < baseText.Length; i++)
             {
                 //When theres a space, check if the word is short enough to not go over our width limit
-                if (originalText[i] == ' ')
+                if (baseText[i] == ' ')
                 {
                     CheckWord(currentWord, maxLineWidth, font, ref formattedSetence, ref currentLineLenght, spaceWidth);
                     currentWord = "";
@@ -1440,7 +1461,7 @@ namespace CalRemix.UI
 
                 //Continue to build the word
                 else
-                    currentWord += originalText[i];
+                    currentWord += baseText[i];
             }
             //Check the final word
             if (currentWord != "")
@@ -1474,6 +1495,18 @@ namespace CalRemix.UI
             //Add the word and space to the end of the setence
             formattedSetence += word;
             formattedSetence += " ";
+        }
+
+        /// <summary>
+        /// Tells fanny that the message spoken has a dynamic text element that is calculated on the fly. The dynamic text replaces the matching $ key. So if you have two dynamic text elements, itll replace $0 and $1
+        /// </summary>
+        /// <param name="customText"></param>
+        /// <returns></returns>
+        public FannyMessage AddDynamicText(DynamicFannyTextSegment customText)
+        {
+            if (originalText.Contains("$" + textSegments.Count.ToString()))
+                textSegments.Add(customText);
+            return this;
         }
         #endregion
     }
