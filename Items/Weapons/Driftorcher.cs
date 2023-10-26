@@ -90,8 +90,17 @@ public class Driftorcher : ModItem
     }
     public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (GetDebuff() != -1)
+        if (GetDebuff() > -1)
             target.AddBuff(GetDebuff(), 120);
+        else if (GetDebuff() == -2)
+        {
+            target.AddBuff(BuffType<BrimstoneFlames>(), 120);
+            target.AddBuff(BuffID.OnFire3, 120);
+            target.AddBuff(BuffType<HolyFlames>(), 120);
+            target.AddBuff(BuffType<KamiFlu>(), 120);
+            target.AddBuff(BuffID.Frostburn2, 120);
+            target.AddBuff(BuffID.Venom, 120);
+        }
     }
     public override void MeleeEffects(Player player, Rectangle hitbox)
     {
@@ -125,7 +134,7 @@ public class Driftorcher : ModItem
         switch (torch)
         {
             case 1:
-                buff = BuffType<MiracleBlight>();
+                buff = -2;
                 break;
             case 2:
                 buff = BuffType<AstralInfectionDebuff>();

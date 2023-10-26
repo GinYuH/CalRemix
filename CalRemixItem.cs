@@ -194,6 +194,12 @@ namespace CalRemix
                 tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
                 tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
             }
+            if (Torch.Contains(item.type))
+            {
+                var line = new TooltipLine(Mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
+                line.OverrideColor = Color.OrangeRed;
+                tooltips.Add(line);
+            }
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)

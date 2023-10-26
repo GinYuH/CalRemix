@@ -1,3 +1,5 @@
+using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Terraria;
@@ -67,8 +69,17 @@ namespace CalRemix.Projectiles.Weapons
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (buff != -1)
+            if (buff > -1)
                 target.AddBuff(buff, 120);
+            else if (buff == -2)
+            {
+                target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 120);
+                target.AddBuff(BuffID.OnFire3, 120);
+                target.AddBuff(ModContent.BuffType<HolyFlames>(), 120);
+                target.AddBuff(ModContent.BuffType<KamiFlu>(), 120);
+                target.AddBuff(BuffID.Frostburn2, 120);
+                target.AddBuff(BuffID.Venom, 120);
+            }
         }
     }
 }
