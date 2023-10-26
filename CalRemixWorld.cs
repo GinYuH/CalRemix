@@ -31,6 +31,7 @@ using Terraria.GameContent.ItemDropRules;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Fishing.SulphurCatches;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace CalRemix
 {
@@ -175,6 +176,7 @@ namespace CalRemix
             RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
             RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
             RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+            RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
         }
         public override void PostUpdateWorld()
         {
