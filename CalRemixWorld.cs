@@ -27,6 +27,10 @@ using CalamityMod.NPCs;
 using CalamityMod.Tiles;
 using CalamityMod.Tiles.SunkenSea;
 using System.Threading;
+using Terraria.GameContent.ItemDropRules;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.Fishing.SulphurCatches;
 
 namespace CalRemix
 {
@@ -70,7 +74,7 @@ namespace CalRemix
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
-    }
+        }
         public override void OnWorldUnload()
         {
             downedDerellect = false;
@@ -163,6 +167,15 @@ namespace CalRemix
             ModContent.TileType<AstralIce>(),
             ModContent.TileType<AstralSnow>(),
         };
+        public override void PreUpdateWorld()
+        {
+            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+            RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
+            RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+        }
         public override void PostUpdateWorld()
         {
             if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
@@ -208,6 +221,30 @@ namespace CalRemix
             }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
+        }
+
+        public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
+        {
+            List<IItemDropRule> JungleCrateDrops = npc ? Terraria.Main.ItemDropsDB.GetRulesForNPCID(bagType) : Terraria.Main.ItemDropsDB.GetRulesForItemID(bagType);
+            for (int i = 0; i < JungleCrateDrops.Count; i++)
+            {
+                if (JungleCrateDrops[i] is LeadingConditionRule lead)
+                {
+                    for (int j = 0; j < lead.ChainedRules.Count; j++)
+                    {
+                        if (lead.ChainedRules[j] is Chains.TryIfSucceeded c)
+                        {
+                            if (c.RuleToChain is CommonDrop fuck)
+                            {
+                                if (fuck.itemId == itemToRemove)
+                                {
+                                    lead.ChainedRules.RemoveAt(j);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void ResetNearbyTileEffects()
