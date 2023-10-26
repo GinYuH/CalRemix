@@ -246,6 +246,10 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
+                if (recipe.HasResult(ModContent.ItemType<GalacticaSingularity>()))
+                {
+                    recipe.DisableRecipe();
+                }
                 /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());

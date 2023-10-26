@@ -978,6 +978,21 @@ Mods: {
 			PlaguedVineWall.DisplayName: Plagued Vine Wall
 			PlaguedJungleMusicBox.DisplayName: Music Box (Plagued Jungle)
 			MinnowsPrimeItem.DisplayName: Minnows Prime
+
+			FrontGar: {
+				DisplayName: Front Gar
+				Tooltip: Right click to extract reaper teeth
+			}
+
+			RearGar: {
+				DisplayName: Rear Gar
+				Tooltip: Right click to extract tarragon
+			}
+
+			SideGar: {
+				DisplayName: Side Gar
+				Tooltip: Right click to extract galactica singularities
+			}
 		}
 
 		NPCs: {

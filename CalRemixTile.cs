@@ -19,6 +19,7 @@ using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Tiles;
 using CalRemix.UI;
 using System.Linq;
+using CalamityMod.Items.Placeables.Ores;
 
 namespace CalRemix
 {
@@ -239,6 +240,10 @@ namespace CalRemix
                     if (e)
                         KinsmanMessage.ActivateMessage();
                 }
+            }
+            if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
+            {
+                Main.tile[i, j].TileType = (ushort)TileID.Mud;
             }
         }
 

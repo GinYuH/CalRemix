@@ -34,6 +34,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items;
 using CalamityMod.Items.Placeables.FurnitureCosmilite;
+using CalamityMod.Items.Fishing.AstralCatches;
+using CalamityMod.Items.Fishing.SulphurCatches;
+using CalamityMod.Items.Placeables.Ores;
 
 namespace CalRemix
 {
@@ -66,6 +69,14 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<PhantomicArtifact>())
             {
                 item.SetNameOverride("Phantomic Soul Artifact");
+            }
+            else if (item.type == ModContent.ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>())
+            {
+                item.SetNameOverride("Tarragon Ore");
+            }
+            else if (item.type == ModContent.ItemType<CalamityMod.Items.Materials.UelibloomBar>())
+            {
+                item.SetNameOverride("Tarragon Bar");
             }
             else if (item.type == ModContent.ItemType<EssenceofHavoc>())
             {

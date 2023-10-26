@@ -683,6 +683,18 @@ namespace CalRemix
             {
                 itemDrop = ModContent.ItemType<GrandioseGland>();
             }
+			if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10))
+			{
+				itemDrop = ModContent.ItemType<SideGar>();
+            }
+            if (inWater && Player.ZoneJungle && DownedBossSystem.downedProvidence && Main.rand.NextBool(10))
+            {
+                itemDrop = ModContent.ItemType<RearGar>();
+            }
+            if (inWater && Player.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast && Main.rand.NextBool(10))
+            {
+                itemDrop = ModContent.ItemType<FrontGar>();
+            }
         }
         public void SpawnPhantomHeart()
         {
