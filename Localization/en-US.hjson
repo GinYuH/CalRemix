@@ -100,6 +100,36 @@ Mods: {
 				DisplayName: Scorinfestation
 				Description: Consumed by magma
 			}
+
+			StatueBuff: {
+				DisplayName: Animated Statue
+				Description: Perfectly balanced
+			}
+
+			MackerelBuff: {
+				DisplayName: Holy Mackerel
+				Description: The mackerel will protect you
+			}
+
+			Leaves: {
+				DisplayName: Leaves Power
+				Description: The leaves are powerful
+			}
+
+			Anxiety: {
+				DisplayName: Calamitous Anxiety
+				Description: Something is watching your every move
+			}
+
+			Dysphoria: {
+				DisplayName: Calamitous Dysphoria
+				Description: You feel like something is out of place, but don't know what it is
+			}
+
+			Euphoria: {
+				DisplayName: Calamitous Euphoria
+				Description: You feel ready to face the entire world!
+			}
 		}
 
 		Items: {
@@ -926,6 +956,11 @@ Mods: {
 					'''
 			}
 
+			Coke: {
+				DisplayName: Sugars of Calamity
+				Tooltip: These sugars feel potent yet cursed
+			}
+
 			MeldChipIceCream: {
 				DisplayName: Meld Chip Ice Cream
 				Tooltip:
@@ -951,7 +986,10 @@ Mods: {
 				Tooltip: Minor improvements to all stats
 			}
 
-			CosmiliteSlag.DisplayName: Cosmilite Slag
+			CosmiliteSlag: {
+				DisplayName: Cosmilite Slag
+				Tooltip: ""
+			}
 
 			BrownSolution: {
 				DisplayName: Brown Solution
@@ -971,14 +1009,6 @@ Mods: {
 					'''
 			}
 
-			PlaguedFirefly.DisplayName: Plagued Firefly
-			PlaguedMudWall.DisplayName: Plagued Mud Wall
-			PlaguedPipeWall.DisplayName: Plagued Pipe Wall
-			PlaguedStoneWall.DisplayName: Plagued Stone Wall
-			PlaguedVineWall.DisplayName: Plagued Vine Wall
-			PlaguedJungleMusicBox.DisplayName: Music Box (Plagued Jungle)
-			MinnowsPrimeItem.DisplayName: Minnows Prime
-
 			FrontGar: {
 				DisplayName: Front Gar
 				Tooltip: Right click to extract reaper teeth
@@ -992,6 +1022,279 @@ Mods: {
 			SideGar: {
 				DisplayName: Side Gar
 				Tooltip: Right click to extract galactica singularities
+			}
+
+			PlaguedFirefly: {
+				DisplayName: Plagued Firefly
+				Tooltip: ""
+			}
+
+			PlaguedMudWall: {
+				DisplayName: Plagued Mud Wall
+				Tooltip: ""
+			}
+
+			PlaguedMud: {
+				Tooltip: ""
+				DisplayName: Plagued Mud
+			}
+
+			PlaguedPipeWall: {
+				DisplayName: Plagued Pipe Wall
+				Tooltip: ""
+			}
+
+			PlaguedPipe: {
+				Tooltip: ""
+				DisplayName: Plagued Pipe
+			}
+
+			PlaguedStoneWall: {
+				DisplayName: Plagued Stone Wall
+				Tooltip: ""
+			}
+
+			PlaguedStone: {
+				Tooltip: ""
+				DisplayName: Plagued Stone
+			}
+
+			PlaguedVineWall: {
+				DisplayName: Plagued Vine Wall
+				Tooltip: ""
+			}
+
+			PlaguedJungleMusicBox: {
+				DisplayName: Music Box (Plagued Jungle)
+				Tooltip: ""
+			}
+
+			Sporezol: {
+				Tooltip: ""
+				DisplayName: Sporezol
+			}
+
+			PlaguedSilt: {
+				Tooltip: ""
+				DisplayName: Plagued Silt
+			}
+
+			PlaguedSand: {
+				Tooltip: ""
+				DisplayName: Plagued Sand
+			}
+
+			PlaguedHive: {
+				Tooltip: ""
+				DisplayName: Plagued Hive
+			}
+
+			PlaguedGrass: {
+				Tooltip: ""
+				DisplayName: Plagued Grass
+			}
+
+			PlaguedClay: {
+				Tooltip: ""
+				DisplayName: Plagued Clay
+			}
+
+			OvergrownPlaguedStone: {
+				Tooltip: ""
+				DisplayName: Overgrown Plagued Stone
+			}
+
+			ChainSpear: {
+				DisplayName: Chain Spear
+				Tooltip:
+					'''
+					Right click to fling the spear outwards and reel in enemies
+					Left clicking when a chained enemy is about to touch you causes you to parry them, creating a blood explosion
+					'If you live for yourself you’ve only got yourself to blame.'
+					'''
+			}
+
+			BundleBones: {
+				DisplayName: Bundle o' Bones
+				Tooltip:
+					'''
+					Fires a cluster of bones that bounces and explodes into lingering fragments
+					Stealth strikes cause the cluster to shoot a bone at the nearest enemy on every bounce
+					'''
+			}
+
+			BucketofCoal: {
+				DisplayName: Bucket of Coal
+				Tooltip:
+					'''
+					Throws a bucket of coal that flings out smaller bits of coal as it travels
+					Stealth strikes cause the bits to grow in size and damage over time
+					'''
+			}
+
+			Baow: {
+				DisplayName: Baow
+				Tooltip: Fires a second arrow mirroring the first
+			}
+
+			AngelsThesis: {
+				DisplayName: Angel's Thesis
+				Tooltip: Summons an animated statue to fight for you
+			}
+
+			Crimtato: {
+				Tooltip: ""
+				DisplayName: Crimtato
+			}
+
+			CrabLeaves: {
+				DisplayName: Leaves of Crabulon
+				Tooltip: Gives decent buffs to ALL offensive and defensive stats
+			}
+
+			HeavenPiercer: {
+				Tooltip: ""
+				DisplayName: Heaven Piercer
+			}
+
+			AstralPearl: {
+				DisplayName: Astral Pearl
+				Tooltip: Gives all projectiles homing
+			}
+
+			BlazingPowder: {
+				DisplayName: Blazing Powder
+				Tooltip: Every other ranged attack creates an astral fireball that deals damage and sets your enemies on fire.
+			}
+
+			GlitterEye: {
+				DisplayName: Glittering Astral Eye
+				Tooltip: All your projectiles are homing and create a homing fireball every 2 seconds.
+			}
+
+			CrocodileScale: {
+				DisplayName: Crocodile Scale
+				Tooltip: ""
+			}
+
+			OrnateCloth: {
+				DisplayName: Ornate Cloth
+				Tooltip: A beautiful sheet of silk.
+			}
+
+			MackerelStaff: {
+				DisplayName: Mackerel Staff
+				Tooltip:
+					'''
+					Summons a Holy Mackerel to fight for you
+					Each mackerel takes only half of a minion slot
+					'''
+			}
+
+			IchorDagger: {
+				DisplayName: Ichor Dagger
+				Tooltip:
+					'''
+					Throws bouncing daggers
+					Stealth strikes are showered in streams of ichor
+					'''
+			}
+
+			GearworkShield: {
+				DisplayName: Gearwork Shield
+				Tooltip:
+					'''
+					Resets enemies back to certain points in time
+					Right click to set a snap shot, and left click to go back
+					Setting enemies back in time has a 1 minute cooldown, during which, the shield can be thrown
+					'If we die and no one remembers us, I guess that's just the way it is.'
+					'''
+			}
+
+			FlamingIceBow: {
+				DisplayName: Flaming Ice Bow
+				Tooltip:
+					'''
+					Causes all arrows to inflict frostburn
+					Damages the user while held
+					'''
+			}
+
+			AOTE: {
+				DisplayName: Aspect of the End
+				Tooltip: hi pixel
+			}
+
+			CursedSpear: {
+				DisplayName: Cursed Spear
+				Tooltip:
+					'''
+					Throws an cursed flame tipped trident
+					Stealth strikes are showered in cursed fireballs
+					'''
+			}
+
+			DualCane: {
+				DisplayName: Dual Cane
+				Tooltip: Fires black and white orbs that travel in a helix pattern
+			}
+
+			Deicide: {
+				DisplayName: Deicide
+				Tooltip:
+					'''
+					In the end remained two numbers painted in the blood of the gods...
+					Slowly throws out punches that increase in speed over time
+					After 10 seconds, homing sacrilegious fists will be fired with each punch
+					After 30 seconds, a dark wreathe is formed around the player that increases their damage by 22%
+					Punching gradually causes the player to be fueled with malice, eventually causing an instant death
+					Activating Rage while using this weapon will fire a powerful .22 hornet round at the cursor
+					'''
+			}
+
+			DemonCore: {
+				DisplayName: Demon Core
+				Tooltip:
+					'''
+					Fires cores that emit dark radiation around them, inflicting shadowflame
+					Stealth strikes cause the core to leave behind a damaging shadowflame gas cloud
+					'''
+			}
+
+			Driftorcher: {
+				DisplayName: Driftorcher
+				Tooltip: Consumes torches to launch damaging sparks when swung
+			}
+
+			Confection: {
+				DisplayName: Confection
+				Tooltip:
+					'''
+					'Memories of the deep sea'
+					Fires out strong cake arrows that explode into puddles of damaging frosting
+					'''
+			}
+
+			TyrantShield: {
+				DisplayName: Tyrant Shield
+				Tooltip:
+					'''
+					'auric man is always useful dead or alive' - John C.A. Lamity
+					Holds out a corpse shield that can deflect enemies or projectiles moving towards you
+					Hit enemies are dealt a significant amount of damage
+					Hit projectiles are deflected and empowered
+					If either deflection occurs, the corpse won't be able to be held out for 1 minute
+					'''
+			}
+
+			MinnowsPrimeItem: {
+				DisplayName: Minnows Prime Item
+				Tooltip: ""
+			}
+
+			Bellwings: {
+				DisplayName: Bellwings
+				Tooltip: ""
 			}
 		}
 
@@ -1032,6 +1335,8 @@ Mods: {
 			Miasmius.DisplayName: Miasmius
 			PlaguedSpidrone.DisplayName: Plagued Spidrone
 			LaRuga.DisplayName: La Ruga
+			Barocrab.DisplayName: Barocrab
+			MinnowsPrime.DisplayName: Minnows Prime
 		}
 
 		Projectiles: {
@@ -1117,7 +1422,12 @@ Mods: {
 			}
 
 			ProfaneNucleus.DisplayName: Profane Nucleus
-			Melee.GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
+
+			Melee: {
+				GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
+				ChainSpearStab.DisplayName: Chain Spear Stab
+			}
+
 			GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
 			Claw.DisplayName: Giant Claw
 			dimusBEAM.DisplayName: Exodimus Beam
@@ -1129,6 +1439,33 @@ Mods: {
 			OgsculeBeamHostile.DisplayName: Ogscule Beam
 			PlaguedFallingSand.DisplayName: Plagued Sand Ball
 			PlagueSpit.DisplayName: Plague Spit
+			IchorSpark.DisplayName: Ichor Spark
+			IchorDaggerProj.DisplayName: Ichor Dagger
+			HolyMackerel.DisplayName: Holy Mackerel
+			GearShield.DisplayName: Gear Shield
+			FlameFrostArrow.DisplayName: Flame Frost Arrow
+			DeicideFist.DisplayName: Sacrilegious Fist
+			CursedSpearProj.DisplayName: Cursed Spear
+			CoalBucket.DisplayName: Coal Bucket
+			Coal.DisplayName: Coal
+			CaneOrb.DisplayName: Cane Orb
+			BoneBundle.DisplayName: Bone Bundle
+			Bone.DisplayName: Bone
+			AnimatedStatue.DisplayName: Animated Statue
+			HomingAstralFireball.DisplayName: Homing Astral Fireball
+			AstralFireball.DisplayName: Astral Fireball
+			BrownSpray.DisplayName: Brown Spray
+			PlaguedSpray.DisplayName: Plagued Spray
+			SDOMGRay.DisplayName: SDOMG Deathray
+			ChainSpearProj.DisplayName: Chain Spear
+			HeavenPiercerProj.DisplayName: Heaven Piercer
+			DemonCoreProj.DisplayName: Demon Core
+			ShadowCloud.DisplayName: Shadow Cloud
+			DriftSpark.DisplayName: Drift Spark
+			Cake.DisplayName: Cake
+			Frosting.DisplayName: Frosting
+			DeadYharim.DisplayName: Dead Yharim
+			HeavenPiercerLaser.DisplayName: HElix Laser
 		}
 
 		Tiles: {

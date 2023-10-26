@@ -26,13 +26,14 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
-using CalamityMod.Rarities;
-using rail;
 using CalRemix.NPCs;
 using CalRemix.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items;
+using CalRemix.Projectiles.Accessories;
+using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalamityMod.Items.Placeables.FurnitureCosmilite;
 using CalamityMod.Items.Fishing.AstralCatches;
 using CalamityMod.Items.Fishing.SulphurCatches;
@@ -45,6 +46,28 @@ namespace CalRemix
         public override bool InstancePerEntity => true;
         public bool Scoriad = false;
         public int NonScoria = -1;
+        public List<int> Torch = new List<int>
+        {
+            ItemID.RainbowTorch,
+            ItemID.UltrabrightTorch,
+            ItemID.IchorTorch,
+            ItemID.BoneTorch,
+            ItemID.CursedTorch,
+            ItemID.DemonTorch,
+            ItemID.IceTorch,
+            ItemID.JungleTorch,
+            ItemID.CrimsonTorch,
+            ItemID.CorruptTorch,
+            ItemID.HallowedTorch,
+            ItemID.Torch,
+            ModContent.ItemType<AstralTorch>(),
+            ModContent.ItemType<SulphurousTorch>(),
+            ModContent.ItemType<GloomTorch>(),
+            ModContent.ItemType<AbyssTorch>(),
+            ModContent.ItemType<AlgalPrismTorch>(),
+            ModContent.ItemType<NavyPrismTorch>(),
+            ModContent.ItemType<RefractivePrismTorch>()
+        };
         public override void SetDefaults(Item item)
         {
             /*if (item.type == ModContent.ItemType<GildedProboscis>())
@@ -164,11 +187,6 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<EyeofDesolation>())
             {
                 var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<StarbusterCore>())
-            {
-                var line = new TooltipLine(Mod, "StarbusterRemix", "Drops when a Stellar Culex touches a Unicorn");
                 tooltips.Add(line);
             }
             if (item.type == ModContent.ItemType<Abombination>())
@@ -363,7 +381,16 @@ namespace CalRemix
                 }
 
             }
-            
+            if (modPlayer.blaze && item.DamageType == DamageClass.Ranged)
+            {
+                if (modPlayer.blazeCount < 1)
+                    modPlayer.blazeCount = 1;
+                else
+                {
+                    Projectile.NewProjectile(source, position, velocity * 0.75f, ModContent.ProjectileType<AstralFireball>(), 25, 0f, player.whoAmI);
+                    modPlayer.blazeCount = 0;
+                }
+            }
             return true;
         }
 
@@ -393,10 +420,13 @@ namespace CalRemix
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
             }
+            if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
+            {
+                itemLoot.Add(ModContent.ItemType<BundleBones>(), 4, 10, 25);
+            }
             if (item.type == ModContent.ItemType<DesertScourgeBag>())
             {
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
-                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
             }
             else if (item.type == ItemID.PlanteraBossBag)
             {
@@ -409,9 +439,8 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
                 itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
-                itemLoot.RemoveWhere((rule) => rule is CommonDrop rouxls && rouxls.itemId == ModContent.ItemType<CosmiliteBar>());
             }
-            if (item.type == ModContent.ItemType<YharonBag>())
+            else if (item.type == ModContent.ItemType<YharonBag>())
             {
                 itemLoot.AddIf(() => !CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
             }
@@ -434,6 +463,7 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<CrabulonBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
+                itemLoot.Add(ModContent.ItemType<CrabLeaves>(), 1, 4, 7);
             }
             else if (item.type == ItemID.FishronBossBag)
             {

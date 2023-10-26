@@ -1,18 +1,16 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Sounds;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Ranged;
-using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using CalamityMod.Projectiles.Ranged;
-using CalamityMod.Projectiles.Summon;
 using CalamityMod;
+using Terraria.DataStructures;
+using CalRemix.Projectiles.Weapons;
+using CalamityMod.Items.Weapons.DraedonsArsenal;
 
 namespace CalRemix.Items.Weapons
 {
@@ -22,6 +20,7 @@ namespace CalRemix.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             DisplayName.SetDefault("SDOMG");
             Tooltip.SetDefault("75% chance to not consume ammo\n" +
                 "Rapidly fires a spread of bullets that close in over time\n" +
@@ -52,32 +51,57 @@ namespace CalRemix.Items.Weapons
         }
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
+            if (player.altFunctionUse == 2)
+                return false;
             return Main.rand.NextFloat() >= 0.75f;
         }
-        public override bool? UseItem(Player player)
+        public override void UpdateInventory(Player player)
+        {
+            if (!player.channel)
+                spread = 0;
+            else if (spread < 600 && player.altFunctionUse != 2 && player.channel && (player.HeldItem == Item || player.inventory[58] == Item))
+                spread++;
+        }
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+        public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
             {
-                Item.useTime = 30;
-                Item.useAnimation = 30;
+                if (player.HasItem(ModContent.ItemType<PlasmaGrenade>()) && player.velocity.Length() == 0)
+                {
+                    Item.UseSound = OpalStriker.Charge;
+                    player.ConsumeItem(ModContent.ItemType<PlasmaGrenade>(), true);
+                    return true;
+                }
+                return false;
             }
-            return true;
+            else
+            {
+                Item.UseSound = SoundID.Item40;
+                return true;
+            }
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (!player.channel)
+            if (player.altFunctionUse == 2)
             {
-                spread = 0;
-            }
-            else if (spread < 600 && player.channel)
-            {
-                spread++;
+                if (player.ownedProjectileCounts[Item.shoot] < 1)
+                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<SDOMGRay>(), damage / 2, knockback, player.whoAmI);
+                return false;
             }
             return true;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            velocity = velocity.RotatedByRandom(MathHelper.ToRadians(60-(spread/10)));
+            if (player.altFunctionUse != 2)
+                velocity = velocity.RotatedByRandom(MathHelper.ToRadians(75-(spread/10)));
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-2f, -2f);
         }
         public override void AddRecipes()
         {

@@ -24,6 +24,9 @@ using CalRemix.Tiles.PlaguedJungle;
 using CalRemix.Projectiles.TileTypeless;
 using CalamityMod.Tiles.Plates;
 using CalamityMod.NPCs;
+using CalRemix.Projectiles.Weapons;
+using CalRemix.Items.Weapons;
+using CalRemix.NPCs;
 using CalamityMod.Tiles;
 using CalamityMod.Tiles.SunkenSea;
 using System.Threading;
@@ -55,6 +58,18 @@ namespace CalRemix
         public static int transmogrifyTimeLeft = 0;
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
 
+        public List<int> DungeonWalls = new List<int>
+        {
+            WallID.BlueDungeonUnsafe,
+            WallID.BlueDungeonSlabUnsafe,
+            WallID.BlueDungeonTileUnsafe,
+            WallID.GreenDungeonUnsafe,
+            WallID.GreenDungeonSlabUnsafe,
+            WallID.GreenDungeonTileUnsafe,
+            WallID.PinkDungeonUnsafe,
+            WallID.PinkDungeonSlabUnsafe,
+            WallID.PinkDungeonTileUnsafe
+        };
         public static void UpdateWorldBool()
         {
             if (Main.netMode == NetmodeID.Server)
@@ -177,6 +192,7 @@ namespace CalRemix
             RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
             RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
             RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
+            RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
         }
         public override void PostUpdateWorld()
         {
@@ -269,6 +285,28 @@ namespace CalRemix
             PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
+        }
+        public override void PostWorldGen()
+        {
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 2 * 36 && DungeonWalls.Contains(Main.tile[chest.x, chest.y].WallType))
+                {
+                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                    {
+                        if (chest.item[inventoryIndex].type == ItemID.None)
+                        {
+                            if (Main.rand.NextBool(4))
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
+                                chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         public static void HMChest(int block1, int block2, int wall, int loot, List<int> anchor, int chest)

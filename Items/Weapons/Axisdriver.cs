@@ -19,6 +19,7 @@ namespace CalRemix.Items.Weapons
 		{
             Item.ResearchUnlockCount = 1;
             DisplayName.SetDefault("Axisdriver");
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             Tooltip.SetDefault("Shoots a burst of 3 exo bullets that tear through enemies\n" +
                 "Critical hits rain elemental bolts from above\n" +
                 "Right click to fire an explosive homing exo bullet\n" +
