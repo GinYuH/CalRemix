@@ -15,6 +15,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Boss;
+using CalRemix.Retheme;
 
 namespace CalRemix
 {
@@ -31,46 +32,7 @@ namespace CalRemix
         public override bool InstancePerEntity => true;
         public override void SetDefaults(Projectile projectile)
         {
-            if (projectile.type == ProjectileType<BrimstoneBall>())
-            {
-                projectile.Name = "Calamity Fireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneBarrage>())
-            {
-                projectile.Name = "Calamity Barrage";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneFire>())
-            {
-                projectile.Name = "Calamity Fire";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
-            {
-                projectile.Name = "Calamity Hellfireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneMonster>())
-            {
-                projectile.Name = "Calamity Monster";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneWave>())
-            {
-                projectile.Name = "Calamity Flame Skull";
-            }
+			RethemeMaster.RethemeProjDefaults(projectile);
         }
 
         public override void AI(Projectile projectile)

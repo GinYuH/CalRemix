@@ -22,7 +22,6 @@ using CalRemix.Items.Materials;
 using CalamityMod.World;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
@@ -32,12 +31,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items;
 using CalRemix.Projectiles.Accessories;
-using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Placeables.FurnitureAbyss;
-using CalamityMod.Items.Placeables.FurnitureCosmilite;
-using CalamityMod.Items.Fishing.AstralCatches;
-using CalamityMod.Items.Fishing.SulphurCatches;
-using CalamityMod.Items.Placeables.Ores;
+using CalRemix.Retheme;
 
 namespace CalRemix
 {
@@ -46,30 +40,9 @@ namespace CalRemix
         public override bool InstancePerEntity => true;
         public bool Scoriad = false;
         public int NonScoria = -1;
-        public List<int> Torch = new List<int>
-        {
-            ItemID.RainbowTorch,
-            ItemID.UltrabrightTorch,
-            ItemID.IchorTorch,
-            ItemID.BoneTorch,
-            ItemID.CursedTorch,
-            ItemID.DemonTorch,
-            ItemID.IceTorch,
-            ItemID.JungleTorch,
-            ItemID.CrimsonTorch,
-            ItemID.CorruptTorch,
-            ItemID.HallowedTorch,
-            ItemID.Torch,
-            ModContent.ItemType<AstralTorch>(),
-            ModContent.ItemType<SulphurousTorch>(),
-            ModContent.ItemType<GloomTorch>(),
-            ModContent.ItemType<AbyssTorch>(),
-            ModContent.ItemType<AlgalPrismTorch>(),
-            ModContent.ItemType<NavyPrismTorch>(),
-            ModContent.ItemType<RefractivePrismTorch>()
-        };
         public override void SetDefaults(Item item)
         {
+            RethemeMaster.RethemeItemDefaults(item);
             /*if (item.type == ModContent.ItemType<GildedProboscis>())
             {
                 item.damage = item.damage / 4;
@@ -80,28 +53,8 @@ namespace CalRemix
                 item.damage = item.damage / 2;
                 item.rare = ItemRarityID.LightRed;
             }
-            else*/ if (item.type == ModContent.ItemType<PearlShard>())
-            {
-                item.SetNameOverride("Conquest Fragment");
-                item.rare = ItemRarityID.Orange;
-            }
-            else if (item.type == ModContent.ItemType<InfestedClawmerang>())
-            {
-                item.SetNameOverride("Shroomerang");
-            }
-            else if (item.type == ModContent.ItemType<PhantomicArtifact>())
-            {
-                item.SetNameOverride("Phantomic Soul Artifact");
-            }
-            else if (item.type == ModContent.ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>())
-            {
-                item.SetNameOverride("Tarragon Ore");
-            }
-            else if (item.type == ModContent.ItemType<CalamityMod.Items.Materials.UelibloomBar>())
-            {
-                item.SetNameOverride("Tarragon Bar");
-            }
-            else if (item.type == ModContent.ItemType<EssenceofHavoc>())
+            else*/
+            if (item.type == ModContent.ItemType<EssenceofHavoc>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofLaw>();
             }
@@ -121,85 +74,11 @@ namespace CalRemix
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<TitanFinger>();
             }
-            else if (item.type == ModContent.ItemType<CosmiliteBar>())
-            {
-                item.rare = ItemRarityID.Purple;
-            }
-
         }
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.type == ModContent.ItemType<PearlShard>())
-            {
-                var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<PhantomicArtifact>())
-            {
-                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<GrandGelatin>())
-            {
-                var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<TheAbsorber>())
-            {
-                var line = new TooltipLine(Mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<TheSponge>())
-            {
-                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<AmbrosialAmpoule>())
-            {
-                var line = new TooltipLine(Mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<AbyssalDivingGear>())
-            {
-                var line = new TooltipLine(Mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<AbyssalDivingSuit>())
-            {
-                var line = new TooltipLine(Mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<TheAmalgam>())
-            {
-                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Purity, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<DesertMedallion>())
-            {
-                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<CryoKey>())
-            {
-                var line = new TooltipLine(Mod, "CryoKeyRemix", "Drops from Primal Aspids");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<EyeofDesolation>())
-            {
-                var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<Abombination>())
-            {
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
-            }
-            if (Torch.Contains(item.type))
-            {
-                var line = new TooltipLine(Mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
-                line.OverrideColor = Color.OrangeRed;
-                tooltips.Add(line);
-            }
+            RethemeMaster.RethemeTooltips(Mod, item, tooltips);
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
