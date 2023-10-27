@@ -178,12 +178,6 @@ namespace CalRemix
 					target.AddBuff(BuffType<GlacialState>(), 60);
 				}
             }
-            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
-                return;
-            if (modPlayer.pearl)
-			{
-				projectile.Kill();
-			}
 		}
 
 		public override void OnKill(Projectile projectile, int timeLeft)
