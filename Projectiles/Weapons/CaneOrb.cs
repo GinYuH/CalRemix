@@ -23,7 +23,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.height = 14;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
-            Projectile.DamageType = ModContent.GetInstance<RogueDamageClass>();
+            Projectile.DamageType = DamageClass.Magic;
         }
         public override void AI()
         {
