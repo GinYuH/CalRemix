@@ -73,6 +73,7 @@ namespace CalRemix
         private bool guardRage, guardOver, yharRage = false;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
+        public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int> 

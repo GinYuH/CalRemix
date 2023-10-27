@@ -65,6 +65,8 @@ public class GearworkShield : ModItem
                     for (int i = 0; i < 4; i++)
                         npc.GetGlobalNPC<CalRemixGlobalNPC>().storedAI[i] = npc.ai[i];
                     for (int i = 0; i < 4; i++)
+                        npc.GetGlobalNPC<CalRemixGlobalNPC>().storedLocalAI[i] = npc.localAI[i];
+                    for (int i = 0; i < 4; i++)
                         npc.GetGlobalNPC<CalRemixGlobalNPC>().storedCalAI[i] = npc.Calamity().newAI[i];
                 }
                 recorded = true;
@@ -88,6 +90,8 @@ public class GearworkShield : ModItem
                         continue;
                     for (int i = 0; i < 4; i++)
                         npc.ai[i] = npc.GetGlobalNPC<CalRemixGlobalNPC>().storedAI[i];
+                    for (int i = 0; i < 4; i++)
+                        npc.localAI[i] = npc.GetGlobalNPC<CalRemixGlobalNPC>().storedLocalAI[i];
                     for (int i = 0; i < 4; i++)
                         npc.Calamity().newAI[i] = npc.GetGlobalNPC<CalRemixGlobalNPC>().storedCalAI[i];
                     if (player.Calamity().StealthStrikeAvailable())
