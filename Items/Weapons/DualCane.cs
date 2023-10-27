@@ -58,8 +58,8 @@ namespace CalRemix.Items.Weapons
         {
             if (charge >= 40)
             {
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CaneOrb>(), damage / 2, knockback, player.whoAmI);
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CaneOrb>(), damage / 2, knockback, player.whoAmI, ai1: 1);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CaneOrb>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CaneOrb>(), damage, knockback, player.whoAmI, ai1: 1);
             }
             return false;
         }

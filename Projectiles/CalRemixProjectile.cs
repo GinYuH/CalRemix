@@ -15,10 +15,6 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Boss;
-using Terraria.ID;
-using CalRemix.Tiles.PlaguedJungle;
-using System;
-using Mono.Cecil;
 
 namespace CalRemix
 {
@@ -83,7 +79,7 @@ namespace CalRemix
 			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
 			bladetimer--;
 			if (modPlayer.brimPortal && nihilicArrow && !projectile.minion && !projectile.sentry && projectile.velocity != Vector2.Zero)
-				CalamityMod.CalamityUtils.HomeInOnNPC(projectile, false, 2500, 10f, 1);
+				CalamityUtils.HomeInOnNPC(projectile, false, 2500, 10f, 1);
 			if (modPlayer.tvo && tvoproj)
             {
 				if (projectile.type == ProjectileType<RainbowComet>())
@@ -99,6 +95,17 @@ namespace CalRemix
 			if (modPlayer.tvo && projectile.type == ProjectileType<SandElementalHealer>() && player.statLife < player.statLifeMax && player.ownedProjectileCounts[ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>()] < 2)
             {
 				Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>(), 0, 0, projectile.owner);
+            }
+			if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
+				return;
+			if (modPlayer.pearl)
+			{
+                CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 1);
+            }
+			eye++;
+            if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
+            {
+                Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, projectile.velocity * 0.75f, ProjectileType<HomingAstralFireball>(), 10, 0, projectile.owner);
             }
         }
 
@@ -170,6 +177,12 @@ namespace CalRemix
 				{
 					target.AddBuff(BuffType<GlacialState>(), 60);
 				}
+            }
+            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
+                return;
+            if (modPlayer.pearl)
+			{
+				projectile.Kill();
 			}
 		}
 

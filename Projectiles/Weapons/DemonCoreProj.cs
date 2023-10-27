@@ -29,7 +29,7 @@ namespace CalRemix.Projectiles.Weapons
             if (!Projectile.Calamity().stealthStrike)
                 return;
             for (int i = 0; i < 5; i++)
-                Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360f)) * 3f, ModContent.ProjectileType<ShadowCloud>(), Projectile.damage / 10, Projectile.knockBack / 2, Projectile.owner);
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360f)) * 3f, ModContent.ProjectileType<ShadowCloud>(), Projectile.damage / 4, 0, Projectile.owner);
         }
     }
 }

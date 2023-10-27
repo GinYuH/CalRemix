@@ -14,6 +14,7 @@ namespace CalRemix.Items.Accessories
 
         public override void SetDefaults()
         {
+            Item.damage = 10;
             Item.value = Item.sellPrice(gold: 7, silver: 87);
             Item.rare = ItemRarityID.Pink;
             Item.accessory = true;
