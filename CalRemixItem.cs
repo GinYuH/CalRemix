@@ -32,6 +32,7 @@ using Terraria.GameContent;
 using CalRemix.Items;
 using CalRemix.Projectiles.Accessories;
 using CalRemix.Retheme;
+using Terraria.Audio;
 
 namespace CalRemix
 {
@@ -525,6 +526,40 @@ namespace CalRemix
                             }
                         }
                     }
+                }
+            }
+        }
+
+        public override void OnConsumeItem(Item item, Player player)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().bananaClown && !player.HasCooldown(BananaClownCooldown.ID))
+            {
+                if (item.type == ItemID.Apple || item.type == ItemID.Apricot || item.type == ItemID.Grapefruit || item.type == ItemID.Lemon || item.type == ItemID.Peach
+                    || item.type == ItemID.Cherry || item.type == ItemID.Plum || item.type == ItemID.BlackCurrant || item.type == ItemID.Elderberry
+                    || item.type == ItemID.BloodOrange || item.type == ItemID.Rambutan || item.type == ItemID.Mango || item.type == ItemID.Pineapple
+                    || item.type == ItemID.Banana || item.type == ItemID.Coconut || item.type == ItemID.Dragonfruit || item.type == ItemID.Starfruit
+                    || item.type == ItemID.Pomegranate || item.type == ItemID.SpicyPepper)
+                {
+                    for (int i = 0; i < Main.rand.Next(2, 6); i++)
+                        SoundEngine.PlaySound(CalamityMod.Projectiles.Magic.AcidicReed.SaxSound with { MaxInstances = 0 });
+                    for (int num502 = 0; num502 < 36; num502++)
+                    {
+                        int dust = Dust.NewDust(new Vector2(player.position.X, player.position.Y + 16f), player.width, player.height - 16, DustID.Confetti_Yellow, 0f, 0f, 0, default, 1f);
+                        Main.dust[dust].velocity *= 3f;
+                        Main.dust[dust].scale *= 1.15f;
+                    }
+                    int num226 = 36;
+                    for (int num227 = 0; num227 < num226; num227++)
+                    {
+                        Vector2 vector6 = Vector2.Normalize(player.velocity) * new Vector2((float)player.width / 2f, (float)player.height) * 0.75f;
+                        vector6 = vector6.RotatedBy((double)((float)(num227 - (num226 / 2 - 1)) * MathHelper.TwoPi / (float)num226), default) + player.Center;
+                        Vector2 vector7 = vector6 - player.Center;
+                        int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Confetti_Yellow, vector7.X * 1.5f, vector7.Y * 1.5f, 100, default, 1.4f);
+                        Main.dust[num228].noGravity = true;
+                        Main.dust[num228].noLight = true;
+                        Main.dust[num228].velocity = vector7;
+                    }
+                    player.AddCooldown(BananaClownCooldown.ID, 4200);
                 }
             }
         }

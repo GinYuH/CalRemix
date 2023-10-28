@@ -8,7 +8,7 @@ namespace CalRemix
     {
         public static new string ID => "Gearwork";
         public override bool ShouldDisplay => true;
-        public override LocalizedText DisplayName => Language.GetOrRegister("Mods/CalRemix/UI.Cooldowns.Gearwork");
+        public override LocalizedText DisplayName => Language.GetOrRegister("Gearwork Cooldown");
         public override string Texture => "CalRemix/ExtraTextures/GearworkCooldown";
         public override Color OutlineColor => new Color(153, 132, 28);
         public override Color CooldownStartColor => new Color(84, 110, 83);

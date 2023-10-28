@@ -81,6 +81,7 @@ namespace CalRemix
 		public bool ZonePlague;
         public bool ZonePlagueDesert;
         public Vector2 clawPosition = Vector2.Zero;
+		public bool bananaClown;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -587,6 +588,7 @@ namespace CalRemix
 			pearl = false;
 			astralEye = false;
 			flamingIce = false;
+			bananaClown = false;
             if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)

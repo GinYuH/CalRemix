@@ -21,7 +21,10 @@ Mods: {
 			KlepticoinCurrency: klepticoins
 		}
 
-		UI.TransmogrifyMenu: Transmogrify
+		UI: {
+			TransmogrifyMenu: Transmogrify
+			Cooldowns.BananaClown: Clown Consumption Cooldown
+		}
 
 		Biomes: {
 			LifeBiome: {
@@ -1296,6 +1299,14 @@ Mods: {
 				DisplayName: Bellwings
 				Tooltip: ""
 			}
+
+			BananaClownHat: {
+				DisplayName: Banana Clown Mask
+				Tooltip: 2 magic damage
+			}
+
+			BananaClownPants.Tooltip: 2 magic damage and 14% increased movement speed
+			BananaClownSleeves.Tooltip: 2 magic damage
 		}
 
 		NPCs: {
