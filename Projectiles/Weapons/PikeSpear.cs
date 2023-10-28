@@ -97,7 +97,7 @@ public class PikeSpear : ModProjectile
         // Apply proper rotation, with an offset of 135 degrees due to the sprite's rotation, notice the usage of MathHelper, use this class!
         // MathHelper.ToRadians(xx degrees here)
       
-        Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+        Projectile.rotation = Projectile.velocity.ToRotation() + 3 * MathHelper.PiOver4;
 
     }
       
