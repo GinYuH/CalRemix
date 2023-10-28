@@ -872,7 +872,7 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 300, onlyPlayOnce: false).SetHoverTextOverride("Thanks Fanny! I'll heal."));
 
             fannyMessages.Add(new FannyMessage("Invisible", "Where did you go?",
-                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax, persistsThroughSaves: false).SetHoverTextOverride("I'm still here Fanny!"));
+                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax, onlyPlayOnce: true, persistsThroughSaves: false).SetHoverTextOverride("I'm still here Fanny!"));
 
             fannyMessages.Add(new FannyMessage("GfbintroEvil", "WELCOME TO HELL!",
                 "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld).SpokenByEvilFanny());

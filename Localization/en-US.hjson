@@ -1348,6 +1348,7 @@ Mods: {
 			LaRuga.DisplayName: La Ruga
 			Barocrab.DisplayName: Barocrab
 			MinnowsPrime.DisplayName: Minnows Prime
+			BananaClown.DisplayName: Banana Clown
 		}
 
 		Projectiles: {
@@ -1477,6 +1478,7 @@ Mods: {
 			Frosting.DisplayName: Frosting
 			DeadYharim.DisplayName: Dead Yharim
 			HeavenPiercerLaser.DisplayName: HElix Laser
+			BananaBomb.DisplayName: Banana Bomb
 		}
 
 		Tiles: {
