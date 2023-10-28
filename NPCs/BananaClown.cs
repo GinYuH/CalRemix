@@ -58,7 +58,7 @@ namespace CalRemix.NPCs
             NPC.value = Item.buyPrice(silver: 20);
             NPC.noGravity = false;
             NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.DeathSound = SoundID.NPCDeath50;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToElectricity = false;
