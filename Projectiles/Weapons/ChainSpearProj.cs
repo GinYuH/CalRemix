@@ -29,11 +29,6 @@ namespace CalRemix.Projectiles.Weapons
         }
         public override void AI()
         {
-            if (Projectile.localAI[0] == 0)
-            {
-                Projectile.velocity *= 2;
-                Projectile.localAI[0] = 1;
-            }
             if (Owner.dead)
             {
                 Projectile.Kill();

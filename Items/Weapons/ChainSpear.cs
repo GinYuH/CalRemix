@@ -58,7 +58,15 @@ namespace CalRemix.Items.Weapons
             if (player.altFunctionUse == 2)
             {
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<ChainSpearProj>()] < 1)
-                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ChainSpearProj>(), damage / 2, knockback, player.whoAmI);
+                {
+                    Projectile.NewProjectile(source, position, velocity * 2, ModContent.ProjectileType<ChainSpearProj>(), damage / 2, knockback, player.whoAmI);
+                }
+                return false;
+            }
+            else if (player.ownedProjectileCounts[ModContent.ProjectileType<ChainSpearProj>()] > 0)
+            {
+                int p = Projectile.NewProjectile(source, position, velocity * 2, Item.shoot, damage, knockback, player.whoAmI);
+                Main.projectile[p].scale = 2;
                 return false;
             }
             return true;

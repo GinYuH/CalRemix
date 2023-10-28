@@ -32,6 +32,18 @@ namespace CalRemix.Projectiles.Weapons
         public override float InitialSpeed => 3f;
         public override float ReelbackSpeed => 1.1f;
         public override float ForwardSpeed => 0.95f;
+        public override void PostAI()
+        {
+            foreach (NPC n in Main.npc)
+            {
+                if (n != null && n.active && n.IsAnEnemy())
+                if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<ChainSpearProj>()) > 0)
+                {
+                    Projectile.scale = 2;
+                    break;
+                }
+            }
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BurningBlood>(), 120);
@@ -41,6 +53,7 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrimlanceHellfireExplosion>(), hit.Damage * 22, hit.Knockback, Projectile.owner);
                 owner.GiveIFrames(60, true);
                 CalamityUtils.KillShootProjectiles(true, ModContent.ProjectileType<ChainSpearProj>(), owner);
+                owner.Calamity().GeneralScreenShakePower = 6;
             }
         }
     }
