@@ -35,13 +35,12 @@ namespace CalRemix.Projectiles.Weapons
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BurningBlood>(), 120);
-            if (target.boss)
-                return;
             Player owner = Main.player[Projectile.owner];
             if (target.GetGlobalNPC<CalRemixGlobalNPC>().grappled)
             {
-                Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrimlanceHellfireExplosion>(), hit.Damage, hit.Knockback, Projectile.owner);
+                Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrimlanceHellfireExplosion>(), hit.Damage * 22, hit.Knockback, Projectile.owner);
                 owner.GiveIFrames(60, true);
+                CalamityUtils.KillShootProjectiles(true, ModContent.ProjectileType<ChainSpearProj>(), owner);
             }
         }
     }
