@@ -506,8 +506,15 @@ namespace CalRemix.UI
         //Loads fanny messages that aren't associated with anything else in particular
         private static void LoadGeneralFannyMessages()
         {
+
             fannyMessages.Add(new FannyMessage("Intro", "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
                 "Idle", (FannySceneMetrics scene) => !Main.zenithWorld, displayOutsideInventory: true));
+
+            fannyMessages.Add(new FannyMessage("GfbintroEvil", "WELCOME TO HELL!",
+    "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("Gfbintro", "This is different that its supposed to be... Oh! You made a getfixedboi world. This world presents new, unfamiliar challenges so always be on your toes.",
+                "Idle", (FannySceneMetrics scene) => Main.zenithWorld));
 
             #region Passive
             fannyMessages.Add(new FannyMessage("MeldGunk", "Fear the Meld Gunk.",
@@ -641,8 +648,11 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ItemID.RodofDiscord));
 
-            fannyMessages.Add(new FannyMessage("Temple", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
-                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611)).AddItemDisplay(ItemID.WireCutter));
+            fannyMessages.Add(new FannyMessage("Temple", "I love house invasion!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple).SetHoverTextOverride("Me too Fanny!"));
+
+            fannyMessages.Add(new FannyMessage("TempleWires", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && (Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611))).AddItemDisplay(ItemID.WireCutter));
 
             fannyMessages.Add(new FannyMessage("Altars", "Smashing demon altars is no longer guaranteed to bless your world with ores. But it’s still worth a shot!",
                "Idle", (FannySceneMetrics scene) => (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson) && Main.hardMode && CalamityConfig.Instance.EarlyHardmodeProgressionRework && !Main.LocalPlayer.ZoneUnderworldHeight));
@@ -723,8 +733,17 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
     "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
+            fannyMessages.Add(new FannyMessage("Anauwu", "I sense an ominous presence. I think the best course of action here would be to kill everything you see. If something is dead it can't hurt you!",
+                "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<LeviathanStart>())));
+
             fannyMessages.Add(new FannyMessage("Fairy", "That thing is hurting my eyes! Kill it, quick!",
                 "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.EmpressButterfly)));
+
+            fannyMessages.Add(new FannyMessage("Cultists", "Looks like some blue robe-wearing hooligans are worshiping a coin! Try not to interrupt them, they seem to be having a good time.",
+                "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.CultistDevote)));
+
+            fannyMessages.Add(new FannyMessage("AncientDom", "Who is this guy???",
+                "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.AncientCultistSquidhead)));
 
             fannyMessages.Add(new FannyMessage("Bloodworm", "Crush it under your boot.",
                 "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BloodwormNormal>() || n.type == ModContent.NPCType<BloodwormFleeing>())));
@@ -738,6 +757,15 @@ namespace CalRemix.UI
             #endregion
 
             #region Event
+            fannyMessages.Add(new FannyMessage("Raining", "It's raining! It's pooring! The man on the moon is snoring! Wait, who is the man on the moon!?",
+   "Idle", (FannySceneMetrics scene) => Main.raining).SetHoverTextOverride("That's a good question Fanny!"));
+
+            fannyMessages.Add(new FannyMessage("Winding", "Ah the weather is so nice out today! You should go fly a kite! That's something a lot of people were interested in right?",
+   "Idle", (FannySceneMetrics scene) => Main._shouldUseWindyDayMusic));
+
+            fannyMessages.Add(new FannyMessage("OOA", "Just so we're clear, none of this is canon, got it?",
+   "Nuhuh", (FannySceneMetrics scene) => Main.invasionType == InvasionID.CachedOldOnesArmy).SetHoverTextOverride("Gotcha Fanny!"));
+
             fannyMessages.Add(new FannyMessage("InvasionDeath", "These guys are really giving us what for. It might be a good idea to step away for a bit in order to come up with a new strategy...",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.dead && Main.invasionType != InvasionID.None, cooldown: 1200));
 
@@ -745,7 +773,7 @@ namespace CalRemix.UI
    "Idle", (FannySceneMetrics scene) => Main.bloodMoon));
 
             fannyMessages.Add(new FannyMessage("Eclipxe", "It's dark.",
-   "Sob", (FannySceneMetrics scene) => Main.eclipse && !DownedBossSystem.downedDoG));
+   "Sob", (FannySceneMetrics scene) => Main.eclipse && !DownedBossSystem.downedDoG).SetHoverTextOverride("It is."));
 
             fannyMessages.Add(new FannyMessage("Holloween", "Happy Halloween my friend! Looks like everyone is getting their spook game on. Get ready for a monster mash!",
    "Idle", (FannySceneMetrics scene) => Main.pumpkinMoon && !DownedBossSystem.downedDoG));
@@ -906,12 +934,6 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Invisible", "Where did you go?",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax, onlyPlayOnce: true).SetHoverTextOverride("I'm still here Fanny!"));
-
-            fannyMessages.Add(new FannyMessage("GfbintroEvil", "WELCOME TO HELL!",
-                "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld).SpokenByEvilFanny());
-
-            fannyMessages.Add(new FannyMessage("Gfbintro", "This is different that its supposed to be... Oh! You made a getfixedboi world. This world presents new, unfamiliar challenges so always be on your toes.",
-                "Idle", (FannySceneMetrics scene) => Main.zenithWorld));
 
             #endregion      
 
