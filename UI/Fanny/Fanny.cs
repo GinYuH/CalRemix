@@ -532,7 +532,7 @@ namespace CalRemix.UI
                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == DamageClass.Magic, cooldown: 300, onlyPlayOnce: false));
 
             fannyMessages.Add(new FannyMessage("Thrust", "Did you know you can parry enemy attacks with your sword? Just right click the moment something is about to hit you, and you'll block it with ease!",
-               "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(2160000), cooldown: 300, onlyPlayOnce: false));
+               "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>(), cooldown: 300, onlyPlayOnce: false));
 
 
             #endregion
@@ -611,8 +611,29 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
                 NearDungeonEntrance));
 
+            fannyMessages.Add(new FannyMessage("Snowbr", "It's quite chilly here, maybe you should invest some time in gathering some cold-protective gear before you freeze to death!", "Idle",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSnow));
+
+            fannyMessages.Add(new FannyMessage("Cavern", "It's quite dark down here. You should go get some more torches before further exploration or you may fall into a pit full of lice!", "Idle",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneRockLayerHeight).AddItemDisplay(ItemID.Torch));
+
+            fannyMessages.Add(new FannyMessage("Granite", "Woah, this place looks so cool and futuristic! It's almost like an entirely different dimension here!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneGranite));
+
+            fannyMessages.Add(new FannyMessage("Marble", "Marble? I LOVE playing with marbles! A few hundred years ago I was an avid marble collector, collecting marbles of various shapes, colors, and sizes. But, one day, I lost my marbles.",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneMarble));
+
+            fannyMessages.Add(new FannyMessage("FungalGrowths", "I know a quick get rich quick scheme. See those Glowing Mushrooms? They sell for a lot! Go destroy that ecosystem for some quick cash!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneGlowshroom).AddItemDisplay(ItemID.GlowingMushroom));
+
+            fannyMessages.Add(new FannyMessage("Hell", "Welcome to hell! This place is flaming hot just like me, so you better get some gear to protect you aganist the heat!", "Nuhuh",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight));
+
             fannyMessages.Add(new FannyMessage("ShimmerNothing", "You should consider throwing that item you're holding in Shimmer! You may get something powerful!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.HeldItem.CanShimmer(), onlyPlayOnce: false, cooldown: 600));
+
+            fannyMessages.Add(new FannyMessage("Meteore", "A Fallen Star!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneMeteor).AddItemDisplay(ItemID.FallenStar));
 
             fannyMessages.Add(new FannyMessage("DeepAbyss", "Tired of this pesky abyss drowning you? I have an idea! If you go into the underworld and poke a hole at the bottom, all the water will drain out! No more pesky pressure!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3));
@@ -723,11 +744,23 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("BloodMoon", "During a blood moon, strange critters can be found hiding under rocks. They can be used for blood moon fishing, but be careful, those teeth can really hurt.",
    "Idle", (FannySceneMetrics scene) => Main.bloodMoon));
 
+            fannyMessages.Add(new FannyMessage("Eclipxe", "It's dark.",
+   "Sob", (FannySceneMetrics scene) => Main.eclipse && !DownedBossSystem.downedDoG));
+
+            fannyMessages.Add(new FannyMessage("Holloween", "Happy Halloween my friend! Looks like everyone is getting their spook game on. Get ready for a monster mash!",
+   "Idle", (FannySceneMetrics scene) => Main.pumpkinMoon && !DownedBossSystem.downedDoG));
+
+            fannyMessages.Add(new FannyMessage("Frostmas", "IT'S CHRISTMAS!!! You don't need to get me a gift, just having you around is the most fan-tastic gift a flame like me could ask for!",
+   "Idle", (FannySceneMetrics scene) => Main.snowMoon && !DownedBossSystem.downedDoG).SetHoverTextOverride("Awe, thanks Fanny, you're great to have around too!"));
+
             #endregion
 
             #region Boss
-            fannyMessages.Add(new FannyMessage("KingSlime", "It looks like you're fighting.. what's his name? The giant blue thing.. King something. Slime! King Slime. I heard he's pretty tough! So in order to defeat him, you need to shoot flares at him! Or was that an animation? Alright, you gotta get a falling star to hit him! But that's rare. And at night. There's also other creatures that can spawn at night. Like the Eye of Cthulhu.  Wait, Cthulhu? Although you fight his organs, you never actually fight Cthulhu. Says here that the Dryads tore him apart or something. Pretty brutal, although this is Terraria lore. Does Terraria lore take place in Calamity? Likely not, as Draedon constructed the mechanical bosses. Mechanical bosses? Those are tough. You could use some help with those. So, I heard that some of them shoot lasers. Nevermind, turns out they all shoot lasers. Just dodge the lasers I guess. Lasers? Like.. the Moon Lord? Moon Lord is the stronger version of Cthulhu. He lives on the moon. In vanilla Terraria, the Moon Lord is the final boss. Once you defeat him, I guess you just think.. who was the first boss you fought? Desert Scourge? But that's from the Calamity Mod. And what if you fought another boss before Desert Scourge, like King Slime? Oh, right! You're fighting King Slime. Dodge him. That's all I have to say.",
-              "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.KingSlime), maxWidth: 470));
+            fannyMessages.Add(new FannyMessage("Mutant", "Woah, how much HP does that guy have??",
+    "Awooga", (FannySceneMetrics scene) => CrossModBoss(scene, "FargowiltasSouls", "MutantBoss")));
+
+            fannyMessages.Add(new FannyMessage("TorchGod", "A fellow being of the flames! It seems you played with a bit too much fire and now you are facing the wrath of the almighty Torch God! Don't worry though, he's impervious to damage, so you won't be able to hurt him.",
+              "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TorchGod)));
 
             fannyMessages.Add(new FannyMessage("Mutant", "Woah, how much HP does that guy have??",
     "Awooga", (FannySceneMetrics scene) => CrossModBoss(scene, "FargowiltasSouls", "MutantBoss")));
