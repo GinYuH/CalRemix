@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod;
 
 namespace CalRemix.Projectiles.Weapons
 {
@@ -38,7 +39,10 @@ namespace CalRemix.Projectiles.Weapons
                 return;
             Player owner = Main.player[Projectile.owner];
             if (target.GetGlobalNPC<CalRemixGlobalNPC>().grappled)
-                Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrimlanceHellfireExplosion>(), hit.Damage / 20, hit.Knockback, Projectile.owner);
+            {
+                Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrimlanceHellfireExplosion>(), hit.Damage, hit.Knockback, Projectile.owner);
+                owner.GiveIFrames(60, true);
+            }
         }
     }
 }

@@ -29,6 +29,11 @@ namespace CalRemix.Projectiles.Weapons
         }
         public override void AI()
         {
+            if (Projectile.localAI[0] == 0)
+            {
+                Projectile.velocity *= 2;
+                Projectile.localAI[0] = 1;
+            }
             if (Owner.dead)
             {
                 Projectile.Kill();
@@ -42,12 +47,7 @@ namespace CalRemix.Projectiles.Weapons
 
             if (victim != null)
                 victim.Center = Projectile.Center;
-            if (Projectile.ai[1] >= 45f && (Projectile.ai[0] != 1f || Projectile.ai[0] != 2f))
-            {
-                Projectile.velocity.Y += 1f;
-                Projectile.velocity.X *= 0.995f;
-            }
-            if (Projectile.ai[0] == 0f && vector.Length() > 800f)
+            if (Projectile.ai[0] == 0f && vector.Length() > 600f)
                 Projectile.ai[0] = 1f;
             if (Projectile.ai[0] >= 1f)
             {
