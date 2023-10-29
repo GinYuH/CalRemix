@@ -1307,6 +1307,7 @@ Mods: {
 
 			BananaClownPants.Tooltip: 2 magic damage and 14% increased movement speed
 			BananaClownSleeves.Tooltip: 2 magic damage
+			CrocodileHerringItem.DisplayName: Crocodile Herring
 		}
 
 		NPCs: {

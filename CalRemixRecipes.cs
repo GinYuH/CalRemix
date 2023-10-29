@@ -109,6 +109,12 @@ namespace CalRemix
                 bar.AddTile(TileID.CookingPots);
                 bar.Register();
             }
+            {
+                Recipe bar = Recipe.Create(ItemID.CookedFish, 1);
+                bar.AddIngredient<CrocodileHerringItem>();
+                bar.AddTile(TileID.CookingPots);
+                bar.Register();
+            }
 
             #region DP stuff
             // Alcohol...

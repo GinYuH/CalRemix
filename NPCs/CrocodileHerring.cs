@@ -11,10 +11,12 @@ using CalamityMod;
 using CalRemix.Items;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Items.Materials;
+using CalRemix.Items.Materials;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.NPCs
 {
-    public class MinnowsPrime : ModNPC
+    public class CrocodileHerring : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -31,21 +33,21 @@ namespace CalRemix.NPCs
             NPC.width = 36;
             NPC.height = 22;
             NPC.defense = 0;
-            NPC.lifeMax = 500;
+            NPC.lifeMax = 50;
             NPC.aiStyle = -1;
             AIType = -1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.chaseable = false;
-            NPC.catchItem = (short)ModContent.ItemType<MinnowsPrimeItem>();
+            NPC.catchItem = (short)ModContent.ItemType<CrocodileHerringItem>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("In ancients times, a ghastly man with a hole for a face decided to drop a bucket of fish in the Dungeon. This was the result."),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
+                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("This fish species was doomed for extinction from the start considering females of the species were exponentially larger and less common. It's a wonder they somehow lived until the modern day."),
             });
         }
 
@@ -205,24 +207,23 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneDungeon && spawnInfo.Water && NPC.downedMoonlord)
+            if (spawnInfo.Player.ZoneBeach && spawnInfo.Water && DownedBossSystem.downedLeviathan)
             {
-                return SpawnCondition.CaveJellyfish.Chance * 2f;
+                return SpawnCondition.Ocean.Chance * 0.8f;
             }
             return 0f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(new CommonDrop(ItemID.Ectoplasm, 1, 36, 57));
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<Polterplasm>(), 1, 7, 15));
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<CrocodileScale>(), 1, 2, 3));
         }
 
         public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, (int)CalamityMod.Dusts.CalamityDusts.Polterplasm, hit.HitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
             }
         }
     }

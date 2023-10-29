@@ -701,7 +701,6 @@ namespace CalRemix
             }
             else if (npc.type == ModContent.NPCType<Leviathan>() || npc.type == ModContent.NPCType<Anahita>())
             {
-                Leviathan levi = npc.ModNPC as Leviathan;
                 LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
                 LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(leadingConditionRule);

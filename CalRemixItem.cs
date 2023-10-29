@@ -356,6 +356,10 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 2, 45, 92);
             }
+            else if (item.type == ModContent.ItemType<LeviathanBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<CrocodileScale>(), 1, 20, 30);
+            }
             /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
