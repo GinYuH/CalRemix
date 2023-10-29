@@ -4,7 +4,4 @@ version = 1.2.1
 dllReferences = MMHOOK_CalamityMod
 modReferences = CalamityMod
 loadAfter = CalamityMod
-hideCode = true
-hideResources = true
-includeSource = false
 

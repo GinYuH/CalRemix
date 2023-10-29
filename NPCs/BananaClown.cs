@@ -86,7 +86,7 @@ namespace CalRemix.NPCs
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 10, ModContent.ProjectileType<BananaBomb>(), 15, 0, Main.myPlayer);
                 }
             }
-            if (GreenAI[2] % (120 + Main.rand.Next(0, 20)) == 0)
+            if (GreenAI[2] >= (120 + Main.rand.Next(0, 20)))
             {
                 int choice = Main.rand.Next(0, 3);
                 SoundStyle fuckyou = SoundID.Zombie121;
@@ -103,6 +103,7 @@ namespace CalRemix.NPCs
                         break;
                 }
                 SoundEngine.PlaySound(fuckyou, NPC.Center);
+                GreenAI[2] = 0;
             }
         }
 
