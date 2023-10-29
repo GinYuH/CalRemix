@@ -20,6 +20,7 @@ using CalamityMod.Tiles;
 using CalRemix.UI;
 using System.Linq;
 using CalamityMod.Items.Placeables.Ores;
+using Microsoft.CodeAnalysis;
 
 namespace CalRemix
 {
@@ -215,6 +216,54 @@ namespace CalRemix
                             if (Main.tile[x, y].TileType == TileID.Stone || Main.tile[x, y].TileType == TileID.IceBlock)
                             {
                                 Main.tile[x, y].TileType = (ushort)type;
+                            }
+                        }
+                    }
+                }
+            }
+            return;
+            if (CalRemixWorld.meldCountdown <= 0)
+            {
+                if (Main.rand.NextBool(2222))
+                {
+                    if (CalRemixWorld.astrallist.Contains(tile.TileType))
+                    {
+                        int LocationX = i;
+                        int LocationY = j;
+                        bool getMelded = false;
+                        bool somethingConverted = false;
+                        int meldRad = 4;
+                        for (int x = LocationX - meldRad; x <= LocationX + meldRad; x++)
+                        {
+                            for (int y = LocationY - meldRad; y <= LocationY + meldRad; y++)
+                            {
+                                if (Main.tile[x, y].TileType == ModContent.TileType<MeldGunkPlaced>())
+                                {
+                                    getMelded = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (getMelded)
+                        {
+                            for (int x = LocationX - meldRad; x <= LocationX + meldRad; x++)
+                            {
+                                for (int y = LocationY - meldRad; y <= LocationY + meldRad; y++)
+                                {
+                                    if (Main.rand.NextBool(6))
+                                    {
+                                        if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= meldRad)
+                                        {
+                                            somethingConverted = true;
+                                            CalamityMod.World.AstralBiome.ConvertToAstral(x, y);
+                                        }
+                                    }
+                                }
+                            }
+                            if (somethingConverted)
+                            {
+                                Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
+                                WorldGen.SquareTileFrame(i, j, true);
                             }
                         }
                     }

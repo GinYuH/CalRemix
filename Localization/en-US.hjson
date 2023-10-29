@@ -1308,6 +1308,15 @@ Mods: {
 			BananaClownPants.Tooltip: 2 magic damage and 14% increased movement speed
 			BananaClownSleeves.Tooltip: 2 magic damage
 			CrocodileHerringItem.DisplayName: Crocodile Herring
+
+			MeldGunk: {
+				DisplayName: Meld Gunk
+				Tooltip:
+					'''
+					Friendship is strong, Meld Gunk is stronger.
+					No seriously, this block is completely unbreakable! Place with caution!
+					'''
+			}
 		}
 
 		NPCs: {
@@ -1490,7 +1499,8 @@ Mods: {
 			HallowEffigyPlaced.MapEntry: Hallow Effigy
 			LifeOreTile.MapEntry: Life Ore
 			MiracleFruitPlaced.MapEntry: Miracle Froota
-			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
+			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag
+			MeldGunkPlaced.MapEntry: Meld Gunk
 		}
 
 		Enchantments: {

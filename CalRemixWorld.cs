@@ -57,6 +57,7 @@ namespace CalRemix
         public static int transmogrifyingItemAmt = 0;
         public static int transmogrifyTimeLeft = 0;
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
+        public static int meldCountdown = 72000;
 
         public List<int> DungeonWalls = new List<int>
         {
@@ -90,6 +91,7 @@ namespace CalRemix
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
+            meldCountdown = 72000;
         }
         public override void OnWorldUnload()
         {
@@ -104,6 +106,7 @@ namespace CalRemix
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
+            meldCountdown = 72000;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -118,6 +121,7 @@ namespace CalRemix
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
             tag["transmogrifyTimeLeft"] = transmogrifyTimeLeft;
+            tag["meld"] = meldCountdown;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -133,6 +137,7 @@ namespace CalRemix
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
             transmogrifyTimeLeft = tag.Get<int>("transmogrifyTimeLeft");
+            meldCountdown = tag.Get<int>("meld");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -148,6 +153,7 @@ namespace CalRemix
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
             writer.Write(transmogrifyTimeLeft);
+            writer.Write(meldCountdown);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -163,16 +169,17 @@ namespace CalRemix
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
             transmogrifyTimeLeft = reader.ReadInt32();
+            meldCountdown = reader.ReadInt32();
         }
 
-        List<int> hallowlist = new List<int>
+        public static List<int> hallowlist = new List<int>
         {
             TileID.Pearlstone,
             TileID.HallowedIce,
             TileID.HallowHardenedSand,
             TileID.HallowSandstone
         };
-        List<int> astrallist = new List<int>
+        public static List<int> astrallist = new List<int>
         {
             ModContent.TileType<AstralStone>(),
             ModContent.TileType<AstralSandstone>(),
@@ -182,6 +189,10 @@ namespace CalRemix
             ModContent.TileType<AstralDirt>(),
             ModContent.TileType<AstralIce>(),
             ModContent.TileType<AstralSnow>(),
+            ModContent.TileType<AstralGrass>(),
+            TileType<AstralClay>(),
+            TileType<AstralSand>(),
+            TileType<AstralMonolith>(),
         };
         public override void PreUpdateWorld()
         {
@@ -192,10 +203,14 @@ namespace CalRemix
             RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
             RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
             RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
-            RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
+            //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
         }
         public override void PostUpdateWorld()
         {
+            if (meldCountdown > 0)
+            {
+                meldCountdown--;
+            }
             if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
