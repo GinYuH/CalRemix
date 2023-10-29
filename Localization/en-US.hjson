@@ -1499,8 +1499,8 @@ Mods: {
 			HallowEffigyPlaced.MapEntry: Hallow Effigy
 			LifeOreTile.MapEntry: Life Ore
 			MiracleFruitPlaced.MapEntry: Miracle Froota
-			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag
-			MeldGunkPlaced.MapEntry: Meld Gunk
+			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
+			MeldGunkPlaced.MapEntry: Meld Gunk Placed
 		}
 
 		Enchantments: {

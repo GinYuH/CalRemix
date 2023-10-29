@@ -48,5 +48,11 @@ namespace CalRemix.Tiles
                 return orig(x,y);
             }
         }
+
+        public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor)
+        {
+            sightColor = Color.Cyan;
+            return true;
+        }
     }
 }
