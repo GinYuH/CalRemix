@@ -47,6 +47,7 @@ namespace CalRemix
         public static int lifeTiles;
         public static int PlagueTiles;
         public static int PlagueDesertTiles;
+        public static int MeldTiles;
         public static int ShrineTimer = -20;
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
@@ -302,6 +303,7 @@ namespace CalRemix
             lifeTiles = 0;
             PlagueTiles = 0;
             PlagueDesertTiles = 0;
+            MeldTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -315,6 +317,7 @@ namespace CalRemix
             tileCounts[TileType<PlaguedSilt>()] +
             tileCounts[TileType<Sporezol>()];
             PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
+            MeldTiles = tileCounts[TileType<MeldGunkPlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
         }
