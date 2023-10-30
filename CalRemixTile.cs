@@ -221,10 +221,10 @@ namespace CalRemix
                     }
                 }
             }
-            return;
             if (CalRemixWorld.meldCountdown <= 0)
             {
-                if (Main.rand.NextBool(2222))
+                int rand = 4 - WorldGen.GetWorldSize();
+                if (Main.rand.NextBool(222 * rand))
                 {
                     if (CalRemixWorld.astrallist.Contains(tile.TileType))
                     {
@@ -232,10 +232,11 @@ namespace CalRemix
                         int LocationY = j;
                         bool getMelded = false;
                         bool somethingConverted = false;
-                        int meldRad = 4;
-                        for (int x = LocationX - meldRad; x <= LocationX + meldRad; x++)
+                        int checkRad = 8;
+                        int spreadRad = 4;
+                        for (int x = LocationX - checkRad; x <= LocationX + checkRad; x++)
                         {
-                            for (int y = LocationY - meldRad; y <= LocationY + meldRad; y++)
+                            for (int y = LocationY - checkRad; y <= LocationY + checkRad; y++)
                             {
                                 if (Main.tile[x, y].TileType == ModContent.TileType<MeldGunkPlaced>())
                                 {
@@ -246,13 +247,13 @@ namespace CalRemix
                         }
                         if (getMelded)
                         {
-                            for (int x = LocationX - meldRad; x <= LocationX + meldRad; x++)
+                            for (int x = LocationX - spreadRad; x <= LocationX + spreadRad; x++)
                             {
-                                for (int y = LocationY - meldRad; y <= LocationY + meldRad; y++)
+                                for (int y = LocationY - spreadRad; y <= LocationY + spreadRad; y++)
                                 {
                                     if (Main.rand.NextBool(6))
                                     {
-                                        if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= meldRad)
+                                        if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= spreadRad)
                                         {
                                             somethingConverted = true;
                                             CalamityMod.World.AstralBiome.ConvertToAstral(x, y);
