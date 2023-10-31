@@ -547,17 +547,19 @@ namespace CalRemix
             int heightdiv2 = 22;
             bool gennedMeld = false;
             Vector2 meldCoords = Vector2.Zero;
+            int ymin = Main.remixWorld ? (int)(Main.maxTilesY * 0.4f) : (int)(Main.maxTilesY * 0.6f);
+            int ymax = Main.remixWorld ? (int)(Main.maxTilesY * 0.6f) : Main.UnderworldLayer - 100;
             for (int loop = 0; loop < 200; loop++)
             {
                 if (gennedMeld)
                     break;
-                for (int x = (int)(Main.maxTilesX * 0.2f); x < Main.maxTilesX; x++)
+                for (int x = (int)(Main.maxTilesX * 0.2f); x < (Main.maxTilesX * 0.8f); x++)
                 {
                     if (gennedMeld)
                         break;
                     if (x > Main.maxTilesX * 0.4f && x < Main.maxTilesX * 0.6f)
                         continue;
-                    for (int y = (int)(Main.maxTilesY * 0.6f); y < Main.UnderworldLayer - 100; y++)
+                    for (int y = ymin; y < ymax; y++)
                     {
                         if (gennedMeld)
                             break;
@@ -641,7 +643,7 @@ namespace CalRemix
                         {
                             if (Main.tile[i, j].HasTile)
                             {
-                                Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
+                                Main.tile[i, j].TileType = (ushort)TileType<MeldGunkPlaced>();
                                 Main.tile[i, j].Get<TileWallWireStateData>().Slope = SlopeType.Solid;
                                 Main.tile[i, j].Get<TileWallWireStateData>().IsHalfBlock = false;
                                 Main.tile[i, j].ClearBlockPaintAndCoating();
