@@ -603,25 +603,29 @@ namespace CalRemix
             }
             if (meldCoords != Vector2.Zero)
             {
-                int planetradius = 56;
-                for (int p = (int)meldCoords.X - planetradius; p < (int)meldCoords.X + planetradius; p++)
-                {
-                    for (int q = (int)meldCoords.Y - planetradius; q < (int)meldCoords.Y + planetradius; q++)
-                    {
-                        int dist = (p - (int)meldCoords.X) * (p - (int)meldCoords.X) + (q - (int)meldCoords.Y) * (q - (int)meldCoords.Y);
-                        if (dist > planetradius * planetradius)
-                            continue;
+                ThreadPool.QueueUserWorkItem(_ => AstralMeld(meldCoords));
+                //AstralMeld(meldCoords);
+            }
 
-                        if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
-                        {
-                            AstralBiome.ConvertToAstral(p, q, true);
-                            WorldGen.SquareTileFrame(p, q, true);
-                            NetMessage.SendTileSquare(-1, p, q, 1);
-                        }
+        }
+
+        public static void AstralMeld(Vector2 meldCoords)
+        {
+            int planetradius = 56;
+            for (int p = (int)meldCoords.X - planetradius; p < (int)meldCoords.X + planetradius; p++)
+            {
+                for (int q = (int)meldCoords.Y - planetradius; q < (int)meldCoords.Y + planetradius; q++)
+                {
+                    int dist = (p - (int)meldCoords.X) * (p - (int)meldCoords.X) + (q - (int)meldCoords.Y) * (q - (int)meldCoords.Y);
+                    if (dist > planetradius * planetradius)
+                        continue;
+
+                    if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
+                    {
+                        AstralBiome.ConvertToAstral(p, q, true);
                     }
                 }
             }
-
         }
 
         public static void PlaceMeldHeart(int x, int y, int width, int height)
@@ -640,6 +644,7 @@ namespace CalRemix
                                 Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
                                 Main.tile[i, j].Get<TileWallWireStateData>().Slope = SlopeType.Solid;
                                 Main.tile[i, j].Get<TileWallWireStateData>().IsHalfBlock = false;
+                                Main.tile[i, j].ClearBlockPaintAndCoating();
                                 Main.tile[i, j].LiquidAmount = 0;
                                 WorldGen.SquareTileFrame(i, j, true);
                                 NetMessage.SendTileSquare(-1, i, j, 1);
@@ -676,6 +681,7 @@ namespace CalRemix
                                 Main.tile[i, j].TileType = (ushort)blockType;
                                 Main.tile[i, j].Get<TileWallWireStateData>().Slope = SlopeType.Solid;
                                 Main.tile[i, j].Get<TileWallWireStateData>().IsHalfBlock = false;
+                                Main.tile[i, j].ClearBlockPaintAndCoating();
                                 Main.tile[i, j].LiquidAmount = 0;
                                 WorldGen.SquareTileFrame(i, j, true);
                                 NetMessage.SendTileSquare(-1, i, j, 1);

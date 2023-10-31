@@ -518,7 +518,7 @@ namespace CalRemix.UI
 
             #region Passive
             fannyMessages.Add(new FannyMessage("MeldGunk", "In a remote location underground, there is a second strain of Astral Infection. If left unattended for too long, it can start spreading and dealing irreversible damage! Stay safe and happy hunting!",
-                "Nuhuh", (FannySceneMetrics scene) => CalRemixWorld.meldCountdown <= 3600));
+                "Nuhuh", (FannySceneMetrics scene) => CalRemixWorld.meldCountdown <= 3600 && Main.hardMode));
 
             fannyMessages.Add(new FannyMessage("FungusGarden", "Careful when exploring the Shroom Garden. I hear some rather large crustaceans make their home there. Wouldn't want to be turned into Delicious Meat!",
     "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
