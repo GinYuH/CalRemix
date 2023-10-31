@@ -27,7 +27,8 @@ namespace CalRemix.Items.Accessories
             Tooltip.SetDefault("This unholy abomination feels like it's deteriorating\n"+
             "90% more damage taken\n" +
             "50% more damage dealt\n" + // yes i buffed it FUCK you
-            "Why would anyone use this"); 
+            "Why would anyone use this");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<YharimsGift>();
         }
 
         public override void SetDefaults()
