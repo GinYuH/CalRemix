@@ -39,6 +39,9 @@ using CalamityMod.Tiles.DraedonStructures;
 using Terraria.WorldBuilding;
 using log4net.Repository.Hierarchy;
 using log4net.Core;
+using CalamityMod.Tiles.FurnitureVoid;
+using CalamityMod.Items.SummonItems;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -326,18 +329,28 @@ namespace CalRemix
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 2 * 36 && DungeonWalls.Contains(Main.tile[chest.x, chest.y].WallType))
+                if (chest != null)
                 {
-                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                    if (Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 2 * 36 && DungeonWalls.Contains(Main.tile[chest.x, chest.y].WallType))
                     {
-                        if (chest.item[inventoryIndex].type == ItemID.None)
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                         {
-                            if (Main.rand.NextBool(4))
+                            if (chest.item[inventoryIndex].type == ItemID.None)
                             {
-                                chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
-                                chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                                if (Main.rand.NextBool(4))
+                                {
+                                    chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
+                                    chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                                }
+                                break;
                             }
-                            break;
+                        }
+                    }
+                    if (Main.tile[chest.x, chest.y].TileType == TileType<VoidChest>())
+                    {
+                        if (chest.item[0].type == ItemType<Terminus>())
+                        {
+                            chest.item[0].SetDefaults(ItemType<CalamityMod.Items.Placeables.Ores.ScoriaOre>());
                         }
                     }
                 }
