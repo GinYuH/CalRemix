@@ -378,7 +378,7 @@ namespace CalRemix
 				projectile.damage = 1000000;
 				return Color.LightBlue;
             }
-            return null;
+            return RethemeMaster.RethemeProjAlpha(projectile);
 		}
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
@@ -391,7 +391,6 @@ namespace CalRemix
                 }
             }
         }
-
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
         {
             if (hyperCharged)

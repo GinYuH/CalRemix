@@ -57,6 +57,8 @@ using Terraria.UI;
 using CalamityMod.NPCs.Leviathan;
 using CalRemix.Retheme;
 using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.NPCs.Other;
+using CalamityMod.NPCs.HiveMind;
 
 namespace CalRemix
 {
@@ -66,12 +68,13 @@ namespace CalRemix
         public bool vBurn = false;
         public bool grappled = false;
         public int bossKillcount = 0;
+        public int clawed = 0;
+        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
+        public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
-        public int clawed = 0;
+        public static int hiveHead, LORDEhead = -1;
         public static int aspidCount = 0;
-        public Vector2 clawPosition = Vector2.Zero;
-        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         private bool guardRage, guardOver, yharRage = false;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
@@ -114,6 +117,21 @@ namespace CalRemix
             ModContent.NPCType<CrimsonSlimeSpawn>(),
             ModContent.NPCType<CrimsonSlimeSpawn2>()
         };
+
+        public override void Load()
+        {
+            hiveHead = Mod.AddBossHeadTexture("CalRemix/Retheme/HiveMind/Map", -1);
+            LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
+        }
+        public override void BossHeadSlot(NPC npc, ref int index)
+        {
+            int slot = hiveHead;
+            int slot2 = LORDEhead;
+            if (npc.type == ModContent.NPCType<HiveMind>() && hiveHead != -1)
+                index = slot;
+            if (npc.type == ModContent.NPCType<THELORDE>() && LORDEhead != -1 && Main.zenithWorld)
+                index = slot2;
+        }
         public override bool PreAI(NPC npc)
         {
             if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<Claw>()) <= 0)
@@ -432,7 +450,7 @@ namespace CalRemix
                 }
                 else if (jaredSay == 5 && (float)npc.life / (float)npc.lifeMax < 0.05f)
                 {
-                    Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea’s young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
+                    Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea's young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
                     jaredSay = 6;
                 }
                 else if (jaredSay == 6 && (float)npc.life / (float)npc.lifeMax < 0.01f)

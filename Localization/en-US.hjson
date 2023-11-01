@@ -1305,9 +1305,20 @@ Mods: {
 				Tooltip: 2 magic damage
 			}
 
-			BananaClownPants.Tooltip: 2 magic damage and 14% increased movement speed
-			BananaClownSleeves.Tooltip: 2 magic damage
-			CrocodileHerringItem.DisplayName: Crocodile Herring
+			BananaClownPants: {
+				Tooltip: 2 magic damage and 14% increased movement speed
+				DisplayName: Banana Clown Pants
+			}
+
+			BananaClownSleeves: {
+				Tooltip: 2 magic damage
+				DisplayName: Banana Clown Sleeves
+			}
+
+			CrocodileHerringItem: {
+				DisplayName: Crocodile Herring
+				Tooltip: ""
+			}
 
 			MeldGunk: {
 				DisplayName: Meld Gunk
@@ -1359,6 +1370,7 @@ Mods: {
 			Barocrab.DisplayName: Barocrab
 			MinnowsPrime.DisplayName: Minnows Prime
 			BananaClown.DisplayName: Banana Clown
+			CrocodileHerring.DisplayName: Crocodile Herring
 		}
 
 		Projectiles: {
