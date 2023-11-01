@@ -523,7 +523,7 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("FungusGarden", "Careful when exploring the Shroom Garden. I hear some rather large crustaceans make their home there. Wouldn't want to be turned into Delicious Meat!",
     "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
 
-            fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and  2 more minutes to drive away. I did nothing to stop it.",
+            fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and 2 more minutes to drive away. I did nothing to stop it.",
             "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
 
             fannyMessages.Add(new FannyMessage("Fuckyou", "You are now manually breathing.",
