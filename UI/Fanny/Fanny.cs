@@ -769,7 +769,7 @@ namespace CalRemix.UI
             #endregion
 
             #region Event
-            fannyMessages.Add(new FannyMessage("Raining", "It's raining! It's pooring! The man on the moon is snoring! Wait, who is the man on the moon!?",
+            fannyMessages.Add(new FannyMessage("Raining", "It's raining! It's pouring! The man on the moon is snoring! Wait, who is the man on the moon!?",
    "Idle", (FannySceneMetrics scene) => Main.raining).SetHoverTextOverride("That's a good question Fanny!"));
 
             fannyMessages.Add(new FannyMessage("Winding", "Ah the weather is so nice out today! You should go fly a kite! That's something a lot of people were interested in right?",
