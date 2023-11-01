@@ -806,6 +806,10 @@ namespace CalRemix
                 postPolter.Add(ModContent.ItemType<IchorDagger>(), 25, hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ModContent.ItemType<IchorDagger>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
             }
+            else if (npc.type == ModContent.NPCType<Bohldohr>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedCalamitas && DownedBossSystem.downedExoMechs, ModContent.ItemType<NO>(), 10, 1, 1, ui: false);
+            }
         }
         public override void OnKill(NPC npc)
         {

@@ -260,10 +260,6 @@ namespace CalRemix.Retheme
             {
                 TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Levi/AquaticAberration");
             }
-            else if (npc.type == NPCType<AstrumAureus>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Levi/AquaticAberration");
-            }
             else if (npc.type == NPCType<RavagerBody>())
             {
                 TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/RavagerMap");
@@ -333,14 +329,14 @@ namespace CalRemix.Retheme
             if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
             {
                 THELORDE lorde = npc.ModNPC as THELORDE;
-                if (!lorde.Dying)
+                if (!lorde.Dying && npc.life > 0)
                 {
                     Texture2D value = Request<Texture2D>("CalRemix/Retheme/LORDE/VotTEyes").Value;
                     Vector2 vector = new(value.Width / 4, value.Height / 14);
                     Vector2 position = npc.Center - screenPos - new Vector2((float)value.Width / 2f, (float)value.Height / 7f) * npc.scale / 2f + vector * npc.scale + new Vector2(0f, npc.gfxOffY);
                     Rectangle value2 = value.Frame(2, 7, 0, 1);
                     SpriteEffects effects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                    spriteBatch.Draw(value, position, value2, drawColor, npc.rotation, vector, npc.scale, effects, 0f);
+                    spriteBatch.Draw(value, position, value2, new Color(255, 255, 255, 255), npc.rotation, vector, npc.scale, effects, 0f);
                 }
             }
         }
