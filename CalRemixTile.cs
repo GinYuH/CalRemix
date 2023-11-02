@@ -34,6 +34,8 @@ namespace CalRemix
 
         public override void SetStaticDefaults()
         {
+            if (Main.dedServ)
+                return;
             roxm = new FannyMessage("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "Awooga",
                 FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
             KinsmanMessage = new FannyMessage("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "Nuhuh",

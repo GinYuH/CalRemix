@@ -19,6 +19,9 @@ namespace CalRemix.NPCs
         {
             DisplayName.SetDefault("Auric Slime");
             Main.npcFrameCount[NPC.type] = 2;
+
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("AuricSlime",
                 "Look! A rare Auric Slime! It's fascinating how fascinated that fascinating humans are with these fascinating creatures. Such is the inner-machinations of the natural animalistic instinct to complete a collection.",
                 "Awooga",

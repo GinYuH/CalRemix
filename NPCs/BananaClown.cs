@@ -40,6 +40,8 @@ namespace CalRemix.NPCs
             DisplayName.SetDefault("Banana Clown");
             Main.npcFrameCount[NPC.type] = 12;
 
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("BananaClown",
                 "Wuh oh! A Banana Clown! Don't get too close to them or you'll go bananas cleaning up the terrain damage they cause!",
                 "Nuhuh",

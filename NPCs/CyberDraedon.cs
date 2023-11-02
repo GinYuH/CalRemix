@@ -37,6 +37,8 @@ namespace CalRemix.NPCs
             nPCBestiaryDrawModifiers.Scale = 0.8f;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("CyberDraedonFight",
                 "It appears you have alerted the high urgency security systems within that projector and summoned the nefarious Cyber Draedon. He's a real fickle foe who is able to deal percentage-based damage, meaning he'll always be a threat no matter how good your defenses and health are!",
                 "Nuhuh",

@@ -34,6 +34,9 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<ArmorCrunch>()] = true;
+
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("KinsmenFight",
                 "Quick! Get him! He's escaping with a one of a kind item!",
                 "Awooga",

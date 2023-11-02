@@ -37,6 +37,8 @@ namespace CalRemix.NPCs
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("Green Demon",
                 "Gee wilickers! A Green Demon! These guys pack a real punch, but they are absolutely TERRIFIED of radioactive toads! or was it frogs? salamanders? Well either way you better catch some!",
                 "Awooga",

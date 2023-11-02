@@ -28,6 +28,9 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
+
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("LifeBiome",
                 "The Life Heart is a joint meeting area of the elements of fire, ice, and nature. With their powers combined, they make a powerful new bar which can be used to upgrade your items! Be careful of the dreaded Life Slimes that visciously guard the place though.",
                 "Nuhuh",

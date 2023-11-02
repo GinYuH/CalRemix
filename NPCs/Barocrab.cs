@@ -21,6 +21,8 @@ namespace CalRemix.NPCs
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
 
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("Barocrab",
                 "Oooh, a Barocrab! You should go approach it and say hello! I heard they’re friendly and know of an ancient art called... the \"Crab Secret\".",
                 "Awooga",

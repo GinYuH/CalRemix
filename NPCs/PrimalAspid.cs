@@ -32,6 +32,8 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
 
+            if (Main.dedServ)
+                return;
             FannyManager.LoadFannyMessage(new FannyMessage("Aspid",
                 "Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!",
                 "Awooga",
