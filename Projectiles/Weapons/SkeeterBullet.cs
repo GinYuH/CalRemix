@@ -1,20 +1,11 @@
 using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Projectiles.Melee;
-using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Projectiles.Summon;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 
 namespace CalRemix.Projectiles.Weapons
 {
@@ -63,7 +54,7 @@ namespace CalRemix.Projectiles.Weapons
             SoundEngine.PlaySound(SoundID.Item14);
             for (int i = 0; i < Main.rand.Next(2, 4); i++)
             {
-                int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)), ModContent.ProjectileType<InfernalKrisCinder>(), Projectile.damage / 4, Projectile.knockBack, Projectile.owner);
+                int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, -Vector2.Normalize(Projectile.oldVelocity).RotatedByRandom(MathHelper.ToRadians(180)), ModContent.ProjectileType<InfernalKrisCinder>(), Projectile.damage / 4, Projectile.knockBack, Projectile.owner);
                 Main.projectile[proj].DamageType = DamageClass.Ranged;
                 Main.projectile[proj].Name = "Cinder Shard";
             }

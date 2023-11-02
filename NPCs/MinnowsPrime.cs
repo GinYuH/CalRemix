@@ -52,7 +52,6 @@ namespace CalRemix.NPCs
         public override void AI()
         {
             CalamityMod.NPCs.CalamityAI.PassiveSwimmingAI(NPC, Mod, 3, 150f, 0.25f, 0.15f, 6f, 6f, 0.05f);
-            NPC.spriteDirection = (NPC.direction > 0) ? -1 : 1;
             NPC.noGravity = true;
             bool flag14 = false;
             if (NPC.direction == 0)
@@ -188,6 +187,7 @@ namespace CalRemix.NPCs
                 NPC.rotation = 0.1f;
                 return;
             }
+            NPC.spriteDirection = NPC.direction = (int)Math.Sign(NPC.velocity.X);
         }
 
         public override void FindFrame(int frameHeight)

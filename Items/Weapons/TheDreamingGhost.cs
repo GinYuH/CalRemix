@@ -51,18 +51,13 @@ public class TheDreamingGhost : ModItem
         velocity.X = 0f;
         velocity.Y = 0f;
         for (int i = 0; i < 10; i++)
-        {
             Dust.NewDust(position, Item.width, Item.height, DustID.PinkCrystalShard, Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
-        }
-        if (player.slotsMinions < player.maxMinions - 4)
+        int num = Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<PinkCrystallineButterfly>(), damage / 2, knockback, Main.myPlayer);
+        int num2 = Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<PurpleCrystallineButterfly>(), damage / 2, knockback, Main.myPlayer);
+        if (Main.projectile.IndexInRange(num))
         {
-            int num = Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<PinkCrystallineButterfly>(), damage / 2, knockback, Main.myPlayer);
-            int num2 = Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<PurpleCrystallineButterfly>(), damage / 2, knockback, Main.myPlayer);
-            if (Main.projectile.IndexInRange(num))
-            {
-                Main.projectile[num].originalDamage = Item.damage;
-                Main.projectile[num2].originalDamage = Item.damage;
-            }
+            Main.projectile[num].originalDamage = Item.damage;
+            Main.projectile[num2].originalDamage = Item.damage;
         }
         return false;
     }

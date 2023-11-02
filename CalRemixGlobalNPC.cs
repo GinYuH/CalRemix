@@ -22,47 +22,43 @@ using CalRemix.NPCs.Bosses;
 using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Materials;
-using CalamityMod.NPCs.Bumblebirb;
 using System.Collections.Generic;
 using CalRemix.Projectiles.Accessories;
 using CalRemix.Projectiles.Weapons;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
-using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.Events;
 using System;
-using Terraria.GameContent;
 using System.IO;
-using Terraria.DataStructures;
 using Terraria.Chat;
 using Terraria.Localization;
 using CalamityMod.NPCs.Crabulon;
-using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Items.Weapons;
-using CalamityMod.Items.TreasureBags;
-using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalamityMod.Items.Potions;
-using CalRemix.UI;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.NPCs;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.World;
 using System.Reflection;
-using CalamityMod.NPCs.Cryogen;
-using static Humanizer.In;
 using CalamityMod.Sounds;
 using CalRemix.Items.Potions;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.DevourerofGods;
-using Terraria.UI;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Tiles.AstralSnow;
 using CalamityMod.Tiles.Ores;
+using CalamityMod.CalPlayer;
+using CalamityMod.Items;
+using Terraria.UI;
+using CalamityMod.NPCs.Leviathan;
+using CalRemix.Retheme;
+using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.NPCs.Other;
+using CalamityMod.NPCs.HiveMind;
 
 namespace CalRemix
 {
@@ -70,14 +66,19 @@ namespace CalRemix
     {
         bool SlimeBoost = false;
         public bool vBurn = false;
+        public bool grappled = false;
         public int bossKillcount = 0;
+        public int clawed = 0;
+        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
+        public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
-        public int clawed = 0;
+        public static int hiveHead, LORDEhead = -1;
         public static int aspidCount = 0;
-        public Vector2 clawPosition = Vector2.Zero;
-        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         private bool guardRage, guardOver, yharRage = false;
+        public float[] storedAI = { 0f, 0f, 0f, 0f };
+        public float[] storedCalAI = { 0f, 0f, 0f, 0f };
+        public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int> 
@@ -116,6 +117,21 @@ namespace CalRemix
             ModContent.NPCType<CrimsonSlimeSpawn>(),
             ModContent.NPCType<CrimsonSlimeSpawn2>()
         };
+
+        public override void Load()
+        {
+            hiveHead = Mod.AddBossHeadTexture("CalRemix/Retheme/HiveMind/Map", -1);
+            LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
+        }
+        public override void BossHeadSlot(NPC npc, ref int index)
+        {
+            int slot = hiveHead;
+            int slot2 = LORDEhead;
+            if (npc.type == ModContent.NPCType<HiveMind>() && hiveHead != -1)
+                index = slot;
+            if (npc.type == ModContent.NPCType<THELORDE>() && LORDEhead != -1 && Main.zenithWorld)
+                index = slot2;
+        }
         public override bool PreAI(NPC npc)
         {
             if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<Claw>()) <= 0)
@@ -434,7 +450,7 @@ namespace CalRemix
                 }
                 else if (jaredSay == 5 && (float)npc.life / (float)npc.lifeMax < 0.05f)
                 {
-                    Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea’s young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
+                    Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea's young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
                     jaredSay = 6;
                 }
                 else if (jaredSay == 6 && (float)npc.life / (float)npc.lifeMax < 0.01f)
@@ -573,31 +589,9 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<PlaguedSolution>()));
             }
         }
-        public override void ModifyTypeName(NPC npc, ref string typeName)
-        {
-            if (npc.type == ModContent.NPCType<WITCH>())
-            {
-                typeName = "Calamity Witch";
-            }
-            else if (npc.type == ModContent.NPCType<BrimstoneElemental>())
-            {
-                typeName = "Calamity Elemental";
-            }
-            else if (npc.type == ModContent.NPCType<BrimstoneHeart>())
-            {
-                typeName = "Calamity Heart";
-            }
-        }
         public override void SetDefaults(NPC npc)
         {
-            if (npc.type == ModContent.NPCType<BrimstoneElemental>())
-            {
-                npc.GivenName = "Calamity Elemental";
-            }
-            else if (npc.type == ModContent.NPCType<BrimstoneHeart>())
-            {
-                npc.GivenName = "Calamity Heart";
-            }
+            RethemeMaster.RethemeNPCDefaults(npc);
             /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npc.damage = 80;
@@ -611,12 +605,42 @@ namespace CalRemix
                 npc.lifeMax = 3375;
             }*/
         }
+        public override void ModifyTypeName(NPC npc, ref string typeName)
+        {
+            RethemeMaster.RethemeTypeName(npc, ref typeName);
+            if (npc.type == ModContent.NPCType<WITCH>())
+            {
+                typeName = "Calamity Witch";
+            }
+            else if (npc.type == ModContent.NPCType<BrimstoneElemental>())
+            {
+                typeName = "Calamity Elemental";
+            }
+            else if (npc.type == ModContent.NPCType<BrimstoneHeart>())
+            {
+                typeName = "Calamity Heart";
+            }
+        }
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            RethemeMaster.RethemeNPCPostDraw(npc, spriteBatch, screenPos, drawColor);
+        }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            /*
+            if (npc.boss && bossKillcount > 5)
+            {
+                npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);
+            }
+            else if (!npc.SpawnedFromStatue && npc.value > 0 && NPC.killCount[npc.type] >= 25)
+            {
+                npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
+            }
+            */
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
-                npcLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
-                npcLoot.Remove((DropHelper.PerPlayer(ModContent.ItemType<PearlShard>(), 1, 25, 30)));
+                LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+                mainRule.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
             }
             /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
@@ -685,19 +709,20 @@ namespace CalRemix
             }
             else if (npc.type == ModContent.NPCType<Crabulon>())
             {
-                npcLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
+                LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+                mainRule.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
+                mainRule.Add(ModContent.ItemType<CrabLeaves>(), 1, 4, 7);
             }
             else if (npc.type == NPCID.DukeFishron)
             {
                 npcLoot.Add(ModContent.ItemType<DeliciousMeat>(), 2, 45, 92);
             }
-            if (npc.boss && bossKillcount > 5)
+            else if (npc.type == ModContent.NPCType<Leviathan>() || npc.type == ModContent.NPCType<Anahita>())
             {
-                //npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);
-            }
-            else if (!npc.SpawnedFromStatue && npc.value > 0 && NPC.killCount[npc.type] >= 25)
-            {
-                //npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
+                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
+                LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.NotExpert());
+                mainRule.Add(leadingConditionRule);
+                leadingConditionRule.Add(ModContent.ItemType<CrocodileScale>(), 1, 20, 30);
             }
             else if (NPCID.Sets.DemonEyes[npc.type])
             {
@@ -760,6 +785,30 @@ namespace CalRemix
                 case NPCID.StardustWormHead:     // Milkyway Weaver
                     npcLoot.Add(ModContent.ItemType<MeldChipIceCream>(), 33);
                     break;
+            }
+            if (npc.type == ModContent.NPCType<SightseerSpitter>())
+            {
+                npcLoot.Add(ModContent.ItemType<AstralPearl>(), new Fraction(1, 15));
+            }
+            else if (npc.type == ModContent.NPCType<SightseerCollider>())
+            {
+                npcLoot.Add(ModContent.ItemType<AstralPearl>(), 20);
+            }
+            else if (npc.type == NPCID.Clinger)
+            {
+                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                postPolter.Add(ModContent.ItemType<CursedSpear>(), 25, hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ModContent.ItemType<CursedSpear>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
+            }
+            else if (npc.type == NPCID.IchorSticker)
+            {
+                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                postPolter.Add(ModContent.ItemType<IchorDagger>(), 25, hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ModContent.ItemType<IchorDagger>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
+            }
+            else if (npc.type == ModContent.NPCType<Bohldohr>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedCalamitas && DownedBossSystem.downedExoMechs, ModContent.ItemType<NO>(), 10, 1, 1, ui: false);
             }
         }
         public override void OnKill(NPC npc)

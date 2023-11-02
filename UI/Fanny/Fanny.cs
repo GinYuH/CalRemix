@@ -512,17 +512,24 @@ namespace CalRemix.UI
         //Loads fanny messages that aren't associated with anything else in particular
         private static void LoadGeneralFannyMessages()
         {
+
             fannyMessages.Add(new FannyMessage("Intro", "Hello there! I'm Fanny the Flame, your personal guide to assist you with traversing this dangerous world. I wish you good luck on your journey and a Fan-tastic time!",
                 "Idle", (FannySceneMetrics scene) => !Main.zenithWorld, displayOutsideInventory: true));
 
+            fannyMessages.Add(new FannyMessage("GfbintroEvil", "WELCOME TO HELL!",
+    "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld).SpokenByEvilFanny());
+
+            fannyMessages.Add(new FannyMessage("Gfbintro", "This is different that its supposed to be... Oh! You made a getfixedboi world. This world presents new, unfamiliar challenges so always be on your toes.",
+                "Idle", (FannySceneMetrics scene) => Main.zenithWorld));
+
             #region Passive
-            fannyMessages.Add(new FannyMessage("MeldGunk", "Fear the Meld Gunk.",
-                "Idle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.InModBiome<UndergroundAstralBiome>(), onlyPlayOnce: false, cooldown: 120));
+            fannyMessages.Add(new FannyMessage("MeldGunk", "In a remote location underground, there is a second strain of Astral Infection. If left unattended for too long, it can start spreading and dealing irreversible damage! Stay safe and happy hunting!",
+                "Nuhuh", (FannySceneMetrics scene) => CalRemixWorld.meldCountdown <= 3600 && Main.hardMode));
 
             fannyMessages.Add(new FannyMessage("FungusGarden", "Careful when exploring the Shroom Garden. I hear some rather large crustaceans make their home there. Wouldn't want to be turned into Delicious Meat!",
     "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
 
-            fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and  2 more minutes to drive away. I did nothing to stop it.",
+            fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and 2 more minutes to drive away. I did nothing to stop it.",
             "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
 
             fannyMessages.Add(new FannyMessage("Fuckyou", "You are now manually breathing.",
@@ -538,7 +545,7 @@ namespace CalRemix.UI
                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == DamageClass.Magic, cooldown: 300, onlyPlayOnce: false));
 
             fannyMessages.Add(new FannyMessage("Thrust", "Did you know you can parry enemy attacks with your sword? Just right click the moment something is about to hit you, and you'll block it with ease!",
-               "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(2160000), cooldown: 300, onlyPlayOnce: false));
+               "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>(), cooldown: 300, onlyPlayOnce: false));
 
 
             #endregion
@@ -617,8 +624,35 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
                 NearDungeonEntrance));
 
+            fannyMessages.Add(new FannyMessage("Snowbr", "It's quite chilly here, maybe you should invest some time in gathering some cold-protective gear before you freeze to death!", "Idle",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSnow));
+
+            fannyMessages.Add(new FannyMessage("Cavern", "It's quite dark down here. You should go get some more torches before further exploration or you may fall into a pit full of lice!", "Idle",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneRockLayerHeight).AddItemDisplay(ItemID.Torch));
+
+            fannyMessages.Add(new FannyMessage("Granite", "Woah, this place looks so cool and futuristic! It's almost like an entirely different dimension here!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneGranite));
+
+            fannyMessages.Add(new FannyMessage("Marble", "Marble? I LOVE playing with marbles! A few hundred years ago I was an avid marble collector, collecting marbles of various shapes, colors, and sizes. But, one day, I lost my marbles.",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneMarble));
+
+            fannyMessages.Add(new FannyMessage("FungalGrowths", "I know a quick get rich quick scheme. See those Glowing Mushrooms? They sell for a lot! Go destroy that ecosystem for some quick cash!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneGlowshroom).AddItemDisplay(ItemID.GlowingMushroom));
+
+            fannyMessages.Add(new FannyMessage("GemCave", "So many gemstones! Make sure to keep some Emeralds handy. Apparently a lot of people like to search for them to make crates for some reason!",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneGemCave).AddItemDisplay(ItemID.Emerald));
+
+            fannyMessages.Add(new FannyMessage("SunkySea", "Did you know that the oldest animal ever identified was a clam? Unfortunately, the people who caught it accidentally froze it to death. Maybe you can find an older clam here in this Sunken Sea!",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSunkenSea));
+
+            fannyMessages.Add(new FannyMessage("Hell", "Welcome to hell! This place is flaming hot just like me, so you better get some gear to protect you aganist the heat!", "Nuhuh",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight));
+
             fannyMessages.Add(new FannyMessage("ShimmerNothing", "You should consider throwing that item you're holding in Shimmer! You may get something powerful!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.HeldItem.CanShimmer(), onlyPlayOnce: false, cooldown: 600));
+
+            fannyMessages.Add(new FannyMessage("Meteore", "A Fallen Star!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneMeteor).AddItemDisplay(ItemID.FallenStar));
 
             fannyMessages.Add(new FannyMessage("DeepAbyss", "Tired of this pesky abyss drowning you? I have an idea! If you go into the underworld and poke a hole at the bottom, all the water will drain out! No more pesky pressure!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3));
@@ -626,8 +660,11 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ItemID.RodofDiscord));
 
-            fannyMessages.Add(new FannyMessage("Temple", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
-                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611)).AddItemDisplay(ItemID.WireCutter));
+            fannyMessages.Add(new FannyMessage("Temple", "I love house invasion!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple).SetHoverTextOverride("Me too Fanny!"));
+
+            fannyMessages.Add(new FannyMessage("TempleWires", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && (Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611))).AddItemDisplay(ItemID.WireCutter));
 
             fannyMessages.Add(new FannyMessage("Altars", "Smashing demon altars is no longer guaranteed to bless your world with ores. But it’s still worth a shot!",
                "Idle", (FannySceneMetrics scene) => (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson) && Main.hardMode && CalamityConfig.Instance.EarlyHardmodeProgressionRework && !Main.LocalPlayer.ZoneUnderworldHeight));
@@ -649,6 +686,21 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("NotBlessedApple", "A smart one ey? Unfortunately, only hostile Unicorns are able to break those astral batties open.",
   "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight) && Main.LocalPlayer.mount.Type == MountID.Unicorn));
+
+            fannyMessages.Add(new FannyMessage("SideGar", "Have you ever heard of gars? They're a neat fish group that you can rip open for valuable loot. One species of gar is the Side Gar, which can be fished up in sky lakes!",
+  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSkyHeight && NPC.downedMoonlord).AddItemDisplay(ModContent.ItemType<SideGar>()));
+
+            fannyMessages.Add(new FannyMessage("RearGar", "Fossilized tree bark!? In the Jungle's mud!? That sounds disgusting! I'll send over some gars to clean it up for you my friend. But, if you ever want some of that stuff for whatever reason, just go fish for some gars in the Jungle!",
+  "Nuhuh", (FannySceneMetrics scene) => DownedBossSystem.downedProvidence).AddItemDisplay(ModContent.ItemType<RearGar>()).SetHoverTextOverride("Thank you so much Fanny! Tree bark is disgusting!"));
+
+            fannyMessages.Add(new FannyMessage("FrontGar", "Now why did that ghost thing cause the ocean to go all crazy? Who knows! But what I do know is that the gars in the Abyss have started mutating. You should try fishing up some gars from the Sulphurous Sea and see if you can extract them for something useful.",
+  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast).AddItemDisplay(ModContent.ItemType<FrontGar>()));
+
+            fannyMessages.Add(new FannyMessage("MeldHeart", "Look at all that gunk! I'm pretty sure it's impossible to break it, so the best solution I can give is to assure it doesn't spread further by digging around it.",
+  "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && !ModLoader.HasMod("NoxusBoss")));
+
+            fannyMessages.Add(new FannyMessage("MeldHeartNoxus", "Look at all that gunk! I'm pretty sure it's impossible to break it, well, maybe if you got some powerful spray bottle, but that might take a while, so the best solution I can give is to assure it doesn't spread further by digging around it.",
+  "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && ModLoader.HasMod("NoxusBoss")));
             #endregion
 
             #region Shrine
@@ -699,8 +751,17 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
     "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
+            fannyMessages.Add(new FannyMessage("Anauwu", "I sense an ominous presence. I think the best course of action here would be to kill everything you see. If something is dead it can't hurt you!",
+                "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<LeviathanStart>())));
+
             fannyMessages.Add(new FannyMessage("Fairy", "That thing is hurting my eyes! Kill it, quick!",
                 "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.EmpressButterfly)));
+
+            fannyMessages.Add(new FannyMessage("Cultists", "Looks like some blue robe-wearing hooligans are worshiping a coin! Try not to interrupt them, they seem to be having a good time.",
+                "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.CultistDevote)));
+
+            fannyMessages.Add(new FannyMessage("AncientDom", "Who is this guy???",
+                "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.AncientCultistSquidhead)));
 
             fannyMessages.Add(new FannyMessage("Bloodworm", "Crush it under your boot.",
                 "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BloodwormNormal>() || n.type == ModContent.NPCType<BloodwormFleeing>())));
@@ -714,17 +775,38 @@ namespace CalRemix.UI
             #endregion
 
             #region Event
+            fannyMessages.Add(new FannyMessage("Raining", "It's raining! It's pouring! The man on the moon is snoring! Wait, who is the man on the moon!?",
+   "Idle", (FannySceneMetrics scene) => Main.raining).SetHoverTextOverride("That's a good question Fanny!"));
+
+            fannyMessages.Add(new FannyMessage("Winding", "Ah the weather is so nice out today! You should go fly a kite! That's something a lot of people were interested in right?",
+   "Idle", (FannySceneMetrics scene) => Main._shouldUseWindyDayMusic));
+
+            fannyMessages.Add(new FannyMessage("OOA", "Just so we're clear, none of this is canon, got it?",
+   "Nuhuh", (FannySceneMetrics scene) => Main.invasionType == InvasionID.CachedOldOnesArmy).SetHoverTextOverride("Gotcha Fanny!"));
+
             fannyMessages.Add(new FannyMessage("InvasionDeath", "These guys are really giving us what for. It might be a good idea to step away for a bit in order to come up with a new strategy...",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.dead && Main.invasionType != InvasionID.None, cooldown: 1200));
 
             fannyMessages.Add(new FannyMessage("BloodMoon", "During a blood moon, strange critters can be found hiding under rocks. They can be used for blood moon fishing, but be careful, those teeth can really hurt.",
    "Idle", (FannySceneMetrics scene) => Main.bloodMoon));
 
+            fannyMessages.Add(new FannyMessage("Eclipxe", "It's dark.",
+   "Sob", (FannySceneMetrics scene) => Main.eclipse && !DownedBossSystem.downedDoG).SetHoverTextOverride("It is."));
+
+            fannyMessages.Add(new FannyMessage("Holloween", "Happy Halloween my friend! Looks like everyone is getting their spook game on. Get ready for a monster mash!",
+   "Idle", (FannySceneMetrics scene) => Main.pumpkinMoon && !DownedBossSystem.downedDoG));
+
+            fannyMessages.Add(new FannyMessage("Frostmas", "IT'S CHRISTMAS!!! You don't need to get me a gift, just having you around is the most fan-tastic gift a flame like me could ask for!",
+   "Idle", (FannySceneMetrics scene) => Main.snowMoon && !DownedBossSystem.downedDoG).SetHoverTextOverride("Awe, thanks Fanny, you're great to have around too!"));
+
             #endregion
 
             #region Boss
-            fannyMessages.Add(new FannyMessage("KingSlime", "It looks like you're fighting.. what's his name? The giant blue thing.. King something. Slime! King Slime. I heard he's pretty tough! So in order to defeat him, you need to shoot flares at him! Or was that an animation? Alright, you gotta get a falling star to hit him! But that's rare. And at night. There's also other creatures that can spawn at night. Like the Eye of Cthulhu.  Wait, Cthulhu? Although you fight his organs, you never actually fight Cthulhu. Says here that the Dryads tore him apart or something. Pretty brutal, although this is Terraria lore. Does Terraria lore take place in Calamity? Likely not, as Draedon constructed the mechanical bosses. Mechanical bosses? Those are tough. You could use some help with those. So, I heard that some of them shoot lasers. Nevermind, turns out they all shoot lasers. Just dodge the lasers I guess. Lasers? Like.. the Moon Lord? Moon Lord is the stronger version of Cthulhu. He lives on the moon. In vanilla Terraria, the Moon Lord is the final boss. Once you defeat him, I guess you just think.. who was the first boss you fought? Desert Scourge? But that's from the Calamity Mod. And what if you fought another boss before Desert Scourge, like King Slime? Oh, right! You're fighting King Slime. Dodge him. That's all I have to say.",
-              "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.KingSlime), maxWidth: 470));
+            fannyMessages.Add(new FannyMessage("Mutant", "Woah, how much HP does that guy have??",
+    "Awooga", (FannySceneMetrics scene) => CrossModBoss(scene, "FargowiltasSouls", "MutantBoss")));
+
+            fannyMessages.Add(new FannyMessage("TorchGod", "A fellow being of the flames! It seems you played with a bit too much fire and now you are facing the wrath of the almighty Torch God! Don't worry though, he's impervious to damage, so you won't be able to hurt him.",
+              "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TorchGod)));
 
             fannyMessages.Add(new FannyMessage("Mutant", "Woah, how much HP does that guy have??",
     "Awooga", (FannySceneMetrics scene) => CrossModBoss(scene, "FargowiltasSouls", "MutantBoss")));
@@ -869,13 +951,7 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 300, onlyPlayOnce: false).SetHoverTextOverride("Thanks Fanny! I'll heal."));
 
             fannyMessages.Add(new FannyMessage("Invisible", "Where did you go?",
-                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax).SetHoverTextOverride("I'm still here Fanny!"));
-
-            fannyMessages.Add(new FannyMessage("GfbintroEvil", "WELCOME TO HELL!",
-                "EvilIdle", (FannySceneMetrics scene) => Main.zenithWorld).SpokenByEvilFanny());
-
-            fannyMessages.Add(new FannyMessage("Gfbintro", "This is different that its supposed to be... Oh! You made a getfixedboi world. This world presents new, unfamiliar challenges so always be on your toes.",
-                "Idle", (FannySceneMetrics scene) => Main.zenithWorld));
+                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax, onlyPlayOnce: true).SetHoverTextOverride("I'm still here Fanny!"));
 
             #endregion      
 
@@ -890,12 +966,11 @@ namespace CalRemix.UI
         {
 
             FannyMessage introLore = new FannyMessage("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
-                "Idle", (FannySceneMetrics scene) => Main.hardMode, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true).AddDelay(5);
-
+                "Idle", (FannySceneMetrics scene) => Main.hardMode, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true).AddDelay(5);
             fannyMessages.Add(introLore);
 
             FannyMessage introEvilLore = new FannyMessage("IntroducingEvilFanny2", "'Sup",
-                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
+                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true)
                 .NeedsActivation(4f).SpokenByEvilFanny();
 
             introLore.AddStartEvent(() => introEvilLore.ActivateMessage());
@@ -903,23 +978,23 @@ namespace CalRemix.UI
             fannyMessages.Add(introEvilLore);
 
             FannyMessage introLore2 = new FannyMessage("IntroducingEvilFanny3", "E-evil Fanny!? I thought you moved away to the Yukon!",
-                "Sob", FannyMessage.AlwaysShow, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
+                "Sob", FannyMessage.AlwaysShow, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true)
                 .NeedsActivation();
             introLore.AddEndEvent(() => introLore2.ActivateMessage());
 
             fannyMessages.Add(introLore2);
 
             FannyMessage introEvilLore2 = new FannyMessage("IntroducingEvilFanny4", "Yeah. Got cold.",
-               "EvilIdle", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
+               "EvilIdle", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true)
                .NeedsActivation().SpokenByEvilFanny();
 
             introEvilLore.AddEndEvent(() => introEvilLore2.ActivateMessage());
 
             fannyMessages.Add(introEvilLore2);
 
-            FannyMessage introLore3 = new FannyMessage("IntroducingEvilFanny5", Main.LocalPlayer.name + ", it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
-               "Idle", FannyMessage.AlwaysShow, 8, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
-               .NeedsActivation();
+            FannyMessage introLore3 = new FannyMessage("IntroducingEvilFanny5", "$0, it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
+               "Idle", FannyMessage.AlwaysShow, 8, onlyPlayOnce: true, displayOutsideInventory: true)
+               .NeedsActivation().AddDynamicText(FannyMessage.GetPlayerName);
 
             introLore2.AddEndEvent(() => introLore3.ActivateMessage());
 
@@ -929,12 +1004,12 @@ namespace CalRemix.UI
         {
 
             FannyMessage ml = new FannyMessage("ML1", "Blegh, I think I swallowed one of that thing's bones. Well, it's time for Godseeker Mode. You will face a sequence of challenges, each more difficult than the last with little to no breathing between encounters.",
-                "Idle", (FannySceneMetrics scene) => NPC.downedMoonlord, 7, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
+                "Idle", (FannySceneMetrics scene) => NPC.downedMoonlord, 7, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).AddDelay(0.4f);
 
             fannyMessages.Add(ml);
 
             FannyMessage ml2 = new FannyMessage("ML2", "Almost sounds like a boss rush or something.",
-                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true)
                 .NeedsActivation(4f).SpokenByEvilFanny();
 
             ml.AddStartEvent(() => ml2.ActivateMessage());
@@ -942,23 +1017,23 @@ namespace CalRemix.UI
             fannyMessages.Add(ml2);
 
             FannyMessage ml3 = new FannyMessage("ML3", "A priority you should take care of immediately is harvesting Unholy Essence from some new, fearsome creatures that have appeared in the Underworld and Hallow. You can then use the essence to make the Rune of Kos and summon the Sentinels of the Devourer.",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddItemDisplay(ModContent.ItemType<RuneofKos>()).NeedsActivation();
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).AddItemDisplay(ModContent.ItemType<RuneofKos>()).NeedsActivation();
 
             ml.AddEndEvent(() => ml3.ActivateMessage());
             fannyMessages.Add(ml3);
 
             FannyMessage ml4 = new FannyMessage("ML4", "You can find 3 different types of cosmic remains if you search the sky, one of them is the remains of the Moon guy you just defeated! Second one is some exotic clusters used for some artifacts! Third one is the distorted remains of Cosmos itself.",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation();
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation();
             ml3.AddEndEvent(() => ml4.ActivateMessage());
             fannyMessages.Add(ml4);
 
             FannyMessage ml5 = new FannyMessage("ML5", "The Dungeon has also gotten an upgrade in power, with new spirit enemies that occasionally pop out of enemies when defeated which drop Phantoplasm, an important crafting material. I'd reccomend killing as many of those things as possible!",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation().AddItemDisplay(ModContent.ItemType<Polterplasm>());
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation().AddItemDisplay(ModContent.ItemType<Polterplasm>());
             ml4.AddEndEvent(() => ml5.ActivateMessage());
             fannyMessages.Add(ml5);
 
             FannyMessage ml6 = new FannyMessage("ML6", "I'm getting a bit of deja vu here.",
-                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true)
                 .NeedsActivation(4f).SpokenByEvilFanny();
 
             ml5.AddStartEvent(() => ml6.ActivateMessage());
@@ -967,29 +1042,29 @@ namespace CalRemix.UI
 
 
             FannyMessage ml7 = new FannyMessage("ML7", "It appears that the red moon will start yielding bountiful harvests of Blood Orbs now! You should take advantage of this opportuntiy to craft lotsa potions! I'm personally a fan of the Inferno Potion myself.",
-                "Nuhuh", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation().AddItemDisplay(ItemID.InfernoPotion);
+                "Nuhuh", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation().AddItemDisplay(ItemID.InfernoPotion);
             ml5.AddEndEvent(() => ml7.ActivateMessage());
             fannyMessages.Add(ml7);
 
 
             FannyMessage ml8 = new FannyMessage("ML8", "Are you feeling a little weak? It may be because of the dreaded \'Curse of the Eldritch\', a terrifying affliction inflicted upon those who slay eldritch beasts which permanently reduces your life regeneration!",
-                "Sob", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation();
+                "Sob", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation();
             ml7.AddEndEvent(() => ml8.ActivateMessage());
             fannyMessages.Add(ml8);
 
 
             FannyMessage ml9 = new FannyMessage("ML9", "I should also mention that if you have a certain thief in one of your towns, they'll start selling the flawless Celestial Reaper, which can be used to cut down herbs significantly faster than the normal Sickle.",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation().AddItemDisplay(ModContent.ItemType<CelestialReaper>());
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation().AddItemDisplay(ModContent.ItemType<CelestialReaper>());
             ml8.AddEndEvent(() => ml9.ActivateMessage());
             fannyMessages.Add(ml9);
 
             FannyMessage ml10 = new FannyMessage("ML10", "Oh oh I should also mention-",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation();
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation();
             ml9.AddEndEvent(() => ml10.ActivateMessage());
             fannyMessages.Add(ml10);
 
             FannyMessage ml11 = new FannyMessage("ML11", "Oh my god shut up already, how much can one boss unlock!?",
-                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true)
                 .NeedsActivation(2f).SpokenByEvilFanny();
 
             ml10.AddStartEvent(() => ml11.ActivateMessage());
@@ -997,7 +1072,7 @@ namespace CalRemix.UI
             fannyMessages.Add(ml11);
 
             FannyMessage ml12 = new FannyMessage("ML12", "It appears this encounter is going to have to be cut short buddy, I need to go do something.",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).NeedsActivation();
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation();
             ml11.AddStartEvent(() => ml12.ActivateMessage());
             fannyMessages.Add(ml12);
 
@@ -1008,73 +1083,73 @@ namespace CalRemix.UI
         private static void Babil()
         {
             FannyMessage babil1 = new FannyMessage("Babil1", "Hey there, adventurer! Have you heard about the Essence of Babil? It's this amazing crafting material that drops from certain jungle creatures. Let me give you some tips on how to find it!",
-                "Nuhuh", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle, persistsThroughSaves: false).SetHoverTextOverride("Umm, Essence of Babil?");
+                "Nuhuh", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle).SetHoverTextOverride("Umm, Essence of Babil?");
 
             fannyMessages.Add(babil1);
 
             FannyMessage babil2 = new FannyMessage("Babil2", "Oh you sweet summer child! The Essence of Babil is this incredible, mystical substance you can gather from jungle enemies. It's a key ingredient for crafting some seriously awesome gear. You should definitely try to collect it!",
-                "Nuhuh", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Huh, okay. So, where do I find it?").AddDelay(2).NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
+                "Nuhuh", FannyMessage.AlwaysShow).SetHoverTextOverride("Huh, okay. So, where do I find it?").AddDelay(2).NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
 
             babil1.AddEndEvent(() => babil2.ActivateMessage());
 
             fannyMessages.Add(babil2);
 
             FannyMessage babil3 = new FannyMessage("Babil3", "Seriously? I just told you, it drops from jungle creatures. You know, those critters lurking around in the jungle biome? Go hunt them down, and you might get your hands on some Essence of Babil!",
-                "Nuhuh", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Jungle creatures... got it!").NeedsActivation();
+                "Nuhuh", FannyMessage.AlwaysShow).SetHoverTextOverride("Jungle creatures... got it!").NeedsActivation();
 
             babil2.AddEndEvent(() => babil3.ActivateMessage());
 
             fannyMessages.Add(babil3);
 
             FannyMessage babil4 = new FannyMessage("Babil4", "The Essence of Babil used for crafting powerful items. You can create some fantastic air-themed equipment with it. Seriously, just check the crafting menu, it's all there!",
-                "Nuhuh", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("I'm not sure I understand...").AddDelay(5).NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
+                "Nuhuh", FannyMessage.AlwaysShow).SetHoverTextOverride("I'm not sure I understand...").AddDelay(5).NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
 
             babil3.AddEndEvent(() => babil4.ActivateMessage());
 
             fannyMessages.Add(babil4);
 
             FannyMessage babil5 = new FannyMessage("Babil5", "Okay, let me spell it out for you one more time. Essence of Babil is a crafting material. You find it in the jungle. You use it to make cool stuff. Got it now? Good!",
-                "Nuhuh", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Uh, thanks, Fanny. I think I get it now.").NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
+                "Nuhuh", FannyMessage.AlwaysShow).SetHoverTextOverride("Uh, thanks, Fanny. I think I get it now.").NeedsActivation().AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
 
             babil4.AddEndEvent(() => babil5.ActivateMessage());
 
             fannyMessages.Add(babil5);
 
             FannyMessage babil6 = new FannyMessage("Babil6", "Hey there, adventurer... Have you heard about the Essence of Babil? It's this... remarkable crafting material that drops from such unworthy jungle creatures. Let me grace you with some information, whether you appreciate it or not.",
-                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle, persistsThroughSaves: false).SetHoverTextOverride("Umm, Essence of Babil? What's that?").AddDelay(3).SpokenByEvilFanny();
+                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle).SetHoverTextOverride("Umm, Essence of Babil? What's that?").AddDelay(3).SpokenByEvilFanny();
 
             fannyMessages.Add(babil6);
 
             FannyMessage babil7 = new FannyMessage("Babil7", "Oh, how utterly clueless. The Essence of Babil is this incredibly mundane substance you can get from jungle enemies. You might even consider it somewhat important for crafting marginally useful gear. But, hey, who cares, right?",
-                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Huh, okay. So, where do I find it?").NeedsActivation().SpokenByEvilFanny();
+                "EvilIdle", FannyMessage.AlwaysShow).SetHoverTextOverride("Huh, okay. So, where do I find it?").NeedsActivation().SpokenByEvilFanny();
 
             babil6.AddEndEvent(() => babil7.ActivateMessage());
 
             fannyMessages.Add(babil7);
 
             FannyMessage babil8 = new FannyMessage("Babil8", "Seriously? I can't believe I have to repeat myself. It drops from those jungle creatures, assuming you can manage to defeat them, of course. Go ahead, give it a shot. Not like it matters.",
-                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Jungle creatures... got it. But what can I make with it?").NeedsActivation().SpokenByEvilFanny().AddDelay(5);
+                "EvilIdle", FannyMessage.AlwaysShow).SetHoverTextOverride("Jungle creatures... got it. But what can I make with it?").NeedsActivation().SpokenByEvilFanny().AddDelay(5);
 
             babil7.AddEndEvent(() => babil8.ActivateMessage());
 
             fannyMessages.Add(babil8);
 
             FannyMessage babil9 = new FannyMessage("Babil9", "You're really pushing your limits here, aren't you? It's used to craft... well, whatever. You can create some totally average air-themed equipment. But, honestly, who cares about that, right?",
-                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("I'm not sure I understand...").NeedsActivation().SpokenByEvilFanny();
+                "EvilIdle", FannyMessage.AlwaysShow).SetHoverTextOverride("I'm not sure I understand...").NeedsActivation().SpokenByEvilFanny();
 
             babil8.AddEndEvent(() => babil9.ActivateMessage());
 
             fannyMessages.Add(babil9);
 
             FannyMessage babil10 = new FannyMessage("Babil10", "Of course, you don't!!! Why would I expect any different? Essence of Babil is just a crafting material. You find it in the jungle. You use it to make \"cool\" stuff, if you're into that sort of thing. But, frankly, I couldn't care less.",
-                "EvilIdle", FannyMessage.AlwaysShow, persistsThroughSaves: false).SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").NeedsActivation().SpokenByEvilFanny().AddDelay(2);
+                "EvilIdle", FannyMessage.AlwaysShow).SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").NeedsActivation().SpokenByEvilFanny().AddDelay(2);
 
             babil9.AddEndEvent(() => babil10.ActivateMessage());
 
             fannyMessages.Add(babil10);
 
             FannyMessage babil11 = new FannyMessage("Babil11", "You think you \"get it\"? You're beyond hopeless! There, now you're truly enlightened. Enjoy your essence... of oblivion!",
-                "EvilIdle", FannyMessage.AlwaysShow, needsToBeClickedOff: false, duration: 20, persistsThroughSaves: false).NeedsActivation().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny);
+                "EvilIdle", FannyMessage.AlwaysShow, duration: 20).NeedsActivation().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny);
 
             babil10.AddEndEvent(() => babil11.ActivateMessage());
 

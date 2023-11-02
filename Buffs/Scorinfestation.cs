@@ -37,7 +37,7 @@ namespace CalRemix.Buffs
                 buffIndex--;
                 return;
             }
-            if (player.buffTime[buffIndex] % CalamityUtils.SecondsToFrames(20) == 0)
+            if (player.buffTime[buffIndex] % CalamityUtils.SecondsToFrames(2) == 0)
             {
                 ScoriaDestruction(player);
             }

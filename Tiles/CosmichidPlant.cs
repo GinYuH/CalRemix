@@ -26,6 +26,7 @@ namespace CalRemix.Tiles
             TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawFlipHorizontal = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
 			TileObjectData.newTile.LavaDeath = true;
 
@@ -41,12 +42,12 @@ namespace CalRemix.Tiles
 
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Cosmichid");
-			AddMapEntry(new Color(156, 41, 143), name);
+			AddMapEntry(new Color(153, 139, 190), name);
             TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
             RegisterItemDrop(ModContent.ItemType<Cosmichid>());
-            DustType = DustID.PinkTorch;
+            DustType = DustID.Silk;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) 
@@ -87,7 +88,6 @@ namespace CalRemix.Tiles
         public override void FloorVisuals(Player player)
         {
             player.AddBuff(ModContent.BuffType<GodSlayerInferno>(), 2);
-            base.FloorVisuals(player);
         }
     }
 }

@@ -15,9 +15,11 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Boss;
-using Terraria.ID;
+using CalRemix.Retheme;
 using CalRemix.Tiles.PlaguedJungle;
 using System;
+using Terraria.ID;
+using CalRemix.Tiles;
 
 namespace CalRemix
 {
@@ -28,86 +30,82 @@ namespace CalRemix
 		public bool tvoproj = false;
 		public bool uniproj = false;
         public bool hyperCharged = false;
+		public int eye = 0;
 		public int bladetimer = 0;
         NPC exc;
         public override bool InstancePerEntity => true;
         public override void SetDefaults(Projectile projectile)
         {
-            if (projectile.type == ProjectileType<BrimstoneBall>())
-            {
-                projectile.Name = "Calamity Fireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneBarrage>())
-            {
-                projectile.Name = "Calamity Barrage";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneFire>())
-            {
-                projectile.Name = "Calamity Fire";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
-            {
-                projectile.Name = "Calamity Hellfireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneMonster>())
-            {
-                projectile.Name = "Calamity Monster";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneWave>())
-            {
-                projectile.Name = "Calamity Flame Skull";
-            }
+			RethemeMaster.RethemeProjDefaults(projectile);
         }
 
         public override void AI(Projectile projectile)
         {
-			Player player = Main.LocalPlayer;
-			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
-			bladetimer--;
-			if (modPlayer.brimPortal && nihilicArrow && !projectile.minion && !projectile.sentry && projectile.velocity != Vector2.Zero)
-				CalamityMod.CalamityUtils.HomeInOnNPC(projectile, false, 2500, 10f, 1);
-			if (modPlayer.tvo && tvoproj)
+            Player player = Main.LocalPlayer;
+            CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
+            bladetimer--;
+            if (modPlayer.brimPortal && nihilicArrow && !projectile.minion && !projectile.sentry && projectile.velocity != Vector2.Zero)
+                CalamityUtils.HomeInOnNPC(projectile, false, 2500, 10f, 1);
+            if (modPlayer.tvo && tvoproj)
             {
-				if (projectile.type == ProjectileType<RainbowComet>())
+                if (projectile.type == ProjectileType<RainbowComet>())
                 {
-					CalamityUtils.HomeInOnNPC(projectile, true, 1200, 20, 1);
-				}
+                    CalamityUtils.HomeInOnNPC(projectile, true, 1200, 20, 1);
+                }
             }
-			if (modPlayer.tvo && projectile.DamageType == GetInstance<RogueDamageClass>() && bladetimer <= 0 && projectile.type != ProjectileType<Nanotech>() && player.ownedProjectileCounts[ProjectileType<Nanotech>()] < 8)
+            if (modPlayer.tvo && projectile.DamageType == GetInstance<RogueDamageClass>() && bladetimer <= 0 && projectile.type != ProjectileType<Nanotech>() && player.ownedProjectileCounts[ProjectileType<Nanotech>()] < 8)
             {
-				Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<Nanotech>(), (int)(projectile.damage * 0.2f), 0, projectile.owner);
-				bladetimer = 30;
+                Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<Nanotech>(), (int)(projectile.damage * 0.2f), 0, projectile.owner);
+                bladetimer = 30;
             }
-			if (modPlayer.tvo && projectile.type == ProjectileType<SandElementalHealer>() && player.statLife < player.statLifeMax && player.ownedProjectileCounts[ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>()] < 2)
+            if (modPlayer.tvo && projectile.type == ProjectileType<SandElementalHealer>() && player.statLife < player.statLifeMax && player.ownedProjectileCounts[ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>()] < 2)
             {
-				Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>(), 0, 0, projectile.owner);
+                Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>(), 0, 0, projectile.owner);
             }
-			if (projectile.type == ProjectileID.PureSpray)
-			{
+            if (projectile.type == ProjectileID.PureSpray)
+            {
                 PlagueToPureConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
             }
             if (projectile.type == ProjectileID.CorruptSpray || projectile.type == ProjectileID.CrimsonSpray || projectile.type == ProjectileID.HallowSpray || projectile.type == ModContent.ProjectileType<AstralSpray>() || projectile.type == ProjectileID.MushroomSpray)
             {
                 PlagueToNeutralConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
             }
+            if (ModLoader.TryGetMod("NoxusBoss", out Mod nox))
+            {
+                int noxType = nox.Find<ModProjectile>("NoxusSprayerGas").Type;
+                int i = (int)(projectile.position.X + projectile.width / 2) / 16;
+                int j = (int)(projectile.position.Y + projectile.height / 2) / 16;
+                if (projectile.type == noxType)
+                {
+                    for (int k = i - 4; k <= i + 4; k++)
+                    {
+                        for (int l = j - 4; l <= j + 4; l++)
+                        {
+                            if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(4 * 4 + 4 * 4))
+                            {
+                                int type = Main.tile[k, l].TileType;
+                                if (type == ModContent.TileType<MeldGunkPlaced>())
+                                {
+                                    Main.tile[k, l].TileType = TileID.Stone;
+                                    WorldGen.SquareTileFrame(k, l, true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
+                return;
+            if (modPlayer.pearl)
+            {
+                CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 1);
+            }
+            eye++;
+            if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
+            {
+                Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, projectile.velocity * 0.75f, ProjectileType<HomingAstralFireball>(), 10, 0, projectile.owner);
+            }
         }
-
 
         public static void PlagueToPureConvert(int i, int j, int size = 4)
         {
@@ -320,7 +318,7 @@ namespace CalRemix
 				{
 					target.AddBuff(BuffType<GlacialState>(), 60);
 				}
-			}
+            }
 		}
 
 		public override void OnKill(Projectile projectile, int timeLeft)
@@ -380,7 +378,7 @@ namespace CalRemix
 				projectile.damage = 1000000;
 				return Color.LightBlue;
             }
-            return null;
+            return RethemeMaster.RethemeProjAlpha(projectile);
 		}
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
@@ -393,7 +391,6 @@ namespace CalRemix
                 }
             }
         }
-
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
         {
             if (hyperCharged)

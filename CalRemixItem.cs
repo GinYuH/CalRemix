@@ -22,18 +22,17 @@ using CalRemix.Items.Materials;
 using CalamityMod.World;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
-using CalamityMod.Rarities;
-using rail;
 using CalRemix.NPCs;
 using CalRemix.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items;
-using CalamityMod.Items.Placeables.FurnitureCosmilite;
+using CalRemix.Projectiles.Accessories;
+using CalRemix.Retheme;
+using Terraria.Audio;
 
 namespace CalRemix
 {
@@ -44,6 +43,7 @@ namespace CalRemix
         public int NonScoria = -1;
         public override void SetDefaults(Item item)
         {
+            RethemeMaster.RethemeItemDefaults(item);
             /*if (item.type == ModContent.ItemType<GildedProboscis>())
             {
                 item.damage = item.damage / 4;
@@ -54,20 +54,8 @@ namespace CalRemix
                 item.damage = item.damage / 2;
                 item.rare = ItemRarityID.LightRed;
             }
-            else*/ if (item.type == ModContent.ItemType<PearlShard>())
-            {
-                item.SetNameOverride("Conquest Fragment");
-                item.rare = ItemRarityID.Orange;
-            }
-            else if (item.type == ModContent.ItemType<InfestedClawmerang>())
-            {
-                item.SetNameOverride("Shroomerang");
-            }
-            else if (item.type == ModContent.ItemType<PhantomicArtifact>())
-            {
-                item.SetNameOverride("Phantomic Soul Artifact");
-            }
-            else if (item.type == ModContent.ItemType<EssenceofHavoc>())
+            else*/
+            if (item.type == ModContent.ItemType<EssenceofHavoc>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofLaw>();
             }
@@ -87,84 +75,11 @@ namespace CalRemix
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<TitanFinger>();
             }
-            else if (item.type == ModContent.ItemType<CosmiliteBar>())
-            {
-                item.rare = ItemRarityID.Purple;
-            }
-
         }
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.type == ModContent.ItemType<PearlShard>())
-            {
-                var line = new TooltipLine(Mod, "ConquestFragment", "\'Victory is yours!\'");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<PhantomicArtifact>())
-            {
-                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<GrandGelatin>())
-            {
-                var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<TheAbsorber>())
-            {
-                var line = new TooltipLine(Mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<TheSponge>())
-            {
-                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<AmbrosialAmpoule>())
-            {
-                var line = new TooltipLine(Mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<AbyssalDivingGear>())
-            {
-                var line = new TooltipLine(Mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<AbyssalDivingSuit>())
-            {
-                var line = new TooltipLine(Mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<TheAmalgam>())
-            {
-                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Purity, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<DesertMedallion>())
-            {
-                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<CryoKey>())
-            {
-                var line = new TooltipLine(Mod, "CryoKeyRemix", "Drops from Primal Aspids");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<EyeofDesolation>())
-            {
-                var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<StarbusterCore>())
-            {
-                var line = new TooltipLine(Mod, "StarbusterRemix", "Drops when a Stellar Culex touches a Unicorn");
-                tooltips.Add(line);
-            }
-            if (item.type == ModContent.ItemType<Abombination>())
-            {
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
-            }
+            RethemeMaster.RethemeTooltips(Mod, item, tooltips);
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
@@ -352,7 +267,16 @@ namespace CalRemix
                 }
 
             }
-            
+            if (modPlayer.blaze && item.DamageType == DamageClass.Ranged)
+            {
+                if (modPlayer.blazeCount < 1)
+                    modPlayer.blazeCount = 1;
+                else
+                {
+                    Projectile.NewProjectile(source, position, velocity * 0.75f, ModContent.ProjectileType<AstralFireball>(), 25, 0f, player.whoAmI);
+                    modPlayer.blazeCount = 0;
+                }
+            }
             return true;
         }
 
@@ -370,18 +294,6 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
-            // i can't remove it from DoG man
-            if (item.type == ModContent.ItemType<CosmiliteBar>() && !Main.expertMode)
-            {
-                foreach (Item i in Main.item)
-                {
-                    if (i.type == ModContent.ItemType<CosmiliteBrick>() && i.active)
-                    {
-                        item.active = false;
-                        break;
-                    }
-                }
-            }
             /*if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
             {
                 item.active = false;
@@ -394,10 +306,13 @@ namespace CalRemix
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
             }
+            if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
+            {
+                itemLoot.Add(ModContent.ItemType<BundleBones>(), 4, 10, 25);
+            }
             if (item.type == ModContent.ItemType<DesertScourgeBag>())
             {
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
-                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<PearlShard>(), 1, 30, 40));
             }
             else if (item.type == ItemID.PlanteraBossBag)
             {
@@ -410,9 +325,9 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
                 itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
-                itemLoot.RemoveWhere((rule) => rule is CommonDrop rouxls && rouxls.itemId == ModContent.ItemType<CosmiliteBar>());
+                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<CosmiliteBar>());
             }
-            if (item.type == ModContent.ItemType<YharonBag>())
+            else if (item.type == ModContent.ItemType<YharonBag>())
             {
                 itemLoot.AddIf(() => !CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
             }
@@ -435,10 +350,15 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<CrabulonBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
+                itemLoot.Add(ModContent.ItemType<CrabLeaves>(), 1, 4, 7);
             }
             else if (item.type == ItemID.FishronBossBag)
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 2, 45, 92);
+            }
+            else if (item.type == ModContent.ItemType<LeviathanBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<CrocodileScale>(), 1, 20, 30);
             }
             /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
             {
@@ -610,6 +530,40 @@ namespace CalRemix
                             }
                         }
                     }
+                }
+            }
+        }
+
+        public override void OnConsumeItem(Item item, Player player)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().bananaClown && !player.HasCooldown(BananaClownCooldown.ID))
+            {
+                if (item.type == ItemID.Apple || item.type == ItemID.Apricot || item.type == ItemID.Grapefruit || item.type == ItemID.Lemon || item.type == ItemID.Peach
+                    || item.type == ItemID.Cherry || item.type == ItemID.Plum || item.type == ItemID.BlackCurrant || item.type == ItemID.Elderberry
+                    || item.type == ItemID.BloodOrange || item.type == ItemID.Rambutan || item.type == ItemID.Mango || item.type == ItemID.Pineapple
+                    || item.type == ItemID.Banana || item.type == ItemID.Coconut || item.type == ItemID.Dragonfruit || item.type == ItemID.Starfruit
+                    || item.type == ItemID.Pomegranate || item.type == ItemID.SpicyPepper)
+                {
+                    for (int i = 0; i < Main.rand.Next(2, 6); i++)
+                        SoundEngine.PlaySound(CalamityMod.Projectiles.Magic.AcidicReed.SaxSound with { MaxInstances = 0 });
+                    for (int num502 = 0; num502 < 36; num502++)
+                    {
+                        int dust = Dust.NewDust(new Vector2(player.position.X, player.position.Y + 16f), player.width, player.height - 16, DustID.Confetti_Yellow, 0f, 0f, 0, default, 1f);
+                        Main.dust[dust].velocity *= 3f;
+                        Main.dust[dust].scale *= 1.15f;
+                    }
+                    int num226 = 36;
+                    for (int num227 = 0; num227 < num226; num227++)
+                    {
+                        Vector2 vector6 = Vector2.Normalize(player.velocity) * new Vector2((float)player.width / 2f, (float)player.height) * 0.75f;
+                        vector6 = vector6.RotatedBy((double)((float)(num227 - (num226 / 2 - 1)) * MathHelper.TwoPi / (float)num226), default) + player.Center;
+                        Vector2 vector7 = vector6 - player.Center;
+                        int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Confetti_Yellow, vector7.X * 1.5f, vector7.Y * 1.5f, 100, default, 1.4f);
+                        Main.dust[num228].noGravity = true;
+                        Main.dust[num228].noLight = true;
+                        Main.dust[num228].velocity = vector7;
+                    }
+                    player.AddCooldown(BananaClownCooldown.ID, 4200);
                 }
             }
         }
