@@ -160,8 +160,6 @@ namespace CalRemix.UI
         {
             tickle = Math.Max(tickle, 0) + 1;
             SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
-
-            FannyManager.LoadWonderFlowerMessages();
         }
 
         public override void Update(GameTime gameTime)
