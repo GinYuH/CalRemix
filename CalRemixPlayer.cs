@@ -17,7 +17,6 @@ using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Typeless;
-using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Pets;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
@@ -29,12 +28,8 @@ using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Items;
-using CalamityMod.BiomeManagers;
-using CalRemix.UI;
-using CalamityMod.Items.Placeables.Furniture.CraftingStations;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
 using CalRemix.Items.Materials;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CalRemix
 {
@@ -67,17 +62,26 @@ namespace CalRemix
 		public bool cart;
 		public bool tvohide;
         public bool dreamingGhost;
+        public bool statue;
+        public bool mackerel;
+        public bool blaze;
+        public bool pearl;
+        public bool astralEye;
+		public bool flamingIce;
+        public int deicide = 0;
         public Particle ring;
 		public Particle ring2;
 		public Particle aura;
-		public bool ZoneLife;
+        public bool ZoneLife;
 		public float cosdam = 0;
-		public int VerbotenMode = 1;
+        public int blazeCount = 0;
+        public int VerbotenMode = 1;
 		public int RecentChest = -1;
 		public bool baroclaw;
 		public bool ZonePlague;
         public bool ZonePlagueDesert;
         public Vector2 clawPosition = Vector2.Zero;
+		public bool bananaClown;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -559,6 +563,8 @@ namespace CalRemix
 			marnite = false;
 			roguebox = false;
             dreamingGhost = false;
+			statue = false;
+			mackerel = false;
             soldier = false;
 			marnitetimer = 0;
 			astEffigy = false;
@@ -578,7 +584,12 @@ namespace CalRemix
 			cart = false;
 			tvohide = false;
 			baroclaw = false;
-			if (astEffigy)
+			blaze = false;
+			pearl = false;
+			astralEye = false;
+			flamingIce = false;
+			bananaClown = false;
+            if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)
 			{
@@ -683,6 +694,18 @@ namespace CalRemix
             {
                 itemDrop = ModContent.ItemType<GrandioseGland>();
             }
+			if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10))
+			{
+				itemDrop = ModContent.ItemType<SideGar>();
+            }
+            if (inWater && Player.ZoneJungle && DownedBossSystem.downedProvidence && Main.rand.NextBool(10))
+            {
+                itemDrop = ModContent.ItemType<RearGar>();
+            }
+            if (inWater && Player.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast && Main.rand.NextBool(10))
+            {
+                itemDrop = ModContent.ItemType<FrontGar>();
+            }
         }
         public void SpawnPhantomHeart()
         {
@@ -745,6 +768,39 @@ namespace CalRemix
 				}
 				RecentChest = Player.chest;
 			}
+        }
+		public override void UpdateBadLifeRegen()
+        {
+            if (flamingIce)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 120;
+            }
+        }
+		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (deicide > 0)
+            {
+                Color c = Color.Lerp(Color.Red, Color.White, Utils.GetLerpValue(-10f, 3000f, deicide, true));
+                g = c.G;
+                b = c.B;
+            }
+            if (drawInfo.shadow != 0)
+				return;
+			if (deicide > 1800)
+			{
+				Texture2D texture = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/DarkWreath").Value;
+                Vector2 position = Player.Center - new Vector2(texture.Width / 2, texture.Height / 2) - Main.screenPosition + Vector2.UnitY * Player.gfxOffY;
+				position = new Vector2((int)position.X, (int)position.Y);
+                Main.spriteBatch.Draw(texture, position, Color.White);
+            }
+            if (deicide > 3000 && Main.rand.NextBool(5))
+            {
+				int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Smoke, SpeedY: -4f, newColor: Color.DarkGray);
+				drawInfo.DustCache.Add(index);
+            }
 		}
-    }
+	}
 }

@@ -14,7 +14,7 @@ namespace CalRemix.Items.Materials
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Essence of Crystal");
-      	Tooltip.SetDefault("	The essence of the rich earth");
+      	Tooltip.SetDefault("The essence of the rich earth");
 			Item.ResearchUnlockCount = 25;
 			ItemID.Sets.SortingPriorityMaterials[Type] = 71; // Soul of Light
             ItemID.Sets.ItemNoGravity[Item.type] = true;

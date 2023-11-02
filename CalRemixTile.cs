@@ -19,6 +19,8 @@ using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Tiles;
 using CalRemix.UI;
 using System.Linq;
+using CalamityMod.Items.Placeables.Ores;
+using Microsoft.CodeAnalysis;
 
 namespace CalRemix
 {
@@ -219,6 +221,55 @@ namespace CalRemix
                     }
                 }
             }
+            if (CalRemixWorld.meldCountdown <= 0)
+            {
+                int rand = 4 - WorldGen.GetWorldSize();
+                if (Main.rand.NextBool(222 * rand))
+                {
+                    if (CalRemixWorld.astrallist.Contains(tile.TileType))
+                    {
+                        int LocationX = i;
+                        int LocationY = j;
+                        bool getMelded = false;
+                        bool somethingConverted = false;
+                        int checkRad = 8;
+                        int spreadRad = 4;
+                        for (int x = LocationX - checkRad; x <= LocationX + checkRad; x++)
+                        {
+                            for (int y = LocationY - checkRad; y <= LocationY + checkRad; y++)
+                            {
+                                if (Main.tile[x, y].TileType == ModContent.TileType<MeldGunkPlaced>())
+                                {
+                                    getMelded = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (getMelded)
+                        {
+                            for (int x = LocationX - spreadRad; x <= LocationX + spreadRad; x++)
+                            {
+                                for (int y = LocationY - spreadRad; y <= LocationY + spreadRad; y++)
+                                {
+                                    if (Main.rand.NextBool(6))
+                                    {
+                                        if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= spreadRad)
+                                        {
+                                            somethingConverted = true;
+                                            CalamityMod.World.AstralBiome.ConvertToAstral(x, y);
+                                        }
+                                    }
+                                }
+                            }
+                            if (somethingConverted)
+                            {
+                                Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
+                                WorldGen.SquareTileFrame(i, j, true);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
@@ -239,6 +290,10 @@ namespace CalRemix
                     if (e)
                         KinsmanMessage.ActivateMessage();
                 }
+            }
+            if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
+            {
+                Main.tile[i, j].TileType = (ushort)TileID.Mud;
             }
         }
 

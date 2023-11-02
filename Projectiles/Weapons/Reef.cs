@@ -1,9 +1,11 @@
 using CalamityMod;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -131,31 +133,65 @@ namespace CalRemix.Projectiles.Weapons
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
-            Texture2D value = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/ReefChain").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/ReefChain").Value;
             Vector2 center = Projectile.Center;
-            Rectangle? sourceRectangle = null;
-            Vector2 origin = new Vector2((float)value.Width * 0.5f, (float)value.Height * 0.5f);
-            float num = value.Height;
-            Vector2 vector = mountedCenter - center;
-            float rotation = (float)Math.Atan2(vector.Y, vector.X) - 1.57f;
-            bool flag = true;
-            if (float.IsNaN(center.X) && float.IsNaN(center.Y))
-                flag = false;
-            if (float.IsNaN(vector.X) && float.IsNaN(vector.Y))
-                flag = false;
-            while (flag)
+            float xVel = Projectile.velocity.X;
+            float yVel = Projectile.velocity.Y;
+            float velDis = (float)Math.Sqrt(xVel * xVel + yVel * yVel);
+            velDis = 4f / velDis;
+            if (Projectile.ai[0] == 0f)
             {
-                if (vector.Length() < num + 1f)
+                center.X -= Projectile.velocity.X * velDis;
+                center.Y -= Projectile.velocity.Y * velDis;
+            }
+            else
+            {
+                center.X += Projectile.velocity.X * velDis;
+                center.Y += Projectile.velocity.Y * velDis;
+            }
+            xVel = Owner.MountedCenter.X - center.X;
+            yVel = Owner.MountedCenter.Y - center.Y;
+            float rotation = (float)Math.Atan2(yVel, xVel) - 1.57f;
+            if (Projectile.alpha == 0)
+            {
+                int num115 = -1;
+                if (Projectile.position.X + (float)(Projectile.width / 2) < Owner.MountedCenter.X)
                 {
-                    flag = false;
+                    num115 = 1;
+                }
+                if (Main.player[Projectile.owner].direction == 1)
+                {
+                    Main.player[Projectile.owner].itemRotation = (float)Math.Atan2(yVel * (float)num115, xVel * (float)num115);
+                }
+                else
+                {
+                    Main.player[Projectile.owner].itemRotation = (float)Math.Atan2(yVel * (float)num115, xVel * (float)num115);
+                }
+            }
+            bool flag20 = true;
+            while (flag20)
+            {
+                float num116 = (float)Math.Sqrt(xVel * xVel + yVel * yVel);
+                if (num116 < 16f)
+                {
+                    flag20 = false;
                     continue;
                 }
-                center += Vector2.Normalize(vector) * num;
-                vector = mountedCenter - center;
+                if (float.IsNaN(num116))
+                {
+                    flag20 = false;
+                    continue;
+                }
+                num116 = 8f / num116;
+                xVel *= num116;
+                yVel *= num116;
+                center.X += xVel;
+                center.Y += yVel;
+                xVel = Owner.MountedCenter.X - center.X;
+                yVel = Owner.MountedCenter.Y - center.Y;
                 Color color = Lighting.GetColor((int)center.X / 16, (int)(center.Y / 16f));
-                Main.spriteBatch.Draw(value, center - Main.screenPosition, sourceRectangle, color, rotation, origin, 1f, SpriteEffects.None, 0f);
-            }
+                Main.EntitySpriteDraw(texture, center - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation, new Vector2(texture.Width, texture.Height), 1f, SpriteEffects.None, 0);
+            }    
             return true;
         }
 

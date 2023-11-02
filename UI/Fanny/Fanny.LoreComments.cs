@@ -32,6 +32,8 @@ namespace CalRemix.UI
 {
     public partial class FannyManager : ModSystem
     {
+        internal static readonly List<int> manuallyDefinedLoreItems = new();
+
         internal static int previousHoveredItem;
         internal static int hoverTime;
         internal static int previousHoverTime;
@@ -41,7 +43,7 @@ namespace CalRemix.UI
         {
             previousHoverTime = hoverTime;
             //Reset hover time if the player changes items theyre hovering over
-            if (Main.HoverItem.type != previousHoveredItem || Main.HoverItem.ModItem == null || Main.HoverItem.ModItem is not LoreItem)
+            if (Main.HoverItem.type != previousHoveredItem || Main.HoverItem.ModItem == null || (Main.HoverItem.ModItem is not LoreItem && !manuallyDefinedLoreItems.Contains(Main.HoverItem.type)))
                 hoverTime = 0;
 
             //Hover time should go up if were hovering a lore item
@@ -235,7 +237,7 @@ namespace CalRemix.UI
             #region PBG
             int pbgLoreItemType = ModContent.ItemType<LorePlaguebringerGoliath>();
             FannyMessage pbgLore = new FannyMessage("LorePBG", "I have the feeling this guy likes bees! What is he, an apiarist or something? It's fan-tastic to see people following their passion!",
-                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == pbgLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves:false).AddDelay(0.4f);
+                "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == pbgLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
 
             fannyMessages.Add(pbgLore);
 

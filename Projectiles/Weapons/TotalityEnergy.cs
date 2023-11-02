@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 using CalamityMod;
-using Terraria.DataStructures;
 
 namespace CalRemix.Projectiles.Weapons
 {
@@ -28,82 +28,23 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
             Projectile.DamageType = DamageClass.MeleeNoSpeed;
-        }
-        public override void OnSpawn(IEntitySource source)
-        {
-            Projectile.ai[0] = 100f;
+            Projectile.aiStyle = ProjAIStyleID.MiniTwins;
         }
         public override void AI()
         {
             Lighting.AddLight((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, Main.DiscoR / 255f, Main.DiscoG / 255f, Main.DiscoB / 255f);
-            bool projType = Projectile.type == ModContent.ProjectileType<TotalityEnergy>();
-            if (!projType || Owner.dead)
-                Projectile.Kill();
-
-            Projectile.rotation += Projectile.velocity.X * 0.1f;
-            bool flag = false;
-
-            if (Owner.HasMinionAttackTargetNPC)
-            {
-                NPC npc = Main.npc[Owner.MinionAttackTargetNPC];
-                flag = targetNPC(npc, flag);
-
-            }
-            else
-            {
-                for (int i = 0; i < 200; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    flag = targetNPC(npc, flag);
-                }
-            }
-            if (Vector2.Distance(Owner.Center, Projectile.Center) > 1600f)
-                flag = false;
-            if (flag)
-                Projectile.ChargingMinionAI(1200f, 1500f, 2400f, 150f, 0, 30f, 18f, 9f, new Vector2(0f, -60f), 30f, 12f, tileVision: true, ignoreTilesWhenCharging: true);
-            else
-            {
-                Vector2 targetVect = Owner.Center - Projectile.Center + new Vector2(0f, -60f);
-                float targetDist = targetVect.Length();
-                if (targetDist < 800f && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
-                {
-                    Projectile.netUpdate = true;
-                }
-
-                if (targetDist > 2000f)
-                {
-                    Projectile.position.X = Owner.Center.X - (Projectile.width / 2);
-                    Projectile.position.Y = Owner.Center.Y - (Projectile.height / 2);
-                    Projectile.netUpdate = true;
-                }
-                if (targetDist > 70f)
-                {
-                    targetVect.Normalize();
-                    targetVect *= 6;
-                    Projectile.velocity = (Projectile.velocity * 40f + targetVect) / 41f;
-                }
-                if (Projectile.velocity.X == 0f && Projectile.velocity.Y == 0f)
-                {
-                    Projectile.velocity.X = -0.15f;
-                    Projectile.velocity.Y = -0.05f;
-                }
-            }
+            Projectile.ChargingMinionAI(1200f, 1500f, 2400f, 150f, 0, 6f, 20f, 10f, new Vector2(0f, 0f), 30f, 12f, tileVision: true, ignoreTilesWhenCharging: true);
         }
-
+        public override void PostAI()
+        {
+            Projectile.rotation += Projectile.velocity.X * 0.25f;
+        }
         public override Color? GetAlpha(Color lightColor)
         {
             return new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 255);
         }
-        private bool targetNPC(NPC npc, bool flag)
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (npc.CanBeChasedBy(Projectile))
-            {
-                float targetDistance = Vector2.Distance(npc.Center, Projectile.Center);
-                if (!flag && targetDistance < 1400f)
-                {
-                    return true;
-                }
-            }
             return false;
         }
     }

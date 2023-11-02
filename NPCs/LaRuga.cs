@@ -48,7 +48,7 @@ namespace CalRemix.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("La Ruga");
-            Main.npcFrameCount[NPC.type] = 5;
+            Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
         }
 
@@ -88,7 +88,7 @@ namespace CalRemix.NPCs
                     NPC.active = false;
                 return;
             }
-            NPC.direction = Math.Sign(NPC.DirectionTo(targ.Center).X);
+            NPC.direction = Phase == (int)AttackID.idle && NPC.wet ? -Math.Sign(NPC.DirectionTo(targ.Center).X) : Math.Sign(NPC.DirectionTo(targ.Center).X);
             NPC.spriteDirection = NPC.direction;
             if (NPC.life <= 2)
             {
@@ -225,20 +225,33 @@ namespace CalRemix.NPCs
         {
             if (Phase == (int)AttackID.attacking || Phase == (int)AttackID.attatch)
             {
-                NPC.frameCounter += 1.0;
+                NPC.frameCounter += 0.75f;
                 if (NPC.frameCounter > 6.0)
                 {
                     NPC.frameCounter = 0.0;
                     NPC.frame.Y += frameHeight;
                 }
-                if (NPC.frame.Y > frameHeight * 3)
+                if (NPC.frame.Y > frameHeight * 7 || NPC.frame.Y < frameHeight * 4)
                 {
-                    NPC.frame.Y = 0;
+                    NPC.frame.Y = frameHeight * 4;
                 }
             }
             else if (Phase == (int)AttackID.neckcrack || Phase == (int)AttackID.death || Phase == (int)AttackID.hover || Phase == (int)AttackID.alert)
             {
-                NPC.frame.Y = frameHeight * 4;
+                NPC.frame.Y = frameHeight * 8;
+            }
+            else if (Phase == (int)AttackID.idle && NPC.wet)
+            {
+                NPC.frameCounter += 0.75f;
+                if (NPC.frameCounter > 6.0)
+                {
+                    NPC.frameCounter = 0.0;
+                    NPC.frame.Y += frameHeight;
+                }
+                if (NPC.frame.Y > frameHeight * 4)
+                {
+                    NPC.frame.Y = frameHeight * 0;
+                }
             }
             else
             {
@@ -248,13 +261,16 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            float val = 0;
             if (spawnInfo.Player.Calamity().ZoneAbyssLayer4)
-                return SpawnCondition.CaveJellyfish.Chance * 0.0022f;
+                val = SpawnCondition.CaveJellyfish.Chance * 0.0022f;
 
             if (DownedBossSystem.downedExoMechs && spawnInfo.Player.ZoneForest)
-                return SpawnCondition.OverworldNightMonster.Chance * 0.0000022f;
+                val = SpawnCondition.OverworldNightMonster.Chance * 0.000022f;
 
-            return 0;
+            if (NPC.AnyNPCs(Type))
+                return 0;
+            return val;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

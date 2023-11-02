@@ -24,9 +24,24 @@ using CalRemix.Tiles.PlaguedJungle;
 using CalRemix.Projectiles.TileTypeless;
 using CalamityMod.Tiles.Plates;
 using CalamityMod.NPCs;
+using CalRemix.Projectiles.Weapons;
+using CalRemix.Items.Weapons;
+using CalRemix.NPCs;
 using CalamityMod.Tiles;
 using CalamityMod.Tiles.SunkenSea;
 using System.Threading;
+using Terraria.GameContent.ItemDropRules;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.Fishing.SulphurCatches;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.Tiles.DraedonStructures;
+using Terraria.WorldBuilding;
+using log4net.Repository.Hierarchy;
+using log4net.Core;
+using CalamityMod.Tiles.FurnitureVoid;
+using CalamityMod.Items.SummonItems;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -35,6 +50,7 @@ namespace CalRemix
         public static int lifeTiles;
         public static int PlagueTiles;
         public static int PlagueDesertTiles;
+        public static int MeldTiles;
         public static int ShrineTimer = -20;
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
@@ -44,12 +60,26 @@ namespace CalRemix
         public static bool deusDeadInSnow = false;
         public static bool generatedCosmiliteSlag = false;
         public static bool generatedPlague = false;
+        public static bool generatedStrain = false;
 
         public static int transmogrifyingItem = -1;
         public static int transmogrifyingItemAmt = 0;
         public static int transmogrifyTimeLeft = 0;
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
+        public static int meldCountdown = 72000;
 
+        public List<int> DungeonWalls = new List<int>
+        {
+            WallID.BlueDungeonUnsafe,
+            WallID.BlueDungeonSlabUnsafe,
+            WallID.BlueDungeonTileUnsafe,
+            WallID.GreenDungeonUnsafe,
+            WallID.GreenDungeonSlabUnsafe,
+            WallID.GreenDungeonTileUnsafe,
+            WallID.PinkDungeonUnsafe,
+            WallID.PinkDungeonSlabUnsafe,
+            WallID.PinkDungeonTileUnsafe
+        };
         public static void UpdateWorldBool()
         {
             if (Main.netMode == NetmodeID.Server)
@@ -66,11 +96,13 @@ namespace CalRemix
             deusDeadInSnow = false;
             generatedCosmiliteSlag = false;
             generatedPlague = false;
+            generatedStrain = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
-    }
+            meldCountdown = 72000;
+        }
         public override void OnWorldUnload()
         {
             downedDerellect = false;
@@ -80,10 +112,12 @@ namespace CalRemix
             deusDeadInSnow = false;
             generatedCosmiliteSlag = false;
             generatedPlague = false;
+            generatedStrain = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
+            meldCountdown = 72000;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -94,10 +128,12 @@ namespace CalRemix
             tag["deusDeadInSnow"] = deusDeadInSnow;
             tag["genSlag"] = generatedCosmiliteSlag;
             tag["plague"] = generatedPlague;
+            tag["astrain"] = generatedStrain;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
             tag["transmogrifyTimeLeft"] = transmogrifyTimeLeft;
+            tag["meld"] = meldCountdown;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -109,10 +145,12 @@ namespace CalRemix
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
             generatedCosmiliteSlag = tag.Get<bool>("genSlag");
             generatedPlague = tag.Get<bool>("plague");
+            generatedStrain = tag.Get<bool>("astrain");
 
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
             transmogrifyTimeLeft = tag.Get<int>("transmogrifyTimeLeft");
+            meldCountdown = tag.Get<int>("meld");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -124,10 +162,12 @@ namespace CalRemix
             writer.Write(deusDeadInSnow);
             writer.Write(generatedCosmiliteSlag);
             writer.Write(generatedPlague);
+            writer.Write(generatedStrain);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
             writer.Write(transmogrifyTimeLeft);
+            writer.Write(meldCountdown);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -139,20 +179,22 @@ namespace CalRemix
             deusDeadInSnow = reader.ReadBoolean();
             generatedCosmiliteSlag = reader.ReadBoolean();
             generatedPlague = reader.ReadBoolean();
+            generatedStrain = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
             transmogrifyTimeLeft = reader.ReadInt32();
+            meldCountdown = reader.ReadInt32();
         }
 
-        List<int> hallowlist = new List<int>
+        public static List<int> hallowlist = new List<int>
         {
             TileID.Pearlstone,
             TileID.HallowedIce,
             TileID.HallowHardenedSand,
             TileID.HallowSandstone
         };
-        List<int> astrallist = new List<int>
+        public static List<int> astrallist = new List<int>
         {
             ModContent.TileType<AstralStone>(),
             ModContent.TileType<AstralSandstone>(),
@@ -162,9 +204,28 @@ namespace CalRemix
             ModContent.TileType<AstralDirt>(),
             ModContent.TileType<AstralIce>(),
             ModContent.TileType<AstralSnow>(),
+            ModContent.TileType<AstralGrass>(),
+            TileType<AstralClay>(),
+            TileType<AstralSand>(),
+            TileType<AstralMonolith>(),
         };
+        public override void PreUpdateWorld()
+        {
+            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+            RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
+            RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+            RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
+            //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
+        }
         public override void PostUpdateWorld()
         {
+            if (meldCountdown > 0)
+            {
+                meldCountdown--;
+            }
             if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -201,13 +262,43 @@ namespace CalRemix
                     }
                 }
             }
-            //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
             if (!generatedPlague && NPC.downedGolemBoss)
             {
                 ThreadPool.QueueUserWorkItem(_ => GeneratePlague(), this);
             }
+            //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
+            if (!generatedStrain && Main.hardMode)
+            {
+                GenerateCavernStrain();
+                generatedStrain = true;
+                UpdateWorldBool();
+            }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
+        }
+
+        public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
+        {
+            List<IItemDropRule> JungleCrateDrops = npc ? Terraria.Main.ItemDropsDB.GetRulesForNPCID(bagType) : Terraria.Main.ItemDropsDB.GetRulesForItemID(bagType);
+            for (int i = 0; i < JungleCrateDrops.Count; i++)
+            {
+                if (JungleCrateDrops[i] is LeadingConditionRule lead)
+                {
+                    for (int j = 0; j < lead.ChainedRules.Count; j++)
+                    {
+                        if (lead.ChainedRules[j] is Chains.TryIfSucceeded c)
+                        {
+                            if (c.RuleToChain is CommonDrop fuck)
+                            {
+                                if (fuck.itemId == itemToRemove)
+                                {
+                                    lead.ChainedRules.RemoveAt(j);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void ResetNearbyTileEffects()
@@ -215,6 +306,7 @@ namespace CalRemix
             lifeTiles = 0;
             PlagueTiles = 0;
             PlagueDesertTiles = 0;
+            MeldTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -228,8 +320,41 @@ namespace CalRemix
             tileCounts[TileType<PlaguedSilt>()] +
             tileCounts[TileType<Sporezol>()];
             PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
+            MeldTiles = tileCounts[TileType<MeldGunkPlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
+        }
+        public override void PostWorldGen()
+        {
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null)
+                {
+                    if (Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 2 * 36 && DungeonWalls.Contains(Main.tile[chest.x, chest.y].WallType))
+                    {
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        {
+                            if (chest.item[inventoryIndex].type == ItemID.None)
+                            {
+                                if (Main.rand.NextBool(4))
+                                {
+                                    chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
+                                    chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if (Main.tile[chest.x, chest.y].TileType == TileType<VoidChest>())
+                    {
+                        if (chest.item[0].type == ItemType<Terminus>())
+                        {
+                            chest.item[0].SetDefaults(ItemType<CalamityMod.Items.Placeables.Ores.ScoriaOre>());
+                        }
+                    }
+                }
+            }
         }
 
         public static void HMChest(int block1, int block2, int wall, int loot, List<int> anchor, int chest)
@@ -307,7 +432,7 @@ namespace CalRemix
                         {
                             if (Main.rand.NextBool(75))
                             {
-                                if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == ModContent.TileType<ExodiumOre>())
+                                if (Main.tile[i, j].TileType == TileID.LunarOre || Main.tile[i, j].TileType == TileType<ExodiumOre>())
                                 {
                                     int planetradius = Main.rand.Next(4, 7);
                                     for (int p = i - planetradius; p < i + planetradius; p++)
@@ -319,14 +444,16 @@ namespace CalRemix
                                                 continue;
 
                                             if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
-                                                if (Main.tile[p, q].TileType == TileID.LunarOre || Main.tile[p, q].TileType == ModContent.TileType<ExodiumOre>())
+                                            {
+                                                if (Main.tile[p, q].TileType == TileID.LunarOre || Main.tile[p, q].TileType == TileType<ExodiumOre>())
                                                 {
-                                                    Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
+                                                    Main.tile[p, q].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
 
                                                     WorldGen.SquareTileFrame(p, q, true);
                                                     NetMessage.SendTileSquare(-1, p, q, 1);
                                                     cutitNOW = true;
                                                 }
+                                            }
                                         }
                                     }
                                 }
@@ -427,13 +554,161 @@ namespace CalRemix
             }
         }
 
-        public static void PlacePlague(int i, int j, int size)
+        public static void GenerateCavernStrain()
         {
-            for (int k =  i - size; k < size + 1; k++)
+            int widthdiv2 = 16;
+            int heightdiv2 = 22;
+            bool gennedMeld = false;
+            Vector2 meldCoords = Vector2.Zero;
+            int ymin = Main.remixWorld ? (int)(Main.maxTilesY * 0.4f) : (int)(Main.maxTilesY * 0.6f);
+            int ymax = Main.remixWorld ? (int)(Main.maxTilesY * 0.6f) : Main.UnderworldLayer - 100;
+            for (int loop = 0; loop < 200; loop++)
             {
-                for (int l = j - size; l < size + 1; l++) 
+                if (gennedMeld)
+                    break;
+                for (int x = (int)(Main.maxTilesX * 0.2f); x < (Main.maxTilesX * 0.8f); x++)
                 {
-                    //PlaguedSpray.ConvertSingular(k, l);
+                    if (gennedMeld)
+                        break;
+                    if (x > Main.maxTilesX * 0.4f && x < Main.maxTilesX * 0.6f)
+                        continue;
+                    for (int y = ymin; y < ymax; y++)
+                    {
+                        if (gennedMeld)
+                            break;
+                        if (Main.rand.NextBool(2222222))
+                        {
+                            if (widthdiv2 * 2 > Main.maxTilesX - 100 || heightdiv2 * 2 > Main.maxTilesY - 100)
+                                continue;
+                            if (x - widthdiv2 < 100 || y - heightdiv2 < 100)
+                                continue;
+                            bool canGen = true;
+                            for (int m = x - 100; m < x + 100; m++)
+                            {
+                                if (!canGen)
+                                    break;
+                                for (int n = y - 100; n < y + 100; n++)
+                                {
+                                    if (!canGen)
+                                        break;
+                                    Tile t = Main.tile[m, n];
+                                    if (WorldGen.InWorld(m, n, 1))
+                                    {
+                                        if (t.TileType == TileID.StoneSlab || t.TileType == TileType<LaboratoryPlating>() || t.TileType == TileType<LaboratoryPanels>() || t.TileType == TileType<RustedPipes>() || TileID.Sets.IsAContainer[t.TileType] || TileID.Sets.AvoidedByMeteorLanding[t.TileType] || t.TileType == TileID.LihzahrdBrick || Terraria.Main.tileDungeon[t.TileType] || t.TileType == TileType<Navystone>() || t.TileType == TileID.JungleGrass)
+                                        {
+                                            canGen = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (canGen)
+                            {
+                                if (WorldGen.InWorld(x, y, 1))
+                                {
+                                    PlaceMeldHeart(x, y, 16, 22);
+                                    meldCoords = new Vector2(x, y);
+                                    gennedMeld = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (meldCoords != Vector2.Zero)
+            {
+                ThreadPool.QueueUserWorkItem(_ => AstralMeld(meldCoords));
+                //AstralMeld(meldCoords);
+            }
+
+        }
+
+        public static void AstralMeld(Vector2 meldCoords)
+        {
+            int planetradius = 56;
+            for (int p = (int)meldCoords.X - planetradius; p < (int)meldCoords.X + planetradius; p++)
+            {
+                for (int q = (int)meldCoords.Y - planetradius; q < (int)meldCoords.Y + planetradius; q++)
+                {
+                    int dist = (p - (int)meldCoords.X) * (p - (int)meldCoords.X) + (q - (int)meldCoords.Y) * (q - (int)meldCoords.Y);
+                    if (dist > planetradius * planetradius)
+                        continue;
+
+                    if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
+                    {
+                        AstralBiome.ConvertToAstral(p, q, true);
+                    }
+                }
+            }
+        }
+
+        public static void PlaceMeldHeart(int x, int y, int width, int height)
+        {
+            // cut off at the top octagon
+            for (int i = x - width; i < x + width; i++)
+            {
+                for (int j = y; j < y + height; j++)
+                {
+                    if (WorldGen.InWorld(i, j, 1) && Math.Abs(i - x) + Math.Abs(j - y) < Math.Sqrt(width * width + height * height))
+                    {
+                        if (WorldGen.CheckTileBreakability(i, j) == 0)
+                        {
+                            if (Main.tile[i, j].HasTile)
+                            {
+                                Main.tile[i, j].TileType = (ushort)TileType<MeldGunkPlaced>();
+                                Main.tile[i, j].Get<TileWallWireStateData>().Slope = SlopeType.Solid;
+                                Main.tile[i, j].Get<TileWallWireStateData>().IsHalfBlock = false;
+                                Main.tile[i, j].ClearBlockPaintAndCoating();
+                                Main.tile[i, j].LiquidAmount = 0;
+                                WorldGen.SquareTileFrame(i, j, true);
+                                NetMessage.SendTileSquare(-1, i, j, 1);
+                            }
+                            else
+                            {
+                                WorldGen.PlaceTile(i, j, TileType<MeldGunkPlaced>(), true, true);
+                                WorldGen.SquareTileFrame(i, j, true);
+                                NetMessage.SendTileSquare(-1, i, j, 1);
+                            }
+                        }
+                    }
+                }
+            }
+            RightTriangleGen(TileType<MeldGunkPlaced>(), x - width, y, (int)(width * 0.7f) * 2, (int)(height * 1.0f));
+            RightTriangleGen(TileType<MeldGunkPlaced>(), x, y + (int)(height * 0.22f), (int)(width * 0.5f) * 2, (int)(height * 0.7f));
+        }
+
+        // at the moment this only supports a /| angled triangle
+        public static void RightTriangleGen(int blockType, int x, int y, int width, int height)
+        {
+            float slope = -(float)height / (float)width;
+            float b = y - slope * x;
+            for (int i = x; i < x + width; i++)
+            {
+                for (int j = y - height; j < y; j++)
+                {
+                    if (j >= slope * i + b)
+                    {
+                        if (WorldGen.CheckTileBreakability(i, j) == 0)
+                        {
+                            if (Main.tile[i, j].HasTile)
+                            {
+                                Main.tile[i, j].TileType = (ushort)blockType;
+                                Main.tile[i, j].Get<TileWallWireStateData>().Slope = SlopeType.Solid;
+                                Main.tile[i, j].Get<TileWallWireStateData>().IsHalfBlock = false;
+                                Main.tile[i, j].ClearBlockPaintAndCoating();
+                                Main.tile[i, j].LiquidAmount = 0;
+                                WorldGen.SquareTileFrame(i, j, true);
+                                NetMessage.SendTileSquare(-1, i, j, 1);
+                            }
+                            else
+                            {
+                                WorldGen.PlaceTile(i, j, blockType, true, true);
+                                WorldGen.SquareTileFrame(i, j, true);
+                                NetMessage.SendTileSquare(-1, i, j, 1);
+                            }
+                        }
+                    }
                 }
             }
         }

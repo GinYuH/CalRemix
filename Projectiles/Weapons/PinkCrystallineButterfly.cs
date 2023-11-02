@@ -42,9 +42,12 @@ namespace CalRemix.Projectiles.Weapons
             Owner.AddBuff(ModContent.BuffType<TheDreamingGhostBuff>(), 3600);
             if (Projectile.type != ModContent.ProjectileType<PinkCrystallineButterfly>())
                 return;
+            if (Owner.dead)
+                Owner.GetModPlayer<CalRemixPlayer>().dreamingGhost = false;
+            if (Owner.GetModPlayer<CalRemixPlayer>().dreamingGhost)
+                Projectile.timeLeft = 2;
 
             int frameGate = 6;
-
             Projectile.frameCounter++;
             if (Projectile.frameCounter > frameGate)
             {
@@ -52,14 +55,7 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.frameCounter = 0;
             }
             if (Projectile.frame >= 3)
-            {
                 Projectile.frame = 0;
-            }
-
-            if (Owner.dead)
-                Owner.GetModPlayer<CalRemixPlayer>().dreamingGhost = false;
-            if (Owner.GetModPlayer<CalRemixPlayer>().dreamingGhost)
-                Projectile.timeLeft = 2;
             if (Owner.Center.Distance(Projectile.Center) > 450)
             {
                 Projectile.aiStyle = ProjAIStyleID.MiniTwins;
@@ -69,9 +65,9 @@ namespace CalRemix.Projectiles.Weapons
                 Projectile.aiStyle = -1;
                 Projectile.velocity = Vector2.Zero;
             }
-            if (Projectile.ai[0] != 0f)
+            if (Projectile.ai[0] != 8f)
             {
-                Projectile.ai[0] -= 1f;
+                Projectile.ai[0]++;
                 return;
             }
             NPC npc = Projectile.Center.MinionHoming(550f, Main.player[Projectile.owner]);
@@ -79,12 +75,10 @@ namespace CalRemix.Projectiles.Weapons
             {
                 Projectile.spriteDirection = npc.position.X - Projectile.position.X >= 0 ? -1 : 1;
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(npc.Center) * 20f, ModContent.ProjectileType<SakuraBullet>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-                Projectile.ai[0] = 8f;
+                Projectile.ai[0] = 0f;
             }
             else
-            {
                 Projectile.spriteDirection = Owner.position.X - Projectile.position.X >= 0 ? -1 : 1;
-            }
         }
         public override bool? CanDamage()
         {

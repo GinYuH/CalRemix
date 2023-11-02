@@ -36,16 +36,17 @@ using CalamityMod.Items.Tools;
 using CalamityMod.Items.Armor.Victide;
 using CalamityMod.Items.Armor.Statigel;
 using CalamityMod.Items.Armor.PlagueReaper;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Items.Tools.ClimateChange;
+using CalamityMod.Items.Armor.Prismatic;
+using CalamityMod.Items.Armor.Silva;
 
 namespace CalRemix
 {
     public class Recipes : ModSystem
     {
         public static RecipeGroup Blinkchid, Daychid, Moonchid, Deathchid, Waterchid, Firechid, Shiverchid;
-
+        public static RecipeGroup GreaterEvil;
         public override void Unload()
         {
             Blinkchid = null;
@@ -55,6 +56,7 @@ namespace CalRemix
             Waterchid = null;
             Firechid = null;
             Shiverchid = null;
+            GreaterEvil = null;
         }
         public override void AddRecipeGroups()
         {
@@ -65,6 +67,9 @@ namespace CalRemix
             CosmichidGroup(Waterchid, "Waterchid", ItemID.Waterleaf);
             CosmichidGroup(Firechid, "Firechid", ItemID.Fireblossom);
             CosmichidGroup(Shiverchid, "Shiverchid", ItemID.Shiverthorn);
+
+            GreaterEvil = new RecipeGroup(() => "Any Greater Evil Flesh", ModContent.ItemType<RottenMatter>(), ModContent.ItemType<BloodSample>());
+            RecipeGroup.RegisterGroup("CalRemix:GreaterEvil", GreaterEvil);
         }
         public override void AddRecipes() 
         {
@@ -101,6 +106,12 @@ namespace CalRemix
             {
                 Recipe bar = Recipe.Create(ModContent.ItemType<MidasPrime>(), 1);
                 bar.AddIngredient<MinnowsPrimeItem>();
+                bar.AddTile(TileID.CookingPots);
+                bar.Register();
+            }
+            {
+                Recipe bar = Recipe.Create(ItemID.CookedFish, 1);
+                bar.AddIngredient<CrocodileHerringItem>();
                 bar.AddTile(TileID.CookingPots);
                 bar.Register();
             }
@@ -243,6 +254,10 @@ namespace CalRemix
                     recipe.DisableRecipe();
                 }
                 if (recipe.HasResult(ModContent.ItemType<EyeofDesolation>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<GalacticaSingularity>()))
                 {
                     recipe.DisableRecipe();
                 }
@@ -820,9 +835,69 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<DeliciousMeat>(), 50);
                 }
                 #endregion
+                if (recipe.HasResult(ModContent.ItemType<PrismaticHelmet>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 8);
+                }
+                if (recipe.HasResult(ModContent.ItemType<PrismaticRegalia>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 8);
+                }
+                if (recipe.HasResult(ModContent.ItemType<PrismaticGreaves>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 8);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SilvaArmor>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 12);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SilvaLeggings>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 12);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SilvaHeadMagic>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 12);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SilvaHeadSummon>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 12);
+                }
+                if (recipe.HasResult(ModContent.ItemType<SilvaWings>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<OrnateCloth>(), 12);
+                }
                 if (recipe.HasResult(ModContent.ItemType<ClaretCannon>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<UnholyBloodCells>(), 25);
+                }
+                if (recipe.HasResult(ModContent.ItemType<DreadmineStaff>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 10);
+                }
+                if (recipe.HasResult(ModContent.ItemType<FlakKraken>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 10);
+                }
+                if (recipe.HasResult(ModContent.ItemType<BallisticPoisonBomb>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 10);
+                }
+                if (recipe.HasResult(ModContent.ItemType<Floodtide>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<LumenousAmulet>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 5);
+                }
+                if (recipe.HasResult(ModContent.ItemType<TyphonsGreed>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 10);
+                }
+                if (recipe.HasResult(ModContent.ItemType<UndinesRetribution>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 10);
                 }
                 if (recipe.HasResult(ModContent.ItemType<AstralBeaconItem>()))
                 {
@@ -846,6 +921,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<AbyssBlade>()))
                 {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 5);
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
                 }
                 if (recipe.HasResult(ModContent.ItemType<AbyssalMirror>()))
@@ -878,6 +954,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<BarracudaGun>()))
                 {
+                    recipe.AddIngredient(ModContent.ItemType<CrocodileScale>(), 5);
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
                 }
                 if (recipe.HasResult(ModContent.ItemType<BladedgeGreatbow>()))
