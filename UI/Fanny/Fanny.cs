@@ -467,6 +467,58 @@ namespace CalRemix.UI
         }
     }
 
+    public class FannySavePlayer : ModPlayer
+    {
+        public bool[] readMessages;
+
+        public bool readTroughFannyDogDialogue = false;
+
+        public override void SaveData(TagCompound tag)
+        {
+            for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
+            {
+                FannyMessage msg = FannyManager.fannyMessages[i];
+                if (msg.alreadySeen && msg.PersistsThroughSaves)
+                    tag["FannyDialogue" + msg.Identifier] = true;
+            }
+
+            tag["FannyReadThroughDogDialogue"] = FannyManager.ReadAllDogTips;
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            readMessages = new bool[FannyManager.fannyMessages.Count];
+            for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
+            {
+                FannyMessage msg = FannyManager.fannyMessages[i];
+                readMessages[i] = tag.ContainsKey("FannyDialogue" + msg.Identifier);
+            }
+
+            if (tag.TryGet<bool>("FannyReadThroughDogDialogue", out bool readDog))
+                readTroughFannyDogDialogue = readDog;
+        }
+
+        public override void OnEnterWorld()
+        {
+            if (Main.mouseRight && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                SoundEngine.PlaySound(SoundID.Cockatiel);
+                SoundEngine.PlaySound(SoundID.DD2_GoblinScream);
+                SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion);
+                return;
+            }
+
+            for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
+            {
+                FannyMessage msg = FannyManager.fannyMessages[i];
+                msg.alreadySeen = readMessages[i];
+            }
+
+            FannyManager.ReadAllDogTips = readTroughFannyDogDialogue;
+        }
+    }
+
+    [Autoload(Side = ModSide.Client)]
     public partial class FannyManager : ModSystem
     {
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
@@ -1329,41 +1381,6 @@ namespace CalRemix.UI
                 msg.CooldownTime = 0;
                 msg.alreadySeen = false;
             }
-        }
-
-        public override void SaveWorldData(TagCompound tag)
-        {
-            //Save all the ones already seen
-            for (int i = 0; i < fannyMessages.Count; i++)
-            {
-                FannyMessage msg = fannyMessages[i];
-                if (msg.alreadySeen && msg.PersistsThroughSaves)
-                    tag["FannyDialogue" + msg.Identifier] = true;
-            }
-
-            tag["FannyReadThroughDogDialogue"] = ReadAllDogTips;
-        }
-
-        public override void LoadWorldData(TagCompound tag)
-        {
-            //Debug konami code to prevent loading
-            if (Main.mouseRight && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
-            {
-                SoundEngine.PlaySound(SoundID.Cockatiel);
-                SoundEngine.PlaySound(SoundID.DD2_GoblinScream);
-                SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion);
-                return;
-            }
-
-            for (int i = 0; i < fannyMessages.Count; i++)
-            {
-                FannyMessage msg = fannyMessages[i];
-                if (tag.ContainsKey("FannyDialogue" + msg.Identifier))
-                    msg.alreadySeen = true;
-            }
-
-            if (tag.TryGet<bool>("FannyReadThroughDogDialogue", out bool readDog))
-                ReadAllDogTips = readDog;
         }
         #endregion
     }
