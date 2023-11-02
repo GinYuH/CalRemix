@@ -160,6 +160,8 @@ namespace CalRemix.UI
         {
             tickle = Math.Max(tickle, 0) + 1;
             SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
+
+            FannyManager.LoadWonderFlowerMessages();
         }
 
         public override void Update(GameTime gameTime)
@@ -372,12 +374,15 @@ namespace CalRemix.UI
     {
         public static Fanny FannyTheFire = new Fanny();
         public static Fanny EvilFanny = new Fanny();
+        public static Fanny WonderFlower = new Fanny();
 
         public override void OnInitialize()
         {
             LoadFanny(FannyTheFire, "Thank you for the help, Fanny!", false, true, SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, "Idle");
             LoadFanny(EvilFanny, "Get away, Evil Fanny!", true, false, SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, "EvilIdle", distanceFromEdge: 120,
                 textboxPalette: new FannyTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato));
+            LoadFanny(WonderFlower, "Oooh! So exciting!", false, false, FannyManager.WonderFannyVoice, "TalkingFlower", verticalOffset: 0.3f, distanceFromEdge: 240,
+               textboxPalette: new FannyTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f));
         }
 
         public Fanny LoadFanny(Fanny fanny, string hoverText, bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f, FannyTextboxPalette? textboxPalette = null)
@@ -476,6 +481,7 @@ namespace CalRemix.UI
             LoadGeneralFannyMessages();
             LoadDogSpamMessages();
             LoadLoreComments();
+            LoadWonderFlowerMessages();
         }
 
 
@@ -488,6 +494,8 @@ namespace CalRemix.UI
             FannyPortrait.LoadPortrait("Nuhuh", 19);
 
             FannyPortrait.LoadPortrait("EvilIdle", 1);
+
+            LoadWonderFlowerPortraits();
         }
 
         /// <summary>
@@ -884,12 +892,12 @@ namespace CalRemix.UI
         {
 
             FannyMessage introLore = new FannyMessage("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
-                "Idle", (FannySceneMetrics scene) => Main.hardMode, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(5);
+                "Idle", (FannySceneMetrics scene) => Main.hardMode, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true).AddDelay(5);
 
             fannyMessages.Add(introLore);
 
             FannyMessage introEvilLore = new FannyMessage("IntroducingEvilFanny2", "'Sup",
-                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
                 .NeedsActivation(4f).SpokenByEvilFanny();
 
             introLore.AddStartEvent(() => introEvilLore.ActivateMessage());
@@ -897,14 +905,14 @@ namespace CalRemix.UI
             fannyMessages.Add(introEvilLore);
 
             FannyMessage introLore2 = new FannyMessage("IntroducingEvilFanny3", "E-evil Fanny!? I thought you moved away to the Yukon!",
-                "Sob", FannyMessage.AlwaysShow, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+                "Sob", FannyMessage.AlwaysShow, 8, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
                 .NeedsActivation();
             introLore.AddEndEvent(() => introLore2.ActivateMessage());
 
             fannyMessages.Add(introLore2);
 
             FannyMessage introEvilLore2 = new FannyMessage("IntroducingEvilFanny4", "Yeah. Got cold.",
-               "EvilIdle", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+               "EvilIdle", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
                .NeedsActivation().SpokenByEvilFanny();
 
             introEvilLore.AddEndEvent(() => introEvilLore2.ActivateMessage());
@@ -912,7 +920,7 @@ namespace CalRemix.UI
             fannyMessages.Add(introEvilLore2);
 
             FannyMessage introLore3 = new FannyMessage("IntroducingEvilFanny5", Main.LocalPlayer.name + ", it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
-               "Idle", FannyMessage.AlwaysShow, 8, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false)
+               "Idle", FannyMessage.AlwaysShow, 8, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: true)
                .NeedsActivation();
 
             introLore2.AddEndEvent(() => introLore3.ActivateMessage());
@@ -1337,6 +1345,7 @@ namespace CalRemix.UI
 
         public FannyTextboxPalette? paletteOverride = null;
         public string hoverTextOverride = "";
+        public SoundStyle? voiceOverride = null;
 
         public delegate string DynamicFannyTextSegment();
         public static string GetPlayerName() => Main.LocalPlayer.name;
@@ -1405,6 +1414,12 @@ namespace CalRemix.UI
         public FannyMessage SetHoverTextOverride(string hoverTextOverride)
         {
             this.hoverTextOverride = hoverTextOverride;
+            return this;
+        }
+
+        public FannyMessage SetSoundOverride(SoundStyle soundStyleOverride)
+        {
+            this.voiceOverride = soundStyleOverride;
             return this;
         }
 
@@ -1522,7 +1537,7 @@ namespace CalRemix.UI
 
             speakingFanny.needsToShake = true;
             SoundEngine.PlaySound(SoundID.MenuOpen);
-            SoundEngine.PlaySound(speakingFanny.speakingSound);
+            SoundEngine.PlaySound(voiceOverride ?? speakingFanny.speakingSound);
             OnStart?.Invoke();
         }
 
