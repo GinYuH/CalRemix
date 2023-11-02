@@ -473,6 +473,7 @@ namespace CalRemix.UI
 
         public bool readTroughFannyDogDialogue = false;
 
+
         public override void SaveData(TagCompound tag)
         {
             for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
@@ -507,6 +508,18 @@ namespace CalRemix.UI
                 SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion);
                 return;
             }
+
+            if (readMessages is null || readMessages.Length < FannyManager.fannyMessages.Count)
+            {
+
+                for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
+                {
+                    FannyMessage msg = FannyManager.fannyMessages[i];
+                    msg.alreadySeen = false;
+                }
+                return;
+            }
+
 
             for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
             {
@@ -1003,7 +1016,7 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 300, onlyPlayOnce: false).SetHoverTextOverride("Thanks Fanny! I'll heal."));
 
             fannyMessages.Add(new FannyMessage("Invisible", "Where did you go?",
-                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax, onlyPlayOnce: true).SetHoverTextOverride("I'm still here Fanny!"));
+                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || (Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax && Main.LocalPlayer.Calamity().rogueStealthMax > 0), onlyPlayOnce: true).SetHoverTextOverride("I'm still here Fanny!"));
 
             #endregion      
 
