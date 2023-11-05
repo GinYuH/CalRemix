@@ -574,7 +574,11 @@ namespace CalRemix
                     npc.StrikeInstantKill();
                     for (int i = 0; i < 30; i++)
                     {
-                        Dust.NewDust(npc.position, npc.width, npc.height, DustID.CorruptionThorns);
+                        Dust d = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, DustID.CorruptionThorns, Scale: Main.rand.NextFloat(2f, 4f))];
+                        d.noGravity = true;
+                        Vector2 vel = d.position - npc.Center;
+                        vel.SafeNormalize(Vector2.Zero);
+                        d.velocity = vel * Main.rand.NextFloat(0.1f, 0.3f);
                     }
                     if (npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.SpawnedFromStatue && npc.damage > 0)
                     {

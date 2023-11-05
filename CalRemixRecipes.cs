@@ -18,6 +18,7 @@ using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Accessories.Wings;
+using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.SummonItems;
@@ -40,6 +41,7 @@ using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Items.Tools.ClimateChange;
 using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Armor.Silva;
+using CalamityMod.Items.Armor.Fearmonger;
 
 namespace CalRemix
 {
@@ -258,6 +260,18 @@ namespace CalRemix
                     recipe.DisableRecipe();
                 }
                 if (recipe.HasResult(ModContent.ItemType<GalacticaSingularity>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<FearmongerGreathelm>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<FearmongerPlateMail>()))
+                {
+                    recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ModContent.ItemType<FearmongerGreaves>()))
                 {
                     recipe.DisableRecipe();
                 }
