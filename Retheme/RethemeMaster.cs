@@ -56,6 +56,7 @@ using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.CalPlayer;
 using CalamityMod.NPCs;
 using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.Items.Armor.Fearmonger;
 
 namespace CalRemix.Retheme
 {
@@ -786,6 +787,44 @@ namespace CalRemix.Retheme
             {
                 tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
                 tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
+            }
+            if (item.type == ItemType<FearmongerGreathelm>())
+            {
+                tooltips.FindAndReplace("+60 max mana and ", "");
+                tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
+                for (int i = 0; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Text.Contains("Pumpkin"))
+                    {
+                        tooltips.RemoveAt(i);
+                        break;
+                    }
+                }
+                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+            }
+            if (item.type == ItemType<FearmongerPlateMail>())
+            {
+                tooltips.FindAndReplace("+100 max life and ", "");
+                for (int i = 0; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Text.Contains("Pumpkin"))
+                    {
+                        tooltips.RemoveAt(i);
+                    }
+                }
+                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+            }
+            if (item.type == ItemType<FearmongerGreaves>())
+            {
+                for (int i = 0; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Text.Contains("Pumpkin"))
+                    {
+                        tooltips.RemoveAt(i);
+                        break;
+                    }
+                }
+                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
             }
             if (Torch.Contains(item.type))
             {

@@ -61,6 +61,7 @@ namespace CalRemix
         public static bool generatedCosmiliteSlag = false;
         public static bool generatedPlague = false;
         public static bool generatedStrain = false;
+        public static bool grime = false;
 
         public static int transmogrifyingItem = -1;
         public static int transmogrifyingItemAmt = 0;
@@ -97,6 +98,8 @@ namespace CalRemix
             generatedCosmiliteSlag = false;
             generatedPlague = false;
             generatedStrain = false;
+            grime = false;
+            
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -129,6 +132,7 @@ namespace CalRemix
             tag["genSlag"] = generatedCosmiliteSlag;
             tag["plague"] = generatedPlague;
             tag["astrain"] = generatedStrain;
+            tag["grime"] = grime;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -146,6 +150,7 @@ namespace CalRemix
             generatedCosmiliteSlag = tag.Get<bool>("genSlag");
             generatedPlague = tag.Get<bool>("plague");
             generatedStrain = tag.Get<bool>("astrain");
+            grime = tag.Get<bool>("grime");
 
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
@@ -163,6 +168,7 @@ namespace CalRemix
             writer.Write(generatedCosmiliteSlag);
             writer.Write(generatedPlague);
             writer.Write(generatedStrain);
+            writer.Write(grime);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -180,6 +186,7 @@ namespace CalRemix
             generatedCosmiliteSlag = reader.ReadBoolean();
             generatedPlague = reader.ReadBoolean();
             generatedStrain = reader.ReadBoolean();
+            grime = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();

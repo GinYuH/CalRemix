@@ -33,6 +33,12 @@ using CalRemix.Items;
 using CalRemix.Projectiles.Accessories;
 using CalRemix.Retheme;
 using Terraria.Audio;
+using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Buffs.StatDebuffs;
+using CalRemix.Tiles;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.HiveMind;
+using CalRemix.Items.Placeables;
 
 namespace CalRemix
 {
@@ -74,6 +80,24 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<TitanFinger>();
+            }
+            else if (item.type == ModContent.ItemType<FearmongerGreathelm>())
+            {
+                item.defense = 2;
+                item.value = Item.sellPrice(silver: 15);
+                item.rare = ItemRarityID.Blue;
+            }
+            else if (item.type == ModContent.ItemType<FearmongerPlateMail>())
+            {
+                item.defense = 8;
+                item.value = Item.sellPrice(silver: 12);
+                item.rare = ItemRarityID.Blue;
+            }
+            else if (item.type == ModContent.ItemType<FearmongerGreaves>())
+            {
+                item.defense = 6;
+                item.value = Item.sellPrice(silver: 9);
+                item.rare = ItemRarityID.Blue;
             }
         }
 
@@ -298,6 +322,43 @@ namespace CalRemix
             {
                 item.active = false;
             }*/
+            if (item.type == ItemID.ShadowScale || item.type == ItemID.TissueSample)
+            {
+                if (!CalamityPlayer.areThereAnyDamnBosses)
+                {
+
+                    if (Main.tile[(int)item.Bottom.X / 16, (int)item.Bottom.Y / 16].TileType == ModContent.TileType<GrimesandPlaced>())
+                    {
+                        if (item.type == ItemID.ShadowScale)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                                int n = NPC.NewNPC(item.GetSource_Death(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<HiveMind>());
+                                NPC blug = Main.npc[n];
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    Dust.NewDust(blug.position, blug.width, blug.height, DustID.Corruption);
+                                }
+                            }
+                        }
+                        else if (item.type == ItemID.TissueSample)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                                int n = NPC.NewNPC(item.GetSource_Death(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<PerforatorHive>());
+                                NPC blug = Main.npc[n];
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    Dust.NewDust(blug.position, blug.width, blug.height, DustID.Blood);
+                                }
+                            }
+                        }
+                        item.active = false;
+                    }
+                }
+            }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -360,6 +421,10 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<CrocodileScale>(), 1, 20, 30);
             }
+            else if (item.type == ItemID.CorruptFishingCrate || item.type == ItemID.CorruptFishingCrateHard)
+            {
+                itemLoot.Add(ModContent.ItemType<Grimesand>(), 1, 10, 30);
+            }
             /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
@@ -369,6 +434,25 @@ namespace CalRemix
 
 
 
+        public override void UpdateEquip(Item item, Player player)
+        {
+            if (item.type == ModContent.ItemType<FearmongerGreathelm>())
+            {
+                player.statManaMax2 -= 60;
+            }
+            if (item.type == ModContent.ItemType<FearmongerPlateMail>())
+            {
+                player.statLifeMax2 -= 100;
+            }
+            if (item.type == ModContent.ItemType<FearmongerGreaves>())
+            {
+                player.panic = false;
+            }
+        }
+
+        public override void UpdateArmorSet(Player player, string sns)
+        {
+        }
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {

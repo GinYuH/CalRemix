@@ -1328,6 +1328,8 @@ Mods: {
 					No seriously, this block is completely unbreakable! Place with caution!
 					'''
 			}
+
+			Grimesand.DisplayName: Grimesand
 		}
 
 		NPCs: {
@@ -1513,6 +1515,7 @@ Mods: {
 			MiracleFruitPlaced.MapEntry: Miracle Froota
 			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
 			MeldGunkPlaced.MapEntry: Meld Gunk Placed
+			GrimesandPlaced.MapEntry: Grimesand Placed
 		}
 
 		Enchantments: {
@@ -1523,5 +1526,19 @@ Mods: {
 		}
 
 		Keybinds.Baroclaw.DisplayName: Baroclaw
+
+		Configs: {
+			DisplayName: Calamity Community Remix Config
+
+			CalRemixConfig: {
+				Headers.CalRemixHeader: Calamity Community Remix
+
+				FannyToggle: {
+					Header: Fanny
+					Label: Toggle Fanny
+					Tooltip: Enables/disables Fanny.
+				}
+			}
+		}
 	}
 }

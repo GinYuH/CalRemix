@@ -30,6 +30,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Items;
 using CalRemix.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.Buffs.StatDebuffs;
 
 namespace CalRemix
 {
@@ -528,7 +529,49 @@ namespace CalRemix
 
 					target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 1200);
 				}
-			}
+            }
+
+            if (Player.Calamity().fearmongerSet)
+            {
+				if (Main.snowMoon || Main.pumpkinMoon)
+				{
+					Player.endurance *= 0.85f;
+				}
+                Player.Calamity().wearingRogueArmor = false;
+                Player.Calamity().WearingPostMLSummonerSet = false;
+                Player.maxMinions -= 1;
+                if (Player.slotsMinions > 0)
+                {
+                    Player.GetDamage<MeleeDamageClass>() *= 0.75f;
+                    Player.GetDamage<RangedDamageClass>() *= 0.75f;
+                    Player.GetDamage<MagicDamageClass>() *= 0.75f;
+                    Player.GetDamage<RogueDamageClass>() *= 0.75f;
+                    Player.GetDamage<TrueMeleeDamageClass>() *= 0.75f;
+                    Player.GetDamage<TrueMeleeNoSpeedDamageClass>() *= 0.75f;
+                    Player.GetDamage<TrueMeleeDamageClass>() *= 0.75f;
+                }
+                Player.GetDamage<SummonDamageClass>() -= 0.2f;
+                Player.lifeRegen = (int)MathHelper.Min(Player.lifeRegen, 2);
+                int[] immuneDebuffs = {
+                BuffID.OnFire,
+                BuffID.Frostburn,
+                BuffID.CursedInferno,
+                BuffID.ShadowFlame, //doesn't do anything
+                BuffID.Daybreak, //doesn't do anything
+                BuffID.Burning,
+                ModContent.BuffType<Shadowflame>(),
+                ModContent.BuffType<BrimstoneFlames>(),
+                ModContent.BuffType<HolyFlames>(),
+                ModContent.BuffType<GodSlayerInferno>(),
+                BuffID.Chilled,
+                BuffID.Frozen,
+                ModContent.BuffType<GlacialState>(),
+            };
+                for (var i = 0; i < immuneDebuffs.Length; ++i)
+                    Player.buffImmune[immuneDebuffs[i]] = false;
+                if (Player.yoraiz0rEye == 0)
+                    Player.yoraiz0rEye = 3;
+            }
             #region stealth cuts
             if (tvo) //Verboten one
 			{

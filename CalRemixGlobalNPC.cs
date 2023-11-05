@@ -59,6 +59,8 @@ using CalRemix.Retheme;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.NPCs.Other;
 using CalamityMod.NPCs.HiveMind;
+using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.Items.Armor.Fearmonger;
 
 namespace CalRemix
 {
@@ -561,6 +563,32 @@ namespace CalRemix
                                 n.StrikeInstantKill();
                                 npc.StrikeInstantKill();
                             }
+                        }
+                    }
+                }
+            }
+            if (!CalamityPlayer.areThereAnyDamnBosses)
+            {
+                if (Main.tile[(int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16].TileType == ModContent.TileType<GrimesandPlaced>())
+                {
+                    npc.StrikeInstantKill();
+                    for (int i = 0; i < 30; i++)
+                    {
+                        Dust.NewDust(npc.position, npc.width, npc.height, DustID.CorruptionThorns);
+                    }
+                    if (npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.SpawnedFromStatue && npc.damage > 0)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreathelm>());
+                        }
+                        if (Main.rand.NextBool(10))
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreaves>());
+                        }
+                        if (Main.rand.NextBool(10))
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerPlateMail>());
                         }
                     }
                 }
