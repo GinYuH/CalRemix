@@ -61,6 +61,9 @@ using CalamityMod.NPCs.Other;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Items.Armor.Fearmonger;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using CalamityMod.NPCs.Perforator;
 
 namespace CalRemix
 {
@@ -569,30 +572,33 @@ namespace CalRemix
             }
             if (!CalamityPlayer.areThereAnyDamnBosses)
             {
-                if (Main.tile[(int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16].TileType == ModContent.TileType<GrimesandPlaced>())
+                if (!NPCID.Sets.BossBestiaryPriority.Contains(npc.type) || npc.Calamity().CanHaveBossHealthBar)
                 {
-                    npc.StrikeInstantKill();
-                    for (int i = 0; i < 30; i++)
+                    if (Main.tile[(int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16].TileType == ModContent.TileType<GrimesandPlaced>())
                     {
-                        Dust d = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, DustID.CorruptionThorns, Scale: Main.rand.NextFloat(2f, 4f))];
-                        d.noGravity = true;
-                        Vector2 vel = d.position - npc.Center;
-                        vel.SafeNormalize(Vector2.Zero);
-                        d.velocity = vel * Main.rand.NextFloat(0.1f, 0.3f);
-                    }
-                    if (npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.SpawnedFromStatue && npc.damage > 0)
-                    {
-                        if (Main.rand.NextBool(10))
+                        npc.StrikeInstantKill();
+                        for (int i = 0; i < 30; i++)
                         {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreathelm>());
+                            Dust d = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, DustID.CorruptionThorns, Scale: Main.rand.NextFloat(2f, 4f))];
+                            d.noGravity = true;
+                            Vector2 vel = d.position - npc.Center;
+                            vel.SafeNormalize(Vector2.Zero);
+                            d.velocity = vel * Main.rand.NextFloat(0.1f, 0.3f);
                         }
-                        if (Main.rand.NextBool(10))
+                        if (npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.SpawnedFromStatue && npc.damage > 0 && !npc.friendly)
                         {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreaves>());
-                        }
-                        if (Main.rand.NextBool(10))
-                        {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerPlateMail>());
+                            if (Main.rand.NextBool(10))
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreathelm>());
+                            }
+                            if (Main.rand.NextBool(10))
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreaves>());
+                            }
+                            if (Main.rand.NextBool(10))
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerPlateMail>());
+                            }
                         }
                     }
                 }
