@@ -318,7 +318,7 @@ namespace CalRemix
             {
                 if (type == TileID.ShadowOrbs)
                 {
-                        CalamityMod.CalamityUtils.SpawnOre(ModContent.TileType<GrimesandPlaced>(), 6E-05, 0, 0.2f, 5, 10, TileID.Dirt);
+                        CalamityMod.CalamityUtils.SpawnOre(ModContent.TileType<GrimesandPlaced>(), 6E-05, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt);
                         Main.NewText("The sky islands pollute with grime...", Color.Brown);
                         CalRemixWorld.grime = true;
                         CalRemixWorld.UpdateWorldBool();
