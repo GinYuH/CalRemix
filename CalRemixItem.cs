@@ -334,7 +334,7 @@ namespace CalRemix
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
-                                int n = NPC.NewNPC(item.GetSource_Death(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<HiveMind>());
+                                int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<HiveMind>());
                                 NPC blug = Main.npc[n];
                                 for (int i = 0; i < 30; i++)
                                 {

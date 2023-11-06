@@ -31,6 +31,7 @@ namespace CalRemix
         public static FannyMessage roxm;
         public static FannyMessage KinsmanMessage;
         public static FannyMessage MineMessage;
+        public static FannyMessage GrimeMessage;
 
         public override void SetStaticDefaults()
         {
@@ -42,9 +43,12 @@ namespace CalRemix
                 FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
             MineMessage = new FannyMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "Nuhuh",
                 (FannySceneMetrics metrics) => ModLoader.HasMod("OreExcavator"), onlyPlayOnce: true).NeedsActivation().SetHoverTextOverride(Main.rand.NextBool(100) ? "Sure Fanny, I'll be a real gangsta thug and do that right now homeboy." : "Sure Fanny, I'll do that right now!");
+            GrimeMessage = new FannyMessage("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "Nuhuh",
+                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
             FannyManager.LoadFannyMessage(roxm);
             FannyManager.LoadFannyMessage(KinsmanMessage);
             FannyManager.LoadFannyMessage(MineMessage);
+            FannyManager.LoadFannyMessage(GrimeMessage);
         }
 
 
@@ -293,6 +297,13 @@ namespace CalRemix
                         KinsmanMessage.ActivateMessage();
                 }
             }
+            if (!GrimeMessage.alreadySeen)
+            {
+                if (type == ModContent.TileType<GrimesandPlaced>())
+                {
+                    GrimeMessage.ActivateMessage();
+                }
+            }
             if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
             {
                 Main.tile[i, j].TileType = (ushort)TileID.Mud;
@@ -318,7 +329,7 @@ namespace CalRemix
             {
                 if (type == TileID.ShadowOrbs)
                 {
-                        CalamityMod.CalamityUtils.SpawnOre(ModContent.TileType<GrimesandPlaced>(), 6E-05, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt);
+                        CalamityMod.CalamityUtils.SpawnOre(ModContent.TileType<GrimesandPlaced>(), 6E-05, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
                         Main.NewText("The sky islands pollute with grime...", Color.Brown);
                         CalRemixWorld.grime = true;
                         CalRemixWorld.UpdateWorldBool();

@@ -1,4 +1,11 @@
 Mods: {
+	CalamityMod: {
+		BossChecklistIntegration: {
+			HiveMind.SpawnInfo: Drop a [i:86] on Grimesand found in floating islands after breaking a shadow orb or use a [i:CalamityMod/Teratoma] in the Corruption.
+			Perforators.SpawnInfo: Drop a [i:1329] on Grimesand found in floating islands after breaking a crimson heart or use a [i:CalamityMod/BloodyWormFood] in the Crimson.
+		}
+	}
+
 	CalRemix: {
 		TownNPCMood: {
 			Celestial: {
@@ -1542,3 +1549,5 @@ Mods: {
 		}
 	}
 }
+
+HiveMind.SpawnInfo: Drop a Shadow Scale on some Grimesand or use a [i:CalamityMod/Teratoma] in the Corruption.

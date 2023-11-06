@@ -64,6 +64,10 @@ using CalamityMod.Items.Armor.Fearmonger;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using CalamityMod.NPCs.Perforator;
+using log4net.Repository.Hierarchy;
+using MonoMod.Utils;
+using Terraria.DataStructures;
+using CalRemix.UI;
 
 namespace CalRemix
 {
@@ -84,10 +88,11 @@ namespace CalRemix
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
+        public static FannyMessage CystMessage;
         public override bool InstancePerEntity => true;
 
-        public List<int> BossSlimes = new List<int> 
-        { 
+        public List<int> BossSlimes = new List<int>
+        {
             NPCID.KingSlime,
             NPCID.QueenSlimeBoss,
             ModContent.NPCType<AstrumAureus>(),
@@ -127,7 +132,21 @@ namespace CalRemix
         {
             hiveHead = Mod.AddBossHeadTexture("CalRemix/Retheme/HiveMind/Map", -1);
             LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
+            //IL.CalamityMod.NPCs.Perforator.PerforatorCyst.HitEffect += KillPerfCyst;
+            //IL.CalamityMod.NPCs.HiveMind.HiveTumor.HitEffect += HiveCystDeath;
+            Terraria.On_NPC.NewNPC += KillHiveMind;
         }
+
+        public override void SetStaticDefaults()
+        {
+            if (!Main.dedServ)
+            {
+                CystMessage = new FannyMessage("CystDeath", "See!", "",
+                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+                FannyManager.LoadFannyMessage(CystMessage);
+            }
+        }
+
         public override void BossHeadSlot(NPC npc, ref int index)
         {
             int slot = hiveHead;
@@ -279,7 +298,7 @@ namespace CalRemix
                         Rectangle theirrect = target.getRect();
                         if (target.immune[npc.whoAmI] == 0 && thisrect.Intersects(theirrect) && target.whoAmI != npc.whoAmI && npc.active && target.active && !target.dontTakeDamage && !Slimes.Contains(target.type) && !bossSlime)
                         {
-                            target.StrikeNPC(target.CalculateHitInfo(npc.damage,  0));
+                            target.StrikeNPC(target.CalculateHitInfo(npc.damage, 0));
                             target.immune[npc.whoAmI] = 10;
                             if (target.damage > 0)
                                 npc.StrikeNPC(npc.CalculateHitInfo(target.damage, 0));
@@ -616,7 +635,7 @@ namespace CalRemix
                 npc.position.X = MathHelper.Lerp(npc.position.X, clawPosition.X - npc.width / 2, 0.1f);
                 npc.position.Y = MathHelper.Lerp(npc.position.Y, clawPosition.Y - npc.height / 2, 0.1f);
                 npc.velocity = Vector2.Zero;
-                    npc.position += new Vector2(Main.rand.NextFloat(-1f, 2f), Main.rand.NextFloat(-1f, 2f));
+                npc.position += new Vector2(Main.rand.NextFloat(-1f, 2f), Main.rand.NextFloat(-1f, 2f));
                 npc.frameCounter += 2;
             }
         }
@@ -848,6 +867,14 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => DownedBossSystem.downedCalamitas && DownedBossSystem.downedExoMechs, ModContent.ItemType<NO>(), 10, 1, 1, ui: false);
             }
+            else if (npc.type == ModContent.NPCType<HiveTumor>())
+            {
+                npcLoot.Add(ItemID.DemoniteOre, 1, 10, 26);
+            }
+            else if (npc.type == ModContent.NPCType<PerforatorCyst>())
+            {
+                npcLoot.Add(ItemID.CrimtaneOre, 1, 10, 26);
+            }
         }
         public override void OnKill(NPC npc)
         {
@@ -871,6 +898,13 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<Horse>())
                 CalRemixWorld.downedEarth = true;
+            if (!CystMessage.alreadySeen)
+            {
+                if (npc.type == ModContent.NPCType<PerforatorCyst>() || npc.type == ModContent.NPCType<HiveTumor>())
+                {
+                    CystMessage.ActivateMessage();
+                }
+            }
         }
 
         public override void LoadData(NPC npc, TagCompound tag)
@@ -927,7 +961,7 @@ namespace CalRemix
                 yharRage = binaryReader.ReadBoolean();
             if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
                 if (BossSlimes.Contains(npc.type) || Slimes.Contains(npc.type))
-                npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = binaryReader.ReadBoolean();
+                    npc.GetGlobalNPC<CalRemixGlobalNPC>().SlimeBoost = binaryReader.ReadBoolean();
         }
         public override bool PreKill(NPC npc)
         {
@@ -1013,5 +1047,52 @@ namespace CalRemix
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(text, color);
         }
+
+        public static void HiveCystDeath(ILContext il)
+        {
+            var c = new ILCursor(il);
+            int id = ModContent.NPCType<HiveMind>();
+            if (!c.TryGotoNext(i => i.MatchLdcI4(id)))
+            {
+                CalamityMod.ILEditing.ILChanges.LogFailure("Hive mind", id + " was not found...");
+                return;
+            }
+
+            c.Index++;
+            c.Emit(OpCodes.Pop);
+            c.Emit(OpCodes.Ldc_I4, 0);
+        }
+
+        private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
+        {
+            if (spawnSource is EntitySource_Death)
+            {
+                if (type == ModContent.NPCType<HiveMind>())
+                {
+                    if (!(Main.zenithWorld && NPC.AnyNPCs(ModContent.NPCType<HiveMind>())))
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
+                    }
+                }
+                else if (type == ModContent.NPCType<PerforatorHive>())
+                {
+                    return 0;
+                }
+                else
+                {
+                    return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
+                }
+            }
+            else
+            {
+                return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
+            }
+        }
+
+        public static int HiveID() => ModContent.NPCType<HiveMind>();
     }
 }
