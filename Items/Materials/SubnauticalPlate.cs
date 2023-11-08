@@ -20,7 +20,7 @@ namespace CalRemix.Items.Materials
 		{
             Item.rare = ModContent.RarityType<Violet>();
             Item.value = CalamityGlobalItem.Rarity15BuyPrice;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
         public override void PostUpdate()
         {

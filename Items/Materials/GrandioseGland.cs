@@ -16,7 +16,7 @@ namespace CalRemix.Items.Materials
         {
             Item.rare = ItemRarityID.LightPurple;
             Item.sellPrice(silver: 80);
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
     }
 }

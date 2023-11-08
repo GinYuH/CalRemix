@@ -18,7 +18,7 @@ namespace CalRemix.Items
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 10;
             Item.useAnimation = 15;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.makeNPC = (short)ModContent.NPCType<NPCs.PlaguedFirefly>();
         }
     }

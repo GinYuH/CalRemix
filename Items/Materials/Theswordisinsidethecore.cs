@@ -17,7 +17,7 @@ namespace CalRemix.Items.Materials
         {
             Item.rare = ItemRarityID.LightPurple;
             Item.sellPrice(silver: 20);
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
         public override void AddRecipes()
         {

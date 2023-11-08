@@ -17,7 +17,7 @@ namespace CalRemix.Items.Materials
 		{
             Item.rare = ItemRarityID.Pink;
             Item.value = CalamityGlobalItem.Rarity5BuyPrice;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
     	}
 	}
 }

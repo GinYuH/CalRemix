@@ -20,7 +20,7 @@ namespace CalRemix.Items.Materials
 		{
             Item.rare = ModContent.RarityType<DarkBlue>();
             Item.value = CalamityGlobalItem.Rarity14BuyPrice;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
     	}
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {

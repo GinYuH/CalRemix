@@ -22,7 +22,7 @@ namespace CalRemix.Items.Placeables
             Item.useAnimation = 14;
             Item.useTime = 10;
             Item.autoReuse = true;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<GrimesandPlaced>();
             Item.width = 12;

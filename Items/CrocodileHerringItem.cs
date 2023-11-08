@@ -18,7 +18,7 @@ namespace CalRemix.Items
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 10;
             Item.useAnimation = 15;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Lime;
             Item.value = Terraria.Item.sellPrice(gold: 6);
             Item.bait = 20;

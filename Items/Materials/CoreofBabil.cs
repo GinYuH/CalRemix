@@ -24,7 +24,7 @@ namespace CalRemix.Items.Materials
 		{
             Item.rare = ItemRarityID.Yellow;
             Item.value = CalamityGlobalItem.Rarity8BuyPrice;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
             Item.width = Item.height = 32;
         }
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)

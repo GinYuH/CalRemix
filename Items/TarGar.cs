@@ -5,17 +5,16 @@ using Terraria.GameContent.Creative;
 using CalRemix.Items.Materials;
 using CalamityMod.Rarities;
 using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.Items.Materials;
 
 namespace CalRemix.Items
 {
-    public class FrontGar : ModItem
+    public class TarGar : ModItem
     {
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Front Gar");
-            Tooltip.SetDefault("Right click to extract reaper teeth");
+            DisplayName.SetDefault("Tar Gar");
+            Tooltip.SetDefault("Right click to extract slime rain");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 
@@ -25,17 +24,16 @@ namespace CalRemix.Items
             Item.consumable = true;
             Item.width = 24;
             Item.height = 24;
-            Item.rare = ModContent.RarityType<PureGreen>();
-            Item.value = Item.sellPrice(gold: 2);
+            Item.rare = ModContent.RarityType<Violet>();
         }
 
         public override bool CanRightClick()
         {
-            return true;
+            return !Main.slimeRain;
         }
         public override void RightClick(Player player)
         {
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ReaperTooth>(), Main.rand.Next(5, 16));
+            Main.StartSlimeRain();
         }
     }
 }

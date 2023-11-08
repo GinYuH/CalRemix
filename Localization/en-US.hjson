@@ -1344,6 +1344,11 @@ Mods: {
 				DisplayName: Worm Meal
 				Tooltip: "'Surely my summons will eat this.. right?'"
 			}
+
+			TarGar: {
+				DisplayName: Tar Gar
+				Tooltip: Right click to extract slime rain
+			}
 		}
 
 		NPCs: {

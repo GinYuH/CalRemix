@@ -752,6 +752,10 @@ namespace CalRemix
             {
                 itemDrop = ModContent.ItemType<FrontGar>();
             }
+            if (inWater && (Player.ZoneCrimson || Player.ZoneCorrupt) && !Main.dayTime && attempt.common && Main.rand.NextBool(10))
+            {
+                itemDrop = ModContent.ItemType<TarGar>();
+            }
         }
         public void SpawnPhantomHeart()
         {
