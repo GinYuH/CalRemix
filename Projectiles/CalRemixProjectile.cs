@@ -319,6 +319,13 @@ namespace CalRemix
 					target.AddBuff(BuffType<GlacialState>(), 60);
 				}
             }
+            if (modPlayer.wormMeal && projectile.DamageType == DamageClass.Summon)
+            {
+                if (Main.rand.NextBool(20))
+                {
+                    target.AddBuff(BuffID.Confused, 480);
+                }
+            }
 		}
 
 		public override void OnKill(Projectile projectile, int timeLeft)

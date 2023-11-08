@@ -1337,6 +1337,13 @@ Mods: {
 			}
 
 			Grimesand.DisplayName: Grimesand
+			GulletWorm.DisplayName: Gullet Worm
+			GulletWormCage.DisplayName: Gullet Worm Cage
+
+			WormMeal: {
+				DisplayName: Worm Meal
+				Tooltip: "'Surely my summons will eat this.. right?'"
+			}
 		}
 
 		NPCs: {

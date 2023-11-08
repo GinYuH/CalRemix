@@ -31,6 +31,7 @@ using CalRemix.Items;
 using CalRemix.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Buffs.StatDebuffs;
+using System.Security.Policy;
 
 namespace CalRemix
 {
@@ -62,6 +63,7 @@ namespace CalRemix
 		public bool cursed;
 		public bool cart;
 		public bool tvohide;
+		public bool wormMeal;
         public bool dreamingGhost;
         public bool statue;
         public bool mackerel;
@@ -632,6 +634,7 @@ namespace CalRemix
 			astralEye = false;
 			flamingIce = false;
 			bananaClown = false;
+			wormMeal = false;
             if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)

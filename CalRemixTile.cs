@@ -335,6 +335,19 @@ namespace CalRemix
                         CalRemixWorld.UpdateWorldBool();
                 }
             }
+            if (type == TileID.LargePiles2)
+            {
+                if (Main.bloodMoon)
+                {
+                    if ((Main.LocalPlayer.ZonePurity && Main.LocalPlayer.position.Y >= Main.worldSurface + 30) || Main.LocalPlayer.ZoneJungle) // i'm too lazy to get all the tile frames
+                    {
+                        if (Main.netMode != NetmodeID.Server && Main.rand.NextBool(60)) // roughly 10% when considering the piles are 6 tiles in size
+                        {
+                            NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, ModContent.NPCType<GulletWorm>());
+                        }
+                    }
+                }
+            }
         }
     }
 }

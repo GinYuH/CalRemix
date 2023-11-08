@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>..\CalamityMod\bin\Debug\net6.0\CalamityMod.dll</HintPath>
+      <HintPath>..\CalamityMod\obj\Debug\net6.0\CalamityMod.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_CalamityMod">
       <HintPath>bin\Debug\net6.0\MMHOOK_CalamityMod.dll</HintPath>
