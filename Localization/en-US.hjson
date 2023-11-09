@@ -141,7 +141,10 @@ Mods: {
 				Description: You feel ready to face the entire world!
 			}
 
-			GarBoost.DisplayName: Gar Mana Boost
+			GarBoost: {
+				DisplayName: Gar Mana Boost
+				Description: Temporary unlimited mana
+			}
 		}
 
 		Items: {
