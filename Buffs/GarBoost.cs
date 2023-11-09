@@ -8,6 +8,7 @@ namespace CalRemix.Buffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gar Mana Boost");
+            Description.SetDefault("Temporary unlimited mana");
         }
         public override void Update(Player player, ref int buffIndex)
         {

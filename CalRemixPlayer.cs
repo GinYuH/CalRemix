@@ -873,5 +873,14 @@ namespace CalRemix
 				Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
 			}
         }
+
+        public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+        {
+            if (invGar)
+            {
+                SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
+                Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
+            }
+        }
     }
 }
