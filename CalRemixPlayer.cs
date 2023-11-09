@@ -32,6 +32,8 @@ using CalRemix.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Buffs.StatDebuffs;
 using System.Security.Policy;
+using CalRemix.Buffs;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix
 {
@@ -85,6 +87,7 @@ namespace CalRemix
         public bool ZonePlagueDesert;
         public Vector2 clawPosition = Vector2.Zero;
 		public bool bananaClown;
+		public bool invGar;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -635,6 +638,7 @@ namespace CalRemix
 			flamingIce = false;
 			bananaClown = false;
 			wormMeal = false;
+			invGar = false;
             if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)
@@ -756,6 +760,14 @@ namespace CalRemix
             {
                 itemDrop = ModContent.ItemType<TarGar>();
             }
+            if (inWater && Player.Calamity().ZoneAbyss && attempt.rare && Main.rand.NextBool(10))
+            {
+                itemDrop = ModContent.ItemType<ShadowGar>();
+            }
+            if (inWater && Player.Calamity().ZoneAbyssLayer4 && attempt.legendary)
+            {
+                itemDrop = ModContent.ItemType<RipperShark>();
+            }
         }
         public void SpawnPhantomHeart()
         {
@@ -852,5 +864,14 @@ namespace CalRemix
 				drawInfo.DustCache.Add(index);
             }
 		}
-	}
+
+        public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+        {
+            if (invGar)
+			{
+				SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
+				Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
+			}
+        }
+    }
 }

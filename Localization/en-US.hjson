@@ -140,6 +140,8 @@ Mods: {
 				DisplayName: Calamitous Euphoria
 				Description: You feel ready to face the entire world!
 			}
+
+			GarBoost.DisplayName: Gar Mana Boost
 		}
 
 		Items: {
@@ -1348,6 +1350,15 @@ Mods: {
 			TarGar: {
 				DisplayName: Tar Gar
 				Tooltip: Right click to extract slime rain
+			}
+
+			ShadowGar: {
+				DisplayName: Inverted Gar
+				Tooltip:
+					'''
+					Taking damage will temporarily prevent mana from being consumed.
+					Thanks for nothing
+					'''
 			}
 		}
 
