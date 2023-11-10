@@ -132,8 +132,6 @@ namespace CalRemix
         {
             hiveHead = Mod.AddBossHeadTexture("CalRemix/Retheme/HiveMind/Map", -1);
             LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
-            //IL.CalamityMod.NPCs.Perforator.PerforatorCyst.HitEffect += KillPerfCyst;
-            //IL.CalamityMod.NPCs.HiveMind.HiveTumor.HitEffect += HiveCystDeath;
             Terraria.On_NPC.NewNPC += KillHiveMind;
         }
 
@@ -1048,21 +1046,6 @@ namespace CalRemix
                 Main.NewText(text, color);
         }
 
-        public static void HiveCystDeath(ILContext il)
-        {
-            var c = new ILCursor(il);
-            int id = ModContent.NPCType<HiveMind>();
-            if (!c.TryGotoNext(i => i.MatchLdcI4(id)))
-            {
-                CalamityMod.ILEditing.ILChanges.LogFailure("Hive mind", id + " was not found...");
-                return;
-            }
-
-            c.Index++;
-            c.Emit(OpCodes.Pop);
-            c.Emit(OpCodes.Ldc_I4, 0);
-        }
-
         private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
             if (spawnSource is EntitySource_Death)
@@ -1092,7 +1075,5 @@ namespace CalRemix
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
             }
         }
-
-        public static int HiveID() => ModContent.NPCType<HiveMind>();
     }
 }
