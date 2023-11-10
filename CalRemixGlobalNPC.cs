@@ -1035,7 +1035,7 @@ namespace CalRemix
         {
             if (vBurn)
             {
-                modifiers.SourceDamage *= 0.95f;
+                modifiers.SourceDamage *= 1.05f;
             }
         }
         private static void Talk(string text, Color color)
