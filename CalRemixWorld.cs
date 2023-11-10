@@ -42,6 +42,12 @@ using log4net.Core;
 using CalamityMod.Tiles.FurnitureVoid;
 using CalamityMod.Items.SummonItems;
 using CalRemix.Items;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.Items.TreasureBags;
+using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.NPCs.GreatSandShark;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.NPCs.PrimordialWyrm;
 
 namespace CalRemix
 {
@@ -224,8 +230,9 @@ namespace CalRemix
             RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
             RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
             RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+            RemoveLoot(NPCType<DesertScourgeHead>(), ItemType<PearlShard>(), true);
+            RemoveLoot(NPCType<Bumblefuck>(), ItemType<EffulgentFeather>(), true);
             RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
-            //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
         }
         public override void PostUpdateWorld()
         {

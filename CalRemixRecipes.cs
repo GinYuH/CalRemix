@@ -18,7 +18,6 @@ using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Accessories.Wings;
-using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.SummonItems;
@@ -48,7 +47,7 @@ namespace CalRemix
     public class Recipes : ModSystem
     {
         public static RecipeGroup Blinkchid, Daychid, Moonchid, Deathchid, Waterchid, Firechid, Shiverchid;
-        public static RecipeGroup GreaterEvil;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar;
         public override void Unload()
         {
             Blinkchid = null;
@@ -59,6 +58,8 @@ namespace CalRemix
             Firechid = null;
             Shiverchid = null;
             GreaterEvil = null;
+            EvilBar = null;
+            T4Bar = null;
         }
         public override void AddRecipeGroups()
         {
@@ -72,16 +73,20 @@ namespace CalRemix
 
             GreaterEvil = new RecipeGroup(() => "Any Greater Evil Flesh", ModContent.ItemType<RottenMatter>(), ModContent.ItemType<BloodSample>());
             RecipeGroup.RegisterGroup("CalRemix:GreaterEvil", GreaterEvil);
+            EvilBar = new RecipeGroup(() => "Any Evil Bar", ItemID.DemoniteBar, ItemID.CrimtaneBar);
+            RecipeGroup.RegisterGroup("CalRemix:EvilBar", EvilBar);
+            T4Bar = new RecipeGroup(() => "Any Tier 4 Bar", ItemID.GoldBar, ItemID.PlatinumBar);
+            RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
         }
         public override void AddRecipes() 
         {
-            /*{
+            {
                 Recipe feather = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
-                feather.AddIngredient<DesertFeather>(3)
-                .AddIngredient<LifeAlloy>()
+                feather.AddIngredient<DesertFeather>(3);
+                feather.AddIngredient<LifeAlloy>()
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
-            }*/
+            }
             {
                 Recipe alloy = Recipe.Create(ModContent.ItemType<LifeAlloy>());
                 alloy.AddIngredient<LifeOre>(5)
@@ -110,6 +115,15 @@ namespace CalRemix
                 bar.AddIngredient<MinnowsPrimeItem>();
                 bar.AddTile(TileID.CookingPots);
                 bar.Register();
+            }
+            {
+                Recipe halibut = Recipe.Create(ModContent.ItemType<HalibutCannon>());
+                halibut.AddIngredient<FlounderMortar>();
+                halibut.AddIngredient<ReaperTooth>(20);
+                halibut.AddIngredient<Lumenyl>(20);
+                halibut.AddIngredient<SubnauticalPlate>(5)
+                .AddTile<CalamityMod.Tiles.Furniture.CraftingStations.CosmicAnvil>()
+                .Register();
             }
             {
                 Recipe bar = Recipe.Create(ItemID.CookedFish, 1);
@@ -172,13 +186,28 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                /*if (recipe.HasResult(ModContent.ItemType<GrandScale>()))
+                if (recipe.HasIngredient(ModContent.ItemType<GrandScale>()))
                 {
                     recipe.DisableRecipe();
-                }*/
+                }
                 if (recipe.HasResult(ModContent.ItemType<ShadowspecBar>()))
                 {
                     recipe.AddIngredient<SubnauticalPlate>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<AstralChunk>()))
+                {
+                    recipe.RemoveIngredient(ItemID.FallenStar);
+                    recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
+                }
+                if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
+                {
+                    recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
+                    recipe.RemoveIngredient(ItemID.FragmentSolar);
+                    recipe.RemoveTile(TileID.LunarCraftingStation);
+                    recipe.AddRecipeGroup("CalRemix:EvilBar", 15);
+                    recipe.AddRecipeGroup("CalRemix:T4Bar", 10);
+                    recipe.AddIngredient(ItemID.Feather, 7);
+                    recipe.AddTile(TileID.MythrilAnvil);
                 }
                 if (recipe.HasResult(ModContent.ItemType<AcesHigh>()))
                 {
@@ -275,17 +304,6 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
-                {
-                    recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
-                    recipe.RemoveIngredient(ItemID.FragmentSolar);
-                    recipe.RemoveTile(TileID.LunarCraftingStation);
-                    recipe.AddIngredient(ModContent.ItemType<UnholyCore>(), 5);
-                    recipe.AddIngredient(ItemID.SoulofLight, 5);
-                    recipe.AddIngredient(ItemID.SoulofNight, 5);
-                    recipe.AddIngredient(ItemID.PinkPricklyPear);
-                    recipe.AddTile(TileID.MythrilAnvil);
-                }*/
                 #region Accessory edits
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
                 {
@@ -958,10 +976,6 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
                 }
-                if (recipe.HasResult(ModContent.ItemType<AstralChunk>()))
-                {
-                    recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
-                }
                 if (recipe.HasResult(ModContent.ItemType<TrueBiomeBlade>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
@@ -988,10 +1002,6 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
                 }
                 if (recipe.HasResult(ModContent.ItemType<EnhancedNanoRound>()))
-                {
-                    recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
-                }
-                if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<EssentialEssenceBar>(), 40);
                 }

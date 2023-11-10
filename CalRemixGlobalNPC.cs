@@ -68,6 +68,13 @@ using log4net.Repository.Hierarchy;
 using MonoMod.Utils;
 using Terraria.DataStructures;
 using CalRemix.UI;
+using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.NPCs.GreatSandShark;
 
 namespace CalRemix
 {
@@ -509,10 +516,6 @@ namespace CalRemix
             {
                 npc.active = false;
             }
-            /*if (npc.type == ModContent.NPCType<Bumblefuck>() && Main.LocalPlayer.ZoneDesert)
-            {
-                npc.localAI[1] = 0;
-            }*/
             if (npc.type == ModContent.NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;
@@ -647,7 +650,7 @@ namespace CalRemix
         public override void SetDefaults(NPC npc)
         {
             RethemeMaster.RethemeNPCDefaults(npc);
-            /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npc.damage = 80;
                 npc.lifeMax = 58500;
@@ -658,23 +661,11 @@ namespace CalRemix
             {
                 npc.damage = 60;
                 npc.lifeMax = 3375;
-            }*/
+            }
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)
         {
             RethemeMaster.RethemeTypeName(npc, ref typeName);
-            if (npc.type == ModContent.NPCType<WITCH>())
-            {
-                typeName = "Calamity Witch";
-            }
-            else if (npc.type == ModContent.NPCType<BrimstoneElemental>())
-            {
-                typeName = "Calamity Elemental";
-            }
-            else if (npc.type == ModContent.NPCType<BrimstoneHeart>())
-            {
-                typeName = "Calamity Heart";
-            }
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -682,7 +673,6 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            /*
             if (npc.boss && bossKillcount > 5)
             {
                 npcLoot.Add(ModContent.ItemType<PearlShard>(), 1, 2, 4);
@@ -691,20 +681,43 @@ namespace CalRemix
             {
                 npcLoot.Add(ModContent.ItemType<PearlShard>(), 5, 1, 1);
             }
-            */
-            if (npc.type == ModContent.NPCType<DesertScourgeHead>())
+            else if (npc.type == ModContent.NPCType<GreatSandShark>())
+            {
+                LeadingConditionRule toothRule = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                toothRule.Add(ModContent.ItemType<SandSharkToothNecklace>(), 4, hideLootReport: !Main.expertMode);
+                toothRule.AddFail(ModContent.ItemType<SandSharkToothNecklace>(), 3, hideLootReport: Main.expertMode);
+
+                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule normal = npcLoot.DefineNormalOnlyDropSet();
+                int[] itemIDs = new int[6]
+                {
+                    ModContent.ItemType<Tumbleweed>(),
+                    ModContent.ItemType<SandstormGun>(),
+                    ModContent.ItemType<ShiftingSands>(),
+                    ModContent.ItemType<SandSharknadoStaff>(),
+                    ModContent.ItemType<Sandslasher>(),
+                    ModContent.ItemType<DuststormInABottle>()
+                };
+                mainRule.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, itemIDs), hideLootReport: !Main.expertMode);
+                mainRule.AddFail(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, itemIDs), hideLootReport: Main.expertMode);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<GrandScale>());
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.LightShard);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DarkShard);
+            }
+            else if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
                 LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
                 mainRule.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
             }
-            /*else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            else if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
-                npcLoot.Remove(npcLoot.DefineNormalOnlyDropSet().Add(ModContent.ItemType<EffulgentFeather>(), 1, 25, 30));
+                LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+                mainRule.Add(ModContent.ItemType<DesertFeather>(), 1, 25, 30);
             }
-            else*/
-            if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
+            else if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<HalibutCannon>());
             }
             else if (npc.type == ModContent.NPCType<MirageJelly>())
             {
@@ -852,14 +865,14 @@ namespace CalRemix
             else if (npc.type == NPCID.Clinger)
             {
                 LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
-                postPolter.Add(ModContent.ItemType<CursedSpear>(), 25, hideLootReport: !Main.expertMode);
-                postPolter.AddFail(ModContent.ItemType<CursedSpear>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
+                postPolter.Add(ModContent.ItemType<CursedSpear>(), new Fraction(2, 30) , hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ModContent.ItemType<CursedSpear>(), 25, hideLootReport: Main.expertMode);
             }
             else if (npc.type == NPCID.IchorSticker)
             {
                 LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
-                postPolter.Add(ModContent.ItemType<IchorDagger>(), 25, hideLootReport: !Main.expertMode);
-                postPolter.AddFail(ModContent.ItemType<IchorDagger>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
+                postPolter.Add(ModContent.ItemType<IchorDagger>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ModContent.ItemType<IchorDagger>(), 25, hideLootReport: Main.expertMode);
             }
             else if (npc.type == ModContent.NPCType<Bohldohr>())
             {
@@ -872,6 +885,12 @@ namespace CalRemix
             else if (npc.type == ModContent.NPCType<PerforatorCyst>())
             {
                 npcLoot.Add(ItemID.CrimtaneOre, 1, 10, 26);
+            }
+            else if (npc.type == ModContent.NPCType<Sulflounder>())
+            {
+                LeadingConditionRule flound = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                flound.Add(ModContent.ItemType<FlounderMortar>(), 10, hideLootReport: !Main.expertMode);
+                flound.AddFail(ModContent.ItemType<FlounderMortar>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
             }
         }
         public override void OnKill(NPC npc)
@@ -1045,7 +1064,10 @@ namespace CalRemix
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(text, color);
         }
-
+        public override Color? GetAlpha(NPC npc, Color drawColor)
+        {
+            return RethemeMaster.RethemeNPCAlpha(npc, drawColor);
+        }
         private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
             if (spawnSource is EntitySource_Death)

@@ -34,11 +34,12 @@ using CalRemix.Projectiles.Accessories;
 using CalRemix.Retheme;
 using Terraria.Audio;
 using CalamityMod.Items.Armor.Fearmonger;
-using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Tiles;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.HiveMind;
 using CalRemix.Items.Placeables;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
 
 namespace CalRemix
 {
@@ -50,18 +51,21 @@ namespace CalRemix
         public override void SetDefaults(Item item)
         {
             RethemeMaster.RethemeItemDefaults(item);
-            /*if (item.type == ModContent.ItemType<GildedProboscis>())
+            if (item.type == ModContent.ItemType<GildedProboscis>())
             {
-                item.damage = item.damage / 4;
+                item.damage = item.damage / 9;
                 item.rare = ItemRarityID.LightRed;
             }
-            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>() || item.type == ModContent.ItemType<Swordsplosion>())
+            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>())
             {
-                item.damage = item.damage / 2;
+                item.damage = item.damage / 5;
                 item.rare = ItemRarityID.LightRed;
             }
-            else*/
-            if (item.type == ModContent.ItemType<EssenceofHavoc>())
+            else if (item.type == ModContent.ItemType<Swordsplosion>())
+            {
+                item.rare = ItemRarityID.LightRed;
+            }
+            else if (item.type == ModContent.ItemType<EssenceofHavoc>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofLaw>();
             }
@@ -318,10 +322,6 @@ namespace CalRemix
             {
                 item.stack = 1;
             }
-            /*if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
-            {
-                item.active = false;
-            }*/
             if (item.type == ItemID.ShadowScale || item.type == ItemID.TissueSample)
             {
                 if (!CalamityPlayer.areThereAnyDamnBosses)
@@ -374,6 +374,12 @@ namespace CalRemix
             if (item.type == ModContent.ItemType<DesertScourgeBag>())
             {
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
+                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<PearlShard>());
+            }
+            else if (item.type == ModContent.ItemType<DragonfollyBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 25, 30);
+                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<EffulgentFeather>());
             }
             else if (item.type == ItemID.PlanteraBossBag)
             {
@@ -390,23 +396,9 @@ namespace CalRemix
             }
             else if (item.type == ModContent.ItemType<YharonBag>())
             {
-                itemLoot.AddIf(() => !CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
-            }
-            else if (item.type == ModContent.ItemType<YharonBag>())
-            {
-                itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 6, 8);
-            }
-            if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())
-            {
-                itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 9, 11);
-            }
-            else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())
-            {
-                itemLoot.AddIf(() => !CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 7, 9);
-            }
-            else if (item.type == ModContent.ItemType<DraedonBag>())
-            {
-                itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 6000, 8000);
+                LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
+                yhar.Add(ModContent.ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ModContent.ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
             }
             else if (item.type == ModContent.ItemType<CrabulonBag>())
             {
@@ -425,11 +417,16 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<Grimesand>(), 1, 10, 30);
             }
-            /*else if (item.type == ModContent.ItemType<DragonfollyBag>())
+            else if (item.type == ModContent.ItemType<DraedonBag>())
             {
-                itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 15, 21);
-                //itemLoot.Remove(itemLoot.Add(ModContent.ItemType<EffulgentFeather>(), 1, 30, 35));
-            }*/
+                itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 6000, 8000);
+            }
+            else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())
+            {
+                LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
+                yhar.Add(ModContent.ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ModContent.ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+            }
         }
 
 

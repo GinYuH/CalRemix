@@ -3,6 +3,23 @@ Mods: {
 		BossChecklistIntegration: {
 			HiveMind.SpawnInfo: Drop a [i:86] on Grimesand found in floating islands after breaking a shadow orb or use a [i:CalamityMod/Teratoma] in the Corruption.
 			Perforators.SpawnInfo: Drop a [i:1329] on Grimesand found in floating islands after breaking a crimson heart or use a [i:CalamityMod/BloodyWormFood] in the Crimson.
+			AstrumAureus.SpawnInfo: Use an [i:CalamityMod/AstralChunk] at night in the Plagued Jungle.
+			Dragonfolly.SpawnInfo: Use [i:CalamityMod/ExoticPheromones] in the desert.
+		}
+
+		Items: {
+			SummonItems: {
+				ExoticPheromones: {
+					DisplayName: Exotic Pheromones
+					Tooltip:
+						'''
+						Summons The Dragonfolly when used in the Desert
+						Enrages outside the Desert
+						Not consumable
+						'Pheromones used for hunting Draconic Offshoots.'
+						'''
+				}
+			}
 		}
 	}
 
@@ -1198,7 +1215,7 @@ Mods: {
 			}
 
 			MackerelStaff: {
-				DisplayName: Mackerel Staff
+				DisplayName: Holy Mackerel Staff
 				Tooltip:
 					'''
 					Summons a Holy Mackerel to fight for you
@@ -1341,9 +1358,20 @@ Mods: {
 					'''
 			}
 
-			Grimesand.DisplayName: Grimesand
-			GulletWorm.DisplayName: Gullet Worm
-			GulletWormCage.DisplayName: Gullet Worm Cage
+			Grimesand: {
+				DisplayName: Grimesand
+				Tooltip: ""
+			}
+
+			GulletWorm: {
+				DisplayName: Gullet Worm
+				Tooltip: ""
+			}
+
+			GulletWormCage: {
+				DisplayName: Gullet Worm Cage
+				Tooltip: ""
+			}
 
 			WormMeal: {
 				DisplayName: Worm Meal
@@ -1362,6 +1390,21 @@ Mods: {
 					Taking damage will temporarily prevent mana from being consumed.
 					Thanks for nothing
 					'''
+			}
+
+			RipperShark: {
+				DisplayName: Ripper Shark
+				Tooltip: ""
+			}
+
+			DesertFeather: {
+				DisplayName: Desert Feather
+				Tooltip: ""
+			}
+
+			FlounderMortar: {
+				DisplayName: Flounder Mortar
+				Tooltip: Converts musket balls into streams of acid
 			}
 		}
 
@@ -1406,6 +1449,7 @@ Mods: {
 			MinnowsPrime.DisplayName: Minnows Prime
 			BananaClown.DisplayName: Banana Clown
 			CrocodileHerring.DisplayName: Crocodile Herring
+			GulletWorm.DisplayName: Gullet Worm
 		}
 
 		Projectiles: {
