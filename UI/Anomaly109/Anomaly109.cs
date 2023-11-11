@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -24,6 +25,7 @@ namespace CalRemix.UI
     public class Anomaly109UI : UIState
     {
         public static int CurrentPage = 0;
+        public static int ClickCooldown = 0;
         public override void Update(GameTime gameTime)
         {
             bool shouldShow = !Main.gameMenu;
@@ -42,54 +44,52 @@ namespace CalRemix.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            int borderwidth = 4;
             float bgWidth = Main.screenWidth * 0.6f;
             float bgHeight = Main.screenHeight * 0.7f;
-            Rectangle mainframe = new Rectangle((int)(Main.screenWidth - bgWidth) / 2, (int)(Main.screenHeight - bgHeight) / 2, (int)bgWidth, (int)bgHeight);
-            Rectangle borderframe = new Rectangle((int)(Main.screenWidth - bgWidth) / 2 - borderwidth, (int)(Main.screenHeight - bgHeight) / 2 - borderwidth, (int)bgWidth + borderwidth * 2, (int)bgHeight + borderwidth * 2);
+            DrawBackground(spriteBatch, bgWidth, bgHeight, out Rectangle borderframe, out Rectangle mainframe);
+            BlockClicks(borderframe);
+            Anomaly109Option selected = new Anomaly109Option("aa", "aaa", "aaaaa", () => { });
+            Rectangle barrect2 = new Rectangle();
+            DrawOptions(spriteBatch, mainframe, out barrect2, out selected, bgWidth, bgHeight);
+            DrawArrows(spriteBatch, mainframe);
+            SelectOption(spriteBatch, selected, barrect2);
+        }
+
+        private static void BlockClicks(Rectangle borderframe)
+        {
+            Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
+            if (maus.Intersects(borderframe))
+            {
+                Main.blockMouse = true;
+            }
+        }
+
+        private static void DrawBackground(SpriteBatch spriteBatch, float bgWidth, float bgHeight, out Rectangle borderframe, out Rectangle mainframe)
+        {
+            int borderwidth = 4;
+            mainframe = new Rectangle((int)(Main.screenWidth - bgWidth) / 2, (int)(Main.screenHeight - bgHeight) / 2, (int)bgWidth, (int)bgHeight);
+            borderframe = new Rectangle((int)(Main.screenWidth - bgWidth) / 2 - borderwidth, (int)(Main.screenHeight - bgHeight) / 2 - borderwidth, (int)bgWidth + borderwidth * 2, (int)bgHeight + borderwidth * 2);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, borderframe, Color.Lime);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, mainframe, Color.Black);
+        }
 
+        private static void DrawOptions(SpriteBatch spriteBatch, Rectangle mainframe, out Rectangle optionRect, out Anomaly109Option selected, float bgWidth, float bgHeight)
+        {
+            Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
             int individualLength = (int)(bgWidth / 2 * 0.6f);
             int individualHeight = (int)(bgHeight / 4 * 0.4f);
             int spacingX = (int)(bgHeight / 1.9f);
             int spacingY = (int)(bgHeight / 7);
             int row = 1;
             int column = 1;
-            int page = 1;
-            Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 20, 20);
-            Anomaly109Option selected = new Anomaly109Option("aa", "aaa", "aaaaa", () => { });
-            Rectangle barrect2 = new Rectangle();
-            CurrentPage = Main.LocalPlayer.selectedItem;
+            selected = new Anomaly109Option("aa", "aaa", "aaaa", () => { });
+            optionRect = new Rectangle();
             for (int i = CurrentPage * 12; i < Anomaly109Manager.options.Count(); i++)
             {
                 if (i >= CurrentPage * 12 + CurrentPage * 12 && i > 11)
                 {
                     break;
                 }
-                /*if (i % 12 == 0)
-                {
-                    page++;
-                    column = 0;
-                    row = 0;
-                    int row2 = 1;
-                    int column2 = 1;
-                    for (int j = 0; j < Anomaly109Manager.options.Count(); j++)
-                    {
-                        column2++;
-                        if (j % 3 == 0 && j <= 11)
-                        {
-                            column2 = 0;
-                            row2++;
-                        }
-                        if (j > 11)
-                        {
-                            break;
-                        }
-                        Rectangle barbg2 = new Rectangle((int)(mainframe.X + mainframe.Width / 28) + spacingX * column2, (int)(mainframe.Y + mainframe.Height / 16) + spacingY * row2, individualLength + 4, individualHeight + 4);
-                        spriteBatch.Draw(TextureAssets.MagicPixel.Value, barbg2, Color.Black);
-                    }
-                }*/
                 column++;
                 if (i % 3 == 0)
                 {
@@ -102,26 +102,73 @@ namespace CalRemix.UI
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, barbg, Color.Lime);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, barframe, Color.Black);
                 string address = "C:\\remix\\";
-                
+
                 Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, address, barbg.X + barbg.Width / 32, barbg.Y + barbg.Height / 4, Color.Lime * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
-                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, Anomaly109Manager.options[i].title, barbg.X + barbg.Width / 32 + FontAssets.MouseText.Value.MeasureString(address).X, barbg.Y + barbg.Height / 4, Color.MediumBlue * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
-                
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, Anomaly109Manager.options[i].title, barbg.X + barbg.Width / 32 + (float)FontAssets.MouseText.Value.MeasureString(address).X * (float)Main.screenWidth / (float)1745, barbg.Y + barbg.Height / 4, Color.MediumBlue * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+
                 if (maus.Intersects(barbg))
                 {
                     selected = Anomaly109Manager.options[i];
-                    barrect2 = barbg;
+                    optionRect = barbg;
                 }
             }
-            if (selected.key != "aa")
+        }
+
+        private static void SelectOption(SpriteBatch spriteBatch, Anomaly109Option option, Rectangle optionRect)
+        {
+            Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
+            if (option.key != "aa")
             {
-                if (maus.Intersects(barrect2))
+                if (maus.Intersects(optionRect))
                 {
-                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, selected.message, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
-                    if (Main.LocalPlayer.controlUseItem)
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, option.message, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                    if (Main.mouseLeft && ClickCooldown <= 0)
                     {
-                        selected.toggle();
+                        option.toggle();
+                        ClickCooldown = 8;
                     }
                 }
+            }
+        }
+
+        private static void DrawArrows(SpriteBatch spriteBatch, Rectangle mainframe)
+        {
+            Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
+            int maxPages = Anomaly109Manager.options.Count() / 12;
+            Rectangle arrowframer = new Rectangle(mainframe.Right - (int)(mainframe.Width * 0.1f), mainframe.Bottom - (int)(mainframe.Height * 0.1f), (int)(mainframe.Width * 0.05f), (int)(mainframe.Width * 0.05f));
+            Rectangle arrowframel = new Rectangle(mainframe.Left + (int)(mainframe.Width * 0.1f), mainframe.Bottom - (int)(mainframe.Height * 0.1f), (int)(mainframe.Width * 0.05f), (int)(mainframe.Width * 0.05f));
+            if (CurrentPage < maxPages)
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, arrowframer, Color.Lime);
+            if (CurrentPage > 0)
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, arrowframel, Color.Lime);
+            if (maus.Intersects(arrowframer))
+            {
+                if (CurrentPage < maxPages)
+                {
+                    if (Main.mouseLeft && ClickCooldown <= 0)
+                    {
+                        Main.LocalPlayer.releaseUseItem = true;
+                        CurrentPage++;
+                        ClickCooldown = 8;
+                    }
+                }
+            }
+            else
+            if (maus.Intersects(arrowframel))
+            {
+                if (CurrentPage > 0)
+                {
+                    if (Main.mouseLeft && CurrentPage > 0 && ClickCooldown <= 0)
+                    {
+                        Main.LocalPlayer.releaseUseItem = true;
+                        CurrentPage--;
+                        ClickCooldown = 8;
+                    }
+                }
+            }
+            if (ClickCooldown > 0)
+            {
+                ClickCooldown--;
             }
         }
     }
@@ -151,6 +198,15 @@ namespace CalRemix.UI
                 options.Add(new Anomaly109Option("034683710", "resprites", "Toggles resprites for bosses and items", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
                 options.Add(new Anomaly109Option("034683710", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
                 options.Add(new Anomaly109Option("034683710", "grimesand", "Toggles generation of Grimesand and its requirement for evil 2 bosses", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "banana_clown", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "primal_aspid", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "clamitas", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "coyote_venom", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "parched_scales", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "fearmonger_retier", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "idkrn", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "idkrn2", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
+                options.Add(new Anomaly109Option("034683710", "idkrn3", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
                 options.Add(new Anomaly109Option("034683710", "la_ruga", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }));
             }
         }
