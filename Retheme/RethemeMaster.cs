@@ -379,30 +379,30 @@ namespace CalRemix.Retheme
             {
                 TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/DesertMedallion");
             }
-            else if (item.type == ItemType<OceanCrest>())
+    /*   //     else if (item.type == ItemType<OceanCrest>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/OceanCrest");
+      //          TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/OceanCrest");
             }
-            else if (item.type == ItemType<AquaticDischarge>())
+           // else if (item.type == ItemType<AquaticDischarge>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
+                //TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
             }
-            else if (item.type == ItemType<Barinade>())
+           // else if (item.type == ItemType<Barinade>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/Barinade");
+             //   TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/Barinade");
             }
-            else if (item.type == ItemType<StormSpray>())
+           // else if (item.type == ItemType<StormSpray>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/StormSpray");
+                //TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/StormSpray");
             }
-            else if (item.type == ItemType<SeaboundStaff>())
+          //  else if (item.type == ItemType<SeaboundStaff>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/SeaboundStaff");
+            //    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/SeaboundStaff");
             }
-            else if (item.type == ItemType<ScourgeoftheDesert>())
+          //  else if (item.type == ItemType<ScourgeoftheDesert>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
-            }
+              //  TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
+            }*/
             #endregion
             #region Crabulon
             else if (item.type == ItemType<DecapoditaSprout>())
@@ -836,11 +836,11 @@ namespace CalRemix.Retheme
         public static void RethemeProjDefaults(Projectile projectile)
         {
             #region Resprites
-            if (projectile.type == ProjectileType<AquaticDischargeProj>())
+           // if (projectile.type == ProjectileType<AquaticDischargeProj>())
             {
-                TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
+               // TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
             }
-            else if (projectile.type == ProjectileType<ScourgeoftheDesertProj>())
+           /* else */if (projectile.type == ProjectileType<ScourgeoftheDesertProj>())
             {
                 TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
             }

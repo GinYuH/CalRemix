@@ -69,6 +69,10 @@ namespace CalRemix
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
         public static int meldCountdown = 72000;
 
+        public static bool alloyBars = true;
+        public static bool essenceBars = true;
+        public static bool yharimBars = true;
+
         public List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,
@@ -99,6 +103,10 @@ namespace CalRemix
             generatedPlague = false;
             generatedStrain = false;
             grime = false;
+
+            alloyBars = true;
+            essenceBars = true;
+            yharimBars = true;
             
 
             transmogrifyingItem = -1;
@@ -117,6 +125,10 @@ namespace CalRemix
             generatedPlague = false;
             generatedStrain = false;
 
+            alloyBars = true;
+            essenceBars = true;
+            yharimBars = true;
+
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
@@ -133,6 +145,10 @@ namespace CalRemix
             tag["plague"] = generatedPlague;
             tag["astrain"] = generatedStrain;
             tag["grime"] = grime;
+
+            tag["109alloybar"] = alloyBars;
+            tag["109essencebar"] = essenceBars;
+            tag["109yharimbar"] = yharimBars;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -152,6 +168,10 @@ namespace CalRemix
             generatedStrain = tag.Get<bool>("astrain");
             grime = tag.Get<bool>("grime");
 
+            alloyBars = tag.Get<bool>("109alloybar");
+            essenceBars = tag.Get<bool>("109essencebar");
+            yharimBars = tag.Get<bool>("109yharimbar");
+
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
             transmogrifyTimeLeft = tag.Get<int>("transmogrifyTimeLeft");
@@ -170,6 +190,10 @@ namespace CalRemix
             writer.Write(generatedStrain);
             writer.Write(grime);
 
+            writer.Write(alloyBars);
+            writer.Write(essenceBars);
+            writer.Write(yharimBars);
+
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
             writer.Write(transmogrifyTimeLeft);
@@ -187,6 +211,10 @@ namespace CalRemix
             generatedPlague = reader.ReadBoolean();
             generatedStrain = reader.ReadBoolean();
             grime = reader.ReadBoolean();
+
+            alloyBars = reader.ReadBoolean();
+            essenceBars = reader.ReadBoolean();
+            yharimBars = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();

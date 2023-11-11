@@ -31,6 +31,7 @@ Mods: {
 		UI: {
 			TransmogrifyMenu: Transmogrify
 			Cooldowns.BananaClown: Clown Consumption Cooldown
+			ExampleResource: Mods.CalRemix.UI.ExampleResource
 		}
 
 		Biomes: {
@@ -1363,6 +1364,11 @@ Mods: {
 					Thanks for nothing
 					'''
 			}
+
+			Anomaly109: {
+				DisplayName: Anomaly 109
+				Tooltip: Insert unique codes in order to disable certain aspects of your game.
+			}
 		}
 
 		NPCs: {
@@ -1549,6 +1555,7 @@ Mods: {
 			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
 			MeldGunkPlaced.MapEntry: Meld Gunk Placed
 			GrimesandPlaced.MapEntry: Grimesand Placed
+			Anomaly109Placed.MapEntry: Anomaly109 Placed
 		}
 
 		Enchantments: {
