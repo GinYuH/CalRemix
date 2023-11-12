@@ -88,6 +88,7 @@ namespace CalRemix
         public Vector2 clawPosition = Vector2.Zero;
 		public bool bananaClown;
 		public bool invGar;
+		public bool anomaly109UI;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -868,8 +869,9 @@ namespace CalRemix
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
             if (invGar)
-			{
-				SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
+            {
+                anomaly109UI = false;
+                SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
 				Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
 			}
         }
@@ -878,6 +880,7 @@ namespace CalRemix
         {
             if (invGar)
             {
+                anomaly109UI = false;
                 SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
                 Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
             }

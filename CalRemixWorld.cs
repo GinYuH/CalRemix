@@ -149,6 +149,7 @@ namespace CalRemix
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
             tag["109yharimbar"] = yharimBars;
+            tag["109fanny"] = FannyManager.fannyEnabled;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -171,6 +172,7 @@ namespace CalRemix
             alloyBars = tag.Get<bool>("109alloybar");
             essenceBars = tag.Get<bool>("109essencebar");
             yharimBars = tag.Get<bool>("109yharimbar");
+            FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
 
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
@@ -193,6 +195,7 @@ namespace CalRemix
             writer.Write(alloyBars);
             writer.Write(essenceBars);
             writer.Write(yharimBars);
+            writer.Write(FannyManager.fannyEnabled);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -215,6 +218,7 @@ namespace CalRemix
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
             yharimBars = reader.ReadBoolean();
+            FannyManager.fannyEnabled = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
