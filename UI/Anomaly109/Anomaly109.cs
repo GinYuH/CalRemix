@@ -6,6 +6,7 @@ using CalamityMod.Items.Potions;
 using CalamityMod.NPCs.Yharon;
 using CalRemix.Items.Materials;
 using CalRemix.Projectiles.Weapons;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Localization.IME;
@@ -39,6 +40,7 @@ namespace CalRemix.UI
         private static int UnderscoreTimer = 0;
         public static bool TryUnlock = false;
         private static int HeldRightTimer = 0;
+        private static Vector2 fannyOffset = Vector2.Zero;
 
         public enum InputType
         {
@@ -306,7 +308,7 @@ namespace CalRemix.UI
             Rectangle cageframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.2f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.4f));
             Rectangle bgframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.65f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.1f));
             Rectangle borderframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f) - 2, mainframe.Y + (int)(mainframe.Height * 0.65f) - 2, (int)(mainframe.Width * 0.25f) + 4, (int)(mainframe.Height * 0.1f) + 4);
-            Rectangle fannyframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.22f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.35f));
+            Rectangle fannyframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f + fannyOffset.X), mainframe.Y + (int)(mainframe.Height * 0.22f + fannyOffset.Y), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.35f));
             Rectangle fannytheFrame = fanny.Frame(1, 8, 0, 0);
 
             string FannyStatus = FannyManager.fannyEnabled ? "Fanny is currently free" : "Fanny is currently sealed";
@@ -320,14 +322,42 @@ namespace CalRemix.UI
             }
             spriteBatch.Draw(cage, cageframe, Color.White * 0.6f);
             Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, FannyStatus, bgframe.X + (int)(bgframe.Height * 0.3f), bgframe.Y + (int)(bgframe.Height * 0.3f), FannyColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+            fannyOffset = Vector2.Zero;
             if (maus.Intersects(bgframe))
             {
+                if (FannyManager.fannyEnabled)
+                {
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Toggles Fanny", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                }
+                else
+                {
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "KILL KILL KILL KILL KILL", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.DarkRed * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                }
                 if (Main.mouseLeft && ClickCooldown <= 0)
                 {
                     FannyManager.fannyEnabled = !FannyManager.fannyEnabled;
                     CalRemixWorld.UpdateWorldBool();
-                    ClickCooldown = 7;
+                    ClickCooldown = 12;
+                    if (FannyManager.fannyEnabled)
+                    {
+                        SoundEngine.PlaySound(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f });
+                        SoundEngine.PlaySound(SoundID.Item27);
+                        SoundEngine.PlaySound(SoundID.Item62);
+                    }
+                    else
+                    {
+                        SoundEngine.PlaySound(SoundID.DD2_GoblinScream);
+                        SoundEngine.PlaySound(SoundID.Item28);
+                        SoundEngine.PlaySound(CalamityMod.NPCs.Cryogen.Cryogen.ShieldRegenSound);
+                    }
+
                 }
+            }
+            if (maus.Intersects(fannyframe) && !FannyManager.fannyEnabled && Main.mouseLeft && ClickCooldown <= 0)
+            {
+                SoundEngine.PlaySound(CalamityMod.NPCs.Cryogen.Cryogen.HitSound);
+                fannyOffset += new Vector2(Main.rand.NextFloat(-2.5f, 2.5f), Main.rand.NextFloat(-2.5f, 2.5f));
+                ClickCooldown = 4;
             }
         }
 
@@ -348,34 +378,31 @@ namespace CalRemix.UI
         {
             if (options.Count == 0)
             {
-                options.Add(new Anomaly109Option("749257290", "alloy_bars", "Toggles Alloy Bars from recipes", () => { CalRemixWorld.alloyBars = !CalRemixWorld.alloyBars; }, false));
-                options.Add(new Anomaly109Option("154382034", "essential_essence_bars", "Toggles Essential Essence Bars from recipes", () => { CalRemixWorld.essenceBars = !CalRemixWorld.essenceBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "yharim_bars", "Toggles Yharim Bars from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("963282883", "shimmer_essences", "Toggles Shimmer Essences from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("346018689", "cosmilite_slag", "Toggles tiershifted Cosmilite", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("132059332", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("123508223", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal",  () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("123608122", "front_gars", "Toggles Front Gars and Reaper Tooth drops", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("873025872", "meld_gunk", "Toggles Meld Gunk", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("023582378", "crocodile_scales", "Toggles Crocodile Scales from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("018539273", "permanent_upgrades", "Toggles permanent upgrade recipes and alt obtainment methods", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("639202857", "starbuster_core", "Toggles the Starbuster Core's strange obtainment method", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("631208414", "plagued_jungle", "Toggles generation of the Plagued Jungle and related requirements", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "hardmode_shrines", "Toggles generation for hardmode shrines", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "life_ore", "Toggles generation for Life Ore", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "resprites", "Toggles resprites for bosses and items", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "grimesand", "Toggles generation of Grimesand and its requirement for evil 2 bosses", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "banana_clown", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "primal_aspid", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "clamitas", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "coyote_venom", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "parched_scales", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "fearmonger_retier", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "idkrn", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "idkrn2", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "idkrn3", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
-                options.Add(new Anomaly109Option("034683710", "la_ruga", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("terragrim", "alloy_bars", "Toggles Alloy Bars from recipes", () => { CalRemixWorld.alloyBars = !CalRemixWorld.alloyBars; }, false));
+                options.Add(new Anomaly109Option("starfury", "essential_essence_bars", "Toggles Essential Essence Bars from recipes", () => { CalRemixWorld.essenceBars = !CalRemixWorld.essenceBars; }, false));
+                options.Add(new Anomaly109Option("defiledgreatsword", "yharim_bars", "Toggles Yharim Bars from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("babilzot", "shimmer_essences", "Toggles Shimmer Essences from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("thedevourerofgods", "cosmilite_slag", "Toggles initial generation of Cosmilite Slag and nerfed Cosmilite gear", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal",  () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("meldosaurus", "meld_gunk", "Toggles Meld Gunk initial generation and spread", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("leviathan", "crocodile_scales", "Toggles Crocodile Scales from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("bloodorange", "permanent_upgrades", "Toggles permanent upgrade recipe removals and alt obtainment methods", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("stellarculex", "starbuster_core", "Toggles the Starbuster Core's strange obtainment method", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("beewasp", "plagued_jungle", "Toggles the initial generation of the Plagued Jungle and related requirements", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("shrineys", "hardmode_shrines", "Toggles the initial generation for Hardmode shrines", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("livinglife", "life_ore", "Toggles the initial generation for Life Ore", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("emrecolor", "resprites", "Toggles resprites for bosses and items", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("talkywalky", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("grimethegame", "grimesand", "Toggles generation of Grimesand and its requirement for evil 2 bosses", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("applesand", "banana_clown", "Toggles Banana Clowns", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("eleum", "primal_aspid", "Toggles Primal Aspids and the Cryo Key recipe removal", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("havoc", "clamitas", "Toggles the Clamitas miniboss and the Eye of Desolation recipe removal", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("ceaselessvoid", "coyote_venom", "Toggles Coyote Venom drops and recipe injections", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("summoner", "fearmonger_retier", "Toggles the Fearmonger set's tiershifted stats", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("passive", "seafood", "Toggles Seafood becoming a normal food item", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
+                options.Add(new Anomaly109Option("thesealed", "la_ruga", "...", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, false));
             }
         }
         public override void SaveWorldData(TagCompound tag)
