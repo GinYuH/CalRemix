@@ -277,6 +277,10 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
+                if (recipe.HasResult(ModContent.ItemType<Seafood>()))
+                {
+                    recipe.DisableRecipe();
+                }
                 /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
@@ -472,10 +476,6 @@ namespace CalRemix
                     recipe.RemoveIngredient(ItemID.Diamond);
                     recipe.RemoveIngredient(ItemID.Obsidian);
                     recipe.AddRecipeGroup(RecipeGroupID.IronBar, 15);
-                }
-                if (recipe.HasResult(ItemID.Starfury))
-                {
-                    recipe.AddIngredient(ModContent.ItemType<EssenceofLaw>(), 3);
                 }
                 // Myst
                 if (recipe.HasResult(ModContent.ItemType<EpidemicShredder>()))

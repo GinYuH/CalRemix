@@ -93,9 +93,9 @@ namespace CalRemix.UI
             }
             else
                 DrawFanny(spriteBatch, mainframe);
+            DrawArrows(spriteBatch, mainframe);
             if (CurrentPage <= Anomaly109Manager.options.Count() / 12)
             {
-                DrawArrows(spriteBatch, mainframe);
                 SelectOption(spriteBatch, selectedOption, selectedRectangle);
             }
         }

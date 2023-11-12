@@ -829,6 +829,7 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<StellarCulex>())
             {
                 npcLoot.RemoveWhere((rule) => rule is ItemDropWithConditionRule rouxls && rouxls.itemId == ModContent.ItemType<StarbusterCore>());
+                npcLoot.AddIf(() => !CalRemixWorld.starbuster, ModContent.ItemType<StarbusterCore>(), 7, ui: !CalRemixWorld.starbuster);
             }
             switch (npc.type)
             {
@@ -882,11 +883,11 @@ namespace CalRemix
             }
             else if (npc.type == ModContent.NPCType<HiveTumor>())
             {
-                npcLoot.Add(ItemID.DemoniteOre, 1, 10, 26);
+                npcLoot.AddIf(()=> CalRemixWorld.grimesandToggle, ItemID.DemoniteOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
             }
             else if (npc.type == ModContent.NPCType<PerforatorCyst>())
             {
-                npcLoot.Add(ItemID.CrimtaneOre, 1, 10, 26);
+                npcLoot.AddIf(() => CalRemixWorld.grimesandToggle, ItemID.CrimtaneOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
             }
         }
         public override void OnKill(NPC npc)
