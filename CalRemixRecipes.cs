@@ -42,6 +42,7 @@ using CalamityMod.Items.Tools.ClimateChange;
 using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod;
 
 namespace CalRemix
 {
@@ -1018,6 +1019,17 @@ namespace CalRemix
                     {
                         CalRemixItem.cosmicItems.Add(recipe.createItem.type);
                     }
+                }
+            }
+        }
+        public static void MassRemoveIngredient(int id)
+        {
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
+                if (recipe.HasIngredient(id))
+                {
+                    recipe.RemoveIngredient(id);
                 }
             }
         }
