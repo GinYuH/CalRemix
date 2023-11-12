@@ -86,7 +86,7 @@ namespace CalRemix
         public static bool lifeoretoggle = true;
         public static bool resprites = true;
         public static bool bossdialogue = true;
-        public static bool grimesand = true;
+        public static bool grimesandToggle = true;
         public static bool clowns = true;
         public static bool aspids = true;
         public static bool clamitas = true;
@@ -143,7 +143,7 @@ namespace CalRemix
             lifeoretoggle = true;
             resprites = true;
             bossdialogue = true;
-            grimesand = true;
+            grimesandToggle = true;
             clowns = true;
             aspids = true;
             clamitas = true;
@@ -190,7 +190,7 @@ namespace CalRemix
             lifeoretoggle = true;
             resprites = true;
             bossdialogue = true;
-            grimesand = true;
+            grimesandToggle = true;
             clowns = true;
             aspids = true;
             clamitas = true;
@@ -233,7 +233,7 @@ namespace CalRemix
             tag["109lifeore"] = lifeoretoggle;
             tag["109resprites"] = resprites;
             tag["109dialogue"] = bossdialogue;
-            tag["109grime"] = grimesand;
+            tag["109grime"] = grimesandToggle;
             tag["109clowns"] = clowns;
             tag["109aspids"] = aspids;
             tag["109clamitas"] = clamitas;
@@ -278,7 +278,7 @@ namespace CalRemix
             lifeoretoggle= tag.Get<bool>("109lifeore");// = lifeoretoggle;
             resprites= tag.Get<bool>("109resprites");// = resprites;
             bossdialogue= tag.Get<bool>("109dialogue");// = bossdialogue;
-            grimesand= tag.Get<bool>("109grime");// = grimesand;
+            grimesandToggle= tag.Get<bool>("109grime");// = grimesand;
             clowns= tag.Get<bool>("109clowns");// = clowns;
             aspids= tag.Get<bool>("109aspids");// = aspids;
             clamitas= tag.Get<bool>("109clamitas");// = clamitas;
@@ -323,7 +323,7 @@ namespace CalRemix
             writer.Write(lifeoretoggle );//tag.Get<bool>("109lifeore");;// );//lifeoretoggle;
             writer.Write(resprites );//tag.Get<bool>("109resprites");;// );//resprites;
             writer.Write(bossdialogue );//tag.Get<bool>("109dialogue");;// );//bossdialogue;
-            writer.Write(grimesand );//tag.Get<bool>("109grime");;// );//grimesand;
+            writer.Write(grimesandToggle );//tag.Get<bool>("109grime");;// );//grimesand;
             writer.Write(clowns );//tag.Get<bool>("109clowns");;// );//clowns;
             writer.Write(aspids );//tag.Get<bool>("109aspids");;// );//aspids;
             writer.Write(clamitas );//tag.Get<bool>("109clamitas");;// );//clamitas;
@@ -368,7 +368,7 @@ namespace CalRemix
             lifeoretoggle = reader.ReadBoolean();//.Get<bool>("109lifeore");// = lifeoretoggle;
             resprites = reader.ReadBoolean();//.Get<bool>("109resprites");// = resprites;
             bossdialogue = reader.ReadBoolean();//.Get<bool>("109dialogue");// = bossdialogue;
-            grimesand = reader.ReadBoolean();//.Get<bool>("109grime");// = grimesand;
+            grimesandToggle = reader.ReadBoolean();//.Get<bool>("109grime");// = grimesand;
             clowns = reader.ReadBoolean();//.Get<bool>("109clowns");// = clowns;
             aspids = reader.ReadBoolean();//.Get<bool>("109aspids");// = aspids;
             clamitas = reader.ReadBoolean();//.Get<bool>("109clamitas");// = clamitas;
@@ -423,52 +423,67 @@ namespace CalRemix
             {
                 meldCountdown--;
             }
-            if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
+            if (aspids)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
                 {
-                    NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
+                    }
+                    CalRemixGlobalNPC.aspidCount = 0;
                 }
-                CalRemixGlobalNPC.aspidCount = 0;
             }
             if (CalamityMod.World.CalamityWorld.spawnedCirrus)
             {
                 CalamityMod.World.CalamityWorld.spawnedCirrus = false;
             }
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
-            if (ShrineTimer == 0)
+            if (shrinetoggle)
             {
-                HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);
-                HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), astrallist, 46);
+                if (ShrineTimer == 0)
+                {
+                    HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);
+                    HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), astrallist, 46);
 
-                Color messageColor = Color.Magenta;
-                CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                    Color messageColor = Color.Magenta;
+                    CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                }
             }
             if (ShrineTimer > -20)
             {
                 ShrineTimer--;
             }
-            if (!generatedCosmiliteSlag)
+            if (cosmislag)
             {
-                if (NPC.downedMoonlord)
+                if (!generatedCosmiliteSlag)
                 {
-                    if (CalamityWorld.HasGeneratedLuminitePlanetoids)
+                    if (NPC.downedMoonlord)
                     {
-                        //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
-                        GenerateCosmiliteSlag();
+                        if (CalamityWorld.HasGeneratedLuminitePlanetoids)
+                        {
+                            //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
+                            GenerateCosmiliteSlag();
+                        }
                     }
                 }
             }
-            if (!generatedPlague && NPC.downedGolemBoss)
+            if (plaguetoggle)
             {
-                ThreadPool.QueueUserWorkItem(_ => GeneratePlague(), this);
+                if (!generatedPlague && NPC.downedGolemBoss)
+                {
+                    ThreadPool.QueueUserWorkItem(_ => GeneratePlague(), this);
+                }
             }
             //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
-            if (!generatedStrain && Main.hardMode)
+            if (meldGunk)
             {
-                GenerateCavernStrain();
-                generatedStrain = true;
-                UpdateWorldBool();
+                if (!generatedStrain && Main.hardMode)
+                {
+                    GenerateCavernStrain();
+                    generatedStrain = true;
+                    UpdateWorldBool();
+                }
             }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;

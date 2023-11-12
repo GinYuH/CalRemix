@@ -53,7 +53,7 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.PlayerSafe || !NPC.downedMoonlord)
+            if (spawnInfo.PlayerSafe || !NPC.downedMoonlord || !CalRemixWorld.cosmislag)
             {
                 return 0f;
             }

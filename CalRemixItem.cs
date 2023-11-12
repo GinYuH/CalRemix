@@ -81,23 +81,26 @@ namespace CalRemix
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<TitanFinger>();
             }
-            else if (item.type == ModContent.ItemType<FearmongerGreathelm>())
+            if (CalRemixWorld.fearmonger)
             {
-                item.defense = 2;
-                item.value = Item.sellPrice(silver: 15);
-                item.rare = ItemRarityID.Blue;
-            }
-            else if (item.type == ModContent.ItemType<FearmongerPlateMail>())
-            {
-                item.defense = 8;
-                item.value = Item.sellPrice(silver: 12);
-                item.rare = ItemRarityID.Blue;
-            }
-            else if (item.type == ModContent.ItemType<FearmongerGreaves>())
-            {
-                item.defense = 6;
-                item.value = Item.sellPrice(silver: 9);
-                item.rare = ItemRarityID.Blue;
+                if (item.type == ModContent.ItemType<FearmongerGreathelm>())
+                {
+                    item.defense = 2;
+                    item.value = Item.sellPrice(silver: 15);
+                    item.rare = ItemRarityID.Blue;
+                }
+                else if (item.type == ModContent.ItemType<FearmongerPlateMail>())
+                {
+                    item.defense = 8;
+                    item.value = Item.sellPrice(silver: 12);
+                    item.rare = ItemRarityID.Blue;
+                }
+                else if (item.type == ModContent.ItemType<FearmongerGreaves>())
+                {
+                    item.defense = 6;
+                    item.value = Item.sellPrice(silver: 9);
+                    item.rare = ItemRarityID.Blue;
+                }
             }
         }
 
@@ -108,11 +111,14 @@ namespace CalRemix
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-            if (cosmicItems.Contains(item.type))
+            if (CalRemixWorld.cosmislag)
             {
-                if (item.damage > 0)
+                if (cosmicItems.Contains(item.type))
                 {
-                    damage *= 0.7f;
+                    if (item.damage > 0)
+                    {
+                        damage *= 0.7f;
+                    }
                 }
             }
         }
@@ -123,28 +129,37 @@ namespace CalRemix
             {
                 TransformItem(ref item, ModContent.ItemType<Items.Potions.NotFabsolVodka>());
             }
-            if (item.type == ModContent.ItemType<Seafood>())
+            if (CalRemixWorld.seafood)
             {
-                TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+                if (item.type == ModContent.ItemType<Seafood>())
+                {
+                    TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+                }
             }
         }
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if (Scoriad)
+            if (CalRemixWorld.laruga)
             {
-                int frameCount = Main.itemAnimations[item.type] != null ? Main.itemAnimations[item.type].FrameCount : 1;
-                Vector2 rand = new Vector2(Main.rand.Next(-4, 5), 0);
-                Color col = item.type == ModContent.ItemType<HornetRound>() ? Color.Yellow : Color.Red;
-                Main.EntitySpriteDraw(TextureAssets.Item[item.type].Value, position - new Vector2(TextureAssets.Item[item.type].Value.Width * 0.02f, TextureAssets.Item[item.type].Value.Height * 0.1f / frameCount) + rand, frame, col, 0, origin, scale * 1.4f, SpriteEffects.None);
+                if (Scoriad)
+                {
+                    int frameCount = Main.itemAnimations[item.type] != null ? Main.itemAnimations[item.type].FrameCount : 1;
+                    Vector2 rand = new Vector2(Main.rand.Next(-4, 5), 0);
+                    Color col = item.type == ModContent.ItemType<HornetRound>() ? Color.Yellow : Color.Red;
+                    Main.EntitySpriteDraw(TextureAssets.Item[item.type].Value, position - new Vector2(TextureAssets.Item[item.type].Value.Width * 0.02f, TextureAssets.Item[item.type].Value.Height * 0.1f / frameCount) + rand, frame, col, 0, origin, scale * 1.4f, SpriteEffects.None);
+                }
             }
             return true;
         }
 
         public override void UpdateInventory(Item item, Player player)
         {
-            if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
+            if (CalRemixWorld.permanenthealth)
             {
-                item.stack = 1;
+                if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
+                {
+                    item.stack = 1;
+                }
             }
             if (player.GetModPlayer<CalRemixPlayer>().amongusEnchant)
             {
@@ -154,18 +169,24 @@ namespace CalRemix
             {
                 TransformItem(ref item, ModContent.ItemType<Items.Potions.NotFabsolVodka>());
             }
-            if (item.type == ModContent.ItemType<Seafood>())
+            if (CalRemixWorld.seafood)
             {
-                TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
-            }
-            if (Scoriad)
-            {
-                if (!NPC.AnyNPCs(ModContent.NPCType<LaRuga>()) && !player.HasBuff(ModContent.BuffType<Scorinfestation>()))
+                if (item.type == ModContent.ItemType<Seafood>())
                 {
-                    int stacke = item.stack;
-                    item.SetDefaults(NonScoria);
-                    item.stack = stacke;
-                    Scoriad = false;
+                    TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
+                }
+            }
+            if (CalRemixWorld.laruga)
+            {
+                if (Scoriad)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<LaRuga>()) && !player.HasBuff(ModContent.BuffType<Scorinfestation>()))
+                    {
+                        int stacke = item.stack;
+                        item.SetDefaults(NonScoria);
+                        item.stack = stacke;
+                        Scoriad = false;
+                    }
                 }
             }
         }
@@ -306,22 +327,21 @@ namespace CalRemix
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (item.type == ItemID.Apple)
+            if (CalRemixWorld.permanenthealth)
             {
-                if (item.wet && !item.lavaWet && Main.bloodMoon && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                if (item.type == ItemID.Apple)
                 {
-                    item.SetDefaults(ModContent.ItemType<BloodOrange>());
-                    item.stack++;
+                    if (item.wet && !item.lavaWet && Main.bloodMoon && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                    {
+                        item.SetDefaults(ModContent.ItemType<BloodOrange>());
+                        item.stack++;
+                    }
+                }
+                if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
+                {
+                    item.stack = 1;
                 }
             }
-            if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
-            {
-                item.stack = 1;
-            }
-            /*if (item.type == ModContent.ItemType<EffulgentFeather>() && !DownedBossSystem.downedRavager)
-            {
-                item.active = false;
-            }*/
             if (item.type == ItemID.ShadowScale || item.type == ItemID.TissueSample)
             {
                 if (!CalamityPlayer.areThereAnyDamnBosses)
@@ -364,8 +384,8 @@ namespace CalRemix
         {
             if (item.type == ItemID.FloatingIslandFishingCrate || item.type == ItemID.FloatingIslandFishingCrateHard)
             {
-                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 1);
-                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit, ModContent.ItemType<Dragonfruit>(), 20);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit && CalRemixWorld.permanenthealth, ModContent.ItemType<Dragonfruit>(), 1);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit && CalRemixWorld.permanenthealth, ModContent.ItemType<Dragonfruit>(), 20);
             }
             if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
             {
@@ -436,17 +456,20 @@ namespace CalRemix
 
         public override void UpdateEquip(Item item, Player player)
         {
-            if (item.type == ModContent.ItemType<FearmongerGreathelm>())
+            if (CalRemixWorld.fearmonger)
             {
-                player.statManaMax2 -= 60;
-            }
-            if (item.type == ModContent.ItemType<FearmongerPlateMail>())
-            {
-                player.statLifeMax2 -= 100;
-            }
-            if (item.type == ModContent.ItemType<FearmongerGreaves>())
-            {
-                player.panic = false;
+                if (item.type == ModContent.ItemType<FearmongerGreathelm>())
+                {
+                    player.statManaMax2 -= 60;
+                }
+                if (item.type == ModContent.ItemType<FearmongerPlateMail>())
+                {
+                    player.statLifeMax2 -= 100;
+                }
+                if (item.type == ModContent.ItemType<FearmongerGreaves>())
+                {
+                    player.panic = false;
+                }
             }
         }
 

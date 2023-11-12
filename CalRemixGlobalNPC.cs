@@ -321,177 +321,183 @@ namespace CalRemix
                 }
             }
             #region Quotes
-            if (npc.type == ModContent.NPCType<Crabulon>())
+            if (CalRemixWorld.bossdialogue)
             {
-                if (crabSay == 0)
+                if (npc.type == ModContent.NPCType<Crabulon>())
                 {
-                    if (DateTime.Today.ToString("dd/MM").Equals("01/04") && Main.rand.NextBool(100))
-                        Talk("Buy Delicious Meat! So Very Delicious! 20% Off! Buy Today!", Color.LightSkyBlue);
-                    else
-                        Talk("Hello, are you here to place a delivery for my world-famous Delicious Meat, made with Frosted Pigron and Blue Truffles (now 70% bluer)?", Color.LightSkyBlue);
-                    crabSay = 1;
+                    if (crabSay == 0)
+                    {
+                        if (DateTime.Today.ToString("dd/MM").Equals("01/04") && Main.rand.NextBool(100))
+                            Talk("Buy Delicious Meat! So Very Delicious! 20% Off! Buy Today!", Color.LightSkyBlue);
+                        else
+                            Talk("Hello, are you here to place a delivery for my world-famous Delicious Meat, made with Frosted Pigron and Blue Truffles (now 70% bluer)?", Color.LightSkyBlue);
+                        crabSay = 1;
+                    }
+                    else if (crabSay == 2 && npc.life < (npc.lifeMax * 3 / 4))
+                    {
+                        Talk("You must be kidding. You're just another one of those desperate Delicious Meat fans that don't care to pay up for our hard work that was put into making these. For shame.", Color.LightSkyBlue);
+                        crabSay = 3;
+                    }
+                    else if (crabSay == 3 && npc.life < (npc.lifeMax / 3))
+                    {
+                        Talk("You remind me of that giant mushroom pig flying fish thing. If it could, it would easily butcher you whole, while you're blinded by your depression or whatever.", Color.LightSkyBlue);
+                        crabSay = 4;
+                    }
                 }
-                else if (crabSay == 2 && npc.life < (npc.lifeMax * 3 / 4))
+                else if (npc.type == ModContent.NPCType<SlimeGodCore>())
                 {
-                    Talk("You must be kidding. You're just another one of those desperate Delicious Meat fans that don't care to pay up for our hard work that was put into making these. For shame.", Color.LightSkyBlue);
-                    crabSay = 3;
+                    bool noPals = !NPC.AnyNPCs(ModContent.NPCType<CrimulanPaladin>()) && !NPC.AnyNPCs(ModContent.NPCType<EbonianPaladin>());
+                    bool none = noPals && !NPC.AnyNPCs(ModContent.NPCType<SplitCrimulanPaladin>()) && !NPC.AnyNPCs(ModContent.NPCType<SplitEbonianPaladin>());
+                    bool lastCrim = noPals && NPC.CountNPCS(ModContent.NPCType<SplitCrimulanPaladin>()) < 2 && !NPC.AnyNPCs(ModContent.NPCType<SplitEbonianPaladin>());
+                    bool lastEbon = noPals && NPC.CountNPCS(ModContent.NPCType<SplitEbonianPaladin>()) < 2 && !NPC.AnyNPCs(ModContent.NPCType<SplitCrimulanPaladin>());
+                    if (slimeSay == 0)
+                    {
+                        Talk("Hello we have suspected you committing blasphemy against sloomes", Color.Olive);
+                        slimeSay = 1;
+                    }
+                    else if (slimeSay == 1 && (lastCrim || lastEbon))
+                    {
+                        Talk("Absurd! I can't allow you to butcher the last bean bag", Color.Olive);
+                        slimeSay = 2;
+                    }
+                    else if (slimeSay == 2 && none)
+                    {
+                        Talk("You will not be forgiven for your sins. I'm now going to change my gender soon...", Color.Olive);
+                        slimeSay = 3;
+                    }
                 }
-                else if (crabSay == 3 && npc.life < (npc.lifeMax / 3))
+                else if (npc.type == ModContent.NPCType<ProfanedGuardianCommander>())
                 {
-                    Talk("You remind me of that giant mushroom pig flying fish thing. If it could, it would easily butcher you whole, while you're blinded by your depression or whatever.", Color.LightSkyBlue);
-                    crabSay = 4;
+                    if (guardSay == 0)
+                    {
+                        Talk("Guardian Commander: YOU WILL BURN BY THE WILL OF THE PROFLAMED FLAMES!", Color.Yellow);
+                        Talk("Guardian Defender: Prepare to meet your end, fool.", Color.Gold);
+                        Talk("Guardian Healer: Be careful... we're some tough guardians!", Color.LavenderBlush);
+                        guardSay = 1;
+                    }
+                    if (npc.Calamity().CurrentlyEnraged && !guardOver && guardSay > 0)
+                    {
+                        Talk("Guardian Commander: That is bad. We are Angry", Color.Yellow);
+                        if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianDefender>()))
+                            Talk("Guardian Defender: That is bad. We are Angry", Color.Gold);
+                        if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianHealer>()))
+                            Talk("Guardian Healer: That is bad. We are Angry", Color.LavenderBlush);
+                        guardOver = true;
+                    }
+                    if (NPC.AnyNPCs(ModContent.NPCType<DILF>()) && !guardRage && guardSay > 0)
+                    {
+                        Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
+                        if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianDefender>()))
+                            Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
+                        if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianHealer>()))
+                            Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
+                        guardRage = true;
+                    }
                 }
-            }
-            else if (npc.type == ModContent.NPCType<SlimeGodCore>())
-            {
-                bool noPals = !NPC.AnyNPCs(ModContent.NPCType<CrimulanPaladin>()) && !NPC.AnyNPCs(ModContent.NPCType<EbonianPaladin>());
-                bool none = noPals && !NPC.AnyNPCs(ModContent.NPCType<SplitCrimulanPaladin>()) && !NPC.AnyNPCs(ModContent.NPCType<SplitEbonianPaladin>());
-                bool lastCrim = noPals && NPC.CountNPCS(ModContent.NPCType<SplitCrimulanPaladin>()) < 2 && !NPC.AnyNPCs(ModContent.NPCType<SplitEbonianPaladin>());
-                bool lastEbon = noPals && NPC.CountNPCS(ModContent.NPCType<SplitEbonianPaladin>()) < 2 && !NPC.AnyNPCs(ModContent.NPCType<SplitCrimulanPaladin>());
-                if (slimeSay == 0)
+                else if (npc.type == ModContent.NPCType<Yharon>())
                 {
-                    Talk("Hello we have suspected you committing blasphemy against sloomes", Color.Olive);
-                    slimeSay = 1;
-                }
-                else if (slimeSay == 1 && (lastCrim || lastEbon))
-                {
-                    Talk("Absurd! I can't allow you to butcher the last bean bag", Color.Olive);
-                    slimeSay = 2;
-                }
-                else if (slimeSay == 2 && none)
-                {
-                    Talk("You will not be forgiven for your sins. I'm now going to change my gender soon...", Color.Olive);
-                    slimeSay = 3;
-                }
-            }
-            else if (npc.type == ModContent.NPCType<ProfanedGuardianCommander>())
-            {
-                if (guardSay == 0)
-                {
-                    Talk("Guardian Commander: YOU WILL BURN BY THE WILL OF THE PROFLAMED FLAMES!", Color.Yellow);
-                    Talk("Guardian Defender: Prepare to meet your end, fool.", Color.Gold);
-                    Talk("Guardian Healer: Be careful... we're some tough guardians!", Color.LavenderBlush);
-                    guardSay = 1;
-                }
-                if (npc.Calamity().CurrentlyEnraged && !guardOver && guardSay > 0)
-                {
-                    Talk("Guardian Commander: That is bad. We are Angry", Color.Yellow);
-                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianDefender>()))
-                        Talk("Guardian Defender: That is bad. We are Angry", Color.Gold);
-                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianHealer>()))
-                        Talk("Guardian Healer: That is bad. We are Angry", Color.LavenderBlush);
-                    guardOver = true;
-                }
-                if (NPC.AnyNPCs(ModContent.NPCType<DILF>()) && !guardRage && guardSay > 0)
-                {
-                    Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
-                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianDefender>()))
-                        Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
-                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianHealer>()))
-                        Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
-                    guardRage = true;
-                }
-            }
-            else if (npc.type == ModContent.NPCType<Yharon>())
-            {
 
-                float hp = (float)npc.life / (float)npc.lifeMax;
-                bool flag = Main.expertMode || BossRushEvent.BossRushActive;
-                bool flag2 = CalamityWorld.revenge || BossRushEvent.BossRushActive;
-                bool flag3 = CalamityWorld.death || BossRushEvent.BossRushActive;
+                    float hp = (float)npc.life / (float)npc.lifeMax;
+                    bool flag = Main.expertMode || BossRushEvent.BossRushActive;
+                    bool flag2 = CalamityWorld.revenge || BossRushEvent.BossRushActive;
+                    bool flag3 = CalamityWorld.death || BossRushEvent.BossRushActive;
 
-                bool p2 = hp <= (flag2 ? 0.9f : (flag ? 0.85f : 0.75f));
-                bool p3 = hp <= (flag3 ? 0.8f : (flag2 ? 0.75f : (flag ? 0.7f : 0.625f)));
-                bool p5 = hp <= (flag2 ? 0.44f : (flag ? 0.385f : 0.275f));
-                bool p6 = hp <= (flag3 ? 0.358f : (flag2 ? 0.275f : (flag ? 0.22f : 0.138f)));
+                    bool p2 = hp <= (flag2 ? 0.9f : (flag ? 0.85f : 0.75f));
+                    bool p3 = hp <= (flag3 ? 0.8f : (flag2 ? 0.75f : (flag ? 0.7f : 0.625f)));
+                    bool p5 = hp <= (flag2 ? 0.44f : (flag ? 0.385f : 0.275f));
+                    bool p6 = hp <= (flag3 ? 0.358f : (flag2 ? 0.275f : (flag ? 0.22f : 0.138f)));
 
-                Yharon yhar = npc.ModNPC as Yharon;
-                int y = (int)yhar.GetType().GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(yhar);
-                if (yharSay == 0)
-                {
-                    Talk("Hello! Are you here for a duel? I'll go easy on you since you're so small and weak.", Color.OrangeRed);
-                    yharSay = 1;
+                    Yharon yhar = npc.ModNPC as Yharon;
+                    int y = (int)yhar.GetType().GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(yhar);
+                    if (yharSay == 0)
+                    {
+                        Talk("Hello! Are you here for a duel? I'll go easy on you since you're so small and weak.", Color.OrangeRed);
+                        yharSay = 1;
+                    }
+                    else if (yharSay == 1 && p2)
+                    {
+                        Talk("Wow, you are quite strong! I underestimated you!", Color.OrangeRed);
+                        yharSay = 2;
+                    }
+                    else if (yharSay == 2 && p3)
+                    {
+                        Talk("Well done! You can withstand my attacks while launching powerful attacks of your own!", Color.OrangeRed);
+                        yharSay = 3;
+                    }
+                    else if (yharSay == 3 && hp <= 0.55f)
+                    {
+                        Talk("No more messing around. Impressive, but it's not enough to stop me!", Color.OrangeRed);
+                        yharSay = 4;
+                    }
+                    else if (yharSay == 4 && y >= 300)
+                    {
+                        Talk("You're very tough, I hope I can win this...", Color.OrangeRed);
+                        yharSay = 5;
+                    }
+                    else if (yharSay == 5 && p5)
+                    {
+                        Talk("I won't hold back! You may be hard to beat, but I am harder!", Color.OrangeRed);
+                        yharSay = 6;
+                    }
+                    else if (yharSay == 6 && p6)
+                    {
+                        Talk("STOP! STOP! NO!", Color.OrangeRed);
+                        yharSay = 7;
+                    }
                 }
-                else if (yharSay == 1 && p2)
+                else if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
                 {
-                    Talk("Wow, you are quite strong! I underestimated you!", Color.OrangeRed);
-                    yharSay = 2;
-                }
-                else if (yharSay == 2 && p3)
-                {
-                    Talk("Well done! You can withstand my attacks while launching powerful attacks of your own!", Color.OrangeRed);
-                    yharSay = 3;
-                }
-                else if (yharSay == 3 && hp <= 0.55f)
-                {
-                    Talk("No more messing around. Impressive, but it's not enough to stop me!", Color.OrangeRed);
-                    yharSay = 4;
-                }
-                else if (yharSay == 4 && y >= 300)
-                {
-                    Talk("You're very tough, I hope I can win this...", Color.OrangeRed);
-                    yharSay = 5;
-                }
-                else if (yharSay == 5 && p5)
-                {
-                    Talk("I won't hold back! You may be hard to beat, but I am harder!", Color.OrangeRed);
-                    yharSay = 6;
-                }
-                else if (yharSay == 6 && p6)
-                {
-                    Talk("STOP! STOP! NO!", Color.OrangeRed);
-                    yharSay = 7;
-                }
-            }
-            else if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
-            {
-                if (jaredSay == 0)
-                {
-                    Talk("You are foolish to think you can invade our lands, mortal.", Color.Aqua);
-                    jaredSay = 1;
-                }
-                else if (jaredSay == 1 && (float)npc.life / (float)npc.lifeMax < 0.8f)
-                {
-                    Talk("Oh? So you are stronger than I thought... this will be fun. Have you come to take that little artifact we have guarded for all of eternity?", Color.Aqua);
-                    jaredSay = 2;
-                }
-                else if (jaredSay == 2 && (float)npc.life / (float)npc.lifeMax < 0.6f)
-                {
-                    Talk("Soon, you will cease to exist. How naive, to think that you possess even a fraction of my power.", Color.Aqua);
-                    jaredSay = 3;
-                }
-                else if (jaredSay == 3 && (float)npc.life / (float)npc.lifeMax < 0.4f)
-                {
-                    Talk("For millions of years, I have ruled this sea, undefeated. Your pointless existence will not change that.", Color.Aqua);
-                    jaredSay = 4;
-                }
-                else if (jaredSay == 4 && (float)npc.life / (float)npc.lifeMax < 0.2f)
-                {
-                    Talk("Do you think you can POSSIBLY defeat me? I am Jared, the primordial being, the abyssal god, and you think you could ever stand a chance?!", Color.Aqua);
-                    jaredSay = 5;
-                }
-                else if (jaredSay == 5 && (float)npc.life / (float)npc.lifeMax < 0.05f)
-                {
-                    Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea's young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
-                    jaredSay = 6;
-                }
-                else if (jaredSay == 6 && (float)npc.life / (float)npc.lifeMax < 0.01f)
-                {
-                    Talk("This is just the beginning of the calamity. Your enemies are ascending beyond your control... or was that all your intention?", Color.Aqua);
-                    jaredSay = 7;
+                    if (jaredSay == 0)
+                    {
+                        Talk("You are foolish to think you can invade our lands, mortal.", Color.Aqua);
+                        jaredSay = 1;
+                    }
+                    else if (jaredSay == 1 && (float)npc.life / (float)npc.lifeMax < 0.8f)
+                    {
+                        Talk("Oh? So you are stronger than I thought... this will be fun. Have you come to take that little artifact we have guarded for all of eternity?", Color.Aqua);
+                        jaredSay = 2;
+                    }
+                    else if (jaredSay == 2 && (float)npc.life / (float)npc.lifeMax < 0.6f)
+                    {
+                        Talk("Soon, you will cease to exist. How naive, to think that you possess even a fraction of my power.", Color.Aqua);
+                        jaredSay = 3;
+                    }
+                    else if (jaredSay == 3 && (float)npc.life / (float)npc.lifeMax < 0.4f)
+                    {
+                        Talk("For millions of years, I have ruled this sea, undefeated. Your pointless existence will not change that.", Color.Aqua);
+                        jaredSay = 4;
+                    }
+                    else if (jaredSay == 4 && (float)npc.life / (float)npc.lifeMax < 0.2f)
+                    {
+                        Talk("Do you think you can POSSIBLY defeat me? I am Jared, the primordial being, the abyssal god, and you think you could ever stand a chance?!", Color.Aqua);
+                        jaredSay = 5;
+                    }
+                    else if (jaredSay == 5 && (float)npc.life / (float)npc.lifeMax < 0.05f)
+                    {
+                        Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea's young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
+                        jaredSay = 6;
+                    }
+                    else if (jaredSay == 6 && (float)npc.life / (float)npc.lifeMax < 0.01f)
+                    {
+                        Talk("This is just the beginning of the calamity. Your enemies are ascending beyond your control... or was that all your intention?", Color.Aqua);
+                        jaredSay = 7;
+                    }
                 }
             }
             #endregion
-            if (npc.type == ModContent.NPCType<ProfanedGuardianCommander>() || npc.type == ModContent.NPCType<ProfanedGuardianDefender>() || npc.type == ModContent.NPCType<ProfanedGuardianHealer>())
+            if (CalRemixWorld.bossdialogue)
             {
-                if (NPC.AnyNPCs(ModContent.NPCType<DILF>()) && guardRage)
+                if (npc.type == ModContent.NPCType<ProfanedGuardianCommander>() || npc.type == ModContent.NPCType<ProfanedGuardianDefender>() || npc.type == ModContent.NPCType<ProfanedGuardianHealer>())
                 {
-                    foreach (NPC frosty in Main.npc)
+                    if (NPC.AnyNPCs(ModContent.NPCType<DILF>()) && guardRage)
                     {
-                        if (frosty.type == ModContent.NPCType<DILF>())
+                        foreach (NPC frosty in Main.npc)
                         {
-                            npc.velocity = npc.DirectionTo(frosty.Center) * 10f;
-                            return false;
+                            if (frosty.type == ModContent.NPCType<DILF>())
+                            {
+                                npc.velocity = npc.DirectionTo(frosty.Center) * 10f;
+                                return false;
+                            }
                         }
                     }
                 }
@@ -528,60 +534,66 @@ namespace CalRemix
                     }
                 }
             }
-            if (npc.type == ModContent.NPCType<PlaguebringerGoliath>() && !Main.player[npc.target].GetModPlayer<CalRemixPlayer>().ZonePlague)
+            if (CalRemixWorld.plaguetoggle)
             {
-                if (npc.ai[2] == 1)
+                if (npc.type == ModContent.NPCType<PlaguebringerGoliath>() && !Main.player[npc.target].GetModPlayer<CalRemixPlayer>().ZonePlague)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (npc.ai[2] == 1)
                     {
-                        Vector2 dist = npc.Center - Main.player[npc.target].Center;
-                        dist.Normalize();
-                        for (int i = 0; i < Main.rand.Next(5, 9); i++)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Vector2 velocity = dist * 16;
-                            Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / (float)(3 - 1)));
-                            perturbedSpeed += new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
-                            int type = Main.rand.NextBool(3) ? ModContent.ProjectileType<HiveBombGoliath>() : ModContent.ProjectileType<PlagueStingerGoliathV2>();
-                            int p = Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, perturbedSpeed, type, (int)(npc.damage * 0.5f), 0f);
+                            Vector2 dist = npc.Center - Main.player[npc.target].Center;
+                            dist.Normalize();
+                            for (int i = 0; i < Main.rand.Next(5, 9); i++)
+                            {
+                                Vector2 velocity = dist * 16;
+                                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / (float)(3 - 1)));
+                                perturbedSpeed += new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
+                                int type = Main.rand.NextBool(3) ? ModContent.ProjectileType<HiveBombGoliath>() : ModContent.ProjectileType<PlagueStingerGoliathV2>();
+                                int p = Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, perturbedSpeed, type, (int)(npc.damage * 0.5f), 0f);
+                            }
                         }
                     }
+                    //npc.ai[1]++;
                 }
-                //npc.ai[1]++;
             }
-            if (npc.type == NPCID.Unicorn)
+            if (CalRemixWorld.starbuster)
             {
-                if (NPC.AnyNPCs(ModContent.NPCType<StellarCulex>()))
+                if (npc.type == NPCID.Unicorn)
                 {
-                    foreach (NPC n in Main.npc)
+                    if (NPC.AnyNPCs(ModContent.NPCType<StellarCulex>()))
                     {
-                        if (n.type == ModContent.NPCType<StellarCulex>() && n.active)
+                        foreach (NPC n in Main.npc)
                         {
-                            if (n.getRect().Intersects(npc.getRect()))
+                            if (n.type == ModContent.NPCType<StellarCulex>() && n.active)
                             {
-                                if (Main.netMode != NetmodeID.Server)
+                                if (n.getRect().Intersects(npc.getRect()))
                                 {
-                                    Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
-                                }
-                                int craterRadius = 4;
-                                for (int i = -craterRadius; i < craterRadius; i++)
-                                {
-                                    for (int j = -craterRadius; j < craterRadius; j++)
+                                    if (Main.netMode != NetmodeID.Server)
                                     {
-                                        int dist = ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) * ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) + ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j)) * ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j));
-                                        if (dist > craterRadius * craterRadius)
-                                            continue;
-
-                                        Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
-                                        if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
+                                        Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
+                                    }
+                                    int craterRadius = 4;
+                                    for (int i = -craterRadius; i < craterRadius; i++)
+                                    {
+                                        for (int j = -craterRadius; j < craterRadius; j++)
                                         {
-                                            t.TileType = (ushort)ModContent.TileType<AstralOre>();
-                                            WorldGen.SquareTileFrame((int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, true);
-                                            NetMessage.SendTileSquare(-1, (int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, 1);
+                                            int dist = ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) * ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) + ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j)) * ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j));
+                                            if (dist > craterRadius * craterRadius)
+                                                continue;
+
+                                            Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
+                                            if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
+                                            {
+                                                t.TileType = (ushort)ModContent.TileType<AstralOre>();
+                                                WorldGen.SquareTileFrame((int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, true);
+                                                NetMessage.SendTileSquare(-1, (int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, 1);
+                                            }
                                         }
                                     }
+                                    n.StrikeInstantKill();
+                                    npc.StrikeInstantKill();
                                 }
-                                n.StrikeInstantKill();
-                                npc.StrikeInstantKill();
                             }
                         }
                     }
@@ -602,19 +614,22 @@ namespace CalRemix
                             vel.SafeNormalize(Vector2.Zero);
                             d.velocity = vel * Main.rand.NextFloat(0.1f, 0.3f);
                         }
-                        if (npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.SpawnedFromStatue && npc.damage > 0 && !npc.friendly)
+                        if (CalRemixWorld.fearmonger)
                         {
-                            if (Main.rand.NextBool(10))
+                            if (npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.SpawnedFromStatue && npc.damage > 0 && !npc.friendly)
                             {
-                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreathelm>());
-                            }
-                            if (Main.rand.NextBool(10))
-                            {
-                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreaves>());
-                            }
-                            if (Main.rand.NextBool(10))
-                            {
-                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerPlateMail>());
+                                if (Main.rand.NextBool(10))
+                                {
+                                    Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreathelm>());
+                                }
+                                if (Main.rand.NextBool(10))
+                                {
+                                    Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerGreaves>());
+                                }
+                                if (Main.rand.NextBool(10))
+                                {
+                                    Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<FearmongerPlateMail>());
+                                }
                             }
                         }
                     }
@@ -896,7 +911,7 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<Horse>())
                 CalRemixWorld.downedEarth = true;
-            if (!CystMessage.alreadySeen)
+            if (!CystMessage.alreadySeen && !CalRemixWorld.grimesandToggle)
             {
                 if (npc.type == ModContent.NPCType<PerforatorCyst>() || npc.type == ModContent.NPCType<HiveTumor>())
                 {
@@ -963,16 +978,22 @@ namespace CalRemix
         }
         public override bool PreKill(NPC npc)
         {
-            if (!DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())
-            {
-                CalamityUtils.SpawnOre(ModContent.TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
+            if (CalRemixWorld.lifeoretoggle)
+            { 
+                if (!DownedBossSystem.downedRavager && npc.type == ModContent.NPCType<RavagerBody>())
+                {
+                    CalamityUtils.SpawnOre(ModContent.TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
 
-                Color messageColor = Color.Lime;
-                CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);
+                    Color messageColor = Color.Lime;
+                    CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);
+                }
             }
-            if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
+            if (CalRemixWorld.shrinetoggle)
             {
-                CalRemixWorld.ShrineTimer = 3000;
+                if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
+                {
+                    CalRemixWorld.ShrineTimer = 3000;
+                }
             }
             return true;
         }
@@ -997,39 +1018,41 @@ namespace CalRemix
         }
         public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
-            if (npc.type == ModContent.NPCType<Crabulon>() && crabSay <= 1)
+            if (CalRemixWorld.bossdialogue)
             {
-                Talk("No? Please do be careful with that weapon, though, it looks kinda dangerous. Honestly, you seem quite... crabby. Get it?!", Color.LightSkyBlue);
-                crabSay = 2;
+                if (npc.type == ModContent.NPCType<Crabulon>() && crabSay <= 1)
+                {
+                    Talk("No? Please do be careful with that weapon, though, it looks kinda dangerous. Honestly, you seem quite... crabby. Get it?!", Color.LightSkyBlue);
+                    crabSay = 2;
+                }
+                else if (npc.type == ModContent.NPCType<Crabulon>() && npc.life <= 0 && crabSay == 4)
+                {
+                    Talk("AAAAAAAAAh", Color.LightSkyBlue);
+                    crabSay = 5;
+                }
+                else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianCommander>())
+                {
+                    Talk("Guardian Commander: MY MENTAL FORTITUDE IS FADING...", Color.Yellow);
+                }
+                else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianDefender>())
+                {
+                    Talk("Guardian Defender: Nothing... can beat my eldest sibling...", Color.Gold);
+                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianCommander>()))
+                        Talk("Guardian Commander: VERY SOON, YOU WILL FEEL MY PROFANED RAGE... HA-HA-HA...", Color.Yellow);
+                }
+                else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianHealer>())
+                {
+                    Talk("Guardian Healer: Ouch!", Color.LavenderBlush);
+                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianDefender>()))
+                        Talk("Guardian Defender: How? How could you!?", Color.Gold);
+                    if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianCommander>()))
+                        Talk("Guardian Commander: ENOUGH! YOU MAY HAVE DEFEATED ONE OF US, BUT US TWO ARE MUCH TOUGHER!", Color.Yellow);
+                }
+                else if (npc.life <= 0 && npc.type == ModContent.NPCType<Yharon>())
+                {
+                    Talk("I can't believe it, you are even stronger than me. Nice job!", Color.OrangeRed);
+                }
             }
-            else if (npc.type == ModContent.NPCType<Crabulon>() && npc.life <= 0 && crabSay == 4)
-            {
-                Talk("AAAAAAAAAh", Color.LightSkyBlue);
-                crabSay = 5;
-            }
-            else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianCommander>())
-            {
-                Talk("Guardian Commander: MY MENTAL FORTITUDE IS FADING...", Color.Yellow);
-            }
-            else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianDefender>())
-            {
-                Talk("Guardian Defender: Nothing... can beat my eldest sibling...", Color.Gold);
-                if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianCommander>()))
-                    Talk("Guardian Commander: VERY SOON, YOU WILL FEEL MY PROFANED RAGE... HA-HA-HA...", Color.Yellow);
-            }
-            else if (npc.life <= 0 && npc.type == ModContent.NPCType<ProfanedGuardianHealer>())
-            {
-                Talk("Guardian Healer: Ouch!", Color.LavenderBlush);
-                if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianDefender>()))
-                    Talk("Guardian Defender: How? How could you!?", Color.Gold);
-                if (NPC.AnyNPCs(ModContent.NPCType<ProfanedGuardianCommander>()))
-                    Talk("Guardian Commander: ENOUGH! YOU MAY HAVE DEFEATED ONE OF US, BUT US TWO ARE MUCH TOUGHER!", Color.Yellow);
-            }
-            else if (npc.life <= 0 && npc.type == ModContent.NPCType<Yharon>())
-            {
-                Talk("I can't believe it, you are even stronger than me. Nice job!", Color.OrangeRed);
-            }
-
         }
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
@@ -1048,6 +1071,8 @@ namespace CalRemix
 
         private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
+            if (!CalRemixWorld.grimesandToggle)
+                return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
             if (spawnSource is EntitySource_Death)
             {
                 if (type == ModContent.NPCType<HiveMind>())

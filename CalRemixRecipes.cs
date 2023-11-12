@@ -561,10 +561,6 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<UnholyBloodCells>(), 25);
                 }
-                if (recipe.HasResult(ModContent.ItemType<Seafood>()))
-                {
-                    recipe.DisableRecipe();
-                }
                 if (recipe.HasResult(ModContent.ItemType<MidnightSunBeacon>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
