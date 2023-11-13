@@ -48,6 +48,7 @@ namespace CalRemix.UI
         public static bool TryUnlock = false;
         private static int HeldRightTimer = 0;
         private static Vector2 fannyOffset = Vector2.Zero;
+        public static int fannyFreezeTime = 0;
 
         public enum InputType
         {
@@ -65,6 +66,10 @@ namespace CalRemix.UI
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (!FannyManager.fannyEnabled)
+            {
+                fannyFreezeTime++;
+            }
             // This prevents drawing unless we are using an ExampleCustomResourceWeapon
             if (Main.gameMenu)
                 return;
@@ -376,6 +381,7 @@ namespace CalRemix.UI
                     ClickCooldown = 12;
                     if (FannyManager.fannyEnabled)
                     {
+                        fannyFreezeTime = 0;
                         SoundEngine.PlaySound(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f });
                         SoundEngine.PlaySound(SoundID.Item27);
                         SoundEngine.PlaySound(SoundID.Item62);

@@ -488,6 +488,7 @@ namespace CalRemix.UI
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
         public static bool fannyEnabled = true;
+        public static int fannyTimesFrozen = 0;
 
         #region Loading
         public override void Load()
@@ -513,6 +514,7 @@ namespace CalRemix.UI
             LoadWonderFlowerMessages();
 
             fannyEnabled = true;
+            fannyTimesFrozen = 0;
         }
 
 

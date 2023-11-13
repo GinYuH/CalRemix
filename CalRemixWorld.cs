@@ -247,6 +247,7 @@ namespace CalRemix
             tag["109seafood"] = seafood;
             tag["109laruga"] = laruga;
             tag["109fanny"] = FannyManager.fannyEnabled;
+            tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -297,6 +298,7 @@ namespace CalRemix
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
             transmogrifyTimeLeft = tag.Get<int>("transmogrifyTimeLeft");
             meldCountdown = tag.Get<int>("meld");
+            FannyManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -337,6 +339,7 @@ namespace CalRemix
             writer.Write(seafood );//tag.Get<bool>("109seafood");;// );//seafood;
             writer.Write(laruga );//tag.Get<bool>("109laruga");;// );//laruga;
             writer.Write(FannyManager.fannyEnabled);
+            writer.Write(FannyManager.fannyTimesFrozen);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -382,6 +385,7 @@ namespace CalRemix
             seafood = reader.ReadBoolean();//.Get<bool>("109seafood");// = seafood;
             laruga = reader.ReadBoolean();//.Get<bool>("109laruga");// = laruga;
             FannyManager.fannyEnabled = reader.ReadBoolean();
+            FannyManager.fannyTimesFrozen = reader.ReadInt32();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
