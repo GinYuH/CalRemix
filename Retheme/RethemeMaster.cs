@@ -86,6 +86,8 @@ namespace CalRemix.Retheme
         };
         public static void RethemeNPCDefaults(NPC npc)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             #region Resprites
             if (npc.type == NPCType<DesertScourgeHead>())
             {
@@ -321,6 +323,8 @@ namespace CalRemix.Retheme
         }
         public static void RethemeNPCPostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             if (npc.type == NPCType<ProfanedGuardianCommander>())
                 MaskDraw(1, npc, spriteBatch, screenPos, drawColor);
             else if (npc.type == NPCType<ProfanedGuardianDefender>())
@@ -353,6 +357,8 @@ namespace CalRemix.Retheme
         }
         public static void RethemeItemDefaults(Item item)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             #region Resprites
             if (item.type == ItemType<PearlShard>())
             {
@@ -773,58 +779,70 @@ namespace CalRemix.Retheme
                 var line = new TooltipLine(mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<CryoKey>())
+            if (CalRemixWorld.aspids)
             {
-                var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<EyeofDesolation>())
-            {
-                var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<Abombination>())
-            {
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
-            }
-            if (item.type == ItemType<FearmongerGreathelm>())
-            {
-                tooltips.FindAndReplace("+60 max mana and ", "");
-                tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
-                for (int i = 0; i < tooltips.Count; i++)
+                if (item.type == ItemType<CryoKey>())
                 {
-                    if (tooltips[i].Text.Contains("Pumpkin"))
-                    {
-                        tooltips.RemoveAt(i);
-                        break;
-                    }
+                    var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                    tooltips.Add(line);
                 }
-                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
             }
-            if (item.type == ItemType<FearmongerPlateMail>())
+            if (CalRemixWorld.clamitas)
             {
-                tooltips.FindAndReplace("+100 max life and ", "");
-                for (int i = 0; i < tooltips.Count; i++)
+                if (item.type == ItemType<EyeofDesolation>())
                 {
-                    if (tooltips[i].Text.Contains("Pumpkin"))
-                    {
-                        tooltips.RemoveAt(i);
-                    }
+                    var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                    tooltips.Add(line);
                 }
-                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
             }
-            if (item.type == ItemType<FearmongerGreaves>())
+            if (CalRemixWorld.plaguetoggle)
             {
-                for (int i = 0; i < tooltips.Count; i++)
+                if (item.type == ItemType<Abombination>())
                 {
-                    if (tooltips[i].Text.Contains("Pumpkin"))
-                    {
-                        tooltips.RemoveAt(i);
-                        break;
-                    }
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
                 }
-                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+            }
+            if (CalRemixWorld.fearmonger)
+            {
+                if (item.type == ItemType<FearmongerGreathelm>())
+                {
+                    tooltips.FindAndReplace("+60 max mana and ", "");
+                    tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerPlateMail>())
+                {
+                    tooltips.FindAndReplace("+100 max life and ", "");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerGreaves>())
+                {
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
             }
             if (Torch.Contains(item.type))
             {
@@ -835,6 +853,8 @@ namespace CalRemix.Retheme
         }
         public static void RethemeProjDefaults(Projectile projectile)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             #region Resprites
            // if (projectile.type == ProjectileType<AquaticDischargeProj>())
             {
@@ -950,6 +970,8 @@ namespace CalRemix.Retheme
         }
         public static Color? RethemeProjAlpha(Projectile projectile)
         {
+            if (!CalRemixWorld.resprites)
+                return null;
             if ((!Main.dayTime || BossRushEvent.BossRushActive) && (projectile.type == ProjectileType<HolyBlast>() || projectile.type == ProjectileType<HolyBomb>() || projectile.type == ProjectileType<HolyFire>() || projectile.type == ProjectileType<HolyFire2>() || projectile.type == ProjectileType<HolyFlare>() || projectile.type == ProjectileType<MoltenBlob>() || projectile.type == ProjectileType<MoltenBlast>()))
                 return Color.MediumPurple;
             return null;
@@ -958,6 +980,16 @@ namespace CalRemix.Retheme
     public class RethemeIL : ModSystem
     {
         public override void Load()
+        {
+            LoadRethemes();
+        }
+
+        public override void Unload()
+        {
+            UnloadRethemes();
+        }
+
+        public static void LoadRethemes()
         {
             // IL.CalamityMod.NPCs.PreDraw += ;
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
@@ -1005,8 +1037,58 @@ namespace CalRemix.Retheme
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
         }
+
+        public static void UnloadRethemes()
+        {
+            // IL.CalamityMod.NPCs.PreDraw -= ;
+            IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw -= Crabulon;
+            IL.CalamityMod.NPCs.HiveMind.HiveMind.PreDraw -= HiveMind;
+            IL.CalamityMod.NPCs.Perforator.PerforatorCyst.PreDraw -= PerforatorCyst;
+            #region PerfWormHeck
+            IL.CalamityMod.NPCs.Perforator.PerforatorBodyLarge.PreDraw -= PerfLBody;
+            IL.CalamityMod.NPCs.Perforator.PerforatorBodyMedium.PreDraw -= PerfMBody;
+            IL.CalamityMod.NPCs.Perforator.PerforatorBodySmall.PreDraw -= PerfSBody;
+            IL.CalamityMod.NPCs.Perforator.PerforatorHeadLarge.PreDraw -= PerfLHead;
+            IL.CalamityMod.NPCs.Perforator.PerforatorHeadMedium.PreDraw -= PerfMHead;
+            IL.CalamityMod.NPCs.Perforator.PerforatorHeadSmall.PreDraw -= PerfSHead;
+            IL.CalamityMod.NPCs.Perforator.PerforatorTailLarge.PreDraw -= PerfLTail;
+            IL.CalamityMod.NPCs.Perforator.PerforatorTailMedium.PreDraw -= PerfMTail;
+            IL.CalamityMod.NPCs.Perforator.PerforatorTailSmall.PreDraw -= PerfSTail;
+            #endregion
+            IL.CalamityMod.NPCs.Perforator.PerforatorHive.PreDraw -= PerforatorHive;
+            IL.CalamityMod.NPCs.Cryogen.Cryogen.PreDraw -= Cryogen;
+            IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw -= CryogenShield;
+            IL.CalamityMod.NPCs.CalClone.CalamitasClone.PreDraw -= CalamitasClone;
+            IL.CalamityMod.NPCs.CalClone.Cataclysm.PreDraw -= Cataclysm;
+            IL.CalamityMod.NPCs.CalClone.Catastrophe.PreDraw -= Catastrophe;
+            IL.CalamityMod.NPCs.Leviathan.Leviathan.SetStaticDefaults -= Leviathan;
+            IL.CalamityMod.NPCs.Leviathan.Anahita.PreDraw -= Anahita;
+            //IL.CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.PreDraw -= PBG;
+            //IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
+            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusHead.PreDraw -= AstrumDeusHead;
+            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusBody.PreDraw -= AstrumDeusBody;
+            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusTail.PreDraw -= AstrumDeusTail;
+            IL.CalamityMod.NPCs.Yharon.Yharon.PreDraw -= Yharon;
+            IL.CalamityMod.NPCs.Other.THELORDE.PreDraw -= LORDE;
+            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|46_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
+            //MonoModHooks.Modify(typeof(CalamityMod.CalamityMod).Assembly.GetType("WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Instance), BossChecklist);
+
+            // IL.CalamityMod.Items.Weapons.PreDraw -= ;
+            IL.CalamityMod.Items.Weapons.Ranged.HeavenlyGale.PostDrawInWorld -= HeavenlyGale;
+
+            // IL.CalamityMod.Projectiles.PreDraw -= ;
+            IL.CalamityMod.Projectiles.Rogue.InfestedClawmerangProj.PreDraw -= InfestedClawmerangProj;
+            IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI -= EldritchTentacle;
+            IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw -= MurasamaSlash;
+            IL.CalamityMod.Projectiles.Melee.ExobladeProj.DrawBlade -= ExobladeProj;
+            IL.CalamityMod.Projectiles.Ranged.HeavenlyGaleProj.PreDraw -= HeavenlyGaleProj;
+            IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw -= CelestusProj;
+            IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw -= ViolenceThrownProjectile;
+            IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw -= HolyBlast;
+        }
+
         #region BossChecklist
-        private void BossChecklist(ILContext il)
+        private static void BossChecklist(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/DesertScourge/DesertScourge_BossChecklist")))
@@ -1014,7 +1096,7 @@ namespace CalRemix.Retheme
         }
         #endregion
         #region NPCs
-        private void Crabulon(ILContext il)
+        private static void Crabulon(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Crabulon/CrabulonGlow")))
@@ -1024,27 +1106,27 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Crabulon/CrabulonAttackGlow")))
                 Retheme(c, "CalRemix/Retheme/Crabulon/CrabulonAttackGlow");
         }
-        private void HiveMind(ILContext il)
+        private static void HiveMind(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/HiveMind/HiveMindP2")))
                 Retheme(c, "CalRemix/Retheme/HiveMind/HiveMindP2");
         }
-        private void PerforatorCyst(ILContext il)
+        private static void PerforatorCyst(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorCystGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/CystGlow");
         }
         #region PerfWormHeck
-        private void PerforatorHive(ILContext il)
+        private static void PerforatorHive(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorHiveGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/HiveGlow");
         }
         #endregion
-        private void PerfLBody(ILContext il)
+        private static void PerfLBody(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorBodyLargeAlt")))
@@ -1054,97 +1136,97 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorBodyLargeAltGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/LBodyAltGlow");
         }
-        private void PerfMBody(ILContext il)
+        private static void PerfMBody(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorBodyMediumGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/MBodyGlow");
         }
-        private void PerfSBody(ILContext il)
+        private static void PerfSBody(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorBodySmallGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/SBodyGlow");
         }
-        private void PerfLHead(ILContext il)
+        private static void PerfLHead(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorHeadLargeGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/LHeadGlow");
         }
-        private void PerfMHead(ILContext il)
+        private static void PerfMHead(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorHeadMediumGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/MHeadGlow");
         }
-        private void PerfSHead(ILContext il)
+        private static void PerfSHead(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorHeadSmallGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/SHeadGlow");
         }
-        private void PerfLTail(ILContext il)
+        private static void PerfLTail(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorTailLargeGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/LTailGlow");
         }
-        private void PerfMTail(ILContext il)
+        private static void PerfMTail(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorTailMediumGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/MTailGlow");
         }
-        private void PerfSTail(ILContext il)
+        private static void PerfSTail(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Perforator/PerforatorTailSmallGlow")))
                 Retheme(c, "CalRemix/Retheme/Perfs/STailGlow");
         }
-        private void Cryogen(ILContext il)
+        private static void Cryogen(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Cryogen/Cryogen_Phase")))
                 Retheme(c, "CalRemix/Retheme/Cryogen/CryogenPhase");
         }
-        private void CryogenShield(ILContext il)
+        private static void CryogenShield(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Cryogen/CryogenShield")))
                 Retheme(c, "CalRemix/Retheme/Cryogen/CryogenShield");
         }
-        private void CalamitasClone(ILContext il)
+        private static void CalamitasClone(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/CalClone/CalamitasCloneGlow")))
                 Retheme(c, "CalRemix/Retheme/Cal/CalamitasGlow");
         }
-        private void Cataclysm(ILContext il)
+        private static void Cataclysm(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/CalClone/CataclysmGlow")))
                 Retheme(c, "CalRemix/Retheme/Cal/CataclysmGlow");
         }
-        private void Catastrophe(ILContext il)
+        private static void Catastrophe(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/CalClone/CatastropheGlow")))
                 Retheme(c, "CalRemix/Retheme/Cal/CatastropheGlow");
         }
-        private void Leviathan(ILContext il)
+        private static void Leviathan(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Leviathan/LeviathanAttack")))
                 Retheme(c, "CalRemix/Retheme/Levi/Levi2");
         }
-        private void Anahita(ILContext il)
+        private static void Anahita(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Leviathan/AnahitaStabbing")))
                 Retheme(c, "CalRemix/Retheme/Levi/AnahitaStab");
         }/*
-        private void PBG(ILContext il)
+        private static void PBG(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/PlaguebringerGoliath/PlaguebringerGoliathGlow")))
@@ -1154,7 +1236,7 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/PlaguebringerGoliath/PlaguebringerGoliathChargeTexGlow")))
                 Retheme(c, "CalRemix/Retheme/Plague/PBGGlow");
         }*/
-        private void AstrumDeusHead(ILContext il)
+        private static void AstrumDeusHead(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/AstrumDeus/AstrumDeusHeadGlow2")))
@@ -1166,7 +1248,7 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/AstrumDeus/AstrumDeusHeadGlow4")))
                 Retheme(c, "CalRemix/Retheme/AD/HeadGlow");
         }
-        private void AstrumDeusBody(ILContext il)
+        private static void AstrumDeusBody(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/AstrumDeus/AstrumDeusBodyAltSpectral")))
@@ -1184,7 +1266,7 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/AstrumDeus/AstrumDeusBodyGlow4")))
                 Retheme(c, "CalRemix/Retheme/AD/BodyGlow");
         }
-        private void AstrumDeusTail(ILContext il)
+        private static void AstrumDeusTail(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/AstrumDeus/AstrumDeusTailGlow")))
@@ -1192,7 +1274,7 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/AstrumDeus/AstrumDeusTailGlow2")))
                 Retheme(c, "CalRemix/Retheme/AD/TailGlow");
         }
-        private void Providence(ILContext il)
+        private static void Providence(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Providence/")))
@@ -1217,7 +1299,7 @@ namespace CalRemix.Retheme
                 c.Emit(OpCodes.Call, typeof(Color).GetMethod("get_White"));
             }*/
         }
-        private void Yharon(ILContext il)
+        private static void Yharon(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Yharon/YharonGlowGreen")))
@@ -1225,7 +1307,7 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/NPCs/Yharon/YharonGlowPurple")))
                 Retheme(c, "CalRemix/Retheme/Yharon/YharonGlowPurple");
         }
-        private void LORDE(ILContext il)
+        private static void LORDE(ILContext il)
         {
             var c = new ILCursor(il);
             var t = typeof(ModNPC).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance);
@@ -1238,7 +1320,7 @@ namespace CalRemix.Retheme
         }
         #endregion
         #region Items
-        private void HeavenlyGale(ILContext il)
+        private static void HeavenlyGale(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/Items/Weapons/Ranged/HeavenlyGaleGlow")))
@@ -1246,14 +1328,14 @@ namespace CalRemix.Retheme
         }
         #endregion
         #region Projectiles
-        private void InfestedClawmerangProj(ILContext il)
+        private static void InfestedClawmerangProj(ILContext il)
         {
             var c = new ILCursor(il);
             var t = typeof(ModProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance);
             if (c.TryGotoNext(i => i.MatchCallvirt(t)))
                 Retheme(c, "CalRemix/Retheme/Crabulon/Shroomerang");
         }
-        private void EldritchTentacle(ILContext il)
+        private static void EldritchTentacle(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdcI4(60)))
@@ -1263,21 +1345,21 @@ namespace CalRemix.Retheme
                 c.Emit(OpCodes.Ldc_I4, 188);
             }
         }
-        private void MurasamaSlash(ILContext il)
+        private static void MurasamaSlash(ILContext il)
         {
             var c = new ILCursor(il);
             var t = typeof(ModProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance);
             if (c.TryGotoNext(i => i.MatchCallvirt(t)))
                 Retheme(c, "CalRemix/Retheme/MurasamaSlash");
         }
-        private void ExobladeProj(ILContext il)
+        private static void ExobladeProj(ILContext il)
         {
             var c = new ILCursor(il);
             var t = typeof(ModProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance);
             if (c.TryGotoNext(i => i.MatchCallvirt(t)))
                 Retheme(c, "CalRemix/Retheme/Exo/Blade");
         }
-        private void HeavenlyGaleProj(ILContext il)
+        private static void HeavenlyGaleProj(ILContext il)
         {
             var c = new ILCursor(il);
             var t = typeof(ModProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance);
@@ -1286,19 +1368,19 @@ namespace CalRemix.Retheme
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/Projectiles/Ranged/HeavenlyGaleProjGlow")))
                 Retheme(c, "CalRemix/Retheme/Exo/GaleProjGlow");
         }
-        private void CelestusProj(ILContext il)
+        private static void CelestusProj(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchLdstr("CalamityMod/Projectiles/Rogue/CelestusProjGlow")))
                 Retheme(c, "CalRemix/Retheme/Blank");
         }
-        private void ViolenceThrownProjectile(ILContext il)
+        private static void ViolenceThrownProjectile(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchCallvirt(typeof(ModProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance))))
                 Retheme(c, "CalRemix/Retheme/Violence");
         }
-        private void HolyBlast(ILContext il)
+        private static void HolyBlast(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchCallvirt(typeof(ModProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance))))

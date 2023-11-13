@@ -42,6 +42,7 @@ using log4net.Core;
 using CalamityMod.Tiles.FurnitureVoid;
 using CalamityMod.Items.SummonItems;
 using CalRemix.Items;
+using Terraria.UI;
 
 namespace CalRemix
 {
@@ -408,12 +409,17 @@ namespace CalRemix
         };
         public override void PreUpdateWorld()
         {
+            return;
             RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
             RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
             RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
             RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-            RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
-            RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+            if (false)
+            {
+                Main.NewText("Removed reaper teeth");
+                RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
+                RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+            }
             RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
             //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
         }
@@ -489,6 +495,29 @@ namespace CalRemix
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
         }
 
+        public static void AddLootDynamically(int npcType, bool npc = false)
+        {
+            if (npc)
+            {
+                if (npcType == NPCType<ReaperShark>())
+                {
+                    var postPolter = new LeadingConditionRule(DropHelper.PostPolter());
+                    postPolter.Add(ItemType<ReaperTooth>(), 1, 3, 4);
+                    Terraria.Main.ItemDropsDB.RegisterToNPC(npcType, postPolter);
+                }
+            }
+            else
+            {
+                if (npcType == ItemType<SulphurousCrate>())
+                {
+                    // dude i fucking FUCKING LOATHE drop code
+                    var postDuke = new LeadingConditionRule(DropHelper.PostOD());
+                    postDuke.Add(ItemType<ReaperTooth>(), 10, 1, 5);
+                    var postPolter = new LeadingConditionRule(DropHelper.PostPolter()).OnSuccess(postDuke);
+                    Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
+                }
+            }
+        }
         public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
         {
             List<IItemDropRule> JungleCrateDrops = npc ? Terraria.Main.ItemDropsDB.GetRulesForNPCID(bagType) : Terraria.Main.ItemDropsDB.GetRulesForItemID(bagType);

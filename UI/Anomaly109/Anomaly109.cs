@@ -1,11 +1,14 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Fishing.SulphurCatches;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalamityMod.Items.Potions;
+using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.Yharon;
 using CalRemix.Items.Materials;
 using CalRemix.Projectiles.Weapons;
+using CalRemix.Retheme;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -415,7 +418,7 @@ namespace CalRemix.UI
                 options.Add(new Anomaly109Option("thedevourerofgods", "cosmilite_slag", "Toggles initial generation of Cosmilite Slag and nerfed Cosmilite gear", () => { CalRemixWorld.cosmislag = !CalRemixWorld.cosmislag; }, new Condition("", () => CalRemixWorld.cosmislag)));
                 options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () => { CalRemixWorld.reargar = !CalRemixWorld.reargar; }, new Condition("", () => CalRemixWorld.reargar)));
                 options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal",  () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, new Condition("", () => CalRemixWorld.sidegar)));
-                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => { CalRemixWorld.frontgar = !CalRemixWorld.frontgar; }, new Condition("", () => CalRemixWorld.frontgar)));
+                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => { if (!CalRemixWorld.frontgar) { CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true); CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false); } else { CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true); CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>()); } CalRemixWorld.frontgar = !CalRemixWorld.frontgar; }, new Condition("", () => CalRemixWorld.frontgar)));
                 options.Add(new Anomaly109Option("meldosaurus", "meld_gunk", "Toggles Meld Gunk initial generation and spread", () => { CalRemixWorld.meldGunk = !CalRemixWorld.meldGunk; }, new Condition("", () => CalRemixWorld.meldGunk)));
                 options.Add(new Anomaly109Option("leviathan", "crocodile_scales", "Toggles Crocodile Scales from recipes", () => { if (CalRemixWorld.crocodile) { Recipes.MassModifyIngredient(CalRemixWorld.crocodile, Recipes.crocodileCrafts); }; CalRemixWorld.crocodile = !CalRemixWorld.crocodile; }, new Condition("", ()=> CalRemixWorld.crocodile)));
                 options.Add(new Anomaly109Option("bloodorange", "permanent_upgrades", "Toggles permanent upgrade recipe removals and alt obtainment methods", () => { CalRemixWorld.permanenthealth = !CalRemixWorld.permanenthealth; }, new Condition("", () => CalRemixWorld.permanenthealth)));
