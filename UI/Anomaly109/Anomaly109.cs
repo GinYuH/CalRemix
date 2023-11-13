@@ -3,8 +3,11 @@ using CalamityMod.Items.Fishing.SulphurCatches;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
+using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.Abyss;
+using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.Yharon;
 using CalRemix.Items.Materials;
 using CalRemix.Projectiles.Weapons;
@@ -413,10 +416,37 @@ namespace CalRemix.UI
             {
                 options.Add(new Anomaly109Option("terragrim", "alloy_bars", "Toggles Alloy Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.alloyBars, Recipes.alloyBarCrafts); CalRemixWorld.alloyBars = !CalRemixWorld.alloyBars; }, new Condition("", () => CalRemixWorld.alloyBars)));
                 options.Add(new Anomaly109Option("starfury", "essential_essence_bars", "Toggles Essential Essence Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.essenceBars, Recipes.essenceBarCrafts); CalRemixWorld.essenceBars = !CalRemixWorld.essenceBars; }, new Condition("", () => CalRemixWorld.essenceBars)));
-                options.Add(new Anomaly109Option("defiledgreatsword", "yharim_bars", "Toggles Yharim Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.yharimBars, Recipes.yharimBarCrafts); CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, new Condition("", () => CalRemixWorld.yharimBars)));
+                options.Add(new Anomaly109Option("defiledgreatsword", "yharim_bars", "Toggles Yharim Bars from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, new Condition("", () => CalRemixWorld.yharimBars)));
                 options.Add(new Anomaly109Option("babilzot", "shimmer_essences", "Toggles Shimmer Essences from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.shimmerEssences, Recipes.shimmerEssenceCrafts); CalRemixWorld.shimmerEssences = !CalRemixWorld.shimmerEssences; }, new Condition("", () => CalRemixWorld.shimmerEssences)));
-                options.Add(new Anomaly109Option("thedevourerofgods", "cosmilite_slag", "Toggles initial generation of Cosmilite Slag and nerfed Cosmilite gear", () => { CalRemixWorld.cosmislag = !CalRemixWorld.cosmislag; }, new Condition("", () => CalRemixWorld.cosmislag)));
-                options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () => { CalRemixWorld.reargar = !CalRemixWorld.reargar; }, new Condition("", () => CalRemixWorld.reargar)));
+                options.Add(new Anomaly109Option("thedevourerofgods", "cosmilite_slag", "Toggles initial generation of Cosmilite Slag and nerfed Cosmilite gear", () => 
+                { 
+                    if (!CalRemixWorld.cosmislag) 
+                    { 
+                        CalRemixWorld.RemoveLoot(ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<CosmiliteBar>(), true); 
+                        CalRemixWorld.RemoveLoot(ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<CosmiliteBar>(), false); 
+                    } 
+                    else 
+                    { 
+                        CalRemixWorld.AddLootDynamically(ModContent.NPCType<DevourerofGodsHead>(), true);
+                        CalRemixWorld.AddLootDynamically(ModContent.ItemType<DevourerofGodsBag>());
+                    }  
+                    CalRemixWorld.cosmislag = !CalRemixWorld.cosmislag; 
+                }, new Condition("", () => CalRemixWorld.cosmislag)));
+                options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () =>
+                {
+                    if (!CalRemixWorld.reargar)
+                    {
+                        CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrate, ModContent.ItemType<UelibloomOre>(), false);
+                        CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrateHard, ModContent.ItemType<UelibloomOre>(), false);
+                        CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrate, ModContent.ItemType<UelibloomBar>(), false);
+                        CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrateHard, ModContent.ItemType<UelibloomBar>(), false);
+                    }
+                    else
+                    {
+                        CalRemixWorld.AddLootDynamically(ItemID.JungleFishingCrate);
+                    }
+                    CalRemixWorld.reargar = !CalRemixWorld.reargar; 
+                }, new Condition("", () => CalRemixWorld.reargar)));
                 options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal",  () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, new Condition("", () => CalRemixWorld.sidegar)));
                 options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => { if (!CalRemixWorld.frontgar) { CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true); CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false); } else { CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true); CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>()); } CalRemixWorld.frontgar = !CalRemixWorld.frontgar; }, new Condition("", () => CalRemixWorld.frontgar)));
                 options.Add(new Anomaly109Option("meldosaurus", "meld_gunk", "Toggles Meld Gunk initial generation and spread", () => { CalRemixWorld.meldGunk = !CalRemixWorld.meldGunk; }, new Condition("", () => CalRemixWorld.meldGunk)));

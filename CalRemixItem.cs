@@ -407,6 +407,8 @@ namespace CalRemix
             {
                 itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<CosmiliteBar>());
+                itemLoot.AddIf(()=> !CalRemixWorld.cosmislag, ModContent.ItemType<CosmiliteBar>(), 1, 55, 65);
+
             }
             else if (item.type == ModContent.ItemType<YharonBag>())
             {

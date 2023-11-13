@@ -44,6 +44,7 @@ using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod;
 using System.Collections.Generic;
+using Steamworks;
 
 namespace CalRemix
 {
@@ -87,6 +88,7 @@ namespace CalRemix
             {
                 Recipe alloy = Recipe.Create(ModContent.ItemType<LifeAlloy>());
                 alloy.AddIngredient<LifeOre>(5)
+                .AddCondition(new Condition("While the Anomaly 109 \'life_ore\' setting is enabled", () => CalRemixWorld.alloyBars))
                 .AddTile(TileID.AdamantiteForge)
                 .Register();
             }
@@ -98,13 +100,14 @@ namespace CalRemix
             {
                 Recipe cell = Recipe.Create(ModContent.ItemType<PlagueCellCanister>(), 1);
                 cell.AddRecipeGroup(RecipeGroupID.IronBar);
-                cell.AddCondition(new Condition("While Coyote Venom is enabled", () => CalRemixWorld.wolfvenom));
+                cell.AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom));
                 cell.Register();
             }
             {
                 Recipe bar = Recipe.Create(ModContent.ItemType<CosmiliteBar>(), 1);
                 bar.AddIngredient<CosmiliteSlag>(5);
-                bar.AddTile(TileID.LunarCraftingStation);
+                bar.AddTile(TileID.LunarCraftingStation)
+                .AddCondition(new Condition("While the Anomaly 109 \'cosmilite_slag\' setting is enabled", () => CalRemixWorld.cosmislag));
                 bar.Register();
             }
             {
@@ -223,31 +226,31 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<MiracleFruit>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<Dragonfruit>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<BloodOrange>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<CometShard>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<EtherealCore>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<PhantomHeart>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<DesertMedallion>()))
                 {
@@ -255,31 +258,31 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<CryoKey>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'primal_aspid\' setting is disabled", () => !CalRemixWorld.aspids));
                 }
                 if (recipe.HasResult(ModContent.ItemType<EyeofDesolation>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'clamitas\' setting is disabled", () => !CalRemixWorld.clamitas));
                 }
                 if (recipe.HasResult(ModContent.ItemType<GalacticaSingularity>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'side_gar\' setting is disabled", () => !CalRemixWorld.sidegar));
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreathelm>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerPlateMail>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreaves>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
                 }
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the Anomaly 109 \'seafood\' setting is disabled", () => !CalRemixWorld.seafood));
                 }
                 /*if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
@@ -567,11 +570,11 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
             }
-            MassAddIngredient(essenceBarCrafts);
+            /*MassAddIngredient(essenceBarCrafts);
             MassAddIngredient(alloyBarCrafts);
             MassAddIngredient(yharimBarCrafts);
             MassAddIngredient(venomCrafts);
-            MassAddIngredient(shimmerEssenceCrafts);
+            MassAddIngredient(shimmerEssenceCrafts);*/
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
                 Recipe recipe = Main.recipe[i];
@@ -607,6 +610,17 @@ namespace CalRemix
                     if (recipe.HasResult(results[j].Item1) && recipe.HasIngredient(results[j].Item2))
                     {
                         recipe.RemoveIngredient(results[j].Item2);
+                    }
+                    // you get special treatment
+                    if (results == alloyBarCrafts)
+                    {
+                        if (recipe.HasIngredient(ModContent.ItemType<AlloyBar>()))
+                        {
+                            if (recipe.HasIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.FurnitureStatigel.StatigelBlock>()) || recipe.HasResult(ModContent.ItemType<CalamityMod.Items.Placeables.FurnitureStatigel.StatigelBlock>()))
+                            {
+                                recipe.RemoveIngredient(ModContent.ItemType<AlloyBar>());
+                            }
+                        }
                     }
                 }
             }

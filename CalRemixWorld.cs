@@ -56,6 +56,7 @@ namespace CalRemix
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
         public static bool downedEarth = false;
+        public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
@@ -153,6 +154,7 @@ namespace CalRemix
             seafood = true;
             laruga = true;
 
+            loadedRecipeInjections = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -199,6 +201,8 @@ namespace CalRemix
             fearmonger = true;
             seafood = true;
             laruga = true;
+
+            loadedRecipeInjections = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -409,19 +413,32 @@ namespace CalRemix
         };
         public override void PreUpdateWorld()
         {
-            return;
-            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-            if (false)
+            if (!loadedRecipeInjections)
             {
-                Main.NewText("Removed reaper teeth");
-                RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
-                RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+                if (reargar)
+                {
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+                }
+                if (frontgar)
+                {
+                    RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
+                    RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+                }
+                if (cosmislag)
+                {
+                    RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
+                }
+                Recipes.MassModifyIngredient(!yharimBars, Recipes.yharimBarCrafts);
+                Recipes.MassModifyIngredient(!alloyBars, Recipes.alloyBarCrafts);
+                Recipes.MassModifyIngredient(!essenceBars, Recipes.essenceBarCrafts);
+                Recipes.MassModifyIngredient(!crocodile, Recipes.crocodileCrafts);
+                Recipes.MassModifyIngredient(!wolfvenom, Recipes.venomCrafts);
+                loadedRecipeInjections = true;
+                //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
             }
-            RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
-            //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
         }
         public override void PostUpdateWorld()
         {
@@ -515,6 +532,14 @@ namespace CalRemix
                     postDuke.Add(ItemType<ReaperTooth>(), 10, 1, 5);
                     var postPolter = new LeadingConditionRule(DropHelper.PostPolter()).OnSuccess(postDuke);
                     Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
+                }
+                if (npcType == ItemID.JungleFishingCrate)
+                {
+                    var postDuke = new LeadingConditionRule(DropHelper.PostProv());
+                    postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
+                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
+                    Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
+                    Terraria.Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
                 }
             }
         }
