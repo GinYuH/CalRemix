@@ -416,7 +416,7 @@ namespace CalRemix.UI
             {
                 options.Add(new Anomaly109Option("terragrim", "alloy_bars", "Toggles Alloy Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.alloyBars, Recipes.alloyBarCrafts); CalRemixWorld.alloyBars = !CalRemixWorld.alloyBars; }, new Condition("", () => CalRemixWorld.alloyBars)));
                 options.Add(new Anomaly109Option("starfury", "essential_essence_bars", "Toggles Essential Essence Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.essenceBars, Recipes.essenceBarCrafts); CalRemixWorld.essenceBars = !CalRemixWorld.essenceBars; }, new Condition("", () => CalRemixWorld.essenceBars)));
-                options.Add(new Anomaly109Option("defiledgreatsword", "yharim_bars", "Toggles Yharim Bars from recipes", () => { CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, new Condition("", () => CalRemixWorld.yharimBars)));
+                options.Add(new Anomaly109Option("defiledgreatsword", "yharim_bars", "Toggles Yharim Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.yharimBars, Recipes.yharimBarCrafts); CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, new Condition("", () => CalRemixWorld.yharimBars)));
                 options.Add(new Anomaly109Option("babilzot", "shimmer_essences", "Toggles Shimmer Essences from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.shimmerEssences, Recipes.shimmerEssenceCrafts); CalRemixWorld.shimmerEssences = !CalRemixWorld.shimmerEssences; }, new Condition("", () => CalRemixWorld.shimmerEssences)));
                 options.Add(new Anomaly109Option("thedevourerofgods", "cosmilite_slag", "Toggles initial generation of Cosmilite Slag and nerfed Cosmilite gear", () => 
                 { 
@@ -448,7 +448,19 @@ namespace CalRemix.UI
                     CalRemixWorld.reargar = !CalRemixWorld.reargar; 
                 }, new Condition("", () => CalRemixWorld.reargar)));
                 options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal",  () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, new Condition("", () => CalRemixWorld.sidegar)));
-                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => { if (!CalRemixWorld.frontgar) { CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true); CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false); } else { CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true); CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>()); } CalRemixWorld.frontgar = !CalRemixWorld.frontgar; }, new Condition("", () => CalRemixWorld.frontgar)));
+                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => 
+                { 
+                    if (!CalRemixWorld.frontgar) 
+                    { 
+                        CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true); 
+                        CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false); } 
+                    else 
+                    { 
+                        CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true); 
+                        CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>()); 
+                    } 
+                    CalRemixWorld.frontgar = !CalRemixWorld.frontgar; 
+                }, new Condition("", () => CalRemixWorld.frontgar)));
                 options.Add(new Anomaly109Option("meldosaurus", "meld_gunk", "Toggles Meld Gunk initial generation and spread", () => { CalRemixWorld.meldGunk = !CalRemixWorld.meldGunk; }, new Condition("", () => CalRemixWorld.meldGunk)));
                 options.Add(new Anomaly109Option("leviathan", "crocodile_scales", "Toggles Crocodile Scales from recipes", () => { if (CalRemixWorld.crocodile) { Recipes.MassModifyIngredient(CalRemixWorld.crocodile, Recipes.crocodileCrafts); }; CalRemixWorld.crocodile = !CalRemixWorld.crocodile; }, new Condition("", ()=> CalRemixWorld.crocodile)));
                 options.Add(new Anomaly109Option("bloodorange", "permanent_upgrades", "Toggles permanent upgrade recipe removals and alt obtainment methods", () => { CalRemixWorld.permanenthealth = !CalRemixWorld.permanenthealth; }, new Condition("", () => CalRemixWorld.permanenthealth)));
