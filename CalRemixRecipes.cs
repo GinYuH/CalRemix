@@ -300,14 +300,17 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreathelm>()))
                 {
                     recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerPlateMail>()))
                 {
                     recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreaves>()))
                 {
                     recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
