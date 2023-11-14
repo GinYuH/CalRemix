@@ -289,9 +289,16 @@ namespace CalRemix.UI
             Rectangle arrowframer = new Rectangle(mainframe.Right - (int)(mainframe.Width * 0.0775f), mainframe.Bottom - (int)(mainframe.Height * 0.125f), (int)(mainframe.Width * 0.05f), (int)(mainframe.Width * 0.05f));
             Rectangle arrowframel = new Rectangle(mainframe.Left + (int)(mainframe.Width * 0.036f), mainframe.Bottom - (int)(mainframe.Height * 0.125f), (int)(mainframe.Width * 0.05f), (int)(mainframe.Width * 0.05f));
             if (CurrentPage < maxPages)
+            {
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, arrowframer, Color.Lime);
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "→", arrowframer.X + (int)(arrowframer.Width * 0.1f), arrowframer.Y + (int)(arrowframer.Height * 0.1f), Color.Black * (Main.mouseTextColor / 255f), Color.Lime, Vector2.Zero, 2 * (float)Main.screenWidth / (float)1745);
+            }
             if (CurrentPage > 0)
+            {
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, arrowframel, Color.Lime);
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "←", arrowframel.X + (int)(arrowframel.Width * 0.1f), arrowframel.Y + (int)(arrowframel.Height * 0.1f), Color.Black * (Main.mouseTextColor / 255f), Color.Lime, Vector2.Zero, 2 * (float)Main.screenWidth / (float)1745);
+            }
+            bool holdingRight = false;
             if (maus.Intersects(arrowframer))
             {
                 if (CurrentPage < maxPages)
@@ -310,6 +317,7 @@ namespace CalRemix.UI
                     {
                         Main.LocalPlayer.releaseUseItem = true;
                         HeldRightTimer++;
+                        holdingRight = true;
                         if (HeldRightTimer > 300)
                         {
                             CurrentPage++;
@@ -336,6 +344,10 @@ namespace CalRemix.UI
             if (ClickCooldown > 0)
             {
                 ClickCooldown--;
+            }
+            if (HeldRightTimer > 0 && !holdingRight)
+            {
+                HeldRightTimer = 0;
             }
         }
 

@@ -3,6 +3,7 @@ Mods: {
 		BossChecklistIntegration: {
 			HiveMind.SpawnInfo: Drop a [i:86] on Grimesand found in floating islands after breaking a shadow orb or use a [i:CalamityMod/Teratoma] in the Corruption.
 			Perforators.SpawnInfo: Drop a [i:1329] on Grimesand found in floating islands after breaking a crimson heart or use a [i:CalamityMod/BloodyWormFood] in the Crimson.
+			PlaguebringerGoliath.SpawnInfo: Use a [i:CalamityMod/Abombination] in the Plagued Jungle.
 			AstrumAureus.SpawnInfo: Use an [i:CalamityMod/AstralChunk] at night in the Plagued Jungle.
 			Dragonfolly.SpawnInfo: Use [i:CalamityMod/ExoticPheromones] in the desert.
 		}
@@ -1406,6 +1407,8 @@ Mods: {
 			FlounderMortar: {
 				DisplayName: Flounder Mortar
 				Tooltip: Converts musket balls into streams of acid
+			}
+
 			Anomaly109: {
 				DisplayName: Anomaly 109
 				Tooltip: Insert unique codes in order to disable certain aspects of your game.
@@ -1624,5 +1627,3 @@ Mods: {
 		}
 	}
 }
-
-HiveMind.SpawnInfo: Drop a Shadow Scale on some Grimesand or use a [i:CalamityMod/Teratoma] in the Corruption.

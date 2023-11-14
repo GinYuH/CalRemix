@@ -1139,6 +1139,8 @@ namespace CalRemix.Retheme
         public override void Unload()
         {
             UnloadRethemes();
+            IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
+            IL.CalamityMod.NPCs.CalamityAI.BumblebirbAI -= BirbAI;
         }
 
         public static void LoadRethemes()
@@ -1196,11 +1198,6 @@ namespace CalRemix.Retheme
             IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw += CelestusProj;
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
-        }
-        public override void Unload()
-        {
-            IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
-            IL.CalamityMod.NPCs.CalamityAI.BumblebirbAI -= BirbAI;
         }
 
         public static void UnloadRethemes()
@@ -1585,12 +1582,12 @@ namespace CalRemix.Retheme
         }
         #endregion
         #region Items
-        private bool Exotic(On.CalamityMod.Items.SummonItems.ExoticPheromones.orig_CanUseItem orig, CalamityMod.Items.SummonItems.ExoticPheromones self, object player)
+        private static bool Exotic(On.CalamityMod.Items.SummonItems.ExoticPheromones.orig_CanUseItem orig, CalamityMod.Items.SummonItems.ExoticPheromones self, object player)
         {
             Player p = (Player)player;
             return (p.ZoneDesert && !NPC.AnyNPCs(NPCType<Bumblefuck>()) && !BossRushEvent.BossRushActive);
         }
-        private bool AstralChunk(On.CalamityMod.Items.SummonItems.AstralChunk.orig_CanUseItem orig, CalamityMod.Items.SummonItems.AstralChunk self, object player)
+        private static bool AstralChunk(On.CalamityMod.Items.SummonItems.AstralChunk.orig_CanUseItem orig, CalamityMod.Items.SummonItems.AstralChunk self, object player)
         {
             Player p = (Player)player;
             return (p.GetModPlayer<CalRemixPlayer>().ZonePlague || p.GetModPlayer<CalRemixPlayer>().ZonePlagueDesert) && !NPC.AnyNPCs(NPCType<AstrumAureus>()) && !BossRushEvent.BossRushActive;

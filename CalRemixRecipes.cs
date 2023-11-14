@@ -584,7 +584,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("While the anomaly 109 \'seafood\' setting is disabled", () => !CalRemixWorld.seafood));
                 }
                 if (recipe.HasResult(ModContent.ItemType<MidnightSunBeacon>()))
                 {
