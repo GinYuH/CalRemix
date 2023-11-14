@@ -291,12 +291,12 @@ namespace CalRemix.UI
             if (CurrentPage < maxPages)
             {
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, arrowframer, Color.Lime);
-                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "→", arrowframer.X + (int)(arrowframer.Width * 0.1f), arrowframer.Y + (int)(arrowframer.Height * 0.1f), Color.Black * (Main.mouseTextColor / 255f), Color.Lime, Vector2.Zero, 2 * (float)Main.screenWidth / (float)1745);
+                //Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "→", arrowframer.X + (int)(arrowframer.Width * 0.1f), arrowframer.Y + (int)(arrowframer.Height * 0.1f), Color.Black * (Main.mouseTextColor / 255f), Color.Lime, Vector2.Zero, 2 * (float)Main.screenWidth / (float)1745);
             }
             if (CurrentPage > 0)
             {
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, arrowframel, Color.Lime);
-                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "←", arrowframel.X + (int)(arrowframel.Width * 0.1f), arrowframel.Y + (int)(arrowframel.Height * 0.1f), Color.Black * (Main.mouseTextColor / 255f), Color.Lime, Vector2.Zero, 2 * (float)Main.screenWidth / (float)1745);
+                //Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "←", arrowframel.X + (int)(arrowframel.Width * 0.1f), arrowframel.Y + (int)(arrowframel.Height * 0.1f), Color.Black * (Main.mouseTextColor / 255f), Color.Lime, Vector2.Zero, 2 * (float)Main.screenWidth / (float)1745);
             }
             bool holdingRight = false;
             if (maus.Intersects(arrowframer))
