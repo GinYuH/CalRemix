@@ -122,7 +122,7 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.dayTime)
+            if (Main.dayTime || !CalRemixWorld.clowns)
                 return 0f;
 
             return SpawnCondition.OverworldNightMonster.Chance * 0.05f;

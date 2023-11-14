@@ -88,6 +88,7 @@ namespace CalRemix
         public Vector2 clawPosition = Vector2.Zero;
 		public bool bananaClown;
 		public bool invGar;
+		public bool anomaly109UI;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -364,7 +365,10 @@ namespace CalRemix
 
         public override void PreUpdate()
         {
-            SpawnPhantomHeart();
+			if (CalRemixWorld.permanenthealth)
+			{
+				SpawnPhantomHeart();
+			}
 
 			if (VerbotenMode >= 5)
 			{
@@ -536,7 +540,7 @@ namespace CalRemix
 				}
             }
 
-            if (Player.Calamity().fearmongerSet)
+            if (Player.Calamity().fearmongerSet && CalRemixWorld.fearmonger)
             {
 				if (Main.snowMoon || Main.pumpkinMoon)
 				{
@@ -651,7 +655,7 @@ namespace CalRemix
 		}
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
-			if (CalamityMod.DownedBossSystem.downedProvidence)
+			if (CalamityMod.DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
 			{
 				if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().eBerry)
 				{
@@ -744,15 +748,15 @@ namespace CalRemix
             {
                 itemDrop = ModContent.ItemType<GrandioseGland>();
             }
-			if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10))
+			if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10) && CalRemixWorld.sidegar)
 			{
 				itemDrop = ModContent.ItemType<SideGar>();
             }
-            if (inWater && Player.ZoneJungle && DownedBossSystem.downedProvidence && Main.rand.NextBool(10))
+            if (inWater && Player.ZoneJungle && DownedBossSystem.downedProvidence && Main.rand.NextBool(10) && CalRemixWorld.reargar)
             {
                 itemDrop = ModContent.ItemType<RearGar>();
             }
-            if (inWater && Player.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast && Main.rand.NextBool(10))
+            if (inWater && Player.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast && Main.rand.NextBool(10) && CalRemixWorld.frontgar)
             {
                 itemDrop = ModContent.ItemType<FrontGar>();
             }
@@ -868,8 +872,9 @@ namespace CalRemix
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
             if (invGar)
-			{
-				SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
+            {
+                anomaly109UI = false;
+                SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
 				Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
 			}
         }
@@ -878,6 +883,7 @@ namespace CalRemix
         {
             if (invGar)
             {
+                anomaly109UI = false;
                 SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
                 Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
             }

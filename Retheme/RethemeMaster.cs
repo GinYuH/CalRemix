@@ -95,6 +95,8 @@ namespace CalRemix.Retheme
         };
         public static void RethemeNPCDefaults(NPC npc)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             #region Resprites
             #region Pre-Hardmode
             if (npc.type == NPCType<DesertScourgeHead>())
@@ -367,6 +369,8 @@ namespace CalRemix.Retheme
         }
         public static void RethemeNPCPostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             if (npc.type == NPCType<ProfanedGuardianCommander>())
                 MaskDraw(1, npc, spriteBatch, screenPos, drawColor);
             else if (npc.type == NPCType<ProfanedGuardianDefender>())
@@ -405,6 +409,8 @@ namespace CalRemix.Retheme
         }
         public static void RethemeItemDefaults(Item item)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             #region Resprites
             if (item.type == ItemType<PearlShard>())
             {
@@ -439,30 +445,30 @@ namespace CalRemix.Retheme
             {
                 TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/DesertMedallion");
             }
-            else if (item.type == ItemType<OceanCrest>())
+    /*   //     else if (item.type == ItemType<OceanCrest>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/OceanCrest");
+      //          TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/OceanCrest");
             }
-            else if (item.type == ItemType<AquaticDischarge>())
+           // else if (item.type == ItemType<AquaticDischarge>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
+                //TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
             }
-            else if (item.type == ItemType<Barinade>())
+           // else if (item.type == ItemType<Barinade>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/Barinade");
+             //   TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/Barinade");
             }
-            else if (item.type == ItemType<StormSpray>())
+           // else if (item.type == ItemType<StormSpray>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/StormSpray");
+                //TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/StormSpray");
             }
-            else if (item.type == ItemType<SeaboundStaff>())
+          //  else if (item.type == ItemType<SeaboundStaff>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/SeaboundStaff");
+            //    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/SeaboundStaff");
             }
-            else if (item.type == ItemType<ScourgeoftheDesert>())
+          //  else if (item.type == ItemType<ScourgeoftheDesert>())
             {
-                TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
-            }
+              //  TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
+            }*/
             #endregion
             #region Crabulon
             else if (item.type == ItemType<CrabulonBag>())
@@ -925,58 +931,70 @@ namespace CalRemix.Retheme
                 var line = new TooltipLine(mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<CryoKey>())
+            if (CalRemixWorld.aspids)
             {
-                var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<EyeofDesolation>())
-            {
-                var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<Abombination>())
-            {
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
-                tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
-            }
-            if (item.type == ItemType<FearmongerGreathelm>())
-            {
-                tooltips.FindAndReplace("+60 max mana and ", "");
-                tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
-                for (int i = 0; i < tooltips.Count; i++)
+                if (item.type == ItemType<CryoKey>())
                 {
-                    if (tooltips[i].Text.Contains("Pumpkin"))
-                    {
-                        tooltips.RemoveAt(i);
-                        break;
-                    }
+                    var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                    tooltips.Add(line);
                 }
-                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
             }
-            if (item.type == ItemType<FearmongerPlateMail>())
+            if (CalRemixWorld.clamitas)
             {
-                tooltips.FindAndReplace("+100 max life and ", "");
-                for (int i = 0; i < tooltips.Count; i++)
+                if (item.type == ItemType<EyeofDesolation>())
                 {
-                    if (tooltips[i].Text.Contains("Pumpkin"))
-                    {
-                        tooltips.RemoveAt(i);
-                    }
+                    var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                    tooltips.Add(line);
                 }
-                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
             }
-            if (item.type == ItemType<FearmongerGreaves>())
+            if (CalRemixWorld.plaguetoggle)
             {
-                for (int i = 0; i < tooltips.Count; i++)
+                if (item.type == ItemType<Abombination>())
                 {
-                    if (tooltips[i].Text.Contains("Pumpkin"))
-                    {
-                        tooltips.RemoveAt(i);
-                        break;
-                    }
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
                 }
-                tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+            }
+            if (CalRemixWorld.fearmonger)
+            {
+                if (item.type == ItemType<FearmongerGreathelm>())
+                {
+                    tooltips.FindAndReplace("+60 max mana and ", "");
+                    tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerPlateMail>())
+                {
+                    tooltips.FindAndReplace("+100 max life and ", "");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerGreaves>())
+                {
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
             }
             if (Torch.Contains(item.type))
             {
@@ -987,12 +1005,14 @@ namespace CalRemix.Retheme
         }
         public static void RethemeProjDefaults(Projectile projectile)
         {
+            if (!CalRemixWorld.resprites)
+                return;
             #region Resprites
-            if (projectile.type == ProjectileType<AquaticDischargeProj>())
+           // if (projectile.type == ProjectileType<AquaticDischargeProj>())
             {
-                TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
+               // TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
             }
-            else if (projectile.type == ProjectileType<ScourgeoftheDesertProj>())
+           /* else */if (projectile.type == ProjectileType<ScourgeoftheDesertProj>())
             {
                 TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
             }
@@ -1102,6 +1122,8 @@ namespace CalRemix.Retheme
         }
         public static Color? RethemeProjAlpha(Projectile projectile)
         {
+            if (!CalRemixWorld.resprites)
+                return null;
             if ((!Main.dayTime || BossRushEvent.BossRushActive) && (projectile.type == ProjectileType<HolyBlast>() || projectile.type == ProjectileType<HolyBomb>() || projectile.type == ProjectileType<HolyFire>() || projectile.type == ProjectileType<HolyFire2>() || projectile.type == ProjectileType<HolyFlare>() || projectile.type == ProjectileType<MoltenBlob>() || projectile.type == ProjectileType<MoltenBlast>()))
                 return Color.MediumPurple;
             return null;
@@ -1110,6 +1132,16 @@ namespace CalRemix.Retheme
     public class RethemeIL : ModSystem
     {
         public override void Load()
+        {
+            LoadRethemes();
+        }
+
+        public override void Unload()
+        {
+            UnloadRethemes();
+        }
+
+        public static void LoadRethemes()
         {
             // IL.CalamityMod.NPCs.PreDraw += ;
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
@@ -1170,6 +1202,56 @@ namespace CalRemix.Retheme
             IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
             IL.CalamityMod.NPCs.CalamityAI.BumblebirbAI -= BirbAI;
         }
+
+        public static void UnloadRethemes()
+        {
+            // IL.CalamityMod.NPCs.PreDraw -= ;
+            IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw -= Crabulon;
+            IL.CalamityMod.NPCs.HiveMind.HiveMind.PreDraw -= HiveMind;
+            IL.CalamityMod.NPCs.Perforator.PerforatorCyst.PreDraw -= PerforatorCyst;
+            #region PerfWormHeck
+            IL.CalamityMod.NPCs.Perforator.PerforatorBodyLarge.PreDraw -= PerfLBody;
+            IL.CalamityMod.NPCs.Perforator.PerforatorBodyMedium.PreDraw -= PerfMBody;
+            IL.CalamityMod.NPCs.Perforator.PerforatorBodySmall.PreDraw -= PerfSBody;
+            IL.CalamityMod.NPCs.Perforator.PerforatorHeadLarge.PreDraw -= PerfLHead;
+            IL.CalamityMod.NPCs.Perforator.PerforatorHeadMedium.PreDraw -= PerfMHead;
+            IL.CalamityMod.NPCs.Perforator.PerforatorHeadSmall.PreDraw -= PerfSHead;
+            IL.CalamityMod.NPCs.Perforator.PerforatorTailLarge.PreDraw -= PerfLTail;
+            IL.CalamityMod.NPCs.Perforator.PerforatorTailMedium.PreDraw -= PerfMTail;
+            IL.CalamityMod.NPCs.Perforator.PerforatorTailSmall.PreDraw -= PerfSTail;
+            #endregion
+            IL.CalamityMod.NPCs.Perforator.PerforatorHive.PreDraw -= PerforatorHive;
+            IL.CalamityMod.NPCs.Cryogen.Cryogen.PreDraw -= Cryogen;
+            IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw -= CryogenShield;
+            IL.CalamityMod.NPCs.CalClone.CalamitasClone.PreDraw -= CalamitasClone;
+            IL.CalamityMod.NPCs.CalClone.Cataclysm.PreDraw -= Cataclysm;
+            IL.CalamityMod.NPCs.CalClone.Catastrophe.PreDraw -= Catastrophe;
+            IL.CalamityMod.NPCs.Leviathan.Leviathan.SetStaticDefaults -= Leviathan;
+            IL.CalamityMod.NPCs.Leviathan.Anahita.PreDraw -= Anahita;
+            //IL.CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.PreDraw -= PBG;
+            //IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
+            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusHead.PreDraw -= AstrumDeusHead;
+            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusBody.PreDraw -= AstrumDeusBody;
+            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusTail.PreDraw -= AstrumDeusTail;
+            IL.CalamityMod.NPCs.Yharon.Yharon.PreDraw -= Yharon;
+            IL.CalamityMod.NPCs.Other.THELORDE.PreDraw -= LORDE;
+            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|46_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
+            //MonoModHooks.Modify(typeof(CalamityMod.CalamityMod).Assembly.GetType("WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Instance), BossChecklist);
+
+            // IL.CalamityMod.Items.Weapons.PreDraw -= ;
+            IL.CalamityMod.Items.Weapons.Ranged.HeavenlyGale.PostDrawInWorld -= HeavenlyGale;
+
+            // IL.CalamityMod.Projectiles.PreDraw -= ;
+            IL.CalamityMod.Projectiles.Rogue.InfestedClawmerangProj.PreDraw -= InfestedClawmerangProj;
+            IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI -= EldritchTentacle;
+            IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw -= MurasamaSlash;
+            IL.CalamityMod.Projectiles.Melee.ExobladeProj.DrawBlade -= ExobladeProj;
+            IL.CalamityMod.Projectiles.Ranged.HeavenlyGaleProj.PreDraw -= HeavenlyGaleProj;
+            IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw -= CelestusProj;
+            IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw -= ViolenceThrownProjectile;
+            IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw -= HolyBlast;
+        }
+
         #region BossChecklist
         private static void BossChecklist(ILContext il)
         {

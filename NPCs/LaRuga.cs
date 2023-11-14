@@ -268,7 +268,7 @@ namespace CalRemix.NPCs
             if (DownedBossSystem.downedExoMechs && spawnInfo.Player.ZoneForest)
                 val = SpawnCondition.OverworldNightMonster.Chance * 0.000022f;
 
-            if (NPC.AnyNPCs(Type))
+            if (NPC.AnyNPCs(Type) || !CalRemixWorld.laruga)
                 return 0;
             return val;
         }

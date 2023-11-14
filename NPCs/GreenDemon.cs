@@ -222,7 +222,7 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!Main.eclipse || !DownedBossSystem.downedLeviathan)
+            if (!Main.eclipse || !DownedBossSystem.downedLeviathan || !CalRemixWorld.essenceBars)
                 return 0f;
 
             return SpawnCondition.SolarEclipse.Chance * 0.4f;

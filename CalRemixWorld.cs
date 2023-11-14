@@ -48,6 +48,7 @@ using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.PrimordialWyrm;
+using Terraria.UI;
 
 namespace CalRemix
 {
@@ -61,6 +62,7 @@ namespace CalRemix
         public static bool downedDerellect = false;
         public static bool downedExcavator = false;
         public static bool downedEarth = false;
+        public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
@@ -74,6 +76,32 @@ namespace CalRemix
         public static int transmogrifyTimeLeft = 0;
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
         public static int meldCountdown = 72000;
+
+        public static bool alloyBars = true;
+        public static bool essenceBars = true;
+        public static bool yharimBars = true;
+        public static bool shimmerEssences = true;
+        public static bool meldGunk = true;
+        public static bool cosmislag = true;
+        public static bool reargar = true;
+        public static bool sidegar = true;
+        public static bool frontgar = true;
+        public static bool crocodile = true;
+        public static bool permanenthealth = true;
+        public static bool starbuster = true;
+        public static bool plaguetoggle = true;
+        public static bool shrinetoggle = true;
+        public static bool lifeoretoggle = true;
+        public static bool resprites = true;
+        public static bool bossdialogue = true;
+        public static bool grimesandToggle = true;
+        public static bool clowns = true;
+        public static bool aspids = true;
+        public static bool clamitas = true;
+        public static bool wolfvenom = true;
+        public static bool fearmonger = true;
+        public static bool seafood = true;
+        public static bool laruga = true;
 
         public List<int> DungeonWalls = new List<int>
         {
@@ -105,7 +133,34 @@ namespace CalRemix
             generatedPlague = false;
             generatedStrain = false;
             grime = false;
-            
+
+            alloyBars = true;
+            essenceBars = true;
+            yharimBars = true;
+            shimmerEssences = true;
+            meldGunk = true;
+            cosmislag = true;
+            reargar = true;
+            sidegar = true;
+            frontgar = true;
+            crocodile = true;
+            permanenthealth = true;
+            starbuster = true;
+            plaguetoggle = true;
+            shrinetoggle = true;
+            lifeoretoggle = true;
+            resprites = true;
+            bossdialogue = true;
+            grimesandToggle = true;
+            clowns = true;
+            aspids = true;
+            clamitas = true;
+            wolfvenom = true;
+            fearmonger = true;
+            seafood = true;
+            laruga = true;
+
+            loadedRecipeInjections = false;
 
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
@@ -123,6 +178,38 @@ namespace CalRemix
             generatedPlague = false;
             generatedStrain = false;
 
+            alloyBars = true;
+            essenceBars = true;
+            yharimBars = true;
+
+            alloyBars = true;
+            essenceBars = true;
+            yharimBars = true;
+            shimmerEssences = true;
+            meldGunk = true;
+            cosmislag = true;
+            reargar = true;
+            sidegar = true;
+            frontgar = true;
+            crocodile = true;
+            permanenthealth = true;
+            starbuster = true;
+            plaguetoggle = true;
+            shrinetoggle = true;
+            lifeoretoggle = true;
+            resprites = true;
+            bossdialogue = true;
+            grimesandToggle = true;
+            clowns = true;
+            aspids = true;
+            clamitas = true;
+            wolfvenom = true;
+            fearmonger = true;
+            seafood = true;
+            laruga = true;
+
+            loadedRecipeInjections = false;
+
             transmogrifyingItem = -1;
             transmogrifyingItemAmt = 0;
             transmogrifyTimeLeft = 0;
@@ -139,6 +226,34 @@ namespace CalRemix
             tag["plague"] = generatedPlague;
             tag["astrain"] = generatedStrain;
             tag["grime"] = grime;
+
+            tag["109alloybar"] = alloyBars;
+            tag["109essencebar"] = essenceBars;
+            tag["109yharimbar"] = yharimBars;
+            tag["109essenceshimmer"] = shimmerEssences;
+            tag["109meldgunk"] = meldGunk;
+            tag["109cosmilite"] = cosmislag;
+            tag["109reargar"] = reargar;
+            tag["109sidegar"] = sidegar;
+            tag["109frontgar"] = frontgar;
+            tag["109crocodile"] = crocodile;
+            tag["109permanenthealth"] = permanenthealth;
+            tag["109starbuster"] = starbuster;
+            tag["109plague"] = plaguetoggle;
+            tag["109shrine"] = shrinetoggle;
+            tag["109lifeore"] = lifeoretoggle;
+            tag["109resprites"] = resprites;
+            tag["109dialogue"] = bossdialogue;
+            tag["109grime"] = grimesandToggle;
+            tag["109clowns"] = clowns;
+            tag["109aspids"] = aspids;
+            tag["109clamitas"] = clamitas;
+            tag["109coyotevenom"] = wolfvenom;
+            tag["109fearmonger"] = fearmonger;
+            tag["109seafood"] = seafood;
+            tag["109laruga"] = laruga;
+            tag["109fanny"] = FannyManager.fannyEnabled;
+            tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
 
             tag["transmogrifyingItem"] = transmogrifyingItem;
             tag["transmogrifyingItemAmt"] = transmogrifyingItemAmt;
@@ -158,10 +273,38 @@ namespace CalRemix
             generatedStrain = tag.Get<bool>("astrain");
             grime = tag.Get<bool>("grime");
 
+            alloyBars = tag.Get<bool>("109alloybar");
+            essenceBars = tag.Get<bool>("109essencebar");
+            yharimBars = tag.Get<bool>("109yharimbar");
+            shimmerEssences = tag.Get<bool>("109essenceshimmer");// = shimmerEssences;
+            meldGunk = tag.Get<bool>("109meldgunk");// = meldGunk;
+            cosmislag = tag.Get<bool>("109cosmilite");// = cosmislag;
+            reargar = tag.Get<bool>("109reargar");// = reargar;
+            sidegar = tag.Get<bool>("109sidegar");// = sidegar;
+            frontgar = tag.Get<bool>("109frontgar");// = frontgar;
+            crocodile = tag.Get<bool>("109crocodile");// = crocodile;
+            permanenthealth= tag.Get<bool>("109permanenthealth");// = permanenthealth;
+            starbuster= tag.Get<bool>("109starbuster");// = starbuster;
+            plaguetoggle= tag.Get<bool>("109plague");// = plaguetoggle;
+            shrinetoggle= tag.Get<bool>("109shrine");// = shrinetoggle;
+            lifeoretoggle= tag.Get<bool>("109lifeore");// = lifeoretoggle;
+            resprites= tag.Get<bool>("109resprites");// = resprites;
+            bossdialogue= tag.Get<bool>("109dialogue");// = bossdialogue;
+            grimesandToggle= tag.Get<bool>("109grime");// = grimesand;
+            clowns= tag.Get<bool>("109clowns");// = clowns;
+            aspids= tag.Get<bool>("109aspids");// = aspids;
+            clamitas= tag.Get<bool>("109clamitas");// = clamitas;
+            wolfvenom= tag.Get<bool>("109coyotevenom");// = wolfvenom;
+            fearmonger= tag.Get<bool>("109fearmonger");// = fearmonger;
+            seafood= tag.Get<bool>("109seafood");// = seafood;
+            laruga= tag.Get<bool>("109laruga");// = laruga;
+            FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
+
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
             transmogrifyingItem = tag.Get<int>("transmogrifyingItemAmt");
             transmogrifyTimeLeft = tag.Get<int>("transmogrifyTimeLeft");
             meldCountdown = tag.Get<int>("meld");
+            FannyManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -175,6 +318,34 @@ namespace CalRemix
             writer.Write(generatedPlague);
             writer.Write(generatedStrain);
             writer.Write(grime);
+
+            writer.Write(alloyBars);
+            writer.Write(essenceBars);
+            writer.Write(yharimBars);
+            writer.Write(shimmerEssences );//tag.Get<bool>("109essenceshimmer");;// );//shimmerEssences;
+            writer.Write(meldGunk );//tag.Get<bool>("109meldgunk");;// );//meldGunk;
+            writer.Write(cosmislag );//tag.Get<bool>("109cosmilite");;// );//cosmislag;
+            writer.Write(reargar );//tag.Get<bool>("109reargar");;// );//reargar;
+            writer.Write(sidegar );//tag.Get<bool>("109sidegar");;// );//sidegar;
+            writer.Write(frontgar );//tag.Get<bool>("109frontgar");;// );//frontgar;
+            writer.Write(crocodile );//tag.Get<bool>("109crocodile");;// );//crocodile;
+            writer.Write(permanenthealth );//tag.Get<bool>("109permanenthealth");;// );//permanenthealth;
+            writer.Write(starbuster );//tag.Get<bool>("109starbuster");;// );//starbuster;
+            writer.Write(plaguetoggle );//tag.Get<bool>("109plague");;// );//plaguetoggle;
+            writer.Write(shrinetoggle );//tag.Get<bool>("109shrine");;// );//shrinetoggle;
+            writer.Write(lifeoretoggle );//tag.Get<bool>("109lifeore");;// );//lifeoretoggle;
+            writer.Write(resprites );//tag.Get<bool>("109resprites");;// );//resprites;
+            writer.Write(bossdialogue );//tag.Get<bool>("109dialogue");;// );//bossdialogue;
+            writer.Write(grimesandToggle );//tag.Get<bool>("109grime");;// );//grimesand;
+            writer.Write(clowns );//tag.Get<bool>("109clowns");;// );//clowns;
+            writer.Write(aspids );//tag.Get<bool>("109aspids");;// );//aspids;
+            writer.Write(clamitas );//tag.Get<bool>("109clamitas");;// );//clamitas;
+            writer.Write(wolfvenom );//tag.Get<bool>("109coyotevenom");;// );//wolfvenom;
+            writer.Write(fearmonger );//tag.Get<bool>("109fearmonger");;// );//fearmonger;
+            writer.Write(seafood );//tag.Get<bool>("109seafood");;// );//seafood;
+            writer.Write(laruga );//tag.Get<bool>("109laruga");;// );//laruga;
+            writer.Write(FannyManager.fannyEnabled);
+            writer.Write(FannyManager.fannyTimesFrozen);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -193,6 +364,34 @@ namespace CalRemix
             generatedPlague = reader.ReadBoolean();
             generatedStrain = reader.ReadBoolean();
             grime = reader.ReadBoolean();
+
+            alloyBars = reader.ReadBoolean();
+            essenceBars = reader.ReadBoolean();
+            yharimBars = reader.ReadBoolean();
+            shimmerEssences = reader.ReadBoolean();//.Get<bool>("109essenceshimmer");// = shimmerEssences;
+            meldGunk = reader.ReadBoolean();//.Get<bool>("109meldgunk");// = meldGunk;
+            cosmislag = reader.ReadBoolean();//.Get<bool>("109cosmilite");// = cosmislag;
+            reargar = reader.ReadBoolean();//.Get<bool>("109reargar");// = reargar;
+            sidegar = reader.ReadBoolean();//.Get<bool>("109sidegar");// = sidegar;
+            frontgar = reader.ReadBoolean();//.Get<bool>("109frontgar");// = frontgar;
+            crocodile = reader.ReadBoolean();//.Get<bool>("109crocodile");// = crocodile;
+            permanenthealth = reader.ReadBoolean();//.Get<bool>("109permanenthealth");// = permanenthealth;
+            starbuster = reader.ReadBoolean();//.Get<bool>("109starbuster");// = starbuster;
+            plaguetoggle = reader.ReadBoolean();//.Get<bool>("109plague");// = plaguetoggle;
+            shrinetoggle = reader.ReadBoolean();//.Get<bool>("109shrine");// = shrinetoggle;
+            lifeoretoggle = reader.ReadBoolean();//.Get<bool>("109lifeore");// = lifeoretoggle;
+            resprites = reader.ReadBoolean();//.Get<bool>("109resprites");// = resprites;
+            bossdialogue = reader.ReadBoolean();//.Get<bool>("109dialogue");// = bossdialogue;
+            grimesandToggle = reader.ReadBoolean();//.Get<bool>("109grime");// = grimesand;
+            clowns = reader.ReadBoolean();//.Get<bool>("109clowns");// = clowns;
+            aspids = reader.ReadBoolean();//.Get<bool>("109aspids");// = aspids;
+            clamitas = reader.ReadBoolean();//.Get<bool>("109clamitas");// = clamitas;
+            wolfvenom = reader.ReadBoolean();//.Get<bool>("109coyotevenom");// = wolfvenom;
+            fearmonger = reader.ReadBoolean();//.Get<bool>("109fearmonger");// = fearmonger;
+            seafood = reader.ReadBoolean();//.Get<bool>("109seafood");// = seafood;
+            laruga = reader.ReadBoolean();//.Get<bool>("109laruga");// = laruga;
+            FannyManager.fannyEnabled = reader.ReadBoolean();
+            FannyManager.fannyTimesFrozen = reader.ReadInt32();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
@@ -224,15 +423,34 @@ namespace CalRemix
         };
         public override void PreUpdateWorld()
         {
-            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-            RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-            RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-            RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
-            RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
-            RemoveLoot(NPCType<DesertScourgeHead>(), ItemType<PearlShard>(), true);
-            RemoveLoot(NPCType<Bumblefuck>(), ItemType<EffulgentFeather>(), true);
-            RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
+            if (!loadedRecipeInjections)
+            {
+                if (reargar)
+                {
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+                }
+                if (frontgar)
+                {
+                    RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
+                    RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
+                }
+                if (cosmislag)
+                {
+                    RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
+                }
+                RemoveLoot(NPCType<DesertScourgeHead>(), ItemType<PearlShard>(), true);
+                RemoveLoot(NPCType<Bumblefuck>(), ItemType<EffulgentFeather>(), true);
+                Recipes.MassModifyIngredient(!yharimBars, Recipes.yharimBarCrafts);
+                Recipes.MassModifyIngredient(!alloyBars, Recipes.alloyBarCrafts);
+                Recipes.MassModifyIngredient(!essenceBars, Recipes.essenceBarCrafts);
+                Recipes.MassModifyIngredient(!crocodile, Recipes.crocodileCrafts);
+                Recipes.MassModifyIngredient(!wolfvenom, Recipes.venomCrafts);
+                loadedRecipeInjections = true;
+                //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
+            }
         }
         public override void PostUpdateWorld()
         {
@@ -240,57 +458,103 @@ namespace CalRemix
             {
                 meldCountdown--;
             }
-            if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
+            if (aspids)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (CalRemixGlobalNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
                 {
-                    NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
+                    }
+                    CalRemixGlobalNPC.aspidCount = 0;
                 }
-                CalRemixGlobalNPC.aspidCount = 0;
             }
             if (CalamityMod.World.CalamityWorld.spawnedCirrus)
             {
                 CalamityMod.World.CalamityWorld.spawnedCirrus = false;
             }
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
-            if (ShrineTimer == 0)
+            if (shrinetoggle)
             {
-                HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);
-                HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), astrallist, 46);
+                if (ShrineTimer == 0)
+                {
+                    HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);
+                    HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), astrallist, 46);
 
-                Color messageColor = Color.Magenta;
-                CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                    Color messageColor = Color.Magenta;
+                    CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                }
             }
             if (ShrineTimer > -20)
             {
                 ShrineTimer--;
             }
-            if (!generatedCosmiliteSlag)
+            if (cosmislag)
             {
-                if (NPC.downedMoonlord)
+                if (!generatedCosmiliteSlag)
                 {
-                    if (CalamityWorld.HasGeneratedLuminitePlanetoids)
+                    if (NPC.downedMoonlord)
                     {
-                        //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
-                        GenerateCosmiliteSlag();
+                        if (CalamityWorld.HasGeneratedLuminitePlanetoids)
+                        {
+                            //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
+                            GenerateCosmiliteSlag();
+                        }
                     }
                 }
             }
-            if (!generatedPlague && NPC.downedGolemBoss)
+            if (plaguetoggle)
             {
-                ThreadPool.QueueUserWorkItem(_ => GeneratePlague(), this);
+                if (!generatedPlague && NPC.downedGolemBoss)
+                {
+                    ThreadPool.QueueUserWorkItem(_ => GeneratePlague(), this);
+                }
             }
             //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
-            if (!generatedStrain && Main.hardMode)
+            if (meldGunk)
             {
-                GenerateCavernStrain();
-                generatedStrain = true;
-                UpdateWorldBool();
+                if (!generatedStrain && Main.hardMode)
+                {
+                    GenerateCavernStrain();
+                    generatedStrain = true;
+                    UpdateWorldBool();
+                }
             }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
         }
 
+        public static void AddLootDynamically(int npcType, bool npc = false)
+        {
+            if (npc)
+            {
+                if (npcType == NPCType<ReaperShark>())
+                {
+                    var postPolter = new LeadingConditionRule(DropHelper.PostPolter());
+                    postPolter.Add(ItemType<ReaperTooth>(), 1, 3, 4);
+                    Terraria.Main.ItemDropsDB.RegisterToNPC(npcType, postPolter);
+                }
+            }
+            else
+            {
+                if (npcType == ItemType<SulphurousCrate>())
+                {
+                    // dude i fucking FUCKING LOATHE drop code
+                    var postDuke = new LeadingConditionRule(DropHelper.PostOD());
+                    postDuke.Add(ItemType<ReaperTooth>(), 10, 1, 5);
+                    var postPolter = new LeadingConditionRule(DropHelper.PostPolter()).OnSuccess(postDuke);
+                    Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
+                }
+                if (npcType == ItemID.JungleFishingCrate)
+                {
+                    var postDuke = new LeadingConditionRule(DropHelper.PostProv());
+                    postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
+                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
+                    Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
+                    Terraria.Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
+                }
+            }
+        }
         public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
         {
             List<IItemDropRule> JungleCrateDrops = npc ? Terraria.Main.ItemDropsDB.GetRulesForNPCID(bagType) : Terraria.Main.ItemDropsDB.GetRulesForItemID(bagType);

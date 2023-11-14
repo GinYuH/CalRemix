@@ -32,6 +32,24 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Thrust", "Did you know you can parry enemy attacks with your sword? Just right click the moment something is about to hit you, and you'll block it with ease!",
                "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>(), cooldown: 300, onlyPlayOnce: false));
+
+            fannyMessages.Add(new FannyMessage("Frozen1", "I'm back! It was quite chilly in there, but luckily, I was able to thaw myself out! Hopefully it doesn't happen again!",
+               "Idle", (FannySceneMetrics scene) => fannyTimesFrozen == 1).SetHoverTextOverride("..."));
+
+            fannyMessages.Add(new FannyMessage("Frozen2", "I-cee you're having some trouble. Don't worry! I broke out of the ice cube I was stuck in again!",
+               "Nuhuh", (FannySceneMetrics scene) => fannyTimesFrozen == 2));
+
+            fannyMessages.Add(new FannyMessage("Frozen3", "Wouldja believe it? I somehow managed to get trapped in another ice cube! Whoever keeps doing that is sure getting on thin ice.",
+               "Nuhuh", (FannySceneMetrics scene) => fannyTimesFrozen == 3));
+
+            fannyMessages.Add(new FannyMessage("Frozen4", "This is a bit embarassing, but I got myself caught in yet another ice cube! This shtick is getting cold at this point, or should I say warm?",
+               "Idle", (FannySceneMetrics scene) => fannyTimesFrozen == 4));
+
+            fannyMessages.Add(new FannyMessage("Frozen5", "At this point me and ice have gotten to know each other quite well, a true dance of the elements. I won't weigh you down anymore with updates on my frigid situation, have fun!",
+               "Idle", (FannySceneMetrics scene) => fannyTimesFrozen == 5));
+
+            fannyMessages.Add(new FannyMessage("Frozen6", "Oh wait wait wait, this time I found a small crumb inside the ice. It was disgusting!",
+               "Idle", (FannySceneMetrics scene) => fannyTimesFrozen == 6));
         }
     }
 }

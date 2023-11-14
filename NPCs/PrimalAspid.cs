@@ -125,7 +125,7 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.PlayerSafe || !Main.hardMode || !spawnInfo.Player.ZoneSnow)
+            if (spawnInfo.PlayerSafe || !Main.hardMode || !spawnInfo.Player.ZoneSnow || !CalRemixWorld.aspids)
             {
                 return 0f;
             }

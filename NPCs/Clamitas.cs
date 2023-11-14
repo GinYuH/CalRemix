@@ -336,7 +336,7 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.Calamity().ZoneCalamity && !NPC.AnyNPCs(ModContent.NPCType<Clamitas>()))
+            if (spawnInfo.Player.Calamity().ZoneCalamity && !NPC.AnyNPCs(ModContent.NPCType<Clamitas>()) && CalRemixWorld.clamitas)
             {
                 return 0.01f;
             }

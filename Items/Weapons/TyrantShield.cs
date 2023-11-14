@@ -48,7 +48,6 @@ public class TyrantShield : ModItem
             AddIngredient(ItemID.Silk, 20).
             AddIngredient(ItemID.LavaBucket).
             AddIngredient<DeliciousMeat>(349).
-            AddIngredient<YharimBar>(124).
             AddTile<CosmicAnvil>().
             Register();
     }

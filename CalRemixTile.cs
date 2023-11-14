@@ -69,7 +69,7 @@ namespace CalRemix
         public override void RightClick(int i, int j, int type)
         {
             Player player = Main.LocalPlayer;
-            if (type == ModContent.TileType<AstralBeacon>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>())
+            if (type == ModContent.TileType<AstralBeacon>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>() && CalRemixWorld.permanenthealth)
             {
                 SoundEngine.PlaySound(SoundID.Item9, player.Center);
                 if (!player.Calamity().eCore)
@@ -146,35 +146,37 @@ namespace CalRemix
         {
             Tile tile = Framing.GetTileSafely(i, j);
             Tile tile2 = Framing.GetTileSafely(i + 1, j);
-
-            if (tile.TileType == TileID.JungleGrass && tile.HasUnactuatedTile && tile2.TileType == TileID.JungleGrass && tile2.HasUnactuatedTile && j < 100)
+            if (CalRemixWorld.permanenthealth)
             {
-                berryCount = 0;
-
-                int r = 80;
-                int xRadStart = i - r;
-                int xRadEnd = xRadStart + (r * 2);
-                int yRadStart = j - r;
-                int yRadEnd = yRadStart + (r * 2);
-
-                for (int x = xRadStart; x < xRadEnd && x < Main.maxTilesX; x++)
+                if (tile.TileType == TileID.JungleGrass && tile.HasUnactuatedTile && tile2.TileType == TileID.JungleGrass && tile2.HasUnactuatedTile && j < 100)
                 {
-                    for (int y = yRadStart; y < yRadEnd && y < Main.maxTilesY; y++)
-                    {
-                        Tile tileCount = Framing.GetTileSafely(x, y);
+                    berryCount = 0;
 
-                        if (tileCount.TileType == ModContent.TileType<MiracleFruitPlaced>())
-                            berryCount++;
-                    }
-                }
+                    int r = 80;
+                    int xRadStart = i - r;
+                    int xRadEnd = xRadStart + (r * 2);
+                    int yRadStart = j - r;
+                    int yRadEnd = yRadStart + (r * 2);
 
-                if (berryCount < 6 && j < 100 && Main.rand.NextBool(48) && NPC.downedGolemBoss)
-                {
-                    if (exclusionlist.Contains(Main.tile[i, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
+                    for (int x = xRadStart; x < xRadEnd && x < Main.maxTilesX; x++)
                     {
-                        if (exclusionlist.Contains(Main.tile[i + 1, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
+                        for (int y = yRadStart; y < yRadEnd && y < Main.maxTilesY; y++)
                         {
-                            WorldGen.PlaceObject(i, j - 1, ModContent.TileType<MiracleFruitPlaced>(), true);
+                            Tile tileCount = Framing.GetTileSafely(x, y);
+
+                            if (tileCount.TileType == ModContent.TileType<MiracleFruitPlaced>())
+                                berryCount++;
+                        }
+                    }
+
+                    if (berryCount < 6 && j < 100 && Main.rand.NextBool(48) && NPC.downedGolemBoss)
+                    {
+                        if (exclusionlist.Contains(Main.tile[i, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
+                        {
+                            if (exclusionlist.Contains(Main.tile[i + 1, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
+                            {
+                                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<MiracleFruitPlaced>(), true);
+                            }
                         }
                     }
                 }
@@ -227,50 +229,53 @@ namespace CalRemix
                     }
                 }
             }
-            if (CalRemixWorld.meldCountdown <= 0)
+            if (CalRemixWorld.meldGunk)
             {
-                int rand = 4 - WorldGen.GetWorldSize();
-                if (Main.rand.NextBool(222 * rand))
+                if (CalRemixWorld.meldCountdown <= 0)
                 {
-                    if (CalRemixWorld.astrallist.Contains(tile.TileType))
+                    int rand = 4 - WorldGen.GetWorldSize();
+                    if (Main.rand.NextBool(222 * rand))
                     {
-                        int LocationX = i;
-                        int LocationY = j;
-                        bool getMelded = false;
-                        bool somethingConverted = false;
-                        int checkRad = 8;
-                        int spreadRad = 4;
-                        for (int x = LocationX - checkRad; x <= LocationX + checkRad; x++)
+                        if (CalRemixWorld.astrallist.Contains(tile.TileType))
                         {
-                            for (int y = LocationY - checkRad; y <= LocationY + checkRad; y++)
+                            int LocationX = i;
+                            int LocationY = j;
+                            bool getMelded = false;
+                            bool somethingConverted = false;
+                            int checkRad = 8;
+                            int spreadRad = 4;
+                            for (int x = LocationX - checkRad; x <= LocationX + checkRad; x++)
                             {
-                                if (Main.tile[x, y].TileType == ModContent.TileType<MeldGunkPlaced>())
+                                for (int y = LocationY - checkRad; y <= LocationY + checkRad; y++)
                                 {
-                                    getMelded = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (getMelded)
-                        {
-                            for (int x = LocationX - spreadRad; x <= LocationX + spreadRad; x++)
-                            {
-                                for (int y = LocationY - spreadRad; y <= LocationY + spreadRad; y++)
-                                {
-                                    if (Main.rand.NextBool(6))
+                                    if (Main.tile[x, y].TileType == ModContent.TileType<MeldGunkPlaced>())
                                     {
-                                        if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= spreadRad)
-                                        {
-                                            somethingConverted = true;
-                                            CalamityMod.World.AstralBiome.ConvertToAstral(x, y);
-                                        }
+                                        getMelded = true;
+                                        break;
                                     }
                                 }
                             }
-                            if (somethingConverted)
+                            if (getMelded)
                             {
-                                Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
-                                WorldGen.SquareTileFrame(i, j, true);
+                                for (int x = LocationX - spreadRad; x <= LocationX + spreadRad; x++)
+                                {
+                                    for (int y = LocationY - spreadRad; y <= LocationY + spreadRad; y++)
+                                    {
+                                        if (Main.rand.NextBool(6))
+                                        {
+                                            if (Vector2.Distance(new Vector2(LocationX, LocationY), new Vector2(x, y)) <= spreadRad)
+                                            {
+                                                somethingConverted = true;
+                                                CalamityMod.World.AstralBiome.ConvertToAstral(x, y);
+                                            }
+                                        }
+                                    }
+                                }
+                                if (somethingConverted)
+                                {
+                                    Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
+                                    WorldGen.SquareTileFrame(i, j, true);
+                                }
                             }
                         }
                     }
@@ -280,59 +285,71 @@ namespace CalRemix
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
-            if (!roxm.alreadySeen)
+            if (FannyManager.fannyEnabled)
             {
-                if (type == ModContent.TileType<RoxTile>())
+                if (!roxm.alreadySeen)
                 {
-                    roxm.ActivateMessage();
+                    if (type == ModContent.TileType<RoxTile>())
+                    {
+                        roxm.ActivateMessage();
+                    }
+                }
+                if (!KinsmanMessage.alreadySeen)
+                {
+                    if (type == ModContent.TileType<OnyxExcavatorTile>() && CalRemixWorld.downedEarth)
+                    {
+                        Player player = Main.LocalPlayer;
+                        bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
+                        if (e)
+                            KinsmanMessage.ActivateMessage();
+                    }
+                }
+                if (!GrimeMessage.alreadySeen)
+                {
+                    if (type == ModContent.TileType<GrimesandPlaced>())
+                    {
+                        GrimeMessage.ActivateMessage();
+                    }
                 }
             }
-            if (!KinsmanMessage.alreadySeen)
+            if (CalRemixWorld.reargar)
             {
-                if (type == ModContent.TileType<OnyxExcavatorTile>() && CalRemixWorld.downedEarth)
+                if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
                 {
-                    Player player = Main.LocalPlayer;
-                    bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
-                    if (e)
-                        KinsmanMessage.ActivateMessage();
+                    Main.tile[i, j].TileType = (ushort)TileID.Mud;
                 }
-            }
-            if (!GrimeMessage.alreadySeen)
-            {
-                if (type == ModContent.TileType<GrimesandPlaced>())
-                {
-                    GrimeMessage.ActivateMessage();
-                }
-            }
-            if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
-            {
-                Main.tile[i, j].TileType = (ushort)TileID.Mud;
             }
         }
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if (ModLoader.HasMod("OreExcavator"))
+            if (FannyManager.fannyEnabled)
             {
-                if (!MineMessage.alreadySeen)
+                if (ModLoader.HasMod("OreExcavator"))
                 {
-                    if (TileID.Sets.Ore[type])
+                    if (!MineMessage.alreadySeen)
                     {
-                        if (Main.rand.NextBool(100))
+                        if (TileID.Sets.Ore[type])
                         {
-                            MineMessage.ActivateMessage();
+                            if (Main.rand.NextBool(100))
+                            {
+                                MineMessage.ActivateMessage();
+                            }
                         }
                     }
                 }
             }
-            if (!CalRemixWorld.grime)
+            if (CalRemixWorld.grimesandToggle)
             {
-                if (type == TileID.ShadowOrbs)
+                if (!CalRemixWorld.grime)
                 {
+                    if (type == TileID.ShadowOrbs)
+                    {
                         CalamityMod.CalamityUtils.SpawnOre(ModContent.TileType<GrimesandPlaced>(), 6E-05, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
                         Main.NewText("The sky islands pollute with grime...", Color.Brown);
                         CalRemixWorld.grime = true;
                         CalRemixWorld.UpdateWorldBool();
+                    }
                 }
             }
             if (type == TileID.LargePiles2)

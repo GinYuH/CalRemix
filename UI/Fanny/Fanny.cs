@@ -99,12 +99,18 @@ namespace CalRemix.UI
 
         private void TickleTheRepugnantFuck(UIMouseEvent evt, UIElement listeningElement)
         {
+            if (!FannyManager.fannyEnabled)
+                return;
             tickle = Math.Max(tickle, 0) + 1;
             SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (!FannyManager.fannyEnabled)
+            {
+                StopTalking();
+            }
             //Tick down the talk cooldown
             talkCooldown--;
 
@@ -161,6 +167,10 @@ namespace CalRemix.UI
         // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            if (!FannyManager.fannyEnabled)
+            {
+                return;
+            }
             AnimateFanny();
 
             // finally draw Fanny
@@ -477,6 +487,8 @@ namespace CalRemix.UI
     {
         public static List<FannyMessage> fannyMessages = new List<FannyMessage>();
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
+        public static bool fannyEnabled = true;
+        public static int fannyTimesFrozen = 0;
 
         #region Loading
         public override void Load()
@@ -500,6 +512,9 @@ namespace CalRemix.UI
             LoadBabil();
             //LoadPityParty();
             LoadWonderFlowerMessages();
+
+            fannyEnabled = true;
+            fannyTimesFrozen = 0;
         }
 
 
