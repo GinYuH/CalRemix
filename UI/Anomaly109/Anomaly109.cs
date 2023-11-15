@@ -148,11 +148,20 @@ namespace CalRemix.UI
             string textwithoutspaces = TextInput.Replace(" ", string.Empty);
             for (int i = 0; i < Anomaly109Manager.options.Count; i++)
             {
-                if (Anomaly109Manager.options[i].key == textwithoutspaces && !Anomaly109Manager.options[i].unlocked)
+                if (!Anomaly109Manager.options[i].unlocked)
                 {
-                    SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
-                    Anomaly109Manager.options[i].unlocked = true;
-                    break;
+                    if ((textwithoutspaces == "welive4hypnos" || textwithoutspaces == "weliveforhypnos"))
+                    {
+                        SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
+                        Anomaly109Manager.options[i].unlocked = true;
+                        continue;
+                    }
+                    if (Anomaly109Manager.options[i].key == textwithoutspaces)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
+                        Anomaly109Manager.options[i].unlocked = true;
+                        break;
+                    }
                 }
             }
             Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, ">C:\\remix\\" + TextInput + Underscore, promptframe.X + promptframe.Width / 64, promptframe.Y + promptframe.Height / 3f, Color.Lime * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
@@ -319,6 +328,7 @@ namespace CalRemix.UI
                     {
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
                         option.toggle();
+                        CalRemixWorld.UpdateWorldBool();
                         ClickCooldown = 8;
                     }
                 }
