@@ -20,6 +20,17 @@ Mods: {
 						'Pheromones used for hunting Draconic Offshoots.'
 						'''
 				}
+
+				AstralChunk: {
+					DisplayName: Astralination
+					Tooltip:
+						'''
+						Summons Astrum Viridis when used in the Plagued Jungle
+						Enrages during the day while outside the Plagued Jungle
+						Not consumable
+						'The nanomachines' fortress has found another target.'
+						'''
+				}
 			}
 		}
 	}

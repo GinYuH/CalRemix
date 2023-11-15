@@ -64,6 +64,7 @@ namespace CalRemix
             }
             else if (item.type == ModContent.ItemType<Swordsplosion>())
             {
+                item.damage = item.damage / 3;
                 item.rare = ItemRarityID.LightRed;
             }
             else if (item.type == ModContent.ItemType<EssenceofHavoc>())

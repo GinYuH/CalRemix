@@ -1133,18 +1133,6 @@ namespace CalRemix.Retheme
     {
         public override void Load()
         {
-            LoadRethemes();
-        }
-
-        public override void Unload()
-        {
-            UnloadRethemes();
-            IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
-            IL.CalamityMod.NPCs.CalamityAI.BumblebirbAI -= BirbAI;
-        }
-
-        public static void LoadRethemes()
-        {
             // IL.CalamityMod.NPCs.PreDraw += ;
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
             IL.CalamityMod.NPCs.HiveMind.HiveMind.PreDraw += HiveMind;
@@ -1168,14 +1156,14 @@ namespace CalRemix.Retheme
             IL.CalamityMod.NPCs.CalClone.Catastrophe.PreDraw += Catastrophe;
             IL.CalamityMod.NPCs.Leviathan.Leviathan.SetStaticDefaults += Leviathan;
             IL.CalamityMod.NPCs.Leviathan.Anahita.PreDraw += Anahita;
-            IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI += AureusAI;
+            MonoModHooks.Modify(typeof(CalamityAI).GetMethod("AstrumAureusAI", BindingFlags.Public | BindingFlags.Static), AureusAI);
             IL.CalamityMod.NPCs.AstrumAureus.AstrumAureus.PreDraw += AstrumAureus;
             IL.CalamityMod.NPCs.AstrumAureus.AureusSpawn.PreDraw += AureusSpawn;
             //IL.CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.PreDraw += PBG;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusHead.PreDraw += AstrumDeusHead;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusBody.PreDraw += AstrumDeusBody;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusTail.PreDraw += AstrumDeusTail;
-            IL.CalamityMod.NPCs.CalamityAI.BumblebirbAI += BirbAI;
+            MonoModHooks.Modify(typeof(CalamityAI).GetMethod("BumblebirbAI", BindingFlags.Public | BindingFlags.Static), BirbAI);
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.PreDraw += BirbDraw;
             IL.CalamityMod.NPCs.NormalNPCs.WildBumblefuck.SpawnChance += BirbSpawn;
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.SetBestiary += BirbBest;
@@ -1198,55 +1186,6 @@ namespace CalRemix.Retheme
             IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw += CelestusProj;
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
-        }
-
-        public static void UnloadRethemes()
-        {
-            // IL.CalamityMod.NPCs.PreDraw -= ;
-            IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw -= Crabulon;
-            IL.CalamityMod.NPCs.HiveMind.HiveMind.PreDraw -= HiveMind;
-            IL.CalamityMod.NPCs.Perforator.PerforatorCyst.PreDraw -= PerforatorCyst;
-            #region PerfWormHeck
-            IL.CalamityMod.NPCs.Perforator.PerforatorBodyLarge.PreDraw -= PerfLBody;
-            IL.CalamityMod.NPCs.Perforator.PerforatorBodyMedium.PreDraw -= PerfMBody;
-            IL.CalamityMod.NPCs.Perforator.PerforatorBodySmall.PreDraw -= PerfSBody;
-            IL.CalamityMod.NPCs.Perforator.PerforatorHeadLarge.PreDraw -= PerfLHead;
-            IL.CalamityMod.NPCs.Perforator.PerforatorHeadMedium.PreDraw -= PerfMHead;
-            IL.CalamityMod.NPCs.Perforator.PerforatorHeadSmall.PreDraw -= PerfSHead;
-            IL.CalamityMod.NPCs.Perforator.PerforatorTailLarge.PreDraw -= PerfLTail;
-            IL.CalamityMod.NPCs.Perforator.PerforatorTailMedium.PreDraw -= PerfMTail;
-            IL.CalamityMod.NPCs.Perforator.PerforatorTailSmall.PreDraw -= PerfSTail;
-            #endregion
-            IL.CalamityMod.NPCs.Perforator.PerforatorHive.PreDraw -= PerforatorHive;
-            IL.CalamityMod.NPCs.Cryogen.Cryogen.PreDraw -= Cryogen;
-            IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw -= CryogenShield;
-            IL.CalamityMod.NPCs.CalClone.CalamitasClone.PreDraw -= CalamitasClone;
-            IL.CalamityMod.NPCs.CalClone.Cataclysm.PreDraw -= Cataclysm;
-            IL.CalamityMod.NPCs.CalClone.Catastrophe.PreDraw -= Catastrophe;
-            IL.CalamityMod.NPCs.Leviathan.Leviathan.SetStaticDefaults -= Leviathan;
-            IL.CalamityMod.NPCs.Leviathan.Anahita.PreDraw -= Anahita;
-            //IL.CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.PreDraw -= PBG;
-            //IL.CalamityMod.NPCs.CalamityAI.AstrumAureusAI -= AureusAI;
-            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusHead.PreDraw -= AstrumDeusHead;
-            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusBody.PreDraw -= AstrumDeusBody;
-            IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusTail.PreDraw -= AstrumDeusTail;
-            IL.CalamityMod.NPCs.Yharon.Yharon.PreDraw -= Yharon;
-            IL.CalamityMod.NPCs.Other.THELORDE.PreDraw -= LORDE;
-            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|46_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
-            //MonoModHooks.Modify(typeof(CalamityMod.CalamityMod).Assembly.GetType("WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Instance), BossChecklist);
-
-            // IL.CalamityMod.Items.Weapons.PreDraw -= ;
-            IL.CalamityMod.Items.Weapons.Ranged.HeavenlyGale.PostDrawInWorld -= HeavenlyGale;
-
-            // IL.CalamityMod.Projectiles.PreDraw -= ;
-            IL.CalamityMod.Projectiles.Rogue.InfestedClawmerangProj.PreDraw -= InfestedClawmerangProj;
-            IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI -= EldritchTentacle;
-            IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw -= MurasamaSlash;
-            IL.CalamityMod.Projectiles.Melee.ExobladeProj.DrawBlade -= ExobladeProj;
-            IL.CalamityMod.Projectiles.Ranged.HeavenlyGaleProj.PreDraw -= HeavenlyGaleProj;
-            IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw -= CelestusProj;
-            IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw -= ViolenceThrownProjectile;
-            IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw -= HolyBlast;
         }
 
         #region BossChecklist
