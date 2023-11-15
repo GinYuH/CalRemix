@@ -212,7 +212,7 @@ namespace CalRemix.UI
             Rectangle maus = getMouse();
 
             string textwithoutspaces = TextInput.Replace(" ", string.Empty);
-            if (TextInput.ToLower().Contains("gg") && !Anomaly109Manager.helpUnlocked)
+            if (TextInput.ToLower().Contains("gg") && !Anomaly109Manager.helpUnlocked && !TextInput.ToLower().Contains("fandom"))
             {
                 SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
                 Anomaly109Manager.helpUnlocked = true;
