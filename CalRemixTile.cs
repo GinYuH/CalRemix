@@ -285,55 +285,61 @@ namespace CalRemix
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
-            if (FannyManager.fannyEnabled)
+            if (!Main.dedServ)
             {
-                if (!roxm.alreadySeen)
+                if (FannyManager.fannyEnabled)
                 {
-                    if (type == ModContent.TileType<RoxTile>())
+                    if (!roxm.alreadySeen)
                     {
-                        roxm.ActivateMessage();
+                        if (type == ModContent.TileType<RoxTile>())
+                        {
+                            roxm.ActivateMessage();
+                        }
+                    }
+                    if (!KinsmanMessage.alreadySeen)
+                    {
+                        if (type == ModContent.TileType<OnyxExcavatorTile>() && CalRemixWorld.downedEarth)
+                        {
+                            Player player = Main.LocalPlayer;
+                            bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
+                            if (e)
+                                KinsmanMessage.ActivateMessage();
+                        }
+                    }
+                    if (!GrimeMessage.alreadySeen)
+                    {
+                        if (type == ModContent.TileType<GrimesandPlaced>())
+                        {
+                            GrimeMessage.ActivateMessage();
+                        }
                     }
                 }
-                if (!KinsmanMessage.alreadySeen)
+                if (CalRemixWorld.reargar)
                 {
-                    if (type == ModContent.TileType<OnyxExcavatorTile>() && CalRemixWorld.downedEarth)
+                    if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
                     {
-                        Player player = Main.LocalPlayer;
-                        bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
-                        if (e)
-                            KinsmanMessage.ActivateMessage();
+                        Main.tile[i, j].TileType = (ushort)TileID.Mud;
                     }
-                }
-                if (!GrimeMessage.alreadySeen)
-                {
-                    if (type == ModContent.TileType<GrimesandPlaced>())
-                    {
-                        GrimeMessage.ActivateMessage();
-                    }
-                }
-            }
-            if (CalRemixWorld.reargar)
-            {
-                if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
-                {
-                    Main.tile[i, j].TileType = (ushort)TileID.Mud;
                 }
             }
         }
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if (FannyManager.fannyEnabled)
+            if (!Main.dedServ)
             {
-                if (ModLoader.HasMod("OreExcavator"))
+                if (FannyManager.fannyEnabled)
                 {
-                    if (!MineMessage.alreadySeen)
+                    if (ModLoader.HasMod("OreExcavator"))
                     {
-                        if (TileID.Sets.Ore[type])
+                        if (!MineMessage.alreadySeen)
                         {
-                            if (Main.rand.NextBool(100))
+                            if (TileID.Sets.Ore[type])
                             {
-                                MineMessage.ActivateMessage();
+                                if (Main.rand.NextBool(100))
+                                {
+                                    MineMessage.ActivateMessage();
+                                }
                             }
                         }
                     }
