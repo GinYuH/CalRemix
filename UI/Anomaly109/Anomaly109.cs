@@ -27,6 +27,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameInput;
@@ -107,6 +108,7 @@ namespace CalRemix.UI
             DrawArrows(spriteBatch, mainframe);
             if (CurrentPage <= Anomaly109Manager.options.Count() / 12)
             {
+                DrawHelp(spriteBatch, mainframe);
                 SelectOption(spriteBatch, selectedOption, selectedRectangle);
             }
         }
@@ -187,6 +189,47 @@ namespace CalRemix.UI
                     TextInput = newText;
                 }
             }
+        }
+
+        private static void DrawHelp(SpriteBatch spriteBatch, Rectangle mainframe)
+        {
+            int borderwidth = 4;
+            Color bordercolor = Anomaly109Manager.helpUnlocked ? Color.Yellow : Color.DarkSlateGray;
+            Rectangle promptframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.775f), mainframe.Bottom - (int)(mainframe.Height * 0.125f), (int)(mainframe.Width * 0.1f), (int)(mainframe.Height * 0.08f));
+            Rectangle promptborderframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.775f) - borderwidth, mainframe.Bottom - (int)(mainframe.Height * 0.125f) - borderwidth, (int)(mainframe.Width * 0.1f) + borderwidth * 2, (int)(mainframe.Height * 0.08f) + borderwidth * 2);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, promptborderframe, bordercolor);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, promptframe, Color.Black);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Help", promptframe.X + promptframe.Width / 3, promptframe.Y + promptframe.Height / 3f, bordercolor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+            Rectangle maus = getMouse();
+
+            string textwithoutspaces = TextInput.Replace(" ", string.Empty);
+            if (TextInput.ToLower().Contains("gg") && !Anomaly109Manager.helpUnlocked)
+            {
+                SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
+                Anomaly109Manager.helpUnlocked = true;
+                CalRemixWorld.UpdateWorldBool();
+            }
+            if (maus.Intersects(promptborderframe))
+            {
+                if (Anomaly109Manager.helpUnlocked)
+                {
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Click to open browser", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+
+                    if (Main.mouseLeft && ClickCooldown <= 0)
+                    {
+                        ClickCooldown = 30;
+                        SoundEngine.PlaySound(SoundID.MenuOpen);
+                        Utils.OpenToURL("https://calamitymod.wiki.gg/wiki/User:Lilsigtum/Sandbox2");
+                    }
+                }
+                else
+                {
+                    string prom = "To unlock help, answer the following: ";
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, prom, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Where is the Calamity Wiki hosted?", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20 + FontAssets.MouseText.Value.MeasureString(prom).Y + 4, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                }
+            }
+
         }
 
         private static void DrawOptions(SpriteBatch spriteBatch, Rectangle mainframe, out Rectangle optionRect, out Anomaly109Option selected, float bgWidth, float bgHeight)
@@ -423,11 +466,17 @@ namespace CalRemix.UI
                 Main.blockMouse = true;
             }
         }
+
+        private static Rectangle getMouse()
+        {
+            return new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
+        }
     }
 
     public class Anomaly109Manager : ModSystem
     {
         public static List<Anomaly109Option> options = new List<Anomaly109Option> { };
+        public static bool helpUnlocked = false;
         public override void OnWorldLoad()
         {
             if (options.Count == 0)
@@ -507,6 +556,7 @@ namespace CalRemix.UI
                 if (msg.unlocked)
                     tag["Anomaly109" + msg.title] = true;
             }
+            tag["help109"] = helpUnlocked;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -516,6 +566,7 @@ namespace CalRemix.UI
                 Anomaly109Option msg = options[i];
                 options[i].unlocked = tag.ContainsKey("Anomaly109" + msg.title);
             }
+            helpUnlocked = tag.ContainsKey("help109");
         }
     }
 

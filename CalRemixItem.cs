@@ -40,6 +40,7 @@ using CalamityMod.NPCs.HiveMind;
 using CalRemix.Items.Placeables;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.TreasureBags.MiscGrabBags;
 
 namespace CalRemix
 {
@@ -452,6 +453,10 @@ namespace CalRemix
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
                 yhar.Add(ModContent.ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
                 yhar.AddFail(ModContent.ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+            }
+            else if (item.type == ModContent.ItemType<StarterBag>())
+            {
+                itemLoot.Add(ModContent.ItemType<Anomaly109>());
             }
         }
 

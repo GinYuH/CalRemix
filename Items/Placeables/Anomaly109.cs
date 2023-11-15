@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using CalRemix.Tiles;
 using CalamityMod.Rarities;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Items.Placeables
 {
@@ -29,6 +30,13 @@ namespace CalRemix.Items.Placeables
             Item.value = Item.buyPrice(0, 0, 0, 0);
             Item.rare = ModContent.RarityType<CalamityRed>();
             Item.createTile = ModContent.TileType<Anomaly109Placed>();
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<DeliciousMeat>(), 22).
+                Register();
         }
     }
 }

@@ -346,6 +346,7 @@ namespace CalRemix
             writer.Write(laruga );//tag.Get<bool>("109laruga");;// );//laruga;
             writer.Write(FannyManager.fannyEnabled);
             writer.Write(FannyManager.fannyTimesFrozen);
+            writer.Write(Anomaly109Manager.helpUnlocked);
 
             writer.Write(transmogrifyingItem);
             writer.Write(transmogrifyingItemAmt);
@@ -392,6 +393,7 @@ namespace CalRemix
             laruga = reader.ReadBoolean();//.Get<bool>("109laruga");// = laruga;
             FannyManager.fannyEnabled = reader.ReadBoolean();
             FannyManager.fannyTimesFrozen = reader.ReadInt32();
+            Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
 
             transmogrifyingItem = reader.ReadInt32();
             transmogrifyingItemAmt = reader.ReadInt32();
