@@ -931,11 +931,14 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<Horse>())
                 CalRemixWorld.downedEarth = true;
-            if (!CystMessage.alreadySeen && !CalRemixWorld.grimesandToggle)
+            if (!Main.dedServ)
             {
-                if (npc.type == ModContent.NPCType<PerforatorCyst>() || npc.type == ModContent.NPCType<HiveTumor>())
+                if (!CystMessage.alreadySeen && !CalRemixWorld.grimesandToggle)
                 {
-                    CystMessage.ActivateMessage();
+                    if (npc.type == ModContent.NPCType<PerforatorCyst>() || npc.type == ModContent.NPCType<HiveTumor>())
+                    {
+                        CystMessage.ActivateMessage();
+                    }
                 }
             }
         }
