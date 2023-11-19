@@ -14,7 +14,7 @@ namespace CalRemix.Tiles.PlaguedJungle
         }
 
         //Idk what to make with the glowmask
-        public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>("CalamityMod/Tiles/PlaguedJungle/PlaguedCactus");
+        public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>("CalRemix/Tiles/PlaguedJungle/PlaguedCactus");
 
         //What is a FruitTexture
         public override Asset<Texture2D> GetFruitTexture() => null;
