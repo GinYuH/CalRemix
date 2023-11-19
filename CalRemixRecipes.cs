@@ -105,6 +105,7 @@ namespace CalRemix
             {
                 Recipe cell = Recipe.Create(ModContent.ItemType<PlagueCellCanister>(), 1);
                 cell.AddRecipeGroup(RecipeGroupID.IronBar);
+                cell.AddIngredient(ItemID.JungleSpores);
                 cell.AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom));
                 cell.Register();
             }
