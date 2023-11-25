@@ -38,7 +38,7 @@ namespace CalRemix.NPCs
         private bool hide;
         private Player Target => Main.player[NPC.target];
         public ref float Wait => ref NPC.ai[0];
-        public ref float Status => ref NPC.ai[1];
+        public ref float Timer => ref NPC.ai[1];
         public ref float Wait2 => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
@@ -50,7 +50,7 @@ namespace CalRemix.NPCs
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<WeakBrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<RancorBurn>()] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new();
             nPCBestiaryDrawModifiers.Scale = 0.4f;
             NPCID.Sets.NPCBestiaryDrawModifiers value = nPCBestiaryDrawModifiers;
             value.Frame = 1;
@@ -134,8 +134,8 @@ namespace CalRemix.NPCs
             {
                 hide = true;
                 NPC.defense = 9999;
-                Status += 1f;
-                if (Status <= 60f && Main.netMode != NetmodeID.Server)
+                Timer += 1f;
+                if (Timer <= 60f && Main.netMode != NetmodeID.Server)
                 {
                     float vel = Target.Center.X > NPC.Center.X ? 1f : -1f;
                     for (int i = 0; i < 7; i++)
@@ -144,7 +144,7 @@ namespace CalRemix.NPCs
                         Dusting(pos, pos + new Vector2(20, 20), 40, 40);
                     }
                 }
-                if (Status == 60f && Main.netMode != NetmodeID.Server)
+                if (Timer == 60f && Main.netMode != NetmodeID.Server)
                 {
                     float vel = Target.Center.X > NPC.Center.X ? 1f : -1f;
                     for (int i = 0; i < 7; i++)
@@ -153,10 +153,10 @@ namespace CalRemix.NPCs
                         proj.timeLeft = 600;
                     }
                 }
-                if (Status >= 120f)
+                if (Timer >= 120f)
                 {
                     Wait = 0f;
-                    Status = 0f;
+                    Timer = 0f;
                     hide = false;
                     attack = -1;
                     NPC.defense = Main.hardMode ? 40 : 15;
@@ -165,98 +165,93 @@ namespace CalRemix.NPCs
             }
             else if (attack == 1)
             {
-                if (Status == 0f)
+                switch (Timer)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.TargetClosest();
-                        Status = 1f;
-                        NPC.netUpdate = true;
-                    }
-                }
-                else if (Status == 1f)
-                {
-                    NPC.damage = 0;
-                    NPC.chaseable = false;
-                    NPC.dontTakeDamage = true;
-                    NPC.noGravity = true;
-                    NPC.noTileCollide = true;
-                    NPC.alpha += Main.hardMode ? 8 : 5;
-                    if (NPC.alpha >= 255)
-                    {
-                        NPC.alpha = 255;
-                        NPC.position.X = player.Center.X - (NPC.width / 2);
-                        NPC.position.Y = player.Center.Y - (NPC.height / 2) + player.gfxOffY - 200f;
-                        NPC.position.X = NPC.position.X - 15f;
-                        NPC.position.Y = NPC.position.Y - 100f;
-                        Status = 2f;
-                        NPC.netUpdate = true;
-                    }
-                }
-                else if (Status == 2f)
-                {
-                    if (Main.rand.NextBool(2))
-                    {
-                        Dusting(NPC.position, NPC.Center, NPC.width, NPC.height);
-                    }
-                    NPC.alpha -= Main.hardMode ? 7 : 4;
-                    if (NPC.alpha <= 0)
-                    {
-                        NPC.damage = Main.hardMode ? 120 : 70;
-                        if (CalamityWorld.death)
-                            NPC.damage = Main.hardMode ? 316 : 168;
-                        else if (CalamityWorld.revenge)
-                            NPC.damage = Main.hardMode ? 288 : 184;
-
-                        NPC.chaseable = true;
-                        NPC.dontTakeDamage = false;
-                        NPC.alpha = 0;
-                        Status = 3f;
-                        NPC.netUpdate = true;
-                    }
-                }
-                else if (Status == 3f)
-                {
-                    NPC.velocity.Y += 0.8f;
-                    if (NPC.Center.Y > player.Center.Y - NPC.Center.Y + player.gfxOffY - 15f)
-                    {
-                        NPC.noTileCollide = false;
-                        Status = 4f;
-                        NPC.netUpdate = true;
-                    }
-                }
-                else if (Status == 4f)
-                {
-                    if (NPC.velocity.Y == 0f)
-                    {
-                        Status = 0f;
-                        Wait = 0f;
-                        NPC.netUpdate = true;
-                        NPC.noGravity = false;
-                        attack = -1;
-                        SoundEngine.PlaySound(SlamSound, (Vector2?)NPC.position);
-                        if (Main.netMode != NetmodeID.Server)
+                    case 0:
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = (int)NPC.position.X - 30; i < (int)NPC.position.X + NPC.width + 60; i += 30)
-                            {
-                                for (int j = 0; j < 5; j++)
-                                {
-                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X - 30f, NPC.position.Y + NPC.height), NPC.width + 30, 4, DustID.LifeDrain, 0f, 0f, 100, default, 1.5f);
-                                    dust.velocity *= 0.2f;
-                                }
+                            NPC.TargetClosest();
+                            Timer = 1f;
+                            NPC.netUpdate = true;
+                        }
+                        break;
+                    case 1:
+                        NPC.damage = 0;
+                        NPC.chaseable = false;
+                        NPC.dontTakeDamage = true;
+                        NPC.noGravity = true;
+                        NPC.noTileCollide = true;
+                        NPC.alpha += Main.hardMode ? 8 : 5;
+                        if (NPC.alpha >= 255)
+                        {
+                            NPC.alpha = 255;
+                            NPC.position.X = player.Center.X - (NPC.width / 2);
+                            NPC.position.Y = player.Center.Y - (NPC.height / 2) + player.gfxOffY - 200f;
+                            NPC.position.X = NPC.position.X - 15f;
+                            NPC.position.Y = NPC.position.Y - 100f;
+                            Timer = 2f;
+                            NPC.netUpdate = true;
+                        }
+                        break;
+                    case 2:
+                        if (Main.rand.NextBool(2))
+                            Dusting(NPC.position, NPC.Center, NPC.width, NPC.height);
+                        NPC.alpha -= Main.hardMode ? 7 : 4;
+                        if (NPC.alpha <= 0)
+                        {
+                            NPC.damage = Main.hardMode ? 120 : 70;
+                            if (CalamityWorld.death)
+                                NPC.damage = Main.hardMode ? 316 : 168;
+                            else if (CalamityWorld.revenge)
+                                NPC.damage = Main.hardMode ? 288 : 184;
 
-                                Gore gore = Gore.NewGoreDirect(NPC.GetSource_FromAI(), new Vector2(i - 30, NPC.position.Y + NPC.height - 12f) * 0.4f, default, Main.rand.Next(61, 64));
-                                gore.velocity *= 0.4f;
-                                SoundEngine.PlaySound(SupremeCalamitas.BrimstoneShotSound, (Vector2?)NPC.position);
-                                for (int j = 0; j < GetDarts(); j++)
+                            NPC.chaseable = true;
+                            NPC.dontTakeDamage = false;
+                            NPC.alpha = 0;
+                            Timer = 3f;
+                            NPC.netUpdate = true;
+                        }
+                        break;
+                    case 3:
+                        NPC.velocity.Y += 0.8f;
+                        if (NPC.Center.Y > player.Center.Y - NPC.Center.Y + player.gfxOffY - 15f)
+                        {
+                            NPC.noTileCollide = false;
+                            Timer = 4f;
+                            NPC.netUpdate = true;
+                        }
+                        break;
+                    case 4:
+                        if (NPC.velocity.Y == 0f)
+                        {
+                            Timer = 0f;
+                            Wait = 0f;
+                            NPC.netUpdate = true;
+                            NPC.noGravity = false;
+                            attack = -1;
+                            SoundEngine.PlaySound(SlamSound, (Vector2?)NPC.position);
+                            if (Main.netMode != NetmodeID.Server)
+                            {
+                                for (int i = (int)NPC.position.X - 30; i < (int)NPC.position.X + NPC.width + 60; i += 30)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.ToRadians(360 / GetDarts() * j)) * 10f, ModContent.ProjectileType<BrimstoneBarrage>(), GetDamage(), 0, ai0: 1);
+                                    for (int j = 0; j < 5; j++)
+                                    {
+                                        Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X - 30f, NPC.position.Y + NPC.height), NPC.width + 30, 4, DustID.LifeDrain, 0f, 0f, 100, default, 1.5f);
+                                        dust.velocity *= 0.2f;
+                                    }
+
+                                    Gore gore = Gore.NewGoreDirect(NPC.GetSource_FromAI(), new Vector2(i - 30, NPC.position.Y + NPC.height - 12f) * 0.4f, default, Main.rand.Next(61, 64));
+                                    gore.velocity *= 0.4f;
+                                    SoundEngine.PlaySound(SupremeCalamitas.BrimstoneShotSound, (Vector2?)NPC.position);
+                                    for (int j = 0; j < GetDarts(); j++)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.ToRadians(360 / GetDarts() * j)) * 10f, ModContent.ProjectileType<BrimstoneBarrage>(), GetDamage(), 0, ai0: 1);
+                                    }
                                 }
                             }
                         }
-                    }
-
-                    NPC.velocity.Y += 0.8f;
+                        NPC.velocity.Y += 0.8f;
+                        break;
                 }
             }
             if (!Main.hardMode)

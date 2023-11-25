@@ -1468,6 +1468,8 @@ Mods: {
 			BananaClown.DisplayName: Banana Clown
 			CrocodileHerring.DisplayName: Crocodile Herring
 			GulletWorm.DisplayName: Gullet Worm
+			FloatingBiomass.DisplayName: Floating Biomass
+			WulfrumMine.DisplayName: Wulfrum Mine
 		}
 
 		Projectiles: {

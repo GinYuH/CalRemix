@@ -25,15 +25,15 @@ namespace CalRemix.NPCs
     public class CyberDraedon : ModNPC
     {
         private Player Target => Main.player[NPC.target];
-        private int state = 0;
         private bool phaseTwo = false;
         private bool killed = false;
-        private float timer = 0;
+        public ref float Timer => ref NPC.ai[0];
+        public ref float State => ref NPC.ai[1];
         public override bool CheckActive() => false;
         public override void SetStaticDefaults()
         {
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new();
             nPCBestiaryDrawModifiers.Scale = 0.8f;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
@@ -76,15 +76,11 @@ namespace CalRemix.NPCs
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(timer);
-            writer.Write(state);
             writer.Write(phaseTwo);
             writer.Write(killed);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            timer = reader.ReadSingle();
-            state = reader.ReadInt32();
             phaseTwo = reader.ReadBoolean();
             killed = reader.ReadBoolean();
         }
@@ -99,6 +95,7 @@ namespace CalRemix.NPCs
                 Talk("Threat detained. Returning to normal operation.", Color.Cyan);
                 killed = true;
             }
+            NPC.velocity.X *= 0.922f;
             NPC.TargetClosest();
             if (!Target.dead && killed)
             {
@@ -122,21 +119,21 @@ namespace CalRemix.NPCs
                         player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), (int)(player.statLife / 20f), (player.Center.X > NPC.Center.X) ? 1 : -1, dodgeable: false, armorPenetration: 10000);
                 }
             }
-            timer++;
-            if (state == 0 && timer % 60 == 55)
+            State++;
+            if (Timer == 0 && State % 60 == 55)
             {
                 NPC.velocity.Y -= 4;
             }
-            if (state == 0 && timer % 60 == 0)
+            if (Timer == 0 && State % 60 == 0)
             {
                 NPC.velocity.X = (Target.Center.X > NPC.Center.X) ? 20 : -20;
             } 
-            else if (state == 0 && timer >= 185)
+            else if (Timer == 0 && State >= 235)
             {
-                state = 1;
-                timer = 30;
+                Timer = 1;
+                State = 30;
             }
-            if (state == 1 && timer % 45 == 0 && Main.netMode != NetmodeID.Server)
+            if (Timer == 1 && State % 45 == 0 && Main.netMode != NetmodeID.Server)
             {
                 Vector2 targetPos = NPC.DirectionTo(Target.Center);
                 if (phaseTwo)
@@ -144,13 +141,13 @@ namespace CalRemix.NPCs
                 else
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + targetPos.SafeNormalize(Vector2.One) * 80f, targetPos * 0.01f, ModContent.ProjectileType<LaserSlash>(), 0, 0, ai0: 1);
             }
-            if (state == 1 && timer < 185)
+            if (Timer == 1 && State < 185)
                 NPC.velocity.X = (Target.Center.X > NPC.Center.X) ? 0.01f : -0.01f;
-            else if (state == 1 && timer >= 185)
+            else if (Timer == 1 && State >= 185)
             {
                 NPC.velocity = new Vector2((Target.Center.X > NPC.Center.X) ? 2 : -2, -2);
-                state = 0;
-                timer = 30;
+                Timer = 0;
+                State = 30;
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

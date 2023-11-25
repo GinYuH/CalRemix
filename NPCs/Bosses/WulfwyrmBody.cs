@@ -12,6 +12,7 @@ using Terraria.GameContent.ItemDropRules;
 using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Newtonsoft.Json.Linq;
 
 namespace CalRemix.NPCs.Bosses
 {
@@ -155,6 +156,8 @@ namespace CalRemix.NPCs.Bosses
                 if (Main.netMode != NetmodeID.Server)
                 {
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("WulfrumExcavatorBody").Type, NPC.scale);
+                    if (NPC.whoAmI % 2 != 0)
+                        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, (Main.rand.NextBool(2) ? Mod.Find<ModGore>("WulfrumExcavatorTire").Type : Mod.Find<ModGore>("WulfrumExcavatorTire2").Type), NPC.scale);
                 }
             }
         }
