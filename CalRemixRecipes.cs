@@ -205,6 +205,10 @@ namespace CalRemix
                     recipe.RemoveIngredient(ItemID.FallenStar);
                     recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
                 }
+                if (recipe.HasResult(ModContent.ItemType<ProfanedShard>()))
+                {
+                    recipe.DisableRecipe();
+                }
                 if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());

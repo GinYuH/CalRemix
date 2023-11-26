@@ -52,6 +52,8 @@ namespace CalRemix
             cal.Call("DeclareMiniboss", ModContent.NPCType<Clamitas>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<OnyxKinsman>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<CyberDraedon>());
+            cal.Call("DeclareMiniboss", ModContent.NPCType<PlagueEmperor>());
+            cal.Call("DeclareMiniboss", ModContent.NPCType<YggdrasilEnt>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
             /*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());

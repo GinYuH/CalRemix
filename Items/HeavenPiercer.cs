@@ -42,10 +42,20 @@ namespace CalRemix.Items
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
+            {
                 Item.UseSound = SoundID.Item33;
+                Item.noUseGraphic = false;
+            }
             else
+            {
                 Item.UseSound = SoundID.Item23;
+                Item.noUseGraphic = true;
+            }
             return true;
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-64f, 0f);
         }
         public override bool AltFunctionUse(Player player)
         {

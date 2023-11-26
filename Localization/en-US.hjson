@@ -1469,7 +1469,26 @@ Mods: {
 			CrocodileHerring.DisplayName: Crocodile Herring
 			GulletWorm.DisplayName: Gullet Worm
 			FloatingBiomass.DisplayName: Floating Biomass
-			WulfrumMine.DisplayName: Wulfrum Mine
+
+			ZER0: {
+				DisplayName: Albatross
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+
+			Tenryu.DisplayName: King of Constellations, Tenryu
+			PlagueEmperor.DisplayName: Plague Emperor
+			EvilPlagueBee.DisplayName: Plague Bee
+			YggdrasilEnt.DisplayName: Yggdrasil Ent
 		}
 
 		Projectiles: {
@@ -1598,8 +1617,10 @@ Mods: {
 			Cake.DisplayName: Cake
 			Frosting.DisplayName: Frosting
 			DeadYharim.DisplayName: Dead Yharim
-			HeavenPiercerLaser.DisplayName: HElix Laser
+			HeavenPiercerLaser.DisplayName: Helix Laser
 			BananaBomb.DisplayName: Banana Bomb
+			EvilPlagueSeeker.DisplayName: Plague Seeker
+			YggThorn.DisplayName: Yggdrasil Thorn
 		}
 
 		Tiles: {
