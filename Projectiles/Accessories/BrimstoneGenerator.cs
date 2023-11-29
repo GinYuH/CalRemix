@@ -1,10 +1,11 @@
 ﻿using CalamityMod.CalPlayer;
-using CalamityMod.Particles.Metaballs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Terraria.GameContent.NetModules;
+using CalamityMod.Graphics.Metaballs;
 
 namespace CalRemix.Projectiles.Accessories
 {
@@ -12,7 +13,7 @@ namespace CalRemix.Projectiles.Accessories
     {
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public bool start = true;
-        public BaseFusableParticleSet.FusableParticle voidaura;
+        public StreamGougeMetaball.CosmicParticle voidaura;
 
         public override void SetStaticDefaults()
         {
@@ -91,7 +92,7 @@ namespace CalRemix.Projectiles.Accessories
 
             if (voidaura == null)
             {
-                voidaura = FusableParticleManager.GetParticleSetByType<VoidGeneratorParticleSet>()?.SpawnParticle(Projectile.Center, 800);
+                voidaura = VoidGeneratorMetaball.SpawnParticle(Projectile.Center, Vector2.Zero, 800f);
             }
             else
             {

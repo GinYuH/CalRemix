@@ -31,6 +31,7 @@ namespace CalRemix
         public static CalRemix instance;
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
+        public Mod VeinMiner;
 
         public static List<int> oreList = new List<int>
         {
@@ -139,11 +140,13 @@ namespace CalRemix
             }
             CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
             KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.KlepticoinCurrency(ModContent.ItemType<Items.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
+            ModLoader.TryGetMod("OreExcavator", out VeinMiner);
         }
         public override void Unload()
         {
             PlagueGlobalNPC.PlagueHelper = null;
             instance = null;
+            VeinMiner = null;
         }
 
         public static bool Enchantable(Item item)

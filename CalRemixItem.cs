@@ -457,7 +457,7 @@ namespace CalRemix
             }
             else if (item.type == ModContent.ItemType<StarterBag>())
             {
-                itemLoot.Add(ModContent.ItemType<Anomaly109>());
+                itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<Anomaly109>());
             }
         }
 

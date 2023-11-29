@@ -87,9 +87,9 @@ namespace CalRemix.Items.Accessories
             calPlayer.laudanum = true;
             calPlayer.heartOfDarkness = true;
             calPlayer.stressPills = true;
-            calPlayer.coreOfTheBloodGod = true;
+            calPlayer.chaliceOfTheBloodGod = true;
             calPlayer.fleshTotem = true;
-            calPlayer.healingPotBonus += 0.25f;
+            calPlayer.healingPotionMultiplier += 0.25f;
             calPlayer.raiderTalisman = true;
             calPlayer.electricianGlove = true;
             calPlayer.filthyGlove = true;
@@ -464,7 +464,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<StatisVoidSash>().
                 AddIngredient<AsgardianAegis>().
                 AddIngredient<ReaperToothNecklace>().
-                AddIngredient<CoreOfTheBloodGod>().
+                AddIngredient<ChaliceOfTheBloodGod>().
                 AddIngredient<RampartofDeities>().
                 AddIngredient<UniversalStone>().
                 AddIngredient<Calamity>().
@@ -493,7 +493,7 @@ namespace CalRemix.Items.Accessories
                 AddIngredient<StatisVoidSash>().
                 AddIngredient<AsgardianAegis>().
                 AddIngredient<ReaperToothNecklace>().
-                AddIngredient<CoreOfTheBloodGod>().
+                AddIngredient<ChaliceOfTheBloodGod>().
                 AddIngredient<RampartofDeities>().
                 AddIngredient<UniversalStone>().
                 AddIngredient<Calamity>().

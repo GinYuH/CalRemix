@@ -36,6 +36,7 @@ namespace CalRemix.Items.Placeables
         {
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<DeliciousMeat>(), 22).
+                AddCondition(new Condition("In Singleplayer", () => Main.netMode != NetmodeID.MultiplayerClient)).
                 Register();
         }
     }

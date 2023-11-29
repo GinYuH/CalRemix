@@ -41,13 +41,16 @@ namespace CalRemix
                 FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
             KinsmanMessage = new FannyMessage("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "Nuhuh",
                 FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
-            MineMessage = new FannyMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "Nuhuh",
-                (FannySceneMetrics metrics) => ModLoader.HasMod("OreExcavator"), onlyPlayOnce: true).NeedsActivation().SetHoverTextOverride(Main.rand.NextBool(100) ? "Sure Fanny, I'll be a real gangsta thug and do that right now homeboy." : "Sure Fanny, I'll do that right now!");
             GrimeMessage = new FannyMessage("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "Nuhuh",
-                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            if (CalRemix.instance.VeinMiner != null)
+            {
+                MineMessage = new FannyMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "Nuhuh",
+                    FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation().SetHoverTextOverride("Sure Fanny, I'll do that right now!");
+                FannyManager.LoadFannyMessage(MineMessage);
+            }
             FannyManager.LoadFannyMessage(roxm);
             FannyManager.LoadFannyMessage(KinsmanMessage);
-            FannyManager.LoadFannyMessage(MineMessage);
             FannyManager.LoadFannyMessage(GrimeMessage);
         }
 
@@ -330,7 +333,7 @@ namespace CalRemix
             {
                 if (FannyManager.fannyEnabled)
                 {
-                    if (ModLoader.HasMod("OreExcavator"))
+                    if (CalRemix.instance.VeinMiner != null)
                     {
                         if (!MineMessage.alreadySeen)
                         {

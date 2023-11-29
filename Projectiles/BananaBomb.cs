@@ -26,7 +26,7 @@ namespace CalRemix.Projectiles
         }
         public override void OnKill(int timeLeft)
         {
-            CalamityUtils.ExplodeandDestroyTiles(Projectile, 3, true, new List<int>(), new List<int>());
+            CalamityUtils.ExplodeTiles(Projectile, 3, true, new List<int>(), new List<int>());
             Projectile.ExplodeTiles(Projectile.Center, 2, 1, 1, 3, 3, false);
             for (int num502 = 0; num502 < 36; num502++)
             {

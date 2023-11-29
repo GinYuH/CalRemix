@@ -41,6 +41,7 @@ using CalamityMod.Items.Tools.ClimateChange;
 using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Placeables.FurnitureStatigel;
 using CalamityMod;
 using System.Collections.Generic;
 using Steamworks;
@@ -598,6 +599,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
+                }
+                if (recipe.HasResult(ModContent.ItemType<StatigelBlock>()) || recipe.HasIngredient(ModContent.ItemType<StatigelBlock>()))
+                {
+                    recipe.AddIngredient(ItemID.Gel);
                 }
             }
             /*MassAddIngredient(essenceBarCrafts);

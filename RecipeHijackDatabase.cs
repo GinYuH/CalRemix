@@ -122,7 +122,7 @@ namespace CalRemix
             yharimBarCrafts.Add((ModContent.ItemType<AuricTeslaSpaceHelmet>(), ModContent.ItemType<YharimBar>(), 35));
             yharimBarCrafts.Add((ModContent.ItemType<AuricTeslaRoyalHelm>(), ModContent.ItemType<YharimBar>(), 35));
             yharimBarCrafts.Add((ModContent.ItemType<EclipseMirror>(), ModContent.ItemType<YharimBar>(), 4));
-            yharimBarCrafts.Add((ModContent.ItemType<CoreOfTheBloodGod>(), ModContent.ItemType<YharimBar>(), 4));
+            yharimBarCrafts.Add((ModContent.ItemType<ChaliceOfTheBloodGod>(), ModContent.ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ModContent.ItemType<EcologicalCollapse>(), ModContent.ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ModContent.ItemType<EidolonStaff>(), ModContent.ItemType<YharimBar>(), 17));
             yharimBarCrafts.Add((ModContent.ItemType<ElementalQuiver>(), ModContent.ItemType<YharimBar>(), 4));
