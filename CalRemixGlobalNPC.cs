@@ -137,9 +137,8 @@ namespace CalRemix
 
         public override void Load()
         {
-            hiveHead = Mod.AddBossHeadTexture("CalRemix/Retheme/HiveMind/Map", -1);
             LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
-            Terraria.On_NPC.NewNPC += KillHiveMind;
+            On_NPC.NewNPC += KillHiveMind;
         }
 
         public override void SetStaticDefaults()
@@ -151,13 +150,29 @@ namespace CalRemix
                 FannyManager.LoadFannyMessage(CystMessage);
             }
         }
-
+        public override void SetDefaults(NPC npc)
+        {
+            RethemeMaster.RethemeNPCDefaults(npc);
+            if (npc.type == ModContent.NPCType<Bumblefuck>())
+            {
+                npc.damage = 80;
+                npc.lifeMax = 58500;
+                npc.defense = 20;
+                npc.value = Item.buyPrice(gold: 10);
+            }
+            else if (npc.type == ModContent.NPCType<Bumblefuck2>())
+            {
+                npc.damage = 60;
+                npc.lifeMax = 3375;
+            }
+        }
+        public override void ModifyTypeName(NPC npc, ref string typeName)
+        {
+            RethemeMaster.RethemeTypeName(npc, ref typeName);
+        }
         public override void BossHeadSlot(NPC npc, ref int index)
         {
-            int slot = hiveHead;
             int slot2 = LORDEhead;
-            if (npc.type == ModContent.NPCType<HiveMind>() && hiveHead != -1)
-                index = slot;
             if (npc.type == ModContent.NPCType<THELORDE>() && LORDEhead != -1 && Main.zenithWorld)
                 index = slot2;
         }
@@ -661,26 +676,6 @@ namespace CalRemix
             {
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<PlaguedSolution>()));
             }
-        }
-        public override void SetDefaults(NPC npc)
-        {
-            RethemeMaster.RethemeNPCDefaults(npc);
-            if (npc.type == ModContent.NPCType<Bumblefuck>())
-            {
-                npc.damage = 80;
-                npc.lifeMax = 58500;
-                npc.defense = 20;
-                npc.value = Item.buyPrice(gold: 10);
-            }
-            else if (npc.type == ModContent.NPCType<Bumblefuck2>())
-            {
-                npc.damage = 60;
-                npc.lifeMax = 3375;
-            }
-        }
-        public override void ModifyTypeName(NPC npc, ref string typeName)
-        {
-            RethemeMaster.RethemeTypeName(npc, ref typeName);
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

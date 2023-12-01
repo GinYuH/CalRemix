@@ -122,7 +122,7 @@ namespace CalRemix.NPCs
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().ZonePlague && !NPC.AnyNPCs(Type) && CalRemixWorld.plaguetoggle)
+            if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().ZonePlague && !NPC.AnyNPCs(Type))
                 return 0.01f;
             return 0f;
         }

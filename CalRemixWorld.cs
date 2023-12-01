@@ -93,6 +93,7 @@ namespace CalRemix
         public static bool shrinetoggle = true;
         public static bool lifeoretoggle = true;
         public static bool resprites = true;
+        public static bool renames = true;
         public static bool bossdialogue = true;
         public static bool grimesandToggle = true;
         public static bool clowns = true;
@@ -150,6 +151,7 @@ namespace CalRemix
             shrinetoggle = true;
             lifeoretoggle = true;
             resprites = true;
+            renames = true;
             bossdialogue = true;
             grimesandToggle = true;
             clowns = true;
@@ -198,6 +200,7 @@ namespace CalRemix
             shrinetoggle = true;
             lifeoretoggle = true;
             resprites = true;
+            renames = true;
             bossdialogue = true;
             grimesandToggle = true;
             clowns = true;
@@ -243,6 +246,7 @@ namespace CalRemix
             tag["109shrine"] = shrinetoggle;
             tag["109lifeore"] = lifeoretoggle;
             tag["109resprites"] = resprites;
+            tag["109renames"] = renames;
             tag["109dialogue"] = bossdialogue;
             tag["109grime"] = grimesandToggle;
             tag["109clowns"] = clowns;
@@ -289,7 +293,8 @@ namespace CalRemix
             shrinetoggle= tag.Get<bool>("109shrine");// = shrinetoggle;
             lifeoretoggle= tag.Get<bool>("109lifeore");// = lifeoretoggle;
             resprites= tag.Get<bool>("109resprites");// = resprites;
-            bossdialogue= tag.Get<bool>("109dialogue");// = bossdialogue;
+            renames = tag.Get<bool>("109resprites");// = renames;
+            bossdialogue = tag.Get<bool>("109dialogue");// = bossdialogue;
             grimesandToggle= tag.Get<bool>("109grime");// = grimesand;
             clowns= tag.Get<bool>("109clowns");// = clowns;
             aspids= tag.Get<bool>("109aspids");// = aspids;
@@ -335,6 +340,7 @@ namespace CalRemix
             writer.Write(shrinetoggle );//tag.Get<bool>("109shrine");;// );//shrinetoggle;
             writer.Write(lifeoretoggle );//tag.Get<bool>("109lifeore");;// );//lifeoretoggle;
             writer.Write(resprites );//tag.Get<bool>("109resprites");;// );//resprites;
+            writer.Write(renames);//tag.Get<bool>("109renames");;// );//renames;
             writer.Write(bossdialogue );//tag.Get<bool>("109dialogue");;// );//bossdialogue;
             writer.Write(grimesandToggle );//tag.Get<bool>("109grime");;// );//grimesand;
             writer.Write(clowns );//tag.Get<bool>("109clowns");;// );//clowns;
@@ -382,6 +388,7 @@ namespace CalRemix
             shrinetoggle = reader.ReadBoolean();//.Get<bool>("109shrine");// = shrinetoggle;
             lifeoretoggle = reader.ReadBoolean();//.Get<bool>("109lifeore");// = lifeoretoggle;
             resprites = reader.ReadBoolean();//.Get<bool>("109resprites");// = resprites;
+            renames = reader.ReadBoolean();//.Get<bool>("109renames");// = renames;
             bossdialogue = reader.ReadBoolean();//.Get<bool>("109dialogue");// = bossdialogue;
             grimesandToggle = reader.ReadBoolean();//.Get<bool>("109grime");// = grimesand;
             clowns = reader.ReadBoolean();//.Get<bool>("109clowns");// = clowns;
