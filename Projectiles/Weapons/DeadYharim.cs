@@ -53,7 +53,7 @@ namespace CalRemix.Projectiles.Weapons
             {
                 Projectile.Center = Owner.Center + Owner.DirectionTo(Main.MouseWorld) * 16f;
                 Projectile.spriteDirection = (Main.MouseWorld.X < Owner.Center.X) ? -1 : 1;
-                Owner.direction = Projectile.spriteDirection;
+                Owner.ChangeDir(Projectile.spriteDirection);
                 Projectile.netUpdate = true;
             }
         }
