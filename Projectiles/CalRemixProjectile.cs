@@ -94,6 +94,12 @@ namespace CalRemix
                     }
                 }
             }
+            if (projectile.type == ModContent.ProjectileType<MurasamaSlash>())
+            {
+                projectile.scale = 4f;
+                projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
+                projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
+            }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
                 return;
             if (modPlayer.pearl)
