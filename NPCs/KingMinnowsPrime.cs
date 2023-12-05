@@ -18,17 +18,13 @@ public class KingMinnowsPrime : ModNPC
     int beginning = 0;
     int AISwitchTimer = 0;
     int TIME1 = 0;
-   int SOUND = 0;
+    int SOUND = 0;
     int weaktime = 0;
     bool weaksound = false;
 
     public override void SetStaticDefaults()
     {
-        // DisplayName.SetDefault("Auric Slime");
         Main.npcFrameCount[NPC.type] = 4;
-        NPCID.Sets.TrailCacheLength[NPC.type] = 20;    
-        NPCID.Sets.TrailingMode[NPC.type] = 1;       
-
     }
 
     public override void SetDefaults()
@@ -49,9 +45,7 @@ public class KingMinnowsPrime : ModNPC
 
 
 
-        // Banner = NPC.type;
-        //  BannerItem = ModContent.ItemType<AuricSlimeBanner>();
-        //  calamityMod.Call(("DeclareMiniboss"), Mod.Find<ModNPC>("AuricSlime").Type);
+     
     }
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {
