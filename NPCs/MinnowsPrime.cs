@@ -214,6 +214,11 @@ namespace CalRemix.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+          if (Main.rand.NextBool(0, 20))
+            {
+                int spawned = NPC.NewNPC(source: null, (int)npc.Center.X, (int)npc.Center.Y, (int)ModContent.NPCType<KingMinnowsPrime>());
+                NPC spawnedNPC = Main.npc[spawned];
+            }
             npcLoot.Add(new CommonDrop(ItemID.Ectoplasm, 1, 36, 57));
             npcLoot.Add(new CommonDrop(ModContent.ItemType<Polterplasm>(), 1, 7, 15));
         }
