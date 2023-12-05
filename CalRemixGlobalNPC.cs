@@ -676,6 +676,10 @@ namespace CalRemix
             {
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<PlaguedSolution>()));
             }
+            if (shop.NpcType == ModContent.NPCType<DILF>())
+            {
+                shop.Add(new NPCShop.Entry(ModContent.ItemType<ColdheartIcicle>()));
+            }
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

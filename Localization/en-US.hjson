@@ -1424,6 +1424,24 @@ Mods: {
 				DisplayName: Anomaly 109
 				Tooltip: Insert unique codes in order to disable certain aspects of your game.
 			}
+
+			WulfrumLeechDagger: {
+				DisplayName: Wulfrum Leech Dagger
+				Tooltip:
+					'''
+					Drains a percentage of enemy health on hit
+					Cannot inflict critical hits
+					'''
+			}
+
+			ColdheartIcicle: {
+				DisplayName: Coldheart Icicle
+				Tooltip:
+					'''
+					Drains a percentage of enemy health on hit
+					Cannot inflict critical hits
+					'''
+			}
 		}
 
 		NPCs: {
@@ -1623,6 +1641,8 @@ Mods: {
 			BananaBomb.DisplayName: Banana Bomb
 			EvilPlagueSeeker.DisplayName: Plague Seeker
 			YggThorn.DisplayName: Yggdrasil Thorn
+			WulfrumLeechDaggerSwordProjectile.DisplayName: Wulfrum Leech Dagger
+			ColdheartIcicleProjectile.DisplayName: Coldheart Icicle
 		}
 
 		Tiles: {
