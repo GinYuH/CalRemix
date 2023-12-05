@@ -10,7 +10,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Bloopslite.Items;
+namespace CalRemix.NPCs
 
 
 public class KingMinnowsPrime : ModNPC
@@ -98,7 +98,7 @@ public class KingMinnowsPrime : ModNPC
         beginning++;
         if (beginning == 10)
         {
-            SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/thypunishmentisdeath"), NPC.Center);
+            SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/thypunishmentisdeath"), NPC.Center);
         }
        
         if (beginning > 300)
@@ -120,7 +120,7 @@ public class KingMinnowsPrime : ModNPC
         }
         if (weaktime == 5)
         {
-            SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/weak"), NPC.Center);
+            SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/weak"), NPC.Center);
         }
         if (NPC.ai[0] == 0 && beginning > 300)
         {
@@ -128,11 +128,11 @@ public class KingMinnowsPrime : ModNPC
             TIME1++;
             if (TIME1 == 10 && SOUND == 0)
             {
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/judgement"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/judgement"), NPC.Center);
             }
             if (TIME1 == 10 && SOUND == 1)
             {
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/thyendisnow"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/thyendisnow"), NPC.Center);
             }
 
             if (TIME1 > 0 && TIME1 < 100)
@@ -175,14 +175,14 @@ public class KingMinnowsPrime : ModNPC
             if (TIME1 == 60 && SOUND == 0)
             {
                 GeneralParticleHandler.SpawnParticle(inward);
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/preparethyself"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/preparethyself"), NPC.Center);
                 SoundEngine.PlaySound(SoundID.Item132, NPC.Center);
 
             }
             if (TIME1 == 10 && SOUND == 1)
             {
                 GeneralParticleHandler.SpawnParticle(inward);
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/useless"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/useless"), NPC.Center);
                 SoundEngine.PlaySound(SoundID.Item132, NPC.Center);
             }
             if (TIME1 == 120)
@@ -206,13 +206,13 @@ public class KingMinnowsPrime : ModNPC
             {
                 Vector2 CRUSH = player.Center + new Vector2(0, -500);
                 NPC.Center = CRUSH;
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/crush"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/crush"), NPC.Center);
             }
             if (TIME1 == 30 && SOUND == 1)
             {
                 Vector2 CRUSH = player.Center + new Vector2(0, -500);
                 NPC.Center = CRUSH;
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(Bloopslite)}/Sounds/die"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/MinnowsSounds/die"), NPC.Center);
             }
             if (TIME1 > 60 && TIME1 < 67)
             {
