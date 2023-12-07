@@ -261,31 +261,31 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Trade with the Dye Trader Post-Providence.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<MiracleFruit>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Find in post-Golem Jungle Planetoids.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<Dragonfruit>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Open an Azure Crate while a Wyvern is alive post-Yharon", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<BloodOrange>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Throw an Apple in water during a Blood Moon post-mechs.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<CometShard>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Get a Nova to collide with Astral Ore.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<EtherealCore>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Insert a Bloody Vein at the Astral Beacon.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<PhantomHeart>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Spawns in the Post-Polterghast Dungeon.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<DesertMedallion>()))
                 {
@@ -293,34 +293,34 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<CryoKey>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'primal_aspid\' setting is disabled", () => !CalRemixWorld.aspids));
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Primal Aspids in the snow biome at night.", () => !CalRemixWorld.aspids));
                 }
                 if (recipe.HasResult(ModContent.ItemType<EyeofDesolation>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'clamitas\' setting is disabled", () => !CalRemixWorld.clamitas));
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Clamitas in the Brimstone Crags.", () => !CalRemixWorld.clamitas));
                 }
                 if (recipe.HasResult(ModContent.ItemType<GalacticaSingularity>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'side_gar\' setting is disabled", () => !CalRemixWorld.sidegar));
+                    recipe.AddCondition(new Condition("Locked recipe. Fish Side Gars from Godseeker Mode space.", () => !CalRemixWorld.sidegar));
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreathelm>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerPlateMail>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreaves>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'seafood\' setting is disabled", () => !CalRemixWorld.seafood));
+                    recipe.AddCondition(new Condition("Locked recipe. Make the other Seafood.", () => !CalRemixWorld.seafood));
                 }
                 #region Accessory edits
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
@@ -591,10 +591,6 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<UnholyBloodCells>(), 25);
                 }
-                if (recipe.HasResult(ModContent.ItemType<Seafood>()))
-                {
-                    recipe.AddCondition(new Condition("While the anomaly 109 \'seafood\' setting is disabled", () => !CalRemixWorld.seafood));
-                }
                 if (recipe.HasResult(ModContent.ItemType<MidnightSunBeacon>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
@@ -602,7 +598,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<StatigelBlock>()) || recipe.HasIngredient(ModContent.ItemType<StatigelBlock>()))
                 {
-                    recipe.AddIngredient(ItemID.Gel);
+                   // recipe.AddIngredient(ItemID.Gel);
                 }
             }
             /*MassAddIngredient(essenceBarCrafts);
@@ -647,7 +643,7 @@ namespace CalRemix
                         recipe.RemoveIngredient(results[j].Item2);
                     }
                     // you get special treatment
-                    if (results == alloyBarCrafts)
+                    /*if (results == alloyBarCrafts)
                     {
                         if (recipe.HasIngredient(ModContent.ItemType<AlloyBar>()))
                         {
@@ -656,7 +652,7 @@ namespace CalRemix
                                 recipe.RemoveIngredient(ModContent.ItemType<AlloyBar>());
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -674,7 +670,7 @@ namespace CalRemix
                     }
                 }
                 // you get special treatment
-                if (itemList == alloyBarCrafts)
+                /*if (itemList == alloyBarCrafts)
                 {
                     if (!recipe.HasIngredient(ModContent.ItemType<AlloyBar>()))
                     {
@@ -683,7 +679,7 @@ namespace CalRemix
                             recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
                         }
                     }
-                }
+                }*/
             }
         }
 
