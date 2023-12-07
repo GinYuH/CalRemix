@@ -40,6 +40,7 @@ namespace CalRemix.NPCs
             NPC.damage = 0;
             NPC.defense = 40;
             NPC.DR_NERD(0.2f);
+            NPC.dontTakeDamage = true;
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(gold: 40);
             NPC.HitSound = SoundID.NPCHit4;
@@ -65,6 +66,7 @@ namespace CalRemix.NPCs
                 SoundEngine.PlaySound(PlaguebringerGoliath.AttackSwitchSound, NPC.Center);
                 Attack = 0;
                 activated = true;
+                NPC.dontTakeDamage = false;
             }
             if (Attack > 300 && !activated)
             {

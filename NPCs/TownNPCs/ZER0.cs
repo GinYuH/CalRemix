@@ -14,7 +14,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.TownNPCs
 {
 	[AutoloadHead]
 	public class ZER0 : ModNPC

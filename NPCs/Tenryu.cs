@@ -21,6 +21,7 @@ namespace CalRemix.NPCs
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[1];
         public ref float State => ref NPC.ai[2];
+        private bool wait = false;
         public override void SetStaticDefaults()
         {
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
@@ -51,11 +52,12 @@ namespace CalRemix.NPCs
             if (Timer > 300)
             {
                 NPC.ai[3] = 180;
+                wait = true;
                 Timer = 0;
             }
             if (Timer % 12 == 0 && Timer > 180)
                 SoundEngine.PlaySound(SoundID.Item43 with { Pitch = (Timer > 300) ? 300 : Timer / 300 }, NPC.Center);
-            if (NPC.ai[3] >= 180 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (NPC.ai[3] >= 180 && wait && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 SoundEngine.PlaySound(SoundID.Item84, NPC.Center);
                 Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), org, org.DirectionTo(Target.Center) * 12f, ModContent.ProjectileType<GalileosPlanet>(), NPC.damage, 6f);
@@ -63,12 +65,13 @@ namespace CalRemix.NPCs
                 proj.hostile = true;
                 proj.tileCollide = false;
                 proj.penetrate = 1;
+                wait = false;
             }
         }
         public override void DrawEffects(ref Color drawColor)
         {
             Vector2 org = new(NPC.Center.X, NPC.Top.Y - 48f);
-            if (Timer % 12 == 0 && Timer > 150)
+            if (Timer % 12 == 0 && Timer > 180)
             {
                 for (int i = 0; i < 5; i++)
                 {

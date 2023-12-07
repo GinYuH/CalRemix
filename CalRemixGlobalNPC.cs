@@ -89,7 +89,6 @@ namespace CalRemix
         public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
-        public static int hiveHead, LORDEhead = -1;
         public static int aspidCount = 0;
         private bool guardRage, guardOver, yharRage = false;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
@@ -137,7 +136,6 @@ namespace CalRemix
 
         public override void Load()
         {
-            LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
             On_NPC.NewNPC += KillHiveMind;
         }
 
@@ -152,7 +150,6 @@ namespace CalRemix
         }
         public override void SetDefaults(NPC npc)
         {
-            RethemeMaster.RethemeNPCDefaults(npc);
             if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
                 npc.damage = 80;
@@ -165,16 +162,6 @@ namespace CalRemix
                 npc.damage = 60;
                 npc.lifeMax = 3375;
             }
-        }
-        public override void ModifyTypeName(NPC npc, ref string typeName)
-        {
-            RethemeMaster.RethemeTypeName(npc, ref typeName);
-        }
-        public override void BossHeadSlot(NPC npc, ref int index)
-        {
-            int slot2 = LORDEhead;
-            if (npc.type == ModContent.NPCType<THELORDE>() && LORDEhead != -1 && Main.zenithWorld)
-                index = slot2;
         }
         public override bool PreAI(NPC npc)
         {
@@ -681,10 +668,6 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<ColdheartIcicle>()));
             }
         }
-        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            RethemeMaster.RethemeNPCPostDraw(npc, spriteBatch, screenPos, drawColor);
-        }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (npc.boss && bossKillcount > 5)
@@ -1093,10 +1076,6 @@ namespace CalRemix
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(text, color);
-        }
-        public override Color? GetAlpha(NPC npc, Color drawColor)
-        {
-            return RethemeMaster.RethemeNPCAlpha(npc, drawColor);
         }
         private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {

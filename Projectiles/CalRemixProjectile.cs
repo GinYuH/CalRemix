@@ -34,11 +34,6 @@ namespace CalRemix
 		public int bladetimer = 0;
         NPC exc;
         public override bool InstancePerEntity => true;
-        public override void SetDefaults(Projectile projectile)
-        {
-			RethemeMaster.RethemeProjDefaults(projectile);
-        }
-
         public override void AI(Projectile projectile)
         {
             Player player = Main.LocalPlayer;
@@ -391,7 +386,7 @@ namespace CalRemix
 				projectile.damage = 1000000;
 				return Color.LightBlue;
             }
-            return RethemeMaster.RethemeProjAlpha(projectile);
+            return null;
 		}
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {

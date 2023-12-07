@@ -51,7 +51,6 @@ namespace CalRemix
         public int NonScoria = -1;
         public override void SetDefaults(Item item)
         {
-            RethemeMaster.RethemeItemDefaults(item);
             if (item.type == ModContent.ItemType<GildedProboscis>())
             {
                 item.damage = item.damage / 9;
@@ -109,12 +108,6 @@ namespace CalRemix
                 }
             }
         }
-
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            RethemeMaster.RethemeTooltips(Mod, item, tooltips);
-        }
-
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (CalRemixWorld.cosmislag)
@@ -128,7 +121,6 @@ namespace CalRemix
                 }
             }
         }
-
         public override void HoldItem(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
@@ -157,9 +149,18 @@ namespace CalRemix
             }
             return true;
         }
-
+        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().clockBar)
+                return Main.rand.NextFloat() >= 0.66f;
+            return true;
+        }
         public override void UpdateInventory(Item item, Player player)
         {
+            if (item.type == ModContent.ItemType<ClockGatlignum>())
+            {
+                player.GetModPlayer<CalRemixPlayer>().clockBar = true;
+            }
             if (CalRemixWorld.permanenthealth)
             {
                 if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)

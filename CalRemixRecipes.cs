@@ -596,6 +596,19 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
+                if (recipe.HasIngredient(ModContent.ItemType<RuinousSoul>()))
+                {
+                    recipe.AddIngredient(ModContent.ItemType<HauntedBar>());
+                    recipe.RemoveIngredient(ModContent.ItemType<RuinousSoul>());
+                }
+                if (!recipe.HasResult(ModContent.ItemType<ElementalBar>()) && recipe.TryGetIngredient(ModContent.ItemType<GalacticaSingularity>(), out Item ing))
+                {
+                    if (ing.stack % 5 == 0 && ing.stack > 1)
+                    {
+                        recipe.AddIngredient(ModContent.ItemType<ElementalBar>());
+                        recipe.RemoveIngredient(ModContent.ItemType<GalacticaSingularity>());
+                    }
+                }
                 if (recipe.HasResult(ModContent.ItemType<StatigelBlock>()) || recipe.HasIngredient(ModContent.ItemType<StatigelBlock>()))
                 {
                    // recipe.AddIngredient(ItemID.Gel);

@@ -32,6 +32,8 @@ Mods: {
 						'''
 				}
 			}
+
+			Weapons.Ranged.ClockGatlignum.Tooltip: All ranged weapons have an additional 33% chance to save ammo while this is in the inventory
 		}
 	}
 
@@ -1442,6 +1444,16 @@ Mods: {
 					Cannot inflict critical hits
 					'''
 			}
+
+			ElementalBar: {
+				DisplayName: Elemental Bar
+				Tooltip: ""
+			}
+
+			HauntedBar: {
+				DisplayName: Haunted Bar
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1509,6 +1521,21 @@ Mods: {
 			PlagueEmperor.DisplayName: Plague Emperor
 			EvilPlagueBee.DisplayName: Plague Bee
 			YggdrasilEnt.DisplayName: Yggdrasil Ent
+
+			FBIGUY: {
+				TownNPCMood: {
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+					Content: I am content.
+					NoHome: I hate not having a home.
+				}
+
+				DisplayName: F B I G U Y
+			}
 		}
 
 		Projectiles: {

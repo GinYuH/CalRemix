@@ -23,6 +23,7 @@ using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Items.Materials;
+using CalRemix.Retheme;
 
 namespace CalRemix
 {

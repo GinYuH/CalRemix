@@ -88,7 +88,8 @@ namespace CalRemix
         public Vector2 clawPosition = Vector2.Zero;
 		public bool bananaClown;
 		public bool invGar;
-		public bool anomaly109UI;
+        public bool clockBar;
+        public bool anomaly109UI;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -641,7 +642,8 @@ namespace CalRemix
 			astralEye = false;
 			flamingIce = false;
 			bananaClown = false;
-			wormMeal = false;
+			clockBar = false;
+            wormMeal = false;
 			invGar = false;
             if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
