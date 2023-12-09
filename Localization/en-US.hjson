@@ -1535,6 +1535,7 @@ Mods: {
 				}
 
 				DisplayName: F B I G U Y
+				Census.SpawnCondition: Conditions unknown
 			}
 		}
 

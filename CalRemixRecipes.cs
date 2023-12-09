@@ -208,7 +208,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<ProfanedShard>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Yggdrasil Ents in Hallow and Hell.", () => false));
                 }
                 if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
@@ -289,7 +289,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<DesertMedallion>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Cnidrions after defeating the Wulfrum Excavator.", () => false));
                 }
                 if (recipe.HasResult(ModContent.ItemType<CryoKey>()))
                 {
