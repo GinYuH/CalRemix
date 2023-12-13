@@ -1454,6 +1454,21 @@ Mods: {
 				DisplayName: Haunted Bar
 				Tooltip: ""
 			}
+
+			Aeroplate: {
+				DisplayName: Aeroplate
+				Tooltip: ""
+			}
+
+			AeroplateWall: {
+				DisplayName: Aeroplate Wall
+				Tooltip: ""
+			}
+
+			Bloodplate: {
+				DisplayName: Bloodplate
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {

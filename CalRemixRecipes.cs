@@ -596,9 +596,9 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
-                if (recipe.HasIngredient(ModContent.ItemType<RuinousSoul>()))
+                if (!recipe.HasResult(ModContent.ItemType<HauntedBar>()) && recipe.TryGetIngredient(ModContent.ItemType<RuinousSoul>(), out Item ruin))
                 {
-                    recipe.AddIngredient(ModContent.ItemType<HauntedBar>());
+                    recipe.AddIngredient(ModContent.ItemType<HauntedBar>(), ruin.stack);
                     recipe.RemoveIngredient(ModContent.ItemType<RuinousSoul>());
                 }
                 if (!recipe.HasResult(ModContent.ItemType<ElementalBar>()) && recipe.TryGetIngredient(ModContent.ItemType<GalacticaSingularity>(), out Item ing))
