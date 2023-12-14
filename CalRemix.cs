@@ -127,10 +127,13 @@ namespace CalRemix
                 player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
             }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
 			*/
-            Main.QueueMainThreadAction(() =>
+            if (Main.netMode != NetmodeID.Server)
             {
-                cal.Call("LoadParticleInstances", instance);
-            });
+                Main.QueueMainThreadAction(() =>
+                {
+                    cal.Call("LoadParticleInstances", instance);
+                });
+            }
         }
 
         public override void Load()

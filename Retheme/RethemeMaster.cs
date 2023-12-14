@@ -512,7 +512,7 @@ namespace CalRemix.Retheme
             // IL.CalamityMod.Projectiles.PreDraw += ;
             IL.CalamityMod.Projectiles.Rogue.InfestedClawmerangProj.PreDraw += InfestedClawmerangProj;
             IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI += EldritchTentacle;
-            IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw += MurasamaSlash;
+            //IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw += MurasamaSlash;
             IL.CalamityMod.Projectiles.Melee.ExobladeProj.DrawBlade += ExobladeProj;
             IL.CalamityMod.Projectiles.Ranged.HeavenlyGaleProj.PreDraw += HeavenlyGaleProj;
             IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw += CelestusProj;
