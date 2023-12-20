@@ -997,10 +997,13 @@ namespace CalRemix
             {
                 if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
                 {
-                    // he's defrosting!
-                    FannyManager.fannyEnabled = true;
-                    FannyManager.fannyTimesFrozen++;
-                    Anomaly109UI.fannyFreezeTime = 0;
+                    if (!FannyManager.fannyEnabled)
+                    {
+                        // he's defrosting!
+                        FannyManager.fannyEnabled = true;
+                        FannyManager.fannyTimesFrozen++;
+                        Anomaly109UI.fannyFreezeTime = 0;
+                    }
                     CalRemixWorld.ShrineTimer = 3000;
                 }
             }
