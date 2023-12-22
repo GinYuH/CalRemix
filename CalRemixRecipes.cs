@@ -45,6 +45,11 @@ using CalamityMod.Items.Placeables.FurnitureStatigel;
 using CalamityMod;
 using System.Collections.Generic;
 using Steamworks;
+using Terraria.GameContent;
+using System.Linq;
+using System.Reflection;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace CalRemix
 {
@@ -106,7 +111,6 @@ namespace CalRemix
             {
                 Recipe cell = Recipe.Create(ModContent.ItemType<PlagueCellCanister>(), 1);
                 cell.AddRecipeGroup(RecipeGroupID.IronBar);
-                cell.AddIngredient(ItemID.JungleSpores);
                 cell.AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom));
                 cell.Register();
             }
@@ -609,16 +613,7 @@ namespace CalRemix
                         recipe.RemoveIngredient(ModContent.ItemType<GalacticaSingularity>());
                     }
                 }
-                if (recipe.HasResult(ModContent.ItemType<StatigelBlock>()) || recipe.HasIngredient(ModContent.ItemType<StatigelBlock>()))
-                {
-                   // recipe.AddIngredient(ItemID.Gel);
-                }
             }
-            /*MassAddIngredient(essenceBarCrafts);
-            MassAddIngredient(alloyBarCrafts);
-            MassAddIngredient(yharimBarCrafts);
-            MassAddIngredient(venomCrafts);
-            MassAddIngredient(shimmerEssenceCrafts);*/
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
                 Recipe recipe = Main.recipe[i];
@@ -634,6 +629,7 @@ namespace CalRemix
 
         public static void MassModifyIngredient(bool condition, List<(int, int, int)> results)
         {
+            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
             if (condition)
             {
                 MassRemoveIngredient(results);
@@ -642,6 +638,38 @@ namespace CalRemix
             {
                 MassAddIngredient(results);
             }
+            Recipe.UpdateWhichItemsAreMaterials();
+            Recipe.UpdateWhichItemsAreCrafted();
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                foreach (Item item in Main.recipe[i].requiredItem)
+                {
+                    item.material = ItemID.Sets.IsAMaterial[item.type];
+                }
+                Main.recipe[i].createItem.material = ItemID.Sets.IsAMaterial[Main.recipe[i].createItem.type];
+            }
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
+                if (recipe.acceptedGroups.Count <= 0)
+                {
+                    continue;
+                }
+                List<int> toRemove = new List<int>();
+                foreach (int num in recipe.acceptedGroups)
+                {
+                    if (!RecipeGroup.recipeGroups[num].ValidItems.Intersect(recipe.requiredItem.Select((Item x) => x.type)).Any())
+                    {
+                        toRemove.Add(num);
+                    }
+                }
+                foreach (int group in toRemove)
+                {
+                    recipe.acceptedGroups.Remove(group);
+                }
+            }
+            info.Invoke(null, null); // FUCK YOU
+            Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
 
         public static void MassRemoveIngredient(List<(int, int, int)> results)
@@ -656,7 +684,7 @@ namespace CalRemix
                         recipe.RemoveIngredient(results[j].Item2);
                     }
                     // you get special treatment
-                    /*if (results == alloyBarCrafts)
+                    if (results == alloyBarCrafts)
                     {
                         if (recipe.HasIngredient(ModContent.ItemType<AlloyBar>()))
                         {
@@ -665,7 +693,7 @@ namespace CalRemix
                                 recipe.RemoveIngredient(ModContent.ItemType<AlloyBar>());
                             }
                         }
-                    }*/
+                    }
                 }
             }
         }
@@ -683,7 +711,7 @@ namespace CalRemix
                     }
                 }
                 // you get special treatment
-                /*if (itemList == alloyBarCrafts)
+                if (itemList == alloyBarCrafts)
                 {
                     if (!recipe.HasIngredient(ModContent.ItemType<AlloyBar>()))
                     {
@@ -692,7 +720,7 @@ namespace CalRemix
                             recipe.AddIngredient(ModContent.ItemType<AlloyBar>(), 5);
                         }
                     }
-                }*/
+                }
             }
         }
 
