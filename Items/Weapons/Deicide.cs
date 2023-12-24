@@ -77,7 +77,7 @@ namespace CalRemix.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient<PhosphorescentGauntlet>().
-                AddIngredient(ItemID.ChristmasTree).
+                AddIngredient<WreathofBelial>().
                 AddIngredient<ShatteredCommunity>().
                 AddIngredient<Klepticoin>().
                 AddIngredient<HornetRound>(22).

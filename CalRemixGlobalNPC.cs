@@ -75,6 +75,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.GreatSandShark;
+using CalamityMod.NPCs.AstrumDeus;
 
 namespace CalRemix
 {
@@ -1005,6 +1006,14 @@ namespace CalRemix
                         Anomaly109UI.fannyFreezeTime = 0;
                     }
                     CalRemixWorld.ShrineTimer = 3000;
+                }
+            }
+            if (!CalRemixWorld.deusDeadInSnow)
+            {
+                if (Main.LocalPlayer.ZoneSnow && npc.type == ModContent.NPCType<AstrumDeusHead>())
+                {
+                    CalRemixWorld.deusDeadInSnow = true;
+                    CalRemixWorld.UpdateWorldBool();
                 }
             }
             return true;

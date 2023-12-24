@@ -1469,6 +1469,51 @@ Mods: {
 				DisplayName: Bloodplate
 				Tooltip: ""
 			}
+
+			PinesPenetrator.DisplayName: Pine's Penetrator
+
+			Snowgrave: {
+				DisplayName: Snowgrave
+				Tooltip:
+					'''
+						Memories of a snowy grave...
+					Summons a large deadly fountain of ice and snow below your cursor that instantly kills normal enemies
+					After usage, the player won't be able to use the weapon again for 1 minute
+					'''
+			}
+
+			WinterBreeze: {
+				DisplayName: Winter Breeze
+				Tooltip: Fires several additional icicle arrows that shatter on impact
+			}
+
+			ChristmasCarol: {
+				DisplayName: Christmas Carol
+				Tooltip:
+					'''
+					Summons a carol bell to support you
+					Hitting the bell with a whip causes it to unleash a damaging sound pulse
+					'''
+			}
+
+			WreathofBelial: {
+				DisplayName: Wreath of Belial
+				Tooltip:
+					'''
+					Throws a festive wreath that grows in size until exploding into icicle shards
+					Stealth strikes cause the wreath to suck in nearby enemies
+					'''
+			}
+
+			HalbardoftheHolidays: {
+				DisplayName: Halberd of the Holidays
+				Tooltip:
+					'''
+					idk I'm still miserable with names
+					- The General
+					Fires exploding red and green bouncing gift bags that emit clouds as they travel
+					'''
+			}
 		}
 
 		NPCs: {
@@ -1686,6 +1731,12 @@ Mods: {
 			YggThorn.DisplayName: Yggdrasil Thorn
 			WulfrumLeechDaggerSwordProjectile.DisplayName: Wulfrum Leech Dagger
 			ColdheartIcicleProjectile.DisplayName: Coldheart Icicle
+			SnowgraveSigil.DisplayName: Snowgrave
+			WreathProjectile.DisplayName: Wreath
+			GreenBall.DisplayName: Green Bag
+			GreenDust.DisplayName: Dust
+			RedBall.DisplayName: Red Bag
+			RedDust.DisplayName: Dust
 		}
 
 		Tiles: {

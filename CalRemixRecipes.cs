@@ -629,7 +629,6 @@ namespace CalRemix
 
         public static void MassModifyIngredient(bool condition, List<(int, int, int)> results)
         {
-            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
             if (condition)
             {
                 MassRemoveIngredient(results);
@@ -668,6 +667,7 @@ namespace CalRemix
                     recipe.acceptedGroups.Remove(group);
                 }
             }
+            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
             info.Invoke(null, null); // FUCK YOU
             Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
