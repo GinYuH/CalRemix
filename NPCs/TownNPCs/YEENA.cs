@@ -19,6 +19,8 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Peripherals.RGB;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -27,6 +29,8 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Humanizer.In;
+using static Humanizer.On;
 
 namespace CalRemix.NPCs.TownNPCs
 {
@@ -58,8 +62,8 @@ namespace CalRemix.NPCs.TownNPCs
             NPC.height = 40;
             NPC.aiStyle = 7;
             NPC.damage = 200;
-            NPC.defense = 90;
-            NPC.lifeMax = 2000;
+            NPC.defense = 25;
+            NPC.lifeMax = 30000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             AnimationType = NPCID.TaxCollector;
@@ -71,7 +75,7 @@ namespace CalRemix.NPCs.TownNPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
-                new FlavorTextBestiaryInfoElement("-.-.  - -. ")
+                new FlavorTextBestiaryInfoElement("A fabled general hailing from parts unknown. His subordinates can't quite agree about his personality.")
             });
         }
 
@@ -239,6 +243,63 @@ namespace CalRemix.NPCs.TownNPCs
             }
             else
             {
+                if (Main.LocalPlayer.name != "kkpro" && Main.LocalPlayer.name != "Aries")
+                {
+                    int e = Main.rand.Next(3);
+                    switch (e)
+                    {
+                        case 0:
+                            Main.npcChatText = "How spirited. But the time isn't yet ripe.";
+                            break;
+                        case 1:
+                            Main.npcChatText = "Do you wish to follow in my footsteps? ...The world isn't ready yet.";
+                            break;
+                        default:
+                            {
+                                Main.npcChatText = "Do you wish to follow in my footsteps? ...The world isn't ready yet.";
+                                if (NPC.GivenName == "Daxia" || NPC.GivenName == "Daniel" || NPC.GivenName == "Cheng" || NPC.GivenName == "Libra")
+                                    Main.npcChatText = "Well, I'll be. But it's not yet the time for that.";
+
+                                if (NPC.GivenName == "Scorpio")
+                                    Main.npcChatText = "You can't seriously be challenging me! Maybe I'll let you later.";
+
+                                if (NPC.GivenName == "Cancer")
+                                    Main.npcChatText = "I can't bear the thought of hurting you. Give me some time to steel myself.";
+
+                                if (NPC.GivenName == "Sagittarius")
+                                    Main.npcChatText = "Picking on an old man, are we ? Ha! Come back when you're a little older.";
+
+                                if (NPC.GivenName == "Aquarius")
+                                    Main.npcChatText = "No way.";
+
+                                if (NPC.GivenName == "Capricorn")
+                                    Main.npcChatText = "Let me come up with a battle plan first.Sit tight.";
+
+                                if (NPC.GivenName == "Leo")
+                                    Main.npcChatText = "...Not yet.";
+
+                                if (NPC.GivenName == "Leo")
+                                    Main.npcChatText = "Very courageous of you! Hone your skills for a while longer and I'll consider it.";
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    int e = Main.rand.Next(3);
+                    switch (e)
+                    {
+                        case 0:
+                            Main.npcChatText = "NO KILL !!!YET";
+                            break;
+                        case 1:
+                            Main.npcChatText = "BUKEYI!!";
+                            break;
+                        case 2:
+                            Main.npcChatText = "YOU ARE A GNAT!";
+                            break;
+                    }
+                }
                 Main.npcChatText = "You want to tussle? I'm afraid the time hasn't quite arrived soldier.";
             }
         }
