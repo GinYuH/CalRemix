@@ -41,14 +41,19 @@ namespace CalRemix.Projectiles.Weapons
                         continue;
                     if (Terraria.ID.ProjectileID.Sets.IsAWhip[p.type])
                     {
-                        if (p.getRect().Intersects(Projectile.getRect()))
+                        for (int j = 0; j < p.WhipPointsForCollision.Count; j++)
                         {
-                            if (Projectile.owner == Main.myPlayer)
+                            Rectangle whipPoint = new Rectangle((int)p.WhipPointsForCollision[j].X, (int)p.WhipPointsForCollision[j].Y, 10, 10);
+                            if (whipPoint.Intersects(Projectile.getRect()))
                             {
-                                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CarolWave>(), Projectile.damage, 1f, Main.myPlayer);
+                                if (Projectile.owner == Main.myPlayer)
+                                {
+                                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CarolWave>(), Projectile.damage, 1f, Main.myPlayer);
+                                }
+                                SoundEngine.PlaySound(CalamityMod.Projectiles.Melee.PwnagehammerProj.UseSoundFunny, Projectile.Center);
+                                Projectile.ai[0] = 60;
+                                break;
                             }
-                            SoundEngine.PlaySound(CalamityMod.Projectiles.Melee.PwnagehammerProj.UseSoundFunny, Projectile.Center);
-                            Projectile.ai[0] = 60;
                         }
                     }
                 }
