@@ -23,10 +23,9 @@ using CalamityMod.World;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.NPCs.SupremeCalamitas;
-using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.Minibosses
 {
     [AutoloadBossHead]
     public class Clamitas : ModNPC

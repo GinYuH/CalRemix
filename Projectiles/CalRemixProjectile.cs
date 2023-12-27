@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Accessories;
 using CalRemix.Projectiles.WulfrumExcavator;
-using CalRemix.NPCs.Bosses;
+using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Projectiles.Magic;

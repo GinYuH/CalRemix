@@ -15,12 +15,10 @@ using Terraria.Chat;
 using Terraria.Localization;
 using CalRemix.Projectiles;
 using CalamityMod.BiomeManagers;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.UI;
 using System.Linq;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.Minibosses
 {
     public class CyberDraedon : ModNPC
     {

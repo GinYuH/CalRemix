@@ -12,6 +12,7 @@ using CalamityMod.Tiles.Furniture;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Tiles.DraedonStructures;
 using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.Items.Accessories;

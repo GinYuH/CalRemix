@@ -26,7 +26,7 @@ using CalRemix.Projectiles.WulfrumExcavator;
 using System;
 using CalRemix.Items.Materials;
 
-namespace CalRemix.NPCs.Bosses
+namespace CalRemix.NPCs.Bosses.Wulfwyrm
 {
     [AutoloadBossHead]
     public class WulfwyrmHead : ModNPC

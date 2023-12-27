@@ -209,12 +209,7 @@ namespace CalRemix.Retheme
                 if (!CalRemixWorld.renames)
                     return;
                 #region Text Changes
-                if (item.type == ItemType<PearlShard>())
-                {
-                    item.SetNameOverride("Conquest Fragment");
-                    item.rare = ItemRarityID.Orange;
-                }
-                else if (item.type == ItemType<InfestedClawmerang>())
+                if (item.type == ItemType<InfestedClawmerang>())
                 {
                     item.SetNameOverride("Shroomerang");
                 }
@@ -269,11 +264,6 @@ namespace CalRemix.Retheme
                 if (!CalRemixWorld.renames)
                     return;
                 Mod mod = Mod;
-                if (item.type == ItemType<PearlShard>())
-                {
-                    var line = new TooltipLine(mod, "ConquestFragment", "\'Victory is yours!\'");
-                    tooltips.Add(line);
-                }
                 if (item.type == ItemType<PhantomicArtifact>())
                 {
                     var line = new TooltipLine(mod, "PhantomicSoulArtifact", "Judgement");

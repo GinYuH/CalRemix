@@ -99,7 +99,6 @@ namespace CalRemix
             essenceBarCrafts.Add((ModContent.ItemType<AridArtifact>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<TrueArkoftheAncients>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<AsgardsValor>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
-            essenceBarCrafts.Add((ModContent.ItemType<AstralChunk>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<TrueBiomeBlade>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<BarracudaGun>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<BladedgeGreatbow>(), ModContent.ItemType<EssentialEssenceBar>(), 40));

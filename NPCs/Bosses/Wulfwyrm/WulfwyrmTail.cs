@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using CalamityMod;
 
-namespace CalRemix.NPCs.Bosses
+namespace CalRemix.NPCs.Bosses.Wulfwyrm
 {
     public class WulfwyrmTail : ModNPC
     {

@@ -25,7 +25,7 @@ using CalamityMod.Items.SummonItems;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using CalRemix.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;

@@ -16,7 +16,7 @@ using CalamityMod.World;
 using CalamityMod.Items.Pets;
 using System.IO;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.Minibosses
 {
     public class YggdrasilEnt : ModNPC
     {
@@ -105,7 +105,7 @@ namespace CalRemix.NPCs
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneHallow && spawnInfo.Player.ZoneUnderworldHeight && !NPC.AnyNPCs(Type))
+            if ((spawnInfo.Player.ZoneHallow || spawnInfo.Player.ZoneUnderworldHeight) && !NPC.AnyNPCs(Type))
                 return 0.01f;
             return 0f;
         }

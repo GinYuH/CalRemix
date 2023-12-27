@@ -15,7 +15,7 @@ using System.Linq;
 using CalamityMod.Items.Materials;
 using System.IO;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.Minibosses
 {
 	public class LifeSlime : ModNPC
 	{

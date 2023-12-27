@@ -9,7 +9,6 @@ using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Magic;
 using CalRemix.Buffs;
-using CalRemix.Items.Elements;
 using CalRemix.Items.Weapons;
 using CalRemix.Projectiles.Weapons;
 using Humanizer;

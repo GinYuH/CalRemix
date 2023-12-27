@@ -130,7 +130,6 @@ namespace CalRemix.Retheme
             { ItemType<EnergyCore>(), "EnergyCore" },
             { ItemType<Nadir>(), "Nadir" },
             { ItemType<Violence>(), "Violence" },
-            { ItemType<PearlShard>(), "PearlShard" },
             { ItemType<Fabstaff>(), "InterfacerStaff" },
             { ItemType<Fabsol>(), "DiscordianSigil" },
             { ItemType<WulfrumMetalScrap>(), "Bars/WulfrumBar" },

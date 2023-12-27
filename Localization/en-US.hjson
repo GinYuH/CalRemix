@@ -1470,7 +1470,10 @@ Mods: {
 				Tooltip: ""
 			}
 
-			PinesPenetrator.DisplayName: Pine's Penetrator
+			PinesPenetrator: {
+				DisplayName: Pine's Penetrator
+				Tooltip: ""
+			}
 
 			Snowgrave: {
 				DisplayName: Snowgrave
@@ -1514,6 +1517,21 @@ Mods: {
 					Fires exploding red and green bouncing gift bags that emit clouds as they travel
 					'''
 			}
+
+			Impact: {
+				DisplayName: Impact
+				Tooltip: ""
+			}
+
+			Machine: {
+				DisplayName: Machine
+				Tooltip: ""
+			}
+
+			ConquestFragment: {
+				Tooltip: ""
+				DisplayName: Conquest Fragment
+			}
 		}
 
 		NPCs: {
@@ -1541,7 +1559,22 @@ Mods: {
 
 			LifeSlime.DisplayName: Life Slime
 			Rosalina.DisplayName: Starborn Princess
-			YEENA.DisplayName: General
+
+			YEENA: {
+				DisplayName: General
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+
 			OnyxKinsman.DisplayName: Onyx Kinsman
 			CyberDraedon.DisplayName: Cyber Draedon
 			Clamitas.DisplayName: Clamitas
@@ -1597,6 +1630,9 @@ Mods: {
 				DisplayName: F B I G U Y
 				Census.SpawnCondition: Conditions unknown
 			}
+
+			Acideye.DisplayName: Acideye
+			MutatedEye.DisplayName: Mutated Eye
 		}
 
 		Projectiles: {
@@ -1737,6 +1773,8 @@ Mods: {
 			GreenDust.DisplayName: Dust
 			RedBall.DisplayName: Red Bag
 			RedDust.DisplayName: Dust
+			CarolBell.DisplayName: Carol Bell
+			CarolWave.DisplayName: Carol Wave
 		}
 
 		Tiles: {

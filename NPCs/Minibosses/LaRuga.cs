@@ -1,5 +1,4 @@
-﻿using CalamityMod.Dusts;
-using CalamityMod.Items.Placeables.Ores;
+﻿using CalamityMod.Items.Placeables.Ores;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -7,30 +6,14 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
 using CalRemix.Items;
-using CalamityMod.NPCs;
 using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Summon;
-using CalamityMod.World;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Projectiles.Weapons;
-using CalRemix.UI;
-using System.Collections.Generic;
-using System.Linq;
-using CalamityMod.Items.Placeables.Furniture.Trophies;
-using System.Xml.Serialization;
-using CalRemix.Items.Materials;
-using CalRemix.Items.Potions;
-using CalamityMod.Items.Weapons.Summon;
-using Microsoft.CodeAnalysis.Operations;
-using Newtonsoft.Json.Serialization;
 using System;
 using CalRemix.Buffs;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.Minibosses
 {
     public class LaRuga : ModNPC
     {

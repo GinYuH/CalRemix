@@ -18,7 +18,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.UI;
 using System.Linq;
 
-namespace CalRemix.NPCs
+namespace CalRemix.NPCs.Minibosses
 {
     public class OnyxKinsman : ModNPC
     {

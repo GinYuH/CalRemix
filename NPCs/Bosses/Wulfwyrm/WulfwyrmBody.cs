@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Newtonsoft.Json.Linq;
 
-namespace CalRemix.NPCs.Bosses
+namespace CalRemix.NPCs.Bosses.Wulfwyrm
 {
     public class WulfwyrmBody : ModNPC
     {
