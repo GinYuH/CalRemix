@@ -1564,14 +1564,22 @@ Mods: {
 				DisplayName: General
 
 				TownNPCMood: {
-					Content: I am content.
-					NoHome: I hate not having a home.
-					FarFromHome: I am too far from home.
-					LoveSpace: I love having so much space.
-					DislikeCrowded: I dislike how crowded I am.
-					HateCrowded: I hate how crowded I am.
-					LikeNPC_Princess: I like {NPCName}.
-					Princess_LovesNPC: I like {NPCName}.
+					Content: I have no complaints. I'm comfortable enough.
+					NoHome: I'm used to sleeping out in the field.  Doesn't mean that I like it one bit.
+					FarFromHome: My base of operations is over there, and I'm over here.  I'm a sitting duck!
+					DislikeCrowded: It's too disorderly around me.  It's hard to focus.
+					HateCrowded: Just how many civilians are here?! This goes beyond a mere liability!
+					LikeNPC_Princess: It's not the first time I've had to protect royalty. I'd give my life to keep {NPCName} safe.
+					Princess_LovesNPC: "{NPCNAME}'s war stories are always so entertaining!"
+					LoveSpace: Perfect. There's nobody around to distract me while I'm strategizing.
+					LoveBiome: What a perfect place for training soldiers! This Desert is fantastic!
+					LikeBiome: The Snow isn't the best for morale, but it reminds me of home. I'm getting pretty sentimental.
+					DislikeBiome: I'm not in my element when near the Ocean. That's more of an Admiral thing.
+					HateBiome: You'd be violating all sorts of conventions by making someone live in the {BiomeName}!
+					LikeNPC: I feel strangely nostalgic when I see {NPCName}. I can't quite understand why.
+					LoveNPC: "{NPCName} and I are like kindred spirits! He has my sympathy."
+					HateNPC: A PIRATE?! Why haven't you locked up {NPCName} yet?!
+					DislikeNPC: "{NPCName} is a liability. Explosives don't take sides!"
 				}
 			}
 

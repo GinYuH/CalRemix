@@ -24,6 +24,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -51,6 +52,15 @@ namespace CalRemix.NPCs.TownNPCs
             NPCID.Sets.ShimmerTownTransform[Type] = false;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new() { Velocity = 1f, Direction = 1 };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPC.Happiness
+            .SetBiomeAffection<SnowBiome>(AffectionLevel.Like) 
+            .SetBiomeAffection<DesertBiome>(AffectionLevel.Love) 
+            .SetBiomeAffection<OceanBiome>(AffectionLevel.Dislike)
+            .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Love)
+            .SetNPCAffection(NPCID.Pirate, AffectionLevel.Hate)
+            .SetNPCAffection(ModContent.NPCType<WITCH>(), AffectionLevel.Like) 
+            .SetNPCAffection(NPCID.Demolitionist, AffectionLevel.Dislike) 
+;
         }
 
         public override void SetDefaults()
@@ -73,7 +83,7 @@ namespace CalRemix.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
                 new FlavorTextBestiaryInfoElement("A fabled general hailing from parts unknown. His subordinates can't quite agree about his personality.")
             });
         }
