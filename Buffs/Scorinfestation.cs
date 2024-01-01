@@ -13,7 +13,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items;
-using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

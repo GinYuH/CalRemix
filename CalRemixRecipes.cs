@@ -45,6 +45,11 @@ using CalamityMod.Items.Placeables.FurnitureStatigel;
 using CalamityMod;
 using System.Collections.Generic;
 using Steamworks;
+using Terraria.GameContent;
+using System.Linq;
+using System.Reflection;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace CalRemix
 {
@@ -106,7 +111,6 @@ namespace CalRemix
             {
                 Recipe cell = Recipe.Create(ModContent.ItemType<PlagueCellCanister>(), 1);
                 cell.AddRecipeGroup(RecipeGroupID.IronBar);
-                cell.AddIngredient(ItemID.JungleSpores);
                 cell.AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom));
                 cell.Register();
             }
@@ -208,7 +212,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ModContent.ItemType<ProfanedShard>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Yggdrasil Ents in Hallow and Hell.", () => false));
                 }
                 if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
                 {
@@ -224,103 +228,106 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<AcesLow>();
                 }
-                if (recipe.HasResult(ModContent.ItemType<CosmicImmaterializer>()))
+                if (recipe.HasResult(ModContent.ItemType<CosmicImmaterializer>()) && recipe.TryGetIngredient(ModContent.ItemType<SanctifiedSpark>(), out Item spark))
                 {
-                    recipe.AddIngredient<DarkEnergyStaff>();
-                    recipe.RemoveIngredient(ModContent.ItemType<SanctifiedSpark>());
+                    spark.type = ModContent.ItemType<DarkEnergyStaff>();
                 }
                 if (recipe.HasResult(ModContent.ItemType<Supernova>()))
                 {
-                    recipe.AddIngredient<UnsealedSingularity>();
+                    if (recipe.TryGetIngredient(ModContent.ItemType<SealedSingularity>(), out Item sing))
+                        sing.type = ModContent.ItemType<UnsealedSingularity>();
                     recipe.AddIngredient<ProfanedNucleus>();
-                    recipe.RemoveIngredient(ModContent.ItemType<SealedSingularity>());
                 }
                 if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
                     recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
                 }
-                if (recipe.HasResult(ModContent.ItemType<Apotheosis>()))
+                if (recipe.HasResult(ModContent.ItemType<Apotheosis>()) && recipe.TryGetIngredient(ItemID.SpellTome, out Item sTome))
                 {
-                    recipe.RemoveIngredient(ItemID.SpellTome);
-                    recipe.AddIngredient(ModContent.ItemType<WrathoftheCosmos>());
+                    sTome.type = ModContent.ItemType<WrathoftheCosmos>();
                 }
-                if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
+                if (recipe.HasResult(ModContent.ItemType<Voidragon>()) && recipe.TryGetIngredient(ModContent.ItemType<Seadragon>(), out Item sDragon))
                 {
-                    recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
-                    recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
+                    sDragon.type = ModContent.ItemType<Megaskeet>();
                 }
-                if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>())))
+                bool shard = (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()));
+                if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && shard)
 		        {
                     recipe.RemoveIngredient(ModContent.ItemType<PearlShard>());
                     recipe.AddIngredient(ModContent.ItemType<ParchedScale>());
                 }
-                if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && recipe.HasResult(ModContent.ItemType<NavyFishingRod>()) || recipe.HasResult(ModContent.ItemType<EutrophicShelf>()) || recipe.HasResult(ModContent.ItemType<AquamarineStaff>()) || recipe.HasResult(ModContent.ItemType<Riptide>()) || recipe.HasResult(ModContent.ItemType<SeashineSword>()) || recipe.HasResult(ModContent.ItemType<StormSurge>()) || recipe.HasResult(ModContent.ItemType<SeafoamBomb>()))
+                bool shard2 = recipe.HasResult(ModContent.ItemType<NavyFishingRod>()) || recipe.HasResult(ModContent.ItemType<EutrophicShelf>()) || recipe.HasResult(ModContent.ItemType<AquamarineStaff>()) || recipe.HasResult(ModContent.ItemType<Riptide>()) || recipe.HasResult(ModContent.ItemType<SeashineSword>()) || recipe.HasResult(ModContent.ItemType<StormSurge>()) || recipe.HasResult(ModContent.ItemType<SeafoamBomb>());
+                if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && shard2)
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<PearlShard>());
                 }
+                if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item pShard) && !(shard || shard))
+                {
+                    pShard.type = ModContent.ItemType<ConquestFragment>();
+                }
                 if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Trade with the Dye Trader Post-Providence.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<MiracleFruit>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Find in post-Golem Jungle Planetoids.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<Dragonfruit>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Open an Azure Crate while a Wyvern is alive post-Yharon", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<BloodOrange>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Throw an Apple in water during a Blood Moon post-mechs.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<CometShard>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Get a Nova to collide with Astral Ore.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<EtherealCore>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Insert a Bloody Vein at the Astral Beacon.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<PhantomHeart>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'permanent_upgrades\' setting is disabled", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition("Locked recipe. Spawns in the Post-Polterghast Dungeon.", () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ModContent.ItemType<DesertMedallion>()))
                 {
-                    recipe.DisableRecipe();
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Cnidrions after defeating the Wulfrum Excavator.", () => false));
                 }
                 if (recipe.HasResult(ModContent.ItemType<CryoKey>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'primal_aspid\' setting is disabled", () => !CalRemixWorld.aspids));
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Primal Aspids in the snow biome at night.", () => !CalRemixWorld.aspids));
                 }
                 if (recipe.HasResult(ModContent.ItemType<EyeofDesolation>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'clamitas\' setting is disabled", () => !CalRemixWorld.clamitas));
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Clamitas in the Brimstone Crags.", () => !CalRemixWorld.clamitas));
                 }
                 if (recipe.HasResult(ModContent.ItemType<GalacticaSingularity>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'side_gar\' setting is disabled", () => !CalRemixWorld.sidegar));
+                    recipe.AddCondition(new Condition("Locked recipe. Fish Side Gars from Godseeker Mode space.", () => !CalRemixWorld.sidegar));
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreathelm>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerPlateMail>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<FearmongerGreaves>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'fearmonger_armor\' setting is disabled", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
-                    recipe.AddCondition(new Condition("While the Anomaly 109 \'seafood\' setting is disabled", () => !CalRemixWorld.seafood));
+                    recipe.AddCondition(new Condition("Locked recipe. Make the other Seafood.", () => !CalRemixWorld.seafood));
                 }
                 #region Accessory edits
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
@@ -591,25 +598,21 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<UnholyBloodCells>(), 25);
                 }
-                if (recipe.HasResult(ModContent.ItemType<Seafood>()))
-                {
-                    recipe.AddCondition(new Condition("While the anomaly 109 \'seafood\' setting is disabled", () => !CalRemixWorld.seafood));
-                }
                 if (recipe.HasResult(ModContent.ItemType<MidnightSunBeacon>()))
                 {
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
-                if (recipe.HasResult(ModContent.ItemType<StatigelBlock>()) || recipe.HasIngredient(ModContent.ItemType<StatigelBlock>()))
+                if (!recipe.HasResult(ModContent.ItemType<HauntedBar>()) && recipe.TryGetIngredient(ModContent.ItemType<RuinousSoul>(), out Item ruin))
                 {
-                    recipe.AddIngredient(ItemID.Gel);
+                    ruin.type = ModContent.ItemType<HauntedBar>();
+                }
+                if (!recipe.HasResult(ModContent.ItemType<ElementalBar>()) && recipe.TryGetIngredient(ModContent.ItemType<GalacticaSingularity>(), out Item ing))
+                {
+                    if (ing.stack % 5 == 0 && ing.stack > 1)
+                        ing.type = ModContent.ItemType<ElementalBar>();
                 }
             }
-            /*MassAddIngredient(essenceBarCrafts);
-            MassAddIngredient(alloyBarCrafts);
-            MassAddIngredient(yharimBarCrafts);
-            MassAddIngredient(venomCrafts);
-            MassAddIngredient(shimmerEssenceCrafts);*/
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
                 Recipe recipe = Main.recipe[i];
@@ -633,6 +636,39 @@ namespace CalRemix
             {
                 MassAddIngredient(results);
             }
+            Recipe.UpdateWhichItemsAreMaterials();
+            Recipe.UpdateWhichItemsAreCrafted();
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                foreach (Item item in Main.recipe[i].requiredItem)
+                {
+                    item.material = ItemID.Sets.IsAMaterial[item.type];
+                }
+                Main.recipe[i].createItem.material = ItemID.Sets.IsAMaterial[Main.recipe[i].createItem.type];
+            }
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
+                if (recipe.acceptedGroups.Count <= 0)
+                {
+                    continue;
+                }
+                List<int> toRemove = new List<int>();
+                foreach (int num in recipe.acceptedGroups)
+                {
+                    if (!RecipeGroup.recipeGroups[num].ValidItems.Intersect(recipe.requiredItem.Select((Item x) => x.type)).Any())
+                    {
+                        toRemove.Add(num);
+                    }
+                }
+                foreach (int group in toRemove)
+                {
+                    recipe.acceptedGroups.Remove(group);
+                }
+            }
+            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
+            info.Invoke(null, null); // FUCK YOU
+            Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
 
         public static void MassRemoveIngredient(List<(int, int, int)> results)

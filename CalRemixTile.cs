@@ -12,6 +12,7 @@ using CalamityMod.Tiles.Furniture;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Tiles.DraedonStructures;
 using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.Items.Accessories;
@@ -21,6 +22,8 @@ using CalRemix.UI;
 using System.Linq;
 using CalamityMod.Items.Placeables.Ores;
 using Microsoft.CodeAnalysis;
+using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.Tiles.SunkenSea;
 
 namespace CalRemix
 {
@@ -373,6 +376,109 @@ namespace CalRemix
                         }
                     }
                 }
+            }
+        }
+
+        internal static void SlopedGlowmask(int i, int j, int type, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color drawColor, Vector2 positionOffset, bool overrideTileFrame = false)
+        {
+            Tile tile = Main.tile[i, j];
+            int num = tile.TileFrameX;
+            int num2 = tile.TileFrameY;
+            if (overrideTileFrame)
+            {
+                num = 0;
+                num2 = 0;
+            }
+
+            int width = 16;
+            int height = 16;
+            if (sourceRectangle.HasValue)
+            {
+                num = sourceRectangle.Value.X;
+                num2 = sourceRectangle.Value.Y;
+            }
+
+            int num3 = i * 16;
+            int num4 = j * 16;
+            Vector2 vector = new Vector2(num3, num4);
+            Vector2 vector2 = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+            {
+                vector2 = Vector2.Zero;
+            }
+
+            Vector2 vector3 = -Main.screenPosition + vector2 + positionOffset;
+            Vector2 position2 = vector + vector3;
+            if ((tile.Slope == SlopeType.Solid && !tile.IsHalfBlock) || (Main.tileSolid[tile.TileType] && Main.tileSolidTop[tile.TileType]))
+            {
+                Main.spriteBatch.Draw(texture, position2, new Rectangle(num, num2, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                return;
+            }
+
+            if (tile.IsHalfBlock)
+            {
+                Main.spriteBatch.Draw(texture, new Vector2(position2.X, position2.Y + 8f), new Rectangle(num, num2, width, 8), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                return;
+            }
+
+            byte b = (byte)tile.Slope;
+            Vector2 position3;
+            if (b == 1 || b == 2)
+            {
+                Rectangle value;
+                for (int k = 0; k < 8; k++)
+                {
+                    int num5 = k * 2;
+                    int num6;
+                    int height2;
+                    if (b == 2)
+                    {
+                        num6 = 16 - num5 - 2;
+                        height2 = 14 - num5;
+                    }
+                    else
+                    {
+                        num6 = num5;
+                        height2 = 14 - num6;
+                    }
+
+                    value = new Rectangle(num + num6, num2, 2, height2);
+                    position3 = new Vector2(num3 + num6, num4 + num5) + vector3;
+                    Main.spriteBatch.Draw(texture, position3, value, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                }
+
+                value = new Rectangle(num, num2 + 14, 16, 2);
+                position3 = new Vector2(num3, num4 + 14) + vector3;
+                Main.spriteBatch.Draw(texture, position3, value, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                return;
+            }
+
+            for (int l = 0; l < 8; l++)
+            {
+                int num7 = l * 2;
+                int num8;
+                int num9;
+                if (b == 3)
+                {
+                    num8 = num7;
+                    num9 = 16 - num8;
+                }
+                else
+                {
+                    num8 = 16 - num7 - 2;
+                    num9 = 16 - num7;
+                }
+
+                Rectangle value = new Rectangle(num + num8, num2 + 16 - num9, 2, num9);
+                position3 = new Vector2(num3 + num8, num4) + vector3;
+                Main.spriteBatch.Draw(texture, position3, value, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+
+            position3 = new Vector2(num3, num4) + vector3;
+            if (tile.TileType != ModContent.TileType<EutrophicGlass>())
+            {
+                Rectangle value = new Rectangle(num, num2, 16, 2);
+                Main.spriteBatch.Draw(texture, position3, value, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
     }

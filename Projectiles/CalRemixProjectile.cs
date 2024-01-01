@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Accessories;
 using CalRemix.Projectiles.WulfrumExcavator;
-using CalRemix.NPCs.Bosses;
+using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Projectiles.Magic;
@@ -34,11 +34,6 @@ namespace CalRemix
 		public int bladetimer = 0;
         NPC exc;
         public override bool InstancePerEntity => true;
-        public override void SetDefaults(Projectile projectile)
-        {
-			RethemeMaster.RethemeProjDefaults(projectile);
-        }
-
         public override void AI(Projectile projectile)
         {
             Player player = Main.LocalPlayer;
@@ -100,17 +95,13 @@ namespace CalRemix
                 projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
                 projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
             }
-            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
+            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0 || projectile.penetrate > 10 || projectile.maxPenetrate > 10 || projectile.timeLeft > 120)
                 return;
             if (modPlayer.pearl)
-            {
                 CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 1);
-            }
             eye++;
             if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
-            {
                 Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, projectile.velocity * 0.75f, ProjectileType<HomingAstralFireball>(), 10, 0, projectile.owner);
-            }
         }
 
         public static void PlagueToPureConvert(int i, int j, int size = 4)
@@ -391,7 +382,7 @@ namespace CalRemix
 				projectile.damage = 1000000;
 				return Color.LightBlue;
             }
-            return RethemeMaster.RethemeProjAlpha(projectile);
+            return null;
 		}
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {

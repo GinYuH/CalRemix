@@ -1,40 +1,23 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.NPCs.SlimeGod;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Events;
 using Terraria.GameContent;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Projectiles.Melee.Spears;
-using CalamityMod.Projectiles.Melee;
 using static Terraria.ModLoader.ModContent;
-using CalamityMod.NPCs.Ravager;
 using ReLogic.Content;
 using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.Projectiles.Boss;
-using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Melee.Shortswords;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using System.Reflection;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.Cryogen;
-using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.Projectiles.Magic;
-using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.Yharon;
 using CalamityMod.NPCs.Other;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.SupremeCalamitas;
@@ -46,31 +29,21 @@ using CalamityMod;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalamityMod.NPCs.ExoMechs;
-using CalamityMod.NPCs.Crabulon;
-using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Projectiles.Typeless;
-using System;
-using CalamityMod.NPCs.Leviathan;
-using CalamityMod.Projectiles.Summon;
 using CalamityMod.NPCs.AstrumAureus;
-using CalamityMod.CalPlayer;
 using CalamityMod.NPCs;
-using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalamityMod.Items.Armor.Fearmonger;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using System.Runtime.Intrinsics.X86;
-using CalamityMod.Items.Potions;
-using Terraria.ModLoader.Core;
 using CalamityMod.NPCs.Bumblebirb;
-using CalamityMod.Items.TreasureBags;
-using CalRemix.Projectiles.Weapons;
 using Terraria.GameContent.Bestiary;
-using CalamityMod.NPCs.Abyss;
+using Terraria.DataStructures;
+using CalamityMod.Items.Mounts;
+using CalamityMod.Items.Weapons.Ranged;
+using System;
+using CalamityMod.Items.Weapons.DraedonsArsenal;
+using CalamityMod.NPCs.ExoMechs.Ares;
 
 namespace CalRemix.Retheme
 {
-    public static class RethemeMaster
+    public class RethemeMaster
     {
         internal static List<int> Torch = new()
         {
@@ -94,1058 +67,388 @@ namespace CalRemix.Retheme
             ItemType<NavyPrismTorch>(),
             ItemType<RefractivePrismTorch>()
         };
-        public static void RethemeNPCDefaults(NPC npc)
+        public class RNPC : GlobalNPC
         {
-            if (!CalRemixWorld.resprites)
-                return;
-            #region Resprites
-            #region Pre-Hardmode
-            if (npc.type == NPCType<DesertScourgeHead>())
+            public override bool InstancePerEntity => true;
+            private int LORDEhead = -1;
+            public override void Load()
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/DS/Head");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/DS/Map");
+                LORDEhead = Mod.AddBossHeadTexture("CalRemix/Retheme/LORDE/VotTMap", -1);
             }
-            else if (npc.type == NPCType<DesertScourgeBody>())
+            public override void SetStaticDefaults()
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/DS/Body");
+                if (!CalRemixWorld.resprites)
+                    return;
+                foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
+                {
+                    TextureAssets.Npc[p.Key] = Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                }
             }
-            else if (npc.type == NPCType<DesertScourgeTail>())
+            public override void BossHeadSlot(NPC npc, ref int index)
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/DS/Tail");
+                if (!CalRemixWorld.resprites)
+                    return;
+                int LORDEheadSlot = LORDEhead;
+                if (npc.type == NPCType<THELORDE>() && LORDEhead != -1 && Main.zenithWorld)
+                    index = LORDEheadSlot;
             }
-            else if (npc.type == NPCType<DesertNuisanceHead>())
+            public override void SetDefaults(NPC npc)
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/DS/NHead");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/DS/NMap");
+                if (!CalRemixWorld.resprites)
+                    return;
+                if (RethemeList.BossHeads.ContainsKey(npc.type))
+                {
+                    RethemeList.BossHeads.TryGetValue(npc.type, out string v);
+                    TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/" + v);
+                }
+                if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
+                {
+                    npc.HitSound = SoundID.NPCHit49;
+                }
             }
-            else if (npc.type == NPCType<DesertNuisanceBody>())
+            public override void ModifyTypeName(NPC npc, ref string typeName)
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/DS/NBody");
+                if (!CalRemixWorld.renames)
+                    return;
+                if (npc.type == NPCType<BrimstoneElemental>())
+                {
+                    typeName = "Calamity Elemental";
+                }
+                else if (npc.type == NPCType<AstrumAureus>())
+                {
+                    typeName = "Astrum Viridis";
+                }
+                else if (npc.type == NPCType<Draedon>())
+                {
+                    typeName = "Draedon, the Living Intellect of Samuel Graydron";
+                }
+                else if (npc.type == NPCType<BrimstoneHeart>())
+                {
+                    typeName = "Calamity Heart";
+                }
+                else if (npc.type == NPCType<SupremeCalamitas>())
+                {
+                    typeName = "Brimdeath Witch, Calitas Jane";
+                }
+                else if (npc.type == NPCType<WITCH>())
+                {
+                    typeName = "Calamity Witch";
+                }
+                else if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
+                {
+                    typeName = "Vision of the Tyrant";
+                }
             }
-            else if (npc.type == NPCType<DesertNuisanceTail>())
+            public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/DS/NTail");
+                if (!CalRemixWorld.resprites)
+                    return;
+                if (npc.type == NPCType<ProfanedGuardianCommander>())
+                    MaskDraw(1, npc, spriteBatch, screenPos, drawColor);
+                else if (npc.type == NPCType<ProfanedGuardianDefender>())
+                    MaskDraw(2, npc, spriteBatch, screenPos, drawColor);
+                else if (npc.type == NPCType<ProfanedGuardianHealer>())
+                    MaskDraw(3, npc, spriteBatch, screenPos, drawColor);
+                if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
+                {
+                    THELORDE lorde = npc.ModNPC as THELORDE;
+                    if (!lorde.Dying && npc.life > 0)
+                    {
+                        Texture2D value = Request<Texture2D>("CalRemix/Retheme/LORDE/VotTEyes").Value;
+                        Vector2 vector = new(value.Width / 4, value.Height / 14);
+                        Vector2 position = npc.Center - screenPos - new Vector2((float)value.Width / 2f, (float)value.Height / 7f) * npc.scale / 2f + vector * npc.scale + new Vector2(0f, npc.gfxOffY);
+                        Rectangle value2 = value.Frame(2, 7, 0, 1);
+                        SpriteEffects effects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                        spriteBatch.Draw(value, position, value2, new Color(255, 255, 255, 255), npc.rotation, vector, npc.scale, effects, 0f);
+                    }
+                }
             }
-            else if (npc.type == NPCType<Crabulon>())
+            private static void MaskDraw(int num, NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
             {
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Map");
+                if (npc.life > 0)
+                {
+                    Texture2D mask = Request<Texture2D>("CalRemix/Retheme/Guardians/DreamMask" + num, AssetRequestMode.ImmediateLoad).Value;
+                    Vector2 draw = npc.Center - screenPos + new Vector2(0f, npc.gfxOffY);
+                    SpriteEffects spriteEffects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                    spriteBatch.Draw(mask, draw, null, drawColor, npc.rotation, mask.Size() / 2f, npc.scale, spriteEffects, 0f);
+                }
             }
-            else if (npc.type == NPCType<HiveTumor>())
+            public override Color? GetAlpha(NPC npc, Color drawColor)
             {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/HiveTumor");
-            }
-            else if (npc.type == NPCType<DankCreeper>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/DankCreeper");
-            }
-            else if (npc.type == NPCType<HiveBlob>() || npc.type == NPCType<HiveBlob2>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/HiveBlob");
-            }
-            else if (npc.type == NPCType<DarkHeart>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/DarkHeart");
-            }
-            else if (npc.type == NPCType<HiveMind>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/HiveMind");
-            }
-            #region Perfs
-            else if (npc.type == NPCType<PerforatorCyst>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/Cyst");
-            }
-            else if (npc.type == NPCType<PerforatorBodyLarge>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/LBody");
-            }
-            else if (npc.type == NPCType<PerforatorBodyMedium>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/MBody");
-            }
-            else if (npc.type == NPCType<PerforatorBodySmall>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/SBody");
-            }
-            else if (npc.type == NPCType<PerforatorHeadLarge>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/LHead");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Perfs/LMap");
-            }
-            else if (npc.type == NPCType<PerforatorHeadMedium>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/MHead");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Perfs/MMap");
-            }
-            else if (npc.type == NPCType<PerforatorHeadSmall>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/SHead");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Perfs/SMap");
-            }
-            else if (npc.type == NPCType<PerforatorTailLarge>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/LTail");
-            }
-            else if (npc.type == NPCType<PerforatorTailMedium>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/MTail");
-            }
-            else if (npc.type == NPCType<PerforatorTailSmall>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/STail");
-            }
-            else if (npc.type == NPCType<PerforatorHive>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/Hive");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Perfs/Map");
-            }
-            #endregion
-            else if (npc.type == NPCType<CrimsonSlimeSpawn>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CrimsonSlimeSpawn");
-            }
-            else if (npc.type == NPCType<CrimsonSlimeSpawn2>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CrimsonSlimeSpawn2");
-            }
-            else if (npc.type == NPCType<CorruptSlimeSpawn>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CorruptSlimeSpawn");
-            }
-            else if (npc.type == NPCType<CorruptSlimeSpawn2>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CorruptSlimeSpawn2");
-            }
-            else if (npc.type == NPCType<SlimeGodCore>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/Core");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/Map");
-            }
-            else if (npc.type == NPCType<CrimulanPaladin>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CrimulanSlimeGod");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CMap");
-            }
-            else if (npc.type == NPCType<SplitCrimulanPaladin>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CrimulanSlimeGod");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CSMap");
-            }
-            else if (npc.type == NPCType<EbonianPaladin>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/EbonianSlimeGod");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/EMap");
-            }
-            else if (npc.type == NPCType<SplitEbonianPaladin>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/EbonianSlimeGod");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/ESMap");
-            }
-            #endregion
-            #region Hardmode
-            else if (npc.type == NPCType<Cryogen>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenPhase1");
-            }
-            else if (npc.type == NPCType<CryogenShield>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenShield");
-            }
-            else if (npc.type == NPCType<CalamitasClone>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Cal/CalamitasClone");
-            }
-            else if (npc.type == NPCType<Cataclysm>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Cal/Cataclysm");
-            }
-            else if (npc.type == NPCType<Catastrophe>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Cal/Catastrophe");
-            }
-            else if (npc.type == NPCType<Anahita>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Anahita");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Levi/AnaMap");
-            }
-            else if (npc.type == NPCType<Leviathan>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Levi");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Levi/LeviMap");
-            }
-            else if (npc.type == NPCType<AquaticAberration>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Levi/AquaticAberration");
-            }
-            else if (npc.type == NPCType<Anahita>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Anahita");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Levi/AnaMap");
-            }
-            else if (npc.type == NPCType<AstrumAureus>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AstrumAureus");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Plague/Map");
-            }
-            else if (npc.type == NPCType<AureusSpawn>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AureusSpawn");
-            }
-            else if (npc.type == NPCType<RavagerBody>())
-            {
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/RavagerMap");
-            }
-            else if (npc.type == NPCType<AstrumDeusHead>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/AD/Head");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/AD/Map");
-            }
-            else if (npc.type == NPCType<AstrumDeusBody>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/AD/Body");
-            }
-            else if (npc.type == NPCType<AstrumDeusTail>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/AD/Tail");
-            }
-            #endregion
-            else if (npc.type == NPCType<Bumblefuck>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Birb/Birb");
-                TextureAssets.NpcHeadBoss[npc.GetBossHeadTextureIndex()] = Request<Texture2D>("CalRemix/Retheme/Birb/Map");
-            }
-            else if (npc.type == NPCType<Bumblefuck2>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Birb/Birb2");
-            }
-            else if (npc.type == NPCType<WildBumblefuck>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Birb/Birb2");
-            }
-            else if (npc.type == NPCType<Yharon>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/Yharon");
-            }
-            else if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
-            {
-                npc.HitSound = SoundID.NPCHit49;
-            }
-            else if (npc.type == NPCType<ReaperShark>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/ReaperShark");
-            }
-            else if (npc.type == NPCType<ColossalSquid>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/ColossalSquid");
-            }
-            else if (npc.type == NPCType<Eidolist>())
-            {
-                TextureAssets.Npc[npc.type] = Request<Texture2D>("CalRemix/Retheme/Eidolist");
-            }
-            #endregion
-        }
-        public static void RethemeTypeName(NPC npc, ref string typeName)
-        {
-            if (!CalRemixWorld.renames)
-                return;
-            if (npc.type == NPCType<BrimstoneElemental>())
-            {
-                typeName = "Calamity Elemental";
-            }
-            else if (npc.type == NPCType<AstrumAureus>())
-            {
-                typeName = "Astrum Viridis";
-            }
-            else if (npc.type == NPCType<Draedon>())
-            {
-                typeName = "Draedon, the Living Intellect of Samuel Graydron";
-            }
-            else if (npc.type == NPCType<BrimstoneHeart>())
-            {
-                typeName = "Calamity Heart";
-            }
-            else if (npc.type == NPCType<SupremeCalamitas>())
-            {
-                typeName = "Brimdeath Witch, Calitas Jane";
-            }
-            else if (npc.type == NPCType<WITCH>())
-            {
-                typeName = "Calamity Witch";
-            }
-            else if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
-            {
-                typeName = "Vision of the Tyrant";
+                if (!Main.zenithWorld && npc.type == NPCType<Providence>())
+                    return new Color(255, 255, 255, 255);
+                return null;
             }
         }
-        public static void RethemeNPCPostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public class RItem : GlobalItem
         {
-            if (!CalRemixWorld.resprites)
-                return;
-            if (npc.type == NPCType<ProfanedGuardianCommander>())
-                MaskDraw(1, npc, spriteBatch, screenPos, drawColor);
-            else if (npc.type == NPCType<ProfanedGuardianDefender>())
-                MaskDraw(2, npc, spriteBatch, screenPos, drawColor);
-            else if (npc.type == NPCType<ProfanedGuardianHealer>())
-                MaskDraw(3, npc, spriteBatch, screenPos, drawColor);
-            if (npc.type == NPCType<THELORDE>() && Main.zenithWorld)
+            public override void SetStaticDefaults()
             {
-                THELORDE lorde = npc.ModNPC as THELORDE;
-                if (!lorde.Dying && npc.life > 0)
+                if (!CalRemixWorld.resprites)
+                    return;
+                foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
-                    Texture2D value = Request<Texture2D>("CalRemix/Retheme/LORDE/VotTEyes").Value;
-                    Vector2 vector = new(value.Width / 4, value.Height / 14);
-                    Vector2 position = npc.Center - screenPos - new Vector2((float)value.Width / 2f, (float)value.Height / 7f) * npc.scale / 2f + vector * npc.scale + new Vector2(0f, npc.gfxOffY);
-                    Rectangle value2 = value.Frame(2, 7, 0, 1);
-                    SpriteEffects effects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                    spriteBatch.Draw(value, position, value2, new Color(255, 255, 255, 255), npc.rotation, vector, npc.scale, effects, 0f);
+                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Retheme/" + p.Value);
                 }
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+                Main.RegisterItemAnimation(ItemType<Fabstaff>(), new DrawAnimationVertical(6, 6));
             }
-        }
-        private static void MaskDraw(int num, NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            if (npc.life > 0)
+            public override void SetDefaults(Item item)
             {
-                Texture2D mask = Request<Texture2D>("CalRemix/Retheme/Guardians/DreamMask" + num, AssetRequestMode.ImmediateLoad).Value;
-                Vector2 draw = npc.Center - screenPos + new Vector2(0f, npc.gfxOffY);
-                SpriteEffects spriteEffects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                spriteBatch.Draw(mask, draw, null, drawColor, npc.rotation, mask.Size() / 2f, npc.scale, spriteEffects, 0f);
-            }
-        }
-        public static Color? RethemeNPCAlpha(NPC npc, Color drawColor)
-        {
-            if (!Main.zenithWorld && npc.type == NPCType<Providence>())
-                return new Color(255, 255, 255, 255);
-            return null;
-        }
-        public static void RethemeItemDefaults(Item item)
-        {
-            if (CalRemixWorld.resprites)
-            {
-                #region Resprites
-                if (item.type == ItemType<PearlShard>())
+                if (item.type == ItemType<ClockGatlignum>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/PearlShard");
+                    item.SetNameOverride("Clockwork Bar");
+                    item.damage = 0;
+                    item.DamageType = DamageClass.Default;
+                    item.shoot = ProjectileID.None;
+                    item.useAnimation = default;
+                    item.useTime = default;
                 }
-                else if (item.type == ItemType<EnergyCore>())
+                else if (item.type == ItemType<Fabstaff>())
+                    item.UseSound = AresTeslaCannon.TeslaOrbShootSound with { Pitch = 0.5f, PitchVariance = 0.2f, Volume = 0.5f };
+                if (!CalRemixWorld.renames)
+                    return;
+                #region Text Changes
+                if (item.type == ItemType<InfestedClawmerang>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/EnergyCore");
+                    item.SetNameOverride("Shroomerang");
                 }
-                else if (item.type == ItemType<BloodyWormFood>())
+                else if (item.type == ItemType<PhantomicArtifact>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodyWormFood");
+                    item.SetNameOverride("Phantomic Soul Artifact");
                 }
-                else if (item.type == ItemType<BloodSample>())
+                else if (item.type == ItemType<UelibloomOre>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodSample");
+                    item.SetNameOverride("Tarragon Ore");
                 }
-                else if (item.type == ItemType<Nadir>())
+                else if (item.type == ItemType<UelibloomBar>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Nadir");
+                    item.SetNameOverride("Tarragon Bar");
                 }
-                else if (item.type == ItemType<Violence>())
+                else if (item.type == ItemType<CosmiliteBar>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Violence");
+                    item.rare = ItemRarityID.Purple;
                 }
-                #region Desert Scourge
-                else if (item.type == ItemType<DesertScourgeBag>())
+                else if (item.type == ItemType<SoulPiercer>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/Bag");
+                    item.SetNameOverride("Stream Gouge");
                 }
-                else if (item.type == ItemType<DesertMedallion>())
+                else if (item.type == ItemType<StreamGouge>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/DesertMedallion");
-                }
-                /*   //     else if (item.type == ItemType<OceanCrest>())
-                        {
-                  //          TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/OceanCrest");
-                        }
-                       // else if (item.type == ItemType<AquaticDischarge>())
-                        {
-                            //TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
-                        }
-                       // else if (item.type == ItemType<Barinade>())
-                        {
-                         //   TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/Barinade");
-                        }
-                       // else if (item.type == ItemType<StormSpray>())
-                        {
-                            //TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/StormSpray");
-                        }
-                      //  else if (item.type == ItemType<SeaboundStaff>())
-                        {
-                        //    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/SeaboundStaff");
-                        }
-                      //  else if (item.type == ItemType<ScourgeoftheDesert>())
-                        {
-                          //  TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
-                        }*/
-                #endregion
-                #region Crabulon
-                else if (item.type == ItemType<CrabulonBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Bag");
-                }
-                else if (item.type == ItemType<DecapoditaSprout>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/DecapoditaSprout");
-                }
-                else if (item.type == ItemType<FungalClump>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/FungalClump");
-                }
-                else if (item.type == ItemType<MushroomPlasmaRoot>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/FungalClump");
-                }
-                else if (item.type == ItemType<MycelialClaws>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/MycelialClaws");
-                }
-                else if (item.type == ItemType<Fungicide>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Fungicide");
-                }
-                else if (item.type == ItemType<HyphaeRod>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/HyphaeRod");
-                }
-                else if (item.type == ItemType<Mycoroot>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Mycoroot");
-                }
-                else if (item.type == ItemType<InfestedClawmerang>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Shroomerang");
-                }
-                #endregion
-                #region Hive Mind
-                else if (item.type == ItemType<HiveMindBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/Bag");
-                }
-                else if (item.type == ItemType<RottenMatter>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/RottenMatter");
-                }
-                else if (item.type == ItemType<Teratoma>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/Teratoma");
-                }
-                else if (item.type == ItemType<RottenBrain>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/RottenBrain");
-                }
-                else if (item.type == ItemType<FilthyGlove>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/FilthyGlove");
-                }
-                else if (item.type == ItemType<PerfectDark>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/PerfectDark");
-                }
-                else if (item.type == ItemType<Shadethrower>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/Shadethrower");
-                }
-                else if (item.type == ItemType<ShaderainStaff>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/ShaderainStaff");
-                }
-                else if (item.type == ItemType<DankStaff>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/DankStaff");
-                }
-                else if (item.type == ItemType<RotBall>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/RotBall");
-                }
-                #endregion
-                #region Perforators
-                else if (item.type == ItemType<PerforatorBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/Bag");
-                }
-                else if (item.type == ItemType<BloodSample>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodSample");
-                }
-                else if (item.type == ItemType<BloodyWormFood>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodyWormFood");
-                }
-                else if (item.type == ItemType<BloodyWormTooth>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodyWormTooth");
-                }
-                else if (item.type == ItemType<BloodstainedGlove>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodstainedGlove");
-                }
-                else if (item.type == ItemType<Aorta>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/Aorta");
-                }
-                else if (item.type == ItemType<VeinBurster>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/VeinBurster");
-                }
-                else if (item.type == ItemType<SausageMaker>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/SausageMaker");
-                }
-                else if (item.type == ItemType<Eviscerator>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/Eviscerator");
-                }
-                else if (item.type == ItemType<BloodBath>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/BloodBath");
-                }
-                else if (item.type == ItemType<FleshOfInfidelity>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/FleshOfInfidelity");
-                }
-                else if (item.type == ItemType<ToothBall>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/ToothBall");
-                }
-                #endregion
-                #region Slime God
-                else if (item.type == ItemType<SlimeGodBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/Bag");
-                }
-                else if (item.type == ItemType<ManaPolarizer>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/Polarizer");
-                }
-                else if (item.type == ItemType<AbyssalTome>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/AbyssalTome");
-                }
-                else if (item.type == ItemType<EldritchTome>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/EldritchTome");
-                }
-                else if (item.type == ItemType<CrimslimeStaff>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CrimslimeStaff");
-                }
-                else if (item.type == ItemType<CorroslimeStaff>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CorroslimeStaff");
-                }
-                #endregion
-                #region Levi
-                else if (item.type == ItemType<LeviathanBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Bag");
-                }
-                else if (item.type == ItemType<PearlofEnthrallment>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Pearl");
-                }
-                else if (item.type == ItemType<Greentide>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Greentide");
-                }
-                else if (item.type == ItemType<Leviatitan>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Leviatitan");
-                }
-                else if (item.type == ItemType<AnahitasArpeggio>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/AnahitasArpeggio");
-                }
-                else if (item.type == ItemType<Atlantis>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Atlantis");
-                }
-                else if (item.type == ItemType<GastricBelcherStaff>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/GastricBelcherStaff");
-                }
-                else if (item.type == ItemType<BrackishFlask>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/BrackishFlask");
-                }
-                else if (item.type == ItemType<LeviathanAmbergris>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Levi/LeviathanAmbergris");
-                }
-                #endregion
-                #region Astrum Aureus
-                else if (item.type == ItemType<AstrumAureusBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/Bag");
-                }
-                else if (item.type == ItemType<AstralChunk>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AstralChunk");
-                }
-                else if (item.type == ItemType<AureusCell>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AureusCell");
-                }
-                else if (item.type == ItemType<GravistarSabaton>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/GravistarSabaton");
-                }
-                else if (item.type == ItemType<Nebulash>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/Nebulash");
-                }
-                else if (item.type == ItemType<AuroraBlazer>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AuroraBlazer");
-                }
-                else if (item.type == ItemType<AlulaAustralis>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AlulaAustralis");
-                }
-                else if (item.type == ItemType<BorealisBomber>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/BorealisBomber");
-                }
-                else if (item.type == ItemType<AuroradicalThrow>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Plague/AuroradicalThrow");
-                }
-                #endregion
-                #region Astrum Deus
-                else if (item.type == ItemType<AstrumDeusBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/Bag");
-                }
-                else if (item.type == ItemType<HideofAstrumDeus>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/HideofAstrumDeus");
-                }
-                else if (item.type == ItemType<TheMicrowave>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/TheMicrowave");
-                }
-                else if (item.type == ItemType<StarSputter>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/StarSputter");
-                }
-                else if (item.type == ItemType<StarShower>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/StarShower");
-                }
-                else if (item.type == ItemType<StarspawnHelixStaff>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/StarspawnHelixStaff");
-                }
-                else if (item.type == ItemType<RegulusRiot>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/AD/RegulusRiot");
-                }
-                #endregion
-                #region Birb
-                else if (item.type == ItemType<DragonfollyBag>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/Bag");
-                }
-                else if (item.type == ItemType<EffulgentFeather>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/EffulgentFeather");
-                }
-                else if (item.type == ItemType<GildedProboscis>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/GildedProboscis");
-                }
-                else if (item.type == ItemType<GoldenEagle>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/GoldenEagle");
-                }
-                else if (item.type == ItemType<RougeSlash>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/RougeSlash");
-                }
-                else if (item.type == ItemType<DynamoStemCells>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/DynamoStemCells");
-                }
-                else if (item.type == ItemType<RedLightningContainer>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Birb/RedLightningContainer");
-                }
-                #endregion
-                #region Yharon
-                else if (item.type == ItemType<YharonSoulFragment>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/YharonSoulFragment");
-                }
-                else if (item.type == ItemType<DragonRage>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/DragonRage");
-                }
-                else if (item.type == ItemType<DragonsBreath>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/DragonsBreath");
-                }
-                else if (item.type == ItemType<ChickenCannon>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/ChickenCannon");
+                    item.SetNameOverride("Soul Piercer");
                 }
                 else if (item.type == ItemType<PhoenixFlameBarrage>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/DragonFlameBarrage");
+                    item.SetNameOverride("Dragon Flame Barrage");
                 }
-                else if (item.type == ItemType<TheBurningSky>())
+                else if (item.type == ItemType<Fabstaff>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/TheBurningSky");
+                    item.SetNameOverride("Interfacer Staff");
                 }
-                else if (item.type == ItemType<FinalDawn>())
+                else if (item.type == ItemType<Fabsol>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/FinalDawn");
-                }
-                else if (item.type == ItemType<Wrathwing>())
-                {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Yharon/Wrathwing");
+                    item.SetNameOverride("Discordian Sigil");
                 }
                 #endregion
-                #region Exo
-                else if (item.type == ItemType<MiracleMatter>())
+            }
+            public override bool CanUseItem(Item item, Player player)
+            {
+                if (item.type == ItemType<ClockGatlignum>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Matter");
+                    return false;
                 }
-                else if (item.type == ItemType<Exoblade>())
+                return true;
+            }
+            public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+            {
+                if (!CalRemixWorld.renames)
+                    return;
+                Mod mod = Mod;
+                if (item.type == ItemType<PhantomicArtifact>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Blade");
+                    var line = new TooltipLine(mod, "PhantomicSoulArtifact", "Judgement");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<HeavenlyGale>())
+                if (item.type == ItemType<GrandGelatin>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Gale");
+                    var line = new TooltipLine(mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<Photoviscerator>())
+                if (item.type == ItemType<TheAbsorber>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Vis");
+                    var line = new TooltipLine(mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<MagnomalyCannon>())
+                if (item.type == ItemType<TheSponge>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Cannon");
+                    var line = new TooltipLine(mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<SubsumingVortex>())
+                if (item.type == ItemType<AmbrosialAmpoule>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Vortex");
+                    var line = new TooltipLine(mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<VividClarity>())
+                if (item.type == ItemType<AbyssalDivingGear>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Clarity");
+                    var line = new TooltipLine(mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<CosmicImmaterializer>())
+                if (item.type == ItemType<AbyssalDivingSuit>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Im");
+                    var line = new TooltipLine(mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<Celestus>())
+                if (item.type == ItemType<TheAmalgam>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Celestus");
+                    var line = new TooltipLine(mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Purity, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
+                    tooltips.Add(line);
                 }
-                else if (item.type == ItemType<Supernova>())
+                if (item.type == ItemType<DesertMedallion>())
                 {
-                    TextureAssets.Item[item.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Supernova");
+                    var line = new TooltipLine(mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
+                    tooltips.Add(line);
                 }
-                #endregion
-                #endregion
-            }
-            if (!CalRemixWorld.renames)
-                return;
-            #region Text Changes
-            if (item.type == ItemType<PearlShard>())
-            {
-                item.SetNameOverride("Conquest Fragment");
-                item.rare = ItemRarityID.Orange;
-            }
-            else if (item.type == ItemType<InfestedClawmerang>())
-            {
-                item.SetNameOverride("Shroomerang");
-            }
-            else if (item.type == ItemType<PhantomicArtifact>())
-            {
-                item.SetNameOverride("Phantomic Soul Artifact");
-            }
-            else if (item.type == ItemType<UelibloomOre>())
-            {
-                item.SetNameOverride("Tarragon Ore");
-            }
-            else if (item.type == ItemType<UelibloomBar>())
-            {
-                item.SetNameOverride("Tarragon Bar");
-            }
-            else if (item.type == ItemType<CosmiliteBar>())
-            {
-                item.rare = ItemRarityID.Purple;
-            }
-            else if (item.type == ItemType<SoulPiercer>())
-            {
-                item.SetNameOverride("Stream Gouge");
-            }
-            else if (item.type == ItemType<StreamGouge>())
-            {
-                item.SetNameOverride("Soul Piercer");
-            }
-            else if (item.type == ItemType<PhoenixFlameBarrage>())
-            {
-                item.SetNameOverride("Dragon Flame Barrage");
-            }
-            #endregion
-        }
-        public static void RethemeTooltips(Mod mod, Item item, List<TooltipLine> tooltips)
-        {
-            if (!CalRemixWorld.renames)
-                return;
-            if (item.type == ItemType<PearlShard>())
-            {
-                var line = new TooltipLine(mod, "ConquestFragment", "\'Victory is yours!\'");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<PhantomicArtifact>())
-            {
-                var line = new TooltipLine(mod, "PhantomicSoulArtifact", "Judgement");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<GrandGelatin>())
-            {
-                var line = new TooltipLine(mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAbsorber>())
-            {
-                var line = new TooltipLine(mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheSponge>())
-            {
-                var line = new TooltipLine(mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AmbrosialAmpoule>())
-            {
-                var line = new TooltipLine(mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingGear>())
-            {
-                var line = new TooltipLine(mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingSuit>())
-            {
-                var line = new TooltipLine(mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAmalgam>())
-            {
-                var line = new TooltipLine(mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Purity, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<DesertMedallion>())
-            {
-                var line = new TooltipLine(mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
-                tooltips.Add(line);
-            }
-            if (CalRemixWorld.aspids)
-            {
-                if (item.type == ItemType<CryoKey>())
+                if (CalRemixWorld.aspids)
                 {
-                    var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                    if (item.type == ItemType<CryoKey>())
+                    {
+                        var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                        tooltips.Add(line);
+                    }
+                }
+                if (CalRemixWorld.clamitas)
+                {
+                    if (item.type == ItemType<EyeofDesolation>())
+                    {
+                        var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                        tooltips.Add(line);
+                    }
+                }
+                if (CalRemixWorld.plaguetoggle)
+                {
+                    if (item.type == ItemType<Abombination>())
+                    {
+                        tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
+                        tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
+                    }
+                }
+                if (CalRemixWorld.fearmonger)
+                {
+                    if (item.type == ItemType<FearmongerGreathelm>())
+                    {
+                        tooltips.FindAndReplace("+60 max mana and ", "");
+                        tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
+                        for (int i = 0; i < tooltips.Count; i++)
+                        {
+                            if (tooltips[i].Text.Contains("Pumpkin"))
+                            {
+                                tooltips.RemoveAt(i);
+                                break;
+                            }
+                        }
+                        tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                    }
+                    if (item.type == ItemType<FearmongerPlateMail>())
+                    {
+                        tooltips.FindAndReplace("+100 max life and ", "");
+                        for (int i = 0; i < tooltips.Count; i++)
+                        {
+                            if (tooltips[i].Text.Contains("Pumpkin"))
+                            {
+                                tooltips.RemoveAt(i);
+                            }
+                        }
+                        tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                    }
+                    if (item.type == ItemType<FearmongerGreaves>())
+                    {
+                        for (int i = 0; i < tooltips.Count; i++)
+                        {
+                            if (tooltips[i].Text.Contains("Pumpkin"))
+                            {
+                                tooltips.RemoveAt(i);
+                                break;
+                            }
+                        }
+                        tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                    }
+                }
+                if (Torch.Contains(item.type))
+                {
+                    var line = new TooltipLine(mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
+                    line.OverrideColor = Color.OrangeRed;
                     tooltips.Add(line);
                 }
             }
-            if (CalRemixWorld.clamitas)
-            {
-                if (item.type == ItemType<EyeofDesolation>())
-                {
-                    var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                    tooltips.Add(line);
-                }
-            }
-            if (CalRemixWorld.plaguetoggle)
-            {
-                if (item.type == ItemType<Abombination>())
-                {
-                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
-                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
-                }
-            }
-            if (CalRemixWorld.fearmonger)
-            {
-                if (item.type == ItemType<FearmongerGreathelm>())
-                {
-                    tooltips.FindAndReplace("+60 max mana and ", "");
-                    tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
-                    for (int i = 0; i < tooltips.Count; i++)
-                    {
-                        if (tooltips[i].Text.Contains("Pumpkin"))
-                        {
-                            tooltips.RemoveAt(i);
-                            break;
-                        }
-                    }
-                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
-                }
-                if (item.type == ItemType<FearmongerPlateMail>())
-                {
-                    tooltips.FindAndReplace("+100 max life and ", "");
-                    for (int i = 0; i < tooltips.Count; i++)
-                    {
-                        if (tooltips[i].Text.Contains("Pumpkin"))
-                        {
-                            tooltips.RemoveAt(i);
-                        }
-                    }
-                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
-                }
-                if (item.type == ItemType<FearmongerGreaves>())
-                {
-                    for (int i = 0; i < tooltips.Count; i++)
-                    {
-                        if (tooltips[i].Text.Contains("Pumpkin"))
-                        {
-                            tooltips.RemoveAt(i);
-                            break;
-                        }
-                    }
-                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
-                }
-            }
-            if (Torch.Contains(item.type))
-            {
-                var line = new TooltipLine(mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
-                line.OverrideColor = Color.OrangeRed;
-                tooltips.Add(line);
-            }
         }
-        public static void RethemeProjDefaults(Projectile projectile)
+        public class RProj : GlobalProjectile
         {
-            if (CalRemixWorld.resprites)
+            public override bool InstancePerEntity => true;
+            public override void SetStaticDefaults()
             {
-                #region Resprites
-                // if (projectile.type == ProjectileType<AquaticDischargeProj>())
+                if (!CalRemixWorld.resprites)
+                    return;
+                foreach (KeyValuePair<int, string> p in RethemeList.Projs)
                 {
-                    // TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/AquaticDischarge");
+                    TextureAssets.Projectile[p.Key] = Request<Texture2D>("CalRemix/Retheme/" + p.Value);
                 }
-                /* else */
-                if (projectile.type == ProjectileType<ScourgeoftheDesertProj>())
+            }
+            public override void SetDefaults(Projectile projectile)
+            {
+                if (!CalRemixWorld.renames)
+                    return;
+                #region Rename
+                if (projectile.type == ProjectileType<BrimstoneBall>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/DS/ScourgeoftheDesert");
+                    projectile.Name = "Calamity Fireball";
                 }
-                else if (projectile.type == ProjectileType<MycorootProj>())
+                else if (projectile.type == ProjectileType<BrimstoneBarrage>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Mycoroot");
+                    projectile.Name = "Calamity Barrage";
                 }
-                else if (projectile.type == ProjectileType<InfestedClawmerangProj>())
+                else if (projectile.type == ProjectileType<BrimstoneFire>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/Shroomerang");
+                    projectile.Name = "Calamity Fire";
                 }
-                else if (projectile.type == ProjectileType<FungalClumpMinion>())
+                else if (projectile.type == ProjectileType<BrimstoneHellblast>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Crabulon/FungalClumpProj");
+                    projectile.Name = "Calamity Hellblast";
                 }
-                else if (projectile.type == ProjectileType<RotBallProjectile>())
+                else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/HiveMind/RotBall");
+                    projectile.Name = "Calamity Hellblast";
                 }
-                else if (projectile.type == ProjectileType<ToothBallProjectile>())
+                else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Perfs/ToothBall");
+                    projectile.Name = "Calamity Hellfireball";
                 }
-                else if (projectile.type == ProjectileType<UnstableCrimulanGlob>())
+                else if (projectile.type == ProjectileType<BrimstoneMonster>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/CBall");
+                    projectile.Name = "Calamity Monster";
                 }
-                else if (projectile.type == ProjectileType<UnstableEbonianGlob>())
+                else if (projectile.type == ProjectileType<BrimstoneRay>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/EBall");
+                    projectile.Name = "Calamity Ray";
                 }
-                else if (projectile.type == ProjectileType<AbyssBall>())
+                else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/SlimeGod/EBall");
+                    projectile.Name = "Calamity Ray";
                 }
-                else if (projectile.type == ProjectileType<WaterElementalMinion>())
+                else if (projectile.type == ProjectileType<BrimstoneWave>())
                 {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Anahita");
-                }
-                else if (projectile.type == ProjectileType<GastricBelcher>())
-                {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Levi/Gastric");
-                }
-                else if (projectile.type == ProjectileType<NadirSpear>())
-                {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/NadirSpear");
-                }
-                else if (projectile.type == ProjectileType<VoidEssence>())
-                {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/VoidEssence");
-                }
-                else if (projectile.type == ProjectileType<ExobladeProj>())
-                {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Blade");
-                }
-                else if (projectile.type == ProjectileType<CelestusProj>())
-                {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Celestus");
-                }
-                else if (projectile.type == ProjectileType<SupernovaBomb>())
-                {
-                    TextureAssets.Projectile[projectile.type] = Request<Texture2D>("CalRemix/Retheme/Exo/Supernova");
+                    projectile.Name = "Calamity Flame Skull";
                 }
                 #endregion
             }
-            if (!CalRemixWorld.renames)
-                return;
-            #region Rename
-            if (projectile.type == ProjectileType<BrimstoneBall>())
+            public override Color? GetAlpha(Projectile projectile, Color lightColor)
             {
-                projectile.Name = "Calamity Fireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneBarrage>())
-            {
-                projectile.Name = "Calamity Barrage";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneFire>())
-            {
-                projectile.Name = "Calamity Fire";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
-            {
-                projectile.Name = "Calamity Hellfireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneMonster>())
-            {
-                projectile.Name = "Calamity Monster";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneWave>())
-            {
-                projectile.Name = "Calamity Flame Skull";
-            }
-            #endregion
-        }
-        public static Color? RethemeProjAlpha(Projectile projectile)
-        {
-            if (!CalRemixWorld.resprites)
+                if (!CalRemixWorld.resprites)
+                    return null;
+                if ((!Main.dayTime || BossRushEvent.BossRushActive) && (projectile.type == ProjectileType<HolyBlast>() || projectile.type == ProjectileType<HolyBomb>() || projectile.type == ProjectileType<HolyFire>() || projectile.type == ProjectileType<HolyFire2>() || projectile.type == ProjectileType<HolyFlare>() || projectile.type == ProjectileType<MoltenBlob>() || projectile.type == ProjectileType<MoltenBlast>()))
+                    return Color.MediumPurple;
                 return null;
-            if ((!Main.dayTime || BossRushEvent.BossRushActive) && (projectile.type == ProjectileType<HolyBlast>() || projectile.type == ProjectileType<HolyBomb>() || projectile.type == ProjectileType<HolyFire>() || projectile.type == ProjectileType<HolyFire2>() || projectile.type == ProjectileType<HolyFlare>() || projectile.type == ProjectileType<MoltenBlob>() || projectile.type == ProjectileType<MoltenBlast>()))
-                return Color.MediumPurple;
-            return null;
+            }
         }
     }
     public class RethemeIL : ModSystem
@@ -1188,7 +491,7 @@ namespace CalRemix.Retheme
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.SetBestiary += BirbBest;
             IL.CalamityMod.NPCs.Yharon.Yharon.PreDraw += Yharon;
             IL.CalamityMod.NPCs.Other.THELORDE.PreDraw += LORDE;
-           // MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|46_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
+            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|48_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
             //MonoModHooks.Modify(typeof(ModLoader).Assembly.GetType("CalamityMod.WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Static), BossChecklist);
 
             // IL.CalamityMod.Items.Weapons.PreDraw += ;
@@ -1199,7 +502,7 @@ namespace CalRemix.Retheme
             // IL.CalamityMod.Projectiles.PreDraw += ;
             IL.CalamityMod.Projectiles.Rogue.InfestedClawmerangProj.PreDraw += InfestedClawmerangProj;
             IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI += EldritchTentacle;
-            IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw += MurasamaSlash;
+            //IL.CalamityMod.Projectiles.Melee.MurasamaSlash.PreDraw += MurasamaSlash;
             IL.CalamityMod.Projectiles.Melee.ExobladeProj.DrawBlade += ExobladeProj;
             IL.CalamityMod.Projectiles.Ranged.HeavenlyGaleProj.PreDraw += HeavenlyGaleProj;
             IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw += CelestusProj;
@@ -1498,7 +801,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !Main.zenithWorld ? "CalRemix/Retheme/Providence/" : "CalamityMod/NPCs/Providence/");
+                c.EmitDelegate(() => !Main.zenithWorld && CalRemixWorld.resprites ? "CalRemix/Retheme/Providence/" : "CalamityMod/NPCs/Providence/");
             }
             if (c.TryGotoNext(i => i.MatchCall<Color>("get_Cyan")))
             {

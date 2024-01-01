@@ -1,6 +1,6 @@
 using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

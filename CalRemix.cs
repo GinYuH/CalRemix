@@ -3,7 +3,9 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.UI.CalamitasEnchants;
 using CalRemix.CrossCompatibility.OutboundCompatibility;
 using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using CalRemix.NPCs.Bosses;
+using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Items.Accessories;
 using System;
 using System.IO;
@@ -23,6 +25,7 @@ using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Items.Materials;
+using CalRemix.Retheme;
 
 namespace CalRemix
 {
@@ -126,6 +129,13 @@ namespace CalRemix
                 player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
             }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
 			*/
+            if (Main.netMode != NetmodeID.Server)
+            {
+                Main.QueueMainThreadAction(() =>
+                {
+                    cal.Call("LoadParticleInstances", instance);
+                });
+            }
         }
 
         public override void Load()

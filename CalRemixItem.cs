@@ -25,13 +25,12 @@ using CalamityMod.Items.SummonItems;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using CalRemix.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items;
 using CalRemix.Projectiles.Accessories;
-using CalRemix.Retheme;
 using Terraria.Audio;
 using CalamityMod.Items.Armor.Fearmonger;
 using CalRemix.Tiles;
@@ -49,9 +48,54 @@ namespace CalRemix
         public override bool InstancePerEntity => true;
         public bool Scoriad = false;
         public int NonScoria = -1;
+        public List<int> BossBags = new()
+        {
+            ItemID.KingSlimeBossBag,
+            ItemID.EyeOfCthulhuBossBag,
+            ItemID.EaterOfWorldsBossBag,
+            ItemID.BrainOfCthulhuBossBag,
+            ItemID.QueenBeeBossBag,
+            ItemID.DeerclopsBossBag,
+            ItemID.SkeletronBossBag,
+            ItemID.WallOfFleshBossBag,
+            ItemID.QueenSlimeBossBag,
+            ItemID.DestroyerBossBag,
+            ItemID.TwinsBossBag,
+            ItemID.SkeletronPrimeBossBag,
+            ItemID.PlanteraBossBag,
+            ItemID.GolemBossBag,
+            ItemID.FishronBossBag,
+            ItemID.FairyQueenBossBag,
+            ItemID.CultistBossBag,
+            ItemID.MoonLordBossBag,
+            ModContent.ItemType<DesertScourgeBag>(),
+            ModContent.ItemType<CrabulonBag>(),
+            ModContent.ItemType<HiveMindBag>(),
+            ModContent.ItemType<PerforatorBag>(),
+            ModContent.ItemType<SlimeGodBag>(),
+            ModContent.ItemType<CryogenBag>(),
+            ModContent.ItemType<AquaticScourgeBag>(),
+            ModContent.ItemType<BrimstoneWaifuBag>(),
+            ModContent.ItemType<CalamitasCloneBag>(),
+            ModContent.ItemType<LeviathanBag>(),
+            ModContent.ItemType<AstrumAureusBag>(),
+            ModContent.ItemType<PlaguebringerGoliathBag>(),
+            ModContent.ItemType<RavagerBag>(),
+            ModContent.ItemType<AstrumDeusBag>(),
+            ModContent.ItemType<DragonfollyBag>(),
+            ModContent.ItemType<ProvidenceBag>(),
+            ModContent.ItemType<CeaselessVoidBag>(),
+            ModContent.ItemType<StormWeaverBag>(),
+            ModContent.ItemType<SignusBag>(),
+            ModContent.ItemType<PolterghastBag>(),
+            ModContent.ItemType<OldDukeBag>(),
+            ModContent.ItemType<DevourerofGodsBag>(),
+            ModContent.ItemType<YharonBag>(),
+            ModContent.ItemType<CalamitasCoffer>(),
+            ModContent.ItemType<DraedonBag>(),
+        };
         public override void SetDefaults(Item item)
         {
-            RethemeMaster.RethemeItemDefaults(item);
             if (item.type == ModContent.ItemType<GildedProboscis>())
             {
                 item.damage = item.damage / 9;
@@ -109,12 +153,6 @@ namespace CalRemix
                 }
             }
         }
-
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            RethemeMaster.RethemeTooltips(Mod, item, tooltips);
-        }
-
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (CalRemixWorld.cosmislag)
@@ -128,7 +166,6 @@ namespace CalRemix
                 }
             }
         }
-
         public override void HoldItem(Item item, Player player)
         {
             if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
@@ -157,9 +194,18 @@ namespace CalRemix
             }
             return true;
         }
-
+        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().clockBar)
+                return Main.rand.NextFloat() >= 0.66f;
+            return true;
+        }
         public override void UpdateInventory(Item item, Player player)
         {
+            if (item.type == ModContent.ItemType<ClockGatlignum>())
+            {
+                player.GetModPlayer<CalRemixPlayer>().clockBar = true;
+            }
             if (CalRemixWorld.permanenthealth)
             {
                 if (item.type == ModContent.ItemType<Elderberry>() && item.stack > 1)
@@ -196,8 +242,6 @@ namespace CalRemix
                 }
             }
         }
-
-
         public static List<int> cosmicItems = new List<int>();
         public static void TransformItem(ref Item item, int transformType)
         {
@@ -242,8 +286,6 @@ namespace CalRemix
                 }
             }
         }
-
-
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
@@ -330,7 +372,6 @@ namespace CalRemix
             }
             return true;
         }
-
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
             if (CalRemixWorld.permanenthealth)
@@ -458,6 +499,11 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<StarterBag>())
             {
                 itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<Anomaly109>());
+                itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<TheInsacredTexts>());
+            }
+            if (BossBags.Contains(item.type))
+            {
+                itemLoot.Add(ModContent.ItemType<ConquestFragment>(), 1, 1, 1);
             }
         }
 

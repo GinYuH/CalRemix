@@ -11,6 +11,7 @@ using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.NPCs.AcidRain;
 using CalRemix.NPCs;
+using CalRemix.NPCs.Minibosses;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.Particles;
 using Terraria.Audio;

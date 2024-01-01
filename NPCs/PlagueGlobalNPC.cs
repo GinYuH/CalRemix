@@ -27,7 +27,10 @@ namespace CalRemix.NPCs
                 pool.Add(ModContent.NPCType<PlagueChargerLarge>(), 0.075f);
                 if (!Main.dayTime)
                     pool.Add(ModContent.NPCType<PlaguedFirefly>(), 0.35f);
-                pool.Add(ModLoader.GetMod("CalValEX").Find<ModNPC>("PlagueFrog").Type, 0.045f);
+                if (ModLoader.HasMod("CalValEX"))
+                {
+                    pool.Add(ModLoader.GetMod("CalValEX").Find<ModNPC>("PlagueFrog").Type, 0.045f);
+                }
             }
             if (player.ZoneJungle && !pPlayer.ZonePlague)
             {
