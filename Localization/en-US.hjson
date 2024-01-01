@@ -1655,6 +1655,7 @@ Mods: {
 
 			Acideye.DisplayName: Acidsighter
 			MutatedEye.DisplayName: Mutated Eye
+			KingMinnowsPrime.DisplayName: King Minnows Prime
 		}
 
 		Projectiles: {
@@ -1797,6 +1798,9 @@ Mods: {
 			RedDust.DisplayName: Dust
 			CarolBell.DisplayName: Carol Bell
 			CarolWave.DisplayName: Carol Wave
+			MinnowsSmallShockwave.DisplayName: Minnows Small Shockwave
+			MinnowsLargeShockwave.DisplayName: Minnows Large Shockwave
+			MinnowsDeathAnimation.DisplayName: Minnows Death Animation
 		}
 
 		Tiles: {

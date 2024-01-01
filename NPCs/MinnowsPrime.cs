@@ -11,6 +11,7 @@ using CalamityMod;
 using CalRemix.Items;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Items.Materials;
+using CalRemix.NPCs.Minibosses;
 
 namespace CalRemix.NPCs
 {
@@ -211,14 +212,16 @@ namespace CalRemix.NPCs
             }
             return 0f;
         }
-
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        public override void OnKill()
         {
-          if (Main.rand.NextBool(0, 20))
+            if (Main.rand.NextBool(0, 20))
             {
-                int spawned = NPC.NewNPC(source: null, (int)npc.Center.X, (int)npc.Center.Y, (int)ModContent.NPCType<KingMinnowsPrime>());
+                int spawned = NPC.NewNPC(source: null, (int)NPC.Center.X, (int)NPC.Center.Y, (int)ModContent.NPCType<KingMinnowsPrime>());
                 NPC spawnedNPC = Main.npc[spawned];
             }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
             npcLoot.Add(new CommonDrop(ItemID.Ectoplasm, 1, 36, 57));
             npcLoot.Add(new CommonDrop(ModContent.ItemType<Polterplasm>(), 1, 7, 15));
         }
