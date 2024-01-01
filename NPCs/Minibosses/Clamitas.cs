@@ -54,6 +54,11 @@ namespace CalRemix.NPCs.Minibosses
             NPCID.Sets.NPCBestiaryDrawModifiers value = nPCBestiaryDrawModifiers;
             value.Frame = 1;
         }
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedClamitas = true;
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;

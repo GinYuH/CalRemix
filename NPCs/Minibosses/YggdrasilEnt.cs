@@ -33,6 +33,11 @@ namespace CalRemix.NPCs.Minibosses
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<HolyFlames>()] = true;
         }
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedYggdrasilEnt = true;
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;

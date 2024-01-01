@@ -54,14 +54,24 @@ namespace CalRemix
 {
     public class CalRemixWorld : ModSystem
     {
+        public static bool downedEarth = false;
+        public static bool downedExcavator = false;
+        public static bool downedDerellect = false;
+
+        public static bool downedLifeSlime = false;
+        public static bool downedClamitas = false;
+        public static bool downedCyberDraedon = false;
+        public static bool downedOnyxKinsman = false;
+        public static bool downedYggdrasilEnt = false;
+        public static bool downedPlagueEmperor = false;
+        public static bool downedLaRuga = false;
+        public static bool downedKingMinnowsPrime = false;
+
         public static int lifeTiles;
         public static int PlagueTiles;
         public static int PlagueDesertTiles;
         public static int MeldTiles;
         public static int ShrineTimer = -20;
-        public static bool downedDerellect = false;
-        public static bool downedExcavator = false;
-        public static bool downedEarth = false;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -128,6 +138,16 @@ namespace CalRemix
             downedDerellect = false;
             downedExcavator = false;
             downedEarth = false;
+
+            downedLifeSlime = false;
+            downedClamitas = false;
+            downedCyberDraedon = false;
+            downedOnyxKinsman = false;
+            downedYggdrasilEnt = false;
+            downedPlagueEmperor = false;
+            downedLaRuga = false;
+            downedKingMinnowsPrime = false;
+
             guideHasExisted = false;
             deusDeadInSnow = false;
             generatedCosmiliteSlag = false;
@@ -174,6 +194,16 @@ namespace CalRemix
             downedDerellect = false;
             downedExcavator = false;
             downedEarth = false;
+
+            downedLifeSlime = false;
+            downedClamitas = false;
+            downedCyberDraedon = false;
+            downedOnyxKinsman = false;
+            downedYggdrasilEnt = false;
+            downedPlagueEmperor = false;
+            downedLaRuga = false;
+            downedKingMinnowsPrime = false;
+
             guideHasExisted = false;
             deusDeadInSnow = false;
             generatedCosmiliteSlag = false;
@@ -223,6 +253,16 @@ namespace CalRemix
             tag["downedDerellect"] = downedDerellect;
             tag["downedExcavator"] = downedExcavator;
             tag["downedEarth"] = downedEarth;
+
+            tag["downedLifeSlime"] = downedLifeSlime;
+            tag["downedClamitas"] = downedClamitas;
+            tag["downedCyberDraedon"] = downedCyberDraedon;
+            tag["downedOnyxKinsman"] = downedOnyxKinsman;
+            tag["downedYggdrasilEnt"] = downedYggdrasilEnt;
+            tag["downedPlagueEmperor"] = downedPlagueEmperor;
+            tag["downedLaRuga"] = downedLaRuga;
+            tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
+
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
             tag["genSlag"] = generatedCosmiliteSlag;
@@ -270,6 +310,19 @@ namespace CalRemix
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
             downedEarth = tag.Get<bool>("downedEarth");
+
+
+
+            downedLifeSlime = tag.Get<bool>("downedLifeSlime");
+            downedClamitas = tag.Get<bool>("downedClamitas");
+            downedCyberDraedon = tag.Get<bool>("downedCyberDraedon");
+            downedOnyxKinsman = tag.Get<bool>("downedOnyxKinsman");
+            downedYggdrasilEnt = tag.Get<bool>("downedYggdrasilEnt");
+            downedPlagueEmperor = tag.Get<bool>("downedPlagueEmperor");
+            downedLaRuga = tag.Get<bool>("downedLaRuga");
+            downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
+
+
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
             generatedCosmiliteSlag = tag.Get<bool>("genSlag");
@@ -365,6 +418,16 @@ namespace CalRemix
             downedDerellect = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
             downedEarth = reader.ReadBoolean();
+
+            downedLifeSlime = reader.ReadBoolean();
+            downedClamitas = reader.ReadBoolean();
+            downedCyberDraedon = reader.ReadBoolean();
+            downedOnyxKinsman = reader.ReadBoolean();
+            downedYggdrasilEnt = reader.ReadBoolean();
+            downedPlagueEmperor = reader.ReadBoolean();
+            downedLaRuga = reader.ReadBoolean();
+            downedKingMinnowsPrime = reader.ReadBoolean();
+
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
             generatedCosmiliteSlag = reader.ReadBoolean();

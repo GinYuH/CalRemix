@@ -31,6 +31,11 @@ namespace CalRemix.NPCs.Minibosses
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Plague>()] = true;
         }
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedPlagueEmperor = true;
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;

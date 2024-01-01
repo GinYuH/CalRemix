@@ -1566,12 +1566,87 @@ Mods: {
 
 				BossChecklistIntegration: {
 					EntryName: Wulfrum Excavator
-					SpawnInfo: Put an Energy Core in an empty Living Wood Chest and close it.
+					SpawnInfo: Put an [i:CalamityMod/EnergyCore] in an empty [i:831] and close it.
 					DespawnMessage: "[c/99ffc7:The old excavator has successfully harvested every player.]"
 				}
 			}
 
-			LifeSlime.DisplayName: Life Slime
+			LifeSlime: {
+				DisplayName: Life Slime
+
+				BossChecklistIntegration: {
+					EntryName: Life Slime
+					SpawnInfo: Spawns near large clusters of Life Ore.
+				}
+			}
+
+			CyberDraedon: {
+				DisplayName: Cyber Draedon
+
+				BossChecklistIntegration: {
+					EntryName: Cyber Draedon
+					SpawnInfo: Insert a [i:CalamityMod/BloodyVein] into a [i:CalamityMod/LabHologramProjectorItem].
+				}
+			}
+
+			Clamitas: {
+				DisplayName: Clamitas
+
+				BossChecklistIntegration: {
+					EntryName: Clamitas
+					SpawnInfo: Rarely spawns in the Brimstone Crag
+					DespawnMessage: "[c/99ffc7:The charred mollusk poofs away in a plume of smoke.]"
+				}
+			}
+
+			PlagueEmperor: {
+				DisplayName: Plague Emperor
+
+				BossChecklistIntegration: {
+					EntryName: Plague Emperor
+					SpawnInfo: Rarely spawns in the Plagued Jungle
+				}
+			}
+
+			YggdrasilEnt: {
+				DisplayName: Yggdrasil Ent
+
+				BossChecklistIntegration: {
+					EntryName: Yggdrasil Ent
+					SpawnInfo: Rarely spawns in the Hallow and the Underworld
+					DespawnMessage: "[c/99ffc7:The ent faded away.]"
+				}
+			}
+
+			KingMinnowsPrime: {
+				DisplayName: King Minnows Prime
+
+				BossChecklistIntegration: {
+					EntryName: King Minnows Prime
+					SpawnInfo: Rarely spawns after killing a Minnows Prime in the Dungeon
+					DespawnMessage: "[c/99ffc7:The fish deemed everyone useless.]"
+				}
+			}
+
+			LaRuga: {
+				DisplayName: La Ruga
+
+				BossChecklistIntegration: {
+					EntryName: La Ruga
+					SpawnInfo: Rarely spawns in the 4th layer of the Abyss
+				}
+			}
+
+			OnyxKinsman: {
+				DisplayName: Onyx Kinsman
+
+				BossChecklistIntegration: {
+					EntryName: Onyx Kinsman
+					SpawnInfo: Interacting with a placed [i:CalamityMod/OnyxExcavatorKey] drill after the Earth Elemental is defeated and the player is holding [i:CalamityMod/EyeoftheStorm], [i:CalamityMod/WifeinaBottle], [i:CalamityMod/WifeinaBottlewithBoobs], [i:CalamityMod/RoseStone], [i:CalamityMod/PearlofEnthrallment], or [i:CalamityMod/InfectedRemote]
+					DespawnMessage: "[c/99ffc7:The Onyx Kinsman returned to the lab.]"
+				}
+			}
+
 			Rosalina.DisplayName: Starborn Princess
 
 			YEENA: {
@@ -1597,9 +1672,6 @@ Mods: {
 				}
 			}
 
-			OnyxKinsman.DisplayName: Onyx Kinsman
-			CyberDraedon.DisplayName: Cyber Draedon
-			Clamitas.DisplayName: Clamitas
 			PrimalAspid.DisplayName: Primal Aspid
 			OgsculianBurrower.DisplayName: Ogsculian Burrower
 			GreenDemon.DisplayName: Green Demon
@@ -1607,7 +1679,6 @@ Mods: {
 			PlaguedFirefly.DisplayName: Plagued Firefly
 			Miasmius.DisplayName: Miasmius
 			PlaguedSpidrone.DisplayName: Plagued Spidrone
-			LaRuga.DisplayName: La Ruga
 			Barocrab.DisplayName: Barocrab
 			MinnowsPrime.DisplayName: Minnows Prime
 			BananaClown.DisplayName: Banana Clown
@@ -1633,9 +1704,7 @@ Mods: {
 			}
 
 			Tenryu.DisplayName: King of Constellations, Tenryu
-			PlagueEmperor.DisplayName: Plague Emperor
 			EvilPlagueBee.DisplayName: Plague Bee
-			YggdrasilEnt.DisplayName: Yggdrasil Ent
 
 			FBIGUY: {
 				TownNPCMood: {
@@ -1655,7 +1724,6 @@ Mods: {
 
 			Acideye.DisplayName: Acidsighter
 			MutatedEye.DisplayName: Mutated Eye
-			KingMinnowsPrime.DisplayName: King Minnows Prime
 		}
 
 		Projectiles: {

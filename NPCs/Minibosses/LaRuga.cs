@@ -35,6 +35,11 @@ namespace CalRemix.NPCs.Minibosses
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
         }
 
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedLaRuga = true;
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;

@@ -42,6 +42,11 @@ namespace CalRemix.NPCs.Minibosses
                 "Awooga",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedOnyxKinsman = true;
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;

@@ -40,6 +40,7 @@ using CalamityMod.Items.Weapons.Ranged;
 using System;
 using CalamityMod.Items.Weapons.DraedonsArsenal;
 using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.NPCs.NormalNPCs;
 
 namespace CalRemix.Retheme
 {
@@ -113,6 +114,10 @@ namespace CalRemix.Retheme
                 if (npc.type == NPCType<BrimstoneElemental>())
                 {
                     typeName = "Calamity Elemental";
+                }
+                else if (npc.type == NPCType<ThiccWaifu>())
+                {
+                    typeName = "Aether Valkyrie";
                 }
                 else if (npc.type == NPCType<AstrumAureus>())
                 {

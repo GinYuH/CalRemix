@@ -42,11 +42,15 @@ namespace CalRemix.NPCs.Minibosses
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
-            calamityMod.Call(("DeclareMiniboss"), Mod.Find<ModNPC>("KingMinnowsPrime").Type);
 
 
 
 
+        }
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedKingMinnowsPrime = true;
+            return false;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

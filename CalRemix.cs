@@ -26,6 +26,8 @@ using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Items.Materials;
 using CalRemix.Retheme;
+using CalRemix.Items.Placeables;
+using CalamityMod.Items.Pets;
 
 namespace CalRemix
 {
@@ -58,6 +60,7 @@ namespace CalRemix
             cal.Call("DeclareMiniboss", ModContent.NPCType<CyberDraedon>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<PlagueEmperor>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<YggdrasilEnt>());
+            cal.Call("DeclareMiniboss", ModContent.NPCType<KingMinnowsPrime>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
             /*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
@@ -86,22 +89,41 @@ namespace CalRemix
 				});
 				}
 			}*/
+            ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist);
+            if (bossChecklist != null)
             {
-                Mod bossChecklist;
-                ModLoader.TryGetMod("BossChecklist", out bossChecklist);
-                if (bossChecklist != null)
+                Action<SpriteBatch, Rectangle, Color> portrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                    Texture2D texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Wulfwyrm/WulfwyrmBossChecklist").Value;
+                    Vector2 centered = new Vector2(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                    sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
+                };
+                bossChecklist.Call("LogBoss", this, "WulfrumExcavator", 0.22f, () => CalRemixWorld.downedExcavator, ModContent.NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
                 {
-                    Action<SpriteBatch, Rectangle, Color> portrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                        Texture2D texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/WulfwyrmBossChecklist").Value;
-                        Vector2 centered = new Vector2(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
-                        sb.Draw(texture, centered + new Vector2(420, 300), null, color, 0, centered, 0.8f, SpriteEffects.None, 1);
-                    };
-                    bossChecklist.Call("LogBoss", this, "WulfrumExcavator", 0.22f, () => CalRemixWorld.downedExcavator, ModContent.NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
-                    {
-                        ["spawnItems"] = ModContent.ItemType<EnergyCore>(),
-                        ["customPortrait"] = portrait
-                    });
-                }
+                    ["spawnItems"] = ModContent.ItemType<EnergyCore>(),
+                    ["customPortrait"] = portrait
+                });
+                bossChecklist.Call("LogMiniBoss", this, "Clamitas", 6.8f, () => CalRemixWorld.downedClamitas, ModContent.NPCType<Clamitas>(), new Dictionary<string, object>());
+                Action<SpriteBatch, Rectangle, Color> cdPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                    Texture2D texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/CyberDraedon").Value;
+                    Vector2 centered = new Vector2(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                    sb.Draw(texture, centered, null, new Color(0, 255, 255, 125), 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
+                };
+                bossChecklist.Call("LogMiniBoss", this, "CyberDraedon", 3.99999f, () => CalRemixWorld.downedCyberDraedon, ModContent.NPCType<CyberDraedon>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<BloodyVein>(),
+                    ["customPortrait"] = cdPortrait
+                });
+                bossChecklist.Call("LogMiniBoss", this, "KingMinnowsPrime", 18.1f, () => CalRemixWorld.downedKingMinnowsPrime, ModContent.NPCType<KingMinnowsPrime>(), new Dictionary<string, object>());
+                bossChecklist.Call("LogMiniBoss", this, "LaRuga", 20.2f, () => CalRemixWorld.downedLaRuga, ModContent.NPCType<LaRuga>(), new Dictionary<string, object>());
+                bossChecklist.Call("LogMiniBoss", this, "LifeSlime", 16.7f, () => CalRemixWorld.downedLifeSlime, ModContent.NPCType<LifeSlime>(), new Dictionary<string, object>());
+                bossChecklist.Call("LogMiniBoss", this, "OnyxKinsman", 7.5f, () => CalRemixWorld.downedOnyxKinsman, ModContent.NPCType<OnyxKinsman>(), new Dictionary<string, object>());
+                bossChecklist.Call("LogMiniBoss", this, "PlagueEmperor", 21.5f, () => CalRemixWorld.downedPlagueEmperor, ModContent.NPCType<PlagueEmperor>(), new Dictionary<string, object>());
+                bossChecklist.Call("LogMiniBoss", this, "YggdrasilEnt", 18.2f, () => CalRemixWorld.downedYggdrasilEnt, ModContent.NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
+            }
+            ModLoader.TryGetMod("Wikithis", out Mod wikithis);
+            if (wikithis != null && !Main.dedServ)
+            {
+                wikithis.Call("AddModURL", this, "https://terrariamods.wiki.gg/wiki/Calamity_Community_Remix/{}");
             }
             LocalizedText fallacious = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Name");
             LocalizedText fallaciousDesc = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Description");

@@ -37,7 +37,12 @@ namespace CalRemix.NPCs.Minibosses
                 "Nuhuh",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)).AddItemDisplay(ModContent.ItemType<LifeAlloy>()));
         }
-		public override void SetDefaults()
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedLifeSlime = true;
+            return false;
+        }
+        public override void SetDefaults()
 		{ 
 			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.width = 48;

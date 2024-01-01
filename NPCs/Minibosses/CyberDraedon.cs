@@ -42,6 +42,11 @@ namespace CalRemix.NPCs.Minibosses
                 "Nuhuh",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
+        public override bool SpecialOnKill()
+        {
+            CalRemixWorld.downedCyberDraedon = true;
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
