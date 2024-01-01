@@ -130,7 +130,7 @@ namespace CalRemix.NPCs.Minibosses
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().ZonePlague && !NPC.AnyNPCs(Type))
-                return 0.01f;
+                return 0.05f;
             return 0f;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

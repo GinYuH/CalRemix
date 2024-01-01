@@ -336,9 +336,7 @@ namespace CalRemix.NPCs.Minibosses
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.Calamity().ZoneCalamity && !NPC.AnyNPCs(ModContent.NPCType<Clamitas>()) && CalRemixWorld.clamitas)
-            {
-                return 0.01f;
-            }
+                return 0.05f;
             return 0f;
         }
         public override void FindFrame(int frameHeight)

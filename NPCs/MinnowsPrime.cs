@@ -214,7 +214,7 @@ namespace CalRemix.NPCs
         }
         public override void OnKill()
         {
-            if (Main.rand.NextBool(0, 20))
+            if (Main.rand.NextBool(10))
             {
                 int spawned = NPC.NewNPC(source: null, (int)NPC.Center.X, (int)NPC.Center.Y, (int)ModContent.NPCType<KingMinnowsPrime>());
                 NPC spawnedNPC = Main.npc[spawned];

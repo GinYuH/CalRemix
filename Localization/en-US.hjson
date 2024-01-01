@@ -1633,7 +1633,7 @@ Mods: {
 
 				BossChecklistIntegration: {
 					EntryName: La Ruga
-					SpawnInfo: Rarely spawns in the 4th layer of the Abyss
+					SpawnInfo: Very rarely spawns in the 4th layer of the Abyss
 				}
 			}
 
