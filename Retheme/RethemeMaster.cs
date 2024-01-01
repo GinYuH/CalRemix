@@ -491,7 +491,7 @@ namespace CalRemix.Retheme
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.SetBestiary += BirbBest;
             IL.CalamityMod.NPCs.Yharon.Yharon.PreDraw += Yharon;
             IL.CalamityMod.NPCs.Other.THELORDE.PreDraw += LORDE;
-           // MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|46_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
+            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|48_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
             //MonoModHooks.Modify(typeof(ModLoader).Assembly.GetType("CalamityMod.WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Static), BossChecklist);
 
             // IL.CalamityMod.Items.Weapons.PreDraw += ;
@@ -801,7 +801,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !Main.zenithWorld ? "CalRemix/Retheme/Providence/" : "CalamityMod/NPCs/Providence/");
+                c.EmitDelegate(() => !Main.zenithWorld && CalRemixWorld.resprites ? "CalRemix/Retheme/Providence/" : "CalamityMod/NPCs/Providence/");
             }
             if (c.TryGotoNext(i => i.MatchCall<Color>("get_Cyan")))
             {

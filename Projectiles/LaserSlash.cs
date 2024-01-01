@@ -1,6 +1,4 @@
-using CalamityMod.Systems;
 using CalamityMod.World;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,7 +6,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles
@@ -21,10 +18,10 @@ namespace CalRemix.Projectiles
         {
             Main.projFrames[Type] = 7;
         }
-		public override void SetDefaults() 
+		public override void SetDefaults()
         {
-            Projectile.width = 262;
-			Projectile.height = 262;
+            Projectile.width = 216;
+            Projectile.height = 216;
             Projectile.aiStyle = -1;
 			Projectile.friendly = false;
 			Projectile.hostile = true;
@@ -67,21 +64,13 @@ namespace CalRemix.Projectiles
                 Projectile.frame++;
                 Projectile.frameCounter = 0;
             }
-            if (Projectile.frame >= 7 && frameX <= 0)
-            {
+            if (Projectile.frame >= 5)
                 Projectile.frame = 0;
-                frameX = 1;
-            }
-            else if (Projectile.frame >= 7 && frameX >= 1)
-            {
-                Projectile.frame = 0;
-                frameX = 0;
-            }
         }
         public override bool PreDraw(ref Color lightColor) 
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Rectangle rect = texture.Frame(2, 7, frameX, Projectile.frame);
+            Rectangle rect = texture.Frame(1, 14, frameX, Projectile.frame);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Color.White, Projectile.rotation, rect.Size() / 2f, Projectile.scale, (Projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
             return false;
 		}

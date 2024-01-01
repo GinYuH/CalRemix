@@ -1,5 +1,5 @@
 displayName = Calamity: Community Remix
-author = YuH, MrGoodLuck, Sploopo, The Purified, and the Cult of Hypnos
+author = YuH, Gardlunik, Sploopo, The Purified, and the Cult of Hypnos
 version = 1.2.2.13
 dllReferences = MMHOOK_CalamityMod
 modReferences = CalamityMod

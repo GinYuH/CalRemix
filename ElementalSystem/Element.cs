@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static CalRemix.Retheme.RethemeMaster;
 
 namespace CalRemix.ElementalSystem
@@ -30,25 +31,31 @@ namespace CalRemix.ElementalSystem
         Unholy,
         Water
     }
-    /*
     public class ElementLists : ModSystem
     {
-        List<Dictionary<int, Element[]>> EList = new();
-        public override void Load()
+        public static List<Dictionary<int, Element[]>> ItemList = new();
+        public static List<Dictionary<int, Tuple<Element[], Element[]>>> NPCList = new();
+        public override void PostSetupContent()
         {
+            //ItemList.Add(VanillaElements.Item);
+            ItemList.Add(CalamityElements.Item);
+            ItemList.Add(RemixElements.Item);
+            NPCList.Add(VanillaElements.Bosses);
+            NPCList.Add(CalamityElements.Bosses);
+            NPCList.Add(RemixElements.Bosses);
         }
+
     }
-    */
     public class ElementItem : GlobalItem
     {
         public Element[] element;
         public override bool InstancePerEntity => true;
         public override void SetDefaults(Item item)
         {
-            foreach (KeyValuePair<int, Element[]> p in CalamityElements.Item)
+            foreach (Dictionary<int, Element[]> d in ElementLists.ItemList)
             {
-                if (item.type == p.Key)
-                    element = p.Value;
+                if (d.TryGetValue(item.type, out Element[] p))
+                    element = p;
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -167,14 +174,14 @@ namespace CalRemix.ElementalSystem
         public Element[] weak, resist;
         public override void SetDefaults(NPC npc)
         {
-            foreach (KeyValuePair<int, Tuple<Element[], Element[]>> p in CalamityElements.Bosses)
+            foreach (Dictionary<int, Tuple<Element[], Element[]>> d in ElementLists.NPCList)
             {
-                if (npc.type == p.Key)
+                if (d.TryGetValue(npc.type, out Tuple<Element[], Element[]> p))
                 {
-                    if (p.Value.Item1 != null)
-                        weak = p.Value.Item1;
-                    if (p.Value.Item2 != null)
-                        resist = p.Value.Item2;
+                    if (p.Item1 != null)
+                        weak = p.Item1;
+                    if (p.Item2 != null)
+                        resist = p.Item2;
                 }
             }
         }
@@ -201,8 +208,6 @@ namespace CalRemix.ElementalSystem
                     }
                 }
                 modifiers.FinalDamage *= multiplier;
-                if (multiplier < 0.99f)
-                    CombatText.NewText(npc.getRect(), Color.LightGray, "Resisted", false);
             }
         }
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -228,8 +233,6 @@ namespace CalRemix.ElementalSystem
                     }
                 }
                 modifiers.FinalDamage *= multiplier;
-                if (multiplier < 0.99f)
-                    CombatText.NewText(npc.getRect(), Color.LightGray, "Resisted", true);
             }
         }
     }

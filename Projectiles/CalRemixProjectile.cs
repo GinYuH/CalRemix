@@ -95,17 +95,13 @@ namespace CalRemix
                 projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
                 projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
             }
-            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly)
+            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0 || projectile.penetrate > 10 || projectile.maxPenetrate > 10 || projectile.timeLeft > 120)
                 return;
             if (modPlayer.pearl)
-            {
                 CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 1);
-            }
             eye++;
             if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
-            {
                 Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, projectile.velocity * 0.75f, ProjectileType<HomingAstralFireball>(), 10, 0, projectile.owner);
-            }
         }
 
         public static void PlagueToPureConvert(int i, int j, int size = 4)
