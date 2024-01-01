@@ -1530,7 +1530,11 @@ Mods: {
 
 			ConquestFragment: {
 				DisplayName: Conquest Fragment
-				Tooltip: Victory is yours!
+				Tooltip:
+					'''
+					Obtained from killing a boss or enemy many times
+					'Victory is yours!'
+					'''
 			}
 
 			TheInsacredTexts: {

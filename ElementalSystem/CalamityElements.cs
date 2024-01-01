@@ -597,6 +597,7 @@ namespace CalRemix.ElementalSystem
             { ItemType<WulfrumController>(), new Element[]{ Element.Machine }},
             #endregion
             #region Hardmode
+            { ItemType<AbandonedSlimeStaff>(), new Element[]{ Element.Impact, Element.Magic }},
             { ItemType<AncientIceChunk>(), new Element[]{ Element.Impact, Element.Cold }},
             { ItemType<BlackHawkRemote>(), new Element[]{ Element.Machine }},
             { ItemType<BorealisBomber>(), new Element[]{ Element.Impact, Element.Machine, Element.Magic }},
