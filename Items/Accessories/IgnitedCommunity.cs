@@ -54,8 +54,8 @@ namespace CalRemix.Items.Accessories
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<GenericDamageClass>() += 0.15f + (0.01f * count);
-            player.statDefense += 15 + (2 * count);
+            player.GetDamage<GenericDamageClass>() += 0.35f;
+            player.statDefense += 35;
             player.GetCritChance<GenericDamageClass>() += 7f;
             player.endurance += 0.07f;
             player.statLifeMax2 = (int)(player.statLifeMax2 * 1.12);
@@ -95,6 +95,12 @@ namespace CalRemix.Items.Accessories
             count = reader.ReadInt32();
         }
     }
+    /*
+     * 
+            player.GetDamage<GenericDamageClass>() += 0.15f + (0.01f * count);
+            player.statDefense += 15 + (2 * count);
+					Further increases damage and defense whenever Calamity Remix items are crafted
+					Maxes out at 30% damage and 60 defense
     public class IgnitedCommunityTracking : ModSystem
     {
         public override void PostAddRecipes()
@@ -105,6 +111,7 @@ namespace CalRemix.Items.Accessories
                 recipe.AddOnCraftCallback(Crafted);
             }
         }
+
         private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
         {
             if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !recipe.HasResult(ModContent.ItemType<TheInsacredTexts>()) && Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
@@ -122,4 +129,5 @@ namespace CalRemix.Items.Accessories
         }
 
     }
+    */
 }
