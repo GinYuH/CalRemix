@@ -95,7 +95,7 @@ namespace CalRemix
                 projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
                 projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
             }
-            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0 || projectile.penetrate > 10 || projectile.maxPenetrate > 10 || projectile.timeLeft > 120)
+            if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;
             if (modPlayer.pearl)
                 CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 1);

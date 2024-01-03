@@ -45,7 +45,7 @@ namespace CalRemix.NPCs.TownNPCs
             NPCID.Sets.DangerDetectRange[Type] = 700;
             NPCID.Sets.AttackType[Type] = 3;
             NPCID.Sets.MagicAuraColor[Type] = Color.Yellow;
-            NPCID.Sets.AttackTime[Type] = 90;
+            NPCID.Sets.AttackTime[Type] = 12;
             NPCID.Sets.AttackAverageChance[Type] = 10;
             NPCID.Sets.HatOffsetY[Type] = 4;
             NPCID.Sets.ShimmerTownTransform[NPC.type] = false;
@@ -340,7 +340,7 @@ namespace CalRemix.NPCs.TownNPCs
         public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
         {
             projType = ProjectileID.RubyBolt;
-            attackDelay = 30;
+            attackDelay = 12;
         }
 
         public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)

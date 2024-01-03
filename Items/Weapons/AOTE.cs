@@ -15,7 +15,8 @@ public class AOTE : ModItem
     {
         DisplayName.SetDefault("Aspect of the End");
         Tooltip.SetDefault("hi pixel");
-        Main.RegisterItemAnimation(Type, new DrawAnimationVertical(6, 3));
+        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
+        ItemID.Sets.AnimatesAsSoul[Type] = true;
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

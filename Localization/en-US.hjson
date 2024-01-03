@@ -1429,7 +1429,7 @@ Mods: {
 				DisplayName: Snowgrave
 				Tooltip:
 					'''
-						Memories of a snowy grave...
+					Memories of a snowy grave...
 					Summons a large deadly fountain of ice and snow below your cursor that instantly kills normal enemies
 					After usage, the player won't be able to use the weapon again for 1 minute
 					'''
@@ -1544,6 +1544,18 @@ Mods: {
 					Ancient chapters detailing the [c/FFFF00:truth]
 					Use to open all 9 chapters of the world's background history
 					Press the Left and Right arrow keys to flip through pages
+					'''
+			}
+
+			IgnitedCommunity: {
+				DisplayName: Ignited Community
+				Tooltip:
+					'''
+					'Reformed from its broken state, its fractures filled with a new power.'
+					Increases critical strike chance by 7%, damage reduction by 7%, and movement speed by 10%
+					Increases max health by 12% and life regeneration by 2 HP/s
+					Increases damage and defense whenever Calamity Remix items are crafted
+					Maxes out at 30% damage and 60 defense
 					'''
 			}
 		}
