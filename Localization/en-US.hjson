@@ -1552,10 +1552,13 @@ Mods: {
 				Tooltip:
 					'''
 					'Reformed from its broken state, its fractures filled with a new power.'
-					Increases critical strike chance by 7%, damage reduction by 7%, and movement speed by 10%
-					Increases max health by 12% and life regeneration by 2 HP/s
-					Increases damage and defense whenever Calamity Remix items are crafted
+					Increases damage by 15% and critical strike chance by 7%, 
+					Increases defense by 15 and damage reduction by 7%
+					Increases max health by 12%, life regeneration by 2 HP/s, and movement speed by 10%
+					Further increases damage and defense whenever Calamity Remix items are crafted
 					Maxes out at 30% damage and 60 defense
+					Thank you for your community contributions!
+					Hold "Left Shift" for the full contributor list
 					'''
 			}
 		}
