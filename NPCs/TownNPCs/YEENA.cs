@@ -150,7 +150,7 @@ namespace CalRemix.NPCs.TownNPCs
                 chat.Add("I’m quite familiar with nighttime ambushes. Most of them I planned myself.");
                 chat.Add("There’s something quaintly romantic about the moon reflecting off of newly - polished weaponry.");
                 chat.Add("Planning usually happens when the soldiers are asleep. They’ll never realize that there’s not usually a plan.");
-                chat.Add("I’m no stranger to a seemingly endless slew of the undead. No stranger at all…");
+                chat.Add("I’m no stranger to a seemingly endless slew of the undead. No stranger at all...");
             }
             if (BirthdayParty.PartyIsUp)
             {
