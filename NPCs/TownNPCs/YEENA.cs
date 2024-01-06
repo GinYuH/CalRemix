@@ -288,7 +288,7 @@ namespace CalRemix.NPCs.TownNPCs
                                 if (NPC.GivenName == "Capricorn")
                                     Main.npcChatText = "Let me come up with a battle plan first. Sit tight.";
 
-                                if (NPC.GivenName == "Leo")
+                                if (NPC.GivenName == "Taurus")
                                     Main.npcChatText = "...Not yet.";
 
                                 if (NPC.GivenName == "Leo")
@@ -313,7 +313,6 @@ namespace CalRemix.NPCs.TownNPCs
                             break;
                     }
                 }
-                Main.npcChatText = "You want to tussle? I'm afraid the time hasn't quite arrived, soldier.";
             }
         }
         public override void AddShops()
