@@ -178,7 +178,7 @@ namespace CalRemix.NPCs.TownNPCs
             }
             if (NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
             {
-                chat.Add("Nice to see that our luck’s turning around. That Calamitas reminds me an awful lot of a good friend of mine…");
+                chat.Add("Nice to see that our luck’s turning around. That Calamitas reminds me an awful lot of a good friend of mine...");
             }
             if (Main.raining)
             {
