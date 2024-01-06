@@ -159,7 +159,7 @@ namespace CalRemix.NPCs.TownNPCs
             if (NPC.AnyNPCs(NPCID.ArmsDealer))
             {
                 int armsDealer = NPC.FindFirstNPC(NPCID.ArmsDealer);
-                chat.Add("Peh. " Main.npc[armsDealer].GivenName + " leaves a bad taste in my mouth. He’s just an amateur in munitions, which makes him all the more dangerous.");
+                chat.Add("Peh. " + Main.npc[armsDealer].GivenName + " leaves a bad taste in my mouth. He’s just an amateur in munitions, which makes him all the more dangerous.");
             }
             if (NPC.AnyNPCs(NPCID.GoblinTinkerer))
             {
@@ -174,7 +174,7 @@ namespace CalRemix.NPCs.TownNPCs
             if (NPC.AnyNPCs(NPCID.Pirate))
             {
                 int pirate = NPC.FindFirstNPC(NPCID.Pirate);
-                chat.Add("Who the hell let " +  Main.npc[pirate].GivenName " have a cannon?! Trusting pirates with just about anything is a recipe for disaster!");
+                chat.Add("Who the hell let " +  Main.npc[pirate].GivenName + " have a cannon?! Trusting pirates with just about anything is a recipe for disaster!");
             }
             if (NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
             {
