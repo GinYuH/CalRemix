@@ -90,10 +90,13 @@ namespace CalRemix.NPCs.Minibosses
             }
             if (Attack > 120)
             {
-                SoundEngine.PlaySound(SoundID.NPCDeath43, NPC.Center);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, pos.DirectionTo(Target.Center) * 32f, ModContent.ProjectileType<YggThorn>(), 120, 5);
-                Attack = 0;
-                State = 0;
+                if (Main.player[NPC.target].Distance(NPC.Center) < 4000)
+                {
+                    SoundEngine.PlaySound(SoundID.NPCDeath43, NPC.Center);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, pos.DirectionTo(Target.Center) * 32f, ModContent.ProjectileType<YggThorn>(), 120, 5);
+                    Attack = 0;
+                    State = 0;
+                }
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -110,7 +113,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.ZoneHallow || spawnInfo.Player.ZoneUnderworldHeight) && !NPC.AnyNPCs(Type))
+            if ((spawnInfo.Player.ZoneHallow || spawnInfo.Player.ZoneUnderworldHeight) && !NPC.AnyNPCs(Type) && NPC.downedMoonlord)
                 return 0.015f;
             return 0f;
         }
