@@ -148,7 +148,7 @@ namespace CalRemix.NPCs.TownNPCs
             if (!Main.dayTime)
             {
                 chat.Add("I’m quite familiar with nighttime ambushes. Most of them I planned myself.");
-                chat.Add("There’s something quaintly romantic about the moon reflecting off of newly - polished weaponry.");
+                chat.Add("There’s something quaintly romantic about the moon reflecting off of newly-polished weaponry.");
                 chat.Add("Planning usually happens when the soldiers are asleep. They’ll never realize that there’s not usually a plan.");
                 chat.Add("I’m no stranger to a seemingly endless slew of the undead. No stranger at all...");
             }
@@ -164,7 +164,7 @@ namespace CalRemix.NPCs.TownNPCs
             if (NPC.AnyNPCs(NPCID.GoblinTinkerer))
             {
                 int goblinTinkerer = NPC.FindFirstNPC(NPCID.GoblinTinkerer);
-                chat.Add("It’s always important to make sure that your weapons are well - maintained. I do wish that " + Main.npc[goblinTinkerer].GivenName + " would charge less, though…");
+                chat.Add("It’s always important to make sure that your weapons are well-maintained. I do wish that " + Main.npc[goblinTinkerer].GivenName + " would charge less, though…");
             }
             if (NPC.AnyNPCs(NPCID.TaxCollector))
             {
@@ -202,7 +202,7 @@ namespace CalRemix.NPCs.TownNPCs
             }
             if (Main.LocalPlayer.Calamity().alcoholPoisonLevel > 0)
             {
-                chat.Add("Inebriation on the battlefield is a one - way ticket to the pit. For you, though, I can make an exception.");
+                chat.Add("Inebriation on the battlefield is a one-way ticket to the pit. For you, though, I can make an exception.");
             }
             if (NPC.AnyNPCs(ModContent.NPCType<Signus>()))
             {
