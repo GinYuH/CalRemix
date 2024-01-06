@@ -99,15 +99,15 @@ namespace CalRemix.NPCs.TownNPCs
         public override string GetChat()
         {
             WeightedRandom<string> chat = new();
-            chat.Add("From one war straight into the next.At least the Jungle Tyrant’s something that you can kill.");
+            chat.Add("From one war straight into the next. At least the Jungle Tyrant’s something that you can kill.");
             chat.Add("It’d be awfully stereotypical for me to start quoting Sun Tzu, so don’t even ask.");
             chat.Add("You’d make a fine mercenary, but I hesitate to say the same about becoming a soldier.");
-            chat.Add("I’ve seen countless battles.Could’ve seen even more if I still had my eye.");
+            chat.Add("I’ve seen countless battles. Could’ve seen even more if I still had my eye.");
             chat.Add("The wind often howls during combat. That may be my fault.");
             if (NPC.GivenName == "Daniel" || NPC.GivenName == "Cheng" || NPC.GivenName == "Libra" || NPC.GivenName == "Daxia")
             {
                 chat.Add("There’s no glory in needless killing. You’d do well to keep that in mind.");
-                chat.Add("We all have our regrets in life.The only thing that we can do is to keep marching on.");
+                chat.Add("We all have our regrets in life. The only thing that we can do is to keep marching on.");
             }
             else if (NPC.GivenName == "Scorpio")
             {
@@ -118,39 +118,39 @@ namespace CalRemix.NPCs.TownNPCs
             {
                 chat.Add("Are you well? Not injured? Please stay in good health. This world is doomed without you.");
                 chat.Add("You’ll conquer the heavens, and I intend to stand by you every step of the way.");
-                chat.Add("An unfortunate name, as I’ve been told.I’ve heard all the jokes.");
+                chat.Add("An unfortunate name, as I’ve been told. I’ve heard all the jokes.");
             }
             else if (NPC.GivenName == "Sagittarius")
             {
-                chat.Add("This takes me back to years ago.I’d tell you stories, but we’d be here forever!");
-                chat.Add("An old soldier is a good one.It means they still haven’t been killed.");
+                chat.Add("This takes me back to years ago. I’d tell you stories, but we’d be here forever!");
+                chat.Add("An old soldier is a good one. It means they still haven’t been killed.");
             }
             else if (NPC.GivenName == "Aquarius")
             {
                 chat.Add("Defy that vile Tyrant at every opportunity that presents itself. He’s earned grudges, not respect.");
-                chat.Add("Bad orders are bad orders.Don’t let fear of authority pressure you into committing war crimes.");
+                chat.Add("Bad orders are bad orders. Don’t let fear of authority pressure you into committing war crimes.");
             }
             else if (NPC.GivenName == "Capricorn")
             {
                 chat.Add("The Tyrant’s plans are much too haphazard to be any good. Knock some sense into him.");
-                chat.Add("Formations have a purpose!Not that it matters to a walking army like you.");
+                chat.Add("Formations have a purpose! Not that it matters to a walking army like you.");
             }
             else if (NPC.GivenName == "Taurus")
             {
                 chat.Add("The iron rule of any charge is to keep moving forwards, no matter what.");
-                chat.Add("Bad orders are still orders.So grit your teeth and accept what must be done.");
+                chat.Add("Bad orders are still orders. So grit your teeth and accept what must be done.");
             }
             else if (NPC.GivenName == "Leo")
             {
                 chat.Add("Don’t get too full of yourself. Not while I’m here, at least!");
-                chat.Add("There’s still plenty for you to learn.The best lessons are taught on the battlefield.");
+                chat.Add("There’s still plenty for you to learn. The best lessons are taught on the battlefield.");
             }
             if (!Main.dayTime)
             {
-                chat.Add("I’m quite familiar with nighttime ambushes.Most of them I planned myself.");
-                chat.Add("There’s something quaintly romantic about the moon reflecting off of newly - polished weaponry.");
-                chat.Add("Planning usually happens when the soldiers are asleep.They’ll never realize that there’s not usually a plan.");
-                chat.Add("I’m no stranger to a seemingly endless slew of the undead.No stranger at all…");
+                chat.Add("I’m quite familiar with nighttime ambushes. Most of them I planned myself.");
+                chat.Add("There’s something quaintly romantic about the moon reflecting off of newly-polished weaponry.");
+                chat.Add("Planning usually happens when the soldiers are asleep. They’ll never realize that there’s not usually a plan.");
+                chat.Add("I’m no stranger to a seemingly endless slew of the undead. No stranger at all...");
             }
             if (BirthdayParty.PartyIsUp)
             {
@@ -158,51 +158,55 @@ namespace CalRemix.NPCs.TownNPCs
             }
             if (NPC.AnyNPCs(NPCID.ArmsDealer))
             {
-                chat.Add("Peh. [Name of Arms Dealer] leaves a bad taste in my mouth.He’s just an amateur in munitions, which makes him all the more dangerous.");
+                int armsDealer = NPC.FindFirstNPC(NPCID.ArmsDealer);
+                chat.Add("Peh. " + Main.npc[armsDealer].GivenName + " leaves a bad taste in my mouth. He’s just an amateur in munitions, which makes him all the more dangerous.");
             }
             if (NPC.AnyNPCs(NPCID.GoblinTinkerer))
             {
-                chat.Add("It’s always important to make sure that your weapons are well - maintained.I do wish that[Name of Goblin Tinkerer] would charge less, though…");
+                int goblinTinkerer = NPC.FindFirstNPC(NPCID.GoblinTinkerer);
+                chat.Add("It’s always important to make sure that your weapons are well-maintained. I do wish that " + Main.npc[goblinTinkerer].GivenName + " would charge less, though…");
             }
             if (NPC.AnyNPCs(NPCID.TaxCollector))
             {
-                chat.Add("Taxes and war go hand in hand.Both are pretty thankless but necessary for the common good.Send[Name of Tax Collector] my regards.");
+                int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
+                chat.Add("Taxes and war go hand in hand. Both are pretty thankless but necessary for the common good. Send " + Main.npc[taxCollector].GivenName + " my regards.");
             }
             if (NPC.AnyNPCs(NPCID.Pirate))
             {
-                chat.Add("Who the hell let[Name of Pirate] have a cannon ? !Trusting pirates with just about anything is a recipe for disaster!");
+                int pirate = NPC.FindFirstNPC(NPCID.Pirate);
+                chat.Add("Who the hell let " +  Main.npc[pirate].GivenName + " have a cannon?! Trusting pirates with just about anything is a recipe for disaster!");
             }
             if (NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
             {
-                chat.Add("Nice to see that our luck’s turning around.That Calamitas reminds me an awful lot of a good friend of mine…");
+                chat.Add("Nice to see that our luck’s turning around. That Calamitas reminds me an awful lot of a good friend of mine...");
             }
             if (Main.raining)
             {
-                chat.Add("Rain is always terrible for morale.It’s hard to march, ruins the supplies, and you can’t tell bullets from the weather.");
+                chat.Add("Rain is always terrible for morale. It’s hard to march, ruins the supplies, and you can’t tell bullets from the weather.");
             }
             if (Main.LocalPlayer.ZoneDungeon)
             {
-                chat.Add("How revolting.Who’d construct a fortress this easy to invade ? No wonder it’s been overrun by monsters.");
+                chat.Add("How revolting. Who’d construct a fortress this easy to invade? No wonder it’s been overrun by monsters.");
             }
             if (Main.invasionType != InvasionID.None)
             {
-                chat.Add("And they call this an army ? How laughable.Put me in charge, and I’ll whip them into shape!");
+                chat.Add("And they call this an army? How laughable. Put me in charge, and I’ll whip them into shape!");
             }
             if (Main.invasionType == InvasionID.CachedOldOnesArmy)
             {
-                chat.Add("Shouldn’t you be defending something right now ? Get to it! We can’t let the enemy breach our defenses!");
+                chat.Add("Shouldn’t you be defending something right now? Get to it! We can’t let the enemy breach our defenses!");
             }
             if (NPC.AnyNPCs(ModContent.NPCType<AstrumDeusHead>()))
             {
-                chat.Add("Splitting yourself in fragments just so that you can continue living… That hits a bit close to home.Not that you’d know.");
+                chat.Add("Splitting yourself in fragments just so that you can continue living... That hits a bit close to home. Not that you’d know.");
             }
             if (Main.LocalPlayer.Calamity().alcoholPoisonLevel > 0)
             {
-                chat.Add("Inebriation on the battlefield is a one - way ticket to the pit. For you, though, I can make an exception.");
+                chat.Add("Inebriation on the battlefield is a one-way ticket to the pit. For you, though, I can make an exception.");
             }
             if (NPC.AnyNPCs(ModContent.NPCType<Signus>()))
             {
-                chat.Add("I’m no stranger to assassins.Few were as blatant as that one.");
+                chat.Add("I’m no stranger to assassins. Few were as blatant as that one.");
             }
             if (NPC.AnyNPCs(ModContent.NPCType<Draedon>()))
             {
@@ -214,7 +218,7 @@ namespace CalRemix.NPCs.TownNPCs
                     {
                         if (n.ModNPC<Draedon>().DefeatTimer > 0)
                         {
-                            chat.Add("Shouldn’t that thing be retreating? Aren’t they afraid that we’d capture them for information ?");
+                            chat.Add("Shouldn’t that thing be retreating? Aren’t they afraid that we’d capture them for information?");
                             break;
                         }
                     }
@@ -222,19 +226,19 @@ namespace CalRemix.NPCs.TownNPCs
             }
             if (NPC.AnyNPCs(NPCID.Cyborg))
             {
-                chat.Add("Am I seeing things, or is there a weaponized drone on the loose ?");
+                chat.Add("Am I seeing things, or is there a weaponized drone on the loose?");
             }
             if (!CalRemixWorld.guideHasExisted)
             {
-                chat.Add("Surely you haven’t been just running amok and somehow thwarting the Tyrant without guidance ? That’s both terrifying and impressive.");
+                chat.Add("Surely you haven’t been just running amok and somehow thwarting the Tyrant without guidance? That’s both terrifying and impressive.");
             }
             if (Main.dontStarveWorld)
             {
-                chat.Add("I was starting to plan logistics, but does anyone even need to eat ?");
+                chat.Add("I was starting to plan logistics, but does anyone even need to eat?");
             }
             if (Main.LocalPlayer.name == "Aries" || Main.LocalPlayer.name == "kkpro")
             {
-                chat.Add("I  KILL   YOU!!!!");
+                chat.Add("I  KILL   YOU! ! !!");
             }
             return chat;
         }
@@ -276,15 +280,15 @@ namespace CalRemix.NPCs.TownNPCs
                                     Main.npcChatText = "I can't bear the thought of hurting you. Give me some time to steel myself.";
 
                                 if (NPC.GivenName == "Sagittarius")
-                                    Main.npcChatText = "Picking on an old man, are we ? Ha! Come back when you're a little older.";
+                                    Main.npcChatText = "Picking on an old man, are we? Ha! Come back when you're a little older.";
 
                                 if (NPC.GivenName == "Aquarius")
                                     Main.npcChatText = "No way.";
 
                                 if (NPC.GivenName == "Capricorn")
-                                    Main.npcChatText = "Let me come up with a battle plan first.Sit tight.";
+                                    Main.npcChatText = "Let me come up with a battle plan first. Sit tight.";
 
-                                if (NPC.GivenName == "Leo")
+                                if (NPC.GivenName == "Taurus")
                                     Main.npcChatText = "...Not yet.";
 
                                 if (NPC.GivenName == "Leo")
@@ -309,7 +313,6 @@ namespace CalRemix.NPCs.TownNPCs
                             break;
                     }
                 }
-                Main.npcChatText = "You want to tussle? I'm afraid the time hasn't quite arrived soldier.";
             }
         }
         public override void AddShops()
