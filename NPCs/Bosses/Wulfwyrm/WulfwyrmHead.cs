@@ -837,10 +837,17 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
             // Lore item
             npcLoot.AddConditionalPerPlayer(() => !CalRemixWorld.downedExcavator, ModContent.ItemType<KnowledgeExcavator>(), desc: DropHelper.FirstKillText);
         }
+        public override void OnKill()
+        {
+            CalRemixWorld.downedExcavator = true;
+            CalRemixWorld.UpdateWorldBool();
+        }
 
         public override bool SpecialOnKill()
         {
+            // work you stupid stupid
             CalRemixWorld.downedExcavator = true;
+            CalRemixWorld.UpdateWorldBool();
             // Position to head such that it's at the closest worm segment to the target on the last frame of its existence.
             // This is done to make loot more convenient to pick up.
             int closestSegmentID = DropHelper.FindClosestWormSegment(NPC,

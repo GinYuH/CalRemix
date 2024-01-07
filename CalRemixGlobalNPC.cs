@@ -667,19 +667,13 @@ namespace CalRemix
         {
             if (npc.boss && Main.BestiaryTracker.Kills.GetKillCount(npc) >= 5)
             {
-                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(() => Main.BestiaryTracker.Kills.GetKillCount(npc) >= 5);
-                LeadingConditionRule leadingConditionRule = new(new Conditions.NotExpert());
-                mainRule.Add(leadingConditionRule);
-                leadingConditionRule.Add(ModContent.ItemType<ConquestFragment>(), 1, 1, 1);
-                npcLoot.Add(mainRule);
+                npcLoot.AddIf(() => Main.BestiaryTracker.Kills.GetKillCount(npc) >= 5 && !Main.expertMode, ModContent.ItemType<ConquestFragment>());
             }
-            else if (!npc.SpawnedFromStatue && npc.value > 0)
+            if (!npc.SpawnedFromStatue && npc.value > 0)
             {
-                LeadingConditionRule fragLoot = npcLoot.DefineConditionalDropSet(() => Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25);
-                fragLoot.Add(ModContent.ItemType<ConquestFragment>(), 20);
-                npcLoot.Add(fragLoot);
+                npcLoot.AddIf(()=> Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25, ModContent.ItemType<ConquestFragment>(), 20);
             }
-            else if (npc.type == ModContent.NPCType<GreatSandShark>())
+            if (npc.type == ModContent.NPCType<GreatSandShark>())
             {
                 LeadingConditionRule toothRule = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
                 toothRule.Add(ModContent.ItemType<SandSharkToothNecklace>(), 4, hideLootReport: !Main.expertMode);
@@ -703,104 +697,101 @@ namespace CalRemix
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.LightShard);
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DarkShard);
             }
-            else if (npc.type == ModContent.NPCType<DesertScourgeHead>())
+            if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
-                LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
                 npcLoot.Add(mainRule);
             }
-            else if (npc.type == ModContent.NPCType<Bumblefuck>())
+            if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
-                LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<DesertFeather>(), 1, 25, 30);
                 npcLoot.Add(mainRule);
             }
-            else if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
+            if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
                 npcLoot.Add(ModContent.ItemType<SubnauticalPlate>(), 1, 22, 34);
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<HalibutCannon>());
             }
-            else if (npc.type == ModContent.NPCType<MirageJelly>())
+            if (npc.type == ModContent.NPCType<MirageJelly>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<MirageJellyItem>(), 7, 5));
             }
-            else if (npc.type == ModContent.NPCType<CragmawMire>())
+            if (npc.type == ModContent.NPCType<CragmawMire>())
             {
                 LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => DownedBossSystem.downedPolterghast);
                 postPolter.Add(ModContent.ItemType<NucleateGello>(), 10, hideLootReport: !DownedBossSystem.downedPolterghast);
                 postPolter.AddFail(ModContent.ItemType<NucleateGello>(), hideLootReport: DownedBossSystem.downedPolterghast);
             }
-            else if (npc.type == ModContent.NPCType<NuclearTerror>())
+            if (npc.type == ModContent.NPCType<NuclearTerror>())
             {
                 npcLoot.Add(ModContent.ItemType<Microxodonta>(), 3);
             }
-            else if (npc.type == NPCID.GraniteFlyer)
+            if (npc.type == NPCID.GraniteFlyer)
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CosmicStone>(), 20, 10));
             }
-            else if (npc.type == ModContent.NPCType<Horse>())
+            if (npc.type == ModContent.NPCType<Horse>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<RockStone>(), 5, 3));
             }
-            else if (npc.type == ModContent.NPCType<Providence>())
+            if (npc.type == ModContent.NPCType<Providence>())
             {
-                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => !Main.expertMode);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ModContent.ItemType<ProfanedNucleus>(), 4);
                 npcLoot.Add(hm);
             }
-            else if (npc.type == ModContent.NPCType<Cnidrion>())
+            if (npc.type == ModContent.NPCType<Cnidrion>())
             {
-                LeadingConditionRule postDS = npcLoot.DefineConditionalDropSet(() => CalRemixWorld.downedExcavator);
-                postDS.Add(ModContent.ItemType<DesertMedallion>(), 1, hideLootReport: !CalRemixWorld.downedExcavator);
-                npcLoot.Add(postDS);
+                npcLoot.AddIf(() => CalRemixWorld.downedExcavator, ModContent.ItemType<DesertMedallion>());
             }
-            else if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
-                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ModContent.ItemType<EssenceofBabil>(), 4, hideLootReport: !Main.hardMode);
                 npcLoot.Add(hm);
             }
-            else if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
             {
                 npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 3);
             }
-            else if (npc.type == NPCID.Plantera)
+            if (npc.type == NPCID.Plantera)
             {
-                LeadingConditionRule exp = npcLoot.DefineConditionalDropSet(() => !Main.expertMode);
+                LeadingConditionRule exp = new LeadingConditionRule(new Conditions.NotExpert());
                 exp.Add(ModContent.ItemType<EssenceofBabil>(), 1, 4, 8, hideLootReport: Main.expertMode);
                 npcLoot.Add(exp);
             }
-            else if (npc.type == NPCID.Wolf)
+            if (npc.type == NPCID.Wolf)
             {
-                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
                 postPolter.Add(ModContent.ItemType<CoyoteVenom>(), 3, hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ModContent.ItemType<CoyoteVenom>(), 4, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
             }
-            else if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
             {
                 npcLoot.Add(ModContent.ItemType<YharimBar>(), 1, 6, 8);
             }
-            else if (npc.type == ModContent.NPCType<Crabulon>())
+            if (npc.type == ModContent.NPCType<Crabulon>())
             {
-                LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
                 mainRule.Add(ModContent.ItemType<CrabLeaves>(), 1, 4, 7);
                 npcLoot.Add(mainRule);
             }
-            else if (npc.type == NPCID.DukeFishron)
+            if (npc.type == NPCID.DukeFishron)
             {
                 npcLoot.Add(ModContent.ItemType<DeliciousMeat>(), 2, 45, 92);
             }
-            else if (npc.type == ModContent.NPCType<Leviathan>() || npc.type == ModContent.NPCType<Anahita>())
+            if (npc.type == ModContent.NPCType<Leviathan>() || npc.type == ModContent.NPCType<Anahita>())
             {
                 LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
                 LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.NotExpert());
-                mainRule.Add(leadingConditionRule);
-                leadingConditionRule.Add(ModContent.ItemType<CrocodileScale>(), 1, 20, 30);
+                mainRule.OnSuccess(leadingConditionRule.Add(ModContent.ItemType<CrocodileScale>(), 1, 20, 30));
                 npcLoot.Add(mainRule);
             }
-            else if (NPCID.Sets.DemonEyes[npc.type])
+            if (NPCID.Sets.DemonEyes[npc.type])
             {
                 npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ModContent.ItemType<Ogscule>());
             }
@@ -812,26 +803,26 @@ namespace CalRemix
             {
                 npcLoot.Add(ModContent.ItemType<TitanFinger>(), 6);
             }
-            else if (npc.type == ModContent.NPCType<EutrophicRay>() || npc.type == ModContent.NPCType<PrismBack>() || npc.type == ModContent.NPCType<BlindedAngler>() || npc.type == ModContent.NPCType<GhostBell>() || npc.type == ModContent.NPCType<GhostBell>())
+            if (npc.type == ModContent.NPCType<EutrophicRay>() || npc.type == ModContent.NPCType<PrismBack>() || npc.type == ModContent.NPCType<BlindedAngler>() || npc.type == ModContent.NPCType<GhostBell>() || npc.type == ModContent.NPCType<GhostBell>())
             {
-                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ModContent.ItemType<ClamChowder>(), 50);
             }
-            else if (npc.type == ModContent.NPCType<Clam>())
+            if (npc.type == ModContent.NPCType<Clam>())
             {
-                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ModContent.ItemType<ClamChowder>(), 10);
                 npcLoot.Add(hm);
             }
-            else if (npc.type == ModContent.NPCType<SeaSerpent1>())
+            if (npc.type == ModContent.NPCType<SeaSerpent1>())
             {
-                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ModContent.ItemType<ClamChowder>(), 20);
                 npcLoot.Add(hm);
             }
-            else if (npc.type == ModContent.NPCType<GiantClam>())
+            if (npc.type == ModContent.NPCType<GiantClam>())
             {
-                LeadingConditionRule hm = npcLoot.DefineConditionalDropSet(() => Main.hardMode);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ModContent.ItemType<ClamChowder>(), 2);
                 npcLoot.Add(hm);
             }
@@ -870,39 +861,39 @@ namespace CalRemix
             {
                 npcLoot.Add(ModContent.ItemType<AstralPearl>(), new Fraction(1, 15));
             }
-            else if (npc.type == ModContent.NPCType<SightseerCollider>())
+            if (npc.type == ModContent.NPCType<SightseerCollider>())
             {
                 npcLoot.Add(ModContent.ItemType<AstralPearl>(), 20);
             }
-            else if (npc.type == NPCID.Clinger)
+            if (npc.type == NPCID.Clinger)
             {
-                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
                 postPolter.Add(ModContent.ItemType<CursedSpear>(), new Fraction(2, 30) , hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ModContent.ItemType<CursedSpear>(), 25, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
             }
-            else if (npc.type == NPCID.IchorSticker)
+            if (npc.type == NPCID.IchorSticker)
             {
-                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
                 postPolter.Add(ModContent.ItemType<IchorDagger>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ModContent.ItemType<IchorDagger>(), 25, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
             }
-            else if (npc.type == ModContent.NPCType<Bohldohr>())
+            if (npc.type == ModContent.NPCType<Bohldohr>())
             {
                 npcLoot.AddIf(() => DownedBossSystem.downedCalamitas && DownedBossSystem.downedExoMechs, ModContent.ItemType<NO>(), 10, 1, 1, ui: false);
             }
-            else if (npc.type == ModContent.NPCType<HiveTumor>())
+            if (npc.type == ModContent.NPCType<HiveTumor>())
             {
                 npcLoot.AddIf(()=> CalRemixWorld.grimesandToggle, ItemID.DemoniteOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
             }
-            else if (npc.type == ModContent.NPCType<PerforatorCyst>())
+            if (npc.type == ModContent.NPCType<PerforatorCyst>())
             {
                 npcLoot.AddIf(() => CalRemixWorld.grimesandToggle, ItemID.CrimtaneOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
             }
-            else if (npc.type == ModContent.NPCType<Sulflounder>())
+            if (npc.type == ModContent.NPCType<Sulflounder>())
             {
-                LeadingConditionRule flound = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule flound = new LeadingConditionRule(new Conditions.IsExpert());
                 flound.Add(ModContent.ItemType<FlounderMortar>(), 10, hideLootReport: !Main.expertMode);
                 flound.AddFail(ModContent.ItemType<FlounderMortar>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
                 npcLoot.Add(flound);
