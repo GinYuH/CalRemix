@@ -53,8 +53,8 @@ namespace CalRemix.NPCs.TownNPCs
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new() { Velocity = 1f, Direction = 1 };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             NPC.Happiness
-            .SetBiomeAffection<SnowBiome>(AffectionLevel.Like) 
-            .SetBiomeAffection<DesertBiome>(AffectionLevel.Love) 
+            .SetBiomeAffection<SnowBiome>(AffectionLevel.Love) 
+            .SetBiomeAffection<DesertBiome>(AffectionLevel.Like) 
             .SetBiomeAffection<OceanBiome>(AffectionLevel.Dislike)
             .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Love)
             .SetNPCAffection(NPCID.Pirate, AffectionLevel.Hate)
@@ -83,7 +83,7 @@ namespace CalRemix.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
                 new FlavorTextBestiaryInfoElement("A fabled general hailing from parts unknown. His subordinates can't quite agree about his personality.")
             });
         }
