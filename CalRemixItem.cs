@@ -501,10 +501,6 @@ namespace CalRemix
                 itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<Anomaly109>());
                 itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<TheInsacredTexts>());
             }
-            if (BossBags.Contains(item.type))
-            {
-                itemLoot.Add(ModContent.ItemType<ConquestFragment>(), 1, 1, 1);
-            }
         }
 
 

@@ -6,12 +6,10 @@ using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Yharon;
-using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.Abyss;
-using CalamityMod.NPCs.Ravager;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
@@ -24,7 +22,6 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.TreasureBags;
-using CalamityMod.Items.Mounts;
 using CalamityMod.Projectiles.Melee.Shortswords;
 using CalamityMod.Projectiles.Melee.Spears;
 using CalamityMod.Projectiles.Melee;
@@ -34,6 +31,9 @@ using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 using System.Collections.Generic;
 using static Terraria.ModLoader.ModContent;
+using CalamityMod.Projectiles.Ranged;
+using CalamityMod.Projectiles.Magic;
+using CalamityMod.Projectiles.Melee.Yoyos;
 
 namespace CalRemix.Retheme
 {
@@ -104,6 +104,7 @@ namespace CalRemix.Retheme
             { NPCType<Yharon>(), "Yharon/Yharon" },
             #endregion
         };
+        /* shelved until someone deals with this
         internal static Dictionary<int, string> BossHeads = new()
         {
             { NPCType<DesertScourgeHead>(), "DS/Map" },
@@ -125,13 +126,12 @@ namespace CalRemix.Retheme
             { NPCType<AstrumDeusHead>(), "AD/Map" },
             { NPCType<Bumblefuck>(), "Birb/Map" },
         };
+        */
         internal static Dictionary<int, string> Items = new()
         {
             { ItemType<EnergyCore>(), "EnergyCore" },
             { ItemType<Nadir>(), "Nadir" },
             { ItemType<Violence>(), "Violence" },
-            { ItemType<Fabstaff>(), "InterfacerStaff" },
-            { ItemType<Fabsol>(), "DiscordianSigil" },
             { ItemType<WulfrumMetalScrap>(), "Bars/WulfrumBar" },
             { ItemType<ClockGatlignum>(), "Bars/ClockworkBar" },
             { ItemType<LifeAlloy>(), "Bars/LifeAlloy" },
@@ -154,6 +154,7 @@ namespace CalRemix.Retheme
             { ItemType<MycelialClaws>(), "Crabulon/MycelialClaws" },
             { ItemType<Fungicide>(), "Crabulon/Fungicide" },
             { ItemType<HyphaeRod>(), "Crabulon/HyphaeRod" },
+            { ItemType<PuffShroom>(), "Crabulon/PuffShroom" },
             { ItemType<Mycoroot>(), "Crabulon/Mycoroot" },
             { ItemType<InfestedClawmerang>(), "Crabulon/Shroomerang" },
             #endregion
@@ -182,6 +183,7 @@ namespace CalRemix.Retheme
             { ItemType<BloodBath>(), "Perfs/BloodBath" },
             { ItemType<FleshOfInfidelity>(), "Perfs/FleshOfInfidelity" },
             { ItemType<ToothBall>(), "Perfs/ToothBall" },
+            { ItemType<BloodyWormScarf>(), "Perfs/BloodyWormScarf" },
             #endregion
             #region Slime God
             { ItemType<SlimeGodBag>(), "SlimeGod/Bag" },
@@ -211,6 +213,7 @@ namespace CalRemix.Retheme
             { ItemType<AuroraBlazer>(), "Plague/AuroraBlazer" },
             { ItemType<AlulaAustralis>(), "Plague/AlulaAustralis" },
             { ItemType<BorealisBomber>(), "Plague/BorealisBomber" },
+            { ItemType<LeonidProgenitor>(), "Plague/LeonidProgenitor" },
             { ItemType<AuroradicalThrow>(), "Plague/AuroradicalThrow" },
             #endregion
             #region Astrum Deus
@@ -232,11 +235,13 @@ namespace CalRemix.Retheme
             { ItemType<RedLightningContainer>(), "Birb/RedLightningContainer" },
             #endregion
             #region Yharon
+            { ItemType<YharonBag>(), "Yharon/Bag" },
             { ItemType<YharonSoulFragment>(), "Yharon/YharonSoulFragment" },
             { ItemType<DragonRage>(), "Yharon/DragonRage" },
             { ItemType<DragonsBreath>(), "Yharon/DragonsBreath" },
             { ItemType<ChickenCannon>(), "Yharon/ChickenCannon" },
             { ItemType<PhoenixFlameBarrage>(), "Yharon/DragonFlameBarrage" },
+            { ItemType<YharonsKindleStaff>(), "Yharon/YharonsKindleStaff" },
             { ItemType<TheBurningSky>(), "Yharon/TheBurningSky" },
             { ItemType<FinalDawn>(), "Yharon/FinalDawn" },
             { ItemType<Wrathwing>(), "Yharon/Wrathwing" },
@@ -258,23 +263,65 @@ namespace CalRemix.Retheme
         {
             { ProjectileType<NadirSpear>(), "NadirSpear" },
             { ProjectileType<VoidEssence>(), "VoidEssence" },
+            #region Desert Sockourge
+            #endregion
             { ProjectileType<SaharaSlicersBlade>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBladeAlt>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBolt>(), "DS/SaharaSlicersBolt" },
             { ProjectileType<BrittleStarMinion>(), "DS/BrittleStarMinion" },
             { ProjectileType<ScourgeoftheDesertProj>(), "DS/ScourgeoftheDesert" },
+            #region Crab
             { ProjectileType<MycorootProj>(), "Crabulon/Mycoroot" },
             { ProjectileType<InfestedClawmerangProj>(), "Crabulon/Shroomerang" },
             { ProjectileType<FungalClumpMinion>(), "Crabulon/FungalClumpProj" },
-            { ProjectileType<RotBallProjectile>(), "HiveMind/RotBall" },
-            { ProjectileType<ToothBallProjectile>(), "Perfs/ToothBall" },
+            #endregion
+            #region Hive
+            { ProjectileType<DarkBall>(), "HiveMind/DarkBall" },
+            { ProjectileType<ShadeNimbusCloud>(), "HiveMind/ShadeNimbusCloud" },
+            { ProjectileType<DankCreeperMinion>(), "HiveMind/DankCreeperMinion" },
+            { ProjectileType<Shaderain>(), "HiveMind/Shaderain" },
+            { ProjectileType<ShadeNimbusHostile>(), "HiveMind/ShadeNimbusHostile" },
+            { ProjectileType<ShaderainHostile>(), "HiveMind/ShaderainHostile" },
+            #endregion
+            #region Perfs
+            { ProjectileType<BloodBall>(), "Perfs/BloodBall" },
+            { ProjectileType<AortaYoyo>(), "Perfs/AortaYoyo" },
+            { ProjectileType<BloodBeam>(), "Perfs/BloodBeam" },
+            { ProjectileType<FleshBallMinion>(), "Perfs/FleshBallMinion" },
+            { ProjectileType<BloodGeyser>(), "Perfs/BloodGeyser" },
+            { ProjectileType<IchorBlob>(), "Perfs/IchorBlob" },
+            { ProjectileType<IchorShot>(), "Perfs/IchorShot" },
+            #endregion
+            #region SG
             { ProjectileType<UnstableCrimulanGlob>(), "SlimeGod/CBall" },
             { ProjectileType<UnstableEbonianGlob>(), "SlimeGod/EBall" },
+            { ProjectileType<AbyssBall>(), "SlimeGod/EBall" },
+            #endregion
+            #region Levi
             { ProjectileType<WaterElementalMinion>(), "Levi/Anahita" },
-            { ProjectileType<GastricBelcher>(), "Levi/Gastric" },
+            #endregion
+            #region Aureus
+            { ProjectileType<NebulashFlail>(), "Plague/NebulashFlail" },
+            { ProjectileType<AureusBomber>(), "Plague/AureusBomber" },
+            { ProjectileType<AuroradicalSplitter>(), "Plague/AuroradicalStar" },
+            { ProjectileType<AuroradicalStar>(), "Plague/AuroradicalStar" },
+            #endregion
+            #region Deus
+            { ProjectileType<MicrowaveYoyo>(), "AD/MicrowaveYoyo" },
+            { ProjectileType<SputterComet>(), "AD/SputterComet" },
+            { ProjectileType<SputterCometBig>(), "AD/SputterCometBig" },
+            { ProjectileType<AstralProbeSummon>(), "AD/AstralProbeSummon" },
+            { ProjectileType<RegulusRiotProj>(), "AD/RegulusRiot" },
+            #endregion
+            #region Yharon
+            { ProjectileType<ChickenCannonHeld>(), "Yharon/ChickenCannonHeld" },
+            #endregion
+            #region Exo
             { ProjectileType<ExobladeProj>(), "Exo/Blade" },
+            { ProjectileType<PhotovisceratorHoldout>(), "Exo/Vis" },
             { ProjectileType<CelestusProj>(), "Exo/Celestus" },
             { ProjectileType<SupernovaBomb>(), "Exo/Supernova" },
+            #endregion
         };
     }
 }

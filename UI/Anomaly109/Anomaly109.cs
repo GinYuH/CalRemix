@@ -6,6 +6,7 @@ using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.TreasureBags;
+using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.Yharon;
@@ -15,6 +16,7 @@ using CalRemix.Retheme;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using ReLogic.Localization.IME;
 using ReLogic.OS;
 using System;
@@ -545,8 +547,52 @@ namespace CalRemix.UI
                 options.Add(new Anomaly109Option("beewasp", "plagued_jungle", "Toggles the initial generation of the Plagued Jungle and related requirements", () => { CalRemixWorld.plaguetoggle = !CalRemixWorld.plaguetoggle; }, new Condition("", () => CalRemixWorld.plaguetoggle)));
                 options.Add(new Anomaly109Option("shrineys", "hardmode_shrines", "Toggles the initial generation for Hardmode shrines", () => { CalRemixWorld.shrinetoggle = !CalRemixWorld.shrinetoggle; }, new Condition("", () => CalRemixWorld.shrinetoggle)));
                 options.Add(new Anomaly109Option("livinglife", "life_ore", "Toggles the initial generation for Life Ore", () => { CalRemixWorld.lifeoretoggle = !CalRemixWorld.lifeoretoggle; }, new Condition("", () => CalRemixWorld.lifeoretoggle)));
-                options.Add(new Anomaly109Option("emrecolor", "resprites", "Toggles resprites for some (not all) bosses and items", () => { CalRemixWorld.resprites = !CalRemixWorld.resprites; }, new Condition("", () => CalRemixWorld.resprites)));
-                options.Add(new Anomaly109Option("emrename", "renames", "Toggles renames for certain NPCs", () => { CalRemixWorld.renames = !CalRemixWorld.renames; }, new Condition("", () => CalRemixWorld.renames)));
+                options.Add(new Anomaly109Option("emitem", "item_changes", "Toggles changes for certain items and projectiles", () =>
+                {
+                    if (!CalRemixWorld.itemChanges)
+                    {
+                        foreach (KeyValuePair<int, string> p in RethemeList.Items)
+                        {
+                            TextureAssets.Item[p.Key] = ModContent.Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                        }
+                        foreach (KeyValuePair<int, string> p in RethemeList.Projs)
+                        {
+                            TextureAssets.Projectile[p.Key] = ModContent.Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                        }
+                        Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
+                        {
+                            TextureAssets.Item[p.Key] = p.Value;
+                        }
+                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
+                        {
+                            TextureAssets.Projectile[p.Key] = p.Value;
+                        }
+                        Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+                    }
+                    CalRemixWorld.itemChanges = !CalRemixWorld.itemChanges;
+                }, new Condition("", () => CalRemixWorld.itemChanges)));
+                options.Add(new Anomaly109Option("creativefreedom", "npc_changes", "Toggles changes for some (not all) NPCs and bosses", () =>
+                {
+                    if (!CalRemixWorld.npcChanges)
+                    {
+                        foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
+                        {
+                            TextureAssets.Npc[p.Key] = ModContent.Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                        }
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
+                        {
+                            TextureAssets.Npc[p.Key] = p.Value;
+                        }
+                    }
+                    CalRemixWorld.npcChanges = !CalRemixWorld.npcChanges;
+                }, new Condition("", () => CalRemixWorld.npcChanges)));
                 options.Add(new Anomaly109Option("talkywalky", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.bossdialogue = !CalRemixWorld.bossdialogue; }, new Condition("", () => CalRemixWorld.bossdialogue)));
                 options.Add(new Anomaly109Option("grimethegame", "grimesand", "Toggles generation of Grimesand and its requirement for evil 2 bosses", () => { CalRemixWorld.grimesandToggle = !CalRemixWorld.grimesandToggle; }, new Condition("", () => CalRemixWorld.grimesandToggle)));
                 options.Add(new Anomaly109Option("applesand", "banana_clown", "Toggles Banana Clowns", () => { CalRemixWorld.clowns = !CalRemixWorld.clowns; }, new Condition("", () => CalRemixWorld.clowns)));

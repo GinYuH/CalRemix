@@ -50,6 +50,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using CalamityMod.Items.Armor;
 
 namespace CalRemix
 {
@@ -141,6 +142,13 @@ namespace CalRemix
                 bar.AddIngredient<CrocodileHerringItem>();
                 bar.AddTile(TileID.CookingPots);
                 bar.Register();
+            }
+            {
+                Recipe ash = Recipe.Create(ModContent.ItemType<CirrusDress>(), 1);
+                ash.AddIngredient(ItemID.Silk, 6);
+                ash.AddIngredient(ItemID.AshBlock, 10);
+                ash.AddTile(TileID.Loom);
+                ash.Register();
             }
 
             #region DP stuff

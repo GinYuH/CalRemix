@@ -518,7 +518,7 @@ namespace CalRemix.ElementalSystem
             { ItemType<ElementalRay>(), new Element[]{ Element.Fire, Element.Magic, Element.Poison, Element.Cold }},
             { ItemType<Eternity>(), new Element[]{ Element.Magic }},
             { ItemType<EventHorizon>(), new Element[]{ Element.Holy, Element.Dark }},
-            { ItemType<Fabstaff>(), new Element[]{ Element.Magic }},
+            { ItemType<Fabstaff>(), new Element[]{ Element.Magic, Element.Machine }},
             { ItemType<FaceMelter>(), new Element[]{ Element.Machine }},
             { ItemType<FatesReveal>(), new Element[]{ Element.Dark }},
             { ItemType<Genisis>(), new Element[]{ Element.Machine }},

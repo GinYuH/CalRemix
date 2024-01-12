@@ -49,6 +49,11 @@ using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.PrimordialWyrm;
 using Terraria.UI;
+using CalRemix.Retheme;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria.GameContent;
+using Terraria.DataStructures;
 
 namespace CalRemix
 {
@@ -102,8 +107,8 @@ namespace CalRemix
         public static bool plaguetoggle = true;
         public static bool shrinetoggle = true;
         public static bool lifeoretoggle = true;
-        public static bool resprites = true;
-        public static bool renames = true;
+        public static bool itemChanges = true;
+        public static bool npcChanges = true;
         public static bool bossdialogue = true;
         public static bool grimesandToggle = true;
         public static bool clowns = true;
@@ -170,8 +175,46 @@ namespace CalRemix
             plaguetoggle = true;
             shrinetoggle = true;
             lifeoretoggle = true;
-            resprites = true;
-            renames = true;
+            itemChanges = true;
+            if (itemChanges)
+            {
+                foreach (KeyValuePair<int, string> p in RethemeList.Items)
+                {
+                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                }
+                foreach (KeyValuePair<int, string> p in RethemeList.Projs)
+                {
+                    TextureAssets.Projectile[p.Key] = Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                }
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+            }
+            else
+            {
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
+                {
+                    TextureAssets.Item[p.Key] = p.Value;
+                }
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
+                {
+                    TextureAssets.Projectile[p.Key] = p.Value;
+                }
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+            }
+            npcChanges = true;
+            if (npcChanges)
+            {
+                foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
+                {
+                    TextureAssets.Npc[p.Key] = Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                }
+            }
+            else
+            {
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
+                {
+                    TextureAssets.Npc[p.Key] = p.Value;
+                }
+            }
             bossdialogue = true;
             grimesandToggle = true;
             clowns = true;
@@ -229,8 +272,8 @@ namespace CalRemix
             plaguetoggle = true;
             shrinetoggle = true;
             lifeoretoggle = true;
-            resprites = true;
-            renames = true;
+            itemChanges = true;
+            npcChanges = true;
             bossdialogue = true;
             grimesandToggle = true;
             clowns = true;
@@ -285,8 +328,8 @@ namespace CalRemix
             tag["109plague"] = plaguetoggle;
             tag["109shrine"] = shrinetoggle;
             tag["109lifeore"] = lifeoretoggle;
-            tag["109resprites"] = resprites;
-            tag["109renames"] = renames;
+            tag["109itemchanges"] = itemChanges;
+            tag["109npcchanges"] = npcChanges;
             tag["109dialogue"] = bossdialogue;
             tag["109grime"] = grimesandToggle;
             tag["109clowns"] = clowns;
@@ -345,8 +388,8 @@ namespace CalRemix
             plaguetoggle= tag.Get<bool>("109plague");// = plaguetoggle;
             shrinetoggle= tag.Get<bool>("109shrine");// = shrinetoggle;
             lifeoretoggle= tag.Get<bool>("109lifeore");// = lifeoretoggle;
-            resprites= tag.Get<bool>("109resprites");// = resprites;
-            renames = tag.Get<bool>("109resprites");// = renames;
+            itemChanges= tag.Get<bool>("109itemchanges");// = itemchanges;
+            npcChanges = tag.Get<bool>("109npcchanges");// = npcchanges;
             bossdialogue = tag.Get<bool>("109dialogue");// = bossdialogue;
             grimesandToggle= tag.Get<bool>("109grime");// = grimesand;
             clowns= tag.Get<bool>("109clowns");// = clowns;
@@ -392,8 +435,8 @@ namespace CalRemix
             writer.Write(plaguetoggle );//tag.Get<bool>("109plague");;// );//plaguetoggle;
             writer.Write(shrinetoggle );//tag.Get<bool>("109shrine");;// );//shrinetoggle;
             writer.Write(lifeoretoggle );//tag.Get<bool>("109lifeore");;// );//lifeoretoggle;
-            writer.Write(resprites );//tag.Get<bool>("109resprites");;// );//resprites;
-            writer.Write(renames);//tag.Get<bool>("109renames");;// );//renames;
+            writer.Write(itemChanges );//tag.Get<bool>("109resprites");;// );//resprites;
+            writer.Write(npcChanges);//tag.Get<bool>("109renames");;// );//renames;
             writer.Write(bossdialogue );//tag.Get<bool>("109dialogue");;// );//bossdialogue;
             writer.Write(grimesandToggle );//tag.Get<bool>("109grime");;// );//grimesand;
             writer.Write(clowns );//tag.Get<bool>("109clowns");;// );//clowns;
@@ -450,8 +493,8 @@ namespace CalRemix
             plaguetoggle = reader.ReadBoolean();//.Get<bool>("109plague");// = plaguetoggle;
             shrinetoggle = reader.ReadBoolean();//.Get<bool>("109shrine");// = shrinetoggle;
             lifeoretoggle = reader.ReadBoolean();//.Get<bool>("109lifeore");// = lifeoretoggle;
-            resprites = reader.ReadBoolean();//.Get<bool>("109resprites");// = resprites;
-            renames = reader.ReadBoolean();//.Get<bool>("109renames");// = renames;
+            itemChanges = reader.ReadBoolean();//.Get<bool>("109resprites");// = resprites;
+            npcChanges = reader.ReadBoolean();//.Get<bool>("109renames");// = renames;
             bossdialogue = reader.ReadBoolean();//.Get<bool>("109dialogue");// = bossdialogue;
             grimesandToggle = reader.ReadBoolean();//.Get<bool>("109grime");// = grimesand;
             clowns = reader.ReadBoolean();//.Get<bool>("109clowns");// = clowns;
@@ -480,15 +523,15 @@ namespace CalRemix
         };
         public static List<int> astrallist = new List<int>
         {
-            ModContent.TileType<AstralStone>(),
-            ModContent.TileType<AstralSandstone>(),
-            ModContent.TileType<HardenedAstralSand>(),
-            ModContent.TileType<CelestialRemains>(),
-            ModContent.TileType<NovaeSlag>(),
-            ModContent.TileType<AstralDirt>(),
-            ModContent.TileType<AstralIce>(),
-            ModContent.TileType<AstralSnow>(),
-            ModContent.TileType<AstralGrass>(),
+            TileType<AstralStone>(),
+            TileType<AstralSandstone>(),
+            TileType<HardenedAstralSand>(),
+            TileType<CelestialRemains>(),
+            TileType<NovaeSlag>(),
+            TileType<AstralDirt>(),
+            TileType<AstralIce>(),
+            TileType<AstralSnow>(),
+            TileType<AstralGrass>(),
             TileType<AstralClay>(),
             TileType<AstralSand>(),
             TileType<AstralMonolith>(),
@@ -550,8 +593,8 @@ namespace CalRemix
             {
                 if (ShrineTimer == 0)
                 {
-                    HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ModContent.ItemType<HallowEffigy>(), hallowlist, 21);
-                    HMChest(ModContent.TileType<AstralMonolith>(), ModContent.TileType<AstralMonolith>(), ModContent.WallType<AstralMonolithWall>(), ModContent.ItemType<AstralEffigy>(), astrallist, 46);
+                    HMChest(TileID.CrystalBlock, TileID.CrystalBlock, WallID.Crystal, ItemType<HallowEffigy>(), hallowlist, 21);
+                    HMChest(TileType<AstralMonolith>(), TileType<AstralMonolith>(), WallType<AstralMonolithWall>(), ItemType<AstralEffigy>(), astrallist, 46);
 
                     Color messageColor = Color.Magenta;
                     CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
@@ -731,12 +774,12 @@ namespace CalRemix
                                 Main.tile[cheste.x, cheste.y + 1].TileType = TileID.Containers2;
                                 Main.tile[cheste.x + 1, cheste.y + 1].TileType = TileID.Containers2;
                             }
-                            if (block1 == ModContent.TileType<AstralMonolith>())
+                            if (block1 == TileType<AstralMonolith>())
                             {
-                                Main.tile[cheste.x, cheste.y].TileType = (ushort)ModContent.TileType<MonolithChest>();
-                                Main.tile[cheste.x + 1, cheste.y].TileType = (ushort)ModContent.TileType<MonolithChest>();
-                                Main.tile[cheste.x, cheste.y + 1].TileType = (ushort)ModContent.TileType<MonolithChest>();
-                                Main.tile[cheste.x + 1, cheste.y + 1].TileType = (ushort)ModContent.TileType<MonolithChest>();
+                                Main.tile[cheste.x, cheste.y].TileType = (ushort)TileType<MonolithChest>();
+                                Main.tile[cheste.x + 1, cheste.y].TileType = (ushort)TileType<MonolithChest>();
+                                Main.tile[cheste.x, cheste.y + 1].TileType = (ushort)TileType<MonolithChest>();
+                                Main.tile[cheste.x + 1, cheste.y + 1].TileType = (ushort)TileType<MonolithChest>();
                             }
                             cheste.item[0].SetDefaults(loot);
                         }
@@ -824,7 +867,7 @@ namespace CalRemix
                                             if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
                                                 if (Main.tile[p, q].TileType == TileID.Dirt || Main.tile[p, q].TileType == TileID.Stone || Main.tile[p, q].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[p, q].TileType])
                                                 {
-                                                    Main.tile[p, q].TileType = (ushort)ModContent.TileType<CosmiliteSlagPlaced>();
+                                                    Main.tile[p, q].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
 
                                                     WorldGen.SquareTileFrame(p, q, true);
                                                     NetMessage.SendTileSquare(-1, p, q, 1);

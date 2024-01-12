@@ -665,13 +665,13 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (npc.boss && Main.BestiaryTracker.Kills.GetKillCount(npc) >= 5)
+            if (npc.boss)
             {
-                npcLoot.AddIf(() => Main.BestiaryTracker.Kills.GetKillCount(npc) >= 5 && !Main.expertMode, ModContent.ItemType<ConquestFragment>());
+                npcLoot.AddIf(() => Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25, ModContent.ItemType<ConquestFragment>(), 5);
             }
             if (!npc.SpawnedFromStatue && npc.value > 0)
             {
-                npcLoot.AddIf(()=> Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25, ModContent.ItemType<ConquestFragment>(), 20);
+                npcLoot.AddIf(()=> Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25, ModContent.ItemType<ConquestFragment>(), 10);
             }
             if (npc.type == ModContent.NPCType<GreatSandShark>())
             {

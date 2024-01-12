@@ -33,7 +33,17 @@ Mods: {
 				}
 			}
 
-			Weapons.Ranged.ClockGatlignum.Tooltip: All ranged weapons have an additional 33% chance to save ammo while this is in the inventory
+			Mounts.Fabsol.Tooltip: Summons a chaotic flying horse mount.
+			Armor.Hardmode.CirrusDress.Tooltip: Covered in the ashes of a previous owner...
+		}
+
+		Buffs: {
+			FabsolVodkaBuff: {
+				DisplayName: Fluorescent
+				Description: You feel lively
+			}
+
+			Nightwither.DisplayName: Moon Burnt
 		}
 	}
 
@@ -176,6 +186,11 @@ Mods: {
 			GarBoost: {
 				DisplayName: Gar Mana Boost
 				Description: Temporary unlimited mana
+			}
+
+			Horse: {
+				DisplayName: Chaotic Horse
+				Description: Flying away!
 			}
 		}
 
