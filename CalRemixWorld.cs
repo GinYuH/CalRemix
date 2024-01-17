@@ -54,6 +54,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.DataStructures;
+using CalamityMod.NPCs.AquaticScourge;
 
 namespace CalRemix
 {
@@ -637,6 +638,26 @@ namespace CalRemix
             }
             if (transmogrifyTimeLeft > 0) transmogrifyTimeLeft--;
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
+            if (!NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
+            {
+                if (CalamityUtils.CountProjectiles(ProjectileID.ChumBucket) > 22 && Main.LocalPlayer.Calamity().ZoneSulphur)
+                {
+                    foreach (Projectile p in Main.projectile)
+                    {
+                        if (p != null && p.active)
+                        {
+                            if (p.type == ProjectileID.ChumBucket)
+                            {
+                                p.Kill();
+                            }
+                        }
+                    }
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<AquaticScourgeHead>());
+                    }
+                }
+            }
         }
 
         public static void AddLootDynamically(int npcType, bool npc = false)
