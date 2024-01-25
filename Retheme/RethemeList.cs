@@ -34,6 +34,7 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee.Yoyos;
+using CalamityMod.Items.Placeables.Ores;
 
 namespace CalRemix.Retheme
 {
@@ -322,6 +323,16 @@ namespace CalRemix.Retheme
             { ProjectileType<CelestusProj>(), "Exo/Celestus" },
             { ProjectileType<SupernovaBomb>(), "Exo/Supernova" },
             #endregion
+        };
+        internal static Dictionary<int, string> ItemNames = new()
+        {
+            { ItemType<InfestedClawmerang>(), "Shroomerang" },
+            { ItemType<PhantomicArtifact>(), "Phantomic Soul Artifact" },
+            { ItemType<UelibloomOre>(), "Tarragon Ore" },
+            { ItemType<UelibloomBar>(), "Tarragon Bar" },
+            { ItemType<SoulPiercer>(), "Stream Gouge" },
+            { ItemType<StreamGouge>(), "Soul Piercer" },
+            { ItemType<PhoenixFlameBarrage>(), "Dragon Flame Barrage" },
         };
     }
 }

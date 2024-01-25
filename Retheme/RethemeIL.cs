@@ -635,7 +635,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Rogue/InfestedClawmerangProj" : "CalRemix/Retheme/Crabulon/Shroomerang");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Rogue/InfestedClawmerangProj" : "CalRemix/Retheme/Crabulon/Shroomerang");
             }
         }
         private static void DankCreeperMinion(ILContext il)
@@ -753,7 +753,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Melee/DragonRageStaff" : "CalRemix/Retheme/Yharon/DragonRageStaff");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Melee/DragonRageStaff" : "CalRemix/Retheme/Yharon/DragonRageStaff");
             }
         }
         private static void FieryDraconid(ILContext il)
@@ -764,7 +764,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Summon/FieryDraconid" : "CalRemix/Retheme/Yharon/FieryDraconid");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Summon/FieryDraconid" : "CalRemix/Retheme/Yharon/FieryDraconid");
             }
         }
         private static void FinalDawnProjectile(ILContext il)
@@ -775,7 +775,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Rogue/FinalDawnProjectile" : "CalRemix/Retheme/Yharon/FinalDawnProjectile");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Rogue/FinalDawnProjectile" : "CalRemix/Retheme/Yharon/FinalDawnProjectile");
             }
         }
         private static void ExobladeProj(ILContext il)
@@ -826,7 +826,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Melee/ViolenceThrownProjectile" : "CalRemix/Retheme/Violence");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Melee/Violence" : "CalRemix/Retheme/Violence");
             }
         }
         private static void HolyBlast(ILContext il)
@@ -837,7 +837,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Boss/HolyBlast" : "CalamityMod/Projectiles/Boss/HolyBlastNight");
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? "CalamityMod/Projectiles/Boss/HolyBlast" : "CalamityMod/Projectiles/Boss/HolyBlastNight");
             }
         }
         #endregion

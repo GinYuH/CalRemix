@@ -34,8 +34,8 @@ using CalRemix.Retheme.NoFab;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Melee.Spears;
-using CalamityMod.Projectiles.Melee;
-using CalamityMod.Projectiles.BaseProjectiles;
+using Terraria.Localization;
+using CalamityMod.Rarities;
 
 namespace CalRemix.Retheme
 {
@@ -44,6 +44,7 @@ namespace CalRemix.Retheme
         internal static Dictionary<int, Asset<Texture2D>> NPCs = new();
         internal static Dictionary<int, Asset<Texture2D>> Items = new();
         internal static Dictionary<int, Asset<Texture2D>> Projs = new();
+        internal static Dictionary<int, string> OriginalItemNames = new();
         public override void Load()
         {
             if (Main.netMode != NetmodeID.Server)
@@ -65,6 +66,10 @@ namespace CalRemix.Retheme
             foreach (KeyValuePair<int, string> p in RethemeList.Projs)
             {
                 Projs.Add(p.Key, TextureAssets.Projectile[p.Key]);
+            }
+            foreach (KeyValuePair<int, string> p in RethemeList.ItemNames)
+            {
+                OriginalItemNames.Add(p.Key, Lang.GetItemName(p.Key).Value);
             }
         }
     }
@@ -178,42 +183,13 @@ namespace CalRemix.Retheme
                 item.defense -= 8;
                 item.bodySlot = EquipLoader.GetEquipSlot(Mod, "AshsCloakBody", EquipType.Body);
             }
-            if (!CalRemixWorld.itemChanges)
-                return;
-            #region Text Changes
-            if (item.type == ItemType<InfestedClawmerang>())
-            {
-                item.SetNameOverride("Shroomerang");
-            }
-            else if (item.type == ItemType<PhantomicArtifact>())
-            {
-                item.SetNameOverride("Phantomic Soul Artifact");
-            }
-            else if (item.type == ItemType<UelibloomOre>())
-            {
-                item.SetNameOverride("Tarragon Ore");
-            }
-            else if (item.type == ItemType<UelibloomBar>())
-            {
-                item.SetNameOverride("Tarragon Bar");
-            }
             else if (item.type == ItemType<CosmiliteBar>())
+                item.rare = CalRemixWorld.cosmislag ? ItemRarityID.Purple : RarityType<DarkBlue>();
+            else if (RethemeMaster.OriginalItemNames.ContainsKey(item.type))
             {
-                item.rare = ItemRarityID.Purple;
+                string name = CalRemixWorld.itemChanges ? RethemeList.ItemNames.GetValueOrDefault(item.type) : RethemeMaster.OriginalItemNames.GetValueOrDefault(item.type);
+                item.SetNameOverride(name);
             }
-            else if (item.type == ItemType<SoulPiercer>())
-            {
-                item.SetNameOverride("Stream Gouge");
-            }
-            else if (item.type == ItemType<StreamGouge>())
-            {
-                item.SetNameOverride("Soul Piercer");
-            }
-            else if (item.type == ItemType<PhoenixFlameBarrage>())
-            {
-                item.SetNameOverride("Dragon Flame Barrage");
-            }
-            #endregion
         }
         public override void UpdateEquip(Item item, Player player)
         {
