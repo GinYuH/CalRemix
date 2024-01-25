@@ -1,6 +1,7 @@
 using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.Items.Accessories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -158,7 +159,7 @@ namespace CalRemix.ElementalSystem
         public Element[] element;
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
-            if (source is EntitySource_ItemUse usesource && usesource.Item.GetGlobalItem<ElementItem>().element != null)
+            if (source is EntitySource_ItemUse usesource && !string.IsNullOrWhiteSpace(usesource.Item.Name) && usesource.Item.GetGlobalItem<ElementItem>().element != null)
             {
                 element = usesource.Item.GetGlobalItem<ElementItem>().element;
             }

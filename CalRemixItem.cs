@@ -558,6 +558,7 @@ namespace CalRemix
                 calplayer.flameLickedShell = true;
                 calplayer.permafrostsConcoction = true;
                 calplayer.aquaticHeart = true;
+                calplayer.aquaticHeartHide = hideVisual;
                 dukePlayer.OldDukeScalesOn = true;
                 if (calplayer.SpongeShieldDurability > 0)
                 {

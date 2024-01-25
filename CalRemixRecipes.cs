@@ -611,6 +611,12 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
+                if (recipe.HasResult(ModContent.ItemType<Fabstaff>()) && recipe.TryGetIngredient(ItemID.RainbowRod, out Item rod) && recipe.TryGetIngredient(ModContent.ItemType<Polterplasm>(), out Item plasm))
+                {
+                    rod.type = ModContent.ItemType<BucketofCoal>();
+                    plasm.type = ItemID.MartianConduitPlating;
+                    plasm.stack = 1000;
+                }
                 if (!recipe.HasResult(ModContent.ItemType<HauntedBar>()) && recipe.TryGetIngredient(ModContent.ItemType<RuinousSoul>(), out Item ruin))
                 {
                     ruin.type = ModContent.ItemType<HauntedBar>();

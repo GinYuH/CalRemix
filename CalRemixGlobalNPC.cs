@@ -675,11 +675,11 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<GreatSandShark>())
             {
-                LeadingConditionRule toothRule = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule toothRule = new LeadingConditionRule(new Conditions.IsExpert());
                 toothRule.Add(ModContent.ItemType<SandSharkToothNecklace>(), 4, hideLootReport: !Main.expertMode);
                 toothRule.AddFail(ModContent.ItemType<SandSharkToothNecklace>(), 3, hideLootReport: Main.expertMode);
 
-                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsExpert());
                 LeadingConditionRule normal = npcLoot.DefineNormalOnlyDropSet();
                 int[] itemIDs = new int[6]
                 {

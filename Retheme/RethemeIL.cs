@@ -786,7 +786,7 @@ namespace CalRemix.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Projectiles/Melee/ExobladeProj" : "CalRemix/Retheme/Exo/Blade");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Melee/Exoblade" : "CalRemix/Retheme/Exo/Blade");
             }
         }
         private static void HeavenlyGaleProj(ILContext il)
