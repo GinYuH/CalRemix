@@ -28,6 +28,11 @@ using CalamityMod.Items.Materials;
 using CalRemix.Retheme;
 using CalRemix.Items.Placeables;
 using CalamityMod.Items.Pets;
+using CalamityMod.UI;
+using CalamityMod.NPCs.HiveMind;
+using Terraria.GameContent.Bestiary;
+using CalRemix.Projectiles.Weapons;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix
 {
@@ -158,6 +163,54 @@ namespace CalRemix
                     cal.Call("LoadParticleInstances", instance);
                 });
             }
+            cal.Call("RegisterModPopupGUIs", instance);
+            AddHiveBestiary(ModContent.NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
+            AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
+            AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
+            RefreshBestiary();
+        }
+
+        public static void AddHiveBestiary(int id, string entryText)
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers modifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
+            modifiers.Hide = false;
+            if (id == ModContent.NPCType<DankCreeper>())
+            {
+                modifiers.CustomTexturePath = "CalRemix/Retheme/HiveMind/DankCreeper";
+            }
+            if (id == ModContent.NPCType<HiveBlob>())
+            {
+                modifiers.CustomTexturePath = "CalRemix/Retheme/HiveMind/HiveBlob";
+            }
+            if (id == ModContent.NPCType<DarkHeart>())
+            {
+                modifiers.PortraitPositionXOverride = 10;
+                modifiers.PortraitPositionYOverride = 20;
+            }
+
+            NPCID.Sets.NPCBestiaryDrawOffset[id] = modifiers;
+            BestiaryEntry b = new BestiaryEntry();
+            b.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption,
+        new FlavorTextBestiaryInfoElement(entryText)
+            });
+            int associatedNPCType = ModContent.NPCType<HiveMind>();
+            b.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
+            ContentSamples.NpcsByNetId[id].ModNPC?.SetBestiary(Main.BestiaryDB, b);
+        }
+
+        public static void RefreshBestiary()
+        {
+            ContentSamples.RebuildBestiarySortingIDsByBestiaryDatabaseContents(Main.BestiaryDB);
+            ItemDropDatabase itemDropDatabase = new ItemDropDatabase();
+            itemDropDatabase.Populate();
+            Main.ItemDropsDB = itemDropDatabase;
+            Main.BestiaryDB.Merge(Main.ItemDropsDB);
+            if (!Main.dedServ)
+            {
+                Main.BestiaryUI = new Terraria.GameContent.UI.States.UIBestiaryTest(Main.BestiaryDB);
+            }
         }
 
         public override void Load()
@@ -167,7 +220,7 @@ namespace CalRemix
 
             if (!Main.dedServ)
             {
-                Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
             }
             CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
