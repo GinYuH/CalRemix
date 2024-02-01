@@ -18,6 +18,9 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
                 NearDungeonEntrance));
 
+            fannyMessages.Add(new FannyMessage("Arsenic", "This place is a lot more out of this world than when I was last here! Try breaking through walls to find the rare and precious Arsenic Ore which can be used for highly advanced robotics!", "Idle",
+                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneDungeon));
+
             fannyMessages.Add(new FannyMessage("Snowbr", "It's quite chilly here, maybe you should invest some time in gathering some cold-protective gear before you freeze to death!", "Idle",
                 (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSnow));
 
