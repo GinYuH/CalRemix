@@ -34,6 +34,7 @@ using CalamityMod.Buffs.StatDebuffs;
 using System.Security.Policy;
 using CalRemix.Buffs;
 using CalRemix.Items.Accessories;
+using CalRemix.Walls;
 
 namespace CalRemix
 {
@@ -90,6 +91,7 @@ namespace CalRemix
 		public bool invGar;
         public bool clockBar;
         public bool anomaly109UI;
+		public bool dungeon2;
 		public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
@@ -582,6 +584,14 @@ namespace CalRemix
                 if (Player.yoraiz0rEye == 0)
                     Player.yoraiz0rEye = 3;
             }
+			if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == ModContent.WallType<StratusWallRemix>())
+			{
+                dungeon2 = true;
+			}
+			else
+			{
+				dungeon2 = false;
+			}
             #region stealth cuts
             if (tvo) //Verboten one
 			{
@@ -681,7 +691,7 @@ namespace CalRemix
             if (moonFist && item.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
-				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type) && !abnormalEnemyList.Contains(target.type)) 
+				if (target.boss == false && !abnormalEnemyList.Contains(target.type)) 
 				{				
 					if (Main.rand.NextBool(10))
 						{
@@ -703,7 +713,7 @@ namespace CalRemix
 			if (moonFist && proj.DamageType == DamageClass.Melee)
 			{
 				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
-				if (target.boss == false && !CalamityLists.bossMinionList.Contains(target.type)) 
+				if (target.boss == false) 
 				{				
 					if(Main.rand.NextBool(10))
 					{

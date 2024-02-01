@@ -51,6 +51,7 @@ using System.Reflection;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using CalamityMod.Items.Armor;
+using CalamityMod.Items.Placeables.FurnitureStratus;
 
 namespace CalRemix
 {
@@ -113,6 +114,14 @@ namespace CalRemix
                 Recipe cell = Recipe.Create(ModContent.ItemType<PlagueCellCanister>(), 1);
                 cell.AddRecipeGroup(RecipeGroupID.IronBar);
                 cell.AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom));
+                cell.Register();
+            }
+            {
+                Recipe cell = Recipe.Create(ModContent.ItemType<DubiousPlating>(), 4);
+                cell.AddIngredient(ModContent.ItemType<ArsenicOre>(), 8);
+                cell.AddIngredient(ItemID.Bone);
+                cell.AddRecipeGroup("AnyGoldBar");
+                cell.AddTile(TileID.Furnaces);
                 cell.Register();
             }
             {
@@ -336,6 +345,14 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<Seafood>()))
                 {
                     recipe.AddCondition(new Condition("Locked recipe. Make the other Seafood.", () => !CalRemixWorld.seafood));
+                }
+                if (recipe.HasResult(ModContent.ItemType<StratusBricks>()) && recipe.HasIngredient(ModContent.ItemType<RuinousSoul>()))
+                {
+                    recipe.DisableDecraft();
+                }
+                if (recipe.HasIngredient(ModContent.ItemType<StratusBricks>()) && !recipe.HasResult(ModContent.ItemType<StratusPlatform>()))
+                {
+                    recipe.DisableDecraft();
                 }
                 #region Accessory edits
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))

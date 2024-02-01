@@ -77,6 +77,7 @@ using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.AstrumDeus;
+using CalamityMod.NPCs.Crags;
 
 namespace CalRemix
 {
@@ -138,6 +139,7 @@ namespace CalRemix
         public override void Load()
         {
             On_NPC.NewNPC += KillHiveMind;
+            On_NPC.SpawnOnPlayer += KillDungeonGuardians;
         }
 
         public override void SetStaticDefaults()
@@ -1083,8 +1085,17 @@ namespace CalRemix
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(text, color);
         }
+        private static void KillDungeonGuardians(Terraria.On_NPC.orig_SpawnOnPlayer orig, int player, int type)
+        {
+            if (type == NPCID.DungeonGuardian)
+                return;
+            else
+                orig(player, type);
+        }
         private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
+            if (type == NPCID.DungeonGuardian)
+                return 0;
             if (!CalRemixWorld.grimesandToggle)
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
             if (spawnSource is EntitySource_Death)
@@ -1112,6 +1123,72 @@ namespace CalRemix
             else
             {
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
+            }
+        }
+
+        public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+        {
+            if (player.GetModPlayer<CalRemixPlayer>().dungeon2)
+            {
+                spawnRate = NPC.downedMoonlord ? (int)(spawnRate * 0.2f) : NPC.downedPlantBoss ? (int)(spawnRate * 0.4f) : (int)(spawnRate * 0.6f);
+                maxSpawns *= NPC.downedMoonlord ? 16 : NPC.downedBoss3 ? 12 : 8;
+            }
+        }
+
+        public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
+            {
+                pool.Clear();
+                if (NPC.downedBoss3)
+                {
+                    pool.Add(NPCID.AngryBones, 1);
+                    pool.Add(NPCID.AngryBonesBig, 1);
+                    pool.Add(NPCID.AngryBonesBigHelmet, 1);
+                    pool.Add(NPCID.AngryBonesBigMuscle, 1);
+                    pool.Add(NPCID.DarkCaster, 0.5f);
+                    pool.Add(NPCID.CursedSkull, 0.5f);
+                    pool.Add(NPCID.DungeonSlime, 0.05f);
+                    pool.Add(NPCID.SpikeBall, 0.05f);
+                    pool.Add(NPCID.BlazingWheel, 0.05f);
+                    if (Main.hardMode)
+                    {
+                        pool.Add(ModContent.NPCType<RenegadeWarlock>(), 0.05f);
+                    }
+                    if (NPC.downedPlantBoss)
+                    {
+                        pool.Add(NPCID.BlueArmoredBones, 1);
+                        pool.Add(NPCID.BlueArmoredBonesMace, 1);
+                        pool.Add(NPCID.BlueArmoredBonesNoPants, 1);
+                        pool.Add(NPCID.BlueArmoredBonesSword, 1);
+                        pool.Add(NPCID.HellArmoredBones, 1);
+                        pool.Add(NPCID.HellArmoredBonesMace, 1);
+                        pool.Add(NPCID.HellArmoredBonesSpikeShield, 1);
+                        pool.Add(NPCID.HellArmoredBonesSword, 1);
+                        pool.Add(NPCID.RustyArmoredBonesAxe, 1);
+                        pool.Add(NPCID.RustyArmoredBonesFlail, 1);
+                        pool.Add(NPCID.RustyArmoredBonesSword, 1);
+                        pool.Add(NPCID.RustyArmoredBonesSwordNoArmor, 1);
+                        pool.Add(NPCID.Necromancer, 0.2f);
+                        pool.Add(NPCID.DiabolistRed, 0.1f);
+                        pool.Add(NPCID.DiabolistWhite, 0.1f);
+                        pool.Add(NPCID.RaggedCaster, 0.2f);
+                        pool.Add(NPCID.Paladin, 0.05f);
+                        pool.Add(NPCID.TacticalSkeleton, 0.2f);
+                        pool.Add(NPCID.SkeletonSniper, 0.2f);
+                        pool.Add(NPCID.SkeletonCommando, 0.2f);
+                        pool.Add(NPCID.GiantCursedSkull, 0.2f);
+                        pool.Add(NPCID.BoneLee, 0.2f);
+                    }
+                    if (spawnInfo.Water && DownedBossSystem.downedPolterghast)
+                    {
+                        pool.Add(ModContent.NPCType<MinnowsPrime>(), 1f);
+                    }
+                }
+                else if (spawnInfo.Player.ZoneDirtLayerHeight || spawnInfo.Player.ZoneRockLayerHeight)
+                {
+                    pool.Add(NPCID.DungeonGuardian, 22f);
+                }
             }
         }
     }

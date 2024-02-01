@@ -1580,6 +1580,8 @@ Mods: {
 				DisplayName: ENVIRONMENT LOG - Exosphere
 				Tooltip: Click to view its contents
 			}
+
+			ArsenicOre.DisplayName: Arsenic Ore
 		}
 
 		NPCs: {
@@ -1919,6 +1921,7 @@ Mods: {
 			MeldGunkPlaced.MapEntry: Meld Gunk Placed
 			GrimesandPlaced.MapEntry: Grimesand Placed
 			Anomaly109Placed.MapEntry: Anomaly109 Placed
+			ArsenicOrePlaced.MapEntry: Arsenic Ore Placed
 		}
 
 		Enchantments: {
