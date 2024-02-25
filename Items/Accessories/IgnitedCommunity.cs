@@ -17,7 +17,6 @@ namespace CalRemix.Items.Accessories
     public class IgnitedCommunity : ModItem
     {
         public int count = 0;
-        private static string people = "AmmyanDocCiesh, BenAbyssJerry, FixationActuation, YYzstNeurosis, Ligmachi,\nEnamoured-melody, Krossseh, TheWulfrumKing, EiramC, InxieRatZey, Yez22, Jellybloop, Explodingcats43, Sup.Crispy,\nDragoncraft9WasTaken, Healthy23, BabyblueSheep, Tehpootisman2, BrimstoneHawk, DeimosCalamitousGamer, BattleBee,\nLeBiggenedQuack, Starphantasm, ZAtaraxious, Ltrltrltr1234, Aloneinthevoid, AGorbus, BloodflareExpert,\nUltravioletColdSeekerMissile, FallenEntropy, AShottyStool, Spaghet55, SpamtonG95";
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -35,12 +34,6 @@ namespace CalRemix.Items.Accessories
                 TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedStats", $"Remix Items crafted: {count} ({count}% damage and {count * 2} defense)");
                 lineAdd.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
                 tooltips.Insert(tooltips.IndexOf(line2) + 1, lineAdd);
-            }
-            TooltipLine line3 = tooltips.Find((TooltipLine t) => t.Text.Contains("Hold \"Left Shift\" for the full contributor list"));
-            if (line3 != null && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
-            {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedPeople", people);
-                tooltips.Insert(tooltips.IndexOf(line3) + 1, lineAdd);
             }
         }
 

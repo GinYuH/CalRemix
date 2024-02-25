@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.Items.Potions
 {
@@ -24,10 +24,14 @@ namespace CalRemix.Items.Potions
             Item.useTime = 17;
             Item.value = Item.sellPrice(gold: 10);
             Item.UseSound = SoundID.Item2;
-            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.buffType = BuffID.WellFed2;
             Item.buffTime = 14400;
+        }
+        public override void UseItemFrame(Player player)
+        {
+            player.itemRotation = MathHelper.PiOver4;
         }
     }
 }

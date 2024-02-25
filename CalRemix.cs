@@ -15,33 +15,25 @@ using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using ReLogic.Content;
-using Terraria.GameContent;
-using ReLogic;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using CalRemix.Backgrounds.Plague;
-using Terraria.Audio;
 using Terraria.Graphics.Effects;
-using Microsoft.Xna.Framework.Graphics;
-using CalamityMod.Items.Materials;
-using CalRemix.Retheme;
-using CalRemix.Items.Placeables;
-using CalamityMod.Items.Pets;
-using CalamityMod.UI;
 using CalamityMod.NPCs.HiveMind;
 using Terraria.GameContent.Bestiary;
-using CalRemix.Projectiles.Weapons;
 using Terraria.GameContent.ItemDropRules;
+using CalRemix.Scenes;
+using Terraria.Graphics.Shaders;
+using System.Reflection;
 
 namespace CalRemix
 {
     public class CalRemix : Mod
     {
         public static CalRemix instance;
+
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
-        public Mod VeinMiner;
 
         public static List<int> oreList = new List<int>
         {
@@ -54,10 +46,40 @@ namespace CalRemix
             TileID.Gold,
             TileID.Platinum
         };
+        // Defer mod call handling to the extraneous mod call manager.
+        public override object Call(params object[] args) => ModCallManager.Call(args);
+        public override void Load()
+        {
+            instance = this;
 
+            PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
+
+            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
+            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.KlepticoinCurrency(ModContent.ItemType<Items.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
+
+            if (!Main.dedServ)
+            {
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:CalamitySky"] = new Filter(new ScreenShaderData("FilterMoonLord"), EffectPriority.High);
+                SkyManager.Instance["CalRemix:CalamitySky"] = new CalamitySky();
+            }
+        }
+        public override void Unload()
+        {
+            FieldInfo enabledMods = typeof(ModLoader).GetField("_enabledMods", BindingFlags.NonPublic | BindingFlags.Static);
+            HashSet<string> modsList = (HashSet<string>)enabledMods.GetValue(null);
+            if (!modsList.Contains("CalRemix"))
+                Utils.OpenToURL("https://cdn.discordapp.com/attachments/1021557397770207324/1206476905180565514/Fanny.png?ex=65dc262d&is=65c9b12d&hm=8c6cb458d96bf5947f97e3c38c128df85bb42a31ccb61245ed3a98a806fa52d1&");
+
+            PlagueGlobalNPC.PlagueHelper = null;
+            instance = null;
+        }
         public override void PostSetupContent()
         {
+            // Calamity Calls
             Mod cal = ModLoader.GetMod("CalamityMod");
+            cal.Call("RegisterModPopupGUIs", this);
             cal.Call("RegisterModCooldowns", this);
             cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<Clamitas>());
@@ -67,75 +89,50 @@ namespace CalRemix
             cal.Call("DeclareMiniboss", ModContent.NPCType<YggdrasilEnt>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<KingMinnowsPrime>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
-            /*cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
-            cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
-			{
-				Mod bossChecklist;
-				ModLoader.TryGetMod("BossChecklist", out bossChecklist);
-				if (bossChecklist != null)
-				{
-					bossChecklist.Call(new object[12]
-				{
-				"AddBoss",
-				12.5f,
-				ModContent.NPCType<NPCs.Bosses.DerellectBoss>(),
-				this,
-				"The Derellect",
-				(Func<bool>)(() => CalRemixWorld.downedDerellect),
-				ModContent.ItemType<CalamityMod.Items.Pets.BloodyVein>(),
-				null,
-				new List<int>
-				{
-					ModLoader.GetMod("CalamityMod").Find<ModItem>("BloodyVein").Type
-				},
-				$"Damage the Mechanical Worm using a [i:{ModContent.ItemType<CalamityMod.Items.Pets.BloodyVein>()}]. But why would you do that?",
-				"The Derellect returns to the scrap heap...",
-				null
-				});
-				}
-			}*/
-            ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist);
-            if (bossChecklist != null)
+            //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
+            //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
+
+            AddEnchantments(cal);
+            LoadBossRushEntries(cal);
+
+            if (Main.netMode != NetmodeID.Server)
             {
-                Action<SpriteBatch, Rectangle, Color> portrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                    Texture2D texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Wulfwyrm/WulfwyrmBossChecklist").Value;
-                    Vector2 centered = new Vector2(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
-                    sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
-                };
-                bossChecklist.Call("LogBoss", this, "WulfrumExcavator", 0.22f, () => CalRemixWorld.downedExcavator, ModContent.NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
+                Main.QueueMainThreadAction(() =>
                 {
-                    ["spawnItems"] = ModContent.ItemType<EnergyCore>(),
-                    ["customPortrait"] = portrait
+                    cal.Call("LoadParticleInstances", instance);
                 });
-                bossChecklist.Call("LogMiniBoss", this, "Clamitas", 6.8f, () => CalRemixWorld.downedClamitas, ModContent.NPCType<Clamitas>(), new Dictionary<string, object>());
-                Action<SpriteBatch, Rectangle, Color> cdPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                    Texture2D texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/CyberDraedon").Value;
-                    Vector2 centered = new Vector2(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
-                    sb.Draw(texture, centered, null, new Color(0, 255, 255, 125), 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
-                };
-                bossChecklist.Call("LogMiniBoss", this, "CyberDraedon", 3.99999f, () => CalRemixWorld.downedCyberDraedon, ModContent.NPCType<CyberDraedon>(), new Dictionary<string, object>()
-                {
-                    ["spawnItems"] = ModContent.ItemType<BloodyVein>(),
-                    ["customPortrait"] = cdPortrait
-                });
-                bossChecklist.Call("LogMiniBoss", this, "KingMinnowsPrime", 18.1f, () => CalRemixWorld.downedKingMinnowsPrime, ModContent.NPCType<KingMinnowsPrime>(), new Dictionary<string, object>());
-                bossChecklist.Call("LogMiniBoss", this, "LaRuga", 20.2f, () => CalRemixWorld.downedLaRuga, ModContent.NPCType<LaRuga>(), new Dictionary<string, object>());
-                bossChecklist.Call("LogMiniBoss", this, "LifeSlime", 16.7f, () => CalRemixWorld.downedLifeSlime, ModContent.NPCType<LifeSlime>(), new Dictionary<string, object>());
-                bossChecklist.Call("LogMiniBoss", this, "OnyxKinsman", 7.5f, () => CalRemixWorld.downedOnyxKinsman, ModContent.NPCType<OnyxKinsman>(), new Dictionary<string, object>());
-                bossChecklist.Call("LogMiniBoss", this, "PlagueEmperor", 21.5f, () => CalRemixWorld.downedPlagueEmperor, ModContent.NPCType<PlagueEmperor>(), new Dictionary<string, object>());
-                bossChecklist.Call("LogMiniBoss", this, "YggdrasilEnt", 18.2f, () => CalRemixWorld.downedYggdrasilEnt, ModContent.NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
             }
-            ModLoader.TryGetMod("Wikithis", out Mod wikithis);
-            if (wikithis != null && !Main.dedServ)
+            AddHiveBestiary(ModContent.NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
+            AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
+            AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
+            RefreshBestiary();
+        }
+        internal void AddEnchantments(Mod cal)
+        {
+            LocalizedText defiant = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Defiant.Name");
+            LocalizedText defiantDesc = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Defiant.Description");
+            cal.Call("CreateEnchantment", defiant, defiantDesc, 150, new Predicate<Item>(DefiantEnchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneDefiant", delegate (Player player)
             {
-                wikithis.Call("AddModURL", this, "https://terrariamods.wiki.gg/wiki/Calamity_Community_Remix/{}");
-            }
+                player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
+            });
+
             LocalizedText fallacious = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Name");
             LocalizedText fallaciousDesc = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Description");
-            cal.Call("CreateEnchantment", fallacious, fallaciousDesc, 156, new Predicate<Item>(Enchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
+            cal.Call("CreateEnchantment", fallacious, fallaciousDesc, 156, new Predicate<Item>(FallaciousEnchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
             {
                 player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
             });
+        }
+        internal static bool DefiantEnchantable(Item item)
+        {
+            return item.IsEnchantable() && item.damage > 0;
+        }
+        internal static bool FallaciousEnchantable(Item item)
+        {
+            return item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip();
+        }
+        internal static void LoadBossRushEntries(Mod cal)
+        {
             List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries = (List<(int, int, Action<int>, int, bool, float, int[], int[])>)cal.Call("GetBossRushEntries");
             int[] excIDs = { ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>() };
             int[] headID = { ModContent.NPCType<WulfwyrmHead>() };
@@ -145,29 +142,6 @@ namespace CalRemix
             };
             brEntries.Insert(0, (ModContent.NPCType<WulfwyrmHead>(), -1, pr, 180, false, 0f, excIDs, headID));
             cal.Call("SetBossRushEntries", brEntries);
-
-            /* I hate enchantments
-            EnchantmentManager.EnchantmentList.Add(new Enchantment("Fallacious", "Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.\nDoes nothing for now.", 156, "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", null, delegate (Player player)
-            {
-                player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
-            }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
-            EnchantmentManager.EnchantmentList.Add(new Enchantment("Defiant", "Dealing damage increases defense and damage but defense damage taken is increased.\nDoes nothing for now.", 157, "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneDefiant", null, delegate (Player player)
-            {
-                player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
-            }, (Item item) => item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip()));
-			*/
-            if (Main.netMode != NetmodeID.Server)
-            {
-                Main.QueueMainThreadAction(() =>
-                {
-                    cal.Call("LoadParticleInstances", instance);
-                });
-            }
-            cal.Call("RegisterModPopupGUIs", instance);
-            AddHiveBestiary(ModContent.NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
-            AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
-            AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
-            RefreshBestiary();
         }
 
         public static void AddHiveBestiary(int id, string entryText)
@@ -212,35 +186,7 @@ namespace CalRemix
                 Main.BestiaryUI = new Terraria.GameContent.UI.States.UIBestiaryTest(Main.BestiaryDB);
             }
         }
-
-        public override void Load()
-        {
-            instance = this;
-            PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
-
-            if (!Main.dedServ)
-            {
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
-            }
-            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
-            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.KlepticoinCurrency(ModContent.ItemType<Items.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
-            ModLoader.TryGetMod("OreExcavator", out VeinMiner);
-        }
-        public override void Unload()
-        {
-            PlagueGlobalNPC.PlagueHelper = null;
-            instance = null;
-            VeinMiner = null;
-        }
-
-        public static bool Enchantable(Item item)
-        {
-            return item.IsEnchantable() && item.damage > 0 && !item.CountsAsClass<SummonDamageClass>() && !item.IsWhip();
-        }
-        // Defer mod call handling to the extraneous mod call manager.
-        public override object Call(params object[] args) => ModCallManager.Call(args);
-        public static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
+        internal static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
         {
             if (!condition || shop is null) return;
             shop.item[nextSlot].SetDefaults(type);

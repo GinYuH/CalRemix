@@ -403,13 +403,13 @@ namespace CalRemix.NPCs.Minibosses
         private static int GetDamage()
         {
 
-            int damage = 80;
+            int damage = 80 / 2;
             if (CalamityWorld.death)
-                damage = 200;
+                damage = 200 / 4;
             else if (CalamityWorld.revenge)
-                damage = 160;
+                damage = 160 / 4;
             else if (Main.expertMode)
-                damage = 120;
+                damage = 120 / 4;
             return damage;
         }
         private static int GetDarts()

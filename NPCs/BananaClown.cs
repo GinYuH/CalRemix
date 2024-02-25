@@ -28,7 +28,7 @@ using CalamityMod.Items.Weapons.Summon;
 using CalRemix.Biomes;
 using CalamityMod.Projectiles.Boss;
 using CalRemix.Items.Armor;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 
 namespace CalRemix.NPCs
 {

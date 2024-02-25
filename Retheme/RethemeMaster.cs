@@ -102,7 +102,9 @@ namespace CalRemix.Retheme
             }
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
-                typeName = "Brimdeath Witch, Calitas Jane";
+                SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
+                if (!cirrus.cirrus)
+                    typeName = "Brimdeath Witch, Calitas Jane";
             }
             else if (npc.type == NPCType<WITCH>())
             {

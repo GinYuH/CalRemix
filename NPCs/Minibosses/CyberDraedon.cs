@@ -13,7 +13,7 @@ using Terraria.GameContent;
 using System.IO;
 using Terraria.Chat;
 using Terraria.Localization;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 using CalamityMod.BiomeManagers;
 using CalRemix.UI;
 using System.Linq;
@@ -117,9 +117,9 @@ namespace CalRemix.NPCs.Minibosses
                 if (player.getRect().Intersects(NPC.getRect()) && player.immuneTime <= 0)
                 {
                     if (Main.expertMode)
-                        player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), (int)(player.statLife / 10f), (player.Center.X > NPC.Center.X) ? 1 : -1, dodgeable: false, armorPenetration: 10000);
+                        player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), (int)(player.statLifeMax2 / 10f), (player.Center.X > NPC.Center.X) ? 1 : -1, dodgeable: false, armorPenetration: 10000);
                     else
-                        player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), (int)(player.statLife / 20f), (player.Center.X > NPC.Center.X) ? 1 : -1, dodgeable: false, armorPenetration: 10000);
+                        player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), (int)(player.statLifeMax2 / 20f), (player.Center.X > NPC.Center.X) ? 1 : -1, dodgeable: false, armorPenetration: 10000);
                 }
             }
             State++;

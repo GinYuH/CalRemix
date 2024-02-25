@@ -71,8 +71,12 @@ namespace CalRemix
     public class CalRemixWorld : ModSystem
     {
         public static bool downedEarth = false;
+
+        public static bool downedCalamity = false;
         public static bool downedExcavator = false;
+        public static bool downedAcidsighter = false;
         public static bool downedDerellect = false;
+        public static bool downedPolyphemalus = false;
 
         public static bool downedLifeSlime = false;
         public static bool downedClamitas = false;
@@ -129,6 +133,7 @@ namespace CalRemix
         public static bool fearmonger = true;
         public static bool seafood = true;
         public static bool laruga = true;
+        public static bool acidsighter = true;
 
         public List<int> DungeonWalls = new List<int>
         {
@@ -235,6 +240,7 @@ namespace CalRemix
             fearmonger = true;
             seafood = true;
             laruga = true;
+            acidsighter = true;
 
             loadedRecipeInjections = false;
 
@@ -294,6 +300,7 @@ namespace CalRemix
             fearmonger = true;
             seafood = true;
             laruga = true;
+            acidsighter = true;
 
             loadedRecipeInjections = false;
 
@@ -350,6 +357,7 @@ namespace CalRemix
             tag["109fearmonger"] = fearmonger;
             tag["109seafood"] = seafood;
             tag["109laruga"] = laruga;
+            tag["109acidsighter"] = acidsighter;
             tag["109fanny"] = FannyManager.fannyEnabled;
             tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
 
@@ -410,6 +418,7 @@ namespace CalRemix
             fearmonger= tag.Get<bool>("109fearmonger");// = fearmonger;
             seafood= tag.Get<bool>("109seafood");// = seafood;
             laruga= tag.Get<bool>("109laruga");// = laruga;
+            acidsighter = tag.Get<bool>("109acidsighter");// = acidsighter;
             FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
 
             transmogrifyingItem = tag.Get<int>("transmogrifyingItem");
@@ -457,6 +466,7 @@ namespace CalRemix
             writer.Write(fearmonger );//tag.Get<bool>("109fearmonger");;// );//fearmonger;
             writer.Write(seafood );//tag.Get<bool>("109seafood");;// );//seafood;
             writer.Write(laruga );//tag.Get<bool>("109laruga");;// );//laruga;
+            writer.Write(acidsighter);//tag.Get<bool>("109acidsighter");;// );//acidsighter;
             writer.Write(FannyManager.fannyEnabled);
             writer.Write(FannyManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
@@ -515,6 +525,7 @@ namespace CalRemix
             fearmonger = reader.ReadBoolean();//.Get<bool>("109fearmonger");// = fearmonger;
             seafood = reader.ReadBoolean();//.Get<bool>("109seafood");// = seafood;
             laruga = reader.ReadBoolean();//.Get<bool>("109laruga");// = laruga;
+            acidsighter = reader.ReadBoolean();
             FannyManager.fannyEnabled = reader.ReadBoolean();
             FannyManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();

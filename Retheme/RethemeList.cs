@@ -328,6 +328,7 @@ namespace CalRemix.Retheme
         {
             { ItemType<InfestedClawmerang>(), "Shroomerang" },
             { ItemType<PhantomicArtifact>(), "Phantomic Soul Artifact" },
+            { ItemType<MeldConstruct>(), "Meld Bar" },
             { ItemType<UelibloomOre>(), "Tarragon Ore" },
             { ItemType<UelibloomBar>(), "Tarragon Bar" },
             { ItemType<SoulPiercer>(), "Stream Gouge" },

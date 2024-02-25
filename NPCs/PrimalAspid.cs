@@ -94,7 +94,7 @@ namespace CalRemix.NPCs
                                 Vector2 velocity = dist * 16;
                                 Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4 / 3, MathHelper.PiOver4 / 3, i / (float)(3 - 1)));
 
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.AspidShot>(), Main.expertMode ? NPC.damage / 4 : NPC.damage / 2, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Hostile.AspidShot>(), Main.expertMode ? NPC.damage / 4 : NPC.damage / 2, 0f);
                             }
                         }
                         NPC.ai[1] = -60;

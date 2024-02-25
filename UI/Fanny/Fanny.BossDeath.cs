@@ -16,6 +16,9 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Cryodeath", "Ha! Snow's over, Cryogen! Wasn't that pretty cool?",
                "Idle", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedCryogen));
 
+            fannyMessages.Add(new FannyMessage("FollyDeath", "You finally beat the Dragonfolly! Though, I don't know why you'd need pheromones though. I mean, you're already a handsome fellow...",
+               "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedDragonfolly).SetHoverTextOverride("Uhm.... Thanks for the help, Fanny...?"));
+
             fannyMessages.Add(new FannyMessage("DraedonExit", "Good golly! You did it! Though I'd HATE to imagine the financial losses caused by the destruction of those machines.",
                 "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedExoMechs));
 

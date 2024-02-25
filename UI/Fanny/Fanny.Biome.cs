@@ -54,8 +54,17 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("DeepAbyss", "Tired of this pesky abyss drowning you? I have an idea! If you go into the underworld and poke a hole at the bottom, all the water will drain out! No more pesky pressure!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3));
 
+            fannyMessages.Add(new FannyMessage("InfernumAbyss", "Try looking for chests down here! I’ve heard there’s unique treasures to be found! A spelunker potion should help!",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && ModLoader.TryGetMod("InfernumMode", out _)));
+
+            fannyMessages.Add(new FannyMessage("NoInfernumAbyss", "Try hunting the creatures for new weapons! Hunter, Battle and Zerg potions should help!",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && !ModLoader.TryGetMod("InfernumMode", out _)));
+
             fannyMessages.Add(new FannyMessage("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
-                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ItemID.RodofDiscord));
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyss && (Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>()))).AddItemDisplay(ItemID.RodofDiscord));
+
+            fannyMessages.Add(new FannyMessage("PlaguedJungle", "Man, this place reminds me of when I volunteered to help run a jungle-themed summer fair at a local elementary school! Long story short, everyone fainted due to dehydration. Not the plague. At least, that’s what I think.",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague));
 
             fannyMessages.Add(new FannyMessage("Temple", "I love house invasion!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple).SetHoverTextOverride("Me too Fanny!"));

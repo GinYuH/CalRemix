@@ -58,7 +58,7 @@ namespace CalRemix
     public partial class Recipes : ModSystem
     {
         public static RecipeGroup Blinkchid, Daychid, Moonchid, Deathchid, Waterchid, Firechid, Shiverchid;
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar;
         public override void Unload()
         {
             Blinkchid = null;
@@ -71,6 +71,7 @@ namespace CalRemix
             GreaterEvil = null;
             EvilBar = null;
             T4Bar = null;
+            HMT1Bar = null;
         }
         public override void AddRecipeGroups()
         {
@@ -88,6 +89,8 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:EvilBar", EvilBar);
             T4Bar = new RecipeGroup(() => "Any Tier 4 Bar", ItemID.GoldBar, ItemID.PlatinumBar);
             RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
+            HMT1Bar = new RecipeGroup(() => "Any Tier 1 Hardmode Bar", ItemID.CobaltBar, ItemID.PalladiumBar);
+            RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
         }
         public override void AddRecipes() 
         {
@@ -245,28 +248,26 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<AcesLow>();
                 }
-                if (recipe.HasResult(ModContent.ItemType<CosmicImmaterializer>()) && recipe.TryGetIngredient(ModContent.ItemType<SanctifiedSpark>(), out Item spark))
+                if (recipe.HasResult(ModContent.ItemType<CosmicImmaterializer>()))
                 {
-                    spark.type = ModContent.ItemType<DarkEnergyStaff>();
+                    recipe.RemoveIngredient(ModContent.ItemType<SanctifiedSpark>());
+                    recipe.AddIngredient(ModContent.ItemType<DarkEnergyStaff>());
                 }
                 if (recipe.HasResult(ModContent.ItemType<Supernova>()))
                 {
-                    if (recipe.TryGetIngredient(ModContent.ItemType<SealedSingularity>(), out Item sing))
-                        sing.type = ModContent.ItemType<UnsealedSingularity>();
-                    recipe.AddIngredient<ProfanedNucleus>();
+                    recipe.RemoveIngredient(ModContent.ItemType<SealedSingularity>());
+                    recipe.AddIngredient(ModContent.ItemType<UnsealedSingularity>());
+                    recipe.AddIngredient(ModContent.ItemType<ProfanedNucleus>());
                 }
-                if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
+                if (recipe.HasResult(ModContent.ItemType<Apotheosis>()))
                 {
-                    recipe.AddIngredient(ModContent.ItemType<AeroBolt>());
-                    recipe.AddIngredient(ModContent.ItemType<ThunderBolt>());
+                    recipe.RemoveIngredient(ItemID.SpellTome);
+                    recipe.AddIngredient(ModContent.ItemType<WrathoftheCosmos>());
                 }
-                if (recipe.HasResult(ModContent.ItemType<Apotheosis>()) && recipe.TryGetIngredient(ItemID.SpellTome, out Item sTome))
+                if (recipe.HasResult(ModContent.ItemType<Voidragon>()))
                 {
-                    sTome.type = ModContent.ItemType<WrathoftheCosmos>();
-                }
-                if (recipe.HasResult(ModContent.ItemType<Voidragon>()) && recipe.TryGetIngredient(ModContent.ItemType<Seadragon>(), out Item sDragon))
-                {
-                    sDragon.type = ModContent.ItemType<Megaskeet>();
+                    recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
+                    recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
                 }
                 bool shard = (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()));
                 if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && shard)
@@ -282,6 +283,13 @@ namespace CalRemix
                 if (recipe.TryGetIngredient(ModContent.ItemType<PearlShard>(), out Item pShard) && !(shard || shard))
                 {
                     pShard.type = ModContent.ItemType<ConquestFragment>();
+                }
+                if (recipe.HasResult(ModContent.ItemType<TearsofHeaven>()))
+                {
+                    recipe.RemoveIngredient(ItemID.WaterBolt);
+                    recipe.RemoveIngredient(ModContent.ItemType<CoreofSunlight>());
+                    recipe.AddIngredient(ModContent.ItemType<PlasmaflashBolt>());
+                    recipe.AddIngredient(ModContent.ItemType<SaltWaterBolt>());
                 }
                 if (recipe.HasResult(ModContent.ItemType<Elderberry>()))
                 {
@@ -628,20 +636,25 @@ namespace CalRemix
                     recipe.AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 10);
                     recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 10);
                 }
-                if (recipe.HasResult(ModContent.ItemType<Fabstaff>()) && recipe.TryGetIngredient(ItemID.RainbowRod, out Item rod) && recipe.TryGetIngredient(ModContent.ItemType<Polterplasm>(), out Item plasm))
+                if (recipe.HasResult(ModContent.ItemType<Fabstaff>()))
                 {
-                    rod.type = ModContent.ItemType<BucketofCoal>();
-                    plasm.type = ItemID.MartianConduitPlating;
-                    plasm.stack = 1000;
+                    recipe.RemoveIngredient(ItemID.RainbowRod);
+                    recipe.RemoveIngredient(ModContent.ItemType<Polterplasm>());
+                    recipe.AddIngredient(ModContent.ItemType<BucketofCoal>());
+                    recipe.AddIngredient(ItemID.MartianConduitPlating, 1000);
                 }
-                if (!recipe.HasResult(ModContent.ItemType<HauntedBar>()) && recipe.TryGetIngredient(ModContent.ItemType<RuinousSoul>(), out Item ruin))
+                if (!recipe.HasResult(ModContent.ItemType<HauntedBar>()) && recipe.TryGetIngredient(ModContent.ItemType<RuinousSoul>(), out Item rSoul))
                 {
-                    ruin.type = ModContent.ItemType<HauntedBar>();
+                    recipe.RemoveIngredient(ModContent.ItemType<RuinousSoul>());
+                    recipe.AddIngredient(ModContent.ItemType<HauntedBar>(), rSoul.stack);
                 }
                 if (!recipe.HasResult(ModContent.ItemType<ElementalBar>()) && recipe.TryGetIngredient(ModContent.ItemType<GalacticaSingularity>(), out Item ing))
                 {
                     if (ing.stack % 5 == 0 && ing.stack > 1)
-                        ing.type = ModContent.ItemType<ElementalBar>();
+                    {
+                        recipe.RemoveIngredient(ModContent.ItemType<GalacticaSingularity>());
+                        recipe.AddIngredient(ModContent.ItemType<ElementalBar>(), ing.stack);
+                    }
                 }
             }
             for (int i = 0; i < Recipe.numRecipes; i++)

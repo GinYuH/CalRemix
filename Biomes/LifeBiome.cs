@@ -15,7 +15,7 @@ namespace CalRemix.Biomes
 
 		// Populate the Bestiary Filter
 		public override string BestiaryIcon => "CalRemix/Biomes/LifeIcon";
-		public override string BackgroundPath => "CalRemix/Biomes/LifeMap";
+		public override string BackgroundPath => "Terraria/Images/MapBG2";
 		public override Color? BackgroundColor => Color.Lime;
 		//public override string Name => "Life Heart";
 

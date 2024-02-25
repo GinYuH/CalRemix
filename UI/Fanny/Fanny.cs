@@ -552,6 +552,8 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Invisible", "Where did you go?",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || (Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax && Main.LocalPlayer.Calamity().rogueStealthMax > 0), onlyPlayOnce: true).SetHoverTextOverride("I'm still here Fanny!"));
+            fannyMessages.Add(new FannyMessage("Cursed", "Looks like you've been cursed! If you spam Left Click, you'll be able to use items again sooner!",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.cursed));
         }
         #endregion
 
@@ -1071,7 +1073,7 @@ namespace CalRemix.UI
         public int frameCount;
         public int animationSpeed;
 
-        public static void LoadPortrait(string portraitName, int frameCount, int animationSpeed = 12)
+        public static void LoadPortrait(string portraitName, int frameCount, int animationSpeed = 11)
         {
             FannyPortrait portrait = new FannyPortrait(portraitName, frameCount, animationSpeed);
             //Load itself into the portrait list
@@ -1079,7 +1081,7 @@ namespace CalRemix.UI
                 FannyManager.Portraits.Add(portraitName, portrait);
         }
 
-        public FannyPortrait(string portrait, int frameCount, int animationSpeed = 12)
+        public FannyPortrait(string portrait, int frameCount, int animationSpeed = 11)
         {
             Texture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Fanny" + portrait);
             this.frameCount = frameCount;

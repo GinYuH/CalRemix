@@ -16,7 +16,7 @@ using CalamityMod.World;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Projectiles.Weapons;
+using CalRemix.Projectiles.Hostile;
 using CalRemix.UI;
 using System.Collections.Generic;
 using System.Linq;

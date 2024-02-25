@@ -14,7 +14,7 @@ using CalamityMod.Items.Pets;
 using System;
 using ReLogic.Content;
 using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 using System.IO;
 
 namespace CalRemix.NPCs.Minibosses
@@ -76,7 +76,7 @@ namespace CalRemix.NPCs.Minibosses
             if (Attack > 300 && !activated)
             {
                 SoundEngine.PlaySound(SoundID.Item10, NPC.Center);
-                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 4f, ModContent.ProjectileType<EvilPlagueSeeker>(), 800, 6f, ai0: NPC.whoAmI);
+                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 4f, ModContent.ProjectileType<EvilPlagueSeeker>(), 140 / 2, 6f, ai0: NPC.whoAmI);
                 Attack = 0;
             }
             if (!activated)
@@ -90,7 +90,7 @@ namespace CalRemix.NPCs.Minibosses
             if (Attack % 90 == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item10, NPC.Center);
-                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(Target.Center) * 12f, ModContent.ProjectileType<EvilPlagueSeeker>(), 80, 6f, ai0: NPC.whoAmI);
+                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(Target.Center) * 12f, ModContent.ProjectileType<EvilPlagueSeeker>(), 140 / 2, 6f, ai0: NPC.whoAmI);
             }
             if (Attack > 600)
             {
@@ -98,11 +98,17 @@ namespace CalRemix.NPCs.Minibosses
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PlagueHomingMissile>());
-                    npc.velocity = NPC.DirectionTo(Target.Center) * 10f; 
+                    npc.velocity = NPC.DirectionTo(Target.Center) * 10f;
+                    npc.damage = (Main.expertMode) ? 280 : 140;
+                    npc.dontTakeDamage = true;
                     NPC npc2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PlagueHomingMissile>());
-                    npc2.velocity = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.ToRadians(-45)).RotatedByRandom(MathHelper.ToRadians(22.5f)) * 10f; 
+                    npc2.velocity = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.ToRadians(-45)).RotatedByRandom(MathHelper.ToRadians(22.5f)) * 10f;
+                    npc2.damage = (Main.expertMode) ? 280 : 140;
+                    npc2.dontTakeDamage = true;
                     NPC npc3 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PlagueHomingMissile>());
                     npc3.velocity = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.ToRadians(45)).RotatedByRandom(MathHelper.ToRadians(22.5f)) * 10f;
+                    npc3.damage = (Main.expertMode) ? 280 : 140;
+                    npc3.dontTakeDamage = true;
                 }
                 Attack = 0;
             }

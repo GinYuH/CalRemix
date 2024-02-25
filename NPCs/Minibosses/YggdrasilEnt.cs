@@ -9,7 +9,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Materials;
 using Terraria.Audio;
 using System;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.World;
@@ -55,6 +55,7 @@ namespace CalRemix.NPCs.Minibosses
             NPC.value = Item.buyPrice(gold: 60);
             NPC.HitSound = ScornEater.HitSound;
             NPC.DeathSound = ScornEater.DeathSound;
+            NPC.chaseable = false;
             NPC.noGravity = true;
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -74,7 +75,11 @@ namespace CalRemix.NPCs.Minibosses
             NPC.position.Y += (float)Math.Cos(Move / 6.50) * 0.25f;
             NPC.TargetClosest();
             if (NPC.life < NPC.lifeMax || Target.HasItem(ModContent.ItemType<BloodyVein>()))
+            {
+                NPC.chaseable = true;
                 angry = true;
+
+            }
              if (!angry)
                 return;
             Attack++;
@@ -88,12 +93,12 @@ namespace CalRemix.NPCs.Minibosses
                 Dust dust = Dust.NewDustDirect(pos, 0, 0, DustID.CopperCoin);
                 dust.velocity = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 6f;
             }
-            if (Attack > 120)
+            if (Attack > 90)
             {
-                if (Main.player[NPC.target].Distance(NPC.Center) < 4000)
+                if (Target.Distance(NPC.Center) < 4000)
                 {
                     SoundEngine.PlaySound(SoundID.NPCDeath43, NPC.Center);
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, pos.DirectionTo(Target.Center) * 32f, ModContent.ProjectileType<YggThorn>(), 120, 5);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, pos.DirectionTo(Target.Center) * 32f, ModContent.ProjectileType<YggThorn>(), 120 / 2, 5);
                     Attack = 0;
                     State = 0;
                 }
@@ -114,7 +119,7 @@ namespace CalRemix.NPCs.Minibosses
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if ((spawnInfo.Player.ZoneHallow || spawnInfo.Player.ZoneUnderworldHeight) && !NPC.AnyNPCs(Type) && NPC.downedMoonlord)
-                return 0.015f;
+                return 0.0100015f;
             return 0f;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

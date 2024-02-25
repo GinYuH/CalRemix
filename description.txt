@@ -15,13 +15,26 @@ More is (not) soon to come!!!
 Suffer.
 
 Extra Credits:
-Dominic Karma: A vast majority of the Wulfrum Excavator fight
-RegigigasSkyForm: Snippets of Dark Statis' code (literally who)
-Bloop: Gravitonomy Pike, Exodimus, Ogscule
-BrainMinusDown: Plague biome music and sprites
-ScalarVector: Localization roundabout code
-IbanPlay and Dominic Karma: Fanny code
-Too many spriters to list: Sprites
-XP-00 Hypnos: Started it all
+
+XP-00 Hypnos - Started it all
+
+Coders:
+IbanPlay - Fanny
+Dominic Karma - Fanny, A vast majority of Wulfrum Excavator
+ScalarVector - Localization roundabout code
+RegigigasSkyForm - Snippets of Dark Statis (literally who)
+Bloop - Gravitonomy Pike, Exodimus, Ogscule, King Minnows Prime
+Doze_Zoze - Polyphemalus and their weapons
+
+Artists:
+BrainMinusDown - Plague biome music and sprites
+DEMON GIRLFRIEND - Acidsighter and Crimson Kaiju themes
+Jteoh - Cryo slime theme
+DM DOKURO - Polyphemalus theme
+GummyLeeches - Alternate Polyphemalus theme
+Too many spriters to list - Various sprites
+
+Inspiration Honorable Mentions:
+AmmyanDocCiesh, BenAbyssJerry, FixationActuation, YYzstNeurosis, Ligmachi, Enamoured-melody, Krossseh, TheWulfrumKing, EiramC, InxieRatZey, Yez22, Jellybloop, Explodingcats43, Sup.Crispy, Dragoncraft9WasTaken, Healthy23, BabyblueSheep, Tehpootisman2, BrimstoneHawk, DeimosCalamitousGamer, BattleBee, LeBiggenedQuack, Starphantasm, ZAtaraxious, Ltrltrltr1234, AGorbus, BloodflareExpert, UltravioletColdSeekerMissile, FallenEntropy, AShottyStool, Spaghet55, SpamtonG95
 
 Multiplayer support? What's that?

@@ -28,7 +28,7 @@ namespace CalRemix.Items.Potions
             Item.useAnimation = 15;
             Item.useTime = 15;
             Item.useTurn = true;
-            Item.UseSound = SoundID.Item3;
+            Item.UseSound = SoundID.Item2;
             Item.maxStack = 9999;
             Item.consumable = true;
             Item.rare = ItemRarityID.Orange;

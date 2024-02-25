@@ -24,6 +24,7 @@ using CalamityMod.Items.Placeables.Ores;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Tiles.SunkenSea;
+using CalRemix.CrossCompatibility;
 
 namespace CalRemix
 {
@@ -46,7 +47,7 @@ namespace CalRemix
                 FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
             GrimeMessage = new FannyMessage("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "Nuhuh",
             FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
-            if (CalRemix.instance.VeinMiner != null)
+            if (ModLoader.TryGetMod("OreExcavator", out _))
             {
                 MineMessage = new FannyMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "Nuhuh",
                     FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation().SetHoverTextOverride("Sure Fanny, I'll do that right now!");
@@ -336,7 +337,7 @@ namespace CalRemix
             {
                 if (FannyManager.fannyEnabled)
                 {
-                    if (CalRemix.instance.VeinMiner != null)
+                    if (ModLoader.TryGetMod("OreExcavator", out _))
                     {
                         if (!MineMessage.alreadySeen)
                         {

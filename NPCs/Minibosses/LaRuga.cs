@@ -60,7 +60,6 @@ namespace CalRemix.NPCs.Minibosses
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().ShouldCloseHPBar = true;
             NPC.rarity = 22;
-            Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/LaRuga");
         }
 
         public override void AI()
@@ -108,7 +107,6 @@ namespace CalRemix.NPCs.Minibosses
                     {
                         NPC.noGravity = false;
                         NPC.ai[1]++;
-                        NPC.boss = true;
                         if (NPC.ai[1] > 60)
                         {
                             SwitchPhase((int)AttackID.attacking);
@@ -175,7 +173,6 @@ namespace CalRemix.NPCs.Minibosses
 
                 case (int)AttackID.death:
                     {
-                        NPC.boss = false;
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
                         NPC.velocity = Vector2.Zero;
@@ -199,7 +196,6 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override void OnKill()
         {
-            NPC.boss = false;
             CalamityMod.Particles.DeathAshParticle.CreateAshesFromNPC(NPC);
         }
 

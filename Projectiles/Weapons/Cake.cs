@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,9 +24,21 @@ namespace CalRemix.Projectiles.Weapons
         }
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 5; i++)
+            SoundEngine.PlaySound(SoundID.NPCDeath21 with { MaxInstances = 1 }, Projectile.Center);
+            if (Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<Frosting>()] <= 40)
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(0, (Projectile.oldVelocity.Y < 0) ? 8f : -8f), Vector2.Zero, ModContent.ProjectileType<Frosting>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            else
+                return;
+            for (int i = 0; i < 7; i++)
+            {
                 if (Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<Frosting>()] <= 40)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, -Vector2.Normalize(Projectile.oldVelocity).RotatedByRandom(MathHelper.ToRadians(180)) * 4f, ModContent.ProjectileType<Frosting>(), Projectile.damage, Projectile.knockBack, Projectile.owner);  
+                {
+                    Vector2 speed = new(0, (Projectile.oldVelocity.Y < 0) ? 10 : -10);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(0, (Projectile.oldVelocity.Y < 0) ? 8f : -8f), speed.RotatedByRandom(MathHelper.ToRadians(135f)), ModContent.ProjectileType<Frosting>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                }
+                else
+                    break;
+            }
         }
     }
 }

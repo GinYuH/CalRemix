@@ -22,7 +22,7 @@ using CalamityMod.Items.Tools;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.NormalNPCs;
 using CalRemix.Items;
-using CalRemix.Projectiles.WulfrumExcavator;
+using CalRemix.Projectiles.Hostile;
 using System;
 using CalRemix.Items.Materials;
 
@@ -127,7 +127,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
             NPC.damage = 20;
             NPC.width = 84;
             NPC.height = 84;
-            Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/scourge of the scrapyard");
+            Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/ScourgeoftheScrapyard");
         }
 
 

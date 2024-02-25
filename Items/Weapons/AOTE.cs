@@ -34,6 +34,7 @@ public class AOTE : ModItem
         Item.rare = ItemRarityID.Cyan;
         Item.value = Item.sellPrice(gold:30);
         Item.UseSound = Use with { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest};
+        Item.useTurn = true;
         Item.autoReuse = true;
 
     }

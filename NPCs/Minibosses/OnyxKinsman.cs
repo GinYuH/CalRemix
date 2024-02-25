@@ -11,7 +11,7 @@ using CalamityMod.Items.Mounts;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Items.Accessories;
 using System;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 using Terraria.Audio;
 using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.Buffs.DamageOverTime;
@@ -111,6 +111,7 @@ namespace CalRemix.NPCs.Minibosses
             }
             if (Main.netMode != NetmodeID.Server && !Target.dead && Target.active)
                 Target.AddBuff(BuffID.NoBuilding, 2);
+            // Dig
             if (NPC.velocity.X == 0f)
             {
                 Timer++;

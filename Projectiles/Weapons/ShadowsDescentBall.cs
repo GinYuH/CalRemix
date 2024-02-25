@@ -111,7 +111,7 @@ namespace CalRemix.Projectiles.Weapons
             Vector2 origin = sourceRectangle.Size() / 2f;
             if (Projectile.velocity == Vector2.Zero)
             {
-                Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Shadow");
+                Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("CalRemix/Projectiles/Weapons/Shadow");
                 Rectangle sourceRectangle2 = new Rectangle(0, 0, texture2.Width, texture2.Height);
                 Main.EntitySpriteDraw(texture2, Projectile.Center - Main.screenPosition + new Vector2(-Projectile.width/4, -Projectile.height/4), sourceRectangle2, drawColor, 0, origin, Projectile.scale*3f, SpriteEffects.None, 0);
             }

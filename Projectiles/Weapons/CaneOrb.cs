@@ -24,6 +24,10 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
             Projectile.DamageType = DamageClass.Magic;
+            Projectile.penetrate = 10;
+            Projectile.timeLeft = 300;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 6;
         }
         public override void AI()
         {

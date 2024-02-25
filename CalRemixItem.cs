@@ -40,6 +40,10 @@ using CalRemix.Items.Placeables;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.TreasureBags.MiscGrabBags;
+using CalamityMod.Items.LoreItems;
+using CalRemix.NPCs.Bosses.BossScule;
+using CalRemix.Retheme;
+using CalamityMod.Items;
 
 namespace CalRemix
 {
@@ -94,6 +98,14 @@ namespace CalRemix
             ModContent.ItemType<CalamitasCoffer>(),
             ModContent.ItemType<DraedonBag>(),
         };
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (item.type == ModContent.ItemType<LoreAwakening>())
+            {
+                var line = new TooltipLine(Mod, "AwakeningRemix", "[c/FF0000:Right click to begin the trial] \n[c/FF0000:Although you won't die, please do not get hit]");
+                tooltips.Add(line);
+            }
+        }
         public override void SetDefaults(Item item)
         {
             if (item.type == ModContent.ItemType<GildedProboscis>())
@@ -151,6 +163,25 @@ namespace CalRemix
                     item.value = Item.sellPrice(silver: 9);
                     item.rare = ItemRarityID.Blue;
                 }
+            }
+        }
+        public override bool CanRightClick(Item item)
+        {
+            if (item.type == ModContent.ItemType<LoreAwakening>())
+                return true;
+            return false;
+        }
+        public override void RightClick(Item item, Player player)
+        {
+            if (player.whoAmI == Main.myPlayer && item.type == ModContent.ItemType<LoreAwakening>())
+            {
+                player.QuickSpawnItem(Entity.GetSource_None(), item);
+                int type = ModContent.NPCType<TheCalamity>();
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.SpawnOnPlayer(player.whoAmI, type);
+                else
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)

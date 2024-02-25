@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace CalRemix.Items.Weapons
 {
@@ -45,6 +46,11 @@ namespace CalRemix.Items.Weapons
 				type = ModContent.ProjectileType<AcesLowCard>();
 			}
 		}
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, velocity, type, damage / 2, knockback);
+            return false;
+        }
         public override void AddRecipes()
         {
             CreateRecipe().

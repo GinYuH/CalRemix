@@ -133,7 +133,7 @@ namespace CalRemix.Projectiles.Weapons
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/ReefChain").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Projectiles/Weapons/ReefChain").Value;
             Vector2 center = Projectile.Center;
             float xVel = Projectile.velocity.X;
             float yVel = Projectile.velocity.Y;

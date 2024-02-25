@@ -521,6 +521,15 @@ namespace CalRemix
             {
                 npc.active = false;
             }
+            if (npc.type == ModContent.NPCType<SupremeCalamitas>()) // MURDER the drunk princess
+            {
+                SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
+                if (cirrus.cirrus)
+                {
+                    Main.NewText("Nope. Get that out of here.", Color.Red);
+                    npc.active = false;
+                }
+            }
             if (npc.type == ModContent.NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;
@@ -667,13 +676,13 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (npc.boss)
+            if (npc.boss && Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25)
             {
-                npcLoot.AddIf(() => Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25, ModContent.ItemType<ConquestFragment>(), 5);
+                npcLoot.Add(ModContent.ItemType<ConquestFragment>(), 5);
             }
-            if (!npc.SpawnedFromStatue && npc.value > 0)
+            if (!npc.boss && !npc.SpawnedFromStatue && npc.value > 0 && Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25)
             {
-                npcLoot.AddIf(()=> Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25, ModContent.ItemType<ConquestFragment>(), 10);
+                npcLoot.Add(ModContent.ItemType<ConquestFragment>(), 10);
             }
             if (npc.type == ModContent.NPCType<GreatSandShark>())
             {
@@ -899,6 +908,18 @@ namespace CalRemix
                 flound.Add(ModContent.ItemType<FlounderMortar>(), 10, hideLootReport: !Main.expertMode);
                 flound.AddFail(ModContent.ItemType<FlounderMortar>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
                 npcLoot.Add(flound);
+            }
+            if (ModLoader.TryGetMod("NoxusBoss", out Mod noxMod) && noxMod.TryFind("EntropicGod", out ModNPC noxus) && npc.type == noxus.Type)
+            {
+                LeadingConditionRule bar = new LeadingConditionRule(new Conditions.IsExpert());
+                bar.Add(ModContent.ItemType<EntropicBar>(), 10);
+                bar.AddFail(ModContent.ItemType<EntropicBar>(), 20);
+                npcLoot.Add(bar);
+
+                LeadingConditionRule frond = new LeadingConditionRule(new Conditions.IsExpert());
+                frond.Add(ModContent.ItemType<EntropicFrond>(), 1, 25, 35);
+                frond.AddFail(ModContent.ItemType<EntropicFrond>(), 1, 35, 45);
+                npcLoot.Add(bar);
             }
         }
         public override void OnKill(NPC npc)

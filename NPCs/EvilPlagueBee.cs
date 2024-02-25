@@ -53,14 +53,7 @@ namespace CalRemix.NPCs
             Death++;
             if (Death >= 900)
                 NPC.life = 0;
-            TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilters.OnlyPlayersInCertainDistance(NPC.Center, 480), null);
-            if (searchResults.FoundTarget)
-            {
-                NPC.target = searchResults.NearestTargetIndex;
-                NPC.targetRect = searchResults.NearestTargetHitbox;
-                if (NPC.ShouldFaceTarget(ref searchResults))
-                    NPC.FaceTarget();
-            }
+            NPC.TargetClosest();
             NPCAimedTarget targetData = NPC.GetTargetData();
             bool flag = false;
             if (targetData.Type == NPCTargetType.Player)

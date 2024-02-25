@@ -1,10 +1,11 @@
 
 using CalamityMod;
 using CalamityMod.Particles;
-using Calremix.Projectiles;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
+using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -26,6 +27,13 @@ namespace CalRemix.NPCs.Minibosses
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
+
+            if (Main.dedServ)
+                return;
+            FannyManager.LoadFannyMessage(new FannyMessage("KingMinnows",
+                "A king minnows prime! This fish is known for yelling out “die!” Which is a subtle reference to the fact that it will kill you! This reference is best observed on the Death mode difficulty.",
+                "Nuhuh",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
 
         public override void SetDefaults()

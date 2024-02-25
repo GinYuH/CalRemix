@@ -6,7 +6,8 @@ Mods: {
 			PlaguebringerGoliath.SpawnInfo: Use a [i:CalamityMod/Abombination] in the Plagued Jungle.
 			AstrumAureus.SpawnInfo: Use an [i:CalamityMod/AstralChunk] at night in the Plagued Jungle.
 			Dragonfolly.SpawnInfo: Use [i:CalamityMod/ExoticPheromones] in the desert.
-			AquaticScourge.SpawnInfo: Drop 22 [i:86]s in the Sulphurous Sea.
+			AquaticScourge.SpawnInfo: Use 22 [i:4608] in the Sulphurous Sea's water.
+			AcidRainT1.SpawnInfo: Use a [i:CalamityMod/CausticTear] or wait for an acidic downpour to occur naturally after the Acidsighter is defeated.
 		}
 
 		Items: {
@@ -49,29 +50,12 @@ Mods: {
 	}
 
 	CalRemix: {
-		TownNPCMood: {
-			Celestial: {
-				Content: This is placeholder text to say I'm doing well.
-				NoHome: This is placeholder text to say I'm homeless.
-				LoveSpace: This is placeholder text to say I appreciate the space.
-				FarFromHome: This is placeholder text to say that I'm too far away from home.
-				DislikeCrowded: This is placeholder text to say that it's too crowded.
-				HateCrowded: This is placeholder text to say that it's WAY too crowded.
-				HateBiome: This is placeholder text to say that this biome sucks.
-				LikeNPC: This is placeholder text to say that I like {NPCName}.
-				LikeNPC_Princess: This is placeholder text to say that I like {NPCName} the Princess.
-				LoveNPC: This is placeholder text to say that I really like {NPCName}.
-				HateNPC: This is placeholder text to say that I really don't like {NPCName}.
-			}
-		}
-
 		Currencies: {
 			CosmiliteCoinCurrency: cosmilite coins
 			KlepticoinCurrency: klepticoins
 		}
 
 		UI: {
-			TransmogrifyMenu: Transmogrify
 			Cooldowns.BananaClown: Clown Consumption Cooldown
 			ExampleResource: Mods.CalRemix.UI.ExampleResource
 		}
@@ -193,6 +177,21 @@ Mods: {
 				DisplayName: Chaotic Horse
 				Description: Flying away!
 			}
+
+			Calamitized: {
+				DisplayName: Calamitized
+				Description: You are counted as being dead to the Calamity
+			}
+
+			CorrosiveEyeBuff: {
+				DisplayName: Corrosive Eye Buff
+				Description: The corrosive eyes are orbiting you
+			}
+
+			EntropicallyFed: {
+				DisplayName: Entropically Fed
+				Description: CHAOS CHAOS
+			}
 		}
 
 		Items: {
@@ -269,7 +268,10 @@ Mods: {
 					'''
 			}
 
-			PolypebralShield.DisplayName: Polypebral Shield
+			PolypebralShield: {
+				DisplayName: Polypebral Shield
+				Tooltip: ""
+			}
 
 			QuiverofMadness: {
 				DisplayName: Quiver of Madness
@@ -426,8 +428,15 @@ Mods: {
 				Tooltip: ""
 			}
 
-			DerellectMask.DisplayName: Derellect Mask
-			DerellectMaskStatic.DisplayName: Derellect Mask (Static)
+			DerellectMask: {
+				DisplayName: Derellect Mask
+				Tooltip: ""
+			}
+
+			DerellectMaskStatic: {
+				DisplayName: Derellect Mask (Static)
+				Tooltip: ""
+			}
 
 			DisgustingSeawater: {
 				DisplayName: Disgusting Seawater
@@ -525,8 +534,15 @@ Mods: {
 				Tooltip: ""
 			}
 
-			DerellectMusicBox.DisplayName: Music Box (Signal Interruption)
-			DerellectTrophyInv.DisplayName: Derellect Trophy
+			DerellectMusicBox: {
+				DisplayName: Music Box (Signal Interruption)
+				Tooltip: ""
+			}
+
+			DerellectTrophyInv: {
+				DisplayName: Derellect Trophy
+				Tooltip: ""
+			}
 
 			HallowEffigy: {
 				DisplayName: Hallow Effigy
@@ -714,9 +730,8 @@ Mods: {
 				DisplayName: Onyx Gunblade
 				Tooltip:
 					'''
-					If you are reading this, there is a solid chance you are using the Calamity Fandom Wiki
-					Do not use it, use the official wiki on calamitymod.wiki.gg instead for up to date information regarding calamity
-					As for remix, download the recipe browser mod, it should give a good amount of information regarding the addon's content.
+					Sword of the clan
+					Uses bullets to fires onyx blasts
 					'''
 			}
 
@@ -919,11 +934,6 @@ Mods: {
 				Tooltip: ""
 			}
 
-			OnyxDrill: {
-				Tooltip: ""
-				DisplayName: Onyx Drill
-			}
-
 			EssentialEssenceBar: {
 				DisplayName: Essential Essence Bar
 				Tooltip: Flowing with pure energy
@@ -1079,7 +1089,7 @@ Mods: {
 
 			PlaguedJungleMusicBox: {
 				DisplayName: Music Box (Plagued Jungle)
-				Tooltip: ""
+				Tooltip: Plays 'Everlasting Dark' by HeartPlusUp
 			}
 
 			Sporezol: {
@@ -1567,12 +1577,10 @@ Mods: {
 				DisplayName: Ignited Community
 				Tooltip:
 					'''
-					'Reformed from its broken state, its fractures filled with a new power.'
+					'It is filled with full power.'
 					Increases damage by 35% and critical strike chance by 7%, 
 					Increases defense by 35 and damage reduction by 7%
 					Increases max health by 12%, life regeneration by 2 HP/s, and movement speed by 10%
-					Thank you for your community contributions!
-					Hold "Left Shift" for the full contributor list
 					'''
 			}
 
@@ -1581,12 +1589,174 @@ Mods: {
 				Tooltip: Click to view its contents
 			}
 
-			ArsenicOre.DisplayName: Arsenic Ore
+			ArsenicOre: {
+				DisplayName: Arsenic Ore
+				Tooltip: ""
+			}
+
+			CalamitousCertificate: {
+				DisplayName: Calamitous Certificate
+				Tooltip: Use to send your trial certificate to your desktop if you don't already have one
+			}
+
+			EntropicBar: {
+				DisplayName: Entropic Bar
+				Tooltip: Does nothing except look awesome
+			}
+
+			PoisonedSclera: {
+				DisplayName: Poisoned Sclera
+				Tooltip: Summons the Acidsighter when used in the sulphurous sea at night
+			}
+
+			EntropicFrond: {
+				DisplayName: Entropic Frond
+				Tooltip: Grants power for short time
+			}
+
+			ProfanedVocalizer: {
+				DisplayName: Profaned Vocalizer
+				Tooltip:
+					'''
+					Converts Primordial Albatrossan into an understandable language while in your inventory
+					Using this makes Primordial Albatross sounds
+					'''
+			}
+
+			AcidBow: {
+				DisplayName: Acid Bow
+				Tooltip:
+					'''
+					Fires two arrows
+					Converts wooden arrows into arrows that inflict irradiated
+					'''
+			}
+
+			CausticClaw: {
+				DisplayName: Caustic Claw
+				Tooltip: Casts caustic tendrils that inflict irradiated
+			}
+
+			CorrosiveEyeStaff: {
+				DisplayName: Corrosive Eye Staff
+				Tooltip: Summons corroded eyes that orbit you and shoot acid shots
+			}
+
+			JetEngine: {
+				DisplayName: Jet Engine
+				Tooltip: Summons an onyx fist to punch enemies
+			}
+
+			PlasmaflashBolt: {
+				DisplayName: Plasmaflash Bolt
+				Tooltip: Casts a quick-moving ball of plasma
+			}
+
+			PungentBomber: {
+				DisplayName: Pungent Bomber
+				Tooltip: Leaves acid bombs when striking enemies
+			}
+
+			RazorTeeth: {
+				DisplayName: Razor Teeth
+				Tooltip:
+					'''
+					Throws a sharp irradiated tooth that pierces enemies
+					Stealth strikes fire three teeth that stick to enemies and injects them with a powerful venom
+					'''
+			}
+
+			RGBMurasama: {
+				DisplayName: RGB Murasama
+				Tooltip: I spent three thousand dollars.
+			}
+
+			SaltBooklet: {
+				DisplayName: Salt Booklet
+				Tooltip:
+					'''
+					A copy of a mass-produced tome phased out in favor of stronger spells
+					Casts a cube of salt
+					'''
+			}
+
+			SaltWaterBolt: {
+				DisplayName: Salt Water Bolt
+				Tooltip:
+					'''
+					A ruined Water Bolt
+					May be part of something greater
+					'''
+			}
+
+			AcideyeBag: {
+				DisplayName: Treasure Bag (Acidsighter)
+				Tooltip: Right Click to open
+			}
+
+			AcidsighterMusicBox: {
+				DisplayName: Music Box (Acidsighter)
+				Tooltip: Plays 'Opticatalysis' by DEMON GIRLFRIEND
+			}
+
+			CryoSlimeMusicBox: {
+				DisplayName: Music Box (Cryo Slime)
+				Tooltip: Plays 'Antarctic Reinsertion' by Jteoh
+			}
+
+			ExcavatorMusicBox: {
+				DisplayName: Music Box (Wulfrum Excavator)
+				Tooltip: Plays 'Scourge of the Scrapyard' by Sploopo
+			}
+
+			LaRugaMusicBox: {
+				DisplayName: Music Box (La Ruga's Ambience)
+				Tooltip: Plays ominous ambience by Sploopo
+			}
+
+			PolyphemalusGFBMusicBox: {
+				DisplayName: Music Box (Polyphemalus - Alternate)
+				Tooltip: Plays 'The Eyes are Anger' by GummyLeeches
+			}
+
+			PolyphemalusMusicBox: {
+				DisplayName: Music Box (Polyphemalus)
+				Tooltip: Plays 'Eyes of Flame (Remix)' by DM DOKURO
+			}
+
+			Dualpoon: {
+				DisplayName: Dualpoon
+				Tooltip: Launches two harpoons
+			}
+
+			Triploon: {
+				DisplayName: Triploon
+				Tooltip: Launches three harpoons
+			}
+
+			Twentoon: {
+				DisplayName: Twentoon
+				Tooltip: Why?
+			}
+
+			TwentyTwoon: {
+				DisplayName: Twenty Twoon
+				Tooltip: WHY?????
+			}
 		}
 
 		NPCs: {
 			AuricSlime.DisplayName: Auric Slime
-			Astigmageddon.DisplayName: Astigmageddon
+
+			Astigmageddon: {
+				DisplayName: Astigmageddon
+
+				BossChecklistIntegration: {
+					EntryName: Polyphemalus
+					SpawnInfo: Use a [i:CalRemix/FusedEye] at night
+				}
+			}
+
 			Cataractacomb.DisplayName: Cataractacomb
 			Conjunctivirus.DisplayName: Conjunctivirus
 			DerellectBoss.DisplayName: The Derellect
@@ -1683,8 +1853,6 @@ Mods: {
 				}
 			}
 
-			Rosalina.DisplayName: Starborn Princess
-
 			YEENA: {
 				DisplayName: General
 
@@ -1760,8 +1928,13 @@ Mods: {
 				Census.SpawnCondition: Conditions unknown
 			}
 
-			Acideye.DisplayName: Acidsighter
+			Acideye: {
+				DisplayName: Acidsighter
+				BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
+			}
+
 			MutatedEye.DisplayName: Mutated Eye
+			TheCalamity.DisplayName: The Calamity
 		}
 
 		Projectiles: {
@@ -1907,6 +2080,27 @@ Mods: {
 			MinnowsSmallShockwave.DisplayName: Minnows Small Shockwave
 			MinnowsLargeShockwave.DisplayName: Minnows Large Shockwave
 			MinnowsDeathAnimation.DisplayName: Minnows Death Animation
+			AcidShot.DisplayName: Acid Shot
+			AcidTooth.DisplayName: Acid Tooth
+			AgentPoon.DisplayName: Agent Poon
+			CausticTendril.DisplayName: Caustic Tendril
+			CorrosiveEye.DisplayName: Corrosive Eye
+			OnyxBlast.DisplayName: Onyx Blast
+			OnyxFist.DisplayName: Onyx Fist
+			PlasmaflashBolt.DisplayName: Plasmaflash Bolt
+			PungentShot.DisplayName: Pungent Shot
+			RazorTooth.DisplayName: Razor Tooth
+			SaltCube.DisplayName: Salt Cube
+			SaltWater.DisplayName: Salt Water
+			SulphurArrow.DisplayName: Sulphur Arrow
+			Twepoon.DisplayName: Twepoon
+			Twetwepoon.DisplayName: Twetwepoon
+			AcidBomb.DisplayName: Acid Bomb
+			AcidTeeth.DisplayName: Acid Teeth
+			CalamityLaser.DisplayName: Calamity Laser
+			Darkscule.DisplayName: Darkscule
+			DarkVein.DisplayName: Dark Vein
+			PungentBomb.DisplayName: Pungent Bomb
 		}
 
 		Tiles: {
@@ -1929,9 +2123,17 @@ Mods: {
 				Name: Fallacious
 				Description: Greatly increases critical strike damage but critical strike chance is reduced. Critical hits also hurt you.
 			}
+
+			Defiant: {
+				Name: Defiant
+				Description: Increases damage reduction but taking any hit decreases damage.
+			}
 		}
 
-		Keybinds.Baroclaw.DisplayName: Baroclaw
+		Keybinds: {
+			Baroclaw.DisplayName: Baroclaw
+			"Polypebral Dash.DisplayName": Polypebral  Dash
+		}
 
 		Configs: {
 			DisplayName: Calamity Community Remix Config

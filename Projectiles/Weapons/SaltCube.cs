@@ -1,0 +1,44 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace CalRemix.Projectiles.Weapons
+{
+	public class SaltCube : ModProjectile
+	{
+        public override void SetStaticDefaults() 
+        {
+			DisplayName.SetDefault("Salt Cube");
+        }
+		public override void SetDefaults() 
+        {
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 1;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
+        }
+        public override void AI()
+        {
+            if (Main.rand.NextBool(30))
+                Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.SandstormInABottle);
+        }
+        public override void OnKill(int timeLeft)
+        {
+            Dust dust = Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.SandstormInABottle);
+            dust.velocity = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360f)) * Main.rand.NextFloat(1f, 1.5f);
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.Electrified, 60);
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.Kill();
+            return true;
+        }
+    }
+}

@@ -13,10 +13,13 @@ namespace CalRemix.Projectiles.Weapons
     {
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
+        private static SoundStyle Splootch = SoundID.NPCDeath21 with { MaxInstances = 1 };
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frosting");
             Main.projFrames[Type] = 6;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
         }
         public override void SetDefaults()
         {
@@ -24,7 +27,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.height = 56;
             Projectile.friendly = true;
             Projectile.ignoreWater = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -40,6 +43,8 @@ namespace CalRemix.Projectiles.Weapons
         public override void AI()
         {
             Timer += 1f;
+            if (Timer > 5f)
+                Projectile.tileCollide = true;
             if (Timer > 600f)
             {
                 Alpha += 10f;
@@ -51,7 +56,7 @@ namespace CalRemix.Projectiles.Weapons
                 Alpha = 255f;
             }
             Projectile.alpha = (int)(100.0 + (double)Alpha * 0.7);
-            if (Projectile.velocity.Y != 0f)
+            if (Projectile.velocity.Y != 0f && Projectile.oldPos[9].Distance(Projectile.position) > 4f)
             {
                 Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) - MathF.PI / 2f;
                 Projectile.frameCounter++;
@@ -70,7 +75,7 @@ namespace CalRemix.Projectiles.Weapons
                 {
                     Projectile.frame = 2;
                     Projectile.frameCounter = 0;
-                    SoundEngine.PlaySound(in SoundID.NPCDeath21, Projectile.Center);
+                    SoundEngine.PlaySound(Splootch, Projectile.Center);
                 }
                 Projectile.rotation = 0f;
                 Projectile.gfxOffY = 4f;
@@ -113,10 +118,10 @@ namespace CalRemix.Projectiles.Weapons
             {
                 byte b = (byte)((26f - (Timer - 900f)) * 10f);
                 byte alpha = (byte)((float)Projectile.alpha * ((float)(int)b / 255f));
-                return new Color(b, b, b, alpha);
+                return new Color(lightColor.R, lightColor.G, lightColor.B, alpha);
             }
 
-            return new Color(255, 255, 255, Projectile.alpha);
+            return new Color(lightColor.R, lightColor.G, lightColor.B, Projectile.alpha);
         }
     }
 }

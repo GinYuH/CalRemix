@@ -197,7 +197,7 @@ namespace CalRemix.ElementalSystem
                     foreach (Element w in weak)
                     {
                         if (e.Contains(w))
-                            multiplier += 0.1f;
+                            multiplier += 0.05f;
                     }
                 }
                 if (resist != null)
@@ -205,7 +205,7 @@ namespace CalRemix.ElementalSystem
                     foreach (Element r in resist)
                     {
                         if (e.Contains(r))
-                            multiplier -= 0.1f;
+                            multiplier -= 0.25f;
                     }
                 }
                 modifiers.FinalDamage *= multiplier;

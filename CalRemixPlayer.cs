@@ -70,6 +70,7 @@ namespace CalRemix
         public bool dreamingGhost;
         public bool statue;
         public bool mackerel;
+		public bool corrosiveEye;
         public bool blaze;
         public bool pearl;
         public bool astralEye;
@@ -92,7 +93,27 @@ namespace CalRemix
         public bool clockBar;
         public bool anomaly109UI;
 		public bool dungeon2;
-		public int[] MinionList =
+
+        public int chainSawCharge;
+        public int chainSawHitCooldown = 0;
+        public int chainSawLevel1 = 1;
+        public int chainSawLevel2 = 30 * 5;
+        public int chainSawLevel3 = 30 * 10;
+        public int chainSawChargeCritMax = 30 * 15;
+        public int chainSawChargeMax = 30 * 20;
+
+        public bool polyShieldChargeEnabled;
+        public int polyShieldCooldown;
+        public bool polyShieldChargeKeypress;
+        public int polyShieldChargeDuration;
+        public int polyShieldChargeSpeed = 16;
+        public int polyShieldChargeDurationMax = 25;
+        public int dashBuffer = 5;
+        public int dashBufferEarly = 5;
+        public int dashBufferLate = 5;
+        public Vector2 polyShieldChargeDir = new Vector2(0, 0);
+
+        public int[] MinionList =
 		{
 			ModContent.ProjectileType<PlantationStaffSummon>(),
 			ModContent.ProjectileType<AtlasSoldier>(),
@@ -365,10 +386,13 @@ namespace CalRemix
 			}
 			
         }
-
-        public override void PreUpdate()
+		public override void UpdateEquips()
         {
-			if (CalRemixWorld.permanenthealth)
+            Player.GetJumpState<CalRemixJump>().Enable();
+        }
+		public override void PreUpdate()
+        {
+            if (CalRemixWorld.permanenthealth)
 			{
 				SpawnPhantomHeart();
 			}
@@ -376,30 +400,39 @@ namespace CalRemix
 			if (VerbotenMode >= 5)
 			{
 				VerbotenMode = 1;
-			}
+            }
+            if (chainSawCharge >= chainSawLevel1)
+            {
+                Player.ClearBuff(BuffID.Darkness);
+                Player.AddBuff(BuffID.Darkness, chainSawCharge);
+            }
+            if (chainSawCharge >= chainSawLevel2)
+            {
+                Player.ClearBuff(BuffID.Blackout);
+                Player.AddBuff(BuffID.Blackout, chainSawCharge - (30 * 4));
+            }
+            if (chainSawCharge >= chainSawLevel3)
+            {
+                Player.ClearBuff(BuffID.Obstructed);
+                Player.AddBuff(BuffID.Obstructed, chainSawCharge - (30 * 10));
+            }
 
-            /*if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityMod.Items.CalamityGlobalItem>().AppliedEnchantment.Value.Equals(156))
+            chainSawHitCooldown--;
+            if (chainSawHitCooldown < 0)
             {
-				Main.NewText("Polterc");
-                amongusEnchant = true;
+                chainSawCharge--;
+                if (chainSawCharge < 0)
+                {
+                    chainSawCharge = 0;
+                }
+                chainSawHitCooldown = 0;
             }
-            else
-            {
-                amongusEnchant = false;
-            }
-            /*if (Main.LocalPlayer.HeldItem.GetGlobalItem<CalamityGlobalItem>().AppliedEnchantment.Value.Equals(157))
-            {
-                earthEnchant = true;
-            }
-            else
-            {
-                earthEnchant = false;
-            }*/
         }
 
         public override bool PreItemCheck()
         {
-            /*if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
+			/*
+            if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
                 if (NPC.CountNPCS(ModContent.NPCType<DerellectBoss>()) >= 1)
 				{
@@ -409,7 +442,8 @@ namespace CalRemix
 
 				}
   				return true;                  
-			}*/
+			}
+			*/
 			return true;
         }
 
@@ -618,9 +652,6 @@ namespace CalRemix
 
         public override void ResetEffects()
 		{
-
-            earthEnchant = false;
-			//amongusEnchant = false;
 			brimPortal = false;
 			arcanumHands = false;
 			marnite = false;
@@ -629,7 +660,8 @@ namespace CalRemix
 			statue = false;
 			mackerel = false;
             soldier = false;
-			marnitetimer = 0;
+			corrosiveEye = false;
+            marnitetimer = 0;
 			astEffigy = false;
 			halEffigy = false;
 			nothing = false;
@@ -857,6 +889,11 @@ namespace CalRemix
                 Player.lifeRegen -= 120;
             }
         }
+		public override void FrameEffects()
+		{
+			if (Player.GetJumpState<CalRemixJump>().Active)
+				Player.armorEffectDrawShadow = true;
+		}
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
             if (deicide > 0)

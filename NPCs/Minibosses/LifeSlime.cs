@@ -2,7 +2,7 @@ using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Biomes;
 using CalRemix.Items.Placeables;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Terraria;

@@ -24,6 +24,10 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.alpha = 0;
             Projectile.penetrate = 4;
         }
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+        }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);

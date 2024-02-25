@@ -179,7 +179,7 @@ namespace CalRemix.UI
 
             #region Calclone
             int ccloneLoreItemType = ModContent.ItemType<LoreCalamitasClone>();
-            FannyMessage ccloneLore = new FannyMessage("LoreCalc", "Ah, the so it was a clone! Seems like that Draedon guy didn't do too well in biology class if that's what his attempt at a clone looks like. But let's be real, who needs a witch's clone when we've got enough problems with our own rude doppelgangers.",
+            FannyMessage ccloneLore = new FannyMessage("LoreCalc", "Ah, so it was a clone! Seems like that Draedon guy didn't do too well in biology class if that's what his attempt at a clone looks like. But let's be real, who needs a witch's clone when we've got enough problems with our own rude doppelgangers.",
                 "Idle", (FannySceneMetrics scene) => ReadLoreItem && previousHoveredItem == ccloneLoreItemType, 5, onlyPlayOnce: true, displayOutsideInventory: true, persistsThroughSaves: false).AddDelay(0.4f);
 
             fannyMessages.Add(ccloneLore);

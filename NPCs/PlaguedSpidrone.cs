@@ -27,7 +27,7 @@ using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Summon;
 using CalRemix.Biomes;
 using CalamityMod.Projectiles.Boss;
-using CalRemix.Projectiles;
+using CalRemix.Projectiles.Hostile;
 using CalamityMod.Projectiles.Environment;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Creative;
