@@ -67,11 +67,6 @@ namespace CalRemix
         }
         public override void Unload()
         {
-            FieldInfo enabledMods = typeof(ModLoader).GetField("_enabledMods", BindingFlags.NonPublic | BindingFlags.Static);
-            HashSet<string> modsList = (HashSet<string>)enabledMods.GetValue(null);
-            if (!modsList.Contains("CalRemix"))
-                Utils.OpenToURL("https://cdn.discordapp.com/attachments/1021557397770207324/1206476905180565514/Fanny.png?ex=65dc262d&is=65c9b12d&hm=8c6cb458d96bf5947f97e3c38c128df85bb42a31ccb61245ed3a98a806fa52d1&");
-
             PlagueGlobalNPC.PlagueHelper = null;
             instance = null;
         }
