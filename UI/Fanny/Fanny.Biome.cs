@@ -2,6 +2,7 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Mounts;
+using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Items;
 using CalRemix.Items.Placeables;
@@ -107,6 +108,10 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("MeldHeartNoxus", "Look at all that gunk! I'm pretty sure it's impossible to break it, well, maybe if you got some powerful spray bottle, but that might take a while, so the best solution I can give is to assure it doesn't spread further by digging around it.",
   "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && ModLoader.HasMod("NoxusBoss")));
+
+            fannyMessages.Add(new FannyMessage("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
+  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>()));
+
         }
 
         public static void LoadShrineMessages()

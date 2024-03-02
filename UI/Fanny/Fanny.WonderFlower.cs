@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using CalamityMod.Items.Accessories.Wings;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 
@@ -20,6 +21,11 @@ namespace CalRemix.UI
                 "TalkingFlower", (FannySceneMetrics m) => Main.LocalPlayer.wingTimeMax > 0, 15, onlyPlayOnce: true, displayOutsideInventory: true, needsToBeClickedOff: true, maxWidth: 500)
                 .SpokenByAnotherFanny(FannyUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
             fannyMessages.Add(wonderWings);
+
+            FannyMessage wonderTracers = new FannyMessage("Wonder_Tracers", "Onward and upward... and sideward!",
+                "TalkingFlower", (FannySceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<TracersCelestial>()) || Main.LocalPlayer.equippedWings?.type == ModContent.ItemType<TracersCelestial>(), 15, onlyPlayOnce: true, displayOutsideInventory: true, needsToBeClickedOff: true, maxWidth: 500)
+                .SpokenByAnotherFanny(FannyUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
+            fannyMessages.Add(wonderTracers);
         }
     }
 }

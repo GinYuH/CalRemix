@@ -86,6 +86,7 @@ namespace CalRemix
         public static bool downedPlagueEmperor = false;
         public static bool downedLaRuga = false;
         public static bool downedKingMinnowsPrime = false;
+        public static bool ogslime = false;
 
         public static int lifeTiles;
         public static int PlagueTiles;
@@ -168,6 +169,7 @@ namespace CalRemix
             downedPlagueEmperor = false;
             downedLaRuga = false;
             downedKingMinnowsPrime = false;
+            ogslime = false;
 
             guideHasExisted = false;
             deusDeadInSnow = false;
@@ -263,6 +265,7 @@ namespace CalRemix
             downedPlagueEmperor = false;
             downedLaRuga = false;
             downedKingMinnowsPrime = false;
+            ogslime = false;
 
             guideHasExisted = false;
             deusDeadInSnow = false;
@@ -323,6 +326,7 @@ namespace CalRemix
             tag["downedPlagueEmperor"] = downedPlagueEmperor;
             tag["downedLaRuga"] = downedLaRuga;
             tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
+            tag["ogslime"] = ogslime;
 
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
@@ -383,6 +387,7 @@ namespace CalRemix
             downedPlagueEmperor = tag.Get<bool>("downedPlagueEmperor");
             downedLaRuga = tag.Get<bool>("downedLaRuga");
             downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
+            ogslime = tag.Get<bool>("ogslime");
 
 
             guideHasExisted = tag.Get<bool>("guideHasExisted");
@@ -434,6 +439,7 @@ namespace CalRemix
             writer.Write(downedExcavator);
             writer.Write(downedEarth);
             writer.Write(guideHasExisted);
+            writer.Write(ogslime);
             writer.Write(deusDeadInSnow);
             writer.Write(generatedCosmiliteSlag);
             writer.Write(generatedPlague);
@@ -492,6 +498,7 @@ namespace CalRemix
             downedLaRuga = reader.ReadBoolean();
             downedKingMinnowsPrime = reader.ReadBoolean();
 
+            ogslime = reader.ReadBoolean();
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
             generatedCosmiliteSlag = reader.ReadBoolean();
