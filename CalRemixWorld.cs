@@ -683,7 +683,7 @@ namespace CalRemix
             if (transmogrifyTimeLeft > 200) transmogrifyTimeLeft = 200;
             if (!NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
             {
-                if (CalamityUtils.CountProjectiles(ProjectileID.ChumBucket) > 22 && Main.LocalPlayer.Calamity().ZoneSulphur)
+                if (CalamityUtils.CountProjectiles(ProjectileID.ChumBucket) > 21 && Main.LocalPlayer.Calamity().ZoneSulphur)
                 {
                     foreach (Projectile p in Main.projectile)
                     {
