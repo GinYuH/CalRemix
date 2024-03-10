@@ -78,6 +78,7 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Crags;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix
 {
@@ -922,6 +923,40 @@ namespace CalRemix
                 npcLoot.Add(bar);
             }
         }
+
+        public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
+        {
+            GeneralHitStuff(npc, hit, damageDone, player);
+        }
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            Player p = Main.player[projectile.owner];
+            GeneralHitStuff(npc, hit, damageDone, p);
+        }
+
+        public static void GeneralHitStuff(NPC npc, NPC.HitInfo hit, int damageDone, Player p = null)
+        {
+            if (p != null)
+            {
+                if (p.Calamity().titanHeartSet)
+                {
+                    if (npc.type == NPCID.WanderingEye)
+                    {
+                        if (NPC.CountNPCS(ModContent.NPCType<Ogslime>()) <= 0)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.NewNPC(npc.GetSource_OnHit(npc), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Ogslime>());
+                            if (!CalRemixWorld.ogslime)
+                            {
+                                CalRemixWorld.ogslime = true;
+                                CalRemixWorld.UpdateWorldBool();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public override void OnKill(NPC npc)
         {
             if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().tvo)
