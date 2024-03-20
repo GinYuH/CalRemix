@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Terraria.ID;
 using System;
 
-namespace CalRemix.ElementalSystem
+namespace CalRemix.UI.ElementalSystem
 {
     public static class VanillaElements
     {

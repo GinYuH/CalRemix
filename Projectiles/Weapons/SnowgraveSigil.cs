@@ -13,7 +13,7 @@ namespace CalRemix.Projectiles.Weapons
 {
     public class SnowgraveSigil : ModProjectile
     {
-        public override string Texture => "CalRemix/ElementalSystem/Cold";
+        public override string Texture => "CalRemix/UI/ElementalSystem/Cold";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Snowgrave");

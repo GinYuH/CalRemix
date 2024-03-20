@@ -11,8 +11,10 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Weapons;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +36,7 @@ namespace CalRemix.UI
                 (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>()));
 
             fannyMessages.Add(new FannyMessage("BunnyMurder", "...", "Cryptid",
-                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false));
+                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false).AddItemDisplay(ItemID.BunnyBanner));
             //Add a condition to this one YUH, to pass the test of knowledge...
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
@@ -43,14 +45,19 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("VoodooDoll", "Cool doll you have! I think that it will be even cooler when in lava!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.GuideVoodooDoll)));
 
-            fannyMessages.Add(new FannyMessage("PortalGun", "Cave Johnson here. We're fresh out of combustible lemons, but let me tell you a little bit about this thing here. These portals are only designed to stick on planetoid rock and not much else. Hope you've got a test chamber lying around that's full of that stuff!",
-    "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PortalGun)));
-
             fannyMessages.Add(new FannyMessage("TwentyTwo", "I love 22. My banner now.",
     "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HornetBanner)).AddItemDisplay(ItemID.HornetBanner).AddStartEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.HornetBanner)).SetHoverTextOverride("Thanks Fanny! That was cluttering my inventory!"));
 
             fannyMessages.Add(new FannyMessage("Shadowspec", "Please throw this thing out, it will delete your world if you have it in inventory for too long!",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()).SetHoverTextOverride("Thank you for the help Fanny! I will!"));
+            /*
+                        fannyMessages.Add(new FannyMessage("Babilplate", "Is that a babilplate? I've heard legends of how supremely powerful this artifact is! I wonder how we might be able to activate its power?",
+                            "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<>())).AddItemDisplay(ModContent.ItemType<YharimBar>()));
+             */
+
+
+            fannyMessages.Add(new FannyMessage("YharimBar", "Is that a Yharim Bar? You'll need a lot of them for various recipes!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>())).AddItemDisplay(ModContent.ItemType<YharimBar>()));
 
             fannyMessages.Add(new FannyMessage("Jump", "Did you know? You can press the \"space\" button to jump!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!"));
@@ -67,9 +74,6 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("AlloyBar", "Congratulations, you have obtained the final bar for this stage of your adventure. You should attempt making some Alloy Bars, a versatile material made of every available bar which can be used for powerful items.",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<AlloyBar>())).AddItemDisplay(ModContent.ItemType<AlloyBar>()));
 
-            fannyMessages.Add(new FannyMessage("Murasama", "Erm, holy crap? $0? Is that a reference to my FAVORITE game of all time, metal gear rising revengeance? Did you know that calamity adds a custom boss health boss bar and many othe-",
-               "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Murasama>())).AddDynamicText(FannyMessage.GetPlayerName));
-
             fannyMessages.Add(new FannyMessage("Sponge", "Oh, is that a Sponge? Maybe avoid using it. I've heard something about the wielder dying, or something...",
                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TheSponge>())).AddItemDisplay(ModContent.ItemType<TheSponge>()));
 
@@ -77,28 +81,22 @@ namespace CalRemix.UI
                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.OldShoe) || Main.LocalPlayer.HasItem(ItemID.FishingSeaweed) || Main.LocalPlayer.HasItem(ItemID.TinCan) || Main.LocalPlayer.HasItem(ItemID.JojaCola)).AddItemDisplay(ItemID.TrashCan).SetHoverTextOverride("Thanks Fanny! I already wanted to cook it."));
 
             fannyMessages.Add(new FannyMessage("Nightfuel", "Nightmare Fuel, huh? ...you know, maybe if you can harvest enough of it, maybe those Pumpkings will stop terorrizing our inhabitants and they'll be permanently more happy!",
-   "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NightmareFuel>())).AddItemDisplay(ModContent.ItemType<NightmareFuel>()));
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NightmareFuel>())).AddItemDisplay(ModContent.ItemType<NightmareFuel>()));
 
             fannyMessages.Add(new FannyMessage("Endenergy", "Ooh, is that Endothermic Energy? If we can get a decent supply of it, I think those Ice Queens will fear us and our residents might be forever grateful with us!",
-   "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<EndothermicEnergy>())).AddItemDisplay(ModContent.ItemType<EndothermicEnergy>()));
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<EndothermicEnergy>())).AddItemDisplay(ModContent.ItemType<EndothermicEnergy>()));
 
             fannyMessages.Add(new FannyMessage("Darksunfrag", "What's that? Darksun Fragment? Do you think with enough of it, our world will be permanently lit up like a lemon-scented candle flame?",
-   "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DarksunFragment>())).AddItemDisplay(ModContent.ItemType<DarksunFragment>()));
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DarksunFragment>())).AddItemDisplay(ModContent.ItemType<DarksunFragment>()));
 
             fannyMessages.Add(new FannyMessage("Onion", "I'd be weary about eating that strange plant. You can only get one, so it might be useful to hang on to it for later.",
-   "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>())).AddItemDisplay(ModContent.ItemType<CelestialOnion>()));
-
-            fannyMessages.Add(new FannyMessage("Ultrakill", "Oh EM GEE! A gun from the hit first-person shooter game, \'MURDERDEATH\'!? Try throwing out some coins and hitting them with a Titanium Railgun to pull a sick railcoin maneuver!",
-   "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<MidasPrime>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<CrackshotColt>())).AddItemDisplay(ModContent.ItemType<MidasPrime>()));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>())).AddItemDisplay(ModContent.ItemType<CelestialOnion>()));
 
             fannyMessages.Add(new FannyMessage("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
-   "EvilIdle", (FannySceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny());
+                "EvilIdle", (FannySceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny());
 
-            fannyMessages.Add(new FannyMessage("Tofu", "Uh oh! Looks like one of your items is a reference to a smelly old game franchise known as Touhou! Do your ol\' pal Fanny a good deed and put it away.",
-   "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ScarletDevil>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<GlacialEmbrace>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<RecitationoftheBeast>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<EventHorizon>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HermitsBoxofOneHundredMedicines>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<PristineFury>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<DarkSpark>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<ResurrectionButterfly>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<FantasyTalisman>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HellsSun>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<TheDreamingGhost>())).SetHoverTextOverride("Anything for you Fanny!"));
-
-            fannyMessages.Add(new FannyMessage("PetRock", "Oh hey, is that my pet rock? I lost it in my backyard a few years back. I’ve been trying to find it since!", "Awooga",
-                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Rock>())));
+            fannyMessages.Add(new FannyMessage("PetRock", "Oh hey, is that my pet rock? I lost it in my backyard a few years back. I’ve been trying to find it since!", 
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Rock>())));
 
             FannyMessage rock1 = new FannyMessage("RockLobster1", "Oh, hot tamales! You've gone and done it! You've reeled in a lobster, my friend! Can you believe it? A rock lobster, right here in the oasis! I mean, who would've thought? Rock Lobsters are like the rockstars of the desert, and you just snagged one. You're a fishing master, my friend! But hey, let me tell you a tale about lobsters that'll have you crackling with laughter. So there I was, with my good pal Dron, you know. We decided to hit up this fancy lobster restaurant downtown. Now, you might be wondering, \"Fanny, why would a flame like you even eat lobster?\" Well, my friend, curiosity burns bright, and I figured it was worth a shot. We waltz into this posh place, me flickering with excitement, Dron rolling in like a boss. We get seated, and the waiter hands us these bibs – you know, the ones with the goofy lobster design? I, of course, couldn't wear one, being made of flame and all, but Dron struggled a bit. Picture it: Dron, bib askew, trying to maneuver it with no arms. Hilarious, right? Now, we dive into the menu. Lobster this, lobster that – it was like a seafood carnival! Dron's eyes were wide, no arms to shield them from the sea of options. We decided to go for the lobster feast, the whole shebang. And let me tell you, it was a feast fit for kings! But here comes the twist! The waiter brings out this succulent lobster dish, steam rising like the flames on my head. Dron takes a bite, a hearty one, and suddenly, his face turns redder than a ripe tomato. Turns out, he's allergic to shellfish! Who would've thought? Poor Dron, armless and allergic – the universe sure has a sense of humor. Which reminds me of the spicy saga of my friend Green Demon and his salsa extravaganza. Now, Green Demon is quite the character – always pushing the boundaries of fiery flavors, forever on a quest to grow the spiciest peppers in our little corner of the world. One day, the sun was blazing overhead, and Green Demon excitedly invited our motley crew – me, La Ruga, Ogscule, Tim, Cnidrion, and Pyrogen – for a salsa fiesta at his fiery abode. Oh, the anticipation was palpable! I flickered with excitement, eager to see what kind of fiery concoction he had in store for us. As we approached, the scent of peppers wafted through the air like a zesty dance. Rows upon rows of vibrant, fiery red and green peppers swayed in the breeze, basking in the sun's warm embrace. Green Demon, with his devilish grin, welcomed us to his spicy paradise. \"Behold, my friends! The harvest of the spiciest peppers in the land!\" he declared, his eyes gleaming with mischievous delight. We gathered around as Green Demon plucked peppers with such finesse, it was like he was orchestrating a spicy symphony. With a basket brimming with peppers, he led us to his fiery kitchen, a cauldron bubbling away with a mysterious potion – or rather, his special salsa. The kitchen was alive with the rhythmic chopping of peppers and the sizzling melody of ingredients harmonizing in the pan. I, being a flame myself, felt right at home amidst the culinary inferno. Green Demon's hands moved with the precision of a seasoned chef, his eyes gleaming with the promise of a taste explosion. Now, my friends, you must understand – this salsa wasn't just your average dip. It was a potion of pure heat, a symphony of spices that would make even the bravest tongues tremble. Green Demon was a maestro, and his salsa was his fiery masterpiece. As the salsa simmered, the aroma grew more intense. It was like a spicy enchantment had taken over the kitchen. We were all eagerly awaiting the taste test, our excitement building like a rising flame. Finally, the moment of truth arrived. Green Demon scooped up a generous amount of salsa and handed us each a tortilla chip. We stared at each other, eyes wide with anticipation, and took a bite simultaneously. Flames! The heat hit us like a spicy meteor shower.", "Idle"
                 , (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RockLobster), maxWidth: 1000, fontSize: 0.8f).AddItemDisplay(ItemID.RockLobster);
@@ -111,9 +109,37 @@ namespace CalRemix.UI
 
             fannyMessages.Add(rock2);
 
-            /*fannyMessages.Add(new FannyMessage("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
-               "Nuhuh", (FannySceneMetrics scene) => ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip) && Main.LocalPlayer.talk == ModContent.NPCType<WITCH>()));*/
+            fannyMessages.Add(new FannyMessage("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
+               "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WITCH>() && Main.LocalPlayer.TalkNPC == n) && ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip)));
+
             #endregion
+
+            #region CrossMod
+
+            fannyMessages.Add(new FannyMessage("ThoriumOre", "Hey, take a look at this blueish-greenish-yellow metal! Isn't it cool? It's called Thorium! That would be a great name for a mod! Thankfully, we're not in a game, so I can use it freely!",
+               "Nuhuh", (FannySceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "ThoriumMod", "ThoriumOre")));
+
+            fannyMessages.Add(new FannyMessage("OcramSkull", "Woah! That skull looks a bit.. off! I feel like i've seen it before, a long time ago. I'm pretty sure it summons a really big bad guy! Are you sure you can take him? (He's really big, and bad!)",
+               "Nuhuh", (FannySceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "Consolaria", "SuspiciousLookingSkull")));
+
+            #endregion
+
+            #region References
+
+            fannyMessages.Add(new FannyMessage("PortalGun", "Cave Johnson here. We're fresh out of combustible lemons, but let me tell you a little bit about this thing here. These portals are only designed to stick on planetoid rock and not much else. Hope you've got a test chamber lying around that's full of that stuff!",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PortalGun)));
+
+            fannyMessages.Add(new FannyMessage("Murasama", "Erm, holy crap? $0? Is that a reference to my FAVORITE game of all time, metal gear rising revengeance? Did you know that calamity adds a custom boss health boss bar and many othe-",
+               "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Murasama>())).AddDynamicText(FannyMessage.GetPlayerName));
+
+            fannyMessages.Add(new FannyMessage("Ultrakill", "Oh EM GEE! A gun from the hit first-person shooter game, \'MURDERDEATH\'!? Try throwing out some coins and hitting them with a Titanium Railgun to pull a sick railcoin maneuver!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<MidasPrime>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<CrackshotColt>())).AddItemDisplay(ModContent.ItemType<MidasPrime>()));
+
+            fannyMessages.Add(new FannyMessage("Tofu", "Uh oh! Looks like one of your items is a reference to a smelly old game franchise known as Touhou! Do your ol\' pal Fanny a good deed and put it away.",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ScarletDevil>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<GlacialEmbrace>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<RecitationoftheBeast>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<EventHorizon>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HermitsBoxofOneHundredMedicines>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<PristineFury>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<DarkSpark>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<ResurrectionButterfly>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<FantasyTalisman>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HellsSun>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<TheDreamingGhost>())).SetHoverTextOverride("Anything for you Fanny!"));
+
+            #endregion
+
         }
     }
 }

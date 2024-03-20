@@ -1935,6 +1935,11 @@ Mods: {
 
 			MutatedEye.DisplayName: Mutated Eye
 			TheCalamity.DisplayName: The Calamity
+
+			Ogslime: {
+				DisplayName: Ogslime
+				Census.SpawnCondition: Conditions unknown
+			}
 		}
 
 		Projectiles: {

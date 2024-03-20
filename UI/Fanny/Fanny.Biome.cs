@@ -16,17 +16,21 @@ namespace CalRemix.UI
     {
         public static void LoadBiomeMessages()
         {
-            fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.", "Nuhuh",
-                NearDungeonEntrance));
+            #region Vanilla
 
-            fannyMessages.Add(new FannyMessage("Arsenic", "This place is a lot more out of this world than when I was last here! Try breaking through walls to find the rare and precious Arsenic Ore which can be used for highly advanced robotics!", "Idle",
-                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneDungeon));
+            fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.",
+                "Nuhuh", NearDungeonEntrance));
 
-            fannyMessages.Add(new FannyMessage("Snowbr", "It's quite chilly here, maybe you should invest some time in gathering some cold-protective gear before you freeze to death!", "Idle",
-                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSnow));
+            #endregion
 
-            fannyMessages.Add(new FannyMessage("Cavern", "It's quite dark down here. You should go get some more torches before further exploration or you may fall into a pit full of lice!", "Idle",
-                (FannySceneMetrics scene) => Main.LocalPlayer.ZoneRockLayerHeight).AddItemDisplay(ItemID.Torch));
+            fannyMessages.Add(new FannyMessage("Arsenic", "This place is a lot more out of this world than when I was last here! Try breaking through walls to find the rare and precious Arsenic Ore which can be used for highly advanced robotics!", 
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneDungeon));
+
+            fannyMessages.Add(new FannyMessage("Snowbr", "It's quite chilly here, maybe you should invest some time in gathering some cold-protective gear before you freeze to death!", 
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSnow));
+
+            fannyMessages.Add(new FannyMessage("Cavern", "It's quite dark down here. You should go get some more torches before further exploration or you may fall into a pit full of lice!", 
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneRockLayerHeight).AddItemDisplay(ItemID.Torch));
 
             fannyMessages.Add(new FannyMessage("Granite", "Woah, this place looks so cool and futuristic! It's almost like an entirely different dimension here!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneGranite));
@@ -83,34 +87,34 @@ namespace CalRemix.UI
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.breath <= 0 && Main.LocalPlayer.Calamity().ZoneAbyss));
 
             fannyMessages.Add(new FannyMessage("Jungleabyss", "I’ve heard word that there’s incredible treasures in the mysterious depths of the ocean, the one past the jungle!",
-   "Nuhuh", (FannySceneMetrics scene) => !NPC.downedBoss3 && Main.LocalPlayer.ZoneJungle && Main.rand.NextBool(600)));
+                "Nuhuh", (FannySceneMetrics scene) => !NPC.downedBoss3 && Main.LocalPlayer.ZoneJungle && Main.rand.NextBool(600)));
 
             fannyMessages.Add(new FannyMessage("Sulph", "Ah the good ol' Sulphurous Sea. Just take a breathe of the fresh air here! If you see any tiny light green lights, you should use a Bug Net on it to get a fancy light pet.",
-  "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur).AddItemDisplay(ModContent.ItemType<DisgustingSeawater>()));
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur).AddItemDisplay(ModContent.ItemType<DisgustingSeawater>()));
 
             fannyMessages.Add(new FannyMessage("Starbuster", "Trying to get a Starbuster Core? Lately those culex things have been hardening up! The only way to force their cores out of them is by running a Unicorn into them!",
-  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight)).AddItemDisplay(ModContent.ItemType<StarbusterCore>()));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight)).AddItemDisplay(ModContent.ItemType<StarbusterCore>()));
 
             fannyMessages.Add(new FannyMessage("NotBlessedApple", "A smart one ey? Unfortunately, only hostile Unicorns are able to break those astral batties open.",
-  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight) && Main.LocalPlayer.mount.Type == MountID.Unicorn));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight) && Main.LocalPlayer.mount.Type == MountID.Unicorn));
 
             fannyMessages.Add(new FannyMessage("SideGar", "Have you ever heard of gars? They're a neat fish group that you can rip open for valuable loot. One species of gar is the Side Gar, which can be fished up in sky lakes!",
-  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSkyHeight && NPC.downedMoonlord).AddItemDisplay(ModContent.ItemType<SideGar>()));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneSkyHeight && NPC.downedMoonlord).AddItemDisplay(ModContent.ItemType<SideGar>()));
 
             fannyMessages.Add(new FannyMessage("RearGar", "Fossilized tree bark!? In the Jungle's mud!? That sounds disgusting! I'll send over some gars to clean it up for you my friend. But, if you ever want some of that stuff for whatever reason, just go fish for some gars in the Jungle!",
-  "Nuhuh", (FannySceneMetrics scene) => DownedBossSystem.downedProvidence).AddItemDisplay(ModContent.ItemType<RearGar>()).SetHoverTextOverride("Thank you so much Fanny! Tree bark is disgusting!"));
+                "Nuhuh", (FannySceneMetrics scene) => DownedBossSystem.downedProvidence).AddItemDisplay(ModContent.ItemType<RearGar>()).SetHoverTextOverride("Thank you so much Fanny! Tree bark is disgusting!"));
 
             fannyMessages.Add(new FannyMessage("FrontGar", "Now why did that ghost thing cause the ocean to go all crazy? Who knows! But what I do know is that the gars in the Abyss have started mutating. You should try fishing up some gars from the Sulphurous Sea and see if you can extract them for something useful.",
-  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast).AddItemDisplay(ModContent.ItemType<FrontGar>()));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast).AddItemDisplay(ModContent.ItemType<FrontGar>()));
 
             fannyMessages.Add(new FannyMessage("MeldHeart", "Look at all that gunk! I'm pretty sure it's impossible to break it, so the best solution I can give is to assure it doesn't spread further by digging around it.",
-  "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && !ModLoader.HasMod("NoxusBoss")));
+                "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && !ModLoader.HasMod("NoxusBoss")));
 
             fannyMessages.Add(new FannyMessage("MeldHeartNoxus", "Look at all that gunk! I'm pretty sure it's impossible to break it, well, maybe if you got some powerful spray bottle, but that might take a while, so the best solution I can give is to assure it doesn't spread further by digging around it.",
-  "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && ModLoader.HasMod("NoxusBoss")));
+                "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && ModLoader.HasMod("NoxusBoss")));
 
             fannyMessages.Add(new FannyMessage("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
-  "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>()));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>()));
 
         }
 

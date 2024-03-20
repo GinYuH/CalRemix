@@ -18,64 +18,16 @@ namespace CalRemix.UI
     {
         public static void LoadNPCMessages()
         {
-            fannyMessages.Add(new FannyMessage("WulfrumPylone",
-                "Woah, you hear that? No? Well it sounded like something big... we should get it's attention. A dose of some of that tower over there's energy in a special chest might be just the motivation it needs to come to the surface!",
+            fannyMessages.Add(new FannyMessage("Bee", "According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyways. Because bees don't care what humans think is impossible.",
+                "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Bee || n.type == NPCID.BeeSmall)));
+
+            fannyMessages.Add(new FannyMessage("WulfrumPylone", "Woah, you hear that? No? Well it sounded like something big... we should get it's attention. A dose of some of that tower over there's energy in a special chest might be just the motivation it needs to come to the surface!",
                 "Idle",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WulfrumAmplifier>() && !CalRemixWorld.downedExcavator), onlyPlayOnce: false, cooldown: 2400).AddItemDisplay(ItemID.LivingWoodChest));
 
-            fannyMessages.Add(new FannyMessage("Cysts",
-                "That pimple thing looks useless, but it drops a very useful material. Please kill it!",
+            fannyMessages.Add(new FannyMessage("Cysts", "That pimple thing looks useless, but it drops a very useful material. Please kill it!",
                 "Awooga",
                 (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<HiveTumor>() || n.type == ModContent.NPCType<PerforatorCyst>())));
-
-            FannyMessage pumpking1 = new FannyMessage("Pumpking1", "Wh- Ahh! AAAAAAAAAAAAH!!",
-                "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Pumpking), 3, needsToBeClickedOff: false).SetHoverTextOverride("What?");
-
-            fannyMessages.Add(pumpking1);
-
-            FannyMessage pumpking2 = new FannyMessage("Pumpking2", "I told Fanny as a joke that jack-o-lanterns get their lights by eating flames. Don't tell him, though. It's funnier this way.",
-                "EvilIdle", FannyMessage.AlwaysShow).AddDelay(2).NeedsActivation().SetHoverTextOverride("Sure? I might tell Fanny later...");
-
-            pumpking1.AddEndEvent(() => pumpking2.ActivateMessage());
-
-            fannyMessages.Add(pumpking2);
-
-            // Empress
-            FannyMessage eol1 = new FannyMessage("EoL1", "So, there's a second boss for the Hallow... Then where's the second boss for the other biomes? Did they just like this one more than the others?",
-                "EvilIdle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss), 8, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny();
-
-            fannyMessages.Add(eol1);
-
-            FannyMessage eol2 = new FannyMessage("EoL2", "... then again, the other boss is a recolor. Maybe for the best.",
-                "EvilIdle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
-
-            eol1.AddEndEvent(() => eol2.ActivateMessage());
-
-            fannyMessages.Add(eol2);
-
-            FannyMessage eol3 = new FannyMessage("EoL3", "Just like you!",
-                "Nuhuh", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, displayOutsideInventory: true).NeedsActivation();
-
-            eol2.AddEndEvent(() => eol3.ActivateMessage());
-
-            fannyMessages.Add(eol3);
-
-            FannyMessage eol4 = new FannyMessage("EoL4", "...",
-                "EvilIdle", FannyMessage.AlwaysShow, 5, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
-
-            eol3.AddEndEvent(() => eol4.ActivateMessage());
-
-            fannyMessages.Add(eol4); 
-            
-            FannyMessage eol5 = new FannyMessage("EoL5", "Bitch",
-                "EvilIdle", (FannySceneMetrics scene) => ChildSafety.Disabled, 5, onlyPlayOnce: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
-
-            eol4.AddEndEvent(() => eol5.ActivateMessage());
-
-            fannyMessages.Add(eol5);
-
-            fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
-    "Idle", (FannySceneMetrics scene) => CrossModBoss(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
             fannyMessages.Add(new FannyMessage("Anauwu", "I sense an ominous presence. I think the best course of action here would be to kill everything you see. If something is dead it can't hurt you!",
                 "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<LeviathanStart>())));
@@ -89,20 +41,23 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("AncientDom", "Who is this guy???",
                 "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.AncientCultistSquidhead)));
 
-            fannyMessages.Add(new FannyMessage("PGuardians", "It seems like these mischievous scoundrels are up to no good, and plan to burn all the delicious meat! We gotta go put an end to their plan of calamity!",
-                "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<ProfanedGuardianCommander>())));
-
             fannyMessages.Add(new FannyMessage("Bloodworm", "Crush it under your boot.",
                 "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BloodwormNormal>() || n.type == ModContent.NPCType<BloodwormFleeing>())));
 
             fannyMessages.Add(new FannyMessage("Wolf", "Aw look a cute wolf! You can extract valuable Coyote Venom from their lifeless corpses in order to make some neat ice items.",
-    "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Wolf)).AddItemDisplay(ModContent.ItemType<CoyoteVenom>()));
+                "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Wolf)).AddItemDisplay(ModContent.ItemType<CoyoteVenom>()));
 
             fannyMessages.Add(new FannyMessage("Dungeondie", "Oh, it appears my hack didn't work.",
-    "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead));
+                "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead));
 
-            fannyMessages.Add(new FannyMessage("Scaldie", "Are you hurt? That was calamitous!",
-    "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SupremeCalamitas>()) && Main.LocalPlayer.dead));
+            fannyMessages.Add(new FannyMessage("AnglerTalk", "Look at his shit eating grin. He knows there is nothing you can do to him. He's bullying you, and you are helpless. Kill him. Kill him now. He won't see death coming.",
+                "EvilIdle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?"));
+
+            fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
+                "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
+
+            fannyMessages.Add(new FannyMessage("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
+                "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "FargowiltasSouls", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!"));
         }
     }
 }

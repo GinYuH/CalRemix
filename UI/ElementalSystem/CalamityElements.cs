@@ -45,7 +45,7 @@ using CalamityMod.NPCs.PrimordialWyrm;
 using CalamityMod.Items.Fishing.BrimstoneCragCatches;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
 
-namespace CalRemix.ElementalSystem
+namespace CalRemix.UI.ElementalSystem
 {
     public static class CalamityElements
     {

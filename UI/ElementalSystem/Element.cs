@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using static CalRemix.Retheme.RethemeMaster;
 
-namespace CalRemix.ElementalSystem
+namespace CalRemix.UI.ElementalSystem
 {
     public enum Element
     {

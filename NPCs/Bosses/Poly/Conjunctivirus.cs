@@ -337,7 +337,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             }
         }
 
-        public override void OnKill()
+        public override bool SpecialOnKill()
         {
             Astigmageddon astigmadeddon = null;
             Exotrexia exotrexia = null;
@@ -379,6 +379,7 @@ namespace CalRemix.NPCs.Bosses.Poly
                 CalRemixWorld.downedPolyphemalus = true;
                 CalRemixWorld.UpdateWorldBool();
             }
+            return true;
         }
 
         private void ShootCenter(int type, float velocityMod, int damage, float spread = 0)

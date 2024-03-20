@@ -1,6 +1,9 @@
 ﻿using CalamityMod;
 using CalamityMod.Tiles.DraedonStructures;
+using Microsoft.Xna.Framework;
+using System.Threading;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,10 +17,16 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => CalRemixWorld.meldCountdown <= 3600 && Main.hardMode));
 
             fannyMessages.Add(new FannyMessage("FungusGarden", "Careful when exploring the Shroom Garden. I hear some rather large crustaceans make their home there. Wouldn't want to be turned into Delicious Meat!",
-    "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
+                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
+
+            fannyMessages.Add(new FannyMessage("FakeGen", "I don't mean to alarm you my friend, but it seems like something huge might have generated in your world! You might want to go investigate whatever caused that terrible racket.",
+                "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)).AddStartEvent(FakeGen));
+
+            fannyMessages.Add(new FannyMessage("FalseRef", "WHOA! Is that a reference to another of my favorite games?????",
+                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
 
             fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and 2 more minutes to drive away. I did nothing to stop it.",
-            "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
+                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
 
             fannyMessages.Add(new FannyMessage("Fuckyou", "You are now manually breathing.",
                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(4000000)));
@@ -29,7 +38,7 @@ namespace CalRemix.UI
                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.chest != -1 && (Main.tile[Main.chest[Main.LocalPlayer.chest].x, Main.chest[Main.LocalPlayer.chest].y].TileType == ModContent.TileType<SecurityChestTile>() || Main.tile[Main.chest[Main.LocalPlayer.chest].x, Main.chest[Main.LocalPlayer.chest].y].TileType == ModContent.TileType<AgedSecurityChestTile>())));
 
             fannyMessages.Add(new FannyMessage("Creepy", Main.rand.Next(1000000) + " remaining...",
-   "Cryptid", (FannySceneMetrics scene) => Main.rand.NextBool(100000000), duration: 60, needsToBeClickedOff: false));
+                "Cryptid", (FannySceneMetrics scene) => Main.rand.NextBool(100000000), duration: 60, needsToBeClickedOff: false));
 
             fannyMessages.Add(new FannyMessage("Mhage", "Be careful when using magic weapons. Drinking too many mana potions can drain your health, and leave you vulnerable to enemy attacks.",
                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == DamageClass.Magic, cooldown: 300, onlyPlayOnce: false));
@@ -54,6 +63,14 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Frozen6", "Oh wait wait wait, this time I found a small crumb inside the ice. It was disgusting!",
                "Idle", (FannySceneMetrics scene) => fannyTimesFrozen == 6));
+        }
+        private static void FakeGen()
+        {
+            for (int i = 0; i < 10; i++) 
+            {
+                SoundEngine.PlaySound(SoundID.Tink, Main.LocalPlayer.Center + Vector2.UnitX * (Main.rand.NextBool() ? 100 : -100));
+            }
+            Thread.Sleep(10000);
         }
     }
 }

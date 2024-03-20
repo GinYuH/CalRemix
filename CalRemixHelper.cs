@@ -40,6 +40,15 @@ namespace CalRemix
             }
             return true;
         }
+        public static bool HasCrossModItem(Player player, string ModName, string ItemName)
+        {
+            if (ModLoader.HasMod(ModName))
+            {
+                if (player.HasItem(ModLoader.GetMod(ModName).Find<ModItem>(ItemName).Type))
+                    return true;
+            }
+            return false;
+        }
 
     }
 }

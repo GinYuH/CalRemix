@@ -6,7 +6,7 @@ using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalRemix.NPCs.Bosses.Acideye;
 using CalRemix.NPCs.Bosses.Poly;
 
-namespace CalRemix.ElementalSystem
+namespace CalRemix.UI.ElementalSystem
 {
     public static class RemixElements
     {
