@@ -1,5 +1,6 @@
 ﻿using CalRemix.UI;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -7,6 +8,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Terraria.Player;
 
 namespace CalRemix.NPCs.TownNPCs
 {
@@ -14,6 +16,26 @@ namespace CalRemix.NPCs.TownNPCs
     public class Ogslime : ModNPC
     {
         public static double spawnTime = double.MaxValue;
+
+        public override void Load()
+        {
+            Terraria.On_Player.ItemCheck_ApplyHoldStyle_Inner += PetSlime;
+        }
+
+        public static void PetSlime(Terraria.On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player p, float mountOffset, Item sItem, Rectangle heldItemFrame)
+        {
+            if (p.isPettingAnimal && p.TalkNPC?.type == ModContent.NPCType<Ogslime>())
+            {
+                int counter = p.miscCounter % 14 / 7;
+                CompositeArmStretchAmount stretch = CompositeArmStretchAmount.ThreeQuarters;
+                if (counter == 1)
+                {
+                    stretch = CompositeArmStretchAmount.Full;
+                }
+                p.SetCompositeArmBack(enabled: true, stretch, (float)Math.PI * -2f * 0.2f * (float)p.direction);
+            }
+        }
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 14;
@@ -42,6 +64,7 @@ namespace CalRemix.NPCs.TownNPCs
             AIType = NPCID.TownSlimeBlue;
             AnimationType = NPCID.TownSlimeBlue;
             NPC.lifeMax = 1000;
+            DrawOffsetY = 5;
         }
 
         public override string GetChat()
@@ -129,62 +152,6 @@ namespace CalRemix.NPCs.TownNPCs
 
         public override void AI()
         {
-            Player player = Main.player[Main.myPlayer];
-            if (player.talkNPC > -1 && Main.npc[player.talkNPC].type == Type)
-            {
-                int targetDirection = (NPC.Center.X > player.Center.X) ? 1 : (-1);
-                Vector2 playerPositionWhenPetting2 = (NPC.Bottom + new Vector2((float)(-targetDirection * 30), 0f)).Floor();
-                if (player.talkNPC == -1)
-                {
-                    return;
-                }
-                int num = System.Math.Sign(NPC.Center.X - player.Center.X);
-                if (player.controlLeft || player.controlRight || player.controlUp || player.controlDown || player.controlJump || player.pulley || player.mount.Active || num != player.direction)
-                {
-                    return;
-                }
-                /*if (player.Bottom.Distance(playerPositionWhenPetting2) > 31f)
-                {
-                    return;
-                }*/
-                Vector2 offset = playerPositionWhenPetting2 - player.Bottom;
-                bool flag = player.CanSnapToPosition(offset);
-                if (flag && !WorldGen.SolidTileAllowBottomSlope((int)playerPositionWhenPetting2.X / 16, (int)playerPositionWhenPetting2.Y / 16))
-                {
-                    flag = false;
-                }
-                if (!flag)
-                {
-                    return;
-                }
-                player.StopVanityActions();
-                player.RemoveAllGrapplingHooks();
-                if (player.mount.Active)
-                {
-                    player.mount.Dismount(player);
-                }
-                player.Bottom = playerPositionWhenPetting2;
-                player.ChangeDir(targetDirection);
-                player.velocity = Vector2.Zero;
-                player.gravDir = 1f;
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    Terraria.GameContent.Achievements.AchievementsHelper.HandleSpecialEvent(player, 21);
-                }
-                int num17 = player.miscCounter % 14 / 7;
-                Player.CompositeArmStretchAmount stretch11 = Player.CompositeArmStretchAmount.ThreeQuarters;
-                if (num17 == 1)
-                {
-                    stretch11 = Player.CompositeArmStretchAmount.Full;
-                }
-                float num16 = 0.1f;
-                if (player.isTheAnimalBeingPetSmall)
-                {
-                    num16 = 0.1f;
-                }
-                player.SetCompositeArmBack(enabled: true, stretch11, MathHelper.Pi * -2f * num16 * (float)player.direction);
-            }
-
             NPC.position.X = MathHelper.Clamp(NPC.position.X, 150f, Main.maxTilesX * 16f - 150f);
             NPC.position.Y = MathHelper.Clamp(NPC.position.Y, 150f, Main.maxTilesY * 16f - 150f);
             if (!CalRemixWorld.ogslime)
