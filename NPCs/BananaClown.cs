@@ -77,7 +77,7 @@ namespace CalRemix.NPCs
         {
             GreenAI[0]++;
             GreenAI[2]++;
-            CalamityMod.NPCs.CalamityGlobalAI.BuffedFighterAI(NPC, Mod);
+            CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedFighterAI(NPC, Mod);
             NPC.spriteDirection = NPC.direction;
             if (NPC.HasPlayerTarget)
             {

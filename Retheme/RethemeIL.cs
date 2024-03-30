@@ -17,6 +17,7 @@ using System;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Ranged;
+using IL.CalamityMod.NPCs;
 
 namespace CalRemix.Retheme
 {
@@ -47,19 +48,19 @@ namespace CalRemix.Retheme
             IL.CalamityMod.NPCs.CalClone.Catastrophe.PreDraw += Catastrophe;
             IL.CalamityMod.NPCs.Leviathan.Leviathan.SetStaticDefaults += Leviathan;
             IL.CalamityMod.NPCs.Leviathan.Anahita.PreDraw += Anahita;
-            MonoModHooks.Modify(typeof(CalamityAI).GetMethod("AstrumAureusAI", BindingFlags.Public | BindingFlags.Static), AureusAI);
+            //MonoModHooks.Modify(typeof(CalamityAI).GetMethod("AstrumAureusAI", BindingFlags.Public | BindingFlags.Static), AureusAI);
             IL.CalamityMod.NPCs.AstrumAureus.AstrumAureus.PreDraw += AstrumAureus;
             IL.CalamityMod.NPCs.AstrumAureus.AureusSpawn.PreDraw += AureusSpawn;
             //IL.CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.PreDraw += PBG;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusHead.PreDraw += AstrumDeusHead;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusBody.PreDraw += AstrumDeusBody;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusTail.PreDraw += AstrumDeusTail;
-            MonoModHooks.Modify(typeof(CalamityAI).GetMethod("BumblebirbAI", BindingFlags.Public | BindingFlags.Static), BirbAI);
+            ////MonoModHooks.Modify(typeof(CalamityAI).GetMethod("BumblebirbAI", BindingFlags.Public | BindingFlags.Static), BirbAI);
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.PreDraw += BirbDraw;
             IL.CalamityMod.NPCs.NormalNPCs.WildBumblefuck.SpawnChance += BirbSpawn;
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.SetBestiary += BirbBest;
             IL.CalamityMod.NPCs.Yharon.Yharon.PreDraw += Yharon;
-            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|48_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
+            //MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|48_0", BindingFlags.NonPublic | BindingFlags.Instance), Providence);
             //MonoModHooks.Modify(typeof(ModLoader).Assembly.GetType("CalamityMod.WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Static), BossChecklist);
 
             // IL.CalamityMod.Items.Weapons.PreDraw += ;

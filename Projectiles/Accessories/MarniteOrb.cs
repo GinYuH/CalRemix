@@ -10,13 +10,13 @@ using ReLogic.Content;
 using Terraria.Graphics.Shaders;
 using CalamityMod.DataStructures;
 using CalamityMod;
+using CalamityMod.Graphics.Primitives;
 
 namespace CalRemix.Projectiles.Accessories
 {
     public class MarniteOrb : ModProjectile
     {
         public override string Texture => "CalamityMod/Projectiles/Magic/AsteroidMolten";
-        internal PrimitiveTrail TrailDrawer;
         NPC target;
 
         public override void SetStaticDefaults()
@@ -70,11 +70,8 @@ namespace CalRemix.Projectiles.Accessories
             Texture2D tex = ModContent.Request<Texture2D>(Texture).Value;
             Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Color.Blue, Projectile.rotation, tex.Size() / 2f, Projectile.scale, SpriteEffects.None, 0);
 
-            if (TrailDrawer is null)
-                TrailDrawer = new PrimitiveTrail(WidthFunction, ColorFunction, specialShader: GameShaders.Misc["CalamityMod:TrailStreak"]);
-
             GameShaders.Misc["CalamityMod:TrailStreak"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
-            TrailDrawer.Draw(Projectile.oldPos, Projectile.Size * 1f - Main.screenPosition, 10);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, (_) => Projectile.Size, shader: GameShaders.Misc["CalamityMod:TrailStreak"]), 10);
 
 
             return false;

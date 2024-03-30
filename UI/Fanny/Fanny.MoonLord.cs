@@ -38,7 +38,7 @@ namespace CalRemix.UI
             fannyMessages.Add(ml4);
 
             FannyMessage ml5 = new FannyMessage("ML5", "The Dungeon has also gotten an upgrade in power, with new spirit enemies that occasionally pop out of enemies when defeated which drop Phantoplasm, an important crafting material. I'd reccomend killing as many of those things as possible!",
-                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation().AddItemDisplay(ModContent.ItemType<Polterplasm>());
+                "Idle", FannyMessage.AlwaysShow, 6, needsToBeClickedOff: true, onlyPlayOnce: true, displayOutsideInventory: true).NeedsActivation().AddItemDisplay(ModContent.ItemType<Necroplasm>());
             ml4.AddEndEvent(() => ml5.ActivateMessage());
             fannyMessages.Add(ml5);
 

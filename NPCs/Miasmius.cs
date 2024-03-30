@@ -92,7 +92,7 @@ namespace CalRemix.NPCs
             }
             else
             {
-                CalamityMod.NPCs.CalamityGlobalAI.BuffedHerplingAI(NPC, Mod);
+                CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
                 if (NPC.HasPlayerTarget)
                 {
                     if (GreenAI[0] % (70 + Main.rand.Next(0, 21)) == 0)

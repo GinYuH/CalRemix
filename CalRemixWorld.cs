@@ -65,6 +65,10 @@ using Terraria.GameContent.Generation;
 using CalamityMod.Tiles.FurniturePlaguedPlate;
 using CalamityMod.Tiles.FurnitureStratus;
 using CalRemix.Walls;
+using SubworldLibrary;
+using Terraria.Graphics.Effects;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.AstrumAureus;
 
 namespace CalRemix
 {
@@ -670,7 +674,7 @@ namespace CalRemix
                 }
             }
             //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
-            if (meldGunk)
+            if (meldGunk && !SubworldSystem.AnyActive())
             {
                 if (!generatedStrain && Main.hardMode)
                 {
@@ -1182,6 +1186,7 @@ namespace CalRemix
 
         public override void PostWorldGen()
         {
+            Main.LocalPlayer.vortexMonolithShader = true;
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
@@ -1628,6 +1633,16 @@ namespace CalRemix
                     backgroundColor.G = 40;
                     backgroundColor.B = 40;
                 }
+            }
+            if (SkyManager.Instance["CalRemix:Exosphere"].IsActive())
+            {
+                float intensity = SkyManager.Instance["CalRemix:Exosphere"].Opacity;
+                backgroundColor = Color.Lerp(backgroundColor, Color.DarkGray, intensity * 0.9f);
+                backgroundColor = Color.Lerp(backgroundColor, Color.Black, intensity * 0.67f);
+                tileColor = Color.Lerp(tileColor, Color.DarkGray, intensity * 0.8f);
+                tileColor = Color.Lerp(tileColor, Color.Black, intensity * 0.3f);
+                Main.ColorOfTheSkies = Color.Lerp(Main.ColorOfTheSkies, Color.DarkGray, intensity * 0.9f);
+                Main.ColorOfTheSkies = Color.Lerp(Main.ColorOfTheSkies, Color.Black, intensity * 0.65f);
             }
         }
         public static bool IsTileFullySolid(int i, int j)

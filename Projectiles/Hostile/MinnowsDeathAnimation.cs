@@ -36,7 +36,7 @@ public class MinnowsDeathAnimation : ModProjectile
     }
     public override bool PreKill(int timeLeft)
     {
-        Item.NewItem(source: null, Projectile.Center, ModContent.ItemType<Polterplasm>(), Main.rand.Next(20, 30));
+        Item.NewItem(source: null, Projectile.Center, ModContent.ItemType<Necroplasm>(), Main.rand.Next(20, 30));
         return true;
 
     }

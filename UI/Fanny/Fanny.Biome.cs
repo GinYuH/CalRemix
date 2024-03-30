@@ -6,6 +6,8 @@ using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Items;
 using CalRemix.Items.Placeables;
+using CalRemix.Subworlds;
+using SubworldLibrary;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -115,6 +117,9 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>()));
+
+            fannyMessages.Add(new FannyMessage("Exospheree", "THE EXOSPHERE!!!!",
+                "Awooga", FannyMessage.AlwaysShow, dedicatedSubworld: ModContent.GetInstance<ExosphereSubworld>()));
 
         }
 

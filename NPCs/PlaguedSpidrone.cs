@@ -85,7 +85,7 @@ namespace CalRemix.NPCs
                         NPC.noGravity = false;
                         NPC.noTileCollide = false;
                         GreenAI[1]++;
-                        CalamityMod.NPCs.CalamityGlobalAI.BuffedHerplingAI(NPC, Mod);
+                        CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
                         if (GreenAI[1] >= 120)
                         {
                             SwitchPhase(1);

@@ -25,6 +25,7 @@ using Terraria.GameContent.ItemDropRules;
 using CalRemix.Scenes;
 using Terraria.Graphics.Shaders;
 using System.Reflection;
+using CalRemix.Skies;
 
 namespace CalRemix
 {
@@ -34,6 +35,7 @@ namespace CalRemix
 
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
+        public static List<string> RemixItemNames = new List<string>();
 
         public static List<int> oreList = new List<int>
         {
@@ -63,6 +65,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:CalamitySky"] = new Filter(new ScreenShaderData("FilterMoonLord"), EffectPriority.High);
                 SkyManager.Instance["CalRemix:CalamitySky"] = new CalamitySky();
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Exosphere"] = new Filter(new ExosphereScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:Exosphere"] = new ExosphereSky();
             }
         }
         public override void Unload()

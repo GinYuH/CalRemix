@@ -244,7 +244,7 @@ namespace CalRemix.Retheme
             { ItemType<PhoenixFlameBarrage>(), "Yharon/DragonFlameBarrage" },
             { ItemType<YharonsKindleStaff>(), "Yharon/YharonsKindleStaff" },
             { ItemType<TheBurningSky>(), "Yharon/TheBurningSky" },
-            { ItemType<FinalDawn>(), "Yharon/FinalDawn" },
+            { ItemType<TheFinalDawn>(), "Yharon/FinalDawn" },
             { ItemType<Wrathwing>(), "Yharon/Wrathwing" },
             #endregion
             #region Exos
