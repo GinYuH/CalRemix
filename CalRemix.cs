@@ -26,16 +26,20 @@ using CalRemix.Scenes;
 using Terraria.Graphics.Shaders;
 using System.Reflection;
 using CalRemix.Skies;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Social.Steam;
+using static Terraria.GameContent.UI.EmoteID;
+using CalRemix.Subworlds;
 
 namespace CalRemix
 {
     public class CalRemix : Mod
     {
         public static CalRemix instance;
+        public static Mod CalVal;
 
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
-        public static List<string> RemixItemNames = new List<string>();
 
         public static List<int> oreList = new List<int>
         {
@@ -53,6 +57,7 @@ namespace CalRemix
         public override void Load()
         {
             instance = this;
+            ModLoader.TryGetMod("CalValEX", out CalVal);
 
             PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
 
@@ -67,12 +72,65 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:CalamitySky"] = new CalamitySky();
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Exosphere"] = new Filter(new ExosphereScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Exosphere"] = new ExosphereSky();
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Fanny"] = new Filter(new FannyScreenShaderData("FilterMiniTower").UseColor(FannySky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
             }
+            Terraria.On_IngameOptions.DrawLeftSide += OhGod;
         }
+
+        public static bool OhGod(Terraria.On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
+        {
+            bool flag = false;
+            FieldInfo leftMapping = typeof(Terraria.IngameOptions).GetField("_leftSideCategoryMapping", BindingFlags.NonPublic | BindingFlags.Static);
+            Dictionary<int, int> modsList = (Dictionary<int, int>)leftMapping.GetValue(null);
+            if (modsList.TryGetValue(i, out var value))
+            {
+                flag = Terraria.IngameOptions.category == value;
+            }
+            Color color = Color.Lerp(Color.Gray, Color.White, (scales[i] - minscale) / (maxscale - minscale));
+            if (flag)
+            {
+                color = Color.Gold;
+            }
+            if (txt == "Save & Exit")
+                txt = "A Fan-tastic time awaits!";
+            if (txt == "A Fan-tastic time awaits!")
+            {
+                color = Color.Lerp(Color.Red, Color.Orange, (scales[i] - minscale) / (maxscale - minscale));
+            }
+            Vector2 vector = Utils.DrawBorderStringBig(sb, txt, anchor + offset * (1 + i), color, scales[i] * (txt == "A Fan-tastic time awaits!" ? 0.8f : 1f), 0.5f, 0.5f);
+            bool flag2 = new Rectangle((int)anchor.X - (int)vector.X / 2, (int)anchor.Y + (int)(offset.Y * (float)(1 + i)) - (int)vector.Y / 2, (int)vector.X, (int)vector.Y).Contains(new Point(Main.mouseX, Main.mouseY));
+
+            FieldInfo canConsume = typeof(Terraria.IngameOptions).GetField("_canConsumeHover", BindingFlags.NonPublic | BindingFlags.Static);
+            bool consumeHover = (bool)canConsume.GetValue(null);
+            if (!consumeHover)
+            {
+                return false;
+            }
+            if (flag2)
+            {
+                if (txt == "A Fan-tastic time awaits!")
+                {
+                    if (Main.mouseLeft)
+                    {
+                        SubworldLibrary.SubworldSystem.Enter<FannySubworld>();
+                        Terraria.IngameOptions.Close();
+                    }
+                }
+                else
+                {
+                    canConsume.SetValue(null, false);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override void Unload()
         {
             PlagueGlobalNPC.PlagueHelper = null;
             instance = null;
+            CalVal = null;
         }
         public override void PostSetupContent()
         {

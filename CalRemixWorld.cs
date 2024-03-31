@@ -69,6 +69,7 @@ using SubworldLibrary;
 using Terraria.Graphics.Effects;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.AstrumAureus;
+using CalRemix.Subworlds;
 
 namespace CalRemix
 {
@@ -674,7 +675,7 @@ namespace CalRemix
                 }
             }
             //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
-            if (meldGunk && !SubworldSystem.AnyActive())
+            if (meldGunk)
             {
                 if (!generatedStrain && Main.hardMode)
                 {
@@ -705,6 +706,18 @@ namespace CalRemix
                     }
                 }
             }
+            if (CalRemix.CalVal != null && ((DateTime.Now.Day == 1 && DateTime.Now.Month == 4) || (DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld)))
+            {
+                FannyManager.fannyEnabled = false;
+            }
+            if (SubworldSystem.IsActive<FannySubworld>())
+            {
+                if (Main.LocalPlayer.position.X > 16 * (Main.maxTilesX - 130))
+                {
+                    Main.LocalPlayer.position.X = (Main.spawnTileX + 60) * 16;
+                }
+            }
+        
         }
 
         public static void AddLootDynamically(int npcType, bool npc = false)
@@ -1186,7 +1199,6 @@ namespace CalRemix
 
         public override void PostWorldGen()
         {
-            Main.LocalPlayer.vortexMonolithShader = true;
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
@@ -1643,6 +1655,16 @@ namespace CalRemix
                 tileColor = Color.Lerp(tileColor, Color.Black, intensity * 0.3f);
                 Main.ColorOfTheSkies = Color.Lerp(Main.ColorOfTheSkies, Color.DarkGray, intensity * 0.9f);
                 Main.ColorOfTheSkies = Color.Lerp(Main.ColorOfTheSkies, Color.Black, intensity * 0.65f);
+            }
+            if (SkyManager.Instance["CalRemix:Fanny"].IsActive())
+            {
+                float intensity = SkyManager.Instance["CalRemix:Fanny"].Opacity;
+                backgroundColor = Color.Lerp(backgroundColor, Color.DarkOrange, intensity * 0.9f);
+                backgroundColor = Color.Lerp(backgroundColor, Color.Red, intensity * 0.67f);
+                tileColor = Color.Lerp(tileColor, Color.DarkOrange, intensity * 0.8f);
+                tileColor = Color.Lerp(tileColor, Color.Red, intensity * 0.3f);
+                Main.ColorOfTheSkies = Color.Lerp(Main.ColorOfTheSkies, Color.DarkOrange, intensity * 0.9f);
+                Main.ColorOfTheSkies = Color.Lerp(Main.ColorOfTheSkies, Color.Red, intensity * 0.65f);
             }
         }
         public static bool IsTileFullySolid(int i, int j)
