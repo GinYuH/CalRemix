@@ -67,7 +67,7 @@ namespace CalRemix.Projectiles.Weapons
                     Attack = 0;
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, (Main.npc[index].Center - Projectile.Center) / 10, ModContent.ProjectileType<PungentShot>(), Projectile.damage / 2, Projectile.knockBack);
                     proj.DamageType = DamageClass.Summon;
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 1f + Main.rand.NextFloat());
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 1f + Main.rand.NextFloat());
                     dust.velocity = Projectile.rotation.ToRotationVector2() * Main.rand.Next(2, 6);
                     dust.noGravity = false;
                 }

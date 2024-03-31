@@ -33,7 +33,7 @@ namespace CalRemix.Projectiles.Hostile
             SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
             for (int k = 0; k < 10; k++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 1f + Main.rand.NextFloat());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 1f + Main.rand.NextFloat());
                 dust.noGravity = true;
                 dust.velocity = new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21));
             }

@@ -31,7 +31,7 @@ namespace CalRemix.Projectiles.Weapons
         {
             Projectile.velocity = Projectile.velocity.RotatedBy(TurnAngle);
             TurnAngle += 0.00001f * (TurnAngle < MathHelper.ToRadians(0) ? -1 : 1);
-            Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, (int)CalamityDusts.SulfurousSeaAcid, Scale: 2f * Projectile.scale);
+            Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, (int)CalamityDusts.SulphurousSeaAcid, Scale: 2f * Projectile.scale);
             dust.noGravity = true;
         }
     }

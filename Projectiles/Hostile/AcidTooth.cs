@@ -39,7 +39,7 @@ namespace CalRemix.Projectiles.Hostile
         {
             for (int k = 0; k < 3; k++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 1f + Main.rand.NextFloat());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 1f + Main.rand.NextFloat());
                 dust.noGravity = true;
                 dust.velocity = new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11));
             }

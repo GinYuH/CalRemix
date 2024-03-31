@@ -47,7 +47,7 @@ namespace CalRemix.Projectiles
             Projectile.ai[0]++;
             if (Projectile.ai[0] % 32f == 31f)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, (int)CalamityDusts.SulfurousSeaAcid);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, (int)CalamityDusts.SulphurousSeaAcid);
                 dust.velocity = Vector2.One.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1f, 2f);
                 dust.noGravity = true;
                 dust.scale = 1.6f;
