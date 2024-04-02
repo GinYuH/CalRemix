@@ -5,19 +5,16 @@ using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Events;
 using Terraria.GameContent;
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Weapons.Melee;
 using ReLogic.Content;
 using CalamityMod.NPCs.ProfanedGuardians;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Accessories;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using Terraria.ID;
-using CalamityMod.Items.Placeables.Ores;
 using System.Collections.Generic;
 using CalamityMod;
 using CalamityMod.Items.Placeables.Furniture;
@@ -34,7 +31,6 @@ using CalRemix.Retheme.NoFab;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Melee.Spears;
-using Terraria.Localization;
 using CalamityMod.Rarities;
 
 namespace CalRemix.Retheme

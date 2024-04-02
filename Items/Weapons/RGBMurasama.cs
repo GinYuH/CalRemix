@@ -7,13 +7,10 @@ using Terraria.DataStructures;
 using CalamityMod.Items.Materials;
 using CalRemix.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace CalRemix.Items.Weapons
 {
-	public class RGBMurasama : ModItem
+    public class RGBMurasama : ModItem
     {
         public override void SetStaticDefaults() 
 		{

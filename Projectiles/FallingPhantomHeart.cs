@@ -1,12 +1,6 @@
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Projectiles.Melee;
-using CalamityMod.Projectiles.Ranged;
-using CsvHelper.TypeConversion;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -14,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles
 {
-	public class FallingPhantomHeart : ModProjectile
+    public class FallingPhantomHeart : ModProjectile
 	{
 		public override void SetStaticDefaults() 
         {

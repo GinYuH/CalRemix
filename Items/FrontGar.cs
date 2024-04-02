@@ -1,10 +1,7 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
-using CalRemix.Items.Materials;
 using CalamityMod.Rarities;
-using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Materials;
 
 namespace CalRemix.Items

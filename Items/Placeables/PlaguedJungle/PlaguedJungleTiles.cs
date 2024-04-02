@@ -1,13 +1,11 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using CalRemix.Tiles;
 using CalRemix.Tiles.PlaguedJungle;
 
 namespace CalRemix.Items.Placeables.PlaguedJungle
 {
-	public class PlaguedGrass : ModItem
+    public class PlaguedGrass : ModItem
 	{
 		public override void SetDefaults()
 		{

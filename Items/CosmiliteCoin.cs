@@ -1,9 +1,6 @@
-﻿using CalRemix.Projectiles;
-using CalamityMod.Rarities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.UI;
-using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;

@@ -1,5 +1,4 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Buffs.DamageOverTime;
+﻿using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod;
 using CalamityMod.Projectiles.Summon;
 using Microsoft.Xna.Framework;

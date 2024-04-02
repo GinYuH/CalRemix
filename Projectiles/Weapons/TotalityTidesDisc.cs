@@ -7,14 +7,12 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-using CalamityMod;
-using Terraria.ID;
 using Terraria.Audio;
 using CalamityMod.Items.Weapons.Melee;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class TotalityTidesDisc : ModProjectile
+    public class TotalityTidesDisc : ModProjectile
     {
         public override string Texture => "CalRemix/Items/Weapons/TotalityTides";
         public ref float Timer => ref Projectile.ai[0];

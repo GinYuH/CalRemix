@@ -1,12 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
-using CalamityMod.Items.Potions.Alcohol;
-using CalamityMod.Items.Materials;
 
 namespace CalRemix.Items.Potions
 {

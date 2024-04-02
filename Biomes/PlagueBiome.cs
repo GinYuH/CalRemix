@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Capture;
@@ -8,8 +7,8 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Biomes
 {
-	// Shows setting up two basic biomes. For a more complicated example, please request.
-	public class PlagueBiome : ModBiome
+    // Shows setting up two basic biomes. For a more complicated example, please request.
+    public class PlagueBiome : ModBiome
 	{
 		//public override bool IsPrimaryBiome =>false; // Allows this biome to impact NPC prices
 

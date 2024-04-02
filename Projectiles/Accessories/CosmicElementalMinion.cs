@@ -1,14 +1,9 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod;
-using CalamityMod.Projectiles.Summon;
+﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using CalRemix.Buffs;
 using Terraria.ModLoader;
-using CalamityMod.Particles;
-using Terraria.Audio;
 
 namespace CalRemix.Projectiles.Accessories
 {

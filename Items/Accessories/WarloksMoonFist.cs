@@ -1,14 +1,8 @@
 ﻿using CalamityMod.CalPlayer;
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Typeless;
 using CalamityMod;
 using CalamityMod.Rarities;
 using CalamityMod.Items;
-using CalRemix.Projectiles.Accessories;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

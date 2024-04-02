@@ -1,17 +1,15 @@
 using CalamityMod;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class Reef : ModProjectile
+    public class Reef : ModProjectile
 	{
         public Player Owner => Main.player[Projectile.owner];
         public int finalDamage;

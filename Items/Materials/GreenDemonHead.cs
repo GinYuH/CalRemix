@@ -1,12 +1,10 @@
-using CalamityMod.Items;
-using CalamityMod.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Items.Materials
 {
-	public class GreenDemonHead : ModItem
+    public class GreenDemonHead : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

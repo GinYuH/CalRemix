@@ -1,10 +1,7 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.ModLoader;
 using CalamityMod;
-using Terraria.Audio;
-using Terraria.ID;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 namespace CalRemix.Projectiles.Weapons

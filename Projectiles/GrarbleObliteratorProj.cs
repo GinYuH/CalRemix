@@ -1,5 +1,4 @@
 using Terraria.ModLoader;
-using CalamityMod;
 
 namespace CalRemix.Projectiles
 {

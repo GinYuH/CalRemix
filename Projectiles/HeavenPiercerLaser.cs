@@ -1,5 +1,4 @@
-﻿using CalRemix;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles
 {
-	public class HeavenPiercerLaser : ModProjectile
+    public class HeavenPiercerLaser : ModProjectile
     {
         public ref float Time => ref Projectile.ai[0];
         public override void SetStaticDefaults() 

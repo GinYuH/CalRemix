@@ -1,19 +1,11 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using CalRemix.Tiles;
-using CalamityMod.Items;
-using CalRemix.Tiles.Plates;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Pets;
-using CalRemix.Items.Materials;
 using CalRemix.Walls;
 
 namespace CalRemix.Items.Placeables.Plates
 {
-	public class AeroplateWall : ModItem
+    public class AeroplateWall : ModItem
 	{
 		public override void SetStaticDefaults() 
 		{

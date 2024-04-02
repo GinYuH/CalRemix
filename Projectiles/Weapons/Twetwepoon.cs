@@ -2,12 +2,11 @@ using CalamityMod;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class Twetwepoon : ModProjectile
+    public class Twetwepoon : ModProjectile
     {
         public ref float State => ref Projectile.ai[0];
         public Player Owner => Main.player[Projectile.owner];

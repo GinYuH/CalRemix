@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System.IO;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Newtonsoft.Json.Linq;
 
 namespace CalRemix.NPCs.Bosses.Wulfwyrm
 {

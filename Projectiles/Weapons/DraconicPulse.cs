@@ -6,7 +6,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using CalamityMod;
-using CalamityMod.Projectiles.Rogue;
 namespace CalRemix.Projectiles.Weapons
 {
     public class DraconicPulse : ModProjectile

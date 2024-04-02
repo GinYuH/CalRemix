@@ -2,13 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Terraria.GameContent;
-using ReLogic.Content;
 using Terraria.Graphics.Shaders;
-using CalamityMod.DataStructures;
 using CalamityMod;
 
 namespace CalRemix.Projectiles.Accessories

@@ -1,20 +1,12 @@
 ﻿using CalamityMod;
-using CalamityMod.Items;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
-using CalamityMod.Items.Potions;
-using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
-using CalRemix.Items.Materials;
 using CalRemix.Items.Weapons;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.UI

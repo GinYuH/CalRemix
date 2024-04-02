@@ -1,5 +1,4 @@
-﻿using CalamityMod.Balancing;
-using CalamityMod.NPCs.NormalNPCs;
+﻿using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.CalPlayer;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Items.Accessories;
@@ -12,7 +11,6 @@ using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Accessories;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

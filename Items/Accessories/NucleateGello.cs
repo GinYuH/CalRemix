@@ -1,5 +1,4 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.SlimeGod;
 using CalRemix.Projectiles.Accessories;
 using Microsoft.Xna.Framework;

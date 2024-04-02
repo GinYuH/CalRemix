@@ -1,13 +1,9 @@
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
-using Mono.Cecil;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
-using CalRemix.Items.Weapons;
 
 namespace CalRemix.Projectiles.Weapons
 {

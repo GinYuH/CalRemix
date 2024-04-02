@@ -9,7 +9,6 @@ using CalamityMod.Rarities;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
-using CalRemix.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod;
 

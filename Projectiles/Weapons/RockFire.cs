@@ -6,7 +6,6 @@ using CalamityMod;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
-using Terraria.ID;
 namespace CalRemix.Projectiles.Weapons
 {
     public class RockFire : ModProjectile

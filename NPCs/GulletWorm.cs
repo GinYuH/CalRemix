@@ -1,13 +1,9 @@
 ﻿using CalamityMod;
-using CalRemix.Items.Accessories;
-using CalRemix.UI;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using System.Linq;
-using CalamityMod.Items;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.NPCs

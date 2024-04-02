@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ID;
+﻿using Terraria;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using CalRemix.Tiles;
 
 namespace CalRemix.Items.Placeables

@@ -1,5 +1,4 @@
-﻿using CalamityMod.Dusts;
-using CalamityMod.Items.Placeables.Ores;
+﻿using CalamityMod.Items.Placeables.Ores;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -7,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
 using CalRemix.Items;
-using CalamityMod.NPCs;
 using System.Linq;
 using CalRemix.UI;
 

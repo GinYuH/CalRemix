@@ -5,12 +5,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Hostile
 {
-	public class AcidTooth : ModProjectile
+    public class AcidTooth : ModProjectile
 	{
 		public override void SetStaticDefaults() 
         {

@@ -13,8 +13,6 @@ using CalRemix.Items.Accessories;
 using System;
 using CalRemix.Projectiles.Hostile;
 using Terraria.Audio;
-using CalamityMod.Tiles.DraedonStructures;
-using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.UI;
 using System.Linq;
 

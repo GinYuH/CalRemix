@@ -1,9 +1,8 @@
-using Terraria;
 using Terraria.ModLoader;
 
 namespace CalRemix.Backgrounds.Plague
 {
-	public class PlagueBgStyle : ModSurfaceBackgroundStyle
+    public class PlagueBgStyle : ModSurfaceBackgroundStyle
     {
 		// Use this to keep far Backgrounds like the mountains.
 		public override void ModifyFarFades(float[] fades, float transitionSpeed)

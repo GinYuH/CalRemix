@@ -1,7 +1,7 @@
 ﻿using Terraria.ModLoader;
 using CalamityMod;
 using Terraria;
-using Terraria.DataStructures; 
+using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Accessories;
 using CalRemix.Projectiles.Hostile;
@@ -14,8 +14,6 @@ using CalamityMod.Projectiles.Melee;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using static Terraria.ModLoader.ModContent;
-using CalamityMod.Projectiles.Boss;
-using CalRemix.Retheme;
 using CalRemix.Tiles.PlaguedJungle;
 using System;
 using Terraria.ID;
@@ -23,7 +21,7 @@ using CalRemix.Tiles;
 
 namespace CalRemix
 {
-	public class CalRemixProjectile : GlobalProjectile
+    public class CalRemixProjectile : GlobalProjectile
 	{
 		public bool nihilicArrow = false;
 		public bool rogueclone = false;

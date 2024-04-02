@@ -1,17 +1,11 @@
-using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.Particles;
 using CalRemix.Gores;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons

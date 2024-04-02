@@ -3,7 +3,6 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Items.Potions;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Typeless;
 using CalamityMod;
 using CalamityMod.Rarities;
 using CalamityMod.Items;

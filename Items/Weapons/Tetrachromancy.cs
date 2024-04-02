@@ -4,9 +4,6 @@ using Terraria.ID;
 using Terraria;
 using Terraria.DataStructures;
 using CalRemix.Projectiles.Weapons;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
 
 namespace CalRemix.Items.Weapons;
 

@@ -1,9 +1,6 @@
-﻿using CalamityMod.Projectiles.Melee;
-using CalamityMod.Rarities;
+﻿using CalamityMod.Rarities;
 using CalRemix.Projectiles.Weapons;
-using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

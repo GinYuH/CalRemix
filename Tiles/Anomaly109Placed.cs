@@ -1,10 +1,8 @@
-﻿using CalRemix.Buffs;
-using CalRemix.Items.Placeables;
+﻿using CalRemix.Items.Placeables;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;

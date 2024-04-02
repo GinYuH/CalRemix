@@ -2,11 +2,10 @@
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
-using static CalRemix.Retheme.RethemeMaster;
 
 namespace CalRemix.UI.ElementalSystem
 {
-	public class ElementDisplay : InfoDisplay
+    public class ElementDisplay : InfoDisplay
 	{
 		public override bool Active() 
 		{

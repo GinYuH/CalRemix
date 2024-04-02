@@ -1,13 +1,8 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod;
-using CalamityMod.Projectiles.Summon;
+﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Particles;
-using CalRemix.Buffs;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;

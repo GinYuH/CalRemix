@@ -7,7 +7,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System.Linq;
-using CalamityMod.Items;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.NPCs

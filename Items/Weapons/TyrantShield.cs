@@ -5,7 +5,6 @@ using CalamityMod.Items.Potions;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Items.Materials;
-using CalRemix.Projectiles;
 using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;

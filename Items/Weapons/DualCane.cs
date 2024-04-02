@@ -1,8 +1,3 @@
-using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Items;
-using CalamityMod.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +7,7 @@ using CalRemix.Projectiles.Weapons;
 
 namespace CalRemix.Items.Weapons
 {
-	public class DualCane : ModItem
+    public class DualCane : ModItem
 	{
         private int charge = 0;
         public override void SetStaticDefaults() 

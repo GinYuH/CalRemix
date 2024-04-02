@@ -1,9 +1,6 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Projectiles.Boss;
+﻿using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

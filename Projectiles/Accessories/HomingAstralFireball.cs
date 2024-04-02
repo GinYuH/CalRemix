@@ -1,16 +1,14 @@
 using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Accessories
 {
-	public class HomingAstralFireball : ModProjectile
+    public class HomingAstralFireball : ModProjectile
 	{
         public override void SetStaticDefaults() 
         {

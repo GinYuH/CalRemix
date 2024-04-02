@@ -1,11 +1,10 @@
-using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Items.Materials
 {
-	public class Theswordisinsidethecore : ModItem
+    public class Theswordisinsidethecore : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

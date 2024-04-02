@@ -1,4 +1,3 @@
-using CalamityMod.CalPlayer;
 using Terraria;
 using CalamityMod.Dusts;
 using Terraria.ModLoader;

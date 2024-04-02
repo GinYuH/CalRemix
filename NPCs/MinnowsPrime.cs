@@ -1,13 +1,9 @@
-﻿using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Placeables.Banners;
-using CalamityMod.Items.Critters;
-using System;
+﻿using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using CalamityMod;
 using CalRemix.Items;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Items.Materials;

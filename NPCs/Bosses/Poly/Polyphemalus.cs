@@ -1,23 +1,18 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Chat;
-using Terraria.Localization;
 using CalamityMod.NPCs;
 using CalamityMod;
 
 namespace CalRemix.NPCs.Bosses.Poly
 {
-	// The main part of the boss, usually refered to as "body"
-	[AutoloadBossHead] // This attribute looks for a texture called "ClassName_Head_Boss" and automatically registers it as the NPC boss head icon
+    // The main part of the boss, usually refered to as "body"
+    [AutoloadBossHead] // This attribute looks for a texture called "ClassName_Head_Boss" and automatically registers it as the NPC boss head icon
 	public class Polyphemalus : ModNPC
 	{
 		public override void SetStaticDefaults()
