@@ -1,7 +1,5 @@
 using CalamityMod;
 using CalRemix.Items.Weapons;
-using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -9,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class DeadYharim : ModProjectile
+    public class DeadYharim : ModProjectile
 	{
         public override string Texture => "CalRemix/Items/Weapons/TyrantShield";
         public Player Owner => Main.player[Projectile.owner];

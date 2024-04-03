@@ -1,4 +1,3 @@
-using CalamityMod;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CalRemix.Projectiles
 {
-	public class HornetShot : ModProjectile
+    public class HornetShot : ModProjectile
 	{
         List<int> hitlist = new List<int>{ -1 };
         public override string Texture => "Terraria/Images/Projectile_242";

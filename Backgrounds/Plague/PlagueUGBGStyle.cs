@@ -1,9 +1,8 @@
-﻿using Terraria;
-using Terraria.ModLoader;          
+﻿using Terraria.ModLoader;
 
 namespace CalRemix.Backgrounds.Plague
 {
-	public class PlagueUGBGStyle : ModUndergroundBackgroundStyle
+    public class PlagueUGBGStyle : ModUndergroundBackgroundStyle
 	{
 		public override void FillTextureArray(int[] textureSlots)
         {

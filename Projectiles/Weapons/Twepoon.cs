@@ -1,15 +1,12 @@
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class Twepoon : ModProjectile
+    public class Twepoon : ModProjectile
     {
         public ref float State => ref Projectile.ai[0];
         public Player Owner => Main.player[Projectile.owner];

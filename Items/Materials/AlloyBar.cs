@@ -2,11 +2,10 @@ using CalamityMod.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent;
 
 namespace CalRemix.Items.Materials
 {
-	public class AlloyBar : ModItem
+    public class AlloyBar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

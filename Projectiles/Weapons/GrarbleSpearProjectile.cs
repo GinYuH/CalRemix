@@ -1,5 +1,4 @@
 using CalamityMod.Projectiles.BaseProjectiles;
-using CalamityMod;
 
 namespace CalRemix.Projectiles.Weapons
 {

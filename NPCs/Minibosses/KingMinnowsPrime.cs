@@ -1,14 +1,10 @@
-
-using CalamityMod;
 using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;

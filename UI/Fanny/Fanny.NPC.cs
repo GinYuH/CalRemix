@@ -3,12 +3,9 @@ using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.NPCs.SupremeCalamitas;
 using CalRemix.Items.Materials;
 using System.Linq;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,19 +1,13 @@
 using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Items.Materials;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Placeables;
-using Terraria.Audio;
 using CalRemix.Projectiles.Weapons;
 
 namespace CalRemix.Items.Weapons
 {
-	public class ThunderBolt : ModItem
+    public class ThunderBolt : ModItem
 	{
         public override void SetStaticDefaults() 
 		{

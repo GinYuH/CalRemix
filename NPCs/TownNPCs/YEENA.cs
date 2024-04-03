@@ -1,27 +1,15 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.LoreItems;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.Signus;
 using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.NPCs.Yharon;
-using CalamityMod.Projectiles.Magic;
-using CalRemix.Buffs;
 using CalRemix.Items.Weapons;
-using CalRemix.Projectiles.Weapons;
-using Humanizer;
-using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Peripherals.RGB;
-using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.Personalities;
@@ -29,8 +17,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static Humanizer.In;
-using static Humanizer.On;
 
 namespace CalRemix.NPCs.TownNPCs
 {

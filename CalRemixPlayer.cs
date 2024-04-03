@@ -31,14 +31,13 @@ using CalRemix.Items;
 using CalRemix.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Buffs.StatDebuffs;
-using System.Security.Policy;
 using CalRemix.Buffs;
 using CalRemix.Items.Accessories;
 using CalRemix.Walls;
 
 namespace CalRemix
 {
-	public class CalRemixPlayer : ModPlayer
+    public class CalRemixPlayer : ModPlayer
 	{
         public bool earthEnchant;
 		public bool amongusEnchant;

@@ -1,6 +1,4 @@
-using CalamityMod;
 using CalamityMod.Items.Weapons.Summon;
-using CalRemix.Buffs;
 using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;

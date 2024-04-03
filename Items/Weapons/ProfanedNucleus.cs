@@ -1,6 +1,4 @@
-using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
@@ -10,11 +8,10 @@ using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Weapons;
-using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Items.Weapons
 {
-	public class ProfanedNucleus : ModItem
+    public class ProfanedNucleus : ModItem
 	{
 		public override void SetStaticDefaults() 
 		{

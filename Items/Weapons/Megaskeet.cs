@@ -1,7 +1,6 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Sounds;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Ranged;
 using CalRemix.Projectiles.Weapons;
@@ -10,14 +9,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-using CalamityMod.Projectiles.Ranged;
-using CalamityMod.Projectiles.Summon;
-using Mono.Cecil;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace CalRemix.Items.Weapons
 {
-	public class Megaskeet : ModItem
+    public class Megaskeet : ModItem
 	{
         private int shootCount = 1;
         public override void SetStaticDefaults() 

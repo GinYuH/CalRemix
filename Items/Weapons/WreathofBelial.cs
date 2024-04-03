@@ -6,8 +6,6 @@ using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Weapons;
-using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Items.Materials;
 using CalamityMod.Items;
 
 namespace CalRemix.Items.Weapons

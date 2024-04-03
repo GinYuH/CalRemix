@@ -1,12 +1,10 @@
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class ChainSawProjectile : ModProjectile
+    public class ChainSawProjectile : ModProjectile
 	{
 		// Define the range of the Spear Projectile. These are overrideable properties, in case you'll want to make a class inheriting from this one.
 		protected virtual float HoldoutRangeMin => 24f;

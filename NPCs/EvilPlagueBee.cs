@@ -4,16 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Buffs.DamageOverTime;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Utilities;
 using Microsoft.Xna.Framework;
-using static Terraria.Utilities.NPCUtils;
-using Terraria.WorldBuilding;
-using System.Drawing;
 
 namespace CalRemix.NPCs
 {

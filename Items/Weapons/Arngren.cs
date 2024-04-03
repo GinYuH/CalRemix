@@ -1,16 +1,14 @@
-using CalamityMod.Rarities;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using CalamityMod.Items.Placeables;
 
 namespace CalRemix.Items.Weapons
 {
-	public class Arngren : ModItem
+    public class Arngren : ModItem
 	{
 		public override void SetStaticDefaults() 
 		{

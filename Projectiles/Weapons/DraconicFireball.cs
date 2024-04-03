@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
-using Terraria.ID;
 namespace CalRemix.Projectiles.Weapons
 {
     public class DraconicFireball : ModProjectile

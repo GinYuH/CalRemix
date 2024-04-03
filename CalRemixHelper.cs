@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace CalRemix

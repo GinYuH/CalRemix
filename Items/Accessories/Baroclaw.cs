@@ -1,14 +1,7 @@
 using CalamityMod.Items;
-using CalRemix.Projectiles.Accessories;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 
 namespace CalRemix.Items.Accessories
 {

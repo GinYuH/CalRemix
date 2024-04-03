@@ -1,22 +1,13 @@
 using CalamityMod;
-using CalamityMod.NPCs.Perforator;
 using Microsoft.Xna.Framework;
-using CalRemix.Items;
 using CalRemix.Items.Weapons;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
-using Terraria.Chat;
-using Terraria.Localization;
-using CalRemix.Retheme;
 using CalRemix.Items.Placeables.MusicBoxes;
 using CalRemix.Items.Accessories;
 

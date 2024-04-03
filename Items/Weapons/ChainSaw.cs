@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
@@ -8,12 +7,11 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using CalRemix.Projectiles.Weapons;
-using CalRemix;
 
 namespace CalRemix.Items.Weapons
 {
 
-	public class ChainSaw : ModItem
+    public class ChainSaw : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Armor.Hydrothermic;
 using CalamityMod.Items.Fishing.FishingRods;
@@ -14,7 +13,6 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Items;
 using CalRemix.NPCs.Minibosses;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

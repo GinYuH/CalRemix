@@ -1,15 +1,13 @@
 using CalamityMod;
 using CalRemix.Buffs;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class HolyMackerel : ModProjectile
+    public class HolyMackerel : ModProjectile
 	{
 		public override void SetStaticDefaults() 
 		{

@@ -1,7 +1,4 @@
-﻿using CalamityMod.Particles;
-using CalRemix.Particles;
-using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace CalRemix.Buffs

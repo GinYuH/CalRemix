@@ -5,11 +5,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using CalamityMod.Items.Materials;
-using CalRemix.Projectiles.Weapons;
 
 namespace CalRemix.Items.Weapons
 {
-	public class Triploon : ModItem
+    public class Triploon : ModItem
 	{
 		public override void SetStaticDefaults() 
 		{

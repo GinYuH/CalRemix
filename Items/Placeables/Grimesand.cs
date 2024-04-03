@@ -1,10 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using CalRemix.Tiles;
-using CalamityMod.Items;
 
 namespace CalRemix.Items.Placeables
 {

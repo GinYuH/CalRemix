@@ -19,16 +19,12 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Tiles;
 using CalRemix.UI;
-using System.Linq;
-using CalamityMod.Items.Placeables.Ores;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Tiles.SunkenSea;
-using CalRemix.CrossCompatibility;
 
 namespace CalRemix
 {
-	public class CalRemixTile : GlobalTile
+    public class CalRemixTile : GlobalTile
 	{
 		private int berryCount;
         private int cosmicCount;

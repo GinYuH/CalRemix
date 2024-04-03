@@ -1,18 +1,10 @@
-using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Items.Accessories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using static CalRemix.Retheme.RethemeMaster;
 
 namespace CalRemix.UI.ElementalSystem
 {

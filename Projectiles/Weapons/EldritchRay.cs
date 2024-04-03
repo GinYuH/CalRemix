@@ -1,9 +1,7 @@
 ﻿using CalamityMod.Projectiles.Summon;
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
 using Terraria;
 using ReLogic.Content;
 using Terraria.ModLoader;

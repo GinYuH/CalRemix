@@ -1,10 +1,8 @@
-﻿using CalamityMod.CalPlayer;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using Terraria.GameContent.NetModules;
 using CalamityMod.Graphics.Metaballs;
 
 namespace CalRemix.Projectiles.Accessories

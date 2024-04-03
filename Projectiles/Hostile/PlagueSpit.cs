@@ -1,14 +1,11 @@
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Projectiles.Environment;
-using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Hostile
 {
-	public class PlagueSpit : ModProjectile
+    public class PlagueSpit : ModProjectile
 	{
         public override void SetStaticDefaults() 
         {

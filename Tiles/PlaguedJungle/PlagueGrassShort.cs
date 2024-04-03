@@ -1,17 +1,15 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using CalamityMod;
 
 namespace CalRemix.Tiles.PlaguedJungle
 {
-	public class PlagueGrassShort : ModTile
+    public class PlagueGrassShort : ModTile
 	{
 		public override void SetStaticDefaults()
 		{

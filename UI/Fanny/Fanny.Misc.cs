@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.Placeables.Ores;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent;

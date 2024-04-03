@@ -1,15 +1,11 @@
 using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.UI.CalamitasEnchants;
 using CalRemix.CrossCompatibility.OutboundCompatibility;
 using CalRemix.NPCs;
 using CalRemix.NPCs.Minibosses;
-using CalRemix.NPCs.Bosses;
 using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Items.Accessories;
 using System;
-using System.IO;
-using System.Linq;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI;

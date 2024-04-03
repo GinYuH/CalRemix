@@ -10,12 +10,9 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using CalamityMod.Projectiles.Magic;
 using CalRemix.Projectiles.Accessories;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

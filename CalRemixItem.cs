@@ -42,12 +42,10 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.TreasureBags.MiscGrabBags;
 using CalamityMod.Items.LoreItems;
 using CalRemix.NPCs.Bosses.BossScule;
-using CalRemix.Retheme;
-using CalamityMod.Items;
 
 namespace CalRemix
 {
-	public class CalRemixItem : GlobalItem
+    public class CalRemixItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
         public bool Scoriad = false;

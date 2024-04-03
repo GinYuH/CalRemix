@@ -1,4 +1,3 @@
-using CalamityMod.Dusts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class OnyxFist : ModProjectile
+    public class OnyxFist : ModProjectile
     {
         public ref float Timer => ref Projectile.ai[0];
         public ref float State => ref Projectile.ai[1];

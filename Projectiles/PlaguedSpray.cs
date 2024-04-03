@@ -3,13 +3,10 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Tiles.PlaguedJungle;
-using CalamityMod;
-using CalamityMod.Tiles.Astral;
 
 namespace CalRemix.Projectiles.TileTypeless
 {
-	public class PlaguedSpray : ModProjectile
+    public class PlaguedSpray : ModProjectile
 	{
 		public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
 

@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Items.Materials;
 
 namespace CalRemix.Projectiles.Weapons
 {

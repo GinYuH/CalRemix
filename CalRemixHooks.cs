@@ -1,7 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using CalamityMod.Buffs.Pets;
-using System;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using System.Reflection;

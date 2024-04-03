@@ -1,24 +1,14 @@
-﻿using CalamityMod.Dusts;
-using CalamityMod.Items.Placeables.Ores;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
-using CalamityMod.NPCs;
-using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
-using CalamityMod.Projectiles.Summon;
-using CalamityMod.World;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Projectiles.Hostile;
 using CalRemix.UI;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CalRemix.NPCs

@@ -1,5 +1,4 @@
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Ranged;
 using Microsoft.Xna.Framework;
@@ -12,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class AxisExoBullet : ModProjectile
+    public class AxisExoBullet : ModProjectile
 	{
 		public override void SetStaticDefaults() 
         {

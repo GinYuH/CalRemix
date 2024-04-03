@@ -2,16 +2,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items;
 using Terraria.ModLoader;
 using CalRemix.Projectiles.Weapons;
-using Humanizer;
-using Terraria.WorldBuilding;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Projectiles.Melee;
-using CalamityMod.Projectiles.Summon;
 
 namespace CalRemix.Items.Weapons
 {

@@ -1,8 +1,6 @@
 using Terraria.ModLoader;
 using Terraria;
 using System.Collections.Generic;
-using System.Linq;
-using CalRemix;
 using Terraria.ID;
 
 namespace CalRemix.Items.Accessories

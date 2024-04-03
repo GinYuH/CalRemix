@@ -1,4 +1,3 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -8,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class CaneOrb : ModProjectile
+    public class CaneOrb : ModProjectile
     {
         public ref float Time => ref Projectile.ai[0];
         public ref float Image => ref Projectile.ai[1];

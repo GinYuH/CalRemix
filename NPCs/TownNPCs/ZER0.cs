@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items.LoreItems;
-using CalamityMod.Items.SummonItems;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Magic;
 using CalRemix.Items;
@@ -18,7 +17,7 @@ using Terraria.Utilities;
 
 namespace CalRemix.NPCs.TownNPCs
 {
-	[AutoloadHead]
+    [AutoloadHead]
 	public class ZER0 : ModNPC
 	{
 		private static List<int> Fish = new()

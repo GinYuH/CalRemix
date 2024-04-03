@@ -1,14 +1,12 @@
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class DriftSpark : ModProjectile
+    public class DriftSpark : ModProjectile
     {
         public override string Texture => "Terraria/Images/Projectile_504";
         public int dust = DustID.Torch;

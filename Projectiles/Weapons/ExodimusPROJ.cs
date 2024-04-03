@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Items.Weapons.Rogue;
 namespace CalRemix.Projectiles.Weapons;
 
 

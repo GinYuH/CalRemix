@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.Chat.Commands;
-using Terraria.GameContent.Biomes;
 
 namespace CalRemix.Particles
 {

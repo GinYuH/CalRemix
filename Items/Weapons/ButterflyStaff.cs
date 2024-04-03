@@ -2,7 +2,6 @@ using CalamityMod;
 using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

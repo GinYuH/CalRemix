@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace CalRemix.Waters
 {
-	public class PlagueWater : ModWaterStyle
+    public class PlagueWater : ModWaterStyle
 	{
 		public override int ChooseWaterfallStyle()
 		{

@@ -2,15 +2,13 @@ using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Dusts;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class RazorTooth : ModProjectile
+    public class RazorTooth : ModProjectile
     {
         public override string Texture => "CalRemix/Items/Weapons/RazorTeeth";
         private NPC Target;
