@@ -7,7 +7,6 @@ using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Items;
 using CalRemix.Items.Placeables;
 using CalRemix.Subworlds;
-using SubworldLibrary;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -100,7 +100,7 @@ namespace CalRemix.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<GodlySoulArtifact>(1).
+                AddIngredient<AuricSoulArtifact>(1).
                 AddIngredient<DimensionalSoulArtifact>(1).
                 AddIngredient<PhantomicArtifact>(1).
                 AddIngredient<EldritchSoulArtifact>(1).

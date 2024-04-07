@@ -41,13 +41,7 @@ using CalamityMod.NPCs.AquaticScourge;
 using Terraria.GameContent.Bestiary;
 using CalamityMod.NPCs.HiveMind;
 using Terraria.GameContent.Generation;
-using CalamityMod.Tiles.FurniturePlaguedPlate;
-using CalamityMod.Tiles.FurnitureStratus;
-using CalRemix.Walls;
 using SubworldLibrary;
-using Terraria.Graphics.Effects;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.AstrumAureus;
 using CalRemix.Subworlds;
 
 namespace CalRemix
@@ -579,6 +573,20 @@ namespace CalRemix
                 Recipes.MassModifyIngredient(!wolfvenom, Recipes.venomCrafts);
                 loadedRecipeInjections = true;
                 //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
+            }
+            if (Main.eclipse)
+            {
+                if (TextureAssets.Sun3 == CalRemix.sunOG)
+                {
+                    if (DownedBossSystem.downedDoG)
+                    {
+                        TextureAssets.Sun3 = CalRemix.sunCreepy;
+                    }
+                    else
+                    {
+                        TextureAssets.Sun3 = CalRemix.sunOG;
+                    }
+                }
             }
         }
         public static void RefreshBestiary(BestiaryEntry entry, NPC npc, string text)

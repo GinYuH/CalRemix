@@ -3,18 +3,13 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.Events;
 using static Terraria.ModLoader.ModContent;
-using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.AstrumAureus;
 using System.Reflection;
 using MonoMod.Cil;
 using Terraria.GameContent.Bestiary;
 using Mono.Cecil.Cil;
-using CalamityMod.NPCs;
 using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Weapons.Ranged;
-using IL.CalamityMod.NPCs;
 
 namespace CalRemix.Retheme
 {

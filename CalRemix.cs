@@ -23,9 +23,10 @@ using Terraria.Graphics.Shaders;
 using System.Reflection;
 using CalRemix.Skies;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Social.Steam;
-using static Terraria.GameContent.UI.EmoteID;
 using CalRemix.Subworlds;
+using ReLogic.Content;
+using CalRemix.NPCs.Eclipse;
+using Terraria.GameContent;
 
 namespace CalRemix
 {
@@ -36,6 +37,9 @@ namespace CalRemix
 
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
+        internal static Effect SlendermanShader;
+        public static Asset<Texture2D> sunOG = null;
+        public static Asset<Texture2D> sunCreepy = null;
 
         public static List<int> oreList = new List<int>
         {
@@ -50,6 +54,12 @@ namespace CalRemix
         };
         // Defer mod call handling to the extraneous mod call manager.
         public override object Call(params object[] args) => ModCallManager.Call(args);
+        private static void RegisterMiscShader(Effect shader, string passName, string registrationName)
+        {
+            Ref<Effect> shaderPointer = new(shader);
+            MiscShaderData passParamRegistration = new(shaderPointer, passName);
+            GameShaders.Misc["CalRemix/" + registrationName] = passParamRegistration;
+        }
         public override void Load()
         {
             instance = this;
@@ -70,8 +80,17 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:Exosphere"] = new ExosphereSky();
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Fanny"] = new Filter(new FannyScreenShaderData("FilterMiniTower").UseColor(FannySky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
             }
             Terraria.On_IngameOptions.DrawLeftSide += OhGod;
+
+            AssetRepository calAss = instance.Assets;
+            Effect LoadShader(string path) => calAss.Request<Effect>("Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
+            SlendermanShader = LoadShader("SlendermanStatic");
+            RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
+            Terraria.On_Main.DrawGore += DrawStatic;
+            sunOG = TextureAssets.Sun3;
+            sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
         }
 
         public static bool OhGod(Terraria.On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
@@ -247,6 +266,51 @@ namespace CalRemix
             if (specialMoney == 1) shop.item[nextSlot].shopSpecialCurrency = CosmiliteCoinCurrencyId;
             else if (specialMoney == 2) shop.item[nextSlot].shopSpecialCurrency = KlepticoinCurrencyId;
             nextSlot++;
+        }
+
+        public static float extraDist = 222;
+        public static void DrawStatic(Terraria.On_Main.orig_DrawGore orig, Terraria.Main self)
+        {
+            if (!NPC.AnyNPCs(ModContent.NPCType<TallMan>()))
+                return;
+            NPC slender = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<TallMan>())];
+
+            if (slender == null || !slender.active)
+                return;
+
+            if (slender.ai[0] > 222)
+            {
+                extraDist = 222;
+            }
+            else
+            {
+                if (extraDist > 0 && Main.hasFocus)
+                {
+                    extraDist--;
+                }
+            }
+
+            var blackTile = TextureAssets.MagicPixel;
+            var shader = GameShaders.Misc["CalRemix/SlendermanStaticShader"].Shader;
+            float maxRadius = slender.ai[0] + extraDist;
+            shader.Parameters["radius"].SetValue(slender.ai[0]);
+            shader.Parameters["maxRadius"].SetValue(maxRadius);
+            shader.Parameters["anchorPoint"].SetValue(Main.LocalPlayer.Center);
+            shader.Parameters["screenPosition"].SetValue(Main.screenPosition);
+            shader.Parameters["screenSize"].SetValue(Main.ScreenSize.ToVector2());
+            shader.Parameters["maxOpacity"].SetValue(0.9f);
+            shader.Parameters["seed"].SetValue(Main.GlobalTimeWrappedHourly);
+
+            Main.spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied, shader);
+            Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
+            Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+            Main.spriteBatch.ExitShaderRegion();
+
+            Texture2D parasite = ModContent.Request<Texture2D>("CalRemix/NPCs/Eclipse/SlenderJumpscare").Value;
+            Vector2 scale = new Vector2(Main.screenWidth * 1.1f / parasite.Width, Main.screenHeight * 1.1f / parasite.Height);
+            Vector2 screenArea = new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
+            Vector2 origin = parasite.Size() * 0.5f;
+            Main.spriteBatch.Draw(parasite, screenArea, null, Color.Red * slender.ai[2], 0f, origin, scale, SpriteEffects.None, 0f);
         }
     }
 }

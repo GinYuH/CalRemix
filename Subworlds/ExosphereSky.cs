@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CalRemix.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using SubworldLibrary;
 using Terraria;
 using Terraria.Audio;

@@ -75,6 +75,11 @@ Mods: {
 				DisplayName: Exosphere Biome
 				TownNPCDialogueName: the Exosphere Biome
 			}
+
+			FannyBiome: {
+				DisplayName: Fanny Biome
+				TownNPCDialogueName: the Fanny Biome
+			}
 		}
 
 		Buffs: {
@@ -1945,6 +1950,13 @@ Mods: {
 				DisplayName: Ogslime
 				Census.SpawnCondition: Conditions unknown
 			}
+
+			EvilAnimatronic.DisplayName: Evil Animatronic
+			Rodenttmod.DisplayName: Rodent.tmod
+			TallMan.DisplayName: Tall Man
+			Corruption.DisplayName: Corruption
+			Glitch.DisplayName: Glitch
+			CuboidCurse.DisplayName: CuboidCurse
 		}
 
 		Projectiles: {
@@ -2111,6 +2123,9 @@ Mods: {
 			Darkscule.DisplayName: Darkscule
 			DarkVein.DisplayName: Dark Vein
 			PungentBomb.DisplayName: Pungent Bomb
+			PizzaWheelHostile.DisplayName: Pizza
+			RedstoneFireball.DisplayName: Redstone Fireball
+			RedstonePillar.DisplayName: Redstone Pillar
 		}
 
 		Tiles: {

@@ -1,15 +1,7 @@
-﻿using System.Security.Policy;
-using CalamityMod.CalPlayer;
-using CalamityMod.Events;
-using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Systems;
-using CalamityMod.World;
-using CalRemix.Subworlds;
-using Microsoft.Xna.Framework;
+﻿using CalRemix.Subworlds;
 using SubworldLibrary;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Biomes

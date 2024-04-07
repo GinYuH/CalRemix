@@ -13,7 +13,6 @@ using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Placeables;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Ammo;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Materials;

@@ -1,23 +1,12 @@
 ﻿using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using SubworldLibrary;
 using Terraria.WorldBuilding;
 using Terraria.IO;
 using Terraria.ModLoader;
-using CalamityMod.Items.Placeables.FurnitureExo;
 using CalamityMod.Tiles.FurnitureExo;
-using CalamityMod;
-using Terraria.Utilities;
-using Microsoft.Xna.Framework;
-using CalamityMod.Tiles.Abyss;
-using System.Drawing;
 using System;
 using CalamityMod.Tiles.Ores;
-using On.CalamityMod;
-using CalamityMod.Skies;
-using Terraria.Audio;
-using Terraria.Graphics.Effects;
 
 namespace CalRemix.Subworlds
 {
