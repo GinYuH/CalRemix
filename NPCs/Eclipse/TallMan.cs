@@ -68,7 +68,7 @@ namespace CalRemix.NPCs.Eclipse
                     }
                     else
                     {
-                        Main.LocalPlayer.KillMe(new PlayerDeathReason(), 666666, 1);
+                        Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name+"                                ."), 666666, 1);
                         NPC.active = false;
                     }
                 }
