@@ -78,6 +78,7 @@ namespace CalRemix
         public static bool generatedCosmiliteSlag = false;
         public static bool generatedPlague = false;
         public static bool generatedStrain = false;
+        public static bool canGenerateBaron = false;
         public static bool grime = false;
 
         public static int transmogrifyingItem = -1;
@@ -155,6 +156,7 @@ namespace CalRemix
             generatedCosmiliteSlag = false;
             generatedPlague = false;
             generatedStrain = false;
+            canGenerateBaron = false;
             grime = false;
 
             alloyBars = true;
@@ -251,6 +253,7 @@ namespace CalRemix
             generatedCosmiliteSlag = false;
             generatedPlague = false;
             generatedStrain = false;
+            canGenerateBaron = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -312,6 +315,7 @@ namespace CalRemix
             tag["genSlag"] = generatedCosmiliteSlag;
             tag["plague"] = generatedPlague;
             tag["astrain"] = generatedStrain;
+            tag["canBaron"] = canGenerateBaron;
             tag["grime"] = grime;
 
             tag["109alloybar"] = alloyBars;
@@ -374,6 +378,7 @@ namespace CalRemix
             generatedCosmiliteSlag = tag.Get<bool>("genSlag");
             generatedPlague = tag.Get<bool>("plague");
             generatedStrain = tag.Get<bool>("astrain");
+            canGenerateBaron = tag.Get<bool>("canBaron");
             grime = tag.Get<bool>("grime");
 
             alloyBars = tag.Get<bool>("109alloybar");
@@ -423,6 +428,7 @@ namespace CalRemix
             writer.Write(generatedCosmiliteSlag);
             writer.Write(generatedPlague);
             writer.Write(generatedStrain);
+            writer.Write(canGenerateBaron);
             writer.Write(grime);
 
             writer.Write(alloyBars);
@@ -483,6 +489,7 @@ namespace CalRemix
             generatedCosmiliteSlag = reader.ReadBoolean();
             generatedPlague = reader.ReadBoolean();
             generatedStrain = reader.ReadBoolean();
+            canGenerateBaron = reader.ReadBoolean();
             grime = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();

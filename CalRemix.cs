@@ -27,6 +27,13 @@ using CalRemix.Subworlds;
 using ReLogic.Content;
 using CalRemix.NPCs.Eclipse;
 using Terraria.GameContent;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using Terraria.ModLoader;
+using System.Runtime.InteropServices;
+using Terraria.Audio;
+using ReLogic.Utilities;
+using CalRemix.Buffs;
 
 namespace CalRemix
 {
@@ -89,6 +96,7 @@ namespace CalRemix
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             Terraria.On_Main.DrawGore += DrawStatic;
+            Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
             sunOG = TextureAssets.Sun3;
             sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
         }
@@ -139,6 +147,66 @@ namespace CalRemix
                 }
             }
             return false;
+        }
+
+        public static SlotId LazerSoundOverride(Terraria.Audio.On_SoundPlayer.orig_Play orig, SoundPlayer self, [In] ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback)
+        {
+            return orig(self, ref style, position, updateCallback);
+            if (Main.LocalPlayer.HasBuff(ModContent.BuffType<Scorinfestation>()))
+            {
+                style = SoundID.Tink;
+                SoundUpdateCallback updateCallback2 = updateCallback;
+                if (Main.dedServ)
+                {
+                    return SlotId.Invalid;
+                }
+                if (position.HasValue && Vector2.DistanceSquared(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), position.Value) > 100000000f)
+                {
+                    return SlotId.Invalid;
+                }
+                if (style.PlayOnlyIfFocused && !Main.hasFocus)
+                {
+                    return SlotId.Invalid;
+                }
+                if (!Program.IsMainThread)
+                {
+                    SoundStyle styleCopy = style;
+                    return Main.RunOnMainThread(() => PlayInerr(in styleCopy, position, updateCallback2)).GetAwaiter().GetResult();
+                }
+                return PlayInerr(in style, position, updateCallback2);
+            }
+            else
+            {
+                return orig(self, ref style, position, updateCallback);
+            }
+        }
+
+        public static SlotId PlayInerr(in SoundStyle style, Vector2? position, SoundUpdateCallback c)
+        {
+            FieldInfo tracc = typeof(Terraria.Audio.SoundPlayer).GetField("_trackedSounds", BindingFlags.NonPublic | BindingFlags.Instance);
+            ReLogic.Utilities.SlotVector<ActiveSound> consumeHover = (ReLogic.Utilities.SlotVector<ActiveSound>)tracc.GetValue(Terraria.Audio.SoundEngine.SoundPlayer);
+
+            //ReLogic.Utilities.SlotVector<ActiveSound>
+            int maxInstances = style.MaxInstances;
+            if (maxInstances > 0)
+            {
+                int instanceCount = 0;
+                foreach (SlotVector<ActiveSound>.ItemPair item in (IEnumerable<SlotVector<ActiveSound>.ItemPair>)consumeHover)
+                {
+                    ActiveSound activeSound = item.Value;
+                    if (activeSound.IsPlaying && style.IsTheSameAs(activeSound.Style) && ++instanceCount >= maxInstances)
+                    {
+                        if (style.SoundLimitBehavior != SoundLimitBehavior.ReplaceOldest)
+                        {
+                            return SlotId.Invalid;
+                        }
+                        activeSound.Sound?.Stop(immediate: true);
+                    }
+                }
+            }
+            SoundStyle styleCopy = style;
+            ActiveSound value = new ActiveSound(styleCopy, position, c);
+            return consumeHover.Add(value);
         }
 
         public override void Unload()

@@ -1753,6 +1753,12 @@ Mods: {
 				DisplayName: Twenty Twoon
 				Tooltip: WHY?????
 			}
+
+			BanishedPlating.DisplayName: Baronautical Plating
+			BaronBrine.DisplayName: Baron Brine
+			Baronsand.DisplayName: Baronsand
+			Brinerack.DisplayName: Brinerack
+			TanzaniteGlass.DisplayName: Tanzanite Glass
 		}
 
 		NPCs: {
@@ -2137,11 +2143,13 @@ Mods: {
 			HallowEffigyPlaced.MapEntry: Hallow Effigy
 			LifeOreTile.MapEntry: Life Ore
 			MiracleFruitPlaced.MapEntry: Miracle Froota
-			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
-			MeldGunkPlaced.MapEntry: Meld Gunk Placed
-			GrimesandPlaced.MapEntry: Grimesand Placed
-			Anomaly109Placed.MapEntry: Anomaly109 Placed
-			ArsenicOrePlaced.MapEntry: Arsenic Ore Placed
+			CosmiliteSlagPlaced.MapEntry: Cosmilite Slag
+			MeldGunkPlaced.MapEntry: Meld Gunk
+			GrimesandPlaced.MapEntry: Grimesand
+			Anomaly109Placed.MapEntry: Anomaly109
+			ArsenicOrePlaced.MapEntry: Arsenic Ore
+			BaronBrinePlaced.MapEntry: Baron Brine
+			TanzaniteGlassPlaced.MapEntry: Tanzanite Glass
 		}
 
 		Enchantments: {

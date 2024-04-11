@@ -66,6 +66,7 @@ using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Crags;
 using CalRemix.NPCs.TownNPCs;
+using System.Threading;
 
 namespace CalRemix
 {
@@ -493,6 +494,19 @@ namespace CalRemix
                             npc.velocity = npc.DirectionTo(frosty.Center) * 10f;
                             return false;
                         }
+                    }
+                }
+            }
+            if (npc.type == NPCID.DukeFishron)
+            {
+                if (!CalRemixWorld.canGenerateBaron)
+                {
+                    if (npc.position.X < 300 || npc.position.X > (Main.maxTilesY * 16) - 300)
+                    {
+                        bool left = npc.position.X < 300;
+                        ThreadPool.QueueUserWorkItem(_ => BaronStrait.GenerateBaronStrait(left));
+                        CalRemixWorld.canGenerateBaron = true;
+                        CalRemixWorld.UpdateWorldBool();
                     }
                 }
             }
