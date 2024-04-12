@@ -810,6 +810,17 @@ namespace CalRemix
                 CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
             }
+            // Secret Banished Baron seed
+            if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")
+            {
+                // Clear all worldgen tasks, they won't be needed at all and only serve to clutter precious time
+                tasks.Clear();
+                tasks.Add(new PassLegacy("Banishing The Baron", (progress, config) =>
+                {
+                    progress.Message = "Creating a Baron Wasteland";
+                    BaronStrait.GenerateBaronStrait(null); 
+                }));
+            }
         }
 
         public override void PostWorldGen()

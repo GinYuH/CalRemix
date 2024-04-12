@@ -501,7 +501,7 @@ namespace CalRemix
             {
                 if (!CalRemixWorld.canGenerateBaron)
                 {
-                    if (npc.position.X < 300 || npc.position.X > (Main.maxTilesY * 16) - 300)
+                    if (npc.position.X < 300 || npc.position.X > (Main.maxTilesY * 16) - 100)
                     {
                         bool left = npc.position.X < 300;
                         ThreadPool.QueueUserWorkItem(_ => BaronStrait.GenerateBaronStrait(left));

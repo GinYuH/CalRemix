@@ -115,8 +115,8 @@ namespace CalRemix
             {
                 color = Color.Gold;
             }
-            if (txt == "Save & Exit")
-                txt = "A Fan-tastic time awaits!";
+            /*if (txt == "Save & Exit")
+                txt = "A Fan-tastic time awaits!";*/
             if (txt == "A Fan-tastic time awaits!")
             {
                 color = Color.Lerp(Color.Red, Color.Orange, (scales[i] - minscale) / (maxscale - minscale));
