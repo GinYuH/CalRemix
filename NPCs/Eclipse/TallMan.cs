@@ -64,13 +64,13 @@ namespace CalRemix.NPCs.Eclipse
                 NPC.ai[0] -= Main.screenWidth * 0.666f / 600;
                 if (NPC.ai[0] < -60)
                 {
-                    if (NPC.localAI[0] > 0 && NPC.ai[2] == 0)
+                    if (NPC.ai[2] == 0)
                     {
                         SoundEngine.PlaySound(SlenderJumpscare, Main.LocalPlayer.Center);
                     }
                     if (NPC.ai[2] < 2f)
                     {
-                        NPC.ai[2] += 0.05f;
+                        NPC.ai[2] += 0.025f;
                     }
                     else
                     {

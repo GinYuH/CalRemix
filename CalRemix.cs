@@ -360,7 +360,8 @@ namespace CalRemix
 
             var blackTile = TextureAssets.MagicPixel;
             var shader = GameShaders.Misc["CalRemix/SlendermanStaticShader"].Shader;
-            GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
+            GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("CalValEX/Items/MysteryPainting"));
+            GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("CalValEX/Items/MysteryPainting"), 0);
             float maxRadius = slender.ai[0] + extraDist;
             shader.Parameters["radius"].SetValue(slender.ai[0]);
             shader.Parameters["maxRadius"].SetValue(maxRadius);
@@ -382,13 +383,10 @@ namespace CalRemix
             Main.spriteBatch.ExitShaderRegion();
 
             Texture2D parasite = ModContent.Request<Texture2D>("CalRemix/NPCs/Eclipse/SlenderJumpscare" + slender.localAI[0]).Value;
-            Color color = slender.localAI[0] == 0 ? Color.Red * slender.ai[2] : Color.White * (slender.ai[2] > 0 ? 1f : 0f);
+            Color color = Color.White * (slender.ai[2] > 0 ? 1f : 0f);
             Vector2 scale = new Vector2(Main.screenWidth * 1.1f / parasite.Width, Main.screenHeight * 1.1f / parasite.Height);
-            Vector2 screenArea = new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
-            if (slender.localAI[0] > 0)
-            {
-                screenArea += new Vector2(Main.rand.Next(-22, 22), Main.rand.Next(-22, 22));
-            }
+            int shakeamt = 33;
+            Vector2 screenArea = new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f) + new Vector2(Main.rand.Next(-shakeamt, shakeamt), Main.rand.Next(-shakeamt, shakeamt));
             Vector2 origin = parasite.Size() * 0.5f;
             Main.spriteBatch.Draw(parasite, screenArea, null, color, 0f, origin, scale, SpriteEffects.None, 0f);
             Main.spriteBatch.End();
