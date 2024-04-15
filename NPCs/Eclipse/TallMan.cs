@@ -13,6 +13,7 @@ namespace CalRemix.NPCs.Eclipse
 {
     public class TallMan : ModNPC
     {
+        public static SoundStyle SlenderJumpscare = new SoundStyle("CalRemix/Sounds/SlenderJumpscare");
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tall Man");
@@ -37,6 +38,7 @@ namespace CalRemix.NPCs.Eclipse
         public override void OnSpawn(IEntitySource source)
         {
             NPC.ai[0] = Main.screenWidth * 0.666f;
+            NPC.localAI[0] = Main.rand.Next(0, 3);
         }
 
         public override void AI()
@@ -62,6 +64,10 @@ namespace CalRemix.NPCs.Eclipse
                 NPC.ai[0] -= Main.screenWidth * 0.666f / 600;
                 if (NPC.ai[0] < -60)
                 {
+                    if (NPC.localAI[0] > 0 && NPC.ai[2] == 0)
+                    {
+                        SoundEngine.PlaySound(SlenderJumpscare, Main.LocalPlayer.Center);
+                    }
                     if (NPC.ai[2] < 2f)
                     {
                         NPC.ai[2] += 0.05f;

@@ -95,7 +95,7 @@ namespace CalRemix
             Effect LoadShader(string path) => calAss.Request<Effect>("Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
-            Terraria.On_Main.DrawGore += DrawStatic;
+            Terraria.On_Main.DrawDust += DrawStatic;
             Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
             sunOG = TextureAssets.Sun3;
             sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
@@ -337,7 +337,7 @@ namespace CalRemix
         }
 
         public static float extraDist = 222;
-        public static void DrawStatic(Terraria.On_Main.orig_DrawGore orig, Terraria.Main self)
+        public static void DrawStatic(Terraria.On_Main.orig_DrawDust orig, Terraria.Main self)
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<TallMan>()))
                 return;
@@ -360,6 +360,7 @@ namespace CalRemix
 
             var blackTile = TextureAssets.MagicPixel;
             var shader = GameShaders.Misc["CalRemix/SlendermanStaticShader"].Shader;
+            GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
             float maxRadius = slender.ai[0] + extraDist;
             shader.Parameters["radius"].SetValue(slender.ai[0]);
             shader.Parameters["maxRadius"].SetValue(maxRadius);
@@ -368,17 +369,29 @@ namespace CalRemix
             shader.Parameters["screenSize"].SetValue(Main.ScreenSize.ToVector2());
             shader.Parameters["maxOpacity"].SetValue(0.9f);
             shader.Parameters["seed"].SetValue(Main.GlobalTimeWrappedHourly);
+            shader.Parameters["sizeDivisor"].SetValue(0.5f);
 
+            Main.spriteBatch.Begin();
             Main.spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied, shader);
             Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
             Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+
+            shader.Parameters["maxRadius"].SetValue(slender.ai[0] + extraDist + 444);
+            shader.Parameters["sizeDivisor"].SetValue(0.25f);
+            Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
             Main.spriteBatch.ExitShaderRegion();
 
-            Texture2D parasite = ModContent.Request<Texture2D>("CalRemix/NPCs/Eclipse/SlenderJumpscare").Value;
+            Texture2D parasite = ModContent.Request<Texture2D>("CalRemix/NPCs/Eclipse/SlenderJumpscare" + slender.localAI[0]).Value;
+            Color color = slender.localAI[0] == 0 ? Color.Red * slender.ai[2] : Color.White * (slender.ai[2] > 0 ? 1f : 0f);
             Vector2 scale = new Vector2(Main.screenWidth * 1.1f / parasite.Width, Main.screenHeight * 1.1f / parasite.Height);
             Vector2 screenArea = new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
+            if (slender.localAI[0] > 0)
+            {
+                screenArea += new Vector2(Main.rand.Next(-22, 22), Main.rand.Next(-22, 22));
+            }
             Vector2 origin = parasite.Size() * 0.5f;
-            Main.spriteBatch.Draw(parasite, screenArea, null, Color.Red * slender.ai[2], 0f, origin, scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(parasite, screenArea, null, color, 0f, origin, scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.End();
         }
     }
 }
