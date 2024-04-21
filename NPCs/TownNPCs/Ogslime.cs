@@ -32,6 +32,10 @@ namespace CalRemix.NPCs.TownNPCs
                 }
                 p.SetCompositeArmBack(enabled: true, stretch, (float)Math.PI * -2f * 0.2f * (float)p.direction);
             }
+            else
+            {
+                orig(p, mountOffset, sItem, heldItemFrame);
+            }
         }
 
         public override void SetStaticDefaults()

@@ -103,12 +103,12 @@ namespace CalRemix.UI
             }
 
             discord1 = new FannyMessage("DiscordianHash", "Oh you're on Discord? What are they talking about in $0? I wanna see!",
-            "Idle", (FannySceneMetrics m) => DiscordChat != "" && DiscordChat.Contains('#') && NPC.downedBoss1 && !discord2.alreadySeen, onlyPlayOnce: false, cooldown: 0).AddDynamicText(() => DiscordChat).SetHoverTextOverride("Nothing much Fanny!");
+            "Idle", (FannySceneMetrics m) => DiscordChat != "" && DiscordChat.Contains('#') && NPC.downedBoss1 && !discord2.alreadySeen).AddDynamicText(() => DiscordChat).SetHoverTextOverride("Nothing much Fanny!");
 
             fannyMessages.Add(discord1);
 
             discord2 = new FannyMessage("DiscordianAt", "Oh you're on Discord? What are you and $0 talking about? I wanna see!",
-            "Idle", (FannySceneMetrics m) => DiscordChat != "" && !DiscordChat.Contains('#') && NPC.downedBoss1 && !discord1.alreadySeen, onlyPlayOnce: false, cooldown: 0).AddDynamicText(() => DiscordChat).SetHoverTextOverride("Nothing much Fanny!");
+            "Idle", (FannySceneMetrics m) => DiscordChat != "" && !DiscordChat.Contains('#') && NPC.downedBoss1 && !discord1.alreadySeen).AddDynamicText(() => DiscordChat).SetHoverTextOverride("Nothing much Fanny!");
 
             fannyMessages.Add(discord2);
         }
