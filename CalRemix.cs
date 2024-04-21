@@ -34,6 +34,17 @@ using System.Runtime.InteropServices;
 using Terraria.Audio;
 using ReLogic.Utilities;
 using CalRemix.Buffs;
+using CalRemix.Retheme;
+using Mono.Cecil;
+using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
+using Terraria.IO;
+using System.IO;
+using Terraria.Utilities;
+using Terraria.ModLoader.IO;
+using CalamityMod.World;
+using Terraria.UI;
+using CalamityMod.Systems;
 
 namespace CalRemix
 {
@@ -97,9 +108,11 @@ namespace CalRemix
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             Terraria.On_Main.DrawDust += DrawStatic;
             Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
+            //Terraria.On_Player.ItemCheck_Shoot += SoldierShots;
             sunOG = TextureAssets.Sun3;
             sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
         }
+
 
         public static bool OhGod(Terraria.On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
         {
@@ -209,6 +222,51 @@ namespace CalRemix
             return consumeHover.Add(value);
         }
 
+        public static void SoldierShots(Terraria.On_Player.orig_ItemCheck_Shoot orig, Player self, int i, Item sItem, int weaponDamage)
+        {
+            //if (!sItem.channel && sItem.DamageType != DamageClass.Summon)
+            for (int e = 0; e < Main.maxPlayers; e++)
+                {
+                    Player p = Main.player[e];
+                if (p == null)
+                    continue;
+                if (!p.active)
+                    continue;
+
+
+                    if (p.whoAmI != Main.LocalPlayer.whoAmI)
+                    {
+                    float speed = sItem.shootSpeed;
+                    float KnockBack = sItem.knockBack;
+                    Vector2 pointPoisition = p.Center;
+                    float dirX = (float)Main.mouseX + Main.screenPosition.X - pointPoisition.X;
+                    float dirY = (float)Main.mouseY + Main.screenPosition.Y - pointPoisition.Y;
+                    float dist = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
+                    if ((float.IsNaN(dirX) && float.IsNaN(dirY)) || (dirX == 0f && dirY == 0f))
+                    {
+                        dirX = p.direction;
+                        dirY = 0f;
+                        dist = speed;
+                    }
+                    else
+                    {
+                        dist = speed / dist;
+                    }
+                    dirX *= dist;
+                    dirY *= dist;
+                        Main.NewText("A");
+
+                    if (sItem.ModItem?.Shoot(p, (EntitySource_ItemUse_WithAmmo)self.GetSource_ItemUse_WithPotentialAmmo(sItem, i), pointPoisition, new Vector2(dirX, dirY), sItem.shoot, weaponDamage, KnockBack) == true)
+                    {
+                        Projectile.NewProjectile(self.GetSource_FromThis(), pointPoisition.X, pointPoisition.Y, dirX, dirY, sItem.shoot, weaponDamage, KnockBack, i);
+                    }
+                        
+                    NetMessage.SendData(13, -1, -1, null, self.whoAmI);
+                }
+            }
+            orig(self, i, sItem, weaponDamage);
+        }
+
         public override void Unload()
         {
             PlagueGlobalNPC.PlagueHelper = null;
@@ -247,6 +305,7 @@ namespace CalRemix
             AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
             RefreshBestiary();
         }
+
         internal void AddEnchantments(Mod cal)
         {
             LocalizedText defiant = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Defiant.Name");
@@ -339,6 +398,7 @@ namespace CalRemix
         public static float extraDist = 222;
         public static void DrawStatic(Terraria.On_Main.orig_DrawDust orig, Terraria.Main self)
         {
+            orig(self);
             if (!NPC.AnyNPCs(ModContent.NPCType<TallMan>()))
                 return;
             NPC slender = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<TallMan>())];
