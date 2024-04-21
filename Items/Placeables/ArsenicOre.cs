@@ -26,7 +26,7 @@ namespace CalRemix.Items.Placeables
             Item.createTile = ModContent.TileType<ArsenicOrePlaced>();
             Item.width = 12;
             Item.height = 12;
-            Item.value = CalamityGlobalItem.Rarity2BuyPrice;
+            Item.value = CalamityGlobalItem.RarityGreenBuyPrice;
             Item.rare = ModContent.RarityType<DarkOrange>();
         }
     }

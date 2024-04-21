@@ -51,7 +51,7 @@ namespace CalRemix.Projectiles.Weapons
             if (target.GetGlobalNPC<CalRemixGlobalNPC>().grappled)
             {
                 Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrimlanceHellfireExplosion>(), hit.Damage * 22, hit.Knockback, Projectile.owner);
-                owner.GiveIFrames(60, true);
+                owner.GiveIFrames(0, 60, true);
                 CalamityUtils.KillShootProjectiles(true, ModContent.ProjectileType<ChainSpearProj>(), owner);
                 owner.Calamity().GeneralScreenShakePower = 6;
             }

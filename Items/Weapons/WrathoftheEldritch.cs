@@ -29,7 +29,7 @@ namespace CalRemix.Items.Weapons
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 6f;
-            Item.value = CalamityGlobalItem.Rarity13BuyPrice;
+            Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
             Item.rare = ModContent.RarityType<PureGreen>();
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<EldritchPulse>();

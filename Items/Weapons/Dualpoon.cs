@@ -19,7 +19,7 @@ namespace CalRemix.Items.Weapons
 			Item.width = 10;
 			Item.height = 10;
 			Item.rare = ItemRarityID.Pink;
-			Item.value = CalamityGlobalItem.Rarity5BuyPrice;
+			Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
             Item.useTime = 20; 
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;

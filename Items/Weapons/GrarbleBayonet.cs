@@ -24,7 +24,7 @@ namespace CalRemix.Items.Weapons
             Item.useAnimation = 28;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 2.25f;
-            Item.value = CalamityGlobalItem.Rarity1BuyPrice;
+            Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item41;
             Item.autoReuse = true;

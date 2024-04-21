@@ -28,7 +28,7 @@ namespace CalRemix.Items.Weapons
             Item.noMelee = true; 
             Item.sentry = true;
             Item.knockBack = 5f;
-            Item.value = CalamityGlobalItem.Rarity8BuyPrice;
+            Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = PwnagehammerProj.UseSoundFunny;
             Item.autoReuse = true;

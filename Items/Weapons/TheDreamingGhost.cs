@@ -29,7 +29,7 @@ public class TheDreamingGhost : ModItem
     public override void SetDefaults()
     {
         Item.rare = ModContent.RarityType<Violet>();
-        Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+        Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.Calamity().donorItem = true;
         Item.damage = 468;
         Item.DamageType = DamageClass.Summon;

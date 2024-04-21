@@ -28,7 +28,7 @@ public class CorrosiveEyeStaff : ModItem
         Item.noMelee = true;
         Item.knockBack = 3;
         Item.rare = ItemRarityID.Green;
-        Item.value = CalamityGlobalItem.Rarity2BuyPrice;
+        Item.value = CalamityGlobalItem.RarityGreenBuyPrice;
         Item.UseSound = SoundID.Item44;
         Item.autoReuse = true;
         Item.shoot = ModContent.ProjectileType<CorrosiveEye>();

@@ -25,7 +25,7 @@ namespace CalRemix.Items.Accessories
         {
             Item.width = 62;
             Item.height = 70;
-            Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+            Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.rare = RarityType<Violet>();
             Item.accessory = true;
         }

@@ -29,7 +29,7 @@ namespace CalRemix.Items
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.value = CalamityGlobalItem.Rarity1BuyPrice;
+            Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item23;
             Item.autoReuse = true;

@@ -39,7 +39,7 @@ public class Morpho : ModItem
         Item.noMelee = false;
         Item.knockBack = 2.5f;
         Item.rare = ModContent.RarityType<Violet>();
-        Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+        Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = SoundID.Item39 with { Pitch = 0.5f };
         Item.autoReuse = true;
         Item.shoot = ModContent.ProjectileType<CrescentSlash>();

@@ -24,7 +24,7 @@ namespace CalRemix.Items.Weapons
             Item.width = 1;
 			Item.height = 1;
 			Item.rare = ModContent.RarityType<Turquoise>();
-            Item.value = CalamityGlobalItem.Rarity12BuyPrice;
+            Item.value = CalamityGlobalItem.RarityTurquoiseBuyPrice;
             Item.useTime = 14; 
 			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Swing;

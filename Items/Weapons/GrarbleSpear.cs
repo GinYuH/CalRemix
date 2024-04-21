@@ -28,7 +28,7 @@ namespace CalRemix.Items.Weapons
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.height = 50;
-            Item.value = CalamityGlobalItem.Rarity1BuyPrice;
+            Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;
             Item.shoot = ModContent.ProjectileType<GrarbleSpearProjectile>();
             Item.shootSpeed = 5f;

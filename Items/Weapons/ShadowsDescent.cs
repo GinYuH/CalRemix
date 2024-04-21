@@ -31,7 +31,7 @@ namespace CalRemix.Items.Weapons
 			Item.height = 1;
 			Item.rare = ModContent.RarityType<HotPink>();
             Item.Calamity().devItem = true;
-            Item.value = CalamityGlobalItem.Rarity16BuyPrice;
+            Item.value = CalamityGlobalItem.RarityHotPinkBuyPrice;
             Item.useTime = 19; 
 			Item.useAnimation = 19;
 			Item.useStyle = ItemUseStyleID.Swing;

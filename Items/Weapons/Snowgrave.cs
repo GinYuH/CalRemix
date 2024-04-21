@@ -19,7 +19,7 @@ namespace CalRemix.Items.Weapons
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Yellow;
-            Item.value = CalamityGlobalItem.Rarity8BuyPrice;
+            Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.useTime = 1480;
             Item.useAnimation = 1480;
             Item.useStyle = ItemUseStyleID.Shoot;

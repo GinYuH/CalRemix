@@ -25,7 +25,7 @@ namespace CalRemix.Items.Placeables
             Item.createTile = ModContent.TileType<CosmichidPlant>();
             Item.width = 12;
             Item.height = 12;
-            Item.value = CalamityGlobalItem.Rarity1BuyPrice;
+            Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;
     	}
 

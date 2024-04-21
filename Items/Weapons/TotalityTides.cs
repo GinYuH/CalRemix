@@ -36,7 +36,7 @@ public class TotalityTides : ModItem
         Item.noUseGraphic = true;
         Item.knockBack = 4;
         Item.rare = ModContent.RarityType<Violet>();
-        Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+        Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = Exoblade.DashSound;
         Item.autoReuse = true;
         Item.channel = true;

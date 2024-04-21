@@ -33,7 +33,7 @@ namespace CalRemix.Items.Weapons
 			Item.width = 10;
 			Item.height = 10;
 			Item.rare = ModContent.RarityType<DarkBlue>();
-			Item.value = CalamityGlobalItem.Rarity14BuyPrice;
+			Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
             Item.Calamity().donorItem = true;
             Item.useTime = 5; 
 			Item.useAnimation = 5;
