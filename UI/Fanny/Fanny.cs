@@ -171,6 +171,14 @@ namespace CalRemix.UI
             {
                 return;
             }
+            // find the player's latest discord chat while the game isn't opened. doesn't work in multiplayer for sanity reasons
+            if (NPC.downedBoss1)
+            {
+                if (Main.netMode == NetmodeID.SinglePlayer && !(FannyManager.discord1.alreadySeen || FannyManager.discord2.alreadySeen) && !Main.hasFocus)
+                {
+                    FannyManager.GetDiscord();
+                }
+            }
             AnimateFanny();
 
             // finally draw Fanny

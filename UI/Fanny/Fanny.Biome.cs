@@ -120,6 +120,15 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Exospheree", "THE EXOSPHERE!!!!",
                 "Awooga", FannyMessage.AlwaysShow, dedicatedSubworld: ModContent.GetInstance<ExosphereSubworld>()));
 
+            fannyMessages.Add(new FannyMessage("Desert", "Oh, look at you, venturing into the sandy abyss! Remember, in the desert, the sand's as hot as a freshly microwaved burrito! So don't forget your sunscreen... or your water... or your sanity. ",
+               "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneDesert));
+
+            fannyMessages.Add(new FannyMessage("Corpution", "Ah, the Corruption, where the grass is as dark as my soul after what I did to that sleeping homeless person on Feburary 2nd at 2:35 AM. Just watch out for those pesky corruption monsters, they'll nibble you right up!",
+               "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneCorrupt));
+
+            fannyMessages.Add(new FannyMessage("PlantDungeon", "Welcome to the dungeon, where skeletons have more bones than a Halloween decoration aisle! Just be careful not to wake the sleeping spirits, they're grumpier than a cat without its afternoon nap.",
+               "Idle", (FannySceneMetrics scene) => NPC.downedPlantBoss && Main.LocalPlayer.ZoneDungeon));
+
         }
 
         public static void LoadShrineMessages()

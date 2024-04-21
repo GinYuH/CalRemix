@@ -40,6 +40,15 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("BREvilkys", "Kill yourself NOW!",
                 "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.statLife >= Main.LocalPlayer.statLifeMax2 * 0.75f && BossRushEvent.BossRushActive && BossRushEvent.CurrentTier >= 5).SetHoverTextOverride("I'm busy right now, Evil Fanny!"));
+
+            fannyMessages.Add(new FannyMessage("Nite", "Nighttime is when the real party starts! But watch out for those nocturnal nasties, they're like uninvited guests who never leave. Keep a torch handy, it's like bringing a flashlight to a ghost story.",
+              "Idle", (FannySceneMetrics scene) => !Main.dayTime));
+
+            fannyMessages.Add(new FannyMessage("Slimerain", "Ooh, a slime rain! It's like a colorful meteor shower, except instead of making wishes, you're dodging slimy projectiles! Better grab an umbrella, or at least a slicker. Don't want to end up looking like a walking slime ball! wink wink",
+               "Awooga", (FannySceneMetrics scene) => Main.slimeRain));
+
+            fannyMessages.Add(new FannyMessage("Towers", "Ah, the lunar events! It's like hosting a cosmic tea party, except instead of sipping tea, you're dodging death rays from space! Just remember to RSVP with your best battle gear and a side of moon cheese.",
+               "Idle", (FannySceneMetrics scene) => NPC.downedAncientCultist));
         }
     }
 }
