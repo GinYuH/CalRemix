@@ -67,6 +67,8 @@ using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Crags;
 using CalRemix.NPCs.TownNPCs;
 using System.Threading;
+using Humanizer;
+using CalamityMod.Projectiles.Summon;
 
 namespace CalRemix
 {
@@ -129,6 +131,8 @@ namespace CalRemix
         {
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
+            On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
+            On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
         }
 
         public override void SetStaticDefaults()
@@ -923,6 +927,38 @@ namespace CalRemix
                 frond.AddFail(ModContent.ItemType<EntropicFrond>(), 1, 35, 45);
                 npcLoot.Add(bar);
             }
+            if (npc.type == ModContent.NPCType<FlakCrab>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<CadaverousCarrion>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<Orthocera>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<InsidiousImpaler>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<AcidEel>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<VitriolicViper>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<Trilobite>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<ToxicantTwister>(), 20);
+            }
+            if (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronCrimson || npc.type == NPCID.PigronHallow)
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<MutatedTruffle>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<Mauler>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<FetidEmesis>(), 4);
+            }
+            if (npc.type == ModContent.NPCType<CragmawMire>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<SepticSkewer>(), 4);
+            }
+            if (npc.type == ModContent.NPCType<NuclearTerror>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<OldDukeScales>(), 4);
+            }
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -1247,6 +1283,28 @@ namespace CalRemix
                     pool.Add(NPCID.DungeonGuardian, 22f);
                 }
             }
+        }
+
+        public static void NoOldDuke(On.CalamityMod.CalamityUtils.orig_SpawnOldDuke orig, int playerIndex)
+        {
+            SetOldDukeDead();
+        }
+
+        public static void NoOldDuke2(On.CalamityMod.NPCs.CalamityGlobalNPC.orig_OldDukeSpawn orig, int plr, int type, int baitType)
+        {
+            SetOldDukeDead();
+        }
+
+        public static void SetOldDukeDead()
+        {
+            CalamityMod.NPCs.CalamityGlobalNPC.SetNewShopVariable(new int[] { ModContent.NPCType<SEAHOE>() }, DownedBossSystem.downedBoomerDuke);
+
+            // Mark Old Duke as dead
+            DownedBossSystem.downedBoomerDuke = true;
+
+            // Mark first acid rain encounter as true even if he wasn't fought in the acid rain, because it makes sense
+            AcidRainEvent.OldDukeHasBeenEncountered = true;
+            CalamityNetcode.SyncWorld();
         }
     }
 }

@@ -97,6 +97,7 @@ namespace CalRemix
             ModContent.ItemType<CalamitasCoffer>(),
             ModContent.ItemType<DraedonBag>(),
         };
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.type == ModContent.ItemType<LoreAwakening>())

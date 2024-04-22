@@ -45,6 +45,8 @@ using Terraria.ModLoader.IO;
 using CalamityMod.World;
 using Terraria.UI;
 using CalamityMod.Systems;
+using CalamityMod.NPCs.OldDuke;
+using rail;
 
 namespace CalRemix
 {
@@ -340,6 +342,14 @@ namespace CalRemix
                 NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<WulfwyrmHead>());
             };
             brEntries.Insert(0, (ModContent.NPCType<WulfwyrmHead>(), -1, pr, 180, false, 0f, excIDs, headID));
+            foreach (var entry in brEntries)
+            {
+                if (entry.Item1 == ModContent.NPCType<OldDuke>())
+                {
+                    brEntries.Remove(entry);
+                    break;
+                }
+            }
             cal.Call("SetBossRushEntries", brEntries);
         }
 
