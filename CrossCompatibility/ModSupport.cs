@@ -56,7 +56,7 @@ namespace CalRemix.CrossCompatibility
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
             };
-            bc.Call("LogBoss", Mod, "TheCalamity", 0.0000000000022f, () => CalRemixWorld.downedCalamity, NPCType<TheCalamity>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "TheCalamity", 0.0000000000022f, () => RemixDowned.downedCalamity, NPCType<TheCalamity>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<LoreAwakening>(),
                 ["customPortrait"] = calamityPortrait
@@ -66,12 +66,12 @@ namespace CalRemix.CrossCompatibility
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
             };
-            bc.Call("LogBoss", Mod, "WulfrumExcavator", 0.22f, () => CalRemixWorld.downedExcavator, NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "WulfrumExcavator", 0.22f, () => RemixDowned.downedExcavator, NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<EnergyCore>(),
                 ["customPortrait"] = wfportrait
             });
-            bc.Call("LogBoss", Mod, "Acidsighter", 2.1f, () => CalRemixWorld.downedAcidsighter, NPCType<Acideye>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Acidsighter", 2.1f, () => RemixDowned.downedAcidsighter, NPCType<Acideye>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<PoisonedSclera>(),
             });
@@ -81,13 +81,13 @@ namespace CalRemix.CrossCompatibility
                 sb.Draw(texture, centered, color);
             };
             /*
-            bc.Call("LogBoss", Mod, "Derellect", 12.5f, () => CalRemixWorld.downedDerellect, NPCType<DerellectBoss>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Derellect", 12.5f, () => RemixDowned.downedDerellect, NPCType<DerellectBoss>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
             */
             List<int> poly = new() { NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>() };
-            bc.Call("LogBoss", Mod, "Polyphemalus", 12.7f, () => CalRemixWorld.downedPolyphemalus, poly, new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Polyphemalus", 12.7f, () => RemixDowned.downedPolyphemalus, poly, new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<FusedEye>(),
                 ["customPortrait"] = plportrait
@@ -99,7 +99,7 @@ namespace CalRemix.CrossCompatibility
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
             };
-            bc.Call("LogMiniBoss", Mod, "Clamitas", 6.8f, () => CalRemixWorld.downedClamitas, NPCType<Clamitas>(), new Dictionary<string, object>()
+            bc.Call("LogMiniBoss", Mod, "Clamitas", 6.8f, () => RemixDowned.downedClamitas, NPCType<Clamitas>(), new Dictionary<string, object>()
             {
                 ["customPortrait"] = clPortrait
             });
@@ -108,15 +108,15 @@ namespace CalRemix.CrossCompatibility
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, new Color(0, 255, 255, 125));
             };
-            bc.Call("LogMiniBoss", Mod, "CyberDraedon", 3.99999f, () => CalRemixWorld.downedCyberDraedon, NPCType<CyberDraedon>(), new Dictionary<string, object>()
+            bc.Call("LogMiniBoss", Mod, "CyberDraedon", 3.99999f, () => RemixDowned.downedCyberDraedon, NPCType<CyberDraedon>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
                 ["customPortrait"] = cdPortrait
             });
-            bc.Call("LogMiniBoss", Mod, "KingMinnowsPrime", 18.1f, () => CalRemixWorld.downedKingMinnowsPrime, NPCType<KingMinnowsPrime>(), new Dictionary<string, object>());
-            bc.Call("LogMiniBoss", Mod, "LaRuga", 20.2f, () => CalRemixWorld.downedLaRuga, NPCType<LaRuga>(), new Dictionary<string, object>());
-            bc.Call("LogMiniBoss", Mod, "LifeSlime", 16.7f, () => CalRemixWorld.downedLifeSlime, NPCType<LifeSlime>(), new Dictionary<string, object>());
-            bc.Call("LogMiniBoss", Mod, "OnyxKinsman", 7.5f, () => CalRemixWorld.downedOnyxKinsman, NPCType<OnyxKinsman>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "KingMinnowsPrime", 18.1f, () => RemixDowned.downedKingMinnowsPrime, NPCType<KingMinnowsPrime>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "LaRuga", 20.2f, () => RemixDowned.downedLaRuga, NPCType<LaRuga>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "LifeSlime", 16.7f, () => RemixDowned.downedLifeSlime, NPCType<LifeSlime>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "OnyxKinsman", 7.5f, () => RemixDowned.downedOnyxKinsman, NPCType<OnyxKinsman>(), new Dictionary<string, object>());
             Action<SpriteBatch, Rectangle, Color> pePortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Minibosses/PlagueEmperor").Value;
                 Texture2D texture2 = Request<Texture2D>("CalRemix/NPCs/Minibosses/PlagueEmperorEyes").Value;
@@ -124,11 +124,11 @@ namespace CalRemix.CrossCompatibility
                 sb.Draw(texture, centered, color);
                 sb.Draw(texture2, centered, color);
             };
-            bc.Call("LogMiniBoss", Mod, "PlagueEmperor", 21.5f, () => CalRemixWorld.downedPlagueEmperor, NPCType<PlagueEmperor>(), new Dictionary<string, object>()
+            bc.Call("LogMiniBoss", Mod, "PlagueEmperor", 21.5f, () => RemixDowned.downedPlagueEmperor, NPCType<PlagueEmperor>(), new Dictionary<string, object>()
             {
                 ["customPortrait"] = pePortrait
             });
-            bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => CalRemixWorld.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
         }
         internal void AddMusicDisplayEntries()
         {

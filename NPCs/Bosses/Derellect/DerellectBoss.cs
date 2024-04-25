@@ -368,12 +368,12 @@ namespace CalRemix.NPCs.Bosses.Derellect
             npcLoot.Add(ItemType<DerellectMask>(), 7);
 
             // Lore item
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !CalRemixWorld.downedDerellect), ItemType<KnowledgeDerellect>()));
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !RemixDowned.downedDerellect), ItemType<KnowledgeDerellect>()));
         }
 
         public override void OnKill()
         {
-            CalRemixWorld.downedDerellect = true;
+            RemixDowned.downedDerellect = true;
             CalRemixWorld.UpdateWorldBool();
             if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
             {

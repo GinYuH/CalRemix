@@ -33,7 +33,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedPlagueEmperor = true;
+            RemixDowned.downedPlagueEmperor = true;
             return false;
         }
         public override void SetDefaults()

@@ -117,7 +117,7 @@ namespace CalRemix
                 player.ConsumeItem(ModContent.ItemType<BloodyVein>(), true);
             }
             bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<RoseStone>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
-            if (type == ModContent.TileType<OnyxExcavatorTile>() && e && CalRemixWorld.downedEarth)
+            if (type == ModContent.TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
                 int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<OnyxKinsman>());
@@ -214,7 +214,7 @@ namespace CalRemix
                 }
             }
 
-            if (CalRemix.oreList.Contains(type) && Main.rand.NextBool(2222) && CalRemixWorld.downedExcavator)
+            if (CalRemix.oreList.Contains(type) && Main.rand.NextBool(2222) && RemixDowned.downedExcavator)
             {
                 int LocationX = i;
                 int LocationY = j;
@@ -301,7 +301,7 @@ namespace CalRemix
                     }
                     if (!KinsmanMessage.alreadySeen)
                     {
-                        if (type == ModContent.TileType<OnyxExcavatorTile>() && CalRemixWorld.downedEarth)
+                        if (type == ModContent.TileType<OnyxExcavatorTile>() && RemixDowned.downedEarthElemental)
                         {
                             Player player = Main.LocalPlayer;
                             bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());

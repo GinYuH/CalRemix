@@ -38,6 +38,7 @@ Too many spriters to list - Various sprites
 =Assets Used=
 ScalarVector - Localization roundabout code
 DM DOKURO - Polyphemalus theme
+Minimusicman - Main Menu theme
 
 =Wiki Inspiration=
 AmmyanDocCiesh, BenAbyssJerry, FixationActuation, YYzstNeurosis, Ligmachi, Enamoured-melody, Krossseh, TheWulfrumKing, EiramC, InxieRatZey, Yez22, Jellybloop, Explodingcats43, Sup.Crispy, Dragoncraft9WasTaken, Healthy23, BabyblueSheep, Tehpootisman2, BrimstoneHawk, DeimosCalamitousGamer, BattleBee, LeBiggenedQuack, Starphantasm, ZAtaraxious, Ltrltrltr1234, AGorbus, BloodflareExpert, UltravioletColdSeekerMissile, FallenEntropy, AShottyStool, Spaghet55, SpamtonG95

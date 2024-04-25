@@ -191,7 +191,7 @@ namespace CalRemix.NPCs.Bosses.BossScule
         }
         public override void OnKill()
         {
-            CalRemixWorld.downedCalamity = true;
+            RemixDowned.downedCalamity = true;
             CalRemixWorld.UpdateWorldBool();
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

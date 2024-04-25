@@ -35,7 +35,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedYggdrasilEnt = true;
+            RemixDowned.downedYggdrasilEnt = true;
             return false;
         }
         public override void SetDefaults()

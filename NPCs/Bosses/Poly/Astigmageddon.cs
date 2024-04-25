@@ -315,7 +315,7 @@ namespace CalRemix.NPCs.Bosses.Poly
 
             if (!NPC.AnyNPCs(ModContent.NPCType<Cataractacomb>()) && !NPC.AnyNPCs(ModContent.NPCType<Exotrexia>()) && !NPC.AnyNPCs(ModContent.NPCType<Conjunctivirus>()))
             {
-                CalRemixWorld.downedPolyphemalus = true;
+                RemixDowned.downedPolyphemalus = true;
                 CalRemixWorld.UpdateWorldBool();
             }
         }

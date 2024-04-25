@@ -56,7 +56,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedClamitas = true;
+            RemixDowned.downedClamitas = true;
             return false;
         }
         public override void SetDefaults()

@@ -53,7 +53,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedKingMinnowsPrime = true;
+            RemixDowned.downedKingMinnowsPrime = true;
             return false;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
