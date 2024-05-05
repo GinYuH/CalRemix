@@ -1233,7 +1233,7 @@ namespace CalRemix
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {
                 pool.Clear();
-                if (NPC.downedBoss3)
+                //if (NPC.downedBoss3)
                 {
                     pool.Add(NPCID.AngryBones, 1);
                     pool.Add(NPCID.AngryBonesBig, 1);
@@ -1277,10 +1277,6 @@ namespace CalRemix
                     {
                         pool.Add(ModContent.NPCType<MinnowsPrime>(), 1f);
                     }
-                }
-                else if (spawnInfo.Player.ZoneDirtLayerHeight || spawnInfo.Player.ZoneRockLayerHeight)
-                {
-                    pool.Add(NPCID.DungeonGuardian, 22f);
                 }
             }
         }
