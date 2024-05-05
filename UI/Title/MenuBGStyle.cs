@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace CalRemix.UI.Title
@@ -27,7 +28,7 @@ namespace CalRemix.UI.Title
 				}
 			}
         }
-        private static readonly string TexPath = "CalRemix/ExtraTextures/Blank";
+        private static readonly string TexPath = "CalamityMod/Backgrounds/BlankPixel";
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) => BackgroundTextureLoader.GetBackgroundSlot(TexPath);
         public override int ChooseFarTexture() => BackgroundTextureLoader.GetBackgroundSlot(TexPath);
         public override int ChooseMiddleTexture() => BackgroundTextureLoader.GetBackgroundSlot(TexPath);

@@ -43,6 +43,8 @@ using CalamityMod.NPCs.HiveMind;
 using Terraria.GameContent.Generation;
 using SubworldLibrary;
 using CalRemix.Subworlds;
+using CalamityMod.Items.DraedonMisc;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -767,7 +769,7 @@ namespace CalRemix
                     {
                         if (chest.item[0].type == ItemType<Terminus>())
                         {
-                            chest.item[0].SetDefaults(ItemType<CalamityMod.Items.Placeables.Ores.ScoriaOre>());
+                            chest.item[0].SetDefaults(ItemType<FannyLogAbyss>());
                         }
                     }
                     if (Main.tile[chest.x, chest.y].TileType == TileType<SecurityChestTile>() || Main.tile[chest.x, chest.y].TileType == TileType<AgedSecurityChestTile>())
@@ -796,6 +798,34 @@ namespace CalRemix
                                     chest.item[inventoryIndex] = null;
                                     break;
                                 }
+                            }
+                        }
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        {
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogHell>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogHell>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogJungle>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogJungle>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogSnowBiome>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogIce>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogSunkenSea>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogSunkenSea>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogPlanetoid>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogSpace>());
+                                break;
                             }
                         }
                     }
