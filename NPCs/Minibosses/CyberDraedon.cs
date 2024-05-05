@@ -44,7 +44,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedCyberDraedon = true;
+            RemixDowned.downedCyberDraedon = true;
             return false;
         }
         public override void SetDefaults()

@@ -42,7 +42,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedOnyxKinsman = true;
+            RemixDowned.downedOnyxKinsman = true;
             return false;
         }
         public override void SetDefaults()

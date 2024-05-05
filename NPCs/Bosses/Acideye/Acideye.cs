@@ -615,7 +615,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
         }
         public override void OnKill()
         {
-            CalRemixWorld.downedAcidsighter = true;
+            RemixDowned.downedAcidsighter = true;
             CalRemixWorld.UpdateWorldBool();
         }
         private void SwitchSubphase()

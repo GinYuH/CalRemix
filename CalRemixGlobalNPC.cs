@@ -761,7 +761,7 @@ namespace CalRemix
             }
             if (npc.type == ModContent.NPCType<Cnidrion>())
             {
-                npcLoot.AddIf(() => CalRemixWorld.downedExcavator, ModContent.ItemType<DesertMedallion>());
+                npcLoot.AddIf(() => RemixDowned.downedExcavator, ModContent.ItemType<DesertMedallion>());
             }
             if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
@@ -1011,7 +1011,7 @@ namespace CalRemix
                 }
             }
             if (npc.type == ModContent.NPCType<Horse>())
-                CalRemixWorld.downedEarth = true;
+                RemixDowned.downedEarthElemental = true;
             if (!Main.dedServ)
             {
                 if (!CystMessage.alreadySeen && !CalRemixWorld.grimesandToggle)

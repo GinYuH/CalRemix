@@ -39,7 +39,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override bool SpecialOnKill()
         {
-            CalRemixWorld.downedLifeSlime = true;
+            RemixDowned.downedLifeSlime = true;
             return false;
         }
         public override void SetDefaults()

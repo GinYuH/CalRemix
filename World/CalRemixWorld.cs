@@ -48,22 +48,6 @@ namespace CalRemix
 {
     public class CalRemixWorld : ModSystem
     {
-        public static bool downedEarth = false;
-
-        public static bool downedCalamity = false;
-        public static bool downedExcavator = false;
-        public static bool downedAcidsighter = false;
-        public static bool downedDerellect = false;
-        public static bool downedPolyphemalus = false;
-
-        public static bool downedLifeSlime = false;
-        public static bool downedClamitas = false;
-        public static bool downedCyberDraedon = false;
-        public static bool downedOnyxKinsman = false;
-        public static bool downedYggdrasilEnt = false;
-        public static bool downedPlagueEmperor = false;
-        public static bool downedLaRuga = false;
-        public static bool downedKingMinnowsPrime = false;
         public static bool ogslime = false;
 
         public static int lifeTiles;
@@ -137,18 +121,6 @@ namespace CalRemix
         }
         public override void OnWorldLoad()
         {
-            downedDerellect = false;
-            downedExcavator = false;
-            downedEarth = false;
-
-            downedLifeSlime = false;
-            downedClamitas = false;
-            downedCyberDraedon = false;
-            downedOnyxKinsman = false;
-            downedYggdrasilEnt = false;
-            downedPlagueEmperor = false;
-            downedLaRuga = false;
-            downedKingMinnowsPrime = false;
             ogslime = false;
 
             guideHasExisted = false;
@@ -234,18 +206,6 @@ namespace CalRemix
         }
         public override void OnWorldUnload()
         {
-            downedDerellect = false;
-            downedExcavator = false;
-            downedEarth = false;
-
-            downedLifeSlime = false;
-            downedClamitas = false;
-            downedCyberDraedon = false;
-            downedOnyxKinsman = false;
-            downedYggdrasilEnt = false;
-            downedPlagueEmperor = false;
-            downedLaRuga = false;
-            downedKingMinnowsPrime = false;
             ogslime = false;
 
             guideHasExisted = false;
@@ -296,18 +256,6 @@ namespace CalRemix
         }
         public override void SaveWorldData(TagCompound tag)
         {
-            tag["downedDerellect"] = downedDerellect;
-            tag["downedExcavator"] = downedExcavator;
-            tag["downedEarth"] = downedEarth;
-
-            tag["downedLifeSlime"] = downedLifeSlime;
-            tag["downedClamitas"] = downedClamitas;
-            tag["downedCyberDraedon"] = downedCyberDraedon;
-            tag["downedOnyxKinsman"] = downedOnyxKinsman;
-            tag["downedYggdrasilEnt"] = downedYggdrasilEnt;
-            tag["downedPlagueEmperor"] = downedPlagueEmperor;
-            tag["downedLaRuga"] = downedLaRuga;
-            tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
             tag["ogslime"] = ogslime;
 
             tag["guideHasExisted"] = guideHasExisted;
@@ -356,20 +304,6 @@ namespace CalRemix
 
         public override void LoadWorldData(TagCompound tag)
         {
-            downedDerellect = tag.Get<bool>("downedDerellect");
-            downedExcavator = tag.Get<bool>("downedExcavator");
-            downedEarth = tag.Get<bool>("downedEarth");
-
-
-
-            downedLifeSlime = tag.Get<bool>("downedLifeSlime");
-            downedClamitas = tag.Get<bool>("downedClamitas");
-            downedCyberDraedon = tag.Get<bool>("downedCyberDraedon");
-            downedOnyxKinsman = tag.Get<bool>("downedOnyxKinsman");
-            downedYggdrasilEnt = tag.Get<bool>("downedYggdrasilEnt");
-            downedPlagueEmperor = tag.Get<bool>("downedPlagueEmperor");
-            downedLaRuga = tag.Get<bool>("downedLaRuga");
-            downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
             ogslime = tag.Get<bool>("ogslime");
 
 
@@ -419,9 +353,6 @@ namespace CalRemix
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(downedDerellect);
-            writer.Write(downedExcavator);
-            writer.Write(downedEarth);
             writer.Write(guideHasExisted);
             writer.Write(ogslime);
             writer.Write(deusDeadInSnow);
@@ -470,19 +401,6 @@ namespace CalRemix
 
         public override void NetReceive(BinaryReader reader)
         {
-            downedDerellect = reader.ReadBoolean();
-            downedExcavator = reader.ReadBoolean();
-            downedEarth = reader.ReadBoolean();
-
-            downedLifeSlime = reader.ReadBoolean();
-            downedClamitas = reader.ReadBoolean();
-            downedCyberDraedon = reader.ReadBoolean();
-            downedOnyxKinsman = reader.ReadBoolean();
-            downedYggdrasilEnt = reader.ReadBoolean();
-            downedPlagueEmperor = reader.ReadBoolean();
-            downedLaRuga = reader.ReadBoolean();
-            downedKingMinnowsPrime = reader.ReadBoolean();
-
             ogslime = reader.ReadBoolean();
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();

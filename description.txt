@@ -1,5 +1,6 @@
 Discord: https://discord.gg/NSUaCZ4Dxc
 Wiki: https://terrariamods.wiki.gg/wiki/Calamity_Community_Remix
+
 Disclaimer: Although most of the mod's content originates from the Fandom wiki, we can't stress enough that the Calamity wiki on wiki.gg is the correct and optimal wiki to be using. This mod isn't 100% accurate to what is presented on the Fandom wiki, and attempting to refer to it for help on this mod hurts the developers. If you need help with this mod, refer to the links above.
 
 From the creators of the XP-00 Hypnos Mod, we bring you the Calamity: Community Remix addon!
@@ -14,27 +15,31 @@ More is (not) soon to come!!!
 
 Suffer.
 
-Extra Credits:
+Multiplayer support? What's that?
 
+
+Credits:
 XP-00 Hypnos - Started it all
 
-Coders:
+=Coders=
 IbanPlay - Fanny
 Dominic Karma - Fanny, A vast majority of Wulfrum Excavator
-ScalarVector - Localization roundabout code
 RegigigasSkyForm - Snippets of Dark Statis (literally who)
 Bloop - Gravitonomy Pike, Exodimus, Ogscule, King Minnows Prime
 Doze_Zoze - Polyphemalus and their weapons
 
-Artists:
+=Artists=
 BrainMinusDown - Plague biome music and sprites
-DEMON GIRLFRIEND - Acidsighter and Crimson Kaiju themes
+DEMON GIRLFRIEND - Acidsighter theme
 Jteoh - Cryo slime theme
-DM DOKURO - Polyphemalus theme
 GummyLeeches - Alternate Polyphemalus theme
 Too many spriters to list - Various sprites
 
-Inspiration Honorable Mentions:
+=Assets Used=
+ScalarVector - Localization roundabout code
+DM DOKURO - Polyphemalus theme
+Minimusicman - Main Menu theme
+
+=Wiki Inspiration=
 AmmyanDocCiesh, BenAbyssJerry, FixationActuation, YYzstNeurosis, Ligmachi, Enamoured-melody, Krossseh, TheWulfrumKing, EiramC, InxieRatZey, Yez22, Jellybloop, Explodingcats43, Sup.Crispy, Dragoncraft9WasTaken, Healthy23, BabyblueSheep, Tehpootisman2, BrimstoneHawk, DeimosCalamitousGamer, BattleBee, LeBiggenedQuack, Starphantasm, ZAtaraxious, Ltrltrltr1234, AGorbus, BloodflareExpert, UltravioletColdSeekerMissile, FallenEntropy, AShottyStool, Spaghet55, SpamtonG95
 
-Multiplayer support? What's that?
