@@ -46,7 +46,7 @@ namespace CalRemix.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D pageTexture = ModContent.Request<Texture2D>("CalRemix/UI/TerminalSlab").Value;
+            Texture2D pageTexture = ModContent.Request<Texture2D>("CalRemix/UI/Logs/TerminalSlab").Value;
             float xScale = MathHelper.Lerp(0.004f, 1f, FadeTime / (float)FadeTimeMax);
             Vector2 scale = new Vector2(xScale, 1f) * new Vector2(Main.screenWidth, Main.screenHeight) / pageTexture.Size();
             scale.Y *= 1.5f;

@@ -21,7 +21,7 @@ namespace CalRemix.UI
                 "Idle", (FannySceneMetrics scene) => Main._shouldUseWindyDayMusic));
             
             fannyMessages.Add(new FannyMessage("EvilSnowLegion", "You know... This reminds me back when I had a boyfriend. He was real sweet, if I'll be honest. I even had my first kiss with him. Though he was a snowman, and I was a flame... You kinda get where this is going.",
-                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.invasionType == InvasionID.SnowLegion));
+                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.invasionType == InvasionID.SnowLegion).SpokenByEvilFanny());
 
             fannyMessages.Add(new FannyMessage("OOA", "Just so we're clear, none of this is canon, got it?",
                 "Nuhuh", (FannySceneMetrics scene) => Main.invasionType == InvasionID.CachedOldOnesArmy).SetHoverTextOverride("Gotcha Fanny!"));
@@ -39,7 +39,7 @@ namespace CalRemix.UI
                 "Idle", (FannySceneMetrics scene) => Main.snowMoon && !DownedBossSystem.downedDoG).SetHoverTextOverride("Awe, thanks Fanny, you're great to have around too!"));
 
             fannyMessages.Add(new FannyMessage("BREvilkys", "Kill yourself NOW!",
-                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.statLife >= Main.LocalPlayer.statLifeMax2 * 0.75f && BossRushEvent.BossRushActive && BossRushEvent.CurrentTier >= 5).SetHoverTextOverride("I'm busy right now, Evil Fanny!"));
+                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.statLife >= Main.LocalPlayer.statLifeMax2 * 0.75f && BossRushEvent.BossRushActive && BossRushEvent.CurrentTier >= 5).SetHoverTextOverride("I'm busy right now, Evil Fanny!").SpokenByEvilFanny());
 
             fannyMessages.Add(new FannyMessage("Nite", "Nighttime is when the real party starts! But watch out for those nocturnal nasties, they're like uninvited guests who never leave. Keep a torch handy, it's like bringing a flashlight to a ghost story.",
               "Idle", (FannySceneMetrics scene) => !Main.dayTime));
