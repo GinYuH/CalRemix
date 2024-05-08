@@ -498,7 +498,7 @@ namespace CalRemix.UI.ElementalSystem
             #region Godseeker
             { ItemType<AethersWhisper>(), new Element[]{ Element.Dark }},
             { ItemType<AetherfluxCannon>(), new Element[]{ Element.Holy }},
-            { ItemType<AlphaRay>(), new Element[]{ Element.Machine }},
+            { ItemType<Omicron>(), new Element[]{ Element.Machine }},
             { ItemType<ApoctosisArray>(), new Element[]{ Element.Magic }},
             { ItemType<Apotheosis>(), new Element[]{ Element.Magic, Element.Dark }},
             { ItemType<AsteroidStaff>(), new Element[]{ Element.Magic }},
@@ -517,7 +517,7 @@ namespace CalRemix.UI.ElementalSystem
             { ItemType<Fabstaff>(), new Element[]{ Element.Magic, Element.Machine }},
             { ItemType<FaceMelter>(), new Element[]{ Element.Machine }},
             { ItemType<FatesReveal>(), new Element[]{ Element.Dark }},
-            { ItemType<Genisis>(), new Element[]{ Element.Machine }},
+            { ItemType<Genesis>(), new Element[]{ Element.Machine }},
             { ItemType<GhastlyVisage>(), new Element[]{ Element.Dark }},
             { ItemType<GruesomeEminence>(), new Element[]{ Element.Unholy }},
             { ItemType<HeliumFlash>(), new Element[]{ Element.Fire }},
