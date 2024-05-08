@@ -16,7 +16,6 @@ namespace CalRemix.NPCs
 {
     public class BananaClown : ModNPC
     {
-        public float[] GreenAI = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Banana Clown");
@@ -51,26 +50,26 @@ namespace CalRemix.NPCs
 
         public override void OnSpawn(IEntitySource source)
         {
-            GreenAI[0] = 0;
-            GreenAI[1] = 0;
+            NPC.Remix().GreenAI[0] = 0;
+            NPC.Remix().GreenAI[1] = 0;
         }
 
         public override void AI()
         {
-            GreenAI[0]++;
-            GreenAI[2]++;
+            NPC.Remix().GreenAI[0]++;
+            NPC.Remix().GreenAI[2]++;
             CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedFighterAI(NPC, Mod);
             NPC.spriteDirection = NPC.direction;
             if (NPC.HasPlayerTarget)
             {
-                if (Collision.CanHitLine(NPC.Center, 1, 1, Main.player[NPC.target].Center, 1, 1) && GreenAI[0] % (130 + Main.rand.Next(-10, 21)) == 0 && NPC.Distance(Main.player[NPC.target].Center) < 160)
+                if (Collision.CanHitLine(NPC.Center, 1, 1, Main.player[NPC.target].Center, 1, 1) && NPC.Remix().GreenAI[0] % (130 + Main.rand.Next(-10, 21)) == 0 && NPC.Distance(Main.player[NPC.target].Center) < 160)
                 {
                     Vector2 dist = Main.player[NPC.target].position - NPC.position;
                     dist.Normalize();
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 10, ModContent.ProjectileType<BananaBomb>(), 15, 0, Main.myPlayer);
                 }
             }
-            if (GreenAI[2] >= (120 + Main.rand.Next(0, 20)))
+            if (NPC.Remix().GreenAI[2] >= (120 + Main.rand.Next(0, 20)))
             {
                 int choice = Main.rand.Next(0, 3);
                 SoundStyle fuckyou = SoundID.Zombie121;
@@ -87,7 +86,7 @@ namespace CalRemix.NPCs
                         break;
                 }
                 SoundEngine.PlaySound(fuckyou, NPC.Center);
-                GreenAI[2] = 0;
+                NPC.Remix().GreenAI[2] = 0;
             }
         }
 

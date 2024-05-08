@@ -14,7 +14,6 @@ namespace CalRemix.NPCs.Eclipse
 {
     public class EvilAnimatronic : ModNPC
     {
-        public float[] GreenAI = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Evil Animatronic");
@@ -41,29 +40,29 @@ namespace CalRemix.NPCs.Eclipse
 
         public override void OnSpawn(IEntitySource source)
         {
-            GreenAI[0] = 0;
-            GreenAI[1] = 0;
-            GreenAI[2] = 0;
+            NPC.Remix().GreenAI[0] = 0;
+            NPC.Remix().GreenAI[1] = 0;
+            NPC.Remix().GreenAI[2] = 0;
         }
 
         public override void AI()
         {
-            GreenAI[0]++;
+            NPC.Remix().GreenAI[0]++;
             {
                 CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
                 if (NPC.HasPlayerTarget)
                 {
                     if (Collision.CanHitLine(NPC.Center, 1, 1, Main.player[NPC.target].Center, 1, 1))
                     {
-                        GreenAI[2] = 0;
-                        if (GreenAI[0] % (90 + Main.rand.Next(0, 21)) == 0)
+                        NPC.Remix().GreenAI[2] = 0;
+                        if (NPC.Remix().GreenAI[0] % (90 + Main.rand.Next(0, 21)) == 0)
                         {
                             Vector2 dist = Main.player[NPC.target].position - NPC.position;
                             dist.Normalize();
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 14, ModContent.ProjectileType<PizzaWheelHostile>(), NPC.damage, 0, Main.myPlayer, NPC.whoAmI);
                             SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, NPC.Center);
                         }
-                        if (GreenAI[0] % 120 == 0)
+                        if (NPC.Remix().GreenAI[0] % 120 == 0)
                         {
                             bool left = Main.rand.NextBool();
                             float variance = Main.rand.NextFloat(-20, 20);
@@ -87,12 +86,12 @@ namespace CalRemix.NPCs.Eclipse
                     }
                     else
                     {
-                        GreenAI[2]++;
-                        if (GreenAI[2] >= 240 + Main.rand.Next(0, 31))
+                        NPC.Remix().GreenAI[2]++;
+                        if (NPC.Remix().GreenAI[2] >= 240 + Main.rand.Next(0, 31))
                         {
                             Main.player[NPC.target].AddBuff(BuffID.Blackout, 600);
                             SoundEngine.PlaySound(SoundID.ScaryScream with { Pitch = SoundID.ScaryScream.Pitch + 1}, Main.player[NPC.target].Center);
-                            GreenAI[2] = 0;
+                            NPC.Remix().GreenAI[2] = 0;
                         }
                     }
                 }
