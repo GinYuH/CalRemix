@@ -69,6 +69,7 @@ using CalRemix.NPCs.TownNPCs;
 using System.Threading;
 using Humanizer;
 using CalamityMod.Projectiles.Summon;
+using CalRemix.Items.Placeables;
 
 namespace CalRemix
 {
@@ -720,6 +721,10 @@ namespace CalRemix
                 LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
                 npcLoot.Add(mainRule);
+            }
+            if (npc.type == ModContent.NPCType<Yharon>())
+            {
+                npcLoot.Add(ModContent.ItemType<MovieSign>(), 100);
             }
             if (npc.type == ModContent.NPCType<Bumblefuck>())
             {

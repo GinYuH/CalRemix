@@ -561,6 +561,13 @@ namespace CalRemix
                 itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<Anomaly109>());
                 itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<TheInsacredTexts>());
             }
+            if (ModLoader.HasMod("CalValEX"))
+            {
+                if (item.type == ModLoader.GetMod("CalValEX").Find<ModItem>("MysteryPainting").Type)
+                {
+                    itemLoot.Add(ModContent.ItemType<MovieSign>(), 22);
+                }
+            }
         }
 
 
