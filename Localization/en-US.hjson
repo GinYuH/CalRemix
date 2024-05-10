@@ -1789,17 +1789,35 @@ Mods: {
 				Tooltip: ""
 			}
 
-			FannyLogSunkenSea.DisplayName: The Ramblings of a Flamboyant Flame: A Digital Diary (Entry 1)
-			FannyLogJungle.DisplayName: Plague and Perils in the Jungle Lab (Entry 3)
-			FannyLogSpace.DisplayName: Trouble on Planetoid X-42 (Entry 2)
+			FannyLogSunkenSea: {
+				DisplayName: The Ramblings of a Flamboyant Flame: A Digital Diary (Entry 1)
+				Tooltip: ""
+			}
+
+			FannyLogJungle: {
+				DisplayName: Plague and Perils in the Jungle Lab (Entry 3)
+				Tooltip: ""
+			}
+
+			FannyLogSpace: {
+				DisplayName: Trouble on Planetoid X-42 (Entry 2)
+				Tooltip: ""
+			}
 
 			FannyLogAbyss: {
 				DisplayName: Depths of the Abyss (Entry ???)
 				Tooltip: It has scribbles all over it, making it unusable
 			}
 
-			FannyLogHell.DisplayName: Fiery Finds in the Underworld Lab (Entry 4)
-			FannyLogIce.DisplayName: Frosty Finds in the Ice Cavern Lab (Entry 5)
+			FannyLogHell: {
+				DisplayName: Fiery Finds in the Underworld Lab (Entry 4)
+				Tooltip: ""
+			}
+
+			FannyLogIce: {
+				DisplayName: Frosty Finds in the Ice Cavern Lab (Entry 5)
+				Tooltip: ""
+			}
 
 			MovieSign: {
 				DisplayName: Movie Sign
