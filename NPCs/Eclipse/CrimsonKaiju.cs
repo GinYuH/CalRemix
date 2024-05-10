@@ -37,6 +37,10 @@ namespace CalRemix.NPCs.Eclipse
             Teleport = 6,
             Despawning = 7
         }
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
 
         public override void SetStaticDefaults()
         {

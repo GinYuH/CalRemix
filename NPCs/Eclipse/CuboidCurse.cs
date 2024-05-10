@@ -16,6 +16,10 @@ namespace CalRemix.NPCs.Eclipse
 {
     public class CuboidCurse : ModNPC
     {
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cuboid Curse");

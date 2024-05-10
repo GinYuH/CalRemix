@@ -14,6 +14,11 @@ namespace CalRemix.NPCs.Eclipse
     public class TallMan : ModNPC
     {
         public static SoundStyle SlenderJumpscare = new SoundStyle("CalRemix/Sounds/SlenderJumpscare");
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tall Man");

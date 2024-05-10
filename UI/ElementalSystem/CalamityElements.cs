@@ -213,7 +213,7 @@ namespace CalRemix.UI.ElementalSystem
             { ItemType<RemsRevenge>(), new Element[]{ Element.Impact, Element.Unholy, Element.Dark }},
             { ItemType<ScourgeoftheCosmos>(), new Element[]{ Element.Slash, Element.Magic, Element.Dark }},
             { ItemType<SeekingScorcher>(), new Element[]{ Element.Slash, Element.Holy, Element.Fire }},
-            { ItemType<SolarFlare>(), new Element[]{ Element.Slash, Element.Holy, Element.Fire }},
+            { ItemType<BurningRevelation>(), new Element[]{ Element.Slash, Element.Holy, Element.Fire }},
             { ItemType<SolsticeClaymore>(), new Element[]{ Element.Slash }},
             { ItemType<VoidEdge>(), new Element[]{ Element.Slash, Element.Dark }},
             { ItemType<SpineOfThanatos>(), new Element[]{ Element.Slash, Element.Machine }},

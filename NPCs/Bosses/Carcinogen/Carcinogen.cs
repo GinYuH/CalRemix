@@ -27,6 +27,11 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             Idle = 0
         }
 
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Carcinogen");
