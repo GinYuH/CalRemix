@@ -31,7 +31,7 @@ DisplayName.SetDefault("Wrath of the Dragons");
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 6f;
-            Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+            Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.rare = ModContent.RarityType<Violet>();
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<DraconicPulse>();

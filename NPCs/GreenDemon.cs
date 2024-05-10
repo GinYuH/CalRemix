@@ -17,7 +17,6 @@ namespace CalRemix.NPCs
 {
     public class GreenDemon : ModNPC
     {
-        public float[] GreenAI = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Green Demon");
@@ -61,11 +60,11 @@ namespace CalRemix.NPCs
             {
                 NPC.direction = 1;
             }*/
-            if (GreenAI[1] == 0)
+            if (NPC.Remix().GreenAI[1] == 0)
             {
-                CalamityMod.NPCs.CalamityGlobalAI.BuffedHerplingAI(NPC, Mod);
-                GreenAI[0]++;
-                if (GreenAI[0] % 65 == 0)
+                CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
+                NPC.Remix().GreenAI[0]++;
+                if (NPC.Remix().GreenAI[0] % 65 == 0)
                 {
                     SoundEngine.PlaySound(SoundID.Item20, NPC.Center);
                     Vector2 dist = Main.player[NPC.target].Center - NPC.Center;
@@ -85,7 +84,7 @@ namespace CalRemix.NPCs
                         }
                     }
                 }
-                if (NPC.life <= NPC.lifeMax * 0.5f && GreenAI[0] % 95 == 0)
+                if (NPC.life <= NPC.lifeMax * 0.5f && NPC.Remix().GreenAI[0] % 95 == 0)
                 {
                     SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LargeWeaponFireSound, NPC.Center);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -98,16 +97,16 @@ namespace CalRemix.NPCs
                         Main.projectile[p].DamageType = DamageClass.Generic;
                     }
                 }
-                if (GreenAI[0] >= 300)
+                if (NPC.Remix().GreenAI[0] >= 300)
                 {
-                    GreenAI[1] = 1;
-                    GreenAI[0] = 0;
+                    NPC.Remix().GreenAI[1] = 1;
+                    NPC.Remix().GreenAI[0] = 0;
                 }
             }
-            if (GreenAI[1] == 1)
+            if (NPC.Remix().GreenAI[1] == 1)
             {
-                GreenAI[0]++;
-                if (GreenAI[0] == 1)
+                NPC.Remix().GreenAI[0]++;
+                if (NPC.Remix().GreenAI[0] == 1)
                 {
                     NPC.velocity.Y = -20;
                 }
@@ -135,8 +134,8 @@ namespace CalRemix.NPCs
                             p.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 1000, 0);
                         }
                     }
-                    GreenAI[1] = 2;
-                    GreenAI[0] = 0;
+                    NPC.Remix().GreenAI[1] = 2;
+                    NPC.Remix().GreenAI[0] = 0;
                     if (NPC.life <= NPC.lifeMax * 0.5f)
                     {
                         SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LargeWeaponFireSound, NPC.Center);
@@ -152,15 +151,15 @@ namespace CalRemix.NPCs
                     }
                 }
             }
-            if (GreenAI[1] == 2)
+            if (NPC.Remix().GreenAI[1] == 2)
             {
-                GreenAI[0]++;
-                if (GreenAI[0] >= 120)
+                NPC.Remix().GreenAI[0]++;
+                if (NPC.Remix().GreenAI[0] >= 120)
                 {
-                    GreenAI[1] = 0;
-                    GreenAI[0] = 0;
+                    NPC.Remix().GreenAI[1] = 0;
+                    NPC.Remix().GreenAI[0] = 0;
                 }
-                if (NPC.life <= NPC.lifeMax * 0.5f && GreenAI[0] % 42 == 0)
+                if (NPC.life <= NPC.lifeMax * 0.5f && NPC.Remix().GreenAI[0] % 42 == 0)
                 {
                     SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LargeWeaponFireSound, NPC.Center);
                     if (Main.netMode != NetmodeID.MultiplayerClient)

@@ -7,7 +7,6 @@ namespace CalRemix.Items.Accessories
 {
     public class Baroclaw : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/Baroclaw";
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -19,7 +18,7 @@ namespace CalRemix.Items.Accessories
         {
             Item.width = 42;
             Item.height = 36;
-            Item.value = CalamityGlobalItem.Rarity7BuyPrice;
+            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;
         }

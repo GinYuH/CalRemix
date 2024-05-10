@@ -25,7 +25,7 @@ namespace CalRemix.Items.Placeables
 			Item.createTile = ModContent.TileType<LifeOreTile>();
 			Item.width = 12;
 			Item.height = 12;
-			Item.value = CalamityGlobalItem.Rarity8BuyPrice;
+			Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}

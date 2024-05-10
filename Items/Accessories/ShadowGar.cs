@@ -18,7 +18,7 @@ namespace CalRemix.Items.Accessories
         {
             Item.width = 62;
             Item.height = 70;
-            Item.value = CalamityGlobalItem.Rarity3BuyPrice;
+            Item.value = CalamityGlobalItem.RarityOrangeBuyPrice;
             Item.rare = ItemRarityID.Orange;
             Item.accessory = true;
             Item.value = Item.sellPrice(silver: 80);

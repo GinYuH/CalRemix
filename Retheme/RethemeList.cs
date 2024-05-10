@@ -137,6 +137,9 @@ namespace CalRemix.Retheme
             { ItemType<ClockGatlignum>(), "Bars/ClockworkBar" },
             { ItemType<LifeAlloy>(), "Bars/LifeAlloy" },
             { ItemType<MeldConstruct>(), "Bars/MeldBar" },
+            { ItemType<FetidEmesis>(), "FetidEmesis" },
+            { ItemType<CadaverousCarrion>(), "CadaverousCarrion" },
+            { ItemType<MutatedTruffle>(), "MutatedTruffle" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },
@@ -244,7 +247,7 @@ namespace CalRemix.Retheme
             { ItemType<PhoenixFlameBarrage>(), "Yharon/DragonFlameBarrage" },
             { ItemType<YharonsKindleStaff>(), "Yharon/YharonsKindleStaff" },
             { ItemType<TheBurningSky>(), "Yharon/TheBurningSky" },
-            { ItemType<FinalDawn>(), "Yharon/FinalDawn" },
+            { ItemType<TheFinalDawn>(), "Yharon/FinalDawn" },
             { ItemType<Wrathwing>(), "Yharon/Wrathwing" },
             #endregion
             #region Exos
@@ -264,6 +267,7 @@ namespace CalRemix.Retheme
         {
             { ProjectileType<NadirSpear>(), "NadirSpear" },
             { ProjectileType<VoidEssence>(), "VoidEssence" },
+            { ProjectileType<MutatedTruffleMinion>(), "GassyDuke" },
             #region Desert Sockourge
             #endregion
             { ProjectileType<SaharaSlicersBlade>(), "DS/SaharaSlicer" },
@@ -334,6 +338,7 @@ namespace CalRemix.Retheme
             { ItemType<SoulPiercer>(), "Stream Gouge" },
             { ItemType<StreamGouge>(), "Soul Piercer" },
             { ItemType<PhoenixFlameBarrage>(), "Dragon Flame Barrage" },
+            { ItemType<OldDukeScales>(), "Sulfuric Scale" },
         };
     }
 }

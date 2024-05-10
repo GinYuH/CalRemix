@@ -13,7 +13,6 @@ using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Placeables;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Ammo;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Materials;
@@ -253,7 +252,7 @@ namespace CalRemix
                     recipe.RemoveIngredient(ModContent.ItemType<Seadragon>());
                     recipe.AddIngredient(ModContent.ItemType<Megaskeet>());
                 }
-                bool shard = (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) || recipe.HasResult(ModContent.ItemType<SuperballBullet>()));
+                bool shard = (recipe.HasResult(ModContent.ItemType<SeaRemains>()) || recipe.HasResult(ModContent.ItemType<MonstrousKnives>()) || recipe.HasResult(ModContent.ItemType<FirestormCannon>()) );
                 if (recipe.HasIngredient(ModContent.ItemType<PearlShard>()) && shard)
 		        {
                     recipe.RemoveIngredient(ModContent.ItemType<PearlShard>());
@@ -402,7 +401,7 @@ namespace CalRemix
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
                     recipe.AddIngredient<PlagueHive>();
-                    recipe.AddIngredient<Purity>();
+                    recipe.AddIngredient<Radiance>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
                     recipe.AddIngredient<TheEvolution>();
@@ -466,10 +465,6 @@ namespace CalRemix
                 }
                 #endregion
                 #region Coyote Venom
-                if (recipe.HasResult(ModContent.ItemType<EnhancedNanoRound>()))
-                {
-                    recipe.RemoveIngredient(ModContent.ItemType<EssenceofEleum>());
-                }
                 if (recipe.HasResult(ModContent.ItemType<PlaguebringerPistons>()) || recipe.HasResult(ModContent.ItemType<PlaguebringerVisor>()))
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<PlagueCellCanister>());
@@ -521,7 +516,7 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ModContent.ItemType<ContinentalGreatbow>());
                     recipe.AddIngredient(ModContent.ItemType<DarkechoGreatbow>());
-                    recipe.AddIngredient(ModContent.ItemType<BladedgeGreatbow>());
+                    recipe.AddIngredient(ModContent.ItemType<BladedgeRailbow>());
                     recipe.RemoveIngredient(ModContent.ItemType<AshesofCalamity>());
                 }
                 //Law
@@ -623,7 +618,7 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<Fabstaff>()))
                 {
                     recipe.RemoveIngredient(ItemID.RainbowRod);
-                    recipe.RemoveIngredient(ModContent.ItemType<Polterplasm>());
+                    recipe.RemoveIngredient(ModContent.ItemType<Necroplasm>());
                     recipe.AddIngredient(ModContent.ItemType<BucketofCoal>());
                     recipe.AddIngredient(ItemID.MartianConduitPlating, 1000);
                 }

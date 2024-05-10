@@ -20,7 +20,7 @@ namespace CalRemix.Items.Materials
 		public override void SetDefaults()
 		{
             Item.rare = ItemRarityID.Yellow;
-            Item.value = CalamityGlobalItem.Rarity8BuyPrice;
+            Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
 			Item.maxStack = 9999;
             Item.width = Item.height = 32;
         }

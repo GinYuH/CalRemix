@@ -25,7 +25,7 @@ public class DarkEnergyStaff : ModItem
     public override void SetDefaults()
     {
         Item.rare = ModContent.RarityType<Turquoise>();
-        Item.value = CalamityGlobalItem.Rarity12BuyPrice;
+        Item.value = CalamityGlobalItem.RarityTurquoiseBuyPrice;
         Item.damage = 76;
         Item.DamageType = DamageClass.Summon;
         Item.width = 10;

@@ -512,7 +512,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
             {
                 for (int k = 0; k < 5; k++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 1f + (Main.rand.NextFloat() / 2f));
+                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 1f + (Main.rand.NextFloat() / 2f));
                     dust.noGravity = true;
                     dust.velocity *= 5f;
                 }
@@ -521,7 +521,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
             {
                 for (int k = 0; k < 22; k++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 4f + (Main.rand.NextFloat() * 2f));
+                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 4f + (Main.rand.NextFloat() * 2f));
                     dust.noGravity = true;
                     dust.velocity = new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21));
                 }
@@ -530,7 +530,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
             {
                 if (Main.rand.NextBool(2))
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 1f + (Main.rand.NextFloat() / 2f));
+                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 1f + (Main.rand.NextFloat() / 2f));
                     dust.noGravity = true;
                     dust.velocity = new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11));
                 }
@@ -542,7 +542,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                 return;
             for (int k = 0; k < 22; k++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulfurousSeaAcid, Scale: 4f + (Main.rand.NextFloat() * 2f));
+                Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, (int)CalamityDusts.SulphurousSeaAcid, Scale: 4f + (Main.rand.NextFloat() * 2f));
                 dust.noGravity = true;
                 dust.velocity = new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21));
             }

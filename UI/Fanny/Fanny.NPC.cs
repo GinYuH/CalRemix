@@ -48,13 +48,34 @@ namespace CalRemix.UI
                 "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead));
 
             fannyMessages.Add(new FannyMessage("AnglerTalk", "Look at his shit eating grin. He knows there is nothing you can do to him. He's bullying you, and you are helpless. Kill him. Kill him now. He won't see death coming.",
-                "EvilIdle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?"));
+                "EvilIdle", (FannySceneMetrics scene) => Main.hardMode && scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?").SpokenByEvilFanny());
 
             fannyMessages.Add(new FannyMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
                 "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
             fannyMessages.Add(new FannyMessage("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
                 "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "FargowiltasSouls", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!"));
+
+
+            int num = Main.rand.Next(0, int.MaxValue);
+            int dateTypes = Main.rand.Next(10);
+            // thank you javyz
+            string timeType = dateTypes switch
+            {
+                0 => "milliseconds",
+                1 => "seconds",
+                2 => "minutes",
+                3 => "hours",
+                4 => "days",
+                5 => "weeks",
+                6 => "months",
+                7 => "years",
+                8 => "decades",
+                9 => "centuries",
+                _ => "millenia"
+            };
+            fannyMessages.Add(new FannyMessage("UpdateTime", "Wondering when the next update is? I know! I know! It's in " + num + " " + timeType + "!",
+                "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Cnidrion>())).SetHoverTextOverride("Wow! That sure is a while Fanny!"));
         }
     }
 }

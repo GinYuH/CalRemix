@@ -16,7 +16,6 @@ namespace CalRemix.NPCs
 {
     public class Miasmius : ModNPC
     {
-        public float[] GreenAI = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Miasmius");
@@ -43,15 +42,15 @@ namespace CalRemix.NPCs
 
         public override void OnSpawn(IEntitySource source)
         {
-            GreenAI[0] = 0;
-            GreenAI[1] = 0;
+            NPC.Remix().GreenAI[0] = 0;
+            NPC.Remix().GreenAI[1] = 0;
         }
 
         public override void AI()
         {
-            GreenAI[0]++;
-            GreenAI[2]++;
-            if (GreenAI[1] == 0)
+            NPC.Remix().GreenAI[0]++;
+            NPC.Remix().GreenAI[2]++;
+            if (NPC.Remix().GreenAI[1] == 0)
             {
                 NPC.TargetClosest();
                 NPC.velocity.X = 0;
@@ -60,12 +59,12 @@ namespace CalRemix.NPCs
                     if (Main.player[NPC.target].Distance(NPC.Center) <= 256 || NPC.life < NPC.lifeMax)
                     {
                         SoundEngine.PlaySound(SoundID.Zombie78, NPC.Center);
-                        GreenAI[1] = 1;
+                        NPC.Remix().GreenAI[1] = 1;
                     }
                 }
                 if (CalamityUtils.CountProjectiles(ModContent.ProjectileType < SporeGasPlantera > ()) < 20)
                 {
-                    if (GreenAI[0] % (150 + Main.rand.Next(0, 20)) == 0)
+                    if (NPC.Remix().GreenAI[0] % (150 + Main.rand.Next(0, 20)) == 0)
                     {
                         Vector2 vel = new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 2));
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, vel, ModContent.ProjectileType<SporeGasPlantera>(), NPC.damage, 0, Main.myPlayer);
@@ -76,10 +75,10 @@ namespace CalRemix.NPCs
             }
             else
             {
-                CalamityMod.NPCs.CalamityGlobalAI.BuffedHerplingAI(NPC, Mod);
+                CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
                 if (NPC.HasPlayerTarget)
                 {
-                    if (GreenAI[0] % (70 + Main.rand.Next(0, 21)) == 0)
+                    if (NPC.Remix().GreenAI[0] % (70 + Main.rand.Next(0, 21)) == 0)
                     {
                         Vector2 dist = Main.player[NPC.target].position - NPC.position;
                         dist.Normalize();
@@ -87,7 +86,7 @@ namespace CalRemix.NPCs
                         SoundEngine.PlaySound(SoundID.Item20, NPC.Center);
                     }
                 }
-                if (GreenAI[2] % (120 + Main.rand.Next(0, 20)) == 0)
+                if (NPC.Remix().GreenAI[2] % (120 + Main.rand.Next(0, 20)) == 0)
                 {
                     SoundEngine.PlaySound(SoundID.Zombie78, NPC.Center);
                 }
@@ -103,7 +102,7 @@ namespace CalRemix.NPCs
         }
         public override void FindFrame(int frameHeight)
         {
-            if (NPC.velocity.Y != 0 && GreenAI[1] != 0)
+            if (NPC.velocity.Y != 0 && NPC.Remix().GreenAI[1] != 0)
             {
                 NPC.frameCounter += 1.0;
                 if (NPC.frameCounter > 6.0)

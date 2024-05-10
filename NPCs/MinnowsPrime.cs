@@ -48,7 +48,7 @@ namespace CalRemix.NPCs
 
         public override void AI()
         {
-            CalamityMod.NPCs.CalamityAI.PassiveSwimmingAI(NPC, Mod, 3, 150f, 0.25f, 0.15f, 6f, 6f, 0.05f);
+            CalamityMod.NPCs.CalamityAIs.CalamityRegularEnemyAIs.CalamityRegularEnemyAI.PassiveSwimmingAI(NPC, Mod, 3, 150f, 0.25f, 0.15f, 6f, 6f, 0.05f);
             NPC.noGravity = true;
             bool flag14 = false;
             if (NPC.direction == 0)
@@ -219,14 +219,14 @@ namespace CalRemix.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(new CommonDrop(ItemID.Ectoplasm, 1, 36, 57));
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<Polterplasm>(), 1, 7, 15));
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<Necroplasm>(), 1, 7, 15));
         }
 
         public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, (int)CalamityMod.Dusts.CalamityDusts.Polterplasm, hit.HitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, (int)CalamityMod.Dusts.CalamityDusts.Necroplasm, hit.HitDirection, -1f, 0, default, 1f);
             }
         }
     }

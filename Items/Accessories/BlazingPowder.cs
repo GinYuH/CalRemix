@@ -28,7 +28,7 @@ namespace CalRemix.Items.Accessories
         {
             CreateRecipe().
                 AddIngredient<AshesofCalamity>(10).
-                AddIngredient<Stardust>(5).
+                AddIngredient<StarblightSoot>(5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

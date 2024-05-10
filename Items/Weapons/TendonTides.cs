@@ -32,7 +32,7 @@ public class TendonTides : ModItem
         Item.noUseGraphic = true;
         Item.knockBack = 6;
         Item.rare = ModContent.RarityType<PureGreen>();
-        Item.value = CalamityGlobalItem.Rarity13BuyPrice;
+        Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
         Item.UseSound = SoundID.Item71;
         Item.autoReuse = true;
         Item.channel = true;

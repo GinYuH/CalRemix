@@ -25,7 +25,7 @@ namespace CalRemix.Items.Materials
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ModContent.ItemType<Polterplasm>(), 3).
+                AddIngredient(ModContent.ItemType<Necroplasm>(), 3).
                 AddIngredient(ModContent.ItemType<RuinousSoul>()).
                 AddIngredient(ModContent.ItemType<ExodiumCluster>(), 5).
                 AddTile(TileID.LunarCraftingStation).

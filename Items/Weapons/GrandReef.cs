@@ -35,7 +35,7 @@ public class GrandReef : ModItem
         Item.noUseGraphic = true;
         Item.knockBack = 10f;
         Item.rare = ModContent.RarityType<HotPink>();
-        Item.value = CalamityGlobalItem.Rarity16BuyPrice;
+        Item.value = CalamityGlobalItem.RarityHotPinkBuyPrice;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
         Item.channel = true;

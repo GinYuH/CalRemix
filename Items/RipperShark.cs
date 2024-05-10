@@ -24,7 +24,7 @@ namespace CalRemix.Items
             Item.height = 60;
             Item.useTurn = true;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = CalamityGlobalItem.Rarity13BuyPrice;
+            Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
             Item.rare =  ModContent.RarityType<PureGreen>();
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;

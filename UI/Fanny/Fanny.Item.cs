@@ -50,10 +50,15 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Shadowspec", "Please throw this thing out, it will delete your world if you have it in inventory for too long!",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()).SetHoverTextOverride("Thank you for the help Fanny! I will!"));
-            /*
-                        fannyMessages.Add(new FannyMessage("Babilplate", "Is that a babilplate? I've heard legends of how supremely powerful this artifact is! I wonder how we might be able to activate its power?",
-                            "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<>())).AddItemDisplay(ModContent.ItemType<YharimBar>()));
-             */
+            
+            fannyMessages.Add(new FannyMessage("Wood", "Wood? Yummy!",
+              "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood)));
+
+            fannyMessages.Add(new FannyMessage("HallowedBar", "What you hold now is a bar of extraordinary power infused with the essence of Heaven itself! That's a biome right?",
+               "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is Fanny, it sure is."));
+
+            fannyMessages.Add(new FannyMessage("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",
+               "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LifeCrystal)));
 
 
             fannyMessages.Add(new FannyMessage("YharimBar", "Is that a Yharim Bar? You'll need a lot of them for various recipes!",

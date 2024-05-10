@@ -17,7 +17,6 @@ namespace CalRemix.NPCs
 {
     public class PlaguedSpidrone : ModNPC
     {
-        public float[] GreenAI = new float[4];
         int xColumn = 0;
         int yMin = 0;
         int yMax = 1;
@@ -48,15 +47,15 @@ namespace CalRemix.NPCs
 
         public override void OnSpawn(IEntitySource source)
         {
-            GreenAI[0] = 0;
-            GreenAI[1] = 0;
+            NPC.Remix().GreenAI[0] = 0;
+            NPC.Remix().GreenAI[1] = 0;
         }
 
         public override void AI()
         {
             NPC.spriteDirection = NPC.direction;
             NPC.TargetClosest();
-            switch (GreenAI[0])
+            switch (NPC.Remix().GreenAI[0])
             {
                 case 0:
                     {
@@ -65,9 +64,9 @@ namespace CalRemix.NPCs
                         yMax = 11;
                         NPC.noGravity = false;
                         NPC.noTileCollide = false;
-                        GreenAI[1]++;
-                        CalamityMod.NPCs.CalamityGlobalAI.BuffedHerplingAI(NPC, Mod);
-                        if (GreenAI[1] >= 120)
+                        NPC.Remix().GreenAI[1]++;
+                        CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
+                        if (NPC.Remix().GreenAI[1] >= 120)
                         {
                             SwitchPhase(1);
                         }
@@ -80,10 +79,10 @@ namespace CalRemix.NPCs
                         yMax = 4;
                         NPC.velocity.X *= 0.95f;
                         NPC.noTileCollide = false;
-                        GreenAI[1]++;
+                        NPC.Remix().GreenAI[1]++;
                         if (NPC.HasPlayerTarget)
                         {
-                            if (GreenAI[1] % 20 == 0)
+                            if (NPC.Remix().GreenAI[1] % 20 == 0)
                             {
                                 Vector2 dist = Main.player[NPC.target].position - NPC.position;
                                 dist.Normalize();
@@ -92,7 +91,7 @@ namespace CalRemix.NPCs
                             }
                             NPC.direction = NPC.position.X > Main.player[NPC.target].position.X ? -1 : 1;
                         }
-                        if (GreenAI[1] % 90 == 0)
+                        if (NPC.Remix().GreenAI[1] % 90 == 0)
                         {
                             SwitchPhase(2);
                         }
@@ -108,13 +107,13 @@ namespace CalRemix.NPCs
                         Vector2 dist = Main.player[NPC.target].Center - Vector2.UnitY * 160 - NPC.Center;
                         dist.Normalize();
                         NPC.velocity = dist * 4f;
-                        GreenAI[1]++;
-                        if (GreenAI[1] % (20 + Main.rand.Next(0, 8)) == 0)
+                        NPC.Remix().GreenAI[1]++;
+                        if (NPC.Remix().GreenAI[1] % (20 + Main.rand.Next(0, 8)) == 0)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(8, 12)), ProjectileID.GreekFire1 + Main.rand.Next(0, 3), NPC.damage, 0, Main.myPlayer);
                             SoundEngine.PlaySound(SoundID.Item20, NPC.Center);
                         }
-                        if (GreenAI[1] >= 180)
+                        if (NPC.Remix().GreenAI[1] >= 180)
                         {
                             SwitchPhase(0);
                         }
@@ -125,10 +124,10 @@ namespace CalRemix.NPCs
 
         public void SwitchPhase(int ai0 = 0, int ai1 = 0, int ai2 = 0, int ai3 = 0)
         {
-            GreenAI[0] = ai0;
-            GreenAI[1] = ai1;
-            GreenAI[2] = ai2;
-            GreenAI[3] = ai3;
+            NPC.Remix().GreenAI[0] = ai0;
+            NPC.Remix().GreenAI[1] = ai1;
+            NPC.Remix().GreenAI[2] = ai2;
+            NPC.Remix().GreenAI[3] = ai3;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -140,7 +139,7 @@ namespace CalRemix.NPCs
         }
         public override void FindFrame(int frameHeight)
         {
-            if (NPC.velocity.Y != 0 && GreenAI[1] != 0)
+            if (NPC.velocity.Y != 0 && NPC.Remix().GreenAI[1] != 0)
             {
                 NPC.frameCounter += 1.0;
                 if (NPC.frameCounter > 6.0)

@@ -18,6 +18,8 @@ using CalRemix.Tiles.PlaguedJungle;
 using System;
 using Terraria.ID;
 using CalRemix.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace CalRemix
 {
@@ -32,6 +34,12 @@ namespace CalRemix
 		public int bladetimer = 0;
         NPC exc;
         public override bool InstancePerEntity => true;
+
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[ProjectileType<MutatedTruffleMinion>()] = 1;
+        }
+
         public override void AI(Projectile projectile)
         {
             Player player = Main.LocalPlayer;
@@ -92,6 +100,11 @@ namespace CalRemix
                 projectile.scale = 4f;
                 projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
                 projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
+            }
+            if (projectile.type == ProjectileType<MutatedTruffleMinion>())
+            {
+                projectile.frame = 0;
+
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;
@@ -397,6 +410,34 @@ namespace CalRemix
         {
             if (hyperCharged)
                 target.AddBuff(BuffType<GlacialState>(), 50);
+        }
+
+        public override bool PreDraw(Projectile projectile, ref Color lightColor)
+        {
+            if (projectile.type == ProjectileType<MutatedTruffleMinion>())
+            {
+                Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
+                MutatedTruffleMinion m = projectile.ModProjectile<MutatedTruffleMinion>();
+                Vector2 drawPosition = projectile.Center - Main.screenPosition;
+                Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
+                Vector2 origin = frame.Size() * 0.5f;
+                float drawRotation = projectile.rotation + (projectile.spriteDirection == -1 && m.State != 0 ? MathHelper.Pi : 0f);
+                SpriteEffects effects = (projectile.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                if (CalamityConfig.Instance.Afterimages && (projectile.ai[0] == 1 || projectile.ai[0] == 3))
+                {
+                    for (int i = 0; i < projectile.oldPos.Length; i++)
+                    {
+                        Color afterimageDrawColor = Color.Green with { A = 25 } * projectile.Opacity * (1f - i / (float)projectile.oldPos.Length);
+                        Vector2 afterimageDrawPosition = projectile.oldPos[i] + projectile.Size * 0.5f - Main.screenPosition;
+                        Main.EntitySpriteDraw(texture, afterimageDrawPosition, frame, afterimageDrawColor, drawRotation, origin, projectile.scale, effects, 0);
+                    }
+                }
+
+                Main.EntitySpriteDraw(texture, drawPosition, frame, projectile.GetAlpha(lightColor), drawRotation, origin, projectile.scale, effects, 0);
+                return false;
+            }
+            return base.PreDraw(projectile, ref lightColor);
         }
     }
 }

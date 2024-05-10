@@ -42,6 +42,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.TreasureBags.MiscGrabBags;
 using CalamityMod.Items.LoreItems;
 using CalRemix.NPCs.Bosses.BossScule;
+using CalamityMod.Rarities;
 
 namespace CalRemix
 {
@@ -96,6 +97,7 @@ namespace CalRemix
             ModContent.ItemType<CalamitasCoffer>(),
             ModContent.ItemType<DraedonBag>(),
         };
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.type == ModContent.ItemType<LoreAwakening>())
@@ -160,6 +162,35 @@ namespace CalRemix
                     item.defense = 6;
                     item.value = Item.sellPrice(silver: 9);
                     item.rare = ItemRarityID.Blue;
+                }
+            }
+            if (cosmicItems.Contains(item.type))
+            {
+                item.rare = ItemRarityID.Purple;
+            }
+            // undo the curve flattening
+            // done with content samples so that reforges are ignored
+            if (ContentSamples.ItemsByType.ContainsKey(item.type))
+            {
+                if (ContentSamples.ItemsByType[item.type].rare == ModContent.RarityType<Turquoise>())
+                {
+                    item.damage = (int)(item.damage * 1.33f);
+                }
+                if (ContentSamples.ItemsByType[item.type].rare == ModContent.RarityType<PureGreen>())
+                {
+                    item.damage = (int)(item.damage * 1.67f);
+                }
+                if (ContentSamples.ItemsByType[item.type].rare == ModContent.RarityType<DarkBlue>())
+                {
+                    item.damage = (int)(item.damage * 2.5f);
+                }
+                if (ContentSamples.ItemsByType[item.type].rare == ModContent.RarityType<Violet>())
+                {
+                    item.damage = (int)(item.damage * 3.33f);
+                }
+                if (ContentSamples.ItemsByType[item.type].rare == ModContent.RarityType<HotPink>())
+                {
+                    item.damage = (int)(item.damage * 5f);
                 }
             }
         }
@@ -529,6 +560,13 @@ namespace CalRemix
             {
                 itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<Anomaly109>());
                 itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<TheInsacredTexts>());
+            }
+            if (ModLoader.HasMod("CalValEX"))
+            {
+                if (item.type == ModLoader.GetMod("CalValEX").Find<ModItem>("MysteryPainting").Type)
+                {
+                    itemLoot.Add(ModContent.ItemType<MovieSign>(), 22);
+                }
             }
         }
 

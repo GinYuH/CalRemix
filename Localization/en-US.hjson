@@ -70,6 +70,16 @@ Mods: {
 				DisplayName: Plagued Jungle
 				TownNPCDialogueName: the Plague Biome
 			}
+
+			ExosphereBiome: {
+				DisplayName: Exosphere Biome
+				TownNPCDialogueName: the Exosphere Biome
+			}
+
+			FannyBiome: {
+				DisplayName: Fanny Biome
+				TownNPCDialogueName: the Fanny Biome
+			}
 		}
 
 		Buffs: {
@@ -1743,6 +1753,76 @@ Mods: {
 				DisplayName: Twenty Twoon
 				Tooltip: WHY?????
 			}
+
+			BanishedPlating: {
+				DisplayName: Baronautical Plating
+				Tooltip: ""
+			}
+
+			BaronBrine: {
+				DisplayName: Baron Brine
+				Tooltip: ""
+			}
+
+			Baronsand: {
+				DisplayName: Baronsand
+				Tooltip: ""
+			}
+
+			Brinerack: {
+				DisplayName: Brinerack
+				Tooltip: ""
+			}
+
+			TanzaniteGlass: {
+				DisplayName: Tanzanite Glass
+				Tooltip: ""
+			}
+
+			BanishedPlatingWall: {
+				DisplayName: Banished Plating Wall
+				Tooltip: ""
+			}
+
+			BaronsandWall: {
+				DisplayName: Baronsand Wall
+				Tooltip: ""
+			}
+
+			FannyLogSunkenSea: {
+				DisplayName: The Ramblings of a Flamboyant Flame: A Digital Diary (Entry 1)
+				Tooltip: ""
+			}
+
+			FannyLogJungle: {
+				DisplayName: Plague and Perils in the Jungle Lab (Entry 3)
+				Tooltip: ""
+			}
+
+			FannyLogSpace: {
+				DisplayName: Trouble on Planetoid X-42 (Entry 2)
+				Tooltip: ""
+			}
+
+			FannyLogAbyss: {
+				DisplayName: Depths of the Abyss (Entry ???)
+				Tooltip: It has scribbles all over it, making it unusable
+			}
+
+			FannyLogHell: {
+				DisplayName: Fiery Finds in the Underworld Lab (Entry 4)
+				Tooltip: ""
+			}
+
+			FannyLogIce: {
+				DisplayName: Frosty Finds in the Ice Cavern Lab (Entry 5)
+				Tooltip: ""
+			}
+
+			MovieSign: {
+				DisplayName: Movie Sign
+				Tooltip: It's just a normal Movie Sign
+			}
 		}
 
 		NPCs: {
@@ -1940,6 +2020,15 @@ Mods: {
 				DisplayName: Ogslime
 				Census.SpawnCondition: Conditions unknown
 			}
+
+			EvilAnimatronic.DisplayName: Evil Animatronic
+			Rodenttmod.DisplayName: Rodent.tmod
+			TallMan.DisplayName: Tall Man
+			Corruption.DisplayName: Corruption
+			Glitch.DisplayName: Glitch
+			CuboidCurse.DisplayName: CuboidCurse
+			CrimsonKaiju.DisplayName: Crimson Kaiju
+			Carcinogen.DisplayName: Carcinogen
 		}
 
 		Projectiles: {
@@ -2106,6 +2195,9 @@ Mods: {
 			Darkscule.DisplayName: Darkscule
 			DarkVein.DisplayName: Dark Vein
 			PungentBomb.DisplayName: Pungent Bomb
+			PizzaWheelHostile.DisplayName: Pizza
+			RedstoneFireball.DisplayName: Redstone Fireball
+			RedstonePillar.DisplayName: Redstone Pillar
 		}
 
 		Tiles: {
@@ -2121,6 +2213,12 @@ Mods: {
 			GrimesandPlaced.MapEntry: Grimesand Placed
 			Anomaly109Placed.MapEntry: Anomaly109 Placed
 			ArsenicOrePlaced.MapEntry: Arsenic Ore Placed
+			BanishedPlatingPlaced.MapEntry: Banished Plating Placed
+			BaronBrinePlaced.MapEntry: Baron Brine Placed
+			BaronsandPlaced.MapEntry: Baronsand Placed
+			BrinerackPlaced.MapEntry: Brinerack Placed
+			TanzaniteGlassPlaced.MapEntry: Tanzanite Glass Placed
+			MovieSignPlaced.MapEntry: Moviesign
 		}
 
 		Enchantments: {
@@ -2153,5 +2251,7 @@ Mods: {
 				}
 			}
 		}
+
+		InfoDisplays.ElementDisplay.DisplayName: Element Display
 	}
 }

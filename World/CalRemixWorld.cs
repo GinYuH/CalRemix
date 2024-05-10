@@ -41,6 +41,10 @@ using CalamityMod.NPCs.AquaticScourge;
 using Terraria.GameContent.Bestiary;
 using CalamityMod.NPCs.HiveMind;
 using Terraria.GameContent.Generation;
+using SubworldLibrary;
+using CalRemix.Subworlds;
+using CalamityMod.Items.DraedonMisc;
+using CalRemix.Items;
 
 namespace CalRemix
 {
@@ -60,6 +64,7 @@ namespace CalRemix
         public static bool generatedCosmiliteSlag = false;
         public static bool generatedPlague = false;
         public static bool generatedStrain = false;
+        public static bool canGenerateBaron = false;
         public static bool grime = false;
 
         public static int transmogrifyingItem = -1;
@@ -125,6 +130,7 @@ namespace CalRemix
             generatedCosmiliteSlag = false;
             generatedPlague = false;
             generatedStrain = false;
+            canGenerateBaron = false;
             grime = false;
 
             alloyBars = true;
@@ -209,6 +215,7 @@ namespace CalRemix
             generatedCosmiliteSlag = false;
             generatedPlague = false;
             generatedStrain = false;
+            canGenerateBaron = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -258,6 +265,7 @@ namespace CalRemix
             tag["genSlag"] = generatedCosmiliteSlag;
             tag["plague"] = generatedPlague;
             tag["astrain"] = generatedStrain;
+            tag["canBaron"] = canGenerateBaron;
             tag["grime"] = grime;
 
             tag["109alloybar"] = alloyBars;
@@ -306,6 +314,7 @@ namespace CalRemix
             generatedCosmiliteSlag = tag.Get<bool>("genSlag");
             generatedPlague = tag.Get<bool>("plague");
             generatedStrain = tag.Get<bool>("astrain");
+            canGenerateBaron = tag.Get<bool>("canBaron");
             grime = tag.Get<bool>("grime");
 
             alloyBars = tag.Get<bool>("109alloybar");
@@ -352,6 +361,7 @@ namespace CalRemix
             writer.Write(generatedCosmiliteSlag);
             writer.Write(generatedPlague);
             writer.Write(generatedStrain);
+            writer.Write(canGenerateBaron);
             writer.Write(grime);
 
             writer.Write(alloyBars);
@@ -399,6 +409,7 @@ namespace CalRemix
             generatedCosmiliteSlag = reader.ReadBoolean();
             generatedPlague = reader.ReadBoolean();
             generatedStrain = reader.ReadBoolean();
+            canGenerateBaron = reader.ReadBoolean();
             grime = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
@@ -489,6 +500,20 @@ namespace CalRemix
                 Recipes.MassModifyIngredient(!wolfvenom, Recipes.venomCrafts);
                 loadedRecipeInjections = true;
                 //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
+            }
+            if (Main.eclipse)
+            {
+                if (TextureAssets.Sun3 == CalRemix.sunOG)
+                {
+                    if (DownedBossSystem.downedDoG)
+                    {
+                        TextureAssets.Sun3 = CalRemix.sunCreepy;
+                    }
+                    else
+                    {
+                        TextureAssets.Sun3 = CalRemix.sunOG;
+                    }
+                }
             }
         }
         public static void RefreshBestiary(BestiaryEntry entry, NPC npc, string text)
@@ -604,6 +629,13 @@ namespace CalRemix
             {
                 FannyManager.fannyEnabled = false;
             }
+            if (SubworldSystem.IsActive<FannySubworld>())
+            {
+                if (Main.LocalPlayer.position.X > 16 * (Main.maxTilesX - 130))
+                {
+                    Main.LocalPlayer.position.X = (Main.spawnTileX + 60) * 16;
+                }
+            }
         }
 
         public static void AddLootDynamically(int npcType, bool npc = false)
@@ -698,6 +730,17 @@ namespace CalRemix
                 CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
             }
+            // Secret Banished Baron seed
+            if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")
+            {
+                // Clear all worldgen tasks, they won't be needed at all and only serve to clutter precious time
+                tasks.Clear();
+                tasks.Add(new PassLegacy("Banishing The Baron", (progress, config) =>
+                {
+                    progress.Message = "Creating a Baron Wasteland";
+                    BaronStrait.GenerateBaronStrait(null); 
+                }));
+            }
         }
 
         public override void PostWorldGen()
@@ -726,7 +769,7 @@ namespace CalRemix
                     {
                         if (chest.item[0].type == ItemType<Terminus>())
                         {
-                            chest.item[0].SetDefaults(ItemType<CalamityMod.Items.Placeables.Ores.ScoriaOre>());
+                            chest.item[0].SetDefaults(ItemType<FannyLogAbyss>());
                         }
                     }
                     if (Main.tile[chest.x, chest.y].TileType == TileType<SecurityChestTile>() || Main.tile[chest.x, chest.y].TileType == TileType<AgedSecurityChestTile>())
@@ -755,6 +798,34 @@ namespace CalRemix
                                     chest.item[inventoryIndex] = null;
                                     break;
                                 }
+                            }
+                        }
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        {
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogHell>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogHell>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogJungle>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogJungle>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogSnowBiome>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogIce>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogSunkenSea>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogSunkenSea>());
+                                break;
+                            }
+                            if (chest.item[inventoryIndex].type == ItemType<DraedonsLogPlanetoid>())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogSpace>());
+                                break;
                             }
                         }
                     }

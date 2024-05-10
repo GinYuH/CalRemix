@@ -66,6 +66,10 @@ using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Crags;
 using CalRemix.NPCs.TownNPCs;
+using System.Threading;
+using Humanizer;
+using CalamityMod.Projectiles.Summon;
+using CalRemix.Items.Placeables;
 
 namespace CalRemix
 {
@@ -85,6 +89,7 @@ namespace CalRemix
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public static FannyMessage CystMessage;
+        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int>
@@ -128,6 +133,8 @@ namespace CalRemix
         {
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
+            On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
+            On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
         }
 
         public override void SetStaticDefaults()
@@ -496,6 +503,19 @@ namespace CalRemix
                     }
                 }
             }
+            if (npc.type == NPCID.DukeFishron)
+            {
+                if (!CalRemixWorld.canGenerateBaron)
+                {
+                    if (npc.position.X < 300 || npc.position.X > (Main.maxTilesX * 16) - 300)
+                    {
+                        bool left = npc.position.X < 300;
+                        ThreadPool.QueueUserWorkItem(_ => BaronStrait.GenerateBaronStrait(left));
+                        CalRemixWorld.canGenerateBaron = true;
+                        CalRemixWorld.UpdateWorldBool();
+                    }
+                }
+            }
             return true;
         }
         public override void AI(NPC npc)
@@ -701,6 +721,10 @@ namespace CalRemix
                 LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<ParchedScale>(), 1, 25, 30);
                 npcLoot.Add(mainRule);
+            }
+            if (npc.type == ModContent.NPCType<Yharon>())
+            {
+                npcLoot.Add(ModContent.ItemType<MovieSign>(), 100);
             }
             if (npc.type == ModContent.NPCType<Bumblefuck>())
             {
@@ -908,6 +932,38 @@ namespace CalRemix
                 frond.Add(ModContent.ItemType<EntropicFrond>(), 1, 25, 35);
                 frond.AddFail(ModContent.ItemType<EntropicFrond>(), 1, 35, 45);
                 npcLoot.Add(bar);
+            }
+            if (npc.type == ModContent.NPCType<FlakCrab>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<CadaverousCarrion>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<Orthocera>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<InsidiousImpaler>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<AcidEel>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<VitriolicViper>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<Trilobite>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<ToxicantTwister>(), 20);
+            }
+            if (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronCrimson || npc.type == NPCID.PigronHallow)
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<MutatedTruffle>(), 20);
+            }
+            if (npc.type == ModContent.NPCType<Mauler>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<FetidEmesis>(), 4);
+            }
+            if (npc.type == ModContent.NPCType<CragmawMire>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<SepticSkewer>(), 4);
+            }
+            if (npc.type == ModContent.NPCType<NuclearTerror>())
+            {
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<OldDukeScales>(), 4);
             }
         }
 
@@ -1183,7 +1239,7 @@ namespace CalRemix
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {
                 pool.Clear();
-                if (NPC.downedBoss3)
+                //if (NPC.downedBoss3)
                 {
                     pool.Add(NPCID.AngryBones, 1);
                     pool.Add(NPCID.AngryBonesBig, 1);
@@ -1228,11 +1284,29 @@ namespace CalRemix
                         pool.Add(ModContent.NPCType<MinnowsPrime>(), 1f);
                     }
                 }
-                else if (spawnInfo.Player.ZoneDirtLayerHeight || spawnInfo.Player.ZoneRockLayerHeight)
-                {
-                    pool.Add(NPCID.DungeonGuardian, 22f);
-                }
             }
+        }
+
+        public static void NoOldDuke(On.CalamityMod.CalamityUtils.orig_SpawnOldDuke orig, int playerIndex)
+        {
+            SetOldDukeDead();
+        }
+
+        public static void NoOldDuke2(On.CalamityMod.NPCs.CalamityGlobalNPC.orig_OldDukeSpawn orig, int plr, int type, int baitType)
+        {
+            SetOldDukeDead();
+        }
+
+        public static void SetOldDukeDead()
+        {
+            CalamityMod.NPCs.CalamityGlobalNPC.SetNewShopVariable(new int[] { ModContent.NPCType<SEAHOE>() }, DownedBossSystem.downedBoomerDuke);
+
+            // Mark Old Duke as dead
+            DownedBossSystem.downedBoomerDuke = true;
+
+            // Mark first acid rain encounter as true even if he wasn't fought in the acid rain, because it makes sense
+            AcidRainEvent.OldDukeHasBeenEncountered = true;
+            CalamityNetcode.SyncWorld();
         }
     }
 }

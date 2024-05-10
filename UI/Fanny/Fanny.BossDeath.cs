@@ -30,6 +30,24 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("SCalDie", "That was exhilarating! Though that means the end of our adventure is upon us. What a Calamity as one may say!",
                 "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedCalamitas));
+
+            fannyMessages.Add(new FannyMessage("Mechs", "Congrats on taking down those clanky contraptions! It's like defeating a bunch of oversized kitchen appliances. Just remember, don't get too cocky or they might just hit you with their spatulas of doom!",
+               "Idle", (FannySceneMetrics scene) => NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3));
+
+            FannyMessage plant = new FannyMessage("Plantoreum1", "Hey, have you seen my precious pink flower that I've been growing for 15 years? I left her around here. She's been my best friend for years now, and I could never fathom what I'd do if I had lost h",
+               "Idle", (FannySceneMetrics scene) => NPC.downedPlantBoss);
+
+            fannyMessages.Add(plant);
+            FannyMessage plant2 = new FannyMessage("Plantoreum2", "Oh.",
+               "Sob", FannyMessage.AlwaysShow, needsToBeClickedOff: false, duration: 30)
+                .NeedsActivation();
+
+            plant.AddStartEvent(() => plant2.ActivateMessage());
+
+            fannyMessages.Add(plant2);
+
+            fannyMessages.Add(new FannyMessage("Golem", "Good job defeating that pile o' bricks! You sure.. cough cough wow, the air sure is du- cough cough",
+               "Nuhuh", (FannySceneMetrics scene) => NPC.downedGolemBoss));
         }
     }
 }

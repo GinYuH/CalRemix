@@ -1,6 +1,12 @@
 ﻿using CalamityMod;
 using CalamityMod.Tiles.DraedonStructures;
 using Microsoft.Xna.Framework;
+using Steamworks;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using Terraria;
 using Terraria.Audio;
@@ -63,7 +69,109 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Frozen6", "Oh wait wait wait, this time I found a small crumb inside the ice. It was disgusting!",
                "Idle", (FannySceneMetrics scene) => fannyTimesFrozen == 6));
+
+            try
+            {
+                if (Directory.Exists("C:\\Program Files (x86)\\Steam\\steamapps\\common\\"))
+                {
+                    List<string> games = Directory.GetDirectories("C:\\Program Files (x86)\\Steam\\steamapps\\common\\").ToList<string>();
+                    if (games.Count > 0)
+                    {
+                        List<string> noTerraria = new List<string>();
+                        if (games != null && games.Count > 0)
+                        {
+                            for (int i = 0; i < games.Count; i++)
+                            {
+                                string b = games[i].Remove(0, 46);
+                                if (!(b.Contains("Terraria") || b.Contains("tModLoader") || b.Contains("Steamworks")))
+                                {
+                                    noTerraria.Add(b);
+                                }
+                            }
+                        }
+                        if (noTerraria.Count > 0)
+                        {
+                            fannyMessages.Add(new FannyMessage("StraightUpEvil", "By the way, $0, I see everything. Like how you have played " + noTerraria[Main.rand.Next(0, noTerraria.Count - 1)],
+                           "Cryptid", (FannySceneMetrics m) => NPC.downedDeerclops).AddDynamicText(SteamFriends.GetPersonaName).SetHoverTextOverride("Oh golly gee Fanny!"));
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            discord1 = new FannyMessage("DiscordianHash", "Oh you're on Discord? What are they talking about in $0? I wanna see!",
+            "Idle", (FannySceneMetrics m) => DiscordChat != "" && DiscordChat.Contains('#') && NPC.downedBoss1 && !discord2.alreadySeen).AddDynamicText(() => DiscordChat).SetHoverTextOverride("Nothing much Fanny!");
+
+            fannyMessages.Add(discord1);
+
+            discord2 = new FannyMessage("DiscordianAt", "Oh you're on Discord? What are you and $0 talking about? I wanna see!",
+            "Idle", (FannySceneMetrics m) => DiscordChat != "" && !DiscordChat.Contains('#') && NPC.downedBoss1 && !discord1.alreadySeen).AddDynamicText(() => DiscordChat).SetHoverTextOverride("Nothing much Fanny!");
+
+            fannyMessages.Add(discord2);
         }
+
+        public static FannyMessage discord1 = null;
+        public static FannyMessage discord2 = null;
+        public static string DiscordChat = "";
+
+        public static string GetDiscord()
+        {
+            Process[] processes = new Process[1];
+            try
+            {
+                processes = Process.GetProcesses();
+                string discord = "";
+                foreach (Process p in processes)
+                {
+                    if (!string.IsNullOrEmpty(p.MainWindowTitle))
+                    {
+                        if (p.MainWindowTitle.Contains("Discord"))
+                        {
+                            discord = p.MainWindowTitle;
+                            break;
+                        }
+                    }
+                }
+                if (discord != "")
+                {
+                    string finalDiscord = "";
+                    bool foundHash = false;
+                    for (int i = 0; i < discord.Length; i++)
+                    {
+                        if (!foundHash)
+                        {
+                            if (discord[i] == '#' || discord[i] == '@')
+                            {
+                                foundHash = true;
+                                if (discord[i] == '@')
+                                    continue;
+                            }
+                        }
+                        if (foundHash)
+                        {
+                            if (discord[i] != ' ')
+                            {
+                                finalDiscord += discord[i];
+                            }
+                            else
+                            {
+                                DiscordChat = finalDiscord;
+                                return finalDiscord;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return "";
+        }
+
         private static void FakeGen()
         {
             for (int i = 0; i < 10; i++) 

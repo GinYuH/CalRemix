@@ -59,7 +59,7 @@ namespace CalRemix.Projectiles.Accessories
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalaxyStar>(), Projectile.damage, 0f, Projectile.owner);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.CosmicShivAura>(), Projectile.damage, 0f, Projectile.owner);
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = Projectile.originalDamage;
                         Main.projectile[p].DamageType = DamageClass.Summon;

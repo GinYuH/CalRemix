@@ -32,7 +32,7 @@ namespace CalRemix.Items.Accessories
         {
             Item.width = 36;
             Item.height = 56;
-            Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+            Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.rare = ModContent.RarityType<Violet>();
             Item.accessory = true;
         }
@@ -100,7 +100,7 @@ namespace CalRemix.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<GodlySoulArtifact>(1).
+                AddIngredient<AuricSoulArtifact>(1).
                 AddIngredient<DimensionalSoulArtifact>(1).
                 AddIngredient<PhantomicArtifact>(1).
                 AddIngredient<EldritchSoulArtifact>(1).

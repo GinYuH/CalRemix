@@ -16,7 +16,7 @@ namespace CalRemix.Items.Armor
         {
             Item.width = 30;
             Item.height = 22;
-            Item.value = CalamityGlobalItem.Rarity1BuyPrice;
+            Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;
             Item.defense = 2;
         }

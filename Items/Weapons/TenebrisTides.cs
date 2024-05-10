@@ -34,7 +34,7 @@ public class TenebrisTides : ModItem
         Item.noUseGraphic = true;
         Item.knockBack = 6;
         Item.rare = ItemRarityID.Purple;
-        Item.value = CalamityGlobalItem.Rarity11BuyPrice;
+        Item.value = CalamityGlobalItem.RarityPurpleBuyPrice;
         Item.UseSound = SoundID.Item71;
         Item.autoReuse = true;
         Item.channel = true;

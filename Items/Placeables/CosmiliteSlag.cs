@@ -25,7 +25,7 @@ namespace CalRemix.Items.Placeables
 			Item.createTile = ModContent.TileType<CosmiliteSlagPlaced>();
 			Item.width = 12;
 			Item.height = 12;
-			Item.value = CalamityGlobalItem.Rarity11BuyPrice;
+			Item.value = CalamityGlobalItem.RarityPurpleBuyPrice;
 			Item.rare = ItemRarityID.Purple;
 		}
 	}

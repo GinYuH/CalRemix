@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,6 @@ namespace CalRemix.UI
         //Bounce and tickle anims when hovered / clicked
         public float bounce;
         public float tickle;
-
 
         //Small break between messages
         public int talkCooldown;
@@ -170,6 +170,14 @@ namespace CalRemix.UI
             if (!FannyManager.fannyEnabled)
             {
                 return;
+            }
+            // find the player's latest discord chat while the game isn't opened. doesn't work in multiplayer for sanity reasons
+            if (NPC.downedBoss1)
+            {
+                if (Main.netMode == NetmodeID.SinglePlayer && !(FannyManager.discord1.alreadySeen || FannyManager.discord2.alreadySeen) && !Main.hasFocus)
+                {
+                    FannyManager.GetDiscord();
+                }
             }
             AnimateFanny();
 
@@ -609,10 +617,13 @@ namespace CalRemix.UI
 
                     foreach (FannyMessage message in messageGroup)
                     {
-                        if (message.CanPlayMessage() && message.Condition(scene))
+                        if ((message.DedicatedSubworld == null && !SubworldSystem.AnyActive()) || (message.DedicatedSubworld == SubworldSystem.Current))
                         {
-                            message.PlayMessage(speakingFanny);
-                            break;
+                            if (message.CanPlayMessage() && message.Condition(scene))
+                            {
+                                message.PlayMessage(speakingFanny);
+                                break;
+                            }
                         }
                     }
                 }
@@ -744,6 +755,8 @@ namespace CalRemix.UI
         public bool NeedsToBeClickedOff { get; set; }
         public bool PersistsThroughSaves { get; set; }
 
+        public Subworld DedicatedSubworld { get; set; }
+
         public FannyPortrait Portrait { get; set; }
 
         public FannyTextboxPalette? paletteOverride = null;
@@ -757,7 +770,7 @@ namespace CalRemix.UI
         public List<DynamicFannyTextSegment> textSegments = new List<DynamicFannyTextSegment>();
 
 
-        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
+        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f, Subworld dedicatedSubworld = null)
         {
             //Unique identifier for saving data
             Identifier = identifier;
@@ -778,6 +791,8 @@ namespace CalRemix.UI
             OnlyPlayOnce = onlyPlayOnce;
             NeedsToBeClickedOff = needsToBeClickedOff;
             PersistsThroughSaves = persistsThroughSaves;
+
+            DedicatedSubworld = dedicatedSubworld;
 
             if (portrait == "")
                 portrait = "Idle";

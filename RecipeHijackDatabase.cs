@@ -97,11 +97,10 @@ namespace CalRemix
             essenceBarCrafts.Add((ModContent.ItemType<AsgardsValor>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<TrueBiomeBlade>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<BarracudaGun>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
-            essenceBarCrafts.Add((ModContent.ItemType<BladedgeGreatbow>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
+            essenceBarCrafts.Add((ModContent.ItemType<BladedgeRailbow>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<BrimstoneSword>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<CatastropheClaymore>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<DarklightGreatsword>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
-            essenceBarCrafts.Add((ModContent.ItemType<EnhancedNanoRound>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<AbyssalDivingGear>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<ExoticPheromones>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ModContent.ItemType<FlarefrostBlade>(), ModContent.ItemType<EssentialEssenceBar>(), 40));
@@ -161,7 +160,6 @@ namespace CalRemix
             crocodileCrafts.Add((ModContent.ItemType<BarracudaGun>(), ModContent.ItemType<CrocodileScale>(), 5));
             #endregion
             #region Coyote Venom
-            venomCrafts.Add((ModContent.ItemType<EnhancedNanoRound>(), ModContent.ItemType<CoyoteVenom>(), 1));
             venomCrafts.Add((ModContent.ItemType<StarlightWings>(), ModContent.ItemType<CoyoteVenom>(), 1));
             venomCrafts.Add((ModContent.ItemType<PlaguebringerPistons>(), ModContent.ItemType<CoyoteVenom>(), 1));
             venomCrafts.Add((ModContent.ItemType<PlaguebringerVisor>(), ModContent.ItemType<CoyoteVenom>(), 1));
@@ -177,11 +175,9 @@ namespace CalRemix
             shimmerEssenceCrafts.Add((ModContent.ItemType<Crystalline>(), ModContent.ItemType<EssenceofCrystal>(), 5));
             shimmerEssenceCrafts.Add((ModContent.ItemType<LunicEye>(), ModContent.ItemType<EssenceofCrystal>(), 15));
             shimmerEssenceCrafts.Add((ModContent.ItemType<StormSurge>(), ModContent.ItemType<EssenceofCrystal>(), 5));
-            shimmerEssenceCrafts.Add((ModContent.ItemType<AccelerationRound>(), ModContent.ItemType<EssenceofLaw>(), 1));
             shimmerEssenceCrafts.Add((ModContent.ItemType<EnchantedAxe>(), ModContent.ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ItemID.EnchantedSword, ModContent.ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ModContent.ItemType<SpiritGlyph>(), ModContent.ItemType<EssenceofLaw>(), 5));
-            shimmerEssenceCrafts.Add((ModContent.ItemType<AccelerationRound>(), ModContent.ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ItemID.Starfury, ModContent.ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ModContent.ItemType<EpidemicShredder>(), ModContent.ItemType<EssenceofMyst>(), 105));
             shimmerEssenceCrafts.Add((ModContent.ItemType<PlantationStaff>(), ModContent.ItemType<EssenceofMyst>(), 10));

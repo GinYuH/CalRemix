@@ -32,7 +32,7 @@ public class Exodimus : ModItem
         Item.knockBack = 0;
         Item.value = Item.buyPrice(0, 52, 0, 50);
         Item.rare = ModContent.RarityType<Violet>();
-        Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+        Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
         Item.shoot = Mod.Find<ModProjectile>("ExodimusPROJ").Type;

@@ -199,7 +199,7 @@ public class Driftorcher : ModItem
                 dust = DustType<AstralOrange>();
                 break;
             case 3:
-                dust = (int)CalamityDusts.SulfurousSeaAcid;
+                dust = (int)CalamityDusts.SulphurousSeaAcid;
                 break;
             case 4:
                 dust = DustID.DungeonSpirit;

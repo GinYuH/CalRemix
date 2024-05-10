@@ -29,7 +29,7 @@ namespace CalRemix.Items.Weapons
 			Item.width = 10;
 			Item.height = 10;
 			Item.rare = ModContent.RarityType<Violet>();
-			Item.value = CalamityGlobalItem.Rarity15BuyPrice;
+			Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.useTime = 3; 
 			Item.useAnimation = 3;
 			Item.useStyle = ItemUseStyleID.Shoot;
