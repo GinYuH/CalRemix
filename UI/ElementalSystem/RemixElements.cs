@@ -58,6 +58,7 @@ namespace CalRemix.UI.ElementalSystem
             { ItemType<Morpho>(), new Element[]{ Element.Slash, Element.Fire }},
             { ItemType<Nystagmus>(), new Element[]{ Element.Impact, Element.Dark }},
             { ItemType<Ogscule>(), new Element[]{ Element.Unholy }},
+            { ItemType<SaltWaterBolt>(), new Element[]{ Element.Slash, Element.Unholy }},
             { ItemType<OnyxGunblade>(), new Element[]{ Element.Impact, Element.Slash, Element.Dark }},
             { ItemType<PinesPenetrator>(), new Element[]{ Element.Stab, Element.Cold }},
             { ItemType<PlasmaflashBolt>(), new Element[]{ Element.Magic }},

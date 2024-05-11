@@ -1823,6 +1823,15 @@ Mods: {
 				DisplayName: Movie Sign
 				Tooltip: It's just a normal Movie Sign
 			}
+
+			OnyxGunsaw: {
+				DisplayName: Onyx Overlord's Gunsaw
+				Tooltip:
+					'''
+					Projects a directed stream of onyx sawblasts while firing bullets rapidly
+					This weapon and its projectiles function as a chainsaw
+					'''
+			}
 		}
 
 		NPCs: {
@@ -2198,6 +2207,7 @@ Mods: {
 			PizzaWheelHostile.DisplayName: Pizza
 			RedstoneFireball.DisplayName: Redstone Fireball
 			RedstonePillar.DisplayName: Redstone Pillar
+			OnyxGunsawProjectile.DisplayName: Somewhat cost-efficient chainsaw
 		}
 
 		Tiles: {
