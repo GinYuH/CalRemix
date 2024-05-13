@@ -454,7 +454,7 @@ namespace CalRemix
                 if (!CalamityPlayer.areThereAnyDamnBosses)
                 {
 
-                    if (Main.tile[(int)item.Bottom.X / 16, (int)item.Bottom.Y / 16].TileType == ModContent.TileType<GrimesandPlaced>())
+                    if (Main.tile[(int)item.Bottom.X / 16, (int)item.Bottom.Y / 16].TileType == ModContent.TileType<GrimesandPlaced>() || Main.tile[(int)item.Bottom.X / 16, (int)item.Bottom.Y / 16 + 1].TileType == ModContent.TileType<GrimesandPlaced>())
                     {
                         if (item.type == ItemID.ShadowScale)
                         {
