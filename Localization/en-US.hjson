@@ -1832,6 +1832,8 @@ Mods: {
 					This weapon and its projectiles function as a chainsaw
 					'''
 			}
+
+			Wolfmole.DisplayName: Wolfmole
 		}
 
 		NPCs: {
@@ -2038,6 +2040,7 @@ Mods: {
 			CuboidCurse.DisplayName: CuboidCurse
 			CrimsonKaiju.DisplayName: Crimson Kaiju
 			Carcinogen.DisplayName: Carcinogen
+			Wolfmole.DisplayName: Legendary Wolfmole
 		}
 
 		Projectiles: {
