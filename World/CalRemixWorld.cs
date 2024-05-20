@@ -45,6 +45,11 @@ using SubworldLibrary;
 using CalRemix.Subworlds;
 using CalamityMod.Items.DraedonMisc;
 using CalRemix.Items;
+using Terraria.IO;
+using CalRemix.World;
+using CalamityMod.Items.Tools;
+using Terraria.GameContent.Biomes;
+using CalRemix.Walls;
 
 namespace CalRemix
 {
@@ -720,6 +725,48 @@ namespace CalRemix
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
+            int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
+            tasks.Insert(GraniteIndex, new PassLegacy("Asbestos", (progress, passConfig) =>
+            {
+                progress.Message = "Spreading the True Plague";
+                int biomeAmount = 10;
+                double xRange = (double)(Main.maxTilesX - 200) / (double)biomeAmount;
+                List<Point> placementPoints = new List<Point>(biomeAmount);
+                int tries = 0;
+                int currentBiomeAmount = 0;
+                while (currentBiomeAmount < biomeAmount)
+                {
+                    double biomeRaito = (double)currentBiomeAmount / (double)biomeAmount;
+                    progress.Set(biomeRaito);
+                    Point placementPoint = WorldGen.RandomRectanglePoint((int)(biomeRaito * (double)(Main.maxTilesX - 200)) + 100, (int)GenVars.rockLayer + 20, (int)xRange, Main.maxTilesY - ((int)GenVars.rockLayer + 40) - 200);
+                    if (WorldGen.remixWorldGen)
+                    {
+                        placementPoint = WorldGen.RandomRectanglePoint((int)(biomeRaito * (double)(Main.maxTilesX - 200)) + 100, (int)GenVars.worldSurface + 100, (int)xRange, (int)GenVars.rockLayer - (int)GenVars.worldSurface - 100);
+                    }
+                    while ((double)placementPoint.X > (double)Main.maxTilesX * 0.45 && (double)placementPoint.X < (double)Main.maxTilesX * 0.55)
+                    {
+                        placementPoint.X = WorldGen.genRand.Next(WorldGen.beachDistance, Main.maxTilesX - WorldGen.beachDistance);
+                    }
+                    tries++;
+                    if (AsbestosBiome.CanPlace(placementPoint, GenVars.structures))
+                    {
+                        placementPoints.Add(placementPoint);
+                        currentBiomeAmount++;
+                    }
+                    else if (tries > Main.maxTilesX * 10)
+                    {
+                        biomeAmount = currentBiomeAmount;
+                        currentBiomeAmount++;
+                        tries = 0;
+                    }
+                }
+                AsbestosBiome asBiome = GenVars.configuration.CreateBiome<AsbestosBiome>();
+                for (int i = 0; i < biomeAmount; i++)
+                {
+                    asBiome.Place(placementPoints[i], GenVars.structures);
+                }
+                AsbestosBiome.GenerateAllHouses();
+            }));
             if (FinalIndex != -1)
             {
                 tasks.Insert(FinalIndex, new PassLegacy("Dungeon Retheme", (progress, config) =>
