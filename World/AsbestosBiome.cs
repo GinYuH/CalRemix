@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CalamityMod;
+using CalRemix.Items.Placeables;
 using CalRemix.Tiles;
 using CalRemix.Walls;
 using Microsoft.Xna.Framework;
@@ -386,7 +387,7 @@ namespace CalRemix.World
                     WorldGen.SquareWallFrame(i + x, j + y);
                     if (y == hauseAreaY - 1 && (x < 2 || x > hauseAreaX - 3))
                     {
-                        for (int z = 0; z < 40; z++)
+                        for (int z = 0; z < 80; z++)
                         {
                             Tile blug = Main.tile[i + x, j + y + z + 1];                            
                             if (blug.HasTile)
@@ -419,7 +420,15 @@ namespace CalRemix.World
                     Main.tile[chestX + k, j + hauseAreaY - 1].ResetToType((ushort)ModContent.TileType<AsbestosPlaced>());
                 }
 
-                WorldGen.AddBuriedChest(new Point(chestX, j + hauseAreaY - 3));
+                int chest = AddAsbestosChest(chestX, j + hauseAreaY - 3);
+                if (chest != -1)
+                {
+                    for (int e = 0; e < Main.chest[chest].item.Length; e++)
+                    {
+                        Main.chest[chest].item[e].SetDefaults(ModContent.ItemType<Asbestos>());
+                        Main.chest[chest].item[e].stack = Main.rand.Next(4, 120);
+                    }
+                }
             }
         }
 
@@ -441,17 +450,17 @@ namespace CalRemix.World
 
         public static void GenerateAllHouses()
         {
-            int maxhoueses = 10;
-            int hosuecount = 0;
+            int maxHouses = 15;
+            int houseCount = 0;
             for (int tries = 0; tries < 30; tries++)
             {
-                if (hosuecount > maxhoueses)
+                if (houseCount > maxHouses)
                 {
                     break;
                 }
                 for (int i = 0; i < Main.maxTilesX; i++)
                 {
-                    if (hosuecount > maxhoueses)
+                    if (houseCount > maxHouses)
                     {
                         break;
                     }
@@ -462,16 +471,16 @@ namespace CalRemix.World
                         {
                             int minLength = 20;
                             int maxLength = 30;
-                            int hauseAreaX = Main.rand.Next(minLength, maxLength);
+                            int hauseAreaX = Main.rand.Next(minLength,(int)(maxLength * 1.5f));
                             int hauseAreaY = Main.rand.Next(minLength, (int)MathHelper.Max(maxLength / 2, minLength + 1));
 
-                            if (AsbestosBiome.CanGenHouse(i, j, hauseAreaX, hauseAreaY))
+                            if (CanGenHouse(i, j, hauseAreaX, hauseAreaY))
                             {
-                                AsbestosBiome.GenerateHouse(i, j, hauseAreaX, hauseAreaY);
-                                hosuecount++;
+                                GenerateHouse(i, j, hauseAreaX, hauseAreaY);
+                                houseCount++;
                             }
                         }
-                        if (hosuecount > maxhoueses)
+                        if (houseCount > maxHouses)
                         {
                             break;
                         }
@@ -479,5 +488,42 @@ namespace CalRemix.World
                 }
             }
         }
+
+        public static int AddAsbestosChest(int i, int j)
+        {
+            for (int k = j; k < Main.maxTilesY - 10; k++)
+            {
+                if (Main.tile[i, k].HasTile && Main.tileSolid[Main.tile[i, k].TileType] && !Main.tileSolidTop[Main.tile[i, k].TileType])
+                {
+
+                    if (Main.tile[i - 1, k].TopSlope)
+                    {
+                        WorldGen.SlopeTile(i - 1, k, 0);
+                }
+
+                    if (Main.tile[i, k].TopSlope)
+                    {
+                        WorldGen.SlopeTile(i, k, 0);
+                    }
+                }
+
+                int num5 = 2;
+                for (int n = i - num5; n <= i + num5; n++)
+                {
+                    for (int num6 = k - num5; num6 <= k + num5; num6++)
+                    {
+                        if (Main.tile[n, num6].HasTile && (TileID.Sets.Boulders[Main.tile[n, num6].TileType] || Main.tile[n, num6].TileType == 26 || Main.tile[n, num6].TileType == 237))
+                            return -1;
+                    }
+                }
+
+                if (!WorldGen.SolidTile(i, k))
+                    continue;
+
+                int num7 = k;
+                return WorldGen.PlaceChest(i - 1, num7 - 1, style: 15);
+            }
+            return -1;
+        }        
     }
 }

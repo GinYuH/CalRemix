@@ -80,6 +80,11 @@ Mods: {
 				DisplayName: Fanny Biome
 				TownNPCDialogueName: the Fanny Biome
 			}
+
+			AsbestosBiome: {
+				DisplayName: Asbestos Caves
+				TownNPCDialogueName: the Asbestos Biome
+			}
 		}
 
 		Buffs: {
@@ -2042,6 +2047,7 @@ Mods: {
 			CrimsonKaiju.DisplayName: Crimson Kaiju
 			Carcinogen.DisplayName: Carcinogen
 			Wolfmole.DisplayName: Legendary Wolfmole
+			MoldMan.DisplayName: Mold Man
 		}
 
 		Projectiles: {

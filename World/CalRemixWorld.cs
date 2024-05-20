@@ -50,6 +50,7 @@ using CalRemix.World;
 using CalamityMod.Items.Tools;
 using Terraria.GameContent.Biomes;
 using CalRemix.Walls;
+using CalamityMod.Tiles.FurnitureStratus;
 
 namespace CalRemix
 {
@@ -58,6 +59,7 @@ namespace CalRemix
         public static bool ogslime = false;
 
         public static int lifeTiles;
+        public static int asbestosTiles;
         public static int PlagueTiles;
         public static int PlagueDesertTiles;
         public static int MeldTiles;
@@ -700,6 +702,7 @@ namespace CalRemix
 
         public override void ResetNearbyTileEffects()
         {
+            asbestosTiles = 0;
             lifeTiles = 0;
             PlagueTiles = 0;
             PlagueDesertTiles = 0;
@@ -709,6 +712,7 @@ namespace CalRemix
         {
             // Life Ore tiles
             lifeTiles = tileCounts[TileType<LifeOreTile>()];
+            asbestosTiles = tileCounts[TileType<AsbestosPlaced>()];
             PlagueTiles = tileCounts[TileType<PlaguedGrass>()] +
             tileCounts[TileType<PlaguedMud>()] +
             tileCounts[TileType<PlaguedStone>()] +
@@ -797,7 +801,7 @@ namespace CalRemix
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null)
                 {
-                    if (Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 2 * 36 && DungeonWalls.Contains(Main.tile[chest.x, chest.y].WallType))
+                    if (Main.tile[chest.x, chest.y].TileType == ModContent.TileType<StratusChest>())
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                         {
