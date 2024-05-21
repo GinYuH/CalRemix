@@ -350,7 +350,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("When Yharim realized that the Archmage had defected, Calamitas was ordered to hunt down and kill her former mentor. After a tearful confrontation, she decided to instead seal him away, and fake his death. The spellwork present in this living seal is inspired, and a tragic homage to every lesson Permafrost taught his student.")
+        new FlavorTextBestiaryInfoElement("After the Archwizard was dishonorably discharged from the war, he fell into a state of smoking and gambling. During a gambling night, he sealed himself inside of a chunk of asbestos to win a bet. He was never heard from again.")
             });
         }
 

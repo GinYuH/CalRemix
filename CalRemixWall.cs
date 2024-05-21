@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Biomes;
 using CalRemix.NPCs.Bosses.Carcinogen;
+using CalamityMod;
+using CalamityMod.Items.VanillaArmorChanges;
 
 namespace CalRemix
 {
@@ -12,7 +14,8 @@ namespace CalRemix
         {
             if (Main.LocalPlayer.InModBiome<AsbestosBiome>())
             {
-                if (Main.rand.NextBool(22))
+                int carcChance = WearingLead(Main.LocalPlayer) ? 5 : 10;
+                if (Main.rand.NextBool(carcChance))
                 {
                     if (type == WallID.Wood || type == WallID.Planked)
                     {
@@ -26,6 +29,15 @@ namespace CalRemix
                     }
                 }
             }
+        }
+
+        public static bool WearingLead(Player player)
+        {
+            if (ItemID.LeadHelmet == player.armor[0].type && ItemID.LeadChainmail == player.armor[1].type && ItemID.LeadGreaves == player.armor[2].type)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
