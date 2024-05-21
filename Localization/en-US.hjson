@@ -1833,7 +1833,10 @@ Mods: {
 					'''
 			}
 
-			Wolfmole.DisplayName: Wolfmole
+			Wolfmole: {
+				DisplayName: Wolfmole
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -2041,6 +2044,7 @@ Mods: {
 			CrimsonKaiju.DisplayName: Crimson Kaiju
 			Carcinogen.DisplayName: Carcinogen
 			Wolfmole.DisplayName: Legendary Wolfmole
+			Pyrogen.DisplayName: Pyrogen
 		}
 
 		Projectiles: {
@@ -2211,6 +2215,7 @@ Mods: {
 			RedstoneFireball.DisplayName: Redstone Fireball
 			RedstonePillar.DisplayName: Redstone Pillar
 			OnyxGunsawProjectile.DisplayName: Somewhat cost-efficient chainsaw
+			OnyxPrismTooth.DisplayName: Onyx Prism Tooth
 		}
 
 		Tiles: {

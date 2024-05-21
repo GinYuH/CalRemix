@@ -81,6 +81,9 @@ namespace CalRemix
             MiscShaderData passParamRegistration = new(shaderPointer, passName);
             GameShaders.Misc["CalRemix/" + registrationName] = passParamRegistration;
         }
+
+        internal static CalRemix Instance;
+
         public override void Load()
         {
             instance = this;

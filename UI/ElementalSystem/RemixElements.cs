@@ -5,6 +5,7 @@ using System;
 using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalRemix.NPCs.Bosses.Acideye;
 using CalRemix.NPCs.Bosses.Poly;
+using CalRemix.NPCs.Bosses.Pyrogen;
 
 namespace CalRemix.UI.ElementalSystem
 {
@@ -58,7 +59,6 @@ namespace CalRemix.UI.ElementalSystem
             { ItemType<Morpho>(), new Element[]{ Element.Slash, Element.Fire }},
             { ItemType<Nystagmus>(), new Element[]{ Element.Impact, Element.Dark }},
             { ItemType<Ogscule>(), new Element[]{ Element.Unholy }},
-            { ItemType<SaltWaterBolt>(), new Element[]{ Element.Slash, Element.Unholy }},
             { ItemType<OnyxGunblade>(), new Element[]{ Element.Impact, Element.Slash, Element.Dark }},
             { ItemType<PinesPenetrator>(), new Element[]{ Element.Stab, Element.Cold }},
             { ItemType<PlasmaflashBolt>(), new Element[]{ Element.Magic }},
@@ -103,6 +103,7 @@ namespace CalRemix.UI.ElementalSystem
             { NPCType<Exotrexia>(), new Tuple<Element[], Element[]>(new Element[]{ Element.Stab, Element.Dark, Element.Fire }, new Element[]{ Element.Unholy, Element.Cold }) },
             { NPCType<Conjunctivirus>(), new Tuple<Element[], Element[]>(new Element[]{ Element.Stab, Element.Dark, Element.Water, Element.Holy }, new Element[]{ Element.Unholy, Element.Poison, Element.Fire }) },
             { NPCType<Cataractacomb>(), new Tuple<Element[], Element[]>(new Element[]{ Element.Stab, Element.Magic }, new Element[]{ Element.Unholy, Element.Dark, Element.Fire }) },
+            { NPCType<Pyrogen>(), new Tuple<Element[], Element[]>(new Element[]{ Element.Water, Element.Stab }, new Element[]{ Element.Unholy, Element.Dark, Element.Magic, Element.Slash, Element.Fire }) },
 
             { NPCType<WulfwyrmHead>(), new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Water, Element.Fire }, new Element[]{ Element.Machine, Element.Slash }) },
             { NPCType<WulfwyrmBody>(), new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Water, Element.Fire }, new Element[]{ Element.Machine, Element.Slash }) },
