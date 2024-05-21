@@ -9,6 +9,7 @@ namespace CalRemix
         public static bool downedCalamity = false;
         public static bool downedExcavator = false;
         public static bool downedAcidsighter = false;
+        public static bool downedCarcinogen;
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
 
@@ -26,6 +27,7 @@ namespace CalRemix
             downedCalamity = false;
             downedExcavator = false;
             downedAcidsighter = false;
+            downedCarcinogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
 
@@ -44,6 +46,7 @@ namespace CalRemix
             downedCalamity = false;
             downedExcavator = false;
             downedAcidsighter = false;
+            downedCarcinogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
 
@@ -62,6 +65,7 @@ namespace CalRemix
             tag["downedCalamity"] = downedCalamity;
             tag["downedExcavator"] = downedExcavator;
             tag["downedAcidsighter"] = downedAcidsighter;
+            tag["downedCarcinogen"] = downedCarcinogen;
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
 
@@ -82,6 +86,7 @@ namespace CalRemix
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
             downedAcidsighter = tag.Get<bool>("downedAcidsighter");
+            downedCarcinogen = tag.Get<bool>("downedCarcinogen");
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
 
@@ -101,6 +106,7 @@ namespace CalRemix
             writer.Write(downedCalamity);
             writer.Write(downedExcavator);
             writer.Write(downedAcidsighter);
+            writer.Write(downedCarcinogen);
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
 
@@ -119,6 +125,7 @@ namespace CalRemix
             downedCalamity = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
             downedAcidsighter = reader.ReadBoolean();
+            downedCarcinogen = reader.ReadBoolean();
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
 

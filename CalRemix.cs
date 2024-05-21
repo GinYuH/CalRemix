@@ -48,6 +48,7 @@ using CalamityMod.Systems;
 using CalamityMod.NPCs.OldDuke;
 using rail;
 using CalRemix.UI.Title;
+using CalRemix.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix
 {
@@ -105,6 +106,8 @@ namespace CalRemix
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Fanny"] = new Filter(new FannyScreenShaderData("FilterMiniTower").UseColor(FannySky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
             }
             Terraria.On_IngameOptions.DrawLeftSide += OhGod;
 

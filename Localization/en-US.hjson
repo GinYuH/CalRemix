@@ -2035,7 +2035,7 @@ Mods: {
 
 			Ogslime: {
 				DisplayName: Ogslime
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Kill a Wandering Eye while wearing Titan Heart armor
 			}
 
 			EvilAnimatronic.DisplayName: Evil Animatronic
@@ -2045,9 +2045,21 @@ Mods: {
 			Glitch.DisplayName: Glitch
 			CuboidCurse.DisplayName: CuboidCurse
 			CrimsonKaiju.DisplayName: Crimson Kaiju
-			Carcinogen.DisplayName: Carcinogen
+
+			Carcinogen: {
+				DisplayName: Carcinogen
+
+				BossChecklistIntegration: {
+					EntryName: Carcinogen
+					SpawnInfo: Break a [i:93] or [i:479] while in the Asbestos Caverns.
+					DespawnMessage: "[c/b4d47d:The asbestos construct merges back into the walls of the Asbestos Caverns.]"
+				}
+			}
+
 			Wolfmole.DisplayName: Legendary Wolfmole
 			MoldMan.DisplayName: Mold Man
+			CarcinogenShield.DisplayName: Carcinogen Shield
+			Pyrogen.DisplayName: Pyrogen
 		}
 
 		Projectiles: {
@@ -2218,6 +2230,9 @@ Mods: {
 			RedstoneFireball.DisplayName: Redstone Fireball
 			RedstonePillar.DisplayName: Redstone Pillar
 			OnyxGunsawProjectile.DisplayName: Somewhat cost-efficient chainsaw
+			AsbestosDrop.DisplayName: Asbestos Drop
+			CigarCinder.DisplayName: Cigar Cinder
+			Cigar.DisplayName: Cigar
 		}
 
 		Tiles: {

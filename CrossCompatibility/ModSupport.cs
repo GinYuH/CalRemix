@@ -15,6 +15,7 @@ using CalRemix.NPCs.Bosses.Poly;
 using CalRemix.NPCs.Bosses.BossScule;
 using CalRemix.NPCs.Bosses.Acideye;
 using static Terraria.ModLoader.ModContent;
+using CalRemix.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix.CrossCompatibility
 {
@@ -74,6 +75,10 @@ namespace CalRemix.CrossCompatibility
             bc.Call("LogBoss", Mod, "Acidsighter", 2.1f, () => RemixDowned.downedAcidsighter, NPCType<Acideye>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<PoisonedSclera>(),
+            });
+            bc.Call("LogBoss", Mod, "Carcinogen", 9.22f, () => RemixDowned.downedCarcinogen, NPCType<Carcinogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemID.WoodWall,
             });
             Action<SpriteBatch, Rectangle, Color> plportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Bosses/Poly/Polyphemalus").Value;

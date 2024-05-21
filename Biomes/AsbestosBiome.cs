@@ -30,5 +30,10 @@ namespace CalRemix.Biomes
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
+        public override void SpecialVisuals(Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("CalRemix:Asbestos", isActive);
+        }
     }
 }

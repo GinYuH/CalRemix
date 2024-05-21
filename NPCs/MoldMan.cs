@@ -41,12 +41,12 @@ namespace CalRemix.NPCs
             NPC.Calamity().VulnerableToElectricity = false;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<AsbestosBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
         new FlavorTextBestiaryInfoElement("Oh crap! Look out! It's the Mold Man!")
             });
         }
