@@ -23,6 +23,7 @@ using Microsoft.Xna.Framework;
 using CalRemix.Retheme;
 using CalRemix.UI.ElementalSystem;
 using CalamityMod.World;
+using Terraria.DataStructures;
 
 namespace CalRemix.NPCs.Bosses.Pyrogen
 {
@@ -107,6 +108,43 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             NPC.Calamity().VulnerableToElectricity = false;
             NPC.Calamity().VulnerableToCold = true;
             Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/InfernalSeal");
+        }
+
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                int bitSprite = 0;
+                switch (i)
+                {
+                    case 0:
+                    case 4:
+                    case 8:
+                    case 12:
+                        bitSprite = 0;
+                        break;
+                    case 1:
+                    case 5:
+                    case 9:
+                    case 13:
+                        bitSprite = 1;
+                        break;
+                    case 2:
+                    case 6:
+                    case 10:
+                    case 14:
+                        bitSprite = 2;
+                        break;
+                    case 3:
+                    case 7:
+                    case 11:
+                    case 15:
+                        bitSprite = 3;
+                        break;
+                }
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);  
+            }
         }
 
         public override void AI()
