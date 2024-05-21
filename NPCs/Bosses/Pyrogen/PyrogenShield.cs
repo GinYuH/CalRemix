@@ -57,10 +57,10 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                         rotOffset = -MathHelper.PiOver2;
                         break;
                     case 2:
-                        rotOffset = -MathHelper.PiOver2;
+                        rotOffset = MathHelper.PiOver4;
                         break;
                     case 3:
-                        rotOffset = -MathHelper.PiOver2;
+                        rotOffset = -MathHelper.PiOver2 - MathHelper.PiOver4;
                         break;
                 }
                 NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() + rotOffset;                
