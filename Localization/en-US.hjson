@@ -80,6 +80,11 @@ Mods: {
 				DisplayName: Fanny Biome
 				TownNPCDialogueName: the Fanny Biome
 			}
+
+			AsbestosBiome: {
+				DisplayName: Asbestos Caves
+				TownNPCDialogueName: the Asbestos Biome
+			}
 		}
 
 		Buffs: {
@@ -1833,10 +1838,8 @@ Mods: {
 					'''
 			}
 
-			Wolfmole: {
-				DisplayName: Wolfmole
-				Tooltip: ""
-			}
+			Wolfmole.DisplayName: Wolfmole
+			Asbestos.DisplayName: Asbestos Block
 		}
 
 		NPCs: {
@@ -2044,7 +2047,7 @@ Mods: {
 			CrimsonKaiju.DisplayName: Crimson Kaiju
 			Carcinogen.DisplayName: Carcinogen
 			Wolfmole.DisplayName: Legendary Wolfmole
-			Pyrogen.DisplayName: Pyrogen
+			MoldMan.DisplayName: Mold Man
 		}
 
 		Projectiles: {
@@ -2215,7 +2218,6 @@ Mods: {
 			RedstoneFireball.DisplayName: Redstone Fireball
 			RedstonePillar.DisplayName: Redstone Pillar
 			OnyxGunsawProjectile.DisplayName: Somewhat cost-efficient chainsaw
-			OnyxPrismTooth.DisplayName: Onyx Prism Tooth
 		}
 
 		Tiles: {
