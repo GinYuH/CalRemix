@@ -29,7 +29,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             NPC.height = 24;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.lifeMax = 20;
+            NPC.lifeMax = 200000;
             NPC.defense = 1;
         }
 
@@ -41,7 +41,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                 NPC.localAI[1] += 1f;
                 float distance = 100;
                 distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
-                double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly * 660 + NPC.localAI[1];
+                double deg = 24 * NPC.ai[1] + Main.GlobalTimeWrappedHourly * 420 + NPC.localAI[1];
                 double rad = deg * (Math.PI / 180);
                 float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                 float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;

@@ -2061,6 +2061,9 @@ Mods: {
 			CarcinogenShield.DisplayName: Carcinogen Shield
 			Pyrogen.DisplayName: Pyrogen
 			PyrogenShield.DisplayName: Pyrogen Shield
+			Phytogen.DisplayName: Phytogen
+			PhytogenShield.DisplayName: Phytogen Shield
+			PineappleFrond.DisplayName: Frond
 		}
 
 		Projectiles: {
