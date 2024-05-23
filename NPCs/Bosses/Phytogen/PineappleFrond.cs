@@ -29,7 +29,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             NPC.width = 48;
             NPC.height = 54;
             NPC.defense = 20;
-            NPC.lifeMax = 8000;
+            NPC.lifeMax = 10000;
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = false;
             NPC.noGravity = true;

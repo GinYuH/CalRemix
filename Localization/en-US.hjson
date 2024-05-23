@@ -245,6 +245,11 @@ Mods: {
 				DisplayName: Light Acid Trip
 				Description: You're not on acid, everyone else is
 			}
+
+			HayFeaver: {
+				DisplayName: Hay Fever
+				Description: You're sneezing out blood!
+			}
 		}
 
 		Items: {
@@ -2417,6 +2422,8 @@ Mods: {
 			PinkGreySpray.DisplayName: Pink Grey Spray
 			GreenGreySpray.DisplayName: Green Grey Spray
 			BlueGreySpray.DisplayName: Blue Grey Spray
+			PineappleFrondProj.DisplayName: Frond
+			Potpourri.DisplayName: Potpourri
 		}
 
 		Tiles: {
