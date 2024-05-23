@@ -1838,8 +1838,20 @@ Mods: {
 					'''
 			}
 
-			Wolfmole.DisplayName: Wolfmole
-			Asbestos.DisplayName: Asbestos Block
+			Wolfmole: {
+				DisplayName: Wolfmole
+				Tooltip: ""
+			}
+
+			Asbestos: {
+				DisplayName: Asbestos Block
+				Tooltip: ""
+			}
+
+			AsbestosWall: {
+				Tooltip: ""
+				DisplayName: Asbestos Wall
+			}
 		}
 
 		NPCs: {
@@ -2058,9 +2070,9 @@ Mods: {
 
 			Wolfmole.DisplayName: Legendary Wolfmole
 			MoldMan.DisplayName: Mold Man
-			CarcinogenShield.DisplayName: Carcinogen Shield
+			CarcinogenShield.DisplayName: Carcinogen's Shield
 			Pyrogen.DisplayName: Pyrogen
-			PyrogenShield.DisplayName: Pyrogen Shield
+			PyrogenShield.DisplayName: Pyrogen's Shield
 		}
 
 		Projectiles: {
@@ -2234,6 +2246,8 @@ Mods: {
 			AsbestosDrop.DisplayName: Asbestos Drop
 			CigarCinder.DisplayName: Cigar Cinder
 			Cigar.DisplayName: Cigar
+			OnyxPrismTooth.DisplayName: Onyx Prism Tooth
+			PyrogenFlare.DisplayName: Pyrogen Flare
 		}
 
 		Tiles: {

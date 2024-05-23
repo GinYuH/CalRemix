@@ -62,7 +62,7 @@ namespace CalRemix.UI
 
             fannyMessages.Add(eol4);
 
-            FannyMessage eol5 = new FannyMessage("EoL5", "Bitch",
+            FannyMessage eol5 = new FannyMessage("EoL5", "Bitch.",
                 "EvilIdle", (FannySceneMetrics scene) => ChildSafety.Disabled, 5, onlyPlayOnce: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
 
             eol4.AddEndEvent(() => eol5.ActivateMessage());

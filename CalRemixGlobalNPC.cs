@@ -83,6 +83,8 @@ namespace CalRemix
         public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
+        public static int pyrogen = -1;
+        public static int hypnos = -1;
         public static int aspidCount = 0;
         private bool guardRage, guardOver, yharRage = false;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
