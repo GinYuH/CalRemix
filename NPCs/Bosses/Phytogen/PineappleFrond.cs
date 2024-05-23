@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.DataStructures;
+using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -69,6 +70,19 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 }
             }
             return false;
+        }
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            NPC phyto = Main.npc[(int)NPC.ai[0]];
+            if (phyto == null || !phyto.active || phyto.type != ModContent.NPCType<Phytogen>())
+            {
+                return false;
+            }
+            if (projectile.type == ModContent.ProjectileType<Potpourri>() && phyto.ai[0] == (int)Phytogen.PhaseType.Passive)
+            {
+                return false;
+            }
+            return null;
         }
 
         /*public override bool? CanBeHitByProjectile(Projectile projectile)

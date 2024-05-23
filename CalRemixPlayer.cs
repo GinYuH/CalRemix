@@ -97,6 +97,7 @@ namespace CalRemix
         public bool clockBar;
         public bool anomaly109UI;
 		public bool dungeon2;
+		public bool hayFever;
 
         public int chainSawCharge;
         public int chainSawHitCooldown = 0;
@@ -692,6 +693,7 @@ namespace CalRemix
 			clockBar = false;
             wormMeal = false;
 			invGar = false;
+			hayFever = false;
             if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)
@@ -895,6 +897,13 @@ namespace CalRemix
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 12;
             }
+            if (hayFever)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 240;
+            }
         }
 		public override void FrameEffects()
 		{
@@ -928,7 +937,12 @@ namespace CalRemix
 				int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Smoke, SpeedY: -4f, newColor: Color.DarkGray);
 				drawInfo.DustCache.Add(index);
             }
-		}
+            if (hayFever)
+            {
+                int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.JungleSpore, Scale: Main.rand.NextFloat(1f, 2f));
+                drawInfo.DustCache.Add(index);
+            }
+        }
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {

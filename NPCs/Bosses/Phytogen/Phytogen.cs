@@ -20,6 +20,7 @@ using Microsoft.Build.Tasks;
 using System;
 using CalRemix.Retheme;
 using CalamityMod.Projectiles.Boss;
+using CalRemix.Buffs;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -179,11 +180,10 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                     NPC.ai[2]++;
                                     if (NPC.ai[2] % 4 == 0)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(NPCTarget.Center) * 20, ProjectileID.Leaf, (int)MathHelper.Max(NPCTarget.lifeMax / 50, 222), 1f, Main.myPlayer);
-                                        Main.projectile[p].hostile = true;
-                                        Main.projectile[p].friendly = false;
-                                        Main.projectile[p].tileCollide = false;
-                                        Main.projectile[p].DamageType = DamageClass.Generic;
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(NPCTarget.Center) * 20, ModContent.ProjectileType<Potpourri>(), (int)MathHelper.Max(NPCTarget.lifeMax / 50, 222), 1f, Main.myPlayer, ai0: 0, ai1: NPCTarget.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                        Main.projectile[p].hostile = false;
+                                        Main.projectile[p].friendly = true;
+                                        Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                                     }
                                     if (NPC.ai[1] > 120)
                                     {
@@ -209,6 +209,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                     break;
                 case (int)PhaseType.Idle:
                     {
+                        NPC.damage = 100;
                         int minDist = 400;
                         float speed = 8f;
                         int maxTime = 180;
@@ -229,7 +230,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                     {
                         int fireRate = 10;
                         int projPerShot = 3;
-                        int fireGate = 40;
+                        int fireGate = 110;
                         int perRound = 8;
                         int totalRounds = 2;
                         NPC.ai[1]++;
@@ -243,11 +244,8 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                 for (int i = 0; i < projPerShot; i++)
                                 {
                                     Vector2 perturbedSpeed = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-spreadfactor, spreadfactor, i / ((float)projPerShot - 1))) * scaleFactor;
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, perturbedSpeed, ProjectileID.Leaf, (int)(NPC.damage * 0.25f), 0, Main.myPlayer);
-                                    Main.projectile[p].hostile = true;
-                                    Main.projectile[p].friendly = false;
-                                    Main.projectile[p].tileCollide = false;
-                                    Main.projectile[p].DamageType = DamageClass.Generic;
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                    Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                                 }
                             }
                             if (NPC.ai[2] > fireRate * perRound)
@@ -297,7 +295,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                             maxTime /= 2;
                         }
                         int height = 100;
-                        int fireRate = rev ? 30 : 40;
+                        int fireRate = rev ? 120 : 160;
                         NPC.ai[2]++;
                         NPC.ai[3]++;
                         NPC.Calamity().newAI[1]--;
@@ -330,7 +328,8 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                         if (NPC.ai[2] % fireRate == 0)
                         {
                             SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<SporeGasPlantera>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                            Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                         }
                         /*if (NPC.ai[3] > maxTime || (NPC.ai[3] > minTime && Target.position.Y - height > NPC.Center.Y))
                         {
@@ -364,6 +363,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                             NPC.Calamity().newAI[1] = 0;
                             NPC.rotation = 0;
                             NPC.position = Target.Center - Vector2.UnitY * 200;
+                            NPC.velocity *= 0;
                             DustExplosion();
                             Phase = (int)PhaseType.LastStand;
                         }
@@ -644,21 +644,22 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                             NPC.velocity = NPC.DirectionTo(Target.Center) * speed;
                             if (NPC.ai[1] % sporeFireRate == 0)
                             {
-                                SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<SporeGasPlantera>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer);
+                                //SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
+                                //Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<SporeGasPlantera>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer);
                             }
                             if (NPC.ai[2] % sporeFireRate == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * petalSpeed, ProjectileID.SeedPlantera, (int)(NPC.damage * 0.25f), 0, Main.myPlayer);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * petalSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                             }
                             foreach (Player p in Main.player)
                             {
                                 if (p.active)
                                 {
-                                    if (p.Distance(NPC.Center) > 500)
+                                    if (p.Distance(NPC.Center) > 560)
                                     {
-                                        p.statLife -= 2;
+                                        p.AddBuff(ModContent.BuffType<HayFeaver>(), 2);
                                     }
                                 }
                             }
@@ -740,7 +741,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
-            if (projectile.type == ProjectileID.Leaf && Phase == (int)PhaseType.Passive)
+            if (projectile.type == ModContent.ProjectileType<Potpourri>() && Phase == (int)PhaseType.Passive)
             {
                 return false;
             }

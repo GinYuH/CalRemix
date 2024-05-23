@@ -128,7 +128,9 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 return false;
 
             Asset<Texture2D> sprite = TextureAssets.Npc[Type];
+            Asset<Texture2D> sprite2 = ModContent.Request<Texture2D>(Texture + 2);
             Vector2 npcOffset = NPC.Center - screenPos;
+            spriteBatch.Draw(sprite2.Value, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), -NPC.rotation * 0.8f - 0.3f, sprite.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             spriteBatch.Draw(sprite.Value, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
