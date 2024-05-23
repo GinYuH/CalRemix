@@ -21,6 +21,8 @@ using CalamityMod.Tiles;
 using CalRemix.UI;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Tiles.SunkenSea;
+using Terraria.Enums;
+using CalRemix.NPCs.Bosses.Phytogen;
 
 namespace CalRemix
 {
@@ -370,6 +372,28 @@ namespace CalRemix
                         if (Main.netMode != NetmodeID.Server && Main.rand.NextBool(60)) // roughly 10% when considering the piles are 6 tiles in size
                         {
                             NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, ModContent.NPCType<GulletWorm>());
+                        }
+                    }
+                }
+            }
+            Player player = Main.LocalPlayer;
+            if (player.ZoneJungle && !NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+            {
+                if (!effectOnly && !fail && Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
+                {
+                    CalamityGlobalTile.GetTreeBottom(i, j, out int treeX, out int treeY);
+                    TreeTypes treeType = WorldGen.GetTreeType(Main.tile[treeX, treeY].TileType);
+                    if (treeType != TreeTypes.None)
+                    {
+                        treeY--;
+                        while (treeY > 10 && Main.tile[treeX, treeY].HasTile && TileID.Sets.IsShakeable[Main.tile[treeX, treeY].TileType])
+                            treeY--;
+
+                        treeY++;
+
+                        if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
+                        {
+                            NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Phytogen>());
                         }
                     }
                 }

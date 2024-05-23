@@ -39,6 +39,7 @@ using tModPorter;
 using CalRemix.UI.Title;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using CalRemix.NPCs.Bosses.Phytogen;
 
 namespace CalRemix
 {
@@ -435,6 +436,23 @@ namespace CalRemix
                 }
                 chainSawHitCooldown = 0;
             }
+			if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+			{
+				int plagueEnemies = 0;
+				int plagueToSpawnPhytogen = 10;
+				foreach (NPC n in Main.npc)
+				{
+					if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type))
+					{
+						plagueEnemies++;
+						if (plagueEnemies >= plagueToSpawnPhytogen)
+                        {
+                            NPC.SpawnOnPlayer(Player.whoAmI, ModContent.NPCType<Phytogen>());
+                            break;
+						}
+					}
+				}
+			}
         }
 
         public override bool PreItemCheck()
