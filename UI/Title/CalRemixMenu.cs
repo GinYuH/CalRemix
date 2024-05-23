@@ -100,19 +100,24 @@ namespace CalRemix.UI.Title
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value;
                     direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * 2f : Vector2.UnitX * 2f;
+                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
                 }
                 else if (rand2 == 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value))
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value;
                     direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * 3f : Vector2.UnitX * 3f;
+                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(3f, 3.5f) : Vector2.UnitX * Main.rand.NextFloat(3f, 3.5f);
                 }
                 else if (rand2 > 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)))
                 {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/Items/SideGar").Value;
+                    characterTexture = Main.rand.Next(new Texture2D[]
+                    {
+                        ModContent.Request<Texture2D>("CalRemix/Items/SideGar").Value,
+                        ModContent.Request<Texture2D>("CalRemix/UI/Title/FrontGar").Value,
+                        ModContent.Request<Texture2D>("CalRemix/UI/Title/RearGar").Value
+                    });
                     direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * 1.5f : Vector2.UnitX * 1.5f;
+                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f) : Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f);
                 }
                 else if (rand2 < 4 && evilFanny)
                 {
@@ -123,13 +128,18 @@ namespace CalRemix.UI.Title
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/OnyxKinsman").Value;
                     direction = (rand) ? 0 : 1;
-                    velocity = (rand) ? -Vector2.UnitX * 4f: Vector2.UnitX * 4f;
+                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(4f, 4.5f) : Vector2.UnitX * Main.rand.NextFloat(4f, 4.5f);
                 }
                 else
                 {
-                    characterTexture = Main.rand.Next(new Texture2D[] { ModContent.Request<Texture2D>("CalRemix/Items/Weapons/Ogscule").Value, ModContent.Request<Texture2D>("CalRemix/Projectiles/Weapons/HolyMackerel").Value, ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Acideye/MutatedEye").Value });
+                    characterTexture = Main.rand.Next(new Texture2D[] 
+                    { 
+                        ModContent.Request<Texture2D>("CalRemix/Items/Weapons/Ogscule").Value,
+                        ModContent.Request<Texture2D>("CalRemix/Items/Accessories/Baroclaw").Value,
+                        ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Acideye/MutatedEye").Value 
+                    });
                     direction = (rand) ? 0 : 1;
-                    velocity = (rand) ? -Vector2.UnitX * 1.5f : Vector2.UnitX * 1.5f;
+                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f) : Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f);
                 }
                 Characters.Add(new Character(characterTexture, direction, position, velocity));
             }
@@ -165,7 +175,7 @@ namespace CalRemix.UI.Title
             // Logo and Final Stuff
             Main.time = 27000.0;
             Main.dayTime = true;
-            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 100f), null, drawColor, logoRotation, Logo.Value.Size() * 0.5f, logoScale * 0.45f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 111f) + new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2)), null, drawColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
             return false;
         }
     }

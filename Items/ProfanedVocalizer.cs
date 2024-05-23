@@ -1,4 +1,5 @@
-﻿using CalamityMod.NPCs.Yharon;
+﻿using CalamityMod.Items.Materials;
+using CalamityMod.NPCs.Yharon;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -30,6 +31,14 @@ namespace CalRemix.Items
             if (player.ItemAnimationJustStarted && Main.netMode != NetmodeID.MultiplayerClient)
 				SoundEngine.PlaySound(Yharon.RoarSound with { Pitch = 1.0f }, player.Center);
             return true;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.Megaphone).
+                AddIngredient<DivineGeode>().
+                AddTile(TileID.MythrilAnvil).
+                Register();
         }
     }
 }

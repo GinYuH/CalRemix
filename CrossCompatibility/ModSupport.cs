@@ -16,6 +16,7 @@ using CalRemix.NPCs.Bosses.BossScule;
 using CalRemix.NPCs.Bosses.Acideye;
 using static Terraria.ModLoader.ModContent;
 using CalRemix.NPCs.Bosses.Carcinogen;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix.CrossCompatibility
 {
@@ -24,15 +25,18 @@ namespace CalRemix.CrossCompatibility
         internal Mod BossChecklist;
         internal Mod MusicDisplay;
         internal Mod Wikithis;
+        internal Mod Census;
         public override void Load()
         {
             ModLoader.TryGetMod("BossChecklist", out BossChecklist);
+            ModLoader.TryGetMod("Census", out Mod Census);
             ModLoader.TryGetMod("MusicDisplay", out MusicDisplay);
             ModLoader.TryGetMod("Wikithis", out Wikithis);
         }
         public override void Unload()
         {
             BossChecklist = null;
+            Census = null;
             MusicDisplay = null;
             Wikithis = null;
         }
@@ -59,7 +63,7 @@ namespace CalRemix.CrossCompatibility
             };
             bc.Call("LogBoss", Mod, "TheCalamity", 0.0000000000022f, () => RemixDowned.downedCalamity, NPCType<TheCalamity>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<LoreAwakening>(),
+                ["spawnItems"] = ItemType<Slumbering>(),
                 ["customPortrait"] = calamityPortrait
             });
             Action<SpriteBatch, Rectangle, Color> wfportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
@@ -135,12 +139,23 @@ namespace CalRemix.CrossCompatibility
             });
             bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
         }
+        internal void AddCensusEntries()
+        {
+            if (Census is null)
+                return;
+            Census.Call("TownNPCCondition", ModContent.NPCType<ZER0>(), "Have [i:CalRemix/Ogscule] in your inventory during Godseeker mode");
+            Census.Call("TownNPCCondition", ModContent.NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
+
+            Census.Call("TownNPCCondition", ModContent.NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");
+        }
         internal void AddMusicDisplayEntries()
         {
             if (MusicDisplay is null)
                 return;
             AddMusic("Opticatalysis", "Opticatalysis", "DEMON GIRLFRIEND");
             AddMusic("AntarcticReinsertion", "Antarctic Reinsertion", "Jteoh");
+            AddMusic("Gegenschein", "Gegenschein", "Jteoh");
+            AddMusic("TropicofCancer", "Tropic of Cancer", "Jteoh");
             AddMusic("SignalInterruption", "Signal Interruption", "Sploopo");
             AddMusic("ScourgeoftheScrapyard", "Scourge of the Scrapyard", "Sploopo");
             AddMusic("LaRuga", "La Ruga's Ambience", "Sploopo");

@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items;
 using CalRemix.Projectiles.Weapons;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.Items.Weapons
 {
@@ -30,6 +32,12 @@ namespace CalRemix.Items.Weapons
 			Item.knockBack = 4f;
             Item.shoot = ModContent.ProjectileType<OnyxBlast>();
             Item.shootSpeed = 6f;
+            Item.useAmmo = AmmoID.Bullet;
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<OnyxBlast>(), damage, knockback, player.whoAmI);
+            return false;
         }
         public override void AddRecipes()
         {

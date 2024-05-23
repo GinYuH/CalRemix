@@ -42,7 +42,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             NPC.height = 110;
             NPC.damage = 0;
             NPC.defense = 10;
-            NPC.lifeMax = 25000;
+            NPC.lifeMax = 17000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0f;

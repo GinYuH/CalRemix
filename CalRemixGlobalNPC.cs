@@ -67,9 +67,11 @@ using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Crags;
 using CalRemix.NPCs.TownNPCs;
 using System.Threading;
-using Humanizer;
-using CalamityMod.Projectiles.Summon;
 using CalRemix.Items.Placeables;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Shaders;
+using CalRemix.Buffs;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace CalRemix
 {
@@ -146,21 +148,6 @@ namespace CalRemix
                 CystMessage = new FannyMessage("CystDeath", "See!", "",
                 FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
                 FannyManager.LoadFannyMessage(CystMessage);
-            }
-        }
-        public override void SetDefaults(NPC npc)
-        {
-            if (npc.type == ModContent.NPCType<Bumblefuck>())
-            {
-                npc.damage = 80;
-                npc.lifeMax = 58500;
-                npc.defense = 20;
-                npc.value = Item.buyPrice(gold: 10);
-            }
-            else if (npc.type == ModContent.NPCType<Bumblefuck2>())
-            {
-                npc.damage = 60;
-                npc.lifeMax = 3375;
             }
         }
         public override bool PreAI(NPC npc)
@@ -686,13 +673,11 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (npc.boss && Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25)
+            if (npc.type == NPCID.Vulture)
             {
-                npcLoot.Add(ModContent.ItemType<ConquestFragment>(), 5);
-            }
-            if (!npc.boss && !npc.SpawnedFromStatue && npc.value > 0 && Main.BestiaryTracker.Kills.GetKillCount(npc) >= 25)
-            {
-                npcLoot.Add(ModContent.ItemType<ConquestFragment>(), 10);
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsHardmode());
+                mainRule.Add(ModContent.ItemType<DesertFeather>(), 1, 3, 5);
+                npcLoot.Add(mainRule);
             }
             if (npc.type == ModContent.NPCType<GreatSandShark>())
             {
@@ -727,12 +712,6 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<Yharon>())
             {
                 npcLoot.Add(ModContent.ItemType<MovieSign>(), 100);
-            }
-            if (npc.type == ModContent.NPCType<Bumblefuck>())
-            {
-                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
-                mainRule.Add(ModContent.ItemType<DesertFeather>(), 1, 25, 30);
-                npcLoot.Add(mainRule);
             }
             if (npc.type == ModContent.NPCType<PrimordialWyrmHead>())
             {
@@ -967,6 +946,11 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ModContent.ItemType<OldDukeScales>(), 4);
             }
+            if (npc.type == ModContent.NPCType<DevourerofGodsHead>())
+            {
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
+                mainRule.Add(ModContent.ItemType<Lean>(), 1, 3, 4);
+            }
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -1030,6 +1014,26 @@ namespace CalRemix
                     }
                 }
             }
+        }
+        public override bool CheckDead(NPC npc)
+        {
+            if (npc.lifeMax > 1000 && npc.value > 0f && npc.HasPlayerTarget && NPC.downedMoonlord && Main.player[npc.target].ZoneDungeon && npc.type != ModContent.NPCType<GildedSpirit>() && npc.type != ModContent.NPCType<GlisteningSpirit>())
+            {
+                if (Main.rand.NextBool(10))
+                {
+                    int index = NPC.NewNPC(NPC.GetSource_None(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<GlisteningSpirit>());
+                    if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
+                else
+                {
+                    int index = NPC.NewNPC(NPC.GetSource_None(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<GildedSpirit>());
+                    if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
+            }
+
+            return true;
         }
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -1309,6 +1313,12 @@ namespace CalRemix
             // Mark first acid rain encounter as true even if he wasn't fought in the acid rain, because it makes sense
             AcidRainEvent.OldDukeHasBeenEncountered = true;
             CalamityNetcode.SyncWorld();
+        }
+        public override Color? GetAlpha(NPC npc, Color drawColor)
+        {
+            if (Main.player[Main.myPlayer].HasBuff(ModContent.BuffType<Acid>()))
+                return drawColor.MultiplyRGB(Color.YellowGreen);
+            return null;
         }
     }
 }

@@ -1,25 +1,15 @@
-﻿using CalamityMod.Items.Placeables.Ores;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
-using System.Linq;
-using CalRemix.UI;
-using System.Collections;
-using CalamityMod.Projectiles.BaseProjectiles;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
-using Newtonsoft.Json.Serialization;
-using Humanizer;
 using CalamityMod.World;
 using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
 using CalRemix.Items.Placeables;
-using CalamityMod.Sounds;
 using CalamityMod.Events;
 using CalRemix.Biomes;
 
@@ -106,8 +96,14 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             if (Target == null || Target.dead)
             {
                 NPC.velocity.Y += 1;
+                NPC.Calamity().newAI[3]++;
+                if (NPC.Calamity().newAI[3] > 240)
+                {
+                    NPC.active = false;
+                }
                 return;
             }
+            NPC.Calamity().newAI[3] = 0;
             switch (Phase)
             {
                 case (int)PhaseType.Idle:

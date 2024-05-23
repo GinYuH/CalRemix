@@ -33,6 +33,7 @@ namespace CalRemix.Items.Weapons
 			Item.shootSpeed = 18f;
 			Item.useAmmo = AmmoID.Arrow;
         }
+        public override bool CanUseItem(Player player) => player.GetModPlayer<CalRemixPlayer>().flamingIce;
         public override void UpdateInventory(Player player)
         {
             if (player.HeldItem == Item || player.inventory[58] == Item)
@@ -44,7 +45,9 @@ namespace CalRemix.Items.Weapons
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<FlameFrostArrow>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<FlameFrostArrow>(), damage, knockback, player.whoAmI);
+            Vector2 pos = position + player.DirectionTo(Main.MouseWorld) * 18f;
+            Projectile.NewProjectile(source, pos, velocity, ModContent.ProjectileType<FlameFrostArrow>(), damage, knockback, player.whoAmI);
             return false;
         }
         public override Vector2? HoldoutOffset()

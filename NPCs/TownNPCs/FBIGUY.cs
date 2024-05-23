@@ -25,6 +25,8 @@ namespace CalRemix.NPCs.TownNPCs
 		private bool stash = false;
         public const double despawnTime = 23400.0;
         public static double spawnTime = double.MaxValue;
+        public override bool CanChat() => true;
+        public override bool NeedSaving() => true;
         public override bool PreAI()
         {
             if ((Main.dayTime || Main.time >= despawnTime) && !OnScreen(NPC.Center))
@@ -112,7 +114,8 @@ namespace CalRemix.NPCs.TownNPCs
             NPCID.Sets.AttackTime[Type] = 90;
 			NPCID.Sets.AttackAverageChance[Type] = 10;
 			NPCID.Sets.HatOffsetY[Type] = 4;
-			NPCID.Sets.ShimmerTownTransform[NPC.type] = false;
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.ShimmerTownTransform[NPC.type] = false;
 			NPCID.Sets.ShimmerTownTransform[Type] = false;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new() { Velocity = 1f, Direction = 1 };
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
@@ -160,7 +163,7 @@ namespace CalRemix.NPCs.TownNPCs
             };
             return names;
 		}
-		public override string GetChat() 
+        public override string GetChat() 
 		{
             WeightedRandom<string> chat = new();
             chat.Add("Listen: if anyone asks, I'm dead, you're dead, it would be impossible for us to have a conversation.");

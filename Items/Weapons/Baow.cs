@@ -3,6 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using System;
+using Terraria.Audio;
 
 namespace CalRemix.Items.Weapons
 {
@@ -42,12 +45,19 @@ namespace CalRemix.Items.Weapons
             {
                 Vector2 pos = player.Center + player.DirectionTo(Main.MouseWorld) * (player.Distance(Main.MouseWorld) * 2);
                 Vector2 v = -velocity;
-                Projectile.NewProjectile(source, pos.X, pos.Y, v.X, v.Y, type, damage, knockback, player.whoAmI);
-                for (int i = 0; i < 2; i++)
+                Projectile projectile = Projectile.NewProjectileDirect(source, pos, v, type, damage, knockback, player.whoAmI);
+
+                SoundEngine.PlaySound(SoundID.Item9, player.Center);
+                for (int i = 0; i < 8; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(pos, 1, 1, DustID.MagicMirror, Scale: 1.5f + Main.rand.NextFloat());
-                    dust.velocity = Vector2.Normalize(v).RotatedByRandom(MathHelper.ToRadians(45f));
-                    dust.noGravity = false;
+                    Vector2 spinPoint = Vector2.UnitX * 0f;
+                    spinPoint += -Vector2.UnitY.RotatedBy((float)i * ((float)Math.PI * 0.25f)) * new Vector2(1f, 4f);
+                    spinPoint = spinPoint.RotatedBy(projectile.velocity.ToRotation());
+                    Vector2 pos2 = pos + spinPoint;
+                    Vector2 speed = velocity * 0f + spinPoint.SafeNormalize(Vector2.UnitY) * 1f;
+                    Dust dust = Dust.NewDustDirect(pos2, 0, 0, DustID.DungeonSpirit, speed.X, speed.Y);
+                    dust.scale = 1.5f;
+                    dust.noGravity = true;
                 }
             }
             return true;

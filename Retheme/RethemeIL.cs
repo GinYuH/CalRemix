@@ -81,18 +81,6 @@ namespace CalRemix.Retheme
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
         }
-        #region BossChecklist
-        private static void BossChecklist(ILContext il)
-        {
-            var c = new ILCursor(il);
-            if (c.TryGotoNext(MoveType.After, i => i.MatchLdstr("Dragonfolly"), i => i.MatchStloc(80)))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.Emit(OpCodes.Ldfld, (float)12.01);
-            }
-        }
-        #endregion
         #region NPCs
         private static void Crabulon(ILContext il)
         {

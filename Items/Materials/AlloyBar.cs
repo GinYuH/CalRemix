@@ -32,8 +32,7 @@ namespace CalRemix.Items.Materials
                 AddIngredient(ItemID.DemoniteBar).
                 AddIngredient(ItemID.CrimtaneBar).
                 AddIngredient(ItemID.MeteoriteBar).
-                AddIngredient(ItemID.HellstoneBar).
-                AddIngredient(ItemID.CopperBar).
+                AddIngredient(ModContent.ItemType<WulfrumMetalScrap>()).
                 AddIngredient(ModContent.ItemType<SeaRemains>()).
                 AddIngredient(ModContent.ItemType<AerialiteBar>()).
                 AddTile(TileID.Furnaces).

@@ -35,6 +35,7 @@ using System.Linq;
 using System.Reflection;
 using CalamityMod.Items.Armor;
 using CalamityMod.Items.Placeables.FurnitureStratus;
+using CalamityMod.Items.LoreItems;
 
 namespace CalRemix
 {
@@ -75,13 +76,11 @@ namespace CalRemix
             HMT1Bar = new RecipeGroup(() => "Any Tier 1 Hardmode Bar", ItemID.CobaltBar, ItemID.PalladiumBar);
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
         }
-        public override void AddRecipes() 
+        public override void AddRecipes()
         {
             {
-                Recipe feather = Recipe.Create(ModContent.ItemType<EffulgentFeather>(), 3);
-                feather.AddIngredient<DesertFeather>(3);
-                feather.AddIngredient<LifeAlloy>()
-                .AddTile(TileID.LunarCraftingStation)
+                Recipe slumbering = Recipe.Create(ModContent.ItemType<LoreAwakening>());
+                slumbering.AddIngredient<Slumbering>()
                 .Register();
             }
             {
