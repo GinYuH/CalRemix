@@ -34,6 +34,11 @@ using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Buffs;
 using CalRemix.Items.Accessories;
 using CalRemix.Walls;
+using Terraria.Graphics.Effects;
+using tModPorter;
+using CalRemix.UI.Title;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 
 namespace CalRemix
 {
@@ -387,7 +392,10 @@ namespace CalRemix
         }
 		public override void UpdateEquips()
         {
-            Player.GetJumpState<CalRemixJump>().Enable();
+			if (CalRemixWorld.remixJump)
+				Player.GetJumpState<CalRemixJump>().Enable();
+			else
+                Player.GetJumpState<CalRemixJump>().Disable();
         }
 		public override void PreUpdate()
         {
@@ -445,10 +453,9 @@ namespace CalRemix
 			*/
 			return true;
         }
-
         public override void PostUpdateMiscEffects()
-		{
-			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+        {       
+            CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)
 			{
 				for (int i = 0; i < MinionList.Length; i++)
@@ -456,7 +463,6 @@ namespace CalRemix
 					if (Main.LocalPlayer.ownedProjectileCounts[MinionList[i]] > 0)
 					{
 						Main.LocalPlayer.maxMinions += Player.ownedProjectileCounts[MinionList[i]];
-
 					}
 				}
 			}
@@ -695,7 +701,9 @@ namespace CalRemix
 					amongusEnchant = false;
 				}
 			}
-		}
+            Filters.Scene["CalRemix:AcidSight"].Deactivate();
+            Filters.Scene["CalRemix:LeanVision"].Deactivate();
+        }
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
 			if (CalamityMod.DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
@@ -885,7 +893,7 @@ namespace CalRemix
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
-                Player.lifeRegen -= 120;
+                Player.lifeRegen -= 12;
             }
         }
 		public override void FrameEffects()
@@ -895,6 +903,11 @@ namespace CalRemix
 		}
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            if (flamingIce && Main.rand.NextBool(10))
+            {
+                int index = Dust.NewDust(Player.position, Player.width, Player.height, (Main.rand.NextBool()) ? DustID.IceTorch : DustID.Torch, Main.rand.Next(-2, 3), -5f);
+                drawInfo.DustCache.Add(index);
+            }
             if (deicide > 0)
             {
                 Color c = Color.Lerp(Color.Red, Color.White, Utils.GetLerpValue(-10f, 3000f, deicide, true));

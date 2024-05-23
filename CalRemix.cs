@@ -27,9 +27,6 @@ using CalRemix.Subworlds;
 using ReLogic.Content;
 using CalRemix.NPCs.Eclipse;
 using Terraria.GameContent;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using Terraria.ModLoader;
 using System.Runtime.InteropServices;
 using Terraria.Audio;
 using ReLogic.Utilities;
@@ -46,7 +43,6 @@ using CalamityMod.World;
 using Terraria.UI;
 using CalamityMod.Systems;
 using CalamityMod.NPCs.OldDuke;
-using rail;
 using CalRemix.UI.Title;
 using CalRemix.NPCs.Bosses.Carcinogen;
 
@@ -59,7 +55,10 @@ namespace CalRemix
 
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
+
         internal static Effect SlendermanShader;
+        internal static Effect LeanShader;
+
         public static Asset<Texture2D> sunOG = null;
         public static Asset<Texture2D> sunCreepy = null;
 
@@ -105,9 +104,12 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:Exosphere"] = new ExosphereSky();
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Fanny"] = new Filter(new FannyScreenShaderData("FilterMiniTower").UseColor(FannySky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
+
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:AcidSight"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("CalRemix/Effects/AcidSight", AssetRequestMode.ImmediateLoad), "AcidPass"), EffectPriority.VeryHigh);
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:LeanVision"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("CalRemix/Effects/LeanVision", AssetRequestMode.ImmediateLoad), "LeanPass"), EffectPriority.VeryHigh);
             }
             Terraria.On_IngameOptions.DrawLeftSide += OhGod;
 
@@ -115,6 +117,7 @@ namespace CalRemix
             Effect LoadShader(string path) => calAss.Request<Effect>("Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
+
             Terraria.On_Main.DrawDust += DrawStatic;
             Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
             //Terraria.On_Player.ItemCheck_Shoot += SoldierShots;
@@ -270,7 +273,7 @@ namespace CalRemix
                         Projectile.NewProjectile(self.GetSource_FromThis(), pointPoisition.X, pointPoisition.Y, dirX, dirY, sItem.shoot, weaponDamage, KnockBack, i);
                     }
                         
-                    NetMessage.SendData(13, -1, -1, null, self.whoAmI);
+                    NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, self.whoAmI);
                 }
             }
             orig(self, i, sItem, weaponDamage);
@@ -313,11 +316,12 @@ namespace CalRemix
             AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
             AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
             RefreshBestiary();
-
             do
             {
                 typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { Main.rand.Next(-2, 3) });
                 typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, CalRemixMenu.Instance.FullName);
+                if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || CalRemixMenu.Instance is null)
+                    break;
             }
             while (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName != CalRemixMenu.Instance.FullName);
         }

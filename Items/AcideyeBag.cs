@@ -5,6 +5,7 @@ using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Items.Weapons;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix.Items
 {
@@ -47,6 +48,7 @@ namespace CalRemix.Items
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            itemLoot.Add(ModContent.ItemType<DeterioratingLens>());
             itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<PungentBomber>(), ModContent.ItemType<AcidBow>(), ModContent.ItemType<CausticClaw>(), ModContent.ItemType<CorrosiveEyeStaff>(), ModContent.ItemType<RazorTeeth>()));
             itemLoot.AddRevBagAccessories();
         }

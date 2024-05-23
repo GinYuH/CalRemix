@@ -45,6 +45,22 @@ namespace CalRemix.Items.Placeables.MusicBoxes
             return base.PrefixChance(pre, rand);
         }
     }
+    public class ARMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TropicofCancer"), Type, ModContent.TileType<Tiles.MusicBoxes.ARMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.ARMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand)
+        {
+            return base.PrefixChance(pre, rand);
+        }
+    }
     public class CryoSlimeMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
@@ -70,6 +86,22 @@ namespace CalRemix.Items.Placeables.MusicBoxes
         public override void SetDefaults()
         {
             Item.createTile = ModContent.TileType<Tiles.MusicBoxes.DerellectMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand)
+        {
+            return base.PrefixChance(pre, rand);
+        }
+    }
+    public class EolMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Gegenschein"), Type, ModContent.TileType<Tiles.MusicBoxes.EolMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.EolMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand)

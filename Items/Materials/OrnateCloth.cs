@@ -21,10 +21,9 @@ namespace CalRemix.Items.Materials
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.TatteredCloth, 10).
                 AddIngredient(ItemID.Silk, 10).
                 AddIngredient<SolarVeil>(10).
-                AddIngredient<EffulgentFeather>(10).
+                AddIngredient<EffulgentFeather>(5).
                 AddTile(TileID.Loom).
                 Register();
         }

@@ -20,6 +20,7 @@ using CalamityMod.Particles;
 using CalRemix.Items.Weapons;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Items;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix.NPCs.Bosses.Acideye
 {
@@ -611,6 +612,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                 ModContent.ItemType<CorrosiveEyeStaff>(),
                 ModContent.ItemType<RazorTeeth>()
             };
+            mainRule.Add(ModContent.ItemType<DeterioratingLens>());
             mainRule.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, itemIDs));
         }
         public override void OnKill()

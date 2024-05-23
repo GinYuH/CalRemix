@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Projectiles.Weapons;
-using CalamityMod.Items.Placeables;
 
 namespace CalRemix.Items.Weapons
 {
@@ -28,16 +27,16 @@ namespace CalRemix.Items.Weapons
             Item.DamageType = DamageClass.Magic;
 			Item.damage = 10;
 			Item.knockBack = 5.5f;
-            Item.mana = 12;
+            Item.mana = 1;
 			Item.noMelee = true;
             Item.shoot = ModContent.ProjectileType<SaltCube>();
-            Item.shootSpeed = 7.5f;
+            Item.shootSpeed = 8.5f;
         }
         public override void AddRecipes()
         {
             CreateRecipe().
                 AddIngredient(ItemID.Wood, 10).
-                AddIngredient<SulphurousSand>(5).
+                AddIngredient(ItemID.StoneBlock, 5).
                 AddCondition(Condition.NearWater).
                 Register();
         }

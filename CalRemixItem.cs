@@ -43,6 +43,13 @@ using CalamityMod.Items.TreasureBags.MiscGrabBags;
 using CalamityMod.Items.LoreItems;
 using CalRemix.NPCs.Bosses.BossScule;
 using CalamityMod.Rarities;
+using CalRemix.NPCs;
+using CalamityMod.NPCs.NormalNPCs;
+using System.Linq;
+using CalamityMod.UI.CalamitasEnchants;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.NPCs.Other;
+using CalamityMod.Items;
 
 namespace CalRemix
 {
@@ -51,79 +58,20 @@ namespace CalRemix
         public override bool InstancePerEntity => true;
         public bool Scoriad = false;
         public int NonScoria = -1;
-        public List<int> BossBags = new()
+        private static readonly Dictionary<int, int> GemCrawl = new()
         {
-            ItemID.KingSlimeBossBag,
-            ItemID.EyeOfCthulhuBossBag,
-            ItemID.EaterOfWorldsBossBag,
-            ItemID.BrainOfCthulhuBossBag,
-            ItemID.QueenBeeBossBag,
-            ItemID.DeerclopsBossBag,
-            ItemID.SkeletronBossBag,
-            ItemID.WallOfFleshBossBag,
-            ItemID.QueenSlimeBossBag,
-            ItemID.DestroyerBossBag,
-            ItemID.TwinsBossBag,
-            ItemID.SkeletronPrimeBossBag,
-            ItemID.PlanteraBossBag,
-            ItemID.GolemBossBag,
-            ItemID.FishronBossBag,
-            ItemID.FairyQueenBossBag,
-            ItemID.CultistBossBag,
-            ItemID.MoonLordBossBag,
-            ModContent.ItemType<DesertScourgeBag>(),
-            ModContent.ItemType<CrabulonBag>(),
-            ModContent.ItemType<HiveMindBag>(),
-            ModContent.ItemType<PerforatorBag>(),
-            ModContent.ItemType<SlimeGodBag>(),
-            ModContent.ItemType<CryogenBag>(),
-            ModContent.ItemType<AquaticScourgeBag>(),
-            ModContent.ItemType<BrimstoneWaifuBag>(),
-            ModContent.ItemType<CalamitasCloneBag>(),
-            ModContent.ItemType<LeviathanBag>(),
-            ModContent.ItemType<AstrumAureusBag>(),
-            ModContent.ItemType<PlaguebringerGoliathBag>(),
-            ModContent.ItemType<RavagerBag>(),
-            ModContent.ItemType<AstrumDeusBag>(),
-            ModContent.ItemType<DragonfollyBag>(),
-            ModContent.ItemType<ProvidenceBag>(),
-            ModContent.ItemType<CeaselessVoidBag>(),
-            ModContent.ItemType<StormWeaverBag>(),
-            ModContent.ItemType<SignusBag>(),
-            ModContent.ItemType<PolterghastBag>(),
-            ModContent.ItemType<OldDukeBag>(),
-            ModContent.ItemType<DevourerofGodsBag>(),
-            ModContent.ItemType<YharonBag>(),
-            ModContent.ItemType<CalamitasCoffer>(),
-            ModContent.ItemType<DraedonBag>(),
+            { ItemID.Ruby, ModContent.NPCType<CrawlerRuby>() },
+            { ItemID.Amber, ModContent.NPCType<CrawlerAmber>() },
+            { ItemID.Topaz, ModContent.NPCType<CrawlerTopaz>() },
+            { ItemID.Emerald, ModContent.NPCType<CrawlerEmerald>() },
+            { ItemID.Sapphire, ModContent.NPCType<CrawlerSapphire>() },
+            { ItemID.Amethyst, ModContent.NPCType<CrawlerAmethyst>() },
+            { ItemID.Diamond, ModContent.NPCType<CrawlerDiamond>() },
+            { ItemID.CrystalShard, ModContent.NPCType<CrawlerCrystal>() }
         };
-
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            if (item.type == ModContent.ItemType<LoreAwakening>())
-            {
-                var line = new TooltipLine(Mod, "AwakeningRemix", "[c/FF0000:Right click to begin the trial] \n[c/FF0000:Although you won't die, please do not get hit]");
-                tooltips.Add(line);
-            }
-        }
         public override void SetDefaults(Item item)
         {
-            if (item.type == ModContent.ItemType<GildedProboscis>())
-            {
-                item.damage = item.damage / 9;
-                item.rare = ItemRarityID.LightRed;
-            }
-            else if (item.type == ModContent.ItemType<GoldenEagle>() || item.type == ModContent.ItemType<RougeSlash>())
-            {
-                item.damage = item.damage / 5;
-                item.rare = ItemRarityID.LightRed;
-            }
-            else if (item.type == ModContent.ItemType<Swordsplosion>())
-            {
-                item.damage = item.damage / 3;
-                item.rare = ItemRarityID.LightRed;
-            }
-            else if (item.type == ModContent.ItemType<EssenceofHavoc>())
+            if (item.type == ModContent.ItemType<EssenceofHavoc>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ModContent.ItemType<EssenceofLaw>();
             }
@@ -194,25 +142,6 @@ namespace CalRemix
                 }
             }
         }
-        public override bool CanRightClick(Item item)
-        {
-            if (item.type == ModContent.ItemType<LoreAwakening>())
-                return true;
-            return false;
-        }
-        public override void RightClick(Item item, Player player)
-        {
-            if (player.whoAmI == Main.myPlayer && item.type == ModContent.ItemType<LoreAwakening>())
-            {
-                player.QuickSpawnItem(Entity.GetSource_None(), item);
-                int type = ModContent.NPCType<TheCalamity>();
-
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-            }
-        }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (CalRemixWorld.cosmislag)
@@ -228,6 +157,59 @@ namespace CalRemix
         }
         public override void HoldItem(Item item, Player player)
         {
+            if (player.HasBuff<BrimstoneMadness>() && item != null && !item.IsAir && item.damage > 0)
+            {   
+                if (item.CountsAsClass<SummonDamageClass>() && !item.IsWhip())
+                    player.Calamity().cursedSummonsEnchant = true;
+                if (!item.CountsAsClass<SummonDamageClass>() && !item.IsWhip())
+                {
+                    player.Calamity().flamingItemEnchant = true;
+                    player.AddBuff(ModContent.BuffType<WeakBrimstoneFlames>(), 10);
+                }
+                if (item.CountsAsClass<MagicDamageClass>() && item.mana > 0 && item.type != ModContent.ItemType<Eternity>())
+                    player.Calamity().lifeManaEnchant = true;
+                if (item.shoot > ProjectileID.None && !item.IsTrueMelee() && item.type != ModContent.ItemType<TheFinalDawn>())
+                    player.Calamity().farProximityRewardEnchant = true;
+                if (item.shoot > ProjectileID.None && !item.IsTrueMelee() && item.type != ModContent.ItemType<TheFinalDawn>())
+                    player.Calamity().closeProximityRewardEnchant = true;
+                if (!item.CountsAsClass<SummonDamageClass>() && !item.CountsAsClass<RogueDamageClass>() && !item.channel && item.type != ModContent.ItemType<HeavenlyGale>())
+                {
+                    player.Calamity().dischargingItemEnchant = true;
+                    item.Calamity().DischargeEnchantExhaustion = CalamityGlobalItem.DischargeEnchantExhaustionCap;
+                }
+                if (item.CountsAsClass<SummonDamageClass>() && !item.IsWhip())
+                    player.Calamity().explosiveMinionsEnchant = true;
+                if (item.CountsAsClass<MagicDamageClass>() && item.mana > 0)
+                    player.Calamity().manaMonsterEnchant = true;
+                if (!item.CountsAsClass<SummonDamageClass>())
+                    player.Calamity().witheringWeaponEnchant = true;
+                if (item.shoot > ProjectileID.None)
+                    player.Calamity().persecutedEnchant = true;
+                if (item.shoot > ProjectileID.None && !item.CountsAsClass<SummonDamageClass>() && !item.IsTrueMelee())
+                {
+                    if (!Main.gameMenu)
+                    {
+                        player.Calamity().lecherousOrbEnchant = true;
+                        bool flag = false;
+                        int num = ModContent.NPCType<LecherousOrb>();
+                        ActiveEntityIterator<NPC>.Enumerator enumerator = Main.ActiveNPCs.GetEnumerator();
+                        while (enumerator.MoveNext())
+                        {
+                            NPC current = enumerator.Current;
+                            if (current.type == num && current.target == player.whoAmI)
+                            {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (Main.myPlayer == player.whoAmI && !flag && !player.Calamity().awaitingLecherousOrbSpawn)
+                        {
+                            player.Calamity().awaitingLecherousOrbSpawn = true;
+                            CalamityNetcode.NewNPC_ClientSide(player.Center, num, player);
+                        }
+                    }
+                }
+            }
             if (item.type == ModContent.ItemType<CalamityMod.Items.Potions.Alcohol.FabsolsVodka>())
             {
                 TransformItem(ref item, ModContent.ItemType<Items.Potions.NotFabsolVodka>());
@@ -239,6 +221,15 @@ namespace CalRemix
                     TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
                 }
             }
+        }
+        public override bool? UseItem(Item item, Player player)
+        {
+            if (item.Calamity().AppliedEnchantment != null) 
+            {
+                if (player.ItemAnimationJustStarted && player.Calamity().dischargingItemEnchant && item.Calamity().AppliedEnchantment.Value.Name != CalamityUtils.GetText("UI.Ephemeral.DisplayName"))
+                    item.Calamity().DischargeEnchantExhaustion--;
+            }
+            return null;
         }
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
@@ -503,11 +494,6 @@ namespace CalRemix
                 itemLoot.Add(ModContent.ItemType<ParchedScale>(), 1, 30, 40);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<PearlShard>());
             }
-            else if (item.type == ModContent.ItemType<DragonfollyBag>())
-            {
-                itemLoot.Add(ModContent.ItemType<DesertFeather>(), 1, 25, 30);
-                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<EffulgentFeather>());
-            }
             else if (item.type == ItemID.PlanteraBossBag)
             {
                 itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 5, 9);
@@ -518,6 +504,7 @@ namespace CalRemix
             }
             else if (item.type == ModContent.ItemType<DevourerofGodsBag>())
             {
+                itemLoot.Add(ModContent.ItemType<Lean>(), 1, 6, 8);
                 itemLoot.AddIf(() => CalamityWorld.revenge, ModContent.ItemType<YharimBar>(), 1, 1, 3);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<CosmiliteBar>());
                 itemLoot.AddIf(()=> !CalRemixWorld.cosmislag, ModContent.ItemType<CosmiliteBar>(), 1, 55, 65);
@@ -558,6 +545,38 @@ namespace CalRemix
             }
             else if (item.type == ModContent.ItemType<StarterBag>())
             {
+                List<IItemDropRule> starterBagLoot = itemLoot.Get();
+                for (int i = 0; i < starterBagLoot.Count; i++)
+                {
+                    if (starterBagLoot[i] is LeadingConditionRule lead)
+                    {
+                        for (int j = 0; j < lead.ChainedRules.Count; j++)
+                        {
+                            if (lead.ChainedRules[j] is Chains.TryIfSucceeded c)
+                            {
+                                if (c.RuleToChain is CommonDrop fuck) 
+                                {
+                                    if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
+                                    {
+                                        lead.ChainedRules.RemoveAt(j);
+                                    }
+                                }
+                            }
+                            else if (lead.ChainedRules[j] is Chains.TryIfFailedRandomRoll c2)
+                            {
+                                if (c2.RuleToChain is CommonDrop fuck)
+                                {
+                                    if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
+                                    {
+                                        lead.ChainedRules.RemoveAt(j);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+                itemLoot.Add(ModContent.ItemType<SaltBooklet>(), 1);
                 itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<Anomaly109>());
                 itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ModContent.ItemType<TheInsacredTexts>());
             }
@@ -790,6 +809,19 @@ namespace CalRemix
                         Main.dust[num228].velocity = vector7;
                     }
                     player.AddCooldown(BananaClownCooldown.ID, 4200);
+                }
+            }
+        }
+        public override void PostUpdate(Item item)
+        {
+            int value = ModContent.NPCType<Lizard>();
+            foreach (NPC npc in Main.npc)
+            {
+                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == ModContent.NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out value))
+                {
+                    NPC.NewNPCDirect(NPC.GetSource_None(), npc.Center, value);
+                    npc.life = 0;
+                    item.active = false;
                 }
             }
         }

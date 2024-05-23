@@ -49,6 +49,19 @@ Mods: {
 		}
 	}
 
+	CalamityModMusic: {
+		Items: {
+			AcidRainTier1MusicBox: {
+				DisplayName: Music Box (Acid Rain - Tier 1)
+				Tooltip:
+					'''
+					Plays 'corrosion!' by RoverdriveX
+					This music box contains a placeholder song
+					'''
+			}
+		}
+	}
+
 	CalRemix: {
 		Currencies: {
 			CosmiliteCoinCurrency: cosmilite coins
@@ -206,6 +219,31 @@ Mods: {
 			EntropicallyFed: {
 				DisplayName: Entropically Fed
 				Description: CHAOS CHAOS
+			}
+
+			ILoveLean: {
+				DisplayName: Lean Vision
+				Description: I LOVE LEAN!!!
+			}
+
+			Fairied: {
+				DisplayName: Fairied
+				Description: You can fly like a fairy?
+			}
+
+			ElementalAffinity: {
+				DisplayName: Elemental Affinity
+				Description: You feel like the master of the elements
+			}
+
+			BrimstoneMadness: {
+				DisplayName: Brimstone Madness
+				Description: Maybe you shouldn't have taken all those enchantments
+			}
+
+			Acid: {
+				DisplayName: Light Acid Trip
+				Description: You're not on acid, everyone else is
 			}
 		}
 
@@ -1596,6 +1634,8 @@ Mods: {
 					Increases damage by 35% and critical strike chance by 7%, 
 					Increases defense by 35 and damage reduction by 7%
 					Increases max health by 12%, life regeneration by 2 HP/s, and movement speed by 10%
+					Further increases damage and defense whenever Calamity Remix items are crafted
+					Maxes out at extra 30% damage and 60 defense
 					'''
 			}
 
@@ -1838,8 +1878,141 @@ Mods: {
 					'''
 			}
 
-			Wolfmole.DisplayName: Wolfmole
-			Asbestos.DisplayName: Asbestos Block
+			Wolfmole: {
+				DisplayName: Wolfmole
+				Tooltip: ""
+			}
+
+			Asbestos: {
+				DisplayName: Asbestos Block
+				Tooltip: ""
+			}
+
+			EolMusicBox: {
+				DisplayName: Music Box (Daytime Empress of Light)
+				Tooltip: Plays 'Gegenschein' by Jteoh
+			}
+
+			ARMusicBox: {
+				DisplayName: Music Box (Acid Rain - Tier 2)
+				Tooltip: Plays 'Tropic of Cancer' by Jteoh
+			}
+
+			AsbestosWall: {
+				Tooltip: ""
+				DisplayName: Asbestos Wall
+			}
+
+			AntlionOre: {
+				Tooltip: ""
+				DisplayName: Antlion Ore
+			}
+
+			AntlionBar: {
+				Tooltip: ""
+				DisplayName: Antlion Bar
+			}
+
+			DeterioratingLens: {
+				DisplayName: Deteriorating Lens
+				Tooltip:
+					'''
+					Cloud your vision with acidic cataracts
+					15% increased ranged critical strike chance
+					Increases view range for all items 
+					(Right click to zoom out)
+					'''
+			}
+
+			Slumbering: {
+				DisplayName: Slumbering
+				Tooltip:
+					'''
+					[c/FF0000:This world is not what it seems. Every crevice among the graves only whispers lies.]
+					[c/FF0000:Do not tread the path carved out for you, instead seek truth in the unknown.]
+					[c/FF0000:The world will reveal itself to you, but first I shall do so as well.]
+					[c/FF0000:Use this and attempt my trial.]
+					[c/FF0000:In the future, I may offer another trial. Keep this in case that happen.]
+					'''
+			}
+
+			PCP: {
+				DisplayName: Pixies' Capricious Power
+				Tooltip:
+					'''
+					Increases damage reduction and defense but reduces damage
+					Grants Fairy Flight?
+					'''
+			}
+
+			LSD: {
+				Tooltip:
+					'''
+					Grants a tiny defense and damage boost
+					All NPCs are also acidic to you
+					'''
+				DisplayName: Sulphuric Acid
+			}
+
+			Lean: {
+				Tooltip:
+					'''
+					Grants Lean Vision and significantly boosts some stats
+					[c/C4232C:These visual effects may be nauseating or otherwise bad for some]
+					'A SYRUP DOES NOT FEAR CONSUMPTION'
+					'''
+				DisplayName: Lean
+			}
+
+			Heroin: {
+				DisplayName: Magical Slag Ashes
+				Tooltip:
+					'''
+					You can feel the power of a fallen hero in these ashes
+					Gives every weapon you hold most of the enchantments it can use
+					'''
+			}
+
+			Fentanyl: {
+				DisplayName: Lumtanyl
+				Tooltip:
+					'''
+					Covers you in water
+					Also briefly gets stuck in your throat upon consumption
+					'''
+			}
+
+			Ecstacy: {
+				DisplayName: Elemental Tablets
+				Tooltip: Significantly boosts elemental strength but reduces some stats
+			}
+
+			PinkGreySolution: {
+				DisplayName: Pink Grey Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads Pink Dungeon
+					'''
+			}
+
+			GreenGreySolution: {
+				DisplayName: Green Grey Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads Green Dungeon
+					'''
+			}
+
+			BlueGreySolution: {
+				DisplayName: Blue Grey Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads Blue Dungeon
+					'''
+			}
 		}
 
 		NPCs: {
@@ -2064,6 +2237,9 @@ Mods: {
 			Phytogen.DisplayName: Phytogen
 			PhytogenShield.DisplayName: Phytogen Shield
 			PineappleFrond.DisplayName: Frond
+			Lizard.DisplayName: Lizard
+			GlisteningSpirit.DisplayName: Glistening Spirit
+			GildedSpirit.DisplayName: Gilded Spirit
 		}
 
 		Projectiles: {
@@ -2237,6 +2413,10 @@ Mods: {
 			AsbestosDrop.DisplayName: Asbestos Drop
 			CigarCinder.DisplayName: Cigar Cinder
 			Cigar.DisplayName: Cigar
+			OnyxPrismTooth.DisplayName: Onyx Prism Tooth
+			PinkGreySpray.DisplayName: Pink Grey Spray
+			GreenGreySpray.DisplayName: Green Grey Spray
+			BlueGreySpray.DisplayName: Blue Grey Spray
 		}
 
 		Tiles: {

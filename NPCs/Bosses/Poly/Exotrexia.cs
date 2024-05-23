@@ -279,7 +279,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             }
         }
 
-        public override bool SpecialOnKill()
+        public override void OnKill()
         {
             Astigmageddon astigmadeddon = null;
             Cataractacomb cataractacomb = null;
@@ -321,7 +321,6 @@ namespace CalRemix.NPCs.Bosses.Poly
                 RemixDowned.downedPolyphemalus = true;
                 CalRemixWorld.UpdateWorldBool();
             }
-            return true;
         }
 
         private void ShootCenter(int type, float velocityMod, int damage, float spread = 0)

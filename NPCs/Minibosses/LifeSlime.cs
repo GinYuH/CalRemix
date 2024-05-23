@@ -68,7 +68,7 @@ namespace CalRemix.NPCs.Minibosses
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (DownedBossSystem.downedRavager && spawnInfo.Player.InModBiome(ModContent.GetInstance<LifeBiome>()))
+			if (DownedBossSystem.downedRavager && spawnInfo.Player.InModBiome(ModContent.GetInstance<LifeBiome>()) && NPC.CountNPCS(Type) < 3)
 				return SpawnCondition.Cavern.Chance * 8f;
             return 0;
         }

@@ -18,7 +18,7 @@ Suffer.
 Multiplayer support? What's that?
 
 
-Credits:
+Credits (If you're not here but contributed, let us know):
 XP-00 Hypnos - Started it all
 
 =Coders=
@@ -32,7 +32,7 @@ Xyk - Onyx Overlord's Gunsaw
 =Artists=
 BrainMinusDown - Plague biome music and sprites
 DEMON GIRLFRIEND - Acidsighter theme
-Jteoh - Cryo slime theme
+Jteoh - Acid Rain Tier 2, Daytime Empress of Light, and Cryo slime themes
 GummyLeeches - Alternate Polyphemalus theme
 Too many spriters to list - Various sprites
 

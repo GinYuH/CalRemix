@@ -1,3 +1,4 @@
+using CalRemix.Buffs;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -31,13 +32,37 @@ namespace CalRemix.UI.ElementalSystem
         public override void PostSetupContent()
         {
             //ItemList.Add(VanillaElements.Item);
-            ItemList.Add(CalamityElements.Item);
-            ItemList.Add(RemixElements.Item);
-            NPCList.Add(VanillaElements.Bosses);
-            NPCList.Add(CalamityElements.Bosses);
-            NPCList.Add(RemixElements.Bosses);
-        }
+            ItemList.Add(ToItemList(Mod, RemixElements.Item));
+            ItemList.Add(ToItemList(ModLoader.GetMod("CalamityMod"), CalamityElements.Item));
 
+            NPCList.Add(VanillaElements.Bosses);
+            NPCList.Add(ToNPCList(Mod, RemixElements.Bosses));
+            NPCList.Add(ToNPCList(ModLoader.GetMod("CalamityMod"), CalamityElements.Bosses));
+        }
+        private static Dictionary<int, Element[]> ToItemList(Mod mod, Dictionary<string, Element[]> list)
+        {
+            Dictionary<int, Element[]> newList = new();
+            foreach (var entry in list) 
+            {
+                if (mod.TryFind(entry.Key, out ModItem item))
+                    newList.Add(item.Type, entry.Value);
+                else
+                    Console.WriteLine($"Gasp! {entry.Key} not found in {mod.DisplayName}!");
+            }
+            return newList;
+        }
+        private static Dictionary<int, Tuple<Element[], Element[]>> ToNPCList(Mod mod, Dictionary<string, Tuple<Element[], Element[]>> list)
+        {
+            Dictionary<int, Tuple<Element[], Element[]>> newList = new();
+            foreach (var entry in list)
+            {
+                if (mod.TryFind(entry.Key, out ModNPC npc))
+                    newList.Add(npc.Type, entry.Value);
+                else
+                    Console.WriteLine($"Gasp! {entry.Key} not found in {mod.DisplayName}!");
+            }
+            return newList;
+        }
     }
     public class ElementItem : GlobalItem
     {
@@ -188,8 +213,10 @@ namespace CalRemix.UI.ElementalSystem
                 {
                     foreach (Element w in weak)
                     {
-                        if (e.Contains(w))
+                        if (e.Contains(w) && !player.HasBuff<ElementalAffinity>())
                             multiplier += 0.05f;
+                        else if (e.Contains(w) && !player.HasBuff<ElementalAffinity>())
+                            multiplier += 0.35f;
                     }
                 }
                 if (resist != null)
@@ -213,8 +240,10 @@ namespace CalRemix.UI.ElementalSystem
                 {
                     foreach (Element w in weak)
                     {
-                        if (e.Contains(w))
-                            multiplier += 0.1f;
+                        if (e.Contains(w) && !Main.player[projectile.owner].HasBuff<ElementalAffinity>())
+                            multiplier += 0.05f;
+                        else if (e.Contains(w) && !Main.player[projectile.owner].HasBuff<ElementalAffinity>())
+                            multiplier += 0.35f;
                     }
                 }
                 if (resist != null)
@@ -222,7 +251,7 @@ namespace CalRemix.UI.ElementalSystem
                     foreach (Element r in resist)
                     {
                         if (e.Contains(r))
-                            multiplier -= 0.1f;
+                            multiplier -= 0.25f;
                     }
                 }
                 modifiers.FinalDamage *= multiplier;
