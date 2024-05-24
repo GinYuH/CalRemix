@@ -12,6 +12,10 @@ namespace CalRemix.UI
         //Loads fanny messages that aren't associated with anything else in particular
         public static void LoadGeneralFannyMessages()
         {
+
+            fannyMessages.Add(new FannyMessage("RemixJump", "Hey there friend! I noticed your jumps were a little too weak, so I added a bit of my Fanny-spice and now you can jump TWO times! I hope you enjoy this!",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().remixJumpCount >= 20).SetHoverTextOverride("Thanks Fanny! I will enjoy my new jumps!"));
+
             fannyMessages.Add(new FannyMessage("LowHP", "It looks like you're low on health. If your health reaches 0, you'll die. To combat this, don't let your health reach 0!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 1200, onlyPlayOnce: false).SetHoverTextOverride("Thanks Fanny! I'll heal."));
 
@@ -19,7 +23,7 @@ namespace CalRemix.UI
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || (Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax && Main.LocalPlayer.Calamity().rogueStealthMax > 0), onlyPlayOnce: true).SetHoverTextOverride("I'm still here Fanny!"));
             
             fannyMessages.Add(new FannyMessage("DarkArea", "Fun fact. The human head can still be conscious after decapitation for the average of 20 seconds.",
-                "Nuhuh", (FannySceneMetrics scene) => DarkArea()));
+                "Nuhuh", (FannySceneMetrics scene) => DarkArea() && CalRemixWorld.worldFullyStarted));
             
             fannyMessages.Add(new FannyMessage("ConstantDeath", "Is that someone behind you...?",
                 "Sob", (FannySceneMetrics scene) => DontStarveDarknessDamageDealer.darknessTimer >= 300 && !Main.LocalPlayer.DeadOrGhost));

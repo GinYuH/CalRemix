@@ -62,6 +62,8 @@ namespace CalRemix
         public static Asset<Texture2D> sunOG = null;
         public static Asset<Texture2D> sunCreepy = null;
 
+        public static readonly SoundStyle Silence = new($"{nameof(CalRemix)}/Sounds/EmptySound");
+
         public static List<int> oreList = new List<int>
         {
             TileID.Copper,

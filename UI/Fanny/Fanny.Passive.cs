@@ -17,8 +17,15 @@ namespace CalRemix.UI
 {
     public partial class FannyManager : ModSystem
     {
+        public static readonly SoundStyle HappySFX = new($"{nameof(CalRemix)}/Sounds/Happy");
         public static void LoadPassiveMessages()
         {
+            fannyMessages.Add(new FannyMessage("GonerFanny", "",
+                "Goner", (FannySceneMetrics scene) => Main.rand.NextBool(60000000)).SpokenByAnotherFanny(FannyUIState.GonerFanny));
+
+            fannyMessages.Add(new FannyMessage("Sleeping", "Do you ever dream of me?",
+                "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(1500000) && Main.LocalPlayer.sleeping.isSleeping));
+
             fannyMessages.Add(new FannyMessage("MeldGunk", "In a remote location underground, there is a second strain of Astral Infection. If left unattended for too long, it can start spreading and dealing irreversible damage! Stay safe and happy hunting!",
                 "Nuhuh", (FannySceneMetrics scene) => CalRemixWorld.meldCountdown <= 3600 && Main.hardMode));
 
@@ -29,10 +36,13 @@ namespace CalRemix.UI
                 "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)).AddStartEvent(FakeGen));
 
             fannyMessages.Add(new FannyMessage("FalseRef", "WHOA! Is that a reference to another of my favorite games?????",
-                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
+                "Awooga", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
 
             fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and 2 more minutes to drive away. I did nothing to stop it.",
                 "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
+
+            fannyMessages.Add(new FannyMessage("Blink", "Hey! Uhh, I noticed you haven't blinked in a while. Maybe you should...",
+               "Sob", (FannySceneMetrics scene) => Main.rand.NextBool(4000000)));
 
             fannyMessages.Add(new FannyMessage("Fuckyou", "You are now manually breathing.",
                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(4000000)));

@@ -35,18 +35,25 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Relocator", "Wow! You crafted a Normality Relocator! with a press of a button, unyielding discord is at your fingertips!", "Idle",
                 (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>()));
 
-            fannyMessages.Add(new FannyMessage("BunnyMurder", "...", "Cryptid",
-                (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false).AddItemDisplay(ItemID.BunnyBanner));
+            fannyMessages.Add(new FannyMessage("BunnyMurder", "...", 
+                "Cryptid", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false).AddItemDisplay(ItemID.BunnyBanner));
+
+            fannyMessages.Add(new FannyMessage("Terraspark", "New shoes!!!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.TerrasparkBoots)).AddItemDisplay(ItemID.TerrasparkBoots));
+
+            fannyMessages.Add(new FannyMessage("RoxcaliburShimmer", "Woah, something about that doesn't seem right! I'll take those off your hands- wouldn't wanna skip stuff, would you?",
+                "Nuhuh", HasRoxcaliburMaterials).AddItemDisplay(ModContent.ItemType<Roxcalibur>()).AddStartEvent(TakeRoxcaliburStuff));
             //Add a condition to this one YUH, to pass the test of knowledge...
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
-            fannyMessages.Add(new FannyMessage("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!", "Nuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>()));
+            fannyMessages.Add(new FannyMessage("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!", 
+                "Nuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>()));
 
             fannyMessages.Add(new FannyMessage("VoodooDoll", "Cool doll you have! I think that it will be even cooler when in lava!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.GuideVoodooDoll)));
 
             fannyMessages.Add(new FannyMessage("TwentyTwo", "I love 22. My banner now.",
-    "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HornetBanner)).AddItemDisplay(ItemID.HornetBanner).AddStartEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.HornetBanner)).SetHoverTextOverride("Thanks Fanny! That was cluttering my inventory!"));
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HornetBanner)).AddItemDisplay(ItemID.HornetBanner).AddStartEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.HornetBanner)).SetHoverTextOverride("Thanks Fanny! That was cluttering my inventory!"));
 
             fannyMessages.Add(new FannyMessage("Shadowspec", "Please throw this thing out, it will delete your world if you have it in inventory for too long!",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()).SetHoverTextOverride("Thank you for the help Fanny! I will!"));
@@ -59,7 +66,6 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",
                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LifeCrystal)));
-
 
             fannyMessages.Add(new FannyMessage("YharimBar", "Is that a Yharim Bar? You'll need a lot of them for various recipes!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>())).AddItemDisplay(ModContent.ItemType<YharimBar>()));
@@ -145,6 +151,25 @@ namespace CalRemix.UI
 
             #endregion
 
+        }
+        private static void TakeRoxcaliburStuff()
+        {
+            if (Main.LocalPlayer.HasItem(ItemID.SoulofNight))
+            {
+                int count = Main.LocalPlayer.CountItem(ItemID.SoulofNight);
+                for (int i = 0; i < count; i++)
+                {
+                    Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight);
+                }
+            }
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<EssenceofHavoc>()))
+            {
+                int count = Main.LocalPlayer.CountItem(ModContent.ItemType<EssenceofHavoc>());
+                for (int i = 0; i < count; i++)
+                {
+                    Main.LocalPlayer.ConsumeItem(ModContent.ItemType<EssenceofHavoc>());
+                }
+            }
         }
     }
 }

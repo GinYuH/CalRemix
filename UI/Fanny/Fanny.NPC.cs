@@ -38,6 +38,9 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("AncientDom", "Who is this guy???",
                 "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.AncientCultistSquidhead)));
 
+            fannyMessages.Add(new FannyMessage("Crawltipede", "Did you know that those big worms can only target you when you're on the ground? Keep flying and you're untouchable!",
+                "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.SolarCrawltipedeHead)));
+
             fannyMessages.Add(new FannyMessage("Bloodworm", "Crush it under your boot.",
                 "Idle", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BloodwormNormal>() || n.type == ModContent.NPCType<BloodwormFleeing>())));
 

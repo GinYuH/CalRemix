@@ -39,6 +39,8 @@ using tModPorter;
 using CalRemix.UI.Title;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using CalRemix.UI;
+using ReLogic.Utilities;
 using CalRemix.NPCs.Bosses.Phytogen;
 
 namespace CalRemix
@@ -99,6 +101,7 @@ namespace CalRemix
         public bool anomaly109UI;
 		public bool dungeon2;
 		public bool hayFever;
+		public int remixJumpCount;
 
         public int chainSawCharge;
         public int chainSawHitCooldown = 0;
@@ -401,6 +404,11 @@ namespace CalRemix
         }
 		public override void PreUpdate()
         {
+			if (FannyUIState.GonerFanny != null)
+			{
+				if (FannyUIState.GonerFanny.Speaking && Main.myPlayer == Player.whoAmI)
+					Main.musicVolume = 0;
+			}
             if (CalRemixWorld.permanenthealth)
 			{
 				SpawnPhantomHeart();

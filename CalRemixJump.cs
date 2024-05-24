@@ -13,7 +13,8 @@ namespace CalRemix
 		}
 		public override void OnStarted(Player player, ref bool playSound)
 		{
-			playSound = false;
+			player.GetModPlayer<CalRemixPlayer>().remixJumpCount++;
+            playSound = false;
         }
 	}
 }

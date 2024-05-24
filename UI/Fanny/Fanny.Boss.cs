@@ -20,6 +20,12 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("TorchGod", "A fellow being of the flames! It seems you played with a bit too much fire and now you are facing the wrath of the almighty Torch God! Don't worry though, he's impervious to damage, so you won't be able to hurt him.",
               "Awooga", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TorchGod)));
 
+            fannyMessages.Add(new FannyMessage("Wof", "EEYIKES, that thing is scary! Better use your Magic Mirror to get away!",
+              "Sob", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.WallofFlesh) && Main.LocalPlayer.HasBuff(BuffID.Horrified)));
+
+            fannyMessages.Add(new FannyMessage("SkelePrime", "Is that THE Skeletron Prime?! Goodness, he sure is a whole lot scarier up close! Fear not my friend, if you wait this night out, he might just run his batteries dry and tip right over like the bucket of bolts he is!",
+              "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.SkeletronPrime)));
+
             fannyMessages.Add(new FannyMessage("Calclone", "It is time. The Brimstone Witch, the one behind the Calamity in this world. You will now face Supreme Witch, Calamitas and end everything once and for all!",
                "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>())));
 
@@ -29,7 +35,7 @@ namespace CalRemix.UI
             fannyMessages.Add(pumpking1);
 
             FannyMessage pumpking2 = new FannyMessage("Pumpking2", "I told Fanny as a joke that jack-o-lanterns get their lights by eating flames. Don't tell him, though. It's funnier this way.",
-                "EvilIdle", FannyMessage.AlwaysShow).AddDelay(2).NeedsActivation().SetHoverTextOverride("Sure? I might tell Fanny later...");
+                "EvilIdle", FannyMessage.AlwaysShow).AddDelay(2).NeedsActivation().SetHoverTextOverride("Sure? I might tell Fanny later...").SpokenByEvilFanny();
 
             pumpking1.AddEndEvent(() => pumpking2.ActivateMessage());
 
@@ -63,7 +69,7 @@ namespace CalRemix.UI
             fannyMessages.Add(eol4);
 
             FannyMessage eol5 = new FannyMessage("EoL5", "Bitch.",
-                "EvilIdle", (FannySceneMetrics scene) => ChildSafety.Disabled, 5, onlyPlayOnce: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
+                "EvilIdle", FannyMessage.AlwaysShow, 5, onlyPlayOnce: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
 
             eol4.AddEndEvent(() => eol5.ActivateMessage());
 

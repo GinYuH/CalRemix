@@ -56,6 +56,9 @@ namespace CalRemix
 {
     public class CalRemixWorld : ModSystem
     {
+        public static bool worldFullyStarted = false;
+        public static int worldLoadCounter = 0;
+
         public static bool ogslime = false;
 
         public static int lifeTiles;
@@ -212,6 +215,9 @@ namespace CalRemix
         }
         public override void OnWorldUnload()
         {
+            worldFullyStarted = false;
+            worldLoadCounter = 0;
+
             ogslime = false;
 
             guideHasExisted = false;
@@ -472,6 +478,10 @@ namespace CalRemix
         };
         public override void PreUpdateWorld()
         {
+            if (worldLoadCounter < 180)
+                worldLoadCounter++;
+            else
+                worldFullyStarted = true;
             if (!loadedRecipeInjections)
             {
                 if (reargar)

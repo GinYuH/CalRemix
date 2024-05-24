@@ -29,6 +29,9 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("BloodMoon", "During a blood moon, strange critters can be found hiding under rocks. They can be used for blood moon fishing, but be careful, those teeth can really hurt.",
                 "Idle", (FannySceneMetrics scene) => Main.bloodMoon));
 
+            fannyMessages.Add(new FannyMessage("BloodMoonStare", "",
+                "Stare", (FannySceneMetrics scene) => Main.rand.NextBool(1500000) && Main.bloodMoon));
+
             fannyMessages.Add(new FannyMessage("Eclipxe", "It's dark.",
                 "Sob", (FannySceneMetrics scene) => Main.eclipse && !DownedBossSystem.downedDoG).SetHoverTextOverride("It is."));
 

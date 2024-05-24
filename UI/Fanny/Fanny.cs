@@ -36,6 +36,9 @@ namespace CalRemix.UI
 
         public float distanceFromEdge = 240;
 
+        public bool canBeTickled;
+        public bool canBounce;
+
         private int fanFrame;
         private int fanFrameCounter;
 
@@ -99,7 +102,7 @@ namespace CalRemix.UI
 
         private void TickleTheRepugnantFuck(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!FannyManager.fannyEnabled)
+            if (!FannyManager.fannyEnabled || !canBeTickled)
                 return;
             tickle = Math.Max(tickle, 0) + 1;
             SoundEngine.PlaySound(SoundID.DD2_GoblinScream with { MaxInstances = 0 });
@@ -186,23 +189,26 @@ namespace CalRemix.UI
             Rectangle frame = fannySprite.Frame(1, UsedMessage.Portrait.frameCount, 0, fanFrame);
             Vector2 position = BasePosition;
 
-            if (shakeTime > 0)
+            if (canBounce)
             {
-                position += Main.rand.NextVector2Circular(1f, 1f) * 5f * Utils.GetLerpValue(0.6f, 1f, shakeTime, true);
+                if (shakeTime > 0)
+                {
+                    position += Main.rand.NextVector2Circular(1f, 1f) * 5f * Utils.GetLerpValue(0.6f, 1f, shakeTime, true);
 
-                float bounceTime = Utils.GetLerpValue(0.6f, 1f, shakeTime, true);
-                position.Y -= Math.Abs(MathF.Sin(bounceTime * MathHelper.TwoPi)) * 62f * MathF.Pow(bounceTime, 0.6f);
+                    float bounceTime = Utils.GetLerpValue(0.6f, 1f, shakeTime, true);
+                    position.Y -= Math.Abs(MathF.Sin(bounceTime * MathHelper.TwoPi)) * 62f * MathF.Pow(bounceTime, 0.6f);
+                }
+
+                else if (ContainsPoint(Main.MouseScreen) || bounce > 0)
+                {
+                    if (bounce < 0)
+                        bounce = 1;
+
+                    position.Y -= MathF.Pow(Math.Abs(MathF.Sin(bounce * MathHelper.Pi)), 0.6f) * 22f;
+                }
             }
 
-            else if (ContainsPoint(Main.MouseScreen) || bounce > 0)
-            {
-                if (bounce < 0)
-                    bounce = 1;
-
-                position.Y -= MathF.Pow(Math.Abs(MathF.Sin(bounce * MathHelper.Pi)), 0.6f) * 22f;
-            }
-
-            if (tickle >= 1)
+            if (tickle >= 1 && canBeTickled)
                 position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
 
 
@@ -332,6 +338,7 @@ namespace CalRemix.UI
         public static Fanny FannyTheFire = new Fanny();
         public static Fanny EvilFanny = new Fanny();
         public static Fanny WonderFlower = new Fanny();
+        public static Fanny GonerFanny = new Fanny();
 
         public override void OnInitialize()
         {
@@ -340,9 +347,12 @@ namespace CalRemix.UI
                 textboxPalette: new FannyTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato));
             LoadFanny(WonderFlower, "Oooh! So exciting!", false, false, FannyManager.WonderFannyVoice, "TalkingFlower", verticalOffset: 0.3f, distanceFromEdge: 240,
                textboxPalette: new FannyTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f));
+
+            LoadFanny(GonerFanny, "     ", false, false, FannyManager.HappySFX with { MaxInstances = 0 }, "Goner", verticalOffset: 0.275f, distanceFromEdge: 840,
+                textboxPalette: new FannyTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black), canBeTickled: false, canBounce: false);
         }
 
-        public Fanny LoadFanny(Fanny fanny, string hoverText, bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f, FannyTextboxPalette? textboxPalette = null)
+        public Fanny LoadFanny(Fanny fanny, string hoverText, bool flipped, bool idlesInInventory, SoundStyle voice, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f, FannyTextboxPalette? textboxPalette = null, bool canBeTickled = true, bool canBounce = true)
         {
             fanny.Left.Set(-80, 1);
             fanny.Top.Set(-160, 1 - verticalOffset);
@@ -365,6 +375,9 @@ namespace CalRemix.UI
             fanny.speakingSound = voice;
             fanny.NoMessage = new FannyMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
             fanny.distanceFromEdge = distanceFromEdge;
+
+            fanny.canBeTickled = canBeTickled;
+            fanny.canBounce = canBounce;
 
             if (textboxPalette.HasValue)
                 fanny.textboxPalette = textboxPalette.Value;
@@ -533,6 +546,8 @@ namespace CalRemix.UI
             FannyPortrait.LoadPortrait("Cryptid", 1);
             FannyPortrait.LoadPortrait("Sob", 4);
             FannyPortrait.LoadPortrait("Nuhuh", 19);
+            FannyPortrait.LoadPortrait("Stare", 1);
+            FannyPortrait.LoadPortrait("Goner", 1);
 
             FannyPortrait.LoadPortrait("EvilIdle", 1);
 
@@ -666,6 +681,20 @@ namespace CalRemix.UI
             }
 
             return Main.LocalPlayer.HasItems(materials) && !DownedBossSystem.downedDesertScourge;
+        }
+        public static bool HasRoxcaliburMaterials(FannySceneMetrics scene)
+        {
+            List<int> materials = new List<int>();
+            {
+                materials.Add(ItemID.HellstoneBar);
+                materials.Add(ItemID.SoulofNight);
+                materials.Add(ModContent.ItemType<EssenceofHavoc>());
+                materials.Add(ItemID.Obsidian);
+                materials.Add(ItemID.StoneBlock);
+                materials.Add(ItemID.Amethyst);
+            }
+
+            return Main.LocalPlayer.HasItems(materials) && !Main.hardMode;
         }
 
         public static bool CrossModNPC(FannySceneMetrics scene, string ModName, string NPCName)
