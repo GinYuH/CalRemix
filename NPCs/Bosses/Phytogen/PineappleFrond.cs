@@ -107,6 +107,8 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             NPC phyto = Main.npc[(int)NPC.ai[0]];
             if (phyto == null || !phyto.active || phyto.type != ModContent.NPCType<Phytogen>())
             {
+                NPC.life = 0;
+                NPC.HitEffect();
                 NPC.active = false;
                 return;
             }
@@ -202,6 +204,28 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, seg.position - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, TextureAssets.Npc[Type].Value.Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
             }
             return false;
+        }
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            int goreChance = 2;
+            if (NPC.life <= 0)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    foreach (var seg in Segments)
+                    {
+                        for (int i = 0; i < goreChance; i++)
+                        {
+                            Gore.NewGore(NPC.GetSource_Death(), seg.position, Vector2.Zero, Mod.Find<ModGore>("Frond" + Main.rand.Next(1, 5)).Type, NPC.scale);
+                        }
+                    }
+                }
+            }
+        }
+
+        public override bool CheckActive()
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<Phytogen>());
         }
     }
 }

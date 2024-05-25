@@ -134,5 +134,10 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             spriteBatch.Draw(sprite.Value, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
+
+        public override bool CheckActive()
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<Phytogen>());
+        }
     }
 }

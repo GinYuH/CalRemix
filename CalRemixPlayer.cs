@@ -120,7 +120,10 @@ namespace CalRemix
         public int dashBuffer = 5;
         public int dashBufferEarly = 5;
         public int dashBufferLate = 5;
-        public Vector2 polyShieldChargeDir = new Vector2(0, 0);
+		public Vector2 polyShieldChargeDir = new Vector2(0, 0);
+
+        public int ionDialogue = -1;
+		public int ionQuestLevel = -1;
 
         public int[] MinionList =
 		{

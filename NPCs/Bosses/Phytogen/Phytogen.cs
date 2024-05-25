@@ -21,6 +21,8 @@ using System;
 using CalRemix.Retheme;
 using CalamityMod.Projectiles.Boss;
 using CalRemix.Buffs;
+using CalRemix.CrossCompatibility;
+using CalamityMod.Systems;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -113,6 +115,40 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override void AI()
         {
+            int yharChance = 43200;
+            bool anyYhars = CalamityUtils.CountProjectiles(ModContent.ProjectileType<JungleDragonYharon>()) > 0;
+            /*if (Main.LocalPlayer.controlUseTile)
+            {
+                yharChance = 1;
+            }*/
+            if (!anyYhars)
+            {
+                if (Main.rand.NextBool(yharChance))
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), (int)NPC.Center.X + 3000, NPC.Center.Y, -60, 0, ModContent.ProjectileType<JungleDragonYharon>(), 0, 0, Main.myPlayer);
+                    Main.NewText("Yharon, Dragon of Rebirth has awoken!", Color.MediumPurple);
+                    SoundEngine.PlaySound(CalamityMod.NPCs.Yharon.Yharon.FireSound);
+                }
+            }
+            else
+            {
+                NPC.velocity = Vector2.Zero;
+                foreach (Projectile p in Main.projectile)
+                {
+                    if (p.type == ModContent.ProjectileType<JungleDragonYharon>() && p.active)
+                    {
+                        if (p.getRect().Intersects(NPC.getRect()))
+                        {
+                            NPC.life = 0;
+                            NPC.HitEffect();
+                            NPC.active = false;
+                            p.timeLeft = 30;
+                        }
+                        break;
+                    }
+                }
+                return;
+            }
             Main.LocalPlayer.Calamity().isNearbyBoss = false;
             NPC.TargetClosest();
             NPC.dontTakeDamage = NPC.AnyNPCs(ModContent.NPCType<PineappleFrond>()) && Phase != (int)PhaseType.Passive;
@@ -423,6 +459,17 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                         }
                         break;
                     }
+            }
+        }
+
+        public void GoreExplosion()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                int d = Gore.NewGore(NPC.GetSource_Death(), NPC.Center, Vector2.Zero, Mod.Find<ModGore>("Frond" + Main.rand.NextBool(1, 5)).Type, NPC.scale);
+
+                Main.gore[d].velocity = (Main.gore[d].position - NPC.Center).SafeNormalize(Vector2.One) * Main.rand.Next(10, 18);
+                Main.gore[d].timeLeft = 30;
             }
         }
 
@@ -761,6 +808,11 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                     npc.netUpdate = true;
                 }
             }
+        }
+
+        public override bool CheckActive()
+        {
+            return Target == null || Target.dead || !Target.active;
         }
     }
 }

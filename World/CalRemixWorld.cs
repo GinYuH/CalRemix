@@ -780,6 +780,7 @@ namespace CalRemix
                 StratusDungeon.AddOriginalDungeonHoles();
                 CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
+                tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
             }
             // Secret Banished Baron seed
             if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")

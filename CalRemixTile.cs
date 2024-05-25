@@ -290,6 +290,15 @@ namespace CalRemix
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
+            Tile t = Main.tile[i, j];
+            if (type == ModContent.TileType<IonCubePlaced>() && t.TileFrameX == 0 && t.TileFrameY == 0)
+            {
+                IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+                if (cube == null)
+                {
+                    TileEntity.PlaceEntityNet(i, j, ModContent.TileEntityType<IonCubeTE>());
+                }
+            }
             if (!Main.dedServ)
             {
                 if (FannyManager.fannyEnabled)

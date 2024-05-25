@@ -157,5 +157,17 @@ namespace CalRemix.Projectiles.Hostile
         {
             return true;
         }
+
+        public override void OnKill(int timeLeft)
+        {
+            int goreChance = 2;
+            foreach (var seg in Segments)
+            {
+                for (int i = 0; i < goreChance; i++)
+                { 
+                    Gore.NewGore(Projectile.GetSource_Death(), seg.position, Vector2.Zero, Mod.Find<ModGore>("Frond" + Main.rand.Next(1, 5)).Type, Projectile.scale);
+                }
+            }
+        }
     }
 }
