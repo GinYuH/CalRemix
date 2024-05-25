@@ -150,14 +150,27 @@ namespace CalRemix.Tiles
                 Vector2 saneWorldPos = tilePos - offset + headBop;
                 Vector2 worldPos = saneWorldPos + new Vector2(196, 196);
                 bool playerOnRight = p.position.X > saneWorldPos.X;
-                SpriteEffects fx = playerOnRight ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                if (cube.lookingAtItem <= 0)
+                bool lookingAtSomething = false;
+                if (Main.LocalPlayer.Distance(saneWorldPos) < 720 && Collision.CanHitLine(saneWorldPos, 1, 1, Main.LocalPlayer.Center, 1, 1))
+                {
                     cube.desiredRotation = saneWorldPos.DirectionTo(p.Center).ToRotation();
-                else
+                    lookingAtSomething = true;
+                }
+                else if (cube.lookedAtItem >= 0)
+                {
                     cube.desiredRotation = saneWorldPos.DirectionTo(Main.item[cube.lookedAtItem].Center).ToRotation();
-                float rotation = cube.rotation + (playerOnRight ? 0 : MathHelper.Pi);
+                    lookingAtSomething = true;
+                }
+                else
+                {
+                    cube.desiredRotation = 0;
+                    cube.desiredX = saneWorldPos.X > (Main.maxTilesX / 2) ? -26 : 26;
+                    cube.desiredY = 0;
+                }
+                float rotation = cube.rotation + (lookingAtSomething ? (playerOnRight ? 0 : MathHelper.Pi) : 0);
                 Texture2D guy = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Ionogen/MasterofIons").Value;
                 Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Ionogen/MasterofIonsEyes").Value;
+                SpriteEffects fx = lookingAtSomething ? (playerOnRight ? SpriteEffects.FlipHorizontally : SpriteEffects.None) : saneWorldPos.X > (Main.maxTilesX / 2) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                 DrawChain(sb, tilePos + new Vector2(196 + 4, 196), worldPos);
                 sb.Draw(guy, worldPos - Main.screenPosition, null, GetDrawColour(i, j, Lighting.GetColor((int)saneWorldPos.X / 16, (int)saneWorldPos.Y / 16)), rotation, guy.Size() / 2, 1f, fx, 0f);
                 sb.Draw(eyes, worldPos - Main.screenPosition, null, cube.eyeColor, rotation, guy.Size() / 2, 1f, fx, 0f);
@@ -244,7 +257,7 @@ namespace CalRemix.Tiles
             }, ItemID.Bass));
             dialogue.Add(new(new List<string>()
             {
-                $"A Bass?\nI asked for a bass\n not a [i:{ItemID.Bass}] Bass!",
+                $"A Bass?\nI asked for a bass\nnot a [i:{ItemID.Bass}] Bass!",
                 "You know like, the instrument type?",
                 "Ah whatever, this should suffice anyways.",
                 "For your next mission:",
@@ -264,10 +277,19 @@ namespace CalRemix.Tiles
             {
                 $"Ah! A [i:CalamityMod/SurfClam] Surf Clam!\nThat's what it's called!",
                 "Did you know that clams\nare filter feeders?",
-                "Meaning they filter food\nout of water using\nhair-like structures across\n their gills called cilia?",
+                "Meaning they filter food\nout of water using\nhair-like structures across\ntheir gills called cilia?",
                 "Nature is so fascinating...",
                 "Erm, for your next task:",
-                $"Bring me some [i:CalRemix/EssenceofBabil] [c/32A871:Essence of Babil]."
+                $"Bring me a [i:{ ItemID.RodofDiscord }] [c/f542bc:Rod of Discord]."
+            }, ItemID.RodofDiscord));
+            dialogue.Add(new(new List<string>()
+            {
+                "Oh wow!\nI didn't expect you\nto find one so quick!",
+                "With the power of\nthis artifact, maybe I can\nteleport out of here!",
+                "Freedom...",
+                "I desire it very much so...",
+                "Oh right, tasks.",
+                $"Gather some [i:CalRemix/EssenceofBabil] [c/32A871:Essence of Babil]."
             }, ModContent.ItemType<EssenceofBabil>()));
             dialogue.Add(new(new List<string>()
             {
@@ -317,7 +339,7 @@ namespace CalRemix.Tiles
                 textLifeTime--;
             }
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
-            if (Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480)
+            if (Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480 && Collision.CanHitLine(Position.ToVector2() * 16, 1, 1, Main.LocalPlayer.Center, 1, 1))
             {
                 if (CalRemixWorld.ionQuestLevel == -1)
                 {
