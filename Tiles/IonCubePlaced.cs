@@ -151,14 +151,14 @@ namespace CalRemix.Tiles
                 Vector2 worldPos = saneWorldPos + new Vector2(196, 196);
                 bool playerOnRight = p.position.X > saneWorldPos.X;
                 bool lookingAtSomething = false;
-                if (Main.LocalPlayer.Distance(saneWorldPos) < 720 && Collision.CanHitLine(saneWorldPos, 1, 1, Main.LocalPlayer.Center, 1, 1))
-                {
-                    cube.desiredRotation = saneWorldPos.DirectionTo(p.Center).ToRotation();
-                    lookingAtSomething = true;
-                }
-                else if (cube.lookedAtItem >= 0)
+                if (cube.lookedAtItem >= 0 && cube.lookingAtItem > 0)
                 {
                     cube.desiredRotation = saneWorldPos.DirectionTo(Main.item[cube.lookedAtItem].Center).ToRotation();
+                    lookingAtSomething = true;
+                }
+                else if (Main.LocalPlayer.Distance(saneWorldPos) < 720 && Collision.CanHitLine(saneWorldPos, 1, 1, Main.LocalPlayer.Center, 1, 1))
+                {
+                    cube.desiredRotation = saneWorldPos.DirectionTo(p.Center).ToRotation();
                     lookingAtSomething = true;
                 }
                 else
