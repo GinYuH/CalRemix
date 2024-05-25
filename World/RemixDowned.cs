@@ -11,6 +11,7 @@ namespace CalRemix
         public static bool downedAcidsighter = false;
         public static bool downedCarcinogen = false;
         public static bool downedPhytogen = false;
+        public static bool downedIonogen = false;
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
 
@@ -30,6 +31,7 @@ namespace CalRemix
             downedAcidsighter = false;
             downedCarcinogen = false;
             downedPhytogen = false;
+            downedIonogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
 
@@ -50,6 +52,7 @@ namespace CalRemix
             downedAcidsighter = false;
             downedCarcinogen = false;
             downedPhytogen = false;
+            downedIonogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
 
@@ -70,6 +73,7 @@ namespace CalRemix
             tag["downedAcidsighter"] = downedAcidsighter;
             tag["downedCarcinogen"] = downedCarcinogen;
             tag["downedPhytogen"] = downedPhytogen;
+            tag["downedIonogen"] = downedIonogen;
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
 
@@ -92,6 +96,7 @@ namespace CalRemix
             downedAcidsighter = tag.Get<bool>("downedAcidsighter");
             downedCarcinogen = tag.Get<bool>("downedCarcinogen");
             downedPhytogen = tag.Get<bool>("downedPhytogen");
+            downedIonogen = tag.Get<bool>("downedIonogen");
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
 
@@ -113,6 +118,7 @@ namespace CalRemix
             writer.Write(downedAcidsighter);
             writer.Write(downedCarcinogen);
             writer.Write(downedPhytogen);
+            writer.Write(downedIonogen);
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
 
@@ -133,6 +139,7 @@ namespace CalRemix
             downedAcidsighter = reader.ReadBoolean();
             downedCarcinogen = reader.ReadBoolean();
             downedPhytogen = reader.ReadBoolean();
+            downedIonogen = reader.ReadBoolean();
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
 

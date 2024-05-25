@@ -110,6 +110,9 @@ namespace CalRemix
         public static bool greenDemon = true;
         public static bool remixJump = true;
 
+        public static int ionQuestLevel = -1;
+        public static bool wizardDisabled = false;
+
         public List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,
@@ -211,7 +214,10 @@ namespace CalRemix
             greenDemon = true;
             remixJump = true;
 
-        loadedRecipeInjections = false;
+            loadedRecipeInjections = false;
+
+            ionQuestLevel = -1;
+            wizardDisabled = false;
         }
         public override void OnWorldUnload()
         {
@@ -263,6 +269,9 @@ namespace CalRemix
             remixJump = true;
 
             loadedRecipeInjections = false;
+
+            ionQuestLevel = -1;
+            wizardDisabled = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -306,6 +315,8 @@ namespace CalRemix
             tag["109acidsighter"] = acidsighter;
             tag["109greenDemon"] = greenDemon;
             tag["109remixJump"] = remixJump;
+            tag["ionQuest"] = ionQuestLevel;
+            tag["wizardToggle"] = wizardDisabled;
 
             tag["109fanny"] = FannyManager.fannyEnabled;
             tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
@@ -355,6 +366,8 @@ namespace CalRemix
             acidsighter = tag.Get<bool>("109acidsighter");
             greenDemon = tag.Get<bool>("109greenDemon");
             remixJump = tag.Get<bool>("109remixJump");
+            ionQuestLevel = tag.Get<int>("ionQuest");
+            wizardDisabled = tag.Get<bool>("wizardToggle");
 
             FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
             FannyManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
@@ -401,6 +414,8 @@ namespace CalRemix
             writer.Write(acidsighter);
             writer.Write(greenDemon);
             writer.Write(remixJump);
+            writer.Write(ionQuestLevel);
+            writer.Write(wizardDisabled);
 
             writer.Write(FannyManager.fannyEnabled);
             writer.Write(FannyManager.fannyTimesFrozen);
@@ -448,6 +463,8 @@ namespace CalRemix
             acidsighter = reader.ReadBoolean();
             greenDemon = reader.ReadBoolean();
             remixJump = reader.ReadBoolean();
+            ionQuestLevel = reader.ReadInt32();
+            wizardDisabled = reader.ReadBoolean();
 
             FannyManager.fannyEnabled = reader.ReadBoolean();
             FannyManager.fannyTimesFrozen = reader.ReadInt32();
@@ -524,6 +541,7 @@ namespace CalRemix
                     }
                 }
             }
+            NPC.savedWizard = false;
         }
         public static void RefreshBestiary(BestiaryEntry entry, NPC npc, string text)
         {

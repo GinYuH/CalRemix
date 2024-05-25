@@ -1,6 +1,9 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalamityMod.Items.Fishing.SunkenSeaCatches;
+using CalamityMod.NPCs.OldDuke;
 using CalRemix.Items;
+using CalRemix.Items.Materials;
 using log4net.Appender;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,6 +14,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -41,6 +45,8 @@ namespace CalRemix.Tiles
 
         public override bool RightClick(int i, int j)
         {
+            if (NPC.AnyNPCs(ModContent.NPCType<OldDuke>()))
+                return false;
             IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
             if (cube != null)
             {
@@ -52,13 +58,21 @@ namespace CalRemix.Tiles
                 }
                 else if (player.ionDialogue >= 0)
                 {
-                    if (player.ionDialogue < IonCubeTE.dialogue[player.ionQuestLevel].Line.Count - 1)
+                    if (player.ionDialogue < IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].Line.Count - 1)
                     {
                         player.ionDialogue++;
                         cube.ManualTalk();
                     }
                     else
                     {
+                        if (CalRemixWorld.ionQuestLevel >= 5)
+                        {
+                            int num = NPC.NewNPC(new EntitySource_WorldEvent(), i * 16, j * 16, ModContent.NPCType<OldDuke>());
+                            if (Main.npc.IndexInRange(num))
+                            {
+                                CalamityUtils.BossAwakenMessage(num);
+                            }
+                        }
                         player.ionDialogue = -1;
                         cube.textLifeTime = 0;
                     }
@@ -69,10 +83,22 @@ namespace CalRemix.Tiles
 
         public override void MouseOver(int i, int j)
         {
+            if (NPC.AnyNPCs(ModContent.NPCType<OldDuke>()))
+                return;
             Main.LocalPlayer.cursorItemIconID = ItemID.AnnouncementBox;
             Main.LocalPlayer.noThrow = 2;
             Main.LocalPlayer.cursorItemIconEnabled = true;
         }
+
+        public override bool CanExplode(int i, int j)
+        {
+            return false;
+        }
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            return RemixDowned.downedIonogen;
+        }
+
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
@@ -80,7 +106,8 @@ namespace CalRemix.Tiles
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            DrawGuy(spriteBatch, i, j);
+            if (!NPC.AnyNPCs(ModContent.NPCType<OldDuke>()))
+                DrawGuy(spriteBatch, i, j);
             return true;
         }
         public static void DrawChain(SpriteBatch sb, Vector2 tilePos, Vector2 headPos)
@@ -93,7 +120,7 @@ namespace CalRemix.Tiles
             Vector2 controlPoint2 = headPos + Vector2.UnitY * curvature;
 
             BezierCurve curve = new(new Vector2[] { tilePos, controlPoint1, controlPoint2, headPos });
-            int numPoints = 16; 
+            int numPoints = 16;
             Vector2[] chainPositions = curve.GetPoints(numPoints).ToArray();
 
             //Draw each chain segment bar the very first one
@@ -103,7 +130,7 @@ namespace CalRemix.Tiles
                 float rotation = (chainPositions[i] - chainPositions[i - 1]).ToRotation() - MathHelper.PiOver2; //Calculate rotation based on direction from last point
                 float yScale = Vector2.Distance(chainPositions[i], chainPositions[i - 1]) / chainTex.Height; //Calculate how much to squash/stretch for smooth chain based on distance between points
                 Vector2 scale = new(1, yScale);
-                Color chainLightColor = Lighting.GetColor((int)position.X / 16 - 12, (int)position.Y / 16 - 12); //Lighting of the position of the chain segment
+                Color chainLightColor = GetDrawColour((int)(tilePos.X / 16), (int)(tilePos.Y / 16), Lighting.GetColor((int)position.X / 16 - 12, (int)position.Y / 16 - 12)); //Lighting of the position of the chain segment
                 Vector2 origin = new(chainTex.Width / 2, chainTex.Height); //Draw from center bottom of texture
                 sb.Draw(chainTex, position - Main.screenPosition, null, chainLightColor, rotation, origin, scale, SpriteEffects.None, 0);
             }
@@ -119,7 +146,7 @@ namespace CalRemix.Tiles
                 Vector2 tilePos = new Vector2(i * 16, j * 16);
                 cube.desiredX = p.position.X > tilePos.X ? -26 : 26;
                 Vector2 offset = new Vector2(cube.positionX, 64);
-                Vector2 headBop = new Vector2(0, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 22) * 2);
+                Vector2 headBop = cube.displayText == "[c/e0122d:I'm sorry.]" ? Vector2.Zero : new Vector2(0, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 22) * 2);
                 Vector2 saneWorldPos = tilePos - offset + headBop;
                 Vector2 worldPos = saneWorldPos + new Vector2(196, 196);
                 bool playerOnRight = p.position.X > saneWorldPos.X;
@@ -132,13 +159,8 @@ namespace CalRemix.Tiles
                 Texture2D guy = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Ionogen/MasterofIons").Value;
                 Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Ionogen/MasterofIonsEyes").Value;
                 DrawChain(sb, tilePos + new Vector2(196 + 4, 196), worldPos);
-                sb.Draw(guy, worldPos - Main.screenPosition, null, Lighting.GetColor((int)saneWorldPos.X / 16, (int)saneWorldPos.Y / 16), rotation, guy.Size() / 2, 1f, fx, 0f);
+                sb.Draw(guy, worldPos - Main.screenPosition, null, GetDrawColour(i, j, Lighting.GetColor((int)saneWorldPos.X / 16, (int)saneWorldPos.Y / 16)), rotation, guy.Size() / 2, 1f, fx, 0f);
                 sb.Draw(eyes, worldPos - Main.screenPosition, null, cube.eyeColor, rotation, guy.Size() / 2, 1f, fx, 0f);
-
-
-                /*Utils.DrawBorderString(sb, "You are the hero", worldPos - Main.screenPosition + textOffset, Color.LightBlue);
-                Utils.DrawBorderString(sb, "You must solve the", worldPos - Main.screenPosition + (FontAssets.MouseText.Value.MeasureString("Y").Y + 2) * Vector2.UnitY + textOffset, Color.LightBlue);
-                Utils.DrawBorderString(sb, "Sacred Puzzles", worldPos - Main.screenPosition + (FontAssets.MouseText.Value.MeasureString("Y").Y * 2 + 4) * Vector2.UnitY + textOffset, Color.Lime);*/
 
                 if (cube.textLifeTime > 0)
                 {
@@ -157,6 +179,18 @@ namespace CalRemix.Tiles
                 }
             }
         }
+        private static Color GetDrawColour(int i, int j, Color colour)
+        {
+            int colType = Main.tile[i, j].TileColor;
+            Color paintCol = WorldGen.paintColor(colType);
+            if (colType >= 13 && colType <= 24)
+            {
+                colour.R = (byte)(paintCol.R / 255f * colour.R);
+                colour.G = (byte)(paintCol.G / 255f * colour.G);
+                colour.B = (byte)(paintCol.B / 255f * colour.B);
+            }
+            return colour;
+        }
     }
     public class IonCubeTE : ModTileEntity
     {
@@ -173,14 +207,11 @@ namespace CalRemix.Tiles
         public Color textColor = Color.White;
         public int textLifeTime = 0;
 
-        // The type of item he wants
-        public int desiredItem = 0;
-
         // The item's index
-        public int lookedAtItem = 0;
+        public int lookedAtItem = -1;
 
         // How long he's been looking at the item
-        public int lookingAtItem = 0;
+        public int lookingAtItem = -1;
 
         // His current rotation
         public float rotation = 0;
@@ -193,22 +224,71 @@ namespace CalRemix.Tiles
         // All of his dialogue
         public static List<IonDialogue> dialogue = new List<IonDialogue>() { };
 
-        public struct IonDialogue(List<string> line)
+        public struct IonDialogue(List<string> line, int item = -1, Func<bool> condition = null)
         {
             public List<string> Line = line;
-            public Color Color = Color.White;
+            public int RequiredItem = item;
+            public Func<bool> Condition = condition;
         }
 
         public override void Load()
         {
-            dialogue.Add(new(new List<string>() 
-            { 
-                $"Human, I remember your [c/C61B40:charges].",
+            dialogue.Add(new(new List<string>()
+            {
+                "Greetings traveller! I am The Plastic Oracle.",
                 "You don't seem like one for\nlong tragic backstories,\nso I'll cut to the chase.",
                 "I require several objects\nin order to free myself",
                 "Bring me everything I demand\nfor riches untold!",
                 "Your first mission:",
-                "Bring me a simple Bass.\nYou can do that right?\nI'm sure you can!" 
+                $"Bring me a simple [c/C7F25A:bass].\nYou can do that right?\nI'm sure you can!"
+            }, ItemID.Bass));
+            dialogue.Add(new(new List<string>()
+            {
+                $"A Bass?\nI asked for a bass\n not a [i:{ItemID.Bass}] Bass!",
+                "You know like, the instrument type?",
+                "Ah whatever, this should suffice anyways.",
+                "For your next mission:",
+                $"Bring me a [i:{ItemID.ShinyRedBalloon}] [c/EB3F4E:Shiny Red Balloon].",
+                "This one should be a breeze!\nNow off you go!"
+            }, ItemID.ShinyRedBalloon));
+            dialogue.Add(new(new List<string>()
+            {
+                "Yes, yes!\nThank you for the balloon!",
+                "How does this help me\nescape you may ask.",
+                "Well it doesn't!",
+                "It just reminds me of\nthe good ol' days...",
+                "Back when everyone was\nfilled with lead instead\nof microplastics y'know?",
+                $"Anyways, go get me erm\nWhatever this thing [i:CalamityMod/SurfClam] is."
+            }, ModContent.ItemType<SurfClam>()));
+            dialogue.Add(new(new List<string>()
+            {
+                $"Ah! A [i:CalamityMod/SurfClam] Surf Clam!\nThat's what it's called!",
+                "Did you know that clams\nare filter feeders?",
+                "Meaning they filter food\nout of water using\nhair-like structures across\n their gills called cilia?",
+                "Nature is so fascinating...",
+                "Erm, for your next task:",
+                $"Bring me some [i:CalRemix/EssenceofBabil] [c/32A871:Essence of Babil]."
+            }, ModContent.ItemType<EssenceofBabil>()));
+            dialogue.Add(new(new List<string>()
+            {
+                "How babulous!",
+                "You're such a helpful ally to have!",
+                "Your next request...",
+                $"[c/e0122d:Kill The Wizard.]",
+                $"The guy who wears\nthis hat [i:{ItemID.WizardsHat}] if you're confused.",
+                "It's nothing personal\nJust too many mages running amok.\nOnly the strongest may survive",
+                "And don't worry about\nhim respawning!",
+                "I can assure he [c/E0122D:stays dead],\nand can give you [c/47FF60:all] that\nhe ever could have!",
+                "Now go! Go my friend!\nBeat him to a crisp!"
+            }, -1, () => CalRemixWorld.wizardDisabled));
+            dialogue.Add(new(new List<string>()
+            {
+                "Great job!\nI knew I could\ncount on you!",
+                "You remind me of\nmyself when I was younger...",
+                "So much strength...",
+                "So much energy...",
+                "...",
+                "[c/e0122d:I'm sorry.]"
             }));
         }
 
@@ -224,7 +304,7 @@ namespace CalRemix.Tiles
             if (player.ionDialogue <= -1)
                 return "";
 
-            return dialogue[player.ionQuestLevel].Line[player.ionDialogue];
+            return dialogue[CalRemixWorld.ionQuestLevel].Line[player.ionDialogue];
         }
 
         public override void Update()
@@ -239,22 +319,39 @@ namespace CalRemix.Tiles
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480)
             {
-                if (player.ionQuestLevel == -1)
+                if (CalRemixWorld.ionQuestLevel == -1)
                 {
-                    player.ionQuestLevel = 0;
+                    CalRemixWorld.ionQuestLevel = 0;
                     player.ionDialogue = 0;
                     ManualTalk();
+                }
+                if (dialogue[CalRemixWorld.ionQuestLevel].Condition != null)
+                {
+                    if (dialogue[CalRemixWorld.ionQuestLevel].Condition.Invoke())
+                    {
+                        CalRemixWorld.ionQuestLevel++;
+                        player.ionDialogue = 0;
+                        ManualTalk();
+                    }
                 }
                 if (player.ionDialogue > -1)
                 {
                     if (textLifeTime < 1)
                     {
-                        if (player.ionDialogue < dialogue[player.ionQuestLevel].Line.Count - 1)
+                        if (player.ionDialogue < dialogue[CalRemixWorld.ionQuestLevel].Line.Count - 1)
                         {
                             player.ionDialogue++;
                         }
                         else
                         {
+                            if (CalRemixWorld.ionQuestLevel >= 5)
+                            {
+                                int num = NPC.NewNPC(new EntitySource_WorldEvent(), Position.X * 16, Position.Y * 16, ModContent.NPCType<OldDuke>());
+                                if (Main.npc.IndexInRange(num))
+                                {
+                                    CalamityUtils.BossAwakenMessage(num);
+                                }
+                            }
                             player.ionDialogue = -1;
                         }
                     }
@@ -267,19 +364,26 @@ namespace CalRemix.Tiles
             if (lookingAtItem > 0)
             {
                 lookingAtItem--;
+            }
+            if (dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && lookingAtItem == -1)
+            {
                 foreach (Item i in Main.item)
                 {
-                    if (i.Distance(Position.ToVector2() * 16) < 64 && i.active && i.type == desiredItem)
+                    if (i.Distance(Position.ToVector2() * 16) < 72 && i.active && i.type == dialogue[CalRemixWorld.ionQuestLevel].RequiredItem)
                     {
+                        CalRemixWorld.ionQuestLevel++;
                         lookingAtItem = 240;
                         lookedAtItem = i.whoAmI;
+                        player.ionDialogue = 0;
+                        ManualTalk();
+                        break;
                     }
                 }
             }
-            if (lookingAtItem <= 0 && Main.item[lookedAtItem].active && Main.item[lookedAtItem].type == desiredItem)
+            if (lookingAtItem == 0 && Main.item[lookedAtItem].active && Main.item[lookedAtItem].type == dialogue[CalRemixWorld.ionQuestLevel - 1].RequiredItem)
             {
                 Main.item[lookedAtItem].active = false;
-                desiredItem = -1;
+                lookingAtItem = -1;
             }
         }
 

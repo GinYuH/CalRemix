@@ -983,6 +983,11 @@ namespace CalRemix
                         }
                     }
                 }
+                if (npc.type == NPCID.Wizard && npc.life <= 0)
+                {
+                    CalRemixWorld.wizardDisabled = true;
+                    CalRemixWorld.UpdateWorldBool();
+                }
             }
         }
 
@@ -1013,6 +1018,10 @@ namespace CalRemix
                         CystMessage.ActivateMessage();
                     }
                 }
+            }
+            if (npc.type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
+            {
+                Main.NewText("... and is never coming back.", Color.DarkBlue);
             }
         }
         public override bool CheckDead(NPC npc)
@@ -1201,6 +1210,8 @@ namespace CalRemix
         {
             if (type == NPCID.DungeonGuardian)
                 return 0;
+            if (type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
+                return 0;
             if (!CalRemixWorld.grimesandToggle)
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
             if (spawnSource is EntitySource_Death)
@@ -1242,6 +1253,14 @@ namespace CalRemix
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
+            //Wizard can't respawn
+            if (CalRemixWorld.wizardDisabled)
+            {
+                if (pool.ContainsKey(NPCID.BoundWizard))
+                {
+                    pool.Remove(NPCID.BoundWizard);
+                }
+            }
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {
                 pool.Clear();
