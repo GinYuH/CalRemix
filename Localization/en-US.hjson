@@ -2018,6 +2018,8 @@ Mods: {
 					Spreads Blue Dungeon
 					'''
 			}
+
+			IonCube.DisplayName: Ion Cube
 		}
 
 		NPCs: {
@@ -2425,6 +2427,7 @@ Mods: {
 			PineappleFrondProj.DisplayName: Frond
 			Potpourri.DisplayName: Potpourri
 			PyrogenFlare.DisplayName: Pyrogen Flare
+			JungleDragonYharon.DisplayName: Yharon
 		}
 
 		Tiles: {
@@ -2446,6 +2449,7 @@ Mods: {
 			BrinerackPlaced.MapEntry: Brinerack Placed
 			TanzaniteGlassPlaced.MapEntry: Tanzanite Glass Placed
 			MovieSignPlaced.MapEntry: Moviesign
+			IonCubePlaced.MapEntry: Ion Cube Placed
 		}
 
 		Enchantments: {

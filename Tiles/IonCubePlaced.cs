@@ -52,8 +52,16 @@ namespace CalRemix.Tiles
                 }
                 else if (player.ionDialogue >= 0)
                 {
-                    player.ionDialogue++;
-                    cube.ManualTalk();
+                    if (player.ionDialogue < IonCubeTE.dialogue[player.ionQuestLevel].Line.Count - 1)
+                    {
+                        player.ionDialogue++;
+                        cube.ManualTalk();
+                    }
+                    else
+                    {
+                        player.ionDialogue = -1;
+                        cube.textLifeTime = 0;
+                    }
                 }
             }
             return false;
@@ -68,8 +76,7 @@ namespace CalRemix.Tiles
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
-            if (cube != null) 
-            cube.Kill(i, j);
+            cube?.Kill(i, j);
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -145,7 +152,7 @@ namespace CalRemix.Tiles
                             breaks++;
                         }
                     }
-                    Vector2 textOffset = new Vector2(-60, -60 - 26 * breaks);
+                    Vector2 textOffset = new Vector2(-80, -60 - 26 * breaks);
                     Utils.DrawBorderString(sb, cube.displayText, worldPos - Main.screenPosition + textOffset - headBop, cube.textColor);
                 }
             }
@@ -225,6 +232,10 @@ namespace CalRemix.Tiles
             positionX = MathHelper.Lerp(positionX, desiredX, 0.05f);
             positionY = MathHelper.Lerp(positionY, desiredX, 0.05f);
             rotation = rotation.AngleLerp(desiredRotation, 0.05f);
+            if (textLifeTime > 0)
+            {
+                textLifeTime--;
+            }
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480)
             {
@@ -236,10 +247,6 @@ namespace CalRemix.Tiles
                 }
                 if (player.ionDialogue > -1)
                 {
-                    if (textLifeTime > 0)
-                    {
-                        textLifeTime--;
-                    }
                     if (textLifeTime < 1)
                     {
                         if (player.ionDialogue < dialogue[player.ionQuestLevel].Line.Count - 1)
@@ -257,22 +264,23 @@ namespace CalRemix.Tiles
                     ManualTalk();
                 }
             }
-            /*if (lookingAtItem > 0)
+            if (lookingAtItem > 0)
             {
                 lookingAtItem--;
+                foreach (Item i in Main.item)
+                {
+                    if (i.Distance(Position.ToVector2() * 16) < 64 && i.active && i.type == desiredItem)
+                    {
+                        lookingAtItem = 240;
+                        lookedAtItem = i.whoAmI;
+                    }
+                }
             }
-            if (lookingAtItem <= 0 && Main.item[lookedAtItem].active)
+            if (lookingAtItem <= 0 && Main.item[lookedAtItem].active && Main.item[lookedAtItem].type == desiredItem)
             {
                 Main.item[lookedAtItem].active = false;
+                desiredItem = -1;
             }
-            foreach (Item i in Main.item)
-            {
-                if (i.Distance(Position.ToVector2() * 16) < 64 && i.active && i.type == ItemID.Bass)
-                {
-                    lookingAtItem = 240;
-                    lookedAtItem = i.whoAmI;
-                }
-            }*/
         }
 
         public void ManualTalk()
