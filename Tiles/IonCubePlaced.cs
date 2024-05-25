@@ -402,6 +402,13 @@ namespace CalRemix.Tiles
                     }
                 }
             }
+            if (lookedAtItem > -1)
+            {
+                if (Main.item[lookedAtItem] != null)
+                {
+                    Main.item[lookedAtItem].noGrabDelay = 999;
+                }
+            }
             if (lookingAtItem == 0 && Main.item[lookedAtItem].active && Main.item[lookedAtItem].type == dialogue[CalRemixWorld.ionQuestLevel - 1].RequiredItem)
             {
                 Main.item[lookedAtItem].active = false;
