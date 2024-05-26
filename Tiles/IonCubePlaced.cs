@@ -101,6 +101,8 @@ namespace CalRemix.Tiles
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
+            if (fail)
+                return;
             IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
             cube?.Kill(i, j);
         }
@@ -366,7 +368,7 @@ namespace CalRemix.Tiles
                         }
                         else
                         {
-                            if (CalRemixWorld.ionQuestLevel >= 5)
+                            if (CalRemixWorld.ionQuestLevel >= dialogue.Count - 1)
                             {
                                 int num = NPC.NewNPC(new EntitySource_WorldEvent(), Position.X * 16, Position.Y * 16, ModContent.NPCType<OldDuke>());
                                 if (Main.npc.IndexInRange(num))
@@ -387,7 +389,7 @@ namespace CalRemix.Tiles
             {
                 lookingAtItem--;
             }
-            if (dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && lookingAtItem == -1)
+            if (dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && lookingAtItem == -1 && player.ionDialogue == -1)
             {
                 foreach (Item i in Main.item)
                 {

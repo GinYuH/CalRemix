@@ -983,7 +983,7 @@ namespace CalRemix
                         }
                     }
                 }
-                if (npc.type == NPCID.Wizard && npc.life <= 0)
+                if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
                 {
                     CalRemixWorld.wizardDisabled = true;
                     CalRemixWorld.UpdateWorldBool();
