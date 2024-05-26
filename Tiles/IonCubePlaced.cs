@@ -166,13 +166,13 @@ namespace CalRemix.Tiles
                 else
                 {
                     cube.desiredRotation = 0;
-                    cube.desiredX = saneWorldPos.X > (Main.maxTilesX / 2) ? -26 : 26;
+                    cube.desiredX = saneWorldPos.X > ((Main.maxTilesX * 16) / 2) ? -26 : 26;
                     cube.desiredY = 0;
                 }
                 float rotation = cube.rotation + (lookingAtSomething ? (playerOnRight ? 0 : MathHelper.Pi) : 0);
                 Texture2D guy = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Ionogen/MasterofIons").Value;
                 Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Ionogen/MasterofIonsEyes").Value;
-                SpriteEffects fx = lookingAtSomething ? (playerOnRight ? SpriteEffects.FlipHorizontally : SpriteEffects.None) : saneWorldPos.X > (Main.maxTilesX / 2) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                SpriteEffects fx = lookingAtSomething ? (playerOnRight ? SpriteEffects.FlipHorizontally : SpriteEffects.None) : saneWorldPos.X > ((Main.maxTilesX * 16) / 2) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                 DrawChain(sb, tilePos + new Vector2(196 + 4, 196), worldPos);
                 sb.Draw(guy, worldPos - Main.screenPosition, null, GetDrawColour(i, j, Lighting.GetColor((int)saneWorldPos.X / 16, (int)saneWorldPos.Y / 16)), rotation, guy.Size() / 2, 1f, fx, 0f);
                 sb.Draw(eyes, worldPos - Main.screenPosition, null, cube.eyeColor, rotation, guy.Size() / 2, 1f, fx, 0f);
