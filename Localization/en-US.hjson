@@ -2247,6 +2247,8 @@ Mods: {
 			Lizard.DisplayName: Lizard
 			GlisteningSpirit.DisplayName: Glistening Spirit
 			GildedSpirit.DisplayName: Gilded Spirit
+			Ionogen.DisplayName: Ionogen
+			IonogenShield.DisplayName: Ionogen's Shield
 		}
 
 		Projectiles: {

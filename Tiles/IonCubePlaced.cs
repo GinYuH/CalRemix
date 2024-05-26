@@ -4,6 +4,7 @@ using CalamityMod.Items.Fishing.SunkenSeaCatches;
 using CalamityMod.NPCs.OldDuke;
 using CalRemix.Items;
 using CalRemix.Items.Materials;
+using CalRemix.NPCs.Bosses.Ionogen;
 using log4net.Appender;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -45,7 +46,7 @@ namespace CalRemix.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<OldDuke>()))
+            if (NPC.AnyNPCs(ModContent.NPCType<Ionogen>()))
                 return false;
             IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
             if (cube != null)
@@ -67,7 +68,7 @@ namespace CalRemix.Tiles
                     {
                         if (CalRemixWorld.ionQuestLevel >= 5)
                         {
-                            int num = NPC.NewNPC(new EntitySource_WorldEvent(), i * 16, j * 16, ModContent.NPCType<OldDuke>());
+                            int num = NPC.NewNPC(new EntitySource_WorldEvent(), i * 16, j * 16, ModContent.NPCType<Ionogen>());
                             if (Main.npc.IndexInRange(num))
                             {
                                 CalamityUtils.BossAwakenMessage(num);
@@ -83,7 +84,7 @@ namespace CalRemix.Tiles
 
         public override void MouseOver(int i, int j)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<OldDuke>()))
+            if (NPC.AnyNPCs(ModContent.NPCType<Ionogen>()))
                 return;
             Main.LocalPlayer.cursorItemIconID = ItemID.AnnouncementBox;
             Main.LocalPlayer.noThrow = 2;
@@ -108,7 +109,7 @@ namespace CalRemix.Tiles
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<OldDuke>()))
+            if (!NPC.AnyNPCs(ModContent.NPCType<Ionogen>()))
                 DrawGuy(spriteBatch, i, j);
             return true;
         }
@@ -370,7 +371,7 @@ namespace CalRemix.Tiles
                         {
                             if (CalRemixWorld.ionQuestLevel >= dialogue.Count - 1)
                             {
-                                int num = NPC.NewNPC(new EntitySource_WorldEvent(), Position.X * 16, Position.Y * 16, ModContent.NPCType<OldDuke>());
+                                int num = NPC.NewNPC(new EntitySource_WorldEvent(), Position.X * 16, Position.Y * 16, ModContent.NPCType<Ionogen>());
                                 if (Main.npc.IndexInRange(num))
                                 {
                                     CalamityUtils.BossAwakenMessage(num);
