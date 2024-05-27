@@ -89,6 +89,15 @@ namespace CalRemix.NPCs.Bosses.Ionogen
         public override void AI()
         {
             NPC.TargetClosest();
+            Main.raining = true;
+            Main.cloudBGActive = 1f;
+            Main.numCloudsTemp = Main.maxClouds;
+            Main.numClouds = Main.numCloudsTemp;
+            Main.windSpeedCurrent = 0.72f;
+            Main.windSpeedTarget = Main.windSpeedCurrent;
+            Main.weatherCounter = 60 * 60;
+            Main.rainTime = Main.weatherCounter;
+            Main.maxRaining = 0.89f;
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
             bool death = CalamityWorld.death || BossRushEvent.BossRushActive;
