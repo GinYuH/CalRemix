@@ -123,7 +123,6 @@ namespace CalRemix.CrossCompatibility
                 ["customPortrait"] = cdPortrait
             });
             bc.Call("LogMiniBoss", Mod, "KingMinnowsPrime", 18.1f, () => RemixDowned.downedKingMinnowsPrime, NPCType<KingMinnowsPrime>(), new Dictionary<string, object>());
-            bc.Call("LogMiniBoss", Mod, "LaRuga", 20.2f, () => RemixDowned.downedLaRuga, NPCType<LaRuga>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "LifeSlime", 16.7f, () => RemixDowned.downedLifeSlime, NPCType<LifeSlime>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "OnyxKinsman", 7.5f, () => RemixDowned.downedOnyxKinsman, NPCType<OnyxKinsman>(), new Dictionary<string, object>());
             Action<SpriteBatch, Rectangle, Color> pePortrait = (SpriteBatch sb, Rectangle rect, Color color) => {

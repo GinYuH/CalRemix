@@ -67,7 +67,8 @@ namespace CalRemix.NPCs
                     if (NPC.Remix().GreenAI[0] % (150 + Main.rand.Next(0, 20)) == 0)
                     {
                         Vector2 vel = new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 2));
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, vel, ModContent.ProjectileType<SporeGasPlantera>(), NPC.damage, 0, Main.myPlayer);
+                        Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, vel, ModContent.ProjectileType<SporeGasPlantera>(), NPC.damage, 0, Main.myPlayer);
+                        projectile.timeLeft = 600;
                         SoundEngine.PlaySound(SoundID.Item20, NPC.Center);
                     }
                 }
@@ -82,7 +83,8 @@ namespace CalRemix.NPCs
                     {
                         Vector2 dist = Main.player[NPC.target].position - NPC.position;
                         dist.Normalize();
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 10, ModContent.ProjectileType<SporeGasPlantera>(), NPC.damage, 0, Main.myPlayer);
+                        Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, dist * 10, ModContent.ProjectileType<SporeGasPlantera>(), NPC.damage, 0, Main.myPlayer);
+                        projectile.timeLeft = 600;
                         SoundEngine.PlaySound(SoundID.Item20, NPC.Center);
                     }
                 }

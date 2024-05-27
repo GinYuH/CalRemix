@@ -30,6 +30,6 @@ namespace CalRemix.Biomes
 			return CalRemixWorld.lifeTiles >= 50;
 		}
 
-		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override SceneEffectPriority Priority => SceneEffectPriority.None;
     }
 }

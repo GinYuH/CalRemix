@@ -175,7 +175,9 @@ namespace CalRemix.UI.Title
             // Logo and Final Stuff
             Main.time = 27000.0;
             Main.dayTime = true;
-            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 111f) + new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2)), null, drawColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
+            Texture2D Glow = ModContent.Request<Texture2D>("CalRemix/UI/Title/LogoGlow").Value;
+            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 111f) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), null, Main.DiscoColor, 0, Glow.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 111f), null, drawColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
             return false;
         }
     }

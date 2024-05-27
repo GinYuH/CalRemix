@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.NPCs.PlagueEnemies;
+using CalRemix.NPCs.Minibosses;
 
 namespace CalRemix.NPCs
 {
@@ -25,6 +26,10 @@ namespace CalRemix.NPCs
                 pool.Add(ModContent.NPCType<PlaguebringerMiniboss>(), 0.001f);
                 pool.Add(ModContent.NPCType<PlagueCharger>(), 0.1f);
                 pool.Add(ModContent.NPCType<PlagueChargerLarge>(), 0.075f);
+                pool.Add(ModContent.NPCType<Miasmius>(), 0.1f);
+                pool.Add(ModContent.NPCType<PlaguedSpidrone>(), 0.075f);
+                if (NPC.downedMoonlord && !NPC.AnyNPCs(ModContent.NPCType<PlagueEmperor>()))
+                    pool.Add(ModContent.NPCType<PlagueEmperor>(), 0.0022f);
                 if (!Main.dayTime)
                     pool.Add(ModContent.NPCType<PlaguedFirefly>(), 0.35f);
                 if (ModLoader.HasMod("CalValEX"))

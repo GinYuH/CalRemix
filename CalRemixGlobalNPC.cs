@@ -565,48 +565,6 @@ namespace CalRemix
                     //npc.ai[1]++;
                 }
             }
-            if (CalRemixWorld.starbuster)
-            {
-                if (npc.type == NPCID.Unicorn)
-                {
-                    if (NPC.AnyNPCs(ModContent.NPCType<StellarCulex>()))
-                    {
-                        foreach (NPC n in Main.npc)
-                        {
-                            if (n.type == ModContent.NPCType<StellarCulex>() && n.active)
-                            {
-                                if (n.getRect().Intersects(npc.getRect()))
-                                {
-                                    if (Main.netMode != NetmodeID.Server)
-                                    {
-                                        Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
-                                    }
-                                    int craterRadius = 4;
-                                    for (int i = -craterRadius; i < craterRadius; i++)
-                                    {
-                                        for (int j = -craterRadius; j < craterRadius; j++)
-                                        {
-                                            int dist = ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) * ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) + ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j)) * ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j));
-                                            if (dist > craterRadius * craterRadius)
-                                                continue;
-
-                                            Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
-                                            if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
-                                            {
-                                                t.TileType = (ushort)ModContent.TileType<AstralOre>();
-                                                WorldGen.SquareTileFrame((int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, true);
-                                                NetMessage.SendTileSquare(-1, (int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, 1);
-                                            }
-                                        }
-                                    }
-                                    n.StrikeInstantKill();
-                                    npc.StrikeInstantKill();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             if (!CalamityPlayer.areThereAnyDamnBosses)
             {
                 if (!NPCID.Sets.BossBestiaryPriority.Contains(npc.type) || npc.Calamity().CanHaveBossHealthBar)
@@ -646,6 +604,48 @@ namespace CalRemix
         }
         public override void PostAI(NPC npc)
         {
+            if (CalRemixWorld.starbuster)
+            {
+                if (npc.type == NPCID.Unicorn)
+                {
+                    if (NPC.AnyNPCs(ModContent.NPCType<StellarCulex>()))
+                    {
+                        foreach (NPC n in Main.npc)
+                        {
+                            if (n.type == ModContent.NPCType<StellarCulex>() && n.active)
+                            {
+                                if (n.getRect().Intersects(npc.getRect()))
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Item.NewItem(npc.GetSource_Death(), npc.Center, ModContent.ItemType<StarbusterCore>());
+                                    }
+                                    int craterRadius = 4;
+                                    for (int i = -craterRadius; i < craterRadius; i++)
+                                    {
+                                        for (int j = -craterRadius; j < craterRadius; j++)
+                                        {
+                                            int dist = ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) * ((int)(npc.Bottom.X / 16) - ((int)(npc.Bottom.X / 16) + i)) + ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j)) * ((int)(npc.Bottom.Y / 16) - ((int)(npc.Bottom.Y / 16) + j));
+                                            if (dist > craterRadius * craterRadius)
+                                                continue;
+
+                                            Tile t = Main.tile[(int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j];
+                                            if (TileID.Sets.Grass[t.TileType] || TileID.Sets.Stone[t.TileType] || t.TileType == TileID.SnowBlock || t.TileType == TileID.Dirt || TileID.Sets.Conversion.Sand[t.TileType] || TileID.Sets.Conversion.Sandstone[t.TileType] || TileID.Sets.Conversion.HardenedSand[t.TileType] || TileID.Sets.Conversion.Ice[t.TileType])
+                                            {
+                                                t.TileType = (ushort)ModContent.TileType<AstralOre>();
+                                                WorldGen.SquareTileFrame((int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, true);
+                                                NetMessage.SendTileSquare(-1, (int)(npc.Bottom.X / 16) + i, (int)(npc.Bottom.Y / 16) + j, 1);
+                                            }
+                                        }
+                                    }
+                                    n.StrikeInstantKill();
+                                    npc.StrikeInstantKill();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
             {
                 if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura > 0)
@@ -682,8 +682,9 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<GreatSandShark>())
             {
                 LeadingConditionRule toothRule = new LeadingConditionRule(new Conditions.IsExpert());
-                toothRule.Add(ModContent.ItemType<SandSharkToothNecklace>(), 4, hideLootReport: !Main.expertMode);
-                toothRule.AddFail(ModContent.ItemType<SandSharkToothNecklace>(), 3, hideLootReport: Main.expertMode);
+                toothRule.Add(ModContent.ItemType<SandSharkToothNecklace>(), 1, hideLootReport: !Main.expertMode);
+                toothRule.AddFail(ModContent.ItemType<SandSharkToothNecklace>(), 2, hideLootReport: Main.expertMode);
+                npcLoot.Add(toothRule);
 
                 LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsExpert());
                 LeadingConditionRule normal = npcLoot.DefineNormalOnlyDropSet();

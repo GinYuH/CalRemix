@@ -50,6 +50,7 @@ namespace CalRemix.NPCs.Minibosses
             NPC.value = Item.buyPrice(gold: 40);
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
+            NPC.lavaImmune = true;
             NPC.noGravity = true;
         }
         public override void SendExtraAI(BinaryWriter writer)

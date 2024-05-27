@@ -15,6 +15,7 @@ using CalamityMod.Items.SummonItems;
 using CalamityMod.World;
 using CalamityMod.Items.Pets;
 using System.IO;
+using Terraria.ModLoader.Utilities;
 
 namespace CalRemix.NPCs.Minibosses
 {
@@ -55,6 +56,7 @@ namespace CalRemix.NPCs.Minibosses
             NPC.value = Item.buyPrice(gold: 60);
             NPC.HitSound = ScornEater.HitSound;
             NPC.DeathSound = ScornEater.DeathSound;
+            NPC.lavaImmune = true;
             NPC.chaseable = false;
             NPC.noGravity = true;
         }
@@ -118,9 +120,11 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.ZoneHallow || spawnInfo.Player.ZoneUnderworldHeight) && !NPC.AnyNPCs(Type) && NPC.downedMoonlord)
-                return 0.0100015f;
-            return 0f;
+            if (spawnInfo.PlayerSafe || !NPC.downedMoonlord || spawnInfo.Player.Calamity().ZoneCalamity || NPC.AnyNPCs(Type))
+                return 0f;
+            if (SpawnCondition.Underworld.Chance > 0f)
+                return SpawnCondition.Underworld.Chance / 22f;
+            return SpawnCondition.OverworldHallow.Chance / 22f;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

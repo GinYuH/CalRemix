@@ -47,7 +47,8 @@ namespace CalRemix.NPCs.Minibosses
 			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.width = 48;
 			NPC.height = 30;
-			NPC.noTileCollide = false;
+            NPC.lavaImmune = true;
+            NPC.noTileCollide = false;
 			NPC.noGravity = false;
 			NPC.damage = 260;
 			NPC.defense = 12;
@@ -68,8 +69,8 @@ namespace CalRemix.NPCs.Minibosses
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (DownedBossSystem.downedRavager && spawnInfo.Player.InModBiome(ModContent.GetInstance<LifeBiome>()) && NPC.CountNPCS(Type) < 3)
-				return SpawnCondition.Cavern.Chance * 8f;
+			if (DownedBossSystem.downedRavager && spawnInfo.Player.InModBiome(ModContent.GetInstance<LifeBiome>()) && !NPC.AnyNPCs(Type))
+				return SpawnCondition.Cavern.Chance * 0.1f;
             return 0;
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -149,7 +150,7 @@ namespace CalRemix.NPCs.Minibosses
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<LifeOre>(), 1, 10, 26);
+            npcLoot.Add(ModContent.ItemType<LifeOre>(), 1, 20, 46);
         }
     }
 }
