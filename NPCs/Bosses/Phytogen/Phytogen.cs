@@ -99,7 +99,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             NPC.Calamity().VulnerableToCold = true;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/OncologicReinforcement");
+                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/BotanicReinforcement");
             }
         }
 

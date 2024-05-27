@@ -342,7 +342,7 @@ namespace CalRemix.Tiles
                 textLifeTime--;
             }
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
-            if (Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480 && Collision.CanHitLine(Position.ToVector2() * 16, 1, 1, Main.LocalPlayer.Center, 1, 1))
+            if ((Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480 && Collision.CanHitLine(Position.ToVector2() * 16, 1, 1, Main.LocalPlayer.Center, 1, 1)) || CalRemixWorld.ionQuestLevel >= dialogue.Count - 1)
             {
                 if (CalRemixWorld.ionQuestLevel == -1)
                 {

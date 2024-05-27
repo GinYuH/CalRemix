@@ -60,11 +60,15 @@ namespace CalRemix.Projectiles.Hostile
             Projectile.ai[2]++;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             if (Owner != null)
-            Projectile.Center = Owner.Center + Projectile.velocity * 56f; //Distance offset
+                Projectile.Center = Owner.Center;
 
             if (Projectile.ai[1] <= -1 && Projectile.ai[2] % 5 == 0)
             {
                 SoundEngine.PlaySound(SoundID.DD2_LightningBugZap, Projectile.Center);
+            }
+            if (Projectile.ai[2] == 60)
+            {
+                SoundEngine.PlaySound(CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrimstoneShotSound, Projectile.Center);
             }
 
             return true;
@@ -138,6 +142,11 @@ namespace CalRemix.Projectiles.Hostile
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
             Vector2 unit = Projectile.velocity;
             Utils.PlotTileLine(Projectile.Center, Projectile.Center + unit * LaserLength, Projectile.width + 16, DelegateMethods.CutTiles);
+        }
+
+        public override bool? CanDamage()
+        {
+            return Projectile.ai[2] > 60;
         }
     }
 }

@@ -15,6 +15,8 @@ using CalRemix.Biomes;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Materials;
 using System;
+using CalamityMod.Projectiles.Enemy;
+using Newtonsoft.Json.Serialization;
 
 namespace CalRemix.NPCs.Bosses.Ionogen
 {
@@ -74,7 +76,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             NPC.Calamity().VulnerableToSickness = false;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/OncologicReinforcement");
+                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/IonicReinforcement");
             }
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SulphurousSeaBiome>().Type };
         }
@@ -121,10 +123,9 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                         NPC.ai[1]++;
                         NPC.velocity *= 0.97f;
                         int lightningTime = 120; //CHANGE LIFETIME WITH THIS !!!
-                        int telegraphTime = 60; //CHANGE IonogenLightning.cs AS WELL!!!
                         int startLightning = 30;
                         int lightningRate = lightningTime + 30;
-                        int rounds = 4;
+                        int rounds = death ? 4 : rev ? 3 : 2;
                         int phaseTime = rounds * lightningRate;
                         if (NPC.ai[1] > startLightning)
                         {
@@ -137,14 +138,12 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                             float velocityX2 = (float)(velocity * Math.Sin(angleA) / Math.Sin(angleB));
                             Vector2 spinningPoint = new Vector2(-velocityX2, -velocity);
                             spinningPoint.Normalize();
-                            NPC.Calamity().newAI[2] = 200;
 
                             if (NPC.ai[2] % lightningRate == 0)
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     int type = ModContent.ProjectileType<IonogenLightning>();
-                                    Vector2 spawnPoint = NPC.Center + new Vector2(-1f, 23f);
                                     SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
                                     for (int k = 0; k < totalProjectiles; k++)
                                     {
@@ -153,10 +152,6 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                                     }
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                 }
-                            }
-                            if (NPC.ai[2] % (lightningRate + telegraphTime) == 0)
-                            {
-                                SoundEngine.PlaySound(CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrimstoneShotSound, NPC.Center);
                             }
                             if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<IonogenLightning>()) && NPC.ai[1] % 5 == 0)
                             {
@@ -170,17 +165,29 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                             NPC.ai[2] = 0;
                             Phase = (int)PhaseType.Fall;
                         }
-                        RNGLightning();
+                        RNGLightning(100);
                         break;
                     }
                 case (int)PhaseType.Fall:
                     {
                         float maxFallSpeed = 16f;
                         float fallSpeed = 0.2f;
+                        int acidCount = death ? 26 : rev ? 24 : 20;
+                        float acidSpread = 110f;
+                        int minFallTime = 30;
+                        int maxFallTime = 240;
                         NPC.ai[1]++;
-                        if (NPC.ai[1] > 240 || (Collision.IsWorldPointSolid(NPC.Bottom, true) && NPC.ai[1] > 60))
+                        if (NPC.ai[1] > maxFallTime || (Collision.IsWorldPointSolid(NPC.Bottom, true) && NPC.ai[1] > minFallTime))
                         {
                             NPC.velocity = Vector2.Zero;
+                            if (NPC.ai[2] == 0)
+                            {
+                                for (int i = 0; i < acidCount; i++)
+                                {
+                                    Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(acidSpread));
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.25f), 3f, Main.myPlayer);
+                                }
+                            }
                             NPC.ai[2]++;
                         }
                         else
@@ -194,22 +201,69 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
-                            Phase = (int)PhaseType.Idle;
+                            Phase = (int)PhaseType.Magnet;
                         }
-                        RNGLightning();
+                        RNGLightning(100);
                         break;
                     }
                 case (int)PhaseType.Magnet:
                     {
+                        int startSucc = 60;
+                        int phaseTime = death ? 420 : rev ? 390 : 360;
+                        float succStrength = Target.maxRunSpeed * 2;
+                        int lightningRate = rev ? 40 : 60;
+                        int succRate = 120;
+                        Target.mount.Dismount(Main.LocalPlayer);
+                        Target.Calamity().infiniteFlight = true;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 3;
+                        NPC.ai[1]++;
+                        NPC.ai[2]++;
+                        if (NPC.ai[1] > startSucc)
+                        {
+                            if (NPC.ai[2] % succRate == 0)
+                            {
+                                Vector2 pDirToIo = Target.DirectionTo(NPC.Center);
+                                Target.velocity += pDirToIo * succStrength;
+                            }
+                            RNGLightning(30);
+                        }
+                        int spawnRad = 400;
+                        Dust d = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(spawnRad, spawnRad), DustID.Electric);
+                        d.noGravity = true;
+                        d.velocity = (NPC.Center - d.position).SafeNormalize(Vector2.One) * 10;
+                        if (rev && NPC.ai[1] % lightningRate == 0)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                int type = ModContent.ProjectileType<IonogenLightning>();
+                                SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center).RotatedByRandom(MathHelper.TwoPi), type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                            }
+                        }
+                        if (NPC.ai[1] > phaseTime)
+                        {
+                            NPC.ai[1] = 0;
+                            NPC.ai[2] = 0;
+                            Phase = (int)PhaseType.Idle;
+                            foreach (Projectile p in Main.projectile)
+                            {
+                                if (!p.active)
+                                    continue;
+                                if (p.type != ModContent.ProjectileType<IonogenLightning>())
+                                    continue;
+                                if (p.ai[1] <= -1)
+                                    continue;
+                                p.Kill();
+                            }
+                        }
                         break;
                     }
             }
         }
 
-        public void RNGLightning()
+        public void RNGLightning(int spawnRate)
         {
-            int lightningChance = 100;
-            if (Main.rand.NextBool(lightningChance))
+            if (Main.rand.NextBool(spawnRate))
             {
                 SoundEngine.PlaySound(SoundID.Thunder, NPC.Center);
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-2000, 2001), -1000), new Vector2(0, 1), ModContent.ProjectileType<IonogenLightning>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, -1);
