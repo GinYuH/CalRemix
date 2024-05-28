@@ -386,7 +386,7 @@ namespace CalRemix
                 }
             }
             Player player = Main.LocalPlayer;
-            if (player.ZoneJungle && !NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+           /* if (player.ZoneJungle && !NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
             {
                 if (!effectOnly && !fail && Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                 {
@@ -406,7 +406,7 @@ namespace CalRemix
                         }
                     }
                 }
-            }
+            }*/
         }
 
         internal static void SlopedGlowmask(int i, int j, int type, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color drawColor, Vector2 positionOffset, bool overrideTileFrame = false)

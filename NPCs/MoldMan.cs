@@ -20,6 +20,10 @@ namespace CalRemix.NPCs
             DisplayName.SetDefault("Mold Man");
             Main.npcFrameCount[NPC.type] = 2;
         }
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
 
         public override void SetDefaults()
         {

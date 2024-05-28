@@ -29,6 +29,10 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             this.HideFromBestiary();
         }
 
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
         public override void SetDefaults()
         {
             NPC.damage = 60;

@@ -18,7 +18,8 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         {
             get
             {
-                return NPC.AnyNPCs(ModContent.NPCType<Carcinogen>());
+                return false;
+                //return NPC.AnyNPCs(ModContent.NPCType<Carcinogen>());
             }
         }
 

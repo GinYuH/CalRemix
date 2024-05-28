@@ -28,6 +28,10 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             DisplayName.SetDefault("Ionogen's Shield");
             this.HideFromBestiary();
         }
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
 
         public override void SetDefaults()
         {

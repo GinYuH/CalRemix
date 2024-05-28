@@ -14,6 +14,10 @@ namespace CalRemix.Items.Placeables
             Item.ResearchUnlockCount = 100;
             DisplayName.SetDefault("Asbestos Block");
         }
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;

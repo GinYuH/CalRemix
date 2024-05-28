@@ -789,7 +789,7 @@ namespace CalRemix
         {
             int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
-            tasks.Insert(GraniteIndex, new PassLegacy("Asbestos", (progress, passConfig) =>
+            /*tasks.Insert(GraniteIndex, new PassLegacy("Asbestos", (progress, passConfig) =>
             {
                 progress.Message = "Spreading the True Plague";
                 int biomeAmount = 10;
@@ -829,7 +829,7 @@ namespace CalRemix
                     asBiome.Place(placementPoints[i], GenVars.structures);
                 }
                 AsbestosBiome.GenerateAllHouses();
-            }));
+            }));*/
             if (FinalIndex != -1)
             {
                 tasks.Insert(FinalIndex, new PassLegacy("Dungeon Retheme", (progress, config) =>
@@ -839,7 +839,7 @@ namespace CalRemix
                 StratusDungeon.AddOriginalDungeonHoles();
                 CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
-                tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
+                //tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
             }
             // Secret Banished Baron seed
             if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")

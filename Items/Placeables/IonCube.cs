@@ -12,6 +12,10 @@ namespace CalRemix.Items.Placeables
             Item.ResearchUnlockCount = 1;
             DisplayName.SetDefault("Ion Cube");
         }
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
