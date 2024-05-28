@@ -105,6 +105,10 @@ namespace CalRemix.Projectiles.Accessories
             {
                 latched.GetGlobalNPC<CalRemixGlobalNPC>().clawed = 0;
             }
+            if (Main.LocalPlayer == Main.player[Projectile.owner])
+            {
+                Main.LocalPlayer.AddCooldown(BaroclawCooldown.ID, CalamityUtils.SecondsToFrames(5));
+            }
             if (Main.netMode != NetmodeID.Server)
             {
                 for (int i = 0; i < 4; i++)

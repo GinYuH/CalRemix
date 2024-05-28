@@ -378,12 +378,15 @@ namespace CalRemix
 				}
 			}
 			if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ModContent.ProjectileType<Claw>()) <= 0)
-			{
-				float XDist = 120;
-				clawPosition = Main.MouseWorld;
-				Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
-				int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
-				Main.projectile[p].spriteDirection *= -1;
+            {
+				if (!Player.HasCooldown(BaroclawCooldown.ID))
+				{
+					float XDist = 120;
+					clawPosition = Main.MouseWorld;
+					Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
+					int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
+					Main.projectile[p].spriteDirection *= -1;
+				}
 			}
 		}
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */

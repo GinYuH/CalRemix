@@ -275,7 +275,12 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             if (Main.rand.NextBool(spawnRate))
             {
                 SoundEngine.PlaySound(SoundID.Thunder, NPC.Center);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-2000, 2001), -1000), new Vector2(0, 1), ModContent.ProjectileType<IonogenLightning>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, -1);
+                Vector2 velocity = new Vector2(0, 1);
+                if (Main.masterMode)
+                {
+                    velocity = velocity.RotatedByRandom(MathHelper.PiOver2);
+                }
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-2000, 2001), -1000), velocity, ModContent.ProjectileType<IonogenLightning>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, -1);
             }
         }
 
