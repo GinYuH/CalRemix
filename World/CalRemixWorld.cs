@@ -51,6 +51,9 @@ using CalamityMod.Items.Tools;
 using Terraria.GameContent.Biomes;
 using CalRemix.Walls;
 using CalamityMod.Tiles.FurnitureStratus;
+using CalamityMod.Tiles.SunkenSea;
+using CalamityMod.BiomeManagers;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix
 {
@@ -113,7 +116,7 @@ namespace CalRemix
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
 
-        public List<int> DungeonWalls = new List<int>
+        public static List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,
             WallID.BlueDungeonSlabUnsafe,
@@ -124,6 +127,40 @@ namespace CalRemix
             WallID.PinkDungeonUnsafe,
             WallID.PinkDungeonSlabUnsafe,
             WallID.PinkDungeonTileUnsafe
+        };
+
+        public static List<int> SunkenSeaTiles = new List<int>
+        {
+            TileType<SeaAnemone>(),
+            TileType<TubeCoral>(),
+            TileType<BrainCoral>(),
+            TileType<SmallBrainCoral>(),
+            TileType<TableCoral>(),
+            TileType<SmallCorals>(),
+            TileType<MediumCoral>(),
+            TileType<MediumCoral2>(),
+            TileType<CoralPileLarge>(),
+            TileType<SmallWideCoral>(),
+            TileType<SmallWideCoral2>(),
+            TileType<SunkenStalactite1>(),
+            TileType<SunkenStalactite2>(),
+            TileType<SunkenStalactite3>(),
+            TileType<SunkenStalactitesSmall>(),
+            TileType<SunkenStalagmite1>(),
+            TileType<SunkenStalagmite2>(),
+            TileType<SunkenStalagmite3>(),
+            TileType<SunkenStalagmitesSmall>(),
+            TileType<Navystone>(),
+            TileType<EutrophicSand>(),
+            TileType<HardenedEutrophicSand>(),
+            TileType<SeaPrism>(),
+            TileType<SeaPrismCrystals>(),
+            TileType<FanCoral>(),
+            TileType<SmallTubeCoral>(),
+            TileID.MinecartTrack,
+            TileID.Obsidian,
+            TileID.WaterDrip
+
         };
 
         public static void UpdateWorldBool()
@@ -551,6 +588,10 @@ namespace CalRemix
         }
         public override void PostUpdateWorld()
         {
+            /*if (Main.LocalPlayer.InModBiome<SunkenSeaBiome>() && Main.LocalPlayer.selectedItem == 2 && Main.LocalPlayer.controlHook)
+            {
+                ThreadPool.QueueUserWorkItem(_ => DestroyTheSunkenSea(Main.LocalPlayer.Center / 16, 1111), this);
+            }*/
             NPC heart = ContentSamples.NpcsByNetId[NPCType<DarkHeart>()];
             if (!BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(heart.type).Info.Contains(BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption))
             {
@@ -620,7 +661,6 @@ namespace CalRemix
                     ThreadPool.QueueUserWorkItem(_ => PlagueGeneration.GeneratePlague(), this);
                 }
             }
-            //if (Main.LocalPlayer.HeldItem.type == ItemID.CopperAxe && Main.LocalPlayer.controlUseItem)
             if (meldGunk)
             {
                 if (!generatedStrain && Main.hardMode)
@@ -742,6 +782,7 @@ namespace CalRemix
             MeldTiles = tileCounts[TileType<MeldGunkPlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
+            CalamityMod.Systems.BiomeTileCounterSystem.SunkenSeaTiles += tileCounts[TileType<NavystoneSafe>()] + tileCounts[TileType<SeaPrismSafe>()] + tileCounts[TileType<EutrophicSandSafe>()] + tileCounts[TileType<HardenedEutrophicSandSafe>()];
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
@@ -938,6 +979,33 @@ namespace CalRemix
                         }
                     }
                     break;
+                }
+            }
+        }
+
+        public static void DestroyTheSunkenSea(Vector2 center, int rad)
+        {
+            for (int i = (int)MathHelper.Clamp((int)center.X - rad, 100, Main.maxTilesX - 100); i < (int)MathHelper.Clamp((int)center.X + rad, 100, Main.maxTilesX - 100); i++)
+            {
+                for (int j = (int)MathHelper.Clamp((int)center.Y - rad, 100, Main.maxTilesY - 100); j < (int)MathHelper.Clamp((int)center.Y + rad, 100, Main.maxTilesY - 100); j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.LiquidAmount > 0)
+                    {
+                        t.LiquidAmount = 0;
+                    }
+                    if (t.WallType == WallType<NavystoneWall>() || t.WallType == WallType<EutrophicSandWall>())
+                    {
+                        t.WallType = 0;
+                    }
+                    if (!t.HasTile)
+                    {
+                        continue;
+                    }
+                    if (SunkenSeaTiles.Contains(t.TileType))
+                    {
+                        t.Get<TileWallWireStateData>().HasTile = false;
+                    }
                 }
             }
         }

@@ -50,6 +50,7 @@ using CalamityMod.UI.CalamitasEnchants;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.Other;
 using CalamityMod.Items;
+using CalamityMod.Items.Placeables;
 
 namespace CalRemix
 {
@@ -140,6 +141,22 @@ namespace CalRemix
                 {
                     item.damage = (int)(item.damage * 5f);
                 }
+            }
+            if (item.type == ModContent.ItemType<Navystone>())
+            {
+                item.createTile = ModContent.TileType<NavystoneSafe>();
+            }
+            if (item.type == ModContent.ItemType<EutrophicSand>())
+            {
+                item.createTile = ModContent.TileType<EutrophicSandSafe>();
+            }
+            if (item.type == ModContent.ItemType<HardenedEutrophicSand>())
+            {
+                item.createTile = ModContent.TileType<HardenedEutrophicSandSafe>();
+            }
+            if (item.type == ModContent.ItemType<SeaPrism>())
+            {
+                item.createTile = ModContent.TileType<SeaPrismSafe>();
             }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
