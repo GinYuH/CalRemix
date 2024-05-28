@@ -52,7 +52,7 @@ namespace CalRemix
                         }
                         if (t != null)
                         {
-                            if (t.TileType == ModContent.TileType<SulphurousSand>() || (!t.HasTile && !te.HasTile && t.LiquidAmount > 0 && te.LiquidAmount <= 0))
+                            if (t.TileType == ModContent.TileType<SulphurousSand>())
                             {
                                 if (Main.rand.NextBool(64))
                                 {

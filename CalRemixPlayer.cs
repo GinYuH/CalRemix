@@ -42,6 +42,8 @@ using Terraria.Graphics.Shaders;
 using CalRemix.UI;
 using ReLogic.Utilities;
 using CalRemix.NPCs.Bosses.Phytogen;
+using CalRemix.NPCs;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix
 {
@@ -465,6 +467,14 @@ namespace CalRemix
                             break;
 						}
 					}
+				}
+			}
+			if (CalRemixWorld.hydrogenLocation != Vector2.Zero)
+			{
+				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
+				{
+					if (!NPC.AnyNPCs(ModContent.NPCType<Barocrab>()))
+						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X, (int)CalRemixWorld.hydrogenLocation.Y, ModContent.NPCType<Barocrab>());
 				}
 			}
         }

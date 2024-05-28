@@ -116,6 +116,8 @@ namespace CalRemix
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
 
+        public static Vector2 hydrogenLocation = new Vector2(0, 0);
+
         public static List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,
@@ -238,6 +240,7 @@ namespace CalRemix
                     TextureAssets.Npc[p.Key] = p.Value;
                 }
             }
+            FindCentralGeode();
             bossdialogue = true;
             grimesandToggle = true;
             clowns = true;
@@ -255,6 +258,7 @@ namespace CalRemix
 
             ionQuestLevel = -1;
             wizardDisabled = false;
+            hydrogenLocation = Vector2.Zero;
         }
         public override void OnWorldUnload()
         {
@@ -309,6 +313,7 @@ namespace CalRemix
 
             ionQuestLevel = -1;
             wizardDisabled = false;
+            hydrogenLocation = Vector2.Zero;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -354,6 +359,8 @@ namespace CalRemix
             tag["109remixJump"] = remixJump;
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
+            tag["hydrolocationX"] = hydrogenLocation.X;
+            tag["hydrolocationY"] = hydrogenLocation.Y;
 
             tag["109fanny"] = FannyManager.fannyEnabled;
             tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
@@ -405,6 +412,8 @@ namespace CalRemix
             remixJump = tag.Get<bool>("109remixJump");
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
+            hydrogenLocation.X = tag.Get<Single>("hydrolocationX");
+            hydrogenLocation.Y = tag.Get<Single>("hydrolocationY");
 
             FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
             FannyManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
@@ -453,6 +462,8 @@ namespace CalRemix
             writer.Write(remixJump);
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
+            writer.Write(hydrogenLocation.X);
+            writer.Write(hydrogenLocation.Y);
 
             writer.Write(FannyManager.fannyEnabled);
             writer.Write(FannyManager.fannyTimesFrozen);
@@ -502,6 +513,8 @@ namespace CalRemix
             remixJump = reader.ReadBoolean();
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
+            hydrogenLocation.X = reader.ReadSingle();
+            hydrogenLocation.Y = reader.ReadSingle();
 
             FannyManager.fannyEnabled = reader.ReadBoolean();
             FannyManager.fannyTimesFrozen = reader.ReadInt32();
@@ -588,10 +601,6 @@ namespace CalRemix
         }
         public override void PostUpdateWorld()
         {
-            /*if (Main.LocalPlayer.InModBiome<SunkenSeaBiome>() && Main.LocalPlayer.selectedItem == 2 && Main.LocalPlayer.controlHook)
-            {
-                ThreadPool.QueueUserWorkItem(_ => DestroyTheSunkenSea(Main.LocalPlayer.Center / 16, 1111), this);
-            }*/
             NPC heart = ContentSamples.NpcsByNetId[NPCType<DarkHeart>()];
             if (!BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(heart.type).Info.Contains(BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption))
             {
@@ -840,6 +849,33 @@ namespace CalRemix
                 CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
+                tasks.Insert(FinalIndex, new PassLegacy("Building a bomb", (progress, config) =>
+                {
+                    Rectangle sus = FindCentralGeode();
+                    int hydrogenRadius = 10;
+                    int borderAmt = 3;
+                    Vector2 center = new Vector2(sus.Center.X, sus.Y + (sus.Height / 3));
+                    for (int i = -hydrogenRadius; i < hydrogenRadius; i++)
+                    {
+                        for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
+                            Vector2 pos = new Vector2(center.X + i, center.Y + j);
+                            if (pos.Distance(center) < hydrogenRadius - borderAmt)
+                            {
+                                WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
+                            }
+                            else if (pos.Distance(center) < hydrogenRadius)
+                            {
+                                if (t.HasTile && !SunkenSeaTiles.Contains(t.TileType))
+                                    continue;
+                                WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
+                                WorldGen.PlaceTile((int)center.X + i, (int)center.Y + j, TileType<RustedPipes>(), true);
+                            }
+                        }
+                    }
+                    hydrogenLocation = center * 16;
+                }));
             }
             // Secret Banished Baron seed
             if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")
@@ -989,6 +1025,8 @@ namespace CalRemix
             {
                 for (int j = (int)MathHelper.Clamp((int)center.Y - rad, 100, Main.maxTilesY - 100); j < (int)MathHelper.Clamp((int)center.Y + rad, 100, Main.maxTilesY - 100); j++)
                 {
+                    if (new Vector2(i, j).Distance(center) > rad)
+                        continue;
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.LiquidAmount > 0)
                     {
@@ -1008,6 +1046,46 @@ namespace CalRemix
                     }
                 }
             }
+        }
+
+        public static Rectangle FindCentralGeode()
+        {
+            int sunkenX = 0;
+            int sunkenY = 0;
+            int sunkenLastX = 0;
+            int sunkenLastY = 0;
+            for (int i = 100; i < Main.maxTilesX - 100; i++)
+            {
+                for (int j = 100; j < Main.maxTilesY - 100; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.TileType == TileType<Navystone>())
+                    {
+                        if (sunkenX == 0)
+                        sunkenX = i;
+                        sunkenLastX = i;
+                        break;
+                    }
+                }
+            }
+            for (int i = 100; i < Main.maxTilesY - 100; i++)
+            {
+                for (int j = 100; j < Main.maxTilesX - 100; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(j, i);
+                    if (t.TileType == TileType<Navystone>())
+                    {
+                        if (sunkenY == 0)
+                        sunkenY = i;
+                        sunkenLastY = i;
+                        break;
+                    }
+                }
+            }
+            int sunkenWidth = sunkenLastX - sunkenX;
+            int sunkenHeight = sunkenLastY - sunkenY;
+            hydrogenLocation = new Vector2(sunkenX + (sunkenWidth / 2), sunkenY + (sunkenHeight / 3)) * 16;
+            return new Rectangle(sunkenX, sunkenY, sunkenWidth, sunkenHeight);
         }
     }
 }
