@@ -30,7 +30,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
         public Rectangle teleportPos = new Rectangle();
 
         public static readonly SoundStyle HitSound = new("CalRemix/Sounds/IonogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Sounds/CarcinogenDeath");
+        public static readonly SoundStyle DeathSound = new("CalRemix/Sounds/IonogenDeath");
 
         public enum PhaseType
         {

@@ -36,6 +36,7 @@ namespace CalRemix.Projectiles
         }
         public override void AI()
         {
+            int Hydrogen = NPC.FindFirstNPC(ModContent.NPCType<Hydrogen>());
             if (Projectile.velocity.Length() < 2)
             {
                 Projectile.ai[0]++;
@@ -59,37 +60,13 @@ namespace CalRemix.Projectiles
                             SoundEngine.PlaySound(SoundID.DoorClosed);
                         }
                         Projectile.frame = 1;
-                        if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
+                        if (Hydrogen <= -1 || Main.npc[Hydrogen].life == Main.npc[Hydrogen].lifeMax)
                         {
                             Projectile.ai[1] = 3;
                             Projectile.ai[2] = 2222;
                         }
                     }
-                    else if (Projectile.ai[1] == 1)
-                    {
-                        Projectile.frame = 0;
-                        Main.LocalPlayer.noItems = true;
-                        Main.LocalPlayer.immune = true;
-                        //Main.LocalPlayer.invis = true;
-                        Main.LocalPlayer.position = Projectile.position + new Vector2(20, 20);
-                        Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
-                        //if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
-                        {
-                            if (Projectile.ai[2] > -1)
-                            {
-                                Projectile.ai[2]++;
-                            }
-                            if (Projectile.ai[2] > 90)
-                            {
-                                Projectile.frame = 1;
-                                SoundEngine.PlaySound(SoundID.DoorOpen);
-                                Projectile.ai[1] = 2;
-                                Main.LocalPlayer.velocity = new Vector2(10, 0);
-                                Projectile.ai[2] = 0;
-                            }
-                        }
-                    }
-                    else
+                    else if (Projectile.ai[1] > 1)
                     {
                         Projectile.ai[2]++;
                         if (Projectile.ai[2] == 60)
@@ -98,6 +75,30 @@ namespace CalRemix.Projectiles
                             CombatText.NewText(Projectile.getRect(), Color.White, "You're welcome!", true);
                             Projectile.ai[1] = 3;
                             Projectile.timeLeft = 120;
+                        }
+                    }
+                }
+            }
+            if (Projectile.ai[1] == 1)
+            {
+                Projectile.frame = 0;
+                Main.LocalPlayer.noItems = true;
+                Main.LocalPlayer.immune = true;
+                //Main.LocalPlayer.invis = true;
+                Main.LocalPlayer.position = Projectile.position + new Vector2(20, 20);
+                Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
+                if (Projectile.velocity.Length() < 2)
+                {
+                    if (Hydrogen <= -1 || Main.npc[Hydrogen].life == Main.npc[Hydrogen].lifeMax)
+                    {
+                        Projectile.ai[2]++;
+                        if (Projectile.ai[2] > 90)
+                        {
+                            Projectile.frame = 1;
+                            SoundEngine.PlaySound(SoundID.DoorOpen);
+                            Projectile.ai[1] = 2;
+                            Main.LocalPlayer.velocity = new Vector2(10, 0);
+                            Projectile.ai[2] = 0;
                         }
                     }
                 }

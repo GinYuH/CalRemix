@@ -19,8 +19,8 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override void SetDefaults()
         {
             NPC.damage = 60;
-            NPC.width = 170;
-            NPC.height = 166;
+            NPC.width = 190;
+            NPC.height = 190;
             NPC.defense = 20;
             NPC.lifeMax = 8000;
             NPC.knockBackResist = 0f;
@@ -44,7 +44,16 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             if (carci != null && carci.active && carci.type == ModContent.NPCType<Hydrogen>())
             {
                 NPC.position = carci.Center - NPC.Size / 2;
-                NPC.rotation += 0.1f;
+                if (carci.ai[0] == 0)
+                {
+                    NPC.scale = 1f;
+                    NPC.rotation += 0.025f;
+                }
+                else
+                {
+                    NPC.scale = 1f;
+                    NPC.rotation += 0.1f;
+                }
             }
             else
             {

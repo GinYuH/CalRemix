@@ -481,7 +481,7 @@ namespace CalRemix
 				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
 				{
 					if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
-						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 60, ModContent.NPCType<Hydrogen>());
+						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, ModContent.NPCType<Hydrogen>());
 				}
 			}
         }
@@ -734,7 +734,6 @@ namespace CalRemix
 			cart = false;
 			tvohide = false;
 			baroclaw = false;
-			fridge = false;
 			blaze = false;
 			pearl = false;
 			astralEye = false;
@@ -744,6 +743,10 @@ namespace CalRemix
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
+			if (!CalamityUtils.AnyProjectiles(ModContent.ProjectileType<Fridge>()))
+			{
+                fridge = false;
+            }
             if (astEffigy)
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
 			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)

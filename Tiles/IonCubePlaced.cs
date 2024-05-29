@@ -390,18 +390,21 @@ namespace CalRemix.Tiles
             {
                 lookingAtItem--;
             }
-            if (dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && lookingAtItem == -1 && player.ionDialogue == -1)
+            if (CalRemixWorld.ionQuestLevel > -1)
             {
-                foreach (Item i in Main.item)
+                if (dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && lookingAtItem == -1 && player.ionDialogue == -1)
                 {
-                    if (i.Distance(Position.ToVector2() * 16) < 72 && i.active && i.type == dialogue[CalRemixWorld.ionQuestLevel].RequiredItem)
+                    foreach (Item i in Main.item)
                     {
-                        CalRemixWorld.ionQuestLevel++;
-                        lookingAtItem = 240;
-                        lookedAtItem = i.whoAmI;
-                        player.ionDialogue = 0;
-                        ManualTalk();
-                        break;
+                        if (i.Distance(Position.ToVector2() * 16) < 72 && i.active && i.type == dialogue[CalRemixWorld.ionQuestLevel].RequiredItem)
+                        {
+                            CalRemixWorld.ionQuestLevel++;
+                            lookingAtItem = 240;
+                            lookedAtItem = i.whoAmI;
+                            player.ionDialogue = 0;
+                            ManualTalk();
+                            break;
+                        }
                     }
                 }
             }

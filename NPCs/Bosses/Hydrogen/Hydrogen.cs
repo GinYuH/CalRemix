@@ -39,7 +39,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public Rectangle teleportPos = new Rectangle();
 
         public static readonly SoundStyle HitSound = new("CalRemix/Sounds/IonogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Sounds/CarcinogenDeath");
+        public static readonly SoundStyle ExplosionSound = new("CalRemix/Sounds/HydrogenExplode");
 
         public enum PhaseType
         {
@@ -130,12 +130,14 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             {
                 case (int)PhaseType.Sealed:
                     {
+                        NPC.ai[1]++;
                         NPC.damage = 0;
                         NPC.boss = false;
-                        NPC.velocity = Vector2.Zero;
+                        NPC.velocity = Vector2.UnitY * (float)Math.Sin(NPC.ai[1] * 0.025f) * 0.25f;
                         NPC.chaseable = false;
                         if (lifeRatio < 0.9f)
                         {
+                            NPC.ai[1] = 0;
                             NPC.damage = 100;
                             NPC.boss = true;
                             NPC.chaseable = true;
@@ -159,9 +161,11 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                     {
                         int rocketRate = 5;
                         int fireDelay = 30;
-                        int rocketAmt = 10;
+                        int rocketAmt = death ? 20 : rev ? 16 : expert ? 10 : 8;
                         int salvoAmount = 2;
-                        float missileSpread = 45f;
+                        float missileSpread = death ? 60f : 45f;
+                        if (Main.masterMode)
+                            salvoAmount *= 2;
                         NPC.ai[1]++;
                         NPC.velocity *= 0.95f;
                         if (NPC.ai[1] > fireDelay)
@@ -169,6 +173,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             NPC.ai[2]++;
                             if (NPC.ai[2] % rocketRate == 0)
                             {
+                                SoundEngine.PlaySound(CalamityMod.Items.Weapons.Ranged.Scorpio.RocketShoot);
                                 {
                                     int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
@@ -194,7 +199,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                 case (int)PhaseType.Mines:
                     {
                         int whenToSummon = 90;
-                        int mineAmt = 32;
+                        int mineAmt = death ? 40 : rev ? 32 : 26;
                         int mineRange = 4000;
                         int mineSpeed = 4;
                         int phaseTime = 360;
@@ -202,6 +207,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         NPC.ai[1]++;
                         if (NPC.ai[1] == whenToSummon)
                         {
+                            SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.NukeWarningSound);
                             for (int i = 0; i < mineAmt; i++)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
@@ -224,7 +230,8 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         NPC.velocity *= 0.95f;
                         if (NPC.Calamity().newAI[1] == spawnFridge)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(-400, -400), Vector2.UnitY * 4, ModContent.ProjectileType<Fridge>(), 0, 0f, Main.myPlayer, ai2: -1);
+                            bool playerLeft = Target.Center.X - NPC.Center.X < 0;
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(playerLeft ? -400 : 400, -400), Vector2.UnitY * 4, ModContent.ProjectileType<Fridge>(), 0, 0f, Main.myPlayer, ai2: -1);
                         }
                         if (NPC.Calamity().newAI[1] > doomsdayTimer)
                         {
@@ -235,16 +242,19 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             NPC.netUpdate = true;
 
                             CalRemixWorld.DestroyTheSunkenSea(NPC.Center / 16, 500);
-                            if (Target.GetModPlayer<CalRemixPlayer>().fridge)
-                            foreach (Projectile p in Main.projectile)
+                            foreach (Player p in Main.player)
                             {
                                 if (p == null)
                                     continue;
                                 if (!p.active)
                                     continue;
-                                if (p.type != ModContent.ProjectileType<Fridge>())
+                                if (p.dead)
                                     continue;
-                                p.ai[2] = 0;
+                                if (p.Distance(NPC.Center) > 16 * 500)
+                                    continue;
+                                if (p.GetModPlayer<CalRemixPlayer>().fridge)
+                                    continue;
+                                p.KillMe(PlayerDeathReason.ByCustomReason(p.name + " was atomized."), 9999, 1);
                             }
 
                             // Prevent netUpdate from being blocked by the spam counter.
@@ -254,7 +264,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         if (NPC.Calamity().newAI[1] == startExplosion)
                         {
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 222;
-                            SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
+                            SoundEngine.PlaySound(ExplosionSound);
                         }
                         if (NPC.Calamity().newAI[1] > startExplosion)
                         {
@@ -364,6 +374,33 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (Phase == (int)PhaseType.Sealed)
+            {
+                Vector2 bottom = CalRemixWorld.hydrogenLocation != Vector2.Zero ? CalRemixWorld.hydrogenLocation : NPC.Center;
+                bottom += new Vector2(10, 110);
+                Vector2 distToProj = NPC.Center;
+                float projRotation = NPC.AngleTo(bottom) - 1.57f;
+                bool doIDraw = true;
+                Texture2D texture = ModContent.Request<Texture2D>(Texture + "Chain").Value; //change this accordingly to your chain texture
+
+                while (doIDraw)
+                {
+                    float distance = (bottom - distToProj).Length();
+                    if (distance < (texture.Height + 1))
+                    {
+                        doIDraw = false;
+                    }
+                    else if (!float.IsNaN(distance))
+                    {
+                        Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
+                        distToProj += NPC.DirectionTo(bottom) * texture.Height;
+                        Main.EntitySpriteDraw(texture, distToProj - Main.screenPosition,
+                            new Rectangle(0, 0, texture.Width, texture.Height), drawColore, projRotation,
+                            Utils.Size(texture) / 2f, 1f, SpriteEffects.None, 0);
+                    }
+                }
+            }
+
             Texture2D tex = ModContent.Request<Texture2D>(Texture + "Goner").Value;
             Vector2 drawPos = NPC.Center - screenPos;
             if (NPC.localAI[1] > 0)
