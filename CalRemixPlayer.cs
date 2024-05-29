@@ -475,7 +475,7 @@ namespace CalRemix
 				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
 				{
 					if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
-						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X, (int)CalRemixWorld.hydrogenLocation.Y, ModContent.NPCType<Barocrab>());
+						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 60, ModContent.NPCType<Hydrogen>());
 				}
 			}
         }

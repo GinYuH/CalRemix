@@ -16,7 +16,6 @@ namespace CalRemix.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/Summon/Dreadmine";
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 4;
             DisplayName.SetDefault("Mine");
         }
         public override void SetDefaults()
@@ -24,23 +23,12 @@ namespace CalRemix.Projectiles.Hostile
             Projectile.width = 14;
             Projectile.height = 20;
             Projectile.hostile = true;
-            Projectile.friendly = true;
             Projectile.timeLeft = 120;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
         }
         public override void AI()
         {
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 6)
-            {
-                Projectile.frame++;
-                Projectile.frameCounter = 0;
-            }
-            if (Projectile.frame >= Main.projFrames[Projectile.type])
-            {
-                Projectile.frame = 0;
-            }
         }
         public override void OnKill(int timeLeft)
         {

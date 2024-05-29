@@ -22,7 +22,6 @@ namespace CalRemix.Projectiles.Hostile
             Projectile.width = 14;
             Projectile.height = 20;
             Projectile.hostile = true;
-            Projectile.friendly = true;
             Projectile.timeLeft = 240;
             Projectile.tileCollide = false;
         }

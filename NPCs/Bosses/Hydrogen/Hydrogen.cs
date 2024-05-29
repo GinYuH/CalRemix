@@ -20,6 +20,8 @@ using Newtonsoft.Json.Serialization;
 using CalamityMod.Items.Placeables;
 using System.Net.Http.Headers;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Tiles.Furniture.Monoliths;
+using System.Collections.Generic;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -37,10 +39,11 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public enum PhaseType
         {
-            Idle = 0,
-            MissileLaunch = 1,
-            Mines = 2,
-            Death = 3
+            Sealed = 0,
+            Idle = 1,
+            MissileLaunch = 2,
+            Mines = 3,
+            Death = 4
         }
 
         public override bool IsLoadingEnabled(Mod mod)
@@ -117,6 +120,19 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             NPC.Calamity().newAI[3] = 0;
             switch (Phase)
             {
+                case (int)PhaseType.Sealed:
+                    {
+                        NPC.damage = 0;
+                        NPC.boss = false;
+                        NPC.velocity = Vector2.Zero;
+                        if (lifeRatio < 0.9f)
+                        {
+                            NPC.damage = 100;
+                            NPC.boss = true;
+                            Phase = (int)PhaseType.Idle;
+                        }
+                        break;
+                    }
                 case (int)PhaseType.Idle:
                     {
                         int phaseTime = 90;
@@ -282,6 +298,20 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override bool CheckActive()
         {
             return NPC.Calamity().newAI[0] != 1;
+        }
+
+        public override bool? CanBeHitByItem(Player player, Item item)
+        {
+            if (Phase == (int)PhaseType.Sealed || Phase == (int)PhaseType.Death)
+                return false;
+            return null;
+        }
+
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            if ((Phase == (int)PhaseType.Sealed && !ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type]) || Phase == (int)PhaseType.Death)
+                return false;
+            return null;
         }
     }
 }

@@ -407,6 +407,25 @@ namespace CalRemix
                     }
                 }
             }
+            if (!noItem)
+            {
+                if (type == ModContent.TileType<Navystone>())
+                {
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.Navystone>());
+                }
+                if (type == ModContent.TileType<EutrophicSand>())
+                {
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.EutrophicSand>());
+                }
+                if (type == ModContent.TileType<HardenedEutrophicSand>())
+                {
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.HardenedEutrophicSand>());
+                }
+                if (type == ModContent.TileType<SeaPrism>())
+                {
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.SeaPrism>());
+                }
+            }
         }
 
         internal static void SlopedGlowmask(int i, int j, int type, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color drawColor, Vector2 positionOffset, bool overrideTileFrame = false)
