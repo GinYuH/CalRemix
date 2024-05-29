@@ -26,7 +26,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         Vector2 OriginalSize = new Vector2(216, 206);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Phytogen Shield");
+            DisplayName.SetDefault("Phytogen's Shield");
             this.HideFromBestiary();
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }

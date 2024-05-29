@@ -297,7 +297,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("After the Archwizard was dishonorably discharged from the war, he fell into a state of smoking and gambling. During a gambling night, he sealed himself inside of a chunk of asbestos to win a bet. He was never heard from again.")
+        new FlavorTextBestiaryInfoElement("As one of Surge's failed creations, Ionogen was casted out to the sulphurous sea as a quick means of disposable. Unfortunately, the quick-evolving ecosystem claimed the outdated tech as one of its own constructs.")
             });
         }
 

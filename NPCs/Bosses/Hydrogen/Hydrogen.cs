@@ -297,7 +297,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("After the Archwizard was dishonorably discharged from the war, he fell into a state of smoking and gambling. During a gambling night, he sealed himself inside of a chunk of asbestos to win a bet. He was never heard from again.")
+        new FlavorTextBestiaryInfoElement("This machination of Yharim's artillery proved to be a challenge to fuse both magic and science cohesively. While Ivy's soul comfortably sits outside the construct, Hydrogen's power resonates with her mana; down to its devastating explosion.")
             });
         }
 
