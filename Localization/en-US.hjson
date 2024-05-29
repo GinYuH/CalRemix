@@ -1923,7 +1923,7 @@ Mods: {
 				Tooltip:
 					'''
 					Cloud your vision with acidic cataracts
-					15% increased ranged critical strike chance
+					15% increased critical strike chance
 					Increases view range for all items 
 					(Right click to zoom out)
 					'''
@@ -1966,7 +1966,7 @@ Mods: {
 					[c/C4232C:These visual effects may be nauseating or otherwise bad for some]
 					'A SYRUP DOES NOT FEAR CONSUMPTION'
 					'''
-				DisplayName: Lean
+				DisplayName: Devourer of Colds
 			}
 
 			Heroin: {

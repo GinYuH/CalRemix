@@ -31,10 +31,16 @@ namespace CalRemix.Items.Accessories
             if (line != null)
                 line.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
             TooltipLine line2 = tooltips.Find((TooltipLine t) => t.Text.Contains("Maxes out at extra 30% damage and 60 defense"));
-            if (line2 != null)
+            if (line2 != null && !ModLoader.HasMod("MagicStorage"))
             {
                 TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedStats", $"Remix Items crafted: {count} ({count}% damage and {count * 2} defense)");
                 lineAdd.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
+                tooltips.Insert(tooltips.IndexOf(line2) + 1, lineAdd);
+            }
+            else if (line2 != null && ModLoader.HasMod("MagicStorage"))
+            {
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedStats", "Crafting bonus does not work while Magic Storage is active");
+                lineAdd.OverrideColor = Color.Red;
                 tooltips.Insert(tooltips.IndexOf(line2) + 1, lineAdd);
             }
         }
@@ -100,10 +106,14 @@ namespace CalRemix.Items.Accessories
         };
         public override void PostAddRecipes()
         {
-            for (int i = 0; i < Recipe.numRecipes; i++)
+            if (!ModLoader.HasMod("MagicStorage"))
             {
-                Recipe recipe = Main.recipe[i];
-                recipe.AddOnCraftCallback(Crafted);
+                for (int i = 0; i < Recipe.numRecipes; i++)
+                {
+                    Recipe recipe = Main.recipe[i];
+                    recipe.AddOnCraftCallback(Crafted);
+                }
+
             }
         }
         private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
