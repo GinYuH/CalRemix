@@ -101,44 +101,5 @@ namespace CalRemix.Projectiles.Hostile
             }
             HydrogenShell.HydrogenExplosion(Projectile);
         }
-
-        public static void HydrogenExplosion(Projectile proj)
-        {
-            for (int i = -2; i <= 2; i++)
-            {
-                for (int j = -2; j <= 2; j++)
-                {
-                    float num = Math.Abs((float)proj.Center.X / 16f + i);
-                    float num2 = Math.Abs((float)proj.Center.Y / 16f + j);
-                    if (!(Math.Sqrt(num * num + num2 * num2) < (double)4))
-                        continue;
-
-                    Tile t = CalamityUtils.ParanoidTileRetrieval((int)(proj.Center.X / 16) + i, (int)(proj.Center.Y / 16) + j);
-
-                    if (t != null && t.HasTile)
-                    {
-                        if (CalRemixWorld.SunkenSeaTiles.Contains(t.TileType))
-                        {
-                            WorldGen.KillTile(i, j);
-                            if (!t.HasTile && Main.netMode != 0)
-                                NetMessage.SendData(17, -1, -1, null, 0, i, j);
-                        }
-                    }
-
-                    for (int k = i - 1; k <= i + 1; k++)
-                    {
-                        for (int l = j - 1; l <= j + 1; l++)
-                        {
-                            if (t != null && (t.WallType == ModContent.WallType<NavystoneWall>() || t.WallType == ModContent.WallType<EutrophicSandWall>()))
-                            {
-                                WorldGen.KillWall(k, l);
-                                if (t.WallType == 0 && Main.netMode != 0)
-                                    NetMessage.SendData(17, -1, -1, null, 2, k, l);
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }

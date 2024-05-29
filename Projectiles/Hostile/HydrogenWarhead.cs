@@ -143,44 +143,7 @@ namespace CalRemix.Projectiles.Hostile
                     gore.velocity.Y -= 1f;
                 }
             }
-            //HydrogenExplosion(Projectile);
-        }
-
-        public static void HydrogenExplosion(Projectile proj)
-        {
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -1; j <= 1; j++)
-                {
-                    float num = Math.Abs((float)proj.Center.X / 16f + i);
-                    float num2 = Math.Abs((float)proj.Center.Y / 16f + j);
-                    if (!(Math.Sqrt(num * num + num2 * num2) < (double)2))
-                        continue;
-
-                    if (Main.tile[i, j] != null && Main.tile[i, j].HasTile)
-                    {
-                        if (CalRemixWorld.SunkenSeaTiles.Contains(Main.tile[i, j].TileType))
-                        {
-                            WorldGen.KillTile(i, j);
-                            if (!Main.tile[i, j].HasTile && Main.netMode != 0)
-                                NetMessage.SendData(17, -1, -1, null, 0, i, j);
-                        }
-                    }
-
-                    for (int k = i - 1; k <= i + 1; k++)
-                    {
-                        for (int l = j - 1; l <= j + 1; l++)
-                        {
-                            if (Main.tile[k, l] != null && (Main.tile[k, l].WallType == ModContent.WallType<NavystoneWall>() || Main.tile[k, l].WallType == ModContent.WallType<EutrophicSandWall>()))
-                            {
-                                WorldGen.KillWall(k, l);
-                                if (Main.tile[k, l].WallType == 0 && Main.netMode != 0)
-                                    NetMessage.SendData(17, -1, -1, null, 2, k, l);
-                            }
-                        }
-                    }
-                }
-            }
+            HydrogenShell.HydrogenExplosion(Projectile);
         }
     }
 }

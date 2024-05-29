@@ -73,9 +73,12 @@ namespace CalRemix.Projectiles
                         //Main.LocalPlayer.invis = true;
                         Main.LocalPlayer.position = Projectile.position + new Vector2(20, 20);
                         Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
-                        if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
+                        //if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
                         {
-                            Projectile.ai[2]++;
+                            if (Projectile.ai[2] > -1)
+                            {
+                                Projectile.ai[2]++;
+                            }
                             if (Projectile.ai[2] > 90)
                             {
                                 Projectile.frame = 1;

@@ -217,14 +217,14 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                 case (int)PhaseType.Death:
                     {
                         NPC.Calamity().newAI[1]++;
-                        int doomsdayTimer = 720;
+                        int doomsdayTimer = 870;
                         int spawnFridge = 120;
-                        int startExplosion = doomsdayTimer - 120;
+                        int startExplosion = doomsdayTimer - 300;
                         int tikTok = startExplosion / 11;
                         NPC.velocity *= 0.95f;
                         if (NPC.Calamity().newAI[1] == spawnFridge)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(-400, -400), Vector2.UnitY * 4, ModContent.ProjectileType<Fridge>(), 0, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(-400, -400), Vector2.UnitY * 4, ModContent.ProjectileType<Fridge>(), 0, 0f, Main.myPlayer, ai2: -1);
                         }
                         if (NPC.Calamity().newAI[1] > doomsdayTimer)
                         {
@@ -233,6 +233,19 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             NPC.NPCLoot();
 
                             NPC.netUpdate = true;
+
+                            CalRemixWorld.DestroyTheSunkenSea(NPC.Center / 16, 500);
+                            if (Target.GetModPlayer<CalRemixPlayer>().fridge)
+                            foreach (Projectile p in Main.projectile)
+                            {
+                                if (p == null)
+                                    continue;
+                                if (!p.active)
+                                    continue;
+                                if (p.type != ModContent.ProjectileType<Fridge>())
+                                    continue;
+                                p.ai[2] = 0;
+                            }
 
                             // Prevent netUpdate from being blocked by the spam counter.
                             if (NPC.netSpam >= 10)
