@@ -2249,6 +2249,8 @@ Mods: {
 			GildedSpirit.DisplayName: Gilded Spirit
 			Ionogen.DisplayName: Ionogen
 			IonogenShield.DisplayName: Ionogen's Shield
+			Hydrogen.DisplayName: Hydrogen
+			HydrogenShield.DisplayName: Hydrogen's Shield
 		}
 
 		Projectiles: {
@@ -2430,6 +2432,9 @@ Mods: {
 			Potpourri.DisplayName: Potpourri
 			PyrogenFlare.DisplayName: Pyrogen Flare
 			JungleDragonYharon.DisplayName: Yharon
+			HydrogenMine.DisplayName: Mine
+			HydrogenShell.DisplayName: Missile
+			HydrogenWarhead.DisplayName: Warhead
 		}
 
 		Tiles: {

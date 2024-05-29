@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
 
-namespace CalRemix.NPCs.Bosses.Ionogen
+namespace CalRemix.NPCs.Bosses.Hydrogen
 {
     public class HydrogenShield : ModNPC
     {

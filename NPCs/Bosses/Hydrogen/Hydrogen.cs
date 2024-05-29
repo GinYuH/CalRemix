@@ -18,8 +18,10 @@ using System;
 using CalamityMod.Projectiles.Enemy;
 using Newtonsoft.Json.Serialization;
 using CalamityMod.Items.Placeables;
+using System.Net.Http.Headers;
+using CalamityMod.Projectiles.Boss;
 
-namespace CalRemix.NPCs.Bosses.Ionogen
+namespace CalRemix.NPCs.Bosses.Hydrogen
 {
     [AutoloadBossHead]
     public class Hydrogen : ModNPC
@@ -95,7 +97,14 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             bool death = CalamityWorld.death || BossRushEvent.BossRushActive;
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
-            if (Target == null || Target.dead)
+            if (NPC.life <= 1)
+            {
+                NPC.ai[1] = 0;
+                NPC.ai[2] = 0;
+                NPC.ai[3] = 0;
+                Phase = (int)PhaseType.Death;
+            }
+            else if (Target == null || Target.dead)
             {
                 NPC.velocity.Y += 1;
                 NPC.Calamity().newAI[3]++;
@@ -110,18 +119,91 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             {
                 case (int)PhaseType.Idle:
                     {
+                        int phaseTime = 90;
+                        NPC.ai[1]++;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 5;
+                        if (NPC.ai[1] > phaseTime)
+                        {
+                            NPC.ai[1] = 0;
+                            Phase = (int)PhaseType.MissileLaunch;
+                        }
                         break;
                     }
                 case (int)PhaseType.MissileLaunch:
                     {
+                        int rocketRate = 5;
+                        int fireDelay = 30;
+                        int rocketAmt = 10;
+                        int salvoAmount = 2;
+                        float missileSpread = 45f;
+                        NPC.ai[1]++;
+                        NPC.velocity *= 0.95f;
+                        if (NPC.ai[1] > fireDelay)
+                        {
+                            NPC.ai[2]++;
+                            if (NPC.ai[2] % rocketRate == 0)
+                            {
+                                {
+                                    Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<HydrogenShell>(), (int)(NPC.damage * 0.25f), 3f, Main.myPlayer, Target.whoAmI);
+                                }
+                                if (NPC.ai[2] > rocketAmt * rocketRate)
+                                {
+                                    NPC.ai[2] = 0;
+                                    NPC.ai[1] = 0;
+                                    NPC.ai[3]++;
+                                }
+                            }
+                            if (NPC.ai[3] >= salvoAmount)
+                            {
+                                NPC.ai[1] = 0;
+                                NPC.ai[2] = 0;
+                                NPC.ai[3] = 0;
+                                Phase = (int)PhaseType.Mines;
+                            }
+                        }
                         break;
                     }
                 case (int)PhaseType.Mines:
                     {
+                        int whenToSummon = 90;
+                        int mineAmt = 32;
+                        int mineRange = 4000;
+                        int mineSpeed = 4;
+                        int phaseTime = 360;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 2;
+                        NPC.ai[1]++;
+                        if (NPC.ai[1] == whenToSummon)
+                        {
+                            for (int i = 0; i < mineAmt; i++)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                            }
+                        }
+                        if (NPC.ai[1] > phaseTime)
+                        {
+                            NPC.ai[1] = 0;
+                            Phase = (int)PhaseType.Idle;
+                        }
                         break;
                     }
                 case (int)PhaseType.Death:
                     {
+                        NPC.Calamity().newAI[1]++;
+                        int doomsdayTimer = 600;
+                        NPC.velocity *= 0.95f;
+                        if (NPC.Calamity().newAI[1] > doomsdayTimer)
+                        {
+                            NPC.active = false;
+                            NPC.HitEffect();
+                            NPC.NPCLoot();
+
+                            NPC.netUpdate = true;
+
+                            // Prevent netUpdate from being blocked by the spam counter.
+                            if (NPC.netSpam >= 10)
+                                NPC.netSpam = 9;
+                        }
                         break;
                     }
             }
@@ -180,6 +262,26 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             RemixDowned.downedHydrogen = true;
             CalRemixWorld.UpdateWorldBool();
             return false;
+        }
+
+        public override bool CheckDead()
+        {
+            NPC.life = 1;
+            NPC.Calamity().newAI[0] = 1;
+            NPC.active = true;
+            NPC.dontTakeDamage = true;
+
+            NPC.netUpdate = true;
+
+            // Prevent netUpdate from being blocked by the spam counter.
+            if (NPC.netSpam >= 10)
+                NPC.netSpam = 9;
+            return false;
+        }
+
+        public override bool CheckActive()
+        {
+            return NPC.Calamity().newAI[0] != 1;
         }
     }
 }

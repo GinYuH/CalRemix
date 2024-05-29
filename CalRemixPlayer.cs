@@ -44,6 +44,7 @@ using ReLogic.Utilities;
 using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.NPCs;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CalRemix.NPCs.Bosses.Hydrogen;
 
 namespace CalRemix
 {
@@ -473,7 +474,7 @@ namespace CalRemix
 			{
 				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
 				{
-					if (!NPC.AnyNPCs(ModContent.NPCType<Barocrab>()))
+					if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
 						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X, (int)CalRemixWorld.hydrogenLocation.Y, ModContent.NPCType<Barocrab>());
 				}
 			}
