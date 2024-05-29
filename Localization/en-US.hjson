@@ -2435,6 +2435,7 @@ Mods: {
 			HydrogenMine.DisplayName: Mine
 			HydrogenShell.DisplayName: Missile
 			HydrogenWarhead.DisplayName: Warhead
+			Fridge.DisplayName: Fridge
 		}
 
 		Tiles: {

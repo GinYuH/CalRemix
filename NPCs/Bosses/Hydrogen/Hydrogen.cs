@@ -22,6 +22,10 @@ using System.Net.Http.Headers;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Tiles.Furniture.Monoliths;
 using System.Collections.Generic;
+using Terraria.Utilities;
+using CalRemix.Projectiles;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -75,7 +79,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             NPC.boss = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.DeathSound = DeathSound;
+            NPC.DeathSound = null;
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToElectricity = true;
             NPC.Calamity().VulnerableToHeat = false;
@@ -100,6 +104,10 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             bool death = CalamityWorld.death || BossRushEvent.BossRushActive;
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
+            /*if (NPC.life == NPC.lifeMax)
+            {
+                Phase = (int)PhaseType.Idle;
+            }*/
             if (NPC.life <= 1)
             {
                 NPC.ai[1] = 0;
@@ -125,10 +133,12 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         NPC.damage = 0;
                         NPC.boss = false;
                         NPC.velocity = Vector2.Zero;
+                        NPC.chaseable = false;
                         if (lifeRatio < 0.9f)
                         {
                             NPC.damage = 100;
                             NPC.boss = true;
+                            NPC.chaseable = true;
                             Phase = (int)PhaseType.Idle;
                         }
                         break;
@@ -160,8 +170,9 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             if (NPC.ai[2] % rocketRate == 0)
                             {
                                 {
+                                    int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<HydrogenShell>(), (int)(NPC.damage * 0.25f), 3f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.25f), 3f, Main.myPlayer, Target.whoAmI);
                                 }
                                 if (NPC.ai[2] > rocketAmt * rocketRate)
                                 {
@@ -206,8 +217,15 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                 case (int)PhaseType.Death:
                     {
                         NPC.Calamity().newAI[1]++;
-                        int doomsdayTimer = 600;
+                        int doomsdayTimer = 720;
+                        int spawnFridge = 120;
+                        int startExplosion = doomsdayTimer - 120;
+                        int tikTok = startExplosion / 11;
                         NPC.velocity *= 0.95f;
+                        if (NPC.Calamity().newAI[1] == spawnFridge)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(-400, -400), Vector2.UnitY * 4, ModContent.ProjectileType<Fridge>(), 0, 0f, Main.myPlayer);
+                        }
                         if (NPC.Calamity().newAI[1] > doomsdayTimer)
                         {
                             NPC.active = false;
@@ -219,6 +237,24 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             // Prevent netUpdate from being blocked by the spam counter.
                             if (NPC.netSpam >= 10)
                                 NPC.netSpam = 9;
+                        }
+                        if (NPC.Calamity().newAI[1] == startExplosion)
+                        {
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 222;
+                            SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
+                        }
+                        if (NPC.Calamity().newAI[1] > startExplosion)
+                        {
+                            NPC.localAI[0] += 4.25f;
+                        }
+                        if ((10 - NPC.localAI[1]) > 0)
+                        {
+                            if (NPC.Calamity().newAI[1] % tikTok == 0)
+                            {
+                                SoundEngine.PlaySound(SoundID.Camera);
+                                CombatText.NewText(NPC.getRect(), Color.Lerp(Color.White, Color.Red, NPC.localAI[1] / 10), (int)(10 - NPC.localAI[1]));
+                                NPC.localAI[1]++;
+                            }
                         }
                         break;
                     }
@@ -244,7 +280,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            if (NPC.soundDelay == 0)
+            if (NPC.soundDelay == 0 && Phase != (int)PhaseType.Death)
             {
                 NPC.soundDelay = 3;
                 SoundEngine.PlaySound(HitSound, NPC.Center);
@@ -312,6 +348,16 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             if ((Phase == (int)PhaseType.Sealed && !ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type]) || Phase == (int)PhaseType.Death)
                 return false;
             return null;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D tex = ModContent.Request<Texture2D>(Texture + "Goner").Value;
+            Vector2 drawPos = NPC.Center - screenPos;
+            if (NPC.localAI[1] > 0)
+                drawPos += new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
+            spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, null, NPC.GetAlpha(drawColor), NPC.rotation, TextureAssets.Npc[Type].Value.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(tex, drawPos, null, Color.Red * (NPC.localAI[1] / 10), NPC.rotation, tex.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

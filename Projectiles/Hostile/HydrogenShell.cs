@@ -1,11 +1,15 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Graphics.Primitives;
 using CalamityMod.Particles;
 using CalamityMod.Walls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,6 +20,8 @@ namespace CalRemix.Projectiles.Hostile
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Missile");
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 11;
         }
         public override void SetDefaults()
         {
@@ -141,6 +147,26 @@ namespace CalRemix.Projectiles.Hostile
                     }
                 }
             }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
+            Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
+
+            Vector2 trailOffset = Projectile.Size * 0.5f;
+            trailOffset += (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset), 61);
+            Main.EntitySpriteDraw(texture, centered, null, Projectile.GetAlpha(lightColor), Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            
+            return false;
+        }
+        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.SmoothStep(6f * Projectile.scale, 2f * Projectile.scale, completionRatio);
+
+        public Color FlameTrailColorFunction(float completionRatio)
+        {
+            float trailOpacity = Utils.GetLerpValue(0.8f, 0.27f, completionRatio, true) * Utils.GetLerpValue(0f, 0.067f, completionRatio, true);
+            return Color.LightBlue * trailOpacity;
         }
     }
 }

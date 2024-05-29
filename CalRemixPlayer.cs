@@ -95,6 +95,7 @@ namespace CalRemix
         public int VerbotenMode = 1;
 		public int RecentChest = -1;
 		public bool baroclaw;
+		public bool fridge;
 		public bool ZonePlague;
         public bool ZonePlagueDesert;
         public Vector2 clawPosition = Vector2.Zero;
@@ -392,11 +393,16 @@ namespace CalRemix
 				}
 			}
 		}
+
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
         {
             if (eclipseaura > 0)
             {
 				modifiers.SourceDamage *= 0f;
+            }
+			if (fridge)
+            {
+                modifiers.SourceDamage *= 0f;
             }
 			if (cursed)
 			{ 
@@ -728,6 +734,7 @@ namespace CalRemix
 			cart = false;
 			tvohide = false;
 			baroclaw = false;
+			fridge = false;
 			blaze = false;
 			pearl = false;
 			astralEye = false;

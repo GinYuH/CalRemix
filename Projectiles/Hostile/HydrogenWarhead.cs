@@ -1,11 +1,16 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Particles;
+using CalamityMod.Projectiles.Magic;
+using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Walls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -55,7 +60,7 @@ namespace CalRemix.Projectiles.Hostile
             }
             if (Projectile.ai[1] > 120 && Projectile.velocity.Y > 1)
             {
-                Projectile.Kill();
+                Projectile.tileCollide = true;
             }
         }
         public override void OnKill(int timeLeft)
@@ -65,6 +70,17 @@ namespace CalRemix.Projectiles.Hostile
             Projectile.maxPenetrate = -1;
             Projectile.penetrate = -1;
             Projectile.Damage();
+
+            if (Main.expertMode)
+            for (int i = 0; i < 5; i++)
+            {
+                Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(45f));
+                int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, acidSpeed, ModContent.ProjectileType<SeafoamBubble>(), (int)(Projectile.damage * 0.25f), 3f, Main.myPlayer);
+                Projectile pe = Main.projectile[p];
+                pe.hostile = true;
+                pe.friendly = false;
+                pe.DamageType = DamageClass.Generic;
+            }
 
             for (int i = 0; i < 12; i++)
             {
