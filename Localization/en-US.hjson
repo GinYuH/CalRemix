@@ -2255,6 +2255,7 @@ Mods: {
 			Hydrogen.DisplayName: Hydrogen
 			HydrogenShield.DisplayName: Hydrogen's Shield
 			Oxygen.DisplayName: Oxygen
+			OxygenShield.DisplayName: Oxygen's Shield
 		}
 
 		Projectiles: {

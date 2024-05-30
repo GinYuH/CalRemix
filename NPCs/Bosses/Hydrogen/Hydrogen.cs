@@ -88,7 +88,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             {
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AtomicReinforcement");
             }
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SulphurousSeaBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<SunkenSeaBiome>().Type };
         }
 
         public override void OnSpawn(IEntitySource source)
