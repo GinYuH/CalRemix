@@ -28,6 +28,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items.Materials;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -64,6 +66,20 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         {
             DisplayName.SetDefault("Oxygen");
             Main.npcFrameCount[Type] = 4;
+            if (Main.dedServ)
+                return;
+            FannyMessage f = new FannyMessage("Oxygen",
+                "Oxygen is quite the fickle foe. Many have died foolishly trying to take a crack at it on the surface. However, that glass shell doesn't seem to be built for pressure. Try leading it to the bottom of the Abyss!",
+                "Idle",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
+            FannyManager.LoadFannyMessage(f);
+            FannyMessage e = new FannyMessage("OxygenEvil",
+                "Ok look, Fanny may be an imbecile, but if you're gonna take any words of his to heart it should be these. Leading it to the abyss is the only way you're defeating this idiotic ball.",
+                "EvilIdle",
+                FannyMessage.AlwaysShow).SpokenByEvilFanny().NeedsActivation(2f);
+            f.AddEndEvent(e.ActivateMessage);
+            FannyManager.LoadFannyMessage(e);
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
         }
 
         public override void SetDefaults()
@@ -103,6 +119,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
 
         public override void AI()
         {
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;

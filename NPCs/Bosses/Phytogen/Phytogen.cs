@@ -23,6 +23,8 @@ using CalamityMod.Projectiles.Boss;
 using CalRemix.Buffs;
 using CalRemix.CrossCompatibility;
 using CalamityMod.Systems;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -71,6 +73,12 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phytogen");
+            if (Main.dedServ)
+                return;
+            FannyManager.LoadFannyMessage(new FannyMessage("Pathogen",
+                "Makes fronds, not enemies.",
+                "Nuhuh",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
 
         public override void SetDefaults()

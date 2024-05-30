@@ -26,6 +26,8 @@ using Terraria.Utilities;
 using CalRemix.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -58,6 +60,12 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hydrogen");
+            if (Main.dedServ)
+                return;
+            FannyManager.LoadFannyMessage(new FannyMessage("Hydrogen",
+                "Hey! Do you see that spiky balloon chained over there? Word has it that hitting it with explosives will unleash a terrible evil, capable of destroying the entire sea! But something so destructive couldn't possibly exist, right?",
+                "Nuhuh",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
 
         public override void SetDefaults()

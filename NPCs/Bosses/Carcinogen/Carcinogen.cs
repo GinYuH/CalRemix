@@ -12,6 +12,8 @@ using CalRemix.Projectiles.Hostile;
 using CalRemix.Items.Placeables;
 using CalamityMod.Events;
 using CalRemix.Biomes;
+using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -43,6 +45,12 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Carcinogen");
+            if (Main.dedServ)
+                return;
+            FannyManager.LoadFannyMessage(new FannyMessage("Carcinogen",
+                "A giant floating chunk of asbestos with cigars orbitting it? Now I've seen it all...",
+                "Awooga",
+                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)).SetHoverTextOverride("Indeed Fanny, Indeed."));
         }
 
         public override void SetDefaults()
