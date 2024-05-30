@@ -2019,7 +2019,10 @@ Mods: {
 					'''
 			}
 
-			IonCube.DisplayName: Ion Cube
+			IonCube: {
+				DisplayName: Ion Cube
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -2251,6 +2254,7 @@ Mods: {
 			IonogenShield.DisplayName: Ionogen's Shield
 			Hydrogen.DisplayName: Hydrogen
 			HydrogenShield.DisplayName: Hydrogen's Shield
+			Oxygen.DisplayName: Oxygen
 		}
 
 		Projectiles: {
@@ -2436,6 +2440,7 @@ Mods: {
 			HydrogenShell.DisplayName: Missile
 			HydrogenWarhead.DisplayName: Warhead
 			Fridge.DisplayName: Fridge
+			IonogenLightning.DisplayName: Ionogen Lightning
 		}
 
 		Tiles: {

@@ -46,6 +46,7 @@ using CalamityMod.NPCs.OldDuke;
 using CalRemix.UI.Title;
 using CalRemix.NPCs.Bosses.Carcinogen;
 using CalRemix.NPCs.Bosses.Hydrogen;
+using System.Linq;
 
 namespace CalRemix
 {
@@ -61,7 +62,10 @@ namespace CalRemix
         internal static Effect LeanShader;
 
         public static Asset<Texture2D> sunOG = null;
+        public static Asset<Texture2D> sunReal = null;
         public static Asset<Texture2D> sunCreepy = null;
+        public static Asset<Texture2D> sunOxy = null;
+        public static Asset<Texture2D> sunOxy2 = null;
 
         public static readonly SoundStyle Silence = new($"{nameof(CalRemix)}/Sounds/EmptySound");
 
@@ -126,7 +130,10 @@ namespace CalRemix
             Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
             //Terraria.On_Player.ItemCheck_Shoot += SoldierShots;
             sunOG = TextureAssets.Sun3;
+            sunReal = TextureAssets.Sun;
             sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
+            sunOxy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun");
+            sunOxy2 = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun2");
         }
 
 

@@ -54,6 +54,7 @@ using CalamityMod.Tiles.FurnitureStratus;
 using CalamityMod.Tiles.SunkenSea;
 using CalamityMod.BiomeManagers;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.NPCs.Bosses.Oxygen;
 
 namespace CalRemix
 {
@@ -115,6 +116,8 @@ namespace CalRemix
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
+
+        public static int oxydayTime = 0;
 
         public static Vector2 hydrogenLocation = new Vector2(0, 0);
 
@@ -259,6 +262,7 @@ namespace CalRemix
             ionQuestLevel = -1;
             wizardDisabled = false;
             hydrogenLocation = Vector2.Zero;
+            oxydayTime = 0;
         }
         public override void OnWorldUnload()
         {
@@ -314,6 +318,7 @@ namespace CalRemix
             ionQuestLevel = -1;
             wizardDisabled = false;
             hydrogenLocation = Vector2.Zero;
+            oxydayTime = 0;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -361,6 +366,7 @@ namespace CalRemix
             tag["wizardToggle"] = wizardDisabled;
             tag["hydrolocationX"] = hydrogenLocation.X;
             tag["hydrolocationY"] = hydrogenLocation.Y;
+            tag["oxytime"] = oxydayTime;
 
             tag["109fanny"] = FannyManager.fannyEnabled;
             tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
@@ -414,6 +420,7 @@ namespace CalRemix
             wizardDisabled = tag.Get<bool>("wizardToggle");
             hydrogenLocation.X = tag.Get<Single>("hydrolocationX");
             hydrogenLocation.Y = tag.Get<Single>("hydrolocationY");
+            oxydayTime = tag.Get<Int32>("oxytime");
 
             FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
             FannyManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
@@ -464,6 +471,7 @@ namespace CalRemix
             writer.Write(wizardDisabled);
             writer.Write(hydrogenLocation.X);
             writer.Write(hydrogenLocation.Y);
+            writer.Write(oxydayTime);
 
             writer.Write(FannyManager.fannyEnabled);
             writer.Write(FannyManager.fannyTimesFrozen);
@@ -515,6 +523,7 @@ namespace CalRemix
             wizardDisabled = reader.ReadBoolean();
             hydrogenLocation.X = reader.ReadSingle();
             hydrogenLocation.Y = reader.ReadSingle();
+            oxydayTime = reader.ReadInt32();
 
             FannyManager.fannyEnabled = reader.ReadBoolean();
             FannyManager.fannyTimesFrozen = reader.ReadInt32();
@@ -589,6 +598,39 @@ namespace CalRemix
                     {
                         TextureAssets.Sun3 = CalRemix.sunOG;
                     }
+                }
+            }
+            if (oxydayTime > 0 && !NPC.AnyNPCs(NPCType<Oxygen>()))
+            {
+                if (RemixDowned.downedOxygen)
+                {
+                    TextureAssets.Sun = CalRemix.sunOxy2;
+                }
+                else
+                {
+                    TextureAssets.Sun = CalRemix.sunOxy;
+                }
+            }
+            else
+            {
+                TextureAssets.Sun = CalRemix.sunReal;
+            }
+            if (Main._shouldUseWindyDayMusic)
+            {
+                if (NPC.downedBoss3 && Main.time == 1 && oxydayTime <= 0 && Main.rand.NextBool(4))
+                {
+                    oxydayTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
+                    Main.NewText("The wind is blowing harshly!", Color.LightBlue);
+                }
+            }
+            if (oxydayTime > 0)
+            {
+                Main.LocalPlayer.Calamity().monolithDevourerBShader = 66;
+                Main.windSpeedTarget = 2f;
+                oxydayTime--;
+                if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
+                {
+                    oxydayTime = 0;
                 }
             }
             NPC.savedWizard = false;

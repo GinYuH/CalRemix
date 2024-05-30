@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using CalamityMod.World;
 using CalRemix.Backgrounds.Plague;
 using CalRemix.Projectiles.TileTypeless;
+using CalamityMod;
 
 namespace CalRemix
 {
@@ -100,6 +101,11 @@ namespace CalRemix
                     backgroundColor.G = 40;
                     backgroundColor.B = 40;
                 }
+            }
+            if (CalRemixWorld.oxydayTime > 0)
+            {
+                backgroundColor = Color.Lerp(backgroundColor, Color.LightSkyBlue, 0.2f);
+                backgroundColor = Color.Lerp(backgroundColor, Color.Cyan, 0.2f);
             }
         }
     }

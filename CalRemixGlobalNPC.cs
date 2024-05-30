@@ -1250,6 +1250,11 @@ namespace CalRemix
                 spawnRate = NPC.downedMoonlord ? (int)(spawnRate * 0.2f) : NPC.downedPlantBoss ? (int)(spawnRate * 0.4f) : (int)(spawnRate * 0.6f);
                 maxSpawns *= NPC.downedMoonlord ? 16 : NPC.downedBoss3 ? 12 : 8;
             }
+            if (CalRemixWorld.oxydayTime > 0)
+            {
+                spawnRate = (int)(spawnRate * 0.2f);
+                maxSpawns *= 8;
+            }
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -1261,6 +1266,10 @@ namespace CalRemix
                 {
                     pool.Remove(NPCID.BoundWizard);
                 }
+            }
+            if (CalRemixWorld.oxydayTime > 0)
+            {
+                pool.Add(NPCID.Dandelion, 100);
             }
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {

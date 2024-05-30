@@ -20,6 +20,9 @@ using Terraria.ID;
 using CalRemix.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using CalRemix.NPCs.Bosses.Oxygen;
+using CalRemix.NPCs.Bosses.Ionogen;
+using Terraria.Audio;
 
 namespace CalRemix
 {
@@ -105,6 +108,21 @@ namespace CalRemix
             {
                 projectile.frame = 0;
 
+            }
+
+            if (CalRemixWorld.oxydayTime > 0 && (double)projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == 0 && ((projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f) || (projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f) || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
+            {
+                projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
+                MathHelper.Clamp(projectile.velocity.X, -222f, 222f);
+            }
+            if (CalRemixWorld.oxydayTime > 0)
+            {
+                if (ProjectileID.Sets.IsAGolfBall[projectile.type] && projectile.position.Y < 656 && !NPC.AnyNPCs(NPCType<Oxygen>()))
+                {
+                    SoundEngine.PlaySound(SoundID.Shatter with { Volume = 1 });
+                    projectile.Kill();
+                    NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
+                }
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;

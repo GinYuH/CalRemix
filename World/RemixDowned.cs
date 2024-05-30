@@ -13,6 +13,7 @@ namespace CalRemix
         public static bool downedPhytogen = false;
         public static bool downedIonogen = false;
         public static bool downedHydrogen = false;
+        public static bool downedOxygen = false;
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
 
@@ -34,6 +35,7 @@ namespace CalRemix
             downedPhytogen = false;
             downedIonogen = false;
             downedHydrogen = false;
+            downedOxygen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
 
@@ -56,6 +58,7 @@ namespace CalRemix
             downedPhytogen = false;
             downedIonogen = false;
             downedHydrogen = false;
+            downedOxygen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
 
@@ -78,6 +81,7 @@ namespace CalRemix
             tag["downedPhytogen"] = downedPhytogen;
             tag["downedIonogen"] = downedIonogen;
             tag["downedHydrogen"] = downedHydrogen;
+            tag["downedOxygen"] = downedOxygen;
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
 
@@ -102,6 +106,7 @@ namespace CalRemix
             downedPhytogen = tag.Get<bool>("downedPhytogen");
             downedIonogen = tag.Get<bool>("downedIonogen");
             downedHydrogen = tag.Get<bool>("downedHydrogen");
+            downedOxygen = tag.Get<bool>("downedOxygen");
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
 
@@ -125,6 +130,7 @@ namespace CalRemix
             writer.Write(downedPhytogen);
             writer.Write(downedIonogen);
             writer.Write(downedHydrogen);
+            writer.Write(downedOxygen);
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
 
@@ -147,6 +153,7 @@ namespace CalRemix
             downedPhytogen = reader.ReadBoolean();
             downedIonogen = reader.ReadBoolean();
             downedHydrogen = reader.ReadBoolean();
+            downedOxygen = reader.ReadBoolean();
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
 
