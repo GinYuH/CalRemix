@@ -27,6 +27,7 @@ using CalRemix.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items.Materials;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -84,7 +85,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             NPC.boss = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.DeathSound = null;
+            NPC.DeathSound = CalamityMod.NPCs.Providence.Providence.HurtSound;
             NPC.Calamity().VulnerableToCold = false;
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToElectricity = false;
@@ -93,7 +94,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             {
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AtomicReinforcement");
             }
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SulphurousSeaBiome>().Type };
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -132,7 +132,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                 p.Calamity().infiniteFlight = true;
                 if (p.Distance(NPC.Center) < 320)
                 {
-                    p.breath += (int)MathHelper.Clamp(p.breathMax / 120, -0.001f, p.breathMax - p.breath);
+                    p.breath += (int)MathHelper.Clamp(p.breathMax / 120 * (1 + MaxDepthLevel), -0.001f, p.breathMax - p.breath);
                 }
             }
             if (Target.Calamity().ZoneAbyssLayer4 || BossRushEvent.BossRushActive)
@@ -144,7 +144,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     SoundEngine.PlaySound(SoundID.Shatter);
                     NPC.life -= (int)(NPC.lifeMax * 0.2f);
                     NPC.HitEffect(dmg: (int)(NPC.lifeMax * 0.2f));
-                    Shard(16, true);
+                    Shard(18, true);
                 }
                 DepthLevel = 4;
                 if (MaxDepthLevel < 4)
@@ -157,7 +157,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     SoundEngine.PlaySound(SoundID.Shatter);
                     NPC.life -= (int)(NPC.lifeMax * 0.15f);
                     NPC.HitEffect(dmg : (int)(NPC.lifeMax * 0.15f));
-                    Shard(10, true);
+                    Shard(12, true);
                 }
                 DepthLevel = 3;
                 if (MaxDepthLevel < 3)
@@ -170,7 +170,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     SoundEngine.PlaySound(SoundID.Shatter);
                     NPC.life -= (int)(NPC.lifeMax * 0.1f);
                     NPC.HitEffect(dmg: (int)(NPC.lifeMax * 0.1f));
-                    Shard(6, true);
+                    Shard(8, true);
                 }
                 DepthLevel = 2;
                 if (MaxDepthLevel < 2)
@@ -218,14 +218,15 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         if (NPC.ai[1] == spawnClouds)
                         {
                             int cloudAmt = 12;
-                            int cloudSpacing = 480;
-                            int cloudDist = 2000;
+                            int cloudSpacing = rev ? 480 : 400;
+                            int cloudDist = 1200;
                             int cloudStart = 800 + Main.rand.Next(0, 64);
-                            float cloudSpeed = 10;
+                            float cloudSpeed = death ? 16 : rev ? 12 : 10;
+                            SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
                             for (int i = 0; i < cloudAmt / 2; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<BrimstoneHellblast>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 4), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<BrimstoneHellblast>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 3), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
                             }
                         }
                         if (NPC.ai[1] > spawnClouds)
@@ -246,11 +247,12 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     {
                         NPC.ai[1]++;
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 5;
-                        int flingStrength = 60;
-                        int flingRate = 50;
+                        int flingStrength = 30;
+                        int flingRate = death ? 50 : rev ? 60 : expert ? 70 : 80;
                         int totalFlings = 3;
                         if (NPC.ai[1] % flingRate == 0)
                         {
+                            SoundEngine.PlaySound(SoundID.Item43, NPC.Center);
                             Target.velocity += Main.rand.NextVector2Circular(flingStrength, flingStrength);
                             NPC.ai[2]++;
                             DustExplosion(Target.velocity.SafeNormalize(Vector2.Zero));
@@ -266,22 +268,42 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     }
                 case (int)PhaseType.Bubbles:
                     {
-                        NPC.velocity *= 0.97f;
                         int spawnBubbles = 60;
                         int bubbleAmt = 64;
                         int bubbleRangeX = 1000;
                         int bubbleRangeY = 500;
                         int phaseTime = spawnBubbles + 240;
+                        int dash = spawnBubbles + 120;
                         NPC.ai[1]++;
                         if (NPC.ai[1] == spawnBubbles)
                         {
+                            SoundEngine.PlaySound(SoundID.NPCDeath45, Target.Center);
                             for (int i = 0; i < bubbleAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ProjectileID.Bubble, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ModContent.ProjectileType<OxygenBubble>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                             }
+                        }
+                        if (NPC.ai[1] < dash)
+                        {
+                            NPC.velocity *= 0.97f;
+                            NPC.rotation += 0.6f;
+                        }
+                        else if (NPC.ai[1] == dash)
+                        {
+                            SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
+                            NPC.rotation = NPC.velocity.ToRotation();
+                            NPC.velocity = NPC.DirectionTo(Target.Center) * 20;
+                            if (master)
+                                NPC.velocity += Target.velocity;
+                        }
+                        else
+                        {
+                            NPC.rotation = NPC.velocity.ToRotation();
+                            NPC.velocity *= 0.99f;
                         }
                         if (NPC.ai[1] > phaseTime)
                         {
+                            NPC.rotation = 0;
                             NPC.ai[1] = 0;
                             Phase = (int)PhaseType.Fling;
                         }
@@ -291,16 +313,20 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     {
                         NPC.velocity *= 0.97f;
                         int spawnTornado = 60;
-                        int totalObjects = 10;
-                        int tornadoRate = 90;
-                        int totalTornados = 5;
+                        int totalObjects = death ? 16 : rev ? 10 : 8;
+                        int tornadoRate = rev ? 60 : expert ? 80 :90;
+                        int totalTornados = death ? 10 : rev ? 8 : 5;
                         int phaseTime = tornadoRate * totalTornados + spawnTornado;
                         NPC.ai[1]++;
                         if (NPC.ai[1] > spawnTornado && NPC.ai[1] % tornadoRate == 0)
                         {
+                            SoundEngine.PlaySound(SoundID.Item94, NPC.Center);
+                            int dir = Main.rand.NextBool().ToInt();
                             for (int i = 0; i < totalObjects; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.SaucerScrap, (int)(NPC.damage * 0.25f), 0, Main.myPlayer, i, totalObjects);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OxygenDebris>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
+                                Main.projectile[p].localAI[0] = Main.rand.Next(1, 5);
+                                Main.projectile[p].localAI[1] = dir;
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
@@ -327,7 +353,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("In a magical blunder, this construct found itself a resident of the elemental family as an unwilling eye of her storm. While Tempest carried a plethora of cargo on Yharim's behalf, she slipped into her airstream which sparked a feedback loop outside her control.")
+        new FlavorTextBestiaryInfoElement("In a magical blunder, this construct found itself a resident of the elemental family as an unwilling eye of her storm. While Tempest carried a plethora of cargo on Yharim's behalf, she slipped into her airstream which sparked a feedback loop outside her control."),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
             });
         }
 
@@ -337,6 +364,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             {
                 modifiers.SetMaxDamage(1);
                 Shard();
+                NPC.life += 1;
             }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -345,6 +373,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             {
                 modifiers.SetMaxDamage(1);
                 Shard();
+                NPC.life += 1;
             }
         }
 
@@ -357,9 +386,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                 {
                     SoundEngine.PlaySound(SoundID.Item20 with { Volume = 0.2f, Pitch = 0.4f }, NPC.Center);
                     Vector2 square = new Vector2(Main.rand.Next((int)NPC.position.X, (int)NPC.position.X + NPC.width), Main.rand.Next((int)NPC.position.Y, (int)NPC.position.Y + NPC.height));
-                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<CigarCinder>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<Oxshard>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, ai1: Main.rand.Next(1, 7));
                     Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), Mod.Find<ModGore>("OxygenShrap" + Main.rand.Next(1, 7)).Type);
                 }
                 NPC.Calamity().newAI[1] = 40;
             }
@@ -383,6 +411,11 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                 {
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Cloud, hit.HitDirection, -1f, 0, default, 1f);
                 }
+                for (int i = 0; i < 20; i++)
+                {
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(NPC.width, NPC.height).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("OxygenShrap" + Main.rand.Next(1, 7)).Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(NPC.width, NPC.height).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("Oxygen" + Main.rand.Next(1, 7)).Type);
+                }
             }
         }
 
@@ -393,6 +426,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override void OnKill()
         {
             RemixDowned.downedOxygen = true;
+            CalRemixWorld.oxydayTime = 0;
             CalRemixWorld.UpdateWorldBool();
         }
 
@@ -400,13 +434,16 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         {
             // work you stupid stupid
             RemixDowned.downedOxygen = true;
+            CalRemixWorld.oxydayTime = 0;
             CalRemixWorld.UpdateWorldBool();
             return false;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D crack = ModContent.Request<Texture2D>(Texture + "Cracks").Value;
             Vector2 drawPos = NPC.Center - screenPos;
             spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(DepthLevel, 0, 3)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(crack, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(DepthLevel, 0, 3)), Color.LightBlue * (DepthLevel / 6) * Lighting.GetColor(NPC.position.ToTileCoordinates()).A * 0.1f, NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
             return false;
         }
     }

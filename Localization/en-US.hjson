@@ -2442,6 +2442,10 @@ Mods: {
 			HydrogenWarhead.DisplayName: Warhead
 			Fridge.DisplayName: Fridge
 			IonogenLightning.DisplayName: Ionogen Lightning
+			OxygenBubble.DisplayName: Bubble
+			OxygenCloud.DisplayName: Cloud
+			OxygenDebris.DisplayName: Debris
+			Oxshard.DisplayName: Oxygen Shard
 		}
 
 		Tiles: {
