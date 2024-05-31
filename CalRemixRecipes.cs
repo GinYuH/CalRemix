@@ -399,17 +399,14 @@ namespace CalRemix
                     recipe.AddIngredient<LeviathanAmbergris>();
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
-                    recipe.AddIngredient<PlagueHive>();
+                    recipe.AddIngredient<ToxicHeart>();
+                    recipe.AddIngredient<AlchemicalFlask>();
                     recipe.AddIngredient<Radiance>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
                     recipe.AddIngredient<TheEvolution>();
                     recipe.AddIngredient<Affliction>();
                     recipe.AddIngredient<OldDukeScales>();
-                }
-                if (recipe.HasResult(ModContent.ItemType<PlagueHive>()))
-                {
-                    recipe.AddIngredient<ToxicHeart>();
                 }
                 if (recipe.HasResult(ModContent.ItemType<PhantomicArtifact>()))
                 {
