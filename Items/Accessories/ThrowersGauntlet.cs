@@ -37,7 +37,9 @@ namespace CalRemix.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             CalamityPlayer modPlayer = player.Calamity();
-            modPlayer.eGauntlet = true;
+            ModContent.GetModItem(ModContent.ItemType<ElementalGauntlet>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<WarbanneroftheSun>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<BadgeofBravery>()).UpdateAccessory(player, hideVisual);
             player.kbGlove = true;
             player.autoReuseGlove = true;
             player.meleeScaleGlove = true;

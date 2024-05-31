@@ -57,15 +57,6 @@ namespace CalRemix
                     CalamityUtils.HomeInOnNPC(projectile, true, 1200, 20, 1);
                 }
             }
-            if (modPlayer.tvo && projectile.DamageType == GetInstance<RogueDamageClass>() && bladetimer <= 0 && projectile.type != ProjectileType<Nanotech>() && player.ownedProjectileCounts[ProjectileType<Nanotech>()] < 8)
-            {
-                Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<Nanotech>(), (int)(projectile.damage * 0.2f), 0, projectile.owner);
-                bladetimer = 30;
-            }
-            if (modPlayer.tvo && projectile.type == ProjectileType<SandElementalHealer>() && player.statLife < player.statLifeMax && player.ownedProjectileCounts[ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>()] < 2)
-            {
-                Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Healing.CactusHealOrb>(), 0, 0, projectile.owner);
-            }
             if (projectile.type == ProjectileID.PureSpray)
             {
                 PlagueToPureConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
@@ -356,32 +347,6 @@ namespace CalRemix
 
 		public override void OnKill(Projectile projectile, int timeLeft)
 		{
-			if (rogueclone)
-			{
-				int type = Main.rand.Next(0, 3);
-				switch (type)
-				{
-					case 0:
-						type = ProjectileType<JewelSpike>();
-						break;
-					case 1:
-						type = ProjectileType<LostSoulFriendly>();
-						break;
-					case 2:
-						type = ProjectileType<DragonShit>();
-						break;
-				}
-				for (int i = 0; i < 5; i++)
-                {
-					Projectile p = Main.projectile[Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), type, 20, 0, projectile.owner)];
-					p.DamageType = GetInstance<RogueDamageClass>();
-					if (p.whoAmI.WithinBounds(Main.maxProjectiles))
-					{
-						p.originalDamage = 20;
-					}
-
-				}
-			}
         }
 
         public override Color? GetAlpha(Projectile projectile, Color lightColor)

@@ -46,12 +46,11 @@ namespace CalRemix.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            ModContent.GetModItem(ModContent.ItemType<ElementalQuiver>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<DaawnlightSpiritOrigin>()).UpdateAccessory(player, hideVisual);
             player.GetDamage<RangedDamageClass>() += 0.3f;
-            player.magicQuiver = true;
             CalamityPlayer caPlayer = player.Calamity();
-            caPlayer.deadshotBrooch = true;
             caPlayer.rangedAmmoCost *= 0f;
-            caPlayer.spiritOrigin = true;
             player.GetCritChance<RangedDamageClass>() += 25;
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.brimPortal = true;

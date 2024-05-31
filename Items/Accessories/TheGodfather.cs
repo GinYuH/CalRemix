@@ -49,53 +49,24 @@ namespace CalRemix.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            CalamityPlayer calPlayer = player.Calamity();
-            calPlayer.absorber = true;
-            calPlayer.sponge = true;
-            player.statManaMax2 += 30;
-            player.buffImmune[ModContent.BuffType<ArmorCrunch>()] = true;
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
-            calPlayer.amalgam = true;
-            calPlayer.transformer = true;
-            calPlayer.aSpark = true;
-            calPlayer.hideOfDeus = true;
-            calPlayer.nCore = true;
-            modPlayer.godfather = true;
-            player.GetDamage<GenericDamageClass>() += 0.15f;
+            CalamityPlayer calPlayer = player.Calamity();
+            GetModItem(ItemType<TheAbsorber>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<TheAmalgam>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<TheTransformer>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<HideofAstrumDeus>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<NebulousCore>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<AmalgamatedBrain>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<BlunderBooster>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<DeepDiver>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<LuxorsGift>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<RottenDogtooth>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<FungalSymbiote>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<AbyssalDivingSuit>()).UpdateAccessory(player, hideVisual);
 
-            if (player.immune)
-            {
-                var source = player.GetSource_Accessory(Item);
-                if (player.miscCounter % 6 == 0)
-                {
-                    if (player.whoAmI == Main.myPlayer)
-                    {
-                        int damage = (int)player.GetBestClassDamage().ApplyTo(300);
-                        Projectile rain = CalamityUtils.ProjectileRain(source, player.Center, 400f, 100f, 500f, 800f, 22f, ProjectileType<AuraRain>(), damage, 2f, player.whoAmI);
-                        if (rain.whoAmI.WithinBounds(Main.maxProjectiles))
-                        {
-                            rain.DamageType = DamageClass.Generic;
-                            rain.tileCollide = false;
-                            rain.penetrate = 1;
-                        }
-                        Projectile star = CalamityUtils.ProjectileRain(source, player.Center, 400f, 100f, 500f, 800f, 22f, ProjectileType<AstralStarMagic>(), damage, 2f, player.whoAmI);
-                        if (star.whoAmI.WithinBounds(Main.maxProjectiles))
-                        {
-                            star.DamageType = DamageClass.Generic;
-                            star.tileCollide = false;
-                            star.penetrate = 1;
-                        }
-                        int microbeDamage = (int)player.GetBestClassDamage().ApplyTo(20);
-                        int p = Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, ProjectileID.TruffleSpore, microbeDamage, 0f, player.whoAmI, 0f, 0f);
-                        if (p.WithinBounds(Main.maxProjectiles))
-                        {
-                            Main.projectile[p].DamageType = DamageClass.Generic;
-                            Main.projectile[p].usesLocalNPCImmunity = true;
-                            Main.projectile[p].localNPCHitCooldown = 10;
-                            Main.projectile[p].originalDamage = microbeDamage;
-                        }
-                    }
-                }
+            modPlayer.godfather = true;
+
+            { 
                 modPlayer.nuclegel = true;
                 calPlayer.royalGel = true;
                 modPlayer.amalgel = true;

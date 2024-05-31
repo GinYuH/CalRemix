@@ -39,10 +39,9 @@ namespace CalRemix.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             CalamityPlayer modPlayer = player.Calamity();
-            modPlayer.eTalisman = true;
             player.GetModPlayer<CalRemixPlayer>().marnite = true;
-
-            player.manaMagnet = true;
+            ModContent.GetModItem(ModContent.ItemType<EtherealTalisman>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<UnstableGraniteCore>()).UpdateAccessory(player, hideVisual);
 
             player.statManaMax2 += 250;
             player.GetDamage<MagicDamageClass>() += 0.3f;
@@ -50,7 +49,7 @@ namespace CalRemix.Items.Accessories
             player.GetCritChance<MagicDamageClass>() += 25;
 
 
-            if (Main.LocalPlayer.HasBuff(BuffID.ManaSickness))
+            if (Main.LocalPlayer.HasBuff(BuffID.ManaSickness) && !player.GetModPlayer<CalRemixPlayer>().godfather)
             {
                 if (!Main.LocalPlayer.HasCooldown(MagnaCoreCooldown.ID) && player.active)
                 {

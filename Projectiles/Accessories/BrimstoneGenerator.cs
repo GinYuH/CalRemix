@@ -90,12 +90,12 @@ namespace CalRemix.Projectiles.Accessories
 
             if (voidaura == null)
             {
-                voidaura = VoidGeneratorMetaball.SpawnParticle(Projectile.Center, Vector2.Zero, 800f);
+                voidaura = VoidGeneratorMetaball.SpawnParticle(Projectile.Center, Vector2.Zero, 200f);
             }
             else
             {
                 voidaura.Center = Projectile.Center;
-                voidaura.Size = 800;
+                voidaura.Size = 200;
             }
         }
         public override bool? CanCutTiles() => false;

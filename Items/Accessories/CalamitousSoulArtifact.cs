@@ -39,13 +39,14 @@ namespace CalRemix.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetAttackSpeed(DamageClass.Melee) += 0.2f;
-            player.GetDamage<ThrowingDamageClass>() += 0.45f;
             player.maxMinions += 8;
-            player.manaCost -= 0.75f;
             player.GetModPlayer<CalRemixPlayer>().cart = true;
             float bonus = CalculateBonus(player);
             player.GetDamage<GenericDamageClass>() += bonus;
+            ModContent.GetModItem(ModContent.ItemType<DimensionalSoulArtifact>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<EldritchSoulArtifact>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<PhantomicArtifact>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<AuricSoulArtifact>()).UpdateAccessory(player, hideVisual);
         }
         private static float CalculateBonus(Player player)
         {

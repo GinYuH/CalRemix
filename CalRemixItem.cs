@@ -51,6 +51,7 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.Other;
 using CalamityMod.Items;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Fishing.AstralCatches;
 
 namespace CalRemix
 {
@@ -317,43 +318,6 @@ namespace CalRemix
             item.SetDefaults(transformType);
             item.stack = stack;
         }
-       
-        public override void MeleeEffects(Item item, Player Player, Rectangle hitbox)
-        {
-            if (item.CountsAsClass<MeleeDamageClass>() && item.shoot == ProjectileID.None && Player.GetModPlayer<CalRemixPlayer>().godfather && Main.rand.NextBool(20))
-            {
-                var source = Player.GetSource_ItemUse(item);
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    double damageMult = item.useTime / 30D;
-                    if (damageMult < 0.35)
-                        damageMult = 0.35;
-
-                    int newDamage = (int)(item.damage * 2 * damageMult);
-
-                    int projtype = Main.rand.Next(4);
-                    switch (projtype)
-                    {
-                        case 0:
-                            projtype = ModContent.ProjectileType<BlazingSun>();
-                            break;
-                        case 1:
-                            projtype = ModContent.ProjectileType<MiniatureFolly>();
-                            break;
-                        case 2:
-                            projtype = ProjectileID.Mushroom;
-                            break;
-                        default:
-                            projtype = ModContent.ProjectileType<LuxorsGiftMagic>();
-                            break;
-                    }
-                    Vector2 mousedir = Main.MouseWorld - Player.Center;
-                    mousedir.Normalize();
-                    Projectile.NewProjectile(source, Player.Center, mousedir * 6, projtype, newDamage, 0f, Player.whoAmI, 0f, 0f);
-                    
-                }
-            }
-        }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
@@ -370,63 +334,6 @@ namespace CalRemix
                         Main.projectile[p].GetGlobalProjectile<CalamityMod.Projectiles.CalamityGlobalProjectile>().stealthStrike = true;
                     }
                 }
-            }
-            if (modPlayer.godfather)
-            {
-                if (Main.rand.NextBool(20) && !item.channel)
-                {
-                    double damageMult = item.useTime / 30D;
-                    if (damageMult < 0.35)
-                        damageMult = 0.35;
-
-                    int newDamage = (int)(damage * 2 * damageMult);
-
-                    int projtype = Main.rand.Next(4);
-                    switch (projtype)
-                    {
-                        case 0:
-                            projtype = ModContent.ProjectileType<BlazingSun>();
-                            break;
-                        case 1:
-                            projtype = ModContent.ProjectileType<MiniatureFolly>();
-                            break;
-                        case 2:
-                            projtype = ProjectileID.Mushroom;
-                            break;
-                        default:
-                            projtype = ModContent.ProjectileType<LuxorsGiftMagic>();
-                            break;
-                    }
-
-                    if (player.whoAmI == Main.myPlayer)
-                    {
-                        int projectile = Projectile.NewProjectile(source, position, velocity * 1.25f, projtype, newDamage, 2f, player.whoAmI);
-                        if (projectile.WithinBounds(Main.maxProjectiles))
-                            Main.projectile[projectile].DamageType = DamageClass.Generic;
-                    }
-                }
-
-            }
-            else if (calPlayer.amalgam)
-            {
-                if (Main.rand.NextBool(20) && !item.channel)
-                {
-                    double damageMult = item.useTime / 30D;
-                    if (damageMult < 0.35)
-                        damageMult = 0.35;
-
-                    int newDamage = (int)(damage * 2 * damageMult);
-
-                    int projtype = Main.rand.NextBool(2) ? ModContent.ProjectileType<BlazingSun>() : ModContent.ProjectileType<MiniatureFolly>();
-
-                    if (player.whoAmI == Main.myPlayer)
-                    {
-                        int projectile = Projectile.NewProjectile(source, position, velocity * 1.25f, projtype, newDamage, 2f, player.whoAmI);
-                        if (projectile.WithinBounds(Main.maxProjectiles))
-                            Main.projectile[projectile].DamageType = DamageClass.Generic;
-                    }
-                }
-
             }
             if (modPlayer.blaze && item.DamageType == DamageClass.Ranged)
             {
@@ -635,7 +542,6 @@ namespace CalRemix
         {
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
             CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
-            OldDukeScalesPlayer dukePlayer = player.GetModPlayer<OldDukeScalesPlayer>();
             if (item.type == ModContent.ItemType<GrandGelatin>())
             {
                 modplayer.miragel = true;
@@ -649,150 +555,58 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<TheSponge>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
-                calplayer.absorber = true;
-                calplayer.spongeShieldVisible = !hideVisual;
-                calplayer.baroclaw = true; // cringe you
-                calplayer.lifejelly = true;
-                calplayer.cleansingjelly = true;
-                calplayer.regenator = true;
-                calplayer.ursaSergeant = true;
-                calplayer.trinketOfChi = true;
-                calplayer.aSpark = true;
-                calplayer.flameLickedShell = true;
-                calplayer.permafrostsConcoction = true;
-                calplayer.aquaticHeart = true;
-                calplayer.aquaticHeartHide = hideVisual;
-                dukePlayer.OldDukeScalesOn = true;
-                if (calplayer.SpongeShieldDurability > 0)
-                {
-                    player.statDefense += 30;
-                    player.endurance += 0.3f;
-                }
+                ModContent.GetModItem(ModContent.ItemType<TheAbsorber>()).UpdateAccessory(player, hideVisual);
+                if (item.type != ModContent.ItemType<TheSponge>())
+                    ModContent.GetModItem(ModContent.ItemType<TheSponge>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
+                    ModContent.GetModItem(ModContent.ItemType<Regenator>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<UrsaSergeant>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<TrinketofChi>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<AmidiasSpark>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<FlameLickedShell>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<PermafrostsConcoction>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<AquaticHeart>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ModContent.ItemType<AmbrosialAmpoule>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
-                if (player.ZoneJungle)
-                {
-                    player.lifeRegen += 1;
-                    player.statDefense += 9;
-                    player.endurance += 0.05f;
-                }
-
-                player.buffImmune[BuffID.Venom] = true;
-                player.buffImmune[BuffID.Poisoned] = true;
-
-                if (!player.honey && player.lifeRegen < 0)
-                {
-                    player.lifeRegen += 2;
-                    if (player.lifeRegen > 0)
-                        player.lifeRegen = 0;
-                }
-
-                player.lifeRegenTime += 1;
-                player.lifeRegen += 2;
-
-                if (player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneUnderworldHeight)
-                {
-                    player.statDefense += 10;
-                    player.endurance += 0.05f;
-                    player.pickSpeed -= 0.2f;
-                }
+                ModContent.GetModItem(ModContent.ItemType<ArchaicPowder>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<HoneyDew>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ModContent.ItemType<AbyssalDivingSuit>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
-                calplayer.lumenousAmulet = true;
-                calplayer.abyssalAmulet = true;
-                calplayer.aquaticEmblem = true;
-                calplayer.alluringBait = true;
-                player.pickSpeed -= 0.15f;
+                ModContent.GetModItem(ModContent.ItemType<LumenousAmulet>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<AquaticEmblem>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<AlluringBait>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
-                {
-                    player.findTreasure = true;
-                }
-                player.npcTypeNoAggro[NPCID.Shark] = true;
-                player.npcTypeNoAggro[NPCID.SeaSnail] = true;
-                player.npcTypeNoAggro[NPCID.PinkJellyfish] = true;
-                player.npcTypeNoAggro[NPCID.Crab] = true;
-                player.npcTypeNoAggro[NPCID.Squid] = true;
+                ModContent.GetModItem(ModContent.ItemType<SpelunkersAmulet>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<OceanCrest>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<AquaticEmblem>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ModContent.ItemType<AbyssalDivingGear>())
             {
-                player.npcTypeNoAggro[NPCID.Shark] = true;
-                player.npcTypeNoAggro[NPCID.SeaSnail] = true;
-                player.npcTypeNoAggro[NPCID.PinkJellyfish] = true;
-                player.npcTypeNoAggro[NPCID.Crab] = true;
-                player.npcTypeNoAggro[NPCID.Squid] = true;
+                ModContent.GetModItem(ModContent.ItemType<OceanCrest>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ModContent.ItemType<TheAmalgam>() || item.type == ModContent.ItemType<Slimelgamation>() || item.type == ModContent.ItemType<TheGodfather>() || item.type == ModContent.ItemType<TheVerbotenOne>())
             {
-                calplayer.giantPearl = true;
+                ModContent.GetModItem(ModContent.ItemType<GiantPearl>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
-                calplayer.manaOverloader = true;
-                calplayer.frostFlare = true;
-                calplayer.voidOfExtinction = true;
-                player.strongBees = true;
-                calplayer.uberBees = true;
-                calplayer.alchFlask = true;
-                calplayer.purity = true;
-                calplayer.evolution = true;
-                calplayer.affliction = true;
-                //calplayer.oldDukeScales = true;
-                var source = player.GetSource_Accessory(item);
-                if (Main.rand.NextBool(3))
-                {
-                    if (player.whoAmI == Main.myPlayer)
-                    {
-                        int microbeDamage = (int)player.GetBestClassDamage().ApplyTo(500);
-                        int choice = Main.rand.Next(4);
-                        switch (choice)
-                        {
-                            case 0:
-                                choice = ModContent.ProjectileType<PoisonousSeawater>();
-                                break;
-                            case 1:
-                                choice = ModContent.ProjectileType<PlagueBeeSmall>();
-                                break;
-                            case 2:
-                                choice = ModContent.ProjectileType<Corrocloud1>();
-                                break;
-                            default:
-                                choice = ProjectileID.SporeCloud;
-                                break;
-                        }
-                        int p = Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0f, 0f, choice, microbeDamage, 0f, player.whoAmI, 0f, 0f);
-                        if (p.WithinBounds(Main.maxProjectiles))
-                        {
-                            Main.projectile[p].DamageType = DamageClass.Generic;
-                            Main.projectile[p].usesLocalNPCImmunity = true;
-                            Main.projectile[p].localNPCHitCooldown = 10;
-                            Main.projectile[p].originalDamage = microbeDamage;
-                        }
-                    }
-                }
-                CalamityPlayer modPlayer = player.Calamity();
-                modPlayer.voidOfCalamity = true;
-                modPlayer.abaddon = true;
-                player.buffImmune[ModContent.BuffType<BrimstoneFlames>()] = true;
+                    ModContent.GetModItem(ModContent.ItemType<ManaPolarizer>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<FrostFlare>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<VoidofExtinction>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<Radiance>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<Affliction>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<LeviathanAmbergris>()).UpdateAccessory(player, hideVisual);
+                player.sporeSac = true;
+                ModContent.GetModItem(ModContent.ItemType<Abaddon>()).UpdateAccessory(player, hideVisual);
                 player.magmaStone = true;
-                player.buffImmune[BuffID.OnFire] = true;
-                player.fireWalk = true;
-                player.lavaRose = true;
-                if (player.immune)
-                {
-                    if (player.miscCounter % 10 == 0)
-                    {
-                        if (player.whoAmI == Main.myPlayer)
-                        {
-                            int damage = (int)player.GetBestClassDamage().ApplyTo(300);
-                            Projectile fire = CalamityUtils.ProjectileRain(source, player.Center, 400f, 100f, 500f, 800f, 22f, ModContent.ProjectileType<StandingFire>(), damage, 5f, player.whoAmI);
-                            if (fire.whoAmI.WithinBounds(Main.maxProjectiles))
-                            {
-                                fire.usesLocalNPCImmunity = true;
-                                fire.localNPCHitCooldown = 60;
-                            }
-                        }
-                    }
-                }
+                ModContent.GetModItem(ModContent.ItemType<DynamoStemCells>()).UpdateAccessory(player, hideVisual);
+                ModContent.GetModItem(ModContent.ItemType<BlazingCore>()).UpdateAccessory(player, hideVisual);
             }
         }
 

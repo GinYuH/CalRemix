@@ -52,6 +52,9 @@ namespace CalRemix.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            GetModItem(ItemType<Nucleogenesis>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<GladiatorsLocket>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<DarkSunRing>()).UpdateAccessory(player, hideVisual);
             player.GetDamage<SummonDamageClass>() += 0.2f;
             player.statDefense *= 1.2f;
             player.pickSpeed = (int)(1.15 * player.pickSpeed);
@@ -59,12 +62,6 @@ namespace CalRemix.Items.Accessories
             player.lifeRegen += 4;
 
             CalamityPlayer caPlayer = player.Calamity();
-            caPlayer.shadowMinions = true; 
-            caPlayer.holyMinions = true; 
-            caPlayer.voltaicJelly = true;
-            caPlayer.starTaintedGenerator = true;
-            caPlayer.nucleogenesis = true;
-
             caPlayer.howlTrio = true;
             caPlayer.howlsHeart = true;
             caPlayer.brimstoneWaifu = true;

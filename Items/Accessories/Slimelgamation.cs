@@ -118,6 +118,7 @@ namespace CalRemix.Items.Accessories
 
             var source2 = player.GetSource_Accessory(Item);
 
+            if (!modPlayer.godfather)
             if (player.whoAmI == Main.myPlayer)
             {
                 int baseDamage = 400;

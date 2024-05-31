@@ -8,6 +8,7 @@ using CalamityMod;
 using Terraria;
 using Terraria.ModLoader;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Items.Pets;
 
 namespace CalRemix.Items.Accessories
 {
@@ -44,17 +45,18 @@ namespace CalRemix.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            ModContent.GetModItem(ModContent.ItemType<EclipseMirror>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<ThiefsDime>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<DragonScales>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<GloveOfPrecision>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<GloveOfRecklessness>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<SandCloak>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<SpectralVeil>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<ScuttlersJewel>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<EtherealExtorter>()).UpdateAccessory(player, hideVisual);
             CalamityPlayer modPlayer = player.Calamity();
-            modPlayer.stealthGenStandstill += 0.25f;
-            modPlayer.rogueStealthMax += 0.1f;
-            modPlayer.eclipseMirror = true;
-            modPlayer.stealthStrikeHalfCost = true;
             player.GetCritChance<ThrowingDamageClass>() += 6;
             player.GetDamage<ThrowingDamageClass>() += 0.06f;
-            player.aggro -= 700;
-            player.buffImmune[ModContent.BuffType<Dragonfire>()] = true;
-            player.luck += 0.2f;
-            player.Calamity().thiefsDime = true;
             player.GetModPlayer<CalRemixPlayer>().roguebox = true;
         }
         public override void AddRecipes()
