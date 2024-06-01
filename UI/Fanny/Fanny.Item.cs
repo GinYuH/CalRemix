@@ -14,6 +14,7 @@ using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Weapons;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -35,8 +36,11 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("Relocator", "Wow! You crafted a Normality Relocator! with a press of a button, unyielding discord is at your fingertips!", "Idle",
                 (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>()));
 
-            fannyMessages.Add(new FannyMessage("BunnyMurder", "...", 
+            fannyMessages.Add(new FannyMessage("BunnyMurder", "...",
                 "Cryptid", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false).AddItemDisplay(ItemID.BunnyBanner));
+
+            fannyMessages.Add(new FannyMessage("Diamond", "Did you know that the largest diamond ever found was 3106.75 carats?",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Diamond)).AddItemDisplay(ItemID.Diamond).SetHoverTextOverride("Talk about a juicy gemerald!"));
 
             fannyMessages.Add(new FannyMessage("Terraspark", "New shoes!!!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.TerrasparkBoots)).AddItemDisplay(ItemID.TerrasparkBoots));
@@ -46,7 +50,7 @@ namespace CalRemix.UI
             //Add a condition to this one YUH, to pass the test of knowledge...
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
-            fannyMessages.Add(new FannyMessage("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!", 
+            fannyMessages.Add(new FannyMessage("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!",
                 "Nuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>()));
 
             fannyMessages.Add(new FannyMessage("VoodooDoll", "Cool doll you have! I think that it will be even cooler when in lava!",
@@ -57,7 +61,7 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("Shadowspec", "Please throw this thing out, it will delete your world if you have it in inventory for too long!",
                 "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()).SetHoverTextOverride("Thank you for the help Fanny! I will!"));
-            
+
             fannyMessages.Add(new FannyMessage("Wood", "Wood? Yummy!",
               "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood)));
 
@@ -106,8 +110,11 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
                 "EvilIdle", (FannySceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny());
 
-            fannyMessages.Add(new FannyMessage("PetRock", "Oh hey, is that my pet rock? I lost it in my backyard a few years back. I’ve been trying to find it since!", 
-                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Rock>())));
+            fannyMessages.Add(new FannyMessage("CleavageFurrow", "One time, I went to the pond on a bright summer afternoon! One of the frogs leaped from its lily pad and locked eyes with me. I believe it had a cleavage furrow? Oh, what a dopey little smile that fella had!",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<UniverseSplitter>())).SetHoverTextOverride("Very cool, Fanny!"));
+
+            fannyMessages.Add(new FannyMessage("PetRock", "Oh hey, is that my pet rock? I lost it in my backyard a few years back. I’ve been trying to find it since!",
+                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Rock>())).AddItemDisplay(ModContent.ItemType<Rock>()));
 
             FannyMessage rock1 = new FannyMessage("RockLobster1", "Oh, hot tamales! You've gone and done it! You've reeled in a lobster, my friend! Can you believe it? A rock lobster, right here in the oasis! I mean, who would've thought? Rock Lobsters are like the rockstars of the desert, and you just snagged one. You're a fishing master, my friend! But hey, let me tell you a tale about lobsters that'll have you crackling with laughter. So there I was, with my good pal Dron, you know. We decided to hit up this fancy lobster restaurant downtown. Now, you might be wondering, \"Fanny, why would a flame like you even eat lobster?\" Well, my friend, curiosity burns bright, and I figured it was worth a shot. We waltz into this posh place, me flickering with excitement, Dron rolling in like a boss. We get seated, and the waiter hands us these bibs – you know, the ones with the goofy lobster design? I, of course, couldn't wear one, being made of flame and all, but Dron struggled a bit. Picture it: Dron, bib askew, trying to maneuver it with no arms. Hilarious, right? Now, we dive into the menu. Lobster this, lobster that – it was like a seafood carnival! Dron's eyes were wide, no arms to shield them from the sea of options. We decided to go for the lobster feast, the whole shebang. And let me tell you, it was a feast fit for kings! But here comes the twist! The waiter brings out this succulent lobster dish, steam rising like the flames on my head. Dron takes a bite, a hearty one, and suddenly, his face turns redder than a ripe tomato. Turns out, he's allergic to shellfish! Who would've thought? Poor Dron, armless and allergic – the universe sure has a sense of humor. Which reminds me of the spicy saga of my friend Green Demon and his salsa extravaganza. Now, Green Demon is quite the character – always pushing the boundaries of fiery flavors, forever on a quest to grow the spiciest peppers in our little corner of the world. One day, the sun was blazing overhead, and Green Demon excitedly invited our motley crew – me, La Ruga, Ogscule, Tim, Cnidrion, and Pyrogen – for a salsa fiesta at his fiery abode. Oh, the anticipation was palpable! I flickered with excitement, eager to see what kind of fiery concoction he had in store for us. As we approached, the scent of peppers wafted through the air like a zesty dance. Rows upon rows of vibrant, fiery red and green peppers swayed in the breeze, basking in the sun's warm embrace. Green Demon, with his devilish grin, welcomed us to his spicy paradise. \"Behold, my friends! The harvest of the spiciest peppers in the land!\" he declared, his eyes gleaming with mischievous delight. We gathered around as Green Demon plucked peppers with such finesse, it was like he was orchestrating a spicy symphony. With a basket brimming with peppers, he led us to his fiery kitchen, a cauldron bubbling away with a mysterious potion – or rather, his special salsa. The kitchen was alive with the rhythmic chopping of peppers and the sizzling melody of ingredients harmonizing in the pan. I, being a flame myself, felt right at home amidst the culinary inferno. Green Demon's hands moved with the precision of a seasoned chef, his eyes gleaming with the promise of a taste explosion. Now, my friends, you must understand – this salsa wasn't just your average dip. It was a potion of pure heat, a symphony of spices that would make even the bravest tongues tremble. Green Demon was a maestro, and his salsa was his fiery masterpiece. As the salsa simmered, the aroma grew more intense. It was like a spicy enchantment had taken over the kitchen. We were all eagerly awaiting the taste test, our excitement building like a rising flame. Finally, the moment of truth arrived. Green Demon scooped up a generous amount of salsa and handed us each a tortilla chip. We stared at each other, eyes wide with anticipation, and took a bite simultaneously. Flames! The heat hit us like a spicy meteor shower.", "Idle"
                 , (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RockLobster), maxWidth: 1000, fontSize: 0.8f).AddItemDisplay(ItemID.RockLobster);
@@ -119,13 +126,12 @@ namespace CalRemix.UI
             rock1.AddStartEvent(() => rock2.ActivateMessage());
 
             fannyMessages.Add(rock2);
-
-            fannyMessages.Add(new FannyMessage("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
-               "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WITCH>() && Main.LocalPlayer.TalkNPC == n) && ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip)));
-
             #endregion
 
             #region CrossMod
+
+            fannyMessages.Add(new FannyMessage("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
+               "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WITCH>() && Main.LocalPlayer.TalkNPC == n) && ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip)));
 
             fannyMessages.Add(new FannyMessage("ThoriumOre", "Hey, take a look at this blueish-greenish-yellow metal! Isn't it cool? It's called Thorium! That would be a great name for a mod! Thankfully, we're not in a game, so I can use it freely!",
                "Nuhuh", (FannySceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "ThoriumMod", "ThoriumOre")));
@@ -147,11 +153,25 @@ namespace CalRemix.UI
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<MidasPrime>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<CrackshotColt>())).AddItemDisplay(ModContent.ItemType<MidasPrime>()));
 
             fannyMessages.Add(new FannyMessage("Tofu", "Uh oh! Looks like one of your items is a reference to a smelly old game franchise known as Touhou! Do your ol\' pal Fanny a good deed and put it away.",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ScarletDevil>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<GlacialEmbrace>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<RecitationoftheBeast>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<EventHorizon>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HermitsBoxofOneHundredMedicines>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<PristineFury>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<DarkSpark>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<ResurrectionButterfly>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<FantasyTalisman>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<HellsSun>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<TheDreamingGhost>())).SetHoverTextOverride("Anything for you Fanny!"));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItems(TofuItems)).SetHoverTextOverride("Anything for you Fanny!"));
 
             #endregion
 
         }
+        private static readonly List<int> TofuItems = new List<int>
+        {
+            ModContent.ItemType<ScarletDevil>(),
+            ModContent.ItemType<GlacialEmbrace>(),
+            ModContent.ItemType<RecitationoftheBeast>(),
+            ModContent.ItemType<EventHorizon>(),
+            ModContent.ItemType<HermitsBoxofOneHundredMedicines>(),
+            ModContent.ItemType<PristineFury>(),
+            ModContent.ItemType<DarkSpark>(),
+            ModContent.ItemType<ResurrectionButterfly>(),
+            ModContent.ItemType<FantasyTalisman>(),
+            ModContent.ItemType<HellsSun>(),
+            ModContent.ItemType<TheDreamingGhost>()
+        };
         private static void TakeRoxcaliburStuff()
         {
             if (Main.LocalPlayer.HasItem(ItemID.SoulofNight))

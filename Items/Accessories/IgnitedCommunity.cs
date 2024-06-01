@@ -37,12 +37,6 @@ namespace CalRemix.Items.Accessories
                 lineAdd.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
                 tooltips.Insert(tooltips.IndexOf(line2) + 1, lineAdd);
             }
-            else if (line2 != null && ModLoader.HasMod("MagicStorage"))
-            {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedStats", "Crafting bonus does not work while Magic Storage is active");
-                lineAdd.OverrideColor = Color.Red;
-                tooltips.Insert(tooltips.IndexOf(line2) + 1, lineAdd);
-            }
         }
 
         public override void SetDefaults()
@@ -55,8 +49,8 @@ namespace CalRemix.Items.Accessories
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<GenericDamageClass>() += 0.05f + (0.01f * count);
-            player.statDefense += 5 + (2 * count);
+            player.GetDamage<GenericDamageClass>() += 0.35f;
+            player.statDefense += 35;
             player.GetCritChance<GenericDamageClass>() += 7f;
             player.endurance += 0.07f;
             player.statLifeMax2 = (int)(player.statLifeMax2 * 1.12);
@@ -104,33 +98,6 @@ namespace CalRemix.Items.Accessories
             ModContent.ItemType<Anomaly109>(),
             ModContent.ItemType<Slumbering>()
         };
-        public override void PostAddRecipes()
-        {
-            if (!ModLoader.HasMod("MagicStorage"))
-            {
-                for (int i = 0; i < Recipe.numRecipes; i++)
-                {
-                    Recipe recipe = Main.recipe[i];
-                    recipe.AddOnCraftCallback(Crafted);
-                }
-
-            }
-        }
-        private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
-        {
-            if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !ignoredRecipes.Contains(item.type) && Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
-            {
-                foreach (Item i in Main.LocalPlayer.inventory)
-                {
-                    if (i.type == ModContent.ItemType<IgnitedCommunity>())
-                    {
-                        IgnitedCommunity ig = i.ModItem as IgnitedCommunity;
-                        if (ig.count < 30)
-                            ig.count++;
-                    }
-                }
-            }
-        }
 
     }
 }

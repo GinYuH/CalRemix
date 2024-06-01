@@ -15,6 +15,9 @@ namespace CalRemix.UI
     {
         public static void LoadNPCMessages()
         {
+            fannyMessages.Add(new FannyMessage("God", "Holy sugar honey iced tea! I-is that.. No! It can’t be.. Is that a real GOD?! Oh flapjacks.. you better watch out, $0! That one is a real toughie!",
+                "Awooga", (FannySceneMetrics scene) => Main.rand.NextBool(1500000) && scene.onscreenNPCs.Any(n => !n.friendly && !n.townNPC && !n.dontTakeDamage && !n.SpawnedFromStatue)).SetHoverTextOverride("Oh my! I'll make sure to watch out, Fanny!").AddDynamicText(FannyMessage.GetPlayerName));
+
             fannyMessages.Add(new FannyMessage("Bee", "According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyways. Because bees don't care what humans think is impossible.",
                 "Nuhuh", (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Bee || n.type == NPCID.BeeSmall)));
 

@@ -17,12 +17,6 @@ namespace CalRemix.UI
     {
         public static void LoadBiomeMessages()
         {
-            #region Vanilla
-
-            fannyMessages.Add(new FannyMessage("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.",
-                "Nuhuh", NearDungeonEntrance));
-
-            #endregion
 
             fannyMessages.Add(new FannyMessage("Arsenic", "This place is a lot more out of this world than when I was last here! Try breaking through walls to find the rare and precious Arsenic Ore which can be used for highly advanced robotics!", 
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneDungeon));
@@ -61,10 +55,10 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3));
 
             fannyMessages.Add(new FannyMessage("InfernumAbyss", "Try looking for chests down here! I’ve heard there’s unique treasures to be found! A spelunker potion should help!",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && ModLoader.TryGetMod("InfernumMode", out _)));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && ModLoader.HasMod("InfernumMode")));
 
             fannyMessages.Add(new FannyMessage("NoInfernumAbyss", "Try hunting the creatures for new weapons! Hunter, Battle and Zerg potions should help!",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && !ModLoader.TryGetMod("InfernumMode", out _)));
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && !ModLoader.HasMod("InfernumMode")));
 
             fannyMessages.Add(new FannyMessage("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyss && (Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>()))).AddItemDisplay(ItemID.RodofDiscord));
@@ -107,12 +101,6 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("FrontGar", "Now why did that ghost thing cause the ocean to go all crazy? Who knows! But what I do know is that the gars in the Abyss have started mutating. You should try fishing up some gars from the Sulphurous Sea and see if you can extract them for something useful.",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast).AddItemDisplay(ModContent.ItemType<FrontGar>()));
-
-            fannyMessages.Add(new FannyMessage("MeldHeart", "Look at all that gunk! I'm pretty sure it's impossible to break it, so the best solution I can give is to assure it doesn't spread further by digging around it.",
-                "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && !ModLoader.HasMod("NoxusBoss")));
-
-            fannyMessages.Add(new FannyMessage("MeldHeartNoxus", "Look at all that gunk! I'm pretty sure it's impossible to break it, well, maybe if you got some powerful spray bottle, but that might take a while, so the best solution I can give is to assure it doesn't spread further by digging around it.",
-                "Idle", (FannySceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && ModLoader.HasMod("NoxusBoss")));
 
             fannyMessages.Add(new FannyMessage("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>()));

@@ -17,17 +17,18 @@ namespace CalRemix.UI
 {
     public partial class FannyManager : ModSystem
     {
+        //Loads fanny messages that have a chance to happen anywhere
         public static readonly SoundStyle HappySFX = new($"{nameof(CalRemix)}/Sounds/Happy");
         public static void LoadPassiveMessages()
         {
             fannyMessages.Add(new FannyMessage("GonerFanny", "",
                 "Goner", (FannySceneMetrics scene) => Main.rand.NextBool(60000000)).SpokenByAnotherFanny(FannyUIState.GonerFanny));
 
-            fannyMessages.Add(new FannyMessage("Sleeping", "Do you ever dream of me?",
-                "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(1500000) && Main.LocalPlayer.sleeping.isSleeping));
+            fannyMessages.Add(new FannyMessage("Register", "Did you know you can see where a register is initialized in its current scope by clicking on it with the middle mouse button? All instances of the register in the current scope will highlight in bright yellow. The mustard yellow one is where it is initialized in the current scope.",
+                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)).SetHoverTextOverride("I see!"));
 
-            fannyMessages.Add(new FannyMessage("MeldGunk", "In a remote location underground, there is a second strain of Astral Infection. If left unattended for too long, it can start spreading and dealing irreversible damage! Stay safe and happy hunting!",
-                "Nuhuh", (FannySceneMetrics scene) => CalRemixWorld.meldCountdown <= 3600 && Main.hardMode));
+            fannyMessages.Add(new FannyMessage("Sleeping", "Do you ever dream of me?",
+                "Idle", (FannySceneMetrics scene) => Main.rand.NextBool(1500000) && Main.LocalPlayer.sleeping.isSleeping).SetHoverTextOverride("..."));
 
             fannyMessages.Add(new FannyMessage("FungusGarden", "Careful when exploring the Shroom Garden. I hear some rather large crustaceans make their home there. Wouldn't want to be turned into Delicious Meat!",
                 "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(2160000) && !DownedBossSystem.downedCrabulon, cooldown: 120));
