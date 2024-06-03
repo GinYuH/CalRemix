@@ -49,9 +49,6 @@ namespace CalRemix.Retheme
             { NPCType<DesertScourgeHead>(), "DS/Head" },
             { NPCType<DesertScourgeBody>(), "DS/Body" },
             { NPCType<DesertScourgeTail>(), "DS/Tail" },
-            { NPCType<DesertNuisanceHead>(), "DS/NHead" },
-            { NPCType<DesertNuisanceBody>(), "DS/NBody" },
-            { NPCType<DesertNuisanceTail>(), "DS/NTail" },
             { NPCType<HiveTumor>(), "HiveMind/HiveTumor" },
             { NPCType<DankCreeper>(), "HiveMind/DankCreeper" },
             { NPCType<HiveBlob>(), "HiveMind/HiveBlob" },
@@ -138,6 +135,7 @@ namespace CalRemix.Retheme
             { ItemType<LifeAlloy>(), "Bars/LifeAlloy" },
             { ItemType<MeldConstruct>(), "Bars/MeldBar" },
             { ItemType<FetidEmesis>(), "FetidEmesis" },
+            { ItemType<TheOldReaper>(), "TheReaper" },
             { ItemType<CadaverousCarrion>(), "CadaverousCarrion" },
             { ItemType<MutatedTruffle>(), "MutatedTruffle" },
             #region Desert Scourge
