@@ -57,11 +57,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             Whirlpool = 4
         }
 
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return true;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Oxygen");

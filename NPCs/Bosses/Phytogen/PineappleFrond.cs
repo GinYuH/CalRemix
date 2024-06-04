@@ -23,10 +23,6 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             DisplayName.SetDefault("Frond");
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetDefaults()
         {
             NPC.damage = 60;

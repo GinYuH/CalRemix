@@ -30,10 +30,6 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             this.HideFromBestiary();
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
 
         public override void SetDefaults()
         {

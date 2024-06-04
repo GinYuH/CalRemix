@@ -52,11 +52,6 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             Death = 4
         }
 
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return true;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hydrogen");

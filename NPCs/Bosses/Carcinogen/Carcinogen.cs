@@ -37,11 +37,6 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             Charge = 3
         }
 
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Carcinogen");

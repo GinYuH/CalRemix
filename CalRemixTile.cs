@@ -386,8 +386,8 @@ namespace CalRemix
                 }
             }
             Player player = Main.LocalPlayer;
-            /* if (player.ZoneJungle && !NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
-             {
+            if (player.ZoneJungle && !NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+            {
                  if (!effectOnly && !fail && Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                  {
                      CalamityGlobalTile.GetTreeBottom(i, j, out int treeX, out int treeY);
@@ -406,7 +406,7 @@ namespace CalRemix
                          }
                      }
                  }
-             }*/
+            }
             if (!noItem)
             {
                 if (type == ModContent.TileType<Navystone>())

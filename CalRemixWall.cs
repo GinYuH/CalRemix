@@ -11,7 +11,7 @@ namespace CalRemix
     public class CalRemixWall : GlobalWall
     {
         public override void KillWall(int i, int j, int type, ref bool fail)
-        {/*
+        {
             if (Main.LocalPlayer.InModBiome<AsbestosBiome>())
             {
                 int carcChance = WearingLead(Main.LocalPlayer) ? 5 : 10;
@@ -28,7 +28,7 @@ namespace CalRemix
                         }
                     }
                 }
-            }*/
+            }
         }
 
         public static bool WearingLead(Player player)

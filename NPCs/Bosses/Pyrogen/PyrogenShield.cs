@@ -43,10 +43,6 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             NPC.defense = 60;
             NPC.LifeMaxNERB(220000, 242000, 842000); ;
         }
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
 
         public override void AI()
         {

@@ -61,10 +61,6 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             Hellstorm = 7,
             HellstormFatal = 8
         }
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
 
         public PyroPhaseType AIState
         {

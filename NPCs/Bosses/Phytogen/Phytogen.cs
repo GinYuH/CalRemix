@@ -65,11 +65,6 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             LastStand = 5
         }
 
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phytogen");

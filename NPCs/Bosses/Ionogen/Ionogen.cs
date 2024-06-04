@@ -42,11 +42,6 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             Magnet = 3
         }
 
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ionogen");

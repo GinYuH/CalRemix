@@ -80,10 +80,10 @@ namespace CalRemix.CrossCompatibility
             {
                 ["spawnItems"] = ItemType<PoisonedSclera>(),
             });
-            /*bc.Call("LogBoss", Mod, "Carcinogen", 9.22f, () => RemixDowned.downedCarcinogen, NPCType<Carcinogen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Carcinogen", 9.22f, () => RemixDowned.downedCarcinogen, NPCType<Carcinogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.WoodWall,
-            });*/
+            });
             Action<SpriteBatch, Rectangle, Color> plportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Bosses/Poly/Polyphemalus").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
