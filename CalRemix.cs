@@ -327,26 +327,33 @@ namespace CalRemix
             AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
             AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
             RefreshBestiary();
-            do
+
+            try
             {
                 // Yes I am nullchecking all of these
                 if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    break;
+                    return;
                 if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    break;
+                    return;
                 if (CalRemixMenu.Instance is null)
-                    break;
+                    return;
                 if (CalRemixMenu.Instance.FullName is null)
-                    break;
+                    return;
                 typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { Main.rand.Next(-2, 3) });
                 typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, CalRemixMenu.Instance.FullName);
 
                 if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || CalRemixMenu.Instance is null)
-                    break;
+                    return;
                 if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || CalRemixMenu.Instance.FullName is null)
-                    break;
+                    return;
             }
-            while (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName != CalRemixMenu.Instance.FullName);
+            catch (Exception e)
+            {
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+                Console.WriteLine("CalRemixMenu");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+            }
         }
 
         internal void AddEnchantments(Mod cal)

@@ -31,7 +31,7 @@ namespace CalRemix.Items.Accessories
             if (line != null)
                 line.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
             TooltipLine line2 = tooltips.Find((TooltipLine t) => t.Text.Contains("Maxes out at extra 30% damage and 60 defense"));
-            if (line2 != null)
+            if (line2 != null && !ModLoader.HasMod("MagicStorage"))
             {
                 TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedStats", $"Remix Items crafted: {count} ({count}% damage and {count * 2} defense)");
                 lineAdd.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
@@ -49,8 +49,8 @@ namespace CalRemix.Items.Accessories
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<GenericDamageClass>() += 0.05f + (0.01f * count);
-            player.statDefense += 5 + (2 * count);
+            player.GetDamage<GenericDamageClass>() += 0.35f;
+            player.statDefense += 35;
             player.GetCritChance<GenericDamageClass>() += 7f;
             player.endurance += 0.07f;
             player.statLifeMax2 = (int)(player.statLifeMax2 * 1.12);
@@ -98,29 +98,6 @@ namespace CalRemix.Items.Accessories
             ModContent.ItemType<Anomaly109>(),
             ModContent.ItemType<Slumbering>()
         };
-        public override void PostAddRecipes()
-        {
-            for (int i = 0; i < Recipe.numRecipes; i++)
-            {
-                Recipe recipe = Main.recipe[i];
-                recipe.AddOnCraftCallback(Crafted);
-            }
-        }
-        private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
-        {
-            if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !ignoredRecipes.Contains(item.type) && Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
-            {
-                foreach (Item i in Main.LocalPlayer.inventory)
-                {
-                    if (i.type == ModContent.ItemType<IgnitedCommunity>())
-                    {
-                        IgnitedCommunity ig = i.ModItem as IgnitedCommunity;
-                        if (ig.count < 30)
-                            ig.count++;
-                    }
-                }
-            }
-        }
 
     }
 }

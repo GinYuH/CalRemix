@@ -11,6 +11,10 @@ namespace CalRemix.Items.Placeables
         {
             Item.ResearchUnlockCount = 400;
         }
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
 
         public override void SetDefaults()
         {

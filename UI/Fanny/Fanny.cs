@@ -709,15 +709,6 @@ namespace CalRemix.UI
             }
             return false;
         }
-
-        public static bool YharonPhase2(FannySceneMetrics scene)
-        {
-            if (scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Yharon>() && n.ai[0] == 17f))
-            {
-                return true;
-            }
-            return false;
-        }
         #endregion
 
         #region Saving and Loading data

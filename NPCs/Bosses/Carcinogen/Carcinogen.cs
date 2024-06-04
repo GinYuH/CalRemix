@@ -39,7 +39,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
 
         public override bool IsLoadingEnabled(Mod mod)
         {
-            return true;
+            return false;
         }
 
         public override void SetStaticDefaults()

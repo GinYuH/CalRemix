@@ -10,6 +10,8 @@ using Terraria.GameContent.Bestiary;
 using Mono.Cecil.Cil;
 using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.Projectiles.Rogue;
+using CalamityMod.NPCs.CalamityAIs.CalamityBossAIs;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Retheme
 {
@@ -40,14 +42,12 @@ namespace CalRemix.Retheme
             IL.CalamityMod.NPCs.CalClone.Catastrophe.PreDraw += Catastrophe;
             IL.CalamityMod.NPCs.Leviathan.Leviathan.SetStaticDefaults += Leviathan;
             IL.CalamityMod.NPCs.Leviathan.Anahita.PreDraw += Anahita;
-            //MonoModHooks.Modify(typeof(CalamityAI).GetMethod("AstrumAureusAI", BindingFlags.Public | BindingFlags.Static), AureusAI);
             IL.CalamityMod.NPCs.AstrumAureus.AstrumAureus.PreDraw += AstrumAureus;
             IL.CalamityMod.NPCs.AstrumAureus.AureusSpawn.PreDraw += AureusSpawn;
             //IL.CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.PreDraw += PBG;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusHead.PreDraw += AstrumDeusHead;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusBody.PreDraw += AstrumDeusBody;
             IL.CalamityMod.NPCs.AstrumDeus.AstrumDeusTail.PreDraw += AstrumDeusTail;
-            ////MonoModHooks.Modify(typeof(CalamityAI).GetMethod("BumblebirbAI", BindingFlags.Public | BindingFlags.Static), BirbAI);
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.PreDraw += BirbDraw;
             IL.CalamityMod.NPCs.NormalNPCs.WildBumblefuck.SpawnChance += BirbSpawn;
             IL.CalamityMod.NPCs.Bumblebirb.Bumblefuck.SetBestiary += BirbBest;
@@ -56,8 +56,6 @@ namespace CalRemix.Retheme
             //MonoModHooks.Modify(typeof(ModLoader).Assembly.GetType("CalamityMod.WeakReferenceSupport").GetMethod("AddCalamityBosses", BindingFlags.NonPublic | BindingFlags.Static), BossChecklist);
 
             // IL.CalamityMod.Items.Weapons.PreDraw += ;
-            On.CalamityMod.Items.SummonItems.ExoticPheromones.CanUseItem += Exotic;
-            On.CalamityMod.Items.SummonItems.AstralChunk.CanUseItem += AstralChunk;
             IL.CalamityMod.Items.Weapons.Ranged.HeavenlyGale.PostDrawInWorld += HeavenlyGale;
 
             // IL.CalamityMod.Projectiles.PreDraw += ;
@@ -72,6 +70,7 @@ namespace CalRemix.Retheme
             IL.CalamityMod.Projectiles.Summon.CorroslimeMinion.PreDraw += CorroslimeMinion;
             IL.CalamityMod.Projectiles.Summon.GastricBelcher.PreDraw += GastricBelcher;
             IL.CalamityMod.Projectiles.Rogue.LeonidProgenitorBombshell.PreDraw += LeonidProgenitorBombshell;
+            MonoModHooks.Modify(typeof(ReaperProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance), TheOldReaper);
             IL.CalamityMod.Projectiles.Melee.DragonRageStaff.PreDraw += DragonRageStaff;
             IL.CalamityMod.Projectiles.Summon.FieryDraconid.PreDraw += FieryDraconid;
             IL.CalamityMod.Projectiles.Rogue.FinalDawnProjectile.PreDraw += FinalDawnProjectile;
@@ -585,16 +584,6 @@ namespace CalRemix.Retheme
         #endregion
         #endregion
         #region Items
-        private static bool Exotic(On.CalamityMod.Items.SummonItems.ExoticPheromones.orig_CanUseItem orig, CalamityMod.Items.SummonItems.ExoticPheromones self, object player)
-        {
-            Player p = (Player)player;
-            return (p.ZoneDesert && !NPC.AnyNPCs(NPCType<Bumblefuck>()) && !BossRushEvent.BossRushActive);
-        }
-        private static bool AstralChunk(On.CalamityMod.Items.SummonItems.AstralChunk.orig_CanUseItem orig, CalamityMod.Items.SummonItems.AstralChunk self, object player)
-        {
-            Player p = (Player)player;
-            return (p.GetModPlayer<CalRemixPlayer>().ZonePlague || p.GetModPlayer<CalRemixPlayer>().ZonePlagueDesert) && !NPC.AnyNPCs(NPCType<AstrumAureus>()) && !BossRushEvent.BossRushActive;
-        }
         private static void HeavenlyGale(ILContext il)
         {
             var c = new ILCursor(il);
@@ -724,6 +713,17 @@ namespace CalRemix.Retheme
                 c.Index++;
                 c.Emit(OpCodes.Pop);
                 c.EmitDelegate(() => !CalRemixWorld.itemChanges ? "CalamityMod/Items/Weapons/Rogue/LeonidProgenitor" : "CalRemix/Retheme/Plague/LeonidProgenitor");
+            }
+        }
+        private static void TheOldReaper(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Rogue/TheOldReaper";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitLdstr("CalRemix/Retheme/TheReaper");
             }
         }
         private static void DragonRageStaff(ILContext il)

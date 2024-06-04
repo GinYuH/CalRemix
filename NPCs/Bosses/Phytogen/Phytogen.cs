@@ -67,7 +67,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override bool IsLoadingEnabled(Mod mod)
         {
-            return true;
+            return false;
         }
 
         public override void SetStaticDefaults()
