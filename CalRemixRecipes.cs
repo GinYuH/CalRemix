@@ -399,8 +399,8 @@ namespace CalRemix
                     recipe.AddIngredient<LeviathanAmbergris>();
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
-                    recipe.AddIngredient<ToxicHeart>();
                     recipe.AddIngredient<AlchemicalFlask>();
+                    recipe.AddIngredient<ToxicHeart>();
                     recipe.AddIngredient<Radiance>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
