@@ -102,7 +102,7 @@ namespace CalRemix
                     backgroundColor.B = 40;
                 }
             }
-            if (CalRemixWorld.oxydayTime > 0)
+            if (CalRemixWorld.oxydayTime > 0 && player.position.Y < Main.worldSurface * 16)
             {
                 backgroundColor = Color.Lerp(backgroundColor, Color.LightSkyBlue, 0.2f);
                 backgroundColor = Color.Lerp(backgroundColor, Color.Cyan, 0.2f);

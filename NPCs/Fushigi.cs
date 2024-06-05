@@ -14,6 +14,7 @@ using Terraria.GameContent;
 using System;
 using Newtonsoft.Json.Serialization;
 using CalRemix.Projectiles.Hostile;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.NPCs
 {
@@ -74,6 +75,16 @@ namespace CalRemix.NPCs
                     break;
                 }
             }
+            foreach (Player player in Main.player)
+            {
+                if (NPC.getRect().Intersects(player.getRect()))
+                {
+                    float pushX = 0.3f;
+                    float pushY = 0.1f;
+                    NPC.velocity.X += player.Center.X > NPC.Center.X ? -pushX : pushX;
+                    NPC.velocity.Y += player.Center.Y > NPC.Center.Y ? -pushY : pushY;
+                }
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -85,12 +96,14 @@ namespace CalRemix.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.Calamity().ZoneAbyssLayer3 || spawnInfo.Player.Calamity().ZoneAbyssLayer2 || spawnInfo.Player.Calamity().ZoneAbyssLayer1) && spawnInfo.Water && !NPC.AnyNPCs(ModContent.NPCType<Fushigi>()))
+            if ((spawnInfo.Player.Calamity().ZoneAbyssLayer3 || spawnInfo.Player.Calamity().ZoneAbyssLayer2 || spawnInfo.Player.Calamity().ZoneAbyssLayer1) && spawnInfo.Water && !NPC.AnyNPCs(ModContent.NPCType<Fushigi>()) && CalRemixWorld.oxydayTime <= 0)
                 return Main.remixWorld ? 0.27f : SpawnCondition.CaveJellyfish.Chance * 0.03f;
             return 0f;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Vector2 position = NPC.Center - Main.screenPosition;
             Vector2 origin = texture.Size() * 0.5f;

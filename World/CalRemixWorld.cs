@@ -625,7 +625,8 @@ namespace CalRemix
             }
             if (oxydayTime > 0)
             {
-                Main.LocalPlayer.Calamity().monolithDevourerBShader = 66;
+                if (Main.LocalPlayer.position.Y < Main.worldSurface * 16)
+                    Main.LocalPlayer.Calamity().monolithDevourerBShader = 66;
                 Main.windSpeedTarget = 2f;
                 oxydayTime--;
                 if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
