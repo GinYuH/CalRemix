@@ -31,6 +31,7 @@ using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.UI;
 using System.Linq;
 using System.IO;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -221,7 +222,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             else
             {
                 DepthLevel = 0;
-                MaxDepthLevel = 0;
             }
             switch (Phase)
             {
@@ -428,7 +428,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             if (NPC.soundDelay == 0)
             {
                 NPC.soundDelay = 3;
-                SoundEngine.PlaySound(HitSound, NPC.Center);
+                SoundStyle hite = MaxDepthLevel == 4 ? SoundID.NPCHit3 : HitSound;
+                SoundEngine.PlaySound(hite, NPC.Center);
             }
             for (int k = 0; k < 5; k++)
             {
@@ -469,10 +470,20 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D crack = ModContent.Request<Texture2D>(Texture + "Cracks").Value;
             Vector2 drawPos = NPC.Center - screenPos;
-            spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(DepthLevel, 0, 3)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(crack, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(DepthLevel, 0, 3)), Color.LightBlue * (DepthLevel / 6) * Lighting.GetColor(NPC.position.ToTileCoordinates()).A * 0.1f, NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            Texture2D plasmom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
+            Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
+            float scaleFactor = (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.075f;
+            spriteBatch.Draw(plasmom, drawPos, null, NPC.GetAlpha(Color.Cyan * 0.78f), NPC.rotation, plasmom.Size() / 2, 0.5f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(bloom, drawPos, null, NPC.GetAlpha(Color.Cyan * 1f), NPC.rotation, bloom.Size() / 2, 0.6f + scaleFactor, SpriteEffects.None, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin();
+            if (MaxDepthLevel < 4)
+            {
+                spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(MaxDepthLevel, 0, 3)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
+            }
             return false;
         }
     }

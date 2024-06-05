@@ -15,6 +15,7 @@ using System;
 using Newtonsoft.Json.Serialization;
 using CalRemix.Projectiles.Hostile;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using rail;
 
 namespace CalRemix.NPCs
 {
@@ -83,6 +84,7 @@ namespace CalRemix.NPCs
                     float pushY = 0.1f;
                     NPC.velocity.X += player.Center.X > NPC.Center.X ? -pushX : pushX;
                     NPC.velocity.Y += player.Center.Y > NPC.Center.Y ? -pushY : pushY;
+                    NPC.ai[1] = player.whoAmI;
                 }
             }
         }
@@ -123,6 +125,18 @@ namespace CalRemix.NPCs
             {
                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(NPC.width, NPC.height).SafeNormalize(Vector2.UnitY) * Main.rand.Next(3, 6), Mod.Find<ModGore>("OxygenShrap" + Main.rand.Next(1, 7)).Type, Main.rand.NextFloat(0.2f, 0.5f));
             }
+        }
+
+        public override bool CheckActive()
+        {
+            if (NPC.ai[1] == -1)
+                return true;
+            Player p = Main.player[(int)NPC.ai[1]];
+            if (p == null || !p.active)
+                return true;
+            if (Math.Abs(p.position.X - NPC.position.X) > 2000)
+                return true;
+            return false;
         }
     }
 }
