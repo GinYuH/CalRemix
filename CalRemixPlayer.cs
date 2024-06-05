@@ -45,6 +45,7 @@ using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.NPCs;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CalRemix.NPCs.Bosses.Hydrogen;
+using CalRemix.Items.Potions;
 
 namespace CalRemix
 {
@@ -371,8 +372,7 @@ namespace CalRemix
             ProjectileID.StaticHook,
             ProjectileID.AmberHook
         };
-
-		public override void ProcessTriggers(TriggersSet triggersSet)
+        public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
 			{
@@ -391,8 +391,40 @@ namespace CalRemix
 					int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
 					Main.projectile[p].spriteDirection *= -1;
 				}
-			}
-		}
+            }
+            if (CalRemixKeybinds.StealthPotKeybind.JustPressed && Player.Calamity().rogueStealth < Player.Calamity().rogueStealthMax / 2 && Player.Calamity().wearingRogueArmor)
+            {
+				if (Player.HasItem(ModContent.ItemType<SuperStealthPotion>()))
+                {
+                    CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.25f));
+                    Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.25f;
+                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ModContent.ItemType<SuperStealthPotion>());
+                }
+                else if (Player.HasItem(ModContent.ItemType<GreaterStealthPotion>()))
+                {
+                    CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.2f));
+                    Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.2f;
+                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ModContent.ItemType<GreaterStealthPotion>());
+                }
+                else if (Player.HasItem(ModContent.ItemType<StealthPotion>()))
+                {
+                    CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.15f));
+                    Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.15f;
+                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ModContent.ItemType<StealthPotion>());
+                }
+                else if (Player.HasItem(ModContent.ItemType<LesserStealthPotion>()))
+                {
+                    CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.1f));
+                    Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.1f;
+                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
+                }
+				if (Main.myPlayer == Player.whoAmI)
+					SoundEngine.PlaySound(SoundID.Item3, Player.Center);
+            }
+        }
 
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
         {

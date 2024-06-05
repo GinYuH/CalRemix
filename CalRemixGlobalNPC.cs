@@ -662,6 +662,10 @@ namespace CalRemix
         }
         public override void ModifyShop(NPCShop shop)
         {
+            if (shop.NpcType == ModContent.NPCType<THIEF>())
+            {
+                shop.Add(new NPCShop.Entry(ModContent.ItemType<LesserStealthPotion>()));
+            }
             if (shop.NpcType == NPCID.Steampunker)
             {
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<PlaguedSolution>()));
@@ -951,6 +955,10 @@ namespace CalRemix
             {
                 LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<Lean>(), 1, 3, 4);
+            }
+            if (npc.type == NPCID.BigMimicCorruption || npc.type == NPCID.BigMimicCrimson || npc.type == NPCID.BigMimicHallow)
+            {
+                npcLoot.Add(ModContent.ItemType<GreaterStealthPotion>(), 1, 5, 10);
             }
         }
 

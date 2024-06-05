@@ -2008,6 +2008,26 @@ Mods: {
 				DisplayName: Ion Cube
 				Tooltip: ""
 			}
+
+			StealthPotion: {
+				DisplayName: Stealth Potion
+				Tooltip: Can only Quick Stealth if below 50% stealth
+			}
+
+			LesserStealthPotion: {
+				DisplayName: Lesser Stealth Potion
+				Tooltip: Can only Quick Stealth if below 50% stealth
+			}
+
+			GreaterStealthPotion: {
+				DisplayName: Greater Stealth Potion
+				Tooltip: Can only Quick Stealth if below 50% stealth
+			}
+
+			SuperStealthPotion: {
+				DisplayName: Super Stealth Potion
+				Tooltip: Can only Quick Stealth if below 50% stealth
+			}
 		}
 
 		NPCs: {
@@ -2470,7 +2490,8 @@ Mods: {
 
 		Keybinds: {
 			Baroclaw.DisplayName: Baroclaw
-			"Polypebral Dash.DisplayName": Polypebral  Dash
+			"Polypebral Dash.DisplayName": Polypebral Dash
+			"Quick Stealth.DisplayName": Quick Stealth
 		}
 
 		Configs: {
