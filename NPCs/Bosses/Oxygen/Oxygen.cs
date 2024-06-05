@@ -30,6 +30,7 @@ using CalRemix.Items.Materials;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.UI;
 using System.Linq;
+using System.IO;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -105,6 +106,22 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             {
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AtomicReinforcement");
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Calamity().newAI[0]);
+            writer.Write(NPC.Calamity().newAI[1]);
+            writer.Write(NPC.Calamity().newAI[2]);
+            writer.Write(NPC.Calamity().newAI[3]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Calamity().newAI[0] = reader.ReadSingle();
+            NPC.Calamity().newAI[1] = reader.ReadSingle();
+            NPC.Calamity().newAI[2] = reader.ReadSingle();
+            NPC.Calamity().newAI[3] = reader.ReadSingle();
         }
 
         public override void OnSpawn(IEntitySource source)

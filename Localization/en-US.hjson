@@ -2241,6 +2241,7 @@ Mods: {
 			HydrogenShield.DisplayName: Hydrogen's Shield
 			Oxygen.DisplayName: Oxygen
 			OxygenShield.DisplayName: Oxygen's Shield
+			Fushigi.DisplayName: Fushigi
 		}
 
 		Projectiles: {
