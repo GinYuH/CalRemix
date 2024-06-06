@@ -48,18 +48,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.rotation += Owner.direction * 0.2f;
 
             float projDir = 0;
-            if (CheckCenter())
-                ExoSpawn();
-            else
-            {
-                if (Projectile.Center.X > Owner.Center.X)
-                    projDir = 1f;
-                else if (Projectile.Center.X < Owner.Center.X)
-                    projDir = -1f;
-                else if (Projectile.Center.X < Owner.Center.X)
-                    projDir = Main.rand.NextBool() ? 1f : -1f;
-                ExoSpawn(projDir);
-            }
+            ExoSpawn(Projectile.Center.DirectionTo(Owner.Center) * -1);
             Timer++;
             if (Timer >= 300)
                 Timer = 0;
@@ -68,9 +57,8 @@ namespace CalRemix.Projectiles.Weapons
         {
             return Owner.Center.X > Projectile.Center.X - Projectile.width / 4 && Owner.Center.X < Projectile.Center.X + Projectile.width / 4 && Owner.Center.Y > Projectile.Center.Y - Projectile.height / 4 && Owner.Center.Y < Projectile.Center.Y + Projectile.height / 4;
         }
-        private void ExoSpawn()
+        private void ExoSpawn(Vector2 vector)
         {
-            Vector2 vector = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360));
             if (Timer % 15 == 0)
             {
                 SoundEngine.PlaySound(Exoblade.SwingSound);
