@@ -93,7 +93,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             Vector2 npcOffset = NPC.Center - screenPos;
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
-            spriteBatch.Draw(sprite.Value, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite.Value, npcOffset, null, Color.White, NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);
             spriteBatch.End();
             spriteBatch.Begin();
             spriteBatch.Draw(cigars, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);

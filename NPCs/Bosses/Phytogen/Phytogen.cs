@@ -152,7 +152,6 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 }
                 return;
             }
-            Main.LocalPlayer.Calamity().isNearbyBoss = false;
             NPC.TargetClosest();
             NPC.dontTakeDamage = NPC.AnyNPCs(ModContent.NPCType<PineappleFrond>()) && Phase != (int)PhaseType.Passive;
             if (NPC.dontTakeDamage)
@@ -190,6 +189,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                         NoMoreFrondsChange();
                         NPC.damage = 0;
                         NPC.boss = false;
+                        Main.LocalPlayer.Calamity().isNearbyBoss = false;
                         if (lifeRatio < 0.99f)
                         {
                             NPC.ai[1] = 0;
@@ -257,7 +257,9 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                     break;
                 case (int)PhaseType.Idle:
                     {
+                        NPC.boss = true;
                         NPC.damage = 100;
+                        Main.LocalPlayer.Calamity().isNearbyBoss = true;
                         int minDist = 400;
                         float speed = 8f;
                         int maxTime = 180;

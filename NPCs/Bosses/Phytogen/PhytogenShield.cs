@@ -66,26 +66,31 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 {
                     case (int)Phytogen.PhaseType.Passive:
                         {
+                            NPC.damage = 0;
                             NPC.ai[3] = 0.7f;
                             break;
                         }
                     case (int)Phytogen.PhaseType.Idle:
                         {
+                            NPC.damage = 100;
                             NPC.ai[3] = 0.75f;
                             break;
                         }
                     case (int)Phytogen.PhaseType.SapBlobs:
                         {
+                            NPC.damage = 100;
                             NPC.ai[3] = 0.8f;
                             break;
                         }
                     case (int)Phytogen.PhaseType.Moving:
                         {
+                            NPC.damage = 100;
                             NPC.ai[3] = 1f;
                             break;
                         }
                     case (int)Phytogen.PhaseType.Burrow:
                         {
+                            NPC.damage = 100;
                             NPC.ai[3] = 0.5f;
                             break;
                         }

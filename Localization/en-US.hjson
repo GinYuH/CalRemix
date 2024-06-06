@@ -2262,6 +2262,7 @@ Mods: {
 			Oxygen.DisplayName: Oxygen
 			OxygenShield.DisplayName: Oxygen's Shield
 			Fushigi.DisplayName: Fushigi
+			Eosinine.DisplayName: Eosinine
 		}
 
 		Projectiles: {
@@ -2452,6 +2453,7 @@ Mods: {
 			OxygenCloud.DisplayName: Cloud
 			OxygenDebris.DisplayName: Debris
 			Oxshard.DisplayName: Oxygen Shard
+			EosinineProj.DisplayName: Eosinine
 		}
 
 		Tiles: {

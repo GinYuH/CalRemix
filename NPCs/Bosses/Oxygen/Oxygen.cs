@@ -290,7 +290,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         {
                             NPC.ai[2] = 0;
                             NPC.ai[1] = 0;
-                            Phase = DepthLevel > 2 && Main.rand.NextBool(5 - (int)DepthLevel) ? (int)PhaseType.Whirlpool : (int)PhaseType.Idle;
+                            Phase = (int)PhaseType.Whirlpool;
                         }
 
                         break;
@@ -344,7 +344,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         int spawnTornado = 60;
                         int totalObjects = death ? 16 : rev ? 10 : 8;
                         int tornadoRate = rev ? 60 : expert ? 80 :90;
-                        int totalTornados = death ? 10 : rev ? 8 : 5;
+                        int totalTornados = death ? 8 : rev ? 7 : 5;
                         int phaseTime = tornadoRate * totalTornados + spawnTornado;
                         NPC.ai[1]++;
                         if (NPC.ai[1] > spawnTornado && NPC.ai[1] % tornadoRate == 0)
@@ -361,7 +361,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         if (NPC.ai[1] > phaseTime)
                         {
                             NPC.ai[1] = 0;
-                            Phase = (int)PhaseType.Gusts;
+                            Phase = DepthLevel > 2 ? (int)PhaseType.Gusts : (int)PhaseType.Idle;
                         }
                         break;
                     }

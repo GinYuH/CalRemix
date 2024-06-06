@@ -5,17 +5,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items.Placeables;
 using CalamityMod.BiomeManagers;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
-using Newtonsoft.Json.Serialization;
-using CalRemix.Projectiles.Hostile;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using rail;
 
 namespace CalRemix.NPCs
 {
