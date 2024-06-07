@@ -47,16 +47,12 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.Center = Main.MouseWorld;
             Projectile.rotation += Owner.direction * 0.2f;
 
-            float projDir = 0;
             ExoSpawn(Projectile.Center.DirectionTo(Owner.Center) * -1);
             Timer++;
             if (Timer >= 300)
                 Timer = 0;
         }
-        private bool CheckCenter()
-        {
-            return Owner.Center.X > Projectile.Center.X - Projectile.width / 4 && Owner.Center.X < Projectile.Center.X + Projectile.width / 4 && Owner.Center.Y > Projectile.Center.Y - Projectile.height / 4 && Owner.Center.Y < Projectile.Center.Y + Projectile.height / 4;
-        }
+
         private void ExoSpawn(Vector2 vector)
         {
             if (Timer % 15 == 0)
@@ -86,34 +82,7 @@ namespace CalRemix.Projectiles.Weapons
             }
 
         }
-        private void ExoSpawn(float dir)
-        {
-            if (Timer % 15 == 0)
-            {
-                SoundEngine.PlaySound(Exoblade.SwingSound);
-                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(10f * dir, 0f), ModContent.ProjectileType<Exobeam>(), Projectile.damage / 4, Projectile.knockBack, Projectile.owner);
-            }
-            if (Timer % 30 == 0)
-            {
-                Projectile arrow = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(10f * dir, 0f).RotatedByRandom(MathHelper.ToRadians(45)), ModContent.ProjectileType<ExoCrystalArrow>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-                arrow.DamageType = DamageClass.MeleeNoSpeed;
-                arrow.ai[0] = 1f;
-            }
-            if (Timer % 150 == 0)
-            {
-                Projectile vortex = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(10f * dir, 0f).RotatedByRandom(MathHelper.ToRadians(90)), ModContent.ProjectileType<ExoVortex>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-                vortex.DamageType = DamageClass.MeleeNoSpeed;
-                vortex.scale = 2f;
-            }
-            if (Timer % 300 == 0 && Owner.ownedProjectileCounts[ModContent.ProjectileType<TotalityEnergy>()] < 1)
-            {
-                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(10f * dir, 0f).RotatedByRandom(MathHelper.ToRadians(30)), ModContent.ProjectileType<TotalityEnergy>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-            }
-            if (Timer % 60 == 0)
-            {
-                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(10f * dir, 0f).RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<TotalityScythe>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-            }
-        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
