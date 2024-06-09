@@ -42,7 +42,7 @@ namespace CalRemix.UI
         }
         public static void DrawProgressText(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY, out Vector2 newBarPosition)
         {
-            string progressText = (100 * CompletionRatio).ToString($"N{0}") + "%";
+            string progressText = !BioWar.DefendersWinning && !BioWar.InvadersWinning ? "???" : (100 * CompletionRatio).ToString($"N{0}") + "%";
             progressText = Language.GetTextValue("Game.WaveCleared", progressText);
 
             Vector2 textSize = FontAssets.MouseText.Value.MeasureString(progressText);
@@ -56,10 +56,12 @@ namespace CalRemix.UI
         public static void DrawBackground(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY)
         {
             float barDrawOffsetX = 169f;
-            Vector2 barDrawPosition = baseBarDrawPosition + Vector2.UnitX * (CompletionRatio - 0.5f) * barDrawOffsetX;
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, barDrawPosition, new Rectangle(0, 0, 1, 1), new Color(255, 241, 51), 0f, new Vector2(1f, 0.5f), new Vector2(barDrawOffsetX * CompletionRatio, yScale), SpriteEffects.None, 0f);
+            bool neutral = !BioWar.DefendersWinning && !BioWar.InvadersWinning;
+            float completerRatio = neutral ? 0.5f : CompletionRatio;
+            Vector2 barDrawPosition = baseBarDrawPosition + Vector2.UnitX * (completerRatio - 0.5f) * barDrawOffsetX;
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, barDrawPosition, new Rectangle(0, 0, 1, 1), new Color(255, 241, 51), 0f, new Vector2(1f, 0.5f), new Vector2(barDrawOffsetX * completerRatio, yScale), SpriteEffects.None, 0f);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, barDrawPosition, new Rectangle(0, 0, 1, 1), new Color(255, 165, 0, 127), 0f, new Vector2(1f, 0.5f), new Vector2(2f, yScale), SpriteEffects.None, 0f);
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, barDrawPosition, new Rectangle(0, 0, 1, 1), Color.Black, 0f, Vector2.UnitY * 0.5f, new Vector2(barDrawOffsetX * (1f - CompletionRatio), yScale), SpriteEffects.None, 0f);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, barDrawPosition, new Rectangle(0, 0, 1, 1), Color.Black, 0f, Vector2.UnitY * 0.5f, new Vector2(barDrawOffsetX * (1f - completerRatio), yScale), SpriteEffects.None, 0f);
         }
         public static void DrawProgressTextAndIcons(SpriteBatch spriteBatch, int barOffsetY)
         {
