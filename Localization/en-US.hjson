@@ -2263,6 +2263,7 @@ Mods: {
 			OxygenShield.DisplayName: Oxygen's Shield
 			Fushigi.DisplayName: Fushigi
 			Eosinine.DisplayName: Eosinine
+			Malignant.DisplayName: Malignant
 		}
 
 		Projectiles: {

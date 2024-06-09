@@ -56,17 +56,5 @@ namespace CalRemix.Projectiles.Hostile
             Main.spriteBatch.Draw(texture, position, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (BioWar.InvaderNPCs.Contains(target.type))
-                return true;
-            return null;
-        }
-
-        public override bool CanHitPlayer(Player target)
-        {
-            return !BioWar.DefendersWinning;
-        }
     }
 }

@@ -28,8 +28,8 @@ namespace CalRemix.NPCs.BioWar
             NPC.damage = 60;
             NPC.width = 42;
             NPC.height = 42;
-            NPC.defense = 600;
-            NPC.lifeMax = 22;
+            NPC.defense = 4;
+            NPC.lifeMax = 600;
             NPC.knockBackResist = 0f;
             NPC.value = 0;
             NPC.noGravity = true;
@@ -82,11 +82,6 @@ namespace CalRemix.NPCs.BioWar
             }
             Main.spriteBatch.Draw(texture, position, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
-        }
-
-        public override void OnKill()
-        {
-            BioWar.DefendersKilled++;
         }
     }
 }
