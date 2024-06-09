@@ -17,6 +17,10 @@ using CalRemix.NPCs.Bosses.Acideye;
 using static Terraria.ModLoader.ModContent;
 using CalRemix.NPCs.Bosses.Carcinogen;
 using CalRemix.NPCs.TownNPCs;
+using CalRemix.NPCs.Bosses.Phytogen;
+using CalRemix.NPCs.Bosses.Hydrogen;
+using CalRemix.Items.Placeables;
+using CalRemix.NPCs.Bosses.Ionogen;
 
 namespace CalRemix.CrossCompatibility
 {
@@ -100,6 +104,19 @@ namespace CalRemix.CrossCompatibility
             {
                 ["spawnItems"] = ItemType<FusedEye>(),
                 ["customPortrait"] = plportrait
+            });
+            bc.Call("LogBoss", Mod, "Phytogen", 14f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
+            bc.Call("LogBoss", Mod, "Hydrogen", 14f, () => RemixDowned.downedHydrogen, NPCType<Hydrogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemID.Grenade,
+            });
+            bc.Call("LogBoss", Mod, "Oxygen", 14f, () => RemixDowned.downedOxygen, NPCType<Hydrogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemID.GolfBall,
+            });
+            bc.Call("LogBoss", Mod, "Ionogen", 14f, () => RemixDowned.downedIonogen, NPCType<Ionogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<IonCube>(),
             });
 
             // Minibosses

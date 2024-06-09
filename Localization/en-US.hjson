@@ -2249,17 +2249,53 @@ Mods: {
 			CarcinogenShield.DisplayName: Carcinogen Shield
 			Pyrogen.DisplayName: Pyrogen
 			PyrogenShield.DisplayName: Pyrogen Shield
-			Phytogen.DisplayName: Phytogen
+
+			Phytogen: {
+				DisplayName: Phytogen
+
+				BossChecklistIntegration: {
+					EntryName: Phytogen
+					SpawnInfo: Have more than 9 Plague enemies onscreen at once or by shaking underground Jungle trees.
+					DespawnMessage: "[c/5adb76:The large pineapple goes back to cleansing The Plague.]"
+				}
+			}
 			PhytogenShield.DisplayName: Phytogen Shield
 			PineappleFrond.DisplayName: Frond
 			Lizard.DisplayName: Lizard
 			GlisteningSpirit.DisplayName: Glistening Spirit
 			GildedSpirit.DisplayName: Gilded Spirit
-			Ionogen.DisplayName: Ionogen
+
+			Ionogen: {
+				DisplayName: Ionogen
+
+				BossChecklistIntegration: {
+					EntryName: Ionogen
+					SpawnInfo: Finish the Plastic Oracle's questline
+					DespawnMessage: "[c/6369cf:Power absorbed.]"
+				}
+			}
 			IonogenShield.DisplayName: Ionogen's Shield
-			Hydrogen.DisplayName: Hydrogen
+
+			Hydrogen: {
+				DisplayName: Hydrogen
+
+				BossChecklistIntegration: {
+					EntryName: Hydrogen
+					SpawnInfo: Throw an explosive at it as it rests within the Sunken Sea's central geode.
+					DespawnMessage: "[c/8c183f:The ocean mine cools back down.]"
+				}
+			}
 			HydrogenShield.DisplayName: Hydrogen's Shield
-			Oxygen.DisplayName: Oxygen
+
+			Oxygen: {
+				DisplayName: Oxygen
+
+				BossChecklistIntegration: {
+					EntryName: Oxygen
+					SpawnInfo: Hit a golf ball into space. The boss must be led to the bottom of the Abyss to defeat it.
+					DespawnMessage: "[c/9cf5ff:The glass ball rises back to space.]"
+				}
+			}
 			OxygenShield.DisplayName: Oxygen's Shield
 			Fushigi.DisplayName: Fushigi
 			Eosinine.DisplayName: Eosinine
