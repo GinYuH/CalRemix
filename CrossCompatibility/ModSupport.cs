@@ -21,6 +21,7 @@ using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.Items.Placeables;
 using CalRemix.NPCs.Bosses.Ionogen;
+using CalRemix.NPCs.Bosses.Oxygen;
 
 namespace CalRemix.CrossCompatibility
 {
@@ -110,7 +111,7 @@ namespace CalRemix.CrossCompatibility
             {
                 ["spawnItems"] = ItemID.Grenade,
             });
-            bc.Call("LogBoss", Mod, "Oxygen", 14f, () => RemixDowned.downedOxygen, NPCType<Hydrogen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Oxygen", 14f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.GolfBall,
             });
