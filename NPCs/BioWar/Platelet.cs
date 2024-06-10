@@ -14,71 +14,58 @@ using System;
 
 namespace CalRemix.NPCs.BioWar
 {
-    public class Malignant : ModNPC
+    public class Platelet : ModNPC
     {
         Entity target = null;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Malignant");
-            Main.npcFrameCount[NPC.type] = 4;
+            DisplayName.SetDefault("Platlet");
         }
 
         public override void SetDefaults()
         {
-            NPC.npcSlots = 0.5f;
+            NPC.npcSlots = 0.05f;
             NPC.aiStyle = -1;
-            NPC.damage = 60;
-            NPC.width = 80; //324
-            NPC.height = 80; //216
-            NPC.defense = 68;
+            NPC.damage = 0;
+            NPC.width = 26;
+            NPC.height = 26;
+            NPC.defense = 10;
             NPC.lifeMax = 600;
             NPC.knockBackResist = 0.75f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             AIType = -1;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
-            NPC.alpha = 128;
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
             NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
-        }
-
-        public override void FindFrame(int frameHeight)
-        {
-            NPC.frameCounter += 0.15f;
-            NPC.frameCounter %= Main.npcFrameCount[NPC.type];
-            int frame = (int)NPC.frameCounter;
-            NPC.frame.Y = frame * frameHeight;
         }
 
         public override void AI()
         {
             if (target == null || !target.active || NPC.justHit)
             {
-                target = BioWar.BioGetTarget(false, NPC);
+                target = BioWar.BioGetTarget(true, NPC);
             }
-            int num1009 = (NPC.ai[0] == 0f) ? 1 : 2;
-            int num1010 = (NPC.ai[0] == 0f) ? 60 : 80;
-            for (int num1011 = 0; num1011 < 2; num1011++)
+            if (NPC.ai[0] == 0)
             {
-                if (Main.rand.Next(3) < num1009)
+                NPC.ai[1] = Main.rand.Next(0, 3);
+                NPC.velocity = Main.rand.NextVector2Circular(22, 22).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(-8, 8);
+                NPC.ai[0] = 1;
+            }
+            else if (NPC.ai[0] == 2)
+            {
+                NPC.velocity *= 0.97f;
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (Main.rand.NextBool(3))
                 {
-                    int num1012 = Dust.NewDust(NPC.Center - new Vector2((float)num1010), num1010 * 2, num1010 * 2, 173, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 90, default(Color), 1.5f);
-                    Main.dust[num1012].noGravity = true;
-                    Main.dust[num1012].velocity *= 0.2f;
-                    Main.dust[num1012].fadeIn = 1f;
+                    int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Corruption, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 90, default(Color), 1.5f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity *= 0.2f;
+                    Main.dust[d].fadeIn = 1f;
                 }
-            }
-            if (target != null && target.active && !(target is NPC ne && ne.life <= 0))
-            {
-                NPC.ai[2] += 0.01f;
-                if (NPC.ai[2] > 1)
-                    NPC.ai[2] = 0;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(target.Center) * 8, 0.5f);
-            }
-            else
-            {
-                NPC.velocity *= 0.98f;
             }
             foreach (NPC n in Main.npc)
             {
@@ -113,10 +100,10 @@ namespace CalRemix.NPCs.BioWar
             }
         }
 
-    public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("A dark mass of matter that has incredible self-replicating abilities.")
+                new FlavorTextBestiaryInfoElement("When things start tearing apart, you can count on these good ol' globs to glue stuff together.")
             });
         }
 
@@ -124,18 +111,23 @@ namespace CalRemix.NPCs.BioWar
         {
             if (NPC.IsABestiaryIconDummy)
                 return true;
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Texture2D texture = NPC.ai[1] == 2 ? ModContent.Request<Texture2D>(Texture+2).Value : NPC.ai[2] == 1 ? ModContent.Request<Texture2D>(Texture+3).Value : TextureAssets.Npc[NPC.type].Value;
             Vector2 position = NPC.Center - Main.screenPosition;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 8);
-            Color color = NPC.GetAlpha(Color.Red * 0.6f);
+            Color color = NPC.GetAlpha(Color.Lime * 0.6f);
             Vector2 scale = Vector2.One;
             for (int i = 0; i < 10; i++)
             {
-                Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 6 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));
+                Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 2 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));
                 Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            NPC.ai[0] = 2;
         }
     }
 }

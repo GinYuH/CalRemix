@@ -2259,6 +2259,7 @@ Mods: {
 					DespawnMessage: "[c/5adb76:The large pineapple goes back to cleansing The Plague.]"
 				}
 			}
+
 			PhytogenShield.DisplayName: Phytogen Shield
 			PineappleFrond.DisplayName: Frond
 			Lizard.DisplayName: Lizard
@@ -2274,6 +2275,7 @@ Mods: {
 					DespawnMessage: "[c/6369cf:Power absorbed.]"
 				}
 			}
+
 			IonogenShield.DisplayName: Ionogen's Shield
 
 			Hydrogen: {
@@ -2285,6 +2287,7 @@ Mods: {
 					DespawnMessage: "[c/8c183f:The ocean mine cools back down.]"
 				}
 			}
+
 			HydrogenShield.DisplayName: Hydrogen's Shield
 
 			Oxygen: {
@@ -2296,10 +2299,14 @@ Mods: {
 					DespawnMessage: "[c/9cf5ff:The glass ball rises back to space.]"
 				}
 			}
+
 			OxygenShield.DisplayName: Oxygen's Shield
 			Fushigi.DisplayName: Fushigi
 			Eosinine.DisplayName: Eosinine
 			Malignant.DisplayName: Malignant
+			Platelet.DisplayName: Platlet
+			RedBloodCell.DisplayName: Red Blood Cell
+			WhiteBloodCell.DisplayName: White Blood Cell
 		}
 
 		Projectiles: {

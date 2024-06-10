@@ -35,7 +35,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered defenders
         /// </summary>
-        public static List<int> DefenderNPCs = new List<int>() { ModContent.NPCType<Eosinine>() };
+        public static List<int> DefenderNPCs = new List<int>() { ModContent.NPCType<Eosinine>(), ModContent.NPCType<Platelet>(), ModContent.NPCType<WhiteBloodCell>(), ModContent.NPCType<RedBloodCell>() };
 
         /// <summary>
         /// Enemies considered invaders
@@ -45,7 +45,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Projectiles considered defenders
         /// </summary>
-        public static List<int> DefenderProjectiles = new List<int>() { ModContent.ProjectileType<EosinineProj>() };
+        public static List<int> DefenderProjectiles = new List<int>() { ModContent.ProjectileType<EosinineProj>(), ProjectileID.BloodNautilusShot };
 
         /// <summary>
         /// Projectiles considered invaders
@@ -272,11 +272,13 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
-                    npc.SimpleStrikeNPC(n.damage, n.direction, false);
+                    int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.33f) : n.damage;
+                    npc.SimpleStrikeNPC(dam, n.direction, false);
                     hitCooldown = 20;
                     if (npc.life <= 0)
                     {
-                        NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Malignant>());
+                        int np = NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Malignant>());
+                        Main.npc[np].npcSlots = 0;
                     }
                     break;
                 }
@@ -294,7 +296,8 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
-                    npc.SimpleStrikeNPC(n.damage, n.direction, false);
+                    int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.1f) : n.damage;
+                    npc.SimpleStrikeNPC(dam, n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
                     break;
@@ -313,6 +316,8 @@ namespace CalRemix.NPCs.BioWar
                     if (!BioWar.DefenderNPCs.Contains(n.type))
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
+                        continue;
+                    if (n.damage <= 0)
                         continue;
                     npc.SimpleStrikeNPC(n.damage, n.direction, false);
                     hitCooldown = 20;
@@ -374,6 +379,40 @@ namespace CalRemix.NPCs.BioWar
                 return false;
             return true;
         }
+
+        public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+        {
+            if (BioWar.IsActive)
+            {
+                if (BioWar.SummonedPathogen && BioWar.InvadersWinning)
+                {
+                    maxSpawns += 24;
+                    spawnRate = 6;
+                }
+                else
+                {
+                    maxSpawns += 12;
+                    spawnRate = 12;
+                }
+            }
+        }
+
+        public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+        {
+            if (BioWar.IsActive)
+            {
+                pool.Clear();
+                float defMult = BioWar.SummonedPathogen && BioWar.InvadersWinning ? 3f : BioWar.DefendersWinning ? 0.8f : 1f;
+                float invMult = BioWar.InvadersWinning ? 0.8f : 1f;
+                pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.4f * defMult);
+                pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
+                pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
+                pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
+
+                pool.Add(ModContent.NPCType<Malignant>(), 0.4f * invMult);
+
+            }
+        }
     }
 
     public class BioWarProjectile : GlobalProjectile
@@ -387,6 +426,8 @@ namespace CalRemix.NPCs.BioWar
 
         public override bool CanHitPlayer(Projectile projectile, Player target)
         {
+            if (!BioWar.IsActive)
+                return true;
             if (BioWar.InvaderProjectiles.Contains(projectile.type) && BioWar.InvadersWinning)
                 return false;
             if (BioWar.DefenderProjectiles.Contains(projectile.type) && BioWar.DefendersWinning)
