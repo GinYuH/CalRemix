@@ -50,9 +50,9 @@ namespace CalRemix.NPCs.BioWar
             if (target != null && target.active && !(target is NPC ne && ne.life <= 0))
             {
                 NPC.ai[2] += 0.03f;
-                if (NPC.ai[2] > 10)
+                if (NPC.ai[2] > 18)
                     NPC.ai[2] = 0;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(target.Center) * NPC.ai[2], 0.5f);
+                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(target.Center) * MathHelper.Clamp(NPC.ai[2], 4, 22), 0.5f);
             }
             else
             {

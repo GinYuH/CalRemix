@@ -350,21 +350,6 @@ namespace CalRemix.UI
                         ClickCooldown = 8;
                     }
                 }
-                else if (CurrentPage == maxPages)
-                {
-                    if (Main.mouseLeft)
-                    {
-                        Main.LocalPlayer.releaseUseItem = true;
-                        HeldRightTimer++;
-                        holdingRight = true;
-                        if (HeldRightTimer > 300)
-                        {
-                            CurrentPage++;
-                            SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound with { Pitch = -1f});
-                            HeldRightTimer = 0;
-                        }
-                    }
-                }
             }
             else
             if (maus.Intersects(arrowframel))
@@ -377,6 +362,19 @@ namespace CalRemix.UI
                         CurrentPage--;
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
                         ClickCooldown = 8;
+                    }
+                }
+                else if (Main.mouseLeft)
+                {
+                    Main.LocalPlayer.releaseUseItem = true;
+                    HeldRightTimer++;
+                    holdingRight = true;
+                    if (HeldRightTimer > 300)
+                    {
+                        CurrentPage = maxPages + 1;
+                        SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound with { Pitch = -1f });
+                        HeldRightTimer = 0;
+                        ClickCooldown = 40;
                     }
                 }
             }
