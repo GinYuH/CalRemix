@@ -32,6 +32,9 @@ using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Melee.Spears;
 using CalamityMod.Rarities;
+using CalamityMod.Items.Accessories.Vanity;
+using CalamityMod.Items.Potions.Alcohol;
+using CalRemix.Items.Potions;
 
 namespace CalRemix.Retheme
 {
@@ -156,13 +159,20 @@ namespace CalRemix.Retheme
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(ItemType<Fabstaff>(), new DrawAnimationVertical(6, 6));
+            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Retheme/NA");
+            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Retheme/NA");
             TextureAssets.Item[ItemType<Fabstaff>()] = Request<Texture2D>("CalRemix/Retheme/NoFab/InterfacerStaff");
             TextureAssets.Item[ItemType<Fabsol>()] = Request<Texture2D>("CalRemix/Retheme/NoFab/DiscordianSigil");
             TextureAssets.Item[ItemType<CirrusDress>()] = Request<Texture2D>("CalRemix/Retheme/NoFab/AshsCloak");
         }
         public override void SetDefaults(Item item)
         {
-            if (item.type == ItemType<Fabstaff>())
+            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
+            {
+                item.SetNameOverride("N/A");
+                item.createTile = -1;
+            }
+            else if (item.type == ItemType<Fabstaff>())
             {
                 item.SetNameOverride("Interfacer Staff");
                 item.UseSound = AresTeslaCannon.TeslaOrbShootSound with { Pitch = 0.5f, PitchVariance = 0.2f, Volume = 0.5f };
@@ -188,6 +198,16 @@ namespace CalRemix.Retheme
                 string name = CalRemixWorld.itemChanges ? RethemeList.ItemNames.GetValueOrDefault(item.type) : RethemeMaster.OriginalItemNames.GetValueOrDefault(item.type);
                 item.SetNameOverride(name);
             }
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
+                item.stack = 0;
+        }
+        public override void PostUpdate(Item item)
+        {
+            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
+                item.stack = 0;
         }
         public override void UpdateEquip(Item item, Player player)
         {
@@ -217,6 +237,8 @@ namespace CalRemix.Retheme
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             Mod mod = Mod;
+            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
+                tooltips.Clear();
             if (CalRemixWorld.aspids)
             {
                 if (item.type == ItemType<CryoKey>())

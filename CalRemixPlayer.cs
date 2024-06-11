@@ -46,6 +46,9 @@ using CalRemix.NPCs;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.Items.Potions;
+using CalRemix.Retheme;
+using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Accessories.Vanity;
 
 namespace CalRemix
 {
@@ -451,7 +454,12 @@ namespace CalRemix
         }
 		public override void PreUpdate()
         {
-			if (FannyUIState.GonerFanny != null)
+			if (Main.myPlayer == Player.whoAmI)
+            {
+                if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
+                    Main.mouseItem.stack = 0;
+            }
+            if (FannyUIState.GonerFanny != null)
 			{
 				if (FannyUIState.GonerFanny.Speaking && Main.myPlayer == Player.whoAmI)
 					Main.musicVolume = 0;
@@ -520,7 +528,9 @@ namespace CalRemix
 
         public override bool PreItemCheck()
         {
-			/*
+            if (Player.HeldItem.type == ModContent.ItemType<CirrusCouch>() || Player.HeldItem.type == ModContent.ItemType<CrystalHeartVodka>())
+                Player.HeldItem.stack = 0;
+            /*
             if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
                 if (NPC.CountNPCS(ModContent.NPCType<DerellectBoss>()) >= 1)
@@ -533,7 +543,7 @@ namespace CalRemix
   				return true;                  
 			}
 			*/
-			return true;
+            return true;
         }
         public override void PostUpdateMiscEffects()
         {       
