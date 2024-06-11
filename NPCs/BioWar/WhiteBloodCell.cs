@@ -52,7 +52,7 @@ namespace CalRemix.NPCs.BioWar
                 NPC.ai[2] += 0.03f;
                 if (NPC.ai[2] > 18)
                     NPC.ai[2] = 0;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(target.Center) * MathHelper.Clamp(NPC.ai[2], 4, 22), 0.5f);
+                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(target.Center) * MathHelper.Clamp(NPC.ai[2], 4, 18), 0.5f);
             }
             else
             {
@@ -115,6 +115,21 @@ namespace CalRemix.NPCs.BioWar
             }
             Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Cloud, hit.HitDirection, -1f, 0, default, 1f);
+            }
+            if (NPC.life <= 0)
+            {
+                for (int k = 0; k < 20; k++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Cloud, hit.HitDirection, -1f, 0, default, 1f);
+                }
+            }
         }
     }
 }

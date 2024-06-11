@@ -2307,6 +2307,7 @@ Mods: {
 			Platelet.DisplayName: Platlet
 			RedBloodCell.DisplayName: Red Blood Cell
 			WhiteBloodCell.DisplayName: White Blood Cell
+			Ecolium.DisplayName: Ecolium
 		}
 
 		Projectiles: {

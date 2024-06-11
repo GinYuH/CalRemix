@@ -40,7 +40,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered invaders
         /// </summary>
-        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>() };
+        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>() };
 
         /// <summary>
         /// Projectiles considered defenders
@@ -50,7 +50,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Projectiles considered invaders
         /// </summary>
-        public static List<int> InvaderProjectiles = new List<int>() { };
+        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot };
 
         /// <summary>
         /// Defender NPC kill count
@@ -260,6 +260,7 @@ namespace CalRemix.NPCs.BioWar
             }
             if (BioWar.DefenderNPCs.Contains(npc.type))
             {
+                npc.chaseable = !BioWar.DefendersWinning;
                 foreach (NPC n in Main.npc)
                 {
                     if (n == null)
@@ -297,7 +298,7 @@ namespace CalRemix.NPCs.BioWar
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
                     int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.1f) : n.damage;
-                    npc.SimpleStrikeNPC(dam, n.direction, false);
+                    npc.SimpleStrikeNPC(dam * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
                     break;
@@ -305,6 +306,7 @@ namespace CalRemix.NPCs.BioWar
             }
             if (BioWar.InvaderNPCs.Contains(npc.type))
             {
+                npc.chaseable = !BioWar.InvadersWinning;
                 foreach (NPC n in Main.npc)
                 {
                     if (n == null)
@@ -337,7 +339,7 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
-                    npc.SimpleStrikeNPC(n.damage, n.direction, false);
+                    npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
                     break;
@@ -386,13 +388,13 @@ namespace CalRemix.NPCs.BioWar
             {
                 if (BioWar.SummonedPathogen && BioWar.InvadersWinning)
                 {
-                    maxSpawns += 24;
-                    spawnRate = 6;
+                    maxSpawns += 16;
+                    spawnRate = 8;
                 }
                 else
                 {
-                    maxSpawns += 12;
-                    spawnRate = 12;
+                    maxSpawns += 8;
+                    spawnRate = 16;
                 }
             }
         }
@@ -410,6 +412,7 @@ namespace CalRemix.NPCs.BioWar
                 pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
 
                 pool.Add(ModContent.NPCType<Malignant>(), 0.4f * invMult);
+                pool.Add(ModContent.NPCType<Ecolium>(), 0.33f * invMult);
 
             }
         }

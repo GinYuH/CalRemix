@@ -51,7 +51,6 @@ namespace CalRemix.NPCs.BioWar
             }
             NPC.ai[1]++;
             NPC.velocity.Y = (float)Math.Sin(NPC.ai[1] * ySpeedMult) * yRange;
-            //Main.NewText(NPC.velocity.Y);
             if (NPC.ai[1] % 30 == 0)
             {
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(-NPC.velocity.X, 0), ModContent.ProjectileType<EosinineProj>(), (int)(NPC.damage * 0.33f), 0f);
@@ -82,6 +81,21 @@ namespace CalRemix.NPCs.BioWar
             }
             Main.spriteBatch.Draw(texture, position, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.ShadowbeamStaff, hit.HitDirection, -1f, 0, default, 1f);
+            }
+            if (NPC.life <= 0)
+            {
+                for (int k = 0; k < 20; k++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.ShadowbeamStaff, hit.HitDirection, -1f, 0, default, 1f);
+                }
+            }
         }
     }
 }

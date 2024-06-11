@@ -47,6 +47,7 @@ using CalRemix.UI.Title;
 using CalRemix.NPCs.Bosses.Carcinogen;
 using CalRemix.NPCs.Bosses.Hydrogen;
 using System.Linq;
+using SubworldLibrary;
 
 namespace CalRemix
 {
@@ -478,8 +479,8 @@ namespace CalRemix
 
                 var blackTile = TextureAssets.MagicPixel;
                 var shader = GameShaders.Misc["CalRemix/SlendermanStaticShader"].Shader;
-                GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("CalValEX/Items/MysteryPainting"));
-                GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("CalValEX/Items/MysteryPainting"), 0);
+                GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/Projectiles/InvisibleProj"));
+                GameShaders.Misc["CalRemix/SlendermanStaticShader"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/Projectiles/InvisibleProj"), 0);
                 float maxRadius = slender.ai[0] + extraDist;
                 shader.Parameters["radius"].SetValue(slender.ai[0]);
                 shader.Parameters["maxRadius"].SetValue(maxRadius);

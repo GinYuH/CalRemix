@@ -52,6 +52,10 @@ namespace CalRemix.UI
 
             newBarPosition = baseBarDrawPosition + Vector2.UnitY * (yScale + barOffsetY);
             Utils.DrawBorderString(spriteBatch, progressText, newBarPosition - Vector2.UnitY * 4f, Color.White, progressTextScale, 0.5f, 1f, -1);
+            string defKills = BioWar.DefendersKilled.ToString();
+            string invKills = BioWar.InvadersKilled.ToString();
+            Utils.DrawBorderString(spriteBatch, defKills, newBarPosition - 80 * Vector2.UnitX, Color.Lime, progressTextScale, 0.5f, 1f, -1);
+            Utils.DrawBorderString(spriteBatch, invKills, newBarPosition + 80 * Vector2.UnitX, Color.Red, progressTextScale, 0.5f, 1f, -1);
         }
         public static void DrawBackground(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY)
         {
