@@ -143,12 +143,12 @@ namespace CalRemix
         public void FreezeIcon(Terraria.UI.On_UIElement.orig_Draw orig, UIElement self, SpriteBatch spriteBatch)
         {
             orig(self, spriteBatch);
-            float wid = self.GetOuterDimensions().ToRectangle().Width;
+            float wid = self.GetOuterDimensions().Width;
             // Elements larger than 500 pixels aren't frozen (or else you get a giant ice block covering your screen)
             // Fannies don't show up if disabled
             if (wid < 500 && !((self is Fanny || self is FannyTextbox) && !FannyManager.fannyEnabled))
             {
-                spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * 0.6f * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
+                spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
             }
         }
 

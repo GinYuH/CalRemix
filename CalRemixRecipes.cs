@@ -144,6 +144,16 @@ namespace CalRemix
                 ash.AddTile(TileID.Loom);
                 ash.Register();
             }
+            {
+                Recipe recipe = Recipe.Create(ModContent.ItemType<CryoKey>(), 1)
+                .AddIngredient(ItemID.ShadowKey)
+                .AddIngredient(ModContent.ItemType<CryoKeyMold>())
+                .AddIngredient(ItemID.SoulofLight, 5)
+                .AddIngredient(ItemID.SoulofNight, 5)
+                .AddIngredient(ItemID.SoulofFlight, 5)
+                .AddCondition(new Condition("While the Anomaly 109 \'primal_aspids\' setting is enabled", () => CalRemixWorld.aspids))
+                .Register();
+            }
 
             #region DP stuff
             // Alcohol...
