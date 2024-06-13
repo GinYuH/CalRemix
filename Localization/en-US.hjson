@@ -2028,6 +2028,11 @@ Mods: {
 				DisplayName: Super Stealth Potion
 				Tooltip: Can only Quick Stealth if below 50% stealth
 			}
+
+			CryoKeyMold: {
+				DisplayName: Cryo Key Mold
+				Tooltip: Used for crafting a Cryo Key
+			}
 		}
 
 		NPCs: {

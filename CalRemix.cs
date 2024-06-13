@@ -49,6 +49,7 @@ using CalRemix.NPCs.Bosses.Hydrogen;
 using System.Linq;
 using SubworldLibrary;
 using CalRemix.UI;
+using Terraria.GameContent.Items;
 
 namespace CalRemix
 {
@@ -68,6 +69,9 @@ namespace CalRemix
         public static Asset<Texture2D> sunCreepy = null;
         public static Asset<Texture2D> sunOxy = null;
         public static Asset<Texture2D> sunOxy2 = null;
+
+        public static Type fanson = null;
+        public static Type fansonbox = null;
 
         public static readonly SoundStyle Silence = new($"{nameof(CalRemix)}/Sounds/EmptySound");
 
@@ -97,6 +101,27 @@ namespace CalRemix
         {
             instance = this;
             ModLoader.TryGetMod("CalValEX", out CalVal);
+
+
+            if (CalVal != null)
+            {
+                Type[] r = CalVal.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "Fanny")
+                    {
+                        fanson = mn;
+                    }
+                    if (mn.Name == "FannyTextbox")
+                    {
+                        fansonbox = mn;
+                    }
+                    if (fansonbox !=null && fanson != null)
+                    {
+                        break;
+                    }
+                }
+            }
 
             PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
 
@@ -146,7 +171,7 @@ namespace CalRemix
             float wid = self.GetOuterDimensions().Width;
             // Elements larger than 500 pixels aren't frozen (or else you get a giant ice block covering your screen)
             // Fannies don't show up if disabled
-            if (wid < 500 && !((self is Fanny || self is FannyTextbox) && !FannyManager.fannyEnabled))
+            if (wid < 500 && !((self is Fanny || self is FannyTextbox) && !FannyManager.fannyEnabled) && (CalVal != null && self.GetType() != fanson && self.GetType() != fansonbox))
             {
                 spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
             }
