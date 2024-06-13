@@ -48,6 +48,7 @@ using CalRemix.NPCs.Bosses.Carcinogen;
 using CalRemix.NPCs.Bosses.Hydrogen;
 using System.Linq;
 using SubworldLibrary;
+using CalRemix.UI;
 
 namespace CalRemix
 {
@@ -128,13 +129,27 @@ namespace CalRemix
 
             Terraria.On_Main.DrawDust += DrawStatic;
             Terraria.On_Main.DrawLiquid += DrawTsarBomba;
-            Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
+            //Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
+            //Terraria.UI.On_UIElement.Draw += FreezeIcon;
             //Terraria.On_Player.ItemCheck_Shoot += SoldierShots;
             sunOG = TextureAssets.Sun3;
             sunReal = TextureAssets.Sun;
             sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
             sunOxy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun");
             sunOxy2 = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun2");
+        }
+
+        // Freeze most UI elements
+        public void FreezeIcon(Terraria.UI.On_UIElement.orig_Draw orig, UIElement self, SpriteBatch spriteBatch)
+        {
+            orig(self, spriteBatch);
+            float wid = self.GetOuterDimensions().ToRectangle().Width;
+            // Elements larger than 500 pixels aren't frozen (or else you get a giant ice block covering your screen)
+            // Fannies don't show up if disabled
+            if (wid < 500 && !((self is Fanny || self is FannyTextbox) && !FannyManager.fannyEnabled))
+            {
+                spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * 0.6f * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
+            }
         }
 
 
