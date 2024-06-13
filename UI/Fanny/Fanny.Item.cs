@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Dyes;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
@@ -38,6 +39,9 @@ namespace CalRemix.UI
 
             fannyMessages.Add(new FannyMessage("BunnyMurder", "...",
                 "Cryptid", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false).AddItemDisplay(ItemID.BunnyBanner));
+
+            fannyMessages.Add(new FannyMessage("BunnyVolcano", "One time, when I was making a volcano project for the local science fair, I saw the craziest thing! I could not believe my eyes when I saw what happened to that poor hamster after it ate the baking soda and vinegar I'd left out for the experiment. The little guy popped more forcefully than the one I gave coke and mentos to! Explosive bunnies are one thing, but explosive hamsters are truly a new revelation worthy of the new age!",
+                "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.ExplosiveBunny) || Main.LocalPlayer.HasItem(ItemID.BunnyCannon)).AddItemDisplay(ItemID.ExplosiveBunny));
 
             fannyMessages.Add(new FannyMessage("Diamond", "Did you know that the largest diamond ever found was 3106.75 carats?",
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Diamond)).AddItemDisplay(ItemID.Diamond).SetHoverTextOverride("Talk about a juicy gemerald!"));
@@ -143,21 +147,39 @@ namespace CalRemix.UI
 
             #region References
 
+            /*
             fannyMessages.Add(new FannyMessage("PortalGun", "Cave Johnson here. We're fresh out of combustible lemons, but let me tell you a little bit about this thing here. These portals are only designed to stick on planetoid rock and not much else. Hope you've got a test chamber lying around that's full of that stuff!",
                 "Idle", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PortalGun)));
+             */
 
-            fannyMessages.Add(new FannyMessage("Murasama", "Erm, holy crap? $0? Is that a reference to my FAVORITE game of all time, metal gear rising revengeance? Did you know that calamity adds a custom boss health boss bar and many othe-",
+            fannyMessages.Add(new FannyMessage("BloodGod", "I remember the Blood God, he was very friendly! Too bad he was kicked back into something called \"FertyKay\".",
+                "Sob", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ChaliceOfTheBloodGod>())));
+
+            fannyMessages.Add(new FannyMessage("Murasama", "Erm, holy crap? $0? Is that a reference to my FAVORITE game of all time, Final Fantasy? Did you know that calamity adds a custom boss health boss bar and many othe-",
                "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Murasama>())).AddDynamicText(FannyMessage.GetPlayerName));
 
             fannyMessages.Add(new FannyMessage("Ultrakill", "Oh EM GEE! A gun from the hit first-person shooter game, \'MURDERDEATH\'!? Try throwing out some coins and hitting them with a Titanium Railgun to pull a sick railcoin maneuver!",
                 "Awooga", (FannySceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<MidasPrime>()) || Main.LocalPlayer.HasItem(ModContent.ItemType<CrackshotColt>())).AddItemDisplay(ModContent.ItemType<MidasPrime>()));
 
-            fannyMessages.Add(new FannyMessage("Tofu", "Uh oh! Looks like one of your items is a reference to a smelly old game franchise known as Touhou! Do your ol\' pal Fanny a good deed and put it away.",
-                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.HasItems(TofuItems)).SetHoverTextOverride("Anything for you Fanny!"));
+            fannyMessages.Add(new FannyMessage("DankSouls", "What the scallop? Is that from one of the games by ToHardware?! One time, Evil Fanny was happy to give me a set of all the ToHardware games and wanted to invite our friends to watch me. Their eyes and mouths were wide open watching me beat every boss on the first try in all the games. They must've been proud!",
+                "Awooga", (FannySceneMetrics scene) => Main.hardMode && Main.LocalPlayer.inventory.Any(i => DankSoulsItems.Contains(i.type))));
 
+            fannyMessages.Add(new FannyMessage("Tofu", "Uh oh! Looks like one of your items is a reference to a smelly old game franchise known as Touhou! Do your ol\' pal Fanny a good deed and put it away.",
+                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.inventory.Any(i => TofuItems.Contains(i.type))).SetHoverTextOverride("Anything for you Fanny!"));
             #endregion
 
         }
+        private static readonly List<int> DankSoulsItems = new List<int>
+        {
+            ModContent.ItemType<Karasawa>(),
+            ModContent.ItemType<GreatswordofJudgement>(),
+            ModContent.ItemType<LifehuntScythe>(),
+            ModContent.ItemType<Nadir>(),
+            ModContent.ItemType<StormRuler>(),
+            ModContent.ItemType<TheFirstShadowflame>(),
+            ModContent.ItemType<DefiledFlameDye>(),
+            ModContent.ItemType<RuneofKos>()
+        };
         private static readonly List<int> TofuItems = new List<int>
         {
             ModContent.ItemType<ScarletDevil>(),

@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Tiles.DraedonStructures;
+using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Steamworks;
 using System;
@@ -42,11 +43,17 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and 2 more minutes to drive away. I did nothing to stop it.",
                 "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)));
 
+            fannyMessages.Add(new FannyMessage("CreditCard", "Heya $0 I'm feeling hungry could you send me your credit card details so I can get some food!",
+                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(1500000)).SetHoverTextOverride("Sure thing Fanny!").AddDynamicText(FannyMessage.GetPlayerName));
+
             fannyMessages.Add(new FannyMessage("Blink", "Hey! Uhh, I noticed you haven't blinked in a while. Maybe you should...",
                "Sob", (FannySceneMetrics scene) => Main.rand.NextBool(4000000)));
 
             fannyMessages.Add(new FannyMessage("Fuckyou", "You are now manually breathing.",
                "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(4000000)));
+
+            fannyMessages.Add(new FannyMessage("Luigi", "Did you know you can unlock a \"Luigi\" by defeating every boss in Death mode on the first attempt? I don't even know what that is, but that has to be genuine! I read it online!",
+              "Nuhuh", (FannySceneMetrics scene) => Main.rand.NextBool(4000000) && !CalamityWorld.death));
 
             fannyMessages.Add(new FannyMessage("Mount", "Do a barrel roll on that thing you're riding!",
                "Awooga", (FannySceneMetrics scene) => Main.rand.NextBool(1000) && Main.LocalPlayer.mount.Type != MountID.None));

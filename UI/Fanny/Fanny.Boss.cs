@@ -1,15 +1,17 @@
 ﻿using CalamityMod.NPCs;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.ProfanedGuardians;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.World;
+using System;
 using System.Linq;
+using System.Reflection;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -92,6 +94,9 @@ namespace CalRemix.UI
             fannyMessages.Add(new FannyMessage("PGuardians", "It seems like these mischievous scoundrels are up to no good, and plan to burn all the delicious meat! We gotta go put an end to their plan of calamity!",
                 "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<ProfanedGuardianCommander>())));
 
+            fannyMessages.Add(new FannyMessage("NoArmorDog", "Woah there, $0! Seems like you forgot to put on your favorite set of armor before fighting this boss! We don't want you to pull a Cheeseboy, do we?",
+                "Sob", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<DevourerofGodsHead>()) && NoArmor()).AddDynamicText(FannyMessage.GetPlayerName));
+
             fannyMessages.Add(new FannyMessage("NewYork", "Oh, I saw that sky somewhere in my dreams! the place was called uhhh... New Yuck... Nu Yok.... New Yok.... yea something like that!",
                 "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Yharon>())).SetHoverTextOverride("It's called New York, Fanny! I'll take you there one day."));
 
@@ -128,12 +133,38 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => CrossModNPC(scene, "CatalystMod", "Astrageldon")).SetHoverTextOverride("Thanks you Fanny! I'll go kill the Moon Lord first."));
 
             fannyMessages.Add(new FannyMessage("Mutant", "Woah, how much HP does that guy have??",
-                "Awooga", (FannySceneMetrics scene) => CrossModNPC(scene, "FargowiltasSouls", "MutantBoss")));
+                "Awooga", (FannySceneMetrics scene) => CrossModNPC(scene, "FargowiltasSouls", "MutantBoss") && EnragedMutant()));
 
             fannyMessages.Add(new FannyMessage("ThoriumPrimordials", "WHOA! I didn't think that any Pre-Mordials were still alive! You're in for a tough fight! Killing them may awaken the legendary Dying Reality, a terrifying being that threatens our world! ",
                 "Awooga", (FannySceneMetrics scene) => CrossModNPC(scene, "ThoriumMod", "SlagFury") || CrossModNPC(scene, "ThoriumMod", "Aquaius") || CrossModNPC(scene, "ThoriumMod", "Omnicide")));
 
             #endregion
+        }
+        private static bool NoArmor()
+        {
+            return Main.LocalPlayer.armor[0].type == ItemID.None && Main.LocalPlayer.armor[1].type == ItemID.None && Main.LocalPlayer.armor[2].type == ItemID.None;
+        }
+        private static bool EnragedMutant()
+        {
+            if (ModLoader.TryGetMod("FargowiltasSouls", out Mod f))
+            {
+                Type worldSystem = null;
+                Assembly fargoAssembly = f.GetType().Assembly;
+                bool enraged = false;
+                foreach (Type t in fargoAssembly.GetTypes())
+                {
+                    if (t.Name == "WorldSavingSystem")
+                        worldSystem = t;
+                }
+                if (worldSystem != null)
+                {
+                    PropertyInfo angryProperty = worldSystem.GetProperty("AngryMutant", BindingFlags.Public | BindingFlags.Static);
+                    enraged = (bool)angryProperty.GetValue(null);
+                }
+                if (enraged)
+                    return true;
+            }
+            return false;
         }
     }
 }

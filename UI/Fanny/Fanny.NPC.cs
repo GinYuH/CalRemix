@@ -60,7 +60,7 @@ namespace CalRemix.UI
                 "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
 
             fannyMessages.Add(new FannyMessage("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
-                "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "FargowiltasSouls", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!"));
+                "Idle", (FannySceneMetrics scene) => CrossModNPC(scene, "Fargowiltas", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!"));
 
 
             int num = Main.rand.Next(0, int.MaxValue);
