@@ -94,10 +94,10 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             string pyroIconPath = "CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase1_Head_Boss";
             string cryoIconPath = "CalamityMod/NPCs/Cryogen/Cryogen_Phase1_Head_Boss";
 
-            CalRemix.Instance.AddBossHeadTexture(pyroIconPath, -1);
+            CalRemix.instance.AddBossHeadTexture(pyroIconPath, -1);
             pyroIconIndex = ModContent.GetModBossHeadSlot(pyroIconPath);
 
-            CalRemix.Instance.AddBossHeadTexture(cryoIconPath, -1);
+            CalRemix.instance.AddBossHeadTexture(cryoIconPath, -1);
             cryoIconIndex = ModContent.GetModBossHeadSlot(cryoIconPath);
 
         }
