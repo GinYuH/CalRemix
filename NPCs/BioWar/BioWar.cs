@@ -40,7 +40,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered invaders
         /// </summary>
-        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>() };
+        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>(), ModContent.NPCType<Tobasaia>() };
 
         /// <summary>
         /// Projectiles considered defenders
@@ -50,7 +50,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Projectiles considered invaders
         /// </summary>
-        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot };
+        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot, ModContent.ProjectileType<TobaccoSeed>() };
 
         /// <summary>
         /// Defender NPC kill count
@@ -99,8 +99,7 @@ namespace CalRemix.NPCs.BioWar
 
         public override void PreUpdateWorld()
         {
-            BioWar.EndEvent();
-            //IsActive = true;
+            IsActive = true;
             if (IsActive)
             {
                 if (TotalKills >= 300 && !SummonedPathogen)
@@ -435,6 +434,7 @@ namespace CalRemix.NPCs.BioWar
                 pool.Add(ModContent.NPCType<Ecolium>(), 0.33f * invMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Basilius>()))
                     pool.Add(ModContent.NPCType<Basilius>(), 0.1f * invMult);
+                pool.Add(ModContent.NPCType<Tobasaia>(), 0.2f * invMult);
             }
         }
     }

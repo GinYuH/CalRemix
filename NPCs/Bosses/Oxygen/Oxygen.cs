@@ -159,7 +159,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                 if (p.dead)
                     continue;
                 p.Calamity().infiniteFlight = true;
-                if (p.Distance(NPC.Center) < 320)
+                if (p.Distance(NPC.Center) < 640)
                 {
                     p.breath += (int)MathHelper.Clamp(p.breathMax / 120 * (1 + MaxDepthLevel), -0.001f, p.breathMax - p.breath);
                 }
@@ -240,8 +240,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     {
                         int spawnClouds = 90;
                         int phaseTime = spawnClouds + 240;
-                        float speedMax = 2;
-                        float acc = 0.2f;
                         NPC.ai[1]++;
                         if (NPC.ai[1] == spawnClouds)
                         {
@@ -257,16 +255,15 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 3), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
                             }
                         }
-                        if (NPC.ai[1] > spawnClouds)
-                        {
-                            NPC.velocity.X *= 0.95f;
-                            NPC.velocity.Y -= acc;
-                            if (NPC.velocity.Y < -speedMax)
-                                NPC.velocity.Y = -speedMax;
-                        }
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 4;
                         if (NPC.ai[1] > phaseTime)
                         {
-                            Phase = DepthLevel > 2 && Main.rand.NextBool(6 - (int)DepthLevel) ? (int)PhaseType.Bubbles : (int)PhaseType.Fling;
+                            if (Main.zenithWorld)
+                                Phase = (int)PhaseType.Fling;
+                            else
+                            {
+                                Phase = DepthLevel > 1 && Main.rand.NextBool(6 - (int)DepthLevel) ? (int)PhaseType.Bubbles : (int)PhaseType.Whirlpool;
+                            }
                             NPC.ai[1] = 0;
                         }
                         break;
@@ -300,8 +297,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         int bubbleAmt = 64;
                         int bubbleRangeX = 1000;
                         int bubbleRangeY = 500;
-                        int phaseTime = spawnBubbles + 240;
-                        int dash = spawnBubbles + 120;
+                        int phaseTime = spawnBubbles + 200;
+                        int dash = spawnBubbles + 90;
                         NPC.ai[1]++;
                         if (NPC.ai[1] == spawnBubbles)
                         {
@@ -342,8 +339,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         NPC.velocity *= 0.97f;
                         int spawnTornado = 60;
                         int totalObjects = death ? 16 : rev ? 10 : 8;
-                        int tornadoRate = rev ? 60 : expert ? 80 :90;
-                        int totalTornados = death ? 8 : rev ? 7 : 5;
+                        int tornadoRate = rev ? 50 : expert ? 60 :70;
+                        int totalTornados = death ? 5 : rev ? 4 : 3;
                         int phaseTime = tornadoRate * totalTornados + spawnTornado;
                         NPC.ai[1]++;
                         if (NPC.ai[1] > spawnTornado && NPC.ai[1] % tornadoRate == 0)

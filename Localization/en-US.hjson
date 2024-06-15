@@ -2315,6 +2315,7 @@ Mods: {
 			Ecolium.DisplayName: Ecolium
 			Basilius.DisplayName: Basilius
 			BasiliusBody.DisplayName: Basilius
+			Tobasaia.DisplayName: Tobasaia
 		}
 
 		Projectiles: {
@@ -2506,6 +2507,7 @@ Mods: {
 			OxygenDebris.DisplayName: Debris
 			Oxshard.DisplayName: Oxygen Shard
 			EosinineProj.DisplayName: Eosinine
+			TobaccoSeed.DisplayName: Seed
 		}
 
 		Tiles: {
