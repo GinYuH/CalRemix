@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -47,6 +48,12 @@ namespace CalRemix.Projectiles.Hostile
         public override bool? CanDamage()
         {
             return Projectile.scale > 2f;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.LightBlue * 0.4f, lightColor, 8);
+            return false;
         }
     }
 }

@@ -2313,6 +2313,8 @@ Mods: {
 			RedBloodCell.DisplayName: Red Blood Cell
 			WhiteBloodCell.DisplayName: White Blood Cell
 			Ecolium.DisplayName: Ecolium
+			Basilius.DisplayName: Basilius
+			BasiliusBody.DisplayName: Basilius
 		}
 
 		Projectiles: {

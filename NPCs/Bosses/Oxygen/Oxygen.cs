@@ -105,7 +105,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             NPC.Calamity().VulnerableToHeat = true;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AtomicReinforcement");
+                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AerobicReinforcement");
             }
         }
 
@@ -132,7 +132,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
 
         public override void AI()
         {
-            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;

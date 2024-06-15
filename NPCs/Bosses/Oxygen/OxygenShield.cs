@@ -99,5 +99,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             spriteBatch.Draw(cigars, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);
             return false;
         }
+        public override bool CheckActive() => !(Main.npc[(int)NPC.ai[0]] != null && Main.npc[(int)NPC.ai[0]].active && Main.npc[(int)NPC.ai[0]].type == ModContent.NPCType<Oxygen>());
     }
 }

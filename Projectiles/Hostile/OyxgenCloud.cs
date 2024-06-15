@@ -29,7 +29,8 @@ namespace CalRemix.Projectiles.Hostile
         }
         public override void AI()
         {
-            Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Cloud, 1);
+            Dust d = Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Cloud, 1)];
+            d.noLight = false;
         }
 
         public override void OnKill(int timeLeft)
@@ -43,6 +44,7 @@ namespace CalRemix.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
+            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.White * 0.4f, Color.White * 0.4f, 8, TextureAssets.Cloud[(int)Projectile.ai[0]].Value);
             CalamityUtils.DrawAfterimagesCentered(Projectile, 1, lightColor, 4, TextureAssets.Cloud[(int)Projectile.ai[0]].Value);
             return false; 
         }

@@ -72,6 +72,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
 using CalRemix.Buffs;
 using CalamityMod.NPCs.DevourerofGods;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Terraria.Audio;
+using System.Runtime.CompilerServices;
+using CalRemix.NPCs.BioWar;
+using Microsoft.Build.ObjectModelRemoting;
 
 namespace CalRemix
 {
@@ -1357,5 +1362,495 @@ namespace CalRemix
                 return drawColor.MultiplyRGB(Color.YellowGreen);
             return null;
         }
+
+        public static void WormAI(NPC npc, float speed, float acceleration, Entity target, Vector2 prowlPoint, int segmentType = 0, bool canFlyByDefault = false, bool makeBurrowSound = false, bool despawnOnSurface = false, float despawnSpeed = 0.2f)
+        {
+            {
+                if (npc.ai[3] > 0f)
+                {
+                    npc.realLife = (int)npc.ai[3];
+                }
+                if (target == null || !target.active || (despawnOnSurface && (double)target.position.Y < Main.worldSurface * 16.0))
+                {
+                    npc.EncourageDespawn(300);
+                    if (despawnOnSurface)
+                    {
+                        npc.velocity.Y += despawnSpeed;
+                    }
+                }
+                {
+
+                    if (segmentType != 0)
+                    {
+                        if (!Main.npc[(int)npc.ai[1]].active)
+                            {
+                                npc.life = 0;
+                                npc.HitEffect();
+                                npc.checkDead();
+                                npc.active = false;
+                                NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, -1f);
+                                return;
+                            }
+                    }
+                    if (segmentType == 0)
+                    { 
+                        if (!Main.npc[(int)npc.ai[0]].active)
+                        {
+                            npc.life = 0;
+                            npc.HitEffect();
+                            npc.checkDead();
+                            npc.active = false;
+                            NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, -1f);
+                            return;
+                        }
+                    }
+                    if (!npc.active && Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, -1f);
+                    }
+                }
+                int tileLeft = (int)(npc.position.X / 16f) - 1;
+                int tileRight = (int)((npc.position.X + (float)npc.width) / 16f) + 2;
+                int tileAbove = (int)(npc.position.Y / 16f) - 1;
+                int tileBelow = (int)((npc.position.Y + (float)npc.height) / 16f) + 2;
+                if (tileLeft < 0)
+                {
+                    tileLeft = 0;
+                }
+                if (tileRight > Main.maxTilesX)
+                {
+                    tileRight = Main.maxTilesX;
+                }
+                if (tileAbove < 0)
+                {
+                    tileAbove = 0;
+                }
+                if (tileBelow > Main.maxTilesY)
+                {
+                    tileBelow = Main.maxTilesY;
+                }
+                bool canFly = canFlyByDefault;
+                if (!canFly)
+                {
+                    Vector2 vector2 = default(Vector2);
+                    for (int num43 = tileLeft; num43 < tileRight; num43++)
+                    {
+                        for (int num44 = tileAbove; num44 < tileBelow; num44++)
+                        {
+                            if (Main.tile[num43, num44] == null || ((Main.tile[num43, num44].HasTile || (!Main.tileSolid[Main.tile[num43, num44].TileType] && (!Main.tileSolidTop[Main.tile[num43, num44].TileType] || Main.tile[num43, num44].TileFrameY != 0))) && Main.tile[num43, num44].LiquidAmount <= 64))
+                            {
+                                continue;
+                            }
+                            vector2.X = num43 * 16;
+                            vector2.Y = num44 * 16;
+                            if (npc.position.X + (float)npc.width > vector2.X && npc.position.X < vector2.X + 16f && npc.position.Y + (float)npc.height > vector2.Y && npc.position.Y < vector2.Y + 16f)
+                            {
+                                canFly = true;
+                                if (Main.rand.Next(100) == 0 && npc.type != NPCID.LeechHead && !Main.tile[num43, num44].HasTile && Main.tileSolid[Main.tile[num43, num44].TileType])
+                                {
+                                    WorldGen.KillTile(num43, num44, fail: true, effectOnly: true);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!canFly && (!canFlyByDefault))
+                {
+                    Rectangle rectangle = new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
+                    int num46 = 1000;
+                    bool flag3 = true;
+                    Rectangle rectangle2 = new Rectangle((int)target.position.X - num46, (int)target.position.Y - num46, num46 * 2, num46 * 2);
+                    if (rectangle.Intersects(rectangle2))
+                    {
+                        flag3 = false;
+                    }
+                    if (flag3)
+                    {
+                        canFly = true;
+                    }
+                }
+                if (npc.type == ModContent.NPCType<Basilius>())
+                {
+                    if (npc.velocity.X < 0f)
+                    {
+                        npc.spriteDirection = 1;
+                    }
+                    else if (npc.velocity.X > 0f)
+                    {
+                        npc.spriteDirection = -1;
+                    }
+                }
+                Vector2 vector5 = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
+                float num50 = prowlPoint.X;
+                float num51 = prowlPoint.Y;
+                if (target != null)
+                {
+                    num50 = target.position.X + (float)(target.width / 2);
+                    num51 = target.position.Y + (float)(target.height / 2);
+                }
+                bool passive = false;
+                if (npc.type == ModContent.NPCType<Basilius>() && !(target != null && target.active && !(target is NPC ne && ne.life <= 0)))
+                {
+                    passive = true;
+                }
+                if (passive && prowlPoint != Vector2.Zero)
+                {
+                    speed = 10f;
+                    acceleration = 0.3f;
+                    int num52 = -1;
+                    int num53 = (int)(prowlPoint.X / 16f);
+                    int num54 = (int)(prowlPoint.Y / 16f);
+                    for (int num56 = num53 - 2; num56 <= num53 + 2; num56++)
+                    {
+                        for (int num57 = num54; num57 <= num54 + 15; num57++)
+                        {
+                            if (WorldGen.SolidTile2(num56, num57))
+                            {
+                                num52 = num57;
+                                break;
+                            }
+                        }
+                        if (num52 > 0)
+                        {
+                            break;
+                        }
+                    }
+                    if (num52 > 0)
+                    {
+                        num52 *= 16;
+                        float num58 = num52 - 800;
+                        if (prowlPoint.Y > num58)
+                        {
+                            num51 = num58;
+                            if (Math.Abs(npc.Center.X - prowlPoint.X) < 500f)
+                            {
+                                num50 = ((!(npc.velocity.X > 0f)) ? (prowlPoint.X - 600f) : (prowlPoint.X + 600f));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        speed = 14f;
+                        acceleration = 0.5f;
+                    }
+                    float num59 = speed * 1.3f;
+                    float num60 = speed * 0.7f;
+                    float num61 = npc.velocity.Length();
+                    if (num61 > 0f)
+                    {
+                        if (num61 > num59)
+                        {
+                            npc.velocity.Normalize();
+                            npc.velocity *= num59;
+                        }
+                        else if (num61 < num60)
+                        {
+                            npc.velocity.Normalize();
+                            npc.velocity *= num60;
+                        }
+                    }
+                    if (num52 > 0)
+                    {
+                        for (int num62 = 0; num62 < 200; num62++)
+                        {
+                            if (Main.npc[num62].active && Main.npc[num62].type == npc.type && num62 != npc.whoAmI)
+                            {
+                                Vector2 vector6 = Main.npc[num62].Center - npc.Center;
+                                if (vector6.Length() < 400f)
+                                {
+                                    vector6.Normalize();
+                                    vector6 *= 1000f;
+                                    num50 -= vector6.X;
+                                    num51 -= vector6.Y;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int num63 = 0; num63 < 200; num63++)
+                        {
+                            if (Main.npc[num63].active && Main.npc[num63].type == npc.type && num63 != npc.whoAmI)
+                            {
+                                Vector2 vector7 = Main.npc[num63].Center - npc.Center;
+                                if (vector7.Length() < 60f)
+                                {
+                                    vector7.Normalize();
+                                    vector7 *= 200f;
+                                    num50 -= vector7.X;
+                                    num51 -= vector7.Y;
+                                }
+                            }
+                        }
+                    }
+                }
+                num50 = (int)(num50 / 16f) * 16;
+                num51 = (int)(num51 / 16f) * 16;
+                vector5.X = (int)(vector5.X / 16f) * 16;
+                vector5.Y = (int)(vector5.Y / 16f) * 16;
+                num50 -= vector5.X;
+                num51 -= vector5.Y;
+                float num64 = (float)Math.Sqrt(num50 * num50 + num51 * num51);
+                if (npc.ai[1] > 0f && npc.ai[1] < (float)Main.npc.Length)
+                {
+                    try
+                    {
+                        vector5 = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
+                        num50 = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2) - vector5.X;
+                        num51 = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2) - vector5.Y;
+                    }
+                    catch
+                    {
+                    }
+                    npc.rotation = (float)Math.Atan2(num51, num50) + MathHelper.Pi;
+                    num64 = (float)Math.Sqrt(num50 * num50 + num51 * num51);
+                    int num65 = npc.width;
+                    num64 = (num64 - (float)num65) / num64;
+                    num50 *= num64;
+                    num51 *= num64;
+                    npc.velocity = Vector2.Zero;
+                    npc.position.X += num50;
+                    npc.position.Y += num51;
+                    if (npc.type == ModContent.NPCType<Basilius>())
+                    {
+                        if (num50 < 0f)
+                        {
+                            npc.spriteDirection = 1;
+                        }
+                        else if (num50 > 0f)
+                        {
+                            npc.spriteDirection = -1;
+                        }
+                    }
+                }
+                else
+                {
+                    if (!canFly)
+                    {
+                        npc.TargetClosest();
+                        npc.velocity.Y += 0.11f;
+                        if (npc.velocity.Y > speed)
+                        {
+                            npc.velocity.Y = speed;
+                        }
+                        if ((double)(Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y)) < (double)speed * 0.4)
+                        {
+                            if (npc.velocity.X < 0f)
+                            {
+                                npc.velocity.X -= acceleration * 1.1f;
+                            }
+                            else
+                            {
+                                npc.velocity.X += acceleration * 1.1f;
+                            }
+                        }
+                        else if (npc.velocity.Y == speed)
+                        {
+                            if (npc.velocity.X < num50)
+                            {
+                                npc.velocity.X += acceleration;
+                            }
+                            else if (npc.velocity.X > num50)
+                            {
+                                npc.velocity.X -= acceleration;
+                            }
+                        }
+                        else if (npc.velocity.Y > 4f)
+                        {
+                            if (npc.velocity.X < 0f)
+                            {
+                                npc.velocity.X += acceleration * 0.9f;
+                            }
+                            else
+                            {
+                                npc.velocity.X -= acceleration * 0.9f;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (makeBurrowSound && npc.soundDelay == 0)
+                        {
+                            float num67 = num64 / 40f;
+                            if (num67 < 10f)
+                            {
+                                num67 = 10f;
+                            }
+                            if (num67 > 20f)
+                            {
+                                num67 = 20f;
+                            }
+                            npc.soundDelay = (int)num67;
+                            SoundEngine.PlaySound(SoundID.WormDig, npc.position);
+                        }
+                        num64 = (float)Math.Sqrt(num50 * num50 + num51 * num51);
+                        float num68 = Math.Abs(num50);
+                        float num69 = Math.Abs(num51);
+                        float num70 = speed / num64;
+                        num50 *= num70;
+                        num51 *= num70;
+                        bool flag6 = false;
+                        if (canFly)
+                        {
+                            if (((npc.velocity.X > 0f && num50 < 0f) || (npc.velocity.X < 0f && num50 > 0f) || (npc.velocity.Y > 0f && num51 < 0f) || (npc.velocity.Y < 0f && num51 > 0f)) && Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) > acceleration / 2f && num64 < 300f)
+                            {
+                                flag6 = true;
+                                if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < speed)
+                                {
+                                    npc.velocity *= 1.1f;
+                                }
+                            }
+                            Vector2 pos = target != null ? target.position : prowlPoint;
+                            if (npc.position.Y > pos.Y || (double)(pos.Y / 16f) > Main.worldSurface)
+                            {
+                                flag6 = true;
+                                if (Math.Abs(npc.velocity.X) < speed / 2f)
+                                {
+                                    if (npc.velocity.X == 0f)
+                                    {
+                                        npc.velocity.X -= npc.direction;
+                                    }
+                                    npc.velocity.X *= 1.1f;
+                                }
+                                else if (npc.velocity.Y > 0f - speed)
+                                {
+                                    npc.velocity.Y -= acceleration;
+                                }
+                            }
+                        }
+                        if (!flag6)
+                        {
+                            if ((npc.velocity.X > 0f && num50 > 0f) || (npc.velocity.X < 0f && num50 < 0f) || (npc.velocity.Y > 0f && num51 > 0f) || (npc.velocity.Y < 0f && num51 < 0f))
+                            {
+                                if (npc.velocity.X < num50)
+                                {
+                                    npc.velocity.X += acceleration;
+                                }
+                                else if (npc.velocity.X > num50)
+                                {
+                                    npc.velocity.X -= acceleration;
+                                }
+                                if (npc.velocity.Y < num51)
+                                {
+                                    npc.velocity.Y += acceleration;
+                                }
+                                else if (npc.velocity.Y > num51)
+                                {
+                                    npc.velocity.Y -= acceleration;
+                                }
+                                if ((double)Math.Abs(num51) < (double)speed * 0.2 && ((npc.velocity.X > 0f && num50 < 0f) || (npc.velocity.X < 0f && num50 > 0f)))
+                                {
+                                    if (npc.velocity.Y > 0f)
+                                    {
+                                        npc.velocity.Y += acceleration * 2f;
+                                    }
+                                    else
+                                    {
+                                        npc.velocity.Y -= acceleration * 2f;
+                                    }
+                                }
+                                if ((double)Math.Abs(num50) < (double)speed * 0.2 && ((npc.velocity.Y > 0f && num51 < 0f) || (npc.velocity.Y < 0f && num51 > 0f)))
+                                {
+                                    if (npc.velocity.X > 0f)
+                                    {
+                                        npc.velocity.X += acceleration * 2f;
+                                    }
+                                    else
+                                    {
+                                        npc.velocity.X -= acceleration * 2f;
+                                    }
+                                }
+                            }
+                            else if (num68 > num69)
+                            {
+                                if (npc.velocity.X < num50)
+                                {
+                                    npc.velocity.X += acceleration * 1.1f;
+                                }
+                                else if (npc.velocity.X > num50)
+                                {
+                                    npc.velocity.X -= acceleration * 1.1f;
+                                }
+                                if ((double)(Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y)) < (double)speed * 0.5)
+                                {
+                                    if (npc.velocity.Y > 0f)
+                                    {
+                                        npc.velocity.Y += acceleration;
+                                    }
+                                    else
+                                    {
+                                        npc.velocity.Y -= acceleration;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (npc.velocity.Y < num51)
+                                {
+                                    npc.velocity.Y += acceleration * 1.1f;
+                                }
+                                else if (npc.velocity.Y > num51)
+                                {
+                                    npc.velocity.Y -= acceleration * 1.1f;
+                                }
+                                if ((double)(Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y)) < (double)speed * 0.5)
+                                {
+                                    if (npc.velocity.X > 0f)
+                                    {
+                                        npc.velocity.X += acceleration;
+                                    }
+                                    else
+                                    {
+                                        npc.velocity.X -= acceleration;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + MathHelper.Pi;
+                    if (!canFlyByDefault)
+                    {
+                        if (canFly)
+                        {
+                            if (npc.localAI[0] != 1f)
+                            {
+                                npc.netUpdate = true;
+                            }
+                            npc.localAI[0] = 1f;
+                        }
+                        else
+                        {
+                            if (npc.localAI[0] != 0f)
+                            {
+                                npc.netUpdate = true;
+                            }
+                            npc.localAI[0] = 0f;
+                        }
+                        if (((npc.velocity.X > 0f && npc.oldVelocity.X < 0f) || (npc.velocity.X < 0f && npc.oldVelocity.X > 0f) || (npc.velocity.Y > 0f && npc.oldVelocity.Y < 0f) || (npc.velocity.Y < 0f && npc.oldVelocity.Y > 0f)) && !npc.justHit)
+                        {
+                            npc.netUpdate = true;
+                        }
+                    }
+                }
+                if (npc.alpha > 0 && npc.life > 0)
+                {
+                    for (int num77 = 0; num77 < 2; num77++)
+                    {
+                        int num78 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 14, 0f, 0f, 100, default(Color), 2f);
+                        Main.dust[num78].noGravity = true;
+                        Main.dust[num78].noLight = true;
+                    }
+                }
+                if ((npc.position - npc.oldPosition).Length() > 2f)
+                {
+                    npc.alpha -= 42;
+                    if (npc.alpha < 0)
+                    {
+                        npc.alpha = 0;
+                    }
+                }
+            }
+        }
+
     }
 }

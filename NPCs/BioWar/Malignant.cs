@@ -128,7 +128,7 @@ namespace CalRemix.NPCs.BioWar
             Vector2 position = NPC.Center - Main.screenPosition;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 8);
             Color color = NPC.GetAlpha(Color.Red * 0.6f);
-            Vector2 scale = Vector2.One;
+            float scale = NPC.scale;
             for (int i = 0; i < 10; i++)
             {
                 Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 6 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));

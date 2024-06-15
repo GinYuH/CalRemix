@@ -40,7 +40,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered invaders
         /// </summary>
-        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>() };
+        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>() };
 
         /// <summary>
         /// Projectiles considered defenders
@@ -99,16 +99,17 @@ namespace CalRemix.NPCs.BioWar
 
         public override void PreUpdateWorld()
         {
-            IsActive = true;
+            BioWar.EndEvent();
+            //IsActive = true;
             if (IsActive)
             {
-                if (TotalKills > 300 && !SummonedPathogen)
+                if (TotalKills >= 300 && !SummonedPathogen)
                 {
                     NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCID.Frankenstein);
                     SummonedPathogen = true;
                 }
             }
-            if (DefendersKilled > MaxRequired)
+            if (DefendersKilled >= MaxRequired)
             {
                 EndEvent();
             }
@@ -276,10 +277,17 @@ namespace CalRemix.NPCs.BioWar
                     int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.33f) : n.damage;
                     npc.SimpleStrikeNPC(dam, n.direction, false);
                     hitCooldown = 20;
-                    if (npc.life <= 0)
+                    if (npc.life <= 0 && n.type == ModContent.NPCType<Malignant>()/* && NPC.CountNPCS(ModContent.NPCType<Malignant>()) < 22*/)
                     {
                         int np = NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Malignant>());
                         Main.npc[np].npcSlots = 0;
+                        Main.npc[np].lifeMax = Main.npc[np].life = (int)MathHelper.Max(1, n.lifeMax / 2);
+                        Main.npc[np].damage = (int)MathHelper.Max(1, n.damage * 0.75f);
+                        Main.npc[np].scale = MathHelper.Max(0.2f, n.scale * 0.8f);
+                    }
+                    if (npc.life <= 0)
+                    {
+                        BioWar.DefendersKilled++;
                     }
                     break;
                 }
@@ -301,6 +309,10 @@ namespace CalRemix.NPCs.BioWar
                     npc.SimpleStrikeNPC(dam * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
+                    if (npc.life <= 0)
+                    {
+                        BioWar.DefendersKilled++;
+                    }
                     break;
                 }
             }
@@ -323,6 +335,10 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     npc.SimpleStrikeNPC(n.damage, n.direction, false);
                     hitCooldown = 20;
+                    if (npc.life <= 0)
+                    {
+                        BioWar.InvadersKilled++;
+                    }
                     break;
                 }
                 if (hitCooldown > 0)
@@ -342,6 +358,10 @@ namespace CalRemix.NPCs.BioWar
                     npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
+                    if (npc.life <= 0)
+                    {
+                        BioWar.InvadersKilled++;
+                    }
                     break;
                 }
             }
@@ -413,7 +433,8 @@ namespace CalRemix.NPCs.BioWar
 
                 pool.Add(ModContent.NPCType<Malignant>(), 0.4f * invMult);
                 pool.Add(ModContent.NPCType<Ecolium>(), 0.33f * invMult);
-
+                if (!NPC.AnyNPCs(ModContent.NPCType<Basilius>()))
+                    pool.Add(ModContent.NPCType<Basilius>(), 0.1f * invMult);
             }
         }
     }
