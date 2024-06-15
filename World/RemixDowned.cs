@@ -27,6 +27,7 @@ namespace CalRemix
         public static bool downedLaRuga = false;
         public static bool downedKingMinnowsPrime = false;
         public static bool downedDend = false;
+        public static bool downedMaser = false;
         public override void OnWorldLoad()
         {
             downedCalamity = false;
@@ -50,6 +51,7 @@ namespace CalRemix
             downedLaRuga = false;
             downedKingMinnowsPrime = false;
             downedDend = false;
+            downedMaser = false;
         }
         public override void OnWorldUnload()
         {
@@ -74,6 +76,7 @@ namespace CalRemix
             downedLaRuga = false;
             downedKingMinnowsPrime = false;
             downedDend = false;
+            downedMaser = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -98,6 +101,7 @@ namespace CalRemix
             tag["downedLaRuga"] = downedLaRuga;
             tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
             tag["downedDend"] = downedDend;
+            tag["downedMaser"] = downedMaser;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -124,6 +128,7 @@ namespace CalRemix
             downedLaRuga = tag.Get<bool>("downedLaRuga");
             downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
             downedDend = tag.Get<bool>("downedDend");
+            downedMaser = tag.Get<bool>("downedMaser");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -149,6 +154,7 @@ namespace CalRemix
             writer.Write(downedLaRuga);
             writer.Write(downedKingMinnowsPrime);
             writer.Write(downedDend);
+            writer.Write(downedMaser);
         }
         public override void NetReceive(BinaryReader reader)
         {
@@ -173,6 +179,7 @@ namespace CalRemix
             downedLaRuga = reader.ReadBoolean();
             downedKingMinnowsPrime = reader.ReadBoolean();
             downedDend = reader.ReadBoolean();
+            downedMaser = reader.ReadBoolean();
         }
     }
 }

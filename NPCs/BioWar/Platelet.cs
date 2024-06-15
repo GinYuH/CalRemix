@@ -43,7 +43,7 @@ namespace CalRemix.NPCs.BioWar
 
         public override void AI()
         {
-            if (target == null || !target.active || NPC.justHit)
+            if (target == null || !target.active)
             {
                 target = BioWar.BioGetTarget(true, NPC);
             }

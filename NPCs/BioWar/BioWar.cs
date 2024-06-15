@@ -42,7 +42,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered invaders
         /// </summary>
-        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>(), ModContent.NPCType<Tobasaia>() };
+        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>(), ModContent.NPCType<Tobasaia>(), ModContent.NPCType<MaserPhage>() };
 
         /// <summary>
         /// Projectiles considered defenders
@@ -52,7 +52,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Projectiles considered invaders
         /// </summary>
-        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot, ModContent.ProjectileType<TobaccoSeed>() };
+        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot, ModContent.ProjectileType<TobaccoSeed>(), ProjectileID.DeathLaser, ModContent.ProjectileType<MaserDeathray>() };
 
         /// <summary>
         /// Defender NPC kill count
@@ -371,10 +371,14 @@ namespace CalRemix.NPCs.BioWar
                     if (n.damage <= 0)
                         continue;
                     npc.SimpleStrikeNPC(n.damage, n.direction, false);
-                    hitCooldown = 20;
+                    hitCooldown = armhit ? 5 : 20;
                     if (npc.life <= 0)
                     {
                         BioWar.InvadersKilled++;
+                        if (npc.type == ModContent.NPCType<MaserPhage>())
+                        {
+                            BioWar.InvadersKilled += 4;
+                        }
                     }
                     break;
                 }
@@ -398,6 +402,10 @@ namespace CalRemix.NPCs.BioWar
                     if (npc.life <= 0)
                     {
                         BioWar.InvadersKilled++;
+                        if (npc.type == ModContent.NPCType<MaserPhage>())
+                        {
+                            BioWar.InvadersKilled += 4;
+                        }
                     }
                     break;
                 }
@@ -417,6 +425,10 @@ namespace CalRemix.NPCs.BioWar
                 {
                     BioWar.DefendersKilled += 4;
                 }
+                if (npc.type == ModContent.NPCType<MaserPhage>())
+                {
+                    BioWar.InvadersKilled += 4;
+                }
             }
         }
 
@@ -433,6 +445,10 @@ namespace CalRemix.NPCs.BioWar
                     if (npc.type == ModContent.NPCType<Dendritiator>())
                     {
                         BioWar.DefendersKilled += 4;
+                    }
+                    if (npc.type == ModContent.NPCType<MaserPhage>())
+                    {
+                        BioWar.InvadersKilled += 4;
                     }
                 }
             }
@@ -476,13 +492,15 @@ namespace CalRemix.NPCs.BioWar
                 pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
                 pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Dendritiator>()))
-                    pool.Add(ModContent.NPCType<Dendritiator>(), 0.025f * invMult);
+                    pool.Add(ModContent.NPCType<Dendritiator>(), 0.025f * defMult);
 
                 pool.Add(ModContent.NPCType<Malignant>(), 0.4f * invMult);
                 pool.Add(ModContent.NPCType<Ecolium>(), 0.33f * invMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Basilius>()))
                     pool.Add(ModContent.NPCType<Basilius>(), 0.1f * invMult);
                 pool.Add(ModContent.NPCType<Tobasaia>(), 0.2f * invMult);
+                if (!NPC.AnyNPCs(ModContent.NPCType<MaserPhage>()))
+                    pool.Add(ModContent.NPCType<MaserPhage>(), 0.025f * invMult);
             }
         }
     }

@@ -157,6 +157,7 @@ namespace CalRemix.CrossCompatibility
             });
             bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 18.1f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "MaserPhage", 18.2f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
         }
         internal void AddCensusEntries()
         {

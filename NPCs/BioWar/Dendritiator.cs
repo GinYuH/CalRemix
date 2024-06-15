@@ -61,7 +61,7 @@ namespace CalRemix.NPCs.BioWar
         public override void AI()
         {
             Main.npcFrameCount[NPC.type] = 1;
-            if (targeto == null || !targeto.active || NPC.justHit)
+            if (targeto == null || !targeto.active)
             {
                 targeto = BioWar.BioGetTarget(true, NPC);
             }

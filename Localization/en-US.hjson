@@ -2318,6 +2318,7 @@ Mods: {
 			Tobasaia.DisplayName: Tobasaia
 			Dendritiator.DisplayName: Denritiator
 			DentritiatorArm.DisplayName: Dendriatior
+			MaserPhage.DisplayName: Maser Phage
 		}
 
 		Projectiles: {
@@ -2510,6 +2511,7 @@ Mods: {
 			Oxshard.DisplayName: Oxygen Shard
 			EosinineProj.DisplayName: Eosinine
 			TobaccoSeed.DisplayName: Seed
+			MaserDeathray.DisplayName: Maser Beam
 		}
 
 		Tiles: {
