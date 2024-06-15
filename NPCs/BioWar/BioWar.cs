@@ -304,6 +304,10 @@ namespace CalRemix.NPCs.BioWar
                     if (npc.life <= 0)
                     {
                         BioWar.DefendersKilled++;
+                        if (npc.type == ModContent.NPCType<Dendritiator>())
+                        {
+                            BioWar.DefendersKilled += 4;
+                        }
                     }
                     break;
                 }
@@ -328,6 +332,10 @@ namespace CalRemix.NPCs.BioWar
                     if (npc.life <= 0)
                     {
                         BioWar.DefendersKilled++;
+                        if (npc.type == ModContent.NPCType<Dendritiator>())
+                        {
+                            BioWar.DefendersKilled += 4;
+                        }
                     }
                     break;
                 }
@@ -405,6 +413,10 @@ namespace CalRemix.NPCs.BioWar
                     BioWar.InvadersKilled++;
                 if (BioWar.DefenderNPCs.Contains(npc.type))
                     BioWar.DefendersKilled++;
+                if (npc.type == ModContent.NPCType<Dendritiator>())
+                {
+                    BioWar.DefendersKilled += 4;
+                }
             }
         }
 
@@ -418,6 +430,10 @@ namespace CalRemix.NPCs.BioWar
                         BioWar.InvadersKilled++;
                     if (BioWar.DefenderNPCs.Contains(npc.type))
                         BioWar.DefendersKilled++;
+                    if (npc.type == ModContent.NPCType<Dendritiator>())
+                    {
+                        BioWar.DefendersKilled += 4;
+                    }
                 }
             }
         }
