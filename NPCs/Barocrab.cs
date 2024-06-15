@@ -46,7 +46,6 @@ namespace CalRemix.NPCs
             NPC.DeathSound = SoundID.Item14;
             NPC.lifeMax = 2000;
             NPC.chaseable = false;
-            Banner = NPC.type;
             NPC.rarity = 1;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;

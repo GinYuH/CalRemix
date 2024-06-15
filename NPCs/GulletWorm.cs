@@ -45,8 +45,8 @@ namespace CalRemix.NPCs
         {
             bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The one who holds the Crab Secret."),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon,
+                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("I am a grub that lives in the soil."),
             });
         }
     }

@@ -26,6 +26,7 @@ namespace CalRemix
         public static bool downedPlagueEmperor = false;
         public static bool downedLaRuga = false;
         public static bool downedKingMinnowsPrime = false;
+        public static bool downedDend = false;
         public override void OnWorldLoad()
         {
             downedCalamity = false;
@@ -48,6 +49,7 @@ namespace CalRemix
             downedPlagueEmperor = false;
             downedLaRuga = false;
             downedKingMinnowsPrime = false;
+            downedDend = false;
         }
         public override void OnWorldUnload()
         {
@@ -71,6 +73,7 @@ namespace CalRemix
             downedPlagueEmperor = false;
             downedLaRuga = false;
             downedKingMinnowsPrime = false;
+            downedDend = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -94,6 +97,7 @@ namespace CalRemix
             tag["downedPlagueEmperor"] = downedPlagueEmperor;
             tag["downedLaRuga"] = downedLaRuga;
             tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
+            tag["downedDend"] = downedDend;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -119,6 +123,7 @@ namespace CalRemix
             downedPlagueEmperor = tag.Get<bool>("downedPlagueEmperor");
             downedLaRuga = tag.Get<bool>("downedLaRuga");
             downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
+            downedDend = tag.Get<bool>("downedDend");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -143,6 +148,7 @@ namespace CalRemix
             writer.Write(downedPlagueEmperor);
             writer.Write(downedLaRuga);
             writer.Write(downedKingMinnowsPrime);
+            writer.Write(downedDend);
         }
         public override void NetReceive(BinaryReader reader)
         {
@@ -166,6 +172,7 @@ namespace CalRemix
             downedPlagueEmperor = reader.ReadBoolean();
             downedLaRuga = reader.ReadBoolean();
             downedKingMinnowsPrime = reader.ReadBoolean();
+            downedDend = reader.ReadBoolean();
         }
     }
 }

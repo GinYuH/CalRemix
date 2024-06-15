@@ -51,6 +51,7 @@ using SubworldLibrary;
 using CalRemix.UI;
 using Terraria.GameContent.Items;
 using CalamityMod.Walls;
+using CalRemix.NPCs.BioWar;
 
 namespace CalRemix
 {
@@ -167,8 +168,6 @@ namespace CalRemix
         {
             // Calamity Calls
             Mod cal = ModLoader.GetMod("CalamityMod");
-            cal.Call("RegisterModPopupGUIs", this);
-            cal.Call("RegisterModCooldowns", this);
             cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<Clamitas>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<OnyxKinsman>());
@@ -176,6 +175,7 @@ namespace CalRemix
             cal.Call("DeclareMiniboss", ModContent.NPCType<PlagueEmperor>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<YggdrasilEnt>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<KingMinnowsPrime>());
+            cal.Call("DeclareMiniboss", ModContent.NPCType<Dendritiator>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
