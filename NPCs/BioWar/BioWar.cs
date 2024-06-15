@@ -22,6 +22,8 @@ using System.IO;
 using CalRemix.Projectiles.Hostile;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Terraria.WorldBuilding;
+using CalRemix.NPCs.Bosses.Carcinogen;
+using Terraria.DataStructures;
 
 namespace CalRemix.NPCs.BioWar
 {
@@ -35,7 +37,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered defenders
         /// </summary>
-        public static List<int> DefenderNPCs = new List<int>() { ModContent.NPCType<Eosinine>(), ModContent.NPCType<Platelet>(), ModContent.NPCType<WhiteBloodCell>(), ModContent.NPCType<RedBloodCell>() };
+        public static List<int> DefenderNPCs = new List<int>() { ModContent.NPCType<Eosinine>(), ModContent.NPCType<Platelet>(), ModContent.NPCType<WhiteBloodCell>(), ModContent.NPCType<RedBloodCell>(), ModContent.NPCType<Dendritiator>(), ModContent.NPCType<DentritiatorArm>() };
 
         /// <summary>
         /// Enemies considered invaders
@@ -97,6 +99,8 @@ namespace CalRemix.NPCs.BioWar
         /// </summary>
         public static bool SummonedPathogen = false;
 
+        public static float coughTimer = 0;
+
         public override void PreUpdateWorld()
         {
             IsActive = true;
@@ -106,6 +110,19 @@ namespace CalRemix.NPCs.BioWar
                 {
                     NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCID.Frankenstein);
                     SummonedPathogen = true;
+                }
+                if (Main.rand.NextBool((int)MathHelper.Lerp(1200, 300, DefendersKilled / MaxRequired)) && coughTimer <= 0)
+                {
+                    coughTimer = Main.rand.Next(60, 120);
+                }
+                if (coughTimer > 0)
+                {
+                    coughTimer--;
+                    if (coughTimer % MathHelper.Lerp(40, 20, DefendersKilled / MaxRequired) == 0)
+                    {
+                        SoundEngine.PlaySound(Carcinogen.DeathSound);
+                        Main.LocalPlayer.Calamity().GeneralScreenShakePower = 100;
+                    }
                 }
             }
             if (DefendersKilled >= MaxRequired)
@@ -328,7 +345,20 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (!BioWar.DefenderNPCs.Contains(n.type))
                         continue;
-                    if (!n.getRect().Intersects(npc.getRect()))
+                    bool armhit = false;
+                    DentritiatorArm arm = n.ModNPC<DentritiatorArm>();
+                    if (arm != null)
+                    {
+                        for (int i = 30 - 1; i > 5; i--)
+                        {
+                            if (npc.getRect().Intersects(new Rectangle((int)arm.Segments[i].position.X, (int)arm.Segments[i].position.Y, 10, 10)))
+                            {
+                                armhit = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!n.getRect().Intersects(npc.getRect()) && !armhit)
                         continue;
                     if (n.damage <= 0)
                         continue;
@@ -429,6 +459,8 @@ namespace CalRemix.NPCs.BioWar
                 pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
                 pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
                 pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
+                if (!NPC.AnyNPCs(ModContent.NPCType<Dendritiator>()))
+                    pool.Add(ModContent.NPCType<Dendritiator>(), 0.025f * invMult);
 
                 pool.Add(ModContent.NPCType<Malignant>(), 0.4f * invMult);
                 pool.Add(ModContent.NPCType<Ecolium>(), 0.33f * invMult);

@@ -61,7 +61,7 @@ namespace CalRemix.NPCs.BioWar
                 float hyposx = target.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                 float hyposy = target.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
-                if (NPC.Distance(target.Center) <= distance * 2)
+                if (NPC.Distance(target.Center) <= distance * 1.25f)
                 {
                     NPC.ai[2]++;
                     if (NPC.ai[2] % 90 == 0)
