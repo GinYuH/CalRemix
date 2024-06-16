@@ -47,7 +47,7 @@ namespace CalRemix.NPCs.PandemicPanic
         /// <summary>
         /// Enemies considered invaders
         /// </summary>
-        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>(), ModContent.NPCType<Tobasaia>(), ModContent.NPCType<MaserPhage>() };
+        public static List<int> InvaderNPCs = new List<int>() { ModContent.NPCType<Malignant>(), ModContent.NPCType<Ecolium>(), ModContent.NPCType<Basilius>(), ModContent.NPCType<BasiliusBody>(), ModContent.NPCType<Tobasaia>(), ModContent.NPCType<MaserPhage>(), ModContent.NPCType<Pathogen>() };
 
         /// <summary>
         /// Projectiles considered defenders
@@ -377,8 +377,9 @@ namespace CalRemix.NPCs.PandemicPanic
                         continue;
                     if (n.damage <= 0)
                         continue;
-                    npc.SimpleStrikeNPC(n.damage, n.direction, false);
-                    hitCooldown = armhit ? 1 : 20;
+                    float damageMult = npc.type == ModContent.NPCType<Pathogen>() ? 0.2f : 1f;
+                    npc.SimpleStrikeNPC((int)(n.damage * damageMult), n.direction, false);
+                    hitCooldown = armhit && npc.type != ModContent.NPCType<Pathogen>() ? 1 : 20;
                     if (npc.life <= 0)
                     {
                         PandemicPanic.InvadersKilled++;
