@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
+using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic
 {
@@ -41,6 +42,7 @@ namespace CalRemix.NPCs.PandemicPanic
             NPC.alpha = 128;
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
             NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 
         public override void FindFrame(int frameHeight)

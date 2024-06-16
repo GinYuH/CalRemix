@@ -107,6 +107,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             {
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AerobicReinforcement");
             }
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<GaleforceDayBiome>().Type };
         }
 
         public override void SendExtraAI(BinaryWriter writer)

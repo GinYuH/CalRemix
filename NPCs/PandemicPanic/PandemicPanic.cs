@@ -24,6 +24,11 @@ using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Terraria.WorldBuilding;
 using CalRemix.NPCs.Bosses.Carcinogen;
 using Terraria.DataStructures;
+using CalRemix.NPCs.Bosses.Ionogen;
+using CalRemix.NPCs.Bosses.Pathogen;
+using SubworldLibrary;
+using CalRemix.Items.Weapons;
+using CalRemix.Subworlds;
 
 namespace CalRemix.NPCs.PandemicPanic
 {
@@ -108,7 +113,7 @@ namespace CalRemix.NPCs.PandemicPanic
             {
                 if (TotalKills >= 300 && !SummonedPathogen)
                 {
-                    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCID.Frankenstein);
+                    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Pathogen>());
                     SummonedPathogen = true;
                 }
                 if (Main.rand.NextBool((int)MathHelper.Lerp(1200, 300, DefendersKilled / MaxRequired)) && coughTimer <= 0)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Capture;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Biomes
@@ -31,5 +32,6 @@ namespace CalRemix.Biomes
 		}
 
 		public override SceneEffectPriority Priority => SceneEffectPriority.None;
+        public override int Music => -1;
     }
 }
