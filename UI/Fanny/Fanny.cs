@@ -455,11 +455,13 @@ namespace CalRemix.UI
             {
                 FannyMessage msg = FannyManager.fannyMessages[i];
 
-                //update readmessages array, so that when the player enters a world without loading data, it is up to date
-                readMessages[i] = msg.alreadySeen;
-
                 if (msg.alreadySeen && msg.PersistsThroughSaves)
                     tag["FannyDialogue" + msg.Identifier] = true;
+
+                //update readmessages array, so that when the player enters a world without loading data, it is up to date
+                //nullcheck cuz savedata happens at the start when presenting players
+                if (readMessages != null && msg.alreadySeen)
+                    readMessages[i] = true;
             }
 
             tag["FannyReadThroughDogDialogue"] = FannyManager.ReadAllDogTips;
