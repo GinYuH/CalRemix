@@ -22,6 +22,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         {
             DisplayName.SetDefault("Frond");
             NPCID.Sets.MustAlwaysDraw[Type] = true;
+            this.HideFromBestiary();
         }
         public override void SetDefaults()
         {

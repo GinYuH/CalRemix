@@ -85,6 +85,16 @@ Mods: {
 				DisplayName: Asbestos Caves
 				TownNPCDialogueName: the Asbestos Biome
 			}
+
+			GaleforceDayBiome: {
+				DisplayName: Galeforce Day
+				TownNPCDialogueName: the Galeforce Day Biome
+			}
+
+			PandemicPanicBiome: {
+				DisplayName: Pandemic Panic
+				TownNPCDialogueName: the Pandemic Panic Biome
+			}
 		}
 
 		Buffs: {
@@ -2320,6 +2330,8 @@ Mods: {
 			DentritiatorArm.DisplayName: Dendriatior
 			MaserPhage.DisplayName: Maser Phage
 			DendtritiatorArm.DisplayName: Dendritiator
+			Pathogen.DisplayName: Pathogen
+			PathogenShield.DisplayName: Pathogen's Shield
 		}
 
 		Projectiles: {

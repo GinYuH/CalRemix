@@ -16,6 +16,7 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.World;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic
 {
@@ -49,6 +50,7 @@ namespace CalRemix.NPCs.PandemicPanic
             NPC.value = Item.buyPrice(0, 0, 0, 0);
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
             NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 
         public override void AI()

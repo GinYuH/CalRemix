@@ -19,6 +19,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Animations;
 using CalamityMod.Particles;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic
 {
@@ -48,6 +49,7 @@ namespace CalRemix.NPCs.PandemicPanic
             NPC.scale = 2f;
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
             NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 
         public override void OnSpawn(IEntitySource source)
