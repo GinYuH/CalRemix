@@ -32,7 +32,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void SetDefaults()
         {
-            NPC.npcSlots = 0.5f;
+            NPC.npcSlots = 1f;
             NPC.aiStyle = -1;
             NPC.damage = 60;
             NPC.width = 34; //324

@@ -6,6 +6,7 @@ using CalamityMod.World;
 using CalRemix.Backgrounds.Plague;
 using CalRemix.Projectiles.TileTypeless;
 using CalamityMod;
+using CalRemix.NPCs.PandemicPanic;
 
 namespace CalRemix
 {

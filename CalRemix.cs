@@ -144,6 +144,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:AcidSight"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("CalRemix/Effects/AcidSight", AssetRequestMode.ImmediateLoad), "AcidPass"), EffectPriority.VeryHigh);
                 Terraria.Graphics.Effects.Filters.Scene["CalRemix:LeanVision"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("CalRemix/Effects/LeanVision", AssetRequestMode.ImmediateLoad), "LeanPass"), EffectPriority.VeryHigh);
+                Terraria.Graphics.Effects.Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
             }
 
             AssetRepository calAss = instance.Assets;
