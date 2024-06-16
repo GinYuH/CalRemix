@@ -69,6 +69,10 @@ namespace CalRemix.NPCs.PandemicPanic
             {
                 NPC.velocity = NPC.DirectionTo(targeto.Center) * 4;
             }
+            else
+            {
+                NPC.velocity *= 0.98f;
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

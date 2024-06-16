@@ -351,6 +351,8 @@ namespace CalRemix.NPCs.PandemicPanic
                         continue;
                     if (n.life <= 0)
                         continue;
+                    if (n.type == ModContent.NPCType<Dendritiator>())
+                        continue;
                     if (!PandemicPanic.DefenderNPCs.Contains(n.type))
                         continue;
                     bool armhit = false;
