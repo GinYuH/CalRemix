@@ -513,6 +513,8 @@ namespace CalRemix.UI
         public static Dictionary<string, FannyPortrait> Portraits = new Dictionary<string, FannyPortrait>();
         public static bool fannyEnabled = true;
         public static int fannyTimesFrozen = 0;
+        public static FannySceneMetrics sceneMetrics;
+        public static Rectangle screenRect;
 
         #region Loading
         public override void Load()
@@ -539,6 +541,7 @@ namespace CalRemix.UI
 
             fannyEnabled = true;
             fannyTimesFrozen = 0;
+            sceneMetrics = new FannySceneMetrics();
         }
 
 
@@ -568,6 +571,13 @@ namespace CalRemix.UI
             return message;
         }
         #endregion
+
+        public override void PreUpdateTime()
+        {
+            //Clears out the scene metrics and set the screen rect
+            sceneMetrics.Clear();
+            Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+        }
 
         public override void PostUpdateEverything()
         {
@@ -617,12 +627,6 @@ namespace CalRemix.UI
             //Don't even try looking for a new message if speaking already / On speak cooldown
             if (FannyUISystem.UIState.AnyAvailableFanny())
             {
-
-                FannySceneMetrics scene = new FannySceneMetrics();
-                //Precalculate screen NPCs to avoid repeated checks over all npcs everytime
-                Rectangle screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
-                scene.onscreenNPCs = Main.npc.Where(n => n.active && n.Hitbox.Intersects(screenRect));
-
                 //Split the messages per fanny speaking
                 var messageGroups = fannyMessages.GroupBy(m => m.DesiredFanny);
                 foreach (var messageGroup in messageGroups)
@@ -635,7 +639,7 @@ namespace CalRemix.UI
 
                     foreach (FannyMessage message in messageGroup)
                     {
-                        if (message.CanPlayMessage() && message.CheckExtraConditions(scene))
+                        if (message.CanPlayMessage() && message.CheckExtraConditions(sceneMetrics))
                         {
                             message.PlayMessage(speakingFanny);
                             break;
@@ -730,7 +734,26 @@ namespace CalRemix.UI
 
     public class FannySceneMetrics
     {
-        public IEnumerable<NPC> onscreenNPCs;
+        public List<NPC> onscreenNPCs;
+        //public List<Projectile> onscreenProjectiles;
+        //public List<Item> onscreenItems;
+
+        public FannySceneMetrics()
+        {
+            onscreenNPCs = new List<NPC>(Main.maxNPCs);
+            //onscreenProjectiles = new List<Projectile>(Main.maxProjectiles);
+            //onscreenItems = new List<Item>(Main.maxItems);
+        }
+
+        public void Clear()
+        {
+            //Clear the NPCs
+            onscreenNPCs.Clear();
+            //Clear the Projectiles
+            //onscreenProjectiles.Clear();
+            //Clear the Items
+            //onscreenItems.Clear();
+        }
     }
 
     public class FannyMessage

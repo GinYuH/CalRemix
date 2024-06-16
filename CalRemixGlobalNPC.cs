@@ -1144,6 +1144,9 @@ namespace CalRemix
         public override void ResetEffects(NPC npc)
         {
             vBurn = false;
+
+            if (npc.Hitbox.Intersects(FannyManager.screenRect))
+                FannyManager.sceneMetrics.onscreenNPCs.Add(npc);
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
