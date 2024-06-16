@@ -106,7 +106,7 @@ namespace CalRemix.UI
                 "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>()));
 
             fannyMessages.Add(new FannyMessage("Exospheree", "THE EXOSPHERE!!!!",
-                "Awooga", FannyMessage.AlwaysShow, dedicatedSubworld: ModContent.GetInstance<ExosphereSubworld>()));
+                "Awooga").OnlyPlayInSubworld(ModContent.GetInstance<ExosphereSubworld>()));
 
             fannyMessages.Add(new FannyMessage("Desert", "Oh, look at you, venturing into the sandy abyss! Remember, in the desert, the sand's as hot as a freshly microwaved burrito! So don't forget your sunscreen... or your water... or your sanity. ",
                "Nuhuh", (FannySceneMetrics scene) => Main.LocalPlayer.ZoneDesert));

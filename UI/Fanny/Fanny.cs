@@ -191,6 +191,7 @@ namespace CalRemix.UI
 
             if (canBounce)
             {
+                //Shake motion when fanny picks a message to play when he was already showing in the inventory
                 if (shakeTime > 0)
                 {
                     position += Main.rand.NextVector2Circular(1f, 1f) * 5f * Utils.GetLerpValue(0.6f, 1f, shakeTime, true);
@@ -199,6 +200,7 @@ namespace CalRemix.UI
                     position.Y -= Math.Abs(MathF.Sin(bounceTime * MathHelper.TwoPi)) * 62f * MathF.Pow(bounceTime, 0.6f);
                 }
 
+                //Bouncing up and down when hovered over
                 else if (ContainsPoint(Main.MouseScreen) || bounce > 0)
                 {
                     if (bounce < 0)
@@ -208,7 +210,8 @@ namespace CalRemix.UI
                 }
             }
 
-            if (tickle >= 1 && canBeTickled)
+            //Stupid fuck
+            if (tickle >= 1)
                 position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
 
 
@@ -632,13 +635,10 @@ namespace CalRemix.UI
 
                     foreach (FannyMessage message in messageGroup)
                     {
-                        if ((message.DedicatedSubworld == null && !SubworldSystem.AnyActive()) || (message.DedicatedSubworld == SubworldSystem.Current))
+                        if (message.CanPlayMessage() && message.CheckExtraConditions(scene))
                         {
-                            if (message.CanPlayMessage() && message.Condition(scene))
-                            {
-                                message.PlayMessage(speakingFanny);
-                                break;
-                            }
+                            message.PlayMessage(speakingFanny);
+                            break;
                         }
                     }
                 }
@@ -723,7 +723,6 @@ namespace CalRemix.UI
                 msg.speakingFanny = null;
                 msg.TimeLeft = 0;
                 msg.CooldownTime = 0;
-                msg.alreadySeen = false;
             }
         }
         #endregion
@@ -752,13 +751,14 @@ namespace CalRemix.UI
             }
         }
 
+        //A unique identifier for the message that is used to save in the player data if the message was read or not
         public string Identifier;
 
-        public int CooldownTime { get; set; }
-        private int cooldownDuration;
+        public int CooldownTime { get; set; } //Current cooldown time for this message
+        private int cooldownDuration; //How long the cooldown for this message lasts
 
-        public int TimeLeft { get; set; }
-        internal int messageDuration;
+        public int TimeLeft { get; set; } //Current timeleft for this message
+        internal int messageDuration; //How long the message stayts on screen
         public int MessageDuration => messageDuration;
 
         //Which fanny the message wants to be spoken by
@@ -767,21 +767,15 @@ namespace CalRemix.UI
         //The fanny actively speaking the message. For cases where we want one fanny to say what the other fanny says
         public Fanny speakingFanny;
 
-
+        //We need to keep track of this to avoid playing the same message twice. This variable is set when the player loads into a world, based on saved player data
         public bool alreadySeen = false;
 
-        public bool DisplayOutsideInventory { get; set; }
-        public bool OnlyPlayOnce { get; set; }
-        public bool NeedsToBeClickedOff { get; set; }
-        public bool PersistsThroughSaves { get; set; }
+        public bool DisplayOutsideInventory { get; set; } //Defaults to true
+        public bool OnlyPlayOnce { get; set; } //Defaults to true
+        public bool NeedsToBeClickedOff { get; set; } //Defaults to true
+        public bool PersistsThroughSaves { get; set; } //Defaults to true
 
-        public Subworld DedicatedSubworld { get; set; }
-
-        public FannyPortrait Portrait { get; set; }
-
-        public FannyTextboxPalette? paletteOverride = null;
-        public string hoverTextOverride = "";
-        public SoundStyle? voiceOverride = null;
+        public FannyPortrait Portrait { get; set; } //The portrait used by the message
 
         public delegate string DynamicFannyTextSegment();
         public static string GetPlayerName() => Main.LocalPlayer.name;
@@ -790,7 +784,7 @@ namespace CalRemix.UI
         public List<DynamicFannyTextSegment> textSegments = new List<DynamicFannyTextSegment>();
 
 
-        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f, Subworld dedicatedSubworld = null)
+        public FannyMessage(string identifier, string message, string portrait = "", FannyMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
             //Unique identifier for saving data
             Identifier = identifier;
@@ -798,7 +792,7 @@ namespace CalRemix.UI
 
             maxTextWidth = maxWidth;
             Text = message;
-            Condition = condition ?? NeverShow;
+            Conditions += condition ?? AlwaysShow;
 
             //Duration and cooldown are inputted in seconds and then converted into frames by the constructor
             cooldownDuration = (int)(cooldown * 60);
@@ -811,8 +805,6 @@ namespace CalRemix.UI
             OnlyPlayOnce = onlyPlayOnce;
             NeedsToBeClickedOff = needsToBeClickedOff;
             PersistsThroughSaves = persistsThroughSaves;
-
-            DedicatedSubworld = dedicatedSubworld;
 
             if (portrait == "")
                 portrait = "Idle";
@@ -840,6 +832,11 @@ namespace CalRemix.UI
             return this;
         }
 
+        #region Stylistic overrides
+        public FannyTextboxPalette? paletteOverride = null;
+        public string hoverTextOverride = "";
+        public SoundStyle? voiceOverride = null;
+
         /// <summary>
         /// Adds a custom textbox palette override for this message
         /// </summary>
@@ -849,25 +846,56 @@ namespace CalRemix.UI
             return this;
         }
 
+        /// <summary>
+        /// Adds a custom hover text for this message
+        /// </summary>
         public FannyMessage SetHoverTextOverride(string hoverTextOverride)
         {
             this.hoverTextOverride = hoverTextOverride;
             return this;
         }
 
+        /// <summary>
+        /// Adds a custom sound for this message
+        /// </summary>
         public FannyMessage SetSoundOverride(SoundStyle soundStyleOverride)
         {
             this.voiceOverride = soundStyleOverride;
             return this;
         }
+        #endregion
+
 
         #region Message Condition stuff
 
         public delegate bool FannyMessageCondition(FannySceneMetrics sceneMetrics);
-        public static bool NeverShow(FannySceneMetrics sceneMetrics) => false;
-        public static bool AlwaysShow(FannySceneMetrics sceneMetrics) => true;
+        public static bool AlwaysShow(FannySceneMetrics sceneMetrics) => true; //Default conditions
 
-        public FannyMessageCondition Condition { get; set; }
+        //The list of conditions used for fanny's message to be played
+        public event FannyMessageCondition Conditions;
+
+
+        public bool CheckExtraConditions(FannySceneMetrics sceneMetrics)
+        {
+            //Check every condition. If a condition isn't met, return false
+            foreach (FannyMessageCondition condition in Conditions.GetInvocationList())
+            {
+                if (!condition(sceneMetrics))
+                    return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Adds the condition that the message needs the player to be in a subworld for it to play
+        /// </summary>
+        /// <param name="subworld">The subworld the message is meant to play in. If null, the message only plays in the main world</param>
+        public FannyMessage OnlyPlayInSubworld(Subworld subworld)
+        {
+            Conditions += (FannySceneMetrics metrics) => subworld == SubworldSystem.Current;
+            return this;
+        }
+
 
         public int timerToPlay = 0;
         public int timeToWaitBeforePlaying = 0;
@@ -945,11 +973,12 @@ namespace CalRemix.UI
         //Technically the TimeLeft is not needed because when its active, no other message will try to play. But just in case
         public bool CanPlayMessage()
         {
-            return CooldownTime <= 0 &&                                     //Can't play messages on cooldown
-                   TimeLeft <= 0 &&                                         //Can't play messages that are already playing
-                   (!OnlyPlayOnce || !alreadySeen) &&                       //Can't play messages that are only played once, more than once
-                   (DisplayOutsideInventory || Main.playerInventory) &&     //Can't play messages that only display in the inventory outside of the inventory
-                   timeToWaitBeforePlaying <= timerToPlay;                  //Can't play messages with a timer before the timer is reached
+            return CooldownTime <= 0 &&                                                        //Can't play messages on cooldown
+                   TimeLeft <= 0 &&                                                            //Can't play messages that are already playing
+                   (!OnlyPlayOnce || !alreadySeen) &&                                          //Can't play messages that are only played once, more than once
+                   (DisplayOutsideInventory || Main.playerInventory) &&                        //Can't play messages that only display in the inventory outside of the inventory
+                   timeToWaitBeforePlaying <= timerToPlay;                                     //Can't play messages with a timer before the timer is reached
+
         }
 
         public void PlayMessage(Fanny fanny)

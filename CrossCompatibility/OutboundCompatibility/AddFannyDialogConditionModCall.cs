@@ -30,7 +30,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         {
             FannyMessage message = (FannyMessage)args[0];
             var appearCondition = (Func<IEnumerable<NPC>, bool>)args[1];
-            message.Condition = metrics => appearCondition(metrics.onscreenNPCs);
+            message.Conditions += metrics => appearCondition(metrics.onscreenNPCs);
 
             return message;
         }
