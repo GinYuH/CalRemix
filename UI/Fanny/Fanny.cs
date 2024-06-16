@@ -454,12 +454,17 @@ namespace CalRemix.UI
             for (int i = 0; i < FannyManager.fannyMessages.Count; i++)
             {
                 FannyMessage msg = FannyManager.fannyMessages[i];
+
+                //update readmessages array, so that when the player enters a world without loading data, it is up to date
+                readMessages[i] = msg.alreadySeen;
+
                 if (msg.alreadySeen && msg.PersistsThroughSaves)
                     tag["FannyDialogue" + msg.Identifier] = true;
             }
 
             tag["FannyReadThroughDogDialogue"] = FannyManager.ReadAllDogTips;
         }
+
 
         public override void LoadData(TagCompound tag)
         {
@@ -726,7 +731,6 @@ namespace CalRemix.UI
                 msg.timerToPlay = 0;
                 msg.speakingFanny = null;
                 msg.TimeLeft = 0;
-                msg.CooldownTime = 0;
             }
         }
         #endregion

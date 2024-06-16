@@ -31,7 +31,7 @@ namespace CalRemix.UI
               "Awooga", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.QueenSlimeBoss && n.life <= n.lifeMax / 2)).SetHoverTextOverride("THEY FLY NOW!!"));
 
             fannyMessages.Add(new FannyMessage("SkelePrime", "Is that THE Skeletron Prime?! Goodness, he sure is a whole lot scarier up close! Fear not my friend, if you wait this night out, he might just run his batteries dry and tip right over like the bucket of bolts he is!",
-              "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.SkeletronPrime) && !Main.masterMode || !CalamityWorld.death));
+              "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.SkeletronPrime) && (!Main.masterMode || !CalamityWorld.death)));
             
             fannyMessages.Add(new FannyMessage("OblivionPrime", "Hey, is it just me, or does this seem obliviously familiar to me? I sense a hint of inspiration here, someone was quite blahsphemous with the design of this bucket of bolts!",
               "Nuhuh", (FannySceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.SkeletronPrime) && Main.masterMode && CalamityWorld.death));
