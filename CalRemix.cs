@@ -51,7 +51,7 @@ using SubworldLibrary;
 using CalRemix.UI;
 using Terraria.GameContent.Items;
 using CalamityMod.Walls;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 
 namespace CalRemix
 {

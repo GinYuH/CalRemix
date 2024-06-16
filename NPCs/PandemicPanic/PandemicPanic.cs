@@ -25,9 +25,9 @@ using Terraria.WorldBuilding;
 using CalRemix.NPCs.Bosses.Carcinogen;
 using Terraria.DataStructures;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
-    public class BioWar : ModSystem
+    public class PandemicPanic : ModSystem
     {
         /// <summary>
         /// Whether or not the event is active
@@ -37,7 +37,7 @@ namespace CalRemix.NPCs.BioWar
         /// <summary>
         /// Enemies considered defenders
         /// </summary>
-        public static List<int> DefenderNPCs = new List<int>() { ModContent.NPCType<Eosinine>(), ModContent.NPCType<Platelet>(), ModContent.NPCType<WhiteBloodCell>(), ModContent.NPCType<RedBloodCell>(), ModContent.NPCType<Dendritiator>(), ModContent.NPCType<DentritiatorArm>() };
+        public static List<int> DefenderNPCs = new List<int>() { ModContent.NPCType<Eosinine>(), ModContent.NPCType<Platelet>(), ModContent.NPCType<WhiteBloodCell>(), ModContent.NPCType<RedBloodCell>(), ModContent.NPCType<Dendritiator>(), ModContent.NPCType<DendtritiatorArm>() };
 
         /// <summary>
         /// Enemies considered invaders
@@ -246,7 +246,7 @@ namespace CalRemix.NPCs.BioWar
         }
     }
 
-    public class BioWarNPC : GlobalNPC
+    public class PandemicPanicNPC : GlobalNPC
     {
         public float hitCooldown = 0;
         public override bool InstancePerEntity => true;
@@ -263,7 +263,7 @@ namespace CalRemix.NPCs.BioWar
 
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
         {
-            return BioWar.DefenderNPCs.Contains(entity.type) || BioWar.InvaderNPCs.Contains(entity.type);
+            return PandemicPanic.DefenderNPCs.Contains(entity.type) || PandemicPanic.InvaderNPCs.Contains(entity.type);
         }
 
         public override bool PreAI(NPC npc)
@@ -275,9 +275,9 @@ namespace CalRemix.NPCs.BioWar
                 hitCooldown--;
                 return true;
             }
-            if (npc.type != ModContent.NPCType<DentritiatorArm>() && BioWar.DefenderNPCs.Contains(npc.type))
+            if (npc.type != ModContent.NPCType<DendtritiatorArm>() && PandemicPanic.DefenderNPCs.Contains(npc.type))
             {
-                npc.chaseable = !BioWar.DefendersWinning;
+                npc.chaseable = !PandemicPanic.DefendersWinning;
                 foreach (NPC n in Main.npc)
                 {
                     if (n == null)
@@ -286,7 +286,7 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (n.life <= 0)
                         continue;
-                    if (!BioWar.InvaderNPCs.Contains(n.type))
+                    if (!PandemicPanic.InvaderNPCs.Contains(n.type))
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
@@ -303,10 +303,10 @@ namespace CalRemix.NPCs.BioWar
                     }
                     if (npc.life <= 0)
                     {
-                        BioWar.DefendersKilled++;
+                        PandemicPanic.DefendersKilled++;
                         if (npc.type == ModContent.NPCType<Dendritiator>())
                         {
-                            BioWar.DefendersKilled += 4;
+                            PandemicPanic.DefendersKilled += 4;
                         }
                     }
                     break;
@@ -321,7 +321,7 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (!n.active)
                         continue;
-                    if (!BioWar.InvaderProjectiles.Contains(n.type))
+                    if (!PandemicPanic.InvaderProjectiles.Contains(n.type))
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
@@ -331,18 +331,18 @@ namespace CalRemix.NPCs.BioWar
                     hitCooldown = 20;
                     if (npc.life <= 0)
                     {
-                        BioWar.DefendersKilled++;
+                        PandemicPanic.DefendersKilled++;
                         if (npc.type == ModContent.NPCType<Dendritiator>())
                         {
-                            BioWar.DefendersKilled += 4;
+                            PandemicPanic.DefendersKilled += 4;
                         }
                     }
                     break;
                 }
             }
-            if (BioWar.InvaderNPCs.Contains(npc.type))
+            if (PandemicPanic.InvaderNPCs.Contains(npc.type))
             {
-                npc.chaseable = !BioWar.InvadersWinning;
+                npc.chaseable = !PandemicPanic.InvadersWinning;
                 foreach (NPC n in Main.npc)
                 {
                     if (n == null)
@@ -351,10 +351,10 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (n.life <= 0)
                         continue;
-                    if (!BioWar.DefenderNPCs.Contains(n.type))
+                    if (!PandemicPanic.DefenderNPCs.Contains(n.type))
                         continue;
                     bool armhit = false;
-                    DentritiatorArm arm = n.ModNPC<DentritiatorArm>();
+                    DendtritiatorArm arm = n.ModNPC<DendtritiatorArm>();
                     if (arm != null)
                     {
                         for (int i = 30 - 1; i > 5; i--)
@@ -374,10 +374,10 @@ namespace CalRemix.NPCs.BioWar
                     hitCooldown = armhit ? 1 : 20;
                     if (npc.life <= 0)
                     {
-                        BioWar.InvadersKilled++;
+                        PandemicPanic.InvadersKilled++;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
                         {
-                            BioWar.InvadersKilled += 4;
+                            PandemicPanic.InvadersKilled += 4;
                         }
                     }
                     break;
@@ -392,7 +392,7 @@ namespace CalRemix.NPCs.BioWar
                         continue;
                     if (!n.active)
                         continue;
-                    if (!BioWar.DefenderProjectiles.Contains(n.type))
+                    if (!PandemicPanic.DefenderProjectiles.Contains(n.type))
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
@@ -401,10 +401,10 @@ namespace CalRemix.NPCs.BioWar
                     hitCooldown = 20;
                     if (npc.life <= 0)
                     {
-                        BioWar.InvadersKilled++;
+                        PandemicPanic.InvadersKilled++;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
                         {
-                            BioWar.InvadersKilled += 4;
+                            PandemicPanic.InvadersKilled += 4;
                         }
                     }
                     break;
@@ -417,17 +417,17 @@ namespace CalRemix.NPCs.BioWar
         {
             if (npc.life <= 0)
             {
-                if (BioWar.InvaderNPCs.Contains(npc.type))
-                    BioWar.InvadersKilled++;
-                if (BioWar.DefenderNPCs.Contains(npc.type))
-                    BioWar.DefendersKilled++;
+                if (PandemicPanic.InvaderNPCs.Contains(npc.type))
+                    PandemicPanic.InvadersKilled++;
+                if (PandemicPanic.DefenderNPCs.Contains(npc.type))
+                    PandemicPanic.DefendersKilled++;
                 if (npc.type == ModContent.NPCType<Dendritiator>())
                 {
-                    BioWar.DefendersKilled += 4;
+                    PandemicPanic.DefendersKilled += 4;
                 }
                 if (npc.type == ModContent.NPCType<MaserPhage>())
                 {
-                    BioWar.InvadersKilled += 4;
+                    PandemicPanic.InvadersKilled += 4;
                 }
             }
         }
@@ -438,17 +438,17 @@ namespace CalRemix.NPCs.BioWar
             {
                 if (npc.life <= 0)
                 {
-                    if (BioWar.InvaderNPCs.Contains(npc.type))
-                        BioWar.InvadersKilled++;
-                    if (BioWar.DefenderNPCs.Contains(npc.type))
-                        BioWar.DefendersKilled++;
+                    if (PandemicPanic.InvaderNPCs.Contains(npc.type))
+                        PandemicPanic.InvadersKilled++;
+                    if (PandemicPanic.DefenderNPCs.Contains(npc.type))
+                        PandemicPanic.DefendersKilled++;
                     if (npc.type == ModContent.NPCType<Dendritiator>())
                     {
-                        BioWar.DefendersKilled += 4;
+                        PandemicPanic.DefendersKilled += 4;
                     }
                     if (npc.type == ModContent.NPCType<MaserPhage>())
                     {
-                        BioWar.InvadersKilled += 4;
+                        PandemicPanic.InvadersKilled += 4;
                     }
                 }
             }
@@ -456,18 +456,18 @@ namespace CalRemix.NPCs.BioWar
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            if (BioWar.InvaderNPCs.Contains(npc.type) && BioWar.InvadersWinning)
+            if (PandemicPanic.InvaderNPCs.Contains(npc.type) && PandemicPanic.InvadersWinning)
                 return false;
-            if (BioWar.DefenderNPCs.Contains(npc.type) && BioWar.DefendersWinning)
+            if (PandemicPanic.DefenderNPCs.Contains(npc.type) && PandemicPanic.DefendersWinning)
                 return false;
             return true;
         }
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            if (BioWar.IsActive)
+            if (PandemicPanic.IsActive)
             {
-                if (BioWar.SummonedPathogen && BioWar.InvadersWinning)
+                if (PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning)
                 {
                     maxSpawns += 16;
                     spawnRate = 8;
@@ -482,11 +482,11 @@ namespace CalRemix.NPCs.BioWar
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (BioWar.IsActive)
+            if (PandemicPanic.IsActive)
             {
                 pool.Clear();
-                float defMult = BioWar.SummonedPathogen && BioWar.InvadersWinning ? 3f : BioWar.DefendersWinning ? 0.8f : 1f;
-                float invMult = BioWar.InvadersWinning ? 0.8f : 1f;
+                float defMult = PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning ? 3f : PandemicPanic.DefendersWinning ? 0.8f : 1f;
+                float invMult = PandemicPanic.InvadersWinning ? 0.8f : 1f;
                 pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.6f * defMult);
                 pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
                 pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
@@ -505,22 +505,22 @@ namespace CalRemix.NPCs.BioWar
         }
     }
 
-    public class BioWarProjectile : GlobalProjectile
+    public class PandemicPanicProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
 
         public override bool AppliesToEntity(Projectile entity, bool lateInstantiation)
         {
-            return BioWar.DefenderProjectiles.Contains(entity.type) || BioWar.InvaderProjectiles.Contains(entity.type);
+            return PandemicPanic.DefenderProjectiles.Contains(entity.type) || PandemicPanic.InvaderProjectiles.Contains(entity.type);
         }
 
         public override bool CanHitPlayer(Projectile projectile, Player target)
         {
-            if (!BioWar.IsActive)
+            if (!PandemicPanic.IsActive)
                 return true;
-            if (BioWar.InvaderProjectiles.Contains(projectile.type) && BioWar.InvadersWinning)
+            if (PandemicPanic.InvaderProjectiles.Contains(projectile.type) && PandemicPanic.InvadersWinning)
                 return false;
-            if (BioWar.DefenderProjectiles.Contains(projectile.type) && BioWar.DefendersWinning)
+            if (PandemicPanic.DefenderProjectiles.Contains(projectile.type) && PandemicPanic.DefendersWinning)
                 return false;
             return true;
         }

@@ -2,7 +2,7 @@
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Primitives;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,16 +15,16 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
-    public class DentritiatorArm : ModNPC
+    public class DendtritiatorArm : ModNPC
     {
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public List<VerletSimulatedSegment> Segments;
         int segmentCount = 30;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dendriatior");
+            DisplayName.SetDefault("Dendritiator");
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
         public override void SetDefaults()

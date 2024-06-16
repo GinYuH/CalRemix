@@ -18,7 +18,7 @@ using Terraria.Graphics.Shaders;
 using CalamityMod.Graphics.Primitives;
 using CalRemix.NPCs.Bosses.Phytogen;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
     public class Dendritiator : ModNPC
     {
@@ -54,7 +54,7 @@ namespace CalRemix.NPCs.BioWar
             {
                 int x = (int)Main.rand.NextVector2CircularEdge(300, 300).X;
                 int y = (int)Main.rand.NextVector2CircularEdge(300, 300).Y;
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + x, (int)NPC.position.Y + y, ModContent.NPCType<DentritiatorArm>(), ai0: NPC.whoAmI, ai3: Main.rand.Next(120, 240));
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + x, (int)NPC.position.Y + y, ModContent.NPCType<DendtritiatorArm>(), ai0: NPC.whoAmI, ai3: Main.rand.Next(120, 240));
             }
         }
 
@@ -63,7 +63,7 @@ namespace CalRemix.NPCs.BioWar
             Main.npcFrameCount[NPC.type] = 1;
             if (targeto == null || !targeto.active)
             {
-                targeto = BioWar.BioGetTarget(true, NPC);
+                targeto = PandemicPanic.BioGetTarget(true, NPC);
             }
             if (targeto != null && targeto.active && !(targeto is NPC n && n.life <= 0))
             {

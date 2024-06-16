@@ -75,7 +75,7 @@ using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Terraria.Audio;
 using System.Runtime.CompilerServices;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 using Microsoft.Build.ObjectModelRemoting;
 
 namespace CalRemix

@@ -1,7 +1,7 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Projectiles.BaseProjectiles;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -87,22 +87,22 @@ public class MaserDeathray : BaseLaserbeamProjectile
                 continue;
             if (n.life <= 0)
                 continue;
-            if (n.type == ModContent.NPCType<DentritiatorArm>())
+            if (n.type == ModContent.NPCType<DendtritiatorArm>())
                 continue;
-            if (BioWar.DefenderNPCs.Contains(n.type))
+            if (PandemicPanic.DefenderNPCs.Contains(n.type))
             {
                 float collisionPoint = 0f;
                 Rectangle targetHitbox = n.getRect();
                 if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), base.Projectile.Center, base.Projectile.Center + base.Projectile.velocity * LaserLength, base.Projectile.Size.Length() * base.Projectile.scale, ref collisionPoint))
                 {
                     n.SimpleStrikeNPC(Projectile.damage * (Main.expertMode ? 2 : 4), n.direction, false);
-                    n.GetGlobalNPC<BioWarNPC>().hitCooldown = 20;
+                    n.GetGlobalNPC<PandemicPanicNPC>().hitCooldown = 20;
                     if (n.life <= 0)
                     {
-                        BioWar.DefendersKilled++;
+                        PandemicPanic.DefendersKilled++;
                         if (n.type == ModContent.NPCType<Dendritiator>())
                         {
-                            BioWar.DefendersKilled += 4;
+                            PandemicPanic.DefendersKilled += 4;
                         }
                     }
                 }

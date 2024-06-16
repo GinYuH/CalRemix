@@ -22,7 +22,7 @@ using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.Items.Placeables;
 using CalRemix.NPCs.Bosses.Ionogen;
 using CalRemix.NPCs.Bosses.Oxygen;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 
 namespace CalRemix.CrossCompatibility
 {

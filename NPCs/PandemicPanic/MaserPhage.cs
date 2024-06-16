@@ -17,7 +17,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.World;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
     public class MaserPhage : ModNPC
     {
@@ -55,7 +55,7 @@ namespace CalRemix.NPCs.BioWar
         {
             if (target == null || !target.active)
             {
-                target = BioWar.BioGetTarget(false, NPC);
+                target = PandemicPanic.BioGetTarget(false, NPC);
             }
             float speed = 5f;
             NPC.noGravity = true;

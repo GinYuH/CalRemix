@@ -2319,6 +2319,7 @@ Mods: {
 			Dendritiator.DisplayName: Denritiator
 			DentritiatorArm.DisplayName: Dendriatior
 			MaserPhage.DisplayName: Maser Phage
+			DendtritiatorArm.DisplayName: Dendritiator
 		}
 
 		Projectiles: {

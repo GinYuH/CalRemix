@@ -12,33 +12,31 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
-    public class BasiliusBody : ModNPC
+    public class Basilius : ModNPC
     {
         Entity target = null;
+        Vector2 prowlPoint = Vector2.Zero;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Basilius");
+            Main.npcFrameCount[NPC.type] = 5;
         }
 
         public override void SetDefaults()
         {
-            NPC.npcSlots = 0f;
+            NPC.npcSlots = 0.5f;
             NPC.aiStyle = -1;
             NPC.damage = 60;
-            NPC.width = 40; //324
-            NPC.height = 40; //216
+            NPC.width = 160; //324
+            NPC.height = 160; //216
             NPC.defense = 68;
             NPC.lifeMax = 10000;
-            NPC.knockBackResist = 0.75f;
-            NPC.DR_NERD(0.5f);
+            NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.canGhostHeal = false;
-            NPC.dontCountMe = true;
-            NPC.netAlways = true;
             AIType = -1;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
@@ -47,7 +45,29 @@ namespace CalRemix.NPCs.BioWar
 
         public override void AI()
         {
-            CalRemixGlobalNPC.WormAI(NPC, 32, 0.7f, target, Vector2.Zero, segmentType: 1, canFlyByDefault: true);
+            if (target == null || !target.active)
+            {
+                target = PandemicPanic.BioGetTarget(false, NPC);
+            }
+            if (NPC.ai[0] == 0)
+            {
+                prowlPoint = NPC.position;
+                NPC.ai[3] = NPC.whoAmI;
+                NPC.realLife = NPC.whoAmI;
+                int num4 = 0;
+                int num5 = NPC.whoAmI;
+                for (int m = 0; m < 22; m++)
+                {
+                    num4 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)(NPC.position.X + (float)(NPC.width / 2)), (int)(NPC.position.Y + (float)NPC.height), ModContent.NPCType<BasiliusBody>(), NPC.whoAmI);
+                    Main.npc[num4].ai[3] = NPC.whoAmI;
+                    Main.npc[num4].realLife = NPC.whoAmI;
+                    Main.npc[num4].ai[1] = num5;
+                    Main.npc[num5].ai[0] = num4;
+                    NetMessage.SendData(23, -1, -1, null, num4);
+                    num5 = num4;
+                }
+            }
+            CalRemixGlobalNPC.WormAI(NPC, 12, 0.25f, target, canFlyByDefault: true, prowlPoint: prowlPoint);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -66,13 +86,13 @@ namespace CalRemix.NPCs.BioWar
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 8);
             Color color = NPC.GetAlpha(Color.Red * 0.6f);
             Vector2 scale = Vector2.One;
-            SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
             for (int i = 0; i < 10; i++)
             {
                 Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 2 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));
-                Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation - MathHelper.PiOver2, origin, scale, fx, 0f);
+                Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation, origin, scale, fx, 0f);
             }
-            Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation - MathHelper.PiOver2, origin, scale, fx, 0f);
+            Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, fx, 0f);
             return false;
         }
 
@@ -90,8 +110,13 @@ namespace CalRemix.NPCs.BioWar
                 }
             }
         }
-        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;
-
-        public override bool CheckActive() => false;
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.frameCounter += 0.075f;
+            NPC.frameCounter %= Main.npcFrameCount[NPC.type];
+            int frame = (int)NPC.frameCounter;
+            NPC.frame.Y = frame * frameHeight;
+        }
+        public override bool CheckActive() => !PandemicPanic.IsActive;
     }
 }

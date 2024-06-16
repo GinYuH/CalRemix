@@ -12,30 +12,31 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
-    public class RedBloodCell : ModNPC
+    public class Platelet : ModNPC
     {
         Entity target = null;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Red Blood Cell");
+            DisplayName.SetDefault("Platlet");
         }
 
         public override void SetDefaults()
         {
-            NPC.npcSlots = 0.5f;
+            NPC.npcSlots = 0.05f;
             NPC.aiStyle = -1;
-            NPC.damage = 60;
-            NPC.width = 24; //324
-            NPC.height = 24; //216
-            NPC.defense = 68;
+            NPC.damage = 0;
+            NPC.width = 26;
+            NPC.height = 26;
+            NPC.defense = 10;
             NPC.lifeMax = 600;
             NPC.knockBackResist = 0.75f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             AIType = -1;
+            NPC.value = Item.buyPrice(0, 0, 0, 0);
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
             NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
         }
@@ -44,42 +45,27 @@ namespace CalRemix.NPCs.BioWar
         {
             if (target == null || !target.active)
             {
-                target = BioWar.BioGetTarget(true, NPC);
+                target = PandemicPanic.BioGetTarget(true, NPC);
             }
             if (NPC.ai[0] == 0)
             {
-                NPC.ai[1] = Main.rand.Next(0, 2);
+                NPC.ai[1] = Main.rand.Next(0, 3);
+                NPC.velocity = Main.rand.NextVector2Circular(22, 22).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(-8, 8);
                 NPC.ai[0] = 1;
-                NPC.localAI[1] = Main.rand.NextBool().ToInt();
             }
-            if (target != null && target.active && !(target is NPC ne && ne.life <= 0))
+            else if (NPC.ai[0] == 2)
             {
-                NPC.localAI[2] += NPC.localAI[1] == 1 ? -1f : 1f;
-                float distance = 400;
-                double deg = NPC.localAI[2] * 1.5f;
-                double rad = deg * (Math.PI / 180);
-                float hyposx = target.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
-                float hyposy = target.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
-
-                if (NPC.Distance(target.Center) <= distance * 1.25f)
-                {
-                    NPC.ai[2]++;
-                    if (NPC.ai[2] % 90 == 0)
-                    {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 12, ProjectileID.BloodNautilusShot, (int)(NPC.damage * 0.5f), 0f);
-                    }
-                    NPC.velocity *= 0;
-                    NPC.position = Vector2.Lerp(NPC.position, new Microsoft.Xna.Framework.Vector2(hyposx, hyposy), 0.1f);
-                }
-                else
-                {
-
-                    NPC.velocity = NPC.DirectionTo(new Microsoft.Xna.Framework.Vector2(hyposx, hyposy)) * 8;
-                }
+                NPC.velocity *= 0.97f;
             }
-            else
+            for (int i = 0; i < 2; i++)
             {
-                NPC.velocity *= 0.98f;
+                if (Main.rand.NextBool(3))
+                {
+                    int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Corruption, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 90, default(Color), 1.5f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity *= 0.2f;
+                    Main.dust[d].fadeIn = 1f;
+                }
             }
             foreach (NPC n in Main.npc)
             {
@@ -117,7 +103,7 @@ namespace CalRemix.NPCs.BioWar
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Life as we know it would be greatly different without a blood-based foundation.")
+                new FlavorTextBestiaryInfoElement("When things start tearing apart, you can count on these good ol' globs to glue stuff together.")
             });
         }
 
@@ -125,7 +111,7 @@ namespace CalRemix.NPCs.BioWar
         {
             if (NPC.IsABestiaryIconDummy)
                 return true;
-            Texture2D texture = NPC.ai[2] == 1 ? ModContent.Request<Texture2D>(Texture + 2).Value : TextureAssets.Npc[NPC.type].Value;
+            Texture2D texture = NPC.ai[1] == 2 ? ModContent.Request<Texture2D>(Texture+2).Value : NPC.ai[2] == 1 ? ModContent.Request<Texture2D>(Texture+3).Value : TextureAssets.Npc[NPC.type].Value;
             Vector2 position = NPC.Center - Main.screenPosition;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 8);
             Color color = NPC.GetAlpha(Color.Lime * 0.6f);
@@ -139,17 +125,22 @@ namespace CalRemix.NPCs.BioWar
             return false;
         }
 
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            NPC.ai[0] = 2;
+        }
+
         public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Corruption, hit.HitDirection, -1f, 0, default, 1f);
             }
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 20; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Corruption, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
         }

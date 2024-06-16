@@ -1,5 +1,5 @@
 ﻿using CalRemix.Items;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 using CalRemix.UI.TheInsacredTexts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,14 +18,14 @@ using CalamityMod.UI;
 
 namespace CalRemix.UI
 {
-    public static class BioWarUIState
+    public static class PandemicPanicUIState
     {
-        public static bool IsActive => BioWar.IsActive;
-        public static float CompletionRatio => BioWar.InvadersWinning ? (BioWar.DefendersKilled / BioWar.MaxRequired) : BioWar.DefendersWinning ? (BioWar.InvadersKilled / BioWar.MinToSummonPathogen) : 0;
+        public static bool IsActive => PandemicPanic.IsActive;
+        public static float CompletionRatio => PandemicPanic.InvadersWinning ? (PandemicPanic.DefendersKilled / PandemicPanic.MaxRequired) : PandemicPanic.DefendersWinning ? (PandemicPanic.InvadersKilled / PandemicPanic.MinToSummonPathogen) : 0;
 
-        public static string InvasionName => BioWar.InvadersWinning ? "Bio War - Side: Invader" : BioWar.DefendersWinning ? "Bio War - Side: Defender" : "Bio War - Side: None";
-        public static Color InvasionBarColor => BioWar.InvadersWinning ? Color.Red : BioWar.DefendersWinning ? Color.Lime : Color.White;
-        public static Texture2D IconTexture => BioWar.InvadersWinning ? ModContent.Request<Texture2D>("CalRemix/NPCs/BioWar/RedBloodCell").Value : BioWar.DefendersWinning ? ModContent.Request<Texture2D>("CalRemix/NPCs/BioWar/Ecolium").Value : ModContent.Request<Texture2D>("CalRemix/NPCs/BioWar/RedBloodCell").Value;
+        public static string InvasionName => PandemicPanic.InvadersWinning ? "Pandemic Panic - Side: Invader" : PandemicPanic.DefendersWinning ? "Pandemic Panic - Side: Defender" : "Pandemic Panic - Side: None";
+        public static Color InvasionBarColor => PandemicPanic.InvadersWinning ? Color.Red : PandemicPanic.DefendersWinning ? Color.Lime : Color.White;
+        public static Texture2D IconTexture => PandemicPanic.InvadersWinning ? ModContent.Request<Texture2D>("CalRemix/NPCs/PandemicPanic/RedBloodCell").Value : PandemicPanic.DefendersWinning ? ModContent.Request<Texture2D>("CalRemix/NPCs/PandemicPanic/Ecolium").Value : ModContent.Request<Texture2D>("CalRemix/NPCs/PandemicPanic/RedBloodCell").Value;
 
         public static void DrawBlueBar(SpriteBatch spriteBatch, Vector2 barDrawPosition, int barOffsetY)
         {
@@ -42,7 +42,7 @@ namespace CalRemix.UI
         }
         public static void DrawProgressText(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY, out Vector2 newBarPosition)
         {
-            string progressText = !BioWar.DefendersWinning && !BioWar.InvadersWinning ? "???" : (100 * CompletionRatio).ToString($"N{0}") + "%";
+            string progressText = !PandemicPanic.DefendersWinning && !PandemicPanic.InvadersWinning ? "???" : (100 * CompletionRatio).ToString($"N{0}") + "%";
             progressText = Language.GetTextValue("Game.WaveCleared", progressText);
 
             Vector2 textSize = FontAssets.MouseText.Value.MeasureString(progressText);
@@ -52,15 +52,15 @@ namespace CalRemix.UI
 
             newBarPosition = baseBarDrawPosition + Vector2.UnitY * (yScale + barOffsetY);
             Utils.DrawBorderString(spriteBatch, progressText, newBarPosition - Vector2.UnitY * 4f, Color.White, progressTextScale, 0.5f, 1f, -1);
-            string defKills = BioWar.DefendersKilled.ToString();
-            string invKills = BioWar.InvadersKilled.ToString();
+            string defKills = PandemicPanic.DefendersKilled.ToString();
+            string invKills = PandemicPanic.InvadersKilled.ToString();
             Utils.DrawBorderString(spriteBatch, defKills, newBarPosition - 80 * Vector2.UnitX, Color.Lime, progressTextScale, 0.5f, 1f, -1);
             Utils.DrawBorderString(spriteBatch, invKills, newBarPosition + 80 * Vector2.UnitX, Color.Red, progressTextScale, 0.5f, 1f, -1);
         }
         public static void DrawBackground(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY)
         {
             float barDrawOffsetX = 169f;
-            bool neutral = !BioWar.DefendersWinning && !BioWar.InvadersWinning;
+            bool neutral = !PandemicPanic.DefendersWinning && !PandemicPanic.InvadersWinning;
             float completerRatio = neutral ? 0.5f : CompletionRatio;
             Vector2 barDrawPosition = baseBarDrawPosition + Vector2.UnitX * (completerRatio - 0.5f) * barDrawOffsetX;
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, barDrawPosition, new Rectangle(0, 0, 1, 1), new Color(255, 241, 51), 0f, new Vector2(1f, 0.5f), new Vector2(barDrawOffsetX * completerRatio, yScale), SpriteEffects.None, 0f);
@@ -113,15 +113,15 @@ namespace CalRemix.UI
     {
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            if (BioWar.IsActive)
+            if (PandemicPanic.IsActive)
             {
                 int layerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Diagnose Net"));
                 if (layerIndex != -1)
                 {
-                    layers.Insert(layerIndex, new LegacyGameInterfaceLayer("CalRemix: Bio War Invasion",
+                    layers.Insert(layerIndex, new LegacyGameInterfaceLayer("CalRemix: Pandemic Panic Invasion",
                         delegate
                         {
-                            BioWarUIState.Drawe(Main.spriteBatch);
+                            PandemicPanicUIState.Drawe(Main.spriteBatch);
                             return true;
                         },
                         InterfaceScaleType.UI));

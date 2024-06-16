@@ -11,18 +11,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
+using CalRemix.Projectiles.Hostile;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
-    public class Basilius : ModNPC
+    public class Tobasaia : ModNPC
     {
         Entity target = null;
-        Vector2 prowlPoint = Vector2.Zero;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Basilius");
-            Main.npcFrameCount[NPC.type] = 5;
+            DisplayName.SetDefault("Tobasaia");
+            Main.npcFrameCount[NPC.type] = 6;
         }
 
         public override void SetDefaults()
@@ -30,13 +30,13 @@ namespace CalRemix.NPCs.BioWar
             NPC.npcSlots = 0.5f;
             NPC.aiStyle = -1;
             NPC.damage = 60;
-            NPC.width = 160; //324
-            NPC.height = 160; //216
-            NPC.defense = 68;
-            NPC.lifeMax = 10000;
+            NPC.width = 26; //324
+            NPC.height = 60; //216
+            NPC.defense = 5;
+            NPC.lifeMax = 1500;
             NPC.knockBackResist = 0f;
-            NPC.noGravity = true;
-            NPC.noTileCollide = true;
+            NPC.noGravity = false;
+            NPC.noTileCollide = false;
             AIType = -1;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
@@ -47,33 +47,29 @@ namespace CalRemix.NPCs.BioWar
         {
             if (target == null || !target.active)
             {
-                target = BioWar.BioGetTarget(false, NPC);
+                target = PandemicPanic.BioGetTarget(false, NPC);
             }
-            if (NPC.ai[0] == 0)
+            if (target != null && target.active && !(target is NPC n && n.life <= 0))
             {
-                prowlPoint = NPC.position;
-                NPC.ai[3] = NPC.whoAmI;
-                NPC.realLife = NPC.whoAmI;
-                int num4 = 0;
-                int num5 = NPC.whoAmI;
-                for (int m = 0; m < 22; m++)
+                NPC.ai[1]++;
+                if (NPC.ai[1] >=0 && NPC.ai[1] % 5 == 0)
                 {
-                    num4 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)(NPC.position.X + (float)(NPC.width / 2)), (int)(NPC.position.Y + (float)NPC.height), ModContent.NPCType<BasiliusBody>(), NPC.whoAmI);
-                    Main.npc[num4].ai[3] = NPC.whoAmI;
-                    Main.npc[num4].realLife = NPC.whoAmI;
-                    Main.npc[num4].ai[1] = num5;
-                    Main.npc[num5].ai[0] = num4;
-                    NetMessage.SendData(23, -1, -1, null, num4);
-                    num5 = num4;
+                    if (NPC.ai[1] % 15 == 0)
+                    SoundEngine.PlaySound(SoundID.DD2_BallistaTowerShot, NPC.Center);
+                    Vector2 acidSpeed = (Vector2.UnitY *-16).RotatedBy(MathHelper.ToRadians((float)Math.Sin(NPC.ai[1] / 10) * 45));
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<TobaccoSeed>(), NPC.damage, 0);
+                    if (NPC.ai[1] > 120)
+                    {
+                        NPC.ai[1] = -180;
+                    }
                 }
             }
-            CalRemixGlobalNPC.WormAI(NPC, 12, 0.25f, target, canFlyByDefault: true, prowlPoint: prowlPoint);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Vicious strains of bacteria, these chains are known for their ability to heat up bodies to critical degrees.")
+                new FlavorTextBestiaryInfoElement("Among all of the viscous invading microbes, this one is unique in that it seems to go after plant-life instead of animal-life. How lost it is.")
             });
         }
 
@@ -90,9 +86,9 @@ namespace CalRemix.NPCs.BioWar
             for (int i = 0; i < 10; i++)
             {
                 Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 2 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));
-                Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation, origin, scale, fx, 0f);
+                Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             }
-            Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, fx, 0f);
+            Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             return false;
         }
 
@@ -100,13 +96,13 @@ namespace CalRemix.NPCs.BioWar
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GemSapphire, hit.HitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Plantera_Green, hit.HitDirection, -1f, 0, default, 1f);
             }
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 20; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GemSapphire, hit.HitDirection, -1f, 0, default, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Plantera_Green, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
         }
@@ -117,6 +113,5 @@ namespace CalRemix.NPCs.BioWar
             int frame = (int)NPC.frameCounter;
             NPC.frame.Y = frame * frameHeight;
         }
-        public override bool CheckActive() => !BioWar.IsActive;
     }
 }

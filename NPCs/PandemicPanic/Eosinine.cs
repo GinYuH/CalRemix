@@ -13,7 +13,7 @@ using Terraria.GameContent;
 using System;
 using CalRemix.Projectiles.Hostile;
 
-namespace CalRemix.NPCs.BioWar
+namespace CalRemix.NPCs.PandemicPanic
 {
     public class Eosinine : ModNPC
     {

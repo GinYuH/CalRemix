@@ -11,13 +11,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
-using CalRemix.NPCs.BioWar;
+using CalRemix.NPCs.PandemicPanic;
 
 namespace CalRemix.Projectiles.Hostile
 {
     public class EosinineProj : ModProjectile
     {
-        public override string Texture => "CalRemix/NPCs/BioWar/Eosinine";
+        public override string Texture => "CalRemix/NPCs/PandemicPanic/Eosinine";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eosinine");
