@@ -275,7 +275,7 @@ namespace CalRemix.NPCs.BioWar
                 hitCooldown--;
                 return true;
             }
-            if (BioWar.DefenderNPCs.Contains(npc.type))
+            if (npc.type != ModContent.NPCType<DentritiatorArm>() && BioWar.DefenderNPCs.Contains(npc.type))
             {
                 npc.chaseable = !BioWar.DefendersWinning;
                 foreach (NPC n in Main.npc)
@@ -371,7 +371,7 @@ namespace CalRemix.NPCs.BioWar
                     if (n.damage <= 0)
                         continue;
                     npc.SimpleStrikeNPC(n.damage, n.direction, false);
-                    hitCooldown = armhit ? 5 : 20;
+                    hitCooldown = armhit ? 1 : 20;
                     if (npc.life <= 0)
                     {
                         BioWar.InvadersKilled++;
@@ -487,18 +487,18 @@ namespace CalRemix.NPCs.BioWar
                 pool.Clear();
                 float defMult = BioWar.SummonedPathogen && BioWar.InvadersWinning ? 3f : BioWar.DefendersWinning ? 0.8f : 1f;
                 float invMult = BioWar.InvadersWinning ? 0.8f : 1f;
-                pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.4f * defMult);
+                pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.6f * defMult);
                 pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
                 pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
                 pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Dendritiator>()))
                     pool.Add(ModContent.NPCType<Dendritiator>(), 0.025f * defMult);
 
-                pool.Add(ModContent.NPCType<Malignant>(), 0.4f * invMult);
-                pool.Add(ModContent.NPCType<Ecolium>(), 0.33f * invMult);
+                pool.Add(ModContent.NPCType<Malignant>(), 0.7f * invMult);
+                pool.Add(ModContent.NPCType<Ecolium>(), 0.5f * invMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Basilius>()))
                     pool.Add(ModContent.NPCType<Basilius>(), 0.1f * invMult);
-                pool.Add(ModContent.NPCType<Tobasaia>(), 0.2f * invMult);
+                pool.Add(ModContent.NPCType<Tobasaia>(), 0.1f * invMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<MaserPhage>()))
                     pool.Add(ModContent.NPCType<MaserPhage>(), 0.025f * invMult);
             }

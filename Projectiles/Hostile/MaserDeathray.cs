@@ -87,6 +87,8 @@ public class MaserDeathray : BaseLaserbeamProjectile
                 continue;
             if (n.life <= 0)
                 continue;
+            if (n.type == ModContent.NPCType<DentritiatorArm>())
+                continue;
             if (BioWar.DefenderNPCs.Contains(n.type))
             {
                 float collisionPoint = 0f;

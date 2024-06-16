@@ -15,6 +15,7 @@ using CalRemix.Projectiles.Hostile;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.World;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.NPCs.BioWar
 {
@@ -69,7 +70,7 @@ namespace CalRemix.NPCs.BioWar
                     if (FireRate >= 300f && Main.netMode != 1)
                     {
                         FireRate = 0f;
-                        Phase = Main.rand.Next(1, 3);
+                        Phase = Main.rand.NextBool(3) ? 2 : 1;
                         NPC.netUpdate = true;
                     }
                 }
@@ -108,7 +109,7 @@ namespace CalRemix.NPCs.BioWar
                             FireRate = 0f;
                             Phase = 0f;
                         }
-                        NPC.velocity = Vector2.Zero;
+                        NPC.velocity.X = 0;
                     }
                 }
             }
