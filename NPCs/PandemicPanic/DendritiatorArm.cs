@@ -163,7 +163,7 @@ namespace CalRemix.NPCs.PandemicPanic
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
             Vector2 trailOffset = NPC.Size * 0.5f;
             trailOffset += (NPC.rotation + MathHelper.PiOver2).ToRotationVector2();
-            PrimitiveRenderer.RenderTrail(vecList, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => Vector2.Zero, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
+            PrimitiveRenderer.RenderTrail(vecList, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => Vector2.Zero, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 17);
 
             Main.spriteBatch.ExitShaderRegion();
             
