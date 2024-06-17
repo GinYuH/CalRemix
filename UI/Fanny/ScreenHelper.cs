@@ -452,7 +452,8 @@ namespace CalRemix.UI
             
             LoadScreenHelper(EvilFanny, true, false, "EvilFannyIdle", distanceFromEdge: 120)
                 .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato));
+                .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
+                .SetAvailabilityCondition(() => Main.hardMode);
 
             LoadScreenHelper(WonderFlower,  false, false, "TalkingFlower", verticalOffset: 0.3f, distanceFromEdge: 240)
                 .SetVoiceStyle(ScreenHelperMessageManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
