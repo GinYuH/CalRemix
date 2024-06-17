@@ -17,7 +17,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.UI
 {
-    public partial class ScreenHelperMessageManager : ModSystem
+    public partial class ScreenHelperManager : ModSystem
     {
         public static void LoadBossMessages()
         {
@@ -39,51 +39,28 @@ namespace CalRemix.UI
             screenHelperMessages.Add(new HelperMessage("Calclone", "It is time. The Brimstone Witch, the one behind the Calamity in this world. You will now face Supreme Witch, Calamitas and end everything once and for all!",
                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>())));
 
-            HelperMessage pumpking1 = new HelperMessage("Pumpking1", "Wh- Ahh! AAAAAAAAAAAAH!!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.Pumpking), 3, needsToBeClickedOff: false).SetHoverTextOverride("What?");
+            screenHelperMessages.Add(new HelperMessage("Pumpking1", "Wh- Ahh! AAAAAAAAAAAAH!!",
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.Pumpking), 3, needsToBeClickedOff: false).SetHoverTextOverride("What?"));
 
-            screenHelperMessages.Add(pumpking1);
-
-            HelperMessage pumpking2 = new HelperMessage("Pumpking2", "I told Fanny as a joke that jack-o-lanterns get their lights by eating flames. Don't tell him, though. It's funnier this way.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow).AddDelay(2).NeedsActivation().SetHoverTextOverride("Sure? I might tell Fanny later...").SpokenByEvilFanny();
-
-            pumpking1.AddEndEvent(() => pumpking2.ActivateMessage());
-
-            screenHelperMessages.Add(pumpking2);
+            screenHelperMessages.Add(new HelperMessage("Pumpking2", "I told Fanny as a joke that jack-o-lanterns get their lights by eating flames. Don't tell him, though. It's funnier this way.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow).ChainAfter(delay: 2).SetHoverTextOverride("Sure? I might tell Fanny later...").SpokenByEvilFanny());
 
             // Empress
-            HelperMessage eol1 = new HelperMessage("EoL1", "So, there's a second boss for the Hallow... Then where's the second boss for the other biomes? Did they just like this one more than the others?",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss), 8, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny();
+            screenHelperMessages.Add(new HelperMessage("EoL1", "So, there's a second boss for the Hallow... Then where's the second boss for the other biomes? Did they just like this one more than the others?",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss), 8, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny());
 
-            screenHelperMessages.Add(eol1);
+            screenHelperMessages.Add(new HelperMessage("EoL2", "... then again, the other boss is a recolor. Maybe for the best.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny().ChainAfter());
 
-            HelperMessage eol2 = new HelperMessage("EoL2", "... then again, the other boss is a recolor. Maybe for the best.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
+            screenHelperMessages.Add(new HelperMessage("EoL3", "Just like you!",
+                "FannyNuhuh", HelperMessage.AlwaysShow, 5, needsToBeClickedOff: false, displayOutsideInventory: true).ChainAfter());
 
-            eol1.AddEndEvent(() => eol2.ActivateMessage());
+            screenHelperMessages.Add(new HelperMessage("EoL4", "...",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny().ChainAfter());
 
-            screenHelperMessages.Add(eol2);
+            screenHelperMessages.Add(new HelperMessage("EoL5", "Bitch.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, onlyPlayOnce: false, displayOutsideInventory: true).SpokenByEvilFanny().ChainAfter());
 
-            HelperMessage eol3 = new HelperMessage("EoL3", "Just like you!",
-                "FannyNuhuh", HelperMessage.AlwaysShow, 5, needsToBeClickedOff: false, displayOutsideInventory: true).NeedsActivation();
-
-            eol2.AddEndEvent(() => eol3.ActivateMessage());
-
-            screenHelperMessages.Add(eol3);
-
-            HelperMessage eol4 = new HelperMessage("EoL4", "...",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, needsToBeClickedOff: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
-
-            eol3.AddEndEvent(() => eol4.ActivateMessage());
-
-            screenHelperMessages.Add(eol4);
-
-            HelperMessage eol5 = new HelperMessage("EoL5", "Bitch.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, onlyPlayOnce: false, displayOutsideInventory: true).SpokenByEvilFanny().NeedsActivation();
-
-            eol4.AddEndEvent(() => eol5.ActivateMessage());
-
-            screenHelperMessages.Add(eol5);
 
             screenHelperMessages.Add(new HelperMessage("Deus", "It appears that you are once again fighting a large serpentine creature. Therefore, it's advisable to do what you've done with them before and blast it with fast single target weaponry!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumDeusHead>())));

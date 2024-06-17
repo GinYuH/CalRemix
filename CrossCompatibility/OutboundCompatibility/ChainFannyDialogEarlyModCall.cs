@@ -33,7 +33,8 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
             float appearDelay = (float)args[2];
 
             // Apply activation requirements relative to the parent message.
-            message = message.NeedsActivation(appearDelay);
+            message = message.NeedsActivation();
+            message.AddDelay(appearDelay);
             parent.AddStartEvent(message.ActivateMessage);
             return message;
         }

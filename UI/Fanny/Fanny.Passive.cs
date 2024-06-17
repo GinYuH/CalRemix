@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.UI
 {
-    public partial class ScreenHelperMessageManager : ModSystem
+    public partial class ScreenHelperManager : ModSystem
     {
         //Loads fanny messages that have a chance to happen anywhere
         public static readonly SoundStyle HappySFX = new($"{nameof(CalRemix)}/Sounds/Happy");

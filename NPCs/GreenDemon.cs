@@ -25,7 +25,7 @@ namespace CalRemix.NPCs
 
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Green Demon",
+            ScreenHelperManager.LoadMessage(new HelperMessage("Green Demon",
                 "Gee wilickers! A Green Demon! These guys pack a real punch, but they are absolutely TERRIFIED of radioactive toads! or was it frogs? salamanders? Well either way you better catch some!",
                 "FannyAwooga",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

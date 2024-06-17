@@ -198,7 +198,7 @@ namespace CalRemix.UI
 
         private void OnClickHelper(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!ScreenHelperMessageManager.fannyEnabled)
+            if (!ScreenHelperManager.fannyEnabled)
                 return;
 
 
@@ -212,7 +212,7 @@ namespace CalRemix.UI
 
         public override void Update(GameTime gameTime)
         {
-            if (!ScreenHelperMessageManager.fannyEnabled)
+            if (!ScreenHelperManager.fannyEnabled)
             {
                 StopTalking();
             }
@@ -273,16 +273,16 @@ namespace CalRemix.UI
         // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (!ScreenHelperMessageManager.fannyEnabled)
+            if (!ScreenHelperManager.fannyEnabled)
             {
                 return;
             }
             // find the player's latest discord chat while the game isn't opened. doesn't work in multiplayer for sanity reasons
             if (NPC.downedBoss1)
             {
-                if (Main.netMode == NetmodeID.SinglePlayer && !(ScreenHelperMessageManager.discord1.alreadySeen || ScreenHelperMessageManager.discord2.alreadySeen) && !Main.hasFocus)
+                if (Main.netMode == NetmodeID.SinglePlayer && !(ScreenHelperManager.discord1.alreadySeen || ScreenHelperManager.discord2.alreadySeen) && !Main.hasFocus)
                 {
-                    ScreenHelperMessageManager.GetDiscord();
+                    ScreenHelperManager.GetDiscord();
                 }
             }
             AnimateFanny();
@@ -456,11 +456,11 @@ namespace CalRemix.UI
                 .SetAvailabilityCondition(() => Main.hardMode);
 
             LoadScreenHelper(WonderFlower,  false, false, "TalkingFlower", verticalOffset: 0.3f, distanceFromEdge: 240)
-                .SetVoiceStyle(ScreenHelperMessageManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
+                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f));
 
             LoadScreenHelper(GonerFanny, false, false, "FannyGoner", verticalOffset: 0.275f, distanceFromEdge: 840)
-                .SetVoiceStyle(ScreenHelperMessageManager.HappySFX with { MaxInstances = 0 })
+                .SetVoiceStyle(ScreenHelperManager.HappySFX with { MaxInstances = 0 })
                 .SetTextboxStyle("     ", new HelperTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black))
                 .SetExtraAnimations(false, false, false);
 
@@ -494,8 +494,12 @@ namespace CalRemix.UI
 
             helper.flipped = flipped;
             helper.idlesInInventory = idlesInInventory;
-            helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
             helper.distanceFromEdge = distanceFromEdge;
+
+
+            helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
+            //removes the empty message we just created from the list
+            ScreenHelperManager.screenHelperMessages.RemoveAt(ScreenHelperManager.screenHelperMessages.Count - 1);
 
             return helper;
         }
@@ -560,9 +564,9 @@ namespace CalRemix.UI
 
         public override void SaveData(TagCompound tag)
         {
-            for (int i = 0; i < ScreenHelperMessageManager.screenHelperMessages.Count; i++)
+            for (int i = 0; i < ScreenHelperManager.screenHelperMessages.Count; i++)
             {
-                HelperMessage msg = ScreenHelperMessageManager.screenHelperMessages[i];
+                HelperMessage msg = ScreenHelperManager.screenHelperMessages[i];
 
                 if (msg.alreadySeen && msg.PersistsThroughSaves)
                     tag["FannyDialogue" + msg.Identifier] = true;
@@ -573,16 +577,16 @@ namespace CalRemix.UI
                     readMessages[i] = true;
             }
 
-            tag["FannyReadThroughDogDialogue"] = ScreenHelperMessageManager.ReadAllDogTips;
+            tag["FannyReadThroughDogDialogue"] = ScreenHelperManager.ReadAllDogTips;
         }
 
 
         public override void LoadData(TagCompound tag)
         {
-            readMessages = new bool[ScreenHelperMessageManager.screenHelperMessages.Count];
-            for (int i = 0; i < ScreenHelperMessageManager.screenHelperMessages.Count; i++)
+            readMessages = new bool[ScreenHelperManager.screenHelperMessages.Count];
+            for (int i = 0; i < ScreenHelperManager.screenHelperMessages.Count; i++)
             {
-                HelperMessage msg = ScreenHelperMessageManager.screenHelperMessages[i];
+                HelperMessage msg = ScreenHelperManager.screenHelperMessages[i];
                 readMessages[i] = tag.ContainsKey("FannyDialogue" + msg.Identifier);
             }
 
@@ -600,30 +604,30 @@ namespace CalRemix.UI
                 return;
             }
 
-            if (readMessages is null || readMessages.Length < ScreenHelperMessageManager.screenHelperMessages.Count)
+            if (readMessages is null || readMessages.Length < ScreenHelperManager.screenHelperMessages.Count)
             {
 
-                for (int i = 0; i < ScreenHelperMessageManager.screenHelperMessages.Count; i++)
+                for (int i = 0; i < ScreenHelperManager.screenHelperMessages.Count; i++)
                 {
-                    HelperMessage msg = ScreenHelperMessageManager.screenHelperMessages[i];
+                    HelperMessage msg = ScreenHelperManager.screenHelperMessages[i];
                     msg.alreadySeen = false;
                 }
                 return;
             }
 
 
-            for (int i = 0; i < ScreenHelperMessageManager.screenHelperMessages.Count; i++)
+            for (int i = 0; i < ScreenHelperManager.screenHelperMessages.Count; i++)
             {
-                HelperMessage msg = ScreenHelperMessageManager.screenHelperMessages[i];
+                HelperMessage msg = ScreenHelperManager.screenHelperMessages[i];
                 msg.alreadySeen = readMessages[i];
             }
 
-            ScreenHelperMessageManager.ReadAllDogTips = readTroughFannyDogDialogue;
+            ScreenHelperManager.ReadAllDogTips = readTroughFannyDogDialogue;
         }
     }
 
     [Autoload(Side = ModSide.Client)]
-    public partial class ScreenHelperMessageManager : ModSystem
+    public partial class ScreenHelperManager : ModSystem
     {
         /// <summary>
         /// List that contains all the messages spoken by screen helpers, in the order they're loaded
@@ -694,7 +698,7 @@ namespace CalRemix.UI
         /// You can either provide a condition to the message, in which case the message will automatically play when the condition is met <br/>
         /// Alternatively, you could cache the message, and play it yourself when needed using <see cref="ScreenHelper.TalkAbout(HelperMessage)"/>
         /// </summary>
-        public static HelperMessage LoadFannyMessage(HelperMessage message)
+        public static HelperMessage LoadMessage(HelperMessage message)
         {
             screenHelperMessages.Add(message);
             return message;
@@ -761,14 +765,14 @@ namespace CalRemix.UI
                     msg.DesiredSpeaker = ScreenHelpersUIState.FannyTheFire;
 
                 //Tick up messages that are queued to play with a timer
-                if (msg.timerToPlay > 0)
+                if (msg.activationTimer > 0)
                 {
-                    msg.timerToPlay++;
+                    msg.activationTimer++;
 
-                    //if the message spent 10 seconds without playing after it should have, we stop trying to play it
+                    //if the activated message spent 10 seconds without playing, we stop trying to play it
                     //this is to avoid scenarios where the message's condition isnt met and it ends up hanging in the air forever until it is met
-                    if (msg.timeToWaitBeforePlaying + 600 <= msg.timerToPlay)
-                        msg.timerToPlay = 0;
+                    if (msg.activationTimer >= 600)
+                        msg.activationTimer = 0;
                 }
 
                 //Tick down the cooldown before a message can repeat
@@ -869,7 +873,7 @@ namespace CalRemix.UI
             for (int i = 0; i < screenHelperMessages.Count; i++)
             {
                 HelperMessage msg = screenHelperMessages[i];
-                msg.timerToPlay = 0;
+                msg.activationTimer = 0;
                 msg.currentSpeaker = null;
                 msg.TimeLeft = 0;
             }
@@ -982,10 +986,14 @@ namespace CalRemix.UI
 
             if (portrait == "")
                 portrait = "FannyIdle";
-            Portrait = ScreenHelperMessageManager.Portraits[portrait];
+            Portrait = ScreenHelperManager.Portraits[portrait];
 
             //default
             DesiredSpeaker = ScreenHelpersUIState.FannyTheFire;
+
+
+            //Adds the message to the list
+            ScreenHelperManager.screenHelperMessages.Add(this);
         }
 
         /// <summary>
@@ -1079,58 +1087,54 @@ namespace CalRemix.UI
         #region Message Activation & Chaining
 
         /// <summary>
-        /// Timer used for messages that need activation. It's set to 1 by <see cref="ActivateMessage"/>, from which it starts counting up <br/>
-        /// When the timer reaches <see cref="timeToWaitBeforePlaying"/>, the message can play
+        /// Used by messages that need activation, set by <see cref="NeedsActivation()"/> and <see cref="ChainAfter(HelperMessage, float)"/> 
         /// </summary>
-        public int timerToPlay = 0;
-        /// <summary>
-        /// Used by messages that need activation, set by <see cref="NeedsActivation()"/> and <see cref="ChainAfter(HelperMessage, float)"/> <br/>
-        /// This is how long after activation the message plays. If no delay is specified, it is 1 frame
-        /// </summary>
-        public int timeToWaitBeforePlaying = 0;
+        internal bool _needsActivation = false;
 
         /// <summary>
-        /// Makes it so that the message will never play on its own, and needs both its condition to be met, and <see cref="ActivateMessage"/> to be called for it to be read
-        /// If the condition for the message isn't met, the message won't play even if activated
+        /// Timer used for messages that need activation. It's set to 1 by <see cref="ActivateMessage"/>, indicating its been activated, from which it starts counting up <br/>
+        /// If the timer reaches 10 seconds, the message becomes deactivated
         /// </summary>
-        public HelperMessage NeedsActivation()
-        {
-            timeToWaitBeforePlaying = 1;
-            return this;
-        }
+        public int activationTimer = 0;
 
         /// <summary>
         /// Makes it so that the message doesn't play on its own, and needs to be manually called by another message or event to play, using <see cref="ActivateMessage"/><br/>
         /// If the condition for the message isn't met, the message won't play even if activated
         /// </summary>
-        /// <param name="timer">Delay period after <see cref="ActivateMessage"/> is called where the message waits to play, in seconds</param>
-        public HelperMessage NeedsActivation(float delay = 1)
+        public HelperMessage NeedsActivation()
         {
-            timeToWaitBeforePlaying = Math.Max(1, (int)(delay * 60));
+            _needsActivation = true;
             return this;
         }
 
         /// <summary>
-        /// Manually activates a message, making it able to be played if its condition is met
+        /// Manually activates a message, making it able to be played if its condition is met <br/>
         /// To make a message need manual activation, use <see cref="NeedsActivation"/>
         /// </summary>
         public void ActivateMessage()
         {
             //Increases the timer by 1, which makes it start counting up
-            timerToPlay++;
+            activationTimer++;
         }
 
         /// <summary>
-        /// Sets a message to be played after another message plays
+        /// Sets a message to be played after another message ends. Can be confured to chain it after the other message begins playing instead
         /// </summary>
-        /// <param name="chainFrom">The message that this message is spoken after</param>
+        /// <param name="chainFrom">The message that this message is spoken after. If null, uses the last loaded message</param>
         /// <param name="delay">The delay between the first message being spoken, and this one appearing</param>
         /// <param name="startTimerOnMessageSpoken">By default, the delay timer starts when the original message is clicked off. Set this to true so the timer starts as soon as the first message appears</param>
         /// <returns></returns>
-        public HelperMessage ChainAfter(HelperMessage chainFrom, float delay = 1f, bool startTimerOnMessageSpoken = false)
+        public HelperMessage ChainAfter(HelperMessage chainFrom = null, float delay = 1f, bool startTimerOnMessageSpoken = false)
         {
             //Sets the message to need the activation of the first message
-            NeedsActivation(delay);
+            NeedsActivation();
+
+            if (delay > 0)
+                AddDelay(delay);
+
+            //Uses the last registered message if no message is provided
+            if (chainFrom == null)
+                chainFrom = ScreenHelperManager.screenHelperMessages[^1];
 
             //Sets the first message to activate this one after tis played
             if (startTimerOnMessageSpoken)
@@ -1191,7 +1195,7 @@ namespace CalRemix.UI
                    TimeLeft <= 0 &&                                                                 //Can't play messages that are already playing
                    (!OnlyPlayOnce || !alreadySeen) &&                                               //Can't play messages that are only played once, more than once
                    (DisplayOutsideInventory || Main.playerInventory) &&                             //Can't play messages that only display in the inventory outside of the inventory
-                   timeToWaitBeforePlaying <= timerToPlay &&                                        //Can't play messages with a timer before the timer is reached
+                   (!_needsActivation || activationTimer > 0) &&                                    //Can't play messages that need activation that havent been activated yet
                    (DesiredSpeaker.CharacterAvailableCondition || IgnoreSpeakerSpecificCondition);  //Can't play messages if the speaker isn't avaialble
 
             //Technically the TimeLeft is not needed because when its active, no other message will try to play. But just in case
@@ -1235,7 +1239,7 @@ namespace CalRemix.UI
             currentSpeaker = null;
 
             //Reset timer to play if we want to play it again later
-            timerToPlay = 0;
+            activationTimer = 0;
         }
         #endregion
 
@@ -1355,8 +1359,8 @@ namespace CalRemix.UI
         {
             ScreenHelperPortrait portrait = new ScreenHelperPortrait(portraitName, frameCount, animationSpeed);
             //Load itself into the portrait list
-            if (!ScreenHelperMessageManager.Portraits.ContainsKey(portraitName))
-                ScreenHelperMessageManager.Portraits.Add(portraitName, portrait);
+            if (!ScreenHelperManager.Portraits.ContainsKey(portraitName))
+                ScreenHelperManager.Portraits.Add(portraitName, portrait);
         }
 
         public ScreenHelperPortrait(string portrait, int frameCount, int animationSpeed = 11)

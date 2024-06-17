@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.UI
 {
-    public partial class ScreenHelperMessageManager : ModSystem
+    public partial class ScreenHelperManager : ModSystem
     {
         public static readonly SoundStyle OnwardAndUpwardSound = new("CalRemix/Sounds/Fanny/OnwardAndUpward");
         public static readonly SoundStyle WonderFannyVoice = new("CalRemix/Sounds/Fanny/WonderFannyTalk");

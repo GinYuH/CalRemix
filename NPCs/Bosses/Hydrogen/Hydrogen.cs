@@ -57,7 +57,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             DisplayName.SetDefault("Hydrogen");
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Hydrogen",
+            ScreenHelperManager.LoadMessage(new HelperMessage("Hydrogen",
                 "Hey! Do you see that spiky balloon chained over there? Word has it that hitting it with explosives will unleash a terrible evil, capable of destroying the entire sea! But something so destructive couldn't possibly exist, right?",
                 "FannyNuhuh",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

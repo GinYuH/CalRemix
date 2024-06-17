@@ -70,7 +70,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             DisplayName.SetDefault("Phytogen");
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Pathogen",
+            ScreenHelperManager.LoadMessage(new HelperMessage("Pathogen",
                 "Makes fronds, not enemies.",
                 "FannyNuhuh",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

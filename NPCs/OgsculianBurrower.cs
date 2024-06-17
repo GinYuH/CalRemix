@@ -24,7 +24,7 @@ namespace CalRemix.NPCs
 
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Ogscule",
+            ScreenHelperManager.LoadMessage(new HelperMessage("Ogscule",
                 "That Ogsculian Burrower over there. A dangerous foe. The best course of action here is to jump over them to dodge their laser of doom.",
                 "FannyAwooga",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

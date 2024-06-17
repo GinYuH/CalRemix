@@ -27,7 +27,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         protected override object Process(params object[] args)
         {
             HelperMessage message = (HelperMessage)args[0];
-            ScreenHelperMessageManager.LoadFannyMessage(message);
+            //ScreenHelperManager.LoadMessage(message);
 
             return null;
         }

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.UI
 {
-    public partial class ScreenHelperMessageManager : ModSystem
+    public partial class ScreenHelperManager : ModSystem
     {
         internal static readonly List<int> manuallyDefinedLoreItems = new();
 

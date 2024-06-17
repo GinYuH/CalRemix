@@ -47,7 +47,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             DisplayName.SetDefault("Ionogen");
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Ionogen",
+            ScreenHelperManager.LoadMessage(new HelperMessage("Ionogen",
                 "What a shocking turn of events! All I have to say is watch out for battery acid! It's this domino's most deadliest attack!",
                 "FannyIdle",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

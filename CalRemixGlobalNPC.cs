@@ -150,9 +150,8 @@ namespace CalRemix
         {
             if (!Main.dedServ)
             {
-                CystMessage = new HelperMessage("CystDeath", "See!", "",
-                HelperMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
-                ScreenHelperMessageManager.LoadFannyMessage(CystMessage);
+                CystMessage = new HelperMessage("CystDeath", "See!", "").NeedsActivation();
+                ScreenHelperManager.LoadMessage(CystMessage);
             }
         }
         public override bool PreAI(NPC npc)
@@ -1121,11 +1120,11 @@ namespace CalRemix
             {
                 if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
                 {
-                    if (!ScreenHelperMessageManager.fannyEnabled)
+                    if (!ScreenHelperManager.fannyEnabled)
                     {
                         // he's defrosting!
-                        ScreenHelperMessageManager.fannyEnabled = true;
-                        ScreenHelperMessageManager.fannyTimesFrozen++;
+                        ScreenHelperManager.fannyEnabled = true;
+                        ScreenHelperManager.fannyTimesFrozen++;
                         Anomaly109UI.fannyFreezeTime = 0;
                     }
                     CalRemixWorld.ShrineTimer = 3000;
@@ -1145,8 +1144,8 @@ namespace CalRemix
         {
             vBurn = false;
 
-            if (npc.Hitbox.Intersects(ScreenHelperMessageManager.screenRect))
-                ScreenHelperMessageManager.sceneMetrics.onscreenNPCs.Add(npc);
+            if (npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
+                ScreenHelperManager.sceneMetrics.onscreenNPCs.Add(npc);
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {

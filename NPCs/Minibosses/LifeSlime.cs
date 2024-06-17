@@ -32,7 +32,7 @@ namespace CalRemix.NPCs.Minibosses
 
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("LifeBiome",
+            ScreenHelperManager.LoadMessage(new HelperMessage("LifeBiome",
                 "The Life Heart is a joint meeting area of the elements of fire, ice, and nature. With their powers combined, they make a powerful new bar which can be used to upgrade your items! Be careful of the dreaded Life Slimes that visciously guard the place though.",
                 "FannyNuhuh",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)).AddItemDisplay(ModContent.ItemType<LifeAlloy>()));

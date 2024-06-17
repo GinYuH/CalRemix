@@ -26,7 +26,7 @@ namespace CalRemix.NPCs.Minibosses
 
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("KingMinnows",
+            ScreenHelperManager.LoadMessage(new HelperMessage("KingMinnows",
                 "A king minnows prime! This fish is known for yelling out “die!” Which is a subtle reference to the fact that it will kill you! This reference is best observed on the Death mode difficulty.",
                 "FannyNuhuh",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));

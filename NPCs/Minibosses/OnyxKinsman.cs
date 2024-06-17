@@ -35,7 +35,7 @@ namespace CalRemix.NPCs.Minibosses
 
             if (Main.dedServ)
                 return;
-            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("KinsmenFight",
+            ScreenHelperManager.LoadMessage(new HelperMessage("KinsmenFight",
                 "Quick! Get him! He's escaping with a one of a kind item!",
                 "FannyAwooga",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
