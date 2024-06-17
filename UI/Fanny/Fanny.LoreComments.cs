@@ -230,32 +230,32 @@ namespace CalRemix.UI
 
             #region Provi
             int proviLoreItemType = ModContent.ItemType<LoreProvidence>();
-            HelperMessage proviLore = HelperMessage.New("LoreProv", "A glorious day indeed! Deeds of valor, like finding the last piece of chocolate in the fridge, are truly legendary. I mean, I once opened the fridge and discovered half an onion. What a thrilling tale, right?",
+            HelperMessage.New("LoreProv", "A glorious day indeed! Deeds of valor, like finding the last piece of chocolate in the fridge, are truly legendary. I mean, I once opened the fridge and discovered half an onion. What a thrilling tale, right?",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == proviLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage proviEvilLore = HelperMessage.New("LoreEvilProv", "A \"glorious day\"? More like a day wasted on pompous ramblings.",
+            HelperMessage.New("LoreEvilProv", "A \"glorious day\"? More like a day wasted on pompous ramblings.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
             #endregion
 
             #region Polt
             int poltLoreItemType = ModContent.ItemType<LorePolterghast>();
-            HelperMessage poltLore = HelperMessage.New("LorePolter", "It seems the writer here was a master of procrastination! They managed to turn an entire dungeon into a haunted house attraction, complete with a formless monster, and all because they were too lazy to get their act together. Talk about taking \"ghosting\" to a whole new level!",
+            HelperMessage.New("LorePolter", "It seems the writer here was a master of procrastination! They managed to turn an entire dungeon into a haunted house attraction, complete with a formless monster, and all because they were too lazy to get their act together. Talk about taking \"ghosting\" to a whole new level!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == poltLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage poltEvilLore = HelperMessage.New("LoreEvilPolter", "What a pathetic excuse for a leader. They're so wrapped up in their own little world of self-pity that they can't even be bothered to deal with the mess they created.",
+            HelperMessage.New("LoreEvilPolter", "What a pathetic excuse for a leader. They're so wrapped up in their own little world of self-pity that they can't even be bothered to deal with the mess they created.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
             #endregion
 
             #region Dog...
             int dogLoreItemType = ModContent.ItemType<LoreDevourerofGods>();
-            HelperMessage dogLore = HelperMessage.New("LoreDog", "It seems like the author here had quite a \"bite\" of an issue with this Devourer character. They got a mouthful of manipulation and a side of negligence! Talk about a bad takeout order; maybe next time, they should try a different restaurant – or universe!",
+            HelperMessage.New("LoreDog", "It seems like the author here had quite a \"bite\" of an issue with this Devourer character. They got a mouthful of manipulation and a side of negligence! Talk about a bad takeout order; maybe next time, they should try a different restaurant – or universe!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == dogLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
-            HelperMessage dogEvilLore = HelperMessage.New("LoreEvilDog", "So this power-hungry idiot recruited a snake-tongued disaster and then acted all surprised when everything went to the abyss!?",
+            HelperMessage.New("LoreEvilDog", "So this power-hungry idiot recruited a snake-tongued disaster and then acted all surprised when everything went to the abyss!?",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
@@ -263,11 +263,10 @@ namespace CalRemix.UI
 
             #region Yharon
             int yharonLoreItemType = ModContent.ItemType<LoreYharon>();
-            HelperMessage yharonLore = HelperMessage.New("LoreYharon", "Well, folks, here we have a dramatic tale of dragons and destiny. I mean, who needs destiny, right? But, hey, at least the lava bath spa treatment gave our hero a new buddy. Friendship and fiery scars, what more could you ask for?",
+           HelperMessage.New("LoreYharon", "Well, folks, here we have a dramatic tale of dragons and destiny. I mean, who needs destiny, right? But, hey, at least the lava bath spa treatment gave our hero a new buddy. Friendship and fiery scars, what more could you ask for?",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == yharonLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
-
-            HelperMessage yharonEvilLore = HelperMessage.New("LoreEvilYharon", "Ugh, another one of these melodramatic dragon stories. Who cares about Yharon and his rebirth nonsense? And seriously, \"destiny is for the weak\"? Spare me the hero's whining. It's all just a bunch of hot air, or in this case, hot lava.",
+            HelperMessage.New("LoreEvilYharon", "Ugh, another one of these melodramatic dragon stories. Who cares about Yharon and his rebirth nonsense? And seriously, \"destiny is for the weak\"? Spare me the hero's whining. It's all just a bunch of hot air, or in this case, hot lava.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
@@ -275,22 +274,22 @@ namespace CalRemix.UI
 
             #region Draedon
             int draeLoreItemType = ModContent.ItemType<LoreExoMechs>();
-            HelperMessage draeLore = HelperMessage.New("LoreDraeodn", "Well, well, here we are admiring Draedon's doodads of destruction. I hear he claims his gizmos are better than any divine doohickeys, but I must say, he's never met my toaster-oven! At least that thing makes a mean grilled cheese sandwich.",
+            HelperMessage.New("LoreDraeodn", "Well, well, here we are admiring Draedon's doodads of destruction. I hear he claims his gizmos are better than any divine doohickeys, but I must say, he's never met my toaster-oven! At least that thing makes a mean grilled cheese sandwich.",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == draeLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage draeEvilLore = HelperMessage.New("LoreEvilDraedon", "Oh, Draedon and his soulless contraptions, what a joy. His boasts are as insufferable as the cacophony of a million malfunctioning alarm clocks. And if you think you can \"leverage\" his knowledge, you're as delusional as he is.",
+            HelperMessage.New("LoreEvilDraedon", "Oh, Draedon and his soulless contraptions, what a joy. His boasts are as insufferable as the cacophony of a million malfunctioning alarm clocks. And if you think you can \"leverage\" his knowledge, you're as delusional as he is.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
             #endregion
 
             #region Scal...
             int scalLoreItemType = ModContent.ItemType<LoreCalamitas>();
-            HelperMessage scalLore = HelperMessage.New("LoreScal", "Oh, Calamitas, the Brimstone Witch! She's like that spicy chili you thought was mild but then it lit your mouth on fire! I mean, I could've used her as a barbecue grill with all that brimstone and wrath. Poor girl, she really should've considered anger management classes!",
+            HelperMessage.New("LoreScal", "Oh, Calamitas, the Brimstone Witch! She's like that spicy chili you thought was mild but then it lit your mouth on fire! I mean, I could've used her as a barbecue grill with all that brimstone and wrath. Poor girl, she really should've considered anger management classes!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == scalLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage scalEvilLore = HelperMessage.New("LoreEvilScal", "Of course, she's got a sob story, 'unfathomable, raw power,' give me a break! Sounds like a one-woman wrecking crew who can't handle her own destruction. Good riddance!",
+            HelperMessage.New("LoreEvilScal", "Of course, she's got a sob story, 'unfathomable, raw power,' give me a break! Sounds like a one-woman wrecking crew who can't handle her own destruction. Good riddance!",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
@@ -299,11 +298,10 @@ namespace CalRemix.UI
 
             #region Epilogue
             int cynosureLoreItemType = ModContent.ItemType<LoreCynosure>();
-            HelperMessage cynosureLore = HelperMessage.New("LoreEnd", "So, you're like, the all-powerful ruler of Terraria now? Don't get too cocky, hero. I once had a pet rock that thought it was the king of the backyard. It didn't end well for him. But hey, if you're ready to challenge this guy, go find that Light's grave thingy on top of Dragon Mountain. Just watch out for falling stars, they're your competition now!",
+            HelperMessage.New("LoreEnd", "So, you're like, the all-powerful ruler of Terraria now? Don't get too cocky, hero. I once had a pet rock that thought it was the king of the backyard. It didn't end well for him. But hey, if you're ready to challenge this guy, go find that Light's grave thingy on top of Dragon Mountain. Just watch out for falling stars, they're your competition now!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == cynosureLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
-
-            HelperMessage cynosureEvilLore = HelperMessage.New("LoreEvilEnd", "Is there even a \"Dragon's Aerie\"? You know, after listening to all of these scraps, it seems like whoever is writing these is compensating for actual adventure and substance with chicken scratch they wrote up in a minute tops. Go on, I dare you to go to this supposed aerie.",
+           HelperMessage.New("LoreEvilEnd", "Is there even a \"Dragon's Aerie\"? You know, after listening to all of these scraps, it seems like whoever is writing these is compensating for actual adventure and substance with chicken scratch they wrote up in a minute tops. Go on, I dare you to go to this supposed aerie.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
