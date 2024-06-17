@@ -483,6 +483,11 @@ namespace CalRemix.UI
             helper.Height.Set(80, 0f);
             helper.Width.Set(80, 0f);
 
+            helper.flipped = flipped;
+            helper.idlesInInventory = idlesInInventory;
+            helper.distanceFromEdge = distanceFromEdge;
+            helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
+
             Append(helper);
 
             ScreenHelperTextbox textbox = new ScreenHelperTextbox();
@@ -492,12 +497,7 @@ namespace CalRemix.UI
             Append(textbox);
             helper.SpeechBubble = textbox;
 
-            helper.flipped = flipped;
-            helper.idlesInInventory = idlesInInventory;
-            helper.distanceFromEdge = distanceFromEdge;
 
-
-            helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
 
             return helper;
         }
