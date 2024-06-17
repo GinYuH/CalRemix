@@ -53,7 +53,7 @@ namespace CalRemix.UI
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!ScreenHelperManager.fannyEnabled)
+            if (!ScreenHelperManager.screenHelpersEnabled)
             {
                 fannyFreezeTime++;
             }
@@ -401,12 +401,12 @@ namespace CalRemix.UI
             Rectangle fannyframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f + fannyOffset.X), mainframe.Y + (int)(mainframe.Height * 0.22f + fannyOffset.Y), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.35f));
             Rectangle fannytheFrame = fanny.Frame(1, 8, 0, 0);
 
-            string FannyStatus = ScreenHelperManager.fannyEnabled ? "Fanny is currently free" : "Fanny is currently sealed";
-            Color FannyColor = ScreenHelperManager.fannyEnabled ? Color.Lime : Color.Red;
+            string FannyStatus = ScreenHelperManager.screenHelpersEnabled ? "Fanny is currently free" : "Fanny is currently sealed";
+            Color FannyColor = ScreenHelperManager.screenHelpersEnabled ? Color.Lime : Color.Red;
 
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, borderframe, FannyColor);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgframe, Color.Black);
-            if (!ScreenHelperManager.fannyEnabled)
+            if (!ScreenHelperManager.screenHelpersEnabled)
             {
                 spriteBatch.Draw(fanny, fannyframe, fannytheFrame, Color.White);
             }
@@ -415,7 +415,7 @@ namespace CalRemix.UI
             fannyOffset = Vector2.Zero;
             if (maus.Intersects(bgframe))
             {
-                if (ScreenHelperManager.fannyEnabled)
+                if (ScreenHelperManager.screenHelpersEnabled)
                 {
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Toggles Fanny", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                 }
@@ -425,10 +425,10 @@ namespace CalRemix.UI
                 }
                 if (Main.mouseLeft && ClickCooldown <= 0)
                 {
-                    ScreenHelperManager.fannyEnabled = !ScreenHelperManager.fannyEnabled;
+                    ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
                     CalRemixWorld.UpdateWorldBool();
                     ClickCooldown = 12;
-                    if (ScreenHelperManager.fannyEnabled)
+                    if (ScreenHelperManager.screenHelpersEnabled)
                     {
                         fannyFreezeTime = 0;
                         SoundEngine.PlaySound(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f });
@@ -444,7 +444,7 @@ namespace CalRemix.UI
 
                 }
             }
-            if (maus.Intersects(fannyframe) && !ScreenHelperManager.fannyEnabled && Main.mouseLeft && ClickCooldown <= 0)
+            if (maus.Intersects(fannyframe) && !ScreenHelperManager.screenHelpersEnabled && Main.mouseLeft && ClickCooldown <= 0)
             {
                 SoundEngine.PlaySound(CalamityMod.NPCs.Cryogen.Cryogen.HitSound);
                 fannyOffset += new Vector2(Main.rand.NextFloat(-2.5f, 2.5f), Main.rand.NextFloat(-2.5f, 2.5f));

@@ -369,7 +369,7 @@ namespace CalRemix
             tag["hydrolocationY"] = hydrogenLocation.Y;
             tag["oxytime"] = oxydayTime;
 
-            tag["109fanny"] = ScreenHelperManager.fannyEnabled;
+            tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
 
         }
@@ -423,7 +423,7 @@ namespace CalRemix
             hydrogenLocation.Y = tag.Get<Single>("hydrolocationY");
             oxydayTime = tag.Get<Int32>("oxytime");
 
-            ScreenHelperManager.fannyEnabled = tag.Get<bool>("109fanny");
+            ScreenHelperManager.screenHelpersEnabled = tag.Get<bool>("109fanny");
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
         }
 
@@ -474,7 +474,7 @@ namespace CalRemix
             writer.Write(hydrogenLocation.Y);
             writer.Write(oxydayTime);
 
-            writer.Write(ScreenHelperManager.fannyEnabled);
+            writer.Write(ScreenHelperManager.screenHelpersEnabled);
             writer.Write(ScreenHelperManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
         }
@@ -526,7 +526,7 @@ namespace CalRemix
             hydrogenLocation.Y = reader.ReadSingle();
             oxydayTime = reader.ReadInt32();
 
-            ScreenHelperManager.fannyEnabled = reader.ReadBoolean();
+            ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
             ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
         }
@@ -745,7 +745,7 @@ namespace CalRemix
             }
             if (CalRemix.CalVal != null && ((DateTime.Now.Day == 1 && DateTime.Now.Month == 4) || (DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld)))
             {
-                ScreenHelperManager.fannyEnabled = false;
+                ScreenHelperManager.screenHelpersEnabled = false;
             }
             if (SubworldSystem.IsActive<FannySubworld>())
             {

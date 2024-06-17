@@ -1119,10 +1119,10 @@ namespace CalRemix
             {
                 if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
                 {
-                    if (!ScreenHelperManager.fannyEnabled)
+                    if (!ScreenHelperManager.screenHelpersEnabled)
                     {
                         // he's defrosting!
-                        ScreenHelperManager.fannyEnabled = true;
+                        ScreenHelperManager.screenHelpersEnabled = true;
                         ScreenHelperManager.fannyTimesFrozen++;
                         Anomaly109UI.fannyFreezeTime = 0;
                     }

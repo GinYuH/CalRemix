@@ -25,7 +25,7 @@ namespace CalRemix.UI
 
         private static void AgreeWithFanny(HelperMessage message)
         {
-            if (message.DesiredSpeaker == ScreenHelpersUIState.FannyTheFire && !message.HasAnyEndEvents)
+            if (message.DesiredSpeaker == ScreenHelpersUIState.FannyTheFire && !message.HasAnyEndEvents && Main.rand.NextBool(50))
             {
                 RenaultAd.ActivateMessage();
             }

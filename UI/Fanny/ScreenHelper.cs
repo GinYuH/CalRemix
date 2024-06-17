@@ -3,10 +3,14 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
 using CalamityMod.NPCs.Yharon;
+using Humanizer;
+using Microsoft.CodeAnalysis.CSharp.Formatting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using Steamworks;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -30,23 +34,21 @@ namespace CalRemix.UI
         public ScreenHelperTextbox SpeechBubble;
 
         public float fadeIn;
-        public bool flipped;
         public bool idlesInInventory;
-
-        public float distanceFromEdge = 240;
-
 
         private int helperFrame;
         private int helperFrameCounter;
 
-        //Timer that ticks down after a message has been spoken. Lasts one second
-        public int talkCooldown;
 
+        #region Main Speaking / Stopping code
         //Default placeholder message used when not speaking
         public HelperMessage NoMessage;
 
         //Non-default message currently being spoken
         private HelperMessage currentMessage;
+
+        //Timer that ticks down after a message has been spoken. Lasts one second
+        public int talkCooldown;
 
         /// <summary>
         /// Checks if currently speaking a message. Ignores messages that the helper is already "speaking" but haven't showed yet due to a delay time
@@ -89,16 +91,60 @@ namespace CalRemix.UI
         /// </summary>
         public void StopTalking()
         {
+            if (currentMessage == null || !currentMessage.NoCooldownAfterSpeaking)
+                talkCooldown = 60;
             currentMessage = null;
-            talkCooldown = 60;
+        }
+        #endregion
+
+
+        #region Position data
+        public HelperPositionData CharacterPositionData;
+        public ScreenHelper SetPositionData(HelperPositionData data)
+        {
+            CharacterPositionData = data;
+            CharacterPositionData.SetPosition(this);
+            return this;
         }
 
+        /// <summary>
+        /// Gives the character a basic position data, like the one used by fanny and friends
+        /// </summary>
+        /// <param name="fromTheLeft">If the character comes from the left of the screen or not</param>
+        /// <param name="distanceFromEdge">How far away from the edge is the character</param>
+        /// <param name="screenHeightPercent">Percentage of the screen from which the character is located</param>
+        /// <returns></returns>
+        public ScreenHelper SetPositionData(bool fromTheLeft, float distanceFromEdge, float screenHeightPercent = 0.074f)
+        {
+            CharacterPositionData = new HelperPositionData(
+                new Vector2(fromTheLeft ? 0 : 1, 1 - screenHeightPercent),           //Percent anchor
+                new Vector2(fromTheLeft ? 0 : -80, -80),                             //Pixel anchor
+                new Vector2(fromTheLeft ? distanceFromEdge : -distanceFromEdge, 0),  //Offset when appearing
+                new Vector2(fromTheLeft ? 50 : -50, -90),                             //Textbox offset
+                new Vector2(fromTheLeft ? 0 : 1f, 1f),                               //Textbox text size offset
+                new Vector2(0, -30f),                                                //Textbox fade out offset
+                new Vector2(0f, 40f),                                                //Textbox fade in offset
+                new Vector2(60 * (fromTheLeft ? -1 : 1), -60));                      //item hold offset
+
+            //update the position
+            CharacterPositionData.SetPosition(this);
+            return this;
+        }
+        #endregion
 
         #region Style
         /// <summary>
         /// Speaking sound for the helper's messages. Can be overriden by <see cref="HelperMessage.voiceOverride"/>
         /// </summary>
         public SoundStyle speakingSound;
+        /// <summary>
+        /// Sound played when the helper is tickled by clicking on them. Doesnt play if <see cref="canBeTickled"/> is set to false <br/>
+        /// Doesn't play any sounds if null
+        /// </summary>
+        public SoundStyle? tickleSound = null;
+
+
+
         /// <summary>
         /// Hover text for the helper's textboxes. Can be overriden by <see cref="HelperMessage.hoverTextOverride"/>
         /// </summary>
@@ -108,16 +154,22 @@ namespace CalRemix.UI
         /// </summary>
         public HelperTextboxPalette textboxPalette;
         /// <summary>
-        /// Sound played when the helper is tickled by clicking on them. Doesnt play if <see cref="canBeTickled"/> is set to false <br/>
-        /// Doesn't play any sounds if null
-        /// </summary>
-        public SoundStyle? tickleSound = null;
-
-        /// <summary>
         /// The palette currently used by the helper. This uses the palette of the message's override if one is present
         /// </summary>
-        public HelperTextboxPalette UsedPalette => (currentMessage != null && currentMessage.paletteOverride.HasValue) ? currentMessage.paletteOverride.Value : textboxPalette;
+        public HelperTextboxPalette UsedPalette => (currentMessage != null && currentMessage.paletteOverride != null) ? currentMessage.paletteOverride : textboxPalette;
 
+
+        /// <summary>
+        /// The visual theme of the textbox, made of textures. Contains a 9slice border, and a (potentially animated) background texture
+        /// </summary>
+        public HelperTextboxTheme textboxTheme;
+        /// <summary>
+        /// The formatting of the textbox. Defines the minimum and max size, and the default font size
+        /// </summary>
+        public HelperTextboxFormatting textboxFormatting;
+
+
+        #region Setters
         /// <summary>
         /// Sets the voices of the helper
         /// </summary>
@@ -132,16 +184,38 @@ namespace CalRemix.UI
         /// <summary>
         /// Sets the default hover text and palette of the character's textbox
         /// </summary>
-        public ScreenHelper SetTextboxStyle(string textboxHoverText, HelperTextboxPalette? palette = null)
+        public ScreenHelper SetTextboxStyle(string textboxHoverText, HelperTextboxPalette palette = null)
         {
             this.textboxHoverText = textboxHoverText;
 
-            if (palette.HasValue)
-                this.textboxPalette = palette.Value;
+            if (palette != null)
+                textboxPalette = palette;
             else
                 textboxPalette = new HelperTextboxPalette();
             return this;
         }
+
+        /// <summary>
+        /// Sets the texture theme of the textbox
+        /// </summary>
+        public ScreenHelper SetTextboxTheme(HelperTextboxTheme theme)
+        {
+            textboxTheme = theme;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text formatting of the textbox
+        /// </summary>
+        public ScreenHelper SetTextboxFormatting(HelperTextboxFormatting formatting, int outlineThickness = 3, int textBorderPadding = 10)
+        {
+            textboxFormatting = formatting;
+            SpeechBubble.outlineThickness = outlineThickness;
+            SpeechBubble.backgroundPadding = textBorderPadding;
+
+            return this;
+        }
+        #endregion
         #endregion
 
         #region Bounce, tickle, and shake anims
@@ -202,7 +276,7 @@ namespace CalRemix.UI
         }
         private void OnClickHelper(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!ScreenHelperManager.fannyEnabled)
+            if (!ScreenHelperManager.screenHelpersEnabled)
                 return;
 
             OnClick?.Invoke(this);
@@ -220,32 +294,22 @@ namespace CalRemix.UI
             OnLeftClick += OnClickHelper;
         }
 
-
         public override void Update(GameTime gameTime)
         {
-            if (!ScreenHelperManager.fannyEnabled)
-            {
-                StopTalking();
-            }
-            //Tick down the talk cooldown
+            if (!ScreenHelperManager.screenHelpersEnabled)
+                return;
+
+            //Tick down the cooldown between messages
             talkCooldown--;
-
-            //Slide
-            if (!flipped)
-                Left.Set(-(80 + distanceFromEdge * MathF.Pow(fadeIn, 0.4f)), 1);
-            else
-                Left.Set(distanceFromEdge * MathF.Pow(fadeIn, 0.4f), 0);
-
-            Recalculate();
-
 
             //Show show if there's currently a message (if it's a message only shown in the inventory, only show it there)
             //Additionally, always show with the inventory open as long as its not hidden by default
             bool shouldShow = (Main.playerInventory && idlesInInventory) ||
                 (currentMessage != null && (Main.playerInventory || UsedMessage.DisplayOutsideInventory) && !currentMessage.InDelayPeriod);
 
+            float previousFadeIn = fadeIn;
 
-            //Slides in and out
+            //Fades in and out
             if (!shouldShow)
             {
                 fadeIn -= 0.05f;
@@ -259,7 +323,13 @@ namespace CalRemix.UI
                     fadeIn = 1;
             }
 
+            //Update the position if it changed
+            if (fadeIn != previousFadeIn)
+            {
+                CharacterPositionData.SetPosition(this);
+            }
 
+            #region Misc shake, bounce, and tickle animations
             //Shake if fanny choses a new message while already out there in the inventory
             if (needsToShake)
             {
@@ -267,15 +337,22 @@ namespace CalRemix.UI
                 if (Main.playerInventory && fadeIn == 1 && canShake)
                     shakeTime = 1f;
             }
+
+            //Tick down bounce, shake & tickle anims
+
             if (shakeTime > 0)
                 shakeTime -= 1 / (60f * 1f);
 
-            //Tick down bounce & tickle anims
             bounce -= 1 / (60f * 0.4f);
 
             tickle -= 1 / (60f * 0.4f);
             if (tickle > 4)
                 tickle -= 1 / (60f * 0.4f);
+            #endregion
+
+            //Play animation for the textbox's background
+            if (textboxTheme != null && textboxTheme.backgroundFill != null && textboxTheme.backgroundFrameCount != new Point(1, 1))
+                textboxTheme.Animate();
 
             base.Update(gameTime);
         }
@@ -284,7 +361,7 @@ namespace CalRemix.UI
         // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (!ScreenHelperManager.fannyEnabled)
+            if (!ScreenHelperManager.screenHelpersEnabled)
             {
                 return;
             }
@@ -326,8 +403,13 @@ namespace CalRemix.UI
             if (tickle >= 1)
                 position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
 
+            float opacity = fadeIn;
 
-            spriteBatch.Draw(fannySprite, position, frame, Color.White * fadeIn, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
+            //fades with the textbox if the textbox doesnt have a fade offset
+            if (Speaking && CharacterPositionData.textboxFadeOutOffset == Vector2.Zero)
+                opacity *= MathF.Pow(Utils.GetLerpValue(30, 0, UsedMessage.TimeLeft, true), 1.6f);
+
+            spriteBatch.Draw(fannySprite, position, frame, Color.White * opacity, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
             if (Speaking && UsedMessage.ItemType != -22)
                 DrawItem();
         }
@@ -352,7 +434,7 @@ namespace CalRemix.UI
             int count = Main.itemAnimations[UsedMessage.ItemType] != null ? Main.itemAnimations[UsedMessage.ItemType].FrameCount : 1;
             Rectangle nframe = itemSprite.Frame(1, count, 0, 0);
             Vector2 origin = nframe.Size() / 2f;
-            Vector2 itemPosition = BasePosition + new Vector2(60 * (flipped ? -1 : 1), -60) + UsedMessage.ItemOffset + Vector2.UnitY * MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 4;
+            Vector2 itemPosition = BasePosition + CharacterPositionData.itemOffset + UsedMessage.ItemOffset + Vector2.UnitY * MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 4;
 
             Main.EntitySpriteDraw(itemSprite, itemPosition, nframe, Color.White * fadeIn, MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + MathHelper.PiOver2) * 0.2f, origin, UsedMessage.ItemScale, SpriteEffects.None);
         }
@@ -376,33 +458,12 @@ namespace CalRemix.UI
 
         public override void Recalculate()
         {
-            Vector2 offset = new Vector2(50, 90);
-            if (ParentSpeaker.flipped)
-                offset.X *= -1;
-
-            Vector2 basePosition = ParentSpeaker.BasePosition - offset;
-            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(ParentSpeaker.UsedMessage.Text) * ParentSpeaker.UsedMessage.textSize;
-            Vector2 cornerPosition = basePosition - textSize;
-
-            if (ParentSpeaker.flipped)
-                cornerPosition = basePosition - Vector2.UnitY * textSize.Y;
-
-            //Account for padding
-            textSize += Vector2.One * (backgroundPadding + outlineThickness) * 2;
-            cornerPosition -= Vector2.One * (backgroundPadding + outlineThickness);
-
-            //Fade out
-            cornerPosition.Y -= MathF.Pow(Utils.GetLerpValue(30, 0, ParentSpeaker.UsedMessage.TimeLeft, true), 1.6f) * 30f;
-            //Fade in
-            cornerPosition.Y += MathF.Pow(1 - ParentSpeaker.fadeIn, 2f) * 40;
-
-            Width.Set(textSize.X, 0);
-            Height.Set(textSize.Y, 0);
-            Left.Set(cornerPosition.X, 0);
-            Top.Set(cornerPosition.Y, 0);
-            base.Recalculate();
+            if (ParentSpeaker != null && ParentSpeaker.CharacterPositionData != null)
+            {
+                ParentSpeaker.CharacterPositionData.SetTextboxPosition(this);
+                base.Recalculate();
+            }
         }
-
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
@@ -419,7 +480,7 @@ namespace CalRemix.UI
 
             Vector2 outlineDrawPosition = dimensions.TopLeft();
             Vector2 backgroundDrawPosition = outlineDrawPosition + Vector2.One * outlineThickness;
-            Vector2 textDrawPosition = backgroundDrawPosition + Vector2.One * backgroundPadding;
+            Vector2 textDrawPosition = backgroundDrawPosition + Vector2.One * backgroundPadding + ParentSpeaker.CharacterPositionData.textboxTextOffset;
 
             Vector2 outlineSize = dimensions.Size();
             Vector2 backgroundSize = outlineSize - Vector2.One * outlineThickness * 2;
@@ -431,7 +492,7 @@ namespace CalRemix.UI
             Main.spriteBatch.Draw(squareTexture, outlineDrawPosition, null, palette.outline * opacity, 0, Vector2.Zero, outlineSize / squareTexture.Size(), 0, 0);
             Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.background * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
 
-
+            //Hover text and hover thing
             if (ContainsPoint(Main.MouseScreen) && ParentSpeaker.fadeIn == 1 && !ParentSpeaker.UsedMessage.CantBeClickedOff && ParentSpeaker.UsedMessage.TimeLeft > 30)
             {
                 Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.backgroundHover with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
@@ -441,6 +502,83 @@ namespace CalRemix.UI
                 if (ParentSpeaker.UsedMessage.hoverTextOverride != "")
                     hoverText = ParentSpeaker.UsedMessage.hoverTextOverride;
                 Main.instance.MouseText(hoverText);
+            }
+
+            //texture theme
+            if (ParentSpeaker.textboxTheme != null)
+            {
+                //Draw the background texture
+                if (ParentSpeaker.textboxTheme.backgroundFill  != null)
+                {
+                    Texture2D tex = ParentSpeaker.textboxTheme.backgroundFill.Value;
+
+                    Vector2 bgTextureCorner = outlineDrawPosition;
+                    bgTextureCorner -= ParentSpeaker.textboxTheme.backgroundPadding;
+                    Vector2 bgTextureFillSize = outlineSize;
+                    bgTextureFillSize -= ParentSpeaker.textboxTheme.backgroundPadding * 2;
+
+                    Rectangle bgFrame = ParentSpeaker.textboxTheme.GetFrame();
+
+                    Main.spriteBatch.Draw(tex, bgTextureCorner, bgFrame, Color.White, 0, Vector2.Zero, bgTextureFillSize / bgFrame.Size(), 0, 0);
+                }
+
+                //Draw the 9 slice border
+                if (ParentSpeaker.textboxTheme.border9Slice != null)
+                {
+                    Vector2 insideSize = outlineSize;
+                    insideSize -= ParentSpeaker.textboxTheme.border9SliceCornerSize * 2;
+
+                    Texture2D tex = ParentSpeaker.textboxTheme.border9Slice.Value;
+                    Vector2 cornerSize = ParentSpeaker.textboxTheme.border9SliceCornerSize;
+
+                    Vector2 middlePartSize = tex.Size() - cornerSize * 2;
+
+
+                    //Draw corners
+                    for (int i = 0; i < 2; i++)
+                        for (int j = 0; j < 2; j++)
+                        {
+                            Vector2 origin = cornerSize;
+                            origin.X *= i;
+                            origin.Y *= j;
+
+                            Vector2 drawPosition = outlineDrawPosition;
+                            drawPosition.X += outlineSize.X * i;
+                            drawPosition.Y += outlineSize.Y * j;
+
+                            Rectangle cornerFrame = new Rectangle((int)((cornerSize.X + middlePartSize.X) * i), (int)((cornerSize.Y + middlePartSize.Y) * j), (int)cornerSize.X, (int)cornerSize.Y);
+
+                            Main.spriteBatch.Draw(tex, drawPosition, cornerFrame, Color.White, 0, origin, Vector2.One, 0, 0);
+                        }
+
+                    //Draw fillings
+
+                    //up and down
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Vector2 origin = Vector2.UnitY * cornerSize.Y * i;
+
+                        Vector2 drawPosition = outlineDrawPosition + Vector2.UnitX * cornerSize.X;
+                        drawPosition.Y += outlineSize.Y * i;
+
+                        Rectangle fillingFrame = new Rectangle((int)cornerSize.X + 1, (int)((cornerSize.Y + middlePartSize.Y) * i), (int)middlePartSize.X - 2, (int)cornerSize.Y);
+
+                        Main.spriteBatch.Draw(tex, drawPosition, fillingFrame, Color.White, 0, origin, new Vector2(insideSize.X / (float)fillingFrame.Width, 1f), 0, 0);
+                    }
+
+                    //left and right
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Vector2 origin = Vector2.UnitX * cornerSize.X * i;
+
+                        Vector2 drawPosition = outlineDrawPosition + Vector2.UnitY * cornerSize.Y;
+                        drawPosition.X += outlineSize.X * i;
+
+                        Rectangle fillingFrame = new Rectangle((int)((cornerSize.X + middlePartSize.X) * i), (int)cornerSize.Y + 1, (int)cornerSize.X, (int)middlePartSize.Y - 2);
+
+                        Main.spriteBatch.Draw(tex, drawPosition, fillingFrame, Color.White, 0, origin, new Vector2(1f, insideSize.Y / (float)fillingFrame.Height), 0, 0);
+                    }
+                }
             }
 
             // finally draw the text
@@ -455,32 +593,65 @@ namespace CalRemix.UI
         public static ScreenHelper WonderFlower = new ScreenHelper();
         public static ScreenHelper GonerFanny = new ScreenHelper();
         public static ScreenHelper Renault5 = new ScreenHelper();
+        public static ScreenHelper CrimSon = new ScreenHelper();
+        public static ScreenHelper TrapperBulbChan = new ScreenHelper();
 
         public override void OnInitialize()
         {
-            LoadScreenHelper(FannyTheFire, false, true, "FannyIdle")
+            LoadScreenHelper(FannyTheFire,"FannyIdle", true)
                 .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Thank you for the help, Fanny!");
+                .SetTextboxStyle("Thank you for the help, Fanny!")
+                .SetPositionData(false, 240);
             
-            LoadScreenHelper(EvilFanny, true, false, "EvilFannyIdle", distanceFromEdge: 120)
+            LoadScreenHelper(EvilFanny, "EvilFannyIdle")
                 .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
-                .SetAvailabilityCondition(() => Main.hardMode);
+                .SetAvailabilityCondition(() => Main.hardMode)
+                .SetPositionData(true, 120);
 
-            LoadScreenHelper(WonderFlower,  false, false, "TalkingFlower", verticalOffset: 0.3f, distanceFromEdge: 240)
+            LoadScreenHelper(WonderFlower,  "TalkingFlower")
                 .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f));
+                .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
+                .SetPositionData(false, 240, 0.37f);
 
-            LoadScreenHelper(GonerFanny, false, false, "FannyGoner", verticalOffset: 0.275f, distanceFromEdge: 840)
+            LoadScreenHelper(GonerFanny, "FannyGoner")
                 .SetVoiceStyle(ScreenHelperManager.HappySFX with { MaxInstances = 0 })
                 .SetTextboxStyle("     ", new HelperTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black))
-                .SetExtraAnimations(false, false, false);
+                .SetExtraAnimations(false, false, false)
+                .SetPositionData(false, 840, 0.35f);
 
-            LoadScreenHelper(Renault5, false, false, "Renault5", verticalOffset: 0.36f, distanceFromEdge: 220)
+            LoadScreenHelper(Renault5, "Renault5")
                 .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
                 .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
+                .SetTextboxTheme(new HelperTextboxTheme("Renault5_9Slice", new Vector2(77, 15)))
                 .SetExtraAnimations(true, false, true).
-                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment);
+                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment)
+                .SetPositionData(false, 220, 0.42f);
+
+            LoadScreenHelper(CrimSon, "CrimSonDefault")
+                .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
+                .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
+                SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135))
+                .SetPositionData(false, 240, 0.37f);
+
+            LoadScreenHelper(TrapperBulbChan, "TrapperDefault", false, new Vector2(96, 96))
+                .SetVoiceStyle(SoundID.LucyTheAxeTalk with { MaxInstances = 0 })
+                .SetTextboxStyle("Sugoi!!! Arigato Gozaimas!", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Trapper_Background", Vector2.Zero)).
+                SetExtraAnimations(false, false, false). //shes locked in her textbox
+                SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(640, 158), 465), 0, 0).
+                SetPositionData(new HelperPositionData(
+                    new Vector2(0.5f, 0.0f), //Anchored to top middle of screen
+                    new Vector2(-288, 0f),   //Offset so we're centered
+                    new Vector2(0f, 58f),   //Slides down when spawning
+                    new Vector2(-80, -128),   //Offset from b ottom of portrait to center of 
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    null,
+                    new Vector2(149, 12)
+                    ));
         }
 
         /// <summary>
@@ -493,16 +664,18 @@ namespace CalRemix.UI
         /// <param name="verticalOffset">How high up on the screen this fanny is</param>
         /// <param name="distanceFromEdge">How far away from the edge of the screen this fanny is</param>
         /// <returns></returns>
-        public ScreenHelper LoadScreenHelper(ScreenHelper helper, bool flipped, bool idlesInInventory, string emptyMessagePortrait, float verticalOffset = 0f, float distanceFromEdge = 240f)
+        public ScreenHelper LoadScreenHelper(ScreenHelper helper, string emptyMessagePortrait, bool idlesInInventory = false, Vector2? size = null)
         {
-            helper.Left.Set(-80, 1);
-            helper.Top.Set(-160, 1 - verticalOffset);
             helper.Height.Set(80, 0f);
             helper.Width.Set(80, 0f);
 
-            helper.flipped = flipped;
+            if (size != null)
+            {
+                helper.Height.Set(size.Value.X, 0f);
+                helper.Width.Set(size.Value.Y, 0f);
+            }
+
             helper.idlesInInventory = idlesInInventory;
-            helper.distanceFromEdge = distanceFromEdge;
             helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
 
             Append(helper);
@@ -616,6 +789,13 @@ namespace CalRemix.UI
                 SoundEngine.PlaySound(SoundID.Cockatiel);
                 SoundEngine.PlaySound(SoundID.DD2_GoblinScream);
                 SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion);
+
+                for (int i = 0; i < ScreenHelperManager.screenHelperMessages.Count; i++)
+                {
+                    HelperMessage msg = ScreenHelperManager.screenHelperMessages[i];
+                    msg.alreadySeen = false;
+                }
+
                 return;
             }
 
@@ -657,7 +837,7 @@ namespace CalRemix.UI
         /// </summary>
         public static Dictionary<string, ScreenHelperPortrait> Portraits = new Dictionary<string, ScreenHelperPortrait>();
 
-        public static bool fannyEnabled = true;
+        public static bool screenHelpersEnabled = true;
         public static int fannyTimesFrozen = 0;
         public static ScreenHelperSceneMetrics sceneMetrics;
         public static Rectangle screenRect;
@@ -685,8 +865,10 @@ namespace CalRemix.UI
             //LoadPityParty();
             LoadWonderFlowerMessages();
             LoadRenault5();
+            LoadCrimSon();
+            LoadTrapperBulbChan();
 
-            fannyEnabled = true;
+            screenHelpersEnabled = true;
             fannyTimesFrozen = 0;
             sceneMetrics = new ScreenHelperSceneMetrics();
         }
@@ -710,6 +892,12 @@ namespace CalRemix.UI
 
             //Renault 5
             ScreenHelperPortrait.LoadPortrait("Renault5", 1);
+
+            //Crim Son
+            ScreenHelperPortrait.LoadPortrait("CrimSonDefault", 1);
+
+            //Trapper bulb chan
+            ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
         }
 
         public override void PostSetupContent()
@@ -733,6 +921,10 @@ namespace CalRemix.UI
 
             UpdateLoreCommentTracking();
             UpdateMessages();
+
+            //Dont try speaking messages if fanny is not enabled
+            if (!screenHelpersEnabled)
+                return;
 
             //Don't even try looking for a new message if everyone is speaking already / On speak cooldown
             if (ScreenHelperUISystem.UIState.AnyAvailableScreenHelper())
@@ -971,6 +1163,7 @@ namespace CalRemix.UI
         public bool CantBeClickedOff { get; set; } //Defaults to false
         public bool PersistsThroughSaves { get; set; } //Defaults to true
         public bool IgnoreSpeakerSpecificCondition { get; set; } //Defaults to false
+        public bool NoCooldownAfterSpeaking { get; set; } //Defaults to false
 
         public ScreenHelperPortrait Portrait { get; set; } //The portrait used by the message
 
@@ -1061,6 +1254,12 @@ namespace CalRemix.UI
         {
             DesiredSpeaker = speakingHelper;
             IgnoreSpeakerSpecificCondition = ignoreHelperCondition;
+            return this;
+        }
+
+        public HelperMessage NoCooldown()
+        {
+            NoCooldownAfterSpeaking = true;
             return this;
         }
 
@@ -1255,15 +1454,32 @@ namespace CalRemix.UI
         /// Makes the desired <see cref="ScreenHelper"/> speak this message <br/>
         /// Sets the message duration, checks it off as seen, and calls the <see cref="OnMessageStart"/> events
         /// </summary>
-        public void PlayMessage(ScreenHelper fanny)
+        public void PlayMessage(ScreenHelper speaker)
         {
             TimeLeft = messageDuration + delayTime;
-            fanny.UsedMessage = this;
-            currentSpeaker = fanny;
+            speaker.UsedMessage = this;
+            currentSpeaker = speaker;
             alreadySeen = true;
 
-            //Recalculate the text as its played if we have dynamic text segments
-            if (textSegments.Count > 0)
+            bool needsReformatting = textSegments.Count > 0;
+
+            //if the helper has custom text, we change the formatting to match
+            if (speaker.textboxFormatting != null)
+            {
+                if (textSize != speaker.textboxFormatting.defaultTextSize)
+                {
+                    textSize = speaker.textboxFormatting.defaultTextSize;
+                    needsReformatting = true;
+                }
+                if (speaker.textboxFormatting.maximumWidth != 0 && speaker.textboxFormatting.maximumWidth != maxTextWidth)
+                {
+                    maxTextWidth = (int)speaker.textboxFormatting.maximumWidth;
+                    needsReformatting = true;
+                }
+            }
+
+            //Recalculate the text as its played if we have dynamic text segments, or if the speaker's custom formatting changed
+            if (needsReformatting)
                 FormatText(FontAssets.MouseText.Value, maxTextWidth);
 
             //Immediately play message start effects if the message doesnt have a delay
@@ -1365,8 +1581,18 @@ namespace CalRemix.UI
         /// <param name="word"></param>
         private void CheckWord(string word, float maxLineWidth, DynamicSpriteFont font, ref string formattedSetence, ref float currentLineLenght, float spaceWidth)
         {
+            //if the word is a linebreak, we just line break
+            if (word == "\n")
+            {
+                currentLineLenght = 0;
+                formattedSetence += "\n";
+                return;
+            }
+
+
             //Get the lenght of the word
             float wordLenght = font.MeasureString(word).X * textSize;
+
 
             //If adding the word doesn't make the line go over the max width, simply add the lenght of our last word (and the space) to the current line
             if (wordLenght + currentLineLenght <= maxLineWidth)
@@ -1428,7 +1654,90 @@ namespace CalRemix.UI
         }
     }
 
-    public struct HelperTextboxPalette
+    #region Data classes
+    public class HelperPositionData
+    {
+        public Vector2 percentAnchor;
+        public Vector2 pixelAnchor;
+        public Vector2 pixelOffset;
+
+        //Textbox stuff
+        public Vector2 textboxOffsetFromCharacter;
+        public Vector2 textSizeOffset;
+        public Vector2 textboxFadeInOffset;
+        public Vector2 textboxFadeOutOffset;
+        public Vector2 textboxTextOffset;
+
+        public Vector2 itemOffset;
+
+        public HelperPositionData(Vector2 percentAnchor, Vector2 pixelAnchor, Vector2 pixelOffset,
+            Vector2 textboxOffset, Vector2 offsetByTextSize, Vector2 textboxFadeInOffset, Vector2 textboxFadeOutOffset,
+            Vector2? itemOffset = null, Vector2? textboxTextOffset = null)
+        {
+            this.percentAnchor = percentAnchor;
+            this.pixelAnchor = pixelAnchor;
+            this.pixelOffset = pixelOffset;
+
+            textboxOffsetFromCharacter = textboxOffset;
+            textSizeOffset = offsetByTextSize;
+            this.textboxFadeInOffset = textboxFadeInOffset;
+            this.textboxFadeOutOffset = textboxFadeOutOffset;
+
+            this.itemOffset = itemOffset ?? new Vector2(0, -90);
+            this.textboxTextOffset = textboxTextOffset ?? Vector2.Zero;
+        }
+
+        public void SetPosition(ScreenHelper helper)
+        {
+            Vector2 pixelPosition = pixelAnchor + pixelOffset * MathF.Pow(helper.fadeIn, 0.4f);
+
+            helper.Left.Set(pixelPosition.X, percentAnchor.X);
+            helper.Top.Set(pixelPosition.Y, percentAnchor.Y);
+
+            helper.Recalculate();
+        }
+
+
+        public void SetTextboxPosition(ScreenHelperTextbox textbox)
+        {
+            ScreenHelper speaker = textbox.ParentSpeaker;
+
+            //Base position is obtained from the parent speakers position + some offset
+            Vector2 basePosition = speaker.BasePosition + textboxOffsetFromCharacter;
+
+            //Measure the text
+            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(speaker.UsedMessage.Text) * speaker.UsedMessage.textSize;
+
+            //Get the corner position by offsetting the corner by the text's size
+            //Can be modified so the text size affects or not the position
+            Vector2 cornerPosition = basePosition - textSize * textSizeOffset;
+
+            //Account for padding
+            cornerPosition -= Vector2.One * (textbox.backgroundPadding + textbox.outlineThickness);
+            //Fade out when the message is about to end
+            cornerPosition += textboxFadeOutOffset * MathF.Pow(Utils.GetLerpValue(30, 0, speaker.UsedMessage.TimeLeft, true), 1.6f);
+            //Fade in when the speaker appears
+            cornerPosition += textboxFadeInOffset * MathF.Pow(1 - speaker.fadeIn, 2f);
+
+            //Calculate the size of the final box
+            Vector2 boxSize = textSize + Vector2.One * (textbox.backgroundPadding + textbox.outlineThickness) * 2;
+            if (speaker.textboxFormatting != null)
+            {
+                boxSize.X = Math.Max(boxSize.X, speaker.textboxFormatting.minimumDimensions.X);
+                boxSize.Y = Math.Max(boxSize.Y, speaker.textboxFormatting.minimumDimensions.Y);
+            }
+
+            textbox.Width.Set(boxSize.X, 0);
+            textbox.Height.Set(boxSize.Y, 0);
+            textbox.Left.Set(cornerPosition.X, 0);
+            textbox.Top.Set(cornerPosition.Y, 0);
+        }
+    }
+
+    /// <summary>
+    /// Palette for the textbox's default appearance, drawn below textures from <see cref="HelperTextboxTheme"/>
+    /// </summary>
+    public class HelperTextboxPalette
     {
         public Color background = Color.SaddleBrown;
         public Color backgroundHover = Color.SaddleBrown;
@@ -1447,4 +1756,82 @@ namespace CalRemix.UI
             this.outline = outline;
         }
     }
+
+    /// <summary>
+    /// Texture theme for the textbox, including a 9 slice edge, and a background texture that can be animated
+    /// </summary>
+    public class HelperTextboxTheme
+    {
+        public Asset<Texture2D> border9Slice;
+        public Asset<Texture2D> backgroundFill;
+
+
+        public Vector2 border9SliceCornerSize;
+        public Vector2 backgroundPadding;
+
+        public Point backgroundFrameCount;
+        public int backgroundFrameTime;
+
+        private int bgAnimationFrameTotal;
+        private int bgAnimationFrame;
+        private int bgAnimationFrameCounter;
+
+        public HelperTextboxTheme(string border9SliceTexture, Vector2 border9SliceSize, string backgroundFill = null, Vector2? backgroundPadding = null, Point? backgroundFrameCount = null, int backgroundFrameTime = 1)
+        {
+            if (border9SliceTexture != null)
+            {
+                border9Slice = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Helper" + border9SliceTexture);
+                border9SliceCornerSize = border9SliceSize;
+            }
+
+            if (backgroundFill != null)
+            {
+                this.backgroundFill = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Helper" + backgroundFill);
+                this.backgroundFrameCount = backgroundFrameCount ?? new Point(1, 1);
+                this.backgroundFrameTime = backgroundFrameTime;
+
+                bgAnimationFrameTotal = this.backgroundFrameCount.X * this.backgroundFrameCount.Y;
+            }
+        }
+
+        public void Animate()
+        {
+            bgAnimationFrameCounter++;
+            if (bgAnimationFrameCounter >= backgroundFrameTime)
+            {
+                bgAnimationFrameCounter = 0;
+                bgAnimationFrame++;
+                if (bgAnimationFrame >= bgAnimationFrameTotal)
+                    bgAnimationFrame = 0;
+            }
+        }
+
+        public Rectangle GetFrame()
+        {
+            int frameX = bgAnimationFrame % backgroundFrameCount.X;
+            int frameY = bgAnimationFrame / backgroundFrameCount.Y;
+
+            return backgroundFill.Value.Frame(backgroundFrameCount.X, backgroundFrameCount.Y, frameX, frameY);
+        }
+    }
+
+    /// <summary>
+    /// Formatting information for the textbox, including default font size and minimum & maximum dimensions
+    /// </summary>
+    public class HelperTextboxFormatting
+    {
+        public Vector2 minimumDimensions;
+        public int maximumWidth;
+        public float defaultTextSize;
+
+
+        public HelperTextboxFormatting(Vector2 minimumDimensions, int maximumWidth, float defaultTextSize = 1f)
+        {
+            this.minimumDimensions = minimumDimensions;
+            this.maximumWidth = maximumWidth;
+            this.defaultTextSize = defaultTextSize;
+        }
+    }
+
+    #endregion
 }

@@ -297,7 +297,7 @@ namespace CalRemix
             }
             if (!Main.dedServ)
             {
-                if (ScreenHelperManager.fannyEnabled)
+                if (ScreenHelperManager.screenHelpersEnabled)
                 {
                     if (!roxm.alreadySeen)
                     {
@@ -338,7 +338,7 @@ namespace CalRemix
         {
             if (!Main.dedServ)
             {
-                if (ScreenHelperManager.fannyEnabled)
+                if (ScreenHelperManager.screenHelpersEnabled)
                 {
                     if (ModLoader.TryGetMod("OreExcavator", out _))
                     {

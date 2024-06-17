@@ -99,7 +99,7 @@ namespace CalRemix
             float wid = self.GetOuterDimensions().Width;
             // Elements larger than 500 pixels aren't frozen (or else you get a giant ice block covering your screen)
             // Fannies don't show up if disabled
-            if (wid < 500 && !((self is ScreenHelper || self is ScreenHelperTextbox) && !ScreenHelperManager.fannyEnabled) && (CalRemix.CalVal != null && self.GetType() != CalRemix.calvalFanny && self.GetType() != CalRemix.calvalFannyBox))
+            if (wid < 500 && !((self is ScreenHelper || self is ScreenHelperTextbox) && !ScreenHelperManager.screenHelpersEnabled) && (CalRemix.CalVal != null && self.GetType() != CalRemix.calvalFanny && self.GetType() != CalRemix.calvalFannyBox))
             {
                 spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
             }
