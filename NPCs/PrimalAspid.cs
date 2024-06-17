@@ -26,10 +26,10 @@ namespace CalRemix.NPCs
 
             if (Main.dedServ)
                 return;
-            FannyManager.LoadFannyMessage(new FannyMessage("Aspid",
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Aspid",
                 "Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!",
-                "Awooga",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.HasPlayerTarget),
+                "FannyAwooga",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.HasPlayerTarget),
                 cooldown: 3));
         }
 

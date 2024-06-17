@@ -65,17 +65,17 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             Main.npcFrameCount[Type] = 4;
             if (Main.dedServ)
                 return;
-            FannyMessage f = new FannyMessage("Oxygen",
+            HelperMessage f = new HelperMessage("Oxygen",
                 "Oxygen is quite the fickle foe. Many have died foolishly trying to take a crack at it on the surface. However, that glass shell doesn't seem to be built for pressure. Try leading it to the bottom of the Abyss!",
-                "Idle",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
-            FannyManager.LoadFannyMessage(f);
-            FannyMessage e = new FannyMessage("OxygenEvil",
+                "FannyIdle",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
+            ScreenHelperMessageManager.LoadFannyMessage(f);
+            HelperMessage e = new HelperMessage("OxygenEvil",
                 "Ok look, Fanny may be an imbecile, but if you're gonna take any words of his to heart it should be these. Leading it to the abyss is the only way you're defeating this idiotic ball.",
-                "EvilIdle",
-                FannyMessage.AlwaysShow).SpokenByEvilFanny().NeedsActivation(2f);
+                "EvilFannyIdle",
+                HelperMessage.AlwaysShow).SpokenByEvilFanny().NeedsActivation(2f);
             f.AddEndEvent(e.ActivateMessage);
-            FannyManager.LoadFannyMessage(e);
+            ScreenHelperMessageManager.LoadFannyMessage(e);
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
         }
 

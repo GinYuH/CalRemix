@@ -21,14 +21,14 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         {
             get
             {
-                yield return typeof(FannyMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
+                yield return typeof(HelperMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
                 yield return typeof(Func<IEnumerable<NPC>, bool>); // The condition. The IEnumerable<NPC> represents currently on-screen NPCs.
             }
         }
 
         protected override object ProcessGeneric(params object[] args)
         {
-            FannyMessage message = (FannyMessage)args[0];
+            HelperMessage message = (HelperMessage)args[0];
             var appearCondition = (Func<IEnumerable<NPC>, bool>)args[1];
             message.Conditions += metrics => appearCondition(metrics.onscreenNPCs);
 

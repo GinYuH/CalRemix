@@ -21,14 +21,14 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         {
             get
             {
-                yield return typeof(FannyMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
+                yield return typeof(HelperMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
                 yield return typeof(float); // The dialog duration in seconds. This defaults to 5 seconds if this mod call is not used.
             }
         }
 
         protected override object ProcessGeneric(params object[] args)
         {
-            FannyMessage message = (FannyMessage)args[0];
+            HelperMessage message = (HelperMessage)args[0];
             float dialogDuration = (float)args[1];
             message.messageDuration = CalamityUtils.SecondsToFrames(dialogDuration);
 

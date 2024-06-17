@@ -37,10 +37,10 @@ namespace CalRemix.NPCs.Minibosses
 
             if (Main.dedServ)
                 return;
-            FannyManager.LoadFannyMessage(new FannyMessage("CyberDraedonFight",
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("CyberDraedonFight",
                 "It appears you have alerted the high urgency security systems within that projector and summoned the nefarious Cyber Draedon. He's a real fickle foe who is able to deal percentage-based damage, meaning he'll always be a threat no matter how good your defenses and health are!",
-                "Nuhuh",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                "FannyNuhuh",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
         public override bool SpecialOnKill()
         {

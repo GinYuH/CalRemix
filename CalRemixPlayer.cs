@@ -459,9 +459,9 @@ namespace CalRemix
                 if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
             }
-            if (FannyUIState.GonerFanny != null)
+            if (ScreenHelpersUIState.GonerFanny != null)
 			{
-				if (FannyUIState.GonerFanny.Speaking && Main.myPlayer == Player.whoAmI)
+				if (ScreenHelpersUIState.GonerFanny.Speaking && Main.myPlayer == Player.whoAmI)
 					Main.musicVolume = 0;
 			}
             if (CalRemixWorld.permanenthealth)

@@ -97,7 +97,7 @@ namespace CalRemix
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
-        public static FannyMessage CystMessage;
+        public static HelperMessage CystMessage;
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
@@ -150,9 +150,9 @@ namespace CalRemix
         {
             if (!Main.dedServ)
             {
-                CystMessage = new FannyMessage("CystDeath", "See!", "",
-                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
-                FannyManager.LoadFannyMessage(CystMessage);
+                CystMessage = new HelperMessage("CystDeath", "See!", "",
+                HelperMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+                ScreenHelperMessageManager.LoadFannyMessage(CystMessage);
             }
         }
         public override bool PreAI(NPC npc)
@@ -1121,11 +1121,11 @@ namespace CalRemix
             {
                 if (npc.type == NPCID.WallofFlesh && !Main.hardMode)
                 {
-                    if (!FannyManager.fannyEnabled)
+                    if (!ScreenHelperMessageManager.fannyEnabled)
                     {
                         // he's defrosting!
-                        FannyManager.fannyEnabled = true;
-                        FannyManager.fannyTimesFrozen++;
+                        ScreenHelperMessageManager.fannyEnabled = true;
+                        ScreenHelperMessageManager.fannyTimesFrozen++;
                         Anomaly109UI.fannyFreezeTime = 0;
                     }
                     CalRemixWorld.ShrineTimer = 3000;
@@ -1145,8 +1145,8 @@ namespace CalRemix
         {
             vBurn = false;
 
-            if (npc.Hitbox.Intersects(FannyManager.screenRect))
-                FannyManager.sceneMetrics.onscreenNPCs.Add(npc);
+            if (npc.Hitbox.Intersects(ScreenHelperMessageManager.screenRect))
+                ScreenHelperMessageManager.sceneMetrics.onscreenNPCs.Add(npc);
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {

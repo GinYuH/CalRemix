@@ -20,10 +20,10 @@ namespace CalRemix.NPCs
 
             if (Main.dedServ)
                 return;
-            FannyManager.LoadFannyMessage(new FannyMessage("AuricSlime",
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("AuricSlime",
                 "Look! A rare Auric Slime! It's fascinating how fascinated that fascinating humans are with these fascinating creatures. Such is the inner-machinations of the natural animalistic instinct to complete a collection.",
-                "Awooga",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                "FannyAwooga",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
 
         public override void SetDefaults()

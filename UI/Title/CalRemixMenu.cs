@@ -95,7 +95,7 @@ namespace CalRemix.UI.Title
                 int direction = (rand) ? 0 : 1;
                 Vector2 velocity = (rand) ? -Vector2.UnitX : Vector2.UnitX;
 
-                bool evilFanny = !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyEvilIdle").Value) && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode) || Main.WorldList.Exists((WorldFileData w) => w.ZenithWorld));
+                bool evilFanny = !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value) && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode) || Main.WorldList.Exists((WorldFileData w) => w.ZenithWorld));
                 if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value;
@@ -121,7 +121,7 @@ namespace CalRemix.UI.Title
                 }
                 else if (rand2 < 4 && evilFanny)
                 {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyEvilIdle").Value;
+                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value;
                     direction = (rand) ? 1 : 0;
                 }
                 else if (rand2 == 4 && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/OnyxKinsman").Value))

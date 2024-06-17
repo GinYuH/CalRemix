@@ -21,7 +21,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
 
         protected override Tuple<bool, int> ProcessGeneric(params object[] args)
         {
-            return new(FannyManager.ReadLoreItem, FannyManager.previousHoveredItem);
+            return new(ScreenHelperMessageManager.ReadLoreItem, ScreenHelperMessageManager.previousHoveredItem);
         }
     }
 }

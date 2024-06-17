@@ -35,7 +35,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
             string identifier = (string)args[0];
             string dialog = (string)args[1];
             string portrait = (string)args[2];
-            return new FannyMessage(identifier, dialog, portrait);
+            return new HelperMessage(identifier, dialog, portrait);
         }
     }
 }

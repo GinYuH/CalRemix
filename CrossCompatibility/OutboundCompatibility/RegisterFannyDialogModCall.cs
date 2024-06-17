@@ -20,14 +20,14 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         {
             get
             {
-                yield return typeof(FannyMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
+                yield return typeof(HelperMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
             }
         }
 
         protected override object Process(params object[] args)
         {
-            FannyMessage message = (FannyMessage)args[0];
-            FannyManager.LoadFannyMessage(message);
+            HelperMessage message = (HelperMessage)args[0];
+            ScreenHelperMessageManager.LoadFannyMessage(message);
 
             return null;
         }

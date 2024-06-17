@@ -22,14 +22,14 @@ namespace CalRemix.NPCs
 
             if (Main.dedServ)
                 return;
-            FannyManager.LoadFannyMessage(new FannyMessage("Barocrab",
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("Barocrab",
                 "Oooh, a Barocrab! You should go approach it and say hello! I heard they’re friendly and know of an ancient art called... the \"Crab Secret\".",
-                "Awooga",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
-            FannyManager.LoadFannyMessage(new FannyMessage("BarocrabRun",
+                "FannyAwooga",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("BarocrabRun",
                 "Oh no it ran away! Now you'll never be able to learn the Crab Secret... Well, at least not until another one appears.",
-                "Sob",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.aiStyle == NPCAIStyleID.Worm), needsToBeClickedOff: false));
+                "FannySob",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.aiStyle == NPCAIStyleID.Worm), needsToBeClickedOff: false));
         }
 
         [JITWhenModsEnabled("CalamityMod")]

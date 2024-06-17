@@ -53,10 +53,10 @@ namespace CalRemix.NPCs.TownNPCs
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
             if (Main.dedServ)
                 return;
-            FannyManager.LoadFannyMessage(new FannyMessage("OgslimeAwakening",
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("OgslimeAwakening",
                 "O-Ogslime!?!?",
-                "Awooga",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                "FannyAwooga",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
 
         public override void SetDefaults()

@@ -29,8 +29,8 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         protected override object ProcessGeneric(params object[] args)
         {
             int itemID = (int)args[0];
-            if (!FannyManager.manuallyDefinedLoreItems.Contains(itemID))
-                FannyManager.manuallyDefinedLoreItems.Add(itemID);
+            if (!ScreenHelperMessageManager.manuallyDefinedLoreItems.Contains(itemID))
+                ScreenHelperMessageManager.manuallyDefinedLoreItems.Add(itemID);
 
             return null;
         }

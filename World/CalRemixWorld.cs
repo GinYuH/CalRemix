@@ -369,8 +369,8 @@ namespace CalRemix
             tag["hydrolocationY"] = hydrogenLocation.Y;
             tag["oxytime"] = oxydayTime;
 
-            tag["109fanny"] = FannyManager.fannyEnabled;
-            tag["109fannyfreeze"] = FannyManager.fannyTimesFrozen;
+            tag["109fanny"] = ScreenHelperMessageManager.fannyEnabled;
+            tag["109fannyfreeze"] = ScreenHelperMessageManager.fannyTimesFrozen;
 
         }
 
@@ -423,8 +423,8 @@ namespace CalRemix
             hydrogenLocation.Y = tag.Get<Single>("hydrolocationY");
             oxydayTime = tag.Get<Int32>("oxytime");
 
-            FannyManager.fannyEnabled = tag.Get<bool>("109fanny");
-            FannyManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
+            ScreenHelperMessageManager.fannyEnabled = tag.Get<bool>("109fanny");
+            ScreenHelperMessageManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -474,8 +474,8 @@ namespace CalRemix
             writer.Write(hydrogenLocation.Y);
             writer.Write(oxydayTime);
 
-            writer.Write(FannyManager.fannyEnabled);
-            writer.Write(FannyManager.fannyTimesFrozen);
+            writer.Write(ScreenHelperMessageManager.fannyEnabled);
+            writer.Write(ScreenHelperMessageManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
         }
 
@@ -526,8 +526,8 @@ namespace CalRemix
             hydrogenLocation.Y = reader.ReadSingle();
             oxydayTime = reader.ReadInt32();
 
-            FannyManager.fannyEnabled = reader.ReadBoolean();
-            FannyManager.fannyTimesFrozen = reader.ReadInt32();
+            ScreenHelperMessageManager.fannyEnabled = reader.ReadBoolean();
+            ScreenHelperMessageManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
         }
 
@@ -745,7 +745,7 @@ namespace CalRemix
             }
             if (CalRemix.CalVal != null && ((DateTime.Now.Day == 1 && DateTime.Now.Month == 4) || (DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld)))
             {
-                FannyManager.fannyEnabled = false;
+                ScreenHelperMessageManager.fannyEnabled = false;
             }
             if (SubworldSystem.IsActive<FannySubworld>())
             {

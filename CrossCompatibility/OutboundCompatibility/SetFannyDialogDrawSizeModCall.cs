@@ -21,7 +21,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         {
             get
             {
-                yield return typeof(FannyMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
+                yield return typeof(HelperMessage); // The dialog instance. This accepts the boxed object variant from CreateFannyDialog.
                 yield return typeof(int); // The max dialog width in pixels. Defaults to 380 without this mod call.
                 yield return typeof(float); // The font size factor. Defaults to 1 without this mod call.
             }
@@ -29,7 +29,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
 
         protected override object ProcessGeneric(params object[] args)
         {
-            FannyMessage message = (FannyMessage)args[0];
+            HelperMessage message = (HelperMessage)args[0];
             int dialogWidth = (int)args[1];
             float fontSizeFactor = (float)args[2];
             message.maxTextWidth = dialogWidth;

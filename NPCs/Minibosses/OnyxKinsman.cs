@@ -35,10 +35,10 @@ namespace CalRemix.NPCs.Minibosses
 
             if (Main.dedServ)
                 return;
-            FannyManager.LoadFannyMessage(new FannyMessage("KinsmenFight",
+            ScreenHelperMessageManager.LoadFannyMessage(new HelperMessage("KinsmenFight",
                 "Quick! Get him! He's escaping with a one of a kind item!",
-                "Awooga",
-                (FannySceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                "FannyAwooga",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
         }
         public override bool SpecialOnKill()
         {

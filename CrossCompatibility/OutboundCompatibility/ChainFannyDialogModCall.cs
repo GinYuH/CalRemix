@@ -20,16 +20,16 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         {
             get
             {
-                yield return typeof(FannyMessage); // The dialog which will chain into the next message 
-                yield return typeof(FannyMessage); // The dialog to chained after the previous message
+                yield return typeof(HelperMessage); // The dialog which will chain into the next message 
+                yield return typeof(HelperMessage); // The dialog to chained after the previous message
                 yield return typeof(float); // The appear delay, in seconds.
             }
         }
 
         protected override object ProcessGeneric(params object[] args)
         {
-            FannyMessage parent = (FannyMessage)args[0];
-            FannyMessage message = (FannyMessage)args[1];
+            HelperMessage parent = (HelperMessage)args[0];
+            HelperMessage message = (HelperMessage)args[1];
             float appearDelay = (float)args[2];
 
             // Apply activation requirements relative to the parent message.

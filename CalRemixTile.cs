@@ -30,30 +30,30 @@ namespace CalRemix
 	{
 		private int berryCount;
         private int cosmicCount;
-        public static FannyMessage roxm;
-        public static FannyMessage KinsmanMessage;
-        public static FannyMessage MineMessage;
-        public static FannyMessage GrimeMessage;
+        public static HelperMessage roxm;
+        public static HelperMessage KinsmanMessage;
+        public static HelperMessage MineMessage;
+        public static HelperMessage GrimeMessage;
 
         public override void SetStaticDefaults()
         {
             if (Main.dedServ)
                 return;
-            roxm = new FannyMessage("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "Awooga",
-                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
-            KinsmanMessage = new FannyMessage("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "Nuhuh",
-                FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
-            GrimeMessage = new FannyMessage("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "Nuhuh",
-            FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            roxm = new HelperMessage("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "FannyAwooga",
+                HelperMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            KinsmanMessage = new HelperMessage("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "FannyNuhuh",
+                HelperMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
+            GrimeMessage = new HelperMessage("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "FannyNuhuh",
+            HelperMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation();
             if (ModLoader.TryGetMod("OreExcavator", out _))
             {
-                MineMessage = new FannyMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "Nuhuh",
-                    FannyMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation().SetHoverTextOverride("Sure Fanny, I'll do that right now!");
-                FannyManager.LoadFannyMessage(MineMessage);
+                MineMessage = new HelperMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "FannyNuhuh",
+                    HelperMessage.AlwaysShow, onlyPlayOnce: true).NeedsActivation().SetHoverTextOverride("Sure Fanny, I'll do that right now!");
+                ScreenHelperMessageManager.LoadFannyMessage(MineMessage);
             }
-            FannyManager.LoadFannyMessage(roxm);
-            FannyManager.LoadFannyMessage(KinsmanMessage);
-            FannyManager.LoadFannyMessage(GrimeMessage);
+            ScreenHelperMessageManager.LoadFannyMessage(roxm);
+            ScreenHelperMessageManager.LoadFannyMessage(KinsmanMessage);
+            ScreenHelperMessageManager.LoadFannyMessage(GrimeMessage);
         }
 
 
@@ -301,7 +301,7 @@ namespace CalRemix
             }
             if (!Main.dedServ)
             {
-                if (FannyManager.fannyEnabled)
+                if (ScreenHelperMessageManager.fannyEnabled)
                 {
                     if (!roxm.alreadySeen)
                     {
@@ -342,7 +342,7 @@ namespace CalRemix
         {
             if (!Main.dedServ)
             {
-                if (FannyManager.fannyEnabled)
+                if (ScreenHelperMessageManager.fannyEnabled)
                 {
                     if (ModLoader.TryGetMod("OreExcavator", out _))
                     {
