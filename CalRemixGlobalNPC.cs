@@ -150,8 +150,7 @@ namespace CalRemix
         {
             if (!Main.dedServ)
             {
-                CystMessage = new HelperMessage("CystDeath", "See!", "").NeedsActivation();
-                ScreenHelperManager.LoadMessage(CystMessage);
+                CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
             }
         }
         public override bool PreAI(NPC npc)

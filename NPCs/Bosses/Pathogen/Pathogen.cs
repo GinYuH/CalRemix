@@ -52,10 +52,10 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             DisplayName.SetDefault("Pathogen");
             if (Main.dedServ)
                 return;
-            ScreenHelperManager.LoadMessage(new HelperMessage("Pathogen",
+            HelperMessage.New("Pathogen",
                 "It seems through your efforts, you've awoken Pathogen! I hope you've been helping the viruses, or you'll be in a sick situation! and not in the good way!",
                 "FannyAwooga",
-                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
         }
 
         public override void SetDefaults()

@@ -23,10 +23,10 @@ namespace CalRemix.NPCs
 
             if (Main.dedServ)
                 return;
-            ScreenHelperManager.LoadMessage(new HelperMessage("BananaClown",
+            HelperMessage.New("BananaClown",
                 "Wuh oh! A Banana Clown! Don't get too close to them or you'll go bananas cleaning up the terrain damage they cause!",
                 "FannyNuhuh",
-                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
         }
 
         public override void SetDefaults()

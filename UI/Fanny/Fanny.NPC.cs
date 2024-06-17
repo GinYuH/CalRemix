@@ -15,52 +15,52 @@ namespace CalRemix.UI
     {
         public static void LoadNPCMessages()
         {
-            screenHelperMessages.Add(new HelperMessage("God", "Holy sugar honey iced tea! I-is that.. No! It can’t be.. Is that a real GOD?! Oh flapjacks.. you better watch out, $0! That one is a real toughie!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1500000) && scene.onscreenNPCs.Any(n => !n.friendly && !n.townNPC && !n.dontTakeDamage && !n.SpawnedFromStatue)).SetHoverTextOverride("Oh my! I'll make sure to watch out, Fanny!").AddDynamicText(HelperMessage.GetPlayerName));
+            HelperMessage.New("God", "Holy sugar honey iced tea! I-is that.. No! It can’t be.. Is that a real GOD?! Oh flapjacks.. you better watch out, $0! That one is a real toughie!",
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1500000) && scene.onscreenNPCs.Any(n => !n.friendly && !n.townNPC && !n.dontTakeDamage && !n.SpawnedFromStatue)).SetHoverTextOverride("Oh my! I'll make sure to watch out, Fanny!").AddDynamicText(HelperMessage.GetPlayerName);
 
-            screenHelperMessages.Add(new HelperMessage("Bee", "According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyways. Because bees don't care what humans think is impossible.",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Bee || n.type == NPCID.BeeSmall)));
+            HelperMessage.New("Bee", "According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyways. Because bees don't care what humans think is impossible.",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Bee || n.type == NPCID.BeeSmall));
 
-            screenHelperMessages.Add(new HelperMessage("WulfrumPylone", "Woah, you hear that? No? Well it sounded like something big... we should get it's attention. A dose of some of that tower over there's energy in a special chest might be just the motivation it needs to come to the surface!",
+            screenHelperMessages.Add(HelperMessage.New("WulfrumPylone", "Woah, you hear that? No? Well it sounded like something big... we should get it's attention. A dose of some of that tower over there's energy in a special chest might be just the motivation it needs to come to the surface!",
                 "FannyIdle",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WulfrumAmplifier>() && !RemixDowned.downedExcavator), onlyPlayOnce: false, cooldown: 2400).AddItemDisplay(ItemID.LivingWoodChest));
 
-            screenHelperMessages.Add(new HelperMessage("Cysts", "That pimple thing looks useless, but it drops a very useful material. Please kill it!",
+            screenHelperMessages.Add(HelperMessage.New("Cysts", "That pimple thing looks useless, but it drops a very useful material. Please kill it!",
                 "FannyAwooga",
                 (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<HiveTumor>() || n.type == ModContent.NPCType<PerforatorCyst>())));
 
-            screenHelperMessages.Add(new HelperMessage("Anauwu", "I sense an ominous presence. I think the best course of action here would be to kill everything you see. If something is dead it can't hurt you!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<LeviathanStart>())));
+            HelperMessage.New("Anauwu", "I sense an ominous presence. I think the best course of action here would be to kill everything you see. If something is dead it can't hurt you!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<LeviathanStart>()));
 
-            screenHelperMessages.Add(new HelperMessage("Fairy", "That thing is hurting my eyes! Kill it, quick!",
-                "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.EmpressButterfly)));
+            HelperMessage.New("Fairy", "That thing is hurting my eyes! Kill it, quick!",
+                "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.EmpressButterfly));
 
-            screenHelperMessages.Add(new HelperMessage("Cultists", "Looks like some blue robe-wearing hooligans are worshiping a coin! Try not to interrupt them, they seem to be having a good time.",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.CultistDevote)));
+            HelperMessage.New("Cultists", "Looks like some blue robe-wearing hooligans are worshiping a coin! Try not to interrupt them, they seem to be having a good time.",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.CultistDevote));
 
-            screenHelperMessages.Add(new HelperMessage("AncientDom", "Who is this guy???",
-                "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.AncientCultistSquidhead)));
+            HelperMessage.New("AncientDom", "Who is this guy???",
+                "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.AncientCultistSquidhead));
 
-            screenHelperMessages.Add(new HelperMessage("Crawltipede", "Did you know that those big worms can only target you when you're on the ground? Keep flying and you're untouchable!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.SolarCrawltipedeHead)));
+            HelperMessage.New("Crawltipede", "Did you know that those big worms can only target you when you're on the ground? Keep flying and you're untouchable!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.SolarCrawltipedeHead));
 
-            screenHelperMessages.Add(new HelperMessage("Bloodworm", "Crush it under your boot.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BloodwormNormal>() || n.type == ModContent.NPCType<BloodwormFleeing>())));
+            HelperMessage.New("Bloodworm", "Crush it under your boot.",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BloodwormNormal>() || n.type == ModContent.NPCType<BloodwormFleeing>()));
 
-            screenHelperMessages.Add(new HelperMessage("Wolf", "Aw look a cute wolf! You can extract valuable Coyote Venom from their lifeless corpses in order to make some neat ice items.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Wolf)).AddItemDisplay(ModContent.ItemType<CoyoteVenom>()));
+            HelperMessage.New("Wolf", "Aw look a cute wolf! You can extract valuable Coyote Venom from their lifeless corpses in order to make some neat ice items.",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Wolf)).AddItemDisplay(ModContent.ItemType<CoyoteVenom>());
 
-            screenHelperMessages.Add(new HelperMessage("Dungeondie", "Oh, it appears my hack didn't work.",
-                "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead));
+            HelperMessage.New("Dungeondie", "Oh, it appears my hack didn't work.",
+                "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead);
 
-            screenHelperMessages.Add(new HelperMessage("AnglerTalk", "Look at his shit eating grin. He knows there is nothing you can do to him. He's bullying you, and you are helpless. Kill him. Kill him now. He won't see death coming.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?").SpokenByEvilFanny());
+            HelperMessage.New("AnglerTalk", "Look at his shit eating grin. He knows there is nothing you can do to him. He's bullying you, and you are helpless. Kill him. Kill him now. He won't see death coming.",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?").SpokenByEvilFanny();
 
-            screenHelperMessages.Add(new HelperMessage("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!"));
+            HelperMessage.New("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!");
 
-            screenHelperMessages.Add(new HelperMessage("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "Fargowiltas", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!"));
+            HelperMessage.New("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "Fargowiltas", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!");
 
 
             int num = Main.rand.Next(0, int.MaxValue);
@@ -80,8 +80,8 @@ namespace CalRemix.UI
                 9 => "centuries",
                 _ => "millenia"
             };
-            screenHelperMessages.Add(new HelperMessage("UpdateTime", "Wondering when the next update is? I know! I know! It's in " + num + " " + timeType + "!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Cnidrion>())).SetHoverTextOverride("Wow! That sure is a while Fanny!"));
+            HelperMessage.New("UpdateTime", "Wondering when the next update is? I know! I know! It's in " + num + " " + timeType + "!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Cnidrion>())).SetHoverTextOverride("Wow! That sure is a while Fanny!");
         }
     }
 }

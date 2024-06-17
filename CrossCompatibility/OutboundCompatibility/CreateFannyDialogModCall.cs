@@ -35,7 +35,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
             string identifier = (string)args[0];
             string dialog = (string)args[1];
             string portrait = (string)args[2];
-            return new HelperMessage(identifier, dialog, portrait);
+            return HelperMessage.New(identifier, dialog, portrait);
         }
     }
 }

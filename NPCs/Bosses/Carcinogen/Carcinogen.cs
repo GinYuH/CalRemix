@@ -42,10 +42,10 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             DisplayName.SetDefault("Carcinogen");
             if (Main.dedServ)
                 return;
-            ScreenHelperManager.LoadMessage(new HelperMessage("Carcinogen",
+            HelperMessage.New("Carcinogen",
                 "A giant floating chunk of asbestos with cigars orbitting it? Now I've seen it all...",
                 "FannyAwooga",
-                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)).SetHoverTextOverride("Indeed Fanny, Indeed."));
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)).SetHoverTextOverride("Indeed Fanny, Indeed.");
         }
 
         public override void SetDefaults()

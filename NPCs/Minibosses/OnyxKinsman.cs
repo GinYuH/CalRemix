@@ -35,10 +35,10 @@ namespace CalRemix.NPCs.Minibosses
 
             if (Main.dedServ)
                 return;
-            ScreenHelperManager.LoadMessage(new HelperMessage("KinsmenFight",
+            HelperMessage.New("KinsmenFight",
                 "Quick! Get him! He's escaping with a one of a kind item!",
                 "FannyAwooga",
-                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type)));
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
         }
         public override bool SpecialOnKill()
         {

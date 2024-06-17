@@ -12,15 +12,13 @@ namespace CalRemix.UI
 
         public static void LoadWonderFlowerMessages()
         {
-            HelperMessage wonderWings = new HelperMessage("Wonder_Wings", "Onward and upward!",
-                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.wingTimeMax > 0, 15, onlyPlayOnce: true, displayOutsideInventory: true, needsToBeClickedOff: true, maxWidth: 500)
+            HelperMessage.New("Wonder_Wings", "Onward and upward!",
+                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.wingTimeMax > 0, 15, maxWidth: 500)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
-            screenHelperMessages.Add(wonderWings);
 
-            HelperMessage wonderTracers = new HelperMessage("Wonder_Tracers", "Onward and upward... and sideward!",
-                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<TracersCelestial>()) || Main.LocalPlayer.equippedWings?.type == ModContent.ItemType<TracersCelestial>(), 15, onlyPlayOnce: true, displayOutsideInventory: true, needsToBeClickedOff: true, maxWidth: 500)
+            HelperMessage.New("Wonder_Tracers", "Onward and upward... and sideward!",
+                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<TracersCelestial>()) || Main.LocalPlayer.equippedWings?.type == ModContent.ItemType<TracersCelestial>(), 15, maxWidth: 500)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
-            screenHelperMessages.Add(wonderTracers);
         }
     }
 }

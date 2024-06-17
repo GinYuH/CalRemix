@@ -498,8 +498,6 @@ namespace CalRemix.UI
 
 
             helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
-            //removes the empty message we just created from the list
-            ScreenHelperManager.screenHelperMessages.RemoveAt(ScreenHelperManager.screenHelperMessages.Count - 1);
 
             return helper;
         }
@@ -691,17 +689,6 @@ namespace CalRemix.UI
 
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);
-        }
-
-        /// <summary>
-        /// Registers a message for a screen helper to speak
-        /// You can either provide a condition to the message, in which case the message will automatically play when the condition is met <br/>
-        /// Alternatively, you could cache the message, and play it yourself when needed using <see cref="ScreenHelper.TalkAbout(HelperMessage)"/>
-        /// </summary>
-        public static HelperMessage LoadMessage(HelperMessage message)
-        {
-            screenHelperMessages.Add(message);
-            return message;
         }
 
         public override void PostSetupContent()
@@ -961,8 +948,10 @@ namespace CalRemix.UI
 
         public List<DynamicHelperMessageSegments> textSegments = new List<DynamicHelperMessageSegments>();
 
-
-        public HelperMessage(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
+        /// <summary>
+        /// DONT USE THIS. It doesnt automatically load the message!
+        /// </summary>
+        internal HelperMessage(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
             //Unique identifier for saving data
             Identifier = identifier;
@@ -992,14 +981,38 @@ namespace CalRemix.UI
             DesiredSpeaker = ScreenHelpersUIState.FannyTheFire;
 
 
-            //Adds the message to the list
-            ScreenHelperManager.screenHelperMessages.Add(this);
         }
 
         /// <summary>
-        /// Makes the message be spoken by evil fanny
+        /// Creates a new helper message and registers it in <see cref="ScreenHelperManager.screenHelperMessages"/>
         /// </summary>
-        public HelperMessage SpokenByEvilFanny(bool ignoreHardmodeUnlockCondition = false)
+        /// <param name="identifier"></param>
+        /// <param name="message"></param>
+        /// <param name="portrait"></param>
+        /// <param name="condition"></param>
+        /// <param name="duration"></param>
+        /// <param name="cooldown"></param>
+        /// <param name="displayOutsideInventory"></param>
+        /// <param name="onlyPlayOnce"></param>
+        /// <param name="needsToBeClickedOff"></param>
+        /// <param name="persistsThroughSaves"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="fontSize"></param>
+        /// <returns></returns>
+        public static HelperMessage New(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
+        {
+            HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, needsToBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
+
+            //Adds the message to the list
+            ScreenHelperManager.screenHelperMessages.Add(msg);
+
+            return msg;
+        }
+
+            /// <summary>
+            /// Makes the message be spoken by evil fanny
+            /// </summary>
+            public HelperMessage SpokenByEvilFanny(bool ignoreHardmodeUnlockCondition = false)
         {
             DesiredSpeaker = ScreenHelpersUIState.EvilFanny;
             IgnoreSpeakerSpecificCondition = ignoreHardmodeUnlockCondition;
@@ -1118,7 +1131,8 @@ namespace CalRemix.UI
         }
 
         /// <summary>
-        /// Sets a message to be played after another message ends. Can be confured to chain it after the other message begins playing instead
+        /// Sets a message to be played after another message ends (By default, uses the last created message)<br/>
+        /// Can be configured to chain it after the other message begins playing instead
         /// </summary>
         /// <param name="chainFrom">The message that this message is spoken after. If null, uses the last loaded message</param>
         /// <param name="delay">The delay between the first message being spoken, and this one appearing</param>

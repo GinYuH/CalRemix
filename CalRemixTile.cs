@@ -39,21 +39,17 @@ namespace CalRemix
         {
             if (Main.dedServ)
                 return;
-            roxm = new HelperMessage("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "FannyAwooga")
+            roxm = HelperMessage.New("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "FannyAwooga")
                 .NeedsActivation();
-            KinsmanMessage = new HelperMessage("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "FannyNuhuh")
+            KinsmanMessage = HelperMessage.New("Kinsman", "Watch out! I'm sensing a strange elemental field coming from that onyx drill! Brace yourself for a fight!", "FannyNuhuh")
                 .NeedsActivation();
-            GrimeMessage = new HelperMessage("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "FannyNuhuh")
+            GrimeMessage = HelperMessage.New("Grimesand", "See that weird dark splotch over there? That is Grimesand, it's pretty grimey. You can throw evil materials onto it for epic rewards or lead enemies into it for scary stuff to happen.", "FannyNuhuh")
                 .NeedsActivation();
             if (ModLoader.TryGetMod("OreExcavator", out _))
             {
-                MineMessage = new HelperMessage("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "FannyNuhuh")
+                MineMessage = HelperMessage.New("OreExc", "Gee, you're a real excavating monster! If you really plan on mining this much, why don't you rebind your Excavation key to LeftClick? It'll save you a lot of unnecessary finger movement!", "FannyNuhuh")
                     .NeedsActivation().SetHoverTextOverride("Sure Fanny, I'll do that right now!");
-                ScreenHelperManager.LoadMessage(MineMessage);
             }
-            ScreenHelperManager.LoadMessage(roxm);
-            ScreenHelperManager.LoadMessage(KinsmanMessage);
-            ScreenHelperManager.LoadMessage(GrimeMessage);
         }
 
 
