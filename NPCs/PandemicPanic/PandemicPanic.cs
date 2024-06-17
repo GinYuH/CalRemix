@@ -108,9 +108,14 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public static bool? FinalSide = null;
 
+        public static List<NPC> ActiveNPCs = new List<NPC>();
+
+        public static List<Projectile> ActiveProjectiles = new List<Projectile>();
+
         public override void PreUpdateWorld()
         {
             IsActive = true;
+            UpdateLists();
             if (IsActive)
             {
                 if (TotalKills >= 300 && !SummonedPathogen)
@@ -146,6 +151,36 @@ namespace CalRemix.NPCs.PandemicPanic
             if (DefendersKilled >= MaxRequired)
             {
                 EndEvent();
+            }
+        }
+
+        public static void UpdateLists()
+        {
+            ActiveNPCs.Clear();
+            foreach (NPC n in Main.npc)
+            {
+                if (n == null)
+                    continue;
+                if (!n.active)
+                    continue;
+                if (n.life <= 0)
+                    continue;
+                if (DefenderNPCs.Contains(n.type) || InvaderNPCs.Contains(n.type))
+                {
+                    ActiveNPCs.Add(n);
+                }
+            }
+            ActiveProjectiles.Clear();
+            foreach (Projectile p in Main.projectile)
+            {
+                if (p == null)
+                    continue;
+                if (!p.active)
+                    continue;
+                if (DefenderProjectiles.Contains(p.type) || InvaderProjectiles.Contains(p.type))
+                {
+                    ActiveProjectiles.Add(p);
+                }
             }
         }
 
@@ -220,7 +255,7 @@ namespace CalRemix.NPCs.PandemicPanic
             List<int> enemies = defender ? InvaderNPCs : DefenderNPCs;
             if (defender ? DefendersWinning : InvadersWinning)
             {
-                foreach (NPC n in Main.npc)
+                foreach (NPC n in ActiveNPCs)
                 {
                     if (n == null)
                         continue;
@@ -240,7 +275,7 @@ namespace CalRemix.NPCs.PandemicPanic
             }
             else
             {
-                foreach (NPC n in Main.npc)
+                foreach (NPC n in ActiveNPCs)
                 {
                     if (n == null)
                         continue;
@@ -307,7 +342,7 @@ namespace CalRemix.NPCs.PandemicPanic
             if (npc.type != ModContent.NPCType<DendtritiatorArm>() && PandemicPanic.DefenderNPCs.Contains(npc.type))
             {
                 npc.chaseable = !PandemicPanic.DefendersWinning;
-                foreach (NPC n in Main.npc)
+                foreach (NPC n in PandemicPanic.ActiveNPCs)
                 {
                     if (n == null)
                         continue;
@@ -344,7 +379,7 @@ namespace CalRemix.NPCs.PandemicPanic
                 {
                     return true;
                 }
-                foreach (Projectile n in Main.projectile)
+                foreach (Projectile n in PandemicPanic.ActiveProjectiles)
                 {
                     if (n == null)
                         continue;
@@ -372,7 +407,7 @@ namespace CalRemix.NPCs.PandemicPanic
             if (PandemicPanic.InvaderNPCs.Contains(npc.type))
             {
                 npc.chaseable = !PandemicPanic.InvadersWinning;
-                foreach (NPC n in Main.npc)
+                foreach (NPC n in PandemicPanic.ActiveNPCs)
                 {
                     if (n == null)
                         continue;
@@ -418,7 +453,7 @@ namespace CalRemix.NPCs.PandemicPanic
                 {
                     return true;
                 }
-                foreach (Projectile n in Main.projectile)
+                foreach (Projectile n in PandemicPanic.ActiveProjectiles)
                 {
                     if (n == null)
                         continue;

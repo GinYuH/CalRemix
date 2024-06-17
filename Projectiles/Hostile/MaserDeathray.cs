@@ -79,7 +79,7 @@ public class MaserDeathray : BaseLaserbeamProjectile
             laserscale = MathHelper.Lerp(laserscale, 2f, 0.05f);
         }
         if (Projectile.timeLeft <= 200)
-            foreach (NPC n in Main.npc)
+            foreach (NPC n in PandemicPanic.ActiveNPCs)
         {
             if (n == null)
                 continue;

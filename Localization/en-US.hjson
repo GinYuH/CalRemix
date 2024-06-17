@@ -95,6 +95,11 @@ Mods: {
 				DisplayName: Pandemic Panic
 				TownNPCDialogueName: the Pandemic Panic Biome
 			}
+
+			BaronStraitBiome: {
+				DisplayName: Baron Strait
+				TownNPCDialogueName: the Baron Strait Biome
+			}
 		}
 
 		Buffs: {
