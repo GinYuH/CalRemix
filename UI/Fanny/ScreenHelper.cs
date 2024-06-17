@@ -377,7 +377,20 @@ namespace CalRemix.UI
 
             // finally draw Fanny
             Texture2D fannySprite = UsedMessage.Portrait.Texture.Value;
-            Rectangle frame = fannySprite.Frame(1, UsedMessage.Portrait.frameCount, 0, helperFrame);
+            Rectangle frame;
+
+            //Regular sheet
+            if (UsedMessage.Portrait.rows == UsedMessage.Portrait.frameCount)
+                frame = fannySprite.Frame(1, UsedMessage.Portrait.frameCount, 0, helperFrame);
+            else
+            {
+                int horizontalFrames = (int)MathF.Ceiling(UsedMessage.Portrait.frameCount / UsedMessage.Portrait.rows);
+                int frameY = helperFrame % UsedMessage.Portrait.rows;
+                int frameX = helperFrame / horizontalFrames;
+
+                frame = fannySprite.Frame(horizontalFrames, UsedMessage.Portrait.rows, frameX, frameY);
+            }
+
             Vector2 position = BasePosition;
 
             //Shake motion when fanny picks a message to play when he was already showing in the inventory
@@ -406,8 +419,13 @@ namespace CalRemix.UI
             float opacity = fadeIn;
 
             //fades with the textbox if the textbox doesnt have a fade offset
-            if (Speaking && CharacterPositionData.textboxFadeOutOffset == Vector2.Zero)
-                opacity *= MathF.Pow(Utils.GetLerpValue(30, 0, UsedMessage.TimeLeft, true), 1.6f);
+            if (CharacterPositionData.textboxFadeOutOffset == Vector2.Zero)
+            {
+                if (Speaking)
+                    opacity *= 1 - MathF.Pow(Utils.GetLerpValue(30, 0, UsedMessage.TimeLeft, true), 1.6f);
+                else
+                    opacity = 0;
+            }
 
             spriteBatch.Draw(fannySprite, position, frame, Color.White * opacity, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
             if (Speaking && UsedMessage.ItemType != -22)
@@ -424,7 +442,7 @@ namespace CalRemix.UI
             }
 
             if (helperFrame >= UsedMessage.Portrait.frameCount)
-                helperFrame = 0;
+                helperFrame = UsedMessage.Portrait.loopPoint;
         }
 
         public void DrawItem()
@@ -513,13 +531,13 @@ namespace CalRemix.UI
                     Texture2D tex = ParentSpeaker.textboxTheme.backgroundFill.Value;
 
                     Vector2 bgTextureCorner = outlineDrawPosition;
-                    bgTextureCorner -= ParentSpeaker.textboxTheme.backgroundPadding;
+                    bgTextureCorner += ParentSpeaker.textboxTheme.backgroundPadding;
                     Vector2 bgTextureFillSize = outlineSize;
                     bgTextureFillSize -= ParentSpeaker.textboxTheme.backgroundPadding * 2;
 
                     Rectangle bgFrame = ParentSpeaker.textboxTheme.GetFrame();
 
-                    Main.spriteBatch.Draw(tex, bgTextureCorner, bgFrame, Color.White, 0, Vector2.Zero, bgTextureFillSize / bgFrame.Size(), 0, 0);
+                    Main.spriteBatch.Draw(tex, bgTextureCorner, bgFrame, Color.White * opacity, 0, Vector2.Zero, bgTextureFillSize / bgFrame.Size(), 0, 0);
                 }
 
                 //Draw the 9 slice border
@@ -548,7 +566,7 @@ namespace CalRemix.UI
 
                             Rectangle cornerFrame = new Rectangle((int)((cornerSize.X + middlePartSize.X) * i), (int)((cornerSize.Y + middlePartSize.Y) * j), (int)cornerSize.X, (int)cornerSize.Y);
 
-                            Main.spriteBatch.Draw(tex, drawPosition, cornerFrame, Color.White, 0, origin, Vector2.One, 0, 0);
+                            Main.spriteBatch.Draw(tex, drawPosition, cornerFrame, Color.White * opacity, 0, origin, Vector2.One, 0, 0);
                         }
 
                     //Draw fillings
@@ -563,7 +581,7 @@ namespace CalRemix.UI
 
                         Rectangle fillingFrame = new Rectangle((int)cornerSize.X + 1, (int)((cornerSize.Y + middlePartSize.Y) * i), (int)middlePartSize.X - 2, (int)cornerSize.Y);
 
-                        Main.spriteBatch.Draw(tex, drawPosition, fillingFrame, Color.White, 0, origin, new Vector2(insideSize.X / (float)fillingFrame.Width, 1f), 0, 0);
+                        Main.spriteBatch.Draw(tex, drawPosition, fillingFrame, Color.White * opacity, 0, origin, new Vector2(insideSize.X / (float)fillingFrame.Width, 1f), 0, 0);
                     }
 
                     //left and right
@@ -576,7 +594,7 @@ namespace CalRemix.UI
 
                         Rectangle fillingFrame = new Rectangle((int)((cornerSize.X + middlePartSize.X) * i), (int)cornerSize.Y + 1, (int)cornerSize.X, (int)middlePartSize.Y - 2);
 
-                        Main.spriteBatch.Draw(tex, drawPosition, fillingFrame, Color.White, 0, origin, new Vector2(1f, insideSize.Y / (float)fillingFrame.Height), 0, 0);
+                        Main.spriteBatch.Draw(tex, drawPosition, fillingFrame, Color.White * opacity, 0, origin, new Vector2(1f, insideSize.Y / (float)fillingFrame.Height), 0, 0);
                     }
                 }
             }
@@ -595,6 +613,7 @@ namespace CalRemix.UI
         public static ScreenHelper Renault5 = new ScreenHelper();
         public static ScreenHelper CrimSon = new ScreenHelper();
         public static ScreenHelper TrapperBulbChan = new ScreenHelper();
+        public static ScreenHelper MiracleBoy = new ScreenHelper();
 
         public override void OnInitialize()
         {
@@ -628,12 +647,27 @@ namespace CalRemix.UI
                 AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment)
                 .SetPositionData(false, 220, 0.42f);
 
+            LoadScreenHelper(MiracleBoy, "MiracleBoyIdle")
+                .SetVoiceStyle(SoundID.BloodZombie with { MaxInstances = 0 })
+                .SetTextboxStyle("uh uh..?", new HelperTextboxPalette(Color.OrangeRed, Color.White, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetTextboxTheme(new HelperTextboxTheme("MiracleBoy_9Slice", new Vector2(16, 16), "MiracleBoy_Background", new Vector2(16, 16)))
+                .SetTextboxFormatting(null, 0, 16)
+                .SetPositionData(true, 120, 0.42f);
+
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
-                SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135))
-                .SetPositionData(false, 240, 0.37f);
+                SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
+                SetPositionData(new HelperPositionData(
+                    new Vector2(0.44f, 1f), //Anchored to bottom middle of screen
+                    new Vector2(0f, 0f),   //Offset so we're centered
+                    new Vector2(0f, -160f),   //Slides up when spawning
+                    new Vector2(60, -298),   //Offset from b ottom of portrait to center of 
+                    Vector2.Zero,
+                    Vector2.UnitY * -40f,
+                    Vector2.UnitY * 40f
+                    ));
 
             LoadScreenHelper(TrapperBulbChan, "TrapperDefault", false, new Vector2(96, 96))
                 .SetVoiceStyle(SoundID.LucyTheAxeTalk with { MaxInstances = 0 })
@@ -794,6 +828,7 @@ namespace CalRemix.UI
                 {
                     HelperMessage msg = ScreenHelperManager.screenHelperMessages[i];
                     msg.alreadySeen = false;
+                    msg.CooldownTime = 0;
                 }
 
                 return;
@@ -863,6 +898,7 @@ namespace CalRemix.UI
             LoadMoonLordDeath();
             LoadBabil();
             //LoadPityParty();
+            LoadMiracleBoyMessages();
             LoadWonderFlowerMessages();
             LoadRenault5();
             LoadCrimSon();
@@ -887,17 +923,21 @@ namespace CalRemix.UI
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);
 
+            //Miracle Boy
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyIdle", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyIceCream", 10, 6, 5,  6);
+
+            //Crim Son
+            ScreenHelperPortrait.LoadPortrait("CrimSonDefault", 42, 6, 6);
+
+            //Trapper bulb chan
+            ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
+
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);
 
             //Renault 5
             ScreenHelperPortrait.LoadPortrait("Renault5", 1);
-
-            //Crim Son
-            ScreenHelperPortrait.LoadPortrait("CrimSonDefault", 1);
-
-            //Trapper bulb chan
-            ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
         }
 
         public override void PostSetupContent()
@@ -1631,6 +1671,8 @@ namespace CalRemix.UI
         public Asset<Texture2D> Texture;
         public int frameCount;
         public int animationSpeed;
+        public int rows;
+        public int loopPoint = 0;
 
         /// <summary>
         /// Registers a portrait that's used by a screen helper
@@ -1638,19 +1680,22 @@ namespace CalRemix.UI
         /// <param name="portraitName">The filename. The texture name will use this , prefixed with "Helper" when loading it</param>
         /// <param name="frameCount">How many frames this portrait has</param>
         /// <param name="animationSpeed">How fast the animation plays</param>
-        public static void LoadPortrait(string portraitName, int frameCount, int animationSpeed = 11)
+        public static void LoadPortrait(string portraitName, int frameCount, int animationSpeed = 11, int rows = 0, int loopPoint = 0)
         {
-            ScreenHelperPortrait portrait = new ScreenHelperPortrait(portraitName, frameCount, animationSpeed);
+            ScreenHelperPortrait portrait = new ScreenHelperPortrait(portraitName, frameCount, animationSpeed, rows, loopPoint);
             //Load itself into the portrait list
             if (!ScreenHelperManager.Portraits.ContainsKey(portraitName))
                 ScreenHelperManager.Portraits.Add(portraitName, portrait);
         }
 
-        public ScreenHelperPortrait(string portrait, int frameCount, int animationSpeed = 11)
+        public ScreenHelperPortrait(string portrait, int frameCount, int animationSpeed = 11, int rows = 0, int loopPoint = 0)
         {
             Texture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Helper" + portrait);
             this.frameCount = frameCount;
             this.animationSpeed = animationSpeed;
+
+            this.rows = rows == 0 ? frameCount : rows;
+            this.loopPoint = loopPoint;
         }
     }
 
@@ -1789,6 +1834,7 @@ namespace CalRemix.UI
                 this.backgroundFill = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/Helper" + backgroundFill);
                 this.backgroundFrameCount = backgroundFrameCount ?? new Point(1, 1);
                 this.backgroundFrameTime = backgroundFrameTime;
+                this.backgroundPadding = backgroundPadding ?? Vector2.Zero;
 
                 bgAnimationFrameTotal = this.backgroundFrameCount.X * this.backgroundFrameCount.Y;
             }

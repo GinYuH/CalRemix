@@ -14,8 +14,8 @@ namespace CalRemix.UI
     {
         public static void LoadCrimSon()
         {
-            //HelperMessage.New("CrimSonTest", "Yappucino yap yap yap yap yap yap yap", "CrimSonDefault")
-            //    .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+            HelperMessage.New("CrimSonTest", "Woah, I guess I’m something of a dimension hopper myself!", "CrimSonDefault")
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
         }
 
