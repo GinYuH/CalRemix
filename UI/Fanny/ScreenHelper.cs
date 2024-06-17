@@ -1148,7 +1148,7 @@ namespace CalRemix.UI
 
             //Uses the last registered message if no message is provided
             if (chainFrom == null)
-                chainFrom = ScreenHelperManager.screenHelperMessages[^1];
+                chainFrom = ScreenHelperManager.screenHelperMessages[^2];
 
             //Sets the first message to activate this one after tis played
             if (startTimerOnMessageSpoken)
