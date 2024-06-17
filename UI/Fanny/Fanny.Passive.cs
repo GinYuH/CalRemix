@@ -62,7 +62,7 @@ namespace CalRemix.UI
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.chest != -1 && (Main.tile[Main.chest[Main.LocalPlayer.chest].x, Main.chest[Main.LocalPlayer.chest].y].TileType == ModContent.TileType<SecurityChestTile>() || Main.tile[Main.chest[Main.LocalPlayer.chest].x, Main.chest[Main.LocalPlayer.chest].y].TileType == ModContent.TileType<AgedSecurityChestTile>()));
 
             HelperMessage.New("Creepy", Main.rand.Next(1000000) + " remaining...",
-                "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(100000000), duration: 60, needsToBeClickedOff: false);
+                "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(100000000), duration: 60, cantBeClickedOff: true);
 
             HelperMessage.New("Mhage", "Be careful when using magic weapons. Drinking too many mana potions can drain your health, and leave you vulnerable to enemy attacks.",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == DamageClass.Magic, cooldown: 300, onlyPlayOnce: false);

@@ -40,23 +40,23 @@ namespace CalRemix.UI
                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<CalamitasClone>()));
 
             HelperMessage.New("Pumpking1", "Wh- Ahh! AAAAAAAAAAAAH!!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.Pumpking), 3, needsToBeClickedOff: false).SetHoverTextOverride("What?");
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.Pumpking), 3, cantBeClickedOff: true).SetHoverTextOverride("What?");
 
             HelperMessage.New("Pumpking2", "I told Fanny as a joke that jack-o-lanterns get their lights by eating flames. Don't tell him, though. It's funnier this way.",
                 "EvilFannyIdle").ChainAfter(delay: 2).SetHoverTextOverride("Sure? I might tell Fanny later...").SpokenByEvilFanny();
 
             // Empress
             HelperMessage.New("EoL1", "So, there's a second boss for the Hallow... Then where's the second boss for the other biomes? Did they just like this one more than the others?",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss), 8, needsToBeClickedOff: false).SpokenByEvilFanny();
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss), 8, cantBeClickedOff: true).SpokenByEvilFanny();
 
             HelperMessage.New("EoL2", "... then again, the other boss is a recolor. Maybe for the best.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false).SpokenByEvilFanny().ChainAfter();
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter();
 
             HelperMessage.New("EoL3", "Just like you!",
-                "FannyNuhuh", HelperMessage.AlwaysShow, 5, needsToBeClickedOff: false).ChainAfter();
+                "FannyNuhuh", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter();
 
             HelperMessage.New("EoL4", "...",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, needsToBeClickedOff: false).SpokenByEvilFanny().ChainAfter();
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter();
 
             HelperMessage.New("EoL5", "Bitch.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, onlyPlayOnce: false).SpokenByEvilFanny().ChainAfter();
@@ -93,7 +93,7 @@ namespace CalRemix.UI
                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && !ModLoader.HasMod("InfernumMode") && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AresBody>()));
 
             HelperMessage.New("ExoMayhem", "Wow! What a mayhem! Don't panic though, if you focus on dodging, you will be less likely to get hit. A common strategy for these tin cans is to \" fall god \", which I believe means summoning other gods like the Slime God and killing them for extra health. You should also pay extra attention to Ares' red cannon, because sometimes it can sweep across the screen, ruining your dodge flow. As for the twins, keep a close eye on the right one, as it has increased fire rate. There is no saving you from Thanatos, it isn't synced and breaks the structure these guys are allegedly supposed to have. Like seriously, why do the twins and Ares hover to the sides and above you while that robo-snake just does whatever the heckle heckity heckering hecky heck he wants? It would be significantly more logical if it tried to like stay below you, but no. Anyways, good luck buddy! You're almost at the end, you can do this!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, needsToBeClickedOff: false, duration: 22);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, cantBeClickedOff: true, duration: 22);
 
             HelperMessage.New("Scaldie", "Are you hurt? That was calamitous!",
                 "FannySob", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SupremeCalamitas>()) && Main.LocalPlayer.dead);

@@ -18,7 +18,7 @@ namespace CalRemix.UI
 
 
             HelperMessage.New("ML2", "Almost sounds like a boss rush or something.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false)
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
                 .ChainAfter(delay: 4f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
 
@@ -33,7 +33,7 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow, 6).AddItemDisplay(ModContent.ItemType<Necroplasm>()).ChainAfter();
 
             HelperMessage.New("ML6", "I'm getting a bit of deja vu here.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false)
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
                 .ChainAfter(delay: 4f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
 
@@ -48,14 +48,14 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow, 6).ChainAfter().AddItemDisplay(ModContent.ItemType<CelestialReaper>());
 
             HelperMessage.New("ML10", "Oh oh I should also mention-",
-                "FannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false).ChainAfter();
+                "FannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).ChainAfter();
 
             HelperMessage.New("ML11", "Oh my god shut up already, how much can one boss unlock!?",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false)
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
                 .ChainAfter(delay: 2f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
             HelperMessage.New("ML12", "It appears this encounter is going to have to be cut short buddy, I need to go do something.",
-                "FannyIdle", HelperMessage.AlwaysShow, 6, needsToBeClickedOff: false)
+                "FannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
                 .ChainAfter(startTimerOnMessageSpoken : true).AddEndEvent(Violence);
 
         }

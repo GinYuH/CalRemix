@@ -29,7 +29,7 @@ namespace CalRemix.NPCs
             HelperMessage.New("BarocrabRun",
                 "Oh no it ran away! Now you'll never be able to learn the Crab Secret... Well, at least not until another one appears.",
                 "FannySob",
-                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.aiStyle == NPCAIStyleID.Worm), needsToBeClickedOff: false);
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type && n.aiStyle == NPCAIStyleID.Worm), cantBeClickedOff: true);
         }
 
         [JITWhenModsEnabled("CalamityMod")]

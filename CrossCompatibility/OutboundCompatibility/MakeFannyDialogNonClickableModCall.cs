@@ -28,7 +28,7 @@ namespace CalRemix.CrossCompatibility.OutboundCompatibility
         protected override object ProcessGeneric(params object[] args)
         {
             HelperMessage message = (HelperMessage)args[0];
-            message.NeedsToBeClickedOff = false;
+            message.CantBeClickedOff = true;
 
             return message;
         }

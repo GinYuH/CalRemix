@@ -191,17 +191,21 @@ namespace CalRemix.UI
         }
         #endregion
 
-        public override void OnInitialize()
-        {
-            OnLeftClick += OnClickHelper;
-        }
+        #region On click stuff
+        public event OnClickHelperDelegate OnClick;
+        public delegate void OnClickHelperDelegate(ScreenHelper helper);
 
+        public ScreenHelper AddOnClickEffect(OnClickHelperDelegate onClick)
+        {
+            OnClick += onClick;
+            return this;
+        }
         private void OnClickHelper(UIMouseEvent evt, UIElement listeningElement)
         {
             if (!ScreenHelperManager.fannyEnabled)
                 return;
 
-
+            OnClick?.Invoke(this);
 
             if (canBeTickled && tickleSound.HasValue)
             {
@@ -209,6 +213,13 @@ namespace CalRemix.UI
                 SoundEngine.PlaySound(tickleSound.Value);
             }
         }
+        #endregion
+
+        public override void OnInitialize()
+        {
+            OnLeftClick += OnClickHelper;
+        }
+
 
         public override void Update(GameTime gameTime)
         {
@@ -359,7 +370,7 @@ namespace CalRemix.UI
             base.LeftClick(evt);
 
             //Set the timeleft of the message to 30
-            if (ParentSpeaker.Speaking && ParentSpeaker.fadeIn == 1 && ParentSpeaker.UsedMessage.NeedsToBeClickedOff && ParentSpeaker.UsedMessage.TimeLeft > 30)
+            if (ParentSpeaker.Speaking && ParentSpeaker.fadeIn == 1 && !ParentSpeaker.UsedMessage.CantBeClickedOff && ParentSpeaker.UsedMessage.TimeLeft > 30)
                 ParentSpeaker.UsedMessage.TimeLeft = 30;
         }
 
@@ -421,7 +432,7 @@ namespace CalRemix.UI
             Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.background * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
 
 
-            if (ContainsPoint(Main.MouseScreen) && ParentSpeaker.fadeIn == 1 && ParentSpeaker.UsedMessage.NeedsToBeClickedOff && ParentSpeaker.UsedMessage.TimeLeft > 30)
+            if (ContainsPoint(Main.MouseScreen) && ParentSpeaker.fadeIn == 1 && !ParentSpeaker.UsedMessage.CantBeClickedOff && ParentSpeaker.UsedMessage.TimeLeft > 30)
             {
                 Main.spriteBatch.Draw(squareTexture, backgroundDrawPosition, null, palette.backgroundHover with { A = 0 } * (0.4f + 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly * 4f)) * opacity, 0, Vector2.Zero, backgroundSize / squareTexture.Size(), 0, 0);
                 Main.LocalPlayer.mouseInterface = true;
@@ -443,6 +454,7 @@ namespace CalRemix.UI
         public static ScreenHelper EvilFanny = new ScreenHelper();
         public static ScreenHelper WonderFlower = new ScreenHelper();
         public static ScreenHelper GonerFanny = new ScreenHelper();
+        public static ScreenHelper Renault5 = new ScreenHelper();
 
         public override void OnInitialize()
         {
@@ -464,6 +476,11 @@ namespace CalRemix.UI
                 .SetTextboxStyle("     ", new HelperTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black))
                 .SetExtraAnimations(false, false, false);
 
+            LoadScreenHelper(Renault5, false, false, "Renault5", verticalOffset: 0.36f, distanceFromEdge: 220)
+                .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
+                .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
+                .SetExtraAnimations(true, false, true).
+                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment);
         }
 
         /// <summary>
@@ -667,6 +684,7 @@ namespace CalRemix.UI
             LoadBabil();
             //LoadPityParty();
             LoadWonderFlowerMessages();
+            LoadRenault5();
 
             fannyEnabled = true;
             fannyTimesFrozen = 0;
@@ -689,6 +707,9 @@ namespace CalRemix.UI
 
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);
+
+            //Renault 5
+            ScreenHelperPortrait.LoadPortrait("Renault5", 1);
         }
 
         public override void PostSetupContent()
@@ -772,7 +793,7 @@ namespace CalRemix.UI
                     msg.TimeLeft--;
 
                     //Message stays in stasis if it needs to be clicked off
-                    if (msg.NeedsToBeClickedOff && msg.TimeLeft == 30)
+                    if (!msg.CantBeClickedOff && msg.TimeLeft == 30)
                         msg.TimeLeft = 31;
                 }
 
@@ -786,8 +807,19 @@ namespace CalRemix.UI
                 //Call the start effects if the message has a delay (messages without a delay do the start effects when its played)
                 if (msg.delayTime > 0 && msg.TimeLeft == msg.MessageDuration)
                     msg.OnMessageStart();
+
             }
         }
+
+        #region Hooks
+        public delegate void MessageActionDelegate(HelperMessage message);
+        public static event MessageActionDelegate OnMessageEnd;
+        public static event MessageActionDelegate OnMessageStart;
+
+
+        public static void OnMessageEndCall(HelperMessage message) => OnMessageEnd?.Invoke(message);
+        public static void OnMessageStartCall(HelperMessage message) => OnMessageStart?.Invoke(message);
+        #endregion
 
         #region Conditions for general messages
         public static bool HasDraedonForgeMaterialsButNoMeat(ScreenHelperSceneMetrics scene)
@@ -936,7 +968,7 @@ namespace CalRemix.UI
 
         public bool DisplayOutsideInventory { get; set; } //Defaults to true
         public bool OnlyPlayOnce { get; set; } //Defaults to true
-        public bool NeedsToBeClickedOff { get; set; } //Defaults to true
+        public bool CantBeClickedOff { get; set; } //Defaults to false
         public bool PersistsThroughSaves { get; set; } //Defaults to true
         public bool IgnoreSpeakerSpecificCondition { get; set; } //Defaults to false
 
@@ -951,7 +983,7 @@ namespace CalRemix.UI
         /// <summary>
         /// DONT USE THIS. It doesnt automatically load the message!
         /// </summary>
-        internal HelperMessage(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
+        internal HelperMessage(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool cantBeClickedOff = false, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
             //Unique identifier for saving data
             Identifier = identifier;
@@ -970,7 +1002,7 @@ namespace CalRemix.UI
 
             DisplayOutsideInventory = displayOutsideInventory;
             OnlyPlayOnce = onlyPlayOnce;
-            NeedsToBeClickedOff = needsToBeClickedOff;
+            CantBeClickedOff = cantBeClickedOff;
             PersistsThroughSaves = persistsThroughSaves;
 
             if (portrait == "")
@@ -994,14 +1026,14 @@ namespace CalRemix.UI
         /// <param name="cooldown"></param>
         /// <param name="displayOutsideInventory"></param>
         /// <param name="onlyPlayOnce"></param>
-        /// <param name="needsToBeClickedOff"></param>
+        /// <param name="cantBeClickedOff"></param>
         /// <param name="persistsThroughSaves"></param>
         /// <param name="maxWidth"></param>
         /// <param name="fontSize"></param>
         /// <returns></returns>
-        public static HelperMessage New(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool needsToBeClickedOff = true, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
+        public static HelperMessage New(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool cantBeClickedOff = false, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
-            HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, needsToBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
+            HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
 
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
@@ -1181,6 +1213,8 @@ namespace CalRemix.UI
         #region Playing messages
         public event Action OnStart;
         public event Action OnEnd;
+        public bool HasAnyEndEvents => OnEnd != null;
+        public bool HasAnyStartEvents => OnStart != null;
 
         /// <summary>
         /// Adds an action that happens when the message is being read
@@ -1199,6 +1233,8 @@ namespace CalRemix.UI
             OnEnd += action;
             return this;
         }
+
+
 
         /// <summary>
         /// Check for generic shared conditions on messages, such as cooldown, if its already been played, if it only displays in inventory etc...
@@ -1244,6 +1280,10 @@ namespace CalRemix.UI
             SoundEngine.PlaySound(SoundID.MenuOpen);
             SoundEngine.PlaySound(voiceOverride ?? currentSpeaker.speakingSound);
             OnStart?.Invoke();
+
+
+            //Hook
+            ScreenHelperManager.OnMessageStartCall(this);
         }
 
         public void EndMessage()
@@ -1254,6 +1294,9 @@ namespace CalRemix.UI
 
             //Reset timer to play if we want to play it again later
             activationTimer = 0;
+
+            //Hook
+            ScreenHelperManager.OnMessageEndCall(this);
         }
         #endregion
 

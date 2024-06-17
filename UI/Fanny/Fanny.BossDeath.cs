@@ -38,7 +38,7 @@ namespace CalRemix.UI
                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss);
 
             HelperMessage.New("Plantoreum2", "Oh.",
-               "FannySob", HelperMessage.AlwaysShow, needsToBeClickedOff: false, duration: 30)
+               "FannySob", HelperMessage.AlwaysShow, cantBeClickedOff: true, duration: 30)
                 .ChainAfter();
 
             HelperMessage.New("Golem", "Good job defeating that pile o' bricks! You sure.. cough cough wow, the air sure is du- cough cough",

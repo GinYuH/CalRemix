@@ -38,7 +38,7 @@ namespace CalRemix.UI
                 (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>());
 
             HelperMessage.New("BunnyMurder", "...",
-                "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, needsToBeClickedOff: false).AddItemDisplay(ItemID.BunnyBanner);
+                "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, cantBeClickedOff: true).AddItemDisplay(ItemID.BunnyBanner);
 
             HelperMessage.New("BunnyVolcano", "One time, when I was making a volcano project for the local science fair, I saw the craziest thing! I could not believe my eyes when I saw what happened to that poor hamster after it ate the baking soda and vinegar I'd left out for the experiment. The little guy popped more forcefully than the one I gave coke and mentos to! Explosive bunnies are one thing, but explosive hamsters are truly a new revelation worthy of the new age!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.ExplosiveBunny) || Main.LocalPlayer.HasItem(ItemID.BunnyCannon)).AddItemDisplay(ItemID.ExplosiveBunny);
