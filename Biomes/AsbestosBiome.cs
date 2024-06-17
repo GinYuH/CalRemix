@@ -36,6 +36,6 @@ namespace CalRemix.Biomes
         {
             player.ManageSpecialBiomeVisuals("CalRemix:Asbestos", isActive);
         }
-        public override int Music => -1;
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/FibrousWhisper");
     }
 }

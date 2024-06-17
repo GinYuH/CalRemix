@@ -42,6 +42,7 @@ namespace CalRemix.UI
         }
         public static void DrawProgressText(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY, out Vector2 newBarPosition)
         {
+            Color c = PandemicPanic.SummonedPathogen && PandemicPanic.FinalSide == true ? Main.DiscoColor : Color.White;
             string progressText = !PandemicPanic.DefendersWinning && !PandemicPanic.InvadersWinning ? "???" : (100 * CompletionRatio).ToString($"N{0}") + "%";
             progressText = Language.GetTextValue("Game.WaveCleared", progressText);
 
@@ -51,7 +52,7 @@ namespace CalRemix.UI
                 progressTextScale *= 22f / textSize.Y;
 
             newBarPosition = baseBarDrawPosition + Vector2.UnitY * (yScale + barOffsetY);
-            Utils.DrawBorderString(spriteBatch, progressText, newBarPosition - Vector2.UnitY * 4f, Color.White, progressTextScale, 0.5f, 1f, -1);
+            Utils.DrawBorderString(spriteBatch, progressText, newBarPosition - Vector2.UnitY * 4f, c, progressTextScale, 0.5f, 1f, -1);
             string defKills = PandemicPanic.DefendersKilled.ToString();
             string invKills = PandemicPanic.InvadersKilled.ToString();
             Utils.DrawBorderString(spriteBatch, defKills, newBarPosition - 80 * Vector2.UnitX, Color.Lime, progressTextScale, 0.5f, 1f, -1);

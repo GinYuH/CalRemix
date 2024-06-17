@@ -96,6 +96,10 @@ namespace CalRemix.NPCs.Bosses.Pathogen
 
         public override void AI()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<PathogenShield>()))
+            {
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<PathogenShield>(), ai0: NPC.whoAmI);
+            }
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
@@ -105,9 +109,6 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             if (Target == null || !Target.active || (Target is NPC n && n.life <= 0))
             {
                 Target = PandemicPanic.PandemicPanic.BioGetTarget(false, NPC);
-                Phase = (int)PhaseType.Idle;
-                NPC.ai[1] = 0;
-                NPC.ai[2] = 0;
             }
             NPC.Calamity().newAI[3] = 0;
             switch (Phase)
@@ -171,96 +172,106 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                     }
                 case (int)PhaseType.Mosquito:
                     {
-                        int timeBeforeHome = 60;
-                        int waitTime = 10;
-                        int diveGate = waitTime + 30;
-                        int maxTimeBeforeCollide = diveGate + 180;
-                        int groundDist = 100;
-                        int drillTime = 150;
-                        int maxHomeTime = 300;
-                        Vector2 destination = Target.Center - Vector2.UnitY * 400;
-                        NPC.ai[1]++;
-                        if (NPC.ai[1] > timeBeforeHome && NPC.ai[2] == 0)
+                        if (ValidTarget())
                         {
-                            NPC.damage = 0;
-                            NPC.velocity = NPC.DirectionTo(destination) * 18;
-                            if (NPC.Center.Distance(destination) < 10)
+                            int timeBeforeHome = 60;
+                            int waitTime = 10;
+                            int diveGate = waitTime + 30;
+                            int maxTimeBeforeCollide = diveGate + 180;
+                            int groundDist = 100;
+                            int drillTime = 150;
+                            int maxHomeTime = 300;
+                            Vector2 destination = Target.Center - Vector2.UnitY * 400;
+                            NPC.ai[1]++;
+                            if (NPC.ai[1] > timeBeforeHome && NPC.ai[2] == 0)
                             {
-                                NPC.velocity = Target.velocity;
-                                NPC.ai[2] = 1;
-                            }
-                            else if (NPC.ai[1] > maxHomeTime)
-                            {
-                                NPC.ai[2] = 1;
-                                NPC.ai[3] = waitTime;
-                            }
-                        }
-                        if (NPC.ai[2] == 1)
-                        {
-                            NPC.damage = 100;
-                            NPC.ai[3]++;
-                            if (NPC.ai[3] > diveGate)
-                            {
-                                if (NPC.velocity.Y < 16)
+                                NPC.damage = 0;
+                                NPC.velocity = NPC.DirectionTo(destination) * 18;
+                                if (NPC.Center.Distance(destination) < 10)
                                 {
-                                    NPC.velocity.Y += 0.4f;
+                                    NPC.velocity = Target.velocity;
+                                    NPC.ai[2] = 1;
                                 }
-                                if (Collision.IsWorldPointSolid(NPC.Bottom + Vector2.UnitY * groundDist) || NPC.ai[3] > maxTimeBeforeCollide)
+                                else if (NPC.ai[1] > maxHomeTime)
                                 {
-                                    SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, NPC.Center);
+                                    NPC.ai[2] = 1;
+                                    NPC.ai[3] = waitTime;
+                                }
+                            }
+                            if (NPC.ai[2] == 1)
+                            {
+                                NPC.damage = 100;
+                                NPC.ai[3]++;
+                                if (NPC.ai[3] > diveGate)
+                                {
+                                    if (NPC.velocity.Y < 16)
+                                    {
+                                        NPC.velocity.Y += 0.4f;
+                                    }
+                                    if (Collision.IsWorldPointSolid(NPC.Bottom + Vector2.UnitY * groundDist) || NPC.ai[3] > maxTimeBeforeCollide)
+                                    {
+                                        SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, NPC.Center);
+                                        NPC.velocity = Vector2.Zero;
+                                        NPC.ai[2] = 2;
+                                        NPC.ai[3] = 0;
+                                    }
+                                }
+                                else if (NPC.ai[3] > waitTime)
+                                {
                                     NPC.velocity = Vector2.Zero;
-                                    NPC.ai[2] = 2;
-                                    NPC.ai[3] = 0;
+                                }
+                                else
+                                {
+                                    NPC.Center = Vector2.Lerp(NPC.Center, destination, 0.8f);
                                 }
                             }
-                            else if (NPC.ai[3] > waitTime)
+                            if (NPC.ai[2] == 2)
                             {
-                                NPC.velocity = Vector2.Zero;
-                            }
-                            else
-                            {
-                                NPC.Center = Vector2.Lerp(NPC.Center, destination, 0.8f);
+                                NPC.ai[3]++;
+                                if (NPC.ai[1] % 5 == 0)
+                                {
+                                    SoundEngine.PlaySound(CnidarianJellyfishOnTheString.SlapSound, NPC.Center);
+                                    if (NPC.ai[3] > drillTime)
+                                    {
+                                        Phase = (int)PhaseType.Caltrops;
+                                        NPC.ai[1] = 0;
+                                        NPC.ai[2] = 0;
+                                        NPC.ai[3] = 0;
+                                    }
+                                }
+
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    int bloodLifetime = Main.rand.Next(22, 36);
+                                    float bloodScale = Main.rand.NextFloat(0.6f, 0.8f);
+                                    Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat());
+                                    bloodColor = Color.Lerp(bloodColor, new Color(51, 22, 94), Main.rand.NextFloat(0.65f));
+
+                                    if (Main.rand.NextBool(20))
+                                        bloodScale *= 2f;
+
+                                    Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.81f) * Main.rand.NextFloat(11f, 23f);
+                                    bloodVelocity.Y -= 90f;
+                                    BloodParticle blood = new BloodParticle(NPC.Bottom + Vector2.UnitY * groundDist, bloodVelocity, bloodLifetime, bloodScale, bloodColor);
+                                    GeneralParticleHandler.SpawnParticle(blood);
+                                }
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    float bloodScale = Main.rand.NextFloat(0.2f, 0.33f);
+                                    Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat(0.5f, 1f));
+                                    Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.9f) * Main.rand.NextFloat(9f, 14.5f);
+                                    bloodVelocity.Y -= 10f;
+                                    BloodParticle2 blood = new BloodParticle2(NPC.Bottom + Vector2.UnitY * groundDist, bloodVelocity, 20, bloodScale, bloodColor);
+                                    GeneralParticleHandler.SpawnParticle(blood);
+                                }
                             }
                         }
-                        if (NPC.ai[2] == 2)
+                        else
                         {
-                            NPC.ai[3]++;
-                            if (NPC.ai[1] % 5 == 0)
-                            {
-                                SoundEngine.PlaySound(CnidarianJellyfishOnTheString.SlapSound, NPC.Center);
-                                if (NPC.ai[3] > drillTime)
-                                {
-                                    Phase = (int)PhaseType.Caltrops;
-                                    NPC.ai[1] = 0;
-                                    NPC.ai[2] = 0;
-                                    NPC.ai[3] = 0;
-                                }
-                            }
-
-                            for (int i = 0; i < 6; i++)
-                            {
-                                int bloodLifetime = Main.rand.Next(22, 36);
-                                float bloodScale = Main.rand.NextFloat(0.6f, 0.8f);
-                                Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat());
-                                bloodColor = Color.Lerp(bloodColor, new Color(51, 22, 94), Main.rand.NextFloat(0.65f));
-
-                                if (Main.rand.NextBool(20))
-                                    bloodScale *= 2f;
-
-                                Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.81f) * Main.rand.NextFloat(11f, 23f);
-                                bloodVelocity.Y -= 90f;
-                                BloodParticle blood = new BloodParticle(NPC.Bottom + Vector2.UnitY * groundDist, bloodVelocity, bloodLifetime, bloodScale, bloodColor);
-                                GeneralParticleHandler.SpawnParticle(blood);
-                            }
-                            for (int i = 0; i < 4; i++)
-                            {
-                                float bloodScale = Main.rand.NextFloat(0.2f, 0.33f);
-                                Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat(0.5f, 1f));
-                                Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.9f) * Main.rand.NextFloat(9f, 14.5f);
-                                bloodVelocity.Y -= 10f;
-                                BloodParticle2 blood = new BloodParticle2(NPC.Bottom + Vector2.UnitY * groundDist, bloodVelocity, 20, bloodScale, bloodColor);
-                                GeneralParticleHandler.SpawnParticle(blood);
-                            }
+                            Phase = (int)PhaseType.Caltrops;
+                            NPC.ai[1] = 0;
+                            NPC.ai[2] = 0;
+                            NPC.ai[3] = 0;
                         }
                         break;
                     }
@@ -299,92 +310,100 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                     }
                 case (int)PhaseType.Grinder:
                     {
-                        int fallSpeed = 12;
-                        int phaseTime = 480;
-                        int xChange = 1000;
-                        NPC.ai[1]++;
-                        if (NPC.ai[1] == 1)
+                        if (ValidTarget())
                         {
-                            NPC.velocity.X = 1;
-                        }
-                        int width = NPC.width;
-                        int height = NPC.height;
-                        Vector2 collisionTile = new Vector2(NPC.Center.X - (float)(width / 2), NPC.position.Y + (float)NPC.height - (float)height);
-                        if (Collision.SolidCollision(collisionTile, width, height) || Target.position.Y - NPC.position.Y < -400)
-                        {
-                            if (NPC.velocity.Y > 0f)
+                            int fallSpeed = 12;
+                            int phaseTime = 480;
+                            int xChange = 1000;
+                            NPC.ai[1]++;
+                            if (NPC.ai[1] == 1)
                             {
-                                NPC.velocity.Y = 0f;
+                                NPC.velocity.X = 1;
                             }
-                            if ((double)NPC.velocity.Y > -0.2)
+                            int width = NPC.width;
+                            int height = NPC.height;
+                            Vector2 collisionTile = new Vector2(NPC.Center.X - (float)(width / 2), NPC.position.Y + (float)NPC.height - (float)height);
+                            if (Collision.SolidCollision(collisionTile, width, height) || Target.position.Y - NPC.position.Y < -400)
                             {
-                                NPC.velocity.Y -= 0.025f;
+                                if (NPC.velocity.Y > 0f)
+                                {
+                                    NPC.velocity.Y = 0f;
+                                }
+                                if ((double)NPC.velocity.Y > -0.2)
+                                {
+                                    NPC.velocity.Y -= 0.025f;
+                                }
+                                else
+                                {
+                                    NPC.velocity.Y -= 0.2f;
+                                }
+                                if (NPC.velocity.Y < -4f)
+                                {
+                                    NPC.velocity.Y = -4f;
+                                }
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    int bloodLifetime = Main.rand.Next(22, 36);
+                                    float bloodScale = Main.rand.NextFloat(0.6f, 0.8f);
+                                    Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat());
+                                    bloodColor = Color.Lerp(bloodColor, new Color(51, 22, 94), Main.rand.NextFloat(0.65f));
+
+                                    if (Main.rand.NextBool(20))
+                                        bloodScale *= 2f;
+
+                                    Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.81f) * Main.rand.NextFloat(11f, 23f);
+                                    bloodVelocity.Y -= 80f;
+                                    bloodVelocity = bloodVelocity.RotatedBy(MathHelper.PiOver4 * -Math.Sign(NPC.velocity.X));
+                                    BloodParticle blood = new BloodParticle(NPC.Bottom, bloodVelocity, bloodLifetime, bloodScale, bloodColor);
+                                    GeneralParticleHandler.SpawnParticle(blood);
+                                }
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    float bloodScale = Main.rand.NextFloat(0.2f, 0.33f);
+                                    Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat(0.5f, 1f));
+                                    Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.9f) * Main.rand.NextFloat(9f, 14.5f);
+                                    bloodVelocity.Y -= 10f;
+                                    bloodVelocity = bloodVelocity.RotatedBy(MathHelper.PiOver4 * Math.Sign(NPC.velocity.X));
+                                    bloodVelocity.X *= -1;
+                                    BloodParticle2 blood = new BloodParticle2(NPC.Bottom, bloodVelocity, 20, bloodScale, bloodColor);
+                                    GeneralParticleHandler.SpawnParticle(blood);
+                                }
                             }
                             else
                             {
-                                NPC.velocity.Y -= 0.2f;
+                                if (NPC.velocity.Y < 0f)
+                                {
+                                    NPC.velocity.Y = 0f;
+                                }
+                                if ((double)NPC.velocity.Y < 0.1)
+                                {
+                                    NPC.velocity.Y += 0.025f;
+                                }
+                                else
+                                {
+                                    NPC.velocity.Y += 0.5f;
+                                }
                             }
-                            if (NPC.velocity.Y < -4f)
+                            if (NPC.velocity.Y > fallSpeed)
                             {
-                                NPC.velocity.Y = -4f;
+                                NPC.velocity.Y = fallSpeed;
                             }
-                            for (int i = 0; i < 6; i++)
+                            if (Math.Abs(NPC.position.X - (Target.Center.X + xChange * Math.Sign(NPC.velocity.X))) < 64)
                             {
-                                int bloodLifetime = Main.rand.Next(22, 36);
-                                float bloodScale = Main.rand.NextFloat(0.6f, 0.8f);
-                                Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat());
-                                bloodColor = Color.Lerp(bloodColor, new Color(51, 22, 94), Main.rand.NextFloat(0.65f));
-
-                                if (Main.rand.NextBool(20))
-                                    bloodScale *= 2f;
-
-                                Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.81f) * Main.rand.NextFloat(11f, 23f);
-                                bloodVelocity.Y -= 80f;
-                                bloodVelocity = bloodVelocity.RotatedBy(MathHelper.PiOver4 * -Math.Sign(NPC.velocity.X));
-                                BloodParticle blood = new BloodParticle(NPC.Bottom, bloodVelocity, bloodLifetime, bloodScale, bloodColor);
-                                GeneralParticleHandler.SpawnParticle(blood);
-                            }
-                            for (int i = 0; i < 4; i++)
-                            {
-                                float bloodScale = Main.rand.NextFloat(0.2f, 0.33f);
-                                Color bloodColor = Color.Lerp(Color.Red, Color.DarkRed, Main.rand.NextFloat(0.5f, 1f));
-                                Vector2 bloodVelocity = -Vector2.UnitY.RotatedByRandom(0.9f) * Main.rand.NextFloat(9f, 14.5f);
-                                bloodVelocity.Y -= 10f;
-                                bloodVelocity = bloodVelocity.RotatedBy(MathHelper.PiOver4 * Math.Sign(NPC.velocity.X));
-                                bloodVelocity.X *= -1;
-                                BloodParticle2 blood = new BloodParticle2(NPC.Bottom, bloodVelocity, 20, bloodScale, bloodColor);
-                                GeneralParticleHandler.SpawnParticle(blood);
-                            }
-                        }
-                        else
-                        {
-                            if (NPC.velocity.Y < 0f)
-                            {
-                                NPC.velocity.Y = 0f;
-                            }
-                            if ((double)NPC.velocity.Y < 0.1)
-                            {
-                                NPC.velocity.Y += 0.025f;
+                                NPC.velocity.X = -NPC.velocity.X;
                             }
                             else
                             {
-                                NPC.velocity.Y += 0.5f;
+                                if (Math.Abs(NPC.velocity.X) < 36)
+                                    NPC.velocity.X *= 1.2f;
+                            }
+                            if (NPC.ai[1] > phaseTime)
+                            {
+                                NPC.ai[1] = 0;
+                                Phase = (int)PhaseType.Idle;
                             }
                         }
-                        if (NPC.velocity.Y > fallSpeed)
-                        {
-                            NPC.velocity.Y = fallSpeed;
-                        }
-                        if (Math.Abs(NPC.position.X - (Target.Center.X + xChange * Math.Sign(NPC.velocity.X))) < 64)
-                        {
-                            NPC.velocity.X = -NPC.velocity.X;
-                        }
                         else
-                        {
-                            if (Math.Abs(NPC.velocity.X) < 36)
-                                NPC.velocity.X *= 1.2f;
-                        }
-                        if (NPC.ai[1] > phaseTime)
                         {
                             NPC.ai[1] = 0;
                             Phase = (int)PhaseType.Idle;
@@ -443,7 +462,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
         public override void OnKill()
         {
             RemixDowned.downedPathogen = true;
-            if (PandemicPanic.PandemicPanic.DefendersWinning)
+            if (!PandemicPanic.PandemicPanic.InvadersWinning)
                 PandemicPanic.PandemicPanic.EndEvent();
             CalRemixWorld.UpdateWorldBool();
         }
@@ -452,7 +471,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
         {
             // work you stupid stupid
             RemixDowned.downedPathogen = true;
-            if (PandemicPanic.PandemicPanic.DefendersWinning)
+            if (!PandemicPanic.PandemicPanic.InvadersWinning)
                 PandemicPanic.PandemicPanic.EndEvent();
             CalRemixWorld.UpdateWorldBool();
             return false;

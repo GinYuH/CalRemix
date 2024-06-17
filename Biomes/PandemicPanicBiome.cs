@@ -37,6 +37,6 @@ namespace CalRemix.Biomes
         {
             player.ManageSpecialBiomeVisuals("CalRemix:PandemicPanic", isActive);
         }
-        public override int Music => MusicID.OtherworldlyInvasion;
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PandemicPanic");
     }
 }

@@ -92,12 +92,12 @@ namespace CalRemix.NPCs.PandemicPanic
         /// <summary>
         /// If the player is on the defenders' side
         /// </summary>
-        public static bool DefendersWinning => InvadersKilled > DefendersKilled + KillBuffer;
+        public static bool DefendersWinning => ((InvadersKilled > DefendersKilled + KillBuffer) && FinalSide == null) || FinalSide == true;
 
         /// <summary>
         /// If the player is on the invaders' side
         /// </summary>
-        public static bool InvadersWinning => DefendersKilled > InvadersKilled + KillBuffer;
+        public static bool InvadersWinning => ((DefendersKilled > InvadersKilled + KillBuffer) && FinalSide == null) || FinalSide == false;
 
         /// <summary>
         /// If Pathogen has been summoned
@@ -105,6 +105,8 @@ namespace CalRemix.NPCs.PandemicPanic
         public static bool SummonedPathogen = false;
 
         public static float coughTimer = 0;
+
+        public static bool? FinalSide = null;
 
         public override void PreUpdateWorld()
         {
@@ -130,6 +132,17 @@ namespace CalRemix.NPCs.PandemicPanic
                     }
                 }
             }
+            if (SummonedPathogen && FinalSide == null)
+            {
+                if (InvadersWinning)
+                {
+                    FinalSide = false;
+                }
+                if (DefendersWinning)
+                {
+                    FinalSide = true;
+                }
+            }
             if (DefendersKilled >= MaxRequired)
             {
                 EndEvent();
@@ -140,6 +153,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             DefendersKilled = 0;
             InvadersKilled = 0;
+            FinalSide = null;
             SummonedPathogen = false;
             IsActive = false;
             CalRemixWorld.UpdateWorldBool();
@@ -149,6 +163,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             DefendersKilled = 0;
             InvadersKilled = 0;
+            FinalSide = null;
             SummonedPathogen = false;
             IsActive = false;
         }
@@ -157,6 +172,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             DefendersKilled = 0;
             InvadersKilled = 0;
+            FinalSide = null;
             SummonedPathogen = false;
             IsActive = false;
         }
@@ -167,6 +183,7 @@ namespace CalRemix.NPCs.PandemicPanic
             tag["BioInvaders"] = InvadersKilled;
             tag["PathoSummon"] = SummonedPathogen;
             tag["BioActive"] = IsActive;
+            tag["FinalSide"] = FinalSide;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -175,6 +192,7 @@ namespace CalRemix.NPCs.PandemicPanic
             SummonedPathogen = tag.Get<bool>("PathoSummon");
             DefendersKilled = tag.Get<float>("BioDefenders");
             InvadersKilled = tag.Get<float>("BioInvaders");
+            FinalSide = tag.Get<bool?>("FinalSide");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -183,6 +201,7 @@ namespace CalRemix.NPCs.PandemicPanic
             writer.Write(InvadersKilled);
             writer.Write(SummonedPathogen);
             writer.Write(IsActive);
+            writer.Write((bool)FinalSide);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -191,6 +210,7 @@ namespace CalRemix.NPCs.PandemicPanic
             InvadersKilled = reader.ReadSingle();
             SummonedPathogen = reader.ReadBoolean();
             IsActive = reader.ReadBoolean();
+            FinalSide = reader.ReadBoolean();
         }
 
         public static Entity BioGetTarget(bool defender, NPC npc)
@@ -207,6 +227,8 @@ namespace CalRemix.NPCs.PandemicPanic
                     if (!n.active)
                         continue;
                     if (n.life <= 0)
+                        continue;
+                    if (n.type == ModContent.NPCType<DendtritiatorArm>())
                         continue;
                     if (!enemies.Contains(n.type))
                         continue;
@@ -225,6 +247,8 @@ namespace CalRemix.NPCs.PandemicPanic
                     if (!n.active)
                         continue;
                     if (n.life <= 0)
+                        continue;
+                    if (n.type == ModContent.NPCType<DendtritiatorArm>())
                         continue;
                     if (!enemies.Contains(n.type))
                         continue;
@@ -380,7 +404,7 @@ namespace CalRemix.NPCs.PandemicPanic
                     float damageMult = npc.type == ModContent.NPCType<Pathogen>() ? 0.2f : 1f;
                     npc.SimpleStrikeNPC((int)(n.damage * damageMult), n.direction, false);
                     hitCooldown = armhit && npc.type != ModContent.NPCType<Pathogen>() ? 1 : 20;
-                    if (npc.life <= 0)
+                    if (npc.life <= 0 && !npc.boss)
                     {
                         PandemicPanic.InvadersKilled++;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
@@ -407,7 +431,7 @@ namespace CalRemix.NPCs.PandemicPanic
                     npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
-                    if (npc.life <= 0)
+                    if (npc.life <= 0 && !npc.boss)
                     {
                         PandemicPanic.InvadersKilled++;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
@@ -423,7 +447,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            if (npc.life <= 0)
+            if (npc.life <= 0 && !npc.boss)
             {
                 if (PandemicPanic.InvaderNPCs.Contains(npc.type))
                     PandemicPanic.InvadersKilled++;
@@ -444,7 +468,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             if (projectile.friendly)
             {
-                if (npc.life <= 0)
+                if (npc.life <= 0 && !npc.boss)
                 {
                     if (PandemicPanic.InvaderNPCs.Contains(npc.type))
                         PandemicPanic.InvadersKilled++;

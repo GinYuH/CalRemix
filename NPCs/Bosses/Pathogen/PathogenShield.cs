@@ -81,5 +81,10 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             }
         }
         public override bool CheckActive() => !(Main.npc[(int)NPC.ai[0]] != null && Main.npc[(int)NPC.ai[0]].active && Main.npc[(int)NPC.ai[0]].type == ModContent.NPCType<Pathogen>());
+
+        public override bool NeedSaving()
+        {
+            return true;
+        }
     }
 }

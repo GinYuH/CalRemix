@@ -69,6 +69,7 @@ namespace CalRemix
         public static int asbestosTiles;
         public static int PlagueTiles;
         public static int PlagueDesertTiles;
+        public static int baronTiles;
         public static int MeldTiles;
         public static int ShrineTimer = -20;
         public static bool loadedRecipeInjections = false;
@@ -817,6 +818,7 @@ namespace CalRemix
             PlagueTiles = 0;
             PlagueDesertTiles = 0;
             MeldTiles = 0;
+            baronTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -832,6 +834,7 @@ namespace CalRemix
             tileCounts[TileType<Sporezol>()];
             PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
             MeldTiles = tileCounts[TileType<MeldGunkPlaced>()];
+            baronTiles = tileCounts[TileType<BrinerackPlaced>()] + tileCounts[TileType<TanzaniteGlassPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()] + tileCounts[TileType<BaronsandPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
             CalamityMod.Systems.BiomeTileCounterSystem.SunkenSeaTiles += tileCounts[TileType<NavystoneSafe>()] + tileCounts[TileType<SeaPrismSafe>()] + tileCounts[TileType<EutrophicSandSafe>()] + tileCounts[TileType<HardenedEutrophicSandSafe>()];
