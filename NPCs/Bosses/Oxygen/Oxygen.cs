@@ -76,7 +76,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             HelperMessage.New("OxygenEvil",
                 "Ok look, Fanny may be an imbecile, but if you're gonna take any words of his to heart it should be these. Leading it to the abyss is the only way you're defeating this idiotic ball.",
                 "EvilFannyIdle",
-                HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(delay: 2f);
+                HelperMessage.AlwaysShow).SpokenByEvilFanny(true).ChainAfter(delay: 2f);
 
         }
 
