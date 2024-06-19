@@ -51,6 +51,10 @@ namespace CalRemix.UI
 
             HelperMessage.New("EvilTerraBlade", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. It's just a sword, after all. Now, go on, swing it around like the hero you think you are.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) =>Main.LocalPlayer.HasItem(ItemID.TerraBlade)).SpokenByEvilFanny();
+
+            HelperMessage.New("IonGuy", "Hey there, beachcomber! Looks like you've found a talking panel in that trash pile! It's wired up and ready to chat, but beware—it’s probably going to ask you for items. Remember, not all that glitters is gold, and not all talking panels are trustworthy. You might end up giving away your favorite pair of socks!",
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ionDialogue > 0);
+
         }
         private static bool DarkArea()
         {

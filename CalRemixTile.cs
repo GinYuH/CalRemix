@@ -25,6 +25,7 @@ using Terraria.Enums;
 using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
+using CalRemix.NPCs.PandemicPanic;
 
 namespace CalRemix
 {
@@ -148,11 +149,16 @@ namespace CalRemix
                 }
 
             }
+            if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && !PandemicPanic.IsActive)
+            {
+                PandemicPanic.IsActive = true;
+                Main.NewText("Microbes are going to war!", Color.Red);
+            }
         }
         public override void MouseOver(int i, int j, int type)
         {
             Player player = Main.LocalPlayer;
-            if (type == ModContent.TileType<LabHologramProjector>())
+            if (type == ModContent.TileType<LabHologramProjector>() || TileID.Sets.CountsAsWaterSource[type])
             {
                 if (player.HeldItem.type == ModContent.ItemType<BloodyVein>())
                 {

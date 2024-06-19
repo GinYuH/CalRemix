@@ -2574,6 +2574,10 @@ Mods: {
 			ExothermalSickle.DisplayName: Exothermal Sickle
 			LargeTeslaSphere.DisplayName: Large Tesla Sphere
 			RedExoPulseLaser.DisplayName: Red Exo Pulse Laser
+			PathogenBloodDrop.DisplayName: Blood
+			PathogenBloodThorn.DisplayName: Blood Thorn
+			PathogenCaltrop.DisplayName: White Blood Cell
+			PathogenCell1.DisplayName: Hostile Blood Cell
 		}
 
 		Tiles: {

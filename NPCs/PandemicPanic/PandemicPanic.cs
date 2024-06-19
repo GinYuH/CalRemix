@@ -57,7 +57,7 @@ namespace CalRemix.NPCs.PandemicPanic
         /// <summary>
         /// Projectiles considered invaders
         /// </summary>
-        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot, ModContent.ProjectileType<TobaccoSeed>(), ProjectileID.DeathLaser, ModContent.ProjectileType<MaserDeathray>() };
+        public static List<int> InvaderProjectiles = new List<int>() { ProjectileID.BloodShot, ModContent.ProjectileType<TobaccoSeed>(), ProjectileID.DeathLaser, ModContent.ProjectileType<MaserDeathray>(), ModContent.ProjectileType<PathogenBloodDrop>(), ModContent.ProjectileType<PathogenBloodThorn>(), ModContent.ProjectileType<PathogenCaltrop>() };
 
         /// <summary>
         /// Defender NPC kill count
@@ -92,32 +92,43 @@ namespace CalRemix.NPCs.PandemicPanic
         /// <summary>
         /// If the player is on the defenders' side
         /// </summary>
-        public static bool DefendersWinning => ((InvadersKilled > DefendersKilled + KillBuffer) && FinalSide == null) || FinalSide == true;
+        public static bool DefendersWinning => ((InvadersKilled > DefendersKilled + KillBuffer) && LockedFinalSide == 0) || LockedFinalSide == 1;
 
         /// <summary>
         /// If the player is on the invaders' side
         /// </summary>
-        public static bool InvadersWinning => ((DefendersKilled > InvadersKilled + KillBuffer) && FinalSide == null) || FinalSide == false;
+        public static bool InvadersWinning => ((DefendersKilled > InvadersKilled + KillBuffer) && LockedFinalSide == 0) || LockedFinalSide == -1;
 
         /// <summary>
         /// If Pathogen has been summoned
         /// </summary>
         public static bool SummonedPathogen = false;
 
+        /// <summary>
+        /// This asbestos is some real shit bro
+        /// </summary>
         public static float coughTimer = 0;
 
-        public static bool? FinalSide = null;
+        /// <summary>
+        /// The player's ultimate route. This is decided upon Pathogen's spawn.
+        /// </summary>
+        public static int LockedFinalSide = 0;
 
+        /// <summary>
+        /// All active npcs spawned by the event
+        /// </summary>
         public static List<NPC> ActiveNPCs = new List<NPC>();
 
+        /// <summary>
+        /// All active projectiles that are used by enemies in the event
+        /// </summary>
         public static List<Projectile> ActiveProjectiles = new List<Projectile>();
 
         public override void PreUpdateWorld()
         {
-            IsActive = true;
-            UpdateLists();
             if (IsActive)
             {
+                UpdateLists();
                 if (TotalKills >= 300 && !SummonedPathogen)
                 {
                     NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Pathogen>());
@@ -137,15 +148,15 @@ namespace CalRemix.NPCs.PandemicPanic
                     }
                 }
             }
-            if (SummonedPathogen && FinalSide == null)
+            if (SummonedPathogen && LockedFinalSide == 0)
             {
                 if (InvadersWinning)
                 {
-                    FinalSide = false;
+                    LockedFinalSide = -1;
                 }
                 if (DefendersWinning)
                 {
-                    FinalSide = true;
+                    LockedFinalSide = 1;
                 }
             }
             if (DefendersKilled >= MaxRequired)
@@ -188,7 +199,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             DefendersKilled = 0;
             InvadersKilled = 0;
-            FinalSide = null;
+            LockedFinalSide = 0;
             SummonedPathogen = false;
             IsActive = false;
             CalRemixWorld.UpdateWorldBool();
@@ -198,7 +209,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             DefendersKilled = 0;
             InvadersKilled = 0;
-            FinalSide = null;
+            LockedFinalSide = 0;
             SummonedPathogen = false;
             IsActive = false;
         }
@@ -207,7 +218,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             DefendersKilled = 0;
             InvadersKilled = 0;
-            FinalSide = null;
+            LockedFinalSide = 0;
             SummonedPathogen = false;
             IsActive = false;
         }
@@ -218,7 +229,7 @@ namespace CalRemix.NPCs.PandemicPanic
             tag["BioInvaders"] = InvadersKilled;
             tag["PathoSummon"] = SummonedPathogen;
             tag["BioActive"] = IsActive;
-            tag["FinalSide"] = FinalSide;
+            tag["LockedFinalSide"] = LockedFinalSide;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -227,7 +238,7 @@ namespace CalRemix.NPCs.PandemicPanic
             SummonedPathogen = tag.Get<bool>("PathoSummon");
             DefendersKilled = tag.Get<float>("BioDefenders");
             InvadersKilled = tag.Get<float>("BioInvaders");
-            FinalSide = tag.Get<bool?>("FinalSide");
+            LockedFinalSide = tag.Get<int>("LockedFinalSide");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -236,7 +247,7 @@ namespace CalRemix.NPCs.PandemicPanic
             writer.Write(InvadersKilled);
             writer.Write(SummonedPathogen);
             writer.Write(IsActive);
-            writer.Write((bool)FinalSide);
+            writer.Write(LockedFinalSide);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -245,7 +256,7 @@ namespace CalRemix.NPCs.PandemicPanic
             InvadersKilled = reader.ReadSingle();
             SummonedPathogen = reader.ReadBoolean();
             IsActive = reader.ReadBoolean();
-            FinalSide = reader.ReadBoolean();
+            LockedFinalSide = reader.ReadInt32();
         }
 
         public static Entity BioGetTarget(bool defender, NPC npc)

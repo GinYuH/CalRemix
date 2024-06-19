@@ -503,19 +503,22 @@ namespace CalRemix
                 }
                 chainSawHitCooldown = 0;
             }
-			if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+			if (Player.ZoneRockLayerHeight)
 			{
-				int plagueEnemies = 0;
-				int plagueToSpawnPhytogen = 10;
-				foreach (NPC n in Main.npc)
+				if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
 				{
-					if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type))
+					int plagueEnemies = 0;
+					int plagueToSpawnPhytogen = 10;
+					foreach (NPC n in Main.npc)
 					{
-						plagueEnemies++;
-						if (plagueEnemies >= plagueToSpawnPhytogen)
-                        {
-                            NPC.SpawnOnPlayer(Player.whoAmI, ModContent.NPCType<Phytogen>());
-                            break;
+						if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type))
+						{
+							plagueEnemies++;
+							if (plagueEnemies >= plagueToSpawnPhytogen)
+							{
+								NPC.SpawnOnPlayer(Player.whoAmI, ModContent.NPCType<Phytogen>());
+								break;
+							}
 						}
 					}
 				}

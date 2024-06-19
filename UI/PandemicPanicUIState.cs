@@ -42,7 +42,7 @@ namespace CalRemix.UI
         }
         public static void DrawProgressText(SpriteBatch spriteBatch, float yScale, Vector2 baseBarDrawPosition, int barOffsetY, out Vector2 newBarPosition)
         {
-            Color c = PandemicPanic.SummonedPathogen && PandemicPanic.FinalSide == true ? Main.DiscoColor : Color.White;
+            Color c = PandemicPanic.SummonedPathogen && PandemicPanic.LockedFinalSide == 1 ? Main.DiscoColor : Color.White;
             string progressText = !PandemicPanic.DefendersWinning && !PandemicPanic.InvadersWinning ? "???" : (100 * CompletionRatio).ToString($"N{0}") + "%";
             progressText = Language.GetTextValue("Game.WaveCleared", progressText);
 
