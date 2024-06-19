@@ -6,17 +6,17 @@ using CalRemix.Items.Materials;
 
 namespace CalRemix.Items.Placeables.Plates
 {
-    public class Aeroplate : ModItem
-	{
-		public override void SetStaticDefaults() 
-		{
+    public class Curseplate : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
             Item.ResearchUnlockCount = 100;
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Curseplate>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Bloodplate>();
         }
 
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<AeroplateTile>();
+            Item.createTile = ModContent.TileType<CurseplateTile>();
             Item.useStyle = 1;
             Item.useTurn = true;
             Item.useAnimation = 15;
@@ -32,15 +32,10 @@ namespace CalRemix.Items.Placeables.Plates
 
         public override void AddRecipes()
         {
-            CreateRecipe(3)
-                .AddIngredient(ItemID.Obsidian, 3)
-                .AddIngredient<EssenceofBabil>()
+            CreateRecipe(33)
+                .AddIngredient(ItemID.Obsidian, 33)
+                .AddIngredient(ItemID.Nazar)
                 .AddTile(TileID.Hellforge)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient<AeroplateWall>(4)
-                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }
