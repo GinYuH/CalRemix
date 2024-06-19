@@ -101,7 +101,7 @@ namespace CalRemix.Skies
             Opacity = BackgroundIntensity;
         }
 
-        public override Color OnTileColor(Color inColor) => new Color(Vector4.Lerp(DrawColor.ToVector4(), inColor.ToVector4(), 1f - BackgroundIntensity));
+        public override Color OnTileColor(Color inColor) => new Color(Vector3.Lerp(DrawColor.ToVector3(), inColor.ToVector3(), 1f - BackgroundIntensity));
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {

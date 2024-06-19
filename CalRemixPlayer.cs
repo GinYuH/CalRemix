@@ -49,6 +49,8 @@ using CalRemix.Items.Potions;
 using CalRemix.Retheme;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
+using CalamityMod.NPCs.ExoMechs;
+using CalRemix.NPCs.Bosses.Losbaf;
 
 namespace CalRemix
 {
@@ -454,8 +456,10 @@ namespace CalRemix
         }
 		public override void PreUpdate()
         {
-			if (Main.myPlayer == Player.whoAmI)
+            if (Main.myPlayer == Player.whoAmI)
             {
+                if (NPC.AnyNPCs(ModContent.NPCType<Draedon>()) || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()))
+                    Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
             }

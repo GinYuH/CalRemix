@@ -17,6 +17,8 @@ namespace CalRemix
         public static bool downedPathogen = false;
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
+        public static bool downedHypnos = false;
+        public static bool downedLosbaf = false;
 
         public static bool downedEarthElemental = false;
         public static bool downedLifeSlime = false;
@@ -42,8 +44,10 @@ namespace CalRemix
             downedPathogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
+            downedHypnos = false;
+            downedLosbaf = false;
 
-            downedEarthElemental = false;
+        downedEarthElemental = false;
             downedLifeSlime = false;
             downedClamitas = false;
             downedCyberDraedon = false;
@@ -68,6 +72,8 @@ namespace CalRemix
             downedPathogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
+            downedHypnos = false;
+            downedLosbaf = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -94,6 +100,8 @@ namespace CalRemix
             tag["downedPathogen"] = downedPathogen;
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
+            tag["downedHypnos"] = downedHypnos;
+            tag["downedLosbaf"] = downedLosbaf;
 
             tag["downedEarthElemental"] = downedEarthElemental;
             tag["downedLifeSlime"] = downedLifeSlime;
@@ -122,6 +130,8 @@ namespace CalRemix
             downedPathogen = tag.Get<bool>("downedPathogen");
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
+            downedHypnos = tag.Get<bool>("downedHypnos");
+            downedLosbaf = tag.Get<bool>("downedLosbaf");
 
             downedEarthElemental = tag.Get<bool>("downedEarthElemental");
             downedLifeSlime = tag.Get<bool>("downedLifeSlime");
@@ -149,6 +159,8 @@ namespace CalRemix
             writer.Write(downedPathogen);
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
+            writer.Write(downedHypnos);
+            writer.Write(downedLosbaf);
 
             writer.Write(downedEarthElemental);
             writer.Write(downedLifeSlime);
@@ -175,6 +187,8 @@ namespace CalRemix
             downedPathogen = reader.ReadBoolean();
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
+            downedHypnos = reader.ReadBoolean();
+            downedLosbaf = reader.ReadBoolean();
 
             downedEarthElemental = reader.ReadBoolean();
             downedLifeSlime = reader.ReadBoolean();

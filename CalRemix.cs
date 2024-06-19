@@ -52,9 +52,14 @@ using CalRemix.UI;
 using Terraria.GameContent.Items;
 using CalamityMod.Walls;
 using CalRemix.NPCs.PandemicPanic;
+using CalRemix.NPCs.Bosses.Hypnos;
 
 namespace CalRemix
 {
+    enum HypnosMessageType
+    {
+        HypnosSummoned
+    }
     public class CalRemix : Mod
     {
         public static CalRemix instance;
@@ -64,6 +69,7 @@ namespace CalRemix
         public static int KlepticoinCurrencyId;
 
         internal static Effect SlendermanShader;
+        internal static Effect ShieldShader;
         internal static Effect LeanShader;
 
         public static Asset<Texture2D> sunOG = null;
@@ -90,6 +96,19 @@ namespace CalRemix
         };
         // Defer mod call handling to the extraneous mod call manager.
         public override object Call(params object[] args) => ModCallManager.Call(args);
+        private static void RegisterSceneFilter(ScreenShaderData passReg, string registrationName, EffectPriority priority = EffectPriority.High)
+        {
+            string prefixedRegistrationName = "CalRemix:" + registrationName;
+            Terraria.Graphics.Effects.Filters.Scene[prefixedRegistrationName] = new Filter(passReg, priority);
+            Terraria.Graphics.Effects.Filters.Scene[prefixedRegistrationName].Load();
+        }
+
+        private static void RegisterScreenShader(Effect shader, string passName, string registrationName, EffectPriority priority = EffectPriority.High)
+        {
+            Ref<Effect> shaderPointer = new(shader);
+            ScreenShaderData passParamRegistration = new(shaderPointer, passName);
+            RegisterSceneFilter(passParamRegistration, registrationName, priority);
+        }
         private static void RegisterMiscShader(Effect shader, string passName, string registrationName)
         {
             Ref<Effect> shaderPointer = new(shader);
@@ -152,6 +171,8 @@ namespace CalRemix
             Effect LoadShader(string path) => calAss.Request<Effect>("Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
+            ShieldShader = LoadShader("HoloShield");
+            RegisterScreenShader(ShieldShader, "ShieldPass", "HoloShieldShader");
 
             sunOG = TextureAssets.Sun3;
             sunReal = TextureAssets.Sun;
@@ -224,6 +245,18 @@ namespace CalRemix
                 Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
             }
         }
+        public override void HandlePacket(BinaryReader reader, int whoAmI)
+        {
+            HypnosMessageType msgType = (HypnosMessageType)reader.ReadByte();
+            switch (msgType)
+            {
+                case HypnosMessageType.HypnosSummoned:
+                    int player = reader.ReadByte();
+
+                    Hypnos.SummonDraedon(Main.player[player]);
+                    break;
+            }
+        }
 
         internal void AddEnchantments(Mod cal)
         {
@@ -267,6 +300,13 @@ namespace CalRemix
                     break;
                 }
             }
+            int[] excIDs2 = { ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>() };
+            int[] headID2 = { ModContent.NPCType<Hypnos>() };
+            Action<int> pr2 = delegate (int npc)
+            {
+                NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<Hypnos>());
+            };
+            brEntries.Insert(brEntries.Count() - 2, (ModContent.NPCType<Hypnos>(), -1, pr2, 180, false, 0f, excIDs2, headID2));
             cal.Call("SetBossRushEntries", brEntries);
         }
 

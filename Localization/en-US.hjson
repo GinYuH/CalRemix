@@ -2048,6 +2048,41 @@ Mods: {
 				DisplayName: Cryo Key Mold
 				Tooltip: Used for crafting a Cryo Key
 			}
+
+			HypnosTrophyInv: {
+				DisplayName: Hypnos Trophy Inv
+				Tooltip: ""
+			}
+
+			ShadyGazingSkull: {
+				DisplayName: Shady Gazing Skull
+				Tooltip: ""
+			}
+
+			Teleporter: {
+				DisplayName: Teleporter
+				Tooltip: ""
+			}
+
+			HypnosMask: {
+				DisplayName: Hypnos Mask
+				Tooltip: ""
+			}
+
+			HypnosMusicBox: {
+				DisplayName: Hypnos Music Box
+				Tooltip: ""
+			}
+
+			Keraunos: {
+				Tooltip: ""
+				DisplayName: Keraunos
+			}
+
+			Caduceus: {
+				Tooltip: ""
+				DisplayName: Caduceus
+			}
 		}
 
 		NPCs: {
@@ -2337,6 +2372,11 @@ Mods: {
 			DendtritiatorArm.DisplayName: Dendritiator
 			Pathogen.DisplayName: Pathogen
 			PathogenShield.DisplayName: Pathogen's Shield
+			AergiaNeuron.DisplayName: Aergia Neuron
+			Hypnos.DisplayName: Hypnos
+			HypnosPlug.DisplayName: Hypnos Plug
+			RemixDraedon.DisplayName: Remix Draedon
+			Losbaf.DisplayName: Losbaf
 		}
 
 		Projectiles: {
@@ -2530,6 +2570,10 @@ Mods: {
 			EosinineProj.DisplayName: Eosinine
 			TobaccoSeed.DisplayName: Seed
 			MaserDeathray.DisplayName: Maser Beam
+			BlueExoPulseLaser.DisplayName: Blue Exo Pulse Laser
+			ExothermalSickle.DisplayName: Exothermal Sickle
+			LargeTeslaSphere.DisplayName: Large Tesla Sphere
+			RedExoPulseLaser.DisplayName: Red Exo Pulse Laser
 		}
 
 		Tiles: {
@@ -2552,6 +2596,7 @@ Mods: {
 			TanzaniteGlassPlaced.MapEntry: Tanzanite Glass Placed
 			MovieSignPlaced.MapEntry: Moviesign
 			IonCubePlaced.MapEntry: Ion Cube Placed
+			HypnosTrophyPlaced.MapEntry: Hypnos Trophy Placed
 		}
 
 		Enchantments: {
@@ -2587,5 +2632,6 @@ Mods: {
 		}
 
 		InfoDisplays.ElementDisplay.DisplayName: Element Display
+		Emotes.HypnosEmote.Command: hypnosemote
 	}
 }

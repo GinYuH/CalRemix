@@ -133,6 +133,20 @@ namespace CalRemix.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class HypnosMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.HypnosMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.HypnosMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
     public class LaRugaMusicBox : PlacedRemixMusicBox
     {
         public override void SetStaticDefaults()

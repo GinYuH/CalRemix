@@ -23,6 +23,7 @@ using CalRemix.Items.Placeables;
 using CalRemix.NPCs.Bosses.Ionogen;
 using CalRemix.NPCs.Bosses.Oxygen;
 using CalRemix.NPCs.PandemicPanic;
+using CalRemix.NPCs.Bosses.Hypnos;
 
 namespace CalRemix.CrossCompatibility
 {
@@ -120,7 +121,14 @@ namespace CalRemix.CrossCompatibility
             {
                 ["spawnItems"] = ItemType<IonCube>(),
             });
-
+            bc.Call("LogBoss", Mod, "XP-00 Hypnos", 22.5f, () => RemixDowned.downedHypnos, NPCType<Hypnos>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<BloodyVein>()
+            });
+            /*
+                $"Jam a [i:{ModContent.ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
+                "An imperfection after allÅ, what a shame.",
+             */
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Minibosses/Clamitas_BC").Value;
