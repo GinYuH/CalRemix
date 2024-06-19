@@ -25,7 +25,7 @@ namespace CalRemix.UI
         }
         public override Texture2D GetTextureByPage()
         {
-            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyHolo").Value;
+            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperFannyHolo").Value;
         }
     }
 }
