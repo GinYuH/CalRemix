@@ -19,14 +19,6 @@ namespace CalRemix
 {
     public class IonAltar : ModSystem
     {
-        internal const string IonAltarName = "World/ionaltar.csch";
-
-        internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
-            typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
-
-        internal static readonly MethodInfo ImportSchematicMethod = typeof(CalamitySchematicIO).GetMethod("ImportSchematic", BindingFlags.NonPublic | BindingFlags.Static);
-
-
         public static void GenerateIonAltar()
         {
             bool shouldBreak = false;
@@ -72,7 +64,6 @@ namespace CalRemix
 
                                         bool _ = false;
                                         SchematicManager.PlaceSchematic<Action<Chest>>("Ion Altar", new Point(i, j), SchematicAnchor.CenterLeft, ref _);
-                                        Main.LocalPlayer.position = new Vector2(i * 16, j * 16);
                                         shouldBreak = true;
                                         break;
                                     }
@@ -111,21 +102,6 @@ namespace CalRemix
             {
                 CalRemix.instance.Logger.Error("Could not place Ion Cube!");
             }
-        }
-
-        public override void PostSetupContent()
-        {
-            TileMaps.Add("Ion Altar", LoadSchematic(IonAltarName).ShaveOffEdge());
-        }
-
-
-        public static SchematicMetaTile[,] LoadSchematic(string filename)
-        {
-            SchematicMetaTile[,] ret = null;
-            using (Stream st = CalRemix.instance.GetFileStream(filename, true))
-                ret = (SchematicMetaTile[,])ImportSchematicMethod.Invoke(null, [st]);
-
-            return ret;
         }
     }
 }

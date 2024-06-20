@@ -2083,6 +2083,8 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Caduceus
 			}
+
+			OrigenDoor.DisplayName: Door of Origen
 		}
 
 		NPCs: {
