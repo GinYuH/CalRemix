@@ -2368,6 +2368,7 @@ Mods: {
 			Basilius.DisplayName: Basilius
 			BasiliusBody.DisplayName: Basilius
 			Tobasaia.DisplayName: Tobasaia
+
 			Dendritiator: {
 				DisplayName: Dendritiator
 
@@ -2377,7 +2378,9 @@ Mods: {
 					DespawnMessage: "[c/87fffd:The colossal cell has whiped away everyone's impurity.]"
 				}
 			}
+
 			DentritiatorArm.DisplayName: Dendriatior
+
 			MaserPhage: {
 				DisplayName: Maser Phage
 
@@ -2387,7 +2390,9 @@ Mods: {
 					DespawnMessage: "[c/e04931:The colossal bacteriophage has spread its infection.]"
 				}
 			}
+
 			DendtritiatorArm.DisplayName: Dendritiator
+
 			Pathogen: {
 				DisplayName: Pathogen
 
@@ -2397,6 +2402,7 @@ Mods: {
 					DespawnMessage: "[c/b01e4c:The virus continues destroying immune cells.]"
 				}
 			}
+
 			PathogenShield.DisplayName: Pathogen's Shield
 			AergiaNeuron.DisplayName: Aergia Neuron
 			Hypnos.DisplayName: Hypnos
@@ -2404,6 +2410,7 @@ Mods: {
 			RemixDraedon.DisplayName: Remix Draedon
 			Losbaf.DisplayName: Losbaf
 			Origen.DisplayName: Origen
+
 			OrigenCore: {
 				DisplayName: Origen
 
@@ -2673,5 +2680,6 @@ Mods: {
 
 		InfoDisplays.ElementDisplay.DisplayName: Element Display
 		Emotes.HypnosEmote.Command: hypnosemote
+		BossChecklistIntegration.PandemicPanic.EntryName: Pandemic Panic
 	}
 }
