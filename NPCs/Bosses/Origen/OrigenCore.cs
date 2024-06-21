@@ -132,7 +132,8 @@ namespace CalRemix.NPCs.Bosses.Origen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("A prismatic living ice crystal. Though typically glimpsed only through the harsh sleet of blizzards, on the rare days where it is seen during a sunny day, its body gleams a deadly, beautiful blue.")
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
+        new FlavorTextBestiaryInfoElement("This element was once the first wielder of the Zero Point. After his untimely demise to a party of two John Wicks, Master Chief, and Rick, he was severed from the omniverse to bring upon superior clones of itself.")
             });
         }
 

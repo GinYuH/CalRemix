@@ -503,6 +503,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle,
         new FlavorTextBestiaryInfoElement("After Silva's banishment to the Abyss, a sizeable chunk of her spirit fractured from her rotting body to return to the jungle. This elemental's purified core manifested as a construct to combat against the plague and its carriers.")
             });
         }
