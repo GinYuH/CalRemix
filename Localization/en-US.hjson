@@ -2368,11 +2368,35 @@ Mods: {
 			Basilius.DisplayName: Basilius
 			BasiliusBody.DisplayName: Basilius
 			Tobasaia.DisplayName: Tobasaia
-			Dendritiator.DisplayName: Denritiator
+			Dendritiator: {
+				DisplayName: Dendritiator
+
+				BossChecklistIntegration: {
+					EntryName: Dendritiator
+					SpawnInfo: Spawns during the Pandemic Panic event.
+					DespawnMessage: "[c/87fffd:The colossal cell has whiped away everyone's impurity.]"
+				}
+			}
 			DentritiatorArm.DisplayName: Dendriatior
-			MaserPhage.DisplayName: Maser Phage
+			MaserPhage: {
+				DisplayName: Maser Phage
+
+				BossChecklistIntegration: {
+					EntryName: Maser Phage
+					SpawnInfo: Spawns during the Pandemic Panic event.
+					DespawnMessage: "[c/e04931:The colossal bacteriophage has spread its infection.]"
+				}
+			}
 			DendtritiatorArm.DisplayName: Dendritiator
-			Pathogen.DisplayName: Pathogen
+			Pathogen: {
+				DisplayName: Pathogen
+
+				BossChecklistIntegration: {
+					EntryName: Pathogen
+					SpawnInfo: Use a [i:CalamityMod/BloodyVein] on a sink.
+					DespawnMessage: "[c/b01e4c:The virus continues destroying immune cells.]"
+				}
+			}
 			PathogenShield.DisplayName: Pathogen's Shield
 			AergiaNeuron.DisplayName: Aergia Neuron
 			Hypnos.DisplayName: Hypnos
@@ -2380,7 +2404,15 @@ Mods: {
 			RemixDraedon.DisplayName: Remix Draedon
 			Losbaf.DisplayName: Losbaf
 			Origen.DisplayName: Origen
-			OrigenCore.DisplayName: Origen
+			OrigenCore: {
+				DisplayName: Origen
+
+				BossChecklistIntegration: {
+					EntryName: Origen
+					SpawnInfo: Open the [i:CalRemix/OrigenDoor] in the snow biome.
+					DespawnMessage: "[c/6b7f80:The snowflake returns to its origin.]"
+				}
+			}
 		}
 
 		Projectiles: {
