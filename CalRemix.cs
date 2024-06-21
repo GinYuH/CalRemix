@@ -83,6 +83,25 @@ namespace CalRemix
 
         public static readonly SoundStyle Silence = new($"{nameof(CalRemix)}/Sounds/EmptySound");
 
+        public static readonly List<string> CalamityAddons = new List<string>()
+        {
+            "ApothTestMod",
+            "Bloopsitems",
+            "CalamityHunt",
+            "CalamityLootSwap",
+            "CalamityMod",
+            "CalamityModMusic",
+            "CalRemix",
+            "CalValEX",
+            "CJMOD",
+            "Clamity",
+            "CatalystMod",
+            "InfernumMode",
+            "NoxusBoss",
+            "UnCalamityModMusic"
+        };
+        public static List<ModItem> CalamityAddonItems = new List<ModItem>();
+
         public static List<int> oreList = new List<int>
         {
             TileID.Copper,
@@ -225,17 +244,10 @@ namespace CalRemix
                     return;
                 if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
                     return;
-                if (CalRemixMenu.Instance is null)
+                ModMenu menu = Main.rand.NextBool(4) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
+                if (menu is null)
                     return;
-                if (CalRemixMenu.Instance.FullName is null)
-                    return;
-                typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { Main.rand.Next(-2, 3) });
-                typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, CalRemixMenu.Instance.FullName);
-
-                if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || CalRemixMenu.Instance is null)
-                    return;
-                if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || CalRemixMenu.Instance.FullName is null)
-                    return;
+                MenuStuff(menu);
             }
             catch (Exception e)
             {
@@ -244,6 +256,27 @@ namespace CalRemix
                 Console.WriteLine(e.ToString());
                 Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
             }
+            for (int i = 0; i < ItemLoader.ItemCount; i++)
+            {
+                if (ItemLoader.GetItem(i) is null)
+                    continue;
+                ModItem item = ItemLoader.GetItem(i);
+                if (!CalamityAddons.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
+                    continue;
+                CalamityAddonItems.Add(item);
+            }
+        }
+        private void MenuStuff(ModMenu menu)
+        {
+            if (menu.FullName is null)
+                return;
+            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { Main.rand.Next(-2, 3) });
+            typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, menu.FullName);
+
+            if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || menu is null)
+                return;
+            if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || menu.FullName is null)
+                return;
         }
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {

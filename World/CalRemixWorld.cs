@@ -55,6 +55,8 @@ using CalamityMod.Tiles.SunkenSea;
 using CalamityMod.BiomeManagers;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.NPCs.Bosses.Oxygen;
+using CalRemix.UI.Title;
+using System.Reflection;
 
 namespace CalRemix
 {
