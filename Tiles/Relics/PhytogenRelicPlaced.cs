@@ -1,0 +1,12 @@
+﻿using CalamityMod.Tiles.BaseTiles;
+using Terraria.ModLoader;
+
+namespace CalRemix.Tiles.Relics
+{
+    public class PhytogenRelicPlaced : BaseBossRelic
+    {
+        public override string RelicTextureName => "CalRemix/Tiles/Relics/PhytogenRelicPlaced";
+
+        public override int AssociatedItem => ModContent.ItemType<Items.Placeables.Relics.PhytogenRelic>();
+    }
+}

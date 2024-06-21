@@ -32,6 +32,7 @@ using CalRemix.UI;
 using System.Linq;
 using System.IO;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CalRemix.Items.Placeables.Relics;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -450,6 +451,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 4, 8);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<OxygenRelic>());
         }
         public override void OnKill()
         {

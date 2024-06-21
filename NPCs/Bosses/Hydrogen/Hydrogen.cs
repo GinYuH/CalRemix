@@ -28,6 +28,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.Items.Placeables.Relics;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -327,6 +328,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<SeaPrism>(), 1, 4, 8);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<HydrogenRelic>());
         }
         public override void OnKill()
         {

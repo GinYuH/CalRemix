@@ -9,6 +9,7 @@ namespace CalRemix
         public static bool downedCalamity = false;
         public static bool downedExcavator = false;
         public static bool downedAcidsighter = false;
+        public static bool downedOrigen = false;
         public static bool downedCarcinogen = false;
         public static bool downedPhytogen = false;
         public static bool downedIonogen = false;
@@ -36,6 +37,7 @@ namespace CalRemix
             downedCalamity = false;
             downedExcavator = false;
             downedAcidsighter = false;
+            downedOrigen = false;
             downedCarcinogen = false;
             downedPhytogen = false;
             downedIonogen = false;
@@ -64,6 +66,7 @@ namespace CalRemix
             downedCalamity = false;
             downedExcavator = false;
             downedAcidsighter = false;
+            downedOrigen = false;
             downedCarcinogen = false;
             downedPhytogen = false;
             downedIonogen = false;
@@ -92,6 +95,7 @@ namespace CalRemix
             tag["downedCalamity"] = downedCalamity;
             tag["downedExcavator"] = downedExcavator;
             tag["downedAcidsighter"] = downedAcidsighter;
+            tag["downedOrigen"] = downedOrigen;
             tag["downedCarcinogen"] = downedCarcinogen;
             tag["downedPhytogen"] = downedPhytogen;
             tag["downedIonogen"] = downedIonogen;
@@ -122,6 +126,7 @@ namespace CalRemix
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
             downedAcidsighter = tag.Get<bool>("downedAcidsighter");
+            downedOrigen = tag.Get<bool>("downedOrigen");
             downedCarcinogen = tag.Get<bool>("downedCarcinogen");
             downedPhytogen = tag.Get<bool>("downedPhytogen");
             downedIonogen = tag.Get<bool>("downedIonogen");
@@ -151,6 +156,7 @@ namespace CalRemix
             writer.Write(downedCalamity);
             writer.Write(downedExcavator);
             writer.Write(downedAcidsighter);
+            writer.Write(downedOrigen);
             writer.Write(downedCarcinogen);
             writer.Write(downedPhytogen);
             writer.Write(downedIonogen);
@@ -179,6 +185,7 @@ namespace CalRemix
             downedCalamity = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
             downedAcidsighter = reader.ReadBoolean();
+            downedOrigen = reader.ReadBoolean();
             downedCarcinogen = reader.ReadBoolean();
             downedPhytogen = reader.ReadBoolean();
             downedIonogen = reader.ReadBoolean();

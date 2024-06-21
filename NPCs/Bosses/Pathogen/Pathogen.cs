@@ -25,6 +25,7 @@ using SubworldLibrary;
 using CalRemix.Subworlds;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.NPCs.Crags;
+using CalRemix.Items.Placeables.Relics;
 
 namespace CalRemix.NPCs.Bosses.Pathogen
 {
@@ -483,6 +484,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<BloodSample>(), 1, 4, 8);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
         }
         public override void OnKill()
         {

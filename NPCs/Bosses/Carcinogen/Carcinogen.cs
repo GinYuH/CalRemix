@@ -14,6 +14,7 @@ using CalamityMod.Events;
 using CalRemix.Biomes;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.Items.Placeables.Relics;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -377,6 +378,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<Asbestos>(), 1, 216, 224);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());
         }
         public override void OnKill()
         {

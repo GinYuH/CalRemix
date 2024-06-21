@@ -1,8 +1,10 @@
 ﻿using CalamityMod.NPCs.Cryogen;
 using CalRemix;
+using CalRemix.NPCs.Bosses.Origen;
 using CalRemix.NPCs.Bosses.Pathogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -23,6 +25,10 @@ namespace CalRemix.Tiles
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.Origin = new Point16(1, 2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+
+            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsSandfall[Type] = true;
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(75, 139, 166));
             DustType = 1;
@@ -39,31 +45,13 @@ namespace CalRemix.Tiles
             return false;
         }
 
-       /*public override void NearbyEffects(int i, int j, bool closer)
-        {
-            int x = i - Main.tile[i, j].frameX / 18 % 2;
-            int y = j - Main.tile[i, j].frameY / 18 % 3;
-            for (int l = x; l < x + 3; l++)
-            {
-                for (int m = y; m < y + 3; m++)
-                {
-                    if (Main.tile[l, m] == null)
-                    {
-                        Main.tile[l, m] = new Tile();
-                    }
-                    if (Main.tile[l, m].active() && Main.tile[l, m].type == Type)
-                    {
-                        if (!NPC.AnyNPCs(ModContent.NPCType<NPCs.JohnWulfrum.JohnWulfrumSentry>()) && CalValPlusWorld.downedJohnWulfrum)
-                        {
-                            Main.tile[l, m].frameY = 0;
-                        }
-                    }
-                }
-            }
-        }*/
-
         public override void HitWire(int i, int j)
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<Origen>()))
+            {
+                NPC.NewNPC(new EntitySource_WorldEvent(), i * 16, j * 16 - 12, ModContent.NPCType<Origen>());
+            }
+            SoundEngine.PlaySound(SoundID.DoorOpen);
             int x = i - Main.tile[i, j].TileFrameX / 18 % 2;
             int y = j - Main.tile[i, j].TileFrameY / 18 % 3;
             for (int l = x; l < x + 3; l++)
@@ -74,37 +62,11 @@ namespace CalRemix.Tiles
                     {
                         if (Main.tile[l, m].TileFrameY < 54)
                         {
-                            int spawnX = i * 16 + 16;
-                            int spawnY = j * 16 + 6;
-                            if (!spawnjon)
-                            {
-                                if (!NPC.AnyNPCs(ModContent.NPCType<Cryogen>()) && !RemixDowned.downedPathogen)
-                                {
-                                    NPC.NewNPC(new EntitySource_WorldEvent(), spawnX, spawnY - 12, ModContent.NPCType<Cryogen>());
-                                    spawnjon = true;
-                                }
-                                if (!NPC.AnyNPCs(ModContent.NPCType<Pathogen>()) && RemixDowned.downedPathogen)
-                                {
-                                    NPC.NewNPC(new EntitySource_WorldEvent(), spawnX, spawnY - 12, ModContent.NPCType<Pathogen>());
-                                    spawnjon = true;
-                                }
-                            }
-                            if (!sound)
-                            {
-                                SoundEngine.PlaySound(SoundID.DoorOpen);
-                                sound = true;
-                            }
                             Main.tile[l, m].TileFrameY += 54;
                         }
                         else
                         {
-                            if (sound)
-                            {
-                                SoundEngine.PlaySound(SoundID.DoorClosed);
-                                sound = false;
-                            }
                             Main.tile[l, m].TileFrameY -= 54;
-                            spawnjon = false;
                         }
                     }
                 }

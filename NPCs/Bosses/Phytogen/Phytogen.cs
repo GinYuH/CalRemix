@@ -25,6 +25,7 @@ using CalRemix.CrossCompatibility;
 using CalamityMod.Systems;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.Items.Placeables.Relics;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -529,6 +530,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemID.Obsidian, 1, 216, 224);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PhytogenRelic>());
         }
         public override void OnKill()
         {
