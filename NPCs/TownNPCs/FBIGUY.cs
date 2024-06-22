@@ -236,7 +236,7 @@ namespace CalRemix.NPCs.TownNPCs
                 stash = true;
             }
         }
-		public override bool CanGoToStatue(bool toKingStatue) => true;
+		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
             return false;

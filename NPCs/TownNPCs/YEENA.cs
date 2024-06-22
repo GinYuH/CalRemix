@@ -314,7 +314,7 @@ namespace CalRemix.NPCs.TownNPCs
                 .AddWithCustomValue<HalbardoftheHolidays>(Item.buyPrice(platinum: 50), new Condition("After The Devourer of Gods has been defeated", ()=> DownedBossSystem.downedDoG));
             npcShop.Register();
         }
-        public override bool CanGoToStatue(bool toKingStatue) => true;
+        public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
             damage = 200;

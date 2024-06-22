@@ -134,7 +134,7 @@ namespace CalRemix.NPCs.TownNPCs
         }
 
 
-        public override bool CanGoToStatue(bool toKingStatue) => true;
+        public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
