@@ -665,9 +665,13 @@ namespace CalRemix
         }
         public override void ModifyShop(NPCShop shop)
         {
-            if (shop.NpcType == ModContent.NPCType<THIEF>())
+            if (shop.NpcType == NPCID.Merchant)
             {
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<LesserStealthPotion>()));
+            }
+            if (shop.NpcType == ModContent.NPCType<THIEF>())
+            {
+                shop.Add(new NPCShop.Entry(ModContent.ItemType<StealthPotion>()));
             }
             if (shop.NpcType == NPCID.Steampunker)
             {

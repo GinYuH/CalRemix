@@ -36,6 +36,7 @@ using System.Reflection;
 using CalamityMod.Items.Armor;
 using CalamityMod.Items.Placeables.FurnitureStratus;
 using CalamityMod.Items.LoreItems;
+using CalamityMod;
 
 namespace CalRemix
 {
@@ -43,6 +44,7 @@ namespace CalRemix
     {
         public static RecipeGroup Blinkchid, Daychid, Moonchid, Deathchid, Waterchid, Firechid, Shiverchid;
         public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar;
+        public static RecipeGroup AnyButterfly;
         public override void Unload()
         {
             Blinkchid = null;
@@ -56,6 +58,7 @@ namespace CalRemix
             EvilBar = null;
             T4Bar = null;
             HMT1Bar = null;
+            AnyButterfly = null;
         }
         public override void AddRecipeGroups()
         {
@@ -75,9 +78,42 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
             HMT1Bar = new RecipeGroup(() => "Any Tier 1 Hardmode Bar", ItemID.CobaltBar, ItemID.PalladiumBar);
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
+
+            AnyButterfly = new RecipeGroup(() => "Any Normal Butterfly", ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
+            RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", HMT1Bar);
         }
         public override void AddRecipes()
         {
+            if (ModLoader.TryGetMod("CalamityMusicMod", out Mod music))
+            {
+                Recipe box = Recipe.Create(music.Find<ModItem>("Interlude1MusicBox").Type);
+                box.AddIngredient(ItemID.MusicBox)
+                .AddIngredient<ConquestFragment>(30)
+                .AddCondition(new Condition("After Calamitas Clone is defeated", () => DownedBossSystem.downedCalamitasClone))
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+                Recipe box2 = Recipe.Create(music.Find<ModItem>("Interlude2MusicBox").Type);
+                box2.AddIngredient(ItemID.MusicBox)
+                .AddIngredient<ConquestFragment>(30)
+                .AddCondition(new Condition("After Moon Lord is defeated", () => NPC.downedMoonlord))
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+                Recipe box3 = Recipe.Create(music.Find<ModItem>("DevourerofGodsEulogyMusicBox").Type);
+                box3.AddIngredient(ItemID.MusicBox)
+                .AddIngredient<ConquestFragment>(30)
+                .AddCondition(new Condition("After the Devourer of Gods is defeated", () => DownedBossSystem.downedDoG))
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+                Recipe box4 = Recipe.Create(music.Find<ModItem>("Interlude3MusicBox").Type);
+                box4.AddIngredient(ItemID.MusicBox)
+                .AddIngredient<ConquestFragment>(30)
+                .AddCondition(new Condition("After Yharon is defeated", () => DownedBossSystem.downedYharon))
+                .AddTile(TileID.WorkBenches)
+                .Register();
+            }
             {
                 Recipe slumbering = Recipe.Create(ModContent.ItemType<LoreAwakening>());
                 slumbering.AddIngredient<Slumbering>()
@@ -225,16 +261,6 @@ namespace CalRemix
                 if (recipe.HasResult(ModContent.ItemType<ProfanedShard>()))
                 {
                     recipe.AddCondition(new Condition("Locked recipe. Drops from Yggdrasil Ents in Hallow and Hell.", () => false));
-                }
-                if (recipe.HasResult(ModContent.ItemType<ExoticPheromones>()))
-                {
-                    recipe.RemoveIngredient(ModContent.ItemType<LifeAlloy>());
-                    recipe.RemoveIngredient(ItemID.FragmentSolar);
-                    recipe.RemoveTile(TileID.LunarCraftingStation);
-                    recipe.AddRecipeGroup("CalRemix:EvilBar", 15);
-                    recipe.AddRecipeGroup("CalRemix:T4Bar", 10);
-                    recipe.AddIngredient(ItemID.Feather, 7);
-                    recipe.AddTile(TileID.MythrilAnvil);
                 }
                 if (recipe.HasResult(ModContent.ItemType<AcesHigh>()))
                 {

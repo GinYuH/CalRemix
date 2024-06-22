@@ -2084,7 +2084,45 @@ Mods: {
 				DisplayName: Caduceus
 			}
 
-			OrigenDoor.DisplayName: Door of Origen
+			OrigenDoor: {
+				DisplayName: Door of Origen
+				Tooltip: ""
+			}
+
+			PhytogenRelic: {
+				Tooltip: ""
+				DisplayName: Phytogen Relic
+			}
+
+			PathogenRelic: {
+				Tooltip: ""
+				DisplayName: Pathogen Relic
+			}
+
+			OxygenRelic: {
+				Tooltip: ""
+				DisplayName: Oxygen Relic
+			}
+
+			HydrogenRelic: {
+				Tooltip: ""
+				DisplayName: Hydrogen Relic
+			}
+
+			CarcinogenRelic: {
+				Tooltip: ""
+				DisplayName: Carcinogen Relic
+			}
+
+			AcidsighterRelic: {
+				Tooltip: ""
+				DisplayName: Acidsighter Relic
+			}
+
+			Curseplate: {
+				Tooltip: ""
+				DisplayName: Curseplate
+			}
 		}
 
 		NPCs: {
@@ -2419,6 +2457,25 @@ Mods: {
 					SpawnInfo: Open the [i:CalRemix/OrigenDoor] in the snow biome.
 					DespawnMessage: "[c/6b7f80:The snowflake returns to its origin.]"
 				}
+			}
+
+			BALLER: {
+				TownNPCMood: {
+					Princess_LovesNPC: I like {NPCName}.
+					LikeNPC_Princess: I like {NPCName}.
+					DislikeNPC: I dislike {NPCName}.
+					LikeNPC: I like {NPCName}.
+					DislikeBiome: I dislike {BiomeName}.
+					LikeBiome: I like {BiomeName}.
+					HateCrowded: I hate how crowded I am.
+					DislikeCrowded: I dislike how crowded I am.
+					LoveSpace: I love having so much space.
+					FarFromHome: I am too far from home.
+					NoHome: I hate not having a home.
+					Content: I am content.
+				}
+
+				DisplayName: B A L L E R
 			}
 		}
 

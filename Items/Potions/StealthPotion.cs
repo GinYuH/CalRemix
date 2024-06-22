@@ -9,7 +9,7 @@ namespace CalRemix.Items.Potions
 {
     public class StealthPotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor && player.Calamity().rogueStealth < (player.Calamity().rogueStealthMax - (player.Calamity().rogueStealthMax * 0.15f));
+        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
