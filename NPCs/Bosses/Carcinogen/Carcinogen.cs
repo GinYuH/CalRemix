@@ -15,6 +15,7 @@ using CalRemix.Biomes;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -388,6 +389,10 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
 
         public override bool SpecialOnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<UNCANNY>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<UNCANNY>());
+            }
             // work you stupid stupid
             RemixDowned.downedCarcinogen = true;
             CalRemixWorld.UpdateWorldBool();

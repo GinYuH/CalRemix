@@ -1,30 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using CalamityMod;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Accessories.Vanity;
-using CalamityMod.Items.Ammo;
-using CalamityMod.Items.Placeables.Furniture.Monoliths;
-using CalamityMod.Items.Potions;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Melee;
-using CalamityMod.Projectiles.Typeless;
-using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -45,10 +30,10 @@ namespace CalRemix.NPCs.TownNPCs
             NPCID.Sets.AttackAverageChance[NPC.type] = 30;
             NPCID.Sets.ShimmerTownTransform[Type] = false;
             NPC.Happiness
-                .SetBiomeAffection<SnowBiome>(AffectionLevel.Like)
-                .SetBiomeAffection<DesertBiome>(AffectionLevel.Dislike)
-                .SetNPCAffection(NPCID.Wizard, AffectionLevel.Like)
-                .SetNPCAffection(NPCID.Cyborg, AffectionLevel.Dislike);
+                .SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
+                .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike)
+                .SetNPCAffection(NPCID.Dryad, AffectionLevel.Like)
+                .SetNPCAffection(NPCID.Demolitionist, AffectionLevel.Dislike);
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Velocity = 1f // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
@@ -78,8 +63,8 @@ namespace CalRemix.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
-                new FlavorTextBestiaryInfoElement("Mods.CalamityMod.Bestiary.DILF")
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
+                new FlavorTextBestiaryInfoElement("This powerful witch used her ability to manipulate winds to turn the tide of battle during the war with Yharim. Being able to create powerful drafts with just a wave of her hands, she lifted arships into the sky to cover ground much quicker and carry troops to their stations.\r\n")
             });
         }
 
@@ -151,7 +136,7 @@ namespace CalRemix.NPCs.TownNPCs
         {
             if (firstButton)
             {
-                if (Main.LocalPlayer.PayCurrency(Item.buyPrice(gold: 1)))
+                if (Main.LocalPlayer.BuyItem(Item.buyPrice(gold: 1)))
                 {
                     Main.windSpeedTarget += 1;
                     SoundEngine.PlaySound(SoundID.CoinPickup);

@@ -26,6 +26,7 @@ using CalRemix.Subworlds;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.NPCs.Crags;
 using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix.NPCs.Bosses.Pathogen
 {
@@ -488,6 +489,10 @@ namespace CalRemix.NPCs.Bosses.Pathogen
         }
         public override void OnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<WALTER>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WALTER>());
+            }
             RemixDowned.downedPathogen = true;
             if (!PandemicPanic.PandemicPanic.InvadersWinning)
                 PandemicPanic.PandemicPanic.EndEvent();

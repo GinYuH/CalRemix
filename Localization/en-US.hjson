@@ -2477,6 +2477,12 @@ Mods: {
 
 				DisplayName: B A L L E R
 			}
+
+			IRON.DisplayName: Archmagian
+			KABLOOEY.DisplayName: Archdiviner
+			SIIVA.DisplayName: Archdruid
+			UNCANNY.DisplayName: Archwizard
+			WALTER.DisplayName: Archmagus
 		}
 
 		Projectiles: {

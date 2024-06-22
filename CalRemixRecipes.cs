@@ -37,6 +37,7 @@ using CalamityMod.Items.Armor;
 using CalamityMod.Items.Placeables.FurnitureStratus;
 using CalamityMod.Items.LoreItems;
 using CalamityMod;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix
 {
@@ -679,6 +680,18 @@ namespace CalRemix
                     }
                 }
             }
+
+            string wiz = NPCShopDatabase.GetShopNameFromVanillaIndex(7); // wizard index
+            NPCShopDatabase.TryGetNPCShop(wiz, out AbstractNPCShop shope);
+            NPCShop shopee = shope as NPCShop;
+
+            NPCShop npcShop = new NPCShop(ModContent.NPCType<IRON>(), "Surge");
+            foreach (NPCShop.Entry entry in shopee.Entries)
+            {
+                if (entry.Item.type != ItemID.Harp)
+                    npcShop.Add(entry);
+            }
+            npcShop.Register();
         }
 
         public static void MassModifyIngredient(bool condition, List<(int, int, int)> results)

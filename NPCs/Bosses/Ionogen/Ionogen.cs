@@ -19,6 +19,7 @@ using CalamityMod.Projectiles.Enemy;
 using Newtonsoft.Json.Serialization;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix.NPCs.Bosses.Ionogen
 {
@@ -330,6 +331,10 @@ namespace CalRemix.NPCs.Bosses.Ionogen
         }
         public override void OnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<IRON>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<IRON>());
+            }
             RemixDowned.downedIonogen = true;
             CalRemixWorld.UpdateWorldBool();
         }

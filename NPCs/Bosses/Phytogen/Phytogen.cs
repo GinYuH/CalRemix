@@ -26,6 +26,7 @@ using CalamityMod.Systems;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -535,6 +536,10 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         }
         public override void OnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<SIIVA>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SIIVA>());
+            }
             RemixDowned.downedPhytogen = true;
             CalRemixWorld.UpdateWorldBool();
         }

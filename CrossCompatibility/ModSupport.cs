@@ -186,6 +186,13 @@ namespace CalRemix.CrossCompatibility
             Census.Call("TownNPCCondition", ModContent.NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
 
             Census.Call("TownNPCCondition", ModContent.NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");
+
+            Census.Call("TownNPCCondition", ModContent.NPCType<WALTER>(), "Defeat Pathogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<IRON>(), "Defeat Ionogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<SIIVA>(), "Defeat Phytogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<UNCANNY>(), "Defeat Carcinogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<KABLOOEY>(), "Defeat Hydrogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<BALLER>(), "Defeat Oxygen");
         }
         internal void AddMusicDisplayEntries()
         {
