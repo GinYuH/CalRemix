@@ -57,6 +57,7 @@ using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.NPCs.Bosses.Oxygen;
 using CalRemix.UI.Title;
 using System.Reflection;
+using CalRemix.NPCs;
 
 namespace CalRemix
 {
@@ -632,6 +633,18 @@ namespace CalRemix
                     Main.LocalPlayer.Calamity().monolithDevourerBShader = 66;
                 Main.windSpeedTarget = 2f;
                 oxydayTime--;
+                // roughly once per 6 minutes
+                if (Main.rand.NextBool(22222))
+                {
+                    Main.NewText("Floating Biomasses are migrating!", Color.DarkCyan);
+                    int amt = 22;
+                    for (int i = 0; i < amt; i++)
+                    {
+                        float posX = Main.LocalPlayer.position.X + Main.rand.Next(1000, 2000) * Main.LocalPlayer.direction;
+                        float posY = Main.LocalPlayer.position.Y - Main.rand.Next(-200, 600);
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)posX, (int)posY, NPCType<FloatingBiomass>());
+                    }
+                }
                 if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
                 {
                     oxydayTime = 0;
