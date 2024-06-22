@@ -12,6 +12,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Materials;
+using CalRemix.Items.Weapons;
 
 namespace CalRemix.NPCs
 {
@@ -142,6 +143,7 @@ namespace CalRemix.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<CryoKeyMold>(), 5);
+            npcLoot.Add(ModContent.ItemType<AspidBlaster>(), 10);
             npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<EssenceofHavoc>(), 1, 3, 4, ui: Main.expertMode);
             npcLoot.AddIf(() => !Main.expertMode, ModContent.ItemType<EssenceofHavoc>(), 1, 2, 3, ui: !Main.expertMode);
         }

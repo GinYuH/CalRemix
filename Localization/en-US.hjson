@@ -2123,6 +2123,11 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Curseplate
 			}
+
+			AspidBlaster: {
+				DisplayName: Aspid Blaster
+				Tooltip: Fires an irritating spread of infected orbs
+			}
 		}
 
 		NPCs: {
@@ -2684,6 +2689,7 @@ Mods: {
 			PathogenBloodThorn.DisplayName: Blood Thorn
 			PathogenCaltrop.DisplayName: White Blood Cell
 			PathogenCell1.DisplayName: Hostile Blood Cell
+			AspidShotFriendly.DisplayName: Infection Glob
 		}
 
 		Tiles: {
