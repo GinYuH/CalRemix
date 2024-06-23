@@ -20,6 +20,7 @@ using Newtonsoft.Json.Serialization;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.NPCs.TownNPCs;
+using CalRemix.Items.Placeables.Relics;
 
 namespace CalRemix.NPCs.Bosses.Ionogen
 {
@@ -328,6 +329,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<EssenceofSunlight>(), 1, 4, 8);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<IonogenRelic>());
         }
         public override void OnKill()
         {
