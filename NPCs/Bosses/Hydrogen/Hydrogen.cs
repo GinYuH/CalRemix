@@ -376,27 +376,30 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         {
             if (Phase == (int)PhaseType.Sealed)
             {
-                Vector2 bottom = CalRemixWorld.hydrogenLocation != Vector2.Zero ? CalRemixWorld.hydrogenLocation : NPC.Center;
-                bottom += new Vector2(10, 110);
-                Vector2 distToProj = NPC.Center;
-                float projRotation = NPC.AngleTo(bottom) - 1.57f;
-                bool doIDraw = true;
-                Texture2D texture = ModContent.Request<Texture2D>(Texture + "Chain").Value; //change this accordingly to your chain texture
-
-                while (doIDraw)
+                Vector2 bottom = CalRemixWorld.hydrogenLocation != default && CalRemixWorld.hydrogenLocation != Vector2.Zero ? CalRemixWorld.hydrogenLocation : NPC.Center;
+                if (bottom == CalRemixWorld.hydrogenLocation && NPC.Distance(CalRemixWorld.hydrogenLocation) < 1000)
                 {
-                    float distance = (bottom - distToProj).Length();
-                    if (distance < (texture.Height + 1))
+                    bottom += new Vector2(10, 110);
+                    Vector2 distToProj = NPC.Center;
+                    float projRotation = NPC.AngleTo(bottom) - 1.57f;
+                    bool doIDraw = true;
+                    Texture2D texture = ModContent.Request<Texture2D>(Texture + "Chain").Value; //change this accordingly to your chain texture
+
+                    while (doIDraw)
                     {
-                        doIDraw = false;
-                    }
-                    else if (!float.IsNaN(distance))
-                    {
-                        Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
-                        distToProj += NPC.DirectionTo(bottom) * texture.Height;
-                        Main.EntitySpriteDraw(texture, distToProj - Main.screenPosition,
-                            new Rectangle(0, 0, texture.Width, texture.Height), drawColore, projRotation,
-                            Utils.Size(texture) / 2f, 1f, SpriteEffects.None, 0);
+                        float distance = (bottom - distToProj).Length();
+                        if (distance < (texture.Height + 1))
+                        {
+                            doIDraw = false;
+                        }
+                        else if (!float.IsNaN(distance))
+                        {
+                            Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
+                            distToProj += NPC.DirectionTo(bottom) * texture.Height;
+                            Main.EntitySpriteDraw(texture, distToProj - Main.screenPosition,
+                                new Rectangle(0, 0, texture.Width, texture.Height), drawColore, projRotation,
+                                Utils.Size(texture) / 2f, 1f, SpriteEffects.None, 0);
+                        }
                     }
                 }
             }

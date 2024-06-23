@@ -99,7 +99,7 @@ namespace CalRemix.NPCs.TownNPCs
                 dialogue.Add("The ocean's vastness mirrors the depths of my power. Both are best left undisturbed.");
             }
 
-            if (Main.LocalPlayer.InModBiome<SunkenSeaBiome>())
+            if (Main.LocalPlayer.ZoneUndergroundDesert)
             {
                 dialogue.Add("The Sunken Sea’s void is a haunting reminder of what unchecked power can do.");
                 dialogue.Add("A wasteland where once was life. I must never let my power cause such ruin again.");

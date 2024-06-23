@@ -120,7 +120,7 @@ namespace CalRemix.NPCs.TownNPCs
                 dialogue.Add("The Sunken Sea teems with vibrant life. Its waters are a treasure trove of rare and potent ingredients.");
             }
 
-            if (Main.LocalPlayer.InModBiome<SunkenSeaBiome>() && RemixDowned.downedHydrogen)
+            if (Main.LocalPlayer.ZoneUndergroundDesert && RemixDowned.downedHydrogen)
             {
                 dialogue.Add("The Sunken Sea's void is a haunting reminder of lost potential. Worthless.");
             }
