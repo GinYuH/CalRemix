@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent.Shaders;
 using Terraria.Audio;
 using CalamityMod;
 using Terraria.Chat;

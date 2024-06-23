@@ -10,7 +10,6 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
-using Microsoft.Win32;
 using Terraria.DataStructures;
 
 namespace CalRemix.NPCs.Eclipse

@@ -4,10 +4,10 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using CalRemix.Items;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Items.Materials;
 using CalRemix.NPCs.Minibosses;
+using CalRemix.Items.Critters;
 
 namespace CalRemix.NPCs
 {

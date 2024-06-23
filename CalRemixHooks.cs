@@ -22,6 +22,7 @@ using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.NPCs.Eclipse;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using CalRemix.World;
 
 namespace CalRemix
 {

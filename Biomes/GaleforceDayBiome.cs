@@ -1,4 +1,4 @@
-﻿using CalRemix.NPCs.PandemicPanic;
+﻿using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Capture;

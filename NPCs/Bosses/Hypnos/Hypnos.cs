@@ -17,19 +17,13 @@ using CalamityMod.Items.LoreItems;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Placeables.Furniture.BossRelics;
-using CalamityMod.Items.Placeables.Furniture.Trophies;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.TreasureBags;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Items.Weapons.DraedonsArsenal;
-using CalRemix.Items;
 using CalRemix.Items.Placeables;
-using CalRemix.Projectiles;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using CalRemix.Projectiles.Hostile;
+using CalRemix.Items.Armor;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Hypnos
 {

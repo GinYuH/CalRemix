@@ -4,7 +4,7 @@ using CalamityMod.BiomeManagers;
 using CalamityMod.Graphics.Primitives;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Ranged;
-using CalRemix.NPCs.Bosses.Hypnos;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

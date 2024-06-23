@@ -5,22 +5,12 @@ using Terraria.ModLoader;
 using CalamityMod.Buffs.StatDebuffs;
 using System.IO;
 using Microsoft.Xna.Framework;
-using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod;
-using CalamityMod.Dusts;
-using CalamityMod.World;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.GameContent;
-using Terraria.Audio;
 using CalamityMod.Sounds;
-using CalRemix.Projectiles.Hostile;
-using CalamityMod.Particles;
-using CalRemix.Items.Weapons;
-using Terraria.GameContent.ItemDropRules;
-using CalRemix.Items;
-using CalRemix.Items.Accessories;
 using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.Bosses.Losbaf

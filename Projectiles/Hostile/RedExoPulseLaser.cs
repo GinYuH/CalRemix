@@ -3,12 +3,11 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.ModLoader;
-using CalRemix.Projectiles;
 using CalamityMod;
 
 namespace CalRemix.Projectiles.Hostile
 {
-	public class RedExoPulseLaser : ModProjectile
+    public class RedExoPulseLaser : ModProjectile
 	{
 		public override string Texture => "CalamityMod/Projectiles/Boss/ArtemisLaser";
 		public override void SetStaticDefaults()

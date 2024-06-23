@@ -1,25 +1,13 @@
 ﻿using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.World;
-using CalamityMod.Particles;
-using CalRemix.Projectiles.Hostile;
-using CalRemix.Items.Placeables;
 using CalamityMod.Events;
-using CalRemix.Biomes;
-using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Materials;
-using System;
-using CalamityMod.Projectiles.Enemy;
-using Newtonsoft.Json.Serialization;
 using CalRemix.UI;
 using System.Linq;
-using CalamityMod.NPCs.Cryogen;
 
 namespace CalRemix.NPCs.Bosses.Origen
 {

@@ -2,15 +2,10 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
-using CalamityMod.NPCs.Yharon;
-using Humanizer;
-using Microsoft.CodeAnalysis.CSharp.Formatting;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
-using Steamworks;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;

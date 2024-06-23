@@ -11,7 +11,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
-using CalRemix.Items;
+using CalRemix.Items.Ammo;
 using CalRemix.NPCs.Minibosses;
 using Terraria;
 using Terraria.ID;

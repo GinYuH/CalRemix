@@ -1,11 +1,8 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.BiomeManagers;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
@@ -13,9 +10,7 @@ using Terraria.GameContent;
 using System;
 using CalRemix.Projectiles.Hostile;
 using CalamityMod.NPCs.ExoMechs.Ares;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.World;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic

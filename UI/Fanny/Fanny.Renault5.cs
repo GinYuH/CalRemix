@@ -1,9 +1,5 @@
-﻿using CalamityMod.Items.Accessories.Wings;
-using ReLogic.OS;
+﻿using ReLogic.OS;
 using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;

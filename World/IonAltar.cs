@@ -1,21 +1,14 @@
-﻿using Terraria.ID;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.World;
-using CalRemix.Backgrounds.Plague;
-using CalRemix.Projectiles.TileTypeless;
-using System.Collections.Generic;
 using CalamityMod.Schematics;
 using CalamityMod;
-using System.IO;
-using System.Reflection;
 using CalamityMod.Tiles.Abyss;
 using System;
 using CalRemix.Tiles;
 using Terraria.DataStructures;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class IonAltar : ModSystem
     {
@@ -59,7 +52,7 @@ namespace CalRemix
                                         // If there truly are no dry blocks, increasingly add more wet room
                                         if (z > 22)
                                         {
-                                            liquidCheck = above.LiquidAmount <= (z * 5);
+                                            liquidCheck = above.LiquidAmount <= z * 5;
                                         }
 
                                         bool _ = false;

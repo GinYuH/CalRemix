@@ -1,25 +1,18 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
-using CalamityMod.NPCs.OldDuke;
-using CalRemix.Items;
 using CalRemix.Items.Materials;
 using CalRemix.NPCs.Bosses.Ionogen;
-using log4net.Appender;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 

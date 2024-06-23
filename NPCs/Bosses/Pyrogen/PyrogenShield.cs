@@ -1,18 +1,11 @@
 ﻿using CalamityMod;
-using CalRemix.Biomes;
-using CalRemix.Projectiles.Hostile;
-using CalRemix.Retheme;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using static Terraria.ModLoader.ModContent;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.NPCs.Bosses.Pyrogen

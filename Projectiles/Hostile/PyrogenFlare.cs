@@ -1,12 +1,10 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Retheme;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static CalRemix.Skies.ExosphereSky;
 
 //shamelessly 'borrowed' from carcinogen since they behave almost the same... different visuals and statuses though!
 

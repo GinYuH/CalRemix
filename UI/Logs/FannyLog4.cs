@@ -1,10 +1,8 @@
-﻿using CalamityMod.Items.DraedonMisc;
-using CalamityMod.UI.DraedonLogs;
+﻿using CalamityMod.UI.DraedonLogs;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections;
 using Terraria.ModLoader;
 
-namespace CalRemix.UI
+namespace CalRemix.UI.Logs
 {
     public class FannyLog4 : DraedonsLogGUI
     {

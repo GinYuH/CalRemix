@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Schematics;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;

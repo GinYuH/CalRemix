@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalamityMod.Items.Armor.Empyrean;
 using CalamityMod.Items.Armor.Plaguebringer;
@@ -38,6 +37,10 @@ using CalamityMod.Items.Placeables.FurnitureStratus;
 using CalamityMod.Items.LoreItems;
 using CalamityMod;
 using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
+using CalRemix.Items.Critters;
+using CalRemix.Items.Lore;
+using CalRemix.Items.Ammo;
 
 namespace CalRemix
 {

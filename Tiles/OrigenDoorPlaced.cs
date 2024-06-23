@@ -1,10 +1,5 @@
-﻿using CalamityMod.NPCs.Cryogen;
-using CalRemix;
-using CalRemix.NPCs.Bosses.Origen;
-using CalRemix.NPCs.Bosses.Pathogen;
+﻿using CalRemix.NPCs.Bosses.Origen;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

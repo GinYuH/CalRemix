@@ -27,7 +27,6 @@ using CalRemix.NPCs.Bosses.Wulfwyrm;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Items;
 using CalRemix.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Buffs.StatDebuffs;
@@ -35,22 +34,18 @@ using CalRemix.Buffs;
 using CalRemix.Items.Accessories;
 using CalRemix.Walls;
 using Terraria.Graphics.Effects;
-using tModPorter;
-using CalRemix.UI.Title;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using CalRemix.UI;
-using ReLogic.Utilities;
 using CalRemix.NPCs.Bosses.Phytogen;
-using CalRemix.NPCs;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.Items.Potions;
-using CalRemix.Retheme;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.NPCs.Bosses.Losbaf;
+using CalRemix.World;
+using CalRemix.ExtraTextures;
+using CalRemix.Items.Bags;
+using CalRemix.Items.Tools;
 
 namespace CalRemix
 {

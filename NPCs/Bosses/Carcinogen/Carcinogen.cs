@@ -16,6 +16,7 @@ using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -79,7 +80,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             {
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/OncologicReinforcement");
             }
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<AsbestosBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<Biomes.AsbestosBiome>().Type };
         }
 
         public override void OnSpawn(IEntitySource source)

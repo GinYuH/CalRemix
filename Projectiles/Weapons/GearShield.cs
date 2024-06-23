@@ -1,11 +1,12 @@
 using CalamityMod;
+using CalRemix.ExtraTextures;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Projectiles.Weapons
 {
-	public class GearShield : ModProjectile
+    public class GearShield : ModProjectile
 	{
         public override string Texture => "CalRemix/Items/Weapons/GearworkShield";
         public Player Owner => Main.player[Projectile.owner];

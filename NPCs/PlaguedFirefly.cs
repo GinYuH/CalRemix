@@ -26,7 +26,7 @@ namespace CalRemix.NPCs
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.npcSlots = 0.5f;
-            NPC.catchItem = (short)ModContent.ItemType<Items.PlaguedFirefly>();
+            NPC.catchItem = (short)ModContent.ItemType<Items.Critters.PlaguedFirefly>();
             NPC.noGravity = true;
             NPC.friendly = true;
         }

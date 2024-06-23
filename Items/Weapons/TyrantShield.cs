@@ -4,6 +4,7 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Items.Potions;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalRemix.ExtraTextures;
 using CalRemix.Items.Materials;
 using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

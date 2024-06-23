@@ -56,7 +56,6 @@ using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.NPCs.Perforator;
 using Terraria.DataStructures;
 using CalRemix.UI;
-using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
@@ -68,15 +67,13 @@ using CalamityMod.NPCs.Crags;
 using CalRemix.NPCs.TownNPCs;
 using System.Threading;
 using CalRemix.Items.Placeables;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
 using CalRemix.Buffs;
 using CalamityMod.NPCs.DevourerofGods;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Terraria.Audio;
-using System.Runtime.CompilerServices;
 using CalRemix.NPCs.PandemicPanic;
-using Microsoft.Build.ObjectModelRemoting;
+using CalRemix.World;
+using CalRemix.UI.Anomaly109;
+using CalRemix.Items.Ammo;
 
 namespace CalRemix
 {

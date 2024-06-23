@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CalamityMod;
 using CalamityMod.Projectiles.Melee;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

@@ -7,7 +7,6 @@ using CalamityMod.Items;
 using CalamityMod;
 using Terraria;
 using Terraria.ModLoader;
-using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Pets;
 
 namespace CalRemix.Items.Accessories

@@ -24,6 +24,7 @@ using CalamityMod.BiomeManagers;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {

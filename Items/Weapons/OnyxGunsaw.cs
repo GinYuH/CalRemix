@@ -1,6 +1,5 @@
 ﻿using CalRemix.Projectiles.Weapons;
 using CalamityMod.Rarities;
-using CalRemix;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

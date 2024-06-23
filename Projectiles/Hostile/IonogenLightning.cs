@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using CalamityMod.Graphics.Primitives;
 using CalamityMod.Projectiles.BaseProjectiles;
 using Microsoft.Xna.Framework;

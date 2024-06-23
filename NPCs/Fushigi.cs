@@ -1,5 +1,4 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +12,7 @@ using Terraria.GameContent;
 using System;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {

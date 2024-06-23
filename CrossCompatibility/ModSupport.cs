@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Pets;
-using CalamityMod.Items.LoreItems;
-using CalRemix.Items;
 using CalRemix.NPCs.Minibosses;
 using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalRemix.NPCs.Bosses.Poly;
@@ -26,6 +24,9 @@ using CalRemix.NPCs.PandemicPanic;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalRemix.NPCs.Bosses.Pathogen;
 using CalRemix.NPCs.Bosses.Origen;
+using CalRemix.World;
+using CalRemix.Items.SummonItems;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.CrossCompatibility
 {

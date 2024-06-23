@@ -5,9 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Items.Materials;
+using CalRemix.Items.Critters;
 
 namespace CalRemix.NPCs
 {

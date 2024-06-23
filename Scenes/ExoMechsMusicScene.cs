@@ -2,6 +2,7 @@ using CalamityMod.NPCs.ExoMechs.Apollo;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalamityMod.NPCs.ExoMechs.Thanatos;
+using CalRemix.World;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -9,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Scenes
 {
-	public class ExoMechsMusicScene : ModSceneEffect
+    public class ExoMechsMusicScene : ModSceneEffect
     {
         public override bool IsSceneEffectActive(Player player) => ExoMechWorld.ExoQuartetActive;
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;

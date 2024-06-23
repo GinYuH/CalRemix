@@ -6,7 +6,7 @@ using CalamityMod.Particles;
 using CalamityMod.World;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalRemix.NPCs.Bosses.Losbaf;
-using CalRemix.Retheme;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

@@ -44,22 +44,14 @@ using Terraria.GameContent.Generation;
 using SubworldLibrary;
 using CalRemix.Subworlds;
 using CalamityMod.Items.DraedonMisc;
-using CalRemix.Items;
-using Terraria.IO;
-using CalRemix.World;
-using CalamityMod.Items.Tools;
-using Terraria.GameContent.Biomes;
-using CalRemix.Walls;
 using CalamityMod.Tiles.FurnitureStratus;
 using CalamityMod.Tiles.SunkenSea;
-using CalamityMod.BiomeManagers;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.NPCs.Bosses.Oxygen;
-using CalRemix.UI.Title;
-using System.Reflection;
 using CalRemix.NPCs;
+using CalRemix.UI.Anomaly109;
+using CalRemix.Items.Lore;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class CalRemixWorld : ModSystem
     {
@@ -401,30 +393,30 @@ namespace CalRemix
             sidegar = tag.Get<bool>("109sidegar");
             frontgar = tag.Get<bool>("109frontgar");
             crocodile = tag.Get<bool>("109crocodile");
-            permanenthealth= tag.Get<bool>("109permanenthealth");
-            starbuster= tag.Get<bool>("109starbuster");
-            plaguetoggle= tag.Get<bool>("109plague");
-            shrinetoggle= tag.Get<bool>("109shrine");
-            lifeoretoggle= tag.Get<bool>("109lifeore");
-            itemChanges= tag.Get<bool>("109itemchanges");
+            permanenthealth = tag.Get<bool>("109permanenthealth");
+            starbuster = tag.Get<bool>("109starbuster");
+            plaguetoggle = tag.Get<bool>("109plague");
+            shrinetoggle = tag.Get<bool>("109shrine");
+            lifeoretoggle = tag.Get<bool>("109lifeore");
+            itemChanges = tag.Get<bool>("109itemchanges");
             npcChanges = tag.Get<bool>("109npcchanges");
             bossdialogue = tag.Get<bool>("109dialogue");
-            grimesandToggle= tag.Get<bool>("109grime");
-            clowns= tag.Get<bool>("109clowns");
-            aspids= tag.Get<bool>("109aspids");
-            clamitas= tag.Get<bool>("109clamitas");
-            wolfvenom= tag.Get<bool>("109coyotevenom");
-            fearmonger= tag.Get<bool>("109fearmonger");
-            seafood= tag.Get<bool>("109seafood");
-            laruga= tag.Get<bool>("109laruga");
+            grimesandToggle = tag.Get<bool>("109grime");
+            clowns = tag.Get<bool>("109clowns");
+            aspids = tag.Get<bool>("109aspids");
+            clamitas = tag.Get<bool>("109clamitas");
+            wolfvenom = tag.Get<bool>("109coyotevenom");
+            fearmonger = tag.Get<bool>("109fearmonger");
+            seafood = tag.Get<bool>("109seafood");
+            laruga = tag.Get<bool>("109laruga");
             acidsighter = tag.Get<bool>("109acidsighter");
             greenDemon = tag.Get<bool>("109greenDemon");
             remixJump = tag.Get<bool>("109remixJump");
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
-            hydrogenLocation.X = tag.Get<Single>("hydrolocationX");
-            hydrogenLocation.Y = tag.Get<Single>("hydrolocationY");
-            oxydayTime = tag.Get<Int32>("oxytime");
+            hydrogenLocation.X = tag.Get<float>("hydrolocationX");
+            hydrogenLocation.Y = tag.Get<float>("hydrolocationY");
+            oxydayTime = tag.Get<int>("oxytime");
 
             ScreenHelperManager.screenHelpersEnabled = tag.Get<bool>("109fanny");
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
@@ -464,7 +456,7 @@ namespace CalRemix
             writer.Write(clowns);
             writer.Write(aspids);
             writer.Write(clamitas);
-            writer.Write(wolfvenom);;
+            writer.Write(wolfvenom); ;
             writer.Write(fearmonger);
             writer.Write(seafood);
             writer.Write(laruga);
@@ -567,9 +559,9 @@ namespace CalRemix
                 if (reargar)
                 {
                     RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<UelibloomBar>());
                     RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<UelibloomBar>());
                 }
                 if (frontgar)
                 {
@@ -684,9 +676,9 @@ namespace CalRemix
                     CalRemixGlobalNPC.aspidCount = 0;
                 }
             }
-            if (CalamityMod.World.CalamityWorld.spawnedCirrus)
+            if (CalamityWorld.spawnedCirrus)
             {
-                CalamityMod.World.CalamityWorld.spawnedCirrus = false;
+                CalamityWorld.spawnedCirrus = false;
             }
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
             if (shrinetoggle)
@@ -758,7 +750,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (CalRemix.CalVal != null && ((DateTime.Now.Day == 1 && DateTime.Now.Month == 4) || (DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld)))
+            if (CalRemix.CalVal != null && (DateTime.Now.Day == 1 && DateTime.Now.Month == 4 || DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld))
             {
                 ScreenHelperManager.screenHelpersEnabled = false;
             }
@@ -779,7 +771,7 @@ namespace CalRemix
                 {
                     var postPolter = new LeadingConditionRule(DropHelper.PostPolter());
                     postPolter.Add(ItemType<ReaperTooth>(), 1, 3, 4);
-                    Terraria.Main.ItemDropsDB.RegisterToNPC(npcType, postPolter);
+                    Main.ItemDropsDB.RegisterToNPC(npcType, postPolter);
                 }
             }
             else
@@ -790,21 +782,21 @@ namespace CalRemix
                     var postDuke = new LeadingConditionRule(DropHelper.PostOD());
                     postDuke.Add(ItemType<ReaperTooth>(), 10, 1, 5);
                     var postPolter = new LeadingConditionRule(DropHelper.PostPolter()).OnSuccess(postDuke);
-                    Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
+                    Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
                 }
                 if (npcType == ItemID.JungleFishingCrate)
                 {
                     var postDuke = new LeadingConditionRule(DropHelper.PostProv());
                     postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
-                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
-                    Terraria.Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
-                    Terraria.Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
+                    postDuke.Add(ItemType<UelibloomBar>(), new Fraction(15, 100), 4, 7);
+                    Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
+                    Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
                 }
             }
         }
         public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
         {
-            List<IItemDropRule> JungleCrateDrops = npc ? Terraria.Main.ItemDropsDB.GetRulesForNPCID(bagType) : Terraria.Main.ItemDropsDB.GetRulesForItemID(bagType);
+            List<IItemDropRule> JungleCrateDrops = npc ? Main.ItemDropsDB.GetRulesForNPCID(bagType) : Main.ItemDropsDB.GetRulesForItemID(bagType);
             for (int i = 0; i < JungleCrateDrops.Count; i++)
             {
                 if (JungleCrateDrops[i] is LeadingConditionRule lead)
@@ -863,20 +855,20 @@ namespace CalRemix
             {
                 progress.Message = "Spreading the True Plague";
                 int biomeAmount = 10;
-                double xRange = (double)(Main.maxTilesX - 200) / (double)biomeAmount;
+                double xRange = (Main.maxTilesX - 200) / (double)biomeAmount;
                 List<Point> placementPoints = new List<Point>(biomeAmount);
                 int tries = 0;
                 int currentBiomeAmount = 0;
                 while (currentBiomeAmount < biomeAmount)
                 {
-                    double biomeRaito = (double)currentBiomeAmount / (double)biomeAmount;
+                    double biomeRaito = currentBiomeAmount / (double)biomeAmount;
                     progress.Set(biomeRaito);
-                    Point placementPoint = WorldGen.RandomRectanglePoint((int)(biomeRaito * (double)(Main.maxTilesX - 200)) + 100, (int)GenVars.rockLayer + 20, (int)xRange, Main.maxTilesY - ((int)GenVars.rockLayer + 40) - 200);
+                    Point placementPoint = WorldGen.RandomRectanglePoint((int)(biomeRaito * (Main.maxTilesX - 200)) + 100, (int)GenVars.rockLayer + 20, (int)xRange, Main.maxTilesY - ((int)GenVars.rockLayer + 40) - 200);
                     if (WorldGen.remixWorldGen)
                     {
-                        placementPoint = WorldGen.RandomRectanglePoint((int)(biomeRaito * (double)(Main.maxTilesX - 200)) + 100, (int)GenVars.worldSurface + 100, (int)xRange, (int)GenVars.rockLayer - (int)GenVars.worldSurface - 100);
+                        placementPoint = WorldGen.RandomRectanglePoint((int)(biomeRaito * (Main.maxTilesX - 200)) + 100, (int)GenVars.worldSurface + 100, (int)xRange, (int)GenVars.rockLayer - (int)GenVars.worldSurface - 100);
                     }
-                    while ((double)placementPoint.X > (double)Main.maxTilesX * 0.45 && (double)placementPoint.X < (double)Main.maxTilesX * 0.55)
+                    while (placementPoint.X > Main.maxTilesX * 0.45 && placementPoint.X < Main.maxTilesX * 0.55)
                     {
                         placementPoint.X = WorldGen.genRand.Next(WorldGen.beachDistance, Main.maxTilesX - WorldGen.beachDistance);
                     }
@@ -904,10 +896,10 @@ namespace CalRemix
             {
                 tasks.Insert(FinalIndex, new PassLegacy("Dungeon Retheme", (progress, config) =>
                 {
-                progress.Message = "Remodeling the Dungeon";
-                StratusDungeon.ReplaceDungeon();
-                StratusDungeon.AddOriginalDungeonHoles();
-                CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
+                    progress.Message = "Remodeling the Dungeon";
+                    StratusDungeon.ReplaceDungeon();
+                    StratusDungeon.AddOriginalDungeonHoles();
+                    CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Origen Workshop", (progress, config) => { OrigenWorkshop.GenerateOrigenWorkshop(); }));
@@ -916,7 +908,7 @@ namespace CalRemix
                     Rectangle sus = FindCentralGeode();
                     int hydrogenRadius = 10;
                     int borderAmt = 3;
-                    Vector2 center = new Vector2(sus.Center.X, sus.Y + (sus.Height / 3));
+                    Vector2 center = new Vector2(sus.Center.X, sus.Y + sus.Height / 3);
                     for (int i = -hydrogenRadius; i < hydrogenRadius; i++)
                     {
                         for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
@@ -947,7 +939,7 @@ namespace CalRemix
                 tasks.Add(new PassLegacy("Banishing The Baron", (progress, config) =>
                 {
                     progress.Message = "Creating a Baron Wasteland";
-                    BaronStrait.GenerateBaronStrait(null); 
+                    BaronStrait.GenerateBaronStrait(null);
                 }));
             }
         }
@@ -959,7 +951,7 @@ namespace CalRemix
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null)
                 {
-                    if (Main.tile[chest.x, chest.y].TileType == ModContent.TileType<StratusChest>())
+                    if (Main.tile[chest.x, chest.y].TileType == TileType<StratusChest>())
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                         {
@@ -1053,7 +1045,7 @@ namespace CalRemix
 
                 if (anchor.Contains(Main.tile[tilesX, tilesY].TileType))
                 {
-                    UndergroundShrines.SpecialHut((ushort)block1, (ushort)Main.tile[tilesX, tilesY].TileType, (ushort)wall, UndergroundShrines.UndergroundShrineType.Surface, tilesX, tilesY);
+                    UndergroundShrines.SpecialHut((ushort)block1, Main.tile[tilesX, tilesY].TileType, (ushort)wall, UndergroundShrines.UndergroundShrineType.Surface, tilesX, tilesY);
                     for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
                     {
                         Chest cheste = Main.chest[chestIndex];
@@ -1124,7 +1116,7 @@ namespace CalRemix
                     if (t.TileType == TileType<Navystone>())
                     {
                         if (sunkenX == 0)
-                        sunkenX = i;
+                            sunkenX = i;
                         sunkenLastX = i;
                         break;
                     }
@@ -1138,7 +1130,7 @@ namespace CalRemix
                     if (t.TileType == TileType<Navystone>())
                     {
                         if (sunkenY == 0)
-                        sunkenY = i;
+                            sunkenY = i;
                         sunkenLastY = i;
                         break;
                     }
@@ -1146,7 +1138,7 @@ namespace CalRemix
             }
             int sunkenWidth = sunkenLastX - sunkenX;
             int sunkenHeight = sunkenLastY - sunkenY;
-            hydrogenLocation = new Vector2(sunkenX + (sunkenWidth / 2), sunkenY + (sunkenHeight / 3)) * 16;
+            hydrogenLocation = new Vector2(sunkenX + sunkenWidth / 2, sunkenY + sunkenHeight / 3) * 16;
             return new Rectangle(sunkenX, sunkenY, sunkenWidth, sunkenHeight);
         }
     }

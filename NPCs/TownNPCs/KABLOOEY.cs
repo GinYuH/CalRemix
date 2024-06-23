@@ -2,7 +2,7 @@
 using CalamityMod;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Placeables;
-using CalamityMod.Projectiles.Ranged;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;

@@ -33,8 +33,7 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Melee.Spears;
 using CalamityMod.Rarities;
 using CalamityMod.Items.Accessories.Vanity;
-using CalamityMod.Items.Potions.Alcohol;
-using CalRemix.Items.Potions;
+using CalRemix.World;
 
 namespace CalRemix.Retheme
 {

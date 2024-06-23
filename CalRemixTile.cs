@@ -26,6 +26,7 @@ using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalRemix.NPCs.PandemicPanic;
+using CalRemix.World;
 
 namespace CalRemix
 {

@@ -6,6 +6,7 @@ using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Biomes;
 using CalRemix.Items;
+using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables;
 using CalRemix.Subworlds;
 using Terraria;

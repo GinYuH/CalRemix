@@ -3,15 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using static CalRemix.UI.Title.CalRemixMenu;
-using static Terraria.GameContent.PlayerEyeHelper;
 
 namespace CalRemix.UI.Title
 {
-	public class CalRemixMenu2 : ModMenu
+    public class CalRemixMenu2 : ModMenu
     {
         public static ModMenu Instance
         {

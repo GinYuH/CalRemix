@@ -21,36 +21,16 @@ using Terraria.GameContent.ItemDropRules;
 using CalRemix.Scenes;
 using Terraria.Graphics.Shaders;
 using System.Reflection;
-using CalRemix.Skies;
 using Microsoft.Xna.Framework.Graphics;
 using CalRemix.Subworlds;
 using ReLogic.Content;
-using CalRemix.NPCs.Eclipse;
 using Terraria.GameContent;
-using System.Runtime.InteropServices;
 using Terraria.Audio;
-using ReLogic.Utilities;
-using CalRemix.Buffs;
-using CalRemix.Retheme;
-using Mono.Cecil;
-using Terraria.DataStructures;
-using Terraria.GameContent.UI.Elements;
-using Terraria.IO;
 using System.IO;
-using Terraria.Utilities;
-using Terraria.ModLoader.IO;
-using CalamityMod.World;
-using Terraria.UI;
-using CalamityMod.Systems;
 using CalamityMod.NPCs.OldDuke;
 using CalRemix.UI.Title;
 using CalRemix.NPCs.Bosses.Carcinogen;
-using CalRemix.NPCs.Bosses.Hydrogen;
 using System.Linq;
-using SubworldLibrary;
-using CalRemix.UI;
-using Terraria.GameContent.Items;
-using CalamityMod.Walls;
 using CalRemix.NPCs.PandemicPanic;
 using CalRemix.NPCs.Bosses.Hypnos;
 
@@ -163,8 +143,8 @@ namespace CalRemix
 
             PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
 
-            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.CosmiliteCoinCurrency(ModContent.ItemType<Items.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
-            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.KlepticoinCurrency(ModContent.ItemType<Items.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
+            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.Ammo.CosmiliteCoinCurrency(ModContent.ItemType<Items.Ammo.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
+            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.Ammo.KlepticoinCurrency(ModContent.ItemType<Items.Ammo.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
 
             if (!Main.dedServ)
             {

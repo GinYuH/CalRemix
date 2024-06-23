@@ -1,7 +1,5 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
@@ -16,9 +14,8 @@ using CalRemix.NPCs.Bosses.Hypnos;
 using CalRemix.NPCs.Bosses.Losbaf;
 using System.IO;
 using CalamityMod.World;
-using CalamityMod.UI.DraedonSummoning;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class ExoMechWorld : ModSystem
     {

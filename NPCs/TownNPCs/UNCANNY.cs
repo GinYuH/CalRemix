@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CalamityMod;
-using CalamityMod.Projectiles.Melee;
 using CalRemix.Biomes;
 using CalRemix.Items.Placeables;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.Personalities;
@@ -103,7 +101,7 @@ namespace CalRemix.NPCs.TownNPCs
                 dialogue.Add("A crimson night calls for a heavier smoke. Danger’s in the air.");
             }
 
-            if (Main.LocalPlayer.InModBiome<AsbestosBiome>())
+            if (Main.LocalPlayer.InModBiome<Biomes.AsbestosBiome>())
             {
                 dialogue.Add("Ah, the asbestos cave. It’s not for everyone, but it’s home to me.");
                 dialogue.Add("Surrounded by asbestos, I feel at ease. The risk is part of the thrill.");

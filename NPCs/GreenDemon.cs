@@ -12,6 +12,7 @@ using System.Linq;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Potions;
 using CalamityMod.Items.Weapons.Summon;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {

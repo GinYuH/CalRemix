@@ -3,13 +3,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using Terraria.Audio;
 
 namespace CalRemix.Items.Weapons
 {
-	public class Baow : ModItem
+    public class Baow : ModItem
     {
         public override void SetStaticDefaults() 
 		{

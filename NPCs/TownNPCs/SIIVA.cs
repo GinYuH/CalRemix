@@ -2,6 +2,7 @@
 using CalamityMod;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Tiles.Abyss;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

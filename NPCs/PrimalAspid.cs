@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
@@ -13,6 +12,7 @@ using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Weapons;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {

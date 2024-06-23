@@ -8,6 +8,7 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Projectiles.Weapons;
+using CalRemix.Items.Ammo;
 
 namespace CalRemix.Items.Weapons
 {

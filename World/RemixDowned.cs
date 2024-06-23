@@ -2,7 +2,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class RemixDowned : ModSystem
     {
@@ -49,7 +49,7 @@ namespace CalRemix
             downedHypnos = false;
             downedLosbaf = false;
 
-        downedEarthElemental = false;
+            downedEarthElemental = false;
             downedLifeSlime = false;
             downedClamitas = false;
             downedCyberDraedon = false;

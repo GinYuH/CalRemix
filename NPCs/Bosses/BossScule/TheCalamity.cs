@@ -1,7 +1,8 @@
 ﻿using CalRemix.Buffs;
-using CalRemix.Items;
+using CalRemix.Items.Lore;
 using CalRemix.Items.Weapons;
 using CalRemix.Projectiles.Hostile;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

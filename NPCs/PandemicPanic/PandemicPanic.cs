@@ -1,34 +1,16 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
-using Terraria.GameContent.Bestiary;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.BiomeManagers;
 using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using System;
 using System.Collections.Generic;
-using CalamityMod.Events;
-using CalamityMod.UI;
-using System.Linq;
-using Terraria.ModLoader.Core;
-using CalRemix.NPCs.TownNPCs;
 using Terraria.ModLoader.IO;
 using System.IO;
 using CalRemix.Projectiles.Hostile;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using Terraria.WorldBuilding;
 using CalRemix.NPCs.Bosses.Carcinogen;
-using Terraria.DataStructures;
-using CalRemix.NPCs.Bosses.Ionogen;
 using CalRemix.NPCs.Bosses.Pathogen;
-using SubworldLibrary;
-using CalRemix.Items.Weapons;
-using CalRemix.Subworlds;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.PandemicPanic
 {

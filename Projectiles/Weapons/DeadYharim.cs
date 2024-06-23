@@ -1,4 +1,5 @@
 using CalamityMod;
+using CalRemix.ExtraTextures;
 using CalRemix.Items.Weapons;
 using Terraria;
 using Terraria.Audio;

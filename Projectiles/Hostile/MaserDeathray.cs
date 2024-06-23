@@ -1,12 +1,9 @@
-﻿using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.NPCs.ExoMechs.Ares;
+﻿using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Projectiles.BaseProjectiles;
 using CalRemix.NPCs.PandemicPanic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.IO;
-using System.Reflection.Metadata.Ecma335;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

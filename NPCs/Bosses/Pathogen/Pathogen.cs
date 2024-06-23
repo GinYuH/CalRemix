@@ -9,24 +9,18 @@ using Terraria.Audio;
 using CalamityMod.World;
 using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
-using CalRemix.Items.Placeables;
 using CalamityMod.Events;
 using CalRemix.Biomes;
-using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Materials;
 using System;
-using CalamityMod.Projectiles.Enemy;
-using Newtonsoft.Json.Serialization;
 using CalRemix.UI;
 using System.Linq;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.Projectiles.Summon;
-using SubworldLibrary;
-using CalRemix.Subworlds;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.NPCs.Crags;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Pathogen
 {

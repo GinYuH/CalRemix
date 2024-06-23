@@ -19,9 +19,10 @@ using CalRemix.Projectiles.Hostile;
 using CalamityMod.Particles;
 using CalRemix.Items.Weapons;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.Items;
 using CalRemix.Items.Accessories;
 using CalRemix.Items.Placeables.Relics;
+using CalRemix.World;
+using CalRemix.Items.Bags;
 
 namespace CalRemix.NPCs.Bosses.Acideye
 {

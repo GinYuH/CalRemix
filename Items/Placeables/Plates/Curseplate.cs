@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Tiles.Plates;
-using CalRemix.Items.Materials;
 
 namespace CalRemix.Items.Placeables.Plates
 {

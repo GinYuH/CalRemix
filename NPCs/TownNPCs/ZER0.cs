@@ -2,7 +2,7 @@ using CalamityMod;
 using CalamityMod.Items.LoreItems;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Magic;
-using CalRemix.Items;
+using CalRemix.Items.Tools;
 using CalRemix.Items.Weapons;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

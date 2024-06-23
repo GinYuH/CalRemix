@@ -17,6 +17,7 @@ using CalRemix.Projectiles.Hostile;
 using CalamityMod.BiomeManagers;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {

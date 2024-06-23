@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using CalRemix.Tiles;
+using CalRemix.Items.Critters;
 
 namespace CalRemix.Items.Placeables
 {

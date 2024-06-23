@@ -1,18 +1,14 @@
-﻿using CalRemix.Retheme;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.IO;
 using Terraria.ModLoader;
-using static CalRemix.UI.Title.CalRemixMenu;
 
 namespace CalRemix.UI.Title
 {
-	public class CalRemixMenu : ModMenu
+    public class CalRemixMenu : ModMenu
     {
         public static ModMenu Instance
         {

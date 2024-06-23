@@ -1,20 +1,4 @@
-﻿using CalamityMod.Items.DraedonMisc;
-using CalamityMod.UI.DraedonLogs;
-using CalRemix.UI.ElementalSystem;
-using Humanizer;
-using Microsoft.Build.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Cryptography;
-using Terraria;
-using Terraria.Graphics;
-using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace CalRemix.UI
+﻿namespace CalRemix.UI.Logs
 {
     public class FannyLog7 : TerminalUI
     {
@@ -31,6 +15,6 @@ namespace CalRemix.UI
                 "\n\nSo here's to another chapter in the ongoing adventures of Fanny the Flame. Who knows what mysteries await us in the depths of the ocean? One thing's for sure, with me around, things are always bound to heat up!" +
                 "\n\nUntil next time, stay fiery, my friends, and never stop diving into the unknown!"
             };
-    }
+        }
     }
 }

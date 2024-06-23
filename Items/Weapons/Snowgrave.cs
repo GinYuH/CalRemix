@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Projectiles.Weapons;
 using CalamityMod;
+using CalRemix.ExtraTextures;
 
 namespace CalRemix.Items.Weapons
 {

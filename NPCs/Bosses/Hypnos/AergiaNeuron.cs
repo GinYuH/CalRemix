@@ -12,9 +12,7 @@ using CalamityMod;
 using CalamityMod.Particles;
 using CalamityMod.World;
 using CalamityMod.Projectiles.Boss;
-using CalRemix.Projectiles;
 using CalamityMod.Graphics.Primitives;
-using Terraria.Graphics.Shaders;
 using Terraria.Graphics.Effects;
 using CalRemix.Projectiles.Hostile;
 

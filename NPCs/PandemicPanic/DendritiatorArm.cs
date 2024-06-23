@@ -1,15 +1,10 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Primitives;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;

@@ -1,10 +1,10 @@
-using CalRemix;
+using CalRemix.World;
 using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 
 namespace CalRemix.EmoteBubbles
 {
-	public class HypnosEmote : ModEmoteBubble
+    public class HypnosEmote : ModEmoteBubble
 	{
 		public override void SetStaticDefaults()
 		{

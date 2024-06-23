@@ -6,6 +6,7 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.Signus;
 using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Items.Weapons;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

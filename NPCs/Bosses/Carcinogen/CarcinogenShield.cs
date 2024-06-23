@@ -1,15 +1,7 @@
-﻿using CalamityMod.Items.Placeables.Ores;
-using Terraria;
-using Terraria.GameContent.Bestiary;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
-using System.Linq;
-using CalRemix.UI;
-using CalRemix.Items.Placeables;
-using CalRemix.Biomes;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ReLogic.Content;
@@ -17,7 +9,6 @@ using Terraria.GameContent;
 using CalamityMod.World;
 using CalRemix.Projectiles.Hostile;
 using Terraria.Audio;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {

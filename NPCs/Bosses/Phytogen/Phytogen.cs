@@ -7,26 +7,19 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.World;
-using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
-using CalRemix.Items.Placeables;
 using CalamityMod.Events;
-using CalRemix.Biomes;
 using System.Collections.Generic;
 using CalRemix.NPCs.Minibosses;
 using CalamityMod.NPCs.PlagueEnemies;
 using CalamityMod.NPCs.PlaguebringerGoliath;
-using Microsoft.Build.Tasks;
 using System;
-using CalRemix.Retheme;
-using CalamityMod.Projectiles.Boss;
 using CalRemix.Buffs;
-using CalRemix.CrossCompatibility;
-using CalamityMod.Systems;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {

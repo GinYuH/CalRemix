@@ -6,7 +6,7 @@ using CalamityMod;
 using CalamityMod.Tiles.FurnitureStratus;
 using CalRemix.Walls;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class StratusDungeon : ModSystem
     {
@@ -189,7 +189,7 @@ namespace CalRemix
                             case WallID.GreenDungeonTile:
                                 {
                                     int radii = WorldGen.GetWorldSize() + 2;
-                                    if ((Main.tile[i + radii, j].WallType > 0 || Main.tile[i - radii, j].WallType > 0) || j > Main.worldSurface) // keep the surface pillars intact for the cultists. remove whenever we fuck up the cultist spawn
+                                    if (Main.tile[i + radii, j].WallType > 0 || Main.tile[i - radii, j].WallType > 0 || j > Main.worldSurface) // keep the surface pillars intact for the cultists. remove whenever we fuck up the cultist spawn
                                         t.WallType = (ushort)WallType<StratusWallRemix>();
                                 }
                                 break;
@@ -232,7 +232,7 @@ namespace CalRemix
                             }
                         }
                         originalTile.TileType = (ushort)typer;
-                        originalTile.TileFrameX = (short)(frameToUse);
+                        originalTile.TileFrameX = (short)frameToUse;
                     }
                 }
             }
@@ -266,7 +266,7 @@ namespace CalRemix
                             }
                         }
                         originalTile.TileType = (ushort)typer;
-                        originalTile.TileFrameY = (short)(frameToUse);
+                        originalTile.TileFrameY = (short)frameToUse;
                     }
                 }
             }
@@ -312,7 +312,7 @@ namespace CalRemix
                     {
                         if (Main.rand.NextBool(1000))
                         {
-                            if (Main.tile[i, j].TileType == ModContent.TileType<StratusBricks>())
+                            if (Main.tile[i, j].TileType == TileType<StratusBricks>())
                             {
                                 int planetradius = Main.rand.Next(11, 22);
                                 int brick = Main.rand.Next(3);

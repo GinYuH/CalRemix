@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;

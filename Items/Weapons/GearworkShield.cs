@@ -2,6 +2,7 @@ using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
+using CalRemix.ExtraTextures;
 using CalRemix.Items.Materials;
 using CalRemix.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

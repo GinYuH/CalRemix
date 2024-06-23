@@ -1,21 +1,12 @@
 ﻿using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.World;
-using CalRemix.Backgrounds.Plague;
-using CalRemix.Projectiles.TileTypeless;
-using System.Collections.Generic;
 using CalamityMod.Schematics;
 using CalamityMod;
-using System.IO;
-using System.Reflection;
-using CalamityMod.Tiles.Abyss;
 using System;
-using CalRemix.Tiles;
-using Terraria.DataStructures;
 using Terraria;
 using Terraria.ID;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class OrigenWorkshop : ModSystem
     {
@@ -24,7 +15,7 @@ namespace CalRemix
             bool generated = false;
             for (int h = 0; h < 100; h++)
             {
-               if (generated)
+                if (generated)
                     break;
                 for (int i = 100; i < Main.maxTilesX - 100; i++)
                 {

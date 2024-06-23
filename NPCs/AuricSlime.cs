@@ -5,9 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
 using System.Linq;
 using CalRemix.UI;
+using CalRemix.Items.Ammo;
 
 namespace CalRemix.NPCs
 {

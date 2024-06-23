@@ -15,6 +15,7 @@ using CalRemix.Projectiles.Hostile;
 using Terraria.Audio;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {

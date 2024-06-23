@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using CalRemix.Items.Placeables.MusicBoxes;
 using CalRemix.Items.Accessories;
 using CalamityMod;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Poly
 {
