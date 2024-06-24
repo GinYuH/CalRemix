@@ -204,14 +204,6 @@ namespace CalRemix
 
             AddEnchantments(cal);
             LoadBossRushEntries(cal);
-
-            if (Main.netMode != NetmodeID.Server)
-            {
-                Main.QueueMainThreadAction(() =>
-                {
-                    cal.Call("LoadParticleInstances", instance);
-                });
-            }
             AddHiveBestiary(ModContent.NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
             AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
             AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");

@@ -394,7 +394,7 @@ namespace CalRemix.UI.Anomaly109
             Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
 
             Texture2D cage = ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock").Value;
-            Texture2D fanny = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyIdle").Value;
+            Texture2D fanny = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperFannyIdle").Value;
 
             Rectangle cageframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.2f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.4f));
             Rectangle bgframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.65f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.1f));
