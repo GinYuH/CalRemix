@@ -94,8 +94,9 @@ namespace CalRemix
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
+        public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         public static HelperMessage CystMessage;
-        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0];
+        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int>
