@@ -59,7 +59,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.npcSlots = 24f;
-            NPC.damage = 100;
+            NPC.damage = 150;
             NPC.width = 82;
             NPC.height = 88;
             NPC.defense = 15;
@@ -172,7 +172,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                                 {
                                     int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.25f), 3f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.4f), 3f, Main.myPlayer, Target.whoAmI);
                                 }
                                 if (NPC.ai[2] > rocketAmt * rocketRate)
                                 {
@@ -205,7 +205,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.NukeWarningSound);
                             for (int i = 0; i < mineAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
