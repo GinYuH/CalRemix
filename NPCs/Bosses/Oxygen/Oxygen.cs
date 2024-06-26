@@ -462,15 +462,13 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 drawPos = NPC.Center - screenPos;
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            spriteBatch.EnterShaderRegion(BlendState.Additive);
             Texture2D plasmom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
             float scaleFactor = (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.075f;
             spriteBatch.Draw(plasmom, drawPos, null, NPC.GetAlpha(Color.Cyan * 0.78f), NPC.rotation, plasmom.Size() / 2, 0.5f, SpriteEffects.None, 0f);
             spriteBatch.Draw(bloom, drawPos, null, NPC.GetAlpha(Color.Cyan * 1f), NPC.rotation, bloom.Size() / 2, 0.6f + scaleFactor, SpriteEffects.None, 0f);
-            spriteBatch.End();
-            spriteBatch.Begin();
+            spriteBatch.ExitShaderRegion();
             if (MaxDepthLevel < 4)
             {
                 spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(MaxDepthLevel, 0, 3)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
