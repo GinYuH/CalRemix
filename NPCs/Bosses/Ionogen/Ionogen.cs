@@ -161,7 +161,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                                         Vector2 laserVelocity = spinningPoint.RotatedBy(radians * k + Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2));
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, laserVelocity, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                     }
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                 }
                             }
                             if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<IonogenLightning>()) && NPC.ai[1] % 5 == 0)
@@ -196,7 +196,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                                 for (int i = 0; i < acidCount; i++)
                                 {
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(acidSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.25f), 3f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.5f), 3f, Main.myPlayer);
                                 }
                             }
                             NPC.ai[2]++;
@@ -248,7 +248,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
                             {
                                 int type = ModContent.ProjectileType<IonogenLightning>();
                                 SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center).RotatedByRandom(MathHelper.TwoPi), type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center).RotatedByRandom(MathHelper.TwoPi), type, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
