@@ -252,6 +252,8 @@ Mods: {
 				DisplayName: Hay Fever
 				Description: You're sneezing out blood!
 			}
+
+			MedicallyIntelligent.DisplayName: Medically Intelligent
 		}
 
 		Items: {
@@ -2130,6 +2132,15 @@ Mods: {
 			}
 
 			IonogenRelic.Tooltip: The battery acid melted it...
+
+			PHD: {
+				DisplayName: PHD
+				Tooltip:
+					'''
+					Makes Pandemic Panic enemies easier to recognize
+					"Would my patient mind if I took their organs out and sold them?"
+					'''
+			}
 		}
 
 		NPCs: {

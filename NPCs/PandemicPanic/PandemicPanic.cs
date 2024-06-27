@@ -179,6 +179,8 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public static void EndEvent()
         {
+            string winner = InvadersWinning ? "The invaders successfully spread their influence." : DefendersWinning ? "The defenders successfully offered their protection." : "The microbes all retreat...";
+            Main.NewText(winner, InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory);
             DefendersKilled = 0;
             InvadersKilled = 0;
             LockedFinalSide = 0;

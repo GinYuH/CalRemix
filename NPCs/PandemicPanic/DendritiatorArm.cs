@@ -175,7 +175,15 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public Color FlameTrailColorFunction(float completionRatio)
         {
-            return Color.Lerp(Color.Violet, default, completionRatio);
+            Color color = Color.Violet;
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>() != null)
+            {
+                if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+                {
+                    color = Color.Lime;
+                }
+            }
+            return Color.Lerp(color, default, completionRatio);
         }
     }
 }

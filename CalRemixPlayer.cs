@@ -106,6 +106,7 @@ namespace CalRemix
         public bool anomaly109UI;
 		public bool dungeon2;
 		public bool hayFever;
+		public bool phd;
 		public int remixJumpCount;
 
         public int chainSawCharge;
@@ -787,6 +788,7 @@ namespace CalRemix
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
+			phd = false;
 			if (!CalamityUtils.AnyProjectiles(ModContent.ProjectileType<Fridge>()))
 			{
                 fridge = false;

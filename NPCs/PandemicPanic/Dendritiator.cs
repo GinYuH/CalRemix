@@ -92,6 +92,10 @@ namespace CalRemix.NPCs.PandemicPanic
                 Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             }
             Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+            {
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, NPC.frame, Color.Lime, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+            }
             return false;
         }
 
