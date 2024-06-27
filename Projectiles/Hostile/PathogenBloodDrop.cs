@@ -38,7 +38,7 @@ namespace CalRemix.Projectiles.Hostile
                         Projectile.netUpdate = true;
                     }
                 }
-                Projectile.velocity.Y += 0.2f;
+                Projectile.velocity.Y += Projectile.ai[2];
             }
             if ((double)Projectile.velocity.Y < 0.25 && (double)Projectile.velocity.Y > 0.15)
             {

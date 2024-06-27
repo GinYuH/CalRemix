@@ -65,14 +65,14 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(40000, 48000, 300000);
+            NPC.LifeMaxNERB(60000, 68000, 300000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(0, 40, 0, 0);
-            NPC.boss = true;
+            NPC.boss = false;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.DeathSound = DeathSound;
@@ -108,6 +108,16 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             {
                 Target = PandemicPanic.PandemicPanic.BioGetTarget(false, NPC);
             }
+            if (Target is Player && Target != null && Target.active)
+            {
+                NPC.boss = true;
+                Player p = Target as Player;
+                p.Calamity().isNearbyBoss = true;
+            }
+            else
+            {
+                NPC.boss = false;
+            }
             NPC.Calamity().newAI[3] = 0;
             switch (Phase)
             {
@@ -115,7 +125,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                     {
                         if (ValidTarget())
                         {
-                            NPC.velocity = NPC.DirectionTo(Target.Center) * 6;
+                            NPC.velocity = NPC.DirectionTo(Target.Center) * 8;
                             NPC.ai[1]++;
                         }
                         else
@@ -145,11 +155,11 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                         int phaseTime = (fireRate * totalRounds) + 180;
                         NPC.ai[1]++;
                         if (ValidTarget())
-                        NPC.velocity = NPC.DirectionTo(Target.Center) * 6;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 8;
                         if (NPC.ai[1] % fireRate == 0 && NPC.ai[1] < fireRate * totalRounds)
                         {
                             int firePoints = master ? 6 : 4;
-                            int fireProjSpeed = master ? 10 : 8;
+                            int fireProjSpeed = master ? 10 : 6;
                             float variance = MathHelper.TwoPi / firePoints;
                             float fireRateMultiplier = 0.02f;
                             for (int i = 0; i < firePoints; i++)
@@ -234,7 +244,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                                     {
                                         SoundEngine.PlaySound(PerforatorHeadMedium.DeathSound, NPC.Center);
                                     }
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * Main.rand.NextFloat(11f, 23f), ModContent.ProjectileType<PathogenBloodDrop>(), (int)(NPC.damage * 0.5f), 0f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 1.5f) * Main.rand.NextFloat(17f, 32f), ModContent.ProjectileType<PathogenBloodDrop>(), (int)(NPC.damage * 0.5f), 0f, ai2: 0.6f);
                                     if (NPC.ai[3] > drillTime)
                                     {
                                         Phase = (int)PhaseType.Caltrops;
@@ -281,6 +291,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                     }
                 case (int)PhaseType.Caltrops:
                     {
+                        NPC.damage = 100;
                         int fireRate = 40;
                         int totalRounds = death ? 4 : rev ? 3 : 2;
                         int phaseTime = totalRounds * fireRate + 360;
@@ -293,7 +304,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                             SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ExoHitSound, NPC.Center);
                             for (int i = 0; i < projPerRound; i++)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 12, ModContent.ProjectileType<PathogenCaltrop>(), (int)(NPC.damage * 0.5f), 0f);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 12, ModContent.ProjectileType<PathogenCaltrop>(), (int)(NPC.damage * 0.25f), 0f);
                             }
                             NPC.position.Y += kb;
                         }
@@ -405,9 +416,9 @@ namespace CalRemix.NPCs.Bosses.Pathogen
                             {
                                 SoundEngine.PlaySound(PerforatorHive.IchorShoot, NPC.Center);
                                 NPC.velocity.X = -NPC.velocity.X;
-                                int amt = 5;
+                                int amt = 10;
                                 for (int i = 0; i < amt; i++)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * Main.rand.NextFloat(11f, 23f), ModContent.ProjectileType<PathogenBloodDrop>(), (int)(NPC.damage * 0.5f), 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 1.8f) * Main.rand.NextFloat(16f, 28f), ModContent.ProjectileType<PathogenBloodDrop>(), (int)(NPC.damage * 0.5f), 0f, ai2: 0.4f);
                             }
                             else
                             {

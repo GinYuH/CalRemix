@@ -111,7 +111,7 @@ namespace CalRemix.NPCs.PandemicPanic
             if (IsActive)
             {
                 UpdateLists();
-                if (TotalKills >= 300 && !SummonedPathogen)
+                if (TotalKills >= 300 && (!SummonedPathogen || (!InvadersWinning && !NPC.AnyNPCs(ModContent.NPCType<Pathogen>()))))
                 {
                     NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Pathogen>());
                     SummonedPathogen = true;
@@ -432,7 +432,7 @@ namespace CalRemix.NPCs.PandemicPanic
                     float damageMult = npc.type == ModContent.NPCType<Pathogen>() ? 0.2f : 1f;
                     npc.SimpleStrikeNPC((int)(n.damage * damageMult), n.direction, false);
                     hitCooldown = armhit && npc.type != ModContent.NPCType<Pathogen>() ? 1 : 20;
-                    if (npc.life <= 0 && !npc.boss)
+                    if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
                     {
                         PandemicPanic.InvadersKilled++;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
@@ -459,7 +459,7 @@ namespace CalRemix.NPCs.PandemicPanic
                     npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
-                    if (npc.life <= 0 && !npc.boss)
+                    if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
                     {
                         PandemicPanic.InvadersKilled++;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
@@ -475,7 +475,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            if (npc.life <= 0 && !npc.boss)
+            if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
             {
                 if (PandemicPanic.InvaderNPCs.Contains(npc.type))
                     PandemicPanic.InvadersKilled++;
@@ -496,7 +496,7 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             if (projectile.friendly)
             {
-                if (npc.life <= 0 && !npc.boss)
+                if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
                 {
                     if (PandemicPanic.InvaderNPCs.Contains(npc.type))
                         PandemicPanic.InvadersKilled++;
@@ -529,13 +529,13 @@ namespace CalRemix.NPCs.PandemicPanic
             {
                 if (PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning)
                 {
-                    maxSpawns += 16;
-                    spawnRate = 8;
+                    maxSpawns += 8;
+                    spawnRate = 4;
                 }
                 else
                 {
-                    maxSpawns += 8;
-                    spawnRate = 16;
+                    maxSpawns += 4;
+                    spawnRate = 8;
                 }
             }
         }

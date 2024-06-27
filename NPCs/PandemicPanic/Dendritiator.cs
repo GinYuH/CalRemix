@@ -25,11 +25,11 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             NPC.npcSlots = 1f;
             NPC.aiStyle = -1;
-            NPC.damage = 60;
+            NPC.damage = 120;
             NPC.width = 34; //324
             NPC.height = 34; //216
             NPC.defense = 5;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 10000;
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -52,6 +52,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void AI()
         {
+            NPC.knockBackResist = 0f;
             Main.npcFrameCount[NPC.type] = 1;
             if (targeto == null || !targeto.active)
             {
