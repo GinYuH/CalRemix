@@ -74,6 +74,7 @@ namespace CalRemix.World
         public static bool generatedCosmiliteSlag = false;
         public static bool generatedPlague = false;
         public static bool generatedStrain = false;
+        public static bool generatedHydrogen = false;
         public static bool canGenerateBaron = false;
         public static bool grime = false;
 
@@ -181,6 +182,7 @@ namespace CalRemix.World
             generatedPlague = false;
             generatedStrain = false;
             canGenerateBaron = false;
+            generatedHydrogen = false;
             grime = false;
             meldCountdown = 72000;
 
@@ -273,6 +275,7 @@ namespace CalRemix.World
             generatedPlague = false;
             generatedStrain = false;
             canGenerateBaron = false;
+            generatedHydrogen = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -326,6 +329,7 @@ namespace CalRemix.World
             tag["plague"] = generatedPlague;
             tag["astrain"] = generatedStrain;
             tag["canBaron"] = canGenerateBaron;
+            tag["genHydrogen"] = generatedHydrogen;
             tag["grime"] = grime;
             tag["meld"] = meldCountdown;
 
@@ -380,6 +384,7 @@ namespace CalRemix.World
             generatedPlague = tag.Get<bool>("plague");
             generatedStrain = tag.Get<bool>("astrain");
             canGenerateBaron = tag.Get<bool>("canBaron");
+            generatedHydrogen = tag.Get<bool>("genHydrogen");
             grime = tag.Get<bool>("grime");
             meldCountdown = tag.Get<int>("meld");
 
@@ -431,6 +436,7 @@ namespace CalRemix.World
             writer.Write(generatedPlague);
             writer.Write(generatedStrain);
             writer.Write(canGenerateBaron);
+            writer.Write(generatedHydrogen);
             writer.Write(grime);
             writer.Write(meldCountdown);
 
@@ -483,6 +489,7 @@ namespace CalRemix.World
             generatedPlague = reader.ReadBoolean();
             generatedStrain = reader.ReadBoolean();
             canGenerateBaron = reader.ReadBoolean();
+            generatedHydrogen = reader.ReadBoolean();
             grime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
 
@@ -730,6 +737,34 @@ namespace CalRemix.World
                     UpdateWorldBool();
                 }
             }
+            if (!generatedHydrogen)
+            {
+                Rectangle sus = FindCentralGeode();
+                int hydrogenRadius = 10;
+                int borderAmt = 3;
+                Vector2 center = new Vector2(sus.Center.X, sus.Y + sus.Height / 3);
+                for (int i = -hydrogenRadius; i < hydrogenRadius; i++)
+                {
+                    for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
+                        Vector2 pos = new Vector2(center.X + i, center.Y + j);
+                        if (pos.Distance(center) < hydrogenRadius - borderAmt)
+                        {
+                            WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
+                        }
+                        else if (pos.Distance(center) < hydrogenRadius)
+                        {
+                            if (t.HasTile && !SunkenSeaTiles.Contains(t.TileType))
+                                continue;
+                            WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
+                            WorldGen.PlaceTile((int)center.X + i, (int)center.Y + j, TileType<RustedPipes>(), true);
+                        }
+                    }
+                }
+                hydrogenLocation = center * 16;
+                generatedHydrogen = true;
+            }
             if (!NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
             {
                 if (CalamityUtils.CountProjectiles(ProjectileID.ChumBucket) > 21 && Main.LocalPlayer.Calamity().ZoneSulphur)
@@ -929,6 +964,7 @@ namespace CalRemix.World
                         }
                     }
                     hydrogenLocation = center * 16;
+                    generatedHydrogen = true;
                 }));
             }
             // Secret Banished Baron seed

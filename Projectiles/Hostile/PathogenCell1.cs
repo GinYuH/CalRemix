@@ -41,7 +41,7 @@ namespace CalRemix.Projectiles.Hostile
                 SoundEngine.PlaySound(SoundID.NPCHit20, Projectile.Center);
                 for (int i = 0; i < projAmt; i++)
                 {
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, (i + 1) / (float)projAmt)) * Projectile.velocity.Length() * 1.5f, Type, (int)MathHelper.Max((int)(Projectile.damage * 0.66f), 60), 0, ai0: Projectile.ai[0] + 1, ai1: Projectile.ai[1]);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, (i + 1) / (float)projAmt)) * Projectile.velocity.Length() * 1.5f, Type, (int)MathHelper.Max((int)(Projectile.damage * 0.66f), 20), 0, ai0: Projectile.ai[0] + 1, ai1: Projectile.ai[1]);
                     Main.projectile[p].scale = Projectile.scale * 0.75f;
                 }
             }

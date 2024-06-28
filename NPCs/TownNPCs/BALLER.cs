@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CalamityMod;
+using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Projectiles.Melee;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
@@ -40,6 +41,7 @@ namespace CalRemix.NPCs.TownNPCs
                 Velocity = 1f // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifiers);
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<CrushDepth>()] = true;
         }
 
         public override void SetDefaults()
@@ -84,6 +86,7 @@ namespace CalRemix.NPCs.TownNPCs
             NPC.rotation = NPC.spriteDirection * -MathHelper.PiOver4;
             NPC.spriteDirection = -NPC.direction;
             NPC.velocity.X = Main.windSpeedCurrent;
+            NPC.breath += 2;
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs) => RemixDowned.downedOxygen;

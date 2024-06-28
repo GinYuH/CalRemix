@@ -140,9 +140,9 @@ namespace CalRemix.Projectiles.Hostile
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float nothing = 0;
-            // 90 is the height of the spike
+            // 98 is the height of the spike
             // 22 is width of the spike
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.position, Projectile.position + Projectile.rotation.ToRotationVector2() * Projectile.scale * Projectile.ai[1] * 90, 22f, ref nothing);
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.position, Projectile.position + Projectile.rotation.ToRotationVector2() * Projectile.scale * Projectile.ai[1] * 98, 22f, ref nothing);
         }
 
         public override bool? CanDamage()

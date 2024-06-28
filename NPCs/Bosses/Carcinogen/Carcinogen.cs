@@ -55,12 +55,12 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.npcSlots = 24f;
-            NPC.damage = 50;
+            NPC.damage = 40;
             NPC.width = 86;
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(10000, 12000, 300000);
+            NPC.LifeMaxNERB(6000, 8000, 300000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -114,7 +114,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             {
                 case (int)PhaseType.Idle:
                     {
-                        int tpDistX = 1000;
+                        int tpDistX = 800;
                         int tpDistY = 500;
                         int beginTeleporting = lifeRatio < 0.9f ? 90 : 180;
                         int teleportTelegraphDuration = lifeRatio < 0.9f ? 90 : 120;
@@ -295,7 +295,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         int spinTime = 60;
                         int dashSpeed = 18;
                         int bombRate = 20;
-                        int phaseTime = spinTime + 120;
+                        int phaseTime = spinTime + 90;
                         NPC.ai[1]++;
                         if (NPC.ai[1] < spinTime)
                         {

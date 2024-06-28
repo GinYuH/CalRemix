@@ -22,7 +22,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
 
         public override void SetDefaults()
         {
-            NPC.damage = 60;
+            NPC.damage = 30;
             NPC.width = 170;
             NPC.height = 166;
             NPC.defense = 20;
@@ -62,7 +62,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         {
                             SoundEngine.PlaySound(SoundID.Item20 with { Volume = 0.2f, Pitch = 0.4f }, NPC.Center);
                             Vector2 square = new Vector2(Main.rand.Next((int)NPC.position.X, (int)NPC.position.X + NPC.width), Main.rand.Next((int)NPC.position.Y, (int)NPC.position.Y + NPC.height));
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-cinderSpeed, cinderSpeed), Main.rand.Next(-cinderSpeed, 0)), ModContent.ProjectileType<CigarCinder>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-cinderSpeed, cinderSpeed), Main.rand.Next(-cinderSpeed, 0)), ModContent.ProjectileType<CigarCinder>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                             Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
                         }
                     }
