@@ -549,6 +549,11 @@ namespace CalRemix.NPCs.PandemicPanic
                 pool.Clear();
                 float defMult = PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning ? 3f : PandemicPanic.DefendersWinning ? 0.8f : 1f;
                 float invMult = PandemicPanic.InvadersWinning ? 0.8f : 1f;
+                if (NPC.AnyNPCs(ModContent.NPCType<Pathogen>()) && PandemicPanic.DefendersWinning)
+                {
+                    defMult = 0.1f;
+                    invMult = 0.1f;
+                }
                 pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.6f * defMult);
                 pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
                 pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
