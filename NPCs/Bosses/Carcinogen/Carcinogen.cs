@@ -276,9 +276,8 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 }
                                 else
                                 {
-                                    // </3
-                                    Particle pe = new HeavySmokeParticle(NPC.Center, velocity * 6, Color.Gray, 22, 1f, 1, 1);
-                                    GeneralParticleHandler.SpawnParticle(pe);
+                                    TimedSmokeParticle smoke = new TimedSmokeParticle(NPC.Center, (velocity * 6).RotatedByRandom(MathHelper.PiOver4 / 8), new Color(0.01f, 0.01f, 0.01f), new Color(0.01f, 0.01f, 0.01f), Main.rand.NextFloat(0.8f, 1.6f), 125, 10);
+                                    GeneralParticleHandler.SpawnParticle(smoke);
                                 }
                             }
                         }
