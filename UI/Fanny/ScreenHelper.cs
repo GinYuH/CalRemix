@@ -276,7 +276,7 @@ namespace CalRemix.UI
         }
         private void OnClickHelper(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!ScreenHelperManager.screenHelpersEnabled)
+            if (!ScreenHelperManager.screenHelpersEnabled || fadeIn < 1f)
                 return;
 
             OnClick?.Invoke(this);
