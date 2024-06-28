@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
+using CalRemix.ExtraTextures;
 
 namespace CalRemix.Projectiles.Accessories
 {

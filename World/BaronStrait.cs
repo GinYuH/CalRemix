@@ -1,30 +1,22 @@
-﻿using System;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using CalRemix.Tiles;
-using System.Threading;
 using Microsoft.Xna.Framework;
-using CalamityMod.Tiles.DraedonStructures;
-using CalamityMod.World;
-using CalamityMod.Tiles.SunkenSea;
 using CalamityMod;
-using ReLogic.Utilities;
-using System.CodeDom;
 using CalRemix.Walls;
-using ReLogic.Content;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class BaronStrait : ModSystem
     {
         public static void GenerateBaronStrait(bool? left)
         {
             // Position and distance variables, seed and side dependent 
-            int posX = (left == true || left == null) ? 0 : Main.maxTilesX - WorldGen.beachDistance;
-            int distX = (left == null) ? Main.maxTilesX : WorldGen.beachDistance;
-            int distY = (left == null) ? Main.maxTilesY : (int)Main.worldSurface;
+            int posX = left == true || left == null ? 0 : Main.maxTilesX - WorldGen.beachDistance;
+            int distX = left == null ? Main.maxTilesX : WorldGen.beachDistance;
+            int distY = left == null ? Main.maxTilesY : (int)Main.worldSurface;
 
             // The rectangle that the strait spawns in
             Rectangle straitRect = new Rectangle(posX, 0, distX, distY);
@@ -129,7 +121,7 @@ namespace CalRemix
                         // No matter what, add Banished Plating Walls
                         if (t.WallType == 0)
                             t.WallType = (ushort)WallType<BanishedPlatingWallPlaced>();
-                        
+
                         // If there are more than 4 Baronsands nearby, replace any Plating with Sand
                         if (sur2 > 4)
                         {
@@ -138,7 +130,7 @@ namespace CalRemix
                                 t.ResetToType((ushort)TileType<BaronsandPlaced>());
                             }
                             // Replace all walls with sand regardless of if there's plating
-                            if (t.WallType ==  WallType<BanishedPlatingWallPlaced>())
+                            if (t.WallType == WallType<BanishedPlatingWallPlaced>())
                                 t.WallType = (ushort)WallType<BaronsandWallPlaced>();
                             WorldGen.SquareTileFrame(straitRect.X + i, straitRect.Y + j);
                             sandMap[i, j] = true;
@@ -202,7 +194,7 @@ namespace CalRemix
                                         if (WorldGen.InWorld(x, y))
                                         {
                                             // Replace only air or Baron Strait tiles
-                                            if (!Main.tile[x, y].HasTile || (Main.tile[x, y].TileType == TileType<BaronsandPlaced>() || Main.tile[x, y].TileType == TileType<BanishedPlatingPlaced>() || Main.tile[x, y].TileType == TileType<BrinerackPlaced>()))
+                                            if (!Main.tile[x, y].HasTile || Main.tile[x, y].TileType == TileType<BaronsandPlaced>() || Main.tile[x, y].TileType == TileType<BanishedPlatingPlaced>() || Main.tile[x, y].TileType == TileType<BrinerackPlaced>())
                                             {
                                                 Main.tile[x, y].ResetToType((ushort)TileType<TanzaniteGlassPlaced>());
 
@@ -210,22 +202,22 @@ namespace CalRemix
                                                 // Arbitrary bound check because apparently SlopeTile is weird 
                                                 if (x > 50 && x < Main.maxTilesX - 50 && y > 50 && y < Main.maxTilesY - 50)
                                                 {
-                                                    if (Main.tile[x,y].TileType == TileType<TanzaniteGlassPlaced>())
-                                                    if (y == j - crystalHeight)
-                                                    {
-                                                        // Slope the left 
-                                                        if (x == i)
+                                                    if (Main.tile[x, y].TileType == TileType<TanzaniteGlassPlaced>())
+                                                        if (y == j - crystalHeight)
                                                         {
-                                                            if (Main.tile[x, y].HasTile)
-                                                                WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownRight);
+                                                            // Slope the left 
+                                                            if (x == i)
+                                                            {
+                                                                if (Main.tile[x, y].HasTile)
+                                                                    WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownRight);
+                                                            }
+                                                            // Slope the right
+                                                            if (x == crystalWidth + i - 1)
+                                                            {
+                                                                if (Main.tile[x, y].HasTile)
+                                                                    WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownLeft);
+                                                            }
                                                         }
-                                                        // Slope the right
-                                                        if (x == crystalWidth + i - 1)
-                                                        {
-                                                            if (Main.tile[x, y].HasTile)
-                                                                WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownLeft);
-                                                        }
-                                                    }
                                                 }
                                                 WorldGen.SquareTileFrame(x, y);
                                                 // Assure crystals don't spawn floating in the air

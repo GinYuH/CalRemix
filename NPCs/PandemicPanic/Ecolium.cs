@@ -1,24 +1,15 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using CalamityMod;
-using CalamityMod.BiomeManagers;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
-using CalRemix.Projectiles.Hostile;
-using CalamityMod.Projectiles.Boss;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using Terraria.DataStructures;
-using Terraria.GameContent.Animations;
 using CalamityMod.Particles;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic
@@ -178,6 +169,11 @@ namespace CalRemix.NPCs.PandemicPanic
                 Main.spriteBatch.Draw(texture, position + vector2, null, color, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             Main.spriteBatch.Draw(texture, position, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, SpriteEffects.None, 0f);
+
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+            {
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, null, Color.Red, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
+            }
             for (int g = 0; g < Chains.Count; g++)
             {
                 List<VerletSimulatedSegment> Segments = Chains[g];

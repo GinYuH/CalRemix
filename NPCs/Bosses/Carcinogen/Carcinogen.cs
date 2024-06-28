@@ -14,6 +14,9 @@ using CalamityMod.Events;
 using CalRemix.Biomes;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -52,12 +55,12 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.npcSlots = 24f;
-            NPC.damage = 100;
+            NPC.damage = 40;
             NPC.width = 86;
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(40000, 48000, 300000);
+            NPC.LifeMaxNERB(6000, 8000, 300000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -77,7 +80,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             {
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/OncologicReinforcement");
             }
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<AsbestosBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<Biomes.AsbestosBiome>().Type };
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -111,7 +114,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             {
                 case (int)PhaseType.Idle:
                     {
-                        int tpDistX = 1000;
+                        int tpDistX = 800;
                         int tpDistY = 500;
                         int beginTeleporting = lifeRatio < 0.9f ? 90 : 180;
                         int teleportTelegraphDuration = lifeRatio < 0.9f ? 90 : 120;
@@ -121,7 +124,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         NPC.ai[1]++;
                         NPC.ai[2]++;
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 4;
-                        if (NPC.ai[1] == beginTeleporting)
+                        if (NPC.ai[1] == beginTeleporting || (NPC.ai[1] > beginTeleporting && teleportPos == default))
                         {
                             teleportPos = new Rectangle((int)(Target.Center.X + Main.rand.Next(-tpDistX, tpDistX)), (int)(Target.Center.Y + Main.rand.Next(-tpDistY, tpDistY)), NPC.width, NPC.height);
                         }
@@ -273,9 +276,8 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 }
                                 else
                                 {
-                                    // </3
-                                    Particle pe = new HeavySmokeParticle(NPC.Center, velocity * 6, Color.Gray, 22, 1f, 1, 1);
-                                    GeneralParticleHandler.SpawnParticle(pe);
+                                    TimedSmokeParticle smoke = new TimedSmokeParticle(NPC.Center, (velocity * 6).RotatedByRandom(MathHelper.PiOver4 / 8), new Color(0.01f, 0.01f, 0.01f), new Color(0.01f, 0.01f, 0.01f), Main.rand.NextFloat(0.8f, 1.6f), 125, 10);
+                                    GeneralParticleHandler.SpawnParticle(smoke);
                                 }
                             }
                         }
@@ -292,7 +294,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         int spinTime = 60;
                         int dashSpeed = 18;
                         int bombRate = 20;
-                        int phaseTime = spinTime + 120;
+                        int phaseTime = spinTime + 90;
                         NPC.ai[1]++;
                         if (NPC.ai[1] < spinTime)
                         {
@@ -377,6 +379,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<Asbestos>(), 1, 216, 224);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());
         }
         public override void OnKill()
         {
@@ -386,6 +389,10 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
 
         public override bool SpecialOnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<UNCANNY>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<UNCANNY>());
+            }
             // work you stupid stupid
             RemixDowned.downedCarcinogen = true;
             CalRemixWorld.UpdateWorldBool();

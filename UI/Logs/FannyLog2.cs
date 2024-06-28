@@ -1,10 +1,8 @@
-﻿using CalamityMod.Items.DraedonMisc;
-using CalamityMod.UI.DraedonLogs;
+﻿using CalamityMod.UI.DraedonLogs;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections;
 using Terraria.ModLoader;
 
-namespace CalRemix.UI
+namespace CalRemix.UI.Logs
 {
     public class FannyLog2 : DraedonsLogGUI
     {
@@ -13,7 +11,7 @@ namespace CalRemix.UI
         {
             return Page switch
             {
-                0 => "Well, well, well, look what Fanny stumbled upon this time! Yours truly found another one of those fancy-schmancy tablets, this time in a dingy old lab on Planetoid X-42. Can't say I'm surprised, these things seem to have a knack for popping up wherever I go."+
+                0 => "Well, well, well, look what Fanny stumbled upon this time! Yours truly found another one of those fancy-schmancy tablets, this time in a dingy old lab on Planetoid X-42. Can't say I'm surprised, these things seem to have a knack for popping up wherever I go." +
                     "\n\nNow, you might be wondering what a flame like me is doing on a lonely planetoid orbiting Earth. Truth be told, even Fanny needs a break from the hustle and bustle of guiding lost wanderers. Plus, the view of Earth from up here is simply breathtaking. Not that I have lungs to breathe with, but you get the idea.",
                 1 => "Anyway, back to the tablet. Found it tucked away in a corner covered in cobwebs and space dust. Guess the lab's previous occupants weren't too keen on keeping things tidy. Lucky for them, Fanny's here to lend a fiery hand!" +
                 "\n\nAs for today's escapades, well, let's just say I tried my hand at guiding a confused alien through the maze of scientific equipment in the lab. An odd fella they were, they looked pretty human for being an alien, though I feel like I saw their face turn blue for a moment? Anywho, did they appreciate my help? Ha, who knows! But ol' Fanny did his best, cracking jokes and offering sage advice every step of the way.",
@@ -24,7 +22,7 @@ namespace CalRemix.UI
         }
         public override Texture2D GetTextureByPage()
         {
-            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyHolo").Value;
+            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperFannyHolo").Value;
         }
     }
 }

@@ -1,22 +1,12 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using CalamityMod;
-using CalamityMod.BiomeManagers;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
-using CalRemix.Projectiles.Hostile;
-using System.Collections.Generic;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic
@@ -35,11 +25,11 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             NPC.npcSlots = 1f;
             NPC.aiStyle = -1;
-            NPC.damage = 60;
+            NPC.damage = 120;
             NPC.width = 34; //324
             NPC.height = 34; //216
             NPC.defense = 5;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 10000;
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -62,6 +52,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void AI()
         {
+            NPC.knockBackResist = 0f;
             Main.npcFrameCount[NPC.type] = 1;
             if (targeto == null || !targeto.active)
             {
@@ -101,6 +92,10 @@ namespace CalRemix.NPCs.PandemicPanic
                 Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             }
             Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+            {
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, NPC.frame, Color.Lime, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+            }
             return false;
         }
 

@@ -1,5 +1,8 @@
 ﻿using CalamityMod;
 using CalamityMod.Events;
+using CalamityMod.Items.Pets;
+using CalRemix.NPCs.PandemicPanic;
+using CalRemix.World;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,6 +55,15 @@ namespace CalRemix.UI
 
             HelperMessage.New("Towers", "Ah, the lunar events! It's like hosting a cosmic tea party, except instead of sipping tea, you're dodging death rays from space! Just remember to RSVP with your best battle gear and a side of moon cheese.",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedAncientCultist);
+
+            HelperMessage.New("PanicHint", "You should always collect water bills from your civilians for money! If you don't, try poisoning their water supply! Putting a Bloody Vein into a sink should do it!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DownedBossSystem.downedPerforator && Main.bloodMoon).AddItemDisplay(ModContent.ItemType<BloodyVein>());
+
+            HelperMessage.New("Oxydazy", "With the wind blowing like crazy, your projectiles are getting carried away faster than a bad joke. But here’s a hole-in-one tip: if you hit a golf ball into space, you may be able to hit one of the ships of the legendary Archwitch, Oxy!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => CalRemixWorld.oxydayTime > 1).AddItemDisplay(ItemID.GolfClubIron);
+
+            HelperMessage.New("PandemicPanic", "An invasion has begun with giant immune system cells duking it out with invading microbes! You can side with the immune cells or the microbes by taking out more of the other side. Just remember, no matter who you choose, it’s going to be a cell-ebration of epic proportions! Stay sharp and choose wisely!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive);
         }
     }
 }

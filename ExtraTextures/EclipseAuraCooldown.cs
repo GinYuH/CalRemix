@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 
-namespace CalRemix
+namespace CalRemix.ExtraTextures
 {
     public class EclipseAuraCooldown : CooldownHandler
     {

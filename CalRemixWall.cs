@@ -3,8 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Biomes;
 using CalRemix.NPCs.Bosses.Carcinogen;
-using CalamityMod;
-using CalamityMod.Items.VanillaArmorChanges;
 
 namespace CalRemix
 {

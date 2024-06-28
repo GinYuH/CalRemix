@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
@@ -12,6 +11,8 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Materials;
+using CalRemix.Items.Weapons;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {
@@ -142,6 +143,7 @@ namespace CalRemix.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<CryoKeyMold>(), 5);
+            npcLoot.Add(ModContent.ItemType<AspidBlaster>(), 10);
             npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<EssenceofHavoc>(), 1, 3, 4, ui: Main.expertMode);
             npcLoot.AddIf(() => !Main.expertMode, ModContent.ItemType<EssenceofHavoc>(), 1, 2, 3, ui: !Main.expertMode);
         }

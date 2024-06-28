@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CalamityMod;
 using CalRemix.Items.Placeables;
 using CalRemix.Tiles;
 using CalRemix.Walls;
@@ -8,7 +7,6 @@ using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Biomes;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;

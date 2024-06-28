@@ -1,18 +1,8 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Graphics.Primitives;
-using CalamityMod.Particles;
-using CalamityMod.Walls;
-using CalRemix.NPCs.Bosses.Hydrogen;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+﻿using CalRemix.NPCs.Bosses.Hydrogen;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -16,6 +16,7 @@ using CalamityMod.World;
 using CalamityMod.Items.Pets;
 using System.IO;
 using Terraria.ModLoader.Utilities;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {

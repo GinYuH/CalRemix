@@ -2,13 +2,14 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class RemixDowned : ModSystem
     {
         public static bool downedCalamity = false;
         public static bool downedExcavator = false;
         public static bool downedAcidsighter = false;
+        public static bool downedOrigen = false;
         public static bool downedCarcinogen = false;
         public static bool downedPhytogen = false;
         public static bool downedIonogen = false;
@@ -17,6 +18,8 @@ namespace CalRemix
         public static bool downedPathogen = false;
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
+        public static bool downedHypnos = false;
+        public static bool downedLosbaf = false;
 
         public static bool downedEarthElemental = false;
         public static bool downedLifeSlime = false;
@@ -34,6 +37,7 @@ namespace CalRemix
             downedCalamity = false;
             downedExcavator = false;
             downedAcidsighter = false;
+            downedOrigen = false;
             downedCarcinogen = false;
             downedPhytogen = false;
             downedIonogen = false;
@@ -42,6 +46,8 @@ namespace CalRemix
             downedPathogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
+            downedHypnos = false;
+            downedLosbaf = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -60,6 +66,7 @@ namespace CalRemix
             downedCalamity = false;
             downedExcavator = false;
             downedAcidsighter = false;
+            downedOrigen = false;
             downedCarcinogen = false;
             downedPhytogen = false;
             downedIonogen = false;
@@ -68,6 +75,8 @@ namespace CalRemix
             downedPathogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
+            downedHypnos = false;
+            downedLosbaf = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -86,6 +95,7 @@ namespace CalRemix
             tag["downedCalamity"] = downedCalamity;
             tag["downedExcavator"] = downedExcavator;
             tag["downedAcidsighter"] = downedAcidsighter;
+            tag["downedOrigen"] = downedOrigen;
             tag["downedCarcinogen"] = downedCarcinogen;
             tag["downedPhytogen"] = downedPhytogen;
             tag["downedIonogen"] = downedIonogen;
@@ -94,6 +104,8 @@ namespace CalRemix
             tag["downedPathogen"] = downedPathogen;
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
+            tag["downedHypnos"] = downedHypnos;
+            tag["downedLosbaf"] = downedLosbaf;
 
             tag["downedEarthElemental"] = downedEarthElemental;
             tag["downedLifeSlime"] = downedLifeSlime;
@@ -114,6 +126,7 @@ namespace CalRemix
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedExcavator = tag.Get<bool>("downedExcavator");
             downedAcidsighter = tag.Get<bool>("downedAcidsighter");
+            downedOrigen = tag.Get<bool>("downedOrigen");
             downedCarcinogen = tag.Get<bool>("downedCarcinogen");
             downedPhytogen = tag.Get<bool>("downedPhytogen");
             downedIonogen = tag.Get<bool>("downedIonogen");
@@ -122,6 +135,8 @@ namespace CalRemix
             downedPathogen = tag.Get<bool>("downedPathogen");
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
+            downedHypnos = tag.Get<bool>("downedHypnos");
+            downedLosbaf = tag.Get<bool>("downedLosbaf");
 
             downedEarthElemental = tag.Get<bool>("downedEarthElemental");
             downedLifeSlime = tag.Get<bool>("downedLifeSlime");
@@ -141,6 +156,7 @@ namespace CalRemix
             writer.Write(downedCalamity);
             writer.Write(downedExcavator);
             writer.Write(downedAcidsighter);
+            writer.Write(downedOrigen);
             writer.Write(downedCarcinogen);
             writer.Write(downedPhytogen);
             writer.Write(downedIonogen);
@@ -149,6 +165,8 @@ namespace CalRemix
             writer.Write(downedPathogen);
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
+            writer.Write(downedHypnos);
+            writer.Write(downedLosbaf);
 
             writer.Write(downedEarthElemental);
             writer.Write(downedLifeSlime);
@@ -167,6 +185,7 @@ namespace CalRemix
             downedCalamity = reader.ReadBoolean();
             downedExcavator = reader.ReadBoolean();
             downedAcidsighter = reader.ReadBoolean();
+            downedOrigen = reader.ReadBoolean();
             downedCarcinogen = reader.ReadBoolean();
             downedPhytogen = reader.ReadBoolean();
             downedIonogen = reader.ReadBoolean();
@@ -175,6 +194,8 @@ namespace CalRemix
             downedPathogen = reader.ReadBoolean();
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
+            downedHypnos = reader.ReadBoolean();
+            downedLosbaf = reader.ReadBoolean();
 
             downedEarthElemental = reader.ReadBoolean();
             downedLifeSlime = reader.ReadBoolean();

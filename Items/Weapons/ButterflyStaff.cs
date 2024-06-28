@@ -50,7 +50,7 @@ public class ButterflyStaff : ModItem
     {
         CreateRecipe().
             AddRecipeGroup("Wood", 10).
-            AddIngredient(ItemID.MonarchButterfly, 3).
+            AddRecipeGroup("CalRemix:AnyButterfly", 3).
             AddTile(TileID.Anvils).
             Register();
     }

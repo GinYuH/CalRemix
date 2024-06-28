@@ -2,7 +2,7 @@ using CalamityMod;
 using CalamityMod.Items.LoreItems;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Magic;
-using CalRemix.Items;
+using CalRemix.Items.Tools;
 using CalRemix.Items.Weapons;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -202,7 +202,7 @@ namespace CalRemix.NPCs.TownNPCs
 				.AddWithCustomValue<LoreRequiem>(Item.buyPrice(gold: 50));
             npcShop.Register();
 		}
-		public override bool CanGoToStatue(bool toKingStatue) => true;
+		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) 
 		{
 			damage = 22;

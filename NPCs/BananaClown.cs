@@ -11,6 +11,7 @@ using CalRemix.UI;
 using System.Linq;
 using CalRemix.Items.Armor;
 using CalRemix.Projectiles.Hostile;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {

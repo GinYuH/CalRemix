@@ -1,11 +1,8 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.BiomeManagers;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
@@ -13,9 +10,7 @@ using Terraria.GameContent;
 using System;
 using CalRemix.Projectiles.Hostile;
 using CalamityMod.NPCs.ExoMechs.Ares;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.World;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.Biomes;
 
 namespace CalRemix.NPCs.PandemicPanic
@@ -37,11 +32,11 @@ namespace CalRemix.NPCs.PandemicPanic
         {
             NPC.npcSlots = 1f;
             NPC.aiStyle = -1;
-            NPC.damage = 60;
+            NPC.damage = 100;
             NPC.width = 54; //324
             NPC.height = 80; //216
             NPC.defense = 22;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 10000;
             NPC.knockBackResist = 0.75f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -82,7 +77,7 @@ namespace CalRemix.NPCs.PandemicPanic
                     FireRate += 1f;
                     if (FireRate % 5f == 0f)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                     }
                     if (FireRate >= 180f)
                     {
@@ -102,7 +97,7 @@ namespace CalRemix.NPCs.PandemicPanic
                             for (int i = 0; i < amt; i++)
                             {
                                 Vector2 dir = NPC.DirectionTo(target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, (float)(((float)i + 1f) / (float)amt)) + 0.01f);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ModContent.ProjectileType<MaserDeathray>(), NPC.damage * 2, 0f);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
                                 Main.projectile[p].ModProjectile<MaserDeathray>().NPCOwner = NPC.whoAmI;
                             }
                         }
@@ -233,6 +228,10 @@ namespace CalRemix.NPCs.PandemicPanic
                 Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, scale, SpriteEffects.None, 0f);
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+            {
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, NPC.frame, Color.Red, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
+            }
             return false;
         }
 

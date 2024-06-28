@@ -4,7 +4,9 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
+using CalRemix.Biomes;
 using CalRemix.Items;
+using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables;
 using CalRemix.Subworlds;
 using Terraria;
@@ -66,6 +68,9 @@ namespace CalRemix.UI
             HelperMessage.New("PlaguedJungle", "Man, this place reminds me of when I volunteered to help run a jungle-themed summer fair at a local elementary school! Long story short, everyone fainted due to dehydration. Not the plague. At least, that’s what I think.",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague);
 
+            HelperMessage.New("PlaguedJunglePhyto", "Did you know if you gather a bunch of those pesky plague enemies, you'll summon a giant pineapple? He's a pretty chill fruit until you decide to pick a fight! So, make sure you're ready for a fruit salad battle before you start swinging!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague && Main.LocalPlayer.ZoneRockLayerHeight);
+
             HelperMessage.New("Temple", "I love house invasion!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple).SetHoverTextOverride("Me too Fanny!");
 
@@ -116,6 +121,9 @@ namespace CalRemix.UI
 
             HelperMessage.New("PlantDungeon", "Welcome to the dungeon, where skeletons have more bones than a Halloween decoration aisle! Just be careful not to wake the sleeping spirits, they're grumpier than a cat without its afternoon nap.",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss && Main.LocalPlayer.ZoneDungeon);
+
+            HelperMessage.New("Asbestos", "Asbestos is a naturally occurring fibrous silicate mineral. It's a rockin' place to be, but be careful breaking the walls of houses in these caves, you might attract a crippled smoker named Carcinoma! He's a real pain in the asbestos! Be careful where you swing that hammer!",
+               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.InModBiome<AsbestosBiome>()).AddItemDisplay(ItemID.CopperHammer);
 
         }
 

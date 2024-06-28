@@ -2,22 +2,22 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Projectiles.Weapons
+namespace CalRemix.Projectiles
 {
-	public class AgentPoon : ModProjectile
+    public class AgentPoon : ModProjectile
     {
         public override string Texture => "Terraria/Images/Projectile_23";
-        public override void SetStaticDefaults() 
+        public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Agent's Harpoon");
-		}
-		public override void SetDefaults() 
+            DisplayName.SetDefault("Agent's Harpoon");
+        }
+        public override void SetDefaults()
         {
             Projectile.width = 14;
-			Projectile.height = 14;
-			Projectile.aiStyle = ProjAIStyleID.Arrow;
-			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Ranged;
+            Projectile.height = 14;
+            Projectile.aiStyle = ProjAIStyleID.Arrow;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
     }
 }

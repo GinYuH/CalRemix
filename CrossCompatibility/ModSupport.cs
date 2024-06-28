@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Pets;
-using CalamityMod.Items.LoreItems;
-using CalRemix.Items;
 using CalRemix.NPCs.Minibosses;
 using CalRemix.NPCs.Bosses.Wulfwyrm;
 using CalRemix.NPCs.Bosses.Poly;
@@ -23,6 +21,12 @@ using CalRemix.Items.Placeables;
 using CalRemix.NPCs.Bosses.Ionogen;
 using CalRemix.NPCs.Bosses.Oxygen;
 using CalRemix.NPCs.PandemicPanic;
+using CalRemix.NPCs.Bosses.Hypnos;
+using CalRemix.NPCs.Bosses.Pathogen;
+using CalRemix.NPCs.Bosses.Origen;
+using CalRemix.World;
+using CalRemix.Items.SummonItems;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.CrossCompatibility
 {
@@ -82,11 +86,15 @@ namespace CalRemix.CrossCompatibility
                 ["spawnItems"] = ItemType<EnergyCore>(),
                 ["customPortrait"] = wfportrait
             });
+            bc.Call("LogBoss", Mod, "Origen", 0.3f, () => RemixDowned.downedOrigen, NPCType<OrigenCore>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<OrigenDoor>(),
+            });
             bc.Call("LogBoss", Mod, "Acidsighter", 2.1f, () => RemixDowned.downedAcidsighter, NPCType<Acideye>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<PoisonedSclera>(),
             });
-            bc.Call("LogBoss", Mod, "Carcinogen", 9.22f, () => RemixDowned.downedCarcinogen, NPCType<Carcinogen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Carcinogen", 5.241f, () => RemixDowned.downedCarcinogen, NPCType<Carcinogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.WoodWall,
             });
@@ -107,20 +115,31 @@ namespace CalRemix.CrossCompatibility
                 ["spawnItems"] = ItemType<FusedEye>(),
                 ["customPortrait"] = plportrait
             });
-            bc.Call("LogBoss", Mod, "Phytogen", 14f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
-            bc.Call("LogBoss", Mod, "Hydrogen", 14f, () => RemixDowned.downedHydrogen, NPCType<Hydrogen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Phytogen", 14.25f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
+            bc.Call("LogBoss", Mod, "Hydrogen", 14.15f, () => RemixDowned.downedHydrogen, NPCType<Hydrogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.Grenade,
             });
-            bc.Call("LogBoss", Mod, "Oxygen", 14f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Oxygen", 11.75f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.GolfBall,
             });
-            bc.Call("LogBoss", Mod, "Ionogen", 14f, () => RemixDowned.downedIonogen, NPCType<Ionogen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Ionogen", 11.6f, () => RemixDowned.downedIonogen, NPCType<Ionogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<IonCube>(),
             });
-
+            bc.Call("LogBoss", Mod, "Pathogen", 16.75f, () => RemixDowned.downedPathogen, NPCType<Pathogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<BloodyVein>(),
+            });
+            bc.Call("LogBoss", Mod, "XP-00 Hypnos", 22.5f, () => RemixDowned.downedHypnos, NPCType<Hypnos>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<BloodyVein>()
+            });
+            /*
+                $"Jam a [i:{ModContent.ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
+                "An imperfection after allÅ, what a shame.",
+             */
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Minibosses/Clamitas_BC").Value;
@@ -156,8 +175,9 @@ namespace CalRemix.CrossCompatibility
                 ["customPortrait"] = pePortrait
             });
             bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
-            bc.Call("LogMiniBoss", Mod, "Dendritiator", 18.1f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
-            bc.Call("LogMiniBoss", Mod, "MaserPhage", 18.2f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
+            bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
         }
         internal void AddCensusEntries()
         {
@@ -167,6 +187,13 @@ namespace CalRemix.CrossCompatibility
             Census.Call("TownNPCCondition", ModContent.NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
 
             Census.Call("TownNPCCondition", ModContent.NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");
+
+            Census.Call("TownNPCCondition", ModContent.NPCType<WALTER>(), "Defeat Pathogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<IRON>(), "Defeat Ionogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<SIIVA>(), "Defeat Phytogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<UNCANNY>(), "Defeat Carcinogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<KABLOOEY>(), "Defeat Hydrogen");
+            Census.Call("TownNPCCondition", ModContent.NPCType<BALLER>(), "Defeat Oxygen");
         }
         internal void AddMusicDisplayEntries()
         {

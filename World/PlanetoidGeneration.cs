@@ -7,7 +7,7 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework;
 using CalamityMod.Tiles.Ores;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class PlanetoidGeneration : ModSystem
     {
@@ -75,7 +75,7 @@ namespace CalRemix
                             if (Main.rand.NextBool(222))
                             {
                                 int planetradius = Main.rand.Next(2, 5);
-                                if (Main.tile[i, j].TileType == TileID.Dirt || Main.tile[i, j].TileType == TileID.Stone || Main.tile[i, j].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[i, j].TileType])
+                                if (Main.tile[i, j].TileType == TileID.Dirt || Main.tile[i, j].TileType == TileID.Stone || Main.tile[i, j].TileType == TileID.Grass || TileID.Sets.Ore[Main.tile[i, j].TileType])
                                 {
                                     for (int p = i - planetradius; p < i + planetradius; p++)
                                     {
@@ -86,7 +86,7 @@ namespace CalRemix
                                                 continue;
 
                                             if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
-                                                if (Main.tile[p, q].TileType == TileID.Dirt || Main.tile[p, q].TileType == TileID.Stone || Main.tile[p, q].TileType == TileID.Grass || Terraria.ID.TileID.Sets.Ore[Main.tile[p, q].TileType])
+                                                if (Main.tile[p, q].TileType == TileID.Dirt || Main.tile[p, q].TileType == TileID.Stone || Main.tile[p, q].TileType == TileID.Grass || TileID.Sets.Ore[Main.tile[p, q].TileType])
                                                 {
                                                     Main.tile[p, q].TileType = (ushort)TileType<CosmiliteSlagPlaced>();
 

@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Particles;
+using CalRemix.ExtraTextures;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

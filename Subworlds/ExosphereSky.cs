@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CalRemix.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
@@ -11,7 +10,7 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Skies
+namespace CalRemix.Subworlds
 {
     public class ExosphereSky : CustomSky
     {
@@ -101,7 +100,7 @@ namespace CalRemix.Skies
             Opacity = BackgroundIntensity;
         }
 
-        public override Color OnTileColor(Color inColor) => new Color(Vector4.Lerp(DrawColor.ToVector4(), inColor.ToVector4(), 1f - BackgroundIntensity));
+        public override Color OnTileColor(Color inColor) => new Color(Vector3.Lerp(DrawColor.ToVector3(), inColor.ToVector3(), 1f - BackgroundIntensity));
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {

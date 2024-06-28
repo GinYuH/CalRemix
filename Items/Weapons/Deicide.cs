@@ -11,6 +11,7 @@ using CalRemix.Projectiles;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Accessories;
+using CalRemix.Items.Ammo;
 
 namespace CalRemix.Items.Weapons
 {

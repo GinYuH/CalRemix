@@ -4,6 +4,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using CalamityMod.Items.PermanentBoosters;
+using Terraria.GameContent;
 
 namespace CalRemix.Tiles
 {
@@ -24,6 +25,7 @@ namespace CalRemix.Tiles
             // name.SetDefault("Miracle Froota");
             AddMapEntry(new Color(66, 245, 158), name);
             RegisterItemDrop(ModContent.ItemType<MiracleFruit>());
+            FlexibleTileWand.CreateRubblePlacerMedium().AddVariation(ModContent.ItemType<MiracleFruit>(), Type, 0);
         }
     }
 }

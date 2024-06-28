@@ -1,6 +1,5 @@
 ﻿using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.CalPlayer;
-using CalamityMod.CalPlayer.Dashes;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Items;
 using static Terraria.ModLoader.ModContent;
@@ -10,15 +9,13 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Magic;
-using CalamityMod.Projectiles.Typeless;
 using Terraria;
-using System.Collections.Generic;
-using CalRemix.Projectiles.Accessories;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalRemix.Projectiles;
+using CalRemix.ExtraTextures;
 
 namespace CalRemix.Items.Accessories
 {

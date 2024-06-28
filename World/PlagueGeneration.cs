@@ -4,11 +4,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.World;
 using CalRemix.Backgrounds.Plague;
-using CalRemix.Projectiles.TileTypeless;
-using CalamityMod;
-using CalRemix.NPCs.PandemicPanic;
+using CalRemix.Projectiles;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class PlagueGeneration : ModSystem
     {

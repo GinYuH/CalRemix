@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.Tiles.AstralDesert;
 using Microsoft.Xna.Framework;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class AstralBlightBiome : ModSystem
     {

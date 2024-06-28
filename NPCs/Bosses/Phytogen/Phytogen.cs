@@ -7,24 +7,19 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.World;
-using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
-using CalRemix.Items.Placeables;
 using CalamityMod.Events;
-using CalRemix.Biomes;
 using System.Collections.Generic;
 using CalRemix.NPCs.Minibosses;
 using CalamityMod.NPCs.PlagueEnemies;
 using CalamityMod.NPCs.PlaguebringerGoliath;
-using Microsoft.Build.Tasks;
 using System;
-using CalRemix.Retheme;
-using CalamityMod.Projectiles.Boss;
 using CalRemix.Buffs;
-using CalRemix.CrossCompatibility;
-using CalamityMod.Systems;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -502,6 +497,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle,
         new FlavorTextBestiaryInfoElement("After Silva's banishment to the Abyss, a sizeable chunk of her spirit fractured from her rotting body to return to the jungle. This elemental's purified core manifested as a construct to combat against the plague and its carriers.")
             });
         }
@@ -529,9 +525,14 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemID.Obsidian, 1, 216, 224);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PhytogenRelic>());
         }
         public override void OnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<SIIVA>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SIIVA>());
+            }
             RemixDowned.downedPhytogen = true;
             CalRemixWorld.UpdateWorldBool();
         }

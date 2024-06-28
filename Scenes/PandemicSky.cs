@@ -1,9 +1,6 @@
-﻿using CalRemix.NPCs.Bosses.BossScule;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.Subworlds;
+﻿using CalRemix.NPCs.PandemicPanic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;

@@ -8,7 +8,7 @@ using Terraria.Graphics.Shaders;
 using static Terraria.ModLoader.ModContent;
 
 
-namespace CalRemix
+namespace CalRemix.ExtraTextures
 {
     public class BananaClownCooldown : CooldownHandler
     {

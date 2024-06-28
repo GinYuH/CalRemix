@@ -1,15 +1,8 @@
-﻿using CalamityMod.Items.DraedonMisc;
-using CalamityMod.UI.DraedonLogs;
-using CalRemix.UI.ElementalSystem;
-using Humanizer;
-using Microsoft.CodeAnalysis;
+﻿using CalamityMod.UI.DraedonLogs;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections;
-using System.Collections.Generic;
-using Terraria.Graphics;
 using Terraria.ModLoader;
 
-namespace CalRemix.UI
+namespace CalRemix.UI.Logs
 {
     public class FannyLog6 : DraedonsLogGUI
     {
@@ -30,10 +23,10 @@ namespace CalRemix.UI
                 "\n\nAnd as I made my fiery exit from the abandoned mining facility, I couldn't help but smile. For though the journey had been perilous and the dangers many, Fanny the Flame had triumphed once again." +
                 "\n\nUntil next time, my friends, stay fiery and never let the flames die out!"
             };
-    }
-    public override Texture2D GetTextureByPage()
-    {
-            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyHolo").Value;
+        }
+        public override Texture2D GetTextureByPage()
+        {
+            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperFannyHolo").Value;
         }
     }
 }

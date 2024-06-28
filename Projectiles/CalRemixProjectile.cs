@@ -21,20 +21,20 @@ using CalRemix.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.NPCs.Bosses.Oxygen;
-using CalRemix.NPCs.Bosses.Ionogen;
 using Terraria.Audio;
+using CalRemix.World;
 
-namespace CalRemix
+namespace CalRemix.Projectiles
 {
     public class CalRemixProjectile : GlobalProjectile
-	{
-		public bool nihilicArrow = false;
-		public bool rogueclone = false;
-		public bool tvoproj = false;
-		public bool uniproj = false;
+    {
+        public bool nihilicArrow = false;
+        public bool rogueclone = false;
+        public bool tvoproj = false;
+        public bool uniproj = false;
         public bool hyperCharged = false;
-		public int eye = 0;
-		public int bladetimer = 0;
+        public int eye = 0;
+        public int bladetimer = 0;
         NPC exc;
         public override bool InstancePerEntity => true;
 
@@ -61,7 +61,7 @@ namespace CalRemix
             {
                 PlagueToPureConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
             }
-            if (projectile.type == ProjectileID.CorruptSpray || projectile.type == ProjectileID.CrimsonSpray || projectile.type == ProjectileID.HallowSpray || projectile.type == ModContent.ProjectileType<AstralSpray>() || projectile.type == ProjectileID.MushroomSpray)
+            if (projectile.type == ProjectileID.CorruptSpray || projectile.type == ProjectileID.CrimsonSpray || projectile.type == ProjectileID.HallowSpray || projectile.type == ProjectileType<AstralSpray>() || projectile.type == ProjectileID.MushroomSpray)
             {
                 PlagueToNeutralConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
             }
@@ -79,7 +79,7 @@ namespace CalRemix
                             if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(4 * 4 + 4 * 4))
                             {
                                 int type = Main.tile[k, l].TileType;
-                                if (type == ModContent.TileType<MeldGunkPlaced>())
+                                if (type == TileType<MeldGunkPlaced>())
                                 {
                                     Main.tile[k, l].TileType = TileID.Stone;
                                     WorldGen.SquareTileFrame(k, l, true);
@@ -89,7 +89,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (projectile.type == ModContent.ProjectileType<MurasamaSlash>())
+            if (projectile.type == ProjectileType<MurasamaSlash>())
             {
                 projectile.scale = 4f;
                 projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
@@ -101,7 +101,7 @@ namespace CalRemix
 
             }
 
-            if (CalRemixWorld.oxydayTime > 0 && (double)projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == 0 && ((projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f) || (projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f) || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
+            if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == 0 && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
             {
                 projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
                 MathHelper.Clamp(projectile.velocity.X, -222f, 222f);
@@ -135,77 +135,77 @@ namespace CalRemix
                         int type = Main.tile[k, l].TileType;
                         int wall = Main.tile[k, l].WallType;
 
-                        if (type == ModContent.TileType<PlaguedGrass>())
+                        if (type == TileType<PlaguedGrass>())
                         {
                             Main.tile[k, l].TileType = TileID.JungleGrass;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedMud>())
+                        if (type == TileType<PlaguedMud>())
                         {
                             Main.tile[k, l].TileType = TileID.Mud;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<Sporezol>())
+                        if (type == TileType<Sporezol>())
                         {
                             Main.tile[k, l].TileType = TileID.Copper;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedStone>())
+                        if (type == TileType<PlaguedStone>())
                         {
                             Main.tile[k, l].TileType = TileID.Stone;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedMudWall>() || wall == ModContent.WallType<PlaguedMudWallSafe>())
+                        if (wall == WallType<PlaguedMudWall>() || wall == WallType<PlaguedMudWallSafe>())
                         {
                             Main.tile[k, l].WallType = WallID.MudUnsafe;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedHive>())
+                        if (type == TileType<PlaguedHive>())
                         {
                             Main.tile[k, l].TileType = TileID.Hive;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedSilt>())
+                        if (type == TileType<PlaguedSilt>())
                         {
                             Main.tile[k, l].TileType = TileID.Silt;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedSand>())
+                        if (type == TileType<PlaguedSand>())
                         {
                             Main.tile[k, l].TileType = TileID.Sand;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedPipe>())
+                        if (type == TileType<PlaguedPipe>())
                         {
                             Main.tile[k, l].TileType = TileID.RichMahogany;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedPipeWall>())
+                        if (wall == WallType<PlaguedPipeWall>())
                         {
                             Main.tile[k, l].WallType = WallID.RichMaogany;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedHiveWall>())
+                        if (wall == WallType<PlaguedHiveWall>())
                         {
                             Main.tile[k, l].WallType = WallID.HiveUnsafe;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedStone>())
+                        if (type == TileType<PlaguedStone>())
                         {
                             Main.tile[k, l].TileType = TileID.Stone;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedVineWall>() || wall == ModContent.WallType<PlaguedVineWallSafe>())
+                        if (wall == WallType<PlaguedVineWall>() || wall == WallType<PlaguedVineWallSafe>())
                         {
                             Main.tile[k, l].WallType = WallID.GrassUnsafe;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedStoneWall>() || wall == ModContent.WallType<PlaguedStoneWallSafe>())
+                        if (wall == WallType<PlaguedStoneWall>() || wall == WallType<PlaguedStoneWallSafe>())
                         {
                             Main.tile[k, l].WallType = WallID.Stone;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedClay>())
+                        if (type == TileType<PlaguedClay>())
                         {
                             Main.tile[k, l].TileType = TileID.ClayBlock;
                             WorldGen.SquareTileFrame(k, l, true);
@@ -227,37 +227,37 @@ namespace CalRemix
                         int type = Main.tile[k, l].TileType;
                         int wall = Main.tile[k, l].WallType;
 
-                        if (type == ModContent.TileType<PlaguedMud>())
+                        if (type == TileType<PlaguedMud>())
                         {
                             Main.tile[k, l].TileType = TileID.Mud;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<Sporezol>())
+                        if (type == TileType<Sporezol>())
                         {
                             Main.tile[k, l].TileType = TileID.Copper;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedMudWall>() || wall == ModContent.WallType<PlaguedMudWallSafe>())
+                        if (wall == WallType<PlaguedMudWall>() || wall == WallType<PlaguedMudWallSafe>())
                         {
                             Main.tile[k, l].WallType = WallID.MudUnsafe;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedHive>())
+                        if (type == TileType<PlaguedHive>())
                         {
                             Main.tile[k, l].TileType = TileID.Hive;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedSilt>())
+                        if (type == TileType<PlaguedSilt>())
                         {
                             Main.tile[k, l].TileType = TileID.Silt;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == ModContent.WallType<PlaguedHiveWall>())
+                        if (wall == WallType<PlaguedHiveWall>())
                         {
                             Main.tile[k, l].WallType = WallID.HiveUnsafe;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
-                        if (type == ModContent.TileType<PlaguedClay>())
+                        if (type == TileType<PlaguedClay>())
                         {
                             Main.tile[k, l].TileType = TileID.ClayBlock;
                             WorldGen.SquareTileFrame(k, l, true);
@@ -268,73 +268,73 @@ namespace CalRemix
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Player player = Main.player[projectile.owner];
-			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
-			var source = projectile.GetSource_FromThis();
-			if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
-			{
-				projectile.active = false;
-			}
-			if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CalamityUtils.CountProjectiles(ProjectileType<ArmofAgony>()) < 8)
-			{
-				target.AddBuff(BuffType<BrimstoneFlames>(), 180);
-				int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(260);
-				int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<ArmofAgony>(), apparatusDamage, 4f, projectile.owner);
-				if (proj.WithinBounds(Main.maxProjectiles))
-                {
-					Main.projectile[proj].originalDamage = apparatusDamage;
-                }
-				Main.projectile[proj].DamageType = DamageClass.Summon;
-			}
-			if (modPlayer.tvo && projectile.type != ProjectileType<JewelSpike>())
-			{
-				target.AddBuff(BuffType<BrimstoneFlames>(), 180);
-				int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1060);
-				if (CalamityUtils.CountProjectiles(ProjectileType<JewelSpike>()) < 3)
-				{
-					int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<JewelSpike>(), apparatusDamage, 4f, projectile.owner);
-					if (proj.WithinBounds(Main.maxProjectiles))
-					{
-						Main.projectile[proj].originalDamage = apparatusDamage;
-					}
-					Main.projectile[proj].DamageType = DamageClass.Summon;
-					Main.projectile[proj].GetGlobalProjectile<CalRemixProjectile>().tvoproj = true;
-				}
-			}
-			if (modPlayer.roguebox && projectile.Calamity().stealthStrike && player.ownedProjectileCounts[ProjectileType<DarksunTornado>()] <= 1)
-			{
-				int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), 20000, 0, Main.LocalPlayer.whoAmI);
-				if (p.WithinBounds(Main.maxProjectiles))
-				{
-					Main.projectile[p].originalDamage = 20000;
-				}
-			}
-			if (modPlayer.tvo && projectile.type != ProjectileType<DarksunTornado>() && projectile.type != ProjectileType<NanoFlare>())
-			{
-				int dam = (int)(projectile.damage * 0.2f);
-				if (CalamityUtils.CountProjectiles(ProjectileType<DarksunTornado>()) < 3)
-				{
-					int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), dam, 0, projectile.owner);
-					if (p.WithinBounds(Main.maxProjectiles))
-					{
-						Main.projectile[p].originalDamage = dam;
-					}
-				}
-				if (CalamityUtils.CountProjectiles(ProjectileType<DarksunTornado>()) < 2)
-				CalamityUtils.ProjectileRain(projectile.GetSource_FromAI(), target.Center, 300, 20, -500, -800, 10, ProjectileType<NanoFlare>(), dam, 0, projectile.owner);
-			}
-			if (modPlayer.godfather && projectile.type == ProjectileType<CosmicBlast>())
+        {
+            Player player = Main.player[projectile.owner];
+            CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
+            var source = projectile.GetSource_FromThis();
+            if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
             {
-				Main.player[projectile.owner].Heal(5);
-			}
-			if (modPlayer.crystalconflict && projectile.type == ProjectileType<CryonicShield>())
-			{
-				target.AddBuff(BuffType<GodSlayerInferno>(), 60);
-				if (modPlayer.tvo)
-				{
-					target.AddBuff(BuffType<GlacialState>(), 60);
-				}
+                projectile.active = false;
+            }
+            if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CalamityUtils.CountProjectiles(ProjectileType<ArmofAgony>()) < 8)
+            {
+                target.AddBuff(BuffType<BrimstoneFlames>(), 180);
+                int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(260);
+                int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<ArmofAgony>(), apparatusDamage, 4f, projectile.owner);
+                if (proj.WithinBounds(Main.maxProjectiles))
+                {
+                    Main.projectile[proj].originalDamage = apparatusDamage;
+                }
+                Main.projectile[proj].DamageType = DamageClass.Summon;
+            }
+            if (modPlayer.tvo && projectile.type != ProjectileType<JewelSpike>())
+            {
+                target.AddBuff(BuffType<BrimstoneFlames>(), 180);
+                int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1060);
+                if (CalamityUtils.CountProjectiles(ProjectileType<JewelSpike>()) < 3)
+                {
+                    int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<JewelSpike>(), apparatusDamage, 4f, projectile.owner);
+                    if (proj.WithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[proj].originalDamage = apparatusDamage;
+                    }
+                    Main.projectile[proj].DamageType = DamageClass.Summon;
+                    Main.projectile[proj].GetGlobalProjectile<CalRemixProjectile>().tvoproj = true;
+                }
+            }
+            if (modPlayer.roguebox && projectile.Calamity().stealthStrike && player.ownedProjectileCounts[ProjectileType<DarksunTornado>()] <= 1)
+            {
+                int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), 20000, 0, Main.LocalPlayer.whoAmI);
+                if (p.WithinBounds(Main.maxProjectiles))
+                {
+                    Main.projectile[p].originalDamage = 20000;
+                }
+            }
+            if (modPlayer.tvo && projectile.type != ProjectileType<DarksunTornado>() && projectile.type != ProjectileType<NanoFlare>())
+            {
+                int dam = (int)(projectile.damage * 0.2f);
+                if (CalamityUtils.CountProjectiles(ProjectileType<DarksunTornado>()) < 3)
+                {
+                    int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), dam, 0, projectile.owner);
+                    if (p.WithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[p].originalDamage = dam;
+                    }
+                }
+                if (CalamityUtils.CountProjectiles(ProjectileType<DarksunTornado>()) < 2)
+                    CalamityUtils.ProjectileRain(projectile.GetSource_FromAI(), target.Center, 300, 20, -500, -800, 10, ProjectileType<NanoFlare>(), dam, 0, projectile.owner);
+            }
+            if (modPlayer.godfather && projectile.type == ProjectileType<CosmicBlast>())
+            {
+                Main.player[projectile.owner].Heal(5);
+            }
+            if (modPlayer.crystalconflict && projectile.type == ProjectileType<CryonicShield>())
+            {
+                target.AddBuff(BuffType<GodSlayerInferno>(), 60);
+                if (modPlayer.tvo)
+                {
+                    target.AddBuff(BuffType<GlacialState>(), 60);
+                }
             }
             if (modPlayer.wormMeal && projectile.DamageType == DamageClass.Summon)
             {
@@ -343,41 +343,41 @@ namespace CalRemix
                     target.AddBuff(BuffID.Confused, 480);
                 }
             }
-		}
+        }
 
-		public override void OnKill(Projectile projectile, int timeLeft)
-		{
+        public override void OnKill(Projectile projectile, int timeLeft)
+        {
         }
 
         public override Color? GetAlpha(Projectile projectile, Color lightColor)
         {
-			Player player = Main.player[projectile.owner];
-			CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
-			if (modPlayer.crystalconflict)
-			{
-				if (projectile.type == ProjectileType<CryonicShield>())
-				return Color.Magenta;
-				if (uniproj && (projectile.type == ProjectileType<GalileosPlanet>() 
-					|| projectile.type == ProjectileType<CosmicBlast>()
-					|| projectile.type == ProjectileType<EndoIceShard>()))
-				return Color.HotPink;
-				return null;
-			}
-			if (modPlayer.tvo && tvoproj)
+            Player player = Main.player[projectile.owner];
+            CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
+            if (modPlayer.crystalconflict)
             {
-				if (projectile.type == ProjectileType<JewelSpike>())
-                {
-					return Color.Tan;
-                }
-				return null;
+                if (projectile.type == ProjectileType<CryonicShield>())
+                    return Color.Magenta;
+                if (uniproj && (projectile.type == ProjectileType<GalileosPlanet>()
+                    || projectile.type == ProjectileType<CosmicBlast>()
+                    || projectile.type == ProjectileType<EndoIceShard>()))
+                    return Color.HotPink;
+                return null;
             }
-			if (modPlayer.tvo && projectile.type == ProjectileType<EclipseMirrorBurst>())
+            if (modPlayer.tvo && tvoproj)
             {
-				projectile.damage = 1000000;
-				return Color.LightBlue;
+                if (projectile.type == ProjectileType<JewelSpike>())
+                {
+                    return Color.Tan;
+                }
+                return null;
+            }
+            if (modPlayer.tvo && projectile.type == ProjectileType<EclipseMirrorBurst>())
+            {
+                projectile.damage = 1000000;
+                return Color.LightBlue;
             }
             return null;
-		}
+        }
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
             if (NPC.AnyNPCs(NPCType<WulfwyrmHead>()))
@@ -405,7 +405,7 @@ namespace CalRemix
                 Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
                 Vector2 origin = frame.Size() * 0.5f;
                 float drawRotation = projectile.rotation + (projectile.spriteDirection == -1 && m.State != 0 ? MathHelper.Pi : 0f);
-                SpriteEffects effects = (projectile.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                SpriteEffects effects = projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
                 if (CalamityConfig.Instance.Afterimages && (projectile.ai[0] == 1 || projectile.ai[0] == 3))
                 {

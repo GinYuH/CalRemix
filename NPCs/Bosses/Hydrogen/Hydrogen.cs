@@ -7,27 +7,19 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.World;
-using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
-using CalRemix.Items.Placeables;
 using CalamityMod.Events;
-using CalRemix.Biomes;
 using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Materials;
 using System;
-using CalamityMod.Projectiles.Enemy;
-using Newtonsoft.Json.Serialization;
 using CalamityMod.Items.Placeables;
-using System.Net.Http.Headers;
-using CalamityMod.Projectiles.Boss;
-using CalamityMod.Tiles.Furniture.Monoliths;
-using System.Collections.Generic;
-using Terraria.Utilities;
 using CalRemix.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -67,7 +59,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.npcSlots = 24f;
-            NPC.damage = 100;
+            NPC.damage = 150;
             NPC.width = 82;
             NPC.height = 88;
             NPC.defense = 15;
@@ -111,7 +103,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             {
                 Phase = (int)PhaseType.Idle;
             }*/
-            if (NPC.life <= 1)
+            if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb)
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2] = 0;
@@ -180,7 +172,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                                 {
                                     int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.25f), 3f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.4f), 3f, Main.myPlayer, Target.whoAmI);
                                 }
                                 if (NPC.ai[2] > rocketAmt * rocketRate)
                                 {
@@ -213,7 +205,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.NukeWarningSound);
                             for (int i = 0; i < mineAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
@@ -327,9 +319,14 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<SeaPrism>(), 1, 4, 8);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<HydrogenRelic>());
         }
         public override void OnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<KABLOOEY>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<KABLOOEY>());
+            }
             RemixDowned.downedHydrogen = true;
             CalRemixWorld.UpdateWorldBool();
         }
@@ -344,17 +341,21 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override bool CheckDead()
         {
-            NPC.life = 1;
-            NPC.Calamity().newAI[0] = 1;
-            NPC.active = true;
-            NPC.dontTakeDamage = true;
+            if (CalRemixWorld.hydrogenBomb)
+            {
+                NPC.life = 1;
+                NPC.Calamity().newAI[0] = 1;
+                NPC.active = true;
+                NPC.dontTakeDamage = true;
 
-            NPC.netUpdate = true;
+                NPC.netUpdate = true;
 
-            // Prevent netUpdate from being blocked by the spam counter.
-            if (NPC.netSpam >= 10)
-                NPC.netSpam = 9;
-            return false;
+                // Prevent netUpdate from being blocked by the spam counter.
+                if (NPC.netSpam >= 10)
+                    NPC.netSpam = 9;
+                return false;
+            }
+            return true;
         }
 
         public override bool CheckActive()
@@ -379,27 +380,30 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         {
             if (Phase == (int)PhaseType.Sealed)
             {
-                Vector2 bottom = CalRemixWorld.hydrogenLocation != Vector2.Zero ? CalRemixWorld.hydrogenLocation : NPC.Center;
-                bottom += new Vector2(10, 110);
-                Vector2 distToProj = NPC.Center;
-                float projRotation = NPC.AngleTo(bottom) - 1.57f;
-                bool doIDraw = true;
-                Texture2D texture = ModContent.Request<Texture2D>(Texture + "Chain").Value; //change this accordingly to your chain texture
-
-                while (doIDraw)
+                Vector2 bottom = CalRemixWorld.hydrogenLocation != default && CalRemixWorld.hydrogenLocation != Vector2.Zero ? CalRemixWorld.hydrogenLocation : NPC.Center;
+                if (bottom == CalRemixWorld.hydrogenLocation && NPC.Distance(CalRemixWorld.hydrogenLocation) < 1000)
                 {
-                    float distance = (bottom - distToProj).Length();
-                    if (distance < (texture.Height + 1))
+                    bottom += new Vector2(10, 110);
+                    Vector2 distToProj = NPC.Center;
+                    float projRotation = NPC.AngleTo(bottom) - 1.57f;
+                    bool doIDraw = true;
+                    Texture2D texture = ModContent.Request<Texture2D>(Texture + "Chain").Value; //change this accordingly to your chain texture
+
+                    while (doIDraw)
                     {
-                        doIDraw = false;
-                    }
-                    else if (!float.IsNaN(distance))
-                    {
-                        Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
-                        distToProj += NPC.DirectionTo(bottom) * texture.Height;
-                        Main.EntitySpriteDraw(texture, distToProj - Main.screenPosition,
-                            new Rectangle(0, 0, texture.Width, texture.Height), drawColore, projRotation,
-                            Utils.Size(texture) / 2f, 1f, SpriteEffects.None, 0);
+                        float distance = (bottom - distToProj).Length();
+                        if (distance < (texture.Height + 1))
+                        {
+                            doIDraw = false;
+                        }
+                        else if (!float.IsNaN(distance))
+                        {
+                            Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
+                            distToProj += NPC.DirectionTo(bottom) * texture.Height;
+                            Main.EntitySpriteDraw(texture, distToProj - Main.screenPosition,
+                                new Rectangle(0, 0, texture.Width, texture.Height), drawColore, projRotation,
+                                Utils.Size(texture) / 2f, 1f, SpriteEffects.None, 0);
+                        }
                     }
                 }
             }

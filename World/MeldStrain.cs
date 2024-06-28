@@ -10,7 +10,7 @@ using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.World;
 using CalamityMod.Tiles.SunkenSea;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class MeldStrain : ModSystem
     {
@@ -27,7 +27,7 @@ namespace CalRemix
             {
                 if (gennedMeld)
                     break;
-                for (int x = (int)(Main.maxTilesX * 0.2f); x < (Main.maxTilesX * 0.8f); x++)
+                for (int x = (int)(Main.maxTilesX * 0.2f); x < Main.maxTilesX * 0.8f; x++)
                 {
                     if (gennedMeld)
                         break;
@@ -55,7 +55,7 @@ namespace CalRemix
                                     Tile t = Main.tile[m, n];
                                     if (WorldGen.InWorld(m, n, 1))
                                     {
-                                        if (t.TileType == TileID.StoneSlab || t.TileType == TileType<LaboratoryPlating>() || t.TileType == TileType<LaboratoryPanels>() || t.TileType == TileType<RustedPipes>() || TileID.Sets.IsAContainer[t.TileType] || TileID.Sets.AvoidedByMeteorLanding[t.TileType] || t.TileType == TileID.LihzahrdBrick || Terraria.Main.tileDungeon[t.TileType] || t.TileType == TileType<Navystone>() || t.TileType == TileID.JungleGrass)
+                                        if (t.TileType == TileID.StoneSlab || t.TileType == TileType<LaboratoryPlating>() || t.TileType == TileType<LaboratoryPanels>() || t.TileType == TileType<RustedPipes>() || TileID.Sets.IsAContainer[t.TileType] || TileID.Sets.AvoidedByMeteorLanding[t.TileType] || t.TileType == TileID.LihzahrdBrick || Main.tileDungeon[t.TileType] || t.TileType == TileType<Navystone>() || t.TileType == TileID.JungleGrass)
                                         {
                                             canGen = false;
                                             break;
@@ -142,7 +142,7 @@ namespace CalRemix
         // at the moment this only supports a /| angled triangle
         public static void RightTriangleGen(int blockType, int x, int y, int width, int height)
         {
-            float slope = -(float)height / (float)width;
+            float slope = -(float)height / width;
             float b = y - slope * x;
             for (int i = x; i < x + width; i++)
             {

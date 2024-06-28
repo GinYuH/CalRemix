@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace CalRemix.UI
+namespace CalRemix.UI.Logs
 {
     public abstract class TerminalUI : PopupGUI
     {
@@ -63,12 +63,12 @@ namespace CalRemix.UI
             float drawPositionX = Main.screenWidth * 0.66f;
             Vector2 drawPosition = new Vector2(drawPositionX, yPageTop);
             Rectangle pageRectangle = new Rectangle((int)drawPosition.X - (int)(pageTexture.Width * scale.X), (int)yPageTop, (int)(pageTexture.Width * scale.X) * 2, (int)(pageTexture.Height * scale.Y));
-            
+
             spriteBatch.Draw(pageTexture, drawPosition, null, Color.White, 0f, new Vector2(pageTexture.Width, 0f), scale, SpriteEffects.None, 0f);
 
             if (!HoveringOverBook)
                 HoveringOverBook = mouseRectangle.Intersects(new Rectangle(pageRectangle.X, pageRectangle.Y, pageRectangle.Width / 2, pageRectangle.Height));
-            
+
 
             // Create text and arrows.
             if (FadeTime >= FadeTimeMax - 4 && Active)

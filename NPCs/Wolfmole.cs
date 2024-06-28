@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalRemix.Biomes;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -26,7 +25,7 @@ namespace CalRemix.NPCs
             NPC.width = 30;
             NPC.height = 24;
             NPC.CloneDefaults(NPCID.Mouse);
-            NPC.catchItem = (short)ItemType<Items.Wolfmole>();
+            NPC.catchItem = (short)ItemType<Items.Critters.Wolfmole>();
             NPC.lavaImmune = false;
             AIType = NPCID.Mouse;
             NPC.HitSound = SoundID.NPCHit1;

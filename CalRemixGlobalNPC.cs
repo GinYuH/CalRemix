@@ -56,7 +56,6 @@ using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.NPCs.Perforator;
 using Terraria.DataStructures;
 using CalRemix.UI;
-using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Magic;
@@ -68,15 +67,13 @@ using CalamityMod.NPCs.Crags;
 using CalRemix.NPCs.TownNPCs;
 using System.Threading;
 using CalRemix.Items.Placeables;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
 using CalRemix.Buffs;
 using CalamityMod.NPCs.DevourerofGods;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Terraria.Audio;
-using System.Runtime.CompilerServices;
 using CalRemix.NPCs.PandemicPanic;
-using Microsoft.Build.ObjectModelRemoting;
+using CalRemix.World;
+using CalRemix.UI.Anomaly109;
+using CalRemix.Items.Ammo;
 
 namespace CalRemix
 {
@@ -97,8 +94,9 @@ namespace CalRemix
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
+        public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         public static HelperMessage CystMessage;
-        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0];
+        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int>
@@ -665,9 +663,13 @@ namespace CalRemix
         }
         public override void ModifyShop(NPCShop shop)
         {
-            if (shop.NpcType == ModContent.NPCType<THIEF>())
+            if (shop.NpcType == NPCID.Merchant)
             {
                 shop.Add(new NPCShop.Entry(ModContent.ItemType<LesserStealthPotion>()));
+            }
+            if (shop.NpcType == ModContent.NPCType<THIEF>())
+            {
+                shop.Add(new NPCShop.Entry(ModContent.ItemType<StealthPotion>()));
             }
             if (shop.NpcType == NPCID.Steampunker)
             {

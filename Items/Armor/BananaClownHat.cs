@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.CalPlayer;
+using CalRemix.ExtraTextures;
 
 namespace CalRemix.Items.Armor
 {

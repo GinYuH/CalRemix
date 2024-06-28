@@ -1,15 +1,10 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Primitives;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -180,7 +175,15 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public Color FlameTrailColorFunction(float completionRatio)
         {
-            return Color.Lerp(Color.Violet, default, completionRatio);
+            Color color = Color.Violet;
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>() != null)
+            {
+                if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+                {
+                    color = Color.Lime;
+                }
+            }
+            return Color.Lerp(color, default, completionRatio);
         }
     }
 }

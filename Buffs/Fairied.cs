@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System.Diagnostics;
-using Terraria;
-using Terraria.Chat;
-using Terraria.ID;
-using Terraria.Localization;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace CalRemix.Buffs

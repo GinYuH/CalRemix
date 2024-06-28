@@ -23,7 +23,7 @@ namespace CalRemix.NPCs
             NPC.width = 30;
             NPC.height = 24;
             NPC.CloneDefaults(NPCID.Worm);
-            NPC.catchItem = (short)ItemType<Items.GulletWorm>();
+            NPC.catchItem = (short)ItemType<Items.Critters.GulletWorm>();
             NPC.lavaImmune = false;
             AIType = NPCID.Worm;
             AnimationType = NPCID.Worm;

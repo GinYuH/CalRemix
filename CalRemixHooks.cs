@@ -22,6 +22,7 @@ using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.NPCs.Eclipse;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using CalRemix.World;
 
 namespace CalRemix
 {
@@ -31,6 +32,7 @@ namespace CalRemix
         {
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
+            On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
             Terraria.On_Main.DrawDust += DrawStatic;
             Terraria.On_Main.DrawLiquid += DrawTsarBomba;
@@ -61,6 +63,7 @@ namespace CalRemix
                 c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(CalRemixWorld).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
             }
         }
+        private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
         /*
         private static void HookDerellectSpawn(ILContext il)
         {

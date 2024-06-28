@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -11,7 +10,7 @@ namespace CalRemix.Items.Potions
 {
     public class SuperStealthPotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor && player.Calamity().rogueStealth < (player.Calamity().rogueStealthMax - (player.Calamity().rogueStealthMax * 0.25f));
+        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;

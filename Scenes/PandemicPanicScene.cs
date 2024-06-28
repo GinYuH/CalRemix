@@ -1,5 +1,4 @@
-﻿using CalRemix.NPCs.Bosses.BossScule;
-using CalRemix.NPCs.PandemicPanic;
+﻿using CalRemix.NPCs.PandemicPanic;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;

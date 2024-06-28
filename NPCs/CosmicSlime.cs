@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
 using CalRemix.Items.Placeables;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {

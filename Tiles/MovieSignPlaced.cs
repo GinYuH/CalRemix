@@ -3,9 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
-using CalRemix.Items.Placeables;
 
 namespace CalRemix.Tiles
 {

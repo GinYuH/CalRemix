@@ -1,16 +1,5 @@
-﻿using CalamityMod;
-using CalRemix.Items.Potions;
-using CalRemix.Skies;
-using CalRemix.Subworlds;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SubworldLibrary;
-using System;
-using Terraria;
-using Terraria.GameContent;
+﻿using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Buffs

@@ -1,17 +1,9 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
+﻿using Terraria;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using CalamityMod;
-using CalamityMod.BiomeManagers;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
-using CalRemix.NPCs.PandemicPanic;
 
 namespace CalRemix.Projectiles.Hostile
 {

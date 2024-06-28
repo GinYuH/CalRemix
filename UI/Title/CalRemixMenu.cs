@@ -3,14 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
-using Terraria.IO;
+using Terraria.GameContent;
 using Terraria.ModLoader;
-using static CalRemix.UI.Title.CalRemixMenu;
 
 namespace CalRemix.UI.Title
 {
-	public class CalRemixMenu : ModMenu
+    public class CalRemixMenu : ModMenu
     {
         public static ModMenu Instance
         {
@@ -28,157 +26,118 @@ namespace CalRemix.UI.Title
         public override Asset<Texture2D> SunTexture => blankTexture;
         public override Asset<Texture2D> MoonTexture => blankTexture;
         public override Asset<Texture2D> Logo => logoTexture;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrazyLaPaint");
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu");
         public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<MenuBgStyle>();
         public override string DisplayName => "Remixed Calamity Style";
-        public class Star
+        public class MenuItem
         {
             public int time;
             public int lifetime;
-            public int id;
-            public float scale;
+            public float rotation;
+            public float rotationDirection;
+            public float rotationIntensity;
             public Vector2 center;
             public Vector2 velocity;
-            public Star(int _lifetime, int _id, float _scale, Vector2 _center, Vector2 _velocity)
+            public Texture2D texture;
+
+            public int alpha = 255;
+            public MenuItem(int _lifetime, float _rotationDirection, float _rotationIntensity, Vector2 _center, Vector2 _velocity, Texture2D _texture)
             {
                 lifetime = _lifetime;
-                id = _id;
-                scale = _scale;
+                rotationDirection = _rotationDirection;
+                rotationIntensity = _rotationIntensity;
                 center = _center;
                 velocity = _velocity;
-            }
-        }
-        public class Character
-        {
-            public Texture2D texture;
-            public int direction;
-            public Vector2 center;
-            public Vector2 velocity;
-            public Character(Texture2D _texture, int _direction, Vector2 _center, Vector2 _velocity)
-            {
                 texture = _texture;
-                direction = _direction;
-                center = _center;
-                velocity = _velocity;
             }
         }
 
-        public static List<Star> Stars { get; internal set; } = new List<Star>();
-        public static List<Character> Characters { get; internal set; } = new List<Character>();
+        public static List<MenuItem> MenuItems { get; internal set; } = new List<MenuItem>();
         public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation, ref float logoScale, ref Color drawColor)
         {
-            // Menu
-            Texture2D menuTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Menu").Value;
-            Vector2 zero = Vector2.Zero;
-            Vector2 menuSize = new((float)Main.screenWidth / (float)menuTexture.Width, (float)Main.screenHeight / (float)menuTexture.Height);
-            float scale = menuSize.X;
-            if (menuSize.X != menuSize.Y)
-            {
-                if (menuSize.Y > menuSize.X)
-                {
-                    scale = menuSize.Y;
-                    zero.X -= ((float)menuTexture.Width * scale - (float)Main.screenWidth) * 0.5f;
-                }
-                else
-                    zero.Y -= ((float)menuTexture.Height * scale - (float)Main.screenHeight) * 0.5f;
-            }
-            spriteBatch.Draw(menuTexture, zero, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
-            // Characters
-            if (Characters.Count < 4 && Main.rand.NextBool(550) && Main.WorldList.Exists((WorldFileData w) => w.IsHardMode))
+            // Floating Items
+            if (Main.rand.NextBool(5) && MenuItems.Count < 200)
             {
-                bool rand = Main.rand.NextBool();
-                Vector2 position = new((rand) ? Main.screenWidth + 100f : -100f, Main.screenHeight * Main.rand.NextFloat(0.1f, 0.9f));
+                int randomSide = Main.rand.Next(4);
+                Vector2 position = DetermineSide(randomSide);
+                Vector2 velocity = DetermineVelocity(randomSide).RotatedByRandom(MathHelper.ToRadians(135f));
+                float rotate = MathHelper.ToRadians(1f + Main.rand.NextFloat(2f));
+                Texture2D texturePath = (Texture2D)TextureAssets.Item[CalRemix.CalamityAddonItems[Main.rand.Next(CalRemix.CalamityAddonItems.Count)].Type];
+                MenuItems.Add(new MenuItem(600, Main.rand.NextBool() ? -1 : 1, rotate, position, velocity, texturePath));
+            }
+            for (int j = 0; j < MenuItems.Count; j++)
+            {
+                MenuItem menuItem = MenuItems[j];
+                menuItem.center += menuItem.velocity;
+                menuItem.rotation += menuItem.rotationDirection * menuItem.rotationIntensity;
+                if (menuItem.time <= menuItem.lifetime)
+                    menuItem.time++;
 
-                int rand2 = Main.rand.Next(10);
-                Texture2D characterTexture = ModContent.Request<Texture2D>("CalRemix/Items/Weapons/Ogscule").Value;
-                int direction = (rand) ? 0 : 1;
-                Vector2 velocity = (rand) ? -Vector2.UnitX : Vector2.UnitX;
-
-                bool evilFanny = !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value) && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode) || Main.WorldList.Exists((WorldFileData w) => w.ZenithWorld));
-                if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value;
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
-                }
-                else if (rand2 == 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value;
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(3f, 3.5f) : Vector2.UnitX * Main.rand.NextFloat(3f, 3.5f);
-                }
-                else if (rand2 > 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)))
-                {
-                    characterTexture = Main.rand.Next(new Texture2D[]
-                    {
-                        ModContent.Request<Texture2D>("CalRemix/Items/SideGar").Value,
-                        ModContent.Request<Texture2D>("CalRemix/UI/Title/FrontGar").Value,
-                        ModContent.Request<Texture2D>("CalRemix/UI/Title/RearGar").Value
-                    });
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f) : Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f);
-                }
-                else if (rand2 < 4 && evilFanny)
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value;
-                    direction = (rand) ? 1 : 0;
-                }
-                else if (rand2 == 4 && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/OnyxKinsman").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/OnyxKinsman").Value;
-                    direction = (rand) ? 0 : 1;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(4f, 4.5f) : Vector2.UnitX * Main.rand.NextFloat(4f, 4.5f);
-                }
-                else
-                {
-                    characterTexture = Main.rand.Next(new Texture2D[] 
-                    { 
-                        ModContent.Request<Texture2D>("CalRemix/Items/Weapons/Ogscule").Value,
-                        ModContent.Request<Texture2D>("CalRemix/Items/Accessories/Baroclaw").Value,
-                        ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Acideye/MutatedEye").Value 
-                    });
-                    direction = (rand) ? 0 : 1;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f) : Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f);
-                }
-                Characters.Add(new Character(characterTexture, direction, position, velocity));
             }
-            for (int j = 0; j < Characters.Count; j++)
+            MenuItems.RemoveAll((MenuItem m) => m.time >= 600 && ((m.center.X < -m.texture.Width && m.center.X < -m.texture.Height) || (m.center.X > Main.screenWidth + m.texture.Width && m.center.X > Main.screenWidth + m.texture.Height) || (m.center.Y < -m.texture.Width && m.center.Y < -m.texture.Height) || (m.center.Y > Main.screenHeight + m.texture.Width && m.center.Y > Main.screenHeight + m.texture.Height)));
+            for (int k = 0; k < MenuItems.Count; k++)
             {
-                Characters[j].center += Characters[j].velocity;
-            }
-            Characters.RemoveAll((Character c) => c.center.X >= (Main.screenWidth + 120f) || c.center.X <= (-120f));
-            for (int k = 0; k < Characters.Count; k++)
-            {
-                spriteBatch.Draw(Characters[k].texture, Characters[k].center, null, Color.White, 0f, Characters[k].texture.Size() * 0.5f, 1f, (SpriteEffects)Characters[k].direction, 0f);
-            }
-
-            // Stars
-            if (Main.rand.NextBool(20))
-            {
-                Vector2 position = new((Main.screenWidth * 0.5f + (Main.screenWidth * Main.rand.NextFloat(-0.6f, 0.6f))), -256 - Main.screenHeight * Main.rand.NextFloat(0.1f, 0.15f));
-                Vector2 velocity = Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.9f, 0.9f)) * (4.5f + Main.rand.NextFloat());
-                Stars.Add(new Star(480, Stars.Count, 0.5f + Main.rand.NextFloat(), position, velocity));
-            }
-            for (int j = 0; j < Stars.Count; j++)
-            {
-                Stars[j].center += Stars[j].velocity;
-                Stars[j].time++;
-            }
-            Stars.RemoveAll((Star s) => s.time >= s.lifetime);
-            Texture2D starTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Star").Value;
-            for (int k = 0; k < Stars.Count; k++)
-            {
-                spriteBatch.Draw(starTexture, Stars[k].center, null, Color.White, 0f, starTexture.Size() * 0.5f, Stars[k].scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(MenuItems[k].texture, MenuItems[k].center, null, Color.White, MenuItems[k].rotation, MenuItems[k].texture.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
             }
 
             // Logo and Final Stuff
-            Main.time = 27000.0;
-            Main.dayTime = true;
+            Main.dayTime = false;
+            Main.time = Main.nightLength - (1800 * 3);
+            for (int i = 0; i < Main.cloud.Length; i++)
+            {
+                Main.cloud[i].Alpha = 255;
+                Main.cloud[i].kill = true;
+                Main.cloud[i].active = false;
+            }
+            if (Main.rand.NextBool(10) && Main.numStars < 200)
+                Star.SpawnStars();
+            if (Main.rand.NextBool(25))
+                Main.star[Main.rand.Next(Main.numStars - 1)].Fall();
             Texture2D Glow = ModContent.Request<Texture2D>("CalRemix/UI/Title/LogoGlow").Value;
-            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 111f) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), null, Main.DiscoColor, 0, Glow.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 111f), null, drawColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 111f), null, Color.White, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 111f), null, Main.DiscoColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
             return false;
+        }
+        private static Vector2 DetermineSide(int randomSide)
+        {
+            Vector2 position = Vector2.Zero;
+            switch (randomSide)
+            {
+                case 0:
+                    position = new((Main.screenWidth * 0.5f + (Main.screenWidth * Main.rand.NextFloat(-0.6f, 0.6f))), -256 - Main.screenHeight * Main.rand.NextFloat(0.1f, 0.15f));
+                    break;
+                case 1:
+                    position = new((Main.screenWidth * 0.5f + (Main.screenWidth * Main.rand.NextFloat(-0.6f, 0.6f))), Main.screenHeight + 256 + Main.screenHeight * Main.rand.NextFloat(0.1f, 0.15f));
+                    break;
+                case 2:
+                    position = new(-256 - Main.screenWidth * Main.rand.NextFloat(0.1f, 0.15f), (Main.screenHeight * 0.5f + (Main.screenHeight * Main.rand.NextFloat(-0.6f, 0.6f))));
+                    break;
+                default:
+                    position = new(Main.screenWidth + 256 + Main.screenWidth * Main.rand.NextFloat(0.1f, 0.15f), (Main.screenHeight * 0.5f + (Main.screenHeight * Main.rand.NextFloat(-0.6f, 0.6f))));
+                    break;
+            }
+            return position;
+        }
+        private static Vector2 DetermineVelocity(int randomSide)
+        {
+            Vector2 speed = Vector2.Zero;
+            switch (randomSide)
+            {
+                case 0:
+                    speed = Vector2.UnitY * (0.5f + Main.rand.NextFloat(6f));
+                    break;
+                case 1:
+                    speed = Vector2.UnitY * -(0.5f + Main.rand.NextFloat(6f));
+                    break;
+                case 2:
+                    speed = Vector2.UnitX * (0.5f + Main.rand.NextFloat(6f));
+                    break;
+                default:
+                    speed = Vector2.UnitX * -(0.5f + Main.rand.NextFloat(6f));
+                    break;
+            }
+            return speed;
         }
     }
 }

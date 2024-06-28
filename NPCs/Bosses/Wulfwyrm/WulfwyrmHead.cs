@@ -18,10 +18,11 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.NormalNPCs;
-using CalRemix.Items;
 using CalRemix.Projectiles.Hostile;
 using System;
 using CalRemix.Items.Materials;
+using CalRemix.World;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.NPCs.Bosses.Wulfwyrm
 {

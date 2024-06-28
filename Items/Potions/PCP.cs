@@ -1,5 +1,3 @@
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
 using CalRemix.Buffs;
 using Terraria;
 using Terraria.ID;

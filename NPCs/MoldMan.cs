@@ -1,13 +1,9 @@
-﻿using CalamityMod.Items.Placeables.Ores;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
-using System.Linq;
-using CalRemix.UI;
 using CalRemix.Items.Placeables;
 using CalRemix.Biomes;
 

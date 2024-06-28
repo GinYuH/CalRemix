@@ -6,7 +6,7 @@ using CalamityMod;
 using CalamityMod.Tiles.FurnitureStratus;
 using CalRemix.Walls;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class StratusDungeon : ModSystem
     {
@@ -189,7 +189,7 @@ namespace CalRemix
                             case WallID.GreenDungeonTile:
                                 {
                                     int radii = WorldGen.GetWorldSize() + 2;
-                                    if ((Main.tile[i + radii, j].WallType > 0 || Main.tile[i - radii, j].WallType > 0) || j > Main.worldSurface) // keep the surface pillars intact for the cultists. remove whenever we fuck up the cultist spawn
+                                    if (Main.tile[i + radii, j].WallType > 0 || Main.tile[i - radii, j].WallType > 0 || j > Main.worldSurface) // keep the surface pillars intact for the cultists. remove whenever we fuck up the cultist spawn
                                         t.WallType = (ushort)WallType<StratusWallRemix>();
                                 }
                                 break;
@@ -232,7 +232,7 @@ namespace CalRemix
                             }
                         }
                         originalTile.TileType = (ushort)typer;
-                        originalTile.TileFrameX = (short)(frameToUse);
+                        originalTile.TileFrameX = (short)frameToUse;
                     }
                 }
             }
@@ -266,7 +266,7 @@ namespace CalRemix
                             }
                         }
                         originalTile.TileType = (ushort)typer;
-                        originalTile.TileFrameY = (short)(frameToUse);
+                        originalTile.TileFrameY = (short)frameToUse;
                     }
                 }
             }
@@ -302,6 +302,8 @@ namespace CalRemix
         public static void AddOriginalDungeonHoles()
         {
             int pocketCount = 0;
+            int brickID = TileType<StratusBricks>();
+            int wallID = WallType<StratusWallRemix>();
             for (int be = 0; be < 200; be++)
             {
                 if (pocketCount >= 22)
@@ -312,7 +314,7 @@ namespace CalRemix
                     {
                         if (Main.rand.NextBool(1000))
                         {
-                            if (Main.tile[i, j].TileType == ModContent.TileType<StratusBricks>())
+                            if (Main.tile[i, j].TileType == brickID)
                             {
                                 int planetradius = Main.rand.Next(11, 22);
                                 int brick = Main.rand.Next(3);
@@ -375,12 +377,12 @@ namespace CalRemix
 
                                         if (WorldGen.InWorld(p, q, 1) && Main.tile[p, q].HasTile)
                                         {
-                                            if (Main.tile[p, q].TileType == TileType<StratusBricks>())
+                                            if (Main.tile[p, q].TileType == brickID)
                                             {
                                                 Main.tile[p, q].TileType = (ushort)brick;
                                             }
                                         }
-                                        if (Main.tile[p, q].WallType == WallType<StratusWallRemix>())
+                                        if (Main.tile[p, q].WallType == wallID)
                                         {
                                             Main.tile[p, q].WallType = (ushort)wall;
                                         }

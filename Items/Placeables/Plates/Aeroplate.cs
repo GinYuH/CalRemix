@@ -11,7 +11,7 @@ namespace CalRemix.Items.Placeables.Plates
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 100;
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Bloodplate>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Curseplate>();
         }
 
         public override void SetDefaults()

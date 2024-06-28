@@ -16,6 +16,7 @@ using ReLogic.Content;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalRemix.Projectiles.Hostile;
 using System.IO;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {

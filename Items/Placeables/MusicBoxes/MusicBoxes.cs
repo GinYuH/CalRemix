@@ -125,6 +125,22 @@ namespace CalRemix.Items.Placeables.MusicBoxes
             return base.PrefixChance(pre, rand);
         }
     }
+    public class HypnosMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CerebralAugmentations"), Type, ModContent.TileType<Tiles.MusicBoxes.HypnosMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.HypnosMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand)
+        {
+            return base.PrefixChance(pre, rand);
+        }
+    }
     public class LaRugaMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()

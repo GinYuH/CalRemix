@@ -1,5 +1,4 @@
-﻿using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.NPCs.NormalNPCs;
+﻿using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.CalPlayer;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Items;
@@ -11,7 +10,6 @@ using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod;
 using Microsoft.Xna.Framework;
 using Terraria;
-using CalamityMod.Projectiles.Magic;
 using CalRemix.Projectiles.Accessories;
 using Terraria.ID;
 using Terraria.ModLoader;

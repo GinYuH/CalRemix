@@ -5,13 +5,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
 using CalamityMod.Items.SummonItems;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Summon;
 using Terraria.Audio;
 using System;
 using CalRemix.Buffs;
+using CalRemix.Items.Ammo;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {

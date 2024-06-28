@@ -27,7 +27,6 @@ using CalRemix.NPCs.Bosses.Wulfwyrm;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Items;
 using CalRemix.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Buffs.StatDebuffs;
@@ -35,20 +34,18 @@ using CalRemix.Buffs;
 using CalRemix.Items.Accessories;
 using CalRemix.Walls;
 using Terraria.Graphics.Effects;
-using tModPorter;
-using CalRemix.UI.Title;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using CalRemix.UI;
-using ReLogic.Utilities;
 using CalRemix.NPCs.Bosses.Phytogen;
-using CalRemix.NPCs;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.Items.Potions;
-using CalRemix.Retheme;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
+using CalamityMod.NPCs.ExoMechs;
+using CalRemix.NPCs.Bosses.Losbaf;
+using CalRemix.World;
+using CalRemix.ExtraTextures;
+using CalRemix.Items.Bags;
+using CalRemix.Items.Tools;
 
 namespace CalRemix
 {
@@ -109,6 +106,7 @@ namespace CalRemix
         public bool anomaly109UI;
 		public bool dungeon2;
 		public bool hayFever;
+		public bool phd;
 		public int remixJumpCount;
 
         public int chainSawCharge;
@@ -454,8 +452,10 @@ namespace CalRemix
         }
 		public override void PreUpdate()
         {
-			if (Main.myPlayer == Player.whoAmI)
+            if (Main.myPlayer == Player.whoAmI)
             {
+                if (NPC.AnyNPCs(ModContent.NPCType<Draedon>()) || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()))
+                    Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
             }
@@ -499,19 +499,22 @@ namespace CalRemix
                 }
                 chainSawHitCooldown = 0;
             }
-			if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+			if (Player.ZoneRockLayerHeight)
 			{
-				int plagueEnemies = 0;
-				int plagueToSpawnPhytogen = 10;
-				foreach (NPC n in Main.npc)
+				if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
 				{
-					if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type))
+					int plagueEnemies = 0;
+					int plagueToSpawnPhytogen = 6;
+					foreach (NPC n in Main.npc)
 					{
-						plagueEnemies++;
-						if (plagueEnemies >= plagueToSpawnPhytogen)
-                        {
-                            NPC.SpawnOnPlayer(Player.whoAmI, ModContent.NPCType<Phytogen>());
-                            break;
+						if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type) && n.Distance(Player.Center) < 600)
+						{
+							plagueEnemies++;
+							if (plagueEnemies >= plagueToSpawnPhytogen)
+							{
+								NPC.SpawnOnPlayer(Player.whoAmI, ModContent.NPCType<Phytogen>());
+								break;
+							}
 						}
 					}
 				}
@@ -785,6 +788,7 @@ namespace CalRemix
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
+			phd = false;
 			if (!CalamityUtils.AnyProjectiles(ModContent.ProjectileType<Fridge>()))
 			{
                 fridge = false;

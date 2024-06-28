@@ -7,31 +7,19 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.World;
-using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
-using CalRemix.Items.Placeables;
 using CalamityMod.Events;
 using CalRemix.Biomes;
-using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Materials;
 using System;
-using CalamityMod.Projectiles.Enemy;
-using Newtonsoft.Json.Serialization;
-using CalamityMod.Items.Placeables;
-using System.Net.Http.Headers;
-using CalamityMod.Projectiles.Boss;
-using CalamityMod.Tiles.Furniture.Monoliths;
-using System.Collections.Generic;
-using Terraria.Utilities;
-using CalRemix.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Items.Materials;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.UI;
 using System.Linq;
 using System.IO;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CalRemix.Items.Placeables.Relics;
+using CalRemix.NPCs.TownNPCs;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -253,8 +241,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                             SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
                             for (int i = 0; i < cloudAmt / 2; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 3), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 3), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
                             }
                         }
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 4;
@@ -307,7 +295,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                             SoundEngine.PlaySound(SoundID.NPCDeath45, Target.Center);
                             for (int i = 0; i < bubbleAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ModContent.ProjectileType<OxygenBubble>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ModContent.ProjectileType<OxygenBubble>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer);
                             }
                         }
                         if (NPC.ai[1] < dash)
@@ -351,7 +339,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                             int dir = Main.rand.NextBool().ToInt();
                             for (int i = 0; i < totalObjects; i++)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OxygenDebris>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OxygenDebris>(), (int)(NPC.damage * 0.2f), 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
                                 Main.projectile[p].localAI[0] = Main.rand.Next(1, 5);
                                 Main.projectile[p].localAI[1] = dir;
                             }
@@ -450,9 +438,14 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 4, 8);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<OxygenRelic>());
         }
         public override void OnKill()
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<BALLER>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BALLER>());
+            }
             RemixDowned.downedOxygen = true;
             CalRemixWorld.oxydayTime = 0;
             CalRemixWorld.UpdateWorldBool();
@@ -469,15 +462,13 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 drawPos = NPC.Center - screenPos;
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            spriteBatch.EnterShaderRegion(BlendState.Additive);
             Texture2D plasmom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
             float scaleFactor = (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.075f;
             spriteBatch.Draw(plasmom, drawPos, null, NPC.GetAlpha(Color.Cyan * 0.78f), NPC.rotation, plasmom.Size() / 2, 0.5f, SpriteEffects.None, 0f);
             spriteBatch.Draw(bloom, drawPos, null, NPC.GetAlpha(Color.Cyan * 1f), NPC.rotation, bloom.Size() / 2, 0.6f + scaleFactor, SpriteEffects.None, 0f);
-            spriteBatch.End();
-            spriteBatch.Begin();
+            spriteBatch.ExitShaderRegion();
             if (MaxDepthLevel < 4)
             {
                 spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(MaxDepthLevel, 0, 3)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);

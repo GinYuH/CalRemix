@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Tiles;
 using CalamityMod.Items;
-using CalamityMod.Rarities;
 
 namespace CalRemix.Items.Placeables
 {

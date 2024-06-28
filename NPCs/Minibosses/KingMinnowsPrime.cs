@@ -1,6 +1,7 @@
 using CalamityMod.Particles;
 using CalRemix.Projectiles.Hostile;
 using CalRemix.UI;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;

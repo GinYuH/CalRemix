@@ -2,12 +2,12 @@
 using CalamityMod.Items.Accessories;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalRemix.Items.Lore;
 using CalRemix.Items.Materials;
 using CalRemix.Items.Placeables;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

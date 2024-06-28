@@ -4,6 +4,7 @@ using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.Items.Materials;
+using CalRemix.World;
 using System.Linq;
 using Terraria;
 using Terraria.ID;

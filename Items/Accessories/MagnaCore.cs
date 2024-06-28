@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalRemix.ExtraTextures;
 
 namespace CalRemix.Items.Accessories
 {

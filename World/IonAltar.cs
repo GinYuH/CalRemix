@@ -1,32 +1,17 @@
-﻿using Terraria.ID;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.World;
-using CalRemix.Backgrounds.Plague;
-using CalRemix.Projectiles.TileTypeless;
-using System.Collections.Generic;
 using CalamityMod.Schematics;
 using CalamityMod;
-using System.IO;
-using System.Reflection;
 using CalamityMod.Tiles.Abyss;
 using System;
 using CalRemix.Tiles;
 using Terraria.DataStructures;
 
-namespace CalRemix
+namespace CalRemix.World
 {
     public class IonAltar : ModSystem
     {
-        internal const string IonAltarName = "World/ionaltar.csch";
-
-        internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
-            typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
-
-        internal static readonly MethodInfo ImportSchematicMethod = typeof(CalamitySchematicIO).GetMethod("ImportSchematic", BindingFlags.NonPublic | BindingFlags.Static);
-
-
         public static void GenerateIonAltar()
         {
             bool shouldBreak = false;
@@ -67,12 +52,11 @@ namespace CalRemix
                                         // If there truly are no dry blocks, increasingly add more wet room
                                         if (z > 22)
                                         {
-                                            liquidCheck = above.LiquidAmount <= (z * 5);
+                                            liquidCheck = above.LiquidAmount <= z * 5;
                                         }
 
                                         bool _ = false;
                                         SchematicManager.PlaceSchematic<Action<Chest>>("Ion Altar", new Point(i, j), SchematicAnchor.CenterLeft, ref _);
-                                        Main.LocalPlayer.position = new Vector2(i * 16, j * 16);
                                         shouldBreak = true;
                                         break;
                                     }
@@ -111,21 +95,6 @@ namespace CalRemix
             {
                 CalRemix.instance.Logger.Error("Could not place Ion Cube!");
             }
-        }
-
-        public override void PostSetupContent()
-        {
-            TileMaps.Add("Ion Altar", LoadSchematic(IonAltarName).ShaveOffEdge());
-        }
-
-
-        public static SchematicMetaTile[,] LoadSchematic(string filename)
-        {
-            SchematicMetaTile[,] ret = null;
-            using (Stream st = CalRemix.instance.GetFileStream(filename, true))
-                ret = (SchematicMetaTile[,])ImportSchematicMethod.Invoke(null, [st]);
-
-            return ret;
         }
     }
 }

@@ -2,7 +2,7 @@ using CalamityMod;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.TileEntities;
 using CalRemix.Items.Weapons;
-using CalRemix.Projectiles.Weapons;
+using CalRemix.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ using Terraria.Utilities;
 
 namespace CalRemix.NPCs.TownNPCs
 {
-	[AutoloadHead]
+    [AutoloadHead]
 	public class FBIGUY : ModNPC
 	{
 		private bool stash = false;
@@ -236,7 +236,7 @@ namespace CalRemix.NPCs.TownNPCs
                 stash = true;
             }
         }
-		public override bool CanGoToStatue(bool toKingStatue) => true;
+		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
             return false;

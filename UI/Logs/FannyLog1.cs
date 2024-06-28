@@ -1,10 +1,8 @@
-﻿using CalamityMod.Items.DraedonMisc;
-using CalamityMod.UI.DraedonLogs;
+﻿using CalamityMod.UI.DraedonLogs;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections;
 using Terraria.ModLoader;
 
-namespace CalRemix.UI
+namespace CalRemix.UI.Logs
 {
     public class FannyLog1 : DraedonsLogGUI
     {
@@ -22,7 +20,7 @@ namespace CalRemix.UI
         }
         public override Texture2D GetTextureByPage()
         {
-            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyHolo").Value;
+            return ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperFannyHolo").Value;
         }
     }
 }

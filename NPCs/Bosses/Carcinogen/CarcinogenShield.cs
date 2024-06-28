@@ -1,15 +1,7 @@
-﻿using CalamityMod.Items.Placeables.Ores;
-using Terraria;
-using Terraria.GameContent.Bestiary;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Items;
-using System.Linq;
-using CalRemix.UI;
-using CalRemix.Items.Placeables;
-using CalRemix.Biomes;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ReLogic.Content;
@@ -17,7 +9,6 @@ using Terraria.GameContent;
 using CalamityMod.World;
 using CalRemix.Projectiles.Hostile;
 using Terraria.Audio;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -31,7 +22,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
 
         public override void SetDefaults()
         {
-            NPC.damage = 60;
+            NPC.damage = 30;
             NPC.width = 170;
             NPC.height = 166;
             NPC.defense = 20;
@@ -71,7 +62,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         {
                             SoundEngine.PlaySound(SoundID.Item20 with { Volume = 0.2f, Pitch = 0.4f }, NPC.Center);
                             Vector2 square = new Vector2(Main.rand.Next((int)NPC.position.X, (int)NPC.position.X + NPC.width), Main.rand.Next((int)NPC.position.Y, (int)NPC.position.Y + NPC.height));
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-cinderSpeed, cinderSpeed), Main.rand.Next(-cinderSpeed, 0)), ModContent.ProjectileType<CigarCinder>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-cinderSpeed, cinderSpeed), Main.rand.Next(-cinderSpeed, 0)), ModContent.ProjectileType<CigarCinder>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                             Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
                         }
                     }
@@ -108,11 +99,9 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             Asset<Texture2D> sprite = TextureAssets.Npc[Type];
             Texture2D cigars = ModContent.Request<Texture2D>(Texture + "Cigars").Value;
             Vector2 npcOffset = NPC.Center - screenPos;
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            spriteBatch.EnterShaderRegion(BlendState.Additive);
             spriteBatch.Draw(sprite.Value, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);
-            spriteBatch.End();
-            spriteBatch.Begin();
+            spriteBatch.ExitShaderRegion();
             spriteBatch.Draw(cigars, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);
             return false;
         }

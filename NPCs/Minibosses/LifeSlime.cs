@@ -14,10 +14,11 @@ using Terraria.ModLoader.Utilities;
 using System.Linq;
 using CalamityMod.Items.Materials;
 using System.IO;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Minibosses
 {
-	public class LifeSlime : ModNPC
+    public class LifeSlime : ModNPC
 	{
         public bool angry = false;
         private float timer = 0;

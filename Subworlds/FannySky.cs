@@ -1,5 +1,4 @@
 ﻿using System;
-using CalRemix.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
@@ -8,7 +7,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
-namespace CalRemix.Skies
+namespace CalRemix.Subworlds
 {
     public class FannySky : CustomSky
     {
@@ -45,7 +44,7 @@ namespace CalRemix.Skies
         {
             if (maxDepth >= float.MaxValue)
             {
-                fannyPos --;
+                fannyPos--;
                 if (fannyPos < -Main.screenWidth)
                     fannyPos = Main.screenWidth;
                 fannyPos2--;

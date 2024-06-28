@@ -5,6 +5,7 @@ using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
 using CalRemix.Retheme;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -23,7 +24,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
-namespace CalRemix.UI
+namespace CalRemix.UI.Anomaly109
 {
     public class Anomaly109UI : UIState
     {
@@ -60,7 +61,7 @@ namespace CalRemix.UI
             // This prevents drawing unless we are using an ExampleCustomResourceWeapon
             if (Main.gameMenu)
                 return;
-            if (!(Main.LocalPlayer.TryGetModPlayer<CalRemixPlayer>(out CalRemixPlayer p) && p.anomaly109UI))
+            if (!(Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer p) && p.anomaly109UI))
             {
                 return;
             }
@@ -136,7 +137,7 @@ namespace CalRemix.UI
             {
                 if (!Anomaly109Manager.options[i].unlocked)
                 {
-                    if ((textwithoutspaces == "welive4hypnos" || textwithoutspaces == "weliveforhypnos"))
+                    if (textwithoutspaces == "welive4hypnos" || textwithoutspaces == "weliveforhypnos")
                     {
                         SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
                         Anomaly109Manager.options[i].unlocked = true;
@@ -150,7 +151,7 @@ namespace CalRemix.UI
                     }
                 }
             }
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, ">C:\\remix\\" + TextInput + Underscore, promptframe.X + promptframe.Width / 64, promptframe.Y + promptframe.Height / 3f, Color.Lime * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, ">C:\\remix\\" + TextInput + Underscore, promptframe.X + promptframe.Width / 64, promptframe.Y + promptframe.Height / 3f, Color.Lime * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, Main.screenWidth / (float)1745);
         }
 
         private static void ProcessInput()
@@ -194,7 +195,7 @@ namespace CalRemix.UI
             Rectangle promptborderframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.775f) - borderwidth, mainframe.Bottom - (int)(mainframe.Height * 0.125f) - borderwidth, (int)(mainframe.Width * 0.1f) + borderwidth * 2, (int)(mainframe.Height * 0.08f) + borderwidth * 2);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, promptborderframe, bordercolor);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, promptframe, Color.Black);
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Help", promptframe.X + promptframe.Width / 3, promptframe.Y + promptframe.Height / 3f, bordercolor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Help", promptframe.X + promptframe.Width / 3, promptframe.Y + promptframe.Height / 3f, bordercolor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, Main.screenWidth / (float)1745);
             Rectangle maus = getMouse();
 
             string textwithoutspaces = TextInput.Replace(" ", string.Empty);
@@ -250,8 +251,8 @@ namespace CalRemix.UI
                     column = 0;
                     row++;
                 }
-                Rectangle barframe = new Rectangle((int)(mainframe.X + mainframe.Width / 28 + 2) + spacingX * column, (int)(mainframe.Y + mainframe.Height / 48 + 2) + spacingY * row, individualLength, individualHeight);
-                Rectangle barbg = new Rectangle((int)(mainframe.X + mainframe.Width / 28) + spacingX * column, (int)(mainframe.Y + mainframe.Height / 48) + spacingY * row, individualLength + 4, individualHeight + 4);
+                Rectangle barframe = new Rectangle(mainframe.X + mainframe.Width / 28 + 2 + spacingX * column, mainframe.Y + mainframe.Height / 48 + 2 + spacingY * row, individualLength, individualHeight);
+                Rectangle barbg = new Rectangle(mainframe.X + mainframe.Width / 28 + spacingX * column, mainframe.Y + mainframe.Height / 48 + spacingY * row, individualLength + 4, individualHeight + 4);
 
                 Color outlineColor = Anomaly109Manager.options[i].unlocked ? Color.Lime : Color.Gray;
                 Color pathColor = Anomaly109Manager.options[i].unlocked ? Color.Lime : Color.Gray;
@@ -269,8 +270,8 @@ namespace CalRemix.UI
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, barframe, Color.Black);
                 string address = "C:\\remix\\";
 
-                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, address, barbg.X + barbg.Width / 32, barbg.Y + barbg.Height / 4, pathColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
-                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, Anomaly109Manager.options[i].title, barbg.X + barbg.Width / 32 + (float)FontAssets.MouseText.Value.MeasureString(address).X * (float)Main.screenWidth / (float)1745, barbg.Y + barbg.Height / 4, nameColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, address, barbg.X + barbg.Width / 32, barbg.Y + barbg.Height / 4, pathColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, Main.screenWidth / (float)1745);
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, Anomaly109Manager.options[i].title, barbg.X + barbg.Width / 32 + FontAssets.MouseText.Value.MeasureString(address).X * Main.screenWidth / 1745, barbg.Y + barbg.Height / 4, nameColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, Main.screenWidth / (float)1745);
 
                 if (maus.Intersects(barbg))
                 {
@@ -281,7 +282,7 @@ namespace CalRemix.UI
                 if (putOnLock)
                 {
                     Texture2D locke = ModContent.Request<Texture2D>("CalRemix/UI/Anomaly109/Anomalock").Value;
-                    Rectangle lockrect = new Rectangle((int)(barbg.X + barbg.Width / 2.175f), (int)(barbg.Y + barbg.Height / 5), locke.Width * 2, locke.Height * 2);
+                    Rectangle lockrect = new Rectangle((int)(barbg.X + barbg.Width / 2.175f), barbg.Y + barbg.Height / 5, locke.Width * 2, locke.Height * 2);
                     spriteBatch.Draw(locke, lockrect, Color.White);
                 }
             }
@@ -309,7 +310,7 @@ namespace CalRemix.UI
                     }
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, option.message, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, statusLiteral, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 52, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
-                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, status, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20 + (float)FontAssets.MouseText.Value.MeasureString(statusLiteral).X, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 52, statusColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, status, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20 + FontAssets.MouseText.Value.MeasureString(statusLiteral).X, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 52, statusColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                     if (Main.mouseLeft && ClickCooldown <= 0 && option.unlocked)
                     {
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
@@ -393,7 +394,7 @@ namespace CalRemix.UI
             Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
 
             Texture2D cage = ModContent.Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock").Value;
-            Texture2D fanny = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/FannyIdle").Value;
+            Texture2D fanny = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperFannyIdle").Value;
 
             Rectangle cageframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.2f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.4f));
             Rectangle bgframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.375f), mainframe.Y + (int)(mainframe.Height * 0.65f), (int)(mainframe.Width * 0.25f), (int)(mainframe.Height * 0.1f));
@@ -411,7 +412,7 @@ namespace CalRemix.UI
                 spriteBatch.Draw(fanny, fannyframe, fannytheFrame, Color.White);
             }
             spriteBatch.Draw(cage, cageframe, Color.White * 0.6f);
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, FannyStatus, bgframe.X + (int)(bgframe.Height * 0.3f), bgframe.Y + (int)(bgframe.Height * 0.3f), FannyColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, (float)Main.screenWidth / (float)1745);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, FannyStatus, bgframe.X + (int)(bgframe.Height * 0.3f), bgframe.Y + (int)(bgframe.Height * 0.3f), FannyColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero, Main.screenWidth / (float)1745);
             fannyOffset = Vector2.Zero;
             if (maus.Intersects(bgframe))
             {
@@ -523,7 +524,7 @@ namespace CalRemix.UI
                 }, new Condition("", () => CalRemixWorld.npcChanges)));
                 options.Add(new Anomaly109Option("talkywalky", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.bossdialogue = !CalRemixWorld.bossdialogue; }, new Condition("", () => CalRemixWorld.bossdialogue)));
                 options.Add(new Anomaly109Option("space", "remix_jump", "Toggles the default double jump", () => { CalRemixWorld.remixJump = !CalRemixWorld.remixJump; }, new Condition("", () => CalRemixWorld.remixJump)));
-
+                options.Add(new Anomaly109Option("coughingbaby", "hydrogen_explosions", "Toggles Hydrogen's explosions", () => { CalRemixWorld.hydrogenBomb = !CalRemixWorld.hydrogenBomb; }, new Condition("", () => CalRemixWorld.hydrogenBomb)));
                 options.Add(new Anomaly109Option("bloodorange", "permanent_upgrades", "Toggles permanent upgrade recipe removals and alt obtainment methods", () => { CalRemixWorld.permanenthealth = !CalRemixWorld.permanenthealth; }, new Condition("", () => CalRemixWorld.permanenthealth)));
                 options.Add(new Anomaly109Option("terragrim", "alloy_bars", "Toggles Alloy Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.alloyBars, Recipes.alloyBarCrafts); CalRemixWorld.alloyBars = !CalRemixWorld.alloyBars; }, new Condition("", () => CalRemixWorld.alloyBars)));
                 options.Add(new Anomaly109Option("starfury", "essential_essence_bars", "Toggles Essential Essence Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.essenceBars, Recipes.essenceBarCrafts); CalRemixWorld.essenceBars = !CalRemixWorld.essenceBars; }, new Condition("", () => CalRemixWorld.essenceBars)));
@@ -544,21 +545,22 @@ namespace CalRemix.UI
                     {
                         CalRemixWorld.AddLootDynamically(ItemID.JungleFishingCrate);
                     }
-                    CalRemixWorld.reargar = !CalRemixWorld.reargar; 
+                    CalRemixWorld.reargar = !CalRemixWorld.reargar;
                 }, new Condition("", () => CalRemixWorld.reargar)));
-                options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal",  () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, new Condition("", () => CalRemixWorld.sidegar)));
-                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () => 
-                { 
-                    if (!CalRemixWorld.frontgar) 
-                    { 
-                        CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true); 
-                        CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false); } 
-                    else 
-                    { 
-                        CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true); 
-                        CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>()); 
-                    } 
-                    CalRemixWorld.frontgar = !CalRemixWorld.frontgar; 
+                options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal", () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, new Condition("", () => CalRemixWorld.sidegar)));
+                options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () =>
+                {
+                    if (!CalRemixWorld.frontgar)
+                    {
+                        CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true);
+                        CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false);
+                    }
+                    else
+                    {
+                        CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true);
+                        CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>());
+                    }
+                    CalRemixWorld.frontgar = !CalRemixWorld.frontgar;
                 }, new Condition("", () => CalRemixWorld.frontgar)));
                 options.Add(new Anomaly109Option("passive", "seafood", "Toggles Seafood becoming a normal food item", () => { CalRemixWorld.seafood = !CalRemixWorld.seafood; }, new Condition("", () => CalRemixWorld.seafood)));
                 options.Add(new Anomaly109Option("stellarculex", "starbuster_core", "Toggles the Starbuster Core's strange obtainment method", () => { CalRemixWorld.starbuster = !CalRemixWorld.starbuster; }, new Condition("", () => CalRemixWorld.starbuster)));
@@ -625,7 +627,7 @@ namespace CalRemix.UI
 
         public Condition check { get; set; }
 
-        public bool unlocked {  get; set; }
+        public bool unlocked { get; set; }
 
         public Anomaly109Option(string key, string title, string message, Action toggle, Condition check, bool unlocked = false)
         {
@@ -671,7 +673,8 @@ namespace CalRemix.UI
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "ExampleMod: Example Resource Bar",
-                    delegate {
+                    delegate
+                    {
                         Anomaly109UserInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;
                     },

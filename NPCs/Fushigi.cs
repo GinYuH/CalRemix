@@ -1,5 +1,4 @@
-﻿using CalamityMod.Dusts;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
+using CalRemix.UI;
+using System.Linq;
+using CalRemix.World;
 
 namespace CalRemix.NPCs
 {
@@ -19,6 +21,12 @@ namespace CalRemix.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fushigi");
+            if (Main.dedServ)
+                return;
+            HelperMessage.New("Fushigi",
+                "Look at you, finding a floating glass ball stuck in some rocks! If you break the rocks above it, that ball will rise like it's got somewhere to be. But beware, if it escapes the ocean, you'll be in for some seriously wild wind! Hold onto your hat, or it might fly away faster than my jokes at a comedy show!",
+                "FannyIdle",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
         }
 
         public override void SetDefaults()

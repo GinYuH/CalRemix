@@ -23,6 +23,10 @@ using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Tiles.SunkenSea;
 using Terraria.Enums;
 using CalRemix.NPCs.Bosses.Phytogen;
+using CalRemix.NPCs.Bosses.Hypnos;
+using CalamityMod.Tiles.DraedonSummoner;
+using CalRemix.NPCs.PandemicPanic;
+using CalRemix.World;
 
 namespace CalRemix
 {
@@ -129,11 +133,33 @@ namespace CalRemix
                     NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
                 }
             }
+            if (type == ModContent.TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && NPC.CountNPCS(ModContent.NPCType<RemixDraedon>()) <= 0)
+            {
+                Terraria.Audio.SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
+
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket packet = Mod.GetPacket();
+                    packet.Write((byte)HypnosMessageType.HypnosSummoned);
+                    packet.Write((byte)Main.myPlayer);
+                    packet.Send();
+                }
+                else
+                {
+                    Hypnos.SummonDraedon(Main.LocalPlayer);
+                }
+
+            }
+            if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && !PandemicPanic.IsActive)
+            {
+                PandemicPanic.IsActive = true;
+                Main.NewText("Microbes are going to war!", Color.Red);
+            }
         }
         public override void MouseOver(int i, int j, int type)
         {
             Player player = Main.LocalPlayer;
-            if (type == ModContent.TileType<LabHologramProjector>())
+            if (type == ModContent.TileType<LabHologramProjector>() || TileID.Sets.CountsAsWaterSource[type])
             {
                 if (player.HeldItem.type == ModContent.ItemType<BloodyVein>())
                 {

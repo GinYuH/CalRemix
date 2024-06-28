@@ -3,7 +3,6 @@ using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Steamworks;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
