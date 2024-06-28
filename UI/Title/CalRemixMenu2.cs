@@ -111,7 +111,7 @@ namespace CalRemix.UI.Title
                 {
                     characterTexture = Main.rand.Next(new Texture2D[]
                     {
-                        ModContent.Request<Texture2D>("CalRemix/Items/SideGar").Value,
+                        ModContent.Request<Texture2D>("CalRemix/Items/Bags/SideGar").Value,
                         ModContent.Request<Texture2D>("CalRemix/UI/Title/FrontGar").Value,
                         ModContent.Request<Texture2D>("CalRemix/UI/Title/RearGar").Value
                     });
