@@ -6,7 +6,6 @@ namespace CalRemix.Items.Tools
 {
     public class PHD : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/Baroclaw";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("PHD");
