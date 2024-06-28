@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -95,6 +96,7 @@ namespace CalRemix.Projectiles.Hostile
                     gore.velocity.Y -= 1f;
                 }
             }
+            if (CalRemixWorld.hydrogenBomb)
             HydrogenShell.HydrogenExplosion(Projectile);
         }
     }

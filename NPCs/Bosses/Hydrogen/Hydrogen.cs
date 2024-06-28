@@ -103,7 +103,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             {
                 Phase = (int)PhaseType.Idle;
             }*/
-            if (NPC.life <= 1)
+            if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb)
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2] = 0;
@@ -341,17 +341,21 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override bool CheckDead()
         {
-            NPC.life = 1;
-            NPC.Calamity().newAI[0] = 1;
-            NPC.active = true;
-            NPC.dontTakeDamage = true;
+            if (CalRemixWorld.hydrogenBomb)
+            {
+                NPC.life = 1;
+                NPC.Calamity().newAI[0] = 1;
+                NPC.active = true;
+                NPC.dontTakeDamage = true;
 
-            NPC.netUpdate = true;
+                NPC.netUpdate = true;
 
-            // Prevent netUpdate from being blocked by the spam counter.
-            if (NPC.netSpam >= 10)
-                NPC.netSpam = 9;
-            return false;
+                // Prevent netUpdate from being blocked by the spam counter.
+                if (NPC.netSpam >= 10)
+                    NPC.netSpam = 9;
+                return false;
+            }
+            return true;
         }
 
         public override bool CheckActive()

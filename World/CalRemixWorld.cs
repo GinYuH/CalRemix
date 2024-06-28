@@ -110,6 +110,7 @@ namespace CalRemix.World
         public static bool acidsighter = true;
         public static bool greenDemon = true;
         public static bool remixJump = true;
+        public static bool hydrogenBomb = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -254,6 +255,7 @@ namespace CalRemix.World
             acidsighter = true;
             greenDemon = true;
             remixJump = true;
+            hydrogenBomb = true;
 
             loadedRecipeInjections = false;
 
@@ -311,6 +313,7 @@ namespace CalRemix.World
             acidsighter = true;
             greenDemon = true;
             remixJump = true;
+            hydrogenBomb = true;
 
             loadedRecipeInjections = false;
 
@@ -362,6 +365,8 @@ namespace CalRemix.World
             tag["109acidsighter"] = acidsighter;
             tag["109greenDemon"] = greenDemon;
             tag["109remixJump"] = remixJump;
+            tag["109hydrogen"] = hydrogenBomb;
+
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
             tag["hydrolocationX"] = hydrogenLocation.X;
@@ -417,6 +422,7 @@ namespace CalRemix.World
             acidsighter = tag.Get<bool>("109acidsighter");
             greenDemon = tag.Get<bool>("109greenDemon");
             remixJump = tag.Get<bool>("109remixJump");
+            hydrogenBomb = tag.Get<bool>("109hydrogen");
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
             hydrogenLocation.X = tag.Get<float>("hydrolocationX");
@@ -469,6 +475,8 @@ namespace CalRemix.World
             writer.Write(acidsighter);
             writer.Write(greenDemon);
             writer.Write(remixJump);
+            writer.Write(hydrogenBomb);
+
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
             writer.Write(hydrogenLocation.X);
@@ -522,6 +530,8 @@ namespace CalRemix.World
             acidsighter = reader.ReadBoolean();
             greenDemon = reader.ReadBoolean();
             remixJump = reader.ReadBoolean();
+            hydrogenBomb = reader.ReadBoolean();
+
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
             hydrogenLocation.X = reader.ReadSingle();
@@ -764,6 +774,7 @@ namespace CalRemix.World
                 }
                 hydrogenLocation = center * 16;
                 generatedHydrogen = true;
+                hydrogenBomb = true;
             }
             if (!NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
             {
