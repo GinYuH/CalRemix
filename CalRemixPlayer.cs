@@ -504,10 +504,10 @@ namespace CalRemix
 				if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
 				{
 					int plagueEnemies = 0;
-					int plagueToSpawnPhytogen = 10;
+					int plagueToSpawnPhytogen = 6;
 					foreach (NPC n in Main.npc)
 					{
-						if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type))
+						if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type) && n.Distance(Player.Center) < 600)
 						{
 							plagueEnemies++;
 							if (plagueEnemies >= plagueToSpawnPhytogen)
