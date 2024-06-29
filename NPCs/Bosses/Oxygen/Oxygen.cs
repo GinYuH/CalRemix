@@ -435,9 +435,15 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 4, 8);
+            npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 8, 10);
+            npcLoot.Add(ItemID.HallowedKey, 3);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<OxygenRelic>());
         }
         public override void OnKill()

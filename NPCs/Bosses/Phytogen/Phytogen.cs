@@ -522,9 +522,15 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemID.Obsidian, 1, 216, 224);
+            npcLoot.Add(ItemID.Obsidian, 1, 8, 10);
+            npcLoot.Add(ItemID.JungleKey, 3);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PhytogenRelic>());
         }
         public override void OnKill()

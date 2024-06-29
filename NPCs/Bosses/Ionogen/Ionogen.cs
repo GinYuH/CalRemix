@@ -323,9 +323,14 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<EssenceofSunlight>(), 1, 4, 8);
+            npcLoot.Add(ModContent.ItemType<EssenceofSunlight>(), 1, 8, 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<IonogenRelic>());
         }
         public override void OnKill()

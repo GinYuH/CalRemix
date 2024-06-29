@@ -147,9 +147,15 @@ namespace CalRemix.NPCs.Bosses.Origen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.LesserHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<EssenceofEleum>(), 1, 4, 8);
+            npcLoot.Add(ItemID.Nazar, 1, 8, 10);
+            npcLoot.Add(ItemID.FrozenKey, 3);
         }
         public override void OnKill()
         {

@@ -376,8 +376,14 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.HealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemID.DungeonDesertKey, 3);
             npcLoot.Add(ModContent.ItemType<Asbestos>(), 1, 216, 224);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());
         }

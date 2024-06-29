@@ -487,9 +487,16 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<BloodSample>(), 1, 4, 8);
+            npcLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
+            npcLoot.Add(ItemID.CorruptionKey, 3);
+            npcLoot.Add(ItemID.CrimsonKey, 3);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
         }
         public override void OnKill()

@@ -14,6 +14,7 @@ using Terraria.DataStructures;
 using CalamityMod.Events;
 using static CalamityMod.World.CalamityWorld;
 using CalRemix.Projectiles.Hostile;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.NPCs.Bosses.Pyrogen
 {
@@ -676,6 +677,11 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.FlameBurst, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
         }
     }
 }

@@ -712,6 +712,7 @@ namespace CalRemix
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ModContent.ItemType<GrandScale>());
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.LightShard);
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DarkShard);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DungeonDesertKey);
             }
             if (npc.type == ModContent.NPCType<DesertScourgeHead>())
             {
@@ -775,6 +776,16 @@ namespace CalRemix
                 LeadingConditionRule exp = new LeadingConditionRule(new Conditions.NotExpert());
                 exp.Add(ModContent.ItemType<EssenceofBabil>(), 1, 4, 8, hideLootReport: Main.expertMode);
                 npcLoot.Add(exp);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.JungleKey);
+            }
+            if (npc.type == NPCID.WallofFlesh)
+            {
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
+            }
+            if (npc.type == NPCID.QueenSlimeBoss)
+            {
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedKey);
             }
             if (npc.type == NPCID.Wolf)
             {

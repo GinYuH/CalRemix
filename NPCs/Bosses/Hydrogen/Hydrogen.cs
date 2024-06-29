@@ -344,9 +344,14 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             }
         }
 
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<SeaPrism>(), 1, 4, 8);
+            npcLoot.Add(ModContent.ItemType<SeaPrism>(), 1, 8, 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<HydrogenRelic>());
         }
         public override void OnKill()
