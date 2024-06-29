@@ -153,6 +153,8 @@ namespace CalRemix
             if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && !PandemicPanic.IsActive)
             {
                 PandemicPanic.IsActive = true;
+                PandemicPanic.DefendersKilled = 0;
+                PandemicPanic.InvadersKilled = 0;
                 Main.NewText("Microbes are going to war!", Color.Red);
             }
         }

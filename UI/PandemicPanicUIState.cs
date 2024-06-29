@@ -15,7 +15,7 @@ namespace CalRemix.UI
 {
     public static class PandemicPanicUIState
     {
-        public static bool IsActive => PandemicPanic.IsActive;
+        public static bool IsActive => PandemicPanic.CountsAsActive;
         public static float CompletionRatio => PandemicPanic.InvadersWinning ? (PandemicPanic.DefendersKilled / PandemicPanic.MaxRequired) : PandemicPanic.DefendersWinning ? (PandemicPanic.InvadersKilled / PandemicPanic.MinToSummonPathogen) : 0;
 
         public static string InvasionName => PandemicPanic.InvadersWinning ? "Pandemic Panic - Side: Invader" : PandemicPanic.DefendersWinning ? "Pandemic Panic - Side: Defender" : "Pandemic Panic - Side: None";

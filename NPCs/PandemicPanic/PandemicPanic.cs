@@ -106,9 +106,11 @@ namespace CalRemix.NPCs.PandemicPanic
         /// </summary>
         public static List<Projectile> ActiveProjectiles = new List<Projectile>();
 
+        public static bool CountsAsActive => IsActive && Main.LocalPlayer.position.Y < Main.worldSurface * 16;
+
         public override void PreUpdateWorld()
         {
-            if (IsActive)
+            if (CountsAsActive)
             {
                 UpdateLists();
                 if (TotalKills >= 300 && (!SummonedPathogen || (!InvadersWinning && !NPC.AnyNPCs(ModContent.NPCType<Pathogen>()))))
@@ -179,6 +181,14 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public static void EndEvent()
         {
+            if (!IsActive)
+                return;
+            if (NPC.AnyNPCs(ModContent.NPCType<Pathogen>()) && InvadersWinning)
+            {
+                int path = NPC.FindFirstNPC(ModContent.NPCType<Pathogen>());
+                Main.npc[path].NPCLoot();
+                Main.npc[path].active = false;
+            }
             string winner = InvadersWinning ? "The invaders successfully spread their influence." : DefendersWinning ? "The defenders successfully offered their protection." : "The microbes all retreat...";
             Main.NewText(winner, InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory);
             DefendersKilled = 0;
@@ -527,7 +537,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            if (PandemicPanic.IsActive)
+            if (PandemicPanic.CountsAsActive)
             {
                 if (PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning)
                 {
@@ -544,7 +554,7 @@ namespace CalRemix.NPCs.PandemicPanic
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (PandemicPanic.IsActive)
+            if (PandemicPanic.CountsAsActive)
             {
                 pool.Clear();
                 float defMult = PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning ? 3f : PandemicPanic.DefendersWinning ? 0.8f : 1f;
