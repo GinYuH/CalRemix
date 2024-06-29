@@ -46,6 +46,9 @@ using CalRemix.World;
 using CalRemix.ExtraTextures;
 using CalRemix.Items.Bags;
 using CalRemix.Items.Tools;
+using CalRemix.Subworlds;
+using SubworldLibrary;
+using CalRemix.NPCs.Bosses.Hypnos;
 
 namespace CalRemix
 {
@@ -454,7 +457,7 @@ namespace CalRemix
         {
             if (Main.myPlayer == Player.whoAmI)
             {
-                if (NPC.AnyNPCs(ModContent.NPCType<Draedon>()) || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()))
+                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == ModContent.GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(ModContent.NPCType<Hypnos>()) || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()))
                     Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;

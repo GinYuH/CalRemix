@@ -71,7 +71,8 @@ namespace CalRemix.NPCs.Bosses.Hypnos
             NPC.dontTakeDamage = true;
             NPC.damage = 1;
             NPC.defense = 90;
-            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CerebralAugmentations");
+            if (!Main.dedServ)
+                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/CerebralAugmentations");
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -872,7 +873,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
 
         public static void SummonDraedon(Player player)
         { // don't call it on multiplayer client
-			NPC.NewNPC(new Terraria.DataStructures.EntitySource_BossSpawn(player), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<RemixDraedon>(), 0, 0, 0, 0, player.whoAmI, player.whoAmI);
+			NPC.NewNPC(new Terraria.DataStructures.EntitySource_BossSpawn(player), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>(), 0, 0, 0, 0, player.whoAmI, player.whoAmI);
 
 		}
 	}

@@ -12,7 +12,7 @@ using CalRemix.NPCs.Bosses.Hypnos;
 
 namespace CalRemix.NPCs
 {
-    internal class RemixDraedon : ModNPC
+    internal class HypnosDraedon : ModNPC
     {
         public bool initialized = false;
         public static readonly Color TextColor = new(155, 255, 255);

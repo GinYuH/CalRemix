@@ -133,7 +133,7 @@ namespace CalRemix
                     NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
                 }
             }
-            if (type == ModContent.TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && NPC.CountNPCS(ModContent.NPCType<RemixDraedon>()) <= 0)
+            if (type == ModContent.TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && NPC.CountNPCS(ModContent.NPCType<HypnosDraedon>()) <= 0)
             {
                 Terraria.Audio.SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
 

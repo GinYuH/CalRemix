@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items
+namespace CalRemix.Items.Tools
 {
     public class Caduceus : ModItem
     {
@@ -19,6 +19,7 @@ namespace CalRemix.Items
             Item.height = 22;
             Item.useStyle = ItemUseStyleID.Shoot;
         }
+        /*
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
@@ -31,5 +32,6 @@ namespace CalRemix.Items
             }
             return false;
         }
+         */
     }
 }
