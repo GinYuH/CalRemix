@@ -2505,6 +2505,7 @@ Mods: {
 			SIIVA.DisplayName: Archdruid
 			UNCANNY.DisplayName: Archwizard
 			WALTER.DisplayName: Archmagus
+			HypnosDraedon.DisplayName: Draedon
 		}
 
 		Projectiles: {

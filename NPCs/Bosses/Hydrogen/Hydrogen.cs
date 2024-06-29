@@ -20,6 +20,9 @@ using System.Linq;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
+using Terraria.Utilities;
+using CalamityMod.Items.Fishing.SunkenSeaCatches;
+using CalamityMod.Items.Placeables.Banners;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -35,6 +38,8 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public static readonly SoundStyle HitSound = new("CalRemix/Sounds/IonogenHit", 3);
         public static readonly SoundStyle ExplosionSound = new("CalRemix/Sounds/HydrogenExplode");
 
+        public static WeightedRandom<int> sunkenSeaFish = new WeightedRandom<int>();
+
         public enum PhaseType
         {
             Sealed = 0,
@@ -47,6 +52,24 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hydrogen");
+
+            sunkenSeaFish.Add(ModContent.ItemType<PrismaticGuppy>());
+            sunkenSeaFish.Add(ModContent.ItemType<Serpentuna>(), 0.5f);
+            sunkenSeaFish.Add(ModContent.ItemType<SunkenSailfish>());
+            sunkenSeaFish.Add(ModContent.ItemType<EutrophicSandfish>());
+            sunkenSeaFish.Add(ModContent.ItemType<GreenwaveLoach>(), 0.1f);
+            sunkenSeaFish.Add(ModContent.ItemType<SparklingEmpress>(), 0.05f);
+            sunkenSeaFish.Add(ModContent.ItemType<SurfClam>(), 0.5f);
+            sunkenSeaFish.Add(ModContent.ItemType<SerpentsBite>(), 0.1f);
+            sunkenSeaFish.Add(ModContent.ItemType<PrismBackBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<BlindedAnglerBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<GhostBellBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<BabyGhostBellBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<ClamBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<EutrophicRayBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<SeaFloatyBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<SeaMinnowBanner>(), 0.01f);
+
             if (Main.dedServ)
                 return;
             HelperMessage.New("Hydrogen",
@@ -255,6 +278,11 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             // Prevent netUpdate from being blocked by the spam counter.
                             if (NPC.netSpam >= 10)
                                 NPC.netSpam = 9;
+
+                            for (int i = 0; i < 44; i++)
+                            {
+                                Item.NewItem(NPC.GetSource_Death(), Main.rand.Next((int)Target.Center.X - 1000, (int)Target.Center.X + 1000), Main.rand.Next((int)Target.Center.Y - 1000, (int)Target.Center.Y + 500), 4, 4, sunkenSeaFish.Get());
+                            }
                         }
                         if (NPC.Calamity().newAI[1] == startExplosion)
                         {
