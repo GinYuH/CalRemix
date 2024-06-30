@@ -53,6 +53,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         {
             DisplayName.SetDefault("Hydrogen");
 
+            // A bunch of fucking fish
             sunkenSeaFish.Add(ModContent.ItemType<PrismaticGuppy>());
             sunkenSeaFish.Add(ModContent.ItemType<Serpentuna>(), 0.5f);
             sunkenSeaFish.Add(ModContent.ItemType<SunkenSailfish>());
@@ -116,16 +117,14 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override void AI()
         {
+            // Generic setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
             bool death = CalamityWorld.death || BossRushEvent.BossRushActive;
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
-            /*if (NPC.life == NPC.lifeMax)
-            {
-                Phase = (int)PhaseType.Idle;
-            }*/
+            // If Hydrogen is at <= 1 health and tile destruction is enabled, do death animation
             if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb)
             {
                 NPC.ai[1] = 0;
@@ -144,8 +143,10 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                 return;
             }
             NPC.Calamity().newAI[3] = 0;
+            // Attacks
             switch (Phase)
             {
+                // Dormant...
                 case (int)PhaseType.Sealed:
                     {
                         NPC.ai[1]++;
@@ -153,6 +154,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         NPC.boss = false;
                         NPC.velocity = Vector2.UnitY * (float)Math.Sin(NPC.ai[1] * 0.025f) * 0.25f;
                         NPC.chaseable = false;
+                        // Automatically get pissed off if it somehow gets damaged despite the checks
                         if (lifeRatio < 0.9f)
                         {
                             NPC.ai[1] = 0;
@@ -163,6 +165,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         }
                         break;
                     }
+                // Move towards the player
                 case (int)PhaseType.Idle:
                     {
                         int phaseTime = 90;
@@ -175,6 +178,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         }
                         break;
                     }
+                // Shoot out missiles puncutated by falling warheads
                 case (int)PhaseType.MissileLaunch:
                     {
                         int rocketRate = 5;

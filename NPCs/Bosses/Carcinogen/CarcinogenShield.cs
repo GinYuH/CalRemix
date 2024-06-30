@@ -51,11 +51,12 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                 NPC.position = carci.Center - NPC.Size / 2;
                 NPC.rotation += 0.1f;
 
-                bool blender = carci.ai[0] == 2 && carci.ai[2] == 1;
-                int cinderSpeed = blender ? 10 : 6;
-                int cinderRate = blender ? 10 : 60;
+                bool blender = carci.ai[0] == 2 && carci.ai[2] == 1; // If Carcinogen is doing his fire spin attack
+                int cinderSpeed = blender ? 10 : 6; // Speed of cinder projectiles, increases during blender
+                int cinderRate = blender ? 10 : 60; // Rate at which cinders are spawned
                 if (carci.ai[0] != 1)
                 {
+                    // If Carci is doing the blender, he is below 50% health, or it's revengeance mode, randomly fling out cinders
                     if ((CalamityWorld.revenge || carci.life / carci.lifeMax <= 0.5f) || (carci.ai[0] == 2 && carci.ai[2] == 1))
                     {
                         if (Main.rand.NextBool(cinderRate))
@@ -68,6 +69,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                     }
                 }
             }
+            // Die if the parent is not an active Carcinogen
             else
             {
                 NPC.active = false;
@@ -99,6 +101,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             Asset<Texture2D> sprite = TextureAssets.Npc[Type];
             Texture2D cigars = ModContent.Request<Texture2D>(Texture + "Cigars").Value;
             Vector2 npcOffset = NPC.Center - screenPos;
+            // <3 additive
             spriteBatch.EnterShaderRegion(BlendState.Additive);
             spriteBatch.Draw(sprite.Value, npcOffset, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)carci.position.X / 16, (int)carci.position.Y / 16))), NPC.rotation, sprite.Size() / 2, 1f, SpriteEffects.None, 0);
             spriteBatch.ExitShaderRegion();

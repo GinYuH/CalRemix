@@ -47,6 +47,7 @@ namespace CalRemix.Projectiles.Hostile
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
+            // Only collide with tiles if past the player's vertical position
             return Projectile.position.Y > Main.player[(int)Projectile.ai[0]].Bottom.Y;
         }
     }

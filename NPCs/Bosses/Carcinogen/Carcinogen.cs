@@ -90,9 +90,11 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
 
         public override void AI()
         {
+            // Handicaps
             Main.LocalPlayer.AddBuff(BuffID.Blackout, 22);
             Main.LocalPlayer.wingTime = 0;
             Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
+            // Generic setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
@@ -110,24 +112,28 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                 return;
             }
             NPC.Calamity().newAI[3] = 0;
+            // Attacks
             switch (Phase)
             {
+                // Move directly towards the player and teleport once
                 case (int)PhaseType.Idle:
                     {
-                        int tpDistX = 800;
-                        int tpDistY = 500;
-                        int beginTeleporting = lifeRatio < 0.9f ? 90 : 180;
-                        int teleportTelegraphDuration = lifeRatio < 0.9f ? 90 : 120;
-                        int postTeleportDuration = lifeRatio < 0.9f ? 90 : 120;
-                        int when2Teleport = beginTeleporting + teleportTelegraphDuration;
-                        int when2EndPhase = when2Teleport + postTeleportDuration;
+                        int tpDistX = 800; // The horizontal range centered around the player 
+                        int tpDistY = 500; // The vertical range centered around the player
+                        int beginTeleporting = lifeRatio < 0.9f ? 90 : 180; // When Carcinogen should start teleporting
+                        int teleportTelegraphDuration = lifeRatio < 0.9f ? 90 : 120; // How long it takes for the teleport to actually occur 
+                        int postTeleportDuration = lifeRatio < 0.9f ? 90 : 120; // How long Carcinogen remains in this attack until going to his next attack
+                        int when2Teleport = beginTeleporting + teleportTelegraphDuration; // The exact moment Carcinogen teleports
+                        int when2EndPhase = when2Teleport + postTeleportDuration; // When the phase should end
                         NPC.ai[1]++;
                         NPC.ai[2]++;
-                        NPC.velocity = NPC.DirectionTo(Target.Center) * 4;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 4; // Move directly towards the player
+                        // Choose a teleport position
                         if (NPC.ai[1] == beginTeleporting || (NPC.ai[1] > beginTeleporting && teleportPos == default))
                         {
                             teleportPos = new Rectangle((int)(Target.Center.X + Main.rand.Next(-tpDistX, tpDistX)), (int)(Target.Center.Y + Main.rand.Next(-tpDistY, tpDistY)), NPC.width, NPC.height);
                         }
+                        // Draw a dust telegraph for the teleport
                         if (NPC.ai[1] > beginTeleporting)
                         {
                             for (int i = 0; i < 10; i++)
@@ -136,6 +142,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 Main.dust[d].noGravity = true;
                             }
                         }
+                        // Teleport
                         if (NPC.ai[1] > when2Teleport)
                         {
                             DustExplosion();
@@ -143,6 +150,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                             DustExplosion();
                             NPC.ai[1] = 0;
                         }
+                        // Go to slam attack
                         if (NPC.ai[2] > when2EndPhase)
                         {
                             Phase = (int)PhaseType.Slam;
@@ -152,19 +160,22 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         }
                     }
                     break;
+                // Slam into ceiling and spawn asbestos drop rain
                 case (int)PhaseType.Slam:
                     {
                         NPC.velocity.X *= 0.95f;
                         NPC.ai[1]++;
-                        int maxDist = 600;
-                        float fallSpeedRate = 0.3f;
-                        int fallMaxSpeed = 4;
-                        float riseSpeedRate = lifeRatio < 0.5f ? 0.4f : 0.3f;
-                        int riseMaxSpeed = 10;
-                        int speedB4Crash = 6;
-                        int fallTime = lifeRatio < 0.5f ? 20 : 30;
+                        int maxDist = 600; // Carcinogen automatically slams if he goes this far above the player
+                        float fallSpeedRate = 0.3f; // How quickly Carcinogen falls before starting to rise
+                        int fallMaxSpeed = 4; // Max fall speed
+                        float riseSpeedRate = lifeRatio < 0.5f ? 0.4f : 0.3f; // How quickly Carcinogen rises
+                        int riseMaxSpeed = 10; // Max speed at which Carcinogen rises
+                        int speedB4Crash = 6; // Speed required for slam
+                        int fallTime = lifeRatio < 0.5f ? 20 : 30; // How quickly it takes for Carcinogen to recover from slamming
+                        // Rise behavior
                         if (NPC.ai[2] == 0)
                         {
+                            // Fall downwards
                             if (NPC.ai[1] < fallTime)
                             {
                                 if (NPC.velocity.Y < fallMaxSpeed)
@@ -172,6 +183,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                     NPC.velocity.Y += fallSpeedRate;
                                 }
                             }
+                            // Start rising
                             else if (NPC.ai[1] >= fallTime)
                             {
                                 if (NPC.velocity.Y > -riseMaxSpeed)
@@ -180,6 +192,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 }
                                 if (NPC.velocity.Y < -speedB4Crash)
                                 {
+                                    // If Carcinogen hits a tile 10 blocks above the player or at the max distance, slam
                                     if ((Collision.IsWorldPointSolid(NPC.Top) && NPC.position.Y < Target.position.Y - 160) || NPC.position.Y < Target.position.Y - maxDist)
                                     {
                                         SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, NPC.Center);
@@ -190,19 +203,22 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 }
                             }
                         }
+                        // Slam
                         else
                         {
                             NPC.ai[3]++;
-                            int spacing = 16;
-                            int speed = 10;
-                            int fireRate = 10;
-                            int time = death && NPC.Calamity().newAI[1] == 0 ? 50 : 120;
+                            int spacing = 16; // Spacing between each droplet
+                            int speed = 10; // Droplet speed
+                            int fireRate = 10; // How often a droplet is spawned
+                            int time = death && NPC.Calamity().newAI[1] == 0 ? 50 : 120; // How long the droplet spawning lasts
+                            // Spawn droplets in pairs, distance increasing with each pair
                             if (NPC.ai[3] % fireRate == 0)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X + NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X - NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
                             }
                             NPC.velocity.Y *= 0.98f;
+                            // Do the attack again in Death Mode, if it's been done twice or it's not Death Mode, go to the fire blender
                             if (NPC.ai[3] > time)
                             {
                                 if (death)
@@ -237,15 +253,17 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         }
                         break;
                     }
+                // Shoot spinning flames around itself
                 case (int)PhaseType.FireBlender:
                     {
-                        int normalSpeed = 4;
-                        int fireSpeed = 2;
-                        int firePoints = death ? 5 : 4;
-                        float fireProjSpeed = death ? 10 : rev ? 9 : 8;
-                        float fireRateMultiplier = 0.02f;
-                        int projType = NPC.ai[2] == 1 ? ProjectileID.Flames : ProjectileID.Flames;
+                        int normalSpeed = 4; // Speed Carcinogen moves before shooting fire
+                        int fireSpeed = 2; // Speed Carcinogen moves while shooting fire
+                        int firePoints = death ? 5 : 4; // How many points of fire Carcinogen shoots out
+                        float fireProjSpeed = death ? 10 : rev ? 9 : 8; // Fire projectile speed, effectively range
+                        float fireRateMultiplier = 0.02f; // Makes the spacing between the points sane
+                        int projType = ProjectileID.Flames; // Burn baby burn!
                         NPC.ai[1]++;
+                        // Start firing once the player is less than 300 pixels away or 2 seconds have passed
                         if (NPC.ai[1] > 120 || NPC.Distance(Target.Center) < 300)
                         {
                             if (NPC.ai[2] == 0)
@@ -256,6 +274,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         }
                         NPC.velocity = NPC.DirectionTo(Target.Center) * (NPC.ai[2] == 1 ? fireSpeed : normalSpeed);
                         float variance = MathHelper.TwoPi / firePoints;
+                        // Shoot out streams of fire or harmless smoke if telegraph not done yet
                         if (NPC.ai[1] % 5 == 0)
                         {
                             if (NPC.ai[2] == 1)
@@ -276,11 +295,14 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 }
                                 else
                                 {
+                                    // We're beating the HeavySmokeParticle allegations with this one
+                                    // Barely
                                     TimedSmokeParticle smoke = new TimedSmokeParticle(NPC.Center, (velocity * 6).RotatedByRandom(MathHelper.PiOver4 / 8), new Color(0.01f, 0.01f, 0.01f), new Color(0.01f, 0.01f, 0.01f), Main.rand.NextFloat(0.8f, 1.6f), 125, 10);
                                     GeneralParticleHandler.SpawnParticle(smoke);
                                 }
                             }
                         }
+                        // Go to charge attack
                         if (NPC.ai[1] > 480)
                         {
                             NPC.ai[1] = 0;
@@ -289,23 +311,27 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                         }
                     }
                     break;
+                // Dash while spawning exploding cigars
                 case (int)PhaseType.Charge:
                     {
-                        int spinTime = 60;
-                        int dashSpeed = 18;
-                        int bombRate = 20;
-                        int phaseTime = spinTime + 90;
+                        int spinTime = 60; // How long Carcinogen telegraphs the dash   by spinning
+                        int dashSpeed = 18; // The speed of the dash
+                        int bombRate = 20; // How often a cigar is spawned
+                        int phaseTime = spinTime + 90; // How long the attack lasts
                         NPC.ai[1]++;
+                        // Spin
                         if (NPC.ai[1] < spinTime)
                         {
                             NPC.rotation -= 0.4f;
                             NPC.velocity *= 0.9f;
                         }
+                        // Dash
                         else if (NPC.ai[1] == spinTime)
                         {
                             SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             NPC.velocity = NPC.DirectionTo(Target.Center) * dashSpeed;
+                            // Spawn a circle of cinders in M*ster mode
                             if (master)
                             {
                                 int totalCinders = death ? 12 : rev ? 10 : 8;
@@ -319,6 +345,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 }
                             }
                         }
+                        // Spawn cigars
                         else
                         {
                             NPC.rotation = NPC.velocity.ToRotation();
@@ -327,6 +354,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
                                 SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             }
+                            // Change attack
                             if (NPC.ai[1] > phaseTime)
                             {
                                 NPC.ai[1] = 0;
