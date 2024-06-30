@@ -946,13 +946,6 @@ namespace CalRemix.UI
         }
         #endregion
 
-        public override void PreUpdateTime()
-        {
-            //Clears out the scene metrics and set the screen rect
-            sceneMetrics.Clear();
-            screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
-        }
-
         public override void PostUpdateEverything()
         {
             if (Main.dedServ)
@@ -990,6 +983,10 @@ namespace CalRemix.UI
             }
 
             previousHoveredItem = Main.HoverItem.type;
+
+            //Clears out the scene metrics and set the screen rect
+            sceneMetrics.Clear();
+            screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
         }
 
         public void UpdateMessages()
