@@ -983,7 +983,10 @@ namespace CalRemix.UI
             }
 
             previousHoveredItem = Main.HoverItem.type;
+        }
 
+        public override void PreUpdateNPCs()
+        {
             //Clears out the scene metrics and set the screen rect
             sceneMetrics.Clear();
             screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
