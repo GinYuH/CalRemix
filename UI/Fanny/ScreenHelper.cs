@@ -636,6 +636,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(Renault5, "Renault5")
                 .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
+                .SetAvailabilityCondition(()=> NPC.downedMechBossAny)
                 .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
                 .SetTextboxTheme(new HelperTextboxTheme("Renault5_9Slice", new Vector2(77, 15)))
                 .SetExtraAnimations(true, false, true).
@@ -647,10 +648,12 @@ namespace CalRemix.UI
                 .SetTextboxStyle("uh uh..?", new HelperTextboxPalette(Color.OrangeRed, Color.White, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("MiracleBoy_9Slice", new Vector2(16, 16), "MiracleBoy_Background", new Vector2(16, 16)))
                 .SetTextboxFormatting(null, 0, 16)
-                .SetPositionData(true, 120, 0.42f);
+                .SetPositionData(true, 120, 0.42f)
+                .SetAvailabilityCondition(() => NPC.downedMoonlord);
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
+                .SetAvailabilityCondition(() => NPC.downedGolemBoss)
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
@@ -669,6 +672,7 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Sugoi!!! Arigato Gozaimas!", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Trapper_Background", Vector2.Zero)).
                 SetExtraAnimations(false, false, false). //shes locked in her textbox
+                SetAvailabilityCondition(() => NPC.downedPlantBoss).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(640, 158), 465), 0, 0).
                 SetPositionData(new HelperPositionData(
                     new Vector2(0.5f, 0.0f), //Anchored to top middle of screen

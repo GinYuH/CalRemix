@@ -34,13 +34,6 @@ namespace CalRemix.UI
             HelperMessage.New("Mechs", "Congrats on taking down those clanky contraptions! It's like defeating a bunch of oversized kitchen appliances. Just remember, don't get too cocky or they might just hit you with their spatulas of doom!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3);
 
-            HelperMessage.New("Plantoreum1", "Hey, have you seen my precious pink flower that I've been growing for 15 years? I left her around here. She's been my best friend for years now, and I could never fathom what I'd do if I had lost h",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss);
-
-            HelperMessage.New("Plantoreum2", "Oh.",
-               "FannySob", HelperMessage.AlwaysShow, cantBeClickedOff: true, duration: 30)
-                .ChainAfter();
-
             HelperMessage.New("Golem", "Good job defeating that pile o' bricks! You sure.. cough cough wow, the air sure is du- cough cough",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => NPC.downedGolemBoss);
         }
