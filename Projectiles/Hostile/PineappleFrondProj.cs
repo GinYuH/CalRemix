@@ -52,6 +52,7 @@ namespace CalRemix.Projectiles.Hostile
                 if (target.Distance(Segments[i].position) < 22)
                 {
                     target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);
+                    return true;
                 }
             }
             return false;

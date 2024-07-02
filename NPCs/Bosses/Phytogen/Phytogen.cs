@@ -113,7 +113,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override void AI()
         {
-            int yharChance = 43200;
+            int yharChance = 432000;
             bool anyYhars = CalamityUtils.CountProjectiles(ModContent.ProjectileType<JungleDragonYharon>()) > 0;
             /*if (Main.LocalPlayer.controlUseTile)
             {
