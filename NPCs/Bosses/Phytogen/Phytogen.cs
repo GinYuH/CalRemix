@@ -75,12 +75,12 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.npcSlots = 24f;
-            NPC.damage = 100;
+            NPC.damage = 200;
             NPC.width = 86;
             NPC.height = 80;
             NPC.defense = 15;
             NPC.DR_NERD(0.1f);
-            NPC.LifeMaxNERB(20000, 24000, 150000);
+            NPC.LifeMaxNERB(30000, 35000, 300000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -397,7 +397,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ProjectileID.SeedPlantera, (int)(0.25f * NPC.damage), 0, Main.myPlayer);
                             }
                         }*/
-                        if (lifeRatio < 0.5f)
+                        if (lifeRatio < 0.4f)
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
@@ -409,6 +409,8 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                             NPC.rotation = 0;
                             NPC.position = Target.Center - Vector2.UnitY * 200;
                             NPC.velocity *= 0;
+                            NPC.defense = 30;
+                            NPC.Calamity().DR = 0.2f;
                             DustExplosion();
                             Phase = (int)PhaseType.LastStand;
                         }

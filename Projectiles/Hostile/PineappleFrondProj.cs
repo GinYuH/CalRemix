@@ -1,4 +1,5 @@
-﻿using CalamityMod.DataStructures;
+﻿using CalamityMod;
+using CalamityMod.DataStructures;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -51,7 +52,8 @@ namespace CalRemix.Projectiles.Hostile
             {
                 if (target.Distance(Segments[i].position) < 22)
                 {
-                    target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);
+                    target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);                    
+                    target?.Calamity()?.DealDefenseDamage(new Player.HurtInfo());
                     return true;
                 }
             }
@@ -164,6 +166,11 @@ namespace CalRemix.Projectiles.Hostile
                     Gore.NewGore(Projectile.GetSource_Death(), seg.position, Vector2.Zero, Mod.Find<ModGore>("Frond" + Main.rand.Next(1, 5)).Type, Projectile.scale);
                 }
             }
+        }
+
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            target.AddBuff(BuffID.Venom, 120);
         }
     }
 }

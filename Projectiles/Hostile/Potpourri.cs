@@ -104,5 +104,9 @@ namespace CalRemix.Projectiles.Hostile
             float trailOpacity = Utils.GetLerpValue(0.8f, 0.27f, completionRatio, true) * Utils.GetLerpValue(0f, 0.067f, completionRatio, true);
             return Color.Violet * trailOpacity;
         }
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            target.AddBuff(BuffID.Venom, 120);
+        }
     }
 }

@@ -28,7 +28,9 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             NPC.width = 48;
             NPC.height = 54;
             NPC.defense = 20;
-            NPC.lifeMax = 10000;
+            NPC.LifeMaxNERB(4000, 5000, 70000);
+            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = false;
             NPC.noGravity = true;
