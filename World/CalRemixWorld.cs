@@ -707,7 +707,7 @@ namespace CalRemix.World
 
                     Color messageColor = Color.Magenta;
                     CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
-                    if (DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && CalRemix.CalVal != null)
+                    if (CalRemix.CalVal != null)
                     {
                         ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);
                     }
