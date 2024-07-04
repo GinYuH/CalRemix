@@ -4,12 +4,14 @@ using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 namespace CalRemix
@@ -527,6 +529,22 @@ namespace CalRemix
                 spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/ScuttlersJewel").Value, headPos, null, drawColor, 0f, ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/ScuttlersJewel").Value.Size() / 2, 0.6f, SpriteEffects.None, 1);
             if (championType == (int)ChampionID.Skull)
                 spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/OccultSkullCrown").Value, headPos, null, drawColor, 0f, ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/OccultSkullCrown").Value.Size() / 2, 0.4f, SpriteEffects.None, 1);
+        }
+
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            binaryWriter.Write(championType);
+            binaryWriter.Write(championTimer);
+            binaryWriter.Write(kingMinion);
+            binaryWriter.Write(globRevived);
+        }
+
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            championType = binaryReader.ReadInt32();
+            championTimer = binaryReader.ReadInt32();
+            kingMinion = binaryReader.ReadBoolean();
+            globRevived = binaryReader.ReadBoolean();
         }
     }
 }
