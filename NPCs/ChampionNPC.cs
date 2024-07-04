@@ -218,7 +218,7 @@ namespace CalRemix
             }
             if (kingMinion)
             {
-                return Color.Yellow * npc.Opacity;
+                return Color.Blue * npc.Opacity;
             }
             return null;
         }
@@ -486,6 +486,10 @@ namespace CalRemix
                         continue;
                     n.SimpleStrikeNPC(npc.damage, 1);
                 }
+            }
+            if (kingMinion)
+            {
+                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemID.Star);
             }
         }
 
