@@ -1,9 +1,13 @@
 ﻿using CalamityMod;
+using CalRemix.NPCs;
+using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -19,6 +23,8 @@ namespace CalRemix
         public int championTimer = 0;
 
         public bool globRevived = false;
+
+        public bool kingMinion = false;
 
         public enum ChampionID
         {
@@ -93,7 +99,7 @@ namespace CalRemix
                 {
                     // Grab a champion
                     championType = ChampionWeights.Get();
-                    //championType = (int)ChampionID.Camouflage;
+                    //championType = (int)ChampionID.Skull;
                     // All champions except the size based ones default at slightly larger
                     if (championType > 0 && championType != (int)ChampionID.Small && championType != (int)ChampionID.Large)
                     {
@@ -133,12 +139,27 @@ namespace CalRemix
                         case (int)ChampionID.Rainbow:
                             npc.lifeMax = (int)(npc.lifeMax * 3f);
                             npc.life = (int)(npc.life * 3f);
+                            // Spawn an orbital
+                            if (npc.type != ModContent.NPCType<EternalChampEye>())
+                            {
+                                int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
+                                Main.npc[n].damage = npc.damage / 5;
+                            }
                             break;
                         case (int)ChampionID.Transluscent:
                             // only fall through tiles if it ignores gravity for sanity reasons
                             if (npc.noGravity)
                                 npc.noTileCollide = true;
                             npc.alpha = 100;
+                            break;
+                        case (int)ChampionID.LightWhite:
+                            // Spawn 2-3 orbitals
+                            if (npc.type != ModContent.NPCType<EternalChampEye>())
+                            for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                            {
+                                int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
+                                Main.npc[n].damage = npc.damage / 5;
+                            }
                             break;
                     }
                 }
@@ -177,7 +198,7 @@ namespace CalRemix
                     (int)ChampionID.LightBlue => Color.LightBlue,
                     (int)ChampionID.Camouflage => GetBiomeColor(),
                     (int)ChampionID.PulsingGreen => Color.Lerp(drawColor, Color.Green, (Main.GlobalTimeWrappedHourly % 1f - 0.1f) / 0.2f),
-                    (int)ChampionID.PulsingGray => Color.Lerp(drawColor, Color.Gray, (Main.GlobalTimeWrappedHourly % 1f - 0.1f) / 0.2f),
+                    (int)ChampionID.PulsingGray => championTimer % 120 < 59 ? Color.Gray : drawColor,
                     (int)ChampionID.LightWhite => Color.LightGray,
                     (int)ChampionID.Small => drawColor,
                     (int)ChampionID.Large => drawColor,
@@ -195,6 +216,10 @@ namespace CalRemix
                 }
 
             }
+            if (kingMinion)
+            {
+                return Color.Yellow * npc.Opacity;
+            }
             return null;
         }
 
@@ -208,7 +233,9 @@ namespace CalRemix
                     break;
                 // Leave behind green creep
                 case (int)ChampionID.Green:
-                    //Projectile.NewProjectile creep
+                    championTimer++;
+                    if (championTimer % 30 == 0)
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Bottom, Vector2.Zero, ModContent.ProjectileType<Creep>(), (int)(npc.damage * 0.2f), 0, ai1: npc.noGravity.ToInt());
                     break;
                 // Move slower
                 case (int)ChampionID.DarkBlue:
@@ -339,6 +366,8 @@ namespace CalRemix
                         if (npc.HasPlayerTarget)
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.DirectionTo(Main.player[npc.target].Center) * 8, ProjectileID.BloodNautilusShot, (int)(npc.damage * 0.25f), 0);
                     }
+                    if (championTimer % 30 == 0)
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Bottom, Vector2.Zero, ModContent.ProjectileType<Creep>(), (int)(npc.damage * 0.2f), 0, ai1: npc.noGravity.ToInt());
                     break;
                 // Fade in and out
                 case (int)ChampionID.Black:
@@ -353,7 +382,38 @@ namespace CalRemix
                         npc.alpha -= 6;
                     }
                     break;
+                case (int)ChampionID.Crown:
+
+                    foreach (NPC n in Main.npc)
+                    {
+                        if (n == null)
+                            continue;
+                        if (!n.active)
+                            continue;
+                        if (n.life <= 0)
+                            continue;
+                        if (n.boss)
+                            continue;
+                        if (n.dontTakeDamage)
+                            continue;
+                        if (n.friendly)
+                            continue;
+
+                        if (n.TryGetGlobalNPC(out ChampionNPC c))
+                        {
+                            // Turn all non champions yellow
+                            // This is purely visual
+                            if (c.championType <= 0)
+                            {
+                                c.kingMinion = true;
+                            }
+                        }
+                    }
+                    break;
             }
+
+
+
             return true;
         }
 
@@ -446,11 +506,23 @@ namespace CalRemix
         {
             if (championType == (int)ChampionID.Pulsating)
             {
-                if (NPC.CountNPCS(NPCID.DemonEye) < 5)
+                if (NPC.CountNPCS(ModContent.NPCType<ChampEye>()) < 5)
                 {
-                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, NPCID.DemonEye);
+                    int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<ChampEye>());
+                    NPC eye = Main.npc[n];
+                    eye.lifeMax = npc.life = (int)MathHelper.Max(5, (int)(npc.lifeMax / 20));
+                    eye.damage = (int)MathHelper.Max(5, (int)(npc.damage * 0.25f));
                 }
             }
+        }
+
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Vector2 headPos = npc.Center - Vector2.UnitY * npc.height / 2 - Vector2.UnitY * 22 - screenPos;
+            if (championType == (int)ChampionID.Crown)
+                spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/ScuttlersJewel").Value, headPos, null, drawColor, 0f, ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/ScuttlersJewel").Value.Size() / 2, 0.6f, SpriteEffects.None, 1);
+            if (championType == (int)ChampionID.Skull)
+                spriteBatch.Draw(ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/OccultSkullCrown").Value, headPos, null, drawColor, 0f, ModContent.Request<Texture2D>("CalamityMod/Items/Accessories/OccultSkullCrown").Value.Size() / 2, 0.4f, SpriteEffects.None, 1);
         }
     }
 }

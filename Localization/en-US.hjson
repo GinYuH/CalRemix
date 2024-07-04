@@ -2708,6 +2708,7 @@ Mods: {
 			PathogenCaltrop.DisplayName: White Blood Cell
 			PathogenCell1.DisplayName: Hostile Blood Cell
 			AspidShotFriendly.DisplayName: Infection Glob
+			Creep.DisplayName: Creep
 		}
 
 		Tiles: {
