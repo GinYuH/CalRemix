@@ -93,13 +93,13 @@ namespace CalRemix
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
             // Only naturally spawned enemies can become champions
-            if (source is EntitySource_SpawnNPC && npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode)
+            if (source is EntitySource_SpawnNPC && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode)
             {
                 if (Main.rand.NextBool(ChampionChance))
                 {
                     // Grab a champion
                     championType = ChampionWeights.Get();
-                    //championType = (int)ChampionID.Skull;
+                    //championType = (int)ChampionID.Pulsating;
                     // All champions except the size based ones default at slightly larger
                     if (championType > 0 && championType != (int)ChampionID.Small && championType != (int)ChampionID.Large)
                     {
@@ -506,11 +506,11 @@ namespace CalRemix
         {
             if (championType == (int)ChampionID.Pulsating)
             {
-                if (NPC.CountNPCS(ModContent.NPCType<ChampEye>()) < 5)
+                if (NPC.CountNPCS(ModContent.NPCType<ChampEye>()) < 5 && npc.type != ModContent.NPCType<ChampEye>())
                 {
                     int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<ChampEye>());
                     NPC eye = Main.npc[n];
-                    eye.lifeMax = npc.life = (int)MathHelper.Max(5, (int)(npc.lifeMax / 20));
+                    eye.lifeMax = eye.life = (int)MathHelper.Max(5, (int)(npc.lifeMax / 20));
                     eye.damage = (int)MathHelper.Max(5, (int)(npc.damage * 0.25f));
                 }
             }
