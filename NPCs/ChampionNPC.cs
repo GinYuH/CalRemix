@@ -38,7 +38,7 @@ namespace CalRemix
             Gray = 8, // Decreased health
             Transluscent = 9, // Falls through tiles
             Black = 10, // Fades in and out
-            Magenta = 11, // Shoots projetiles every 60 seconds
+            Magenta = 11, // Shoots projectiles every second
             Violet = 12, // Pulls in player projectiles
             DarkRed = 13, // Revives once upon death
             LightBlue = 14, // Explodes into 8 projectiles on death
