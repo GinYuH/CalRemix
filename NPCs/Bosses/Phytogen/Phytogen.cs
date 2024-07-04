@@ -253,7 +253,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 case (int)PhaseType.Idle:
                     {
                         NPC.boss = true;
-                        NPC.damage = 100;
+                        NPC.damage = 200;
                         Main.LocalPlayer.Calamity().isNearbyBoss = true;
                         int minDist = 400;
                         float speed = 8f;
@@ -278,6 +278,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                         int fireGate = 110;
                         int perRound = 8;
                         int totalRounds = 2;
+                        NPC.damage = 200;
                         NPC.ai[1]++;
                         if (NPC.ai[1] > fireGate)
                         {
@@ -359,7 +360,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                     {
                                         Vector2 velocity = new Vector2(0f, vineSpeed);
                                         velocity = velocity.RotatedBy(variance * i);
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.25f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.5f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
                                     }
                                     DustExplosion();
                                     NPC.Calamity().newAI[1] = 30;

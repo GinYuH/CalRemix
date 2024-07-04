@@ -106,7 +106,7 @@ namespace CalRemix.Projectiles.Hostile
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(BuffID.Venom, 120);
+            target.AddBuff(BuffID.Venom, 180);
         }
     }
 }

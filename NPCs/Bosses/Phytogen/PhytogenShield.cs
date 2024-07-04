@@ -21,7 +21,8 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override void SetDefaults()
         {
-            NPC.damage = 60;
+            NPC.damage = 200;
+            NPC.Calamity().canBreakPlayerDefense = true;
             NPC.width = 216;
             NPC.height = 206;
             NPC.defense = 20;

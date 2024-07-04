@@ -52,7 +52,7 @@ namespace CalRemix.Projectiles.Hostile
             {
                 if (target.Distance(Segments[i].position) < 22)
                 {
-                    target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);                    
+                    double d = target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);
                     target?.Calamity()?.DealDefenseDamage(new Player.HurtInfo());
                     return true;
                 }
@@ -119,7 +119,8 @@ namespace CalRemix.Projectiles.Hostile
                 {
                     if (target.Distance(Segments[i].position) < 22)
                     {
-                        target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);
+                        double d = target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, Projectile.whoAmI), Projectile.damage, 1);
+                        target?.Calamity()?.DealDefenseDamage(new Player.HurtInfo());
                     }
                 }
             }
