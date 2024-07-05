@@ -75,7 +75,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.npcSlots = 24f;
-            NPC.damage = 200;
+            NPC.damage = 175;
             NPC.width = 86;
             NPC.height = 80;
             NPC.defense = 15;
