@@ -15,10 +15,11 @@ using CalamityMod.Projectiles.Boss;
 using CalamityMod.Graphics.Primitives;
 using Terraria.Graphics.Effects;
 using CalRemix.Projectiles.Hostile;
+using CalamityMod.Skies;
 
 namespace CalRemix.NPCs.Bosses.Hypnos
 {
-    internal class AergiaNeuron : ModNPC
+    public class AergiaNeuron : ModNPC
     {
         public bool initialized = false;
         public bool afterimages = false;
@@ -140,6 +141,10 @@ namespace CalRemix.NPCs.Bosses.Hypnos
 				SmokeDrawer.Update();
 			}
             
+            if (NPC.localAI[0] < 1f)
+            {
+                NPC.localAI[0] += 0.01f;
+            }
             
             switch (hypnos.ai[0])
             {
@@ -750,6 +755,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                         {                            
                             if (NPC.ai[1] == 0)
                             {
+                                ExoMechsSky.CreateLightningBolt(22, true);
                                 Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound with { Volume = CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound.Volume, Pitch = CalamityMod.Sounds.CommonCalamitySounds.ExoLaserShootSound.Pitch - 0.2f });
                                 for (int i = 0; i < 3; i++)
                                 {
@@ -1250,6 +1256,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                     shader.Parameters["screenPosition"].SetValue(Main.screenPosition);
                     shader.Parameters["screenSize"].SetValue(Main.ScreenSize.ToVector2());
                     shader.Parameters["resolution"].SetValue(0.9f);
+                    shader.Parameters["alpha"].SetValue(NPC.localAI[0]);
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader, Main.GameViewMatrix.TransformationMatrix);

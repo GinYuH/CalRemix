@@ -8,7 +8,7 @@ using CalamityMod;
 
 namespace CalRemix.NPCs.Bosses.Hypnos
 {
-    internal class HypnosPlug : ModNPC
+    public class HypnosPlug : ModNPC
     {
         public bool initialized = false;
         NPC hypnos;

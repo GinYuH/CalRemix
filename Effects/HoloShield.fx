@@ -1,5 +1,6 @@
 float time;
 float resolution;
+float alpha;
 float2 screenPosition;
 float2 screenSize;
 texture sampleTexture;
@@ -69,7 +70,7 @@ float4 main(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
     
 
 
-    return float4(color - float3(0.4, 0.4, 0.4), textureGet.a * 0.8);
+    return float4(color - float3(0.4, 0.4, 0.4), textureGet.a * 0.8 * alpha);
 }
 
 technique Technique1

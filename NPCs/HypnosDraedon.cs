@@ -102,13 +102,21 @@ namespace CalRemix.NPCs
                             if (Main.netMode != NetmodeID.Server)
                             {
                                 SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.FlareSound with { Volume = CalamityMod.Sounds.CommonCalamitySounds.FlareSound.Volume * 1.55f }, NPC.Center);
+                                SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                             }
-                            int hypy = NPC.NewNPC(NPC.GetSource_FromAI(), (int)player.Center.X, (int)(player.Center.Y - 400), ModContent.NPCType<Hypnos>());
+                            Vector2 cords = new Vector2((int)player.Center.X, (int)(player.Center.Y - 200));
+                            int hypy = NPC.NewNPC(NPC.GetSource_FromAI(), (int)cords.X, (int)cords.Y, ModContent.NPCType<Hypnos>());
                                 hypnosWhoAmI = hypy;
 								hypnos = Main.npc[hypnosWhoAmI];
                                 hypnos.netUpdate = true;
 							NPC.ai[1] = 0;
                             NPC.ai[0] = 1;
+
+                            for (int i = 0; i < 44; i++)
+                            {
+                                int d = Dust.NewDust(cords- Vector2.UnitY * 60, 2, 2, DustID.Blood, Scale: Main.rand.NextFloat(0.6f, 2.6f));
+                                Main.dust[d].velocity = Main.rand.NextVector2Circular(20, 20);
+                            }
                         }
                         NPC.ai[1]++;
                     }

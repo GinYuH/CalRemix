@@ -57,6 +57,7 @@ namespace CalRemix
         public static Asset<Texture2D> sunCreepy = null;
         public static Asset<Texture2D> sunOxy = null;
         public static Asset<Texture2D> sunOxy2 = null;
+        public static Asset<Texture2D> brian = null;
 
         public static Type calvalFanny = null;
         public static Type calvalFannyBox = null;
@@ -175,6 +176,7 @@ namespace CalRemix
 
             sunOG = TextureAssets.Sun3;
             sunReal = TextureAssets.Sun;
+            brian = TextureAssets.Npc[NPCID.BrainofCthulhu];
             sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
             sunOxy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun");
             sunOxy2 = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun2");
