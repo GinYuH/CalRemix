@@ -80,6 +80,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
             NPC.dontTakeDamage = true;
             NPC.damage = 1;
             NPC.defense = 90;
+            NPC.alpha = 255;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/CerebralAugmentations");
         }
@@ -189,6 +190,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                 case 0: //Spawn animation
                     {
                         NPC.ai[1]++;
+                        NPC.alpha = (int)MathHelper.Max(NPC.alpha - 20, 0);
                         NPC.damage = 0;
                         int start = 60;
                         if (NPC.ai[1] < start + 160)
