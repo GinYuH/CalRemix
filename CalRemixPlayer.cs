@@ -457,7 +457,7 @@ namespace CalRemix
         {
             if (Main.myPlayer == Player.whoAmI)
             {
-                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == ModContent.GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(ModContent.NPCType<Hypnos>()) || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()))
+                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == ModContent.GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()) || NPC.AnyNPCs(ModContent.NPCType<Hypnos>()))
                     Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;

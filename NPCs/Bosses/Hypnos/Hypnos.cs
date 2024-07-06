@@ -30,6 +30,9 @@ using CalRemix.NPCs.Bosses.Origen;
 using System.Collections.Generic;
 using static CalRemix.UI.Title.CalRemixMenu2;
 using CalamityMod.Skies;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.NPCs.ExoMechs.Apollo;
+using CalamityMod.NPCs.ExoMechs.Artemis;
 
 namespace CalRemix.NPCs.Bosses.Hypnos
 {
@@ -197,7 +200,8 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                         int placeupper = placelower + 30;
                         int placecrown = placeupper + 30;
                         int placebowl = placecrown + 30;
-                        int totaltime = placebowl + 30;
+                        int startanim = placebowl + 60;
+                        int totaltime = startanim + 70;
                         if (NPC.ai[1] < totaltime)
                         {
                             if (NPC.ai[1] == start + 1)
@@ -235,7 +239,18 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                             {
                                 CreatePiece(NPC.Center + new Vector2(0, 200), "Wires", 0f, false, NPC.Center + new Vector2(0, 0), 10, 0.8f);
                             }
-
+                            if (NPC.ai[1] >= startanim)
+                            {
+                                if (NPC.localAI[1] == 0.3f)
+                                {
+                                    SoundEngine.PlaySound(AresTeslaCannon.TeslaOrbShootSound with { Volume = 0.75f }, NPC.Center);
+                                }
+                                if (NPC.localAI[1] == 1.7f)
+                                {
+                                    SoundEngine.PlaySound(Artemis.ChargeTelegraphSound with { Volume = 1f }, NPC.Center);
+                                }
+                                NPC.localAI[1] += 0.05f;
+                            }
                         }
                         else
                         {
@@ -255,17 +270,16 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                             ChangePhase(1);
                         }
                         if (assemblagePieces != null && assemblagePieces.Count > 0)
-                        foreach (HypnosAssemblagePiece piece in assemblagePieces)
-                        {
-                            piece.Move();
-                        }                        
+                            foreach (HypnosAssemblagePiece piece in assemblagePieces)
+                            {
+                                piece.Move();
+                            }
                     }
                     break;
                 case 1: //Move downward
                     {
                         NPC.ai[1]++;
                         afterimages = true;
-                        Main.LocalPlayer.Calamity().monolithExoShader = 30;
                         Vector2 playerpos = new Vector2(Main.player[NPC.target].Center.X, Main.player[NPC.target].Center.Y + 200);
                         Vector2 distanceFromDestination = playerpos - NPC.Center;
                         CalamityUtils.SmoothMovement(NPC, 100, distanceFromDestination, 30, 1, true);
@@ -781,6 +795,8 @@ namespace CalRemix.NPCs.Bosses.Hypnos
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D eyetexture = Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/Hypnos_Eye").Value;
+            Texture2D glowmask = Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/Hypnos_Glow").Value;
             if (NPC.IsABestiaryIconDummy)
             {
                 SpriteEffects spriteEffects = SpriteEffects.None;
@@ -788,8 +804,6 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                     spriteEffects = SpriteEffects.FlipHorizontally;
 
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-                Texture2D glowmask = Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/Hypnos_Glow").Value;
-                Texture2D eyetexture = Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/Hypnos_Eye").Value;
                 Vector2 origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / Main.npcFrameCount[NPC.type] / 2));
                 Color white = Color.White;
                 float colorLerpAmt = 0.5f;
@@ -823,20 +837,60 @@ namespace CalRemix.NPCs.Bosses.Hypnos
             else if (NPC.ai[0] == 0)
             {
                 Texture2D brian = ModContent.Request<Texture2D>("Terraria/Images/NPC_266").Value;
-                Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-                //Texture2D brian = Terraria.GameContent.TextureAssets.Npc[NPCID.BrainofCthulhu].Value;
                 Vector2 origin = new Vector2((float)(brian.Width / 2), (float)(brian.Height / 8));
                 Vector2 npcOffset = NPC.Center - screenPos;
                 npcOffset -= new Vector2((float)brian.Width, (float)(brian.Height / 4)) * NPC.scale / 2f;
                 npcOffset += origin * NPC.scale + new Vector2(0f, NPC.gfxOffY + 100);
-                spriteBatch.Draw(brian, npcOffset, brian.Frame(1, 8, 0, brainFrame), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale * 0.95f, SpriteEffects.None, 0f);
+
+                int hideSpine = 0;
+                if (NPC.ai[1] > 195)
+                {
+                    hideSpine = (int)MathHelper.Max((int)MathHelper.Lerp(0, -80, (NPC.ai[1] - 195) / 2), -80);
+                }
+
+                spriteBatch.Draw(brian, npcOffset, brian.Frame(1, 8, 0, brainFrame, sizeOffsetY: hideSpine), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale * 0.95f, SpriteEffects.None, 0f);
+
+
+                int flickrate = (int)MathHelper.Lerp(5, 2, NPC.localAI[1] / 2);
+                bool flickOn = NPC.localAI[1] >= 2 ? true : Main.rand.NextBool(flickrate);
+                /*if (NPC.ai[1] > 240)
+                {
+                    if (flickOn)
+                    {
+                        spriteBatch.EnterShaderRegion();
+                        var shader = Terraria.Graphics.Effects.Filters.Scene["CalRemix:HoloShieldShader"].GetShader().Shader;
+                        shader.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly);
+                        shader.Parameters["screenPosition"].SetValue(Main.screenPosition);
+                        shader.Parameters["screenSize"].SetValue(Main.ScreenSize.ToVector2());
+                        shader.Parameters["resolution"].SetValue(0.9f);
+                        shader.Parameters["alpha"].SetValue(MathHelper.Min(NPC.localAI[1], 1));
+
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader, Main.GameViewMatrix.TransformationMatrix);
+
+
+                        Texture2D shield = Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/HypnosShield").Value;
+                        spriteBatch.Draw(shield, npcOffset - new Vector2(0, 136), null, Color.White, NPC.rotation, shield.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
+
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+                    }
+                }*/
 
                 if (assemblagePieces != null && assemblagePieces.Count > 0) 
-                    foreach (HypnosAssemblagePiece piece in assemblagePieces)
+                foreach (HypnosAssemblagePiece piece in assemblagePieces)
+                {
+                    Texture2D tex = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/Assemblage" + piece.texture).Value;
+                    spriteBatch.Draw(tex, piece.position - screenPos + Vector2.UnitY * 40, null, NPC.GetAlpha(drawColor) * (0.00392156863f * piece.opacity), 0, tex.Size() / 2, 1f, piece.leftSide ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1);
+                }
+                if (NPC.ai[1] > 240)
+                {
+                    if (flickOn)
                     {
-                        Texture2D tex = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Hypnos/Assemblage" + piece.texture).Value;
-                        spriteBatch.Draw(tex, piece.position - screenPos + Vector2.UnitY * 40, null, NPC.GetAlpha(drawColor) * (0.00392156863f * piece.opacity), 0, tex.Size() / 2, 1f, piece.leftSide ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1);
+                        spriteBatch.Draw(eyetexture, npcOffset + new Vector2(-4, 11), eyetexture.Frame(1, 4, 0, 0), Color.White * MathHelper.Clamp(NPC.localAI[1], 0, 1), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(glowmask, npcOffset + new Vector2(-4, 11), eyetexture.Frame(1, 4, 0, 0), Color.White * MathHelper.Clamp(NPC.localAI[1], 0, 1), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
                     }
+                }
             }
 
             SmokeDrawer.DrawSet(NPC.Center);
