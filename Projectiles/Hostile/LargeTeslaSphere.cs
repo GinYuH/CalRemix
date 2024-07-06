@@ -1,4 +1,5 @@
-﻿using CalRemix.NPCs.Bosses.Hypnos;
+﻿using CalamityMod;
+using CalRemix.NPCs.Bosses.Hypnos;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -39,18 +40,25 @@ namespace CalRemix.Projectiles.Hostile
 				Projectile.frame = 0;
 			}
 			Player target = Main.player[(int) Projectile.ai[0]];
-			Vector2 distance = target.Center - Projectile.Center;
-			distance *= 6;
-			Projectile.velocity = (Projectile.velocity * 24f + distance) / 25f;
-			Projectile.velocity.Normalize();
-			Projectile.velocity *= 6;
+			if (target != null && target.active)
+			{
+				Vector2 distance = target.Center - Projectile.Center;
+				distance /= 50;
+				Projectile.velocity = ((Projectile.velocity * 24f + distance) / 25f);
+				if (Projectile.velocity.Length() < 6)
+				{
+					Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.UnitY) * 6;
+				}
+				//Projectile.velocity.Normalize();
+				//Projectile.velocity *= 6;
+			}
 
 			
 			NPC hyp = Main.npc[CalRemixGlobalNPC.hypnos];
 
-			if (hyp.type == ModContent.NPCType<Hypnos>())
+			if (hyp != null && hyp.active && hyp.life > 0 && hyp.type == ModContent.NPCType<Hypnos>())
 			{
-				if (hyp.ai[0] > 5 || !hyp.active)
+				if (hyp.ModNPC<Hypnos>().p2 || !hyp.active)
 				{
 					Projectile.damage = 0;
 					Projectile.velocity = Projectile.velocity * 0.9f;
