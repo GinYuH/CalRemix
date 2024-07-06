@@ -33,6 +33,8 @@ using CalRemix.NPCs.Bosses.Carcinogen;
 using System.Linq;
 using CalRemix.NPCs.PandemicPanic;
 using CalRemix.NPCs.Bosses.Hypnos;
+using CalamityMod.UI;
+using CalRemix.NPCs.Bosses.Phytogen;
 
 namespace CalRemix
 {
@@ -201,6 +203,8 @@ namespace CalRemix
             cal.Call("DeclareMiniboss", ModContent.NPCType<KingMinnowsPrime>());
             cal.Call("DeclareMiniboss", ModContent.NPCType<Dendritiator>());
             cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
+            cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<Hypnos>(), ModContent.NPCType<HypnosPlug>());
+            cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<Phytogen>(), ModContent.NPCType<PineappleFrond>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
 

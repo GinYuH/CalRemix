@@ -111,6 +111,7 @@ namespace CalRemix.NPCs
                                 hypnos.netUpdate = true;
 							NPC.ai[1] = 0;
                             NPC.ai[0] = 1;
+                            NewText("Brain of Cthulhu has awoken?", new Color(175, 75, 255));
 
                             for (int i = 0; i < 44; i++)
                             {

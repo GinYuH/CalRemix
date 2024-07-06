@@ -267,6 +267,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                             ExoMechsSky.CreateLightningBolt(22, true);
                             Terraria.Audio.SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.FlareSound, NPC.Center);
                             assemblagePieces.Clear();
+                            Main.NewText(NPC.FullName + " has awoken!", new Color(175, 75, 255));
                             ChangePhase(1);
                         }
                         if (assemblagePieces != null && assemblagePieces.Count > 0)
@@ -1000,6 +1001,18 @@ namespace CalRemix.NPCs.Bosses.Hypnos
 			ragetimer = reader.ReadInt32();
             
             beserktimer = reader.ReadInt32();
+        }
+
+        public override void ModifyTypeName(ref string typeName)
+        {
+            if (NPC.ai[0] == 0)
+            {
+                typeName = ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName;
+            }
+            else
+            {
+                typeName = ContentSamples.NpcsByNetId[Type].TypeName;
+            }
         }
 
         public static void SummonDraedon(Player player)
