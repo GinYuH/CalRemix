@@ -193,7 +193,12 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                         NPC.alpha = (int)MathHelper.Max(NPC.alpha - 20, 0);
                         NPC.damage = 0;
                         int start = 60;
-                        if (NPC.ai[1] < start + 160)
+                        int placelower = start + 30;
+                        int placeupper = placelower + 30;
+                        int placecrown = placeupper + 30;
+                        int placebowl = placecrown + 30;
+                        int totaltime = placebowl + 30;
+                        if (NPC.ai[1] < totaltime)
                         {
                             if (NPC.ai[1] == start + 1)
                             {
@@ -201,34 +206,34 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                                 int yStart = -50;
                                 int xEnd = 69;
                                 int yEnd = -33;
-                                CreatePiece(NPC.Center + new Vector2(xStart, yStart), "Side", 0f, false, NPC.Center + new Vector2(xEnd, yEnd), 10);
-                                CreatePiece(NPC.Center + new Vector2(-xStart, yStart), "Side", 0f, true, NPC.Center + new Vector2(-xEnd, yEnd), 10);
+                                CreatePiece(NPC.Center + new Vector2(xStart, yStart), "Side", 0f, false, NPC.Center + new Vector2(xEnd, yEnd), 10, -0.2f);
+                                CreatePiece(NPC.Center + new Vector2(-xStart, yStart), "Side", 0f, true, NPC.Center + new Vector2(-xEnd, yEnd), 10, -0.2f);
                             }
-                            if (NPC.ai[1] == start + 30)
+                            if (NPC.ai[1] == placelower)
                             {
                                 int xStart = 170;
                                 int yStart = -90;
                                 int xEnd = 70;
                                 int yEnd = -70;
-                                CreatePiece(NPC.Center + new Vector2(xStart, yStart), "LowerTube", 0f, false, NPC.Center + new Vector2(xEnd, yEnd), 6);
-                                CreatePiece(NPC.Center + new Vector2(-xStart, yStart), "LowerTube", 0f, true, NPC.Center + new Vector2(-xEnd, yEnd), 6);
+                                CreatePiece(NPC.Center + new Vector2(xStart, yStart), "LowerTube", 0f, false, NPC.Center + new Vector2(xEnd, yEnd), 6, 0.1f);
+                                CreatePiece(NPC.Center + new Vector2(-xStart, yStart), "LowerTube", 0f, true, NPC.Center + new Vector2(-xEnd, yEnd), 6, 0.1f);
                             }
-                            if (NPC.ai[1] == start + 60)
+                            if (NPC.ai[1] == placeupper)
                             {
                                 int xStart = 170;
                                 int yStart = -120;
                                 int xEnd = 60;
                                 int yEnd = -96;
-                                CreatePiece(NPC.Center + new Vector2(xStart, yStart), "UpperTube", 0f, false, NPC.Center + new Vector2(xEnd, yEnd), 6);
-                                CreatePiece(NPC.Center + new Vector2(-xStart, yStart), "UpperTube", 0f, true, NPC.Center + new Vector2(-xEnd, yEnd), 6);
+                                CreatePiece(NPC.Center + new Vector2(xStart, yStart), "UpperTube", 0f, false, NPC.Center + new Vector2(xEnd, yEnd), 6, 0.3f);
+                                CreatePiece(NPC.Center + new Vector2(-xStart, yStart), "UpperTube", 0f, true, NPC.Center + new Vector2(-xEnd, yEnd), 6, 0.3f);
                             }
-                            if (NPC.ai[1] == start + 90)
+                            if (NPC.ai[1] == placecrown)
                             {
-                                CreatePiece(NPC.Center + new Vector2(0, -200), "Crown", 0f, false, NPC.Center + new Vector2(0, -41), 10);
+                                CreatePiece(NPC.Center + new Vector2(0, -200), "Crown", 0f, false, NPC.Center + new Vector2(0, -41), 10, 0.5f);
                             }
-                            if (NPC.ai[1] == start + 120)
+                            if (NPC.ai[1] == placebowl)
                             {
-                                CreatePiece(NPC.Center + new Vector2(0, 200), "Wires", 0f, false, NPC.Center + new Vector2(0, 0), 10);
+                                CreatePiece(NPC.Center + new Vector2(0, 200), "Wires", 0f, false, NPC.Center + new Vector2(0, 0), 10, 0.8f);
                             }
 
                         }
@@ -944,21 +949,21 @@ namespace CalRemix.NPCs.Bosses.Hypnos
         }
 
         public static void SummonDraedon(Player player)
-        { // don't call it on multiplayer client
+        { 
+            // don't call it on multiplayer client
 			NPC.NewNPC(new Terraria.DataStructures.EntitySource_BossSpawn(player), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>(), 0, 0, 0, 0, player.whoAmI, player.whoAmI);
-
 		}
 
-        public HypnosAssemblagePiece CreatePiece(Vector2 position, string texture, float opacity, bool leftSide, Vector2 destination, float power)
+        public HypnosAssemblagePiece CreatePiece(Vector2 position, string texture, float opacity, bool leftSide, Vector2 destination, float power, float pitch)
         {
-            HypnosAssemblagePiece piece = new HypnosAssemblagePiece(position, texture, opacity, leftSide, destination, power);
+            HypnosAssemblagePiece piece = new HypnosAssemblagePiece(position, texture, opacity, leftSide, destination, power, pitch);
             assemblagePieces.Add(piece);
 
             return piece;
         }
 	}
 
-    public class HypnosAssemblagePiece(Vector2 position, string texture, float opacity, bool leftSide, Vector2 destination, float power)
+    public class HypnosAssemblagePiece(Vector2 position, string texture, float opacity, bool leftSide, Vector2 destination, float power, float pitch)
     {
         public Vector2 position = position;
         public string texture = texture;
@@ -968,6 +973,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
         public float time = -1f;
         public bool playedEffect = false;
         public float power = power;
+        public float pitch = pitch;
 
         public void Move()
         {
@@ -986,7 +992,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
 
             if (time >= 1 && !playedEffect)
             {
-                SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ExoHitSound, position);
+                SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ExoHitSound with { Pitch = pitch }, position);
                 Main.LocalPlayer.Calamity().GeneralScreenShakePower = power;
                 playedEffect = true;
             }
