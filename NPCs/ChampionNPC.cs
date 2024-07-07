@@ -413,9 +413,6 @@ namespace CalRemix
                     }
                     break;
             }
-
-
-
             return true;
         }
 

@@ -34,6 +34,7 @@ using CalamityMod.Projectiles.Melee.Spears;
 using CalamityMod.Rarities;
 using CalamityMod.Items.Accessories.Vanity;
 using CalRemix.World;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Retheme
 {
@@ -352,6 +353,11 @@ namespace CalRemix.Retheme
             if (item.type == ItemType<DesertMedallion>())
             {
                 var line = new TooltipLine(mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<HadalStew>())
+            {
+                var line = new TooltipLine(mod, "HadalStewRemix", "Grants a handful of combat buffs");
                 tooltips.Add(line);
             }
         }

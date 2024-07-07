@@ -637,6 +637,16 @@ namespace CalRemix
                     player.AddCooldown(BananaClownCooldown.ID, 4200);
                 }
             }
+            if (item.type == ModContent.ItemType<HadalStew>())
+            {
+                player.AddBuff(BuffID.Wrath, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Rage, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Endurance, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Swiftness, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Ironskin, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Regeneration, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Titan, CalamityUtils.SecondsToFrames(60));
+            }
         }
         public override void PostUpdate(Item item)
         {
