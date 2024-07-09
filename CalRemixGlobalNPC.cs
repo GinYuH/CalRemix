@@ -976,6 +976,25 @@ namespace CalRemix
             {
                 npcLoot.Add(ModContent.ItemType<GreaterStealthPotion>(), 1, 5, 10);
             }
+            if (npc.type == NPCID.GoblinThief)
+            {
+                npcLoot.AddNormalOnly(ModContent.ItemType<Warglaive>(), 40, 25, 68);
+                npcLoot.AddIf(()=>Main.expertMode, ModContent.ItemType<Warglaive>(), 20, 37, 120);
+            }
+            if (npc.type == NPCID.GoblinPeon)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Warbell>(), 40, 20));
+            }
+            if (npc.type == NPCID.GoblinSorcerer)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Warstaff>(), 20, 10));
+            }
+            if (npc.type == NPCID.GoblinArcher)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Warbow>(), 40, 20));
+                npcLoot.AddNormalOnly(ModContent.ItemType<WarArrow>(), 40, 25, 68);
+                npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<WarArrow>(), 20, 37, 120);
+            }
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
