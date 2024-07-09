@@ -23,6 +23,11 @@ namespace CalRemix.Projectiles
             AIType = ProjectileID.WoodenArrowFriendly;
         }
 
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             int time = Projectile.ai[2] == 1 ? 600 : 240;

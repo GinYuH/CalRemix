@@ -36,7 +36,7 @@ namespace CalRemix.Items.Weapons
         {
             player.AddBuff(ModContent.BuffType<Warath>(), 300);
             target.AddBuff(ModContent.BuffType<ArmorCrunch>(), 300);
-            SoundEngine.PlaySound(BetterSoundID.ItemBell, target.Center);
+            SoundEngine.PlaySound(BetterSoundID.ItemBell with { Volume = 2f, Pitch = -0.4f }, target.Center);
         }
     }
 }

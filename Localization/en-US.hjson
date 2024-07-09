@@ -254,6 +254,11 @@ Mods: {
 			}
 
 			MedicallyIntelligent.DisplayName: Medically Intelligent
+
+			Warath: {
+				DisplayName: Warath
+				Description: Your minions are angry
+			}
 		}
 
 		Items: {
@@ -2141,6 +2146,31 @@ Mods: {
 					"Would my patient mind if I took their organs out and sold them?"
 					'''
 			}
+
+			WarArrow: {
+				DisplayName: War Arrow
+				Tooltip: Inflicts Armor Crunch
+			}
+
+			Warbell: {
+				DisplayName: Warbell
+				Tooltip: Boosts minion damage by 10% on enemy hits
+			}
+
+			Warbow: {
+				DisplayName: Warbow
+				Tooltip: Converts wooden arrows into war arrows which crumble enemy defenses
+			}
+
+			Warglaive: {
+				DisplayName: Warglaive
+				Tooltip: Stealth strikes stick to tiles
+			}
+
+			Warstaff: {
+				DisplayName: War Staff
+				Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
+			}
 		}
 
 		NPCs: {
@@ -2709,6 +2739,9 @@ Mods: {
 			PathogenCell1.DisplayName: Hostile Blood Cell
 			AspidShotFriendly.DisplayName: Infection Glob
 			Creep.DisplayName: Creep
+			WarBolt.DisplayName: Warbolt
+			WarglaiveProjectile.DisplayName: Warglaive
+			WarrowProjectile.DisplayName: Warrow
 		}
 
 		Tiles: {
