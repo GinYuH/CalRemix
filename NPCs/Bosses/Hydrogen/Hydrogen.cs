@@ -55,14 +55,14 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
             // A bunch of fucking fish
             sunkenSeaFish.Add(ModContent.ItemType<PrismaticGuppy>());
-            sunkenSeaFish.Add(ModContent.ItemType<Serpentuna>(), 0.5f);
+            sunkenSeaFish.Add(ModContent.ItemType<Serpentuna>(), 0.5f); // Quest
             sunkenSeaFish.Add(ModContent.ItemType<SunkenSailfish>());
-            sunkenSeaFish.Add(ModContent.ItemType<EutrophicSandfish>());
-            sunkenSeaFish.Add(ModContent.ItemType<GreenwaveLoach>(), 0.1f);
-            sunkenSeaFish.Add(ModContent.ItemType<SparklingEmpress>(), 0.05f);
-            sunkenSeaFish.Add(ModContent.ItemType<SurfClam>(), 0.5f);
-            sunkenSeaFish.Add(ModContent.ItemType<SerpentsBite>(), 0.1f);
-            sunkenSeaFish.Add(ModContent.ItemType<PrismBackBanner>(), 0.01f);
+            sunkenSeaFish.Add(ModContent.ItemType<EutrophicSandfish>(), 0.5f); // Quest
+            sunkenSeaFish.Add(ModContent.ItemType<GreenwaveLoach>(), 0.1f); // Money fish
+            sunkenSeaFish.Add(ModContent.ItemType<SparklingEmpress>(), 0.05f); // Rare weapon
+            sunkenSeaFish.Add(ModContent.ItemType<SurfClam>(), 0.5f); // Surf Clam <3
+            sunkenSeaFish.Add(ModContent.ItemType<SerpentsBite>(), 0.1f); // Tool
+            sunkenSeaFish.Add(ModContent.ItemType<PrismBackBanner>(), 0.01f); // Banners have greatly reduced weights
             sunkenSeaFish.Add(ModContent.ItemType<BlindedAnglerBanner>(), 0.01f);
             sunkenSeaFish.Add(ModContent.ItemType<GhostBellBanner>(), 0.01f);
             sunkenSeaFish.Add(ModContent.ItemType<BabyGhostBellBanner>(), 0.01f);
@@ -181,11 +181,11 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                 // Shoot out missiles puncutated by falling warheads
                 case (int)PhaseType.MissileLaunch:
                     {
-                        int rocketRate = 5;
-                        int fireDelay = 30;
-                        int rocketAmt = death ? 20 : rev ? 16 : expert ? 10 : 8;
-                        int salvoAmount = 2;
-                        float missileSpread = death ? 60f : 45f;
+                        int rocketRate = 5; // Fire rate of projectiles
+                        int fireDelay = 30; // Stagger barrages with this 
+                        int rocketAmt = death ? 20 : rev ? 16 : expert ? 10 : 8; // Amount of rockets to be fired before stagger
+                        int salvoAmount = 2; // Amount of rounds
+                        float missileSpread = death ? 60f : 45f; // Spread
                         if (Main.masterMode)
                             salvoAmount *= 2;
                         NPC.ai[1]++;
@@ -197,6 +197,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             {
                                 SoundEngine.PlaySound(CalamityMod.Items.Weapons.Ranged.Scorpio.RocketShoot);
                                 {
+                                    // The last few projectiles are gravity-affected warheads
                                     int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.4f), 3f, Main.myPlayer, Target.whoAmI);
@@ -205,9 +206,10 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                                 {
                                     NPC.ai[2] = 0;
                                     NPC.ai[1] = 0;
-                                    NPC.ai[3]++;
+                                    NPC.ai[3]++; // Keeps track of how many salvos have been shot
                                 }
                             }
+                            // Transition after the max salvos have been met
                             if (NPC.ai[3] >= salvoAmount)
                             {
                                 NPC.ai[1] = 0;
@@ -218,15 +220,17 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         }
                         break;
                     }
+                // Spawn an uneven row of mines from below that rise then explode
                 case (int)PhaseType.Mines:
                     {
-                        int whenToSummon = 90;
-                        int mineAmt = death ? 40 : rev ? 32 : 26;
-                        int mineRange = 4000;
-                        int mineSpeed = 4;
-                        int phaseTime = 360;
-                        NPC.velocity = NPC.DirectionTo(Target.Center) * 2;
+                        int whenToSummon = 90; // When the mines should spawn
+                        int mineAmt = death ? 40 : rev ? 32 : 26; // Amount of mines
+                        int mineRange = 4000; // Horizontal radius at which mines can spawn
+                        int mineSpeed = 4; // Speed that the mines move up
+                        int phaseTime = 360; // How long the phase lasts 
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 2; // Slowly move towards the player
                         NPC.ai[1]++;
+                        // Summon the mines
                         if (NPC.ai[1] == whenToSummon)
                         {
                             SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.NukeWarningSound);
@@ -242,27 +246,33 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         }
                         break;
                     }
+                // Nagasaki
                 case (int)PhaseType.Death:
                     {
                         NPC.Calamity().newAI[1]++;
-                        int doomsdayTimer = 870;
-                        int spawnFridge = 120;
-                        int startExplosion = doomsdayTimer - 300;
-                        int tikTok = startExplosion / 11;
+                        int doomsdayTimer = 870; // How long until Hydrogen's explosion ends
+                        int spawnFridge = 120; // When the fridge spawns
+                        int startExplosion = doomsdayTimer - 300; // When the actual explosion starts
+                        int tikTok = startExplosion / 11; // Interval of when numbers appear
                         NPC.velocity *= 0.95f;
+                        // Spawn the fridge
+                        // Spawns to the left of the player if they're left of Hydrogen and right if they're on the right
                         if (NPC.Calamity().newAI[1] == spawnFridge)
                         {
                             bool playerLeft = Target.Center.X - NPC.Center.X < 0;
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(playerLeft ? -400 : 400, -400), Vector2.UnitY * 4, ModContent.ProjectileType<Fridge>(), 0, 0f, Main.myPlayer, ai2: -1);
                         }
+                        // Hiroshima
                         if (NPC.Calamity().newAI[1] > doomsdayTimer)
                         {
+                            // Die
                             NPC.active = false;
                             NPC.HitEffect();
                             NPC.NPCLoot();
 
                             NPC.netUpdate = true;
 
+                            // Destroy the Sunken Sea
                             CalRemixWorld.DestroyTheSunkenSea(NPC.Center / 16, 500);
                             foreach (Player p in Main.player)
                             {
@@ -272,10 +282,13 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                                     continue;
                                 if (p.dead)
                                     continue;
+                                // Spare anyone far away
                                 if (p.Distance(NPC.Center) > 16 * 500)
                                     continue;
+                                // Spare anyone hiding in a fridge
                                 if (p.GetModPlayer<CalRemixPlayer>().fridge)
                                     continue;
+                                // Else disentegrate {{sic}}
                                 p.KillMe(PlayerDeathReason.ByCustomReason(p.name + " was atomized."), 9999, 1);
                             }
 
@@ -283,25 +296,30 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                             if (NPC.netSpam >= 10)
                                 NPC.netSpam = 9;
 
+                            // Blast fishing
                             for (int i = 0; i < 44; i++)
                             {
                                 Item.NewItem(NPC.GetSource_Death(), Main.rand.Next((int)Target.Center.X - 1000, (int)Target.Center.X + 1000), Main.rand.Next((int)Target.Center.Y - 1000, (int)Target.Center.Y + 500), 4, 4, sunkenSeaFish.Get());
                             }
                         }
+                        // Kaboom
                         if (NPC.Calamity().newAI[1] == startExplosion)
                         {
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 222;
                             SoundEngine.PlaySound(ExplosionSound);
                         }
+                        // Controls the intensity of the flash with it increasing rapidly 
                         if (NPC.Calamity().newAI[1] > startExplosion)
                         {
                             NPC.localAI[0] += 4.25f;
                         }
+                        // Tick down, localai[1] is the amount of ticks so far
                         if ((10 - NPC.localAI[1]) > 0)
                         {
                             if (NPC.Calamity().newAI[1] % tikTok == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.Camera);
+                                // The ticks grow increasingly more red until the end
                                 CombatText.NewText(NPC.getRect(), Color.Lerp(Color.White, Color.Red, NPC.localAI[1] / 10), (int)(10 - NPC.localAI[1]));
                                 NPC.localAI[1]++;
                             }
@@ -415,9 +433,12 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            // Draws Hydrogen while in his inactive state
             if (Phase == (int)PhaseType.Sealed)
             {
+                // Grab the position at which Hydrogen's chain should connect to
                 Vector2 bottom = CalRemixWorld.hydrogenLocation != default && CalRemixWorld.hydrogenLocation != Vector2.Zero ? CalRemixWorld.hydrogenLocation : NPC.Center;
+                // Don't draw if it's too far for those CHEATERS who spawn Hydrogen in other locations
                 if (bottom == CalRemixWorld.hydrogenLocation && NPC.Distance(CalRemixWorld.hydrogenLocation) < 1000)
                 {
                     bottom += new Vector2(10, 110);
@@ -447,9 +468,12 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
             Texture2D tex = ModContent.Request<Texture2D>(Texture + "Goner").Value;
             Vector2 drawPos = NPC.Center - screenPos;
+            // Shake
             if (NPC.localAI[1] > 0)
                 drawPos += new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
             spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, null, NPC.GetAlpha(drawColor), NPC.rotation, TextureAssets.Npc[Type].Value.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
+            // Enreden when ticking down
+            // Small note: The usage of the word "Enreden" in the above comment was completely on accident and I wasn't thinking about Enreden (user) at all until after I wrote it lmao
             spriteBatch.Draw(tex, drawPos, null, Color.Red * (NPC.localAI[1] / 10), NPC.rotation, tex.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
             return false;
         }

@@ -69,6 +69,7 @@ namespace CalRemix.NPCs.Bosses.Origen
 
         public override void AI()
         {
+            // Generic setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
@@ -86,21 +87,25 @@ namespace CalRemix.NPCs.Bosses.Origen
                 return;
             }
             NPC.Calamity().newAI[3] = 0;
+            // Attacks
             switch (Phase)
             {
+                // Move towards player while firing radial ice blasts and teleporting once
                 case (int)PhaseType.Idle:
                     {
-                        int fireRate = death ? 80 : rev ? 90 : 100;
-                        int totalRounds = death ? 4 : rev ? 3 : 2;
-                        int phaseTime = fireRate * (totalRounds) + 22;
-                        int tpDistX = 1000;
-                        int tpDistY = 500;
+                        int fireRate = death ? 80 : rev ? 90 : 100; // Ice blast fire rate
+                        int totalRounds = death ? 4 : rev ? 3 : 2; // How many ice blast rounds should be fired
+                        int phaseTime = fireRate * (totalRounds) + 22; // How long the attack lasts
+                        int tpDistX = 1000; // Horizontal teleport radius
+                        int tpDistY = 500; // Vertical teleport radius
                         NPC.ai[1]++;
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 3;
+                        // "Prevent cheap bullshit"
                         if (NPC.ai[1] > 60)
                         {
                             NPC.damage = 100;
                         }
+                        // Transition to next attack
                         if (NPC.ai[1] > phaseTime)
                         {
                             DustExplosion();
@@ -110,10 +115,12 @@ namespace CalRemix.NPCs.Bosses.Origen
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
                         }
+                        // Teleport
                         if (NPC.ai[1] == phaseTime - 120)
                         {
                             teleportPos = new Rectangle((int)(Target.Center.X + Main.rand.Next(-tpDistX, tpDistX)), (int)(Target.Center.Y + Main.rand.Next(-tpDistY, tpDistY)), NPC.width, NPC.height);
                         }
+                        // Teleport telegraph
                         if (NPC.ai[1] > phaseTime - 120)
                         {
                             for (int i = 0; i < 10; i++)
@@ -122,10 +129,11 @@ namespace CalRemix.NPCs.Bosses.Origen
                                 Main.dust[d].noGravity = true;
                             }
                         }
+                        // Fire ice blasts in a circle around itself
                         if (NPC.ai[1] % fireRate == 0 && NPC.ai[1] < fireRate * totalRounds + 22)
                         {
-                            int firePoints = 4 + (int)NPC.ai[2];
-                            int fireProjSpeed = master ? 8 : 6;
+                            int firePoints = 4 + (int)NPC.ai[2]; // Each time it fires, 2 more blasts are added in the next round
+                            int fireProjSpeed = master ? 8 : 6; // Ice blast speed
                             float variance = MathHelper.TwoPi / firePoints;
                             for (int i = 0; i < firePoints; i++)
                             {
@@ -139,13 +147,15 @@ namespace CalRemix.NPCs.Bosses.Origen
                         NPC.rotation += 0.1f;
                     }
                     break;
+                // Position itself over the player while raining icicles down
                 case (int)PhaseType.IceRain:
                     {
-                        int fireRate = 5;
-                        int phaseTime = master ? 210 : 180;
-                        Vector2 destination = Target.Center - Vector2.UnitY * 400;
+                        int fireRate = 5; // The rate at which icicles spawn
+                        int phaseTime = master ? 210 : 180; // Attack duration
+                        Vector2 destination = Target.Center - Vector2.UnitY * 400; // Destination location
                         NPC.velocity = NPC.DirectionTo(destination) * 4;
                         NPC.ai[1]++;
+                        // Shoot icicles
                         if (NPC.ai[1] % fireRate == 0)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Bottom.Y), new Vector2(0, 8), ProjectileID.FrostShard, (int)(0.25f * NPC.damage), 0);
@@ -158,12 +168,14 @@ namespace CalRemix.NPCs.Bosses.Origen
                         NPC.rotation = 0;
                         break;
                     }
+                // Spin in place while spewing out projectiles
                 case (int)PhaseType.Spin:
                     {
-                        int phaseTime = master ? 240 : 200;
-                        int fireRate = 5;
-                        int speed = master ? 10 : 6;
+                        int phaseTime = master ? 240 : 200; // Attack duration
+                        int fireRate = 5; // The rate at which projectiles are fired
+                        int speed = master ? 10 : 6; // Projectile speed
                         NPC.ai[1]++;
+                        // Fire projectiles in random directions
                         if (NPC.ai[1] % fireRate == 0)
                         {
                             int type = Main.rand.NextBool() ? ProjectileID.FrostShard : ProjectileID.FrostBlastHostile;
@@ -213,6 +225,7 @@ namespace CalRemix.NPCs.Bosses.Origen
 
         public override bool PreKill()
         {
+            // This hurts, but it makes it more accurate to old Cryogen
             NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OrigenCore>());
             return false;
         }

@@ -42,7 +42,7 @@ namespace CalRemix.Projectiles.Hostile
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.hide = false;
-            Projectile.timeLeft = 120;
+            Projectile.timeLeft = Ionogen.LightningLife;
         }
 
         public override bool PreAI()

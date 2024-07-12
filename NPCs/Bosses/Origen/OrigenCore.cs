@@ -58,6 +58,7 @@ namespace CalRemix.NPCs.Bosses.Origen
 
         public override void AI()
         {
+            // Generic setup
             NPC.TargetClosest();
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
             bool death = CalamityWorld.death || BossRushEvent.BossRushActive;
@@ -74,6 +75,8 @@ namespace CalRemix.NPCs.Bosses.Origen
                 return;
             }
             NPC.Calamity().newAI[3] = 0;
+            // All of this is just Flocko code
+            // I don't even know if any values are changed
             float speedMult = death ? 16 : rev ? 14 : expert ? 12 : 10f;
             if (master)
             {
