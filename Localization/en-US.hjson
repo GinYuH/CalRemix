@@ -2171,6 +2171,11 @@ Mods: {
 				DisplayName: War Staff
 				Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
 			}
+
+			WaraxeReloaded: {
+				DisplayName: Waraxe: Reloaded
+				Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
+			}
 		}
 
 		NPCs: {
@@ -2742,6 +2747,7 @@ Mods: {
 			WarBolt.DisplayName: Warbolt
 			WarglaiveProjectile.DisplayName: Warglaive
 			WarrowProjectile.DisplayName: Warrow
+			WaraxeReloadedHoldout.DisplayName: Waraxe Reloaded
 		}
 
 		Tiles: {

@@ -995,6 +995,10 @@ namespace CalRemix
                 npcLoot.AddNormalOnly(ModContent.ItemType<WarArrow>(), 40, 25, 68);
                 npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<WarArrow>(), 20, 37, 120);
             }
+            if (npc.type == NPCID.GoblinWarrior)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<WaraxeReloaded>(), 20, 10));
+            }
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
