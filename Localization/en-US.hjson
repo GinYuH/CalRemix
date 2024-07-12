@@ -2176,6 +2176,8 @@ Mods: {
 				DisplayName: Waraxe: Reloaded
 				Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
 			}
+
+			Sandrat.DisplayName: Minor Sandrat
 		}
 
 		NPCs: {
@@ -2541,6 +2543,7 @@ Mods: {
 			UNCANNY.DisplayName: Archwizard
 			WALTER.DisplayName: Archmagus
 			HypnosDraedon.DisplayName: Draedon
+			Sandrat.DisplayName: Minor Sandrat
 		}
 
 		Projectiles: {
