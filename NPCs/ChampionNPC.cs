@@ -1,8 +1,10 @@
 ﻿using CalamityMod;
+using CalamityMod.CalPlayer;
 using CalRemix.NPCs;
 using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using Terraria;
@@ -27,6 +29,8 @@ namespace CalRemix
         public bool globRevived = false;
 
         public bool kingMinion = false;
+
+        public bool championChecked = false;
 
         public enum ChampionID
         {
@@ -97,75 +101,81 @@ namespace CalRemix
             // Only naturally spawned enemies can become champions
             if (source is EntitySource_SpawnNPC && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode)
             {
-                if (Main.rand.NextBool(ChampionChance))
-                {
-                    // Grab a champion
-                    championType = ChampionWeights.Get();
-                    //championType = (int)ChampionID.Pulsating;
-                    // All champions except the size based ones default at slightly larger
-                    if (championType > 0 && championType != (int)ChampionID.Small && championType != (int)ChampionID.Large)
-                    {
-                        npc.scale = 1.3f;
-                    }
+                TrySpawnChampion(npc);
+            }
+        }
 
-                    switch (championType)
-                    {
-                        case (int)ChampionID.Red:
-                            npc.lifeMax = (int)(npc.lifeMax * 2.6f);
-                            npc.life = (int)(npc.life * 2.6f);
-                            break;
-                        case (int)ChampionID.Yellow:
-                            npc.lifeMax = (int)(npc.lifeMax * 1.5f);
-                            npc.life = (int)(npc.life * 1.5f);
-                            break;
-                        case (int)ChampionID.Gray:
-                            npc.lifeMax = (int)(npc.lifeMax * 0.66f);
-                            npc.life = (int)(npc.life * 0.66f);
-                            break;
-                        case (int)ChampionID.Small:
-                            npc.lifeMax = (int)(npc.lifeMax * 0.66f);
-                            npc.life = (int)(npc.life * 0.66f);
-                            npc.scale = 0.5f;
-                            npc.width *= (int)(npc.width * 0.5f);
-                            npc.height = (int)(npc.height * 0.5f);
-                            break;
-                        case (int)ChampionID.Large:
-                            npc.lifeMax = (int)(npc.lifeMax * 3f);
-                            npc.life = (int)(npc.life * 3f);
-                            npc.scale = 1.5f;
-                            break;
-                        case (int)ChampionID.Crown:
-                            npc.lifeMax = (int)(npc.lifeMax * 6f);
-                            npc.life = (int)(npc.life * 6f);
-                            break;
-                        case (int)ChampionID.Rainbow:
-                            npc.lifeMax = (int)(npc.lifeMax * 3f);
-                            npc.life = (int)(npc.life * 3f);
-                            // Spawn an orbital
-                            if (npc.type != ModContent.NPCType<EternalChampEye>())
-                            {
-                                int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
-                                Main.npc[n].damage = npc.damage / 5;
-                            }
-                            break;
-                        case (int)ChampionID.Transluscent:
-                            // only fall through tiles if it ignores gravity for sanity reasons
-                            if (npc.noGravity)
-                                npc.noTileCollide = true;
-                            npc.alpha = 100;
-                            break;
-                        case (int)ChampionID.LightWhite:
-                            // Spawn 2-3 orbitals
-                            if (npc.type != ModContent.NPCType<EternalChampEye>())
+        public void TrySpawnChampion(NPC npc)
+        {
+            if (Main.rand.NextBool(ChampionChance))
+            {
+                // Grab a champion
+                championType = ChampionWeights.Get();
+                //championType = (int)ChampionID.Pulsating;
+                // All champions except the size based ones default at slightly larger
+                if (championType > 0 && championType != (int)ChampionID.Small && championType != (int)ChampionID.Large)
+                {
+                    npc.scale = 1.3f;
+                }
+
+                switch (championType)
+                {
+                    case (int)ChampionID.Red:
+                        npc.lifeMax = (int)(npc.lifeMax * 2.6f);
+                        npc.life = (int)(npc.life * 2.6f);
+                        break;
+                    case (int)ChampionID.Yellow:
+                        npc.lifeMax = (int)(npc.lifeMax * 1.5f);
+                        npc.life = (int)(npc.life * 1.5f);
+                        break;
+                    case (int)ChampionID.Gray:
+                        npc.lifeMax = (int)(npc.lifeMax * 0.66f);
+                        npc.life = (int)(npc.life * 0.66f);
+                        break;
+                    case (int)ChampionID.Small:
+                        npc.lifeMax = (int)(npc.lifeMax * 0.66f);
+                        npc.life = (int)(npc.life * 0.66f);
+                        npc.scale = 0.5f;
+                        npc.width *= (int)(npc.width * 0.5f);
+                        npc.height = (int)(npc.height * 0.5f);
+                        break;
+                    case (int)ChampionID.Large:
+                        npc.lifeMax = (int)(npc.lifeMax * 3f);
+                        npc.life = (int)(npc.life * 3f);
+                        npc.scale = 1.5f;
+                        break;
+                    case (int)ChampionID.Crown:
+                        npc.lifeMax = (int)(npc.lifeMax * 6f);
+                        npc.life = (int)(npc.life * 6f);
+                        break;
+                    case (int)ChampionID.Rainbow:
+                        npc.lifeMax = (int)(npc.lifeMax * 3f);
+                        npc.life = (int)(npc.life * 3f);
+                        // Spawn an orbital
+                        if (npc.type != ModContent.NPCType<EternalChampEye>())
+                        {
+                            int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
+                            Main.npc[n].damage = npc.damage / 5;
+                        }
+                        break;
+                    case (int)ChampionID.Transluscent:
+                        // only fall through tiles if it ignores gravity for sanity reasons
+                        if (npc.noGravity)
+                            npc.noTileCollide = true;
+                        npc.alpha = 100;
+                        break;
+                    case (int)ChampionID.LightWhite:
+                        // Spawn 2-3 orbitals
+                        if (npc.type != ModContent.NPCType<EternalChampEye>())
                             for (int i = 0; i < Main.rand.Next(2, 4); i++)
                             {
                                 int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
                                 Main.npc[n].damage = npc.damage / 5;
                             }
-                            break;
-                    }
+                        break;
                 }
             }
+            championChecked = true;
         }
 
         public static Color GetBiomeColor()
@@ -227,6 +237,10 @@ namespace CalRemix
 
         public override bool PreAI(NPC npc)
         {
+            if (npc.ModNPC != null && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode && !championChecked && !CalamityPlayer.areThereAnyDamnBosses)
+            {
+                TrySpawnChampion(npc);
+            }
             switch (championType)
             {
                 // Move faster
@@ -534,6 +548,7 @@ namespace CalRemix
             binaryWriter.Write(championTimer);
             binaryWriter.Write(kingMinion);
             binaryWriter.Write(globRevived);
+            binaryWriter.Write(championChecked);
         }
 
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
@@ -542,6 +557,7 @@ namespace CalRemix
             championTimer = binaryReader.ReadInt32();
             kingMinion = binaryReader.ReadBoolean();
             globRevived = binaryReader.ReadBoolean();
+            championChecked = binaryReader.ReadBoolean();
         }
     }
 }
