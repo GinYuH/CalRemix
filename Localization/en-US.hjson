@@ -2178,6 +2178,7 @@ Mods: {
 			}
 
 			Sandrat.DisplayName: Minor Sandrat
+			FiberBaby.DisplayName: Fiber Baby
 		}
 
 		NPCs: {
@@ -2751,6 +2752,8 @@ Mods: {
 			WarglaiveProjectile.DisplayName: Warglaive
 			WarrowProjectile.DisplayName: Warrow
 			WaraxeReloadedHoldout.DisplayName: Waraxe Reloaded
+			FiberBabyHoldout.DisplayName: Fiber Baby
+			AsbestosDropFriendly.DisplayName: Asbestos Drop
 		}
 
 		Tiles: {
