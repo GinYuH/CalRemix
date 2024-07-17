@@ -18,6 +18,7 @@ using System.Linq;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.World;
+using CalRemix.Items.Bags;
 
 namespace CalRemix.NPCs.Bosses.Ionogen
 {
@@ -351,7 +352,8 @@ namespace CalRemix.NPCs.Bosses.Ionogen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<EssenceofSunlight>(), 1, 8, 10);
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<IonogenBag>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofSunlight>(), 1, 8, 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<IonogenRelic>());
         }
         public override void OnKill()

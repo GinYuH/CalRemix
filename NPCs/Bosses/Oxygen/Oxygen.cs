@@ -20,6 +20,7 @@ using System.IO;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
+using CalRemix.Items.Bags;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -442,9 +443,10 @@ namespace CalRemix.NPCs.Bosses.Oxygen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 8, 10);
+            npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofBabil>(), 1, 8, 10);
             npcLoot.Add(ItemID.HallowedKey, 3);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<OxygenRelic>());
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<OxygenBag>());
         }
         public override void OnKill()
         {

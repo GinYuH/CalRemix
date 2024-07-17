@@ -18,7 +18,7 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.friendly = true;
-            Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.timeLeft = 180;
             Projectile.scale = 0.75f;
         }

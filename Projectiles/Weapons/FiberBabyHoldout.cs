@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,6 +16,7 @@ namespace CalRemix.Projectiles.Weapons
     public class FiberBabyHoldout : ModProjectile
     {
         public Player Owner => Main.player[Projectile.owner];
+        public int ogDamage = 0;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fiber Baby");
@@ -28,8 +30,14 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.aiStyle = -1;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Summon;
         }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            ogDamage = Projectile.damage;
+        }
+
         public override void AI()
         {
             int totalTime = 60;
@@ -106,6 +114,17 @@ namespace CalRemix.Projectiles.Weapons
             {
                 Projectile.frame = 0;
             }
+            double minionCount = 0;
+            foreach (Projectile projectile in Main.ActiveProjectiles)
+            {
+                if (projectile.owner == Owner.whoAmI && projectile.minion && projectile.type != ModContent.ProjectileType<FiberBabyHoldout>())
+                {
+                    minionCount += projectile.minionSlots;
+                }
+            }
+            minionCount = Owner.maxMinions - minionCount;
+            Projectile.scale = 1 + (int)(minionCount) * 0.22f;
+            Projectile.damage = (int)Owner.GetDamage<SummonDamageClass>().ApplyTo(Owner.HeldItem.damage) * (1 + (int)((minionCount) * 0.22f));
 
         }
         public override bool? CanHitNPC(NPC target)

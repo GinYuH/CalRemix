@@ -20,6 +20,7 @@ using System.Linq;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
+using CalRemix.Items.Bags;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -532,7 +533,8 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemID.Obsidian, 1, 8, 10);
+            npcLoot.AddNormalOnly(ItemID.Obsidian, 1, 8, 10);
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PhytogenBag>());
             npcLoot.Add(ItemID.JungleKey, 3);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PhytogenRelic>());
         }

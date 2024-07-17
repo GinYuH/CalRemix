@@ -21,6 +21,7 @@ using CalamityMod.NPCs.Crags;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
+using CalRemix.Items.Bags;
 
 namespace CalRemix.NPCs.Bosses.Pathogen
 {
@@ -494,9 +495,10 @@ namespace CalRemix.NPCs.Bosses.Pathogen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
+            npcLoot.AddNormalOnly(ModContent.ItemType<BloodSample>(), 1, 8, 10);
             npcLoot.Add(ItemID.CorruptionKey, 3);
             npcLoot.Add(ItemID.CrimsonKey, 3);
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PathogenBag>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
         }
         public override void OnKill()
