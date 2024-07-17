@@ -35,6 +35,16 @@ using CalRemix.NPCs.PandemicPanic;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalamityMod.UI;
 using CalRemix.NPCs.Bosses.Phytogen;
+using CalamityMod.NPCs.SupremeCalamitas;
+using CalRemix.NPCs.Bosses.Origen;
+using CalRemix.NPCs.Bosses.Ionogen;
+using CalamityMod.NPCs.CalClone;
+using CalRemix.NPCs.Bosses.Oxygen;
+using CalRemix.NPCs.Bosses.Hydrogen;
+using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalRemix.NPCs.Bosses.Pathogen;
+using Terraria.DataStructures;
+using CalamityMod.Events;
 
 namespace CalRemix
 {
@@ -248,7 +258,7 @@ namespace CalRemix
         {
             if (menu.FullName is null)
                 return;
-            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { Main.rand.Next(-2, 3) });
+            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, [Main.rand.Next(-2, 3)]);
             typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, menu.FullName);
 
             if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || menu is null)
@@ -296,13 +306,16 @@ namespace CalRemix
         internal static void LoadBossRushEntries(Mod cal)
         {
             List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries = (List<(int, int, Action<int>, int, bool, float, int[], int[])>)cal.Call("GetBossRushEntries");
-            int[] excIDs = { ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>() };
-            int[] headID = { ModContent.NPCType<WulfwyrmHead>() };
-            Action<int> pr = delegate (int npc)
-            {
-                NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<WulfwyrmHead>());
-            };
-            brEntries.Insert(0, (ModContent.NPCType<WulfwyrmHead>(), -1, pr, 180, false, 0f, excIDs, headID));
+
+            AddToBossRush(ref brEntries, NPCID.KingSlime, ModContent.NPCType<WulfwyrmHead>(), [ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>()]);
+            AddToBossRush(ref brEntries, NPCID.KingSlime, ModContent.NPCType<Origen>(), [ModContent.NPCType<OrigenCore>()], [ModContent.NPCType<OrigenCore>()]);
+            AddToBossRush(ref brEntries, NPCID.Deerclops, ModContent.NPCType<Carcinogen>(), [ModContent.NPCType<CarcinogenShield>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<CalamitasClone>(), ModContent.NPCType<Ionogen>(), [ModContent.NPCType<IonogenShield>()]);
+            AddToBossRush(ref brEntries, NPCID.Plantera, ModContent.NPCType<Oxygen>(), [ModContent.NPCType<OxygenShield>()]);
+            AddToBossRush(ref brEntries, NPCID.Golem, ModContent.NPCType<Phytogen>(), [ModContent.NPCType<PhytogenShield>(), ModContent.NPCType<PineappleFrond>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<PlaguebringerGoliath>(), ModContent.NPCType<Hydrogen>(), [ModContent.NPCType<HydrogenShield>()]);
+            AddToBossRush(ref brEntries, NPCID.CultistBoss, ModContent.NPCType<Pathogen>(), [ModContent.NPCType<PathogenShield>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<SupremeCalamitas>(), ModContent.NPCType<Hypnos>(), [ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>()]);
             foreach (var entry in brEntries)
             {
                 if (entry.Item1 == ModContent.NPCType<OldDuke>())
@@ -311,14 +324,42 @@ namespace CalRemix
                     break;
                 }
             }
-            int[] excIDs2 = { ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>() };
-            int[] headID2 = { ModContent.NPCType<Hypnos>() };
+            cal.Call("SetBossRushEntries", brEntries);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brEntries">Just pass in the boss rush list, cmon you can do it!</param>
+        /// <param name="beforeBossType">The boss that is fought directly after the boss you want to insert</param>
+        /// <param name="NPCType">The boss you want to insert</param>
+        /// <param name="extraNPCs">Minions/parts of the boss</param>
+        /// <param name="needsNight">Sets time to night if true</param>
+        public static void AddToBossRush(ref List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries, int beforeBossType, int NPCType, int[] extraNPCs, int[] needsDead = default, bool needsNight = false, Action<int> customAction = default)
+        {
+            int bossidx = -1;
+            for (int i = 0; i < brEntries.Count; i++)
+            {
+                if (brEntries[i].Item1 == beforeBossType)
+                {
+                    bossidx = i;
+                    break;
+                }
+            }
+            int[] headID = [NPCType];
+            if (needsDead != default)
+            {
+                headID = needsDead;
+            }
             Action<int> pr2 = delegate (int npc)
             {
-                NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, ModContent.NPCType<Hypnos>());
+                NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, NPCType);
             };
-            brEntries.Insert(brEntries.Count() - 2, (ModContent.NPCType<Hypnos>(), -1, pr2, 180, false, 0f, excIDs2, headID2));
-            cal.Call("SetBossRushEntries", brEntries);
+            if (customAction != default)
+            {
+                pr2 = customAction;
+            }
+            brEntries.Insert(bossidx, (NPCType, -1, pr2, 180, needsNight, 0f, extraNPCs, headID));
         }
 
         public static void AddHiveBestiary(int id, string entryText)

@@ -127,7 +127,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
             // If Hydrogen is at <= 1 health and tile destruction is enabled, do death animation
-            if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb)
+            if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb && !BossRushEvent.BossRushActive)
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2] = 0;
@@ -157,7 +157,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         NPC.velocity = Vector2.UnitY * (float)Math.Sin(NPC.ai[1] * 0.025f) * 0.25f;
                         NPC.chaseable = false;
                         // Automatically get pissed off if it somehow gets damaged despite the checks
-                        if (lifeRatio < 0.9f)
+                        if (lifeRatio < 0.9f || BossRushEvent.BossRushActive)
                         {
                             NPC.ai[1] = 0;
                             NPC.damage = 100;

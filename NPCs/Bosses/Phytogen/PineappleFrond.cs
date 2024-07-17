@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalamityMod.Events;
 using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -158,7 +159,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 NPC.ai[3] = Main.rand.Next(120, 240);
             }
             
-            if (Collision.IsWorldPointSolid(NPC.Center) || Main.tile[(int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)].WallType > 0)
+            if (Collision.IsWorldPointSolid(NPC.Center) || Main.tile[(int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)].WallType > 0 || BossRushEvent.BossRushActive)
             {
                 if (NPC.ai[2] > 60)
                 {

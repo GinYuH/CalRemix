@@ -186,7 +186,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                         NPC.damage = 0;
                         NPC.boss = false;
                         Main.LocalPlayer.Calamity().isNearbyBoss = false;
-                        if (lifeRatio < 0.99f)
+                        if (lifeRatio < 0.99f || BossRushEvent.BossRushActive)
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
