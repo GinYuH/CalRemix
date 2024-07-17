@@ -19,6 +19,7 @@ public class FiberBaby : ModItem
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Fiber Baby");
+        Tooltip.SetDefault("Holds out a baby that coughs up bursts of asbestos\n'The one to defeat the hydrogen bomb'");
         Item.ResearchUnlockCount = 1;
     }
     public override void SetDefaults()

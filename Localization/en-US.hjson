@@ -2178,7 +2178,15 @@ Mods: {
 			}
 
 			Sandrat.DisplayName: Minor Sandrat
-			FiberBaby.DisplayName: Fiber Baby
+
+			FiberBaby: {
+				DisplayName: Fiber Baby
+				Tooltip:
+					'''
+					Holds out a baby that coughs up bursts of asbestos
+					'The one to defeat the hydrogen bomb'
+					'''
+			}
 		}
 
 		NPCs: {

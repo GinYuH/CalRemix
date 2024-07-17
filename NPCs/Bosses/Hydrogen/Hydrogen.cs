@@ -23,6 +23,7 @@ using CalRemix.World;
 using Terraria.Utilities;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
 using CalamityMod.Items.Placeables.Banners;
+using CalRemix.Projectiles.Weapons;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -427,10 +428,23 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
+            if (projectile.type == ModContent.ProjectileType<AsbestosDropFriendly>())
+            {
+                return null;
+            }
             if ((Phase == (int)PhaseType.Sealed && !ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type]) || Phase == (int)PhaseType.Death)
                 return false;
             return null;
         }
+
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.type == ModContent.ProjectileType<AsbestosDropFriendly>())
+            {
+                NPC.StrikeInstantKill();
+            }
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             // Draws Hydrogen while in his inactive state
