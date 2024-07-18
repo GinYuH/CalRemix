@@ -384,6 +384,14 @@ namespace CalRemix
                 {
                     recipe.DisableDecraft();
                 }
+                if (recipe.HasResult(ModContent.ItemType<GravityNormalizerPotion>()))
+                {
+                    recipe.DisableDecraft();
+                }
+                if (recipe.HasResult(ModContent.ItemType<AstralInjection>()))
+                {
+                    recipe.DisableDecraft();
+                }
                 #region Accessory edits
                 if (recipe.HasResult(ModContent.ItemType<GrandGelatin>()))
                 {

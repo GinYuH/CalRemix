@@ -2785,6 +2785,13 @@ Mods: {
 			MovieSignPlaced.MapEntry: Moviesign
 			IonCubePlaced.MapEntry: Ion Cube Placed
 			HypnosTrophyPlaced.MapEntry: Hypnos Trophy Placed
+			CarcinogenTrophyPlaced.MapEntry: Carcinogen Trophy
+			HydrogenTrophyPlaced.MapEntry: Hydrogen Trophy
+			IonogenTrophyPlaced.MapEntry: Ionogen Trophy
+			OrigenTrophyPlaced.MapEntry: Origen Trophy
+			OxygenTrophyPlaced.MapEntry: Oxygen Trophy
+			PathogenTrophyPlaced.MapEntry: Pathogen Trophy
+			PhytogenTrophyPlaced.MapEntry: Phytogen Trophy
 		}
 
 		Enchantments: {

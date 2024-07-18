@@ -19,6 +19,7 @@ using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
 using CalRemix.Items.Weapons;
 using CalRemix.Items.Bags;
+using CalRemix.Items.Placeables.Trophies;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -414,6 +415,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemID.DungeonDesertKey, 3);
+            npcLoot.Add(ModContent.ItemType<CarcinogenTrophy>(), 10);
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<CarcinogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<Asbestos>(), 1, 216, 224);
             npcLoot.AddNormalOnly(ModContent.ItemType<FiberBaby>());

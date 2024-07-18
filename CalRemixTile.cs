@@ -265,7 +265,7 @@ namespace CalRemix
                     int rand = 4 - WorldGen.GetWorldSize();
                     if (Main.rand.NextBool(222 * rand))
                     {
-                        if (CalRemixWorld.astrallist.Contains(tile.TileType))
+                        if (AstralShrine.astrallist.Contains(tile.TileType))
                         {
                             int LocationX = i;
                             int LocationY = j;

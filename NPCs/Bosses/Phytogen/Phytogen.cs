@@ -21,6 +21,7 @@ using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
 using CalRemix.Items.Bags;
+using CalRemix.Items.Placeables.Trophies;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -536,6 +537,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             npcLoot.AddNormalOnly(ItemID.Obsidian, 1, 8, 10);
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PhytogenBag>());
             npcLoot.Add(ItemID.JungleKey, 3);
+            npcLoot.Add(ModContent.ItemType<PhytogenTrophy>(), 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PhytogenRelic>());
         }
         public override void OnKill()

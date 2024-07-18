@@ -21,6 +21,7 @@ using CalRemix.Items.Placeables.Relics;
 using CalRemix.NPCs.TownNPCs;
 using CalRemix.World;
 using CalRemix.Items.Bags;
+using CalRemix.Items.Placeables.Trophies;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -447,6 +448,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             npcLoot.Add(ItemID.HallowedKey, 3);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<OxygenRelic>());
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<OxygenBag>());
+            npcLoot.Add(ModContent.ItemType<OxygenTrophy>(), 10);
         }
         public override void OnKill()
         {
