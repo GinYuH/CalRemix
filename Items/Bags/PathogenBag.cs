@@ -52,6 +52,7 @@ namespace CalRemix.Items.Bags
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
+            itemLoot.Add(ItemID.Heart);
             itemLoot.AddRevBagAccessories();
         }
     }
