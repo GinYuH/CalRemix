@@ -56,7 +56,9 @@ namespace CalRemix.Projectiles.Weapons
                 Owner.heldProj = Projectile.whoAmI;
                 Projectile.rotation = Projectile.DirectionTo(Main.MouseWorld).ToRotation();
                 Projectile.rotation += Projectile.spriteDirection == -1 ? MathHelper.Pi : 0;
-                Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Owner.HandPosition.Value.DirectionTo(Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? MathHelper.Pi + 1f : -1f));
+                float extraOomf = MathHelper.Lerp(0.8f * Projectile.spriteDirection, 0f, (Projectile.ai[0]) / totalTime);
+                Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Owner.HandPosition.Value.DirectionTo(Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? MathHelper.Pi + 1.4f : -1.4f) + extraOomf);
+                Owner.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, Owner.HandPosition.Value.DirectionTo(Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? MathHelper.Pi + 1.4f : -1.4f) + extraOomf);
             }
             if (Owner.controlUseItem)
             {
@@ -70,6 +72,8 @@ namespace CalRemix.Projectiles.Weapons
                 }
             }
             Projectile.ai[0]--;
+            if (Projectile.ai[0] < 0)
+                Projectile.ai[0] = 0;
 
             int animationSpeed = 6;
             int totalLength = 59;
