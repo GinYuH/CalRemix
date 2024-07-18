@@ -20,6 +20,7 @@ using CalRemix.World;
 using CalRemix.Items.Weapons;
 using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
+using CalRemix.Items.Armor;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -419,6 +420,7 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<CarcinogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<Asbestos>(), 1, 216, 224);
             npcLoot.AddNormalOnly(ModContent.ItemType<FiberBaby>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<CarcinogenMask>(), 7);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());
         }
         public override void OnKill()

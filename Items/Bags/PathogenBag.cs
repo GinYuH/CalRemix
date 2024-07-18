@@ -10,6 +10,7 @@ using CalRemix.Items.Placeables;
 using CalamityMod.Items.Placeables;
 using CalRemix.Items.Materials;
 using CalamityMod.Items.Materials;
+using CalRemix.Items.Armor;
 
 namespace CalRemix.Items.Bags
 {
@@ -52,6 +53,7 @@ namespace CalRemix.Items.Bags
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
+            itemLoot.Add(ModContent.ItemType<PathogenMask>(), 7);
             itemLoot.Add(ItemID.Heart);
             itemLoot.AddRevBagAccessories();
         }

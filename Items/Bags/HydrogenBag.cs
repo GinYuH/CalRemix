@@ -8,6 +8,7 @@ using CalRemix.Items.Weapons;
 using CalRemix.Items.Accessories;
 using CalRemix.Items.Placeables;
 using CalamityMod.Items.Placeables;
+using CalRemix.Items.Armor;
 
 namespace CalRemix.Items.Bags
 {
@@ -50,6 +51,7 @@ namespace CalRemix.Items.Bags
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ModContent.ItemType<SeaPrism>(), 1, 8, 10);
+            itemLoot.Add(ModContent.ItemType<HydrogenMask>(), 7);
             itemLoot.AddRevBagAccessories();
         }
     }
