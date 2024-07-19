@@ -2187,6 +2187,15 @@ Mods: {
 					'The one to defeat the hydrogen bomb'
 					'''
 			}
+
+			SoulofCarcinogen: {
+				DisplayName: Soul of Carcinogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Puts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs
+					'''
+			}
 		}
 
 		NPCs: {

@@ -51,6 +51,7 @@ namespace CalRemix.Items.Bags
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ModContent.ItemType<Asbestos>(), 1, 216, 224);
+            itemLoot.Add(ModContent.ItemType<SoulofCarcinogen>());
             itemLoot.Add(ModContent.ItemType<FiberBaby>());
             itemLoot.Add(ModContent.ItemType<CarcinogenMask>(), 7);
             itemLoot.AddRevBagAccessories();

@@ -440,5 +440,10 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             CalRemixWorld.UpdateWorldBool();
             return false;
         }
+
+        public override bool CheckActive()
+        {
+            return Target == null || Target.dead || !Target.active;
+        }
     }
 }

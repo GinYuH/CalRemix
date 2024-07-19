@@ -89,6 +89,14 @@ namespace CalRemix
         public bool pearl;
         public bool astralEye;
 		public bool flamingIce;
+		public bool carcinogenSoul;
+        public bool carcinogenSoulVanity;
+        public bool hydrogenSoul;
+		public bool ionogenSoul;
+		public bool origenSoul;
+		public bool pathogenSoul;
+		public bool oxygenSoul;
+		public bool phytogenSoul;
         public int deicide = 0;
         public Particle ring;
 		public Particle ring2;
@@ -792,6 +800,14 @@ namespace CalRemix
 			invGar = false;
 			hayFever = false;
 			phd = false;
+			carcinogenSoul = false;
+			carcinogenSoulVanity = false;
+			hydrogenSoul = false;
+			origenSoul = false;
+			ionogenSoul = false;
+			phytogenSoul = false;
+			oxygenSoul = false;
+			pathogenSoul = false;
 			if (!CalamityUtils.AnyProjectiles(ModContent.ProjectileType<Fridge>()))
 			{
                 fridge = false;
