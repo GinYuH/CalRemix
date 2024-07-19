@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.Items.Accessories
 {
@@ -47,15 +48,18 @@ namespace CalRemix.Items.Accessories
 
             if (player.miscCounter % 12 == 0)
             {
-                int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center + new Vector2(player.direction * 30, -26), Vector2.UnitY * -4, ProjectileID.BlowupSmoke, 2, 0f, player.whoAmI);
-                Main.projectile[p].timeLeft = 22;
-                Main.projectile[p].scale = 0.25f;
+                int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center + new Vector2(player.direction * 30, -10), Vector2.UnitY * -4 + new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<CigarSmoke>(), (int)player.GetDamage<AverageDamageClass>().ApplyTo(12), 0f, player.whoAmI);
             }
         }
 
         public override void UpdateVanity(Player player)
         {
             player.GetModPlayer<CalRemixPlayer>().carcinogenSoulVanity = true;
+            if (player.miscCounter % 12 == 0)
+            {
+                int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center + new Vector2(player.direction * 30, -10), Vector2.UnitY * -4 + new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<CigarSmoke>(), 0, 0f, player.whoAmI);
+                Main.projectile[p].timeLeft = 120;
+            }
         }
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

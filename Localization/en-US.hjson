@@ -2771,6 +2771,7 @@ Mods: {
 			WaraxeReloadedHoldout.DisplayName: Waraxe Reloaded
 			FiberBabyHoldout.DisplayName: Fiber Baby
 			AsbestosDropFriendly.DisplayName: Asbestos Drop
+			CigarSmoke.DisplayName: Cigar Smoke
 		}
 
 		Tiles: {
