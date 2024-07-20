@@ -113,7 +113,7 @@ namespace CalRemix.Items.Accessories
             int drawX = (int)(drawPlayer.position.X + drawPlayer.width / 2f - Main.screenPosition.X + (-22 * gnuflip));
             int drawY = (int)(drawPlayer.position.Y + drawInfo.drawPlayer.height - Main.screenPosition.Y - 22 + drawPlayer.gfxOffY);
 
-            DrawData dat = new(texture, new Vector2(drawX, drawY), null, Lighting.GetColor((int)drawPlayer.position.X / 16, (int)drawPlayer.position.Y / 16) * alb, 0f, new Vector2(texture.Width / 2f, texture.Height), 1f,
+            DrawData dat = new(texture, new Vector2(drawX, drawY), null, Lighting.GetColor((int)drawPlayer.position.X / 16, (int)drawPlayer.position.Y / 16) * alb, drawPlayer.bodyRotation, new Vector2(texture.Width / 2f, texture.Height), 1f,
                 drawPlayer.direction != -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
             dat.shader = dyeShader;
             drawInfo.DrawDataCache.Add(dat);            
