@@ -49,6 +49,8 @@ using CalRemix.Items.Tools;
 using CalRemix.Subworlds;
 using SubworldLibrary;
 using CalRemix.NPCs.Bosses.Hypnos;
+using CalRemix.Projectiles.Hostile;
+using CalamityMod.Sounds;
 
 namespace CalRemix
 {
@@ -435,6 +437,22 @@ namespace CalRemix
                 }
 				if (Main.myPlayer == Player.whoAmI)
 					SoundEngine.PlaySound(SoundID.Item3, Player.Center);
+            }
+            if (CalRemixKeybinds.IonoLightningKeybind.JustPressed && ionogenSoul)
+            {
+                if (!Player.HasCooldown(IonLightningCooldown.ID))
+                {
+                    int io = Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - Vector2.UnitY * 3200f, Vector2.UnitY, ModContent.ProjectileType<IonogenLightning>(), 0, 0, Player.whoAmI, 0f, -1, 61);
+					Main.projectile[io].timeLeft = 22;
+					SoundEngine.PlaySound(CommonCalamitySounds.LightningSound, Player.Center);
+					double dam = Player.Hurt(PlayerDeathReason.ByProjectile(Player.whoAmI, io), 1, 0, dodgeable: false);
+					if (dam > 0)
+					{
+						Player.statLife += (int)dam;
+						Player.RemoveAllIFrames();
+					}
+					Player.AddCooldown("Ionic", 300);
+                }
             }
         }
 

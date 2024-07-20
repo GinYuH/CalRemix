@@ -11,6 +11,7 @@ using CalamityMod.Items.Materials;
 using System;
 using CalRemix.World;
 using CalRemix.Items.Placeables.Trophies;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix.NPCs.Bosses.Origen
 {
@@ -161,6 +162,7 @@ namespace CalRemix.NPCs.Bosses.Origen
             npcLoot.Add(ItemID.Nazar, 1, 8, 10);
             npcLoot.Add(ItemID.FrozenKey, 3);
             npcLoot.Add(ModContent.ItemType<OrigenTrophy>(), 10);
+            npcLoot.Add(ModContent.ItemType<SoulofOrigen>());
         }
         public override void OnKill()
         {

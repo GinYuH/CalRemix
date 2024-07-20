@@ -23,6 +23,7 @@ using CalRemix.World;
 using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -451,6 +452,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<OxygenBag>());
             npcLoot.Add(ModContent.ItemType<OxygenTrophy>(), 10);
             npcLoot.AddNormalOnly(ModContent.ItemType<OxygenMask>(), 7);
+            npcLoot.AddNormalOnly(ModContent.ItemType<SoulofOxygen>());
         }
         public override void OnKill()
         {

@@ -54,6 +54,7 @@ namespace CalRemix.Items.Bags
         {
             itemLoot.Add(ModContent.ItemType<EssenceofSunlight>(), 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<IonogenMask>(), 7);
+            itemLoot.Add(ModContent.ItemType<SoulofIonogen>());
             itemLoot.AddRevBagAccessories();
         }
     }

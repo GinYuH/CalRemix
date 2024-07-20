@@ -27,6 +27,7 @@ using CalRemix.Projectiles.Weapons;
 using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -377,6 +378,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ModContent.ItemType<SoulofHydrogen>());
             npcLoot.Add(ModContent.ItemType<HydrogenTrophy>(), 10);
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<HydrogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<SeaPrism>(), 1, 8, 10);

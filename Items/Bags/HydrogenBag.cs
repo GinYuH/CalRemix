@@ -52,6 +52,7 @@ namespace CalRemix.Items.Bags
         {
             itemLoot.Add(ModContent.ItemType<SeaPrism>(), 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<HydrogenMask>(), 7);
+            itemLoot.Add(ModContent.ItemType<SoulofHydrogen>());
             itemLoot.AddRevBagAccessories();
         }
     }

@@ -13,7 +13,7 @@ using CalRemix.Items.Armor;
 
 namespace CalRemix.Items.Bags
 {
-    public class OxygenBag : ModItem
+    public class OrigenBag : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -51,16 +51,10 @@ namespace CalRemix.Items.Bags
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 8, 10);
-            itemLoot.Add(ModContent.ItemType<OxygenMask>(), 7);
-            itemLoot.Add(ModContent.ItemType<SoulofOxygen>());
+            itemLoot.Add(ItemID.Nazar, 1, 8, 10);
+            itemLoot.Add(ModContent.ItemType<SoulofOrigen>());
+            //itemLoot.Add(ModContent.ItemType<OrigenMask>(), 7);
             itemLoot.AddRevBagAccessories();
-        }
-
-        // you open up oxygen
-        public override void RightClick(Player player)
-        {
-            player.breath = player.breathMax;
         }
     }
 }

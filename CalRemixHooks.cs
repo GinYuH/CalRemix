@@ -36,7 +36,7 @@ namespace CalRemix
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
             Terraria.On_Main.DrawDust += DrawStatic;
             Terraria.On_Main.DrawLiquid += DrawTsarBomba;
-            //Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
+            Terraria.Audio.On_SoundPlayer.Play += LazerSoundOverride;
             //Terraria.UI.On_UIElement.Draw += FreezeIcon;
             //Terraria.On_Player.ItemCheck_Shoot += SoldierShots;
             Terraria.On_IngameOptions.DrawLeftSide += SendToFannyDimension;
@@ -159,29 +159,33 @@ namespace CalRemix
 
         public static SlotId LazerSoundOverride(Terraria.Audio.On_SoundPlayer.orig_Play orig, SoundPlayer self, [In] ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback)
         {
-            return orig(self, ref style, position, updateCallback);
-            if (Main.LocalPlayer.HasBuff(ModContent.BuffType<Scorinfestation>()))
+            if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer crp))
             {
-                style = SoundID.Tink;
-                SoundUpdateCallback updateCallback2 = updateCallback;
-                if (Main.dedServ)
+                if (crp.oxygenSoul)
                 {
-                    return SlotId.Invalid;
+                    SoundUpdateCallback updateCallback2 = updateCallback;
+                    if (Main.dedServ)
+                    {
+                        return SlotId.Invalid;
+                    }
+                    if (position.HasValue && Vector2.DistanceSquared(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), position.Value) > 100000000f)
+                    {
+                        return SlotId.Invalid;
+                    }
+                    if (style.PlayOnlyIfFocused && !Main.hasFocus)
+                    {
+                        return SlotId.Invalid;
+                    }
+                    if (!Program.IsMainThread)
+                    {
+                        SoundStyle styleCopy = style;
+                        return Main.RunOnMainThread(() => PlayInerr(in styleCopy, position, updateCallback2)).GetAwaiter().GetResult();
+                    }
+                    SoundStyle newst = new SoundStyle();
+                    newst = style with { Pitch = 1f };
+                    return PlayInerr(in newst, position, updateCallback2);
                 }
-                if (position.HasValue && Vector2.DistanceSquared(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), position.Value) > 100000000f)
-                {
-                    return SlotId.Invalid;
-                }
-                if (style.PlayOnlyIfFocused && !Main.hasFocus)
-                {
-                    return SlotId.Invalid;
-                }
-                if (!Program.IsMainThread)
-                {
-                    SoundStyle styleCopy = style;
-                    return Main.RunOnMainThread(() => PlayInerr(in styleCopy, position, updateCallback2)).GetAwaiter().GetResult();
-                }
-                return PlayInerr(in style, position, updateCallback2);
+                return orig(self, ref style, position, updateCallback);
             }
             else
             {

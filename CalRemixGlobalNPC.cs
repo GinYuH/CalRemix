@@ -160,6 +160,11 @@ namespace CalRemix
             clawed--;
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
 
+            if (player.pathogenSoul)
+            {
+                npc.canGhostHeal = true;
+            }
+
             bool assortgel = player.assortegel;
             bool amalgam = player.amalgel;
             bool godfather = player.godfather;

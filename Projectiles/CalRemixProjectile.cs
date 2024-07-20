@@ -35,6 +35,7 @@ namespace CalRemix.Projectiles
         public bool hyperCharged = false;
         public int eye = 0;
         public int bladetimer = 0;
+        public bool splitExplosive = false;
         NPC exc;
         public override bool InstancePerEntity => true;
 
@@ -345,8 +346,32 @@ namespace CalRemix.Projectiles
             }
         }
 
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
+            if (p.hydrogenSoul)
+            {
+                if (ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type] && projectile.type != ProjectileID.Grenade && projectile.type != ProjectileID.StickyGrenade && projectile.type != ProjectileID.PartyGirlGrenade && projectile.type != ProjectileID.Beenade)
+                {
+                    modifiers.FinalDamage *= 50;
+                }
+            }
+        }
+
         public override void OnKill(Projectile projectile, int timeLeft)
         {
+            CalRemixPlayer pe = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
+            if (pe.hydrogenSoul)
+            {
+                if (!splitExplosive && ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type])
+                {
+                    int p = Projectile.NewProjectile(projectile.GetSource_Death(), projectile.Center, Vector2.UnitX * 4, projectile.type, projectile.damage / 2, projectile.knockBack, projectile.owner);
+                    Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().splitExplosive = true;
+                    int q = Projectile.NewProjectile(projectile.GetSource_Death(), projectile.Center, Vector2.UnitX * -4, projectile.type, projectile.damage / 2, projectile.knockBack, projectile.owner);
+                    Main.projectile[q].GetGlobalProjectile<CalRemixProjectile>().splitExplosive = true;
+
+                }
+            }
         }
 
         public override Color? GetAlpha(Projectile projectile, Color lightColor)

@@ -54,6 +54,7 @@ namespace CalRemix.Items.Bags
         {
             itemLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<PathogenMask>(), 7);
+            itemLoot.Add(ModContent.ItemType<SoulofPathogen>());
             itemLoot.Add(ItemID.Heart);
             itemLoot.AddRevBagAccessories();
         }

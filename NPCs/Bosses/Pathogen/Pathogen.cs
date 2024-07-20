@@ -24,6 +24,7 @@ using CalRemix.World;
 using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
+using CalRemix.Items.Accessories;
 
 namespace CalRemix.NPCs.Bosses.Pathogen
 {
@@ -504,6 +505,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PathogenBag>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<PathogenMask>(), 7);
+            npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPathogen>());
         }
         public override void OnKill()
         {

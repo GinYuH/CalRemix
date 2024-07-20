@@ -47,6 +47,7 @@ using CalRemix.ExtraTextures;
 using CalRemix.Projectiles;
 using CalRemix.World;
 using CalRemix.Items.Lore;
+using CalamityMod.Items.Accessories.Wings;
 
 namespace CalRemix
 {
@@ -66,6 +67,18 @@ namespace CalRemix
             { ItemID.Diamond, ModContent.NPCType<CrawlerDiamond>() },
             { ItemID.CrystalShard, ModContent.NPCType<CrawlerCrystal>() }
         };
+
+        public static List<int> genSouls = new List<int>()
+        {
+            ModContent.ItemType<SoulofPhytogen>(),
+            ModContent.ItemType<SoulofPathogen>(),
+            ModContent.ItemType<SoulofOxygen>(),
+            ModContent.ItemType<SoulofIonogen>(),
+            ModContent.ItemType<SoulofHydrogen>(),
+            ModContent.ItemType<SoulofCryogen>(),
+            ModContent.ItemType<SoulofCarcinogen>(),
+        };
+
         public override void SetDefaults(Item item)
         {
             if (item.type == ModContent.ItemType<EssenceofHavoc>())
@@ -603,17 +616,20 @@ namespace CalRemix
                 ModContent.GetModItem(ModContent.ItemType<DynamoStemCells>()).UpdateAccessory(player, hideVisual);
                 ModContent.GetModItem(ModContent.ItemType<BlazingCore>()).UpdateAccessory(player, hideVisual);
             }
+            if (modplayer.origenSoul)
+            {
+                if (genSouls.Contains(item.type))
+                {
+                    player.statDefense += NPC.downedMoonlord ? 40 : Main.hardMode ? 8 : 4;
+                }
+            }
         }
 
         public override void OnConsumeItem(Item item, Player player)
         {
             if (player.GetModPlayer<CalRemixPlayer>().bananaClown && !player.HasCooldown(BananaClownCooldown.ID))
             {
-                if (item.type == ItemID.Apple || item.type == ItemID.Apricot || item.type == ItemID.Grapefruit || item.type == ItemID.Lemon || item.type == ItemID.Peach
-                    || item.type == ItemID.Cherry || item.type == ItemID.Plum || item.type == ItemID.BlackCurrant || item.type == ItemID.Elderberry
-                    || item.type == ItemID.BloodOrange || item.type == ItemID.Rambutan || item.type == ItemID.Mango || item.type == ItemID.Pineapple
-                    || item.type == ItemID.Banana || item.type == ItemID.Coconut || item.type == ItemID.Dragonfruit || item.type == ItemID.Starfruit
-                    || item.type == ItemID.Pomegranate || item.type == ItemID.SpicyPepper)
+                if (IsFruit(item))
                 {
                     for (int i = 0; i < Main.rand.Next(2, 6); i++)
                         SoundEngine.PlaySound(CalamityMod.Projectiles.Magic.AcidicReed.SaxSound with { MaxInstances = 0 });
@@ -637,6 +653,14 @@ namespace CalRemix
                     player.AddCooldown(BananaClownCooldown.ID, 4200);
                 }
             }
+            if (player.GetModPlayer<CalRemixPlayer>().phytogenSoul && !player.HasBuff(BuffID.PotionSickness))
+            {
+                if (IsFruit(item))
+                {
+                    player.Heal(player.statLifeMax2 / 3);
+                    player.AddBuff(BuffID.PotionSickness, CalamityUtils.SecondsToFrames(45));
+                }
+            }
             if (item.type == ModContent.ItemType<HadalStew>())
             {
                 player.AddBuff(BuffID.Wrath, CalamityUtils.SecondsToFrames(60));
@@ -648,6 +672,16 @@ namespace CalRemix
                 player.AddBuff(BuffID.Titan, CalamityUtils.SecondsToFrames(60));
             }
         }
+
+        public bool IsFruit(Item item)
+        {
+            return item.type == ItemID.Apple || item.type == ItemID.Apricot || item.type == ItemID.Grapefruit || item.type == ItemID.Lemon || item.type == ItemID.Peach
+                    || item.type == ItemID.Cherry || item.type == ItemID.Plum || item.type == ItemID.BlackCurrant || item.type == ItemID.Elderberry
+                    || item.type == ItemID.BloodOrange || item.type == ItemID.Rambutan || item.type == ItemID.Mango || item.type == ItemID.Pineapple
+                    || item.type == ItemID.Banana || item.type == ItemID.Coconut || item.type == ItemID.Dragonfruit || item.type == ItemID.Starfruit
+                    || item.type == ItemID.Pomegranate || item.type == ItemID.SpicyPepper;
+        }
+
         public override void PostUpdate(Item item)
         {
             int value = ModContent.NPCType<Lizard>();

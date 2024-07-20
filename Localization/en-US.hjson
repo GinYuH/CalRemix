@@ -2196,6 +2196,63 @@ Mods: {
 					Puts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs
 					'''
 			}
+
+			SoulofHydrogen: {
+				DisplayName: Soul of Hydrogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Throwable explosives deal 2100% increased damage and split once upon detonation
+					'''
+			}
+
+			SoulofIonogen: {
+				DisplayName: Soul of Ionogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Tap ] to strike yourself with lightning
+					This lightning deals 1 point of damage, activating onhit effects
+					This effect has a 10 second cooldown
+					'''
+			}
+
+			SoulofOrigen: {
+				DisplayName: Soul of Origen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Grants additional defense for each elemental construct soul worn
+					'''
+			}
+
+			SoulofOxygen: {
+				DisplayName: Soul of Oxygen
+				Tooltip:
+					'''
+					14% increase to all damage
+					Increases the pitch of all sounds
+					'''
+			}
+
+			SoulofPathogen: {
+				DisplayName: Soul of Pathogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Enables the ability to lifesteal from any enemy
+					'Note: lifesteal sold separately'
+					'''
+			}
+
+			SoulofPhytogen: {
+				DisplayName: Soul of Phytogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Eating fruits heals a third of your max life
+					'''
+			}
 		}
 
 		NPCs: {
@@ -2820,6 +2877,7 @@ Mods: {
 			Baroclaw.DisplayName: Baroclaw
 			"Polypebral Dash.DisplayName": Polypebral Dash
 			"Quick Stealth.DisplayName": Quick Stealth
+			"Ionic Lightning.DisplayName": Ionic  Lightning
 		}
 
 		Configs: {

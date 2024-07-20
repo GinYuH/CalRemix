@@ -21,6 +21,8 @@ using CalRemix.World;
 using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
+using CalRemix.Items.Accessories;
+using Terraria.UI;
 
 namespace CalRemix.NPCs.Bosses.Ionogen
 {
@@ -358,6 +360,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<IonogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofSunlight>(), 1, 8, 10);
             npcLoot.AddNormalOnly(ModContent.ItemType<IonogenMask>(), 7);
+            npcLoot.AddNormalOnly(ModContent.ItemType<SoulofIonogen>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<IonogenRelic>());
         }
         public override void OnKill()
