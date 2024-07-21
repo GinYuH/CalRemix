@@ -44,7 +44,7 @@ namespace CalRemix.NPCs.Bosses.Origen
             NPC.aiStyle = -1;
             AIType = -1;
             NPC.knockBackResist = 0f;
-            NPC.value = Item.buyPrice(0, 40, 0, 0);
+            NPC.value = Item.buyPrice(0, 0, 2, 0);
             NPC.boss = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
