@@ -20,6 +20,8 @@ public class AergianTechnistaff : ModItem
     {
         DisplayName.SetDefault("Aergian Technistaff");
         Tooltip.SetDefault("Summons an orbital Aergia Neuron\nHolding right click causes the orbit to accelerate\nOnce fully charged, the ring can be thrown to chase enemies");
+        ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+        Item.staff[Type] = true;
     }
 
     public override void SetDefaults()
@@ -30,14 +32,14 @@ public class AergianTechnistaff : ModItem
         Item.height = 10;
         Item.useTime = 6;
         Item.useAnimation = 6;
-        Item.useStyle = ItemUseStyleID.Swing;
+        Item.useStyle = ItemUseStyleID.Shoot;
         Item.noMelee = true;
         Item.knockBack = 0;
         Item.rare = ModContent.RarityType<Violet>();
         Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = BetterSoundID.ItemDeadlySphereVroom;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<NobodyKnows>();
+        Item.shoot = ModContent.ProjectileType<AergiaNeuronSummon>();
         Item.shootSpeed = 0f;
         Item.mana = 28;
     }
@@ -73,19 +75,29 @@ public class AergianTechnistaff : ModItem
         if (player.altFunctionUse == 2f)
         {
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useTurn = false;
             Item.shoot = ProjectileID.None;
         }
         else
         {
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useTurn = true;
             Item.shoot = ModContent.ProjectileType<AergiaNeuronSummon>();
         }
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
+        float slots = 0;
+        foreach (Projectile proj in Main.ActiveProjectiles)
+        {
+            if (proj.minionSlots > 0)
+            {
+                slots += proj.minionSlots;
+            }
+        }
+        if ((int)slots > player.maxMinions - 1)
+        {
+            return false;
+        }
         if (player.ownedProjectileCounts[ModContent.ProjectileType<AergiaNeuronCore>()] <= 0)
         {
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<AergiaNeuronCore>(), damage, knockback, player.whoAmI);

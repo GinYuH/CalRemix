@@ -259,6 +259,8 @@ Mods: {
 				DisplayName: Warath
 				Description: Your minions are angry
 			}
+
+			AergiaNeuronBuff.DisplayName: Aergia Neuron
 		}
 
 		Items: {
@@ -2841,6 +2843,7 @@ Mods: {
 			CigarSmoke.DisplayName: Cigar Smoke
 			AergiaNeuronCore.DisplayName: Aergia Neuron Core
 			AergiaNeuronSummon.DisplayName: Aergia Neuron Core
+			BlueExoPulseLaserFriendly.DisplayName: Blue Exo Pulse Laser
 		}
 
 		Tiles: {

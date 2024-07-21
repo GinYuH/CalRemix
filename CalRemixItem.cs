@@ -48,6 +48,7 @@ using CalRemix.Projectiles;
 using CalRemix.World;
 using CalRemix.Items.Lore;
 using CalamityMod.Items.Accessories.Wings;
+using CalRemix.Items.Armor;
 
 namespace CalRemix
 {
@@ -468,6 +469,8 @@ namespace CalRemix
             else if (item.type == ModContent.ItemType<DraedonBag>())
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 6000, 8000);
+                itemLoot.AddIf(() => RemixDowned.downedHypnos, ModContent.ItemType<AergianTechnistaff>());
+                itemLoot.AddIf(() => RemixDowned.downedHypnos, ModContent.ItemType<HypnosMask>(), new Fraction(2, 7));
             }
             else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())
             {

@@ -33,6 +33,7 @@ using CalamityMod.Skies;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.ExoMechs.Apollo;
 using CalamityMod.NPCs.ExoMechs.Artemis;
+using CalRemix.Items.Weapons;
 
 namespace CalRemix.NPCs.Bosses.Hypnos
 {
@@ -910,7 +911,6 @@ namespace CalRemix.NPCs.Bosses.Hypnos
 
             // Trophies
             npcLoot.Add(ModContent.ItemType<HypnosTrophyInv>());
-            npcLoot.Add(ModContent.ItemType<HypnosMask>(), 3);
 
             // Relic
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ModContent.ItemType<DraedonRelic>()));
@@ -930,6 +930,8 @@ namespace CalRemix.NPCs.Bosses.Hypnos
                 // Equipment
                 normalOnly.Add(ModContent.ItemType<ExoThrone>());
                 normalOnly.Add(ModContent.ItemType<DraedonsHeart>());
+                normalOnly.Add(ModContent.ItemType<AergianTechnistaff>());
+                normalOnly.Add(ModContent.ItemType<HypnosMask>(), new Fraction(2, 7));
 
                 // Vanity
                 // Higher chance due to how the drops work
