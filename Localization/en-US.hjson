@@ -2265,6 +2265,16 @@ Mods: {
 					Once fully charged, the ring can be thrown to chase enemies
 					'''
 			}
+
+			Neuraze: {
+				DisplayName: Neuraze
+				Tooltip:
+					'''
+					Rapidly fires spreads of five bullets
+					Pulls from the first five bullet types in your inventory
+					80% chance to not consume ammo
+					'''
+			}
 		}
 
 		NPCs: {

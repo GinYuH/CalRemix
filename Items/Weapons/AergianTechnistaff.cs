@@ -86,6 +86,7 @@ public class AergianTechnistaff : ModItem
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
+        // check if the player has enough slots
         float slots = 0;
         foreach (Projectile proj in Main.ActiveProjectiles)
         {
@@ -94,32 +95,37 @@ public class AergianTechnistaff : ModItem
                 slots += proj.minionSlots;
             }
         }
+        // if they don't, return
         if ((int)slots > player.maxMinions - 1)
         {
             return false;
         }
+        // spawn the parent of the neurons if it doesn't exist yet
         if (player.ownedProjectileCounts[ModContent.ProjectileType<AergiaNeuronCore>()] <= 0)
         {
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<AergiaNeuronCore>(), damage, knockback, player.whoAmI);
         }
-        int coreIndex = -1;
-        int totalNeurons = player.ownedProjectileCounts[type];
-        float currentRot = 0;
+        int coreIndex = -1; // index of the core
+        int totalNeurons = player.ownedProjectileCounts[type]; // the amount of neurons the player owns
+        float currentRot = 0; // the current rotation value of the neurons
         foreach (Projectile proj in Main.ActiveProjectiles)
         {
+            // set the core's index
             if (proj.type == ModContent.ProjectileType<AergiaNeuronCore>() && proj.owner == player.whoAmI)
             {
                 coreIndex = proj.whoAmI;
             }
+            // set the current rotation and update the total neuron count for each neuron
             if (proj.type == ModContent.ProjectileType<AergiaNeuronSummon>() && proj.owner == player.whoAmI)
             {
                 proj.ai[2] = totalNeurons + 1;
                 currentRot = proj.localAI[0];
             }
         }
+        // spawn a newron
         int neuron = Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, coreIndex, totalNeurons, totalNeurons + 1);
         Main.projectile[neuron].localAI[0] = currentRot;
-        Main.projectile[neuron].localAI[1] = 1;
+        Main.projectile[neuron].localAI[1] = 1; // initial rotation speed
         return false;
     }
 }

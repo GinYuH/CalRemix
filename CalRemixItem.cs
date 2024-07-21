@@ -470,6 +470,7 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 6000, 8000);
                 itemLoot.AddIf(() => RemixDowned.downedHypnos, ModContent.ItemType<AergianTechnistaff>());
+                itemLoot.AddIf(() => RemixDowned.downedHypnos, ModContent.ItemType<Neuraze>());
                 itemLoot.AddIf(() => RemixDowned.downedHypnos, ModContent.ItemType<HypnosMask>(), new Fraction(2, 7));
             }
             else if (item.type == ModContent.ItemType<CalamitasCoffer>() || item.type == ModContent.ItemType<DraedonBag>())

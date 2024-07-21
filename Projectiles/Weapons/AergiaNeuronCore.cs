@@ -49,21 +49,26 @@ namespace CalRemix.Projectiles.Weapons
             Player owner = Main.player[Projectile.owner];
             CheckActive(owner);
 
+            // If the player is channeling the staff
             bool channelingStaff = owner.controlUseTile && owner.HeldItem.type == ModContent.ItemType<AergianTechnistaff>() && !owner.CCed;
 
-            if (owner.controlUseTile)
+            // Tick up ai2
+            if (channelingStaff)
             {
                 Projectile.ai[2]++;
             }
 
+            // Once ai2 hits 2 seconds and the player is still channeling, switch to charging ai
             if (Projectile.ai[2] > 120 && channelingStaff)
             {
                 Projectile.ChargingMinionAI(1600f, 2500f, 2800f, 400f, 1, 30f, 24f, 12f, Vector2.Zero, 30f, 10f, true, true);
             }
+            // else reset 
             else if (!channelingStaff)
             {
                 Projectile.ai[2] = 0;
             }
+            // While not charging, move back to the player's center
             if (Projectile.ai[2] <= 120)
             {
                 if (Projectile.Distance(owner.Center) > 22)
@@ -72,6 +77,7 @@ namespace CalRemix.Projectiles.Weapons
                     Projectile.Center = owner.Center;
                 Projectile.velocity = Vector2.Zero;
             }
+            // Charge sound once full
             if (Projectile.ai[2] == 120)
             {
                 SoundEngine.PlaySound(CommonCalamitySounds.ELRFireSound, Projectile.Center);
@@ -92,6 +98,7 @@ namespace CalRemix.Projectiles.Weapons
         public override bool PreDraw(ref Color lightColor)
         {
             int neuronType = ModContent.ProjectileType<AergiaNeuronSummon>();
+            // Draw lightning between all of the neurons
             foreach (Projectile p in Main.ActiveProjectiles)
             {
                 if (p.type != neuronType)
@@ -110,6 +117,7 @@ namespace CalRemix.Projectiles.Weapons
                         continue;
                     if (pe.ai[0] != Projectile.whoAmI)
                         continue;
+                    // If a neuron has a higher value OR the final neuron finds the first neuron, draw the lightning
                     if (pe.ai[1] != p.ai[1] + 1 && !(pe.ai[1] == (pe.ai[2] - 1) && p.ai[1] == 0))
                         continue;
                     List<Vector2> points = AresTeslaOrb.DetermineElectricArcPoints(p.Center, pe.Center, (int)(250290787 * pe.ai[1]));

@@ -3,6 +3,7 @@ using CalamityMod.Sounds;
 using CalRemix.Buffs;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,17 +13,17 @@ namespace CalRemix.Projectiles.Weapons
 {
     public class AergiaNeuronSummon : ModProjectile
     {
-        public ref float OwnerIndex => ref Projectile.ai[0];
+        public ref float OwnerIndex => ref Projectile.ai[0]; // The core projectile
 
-        public ref float NeuronNumber => ref Projectile.ai[1];
+        public ref float NeuronNumber => ref Projectile.ai[1]; // Which neuron this is, not to be confused with its index
 
-        public ref float TotalNeurons => ref Projectile.ai[2];
+        public ref float TotalNeurons => ref Projectile.ai[2]; // The amount of neurons the player has
 
-        public ref float RotationTimer => ref Projectile.localAI[0];
+        public ref float RotationTimer => ref Projectile.localAI[0]; // Determines how rotated the neuron is
 
-        public ref float RotationSpeed => ref Projectile.localAI[1];
+        public ref float RotationSpeed => ref Projectile.localAI[1]; // How fast the neuron rotates
 
-        public ref float ShotTimer => ref Projectile.localAI[2];
+        public ref float ShotTimer => ref Projectile.localAI[2]; // Shoot timer
 
         public override string Texture => "CalRemix/NPCs/Bosses/Hypnos/AergiaNeuron";
         public override void SetStaticDefaults()
@@ -58,6 +59,7 @@ namespace CalRemix.Projectiles.Weapons
 
             Vector2 destination = Vector2.Zero;
 
+            // Orbit the core
             RotationTimer += MathHelper.Lerp(1, 12, MathHelper.Min(owner.ai[2], 120) / 120);
             int distance = 200;
             double deg = NeuronNumber * 360 / TotalNeurons + RotationTimer;
@@ -72,13 +74,14 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.netUpdate = owner.netUpdate;
 
 
+            // Shoot lasers if it finds something
             NPC targ = CalamityUtils.MinionHoming(Projectile.Center, 2100, Main.player[Projectile.owner]);
             if (targ != null)
             {
                 if (targ.active && targ.life > 0)
                 {
                     ShotTimer++;
-                    bool desyncfire = (ShotTimer + NeuronNumber) % (TotalNeurons * 2) == 0;
+                    bool desyncfire = (ShotTimer + NeuronNumber) % (TotalNeurons * 2) == 0; // Desync when launched
                     if ((owner.ai[2] > 120 && desyncfire) || (owner.ai[2] <= 120 && ShotTimer % 45 == 0))
                     {
                         SoundEngine.PlaySound(CommonCalamitySounds.ExoLaserShootSound with { Pitch = 0.6f, Volume = 0.3f }, Projectile.Center);
@@ -96,6 +99,20 @@ namespace CalRemix.Projectiles.Weapons
                 return;
             }
             Projectile.timeLeft = 2;
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Projectile.localAI[0] = reader.ReadSingle();
+            Projectile.localAI[1] = reader.ReadSingle();
+            Projectile.localAI[2] = reader.ReadSingle();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Projectile.localAI[0]);
+            writer.Write(Projectile.localAI[1]);
+            writer.Write(Projectile.localAI[2]);
         }
     }
 }
