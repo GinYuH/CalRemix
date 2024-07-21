@@ -76,11 +76,13 @@ public class AergianTechnistaff : ModItem
         {
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ProjectileID.None;
+            Item.mana = 0;
         }
         else
         {
             Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = ModContent.ProjectileType<AergiaNeuronSummon>();
+            Item.mana = 28;
         }
     }
 
