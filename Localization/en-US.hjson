@@ -2617,18 +2617,18 @@ Mods: {
 
 			BALLER: {
 				TownNPCMood: {
-					Princess_LovesNPC: I like {NPCName}.
-					LikeNPC_Princess: I like {NPCName}.
-					DislikeNPC: I dislike {NPCName}.
-					LikeNPC: I like {NPCName}.
-					DislikeBiome: I dislike {BiomeName}.
-					LikeBiome: I like {BiomeName}.
-					HateCrowded: I hate how crowded I am.
-					DislikeCrowded: I dislike how crowded I am.
-					LoveSpace: I love having so much space.
-					FarFromHome: I am too far from home.
-					NoHome: I hate not having a home.
-					Content: I am content.
+					Content: Everything's flowing perfectly. I'm feeling quite content.
+					NoHome: Without a home, I'm just a gust of wind with no place to settle.
+					FarFromHome: Being away from my usual haunts is unsettling. I miss the open skies.
+					DislikeCrowded: Too many people around. I need more room to breathe.
+					HateCrowded: This crowd is suffocating. I long for some fresh air and space.
+					LoveSpace: Open spaces are ideal. They let the wind move freely and invigorate me.
+					LikeNPC: "{NPCName} understands the importance of fresh air. We get along splendidly."
+					DislikeNPC: "{NPCName}'s dirt-covered antics are the antithesis of what I appreciate. I’d rather avoid him."
+					LikeBiome: The {BiomeName} is where I feel most at home. The fresh, open air is invigorating.
+					DislikeBiome: The {BiomeName} is stifling and oppressive.
+					LikeNPC_Princess: "{NPCName} brings a breath of fresh air into any room. I always enjoy her company."
+					Princess_LovesNPC: "{NPCName} is so amazing with the wind! I think she’s really cool and fun to be around."
 				}
 
 				DisplayName: Archwitch

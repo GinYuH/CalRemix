@@ -34,8 +34,8 @@ namespace CalRemix.NPCs.TownNPCs
             NPC.Happiness
                 .SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
                 .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike)
-                .SetNPCAffection(NPCID.Dryad, AffectionLevel.Like)
-                .SetNPCAffection(NPCID.Demolitionist, AffectionLevel.Dislike);
+                .SetNPCAffection(NPCID.Steampunker, AffectionLevel.Like)
+                .SetNPCAffection(NPCID.GoblinTinkerer, AffectionLevel.Dislike);
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Velocity = 1f // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
