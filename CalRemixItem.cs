@@ -616,6 +616,10 @@ namespace CalRemix
                 ModContent.GetModItem(ModContent.ItemType<DynamoStemCells>()).UpdateAccessory(player, hideVisual);
                 ModContent.GetModItem(ModContent.ItemType<BlazingCore>()).UpdateAccessory(player, hideVisual);
             }
+            // Doing it here means any accessories equipped in higher slots won't be affected by the boost
+            // This is intentional
+            //
+            // I hate this so much
             if (modplayer.origenSoul)
             {
                 if (genSouls.Contains(item.type))

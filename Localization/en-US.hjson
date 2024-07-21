@@ -2253,6 +2253,16 @@ Mods: {
 					Eating fruits heals a third of your max life
 					'''
 			}
+
+			AergianTechnistaff: {
+				DisplayName: Aergian Technistaff
+				Tooltip:
+					'''
+					Summons an orbital Aergia Neuron
+					Holding right click causes the orbit to accelerate
+					Once fully charged, the ring can be thrown to chase enemies
+					'''
+			}
 		}
 
 		NPCs: {
@@ -2829,6 +2839,8 @@ Mods: {
 			FiberBabyHoldout.DisplayName: Fiber Baby
 			AsbestosDropFriendly.DisplayName: Asbestos Drop
 			CigarSmoke.DisplayName: Cigar Smoke
+			AergiaNeuronCore.DisplayName: Aergia Neuron Core
+			AergiaNeuronSummon.DisplayName: Aergia Neuron Core
 		}
 
 		Tiles: {
