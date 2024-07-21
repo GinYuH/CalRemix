@@ -78,6 +78,8 @@ namespace CalRemix.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (Projectile.localAI[0] == 0)
+                return false;
             Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Projectiles/Hostile/OxygenDebris" + Projectile.localAI[0]).Value;
             Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
             //Main.EntitySpriteDraw(texture, centered, null, Projectile.GetAlpha(lightColor), Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);

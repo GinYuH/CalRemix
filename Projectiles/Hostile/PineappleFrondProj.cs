@@ -48,6 +48,7 @@ namespace CalRemix.Projectiles.Hostile
 
         public override bool CanHitPlayer(Player target)
         {
+            if (Segments != null)
             for (int i = 0; i < segmentCount; i++)
             {
                 if (target.Distance(Segments[i].position) < 22)
@@ -162,6 +163,7 @@ namespace CalRemix.Projectiles.Hostile
         public override void OnKill(int timeLeft)
         {
             int goreChance = 2;
+            if (Segments != null)
             foreach (var seg in Segments)
             {
                 for (int i = 0; i < goreChance; i++)

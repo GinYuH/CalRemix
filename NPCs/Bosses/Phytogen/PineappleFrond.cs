@@ -64,6 +64,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
+            if (Segments != null)
             for (int i = 0; i < segmentCount; i++)
             {
                 if (target.getRect().Intersects(new Rectangle((int)Segments[i].position.X, (int)Segments[i].position.Y, 10, 10)) && Main.npc[(int)NPC.ai[0]].ai[0] > 0)
