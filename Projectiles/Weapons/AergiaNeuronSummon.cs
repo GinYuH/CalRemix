@@ -57,23 +57,6 @@ namespace CalRemix.Projectiles.Weapons
             Projectile owner = Main.projectile[(int)Projectile.ai[0]];
             CheckActive(owner);
 
-            Vector2 destination = Vector2.Zero;
-
-            // Orbit the core
-            RotationTimer += MathHelper.Lerp(1, 12, MathHelper.Min(owner.ai[2], 120) / 120);
-            int distance = 200;
-            double deg = NeuronNumber * 360 / TotalNeurons + RotationTimer;
-            double rad = deg * (Math.PI / 180);
-            destination.X = owner.Center.X - (int)(Math.Cos(rad) * distance);
-            destination.Y = owner.Center.Y - (int)(Math.Sin(rad) * distance);
-
-            Projectile.Center = destination;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.extraUpdates = owner.extraUpdates;
-            Projectile.numUpdates = owner.numUpdates;
-            Projectile.netUpdate = owner.netUpdate;
-
-
             // Shoot lasers if it finds something
             NPC targ = CalamityUtils.MinionHoming(Projectile.Center, 2100, Main.player[Projectile.owner]);
             if (targ != null)

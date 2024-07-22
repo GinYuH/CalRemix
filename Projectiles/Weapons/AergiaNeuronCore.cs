@@ -8,6 +8,7 @@ using CalRemix.NPCs.Bosses.Hypnos;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -82,6 +83,13 @@ namespace CalRemix.Projectiles.Weapons
             {
                 SoundEngine.PlaySound(CommonCalamitySounds.ELRFireSound, Projectile.Center);
             }
+            foreach (Projectile p in Main.ActiveProjectiles)
+            {
+                if (p.owner != Projectile.owner)
+                    continue;
+                if (p.type == ModContent.ProjectileType<AergiaNeuronSummon>())
+                NeuronAI(p);
+            }
         }
 
         private void CheckActive(Player owner)
@@ -107,7 +115,6 @@ namespace CalRemix.Projectiles.Weapons
                     continue;
                 if (p.ai[0] != Projectile.whoAmI)
                     continue;
-
 
                 foreach (Projectile pe in Main.ActiveProjectiles)
                 {
@@ -145,6 +152,32 @@ namespace CalRemix.Projectiles.Weapons
             Color color = Color.Lerp(baseColor, baseColor2, ((float)Math.Sin(MathHelper.Pi * completionRatio + Main.GlobalTimeWrappedHourly * 4f) * 0.5f + 0.5f) * 0.8f) * 0.65f;
             color.A = (byte)MathHelper.Lerp(0, 84, MathHelper.Min(Projectile.ai[2], 120) / 120);
             return color;
+        }
+
+        /// <summary>
+        /// Simulates the movement for the neurons
+        /// This is done here because god said if it's done in the neuron's ai it occasionally gets a bugged offset
+        /// </summary>
+        /// <param name="p"></param>
+        public static void NeuronAI(Projectile p)
+        {
+            Projectile owner = Main.projectile[(int)p.ai[0]];
+
+            Vector2 destination = Vector2.Zero;
+
+            // Orbit the core
+            p.localAI[0] += MathHelper.Lerp(1, 12, MathHelper.Min(owner.ai[2], 120) / 120);
+            int distance = 200;
+            double deg = p.ai[1] * 360 / p.ai[2] + p.localAI[0];
+            double rad = deg * (Math.PI / 180);
+            destination.X = owner.Center.X - (int)(Math.Cos(rad) * distance);
+            destination.Y = owner.Center.Y - (int)(Math.Sin(rad) * distance);
+
+            p.Center = destination;
+            p.velocity = Vector2.Zero;
+            p.extraUpdates = owner.extraUpdates;
+            p.numUpdates = owner.numUpdates;
+            p.netUpdate = owner.netUpdate;
         }
     }
 }
