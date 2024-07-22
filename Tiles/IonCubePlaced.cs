@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -414,6 +415,10 @@ namespace CalRemix.Tiles
                 Main.item[lookedAtItem].active = false;
                 lookingAtItem = -1;
             }
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                NetMessage.SendData(MessageID.RequestTileEntityInteraction, -1, -1, null, Position.X, Position.Y, Type);
+            }
         }
 
         public void ManualTalk()
@@ -456,6 +461,34 @@ namespace CalRemix.Tiles
         }
         public override void LoadData(TagCompound tag)
         {
+        }
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(positionX);
+            writer.Write(positionY);
+            writer.Write(desiredX);
+            writer.Write(desiredY);
+            writer.Write(displayText);
+            writer.Write(textLifeTime);
+            writer.Write(lookedAtItem);
+            writer.Write(lookingAtItem);
+            writer.Write(rotation);
+            writer.Write(desiredRotation);
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+            positionX = reader.ReadSingle();
+            positionY = reader.ReadSingle();
+            desiredX = reader.ReadSingle();
+            desiredY = reader.ReadSingle();
+            displayText = reader.ReadString();
+            textLifeTime = reader.ReadInt32();
+            lookedAtItem = reader.ReadInt32();
+            lookingAtItem = reader.ReadInt32();
+            rotation = reader.ReadSingle();
+            desiredRotation = reader.ReadSingle();
         }
     }
 }
