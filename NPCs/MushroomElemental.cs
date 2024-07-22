@@ -10,6 +10,7 @@ using System;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
+using CalamityMod.Items.Potions.Alcohol;
 
 namespace CalRemix.NPCs
 {
@@ -145,6 +146,7 @@ namespace CalRemix.NPCs
             npcLoot.Add(ItemID.GlowingMushroom, new Fraction(9, 10), 6, 12);
             npcLoot.AddIf(()=>!WorldGen.crimson, ItemID.VileMushroom, new Fraction(8, 10), 2, 5);
             npcLoot.AddIf(() => WorldGen.crimson, ItemID.ViciousMushroom, new Fraction(8, 10), 2, 5);
+            npcLoot.Add(ModContent.ItemType<OddMushroom>());
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
