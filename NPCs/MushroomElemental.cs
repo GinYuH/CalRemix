@@ -146,5 +146,10 @@ namespace CalRemix.NPCs
             npcLoot.AddIf(()=>!WorldGen.crimson, ItemID.VileMushroom, new Fraction(8, 10), 2, 5);
             npcLoot.AddIf(() => WorldGen.crimson, ItemID.ViciousMushroom, new Fraction(8, 10), 2, 5);
         }
+
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+        {
+            target.AddBuff(BuffID.Confused, 180);
+        }
     }
 }
