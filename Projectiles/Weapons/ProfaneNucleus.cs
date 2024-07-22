@@ -26,11 +26,16 @@ namespace CalRemix.Projectiles.Weapons
             Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
             Projectile.DamageType = ModContent.GetInstance<RogueDamageClass>();
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
             Projectile.ai[0] += 1f;
+            if (Projectile.ai[0] > 3)
+            {
+                Projectile.tileCollide = true;
+            }
             if (Projectile.ai[0] > 10f)
             {
                 Projectile.ai[0] = 10f;
