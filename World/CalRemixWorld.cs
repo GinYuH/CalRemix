@@ -437,8 +437,8 @@ namespace CalRemix.World
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(guideHasExisted);
             writer.Write(ogslime);
+            writer.Write(guideHasExisted);
             writer.Write(deusDeadInSnow);
             writer.Write(generatedCosmiliteSlag);
             writer.Write(generatedPlague);
