@@ -72,7 +72,7 @@ namespace CalRemix.Projectiles.Weapons
             if (Projectile.ai[2] <= 120)
             {
                 if (Projectile.Distance(owner.Center) > 22)
-                    Projectile.Center = Vector2.Lerp(Projectile.Center, owner.Center - Vector2.UnitY * owner.gfxOffY, 0.05f);
+                    Projectile.Center = Vector2.Lerp(Projectile.Center, owner.Center - Vector2.UnitY * owner.gfxOffY, 0.5f);
                 else
                     Projectile.Center = owner.Center;
                 Projectile.velocity = Vector2.Zero;
