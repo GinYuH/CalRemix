@@ -179,6 +179,14 @@ namespace CalRemix.NPCs.PandemicPanic
             }
         }
 
+        public static void StartEvent(Player player)
+        {
+            IsActive = true;
+            DefendersKilled = 0;
+            InvadersKilled = 0;
+            Main.NewText("Microbes are going to war!", Color.Red);
+        }
+
         public static void EndEvent()
         {
             if (!IsActive)
@@ -360,7 +368,9 @@ namespace CalRemix.NPCs.PandemicPanic
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
                     int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.33f) : n.damage;
-                    npc.SimpleStrikeNPC(dam, n.direction, false);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            npc.SimpleStrikeNPC(dam, n.direction, false);
                     hitCooldown = 20;
                     if (npc.life <= 0 && n.type == ModContent.NPCType<Malignant>()/* && NPC.CountNPCS(ModContent.NPCType<Malignant>()) < 22*/)
                     {
@@ -395,7 +405,8 @@ namespace CalRemix.NPCs.PandemicPanic
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
                     int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.1f) : n.damage;
-                    npc.SimpleStrikeNPC(dam * (Main.expertMode ? 2 : 4), n.direction, false);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        npc.SimpleStrikeNPC(dam * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
                     if (npc.life <= 0)
@@ -442,7 +453,8 @@ namespace CalRemix.NPCs.PandemicPanic
                     if (n.damage <= 0)
                         continue;
                     float damageMult = npc.type == ModContent.NPCType<Pathogen>() ? 0.2f : 1f;
-                    npc.SimpleStrikeNPC((int)(n.damage * damageMult), n.direction, false);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        npc.SimpleStrikeNPC((int)(n.damage * damageMult), n.direction, false);
                     hitCooldown = armhit && npc.type != ModContent.NPCType<Pathogen>() ? 1 : 20;
                     if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
                     {
@@ -468,7 +480,8 @@ namespace CalRemix.NPCs.PandemicPanic
                         continue;
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
-                    npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.penetrate--;
                     hitCooldown = 20;
                     if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())

@@ -48,7 +48,7 @@ namespace CalRemix.Projectiles.Hostile
 
         public override bool CanHitPlayer(Player target)
         {
-            if (Segments != null)
+            if (Segments != null && Main.netMode != NetmodeID.MultiplayerClient)
             for (int i = 0; i < segmentCount; i++)
             {
                 if (target.Distance(Segments[i].position) < 22)

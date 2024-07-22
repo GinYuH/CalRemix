@@ -140,7 +140,7 @@ namespace CalRemix
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     ModPacket packet = Mod.GetPacket();
-                    packet.Write((byte)HypnosMessageType.HypnosSummoned);
+                    packet.Write((byte)RemixMessageType.HypnosSummoned);
                     packet.Write((byte)Main.myPlayer);
                     packet.Send();
                 }
@@ -152,10 +152,17 @@ namespace CalRemix
             }
             if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && !PandemicPanic.IsActive)
             {
-                PandemicPanic.IsActive = true;
-                PandemicPanic.DefendersKilled = 0;
-                PandemicPanic.InvadersKilled = 0;
-                Main.NewText("Microbes are going to war!", Color.Red);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket packet = Mod.GetPacket();
+                    packet.Write((byte)RemixMessageType.PandemicPanicStart);
+                    packet.Write((byte)Main.myPlayer);
+                    packet.Send();
+                }
+                else
+                {
+                    PandemicPanic.StartEvent(Main.LocalPlayer);
+                }
             }
         }
         public override void MouseOver(int i, int j, int type)

@@ -48,9 +48,10 @@ using CalamityMod.Events;
 
 namespace CalRemix
 {
-    enum HypnosMessageType
+    enum RemixMessageType
     {
-        HypnosSummoned
+        HypnosSummoned,
+        PandemicPanicStart
     }
     public class CalRemix : Mod
     {
@@ -268,14 +269,23 @@ namespace CalRemix
         }
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
-            HypnosMessageType msgType = (HypnosMessageType)reader.ReadByte();
+            RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
             switch (msgType)
             {
-                case HypnosMessageType.HypnosSummoned:
-                    int player = reader.ReadByte();
+                case RemixMessageType.HypnosSummoned:
+                    {
+                        int player = reader.ReadByte();
 
-                    Hypnos.SummonDraedon(Main.player[player]);
-                    break;
+                        Hypnos.SummonDraedon(Main.player[player]);
+                        break;
+                    }
+                case RemixMessageType.PandemicPanicStart:
+                    {
+                        int player = reader.ReadByte();
+
+                        PandemicPanic.StartEvent(Main.player[player]);
+                        break;
+                    }
             }
         }
 

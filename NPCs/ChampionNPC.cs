@@ -497,7 +497,8 @@ namespace CalRemix
                         continue;
                     if (n.boss)
                         continue;
-                    n.SimpleStrikeNPC(npc.damage, 1);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        n.SimpleStrikeNPC(npc.damage, 1);
                 }
             }
             if (kingMinion)

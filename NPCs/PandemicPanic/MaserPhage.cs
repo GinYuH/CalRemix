@@ -77,7 +77,8 @@ namespace CalRemix.NPCs.PandemicPanic
                     FireRate += 1f;
                     if (FireRate % 5f == 0f)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                     }
                     if (FireRate >= 180f)
                     {
@@ -94,11 +95,16 @@ namespace CalRemix.NPCs.PandemicPanic
                         {
                             SoundEngine.PlaySound(AresLaserCannon.TelSound, NPC.Center);
                             int amt = CalamityWorld.death ? 5 : CalamityWorld.revenge ? 4 : Main.expertMode ? 3 : 1;
+
                             for (int i = 0; i < amt; i++)
                             {
                                 Vector2 dir = NPC.DirectionTo(target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, (float)(((float)i + 1f) / (float)amt)) + 0.01f);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
-                                Main.projectile[p].ModProjectile<MaserDeathray>().NPCOwner = NPC.whoAmI;
+
+                                if (Main.netMode != NetmodeID.Server)
+                                { 
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
+                                    Main.projectile[p].ModProjectile<MaserDeathray>().NPCOwner = NPC.whoAmI;
+                                }
                             }
                         }
                         if (FireRate >= 300f)

@@ -48,7 +48,8 @@ namespace CalRemix.NPCs.PandemicPanic
             }
             NPC.ai[1]++;
             NPC.velocity.Y = (float)Math.Sin(NPC.ai[1] * ySpeedMult) * yRange;
-            if (NPC.ai[1] % 30 == 0)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (NPC.ai[1] % 30 == 0)
             {
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(-NPC.velocity.X, 0), ModContent.ProjectileType<EosinineProj>(), (int)(NPC.damage * 0.33f), 0f);
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(NPC.velocity.X * 2, 0), ModContent.ProjectileType<EosinineProj>(), (int)(NPC.damage * 0.33f), 0f);

@@ -101,8 +101,8 @@ namespace CalRemix.NPCs.PandemicPanic
                     Main.projectile[p].DamageType = DamageClass.Generic;
                 }
             }
-
-            for (int i = 0; i < Chains.Count; i++)
+            if (Main.netMode != NetmodeID.Server && Chains != null)
+                for (int i = 0; i < Chains.Count; i++)
             {
                 List<VerletSimulatedSegment> Segments = Chains[i];
                 if (Segments is null)
@@ -174,6 +174,7 @@ namespace CalRemix.NPCs.PandemicPanic
             {
                 Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, null, Color.Red, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
             }
+            if (Main.netMode != NetmodeID.Server && Chains != null)
             for (int g = 0; g < Chains.Count; g++)
             {
                 List<VerletSimulatedSegment> Segments = Chains[g];

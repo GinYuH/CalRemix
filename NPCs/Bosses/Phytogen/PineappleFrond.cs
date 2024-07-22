@@ -64,7 +64,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            if (Segments != null)
+            if (Segments != null && Main.netMode != NetmodeID.Server)
             for (int i = 0; i < segmentCount; i++)
             {
                 if (target.getRect().Intersects(new Rectangle((int)Segments[i].position.X, (int)Segments[i].position.Y, 10, 10)) && Main.npc[(int)NPC.ai[0]].ai[0] > 0)
@@ -115,20 +115,23 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                 NPC.active = false;
                 return;
             }
-            if (Segments is null)
+            if (Main.netMode != NetmodeID.Server)
             {
-                Segments = new List<VerletSimulatedSegment>(segmentCount);
-                for (int i = 0; i < segmentCount; ++i)
-                    Segments[i] = new VerletSimulatedSegment(NPC.Center, false);
+                if (Segments is null)
+                {
+                    Segments = new List<VerletSimulatedSegment>(segmentCount);
+                    for (int i = 0; i < segmentCount; ++i)
+                        Segments[i] = new VerletSimulatedSegment(NPC.Center, false);
+                }
+
+                Segments[0].oldPosition = Segments[0].position;
+                Segments[0].position = NPC.Center;
+
+                Segments[Segments.Count - 1].oldPosition = Segments[Segments.Count - 1].position;
+                Segments[Segments.Count - 1].position = phyto.Center;
+
+                Segments = VerletSimulatedSegment.SimpleSimulation(Segments, 2, loops: segmentCount, gravity: 22f);
             }
-
-            Segments[0].oldPosition = Segments[0].position;
-            Segments[0].position = NPC.Center;
-
-            Segments[Segments.Count - 1].oldPosition = Segments[Segments.Count - 1].position;
-            Segments[Segments.Count - 1].position = phyto.Center;
-
-            Segments = VerletSimulatedSegment.SimpleSimulation(Segments, 2, loops: segmentCount, gravity: 22f);
 
             NPC.netUpdate = true;
             NPC.netSpam = 0;

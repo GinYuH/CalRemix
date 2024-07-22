@@ -55,7 +55,9 @@ namespace CalRemix.NPCs.PandemicPanic
                     if (NPC.ai[1] % 15 == 0)
                     SoundEngine.PlaySound(SoundID.DD2_BallistaTowerShot, NPC.Center);
                     Vector2 acidSpeed = (Vector2.UnitY *-16).RotatedBy(MathHelper.ToRadians((float)Math.Sin(NPC.ai[1] / 10) * 45));
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<TobaccoSeed>(), NPC.damage, 0);
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<TobaccoSeed>(), NPC.damage, 0);
                     if (NPC.ai[1] > 120)
                     {
                         NPC.ai[1] = -180;

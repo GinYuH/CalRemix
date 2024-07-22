@@ -109,6 +109,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
         public override void OnSpawn(IEntitySource source)
         {
             NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<PhytogenShield>(), ai0: NPC.whoAmI);
+            if (Main.netMode == NetmodeID.SinglePlayer) // sorry cant bother
             for (int i = 0; i < 2; i++)
             {
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + (i + 1) * 64, (int)NPC.position.Y, ModContent.NPCType<PineappleFrond>(), ai0: NPC.whoAmI, ai1: i, ai3: Main.rand.Next(120, 240));
@@ -128,6 +129,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             {
                 if (Main.rand.NextBool(yharChance))
                 {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), (int)NPC.Center.X + 3000, NPC.Center.Y, -60, 0, ModContent.ProjectileType<JungleDragonYharon>(), 0, 0, Main.myPlayer);
                     Main.NewText("Yharon, Dragon of Rebirth has awoken!", Color.MediumPurple);
                     SoundEngine.PlaySound(CalamityMod.NPCs.Yharon.Yharon.FireSound);
@@ -228,10 +230,13 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                     NPC.ai[2]++;
                                     if (NPC.ai[2] % 4 == 0)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(NPCTarget.Center) * 20, ModContent.ProjectileType<Potpourri>(), (int)MathHelper.Max(NPCTarget.lifeMax / 50, 222), 1f, Main.myPlayer, ai0: 0, ai1: NPCTarget.whoAmI, Main.rand.NextFloat(-2f, 2f));
-                                        Main.projectile[p].hostile = false;
-                                        Main.projectile[p].friendly = true;
-                                        Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(NPCTarget.Center) * 20, ModContent.ProjectileType<Potpourri>(), (int)MathHelper.Max(NPCTarget.lifeMax / 50, 222), 1f, Main.myPlayer, ai0: 0, ai1: NPCTarget.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                            Main.projectile[p].hostile = false;
+                                            Main.projectile[p].friendly = true;
+                                            Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                                        }
                                     }
                                     if (NPC.ai[1] > 120)
                                     {
@@ -295,8 +300,11 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                 for (int i = 0; i < projPerShot; i++)
                                 {
                                     Vector2 perturbedSpeed = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-spreadfactor, spreadfactor, i / ((float)projPerShot - 1))) * scaleFactor;
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
-                                    Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                        Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                                    }
                                 }
                             }
                             if (NPC.ai[2] > fireRate * perRound)
@@ -365,7 +373,9 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                                     {
                                         Vector2 velocity = new Vector2(0f, vineSpeed);
                                         velocity = velocity.RotatedBy(variance * i);
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.5f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
+
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.5f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
                                     }
                                     DustExplosion();
                                     NPC.Calamity().newAI[1] = 30;
@@ -379,8 +389,11 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                         if (NPC.ai[2] % fireRate == 0)
                         {
                             SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
-                            Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                            }
                         }
                         /*if (NPC.ai[3] > maxTime || (NPC.ai[3] > minTime && Target.position.Y - height > NPC.Center.Y))
                         {
@@ -447,8 +460,11 @@ namespace CalRemix.NPCs.Bosses.Phytogen
                             if (NPC.ai[2] % sporeFireRate == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * petalSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
-                                Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * petalSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                    Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
+                                }
                             }
                             foreach (Player p in Main.player)
                             {

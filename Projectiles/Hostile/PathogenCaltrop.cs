@@ -61,10 +61,13 @@ namespace CalRemix.Projectiles.Hostile
                 float speed = 10;
                 for (int i = 0; i < amt; i++)
                 {
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2Circular(speed, speed), Type, (int)MathHelper.Max((int)(Projectile.damage * 0.5f), 60), 0f, ai2: Projectile.ai[2] + 1);
-                    Main.projectile[p].scale *= 0.66f;
-                    Main.projectile[p].damage = (int)(Main.projectile[p].damage * 0.66f);
-                    Main.projectile[p].timeLeft = ContentSamples.ProjectilesByType[Type].timeLeft / 2;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2Circular(speed, speed), Type, (int)MathHelper.Max((int)(Projectile.damage * 0.5f), 60), 0f, ai2: Projectile.ai[2] + 1);
+                        Main.projectile[p].scale *= 0.66f;
+                        Main.projectile[p].damage = (int)(Main.projectile[p].damage * 0.66f);
+                        Main.projectile[p].timeLeft = ContentSamples.ProjectilesByType[Type].timeLeft / 2;
+                    }
                 }
             }
             for (int i = 0; i < 4; i++)
