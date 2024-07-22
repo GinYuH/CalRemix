@@ -19,7 +19,7 @@ namespace CalRemix.Items.Accessories
         {
             DisplayName.SetDefault("Soul of Oxygen");
             Tooltip.SetDefault("14% increase to all damage\nIncreases the pitch of all sounds");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 6));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }

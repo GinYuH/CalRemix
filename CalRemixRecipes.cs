@@ -194,6 +194,14 @@ namespace CalRemix
                 .AddCondition(new Condition("While the Anomaly 109 \'primal_aspids\' setting is enabled", () => CalRemixWorld.aspids))
                 .Register();
             }
+            {
+                Recipe recipe = Recipe.Create(ItemID.WaterBucket, 1);
+                recipe.AddIngredient(ItemID.EmptyBucket);
+                recipe.AddIngredient(ModContent.ItemType<SoulofHydrogen>(), 2);
+                recipe.AddIngredient(ModContent.ItemType<SoulofOxygen>());
+                recipe.DisableDecraft();
+                recipe.Register();
+            }
 
             #region DP stuff
             // Alcohol...
