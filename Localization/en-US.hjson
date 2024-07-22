@@ -2731,6 +2731,7 @@ Mods: {
 
 			HypnosDraedon.DisplayName: Draedon
 			Sandrat.DisplayName: Minor Sandrat
+			MushroomElemental.DisplayName: Mushroom Elemental
 		}
 
 		Projectiles: {
