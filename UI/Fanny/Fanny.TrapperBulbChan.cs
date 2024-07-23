@@ -1,5 +1,6 @@
 ﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.Polterghast;
 using System.Linq;
 using Terraria;
@@ -37,7 +38,6 @@ namespace CalRemix.UI
             HelperMessage ff = HelperMessage.New("TrapperBeginning8", "Oh come fucking on.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(fan3, startTimerOnMessageSpoken: true, delay: 10);
 
-
             HelperMessage poltrap1 = HelperMessage.New("Poltrapper1", "Trapper Bulb Chan desu! Yaho~ ^v^",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
@@ -62,11 +62,26 @@ namespace CalRemix.UI
             HelperMessage.New("Meowmere", "Oh, you’ve found the legendary Meowmere? Nyan-tastic! That space sword shooting bouncing nyan cats is like a dream come true, nya~",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Meowmere)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
+            HelperMessage.New("Meowthrower", "Look at that purrfect weapon, desu! It's like a rainbow of nyan-tastic power! OwO So cute and fierce at the same time, nya~! Let’s set the battlefield ablaze with kitty cuteness and colorful chaos, teehee~! ^w^ Unleash the meowgic and watch your enemies flee in adorable terror, nya~!",
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Meowthrower>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
+            HelperMessage.New("Aotc", "Sugoi! You’ve got the Ark of the Cosmos, desu! That sword is so epic, like something straight out of an anime, nya~! OwO With those cool slash dashes, you’ll be zooming around like a true anime hero, cutting through enemies with style and grace, teehee~!",
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Meowthrower>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
             HelperMessage.New("CosmicShiv", "Trapper Bulb Chan here, desu~ Oh, you’ve got the Cosmic Shiv! Did you know its tooltip used to mention cat girls? Teehee, that’s been changed now, but the cosmic energy it radiates still feels so magical and mysterious, nya~",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CosmicShiv>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Nuclemade", "Nuclear Lemonade-kun, you’re so refreshing and powerful, just like a summer breeze with a hint of sparkle! With you around, every moment becomes a fizzy adventure, desu yo! OwO",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "CalamityHunt", "NuclearLemonade")).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
+            HelperMessage.New("Kitten", "Nyaa~! Look at this adorable kitty-chan, desu! So fuzzy and purrfect, like a tiny bundle of nyan-tastic joy! OwO You’re such a kawaii little neko, aren’t you? Let’s be the bestest of friends and have lots of fun together, nya~! ^w^ Remember to give this sweet kitty-chan all the pets and snuggles, nyaaa~!",
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TownCat)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
+            HelperMessage.New("Shipping", "Omo, omo! Trapper Bulb Chan here, and look at this—it's the Flying Dutchman, desu! spooky and cool, nya~! But you know what would be even cooler? If the Flying Dutchman-chan had a special someone to sail the seas with! OwO Imagine the adventures and romance, sailing through the moonlit waters together, nya~! Let's find a perfect ship for this ship, teehee~! ^w^",
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.PirateShip)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
+            HelperMessage.New("ShipRiding", "Nyaa~! Look at you, sailing the skies on a pirate ship, desu! So adventurous and cool, nya~! It’s like we’re in an epic anime, searching for treasure and having grand adventures! OwO Just imagine the tales we’ll tell and the friendships we’ll forge, nya~! Let’s sail towards the horizon and make every moment a legendary chapter, desu yo!",
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.mount.Type == MountID.PirateShip).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
         }
     }
 }
