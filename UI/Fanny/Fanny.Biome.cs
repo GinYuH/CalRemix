@@ -71,8 +71,8 @@ namespace CalRemix.UI
             HelperMessage.New("PlaguedJunglePhyto", "Did you know if you gather a bunch of those pesky plague enemies, you'll summon a giant pineapple? He's a pretty chill fruit until you decide to pick a fight! So, make sure you're ready for a fruit salad battle before you start swinging!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague && Main.LocalPlayer.ZoneRockLayerHeight);
 
-            HelperMessage.New("Temple", "I love house invasion!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple).SetHoverTextOverride("Me too Fanny!");
+            HelperMessage.New("Temple", "Watch out! A trap!",
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && Main.rand.NextBool(600));
 
             HelperMessage.New("TempleWires", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && (Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611))).AddItemDisplay(ItemID.WireCutter);

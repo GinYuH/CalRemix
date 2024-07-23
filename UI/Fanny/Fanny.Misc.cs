@@ -56,6 +56,9 @@ namespace CalRemix.UI
             HelperMessage.New("IonGuy", "Hey there, beachcomber! Looks like you've found a talking panel in that trash pile! It's wired up and ready to chat, but beware—it’s probably going to ask you for items. Remember, not all that glitters is gold, and not all talking panels are trustworthy. You might end up giving away your favorite pair of socks!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ionDialogue > 0);
 
+            HelperMessage.New("Multiplayer", "The atmosphere seems a lot more social than what I'm used to. Be wary of ruptures in reality!",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.netMode != NetmodeID.SinglePlayer);
+
         }
         private static bool DarkArea()
         {
