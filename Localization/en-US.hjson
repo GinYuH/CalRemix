@@ -2275,6 +2275,15 @@ Mods: {
 					80% chance to not consume ammo
 					'''
 			}
+
+			ScrapBag: {
+				DisplayName: Scrap Bag
+				Tooltip:
+					'''
+					Tosses out scraps
+					Stealth strikes throw charged scraps that linger longer and inflict electrified
+					'''
+			}
 		}
 
 		NPCs: {
@@ -2945,6 +2954,7 @@ Mods: {
 			AergiaNeuronCore.DisplayName: Aergia Neuron Core
 			AergiaNeuronSummon.DisplayName: Aergia Neuron Core
 			BlueExoPulseLaserFriendly.DisplayName: Blue Exo Pulse Laser
+			Scrap.DisplayName: Scrap
 		}
 
 		Tiles: {
