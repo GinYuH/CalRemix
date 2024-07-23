@@ -121,6 +121,8 @@ namespace CalRemix.World
 
         public static Vector2 hydrogenLocation = new Vector2(0, 0);
 
+        public static bool stratusDungeon = true;
+
         public static List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,

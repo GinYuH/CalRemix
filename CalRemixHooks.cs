@@ -23,6 +23,10 @@ using CalRemix.NPCs.Eclipse;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using CalRemix.World;
+using Terraria.GameContent.UI.States;
+using Terraria.GameContent.UI.Elements;
+using Terraria.Localization;
+using Terraria.ModLoader.UI;
 
 namespace CalRemix
 {
@@ -40,7 +44,78 @@ namespace CalRemix
             //Terraria.UI.On_UIElement.Draw += FreezeIcon;
             //Terraria.On_Player.ItemCheck_Shoot += SoldierShots;
             Terraria.On_IngameOptions.DrawLeftSide += SendToFannyDimension;
+            //AddDescriptionPanel(UIElement container, float accumulatedHeight, string tagGroup)
+            //Terraria.GameContent.UI.States.On_UIWorldCreation.AddDescriptionPanel += AddDesc;
         }
+
+        public static bool isHovering = false;
+        public static void AddDesc(Terraria.GameContent.UI.States.On_UIWorldCreation.orig_AddDescriptionPanel orig, UIWorldCreation self, UIElement container, float accu, string tag)
+        {
+
+            UIElement mainElement = new UIElement
+            {
+                Width = new StyleDimension(56f, 0f),
+                Height = new StyleDimension(46, 0f),
+                Left = new StyleDimension(810f, 0f),
+                Top = new StyleDimension(340f, 0f),
+                PaddingLeft = 4f,
+                PaddingRight = 4f,
+            };
+
+
+            UIPanel backgroundPanel = new UIPanel
+            {
+                Width = new StyleDimension(46f, 0f),
+                Height = new StyleDimension(46, 0f),
+                BackgroundColor = UICommon.MainPanelBackground,
+                BorderColor = Color.Transparent
+            }.WithFadedMouseOver();
+
+            UIPanel foregroundPanel = new UIPanel
+            {
+                Width = new StyleDimension(42f, 0f),
+                Height = new StyleDimension(42, 0f),
+                Left = new StyleDimension(2f, 0f),
+                Top = new StyleDimension(2f, 0f),
+                BorderColor = Color.Transparent,
+                BackgroundColor = UICommon.DefaultUIBlue
+            };
+
+            UIImage flame = new UIImage(ModContent.Request<Texture2D>("CalRemix/icon_small"))
+            {
+                Width = new StyleDimension(40f, 0f),
+                Height = new StyleDimension(40, 0f),
+                Left = new StyleDimension(-6f, 0f),
+                Top = new StyleDimension(-6f, 0f),
+                PaddingLeft = 4f,
+                PaddingRight = 4f
+            };
+
+            mainElement.OnLeftClick += StratusToggle;
+            mainElement.Append(backgroundPanel);
+            mainElement.Append(foregroundPanel);
+            foregroundPanel.Append(flame);
+            container.Append(mainElement);
+            orig(self, container, accu, tag);
+        }
+
+        public static void ToggleStratus(UIElement listeningElement)
+        {
+            listeningElement.Update(Main.gameTimeCache);
+            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 1, 1);
+            Rectangle boundingBox = listeningElement.GetInnerDimensions().ToRectangle();
+            if (maus.Intersects(boundingBox))
+            {
+                if (Terraria.GameInput.PlayerInput.Triggers.JustReleased.MouseLeft)
+                {
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    CalRemixWorld.stratusDungeon = !CalRemixWorld.stratusDungeon;
+                }
+
+                isHovering = !isHovering;
+            }
+        }
+
         private static void AcidsighterToggle(ILContext il)
         {
             var c = new ILCursor(il);
