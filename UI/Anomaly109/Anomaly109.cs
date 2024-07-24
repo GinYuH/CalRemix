@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
@@ -37,6 +38,7 @@ namespace CalRemix.UI.Anomaly109
         private static int HeldRightTimer = 0;
         private static Vector2 fannyOffset = Vector2.Zero;
         public static int fannyFreezeTime = 0;
+        public static string a109path = Main.SavePath + "\\A109Unlocked.txt";
 
         public enum InputType
         {
@@ -190,7 +192,8 @@ namespace CalRemix.UI.Anomaly109
         private static void DrawHelp(SpriteBatch spriteBatch, Rectangle mainframe)
         {
             int borderwidth = 4;
-            Color bordercolor = Anomaly109Manager.helpUnlocked ? Color.Yellow : Color.DarkSlateGray;
+            bool fileUnlocked = File.Exists(a109path);
+            Color bordercolor = Anomaly109Manager.helpUnlocked && fileUnlocked ? Color.Yellow : Color.DarkSlateGray;
             Rectangle promptframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.775f), mainframe.Bottom - (int)(mainframe.Height * 0.125f), (int)(mainframe.Width * 0.1f), (int)(mainframe.Height * 0.08f));
             Rectangle promptborderframe = new Rectangle(mainframe.X + (int)(mainframe.Width * 0.775f) - borderwidth, mainframe.Bottom - (int)(mainframe.Height * 0.125f) - borderwidth, (int)(mainframe.Width * 0.1f) + borderwidth * 2, (int)(mainframe.Height * 0.08f) + borderwidth * 2);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, promptborderframe, bordercolor);
@@ -199,15 +202,18 @@ namespace CalRemix.UI.Anomaly109
             Rectangle maus = getMouse();
 
             string textwithoutspaces = TextInput.Replace(" ", string.Empty);
-            if (TextInput.ToLower().Contains("gg") && !Anomaly109Manager.helpUnlocked && !TextInput.ToLower().Contains("fandom"))
+            if (TextInput.ToLower().Contains("gg") && (!Anomaly109Manager.helpUnlocked || !fileUnlocked) && !TextInput.ToLower().Contains("fandom"))
             {
                 SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
-                Anomaly109Manager.helpUnlocked = true;
+                var pathWriter = File.CreateText(a109path);
+                pathWriter.WriteLine("mis nuevos los gatos.");
+                pathWriter.Close();
+                Anomaly109Manager.helpUnlocked = true;                
                 CalRemixWorld.UpdateWorldBool();
             }
             if (maus.Intersects(promptborderframe))
             {
-                if (Anomaly109Manager.helpUnlocked)
+                if (Anomaly109Manager.helpUnlocked && fileUnlocked)
                 {
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Click to open browser", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
 
