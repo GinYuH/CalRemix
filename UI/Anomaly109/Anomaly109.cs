@@ -229,6 +229,7 @@ namespace CalRemix.UI.Anomaly109
                     string prom = "To unlock help, answer the following: ";
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, prom, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Where is the Calamity Wiki hosted?", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20 + FontAssets.MouseText.Value.MeasureString(prom).Y + 4, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+                    Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Unlocking this also adds new worldgen options for future worlds", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20 + FontAssets.MouseText.Value.MeasureString(prom).Y * 3, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                 }
             }
 
