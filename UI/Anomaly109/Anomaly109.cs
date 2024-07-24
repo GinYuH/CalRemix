@@ -205,8 +205,14 @@ namespace CalRemix.UI.Anomaly109
             if (TextInput.ToLower().Contains("gg") && (!Anomaly109Manager.helpUnlocked || !fileUnlocked) && !TextInput.ToLower().Contains("fandom"))
             {
                 SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
+                bool namelessExists = File.Exists(Main.SavePath + "\\NamelessDeityDefeatConfirmation.txt");
+                string finalText = "This file's existing determines if the Community Remix Anomaly 109 is unlocked";
+                if (namelessExists)
+                {
+                    finalText += "\n\n\nWait a minute, Nameless Deity's file is in here too? rad...";
+                }
                 var pathWriter = File.CreateText(a109path);
-                pathWriter.WriteLine("mis nuevos los gatos.");
+                pathWriter.WriteLine(finalText);
                 pathWriter.Close();
                 Anomaly109Manager.helpUnlocked = true;                
                 CalRemixWorld.UpdateWorldBool();
