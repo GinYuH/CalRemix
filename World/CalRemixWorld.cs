@@ -121,6 +121,8 @@ namespace CalRemix.World
 
         public static Vector2 hydrogenLocation = new Vector2(0, 0);
 
+        public static bool stratusDungeonDisabled = false;
+
         public static List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,
@@ -921,11 +923,19 @@ namespace CalRemix.World
             }));
             if (FinalIndex != -1)
             {
-                tasks.Insert(FinalIndex, new PassLegacy("Dungeon Retheme", (progress, config) =>
+                if (!stratusDungeonDisabled)
                 {
-                    progress.Message = "Remodeling the Dungeon";
-                    StratusDungeon.ReplaceDungeon();
-                    StratusDungeon.AddOriginalDungeonHoles();
+                    tasks.Insert(FinalIndex, new PassLegacy("Dungeon Retheme", (progress, config) =>
+                    {
+                        progress.Message = "Remodeling the Dungeon";
+                        StratusDungeon.ReplaceDungeon();
+                        StratusDungeon.AddOriginalDungeonHoles();
+                        CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
+                    }));
+                }
+                tasks.Insert(FinalIndex, new PassLegacy("Arsenic", (progress, config) =>
+                {
+                    progress.Message = "Arsenic Ore";
                     CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
