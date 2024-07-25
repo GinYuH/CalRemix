@@ -77,8 +77,8 @@ namespace CalRemix
                 {
                     Width = new StyleDimension(40f, 0f),
                     Height = new StyleDimension(40, 0f),
-                    Left = new StyleDimension(-8f, 0f),
-                    Top = new StyleDimension(-8f, 0f),
+                    Left = new StyleDimension(-5f, 0f),
+                    Top = new StyleDimension(-2f, 0f),
                     PaddingLeft = 4f,
                     PaddingRight = 4f
                 };
@@ -408,9 +408,9 @@ namespace CalRemix
             CalculatedStyle dimensions = GetDimensions();
             Vector2 position = new Vector2(dimensions.X + 4f, dimensions.Y + 4f);
             Color color = !CalRemixWorld.stratusDungeonDisabled ? Color.White : Color.Gray;
-            spriteBatch.Draw(ModContent.Request<Texture2D>("CalRemix/icon_small").Value, position, color);
-            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 1, 1);
-            if (maus.Intersects(dimensions.ToRectangle() with { Height = (int)(dimensions.Height * 2), Width = (int)(dimensions.Width * 2) }))
+            spriteBatch.Draw(ModContent.Request<Texture2D>("CalRemix/World/StratusDungeon").Value, position, color);
+            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 6, 6);
+            if (maus.Intersects(dimensions.ToRectangle() with { Height = (int)(dimensions.Height * 1.8f), Width = (int)(dimensions.Width * 1.8f) }))
             {
                 Vector2 startpos = Main.MouseScreen + new Vector2(22, 22);
                 string desc = "Stratus Dungeon generation: ";
