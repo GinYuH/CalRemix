@@ -2284,6 +2284,14 @@ Mods: {
 					Stealth strikes throw charged scraps that linger longer and inflict electrified
 					'''
 			}
+
+			KnowledgeCarcinogen.DisplayName: The Archwizard
+			KnowledgeHydrogen.DisplayName: The Archdiviner
+			KnowledgeIonogen.DisplayName: The Archmagian
+			KnowledgeOrigen.DisplayName: The Originator
+			KnowledgeOxygen.DisplayName: The Archwitch
+			KnowledgePathogen.DisplayName: The Archmagus
+			KnowledgePhytogen.DisplayName: The Archdruid
 		}
 
 		NPCs: {

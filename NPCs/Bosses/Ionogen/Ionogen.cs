@@ -24,6 +24,7 @@ using CalRemix.Items.Armor;
 using CalRemix.Items.Accessories;
 using Terraria.UI;
 using CalRemix.Items.Weapons;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.NPCs.Bosses.Ionogen
 {
@@ -364,6 +365,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofIonogen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<ScrapBag>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<IonogenRelic>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedIonogen, ModContent.ItemType<KnowledgeIonogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
         {
@@ -373,14 +375,6 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             }
             RemixDowned.downedIonogen = true;
             CalRemixWorld.UpdateWorldBool();
-        }
-
-        public override bool SpecialOnKill()
-        {
-            // work you stupid stupid
-            RemixDowned.downedIonogen = true;
-            CalRemixWorld.UpdateWorldBool();
-            return false;
         }
     }
 }

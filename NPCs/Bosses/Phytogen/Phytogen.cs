@@ -24,6 +24,7 @@ using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
 using CalRemix.Items.Accessories;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.NPCs.Bosses.Phytogen
 {
@@ -562,6 +563,7 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PhytogenRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<PhytogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPhytogen>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPhytogen, ModContent.ItemType<KnowledgePhytogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
         {
@@ -571,14 +573,6 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             }
             RemixDowned.downedPhytogen = true;
             CalRemixWorld.UpdateWorldBool();
-        }
-
-        public override bool SpecialOnKill()
-        {
-            // work you stupid stupid
-            RemixDowned.downedPhytogen = true;
-            CalRemixWorld.UpdateWorldBool();
-            return false;
         }
 
         public override bool? CanBeHitByProjectile(Projectile projectile)

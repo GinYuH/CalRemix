@@ -22,6 +22,7 @@ using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
 using CalRemix.Items.Accessories;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.NPCs.Bosses.Carcinogen
 {
@@ -424,23 +425,16 @@ namespace CalRemix.NPCs.Bosses.Carcinogen
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofCarcinogen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<CarcinogenMask>(), 7);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedCarcinogen, ModContent.ItemType<KnowledgeCarcinogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
         {
             RemixDowned.downedCarcinogen = true;
             CalRemixWorld.UpdateWorldBool();
-        }
-
-        public override bool SpecialOnKill()
-        {
             if (!NPC.AnyNPCs(ModContent.NPCType<UNCANNY>()))
             {
                 NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<UNCANNY>());
             }
-            // work you stupid stupid
-            RemixDowned.downedCarcinogen = true;
-            CalRemixWorld.UpdateWorldBool();
-            return false;
         }
 
         public override bool CheckActive()

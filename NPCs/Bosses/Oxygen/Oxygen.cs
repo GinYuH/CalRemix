@@ -24,6 +24,7 @@ using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
 using CalRemix.Items.Accessories;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.NPCs.Bosses.Oxygen
 {
@@ -453,6 +454,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             npcLoot.Add(ModContent.ItemType<OxygenTrophy>(), 10);
             npcLoot.AddNormalOnly(ModContent.ItemType<OxygenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofOxygen>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOxygen, ModContent.ItemType<KnowledgeOxygen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
         {
@@ -465,14 +467,6 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             CalRemixWorld.UpdateWorldBool();
         }
 
-        public override bool SpecialOnKill()
-        {
-            // work you stupid stupid
-            RemixDowned.downedOxygen = true;
-            CalRemixWorld.oxydayTime = 0;
-            CalRemixWorld.UpdateWorldBool();
-            return false;
-        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 drawPos = NPC.Center - screenPos;

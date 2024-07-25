@@ -8,6 +8,7 @@ using CalamityMod.World;
 using CalamityMod.Events;
 using CalRemix.UI;
 using System.Linq;
+using CalRemix.World;
 
 namespace CalRemix.NPCs.Bosses.Origen
 {

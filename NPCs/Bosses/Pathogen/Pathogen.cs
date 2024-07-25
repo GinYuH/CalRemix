@@ -25,6 +25,7 @@ using CalRemix.Items.Bags;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
 using CalRemix.Items.Accessories;
+using CalRemix.Items.Lore;
 
 namespace CalRemix.NPCs.Bosses.Pathogen
 {
@@ -514,6 +515,7 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<PathogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPathogen>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPathogen, ModContent.ItemType<KnowledgePathogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
         {
@@ -525,16 +527,6 @@ namespace CalRemix.NPCs.Bosses.Pathogen
             if (!PandemicPanic.PandemicPanic.InvadersWinning)
                 PandemicPanic.PandemicPanic.EndEvent();
             CalRemixWorld.UpdateWorldBool();
-        }
-
-        public override bool SpecialOnKill()
-        {
-            // work you stupid stupid
-            RemixDowned.downedPathogen = true;
-            if (!PandemicPanic.PandemicPanic.InvadersWinning)
-                PandemicPanic.PandemicPanic.EndEvent();
-            CalRemixWorld.UpdateWorldBool();
-            return false;
         }
 
         public override bool NeedSaving()
