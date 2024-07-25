@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
+using CalRemix.Tiles;
+using Terraria.ID;
 
 namespace CalRemix.Items.Materials
 {
@@ -21,7 +23,14 @@ namespace CalRemix.Items.Materials
             Item.rare = ModContent.RarityType<DarkBlue>();
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
 			Item.maxStack = 9999;
-    	}
+            Item.createTile = ModContent.TileType<YharimBarPlaced>();
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+        }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
