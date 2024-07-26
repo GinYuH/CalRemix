@@ -36,6 +36,7 @@ namespace CalRemix.Projectiles
         public int eye = 0;
         public int bladetimer = 0;
         public bool splitExplosive = false;
+        public bool whipGonged = false;
         NPC exc;
         public override bool InstancePerEntity => true;
 
