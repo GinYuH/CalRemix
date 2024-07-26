@@ -6,7 +6,49 @@ Mods: {
 			PlaguebringerGoliath.SpawnInfo: Use a [i:CalamityMod/Abombination] in the Plagued Jungle.
 			AquaticScourge.SpawnInfo: Use 22 [i:4608] in the Sulphurous Sea's water.
 			AcidRainT1.SpawnInfo: Use a [i:CalamityMod/CausticTear] or wait for an acidic downpour to occur naturally after the Acidsighter is defeated.
-		}
+}
+Items.Armor.PostMoonLord.GemTechHeadgear:
+{
+AbilityBrief:
+'''
+A grand total of six exquisitely crafted gem fragments, each one an embodiment of one of the many diverse and distinct classes within the realm of magical and combative arts, along with a singularly unique and 
+multifaceted base gem, gracefully and effortlessly orbit around you in an entrancing and mesmerizing display of arcane prowess and mysticism. These gems are far from being mere ornamental decorations; they 
+are imbued with potent and formidable abilities and powers, each specific to their respective classes. However, be forewarned, for there exists a perilous risk associated with these precious gems. Should you, in 
+the heat of battle, sustain a significant and grievous amount of damage—specifically, more than 100 damage from a single, devastating hit—you will face the unfortunate consequence of losing one of these 
+invaluable gems. The particular gem that will be lost corresponds directly and unequivocally to the class of the most recent ability, skill, or weapon that you had employed prior to the impact. In the event 
+that the specific class gem that ought to be lost has already been forfeited in a previous encounter or mishap, the highly valuable and versatile base gem will be sacrificed in its stead. Upon the unfortunate 
+loss of a gem, it does not simply vanish into the ether, dissipating into nothingness, but rather dramatically and forcefully breaks off from its orbit around you, and with a relentless and aggressive 
+determination, homes in on the nearest enemy or fearsome boss, provided one is within the vicinity. This homing mechanism ensures that the gem seeks out and targets the closest threat with unerring accuracy. 
+When this gem strikes its designated target, it delivers a catastrophic and devastating blow, inflicting a base damage of a staggering and formidable 40,000, leaving a lasting impact on the foe. Once a gem 
+is lost, it is not gone forever into the void but instead enters a temporary state of dormancy, a period of absence, reappearing and rejoining the orbit around you after a precisely measured and calculated 
+duration of 30 seconds. Each gem carries its own unique set of enhancements and abilities, tailored to augment and bolster the capabilities of its respective class. For instance, [i:Ruby] the vibrant and 
+fiery red gem bestows an additional 130 maximum stealth, significantly bolsters rogue-related statistics and attributes, and ensures that stealth is only expended through the use of rogue-specific weapons, 
+thereby enhancing the efficacy and potency of rogue actions. [i:Topaz] The radiant and luminous yellow gem, on the other hand, serves to enhance melee capabilities, providing increased melee statistics 
+and causing melee attacks to release harmful and damaging shards upon hitting their targets. This effect comes with a cooldown period, a brief interval before it can be activated again. 
+Notably, this cooldown is significantly shorter for pure melee attacks, thus favoring direct and unadulterated melee combat. [i:Emerald] The verdant and vibrant green gem is designed to
+augment ranged combat capabilities. It provides increased ranged statistics and triggers swift-flying flechettes that hone in on and damage enemies when they are struck by ranged projectiles. This effect 
+ensures that enemies are continually harassed and damaged by additional projectiles, enhancing the overall effectiveness of ranged attacks. [i:Sapphire] The serene and tranquil blue gem 
+is a boon for summoners, granting an additional four maximum minions, thereby expanding the summoner's arsenal, increasing minion damage, and mitigating the penalty typically associated with summoner items 
+when wielding a non-summoner weapon. This gem thus enhances the versatility and adaptability of summoners in combat. [i:Amethyst] The mystical and enigmatic violet gem is tailored to enhance magical prowess. 
+It provides an extra 100 maximum mana, boosting magic-related statistics and attributes, and enables rapid mana regeneration when holding a non-magical weapon. This effect ensures that mages can quickly 
+replenish their mana reserves, maintaining their ability to cast powerful spells. Lastly, [i:Diamond] the delicate and multifaceted pink base gem offers a comprehensive suite of benefits, including an additional 
+75 defense, enhanced damage reduction, increased movement speed, improved jump speed, and a bonus of 2 life regeneration. This gem serves as a foundation, providing overall enhancements that benefit the 
+wielder in various aspects of combat and survival. In the extraordinary and rare event that all six gems are present, active, and orbiting around you simultaneously, a special and potent effect is triggered. Striking 
+a target with any weapon will grant you an additional 2 life regeneration for a duration of 8 seconds. This beneficial effect is further amplified to 3 life regeneration if, during this 8-second window, you utilize 
+a weapon from a different class, for a period of 2.5 seconds. This synergistic effect encourages versatility and adaptability in combat, rewarding those who skillfully switch between different weapon classes.
+'''
+GeneralGemInfo: ""
+	RedGemInfo: ""
+	YellowGemInfo: ""
+	GreenGemInfo: ""
+	BlueGemInfo: ""
+	PurpleGemInfo: ""
+	PinkGemInfo: ""
+	GemBonusInfo: ""
+AbilityDescription: ""
+
+}
+	
 
 		Items: {
 			SummonItems: {

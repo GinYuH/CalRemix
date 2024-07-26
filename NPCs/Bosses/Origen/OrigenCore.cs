@@ -164,6 +164,7 @@ namespace CalRemix.NPCs.Bosses.Origen
             npcLoot.Add(ItemID.FrozenKey, 3);
             npcLoot.Add(ModContent.ItemType<OrigenTrophy>(), 10);
             npcLoot.Add(ModContent.ItemType<SoulofOrigen>());
+            npcLoot.Add(ModContent.ItemType<IOU>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOrigen, ModContent.ItemType<KnowledgeOrigen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
