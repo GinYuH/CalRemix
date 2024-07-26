@@ -626,7 +626,8 @@ namespace CalRemix.UI
             LoadScreenHelper(WonderFlower,  "TalkingFlower")
                 .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
-                .SetPositionData(false, 240, 0.37f);
+                .SetPositionData(false, 240, 0.37f)
+                .SetAvailabilityCondition(() => Main.hardMode);
 
             LoadScreenHelper(GonerFanny, "FannyGoner")
                 .SetVoiceStyle(ScreenHelperManager.HappySFX with { MaxInstances = 0 })
