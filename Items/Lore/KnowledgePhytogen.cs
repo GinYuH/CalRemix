@@ -19,7 +19,7 @@ namespace CalRemix.Items.Lore
         {
             Item.width = 20;
             Item.height = 20;
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = RarityHelper.Phytogen;
             Item.consumable = false;
         }
 

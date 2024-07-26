@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -52,6 +53,51 @@ namespace CalRemix
             return npc.GetGlobalNPC<CalRemixGlobalNPC>();
         }
 
+    }
+
+    public static class RarityHelper
+    {
+        public const int Origen = 1;
+        public const int WulfrumExcavator = 1;
+        public const int KingSlime = 1;
+        public const int DesertScourge = 1;
+        public const int EyeofCthulhu = 1;
+        public const int Crabulon = 2;
+        public const int EaterofWorlds = 2;
+        public const int BrainofCthulhu = 2;
+        public const int HiveMind = 3;
+        public const int Perforators = 3;
+        public const int QueenBee = 3;
+        public const int Deerclops = 3;
+        public const int Skeletron = 3;
+        public const int Carcinogen = 3;
+        public const int SlimeGod = 4;
+        public const int WallofFlesh = 4;
+        public const int Hardmode = 4;
+        public const int Cryogen = 5;
+        public const int AquaticScourge = 5;
+        public const int BrimstoneElemental = 5;
+        public const int Mechs = 5;
+        public const int Twins = 5;
+        public const int SkeletronPrime = 5;
+        public const int Destroyer = 5;
+        public const int CalamitasClone = 5;
+        public const int Ionogen = 5;
+        public const int Plantera = 6;
+        public const int Leviathan = 7;
+        public const int Oxygen = 7;
+        public const int AstrumAureus = 7;
+        public const int Golem = 8;
+        public const int Phytogen = 8;
+        public const int EmpressofLight = 8;
+        public const int PlaguebringerGoliath = 8;
+        public const int DukeFishron = 8;
+        public const int Hydrogen = 8;
+        public const int Ravager = 8;
+        public const int Pathogen = 8;
+        public const int LunaticCultist = 9;
+        public const int AstrumDeus = 9;
+        public const int MoonLord = 10;
     }
 
     public static class BetterSoundID

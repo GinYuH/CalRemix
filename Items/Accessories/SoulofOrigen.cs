@@ -31,7 +31,7 @@ namespace CalRemix.Items.Accessories
             Item.height = 22;
             Item.value = CalamityGlobalItem.RarityWhiteBuyPrice;
             Item.accessory = true;
-            Item.rare = ItemRarityID.White;
+            Item.rare = RarityHelper.Origen;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

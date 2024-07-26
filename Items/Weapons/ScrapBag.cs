@@ -23,8 +23,8 @@ namespace CalRemix.Items.Weapons
         {
             Item.width = 10;
             Item.height = 10;
-            Item.rare = ItemRarityID.LightPurple;
-            Item.value = CalamityGlobalItem.RarityLightPurpleBuyPrice;
+            Item.rare = RarityHelper.Ionogen;
+            Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
             Item.useTime = 6;
             Item.useAnimation = 6;
             Item.useStyle = ItemUseStyleID.Shoot;

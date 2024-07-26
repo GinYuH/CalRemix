@@ -36,7 +36,7 @@ namespace CalRemix.Items.Accessories
             Item.height = 22;
             Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
             Item.accessory = true;
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = RarityHelper.Phytogen;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -36,7 +36,7 @@ namespace CalRemix.Items.Accessories
             Item.height = 22;
             Item.value = CalamityGlobalItem.RarityLightPurpleBuyPrice;
             Item.accessory = true;
-            Item.rare = ItemRarityID.LightPurple;
+            Item.rare = RarityHelper.Oxygen;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
