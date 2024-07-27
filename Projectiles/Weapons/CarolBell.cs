@@ -11,6 +11,7 @@ namespace CalRemix.Projectiles.Weapons
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+            Main.projFrames[Projectile.type] = 8;
         }
 
         public override void SetDefaults()
@@ -63,6 +64,16 @@ namespace CalRemix.Projectiles.Weapons
                         }
                     }
                 }
+            }
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 4)
+            {
+                Projectile.frame++;
+                Projectile.frameCounter = 0;
+            }
+            if (Projectile.frame >= Main.projFrames[Projectile.type])
+            {
+                Projectile.frame = 0;
             }
         }
 
