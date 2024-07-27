@@ -6,11 +6,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions.Restorative
+namespace CalRemix.Items.Potions.Recovery
 {
-    public class GreaterStealthPotion : ModItem
+    public class GreaterEnragePotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
+        public override bool CanUseItem(Player player) => !player.Calamity().rageModeActive && player.Calamity().RageEnabled;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
@@ -27,21 +27,21 @@ namespace CalRemix.Items.Potions.Restorative
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 20% stealth");
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 15% rage");
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }
         public override bool? UseItem(Player player)
         {
-            CombatText.NewText(player.getRect(), Color.MediumPurple, (int)(player.Calamity().rogueStealthMax * 100f * 0.2f));
-            player.Calamity().rogueStealth += player.Calamity().rogueStealthMax * 0.2f;
+            CombatText.NewText(player.getRect(), Color.Orange, (int)(player.Calamity().rageMax * 0.15f));
+            player.Calamity().rage += player.Calamity().rageMax * 0.15f;
             return true;
         }
         public override void AddRecipes()
         {
             CreateRecipe(3).
                 AddIngredient(ItemID.BottledWater, 3).
-                AddIngredient<StarblightSoot>(3).
+                AddIngredient<EssenceofHavoc>(3).
                 AddIngredient(ItemID.FallenStar).
                 AddTile(TileID.Bottles).
                 Register();

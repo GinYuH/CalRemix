@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions.Restorative
+namespace CalRemix.Items.Potions.Recovery
 {
     public class SuperEnragePotion : ModItem
     {

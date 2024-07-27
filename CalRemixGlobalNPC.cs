@@ -44,7 +44,7 @@ using CalamityMod.World;
 using System.Reflection;
 using CalamityMod.Sounds;
 using CalRemix.Items.Potions;
-using CalRemix.Items.Potions.Restorative;
+using CalRemix.Items.Potions.Recovery;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.PlaguebringerGoliath;

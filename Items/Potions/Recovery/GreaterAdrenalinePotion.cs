@@ -6,18 +6,18 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions.Restorative
+namespace CalRemix.Items.Potions.Recovery
 {
-    public class LesserStealthPotion : ModItem
+    public class GreaterAdrenalinePotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
+        public override bool CanUseItem(Player player) => !player.Calamity().adrenalineModeActive && player.Calamity().AdrenalineEnabled;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
         }
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.LesserHealingPotion);
+            Item.CloneDefaults(ItemID.GreaterHealingPotion);
             Item.healLife = 0;
             Item.buffType = 0;
             Item.potion = false;
@@ -27,21 +27,22 @@ namespace CalRemix.Items.Potions.Restorative
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 10% stealth");
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 9% Adrenaline");
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }
         public override bool? UseItem(Player player)
         {
-            CombatText.NewText(player.getRect(), Color.MediumPurple, (int)(player.Calamity().rogueStealthMax * 100f * 0.1f));
-            player.Calamity().rogueStealth += player.Calamity().rogueStealthMax * 0.1f;
+            CombatText.NewText(player.getRect(), Color.GreenYellow, (int)(player.Calamity().adrenalineMax * 0.09f));
+            player.Calamity().adrenaline += player.Calamity().adrenalineMax * 0.09f;
             return true;
         }
         public override void AddRecipes()
         {
-            CreateRecipe(2).
-                AddIngredient<BlightedGel>(2).
-                AddIngredient(ItemID.Bottle, 2).
+            CreateRecipe(3).
+                AddIngredient(ItemID.BottledWater, 3).
+                AddIngredient<EssenceofEleum>(3).
+                AddIngredient(ItemID.FallenStar).
                 AddTile(TileID.Bottles).
                 Register();
         }

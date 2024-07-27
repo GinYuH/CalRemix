@@ -6,18 +6,18 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions.Restorative
+namespace CalRemix.Items.Potions.Recovery
 {
-    public class SuperAdrenalinePotion : ModItem
+    public class LesserEnragePotion : ModItem
     {
-        public override bool CanUseItem(Player player) => !player.Calamity().adrenalineModeActive && player.Calamity().AdrenalineEnabled;
+        public override bool CanUseItem(Player player) => !player.Calamity().rageModeActive && player.Calamity().RageEnabled;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
         }
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.SuperHealingPotion);
+            Item.CloneDefaults(ItemID.LesserHealingPotion);
             Item.healLife = 0;
             Item.buffType = 0;
             Item.potion = false;
@@ -27,21 +27,21 @@ namespace CalRemix.Items.Potions.Restorative
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 12% Adrenaline");
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 5% rage");
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }
         public override bool? UseItem(Player player)
         {
-            CombatText.NewText(player.getRect(), Color.GreenYellow, (int)(player.Calamity().adrenalineMax * 0.12f));
-            player.Calamity().adrenaline += player.Calamity().adrenalineMax * 0.12f;
+            CombatText.NewText(player.getRect(), Color.Orange, (int)(player.Calamity().rageMax * 0.05f));
+            player.Calamity().rage += player.Calamity().rageMax * 0.05f;
             return true;
         }
         public override void AddRecipes()
         {
-            CreateRecipe(4).
-                AddIngredient<GreaterAdrenalinePotion>(4).
-                AddIngredient<AstralBar>().
+            CreateRecipe(2).
+                AddIngredient<AncientBoneDust>(2).
+                AddIngredient(ItemID.Bottle, 2).
                 AddTile(TileID.Bottles).
                 Register();
         }

@@ -1,23 +1,23 @@
+using CalamityMod;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions.Restorative
+namespace CalRemix.Items.Potions.Recovery
 {
-    public class FlightPotion : ModItem
+    public class GreaterStealthPotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.wingTimeMax > 0;
+        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
         }
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.HealingPotion);
+            Item.CloneDefaults(ItemID.GreaterHealingPotion);
             Item.healLife = 0;
             Item.buffType = 0;
             Item.potion = false;
@@ -27,21 +27,22 @@ namespace CalRemix.Items.Potions.Restorative
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 14% flight");
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 20% stealth");
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }
         public override bool? UseItem(Player player)
         {
-            CombatText.NewText(player.getRect(), Color.BlueViolet, Math.Round((player.wingTimeMax * 0.14f) / 60f, 3).ToString());
-            player.wingTime += (player.wingTime < player.wingTimeMax - player.wingTimeMax * 0.14f) ? player.wingTimeMax * 0.14f : player.wingTimeMax - player.wingTime;
+            CombatText.NewText(player.getRect(), Color.MediumPurple, (int)(player.Calamity().rogueStealthMax * 100f * 0.2f));
+            player.Calamity().rogueStealth += player.Calamity().rogueStealthMax * 0.2f;
             return true;
         }
         public override void AddRecipes()
         {
-            CreateRecipe(2).
-                AddIngredient<LesserFlightPotion>(2).
-                AddIngredient<AerialiteBar>().
+            CreateRecipe(3).
+                AddIngredient(ItemID.BottledWater, 3).
+                AddIngredient<StarblightSoot>(3).
+                AddIngredient(ItemID.FallenStar).
                 AddTile(TileID.Bottles).
                 Register();
         }
