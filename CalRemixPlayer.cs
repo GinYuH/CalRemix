@@ -37,7 +37,7 @@ using Terraria.Graphics.Effects;
 using CalRemix.UI;
 using CalRemix.NPCs.Bosses.Phytogen;
 using CalRemix.NPCs.Bosses.Hydrogen;
-using CalRemix.Items.Potions;
+using CalRemix.Items.Potions.Restorative;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
 using CalamityMod.NPCs.ExoMechs;

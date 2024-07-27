@@ -1,15 +1,16 @@
-using CalamityMod;
+using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions
+namespace CalRemix.Items.Potions.Restorative
 {
-    public class StealthPotion : ModItem
+    public class FlightPotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
+        public override bool CanUseItem(Player player) => player.wingTimeMax > 0;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
@@ -26,21 +27,21 @@ namespace CalRemix.Items.Potions
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:StealthRestore", "Restores 15% stealth");
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 14% flight");
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }
         public override bool? UseItem(Player player)
         {
-            CombatText.NewText(player.getRect(), Color.MediumPurple, (int)(player.Calamity().rogueStealthMax * 100f * 0.15f));
-            player.Calamity().rogueStealth += player.Calamity().rogueStealthMax * 0.15f;
+            CombatText.NewText(player.getRect(), Color.BlueViolet, Math.Round((player.wingTimeMax * 0.14f) / 60f, 3).ToString());
+            player.wingTime += (player.wingTime < player.wingTimeMax - player.wingTimeMax * 0.14f) ? player.wingTimeMax * 0.14f : player.wingTimeMax - player.wingTime;
             return true;
         }
         public override void AddRecipes()
         {
             CreateRecipe(2).
-                AddIngredient<LesserStealthPotion>(2).
-                AddIngredient(ItemID.Bone).
+                AddIngredient<LesserFlightPotion>(2).
+                AddIngredient<AerialiteBar>().
                 AddTile(TileID.Bottles).
                 Register();
         }

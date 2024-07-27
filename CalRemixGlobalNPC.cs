@@ -44,6 +44,7 @@ using CalamityMod.World;
 using System.Reflection;
 using CalamityMod.Sounds;
 using CalRemix.Items.Potions;
+using CalRemix.Items.Potions.Restorative;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.PlaguebringerGoliath;
@@ -980,6 +981,9 @@ namespace CalRemix
             if (npc.type == NPCID.BigMimicCorruption || npc.type == NPCID.BigMimicCrimson || npc.type == NPCID.BigMimicHallow)
             {
                 npcLoot.Add(ModContent.ItemType<GreaterStealthPotion>(), 1, 5, 10);
+                npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ModContent.ItemType<GreaterAdrenalinePotion>(), 1, 5, 10);
+                npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ModContent.ItemType<GreaterEnragePotion>(), 1, 5, 10);
+                npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ModContent.ItemType<GreaterFlightPotion>(), 1, 5, 10);
             }
             if (npc.type == NPCID.GoblinThief)
             {

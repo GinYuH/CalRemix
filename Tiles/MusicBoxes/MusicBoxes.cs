@@ -203,4 +203,18 @@ namespace CalRemix.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class TitleMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.TitleMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.TitleMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
 }

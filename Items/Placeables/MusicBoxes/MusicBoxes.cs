@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Items.Placeables.MusicBoxes
 {
@@ -21,188 +22,162 @@ namespace CalRemix.Items.Placeables.MusicBoxes
             Item.rare = ItemRarityID.LightRed;
             Item.accessory = true;
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            if (this != null)
-                return false;
-            else
-                return true;
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => (this != null);
     }
     public class AcidsighterMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Opticatalysis"), Type, ModContent.TileType<Tiles.MusicBoxes.AcidsighterMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Opticatalysis"), Type, TileType<Tiles.MusicBoxes.AcidsighterMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.AcidsighterMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.AcidsighterMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class ARMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TropicofCancer"), Type, ModContent.TileType<Tiles.MusicBoxes.ARMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TropicofCancer"), Type, TileType<Tiles.MusicBoxes.ARMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.ARMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.ARMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class CryoSlimeMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/AntarcticReinsertion"), Type, ModContent.TileType<Tiles.MusicBoxes.CryoSlimeMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/AntarcticReinsertion"), Type, TileType<Tiles.MusicBoxes.CryoSlimeMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.CryoSlimeMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.CryoSlimeMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class DerellectMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SignalInterruption"), Type, ModContent.TileType<Tiles.MusicBoxes.DerellectMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SignalInterruption"), Type, TileType<Tiles.MusicBoxes.DerellectMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.DerellectMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.DerellectMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class EolMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Gegenschein"), Type, ModContent.TileType<Tiles.MusicBoxes.EolMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Gegenschein"), Type, TileType<Tiles.MusicBoxes.EolMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.EolMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.EolMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class ExcavatorMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ScourgeoftheScrapyard"), Type, ModContent.TileType<Tiles.MusicBoxes.ExcavatorMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ScourgeoftheScrapyard"), Type, TileType<Tiles.MusicBoxes.ExcavatorMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.ExcavatorMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.ExcavatorMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class HypnosMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CerebralAugmentations"), Type, ModContent.TileType<Tiles.MusicBoxes.HypnosMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CerebralAugmentations"), Type, TileType<Tiles.MusicBoxes.HypnosMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.HypnosMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.HypnosMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class LaRugaMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LaRuga"), Type, ModContent.TileType<Tiles.MusicBoxes.LaRugaMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LaRuga"), Type, TileType<Tiles.MusicBoxes.LaRugaMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.LaRugaMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.LaRugaMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class PlaguedJungleMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PlaguedJungle"), Type, ModContent.TileType<Tiles.MusicBoxes.PlaguedJungleMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PlaguedJungle"), Type, TileType<Tiles.MusicBoxes.PlaguedJungleMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.PlaguedJungleMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.PlaguedJungleMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class PolyphemalusMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/EyesofFlame"), Type, ModContent.TileType<Tiles.MusicBoxes.PolyphemalusMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/EyesofFlame"), Type, TileType<Tiles.MusicBoxes.PolyphemalusMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.PolyphemalusMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.PolyphemalusMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
-        {
-            return base.PrefixChance(pre, rand);
-        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
     public class PolyphemalusGFBMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TheEyesareAnger"), Type, ModContent.TileType<Tiles.MusicBoxes.PolyphemalusGFBMusicBox>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TheEyesareAnger"), Type, TileType<Tiles.MusicBoxes.PolyphemalusGFBMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = ModContent.TileType<Tiles.MusicBoxes.PolyphemalusGFBMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.PolyphemalusGFBMusicBox>();
             base.SetDefaults();
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand)
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class TitleMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
         {
-            return base.PrefixChance(pre, rand);
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu"), Type, TileType<Tiles.MusicBoxes.TitleMusicBox>());
         }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.TitleMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
 }

@@ -1,16 +1,16 @@
-using CalamityMod;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items.Potions
+namespace CalRemix.Items.Potions.Restorative
 {
-    public class SuperStealthPotion : ModItem
+    public class SuperFlightPotion : ModItem
     {
-        public override bool CanUseItem(Player player) => player.Calamity().wearingRogueArmor;
+        public override bool CanUseItem(Player player) => player.wingTimeMax > 0;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 30;
@@ -27,21 +27,21 @@ namespace CalRemix.Items.Potions
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:StealthRestore", "Restores 25% stealth");
+                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 28% flight");
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }
         public override bool? UseItem(Player player)
         {
-            CombatText.NewText(player.getRect(), Color.MediumPurple, (int)(player.Calamity().rogueStealthMax * 100f * 0.25f));
-            player.Calamity().rogueStealth += player.Calamity().rogueStealthMax * 0.25f;
+            CombatText.NewText(player.getRect(), Color.BlueViolet, Math.Round((player.wingTimeMax * 0.28f) / 60f, 3).ToString());
+            player.wingTime += (player.wingTime < player.wingTimeMax - player.wingTimeMax * 0.28f) ? player.wingTimeMax * 0.28f : player.wingTimeMax - player.wingTime;
             return true;
         }
         public override void AddRecipes()
         {
             CreateRecipe(4).
-                AddIngredient<GreaterStealthPotion>(4).
-                AddIngredient<MeldConstruct>().
+                AddIngredient<GreaterFlightPotion>(4).
+                AddIngredient<GalacticaSingularity>().
                 AddTile(TileID.Bottles).
                 Register();
         }
