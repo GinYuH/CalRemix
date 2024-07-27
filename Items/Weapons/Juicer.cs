@@ -44,18 +44,8 @@ namespace CalRemix.Items.Weapons
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            int roll = Main.rand.Next(3);
-            roll = roll switch
-            {
-                0 => ProjectileID.WaterStream,
-                1 => ProjectileID.GoldenShowerFriendly,
-                _ => ModContent.ProjectileType<EvergladeSprayProjectile>(),
-            };
             float spread = 2;
-            int num = Projectile.NewProjectile(source, position + velocity * 3, velocity + Main.rand.NextVector2Circular(spread, spread), roll, damage, knockback, player.whoAmI, Main.rand.Next(1, 5));
-            Main.projectile[num].DamageType = DamageClass.Ranged;
-            Main.projectile[num].stepSpeed = 2f;
-
+            int num = Projectile.NewProjectile(source, position + velocity * 3, velocity + Main.rand.NextVector2Circular(spread, spread), ModContent.ProjectileType<Juice>(), damage, knockback, player.whoAmI, Main.rand.Next(1, 5), ai2: Main.rand.Next(0, 7));
             return true;
         }
     }
