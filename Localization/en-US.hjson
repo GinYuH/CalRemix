@@ -2361,6 +2361,8 @@ Mods: {
 				DisplayName: Palette Uncleanser
 				Tooltip: Causes hit enemies to become vulnerable to all debuff elements
 			}
+
+			OrigenPoint.DisplayName: Origen Point
 		}
 
 		NPCs: {
@@ -3032,6 +3034,7 @@ Mods: {
 			AergiaNeuronSummon.DisplayName: Aergia Neuron Core
 			BlueExoPulseLaserFriendly.DisplayName: Blue Exo Pulse Laser
 			Scrap.DisplayName: Scrap
+			OrigenPointProjectile.DisplayName: Point
 		}
 
 		Tiles: {
