@@ -41,9 +41,6 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             if (carci != null && carci.active && carci.type == ModContent.NPCType<Hydrogen>())
             {
                 NPC.position = carci.Center - NPC.Size / 2;
-                // m*ltiplayer
-                NPC.position.X = NPC.position.X - (NPC.width / 2);
-                NPC.position.Y = NPC.position.Y - (NPC.height / 2);
                 if (carci.ai[0] == 0)
                 {
                     NPC.scale = 1f;

@@ -41,9 +41,6 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             if (carci != null && carci.active && carci.type == ModContent.NPCType<Ionogen>())
             {
                 NPC.position = carci.Center - NPC.Size / 2;
-                // m*ltiplayer
-                NPC.position.X = NPC.position.X - (NPC.width / 2);
-                NPC.position.Y = NPC.position.Y - (NPC.height / 2);
                 NPC.rotation += 0.1f;
             }
             else
