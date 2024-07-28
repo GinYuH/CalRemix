@@ -59,6 +59,9 @@ namespace CalRemix.UI
             HelperMessage.New("Multiplayer", "The atmosphere seems a lot more social than what I'm used to. Be wary of ruptures in reality!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.netMode != NetmodeID.SinglePlayer);
 
+            HelperMessage.New("Norcheese", "Something, something, you dirty cheater.",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().NorfleetCounter >= 4).SpokenByEvilFanny();
+
         }
         private static bool DarkArea()
         {
