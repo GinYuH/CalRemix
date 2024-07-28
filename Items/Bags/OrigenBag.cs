@@ -53,6 +53,7 @@ namespace CalRemix.Items.Bags
         {
             itemLoot.Add(ItemID.Nazar, 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<SoulofOrigen>());
+            itemLoot.Add(ModContent.ItemType<PaletteUncleanser>());
             //itemLoot.Add(ModContent.ItemType<OrigenMask>(), 7);
             itemLoot.AddRevBagAccessories();
         }

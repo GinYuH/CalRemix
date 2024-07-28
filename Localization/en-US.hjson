@@ -2351,6 +2351,16 @@ Mods: {
 				DisplayName: Juicer
 				Tooltip: Sprays enemies with an assortment of liquids
 			}
+
+			DisenchantedSword: {
+				DisplayName: Disenchanted Sword
+				Tooltip: Corrupted by evil forces
+			}
+
+			PaletteUncleanser: {
+				DisplayName: Palette Uncleanser
+				Tooltip: Causes hit enemies to become vulnerable to all debuff elements
+			}
 		}
 
 		NPCs: {

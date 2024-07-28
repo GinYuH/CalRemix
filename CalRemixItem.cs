@@ -248,6 +248,10 @@ namespace CalRemix
                     TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
                 }
             }
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            {
+                TransformItem(ref item, ModContent.ItemType<DisenchantedSword>());
+            }
         }
         public override bool? UseItem(Item item, Player player)
         {
@@ -305,6 +309,10 @@ namespace CalRemix
                 {
                     TransformItem(ref item, ModContent.ItemType<SeafoodFood>());
                 }
+            }
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            {
+                TransformItem(ref item, ModContent.ItemType<DisenchantedSword>());
             }
             if (CalRemixWorld.laruga)
             {
@@ -409,6 +417,10 @@ namespace CalRemix
                         item.active = false;
                     }
                 }
+            }
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            {
+                TransformItem(ref item, ModContent.ItemType<DisenchantedSword>());
             }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)

@@ -13,6 +13,7 @@ using CalRemix.World;
 using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Accessories;
 using CalRemix.Items.Lore;
+using CalRemix.Items.Weapons;
 
 namespace CalRemix.NPCs.Bosses.Origen
 {
@@ -165,6 +166,7 @@ namespace CalRemix.NPCs.Bosses.Origen
             npcLoot.Add(ModContent.ItemType<OrigenTrophy>(), 10);
             npcLoot.Add(ModContent.ItemType<SoulofOrigen>());
             npcLoot.Add(ModContent.ItemType<IOU>());
+            npcLoot.Add(ModContent.ItemType<PaletteUncleanser>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOrigen, ModContent.ItemType<KnowledgeOrigen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
