@@ -35,6 +35,14 @@ using CalamityMod.Rarities;
 using CalamityMod.Items.Accessories.Vanity;
 using CalRemix.World;
 using CalamityMod.Items.Potions;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.NPCs.Crabulon;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.Leviathan;
+using System.Reflection;
 
 namespace CalRemix.Retheme
 {
@@ -75,6 +83,27 @@ namespace CalRemix.Retheme
     public class RNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
+        public override void SetStaticDefaults()
+        {
+            DesertScourgeBody.BodyTexture2 = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/DS/Body2")  : Request<Texture2D>("CalamityMod/NPCs/DesertScourge/DesertScourgeBody2");
+            DesertScourgeBody.BodyTexture3 = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/DS/Body2") : Request<Texture2D>("CalamityMod/NPCs/DesertScourge/DesertScourgeBody3");
+            DesertScourgeBody.BodyTexture4 = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/DS/Body2") : Request<Texture2D>("CalamityMod/NPCs/DesertScourge/DesertScourgeBody4");
+            Crabulon.Texture_Glow = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Crabulon/CrabulonGlow") : Request<Texture2D>("CalamityMod/NPCs/Crabulon/CrabulonGlow");
+            Crabulon.AltTexture_Glow = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Crabulon/CrabulonAltGlow") : Request<Texture2D>("CalamityMod/NPCs/Crabulon/CrabulonAltGlow");
+            Crabulon.AttackTexture_Glow = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Crabulon/CrabulonAttackGlow") : Request<Texture2D>("CalamityMod/NPCs/Crabulon/CrabulonAttackGlow");
+            HiveMind.Phase2Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/HiveMind/HiveMindP2") : Request<Texture2D>("CalamityMod/NPCs/HiveMind/HiveMindP2");
+            PerforatorCyst.GlowTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Perfs/CystGlow") : Request<Texture2D>("CalamityMod/NPCs/Perforator/PerforatorCystGlow");
+            //PerforatorBodyLarge.AltTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Perfs/LBodyAlt") : Request<Texture2D>("CalamityMod/NPCs/Perforator/PerforatorBodyLargeAlt");
+
+            Cryogen.Phase2Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenPhase2") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase2");
+            Cryogen.Phase3Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenPhase3") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase3");
+            Cryogen.Phase4Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenPhase4") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase4");
+            Cryogen.Phase5Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenPhase5") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase5");
+            Cryogen.Phase6Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Cryogen/CryogenPhase6") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase6");
+            Anahita.ChargeTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Levi/AnahitaStab") : Request<Texture2D>("CalamityMod/NPCs/Leviathan/AnahitaStabbing");
+            Leviathan.AttackTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Levi/LeviAttack") : Request<Texture2D>("CalamityMod/NPCs/Leviathan/LeviathanAttack");
+            //AstrumAureus.WalkTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Retheme/Levi/LeviAttack") : Request<Texture2D>("CalamityMod/NPCs/AstrumAureus/LeviathanAttack");
+        }
         public override void ModifyTypeName(NPC npc, ref string typeName)
         {
             if (!CalRemixWorld.npcChanges)
@@ -159,8 +188,8 @@ namespace CalRemix.Retheme
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(ItemType<Fabstaff>(), new DrawAnimationVertical(6, 6));
-            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Retheme/NA");
-            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Retheme/NA");
+            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Retheme/Blank");
+            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Retheme/Blank");
             TextureAssets.Item[ItemType<Fabstaff>()] = Request<Texture2D>("CalRemix/Retheme/NoFab/InterfacerStaff");
             TextureAssets.Item[ItemType<Fabsol>()] = Request<Texture2D>("CalRemix/Retheme/NoFab/DiscordianSigil");
             TextureAssets.Item[ItemType<CirrusDress>()] = Request<Texture2D>("CalRemix/Retheme/NoFab/AshsCloak");
