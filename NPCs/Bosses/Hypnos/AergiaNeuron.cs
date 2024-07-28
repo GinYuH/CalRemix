@@ -1018,6 +1018,8 @@ namespace CalRemix.NPCs.Bosses.Hypnos
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             SmokeDrawer.DrawSet(NPC.Center);
             if (!(hypnos.ai[0] == 11 && hypnos.ai[1] >= 31))
             {
