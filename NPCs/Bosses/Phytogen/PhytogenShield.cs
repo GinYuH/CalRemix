@@ -50,6 +50,9 @@ namespace CalRemix.NPCs.Bosses.Phytogen
             if (carci != null && carci.active && carci.type == ModContent.NPCType<Phytogen>())
             {
                 NPC.position = carci.Center - NPC.Size / 2;
+                // m*ltiplayer
+                NPC.position.X = NPC.position.X - (NPC.width / 2);
+                NPC.position.Y = NPC.position.Y - (NPC.height / 2);
                 NPC.rotation += 0.1f;
                 switch (carci.ai[0])
                 {
