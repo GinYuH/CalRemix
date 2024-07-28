@@ -63,6 +63,7 @@ namespace CalRemix.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Origen Point");
+            Tooltip.SetDefault("Creates large, slow moving pixels");
         }
         public override void SetDefaults()
         {
@@ -74,7 +75,7 @@ namespace CalRemix.Items.Weapons
             Item.useAnimation = 47;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.autoReuse = true;
-            Item.UseSound = CalamityMod.CalPlayer.CalamityPlayer.DefenseDamageSound;
+            Item.UseSound = CalamityMod.CalPlayer.CalamityPlayer.DefenseDamageSound with { PitchRange = (-1, 1)};
             Item.DamageType = DamageClass.Generic;
             Item.damage = 12;
             Item.knockBack = 22f;
