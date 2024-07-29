@@ -2,6 +2,7 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
+using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -359,6 +360,11 @@ namespace CalRemix.UI
             if (!ScreenHelperManager.screenHelpersEnabled)
             {
                 return;
+            }
+
+            if (Main.netMode == NetmodeID.SinglePlayer && !Main.hasFocus)
+            {
+                CalRemixWorld.CheckOnFandom();
             }
             // find the player's latest discord chat while the game isn't opened. doesn't work in multiplayer for sanity reasons
             if (NPC.downedBoss1)

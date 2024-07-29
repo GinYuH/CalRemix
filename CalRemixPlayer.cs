@@ -51,6 +51,7 @@ using SubworldLibrary;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalRemix.Projectiles.Hostile;
 using CalamityMod.Sounds;
+using CalamityMod.NPCs.ExoMechs.Ares;
 
 namespace CalRemix
 {
@@ -755,6 +756,13 @@ namespace CalRemix
 			else
 			{
 				dungeon2 = false;
+			}
+			if (CalRemixWorld.onFandom)
+			{
+				if (Player.miscCounter % 120 == 0)
+				{
+					SoundEngine.PlaySound(AresBody.EnragedSound);
+				}
 			}
             #region stealth cuts
             if (tvo) //Verboten one

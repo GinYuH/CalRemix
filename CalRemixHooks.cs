@@ -398,6 +398,14 @@ namespace CalRemix
                 int gus = (int)(255f * hydr.localAI[0] / 100);
                 Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, new Color(gus, gus, gus, (int)hydr.localAI[0]), 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
             }
+            if (CalRemixWorld.onFandom > 0)
+            {
+                CalRemixWorld.onFandom--;
+                string nofandom = "DO NOT USE THE FANDOM WIKI";
+                float fandomwidth = FontAssets.MouseText.Value.MeasureString(nofandom).X;
+                Utils.DrawBorderString(Main.spriteBatch, nofandom, new Vector2(200, Main.screenHeight / 2) + Main.rand.NextVector2Square(-10, 10), Color.Red, (Main.screenWidth / fandomwidth) + 0.1f * (float)Math.Cos(Main.GlobalTimeWrappedHourly * 22));
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Red * 0.22f, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+            }
         }
     }
 
