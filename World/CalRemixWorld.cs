@@ -52,7 +52,6 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.Items.Lore;
 using CalamityMod.Schematics;
 using CalamityMod.Items.Potions;
-using System.Diagnostics;
 
 namespace CalRemix.World
 {
@@ -60,7 +59,6 @@ namespace CalRemix.World
     {
         public static bool worldFullyStarted = false;
         public static int worldLoadCounter = 0;
-        public static int onFandom = -1;
 
         public static bool ogslime = false;
 
@@ -1141,35 +1139,6 @@ namespace CalRemix.World
             int sunkenHeight = sunkenLastY - sunkenY;
             hydrogenLocation = new Vector2(sunkenX + sunkenWidth / 2, sunkenY + sunkenHeight / 3) * 16;
             return new Rectangle(sunkenX, sunkenY, sunkenWidth, sunkenHeight);
-        }
-
-        public static void CheckOnFandom()
-        {
-            bool fandomFound = false;
-            if (onFandom <= -1)
-            {
-                try
-                {
-                    Process[] processes = Process.GetProcesses();
-                    foreach (Process p in processes)
-                    {
-                        if (!string.IsNullOrEmpty(p.MainWindowTitle))
-                        {
-                            if (p.MainWindowTitle.Contains("Calamity Mod Wiki") && !p.MainWindowTitle.Contains("Official"))
-                            {
-                                fandomFound = true;
-                                break;
-                            }
-                        }
-                    }
-
-                }
-                catch
-                {
-
-                }
-            }
-            onFandom = fandomFound ? 300 : -1;
         }
     }
 }

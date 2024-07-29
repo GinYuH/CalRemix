@@ -2362,10 +2362,7 @@ Mods: {
 				Tooltip: Causes hit enemies to become vulnerable to all debuff elements
 			}
 
-			OrigenPoint: {
-				DisplayName: Origen Point
-				Tooltip: Creates large, slow moving pixels
-			}
+			OrigenPoint.DisplayName: Origen Point
 		}
 
 		NPCs: {
