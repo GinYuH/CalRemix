@@ -168,6 +168,10 @@ namespace CalRemix
             {
                 item.createTile = ModContent.TileType<SeaPrismSafe>();
             }
+            if (item.type == ModContent.ItemType<TheBurningSky>())
+            {
+                item.DamageType = DamageClass.Summon;
+            }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {

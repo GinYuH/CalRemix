@@ -23,6 +23,7 @@ using Terraria.GameContent;
 using CalRemix.NPCs.Bosses.Oxygen;
 using Terraria.Audio;
 using CalRemix.World;
+using CalamityMod.Items.Weapons.Melee;
 
 namespace CalRemix.Projectiles
 {
@@ -43,6 +44,15 @@ namespace CalRemix.Projectiles
         public override void SetStaticDefaults()
         {
             Main.projFrames[ProjectileType<MutatedTruffleMinion>()] = 1;
+        }
+
+        // This mod was published in april 2023 yet we never had SetDefaults here until august 2024
+        public override void SetDefaults(Projectile projectile)
+        {
+            if (projectile.type == ProjectileType<BurningMeteor>())
+            {
+                projectile.DamageType = DamageClass.Summon;
+            }
         }
 
         public override void AI(Projectile projectile)
@@ -344,6 +354,10 @@ namespace CalRemix.Projectiles
                 {
                     target.AddBuff(BuffID.Confused, 480);
                 }
+            }
+            if (projectile.type == ProjectileType<BurningMeteor>())
+            {
+                player.MinionAttackTargetNPC = target.whoAmI;
             }
         }
 
