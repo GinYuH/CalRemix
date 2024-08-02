@@ -170,7 +170,7 @@ namespace CalRemix
             }
             if (item.type == ModContent.ItemType<TheBurningSky>())
             {
-                item.DamageType = DamageClass.Summon;
+                item.DamageType = DamageClass.SummonMeleeSpeed;
             }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
