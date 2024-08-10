@@ -49,6 +49,7 @@ using CalRemix.World;
 using CalRemix.Items.Lore;
 using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Items.Armor;
+using CalamityMod.Items.Potions.Alcohol;
 
 namespace CalRemix
 {
@@ -469,6 +470,7 @@ namespace CalRemix
             {
                 itemLoot.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
                 itemLoot.Add(ModContent.ItemType<CrabLeaves>(), 1, 4, 7);
+                itemLoot.Add(ModContent.ItemType<OddMushroom>(), 3);
             }
             else if (item.type == ItemID.FishronBossBag)
             {

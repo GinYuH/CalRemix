@@ -75,6 +75,7 @@ using CalRemix.NPCs.PandemicPanic;
 using CalRemix.World;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Items.Ammo;
+using CalamityMod.Items.Potions.Alcohol;
 
 namespace CalRemix
 {
@@ -809,6 +810,7 @@ namespace CalRemix
                 LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
                 mainRule.Add(ModContent.ItemType<DeliciousMeat>(), 1, 4, 7);
                 mainRule.Add(ModContent.ItemType<CrabLeaves>(), 1, 4, 7);
+                mainRule.Add(ModContent.ItemType<OddMushroom>(), 5);
                 npcLoot.Add(mainRule);
             }
             if (npc.type == NPCID.DukeFishron)
