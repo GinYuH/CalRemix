@@ -1335,6 +1335,10 @@ namespace CalRemix
                 pool.Clear();
                 //if (NPC.downedBoss3)
                 {
+                    if (!NPC.savedMech)
+                    {
+                        pool.Add(NPCID.BoundMechanic, 0.1f);
+                    }
                     pool.Add(NPCID.AngryBones, 1);
                     pool.Add(NPCID.AngryBonesBig, 1);
                     pool.Add(NPCID.AngryBonesBigHelmet, 1);
