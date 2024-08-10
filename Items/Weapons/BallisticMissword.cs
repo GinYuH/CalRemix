@@ -21,7 +21,7 @@ namespace CalRemix.Items.Weapons
         public override void SetDefaults()
         {
             Item.width = 70;
-            Item.damage = 120;
+            Item.damage = 720;
             Item.DamageType = DamageClass.Melee;
             Item.useAnimation = 46;
             Item.useStyle = ItemUseStyleID.Swing;
@@ -41,7 +41,7 @@ namespace CalRemix.Items.Weapons
             {
                 player.itemAnimation = 0;
                 Vector2 pos = player.Center + player.Center.DirectionTo((Vector2)player.HandPosition).SafeNormalize(Vector2.UnitY) * 80;
-                int p = Projectile.NewProjectile(player.GetSource_FromThis(), pos, Vector2.Zero, ProjectileID.GrenadeIII, Item.damage, Item.knockBack, player.whoAmI);
+                int p = Projectile.NewProjectile(player.GetSource_FromThis(), pos, Vector2.Zero, ProjectileID.GrenadeIII, (int)(Item.damage * 0.1f), Item.knockBack, player.whoAmI);
                 player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, p), Item.damage, 0);
                 Main.projectile[p].Kill();
                 SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ExoPlasmaExplosionSound, player.position);
