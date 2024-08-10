@@ -54,6 +54,7 @@ namespace CalRemix.Items.Bags
             itemLoot.Add(ItemID.Obsidian, 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<PhytogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPhytogen>());
+            itemLoot.Add(ModContent.ItemType<Juicer>());
             itemLoot.AddRevBagAccessories();
         }
     }

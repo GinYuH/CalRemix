@@ -23,7 +23,7 @@ namespace CalRemix.Items.Weapons
         {
             Item.width = 10;
             Item.height = 10;
-            Item.rare = RarityHelper.Pathogen;
+            Item.rare = RarityHelper.Phytogen;
             Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.useTime = 4;
             Item.useAnimation = 4;
