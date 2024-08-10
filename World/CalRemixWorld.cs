@@ -52,6 +52,7 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.Items.Lore;
 using CalamityMod.Schematics;
 using CalamityMod.Items.Potions;
+using CalRemix.Scenes;
 
 namespace CalRemix.World
 {
@@ -59,6 +60,7 @@ namespace CalRemix.World
     {
         public static bool worldFullyStarted = false;
         public static int worldLoadCounter = 0;
+        public const int maxStoryTime = 660;
 
         public static bool ogslime = false;
 
@@ -79,6 +81,7 @@ namespace CalRemix.World
         public static bool generatedHydrogen = false;
         public static bool canGenerateBaron = false;
         public static bool grime = false;
+        public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
         public static int meldCountdown = 72000;
@@ -190,6 +193,7 @@ namespace CalRemix.World
             generatedHydrogen = false;
             grime = false;
             meldCountdown = 72000;
+            trueStory = 0;
 
             alloyBars = true;
             essenceBars = true;
@@ -287,6 +291,7 @@ namespace CalRemix.World
             essenceBars = true;
             yharimBars = true;
             meldCountdown = 72000;
+            trueStory = 0;
 
             alloyBars = true;
             essenceBars = true;
@@ -339,6 +344,7 @@ namespace CalRemix.World
             tag["genHydrogen"] = generatedHydrogen;
             tag["grime"] = grime;
             tag["meld"] = meldCountdown;
+            tag["trueStory"] = trueStory;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -396,6 +402,7 @@ namespace CalRemix.World
             generatedHydrogen = tag.Get<bool>("genHydrogen");
             grime = tag.Get<bool>("grime");
             meldCountdown = tag.Get<int>("meld");
+            trueStory = tag.Get<int>("trueStory");
 
             alloyBars = tag.Get<bool>("109alloybar");
             essenceBars = tag.Get<bool>("109essencebar");
@@ -449,6 +456,7 @@ namespace CalRemix.World
             writer.Write(generatedHydrogen);
             writer.Write(grime);
             writer.Write(meldCountdown);
+            writer.Write(trueStory);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -504,6 +512,7 @@ namespace CalRemix.World
             generatedHydrogen = reader.ReadBoolean();
             grime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
+            trueStory = reader.ReadInt32();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -642,6 +651,10 @@ namespace CalRemix.World
                 }
             }
             NPC.savedWizard = false;
+            if (trueStory < maxStoryTime)
+            {
+                trueStory++;
+            }
         }
         public static void RefreshBestiary(BestiaryEntry entry, NPC npc, string text)
         {

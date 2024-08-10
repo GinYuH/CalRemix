@@ -49,7 +49,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             Gusts = 1,
             Fling = 2,
             Bubbles = 3,
-            Whirlpool = 4
+            Orbitals = 4
         }
 
         public override void SetStaticDefaults()
@@ -127,6 +127,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
 
         public override void AI()
         {
+            // Generic boss setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
@@ -144,7 +145,9 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                 return;
             }
             NPC.Calamity().newAI[3] = 0;
+            // Decrement the cooldown for Oxygen summoning shards on hit
             NPC.Calamity().newAI[1]--;
+            // Supply breath and infinite flight based on depth level
             foreach (Player p in Main.player)
             {
                 if (p == null)
@@ -159,6 +162,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                     p.breath += (int)MathHelper.Clamp(p.breathMax / 120 * (1 + MaxDepthLevel), -0.001f, p.breathMax - p.breath);
                 }
             }
+            // Transition to new phases based on abyss layer
+            // During Boss Rush, Oxygen automatically acts as if it's in layer 4
             if (Target.Calamity().ZoneAbyssLayer4 || BossRushEvent.BossRushActive)
             {
                 NPC.defense = 0;
@@ -217,13 +222,16 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             {
                 DepthLevel = 0;
             }
+            // Attacks 
             switch (Phase)
             {
+                // Move towards player
                 case (int)PhaseType.Idle:
                     {
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 5;
                         int phaseTime = 180;
                         NPC.ai[1]++;
+                        // Use gust attack by default with an increasing chance to do bubbles depending on depth
                         if (NPC.ai[1] > phaseTime)
                         {
                             Phase = DepthLevel > 1 && Main.rand.NextBool(5 - (int)DepthLevel) ? (int)PhaseType.Bubbles : (int)PhaseType.Gusts;
@@ -231,18 +239,19 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         }
                         break;
                     }
+                // Summon damaging clouds from both sides of the player
                 case (int)PhaseType.Gusts:
                     {
-                        int spawnClouds = 90;
-                        int phaseTime = spawnClouds + 240;
+                        int spawnClouds = 90; // When the clouds should spawn
+                        int phaseTime = spawnClouds + 240; // How long the phase lasts
                         NPC.ai[1]++;
                         if (NPC.ai[1] == spawnClouds)
                         {
-                            int cloudAmt = 12;
-                            int cloudSpacing = rev ? 480 : 400;
-                            int cloudDist = 1200;
-                            int cloudStart = 800 + Main.rand.Next(0, 64);
-                            float cloudSpeed = death ? 16 : rev ? 12 : 10;
+                            int cloudAmt = 12; // Amount of clouds per side
+                            int cloudSpacing = rev ? 480 : 400; // Spacing in pixels
+                            int cloudDist = 1200; // Horizontal distance from the player
+                            int cloudStart = 800 + Main.rand.Next(0, 64); // The origin height of the top cloud
+                            float cloudSpeed = death ? 16 : rev ? 12 : 10; // Speed of the clouds
                             SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
                             for (int i = 0; i < cloudAmt / 2; i++)
                             {
@@ -253,26 +262,30 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 4;
                         if (NPC.ai[1] > phaseTime)
                         {
+                            // Previously a normal attack, sentenced to gfb
                             if (Main.zenithWorld)
                                 Phase = (int)PhaseType.Fling;
                             else
                             {
-                                Phase = DepthLevel > 1 && Main.rand.NextBool(6 - (int)DepthLevel) ? (int)PhaseType.Bubbles : (int)PhaseType.Whirlpool;
+                                // Use orbital attack by default with an increasing chance to do bubbles depending on depth
+                                Phase = DepthLevel > 1 && Main.rand.NextBool(6 - (int)DepthLevel) ? (int)PhaseType.Bubbles : (int)PhaseType.Orbitals;
                             }
                             NPC.ai[1] = 0;
                         }
                         break;
                     }
+                // Move towards the player while flinging them in random directions
                 case (int)PhaseType.Fling:
                     {
                         NPC.ai[1]++;
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 5;
-                        int flingStrength = 30;
-                        int flingRate = death ? 50 : rev ? 60 : expert ? 70 : 80;
-                        int totalFlings = 3;
+                        int flingStrength = 30; // The speed to toss the player
+                        int flingRate = death ? 50 : rev ? 60 : expert ? 70 : 80; // How often to toss the player
+                        int totalFlings = 3; // How many times the player is tossed
                         if (NPC.ai[1] % flingRate == 0)
                         {
                             SoundEngine.PlaySound(SoundID.Item43, NPC.Center);
+                            // Increment the player's velocity
                             Target.velocity += Main.rand.NextVector2Circular(flingStrength, flingStrength);
                             NPC.ai[2]++;
                             DustExplosion(Target.velocity.SafeNormalize(Vector2.Zero));
@@ -281,41 +294,47 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         {
                             NPC.ai[2] = 0;
                             NPC.ai[1] = 0;
-                            Phase = (int)PhaseType.Whirlpool;
+                            Phase = (int)PhaseType.Orbitals;
                         }
 
                         break;
                     }
+                // Spawn bubbles in random locations then dash at the player
                 case (int)PhaseType.Bubbles:
                     {
-                        int spawnBubbles = 60;
-                        int bubbleAmt = 64;
-                        int bubbleRangeX = 1000;
-                        int bubbleRangeY = 500;
-                        int phaseTime = spawnBubbles + 200;
-                        int dash = spawnBubbles + 90;
+                        int spawnBubbles = 60; // When to spawn bubbles after starting the attack
+                        int bubbleAmt = 64; // Amount of bubbles to spawn
+                        int bubbleRangeX = 1000; // The horizontal distance at which bubbles can spawn, centered on the player
+                        int bubbleRangeY = 500; // The vertical distance at which bubbles can spawn, centered on the player
+                        int phaseTime = spawnBubbles + 200; // How long the phase lasts
+                        int dash = spawnBubbles + 90; // When Oxygen should dash
                         NPC.ai[1]++;
                         if (NPC.ai[1] == spawnBubbles)
                         {
                             SoundEngine.PlaySound(SoundID.NPCDeath45, Target.Center);
+                            // Spawn the bubbles
                             for (int i = 0; i < bubbleAmt; i++)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ModContent.ProjectileType<OxygenBubble>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer);
                             }
                         }
+                        // Stop moving before dash and spin
                         if (NPC.ai[1] < dash)
                         {
                             NPC.velocity *= 0.97f;
                             NPC.rotation += 0.6f;
                         }
+                        // Dash
                         else if (NPC.ai[1] == dash)
                         {
                             SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.velocity = NPC.DirectionTo(Target.Center) * 20;
+                            // Predictive in Master
                             if (master)
                                 NPC.velocity += Target.velocity;
                         }
+                        // Slow speed over time
                         else
                         {
                             NPC.rotation = NPC.velocity.ToRotation();
@@ -329,14 +348,15 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                         }
                         break;
                     }
-                case (int)PhaseType.Whirlpool:
+                // Stay in place and summon rounds of orbital debris
+                case (int)PhaseType.Orbitals:
                     {
                         NPC.velocity *= 0.97f;
-                        int spawnTornado = 60;
-                        int totalObjects = death ? 16 : rev ? 10 : 8;
-                        int tornadoRate = rev ? 50 : expert ? 60 :70;
-                        int totalTornados = death ? 5 : rev ? 4 : 3;
-                        int phaseTime = tornadoRate * totalTornados + spawnTornado;
+                        int spawnTornado = 60; // When to spawn the first set of debris
+                        int totalObjects = death ? 16 : rev ? 10 : 8; // How many objects are in each round
+                        int tornadoRate = rev ? 50 : expert ? 60 : 70; // Time between rounds
+                        int totalTornados = death ? 5 : rev ? 4 : 3; // How many rounds should be done
+                        int phaseTime = tornadoRate * totalTornados + spawnTornado; // How long the phase lasts
                         NPC.ai[1]++;
                         if (NPC.ai[1] > spawnTornado && NPC.ai[1] % tornadoRate == 0)
                         {
@@ -345,8 +365,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                             for (int i = 0; i < totalObjects; i++)
                             {
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OxygenDebris>(), (int)(NPC.damage * 0.2f), 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
-                                Main.projectile[p].localAI[0] = Main.rand.Next(1, 5);
-                                Main.projectile[p].localAI[1] = dir;
+                                Main.projectile[p].localAI[0] = Main.rand.Next(1, 5); // Controls which sprite is used
+                                Main.projectile[p].localAI[1] = dir; // Controls if the debris moves clockwise or counter clockwise
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
@@ -378,6 +398,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             });
         }
 
+        // Release shards and take no damage before reaching layer 4
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (DepthLevel < 4)
@@ -387,6 +408,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
                 NPC.life += 1;
             }
         }
+
+        // Release shards and take no damage before reaching layer 4
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (DepthLevel < 4)
@@ -470,6 +493,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 drawPos = NPC.Center - screenPos;
+            // Draws Oxygen's core which is just some bloom
             spriteBatch.EnterShaderRegion(BlendState.Additive);
             Texture2D plasmom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
@@ -477,6 +501,7 @@ namespace CalRemix.NPCs.Bosses.Oxygen
             spriteBatch.Draw(plasmom, drawPos, null, NPC.GetAlpha(Color.Cyan * 0.78f), NPC.rotation, plasmom.Size() / 2, 0.5f, SpriteEffects.None, 0f);
             spriteBatch.Draw(bloom, drawPos, null, NPC.GetAlpha(Color.Cyan * 1f), NPC.rotation, bloom.Size() / 2, 0.6f + scaleFactor, SpriteEffects.None, 0f);
             spriteBatch.ExitShaderRegion();
+            // Before layer 4, draw its normal shell which changes appearance based on depth
             if (MaxDepthLevel < 4)
             {
                 spriteBatch.Draw(TextureAssets.Npc[Type].Value, drawPos, TextureAssets.Npc[Type].Frame(1, 4, 0, (int)MathHelper.Clamp(MaxDepthLevel, 0, 3)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(TextureAssets.Npc[Type].Value.Width / 2, TextureAssets.Npc[Type].Value.Height / 8), NPC.scale, SpriteEffects.None, 0f);
