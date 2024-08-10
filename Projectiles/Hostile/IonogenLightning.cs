@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalRemix.NPCs.Bosses.Ionogen;
+using CalamityMod.World;
 
 namespace CalRemix.Projectiles.Hostile
 {
@@ -67,6 +68,15 @@ namespace CalRemix.Projectiles.Hostile
             if (Projectile.ai[2] == 60)
             {
                 SoundEngine.PlaySound(CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrimstoneShotSound, Projectile.Center);
+            }
+            if (Main.getGoodWorld)
+            {
+                float one = Projectile.whoAmI % 2 == 0 && Main.zenithWorld ? -0.004f : 0.004f;
+                if (CalamityWorld.revenge && CalamityWorld.LegendaryMode)
+                {
+                    one *= 2;
+                }
+                Projectile.velocity += (Projectile.velocity.ToRotation() + one).ToRotationVector2();
             }
 
             return true;
