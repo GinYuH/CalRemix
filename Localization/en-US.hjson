@@ -2366,6 +2366,11 @@ Mods: {
 				DisplayName: Origen Point
 				Tooltip: Creates large, slow moving pixels
 			}
+
+			BallisticMissword: {
+				DisplayName: Ballistic Missword
+				Tooltip: Has a chance to explode when swung, damaging the wielder
+			}
 		}
 
 		NPCs: {

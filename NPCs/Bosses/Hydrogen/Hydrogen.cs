@@ -29,6 +29,7 @@ using CalRemix.Items.Placeables.Trophies;
 using CalRemix.Items.Armor;
 using CalRemix.Items.Accessories;
 using CalRemix.Items.Lore;
+using CalRemix.Items.Weapons;
 
 namespace CalRemix.NPCs.Bosses.Hydrogen
 {
@@ -384,6 +385,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<HydrogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<SeaPrism>(), 1, 8, 10);
             npcLoot.AddNormalOnly(ModContent.ItemType<HydrogenMask>(), 7);
+            npcLoot.AddNormalOnly(ModContent.ItemType<BallisticMissword>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<HydrogenRelic>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedHydrogen, ModContent.ItemType<KnowledgeHydrogen>(), desc: DropHelper.FirstKillText);
         }
