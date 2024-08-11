@@ -2371,6 +2371,15 @@ Mods: {
 				DisplayName: Ballistic Missword
 				Tooltip: Has a chance to explode when swung, damaging the wielder
 			}
+
+			CalamitySword: {
+				DisplayName: Calamity Sword
+				Tooltip:
+					'''
+					Fires Calamity Beams
+					'Contains the Ashes of Calamity'
+					'''
+			}
 		}
 
 		NPCs: {
