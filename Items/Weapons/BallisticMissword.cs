@@ -51,5 +51,9 @@ namespace CalRemix.Items.Weapons
                 Gore.NewGore(Item.GetSource_FromThis(), pos, Main.rand.NextVector2Circular(10, 10), Mod.Find<ModGore>("Missword3").Type, 1f);
             }
         }
+        public override void UseItemFrame(Player player)
+        {
+            player.itemLocation = (Vector2)player.HandPosition;
+        }
     }
 }
