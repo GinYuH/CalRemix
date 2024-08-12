@@ -7,11 +7,13 @@ using CalamityMod.Rarities;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.NPCs.SupremeCalamitas;
+using Terraria.Audio;
 
 namespace CalRemix.Items.Weapons
 {
     public class CalamitySword : ModItem
     {
+        public static SoundStyle AshesofCalamity = new SoundStyle("CalRemix/Sounds/AshesofCalamity");
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Calamity Sword");
@@ -51,6 +53,7 @@ namespace CalRemix.Items.Weapons
             if (target.type == ModContent.NPCType<SupremeCalamitas>())
             {
                 modifiers.SourceDamage *= 2222f;
+                SoundEngine.PlaySound(AshesofCalamity, target.Center);
             }
         }
     }

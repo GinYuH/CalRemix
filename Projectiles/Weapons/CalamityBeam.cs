@@ -1,6 +1,7 @@
 ﻿using System;
 using CalamityMod;
 using CalamityMod.NPCs.SupremeCalamitas;
+using CalRemix.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -95,6 +96,7 @@ namespace CalRemix.Projectiles.Weapons
             if (target.type == ModContent.NPCType<SupremeCalamitas>())
             {
                 modifiers.SourceDamage *= 22f;
+                SoundEngine.PlaySound(CalamitySword.AshesofCalamity with { Pitch = 1, Volume = 0.6f }, target.Center);
             }
         }
     }
