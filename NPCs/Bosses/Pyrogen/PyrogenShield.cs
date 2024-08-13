@@ -26,6 +26,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                 BloomTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenShieldAura");
                 Glow = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenShield_Glow");
             }
+            this.HideFromBestiary();
         }
 
         public static readonly SoundStyle HitSound = new("CalamityMod/Sounds/NPCHit/RavagerRockPillarHit", 3);

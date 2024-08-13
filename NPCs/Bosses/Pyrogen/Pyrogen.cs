@@ -613,6 +613,10 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                return true;
+            }
             bool p2 = NPC.life < NPC.lifeMax * 0.5f;
             Texture2D texture = p2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
             Texture2D bloomTx = p2 ? BloomTexture2.Value : BloomTexture.Value;
