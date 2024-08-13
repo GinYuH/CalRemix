@@ -607,26 +607,21 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            switch (currentPhase)
-            {
-                case 2:
-                    texture = Phase2Texture.Value;
-                    break;
-                default:
-                    texture = TextureAssets.Npc[NPC.type].Value;
-                    break;
-            }
+            bool p2 = NPC.life < NPC.lifeMax * 0.5f;
+            Texture2D texture = p2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
+            Texture2D bloomTx = p2 ? BloomTexture2.Value : BloomTexture.Value;
+            Texture2D additiveTx = p2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
+
             Vector2 pos = NPC.Center - screenPos;
             Vector2 ringOrigin = RingTexture.Value.Size() / 2;
             float ringRotation = -Main.GlobalTimeWrappedHourly;
             Main.EntitySpriteDraw(RingTexture.Value, pos, null, Color.White, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
             Main.EntitySpriteDraw(RingBloomTexture.Value, pos, null, Color.White, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
-            Main.EntitySpriteDraw(BloomTexture.Value, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw(bloomTx, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.ExitShaderRegion();
             Main.EntitySpriteDraw(texture, pos, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
-            Main.EntitySpriteDraw(AdditiveTexture.Value, pos, null, Color.White with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw(additiveTx, pos, null, Color.White with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             return false;
         }
 
