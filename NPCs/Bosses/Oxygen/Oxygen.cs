@@ -40,8 +40,8 @@ namespace CalRemix.NPCs.Bosses.Oxygen
 
         public Rectangle teleportPos = new Rectangle();
 
-        public static readonly SoundStyle HitSound = new("CalRemix/Sounds/IonogenHit", 3);
-        public static readonly SoundStyle ExplosionSound = new("CalRemix/Sounds/HydrogenExplode");
+        public static readonly SoundStyle HitSound = new("CalRemix/Sounds/GenBosses/IonogenHit", 3);
+        public static readonly SoundStyle ExplosionSound = new("CalRemix/Sounds/GenBosses/HydrogenExplode");
 
         public enum PhaseType
         {

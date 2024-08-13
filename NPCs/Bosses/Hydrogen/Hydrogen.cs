@@ -42,8 +42,9 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public Rectangle teleportPos = new Rectangle();
 
-        public static readonly SoundStyle HitSound = new("CalRemix/Sounds/IonogenHit", 3);
-        public static readonly SoundStyle ExplosionSound = new("CalRemix/Sounds/HydrogenExplode");
+        public static readonly SoundStyle HitSound = new("CalRemix/Sounds/GenBosses/HydrogenHit", 4);
+        public static readonly SoundStyle ExplosionSound = new("CalRemix/Sounds/GenBosses/HydrogenExplode");
+        public static readonly SoundStyle BeepSound = new("CalRemix/Sounds/GenBosses/HydrogenBeep");
 
         public static WeightedRandom<int> sunkenSeaFish = new WeightedRandom<int>();
 
@@ -325,7 +326,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
                         {
                             if (NPC.Calamity().newAI[1] % tikTok == 0)
                             {
-                                SoundEngine.PlaySound(SoundID.Camera);
+                                SoundEngine.PlaySound(BeepSound);
                                 // The ticks grow increasingly more red until the end
                                 CombatText.NewText(NPC.getRect(), Color.Lerp(Color.White, Color.Red, NPC.localAI[1] / 10), (int)(10 - NPC.localAI[1]));
                                 NPC.localAI[1]++;

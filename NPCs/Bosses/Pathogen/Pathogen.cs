@@ -39,8 +39,8 @@ namespace CalRemix.NPCs.Bosses.Pathogen
 
         public Rectangle teleportPos = new Rectangle();
 
-        public static readonly SoundStyle HitSound = new("CalRemix/Sounds/CarcinogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Sounds/CarcinogenDeath");
+        public static readonly SoundStyle HitSound = new("CalRemix/Sounds/GenBosses/PathogenHit", 4);
+        public static readonly SoundStyle DeathSound = new("CalRemix/Sounds/GenBosses/PathogenDeath");
 
         public enum PhaseType
         {
