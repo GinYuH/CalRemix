@@ -10,6 +10,8 @@ using CalRemix.Items.Placeables.MusicBoxes;
 using CalRemix.Items.Accessories;
 using CalamityMod;
 using CalRemix.World;
+using Terraria.Audio;
+using CalRemix.Items.Tools;
 
 namespace CalRemix.NPCs.Bosses.Poly
 {
@@ -43,7 +45,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             NPC.height = 110;
             NPC.damage = 0;
             NPC.defense = 10;
-            NPC.lifeMax = 17000;
+            NPC.LifeMaxNERB(17000, 31000, 340000);
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0f;
@@ -67,6 +69,8 @@ namespace CalRemix.NPCs.Bosses.Poly
         public ref float timer => ref NPC.ai[0];
         public ref float phase => ref NPC.ai[1];
 
+        public int subphase;
+
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
@@ -80,6 +84,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             {
                 NPC.TargetClosest();
             }
+            NPC.Calamity().CurrentlyEnraged = Main.dayTime;
             var eyesLeft = 0;
             AIShare["index"] = 0;
             NPC astigmadeddon = null;
@@ -228,7 +233,34 @@ namespace CalRemix.NPCs.Bosses.Poly
                 if (timer >= 360)
                 {
                     timer = 0;
-                    phase = -1;
+                    phase = 3;
+                }
+            }
+            if (phase == 3)
+            {
+                int dashcount = 8;
+                timer++;
+                NPC.rotation = NPC.velocity.ToRotation();
+                NPC.damage = 150;
+
+                if (timer == 10)
+                {
+                    MoveTowards(player.Center, 35, 1);
+                }
+                if (timer >= 15)
+                {
+                    NPC.velocity *= 0.93f;
+                }
+                if (timer >= 40)
+                {
+                    timer = 0;
+                    subphase++;
+                    if (subphase > dashcount)
+                    {
+                        phase = -1;
+                        subphase = 0;
+                        timer = NPC.Calamity().CurrentlyEnraged ? 175 : 0;
+                    }
                 }
             }
 
@@ -328,13 +360,19 @@ namespace CalRemix.NPCs.Bosses.Poly
         {
             LeadingConditionRule lastLivingPoly = new(new LastPolyBeaten());
             npcLoot.Add(lastLivingPoly);
-            IItemDropRule dropItem = ItemDropRule.Common(ModContent.ItemType<Tetrachromancy>());
+
+            LeadingConditionRule normal = new LeadingConditionRule(new Conditions.IsExpert());
+            normal.AddFail(ModContent.ItemType<Quadnoculars>(), 1, hideLootReport: Main.expertMode);
+            lastLivingPoly.Add(normal);
+
+            IItemDropRule dropItem = new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Tetrachromancy>(), 1, 1, 1, null);
             lastLivingPoly.OnSuccess(dropItem);
-            lastLivingPoly.OnSuccess(ItemDropRule.Common(ItemID.EyeMask));
-            lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
+
+            lastLivingPoly.Add(ItemID.EyeMask);
+
+            //lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
             LeadingConditionRule box = new(new Conditions.ZenithSeedIsNotUp());
             lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusGFBMusicBox>())));
-
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

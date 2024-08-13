@@ -23,6 +23,8 @@ using System;
 using CalRemix.Items.Materials;
 using CalRemix.World;
 using CalRemix.Items.Lore;
+using CalRemix.Items.Bags;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix.NPCs.Bosses.Wulfwyrm
 {
@@ -812,11 +814,13 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.AddIf(() => !Main.expertMode, ModContent.ItemType<WulfrumMetalScrap>(), 1, 16, 20);
-            npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<WulfrumMetalScrap>(), 1, 20, 26);
-            npcLoot.Add(ModContent.ItemType<EnergyCore>(), 1, 1, 2);
-            npcLoot.Add(ModContent.ItemType<EnergyOrb>());
-            npcLoot.Add(ModContent.ItemType<CalamityMod.Items.Tools.WulfrumTreasurePinger>());
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<WulfwyrmBag>()));
+
+            LeadingConditionRule normalRule = npcLoot.DefineNormalOnlyDropSet();
+            normalRule.Add(ModContent.ItemType<WulfrumMetalScrap>(), 1, 16, 20);
+            normalRule.Add(ModContent.ItemType<EnergyCore>(), 1, 1, 2);
+            normalRule.Add(ModContent.ItemType<EnergyOrb>());
+            normalRule.Add(ModContent.ItemType<CalamityMod.Items.Tools.WulfrumTreasurePinger>());
 
             // Weapons
             int[] weapons = new int[]
@@ -827,7 +831,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
                 ModContent.ItemType<WulfrumController>(),
                 ModContent.ItemType<WulfrumKnife>(),
             };
-            npcLoot.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
+            normalRule.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
 
             // Rod
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<WulfwyrmHead>() && info.npc.ModNPC<WulfwyrmHead>().PylonCharged), ModContent.ItemType<WulfrumRod>()));

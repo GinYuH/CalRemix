@@ -1275,7 +1275,8 @@ namespace CalRemix.NPCs.Bosses.Hypnos
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            doafterimages(spriteBatch, screenPos, drawColor);
+            if (initialized)
+                doafterimages(spriteBatch, screenPos, drawColor);
         }
 
         public override void OnKill()

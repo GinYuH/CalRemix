@@ -10,6 +10,7 @@ using CalRemix.Items.Placeables.MusicBoxes;
 using CalRemix.Items.Accessories;
 using CalamityMod;
 using CalRemix.World;
+using CalRemix.Items.Tools;
 
 namespace CalRemix.NPCs.Bosses.Poly
 {
@@ -36,7 +37,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             NPC.height = 110;
             NPC.damage = 0;
             NPC.defense = 10;
-            NPC.lifeMax = 17000;
+            NPC.LifeMaxNERB(17000, 31000, 340000);
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0f;
@@ -82,6 +83,7 @@ namespace CalRemix.NPCs.Bosses.Poly
                 NPC.TargetClosest();
             }
 
+            NPC.Calamity().CurrentlyEnraged = Main.dayTime;
             var eyesLeft = 0;
             AIShare["index"] = 0;
             NPC exotrexia = null;
@@ -241,7 +243,7 @@ namespace CalRemix.NPCs.Bosses.Poly
 
                 if (timer >= 360)
                 {
-                    timer = 0;
+                    timer = NPC.Calamity().CurrentlyEnraged ? 175 : 0;
                     phase = -1;
                 }
             }
@@ -341,13 +343,19 @@ namespace CalRemix.NPCs.Bosses.Poly
         {
             LeadingConditionRule lastLivingPoly = new(new LastPolyBeaten());
             npcLoot.Add(lastLivingPoly);
-            IItemDropRule dropItem = ItemDropRule.Common(ModContent.ItemType<Heterochromia>());
+
+            LeadingConditionRule normal = new LeadingConditionRule(new Conditions.IsExpert());
+            normal.AddFail(ModContent.ItemType<Quadnoculars>(), 1, hideLootReport: Main.expertMode);
+            lastLivingPoly.Add(normal);
+
+            IItemDropRule dropItem = new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Heterochromia>(), 1, 1, 1, null);
             lastLivingPoly.OnSuccess(dropItem);
-            lastLivingPoly.OnSuccess(ItemDropRule.Common(ItemID.EyeMask));
-            lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
+
+            lastLivingPoly.Add(ItemID.EyeMask);
+
+            //lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
             LeadingConditionRule box = new(new Conditions.ZenithSeedIsNotUp());
             lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusGFBMusicBox>())));
-
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

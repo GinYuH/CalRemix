@@ -10,6 +10,8 @@ using CalRemix.Items.Placeables.MusicBoxes;
 using CalRemix.Items.Accessories;
 using CalamityMod;
 using CalRemix.World;
+using CalRemix.Items.Materials;
+using CalRemix.Items.Tools;
 
 namespace CalRemix.NPCs.Bosses.Poly
 {
@@ -36,7 +38,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             NPC.height = 110;
             NPC.damage = 0;
             NPC.defense = 10;
-            NPC.lifeMax = 17000;
+            NPC.LifeMaxNERB(17000, 31000, 340000);
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0f;
@@ -81,6 +83,7 @@ namespace CalRemix.NPCs.Bosses.Poly
             {
                 NPC.TargetClosest();
             }
+            NPC.Calamity().CurrentlyEnraged = Main.dayTime;
 
             var eyesLeft = 0;
             AIShare["index"] = 0;
@@ -208,19 +211,19 @@ namespace CalRemix.NPCs.Bosses.Poly
             if (phase == 2)
             {
                 timer++;
-                var circle = CirclePos(CirclePos(player.Center, (float)(Math.PI / 180 * timer), 175), (float)(Math.PI / 180 * timer * 4), 300);
-                var circlePredictive = CirclePos(CirclePos(player.Center, (float)(Math.PI / 180 * (timer + 1)), 175), (float)(Math.PI / 180 * (timer + 1) * 4), 300);
-                if (Vector2.Distance(NPC.Center, circle) <= 48 * 4)
+                if (Vector2.Distance(NPC.Center, player.Center + new Vector2(0, -400)) > 1000)
                 {
-                    NPC.Center = circle;
-                    NPC.velocity = Vector2.Zero;
-                    NPC.rotation = (circlePredictive - NPC.Center).ToRotation();
+                    MoveTowards(player.Center + new Vector2(0, 400), 40, 10);
                 }
                 else
                 {
-                    MoveTowards(circle, 40, 5);
-                    NPC.rotation = NPC.velocity.ToRotation();
+                    MoveTowards(player.Center + new Vector2(0, 400), 20, 20);
                 }
+                if (timer % 32 == 0)
+                {
+                    ShootCenter(ProjectileID.FrostWave, 2.5f, 45, Main.rand.Next(-45, 46));
+                }
+
                 if (timer >= 360)
                 {
                     NPC.velocity *= -0.25f;
@@ -231,20 +234,19 @@ namespace CalRemix.NPCs.Bosses.Poly
             if (phase == 3)
             {
                 timer++;
-                var circle = CirclePos(CirclePos(player.Center, (float)(Math.PI / 180 * timer), 175), (float)(Math.PI / 180 * timer*4), 300);
-                var circlePredictive = CirclePos(CirclePos(player.Center, (float)(Math.PI / 180 * (timer + 1)), 175), (float)(Math.PI / 180 * (timer + 1)*4), 300);
-                    NPC.Center = circle;
-                    NPC.velocity = Vector2.Zero;
-                    NPC.rotation = (circlePredictive - NPC.Center).ToRotation();
-                if( timer % 20 == 0)
+                var circle = CirclePos(CirclePos(player.Center, (float)(Math.PI / 180 * timer), 175), (float)(Math.PI / 180 * timer * 4), 300);
+                var circlePredictive = CirclePos(CirclePos(player.Center, (float)(Math.PI / 180 * (timer + 1)), 175), (float)(Math.PI / 180 * (timer + 1) * 4), 300);
+                NPC.Center = circle;
+                NPC.velocity = Vector2.Zero;
+                NPC.rotation = (circlePredictive - NPC.Center).ToRotation();
+                if (timer % 20 == 0)
                 {
-                    ShootCenter(ProjectileID.FrostBlastHostile,1,20);
+                    ShootCenter(ProjectileID.FrostBlastHostile, 1, 20);
                 }
 
-                
                 if (timer >= 360)
                 {
-                    timer = 0;
+                    timer = NPC.Calamity().CurrentlyEnraged ? 175 : 0;
                     NPC.velocity = new Vector2(0, 10);
                     phase = -1;
                 }
@@ -347,10 +349,17 @@ namespace CalRemix.NPCs.Bosses.Poly
         {
             LeadingConditionRule lastLivingPoly = new(new LastPolyBeaten());
             npcLoot.Add(lastLivingPoly);
-            IItemDropRule dropItem = ItemDropRule.Common(ModContent.ItemType<ChainSaw>());
+
+            LeadingConditionRule normal = new LeadingConditionRule(new Conditions.IsExpert());
+            normal.AddFail(ModContent.ItemType<Quadnoculars>(), 1, hideLootReport: Main.expertMode);
+            lastLivingPoly.Add(normal);
+
+            IItemDropRule dropItem = new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<ChainSaw>(), 1, 1, 1, null);
             lastLivingPoly.OnSuccess(dropItem);
-            lastLivingPoly.OnSuccess(ItemDropRule.Common(ItemID.EyeMask));
-            lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
+
+            lastLivingPoly.Add(ItemID.EyeMask);
+
+            //lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
             LeadingConditionRule box = new(new Conditions.ZenithSeedIsNotUp());
             lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusGFBMusicBox>())));
 

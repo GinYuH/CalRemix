@@ -401,7 +401,7 @@ namespace CalRemix.NPCs.Bosses.Hydrogen
 
         public override bool CheckDead()
         {
-            if (CalRemixWorld.hydrogenBomb)
+            if (CalRemixWorld.hydrogenBomb && !BossRushEvent.BossRushActive)
             {
                 NPC.life = 1;
                 NPC.Calamity().newAI[0] = 1;

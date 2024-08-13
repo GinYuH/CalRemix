@@ -6,8 +6,8 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.NPCs;
 using CalamityMod;
+using CalamityMod.Events;
 
 namespace CalRemix.NPCs.Bosses.Poly
 {
@@ -34,7 +34,7 @@ namespace CalRemix.NPCs.Bosses.Poly
 			NPC.height = 318;
 			NPC.damage = 0;
 			NPC.defense = 10;
-			NPC.lifeMax = 50000;
+            NPC.LifeMaxNERB(50000, 130000, 640000);
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0f;
@@ -81,7 +81,7 @@ namespace CalRemix.NPCs.Bosses.Poly
 		private int RedLaser = ProjectileID.DeathLaser;
 		private int BlueIce = ProjectileID.FrostWave;
 		private int GrayShadow = ProjectileID.CultistBossFireBallClone;
-		private int GreenFireball = ProjectileID.WoodenArrowHostile;
+		private int GreenFireball = ProjectileID.CursedFlameHostile;
 		private int GreenFlamethrower = ProjectileID.EyeFire;
 
 		private int bhType = 0;
@@ -123,11 +123,7 @@ namespace CalRemix.NPCs.Bosses.Poly
 				NPC.EncourageDespawn(10);
 				return;
 			}
-			bool enrage = CheckEnrage(player);
-			if (enrage)
-				NPC.GetGlobalNPC<CalamityGlobalNPC>().CurrentlyEnraged = true;
-			else
-				NPC.GetGlobalNPC<CalamityGlobalNPC>().CurrentlyEnraged = false;
+            NPC.Calamity().CurrentlyEnraged = CheckEnrage(player);
             Vector2 abovePlayer = (player.Center + new Vector2(0, -500));
             if (phase == -1)
             {
@@ -296,16 +292,11 @@ namespace CalRemix.NPCs.Bosses.Poly
                     } else {
 						if (timer < 15)
 						{
-
-                            TurnTowards(player.Center, greenRotate);
+                            TurnTowards(player.Center);
                         }
-						if (timer > 15)
-						{
-							TurnTowards(player.Center, grayRotate);
-						}
                     }
                 }
-				if (timer >= 60)
+				if (timer >= 120)
 				{
 					timer = 0;
 					subphase = 3;
@@ -573,6 +564,7 @@ namespace CalRemix.NPCs.Bosses.Poly
 
             return (player.Center + player.velocity * strength);
         }
+        public float PolyEnrageValue(NPC npc, float original, float value) => BossRushEvent.BossRushActive || npc.Calamity().CurrentlyEnraged ? value : original;
     }
     public class LastPolyBeaten : IItemDropRuleCondition, IProvideItemConditionDescription
     {

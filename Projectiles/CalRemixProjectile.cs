@@ -24,6 +24,7 @@ using CalRemix.NPCs.Bosses.Oxygen;
 using Terraria.Audio;
 using CalRemix.World;
 using CalamityMod.Items.Weapons.Melee;
+using CalRemix.Retheme;
 
 namespace CalRemix.Projectiles
 {
@@ -420,7 +421,7 @@ namespace CalRemix.Projectiles
         }
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
-            if (NPC.AnyNPCs(NPCType<WulfwyrmHead>()))
+            if (NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && CalRemixGlobalNPC.wulfyrm.WithinBounds(Main.maxNPCs))
             {
                 NPC exc = Main.npc[CalRemixGlobalNPC.wulfyrm];
                 if (projectile.type == ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfwyrmHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile

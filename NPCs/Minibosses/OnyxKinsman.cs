@@ -93,6 +93,7 @@ namespace CalRemix.NPCs.Minibosses
                 }
                 NPC.life = NPC.lifeMax;
                 NPC.velocity.X = 0;
+                NPC.Calamity().ShouldCloseHPBar = true;
             }
             if (State > 0)
             {

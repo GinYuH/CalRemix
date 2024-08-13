@@ -51,6 +51,8 @@ using SubworldLibrary;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalRemix.Projectiles.Hostile;
 using CalamityMod.Sounds;
+using CalamityMod.Events;
+using System;
 
 namespace CalRemix
 {
@@ -329,7 +331,7 @@ namespace CalRemix
 					}
 				}
 			}
-			if (CalRemixWorld.hydrogenLocation != Vector2.Zero)
+			if (CalRemixWorld.hydrogenLocation != Vector2.Zero && !BossRushEvent.BossRushActive)
 			{
 				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
 				{
@@ -795,8 +797,12 @@ namespace CalRemix
 									if (guy.whoAmI.WithinBounds(Main.maxNPCs))
 									{
 										guy.velocity.Y = -20;
-									}
-									break;
+                                    }
+                                    if (Main.netMode == NetmodeID.MultiplayerClient && guy.whoAmI.WithinBounds(Main.maxNPCs))
+                                    {
+                                        NetMessage.SendData(MessageID.SyncNPC, number: guy.whoAmI);
+                                    }
+                                    break;
 								}
 								Main.NewText(ok);
 							}

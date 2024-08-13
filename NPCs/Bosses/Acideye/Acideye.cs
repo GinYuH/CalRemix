@@ -23,6 +23,7 @@ using CalRemix.Items.Accessories;
 using CalRemix.Items.Placeables.Relics;
 using CalRemix.World;
 using CalRemix.Items.Bags;
+using CalamityMod.Events;
 
 namespace CalRemix.NPCs.Bosses.Acideye
 {
@@ -64,7 +65,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
             NPC.aiStyle = -1;
             NPC.width = 110;
             NPC.height = 110;
-            NPC.lifeMax = 4000;
+            NPC.LifeMaxNERB(4000, 9760, 475000);
             NPC.defense = 10;
             NPC.damage = 25;
             NPC.knockBackResist = 0f;
@@ -90,6 +91,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                 NPC.velocity.Y--;
                 return;
             }
+            NPC.Calamity().CurrentlyEnraged = Main.dayTime;
             Timer++;
             switch (Phase)
             {
@@ -109,7 +111,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                         switch (Subphase)
                         {
                             case 0:
-                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 320f) * 7.5f / 1.5f) / 44f;
+                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 320f) * EnrageValue(NPC, 7.5f, 18f) / 1.5f) / 44f;
                                 if (Timer >= 100f)
                                 {
                                     if (Step < 4)
@@ -128,7 +130,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                                 }
                                 break;
                             case 1:
-                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 320f) * 7.5f / 1.5f) / 44f;
+                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 320f) * EnrageValue(NPC, 7.5f, 18f) / 1.5f) / 44f;
                                 if (Timer >= 60f)
                                 {
                                     if (Step < 6)
@@ -227,7 +229,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                         switch (Subphase)
                         {
                             case 0:
-                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 240f) * 8f / 1.5f) / 44f;
+                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 240f) * EnrageValue(NPC, 8f, 24f) / 1.5f) / 44f;
                                 if (Timer >= 60f)
                                 {
                                     if (Step < 6)
@@ -246,7 +248,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                                 }
                                 break;
                             case 1:
-                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitX * 240f *(Target.Center.X > NPC.Center.X ? 1 : -1)) * 7.5f / 1.5f) / 44f;
+                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitX * 240f *(Target.Center.X > NPC.Center.X ? 1 : -1)) * EnrageValue(NPC, 7.5f, 18f) / 1.5f) / 44f;
                                 if (Timer >= 60f)
                                 {
                                     if (Step < 6)
@@ -265,7 +267,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                                 }
                                 break;
                             case 2:
-                                NPC.velocity = (NPC.velocity * 63f + NPC.DirectionTo(Target.Center) * 5.5f / 1.5f) / 64f;
+                                NPC.velocity = (NPC.velocity * 63f + NPC.DirectionTo(Target.Center) * EnrageValue(NPC, 5.5f, 8f) / 1.5f) / 64f;
                                 if (Timer >= 100f)
                                 {
                                     if (Step < 3)
@@ -358,7 +360,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                         switch (Subphase)
                         {
                             case 0:
-                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 240f) * 8f / 1.5f) / 44f;
+                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitY * 240f) * EnrageValue(NPC, 8f, 24f) / 1.5f) / 44f;
                                 if (Timer >= 45f)
                                 {
                                     if (Step < 8)
@@ -377,7 +379,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                                 }
                                 break;
                             case 1:
-                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitX * 240f * (Target.Center.X > NPC.Center.X ? 1 : -1)) * 7.5f / 1.5f) / 44f;
+                                NPC.velocity = (NPC.velocity * 43f + NPC.DirectionTo(Target.Center - Vector2.UnitX * 240f * (Target.Center.X > NPC.Center.X ? 1 : -1)) * EnrageValue(NPC, 7.5f, 18f) / 1.5f) / 44f;
                                 if (Timer >= 90f)
                                 {
                                     if (Step < 3)
@@ -400,7 +402,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
                                 }
                                 break;
                             case 2:
-                                NPC.velocity = (NPC.velocity * 83f + NPC.DirectionTo(Target.Center) * 7.5f / 1.5f) / 84f;
+                                NPC.velocity = (NPC.velocity * 83f + NPC.DirectionTo(Target.Center) * EnrageValue(NPC, 7.5f, 18f) / 1.5f) / 84f;
                                 if (Timer >= 60f)
                                 {
                                     if (Step < 3)
@@ -451,18 +453,18 @@ namespace CalRemix.NPCs.Bosses.Acideye
                                     NPC.velocity.Y = 0f;
                             }
                         }
-                        if (Step > 3 && Timer % 10 == 0 && Main.netMode != NetmodeID.Server)
+                        if (Step > 3 && Timer % 10 == 0 && Timer < 70f && Main.netMode != NetmodeID.Server)
                             Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AcidBomb>(), 15 / 2, 0, ai0: 4);
                         if (Timer < 35f)
                             NPC.rotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
                         else
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.AngleTo(Target.Center) - MathHelper.PiOver2, 0.5f);
-                        if (Timer >= 35f && Step >= 4)
+                        if (Timer >= EnrageValue(NPC, 140f, 70f) && Step >= 3)
                         {
                             if (Step < 7)
                             {
                                 SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
-                                NPC.velocity = NPC.DirectionTo(Target.Center) * 24f;
+                                NPC.velocity = NPC.DirectionTo(Target.Center) * 36f;
                             }
                             else
                             {
@@ -478,22 +480,14 @@ namespace CalRemix.NPCs.Bosses.Acideye
                             Step++;
                             Timer = 0f;
                         }
-                        else if (Timer >= 70f && Step < 4)
+                        else if (Timer >= 70f && Step < 3)
                         {
                             if (Step < 7)
                             {
-                                if (Step == 3)
-                                {
-                                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
-                                    NPC.velocity = NPC.DirectionTo(Target.Center) * 24f;
-                                }
-                                else
-                                {
-                                    for (int a = 0; a < 6; a++)
-                                        Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, (-Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(135f)) * 6f, ModContent.ProjectileType<AcidShot>(), 30 / 2, 0);
-                                    SoundEngine.PlaySound(SoundID.ForceRoar, NPC.Center);
-                                    NPC.velocity = NPC.DirectionTo(Target.Center) * 18f;
-                                }
+                                for (int a = 0; a < 6; a++)
+                                    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, (-Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(135f)) * 6f, ModContent.ProjectileType<AcidShot>(), 30 / 2, 0);
+                                SoundEngine.PlaySound(SoundID.ForceRoar, NPC.Center);
+                                NPC.velocity = NPC.DirectionTo(Target.Center) * 18f;
                             }
                             Step++;
                             Timer = 0f;
@@ -629,5 +623,6 @@ namespace CalRemix.NPCs.Bosses.Acideye
             if (Subphase > 2)
                 Subphase = 0;
         }
+        private float EnrageValue(NPC npc, float original, float value) => BossRushEvent.BossRushActive || npc.Calamity().CurrentlyEnraged ? value : original;
     }
 }

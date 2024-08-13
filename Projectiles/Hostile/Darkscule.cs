@@ -55,21 +55,6 @@ namespace CalRemix.Projectiles.Hostile
                 }
             }
         }
-        public override void OnKill(int timeLeft)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.LifeDrain, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), Scale: Main.rand.NextFloat() + 1f);
-            }
-            int index = Player.FindClosest(Projectile.Center, 1, 1);
-            if (Main.player[index] == null || !index.WithinBounds(Main.maxPlayers))
-                return;
-            else if (Main.player[index].dead || !Main.player[index].active)
-                return;
-            Player target = Main.player[index];
-            Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Projectile.Center.DirectionTo(target.Center) * 44f, ModContent.ProjectileType<CalamityLaser>(), 0, 0);
-            Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, (Projectile.Center.DirectionTo(target.Center) * 44f).RotatedByRandom(MathHelper.ToRadians(45f)), ModContent.ProjectileType<CalamityLaser>(), 0, 0);
-        }
         public override bool CanHitPlayer(Player target)
         {
             return false;

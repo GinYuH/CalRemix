@@ -9,6 +9,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
+using CalamityMod;
 
 namespace CalRemix.NPCs.Bosses.Acideye
 {
@@ -35,7 +36,7 @@ namespace CalRemix.NPCs.Bosses.Acideye
             NPC.aiStyle = -1;
             NPC.width = 25;
             NPC.height = 25;
-            NPC.lifeMax = 30;
+            NPC.LifeMaxNERB(30, 75, 3000);
             NPC.defense = 3;
             NPC.damage = 14;
             NPC.knockBackResist = 0f;

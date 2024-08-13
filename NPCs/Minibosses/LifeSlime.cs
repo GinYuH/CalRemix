@@ -92,7 +92,7 @@ namespace CalRemix.NPCs.Minibosses
             var source = NPC.GetSource_FromAI();
             int projdam = 50;
             Player target = Main.player[NPC.target];
-            if ((NPC.life != NPC.lifeMax || target.InModBiome<LifeBiome>()) && !angry)
+            if ((NPC.life < NPC.lifeMax || target.InModBiome<LifeBiome>()) && !angry)
                 angry = true;
             if (angry)
             {

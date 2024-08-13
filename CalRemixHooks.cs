@@ -112,7 +112,7 @@ namespace CalRemix
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(CalRemixWorld).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(RemixDowned).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
             }
         }
         private static void AcidsighterToggle2(ILContext il)
@@ -123,7 +123,7 @@ namespace CalRemix
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(CalRemixWorld).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(RemixDowned).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
             }
         }
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;

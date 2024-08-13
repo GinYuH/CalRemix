@@ -32,7 +32,6 @@ namespace CalRemix.Items.SummonItems
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.UseSound = SoundID.NPCDeath37;
         }
-        /*
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
@@ -63,6 +62,5 @@ namespace CalRemix.Items.SummonItems
             }
             return false;
         }
-         */
     }
 }

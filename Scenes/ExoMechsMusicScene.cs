@@ -43,7 +43,7 @@ namespace CalRemix.Scenes
                         else if (apingas && !larry && !thanos)
                             return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Exos/Apingas");
                         else
-                            return MusicLoader.GetMusicSlot(Mod, "CalamityModMusic/Sounds/Music/ExoMechs");
+                            return MusicLoader.GetMusicSlot(ModLoader.GetMod("CalamityModMusic"), "CalamityModMusic/Sounds/Music/ExoMechs");
                     }
                     else if (!(NPC.AnyNPCs(NPCType<Artemis>()) || NPC.AnyNPCs(NPCType<Apollo>())) && NPC.AnyNPCs(NPCType<AresBody>()) && NPC.AnyNPCs(NPCType<ThanatosHead>()))
                     {
@@ -56,7 +56,7 @@ namespace CalRemix.Scenes
                         else if (larry && !thanos)
                             return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Exos/Larry");
                         else
-                            return MusicLoader.GetMusicSlot(Mod, "CalamityModMusic/Sounds/Music/ExoMechs");
+                            return MusicLoader.GetMusicSlot(ModLoader.GetMod("CalamityModMusic"), "CalamityModMusic/Sounds/Music/ExoMechs");
                     }
                     else if ((NPC.AnyNPCs(NPCType<Artemis>()) || NPC.AnyNPCs(NPCType<Apollo>())) && NPC.AnyNPCs(NPCType<AresBody>()) && !NPC.AnyNPCs(NPCType<ThanatosHead>()))
                     {
@@ -69,7 +69,7 @@ namespace CalRemix.Scenes
                         else if (larry && !apingas)
                             return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Exos/Larry");
                         else
-                            return MusicLoader.GetMusicSlot(Mod, "CalamityModMusic/Sounds/Music/ExoMechs");
+                            return MusicLoader.GetMusicSlot(ModLoader.GetMod("CalamityModMusic"), "CalamityModMusic/Sounds/Music/ExoMechs");
                     }
                     else if ((NPC.AnyNPCs(NPCType<Artemis>()) || NPC.AnyNPCs(NPCType<Apollo>())) && !NPC.AnyNPCs(NPCType<AresBody>()) && NPC.AnyNPCs(NPCType<ThanatosHead>()))
                     {
@@ -82,7 +82,7 @@ namespace CalRemix.Scenes
                         else if (apingas && !thanos)
                             return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Exos/Apingas");
                         else
-                            return MusicLoader.GetMusicSlot(Mod, "CalamityModMusic/Sounds/Music/ExoMechs");
+                            return MusicLoader.GetMusicSlot(ModLoader.GetMod("CalamityModMusic"), "CalamityModMusic/Sounds/Music/ExoMechs");
                     }
                     else if (!(NPC.AnyNPCs(NPCType<Artemis>()) || NPC.AnyNPCs(NPCType<Apollo>())) && !NPC.AnyNPCs(NPCType<AresBody>()) && NPC.AnyNPCs(NPCType<ThanatosHead>()))
                     {
@@ -98,7 +98,7 @@ namespace CalRemix.Scenes
                     }
                     else
                     {
-                        return MusicLoader.GetMusicSlot(Mod, "CalamityModMusic/Sounds/Music/ExoMechs");
+                        return MusicLoader.GetMusicSlot(ModLoader.GetMod("CalamityModMusic"), "CalamityModMusic/Sounds/Music/ExoMechs");
                     }
                 }
             }

@@ -13,10 +13,10 @@ using CalRemix.NPCs;
 using CalRemix.NPCs.Bosses.Hypnos;
 using CalRemix.NPCs.Bosses.Losbaf;
 using System.IO;
-using CalamityMod.World;
-using CalamityMod.Particles;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using CalamityMod;
 using System.Collections.Immutable;
-using CalRemix.Items.Tools;
 
 namespace CalRemix
 {
@@ -33,6 +33,15 @@ namespace CalRemix
         {
             if (SubworldSystem.Current == GetInstance<ExosphereSubworld>())
                 backgroundColor = new Color(22, 22, 22);
+        }
+        public override void Load()
+        {
+            /*
+            IL.CalamityMod.NPCs.ExoMechs.Ares.AresBody.AI += AresHide;
+            IL.CalamityMod.NPCs.ExoMechs.Artemis.Artemis.AI += ArtemisHide;
+            IL.CalamityMod.NPCs.ExoMechs.Apollo.Apollo.AI += ApolloHide;
+            IL.CalamityMod.NPCs.ExoMechs.Thanatos.ThanatosHead.AI += ThanatosHide;
+             */
         }
         public override void PreUpdateWorld()
         {
@@ -68,40 +77,57 @@ namespace CalRemix
         {
             ExoMayhem = reader.ReadBoolean();
         }
-
-        /*
-        if (Main.npc.ToImmutableList().Exists((NPC npc) => npc.type == NPCType<Artemis>()))
+        private static void AresHide(ILContext il)
         {
-            NPC npc = Main.npc.ToImmutableList().Find((NPC npc) => npc.type == NPCType<Artemis>());
-            Main.NewText("ai0: " + npc.Calamity().newAI[0] + ", ai1: " + npc.Calamity().newAI[1] + ", ai2: " + npc.Calamity().newAI[2] + ", ai3: " + npc.Calamity().newAI[3]);
+            var c = new ILCursor(il);
+            for (int e = 0; e < 5; e++)
+            {
+                if (c.TryGotoNext(i => i.MatchLdcR4(2f), i => i.MatchCall<AresBody>("set_SecondaryAIState")))
+                {
+                    c.Index++;
+                    c.Emit(OpCodes.Pop);
+                    c.EmitDelegate(() => !ExoMayhem ? 2f : 0f);
+                }
+            }
         }
-         */
-        /*
-        if (Main.npc.ToImmutableList().Exists((NPC npc) => npc.type == NPCType<Artemis>()))
+        private static void ArtemisHide(ILContext il)
         {
-            NPC npc = Main.npc.ToImmutableList().Find((NPC npc) => npc.type == NPCType<Artemis>());
-            Main.NewText("ai0: " + npc.Calamity().newAI[0] + ", ai1: " + npc.Calamity().newAI[1] + ", ai2: " + npc.Calamity().newAI[2] + ", ai3: " + npc.Calamity().newAI[3]);
-            if (npc.Calamity().newAI[1] == 2)
-                npc.Calamity().newAI[1] = 0;
+            var c = new ILCursor(il);
+            for (int e = 0; e < 5; e++)
+            {
+                if (c.TryGotoNext(i => i.MatchLdcR4(2f), i => i.MatchCall<Artemis>("set_SecondaryAIState")))
+                {
+                    c.Index++;
+                    c.Emit(OpCodes.Pop);
+                    c.EmitDelegate(() => !ExoMayhem ? 2f : 0f);
+                }
+            }
         }
-        if (Main.npc.ToImmutableList().Exists((NPC npc) => npc.type == NPCType<Apollo>()))
+        private static void ApolloHide(ILContext il)
         {
-            NPC npc = Main.npc.ToImmutableList().Find((NPC npc) => npc.type == NPCType<Apollo>());
-            if (npc.Calamity().newAI[1] == 2)
-                npc.Calamity().newAI[1] = 0;
+            var c = new ILCursor(il);
+            for (int e = 0; e < 5; e++)
+            {
+                if (c.TryGotoNext(i => i.MatchLdcR4(2f), i => i.MatchCall<Apollo>("set_SecondaryAIState")))
+                {
+                    c.Index++;
+                    c.Emit(OpCodes.Pop);
+                    c.EmitDelegate(() => !ExoMayhem ? 2f : 0f);
+                }
+            }
         }
-        if (Main.npc.ToImmutableList().Exists((NPC npc) => npc.type == NPCType<AresBody>()))
+        private static void ThanatosHide(ILContext il)
         {
-            NPC npc = Main.npc.ToImmutableList().Find((NPC npc) => npc.type == NPCType<AresBody>());
-            if (npc.Calamity().newAI[1] == 2)
-                npc.Calamity().newAI[1] = 0;
+            var c = new ILCursor(il);
+            for (int e = 0; e < 5; e++)
+            {
+                if (c.TryGotoNext(i => i.MatchLdcR4(2f), i => i.MatchCall<ThanatosHead>("set_SecondaryAIState")))
+                {
+                    c.Index++;
+                    c.Emit(OpCodes.Pop);
+                    c.EmitDelegate(() => !ExoMayhem ? 2f : 0f);
+                }
+            }
         }
-        if (Main.npc.ToImmutableList().Exists((NPC npc) => npc.type == NPCType<ThanatosHead>()))
-        {
-            NPC npc = Main.npc.ToImmutableList().Find((NPC npc) => npc.type == NPCType<ThanatosHead>());
-            if (npc.Calamity().newAI[1] == 2)
-                npc.Calamity().newAI[1] = 0;
-        }
-         */
     }
 }

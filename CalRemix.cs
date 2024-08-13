@@ -45,6 +45,12 @@ using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalRemix.NPCs.Bosses.Pathogen;
 using Terraria.DataStructures;
 using CalamityMod.Events;
+using CalamityMod.NPCs.Crabulon;
+using CalRemix.NPCs.Bosses.Acideye;
+using CalamityMod.NPCs.Leviathan;
+using CalRemix.NPCs.Bosses.Poly;
+using CalamityMod.NPCs.ExoMechs;
+using CalRemix.NPCs.Bosses.Losbaf;
 
 namespace CalRemix
 {
@@ -320,13 +326,16 @@ namespace CalRemix
 
             AddToBossRush(ref brEntries, NPCID.KingSlime, ModContent.NPCType<WulfwyrmHead>(), [ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>()]);
             AddToBossRush(ref brEntries, NPCID.KingSlime, ModContent.NPCType<Origen>(), [ModContent.NPCType<OrigenCore>()], [ModContent.NPCType<OrigenCore>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<Crabulon>(), ModContent.NPCType<Acideye>(), [ModContent.NPCType<MutatedEye>()]);
             AddToBossRush(ref brEntries, NPCID.Deerclops, ModContent.NPCType<Carcinogen>(), [ModContent.NPCType<CarcinogenShield>()]);
             AddToBossRush(ref brEntries, ModContent.NPCType<CalamitasClone>(), ModContent.NPCType<Ionogen>(), [ModContent.NPCType<IonogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.Plantera, ModContent.NPCType<Oxygen>(), [ModContent.NPCType<OxygenShield>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<Anahita>(), ModContent.NPCType<Polyphemalus>(), [ModContent.NPCType<Astigmageddon>(), ModContent.NPCType<Exotrexia>(), ModContent.NPCType<Conjunctivirus>(), ModContent.NPCType<Cataractacomb>()], [ModContent.NPCType<Astigmageddon>(), ModContent.NPCType<Exotrexia>(), ModContent.NPCType<Conjunctivirus>(), ModContent.NPCType<Cataractacomb>()]);
             AddToBossRush(ref brEntries, NPCID.Golem, ModContent.NPCType<Phytogen>(), [ModContent.NPCType<PhytogenShield>(), ModContent.NPCType<PineappleFrond>()]);
             AddToBossRush(ref brEntries, ModContent.NPCType<PlaguebringerGoliath>(), ModContent.NPCType<Hydrogen>(), [ModContent.NPCType<HydrogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.CultistBoss, ModContent.NPCType<Pathogen>(), [ModContent.NPCType<PathogenShield>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<SupremeCalamitas>(), ModContent.NPCType<Hypnos>(), [ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<Draedon>(), ModContent.NPCType<Hypnos>(), [ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>()]);
+            AddToBossRush(ref brEntries, ModContent.NPCType<SupremeCalamitas>(), ModContent.NPCType<Losbaf>(), [ModContent.NPCType<Losbaf>()]);
             foreach (var entry in brEntries)
             {
                 if (entry.Item1 == ModContent.NPCType<OldDuke>())
@@ -370,7 +379,7 @@ namespace CalRemix
             {
                 pr2 = customAction;
             }
-            brEntries.Insert(bossidx, (NPCType, -1, pr2, 180, needsNight, 0f, extraNPCs, headID));
+            brEntries.Insert(bossidx, (NPCType, -1, pr2, 45, needsNight, 0f, extraNPCs, headID));
         }
 
         public static void AddHiveBestiary(int id, string entryText)

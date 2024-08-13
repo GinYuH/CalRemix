@@ -373,7 +373,6 @@ namespace CalRemix.NPCs.Minibosses
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<BrimstoneSlag>(), 1, 25, 35);
-            npcLoot.Add(ModContent.ItemType<BrimstoneSword>());
             npcLoot.AddIf(() => Main.hardMode, ModContent.ItemType<MolluskHusk>(), 1, 8, 15);
             npcLoot.AddIf(() => Main.hardMode, ModContent.ItemType<EyeofDesolation>());
             int[] itemIDs = new int[5]
