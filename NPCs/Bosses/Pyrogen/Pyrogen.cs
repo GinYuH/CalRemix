@@ -75,6 +75,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
         public static Asset<Texture2D> RingBloomTexture;
         public static Asset<Texture2D> Glowmask;
         public static Asset<Texture2D> Glowmask2;
+        public static Asset<Texture2D> BloomExtra;
 
         public static int cryoIconIndex;
         public static int pyroIconIndex;
@@ -110,6 +111,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                 RingBloomTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenRingAdditive", AssetRequestMode.AsyncLoad);
                 Glowmask = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase1_Glow", AssetRequestMode.AsyncLoad);
                 Glowmask2 = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase2_Glow", AssetRequestMode.AsyncLoad);
+                BloomExtra = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenBloomExtra", AssetRequestMode.AsyncLoad);
             }
         }
 
@@ -625,6 +627,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             Main.EntitySpriteDraw(RingBloomTexture.Value, pos, null, Color.White, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(bloomTx, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.ExitShaderRegion();
+            Main.EntitySpriteDraw(BloomExtra.Value, pos, null, Color.White * 0.05f, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(texture, pos, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(gm, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(additiveTx, pos, null, Color.White with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
