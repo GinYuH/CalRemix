@@ -2380,6 +2380,8 @@ Mods: {
 					'Contains the Ashes of Calamity'
 					'''
 			}
+
+			Quadnoculars.DisplayName: Quadnoculars
 		}
 
 		NPCs: {

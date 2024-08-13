@@ -67,8 +67,12 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
         public override string Texture => "CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase1";
 
         public static Asset<Texture2D> Phase2Texture;
-        public static Asset<Texture2D> Phase3Texture;
-        public static Asset<Texture2D> GlowTexture;
+        public static Asset<Texture2D> AdditiveTexture;
+        public static Asset<Texture2D> AdditiveTexture2;
+        public static Asset<Texture2D> BloomTexture;
+        public static Asset<Texture2D> BloomTexture2;
+        public static Asset<Texture2D> RingTexture;
+        public static Asset<Texture2D> RingBloomTexture;
 
         public static int cryoIconIndex;
         public static int pyroIconIndex;
@@ -96,8 +100,12 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             if (!Main.dedServ)
             {
                 Phase2Texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase2", AssetRequestMode.AsyncLoad);
-                Phase3Texture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase3", AssetRequestMode.AsyncLoad);
-                GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow", AssetRequestMode.AsyncLoad);
+                AdditiveTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenAdditive", AssetRequestMode.AsyncLoad);
+                AdditiveTexture2 = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenAdditive2", AssetRequestMode.AsyncLoad);
+                BloomTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenBloom1", AssetRequestMode.AsyncLoad);
+                BloomTexture2 = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenBloom2", AssetRequestMode.AsyncLoad);
+                RingTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenRing", AssetRequestMode.AsyncLoad);
+                RingBloomTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenRingAdditive", AssetRequestMode.AsyncLoad);
             }
         }
 
@@ -135,34 +143,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
         {
             for (int i = 0; i < 15; i++)
             {
-                int bitSprite = 0;
-                switch (i)
-                {
-                    case 0:
-                    case 4:
-                    case 8:
-                    case 12:
-                        bitSprite = 0;
-                        break;
-                    case 1:
-                    case 5:
-                    case 9:
-                    case 13:
-                        bitSprite = 1;
-                        break;
-                    case 2:
-                    case 6:
-                    case 10:
-                    case 14:
-                        bitSprite = 2;
-                        break;
-                    case 3:
-                    case 7:
-                    case 11:
-                    case 15:
-                        bitSprite = 3;
-                        break;
-                }
+                int bitSprite = i % 6;
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);  
             }
         }
@@ -206,8 +187,10 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             bool phase2 = lifeRatio < 0.5f;
             bool phase3 = lifeRatio < 0.3f;
 
-          //  if ((int)NPC.ai[4] + 1 > currentPhase)
-               // HandlePhaseTransition((int)NPC.ai[4] + 1);
+            //  if ((int)NPC.ai[4] + 1 > currentPhase)
+            // HandlePhaseTransition((int)NPC.ai[4] + 1);
+
+            Lighting.AddLight(NPC.Center, TorchID.Red);
 
 
             switch (Phase)
@@ -624,28 +607,27 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (NPC.IsABestiaryIconDummy)
-            {
-                var effects = NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-                Main.EntitySpriteDraw(GlowTexture.Value, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY + 4),
-                NPC.frame, Color.Orange, NPC.rotation, NPC.frame.Size() / 2f, NPC.scale, effects, 0);
-            }
-
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             switch (currentPhase)
             {
                 case 2:
                     texture = Phase2Texture.Value;
                     break;
-                case 3:
-                    texture = Phase3Texture.Value;
-                    break;
                 default:
                     texture = TextureAssets.Npc[NPC.type].Value;
                     break;
             }
-            return true;
+            Vector2 pos = NPC.Center - screenPos;
+            Vector2 ringOrigin = RingTexture.Value.Size() / 2;
+            float ringRotation = -Main.GlobalTimeWrappedHourly;
+            Main.EntitySpriteDraw(RingTexture.Value, pos, null, Color.White, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
+            Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
+            Main.EntitySpriteDraw(RingBloomTexture.Value, pos, null, Color.White, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw(BloomTexture.Value, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.spriteBatch.ExitShaderRegion();
+            Main.EntitySpriteDraw(texture, pos, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw(AdditiveTexture.Value, pos, null, Color.White with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            return false;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
