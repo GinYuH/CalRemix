@@ -56,7 +56,7 @@ namespace CalRemix.NPCs.Bosses.Origen
             NPC.Calamity().VulnerableToSickness = false;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot("CalamityModMusic/Sounds/Music/Cryogen");
+                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AntarcticReinforcementStructuredMix");
             }
         }
 

@@ -64,7 +64,7 @@ namespace CalRemix.NPCs.Bosses.Origen
             NPC.Calamity().VulnerableToSickness = false;
             if (!Main.dedServ)
             {
-                Music = MusicID.FrostMoon;
+                Music = MusicLoader.GetMusicSlot("CalRemix/Sounds/Music/AntarcticReinforcementStructuredMix");
             }
         }
 
