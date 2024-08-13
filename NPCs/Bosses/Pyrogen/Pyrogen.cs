@@ -73,6 +73,8 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
         public static Asset<Texture2D> BloomTexture2;
         public static Asset<Texture2D> RingTexture;
         public static Asset<Texture2D> RingBloomTexture;
+        public static Asset<Texture2D> Glowmask;
+        public static Asset<Texture2D> Glowmask2;
 
         public static int cryoIconIndex;
         public static int pyroIconIndex;
@@ -106,6 +108,8 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                 BloomTexture2 = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenBloom2", AssetRequestMode.AsyncLoad);
                 RingTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenRing", AssetRequestMode.AsyncLoad);
                 RingBloomTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/PyrogenRingAdditive", AssetRequestMode.AsyncLoad);
+                Glowmask = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase1_Glow", AssetRequestMode.AsyncLoad);
+                Glowmask2 = ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Pyrogen/Pyrogen_Phase2_Glow", AssetRequestMode.AsyncLoad);
             }
         }
 
@@ -611,6 +615,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             Texture2D texture = p2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
             Texture2D bloomTx = p2 ? BloomTexture2.Value : BloomTexture.Value;
             Texture2D additiveTx = p2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
+            Texture2D gm = p2 ? Glowmask2.Value : Glowmask.Value;
 
             Vector2 pos = NPC.Center - screenPos;
             Vector2 ringOrigin = RingTexture.Value.Size() / 2;
@@ -621,6 +626,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             Main.EntitySpriteDraw(bloomTx, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.ExitShaderRegion();
             Main.EntitySpriteDraw(texture, pos, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw(gm, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(additiveTx, pos, null, Color.White with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             return false;
         }
