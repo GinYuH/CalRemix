@@ -116,6 +116,7 @@ namespace CalRemix.World
         public static bool greenDemon = true;
         public static bool remixJump = true;
         public static bool hydrogenBomb = true;
+        public static bool baronStrait = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -264,6 +265,7 @@ namespace CalRemix.World
             greenDemon = true;
             remixJump = true;
             hydrogenBomb = true;
+            baronStrait = true;
 
             loadedRecipeInjections = false;
 
@@ -323,6 +325,7 @@ namespace CalRemix.World
             greenDemon = true;
             remixJump = true;
             hydrogenBomb = true;
+            baronStrait = true;
 
             loadedRecipeInjections = false;
 
@@ -376,6 +379,7 @@ namespace CalRemix.World
             tag["109greenDemon"] = greenDemon;
             tag["109remixJump"] = remixJump;
             tag["109hydrogen"] = hydrogenBomb;
+            tag["109baron"] = baronStrait;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -434,6 +438,8 @@ namespace CalRemix.World
             greenDemon = tag.Get<bool>("109greenDemon");
             remixJump = tag.Get<bool>("109remixJump");
             hydrogenBomb = tag.Get<bool>("109hydrogen");
+            baronStrait = tag.Get<bool>("109baron");
+
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
             hydrogenLocation.X = tag.Get<float>("hydrolocationX");
@@ -488,6 +494,7 @@ namespace CalRemix.World
             writer.Write(greenDemon);
             writer.Write(remixJump);
             writer.Write(hydrogenBomb);
+            writer.Write(baronStrait);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -544,6 +551,7 @@ namespace CalRemix.World
             greenDemon = reader.ReadBoolean();
             remixJump = reader.ReadBoolean();
             hydrogenBomb = reader.ReadBoolean();
+            baronStrait = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
