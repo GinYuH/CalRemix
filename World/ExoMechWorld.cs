@@ -57,9 +57,9 @@ namespace CalRemix
                 }
                 CalamityWorld.DraedonSummonCountdown = -1;
             }
+            */
             if (ExoMayhem && !AnyExoMechActive)
                 ExoMayhem = false;
-             */
         }
         public override void OnWorldLoad()
         {
