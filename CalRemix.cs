@@ -335,7 +335,7 @@ namespace CalRemix
             AddToBossRush(ref brEntries, ModContent.NPCType<PlaguebringerGoliath>(), ModContent.NPCType<Hydrogen>(), [ModContent.NPCType<HydrogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.CultistBoss, ModContent.NPCType<Pathogen>(), [ModContent.NPCType<PathogenShield>()]);
             AddToBossRush(ref brEntries, ModContent.NPCType<Draedon>(), ModContent.NPCType<Hypnos>(), [ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<SupremeCalamitas>(), ModContent.NPCType<Losbaf>(), [ModContent.NPCType<Losbaf>()]);
+            //AddToBossRush(ref brEntries, ModContent.NPCType<SupremeCalamitas>(), ModContent.NPCType<Losbaf>(), [ModContent.NPCType<Losbaf>()]);
             foreach (var entry in brEntries)
             {
                 if (entry.Item1 == ModContent.NPCType<OldDuke>())
