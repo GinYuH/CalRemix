@@ -31,7 +31,7 @@ namespace CalRemix.Projectiles.Weapons
         public override void AI()
         {
             Time += 0.5f;
-            float wave = (float)Math.Sin((Time/3.25)+ Math.PI/2) * 5f;
+            float wave = (float)Math.Sin((Time/3.25)+ Math.PI/2) * 15f;
             Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(Math.PI/2);
             Projectile.Center += (Image == 0) ? direction * wave : -direction * wave;
 

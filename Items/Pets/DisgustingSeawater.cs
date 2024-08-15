@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Items
+namespace CalRemix.Items.Pets
 {
     public class DisgustingSeawater : ModItem
     {

@@ -76,6 +76,7 @@ using CalRemix.World;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Items.Ammo;
 using CalamityMod.Items.Potions.Alcohol;
+using CalRemix.Items.Pets;
 
 namespace CalRemix
 {
