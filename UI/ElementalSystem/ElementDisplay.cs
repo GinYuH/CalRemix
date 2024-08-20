@@ -20,7 +20,12 @@ namespace CalRemix.UI.ElementalSystem
 				displayColor = InactiveInfoTextColor;
                 return "No entities tracked";
             }
-			if (npc.GetGlobalNPC<ElementNPC>().weak is null && npc.GetGlobalNPC<ElementNPC>().resist is null || Main.LocalPlayer.GetModPlayer<ElementPlayer>().noElement)
+            if (!npc.TryGetGlobalNPC(out ElementNPC _))
+            {
+                displayColor = InactiveInfoTextColor;
+                return "No elemental info available";
+            }
+            if (npc.GetGlobalNPC<ElementNPC>().weak is null && npc.GetGlobalNPC<ElementNPC>().resist is null || Main.LocalPlayer.GetModPlayer<ElementPlayer>().noElement)
             {
                 displayColor = InactiveInfoTextColor;
                 return "No elemental info available";

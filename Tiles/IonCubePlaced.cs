@@ -418,6 +418,7 @@ namespace CalRemix.Tiles
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 NetMessage.SendData(MessageID.RequestTileEntityInteraction, -1, -1, null, Position.X, Position.Y, Type);
+                NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, Type, Position.X, Position.Y);
             }
         }
 
