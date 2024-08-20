@@ -771,12 +771,13 @@ namespace CalRemix
 		public override void UpdateAutopause() { RecentChest = Player.chest; }
         public override void PreUpdateBuffs() 
         {
-			if(Main.netMode != NetmodeID.MultiplayerClient)
-            {
-				if (Player.chest == -1 && RecentChest >= 0 && Main.chest[RecentChest] != null)
-				{
-					int i = Main.chest[RecentChest].x;
-					int j = Main.chest[RecentChest].y;
+			if (Player.chest == -1 && RecentChest >= 0 && Main.chest[RecentChest] != null)
+			{
+				int i = Main.chest[RecentChest].x;
+				int j = Main.chest[RecentChest].y;
+				int chestenum = Chest.FindChest(i, j);
+                if (chestenum >= 0)
+                {
 					Chest cheste = Main.chest[RecentChest];
 					if (Main.tile[cheste.x, cheste.y].TileType == TileID.Containers && (Main.tile[i, j].TileFrameX == 432 || Main.tile[i, j].TileFrameX == 450))
 					{
@@ -789,28 +790,30 @@ namespace CalRemix
 								for (int q = 0; q < Chest.maxItems; q++) ok += cheste.item[q].stack;
 								if (ok == 1)
 								{
-									cheste.item[slot].stack = 0;
-									cheste.item[slot].type = ItemID.None;
-									NPC guy = CalamityUtils.SpawnBossBetter(new Vector2(i * 16, j * 16 + 1200), ModContent.NPCType<WulfwyrmHead>());
+									cheste.item[slot] = new Item();
+									
+									if (Main.netMode == NetmodeID.MultiplayerClient)
+										NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, chestenum, slot, cheste.item[slot].stack, cheste.item[slot].prefix, cheste.item[slot].type);
 
-									SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
-									if (guy.whoAmI.WithinBounds(Main.maxNPCs))
-									{
-										guy.velocity.Y = -20;
-                                    }
-                                    if (Main.netMode == NetmodeID.MultiplayerClient && guy.whoAmI.WithinBounds(Main.maxNPCs))
+                                    SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
+
+                                    //if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        NetMessage.SendData(MessageID.SyncNPC, number: guy.whoAmI);
+                                        int npc = NPC.NewNPC(Player.GetSource_FromThis(), i * 16, j * 16 + 1200, ModContent.NPCType<WulfwyrmHead>());
+                                        Main.npc[npc].timeLeft *= 20;
+                                        CalamityUtils.BossAwakenMessage(npc);
+										Main.npc[npc].velocity.Y = -20;
+										if (Main.netMode == NetmodeID.Server)
+											NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc);
                                     }
                                     break;
 								}
-								Main.NewText(ok);
 							}
 						}
 					}
 				}
-				RecentChest = Player.chest;
 			}
+			RecentChest = Player.chest;
         }
 		public override void UpdateBadLifeRegen()
         {

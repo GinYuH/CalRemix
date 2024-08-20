@@ -206,7 +206,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
             }
 
             // Create segments on the first frame.
-            if (Main.netMode != NetmodeID.MultiplayerClient && NPC.localAI[0] == 0f)
+            if (NPC.localAI[0] == 0f)
             {
                 SpawnSegments();
                 NPC.localAI[0] = 1f;
@@ -246,7 +246,6 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
 
             for (int i = 0; i < SegmentCount; i++)
             {
-
 
                 int nextSegmentIndex;
                 if (i < SegmentCount - 1)
@@ -317,7 +316,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
                     SoundEngine.PlaySound(SoundID.Item33, Target.Center);
 
                 // Create lasers.
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     // Loop through the linked list of worm body segments until the tail is reached.
                     List<NPC> segments = new();
@@ -432,7 +431,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
                     SoundEngine.PlaySound(SoundID.Item33, Target.Center);
 
                 // Create lasers.
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     // Loop through the linked list of worm body segments until the tail is reached.
                     List<NPC> segments = new();
@@ -517,7 +516,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
                 if (NPC.WithinRange(Target.Center, 1400f))
                     SoundEngine.PlaySound(SoundID.Item33, Target.Center);
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int laserID = ModContent.ProjectileType<ExcavatorShot>();
                     for (int i = 0; i < laserCount; i++)
@@ -651,7 +650,7 @@ namespace CalRemix.NPCs.Bosses.Wulfwyrm
                 if (NPC.WithinRange(Target.Center, 1400f))
                     SoundEngine.PlaySound(SoundID.Item33, Target.Center);
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int laserID = ModContent.ProjectileType<ExcavatorShot>();
                     float laserShootOffsetAngle = Main.rand.NextFloat(MathHelper.TwoPi);

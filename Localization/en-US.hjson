@@ -2382,6 +2382,17 @@ Mods: {
 			}
 
 			Quadnoculars.DisplayName: Quadnoculars
+			Aurikia5220.DisplayName: Aurikia5220
+
+			OnyxStaff: {
+				DisplayName: Onyx Staff
+				Tooltip: Casts volatile onyx fragments that explode on contact with tiles
+			}
+
+			Unloxcalibur: {
+				DisplayName: Unloxcalibur
+				Tooltip: An average broadsword
+			}
 		}
 
 		NPCs: {
@@ -3054,6 +3065,7 @@ Mods: {
 			BlueExoPulseLaserFriendly.DisplayName: Blue Exo Pulse Laser
 			Scrap.DisplayName: Scrap
 			OrigenPointProjectile.DisplayName: Point
+			OnyxFragment.DisplayName: Onyx Fragment
 		}
 
 		Tiles: {
