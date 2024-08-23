@@ -79,7 +79,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                             }
                             Vector2 idealpos = NPC.Center;
 
-                            float distance = 300;
+                            float distance = MathHelper.Clamp(MathHelper.Lerp(50, 300, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, 300);
                             distance += pyro.width >= pyro.height ? pyro.width : pyro.height;
 
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly * 660 + NPC.localAI[1];

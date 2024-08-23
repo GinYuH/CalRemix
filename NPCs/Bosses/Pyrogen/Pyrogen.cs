@@ -15,6 +15,8 @@ using CalamityMod.Events;
 using static CalamityMod.World.CalamityWorld;
 using CalRemix.Projectiles.Hostile;
 using CalamityMod.Items.Potions;
+using System.Runtime.Serialization;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace CalRemix.NPCs.Bosses.Pyrogen
 {
@@ -37,6 +39,9 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
 
         public int attackSubTotal = 0;
         public int attackTotal = 0; //counts how many attacks have been used- for hellstorm, since it's position in the cycle is set
+
+        public const float BlackholeSafeTime = 40;
+
         public enum PyroPhaseType
         {
             Idle = 0,
@@ -416,6 +421,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PyrogenFlare>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                                 }
                             }
+
                             if (NPC.ai[1] >= endPhase)
                             {
                                 canShootFlares = false;
@@ -432,12 +438,33 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                             int tpDistX = 500;
                             int tpDistY = 500;
                             float distanceRequired = 2000f;
-                            float pullForce = 8f;
+                            float pullForce = 16f;
 
                             if (AttackTimer == 1)
                             {
                                 NPC.damage = 0;
-                                teleportPos = new Rectangle((int)(Target.Center.X + Main.rand.Next(-tpDistX, tpDistX)), (int)(Target.Center.Y + Main.rand.Next(-tpDistY, tpDistY)), NPC.width, NPC.height);
+                                for (int i = 0; i < 1000; i++)
+                                {
+                                    int safeRadius = i > 666 ? 5 : i > 333 ? 10 : i > 100 ? 20 : 30;
+                                    teleportPos = new Rectangle((int)(Target.Center.X + Main.rand.Next(-tpDistX, tpDistX)), (int)(Target.Center.Y + Main.rand.Next(-tpDistY, tpDistY)), NPC.width, NPC.height);
+                                    bool foundTile = false;
+                                    for (int x = -safeRadius; x < safeRadius; x++)
+                                    {
+                                        if (foundTile)
+                                            break;
+                                        for (int y = -safeRadius; y < safeRadius; y++)
+                                        {
+                                            Tile t = CalamityUtils.ParanoidTileRetrieval((int)(teleportPos.X / 16f) + x, (int)(teleportPos.Y / 16f) + y);
+                                            if (t.HasUnactuatedTile)
+                                            {
+                                                foundTile = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (!foundTile)
+                                        break;
+                                }
                                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, DustID.Torch);
                                 Main.dust[d].noGravity = true;
                                 DustExplosion();
@@ -445,24 +472,33 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                                 DustExplosion();
                             }
 
-                            if (AttackTimer < 20) //YANK player in with boss
+                            if (AttackTimer < 20 && AttackTimer > 1) //YANK player in with boss
                             {
                                 foreach (Player victim in Main.ActivePlayers)
                                 {
-                                    float distance = Vector2.Distance(victim.Center, NPC.Center);
-                                    if (distance < distanceRequired)
-                                    {
-                                        float distanceRatio = distance / distanceRequired;
-                                        float multiplier = 1f - distanceRatio;
-                                        victim.velocity.X += pullForce * multiplier;
-                                        victim.velocity.Y += pullForce * multiplier;
-                                    }
+                                    victim.velocity = Vector2.Zero;
+                                    victim.position = Vector2.Lerp(victim.position, NPC.Center, AttackTimer / BlackholeSafeTime / 2);
                                 }
                             }
 
-                            if (AttackTimer == 40)
+                            if (AttackTimer == BlackholeSafeTime)
                             {
                                 NPC.damage = 200;
+                            }
+
+                            if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 40 == 0)
+                            {
+                                int firePoints = 8;
+                                int fireProjSpeed = master ? 16 : 14; // Ice blast speed
+                                float variance = MathHelper.TwoPi / firePoints;
+                                SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
+                                float randomVariance = Main.rand.NextFloat();
+                                for (int i = 0; i < firePoints; i++)
+                                {
+                                    Vector2 velocity = new Vector2(0f, fireProjSpeed);
+                                    velocity = velocity.RotatedBy(variance * i + randomVariance);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ProjectileID.DeathLaser, (int)(0.25f * NPC.damage), 0);
+                                }
                             }
 
                             if (AttackTimer == 700) //reject player from shield since attack has concluded
@@ -484,6 +520,14 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                             if (AttackTimer == 730) //all done!
                             {
                                 SelectNextAttack();
+                            }
+
+                            foreach (Player victim in Main.ActivePlayers)
+                            {
+                                if (victim.Calamity() != null)
+                                {
+                                    victim.Calamity().infiniteFlight = true;
+                                }
                             }
                         }
                     break;
@@ -516,7 +560,6 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
 
         public void SelectNextAttack()
         {
-
             // cycle through attacks based on current HP. chosen attack depends 
 
             switch (AIState)
