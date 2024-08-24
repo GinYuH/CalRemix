@@ -58,6 +58,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                 {
                     case 0 or 1 or 2: //default guarding behavior
                         {
+                            NPC.damage = 220;
                             stopAi1 = false;
                             NPC.localAI[1] += 5f;
                             float distance = 50;
@@ -87,10 +88,9 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 4;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 4;
                             
-                            if (NPC.localAI[1] <= 40)
+                            if (NPC.localAI[1] <= Pyrogen.BlackholeSafeTime)
                             {
                                 NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                                NPC.damage = 0;
                             }
                             else if (NPC.localAI[1] < 600)
                             {
@@ -98,7 +98,12 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                                 NPC.damage = 200;
                             }
 
-                            if (NPC.localAI[1] == 700) // repelling back out! returning to original distance...
+                            if (NPC.localAI[1] < Pyrogen.BlackholeSafeTime * 2)
+                            {
+                                NPC.damage = 0;
+                            }
+
+                            if (NPC.localAI[1] == 670) // repelling back out! returning to original distance...
                             {
                                 distance = 100;
                                 hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
@@ -108,7 +113,6 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                             }
                             if (pyro.ai[3] == 720) // done! restoring contact damage...
                             {
-                                NPC.damage = 220;
                                 stopAi1 = true;
                                 NPC.localAI[1] = 0;
                             }
@@ -120,6 +124,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                         }
                     default: //default guarding behavior
                         {
+                            NPC.damage = 220;
                             NPC.localAI[1] += 8f;
                             float distance = 100;
                             distance = pyro.width >= pyro.height ? pyro.width : pyro.height;

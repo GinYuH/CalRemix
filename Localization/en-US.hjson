@@ -3066,6 +3066,9 @@ Mods: {
 			Scrap.DisplayName: Scrap
 			OrigenPointProjectile.DisplayName: Point
 			OnyxFragment.DisplayName: Onyx Fragment
+			PyrogenWaveFlare.DisplayName: Pyro Flare
+			PyrogenOrbitalFlare.DisplayName: Pyro Flare
+			PyrogenZigZagFlare.DisplayName: Pyro Flare
 		}
 
 		Tiles: {

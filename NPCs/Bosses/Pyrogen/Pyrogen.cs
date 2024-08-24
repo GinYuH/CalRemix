@@ -432,7 +432,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                 }
                 case (int)PyroPhaseType.PullintoShield: //extends shield out, tugs player in with it, then fires some slow-moving projectiles in the limited space; repel player again at end
                 {
-                    {
+                        {
                             AttackTimer++;
                             NPC.velocity = Vector2.Zero;
                             int tpDistX = 500;
@@ -470,6 +470,8 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                                 DustExplosion();
                                 NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
                                 DustExplosion();
+
+                                CalamityUtils.KillAllHostileProjectiles();
                             }
 
                             if (AttackTimer < 20 && AttackTimer > 1) //YANK player in with boss
@@ -483,22 +485,63 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
 
                             if (AttackTimer == BlackholeSafeTime)
                             {
-                                NPC.damage = 200;
                             }
 
-                            if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 40 == 0)
+                            float randomVariance = NPC.ai[1];
+                            int dmg = 100;
+
+                            bool firing = AttackTimer % 60 < 50 && AttackTimer % 90 > 50;
+                            if (NPC.Calamity().newAI[0] == 0)
                             {
-                                int firePoints = 8;
-                                int fireProjSpeed = master ? 16 : 14; // Ice blast speed
-                                float variance = MathHelper.TwoPi / firePoints;
-                                SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
-                                float randomVariance = Main.rand.NextFloat();
-                                for (int i = 0; i < firePoints; i++)
+                                if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 5 == 0 && firing)
                                 {
-                                    Vector2 velocity = new Vector2(0f, fireProjSpeed);
-                                    velocity = velocity.RotatedBy(variance * i + randomVariance);
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ProjectileID.DeathLaser, (int)(0.25f * NPC.damage), 0);
+                                    int firePoints = 8;
+                                    int fireProjSpeed = master ? 4 : 4; // Ice blast speed
+                                    float variance = MathHelper.TwoPi / firePoints;
+                                    SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
+                                    for (int i = 0; i < firePoints; i++)
+                                    {
+                                        Vector2 velocity = new Vector2(0f, fireProjSpeed);
+                                        velocity = velocity.RotatedBy(variance * i + randomVariance);
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PyrogenWaveFlare>(), dmg, 0);
+                                    }
                                 }
+                            }
+                            else if (NPC.Calamity().newAI[0] == 1)
+                            {
+                                if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 10 == 0 && firing)
+                                {
+                                    SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
+                                    int dir = Main.rand.NextBool().ToInt();
+                                    int totalObjects = master ? 16 : 10;
+                                    for (int i = 0; i < totalObjects; i++)
+                                    {
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PyrogenOrbitalFlare>(), dmg, 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 5 == 0 && firing)
+                                {
+                                    int firePoints = 8;
+                                    int fireProjSpeed = master ? 4 : 4; // Ice blast speed
+                                    float variance = MathHelper.TwoPi / firePoints;
+                                    SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
+                                    for (int i = 0; i < firePoints; i++)
+                                    {
+                                        Vector2 velocity = new Vector2(0f, fireProjSpeed);
+                                        velocity = velocity.RotatedBy(variance * i + randomVariance);
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PyrogenZigZagFlare>(), dmg, 0);
+                                    }
+                                }
+                            }
+
+                            // Controls variance for bullet patterns
+                            if (!firing)
+                            {
+                                NPC.ai[1] = Main.rand.NextFloat(-22.22f, 22.22f);
+                                NPC.Calamity().newAI[0] = Main.rand.Next(0, 3);
                             }
 
                             if (AttackTimer == 700) //reject player from shield since attack has concluded
@@ -509,15 +552,12 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
                                     float distance = Vector2.Distance(victim.Center, NPC.Center);
                                     if (distance < distanceRequired)
                                     {
-                                        float distanceRatio = distance / distanceRequired;
-                                        float multiplier = 1f - distanceRatio;
-                                        victim.velocity.X -= pullForce * multiplier;
-                                        victim.velocity.Y -= pullForce * multiplier;
+                                        victim.velocity = NPC.DirectionTo(victim.Center) * 22;
                                     }
                                 }
                             }
 
-                            if (AttackTimer == 730) //all done!
+                            if (AttackTimer >= 730) //all done!
                             {
                                 SelectNextAttack();
                             }
@@ -589,6 +629,7 @@ namespace CalRemix.NPCs.Bosses.Pyrogen
             NPC.ai[1] = 0;
             AttackTimer = 0f;
             charges = 0;
+            NPC.damage = 200;
             NPC.netUpdate = true;
         }
 
