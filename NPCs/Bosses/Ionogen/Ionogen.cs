@@ -364,6 +364,7 @@ namespace CalRemix.NPCs.Bosses.Ionogen
             npcLoot.AddNormalOnly(ModContent.ItemType<IonogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofIonogen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<ScrapBag>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<ExtensionCable>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<IonogenRelic>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedIonogen, ModContent.ItemType<KnowledgeIonogen>(), desc: DropHelper.FirstKillText);
         }

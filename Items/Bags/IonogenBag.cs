@@ -56,6 +56,7 @@ namespace CalRemix.Items.Bags
             itemLoot.Add(ModContent.ItemType<IonogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofIonogen>());
             itemLoot.Add(ModContent.ItemType<ScrapBag>());
+            itemLoot.Add(ModContent.ItemType<ExtensionCable>());
             itemLoot.AddRevBagAccessories();
         }
     }
