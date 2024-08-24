@@ -3,6 +3,7 @@ using CalRemix.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -18,6 +19,9 @@ namespace CalRemix.Projectiles.Weapons
             // This makes the projectile use whip collision detection and allows flasks to be applied to it.
             ProjectileID.Sets.IsAWhip[Type] = true;
         }
+
+        public const int defaultSegs = 10;
+        public const float defaultRange = 0.4f;
 
         public override void SetDefaults()
         {
@@ -45,6 +49,11 @@ namespace CalRemix.Projectiles.Weapons
         // If you remove this, also remove Item.channel = true from the item's SetDefaults.
         public override bool PreAI()
         {
+            Player p = Main.player[Projectile.owner];
+            if (p == null || !p.active || p.dead)
+                return true;
+            Projectile.WhipSettings.Segments = defaultSegs * p.HeldItem.stack;
+            Projectile.WhipSettings.RangeMultiplier = defaultRange * p.HeldItem.stack;
             return true;
         }
 
@@ -52,7 +61,7 @@ namespace CalRemix.Projectiles.Weapons
         {
             target.AddBuff(ModContent.BuffType<ExtensionCordDebuff>(), 240);
             Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
-            Projectile.damage = (int)(Projectile.damage * 0.5f); // Multihit penalty. Decrease the damage the more enemies the whip hits.
+            Projectile.damage = (int)((Projectile.damage * 0.5f) * (Main.player[Projectile.owner].HeldItem.stack / 20f)); // Multihit penalty. Decrease the damage the more enemies the whip hits.
         }
 
         // This method draws a line between all points of the whip, in case there's empty space between the sprites.

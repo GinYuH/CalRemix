@@ -13,7 +13,7 @@ namespace CalRemix.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault(Main.rand.NextBool() ? "Extension Cable" : "Extension Cord"); // Legally speaking, Cable is the canon name
-            Tooltip.SetDefault("Tagged enemies are struck by lightning when hit by minions");
+            Tooltip.SetDefault("Stacks up to 20\nGrows in length but decays in damage depending on the item's stack\nTagged enemies are struck by lightning when hit by minions");
         }
 
         public override void SetDefaults()
@@ -23,6 +23,7 @@ namespace CalRemix.Items.Weapons
             Item.channel = true;
             Item.autoReuse = true;
             Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
+            Item.maxStack = 20;
         }
 
         // Makes the whip receive melee prefixes

@@ -2393,6 +2393,11 @@ Mods: {
 				DisplayName: Unloxcalibur
 				Tooltip: An average broadsword
 			}
+
+			ExtensionCable: {
+				DisplayName: Extension Cable
+				Tooltip: Tagged enemies are struck by lightning when hit by minions
+			}
 		}
 
 		NPCs: {
