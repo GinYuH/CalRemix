@@ -15,10 +15,11 @@ namespace CalRemix.Items.Accessories
 {
     public class SoulofCarcinogen : ModItem
     {
+        public const int MaxSmokeTime = 600;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Carcinogen");
-            Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs");
+            Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -43,12 +44,19 @@ namespace CalRemix.Items.Accessories
         {
             player.GetDamage<GenericDamageClass>() += 0.07f;
             player.GetModPlayer<CalRemixPlayer>().carcinogenSoul = true;
+            player.GetModPlayer<CalRemixPlayer>().timeSmoked++;
+            if (player.GetModPlayer<CalRemixPlayer>().timeSmoked > CalamityUtils.SecondsToFrames(MaxSmokeTime))
+            {
+                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + "'s lungs were replaced by nicotine."), 10142, 0);
+                player.GetModPlayer<CalRemixPlayer>().timeSmoked = 0;
+            }
             if (!hideVisual)
                 player.GetModPlayer<CalRemixPlayer>().carcinogenSoulVanity = true;
 
             if (player.miscCounter % 12 == 0)
             {
-                int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center + new Vector2(player.direction * 30, -10), Vector2.UnitY * -4 + new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<CigarSmoke>(), (int)player.GetDamage<AverageDamageClass>().ApplyTo(12), 0f, player.whoAmI);
+                int damage = (int)MathHelper.Lerp(12, 60, player.GetModPlayer<CalRemixPlayer>().timeSmoked / (float)CalamityUtils.SecondsToFrames(MaxSmokeTime));
+                int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center + new Vector2(player.direction * 30, -10), Vector2.UnitY * -4 + new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<CigarSmoke>(), (int)player.GetDamage<AverageDamageClass>().ApplyTo(damage), 0f, player.whoAmI);
             }
         }
 

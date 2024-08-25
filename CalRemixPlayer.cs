@@ -102,6 +102,7 @@ namespace CalRemix
 		public bool pathogenSoul;
 		public bool oxygenSoul;
 		public bool phytogenSoul;
+		public int timeSmoked;
         public int deicide = 0;
         public Particle ring;
 		public Particle ring2;
@@ -538,6 +539,12 @@ namespace CalRemix
 			{
 				dungeon2 = false;
 			}
+			if (!carcinogenSoul)
+			{
+                if (timeSmoked > 0)
+                    timeSmoked--;
+            }
+			Main.NewText(timeSmoked);
             #region stealth cuts
             if (tvo) //Verboten one
 			{
