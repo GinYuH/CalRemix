@@ -544,7 +544,6 @@ namespace CalRemix
                 if (timeSmoked > 0)
                     timeSmoked--;
             }
-			Main.NewText(timeSmoked);
             #region stealth cuts
             if (tvo) //Verboten one
 			{
