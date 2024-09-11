@@ -8,6 +8,8 @@ Mods: {
 			AcidRainT1.SpawnInfo: Use a [i:CalamityMod/CausticTear] or wait for an acidic downpour to occur naturally after the Acidsighter is defeated.
 		}
 
+		GameTips.DrunkPrincessTip: "No amount of Vodka can attract anyone."
+
 		Items: {
 			Armor: {
 				PostMoonLord: {
@@ -95,6 +97,7 @@ Mods: {
 	}
 
 	CalRemix: {
+
 		Currencies: {
 			CosmiliteCoinCurrency: cosmilite coins
 			KlepticoinCurrency: klepticoins
@@ -2398,6 +2401,8 @@ Mods: {
 				DisplayName: Extension Cable
 				Tooltip: Tagged enemies are struck by lightning when hit by minions
 			}
+
+			BeetleHead.DisplayName: Beetle Juice-Chan Head
 		}
 
 		NPCs: {
