@@ -32,13 +32,12 @@ namespace CalRemix.NPCs.Bosses.Hypnos
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.damage = 1;
             NPC.HitSound = null;
-            NPC.DeathSound = SoundID.Item14;
+            NPC.DeathSound = CalamityMod.Sounds.CommonCalamitySounds.ExoDeathSound with { Pitch = 0.6f, Volume = 0.6f };
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = true;
             NPC.width = 14;
             NPC.height = 14;
             NPC.defense = 20;
-            NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
         }
 
         public override void AI()

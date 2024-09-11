@@ -75,7 +75,7 @@ namespace CalRemix.NPCs.Bosses.Hypnos
             NPC.LifeMaxNERB(1320000, 1980000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
-            NPC.DeathSound = SoundID.Item14;
+            NPC.DeathSound = CalamityMod.Sounds.CommonCalamitySounds.ExoDeathSound;
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = true;
             NPC.width = 208;

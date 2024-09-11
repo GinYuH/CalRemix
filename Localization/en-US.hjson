@@ -8,7 +8,7 @@ Mods: {
 			AcidRainT1.SpawnInfo: Use a [i:CalamityMod/CausticTear] or wait for an acidic downpour to occur naturally after the Acidsighter is defeated.
 		}
 
-		GameTips.DrunkPrincessTip: "No amount of Vodka can attract anyone."
+		GameTips.DrunkPrincessTip: No amount of Vodka can attract anyone.
 
 		Items: {
 			Armor: {
@@ -97,7 +97,6 @@ Mods: {
 	}
 
 	CalRemix: {
-
 		Currencies: {
 			CosmiliteCoinCurrency: cosmilite coins
 			KlepticoinCurrency: klepticoins
