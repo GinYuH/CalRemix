@@ -14,10 +14,7 @@ using CalamityMod.NPCs.Abyss;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Summon.Umbrella;
-using CalamityMod.Projectiles.Summon.SmallAresArms;
-using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Typeless;
-using CalamityMod.Projectiles.Pets;
 using CalamityMod.Particles;
 using CalRemix.Projectiles;
 using CalRemix.Projectiles.Weapons;
@@ -40,7 +37,6 @@ using CalRemix.NPCs.Bosses.Hydrogen;
 using CalRemix.Items.Potions.Recovery;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
-using CalamityMod.NPCs.ExoMechs;
 using CalRemix.NPCs.Bosses.Losbaf;
 using CalRemix.World;
 using CalRemix.ExtraTextures;
@@ -53,6 +49,9 @@ using CalRemix.Projectiles.Hostile;
 using CalamityMod.Sounds;
 using CalamityMod.Events;
 using System;
+using CalRemix.Items.Armor;
+using CalamityMod.NPCs.DevourerofGods;
+using CalRemix.Items.Weapons;
 
 namespace CalRemix
 {
@@ -118,7 +117,9 @@ namespace CalRemix
         public bool ZonePlagueDesert;
         public Vector2 clawPosition = Vector2.Zero;
 		public bool bananaClown;
-		public bool invGar;
+        public bool twistedNetherite;
+        public bool twistedNetheriteBoots;
+        public bool invGar;
         public bool clockBar;
         public bool anomaly109UI;
 		public bool dungeon2;
@@ -238,6 +239,23 @@ namespace CalRemix
 					Player.AddCooldown("Ionic", 300);
                 }
             }
+            if (CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+            {
+				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
+				if (!Player.HasCooldown(SoulExplosionCooldown.ID) && helmet.souls > 0)
+				{
+                    SoundEngine.PlaySound(DevourerofGodsHead.AttackSound);
+                    int maxSouls = (helmet.souls < 10) ? helmet.souls : 10;
+                    for (int i = 0; i < maxSouls; i++)
+                    {
+                        Vector2 velocity = -Vector2.UnitY.RotatedByRandom(0.52999997138977051) * Main.rand.NextFloat(2.5f, 4f);
+                        Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, velocity, ModContent.ProjectileType<SepulcherSoul>(), 0, 0f);
+                    }
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwistedNetheriteSoulExplosion>(), (int)(Math.Log(helmet.souls) + 1) * 1000, 0f, Player.whoAmI, ai1: 1600);
+					helmet.souls = 0;
+                    Player.AddCooldown("SoulExplosion", 1800);
+                }
+            }
         }
 
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
@@ -346,6 +364,19 @@ namespace CalRemix
         {
             if (Player.HeldItem.type == ModContent.ItemType<CirrusCouch>() || Player.HeldItem.type == ModContent.ItemType<CrystalHeartVodka>())
                 Player.HeldItem.stack = 0;
+            if (Player.HeldItem.type == ModContent.ItemType<TwistedNetheriteShovel>() && Player.itemAnimation == Player.itemAnimationMax && Player.IsTargetTileInItemRange(Player.HeldItem))
+            {
+                for (int i = Player.tileTargetX - 4; i <= Player.tileTargetX + 4; i++)
+                {
+                    for (int j = Player.tileTargetY - 4; j <= Player.tileTargetY + 4; j++)
+                    {
+                        if (TileID.Sets.CanBeDugByShovel[Main.tile[i, j].TileType])
+                        {
+                            Player.PickTile(i, j, 100);
+                        }
+                    }
+                }
+            }
             /*
             if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
@@ -603,7 +634,9 @@ namespace CalRemix
 			astralEye = false;
 			flamingIce = false;
 			bananaClown = false;
-			clockBar = false;
+			twistedNetherite = false;
+			twistedNetheriteBoots = false;
+            clockBar = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
@@ -643,7 +676,15 @@ namespace CalRemix
 				rewardPool.Add(ModContent.ItemType<Elderberry>());
 			}
         }
-		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
+		public override void OnHitNPC(NPC npc, NPC.HitInfo hit, int damageDone)
+		{
+			if (npc.life <= 0 && npc.value > 0 && twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+            {
+                TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
+				helmet.souls++;
+            }
+        }
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
 		{
 			if (amongusEnchant && hit.Crit)
 			{
@@ -661,13 +702,21 @@ namespace CalRemix
 				if (target.boss == false && !abnormalEnemyList.Contains(target.type)) 
 				{				
 					if (Main.rand.NextBool(10))
-						{
-							target.HitEffect(0, target.lifeMax * 22);
-						}		
-					}
+					{
+						target.HitEffect(0, target.lifeMax * 22);
+					}		
+					
 				}
 			}
-
+			if (twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+            {
+				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
+                target.AddBuff(ModContent.BuffType<Wither>(), 120);
+				target.GetGlobalNPC<CalRemixGlobalNPC>().wither = helmet.souls;
+                if (target.life <= 0 && target.value > 0 && item.type == ModContent.ItemType<TwistedNetheriteSword>())
+                    helmet.souls += 2;
+            }
+        }
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
 		{
 			if (amongusEnchant && hit.Crit)
@@ -686,8 +735,14 @@ namespace CalRemix
 					{
 						target.HitEffect(0, target.lifeMax * 22);
 					}		
-				}		
-			}
+				}
+            }
+            if (twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+            {
+                TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
+                target.AddBuff(ModContent.BuffType<Wither>(), 120);
+                target.GetGlobalNPC<CalRemixGlobalNPC>().wither = helmet.souls;
+            }
         }
 
 		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)

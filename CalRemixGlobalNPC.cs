@@ -85,6 +85,8 @@ namespace CalRemix
         bool SlimeBoost = false;
         public bool vBurn = false;
         public bool grappled = false;
+        public bool witherDebuff = false;
+        public int wither = 0;
         public int clawed = 0;
         private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         public Vector2 clawPosition = Vector2.Zero;
@@ -1190,22 +1192,32 @@ namespace CalRemix
         public override void ResetEffects(NPC npc)
         {
             vBurn = false;
+            witherDebuff = false;
+            if (!witherDebuff)
+                wither = 0;
 
             if (npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
                 ScreenHelperManager.sceneMetrics.onscreenNPCs.Add(npc);
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
-            if (vBurn)
+            if (witherDebuff)
             {
                 if (npc.lifeRegen > 0)
                 {
                     npc.lifeRegen = 0;
                 }
-                npc.lifeRegen -= 200;
-                if (damage < 40)
+                if (wither > 0)
                 {
-                    damage = 40;
+                    npc.lifeRegen -= 2 * (120 + (int)Math.Log(wither) * 80);
+                    if (damage < 120)
+                        damage = 120 + (int)Math.Log(wither) * 80;
+                }
+                else
+                {
+                    npc.lifeRegen -= 240;
+                    if (damage < 120)
+                        damage = 120;
                 }
             }
         }
