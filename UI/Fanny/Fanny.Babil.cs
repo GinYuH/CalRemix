@@ -1,5 +1,5 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Items.Materials;
+using CalRemix.Content.Items.Materials;
 using System;
 using Terraria;
 using Terraria.Audio;

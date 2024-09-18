@@ -1,4 +1,4 @@
-using CalRemix.Buffs;
+using CalRemix.Content.Buffs;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -33,11 +33,11 @@ namespace CalRemix.UI.ElementalSystem
         {
             //ItemList.Add(VanillaElements.Item);
             ItemList.Add(ToItemList(Mod, RemixElements.Item));
-            ItemList.Add(ToItemList(ModLoader.GetMod("CalamityMod"), CalamityElements.Item));
+            ItemList.Add(ToItemList(CalRemix.CalMod, CalamityElements.Item));
 
             NPCList.Add(VanillaElements.Bosses);
             NPCList.Add(ToNPCList(Mod, RemixElements.Bosses));
-            NPCList.Add(ToNPCList(ModLoader.GetMod("CalamityMod"), CalamityElements.Bosses));
+            NPCList.Add(ToNPCList(CalRemix.CalMod, CalamityElements.Bosses));
         }
         private static Dictionary<int, Element[]> ToItemList(Mod mod, Dictionary<string, Element[]> list)
         {

@@ -1,8 +1,8 @@
 ﻿using CalamityMod;
 using CalamityMod.Events;
 using CalamityMod.Items.Pets;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.World;
+using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Core.World;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

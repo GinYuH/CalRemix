@@ -7,8 +7,8 @@ namespace CalRemix.UI
 {
     public partial class ScreenHelperManager : ModSystem
     {
-        public static readonly SoundStyle OnwardAndUpwardSound = new("CalRemix/Sounds/Fanny/OnwardAndUpward");
-        public static readonly SoundStyle WonderFannyVoice = new("CalRemix/Sounds/Fanny/WonderFannyTalk");
+        public static readonly SoundStyle OnwardAndUpwardSound = new("CalRemix/Assets/Sounds/Helpers/OnwardAndUpward");
+        public static readonly SoundStyle WonderFannyVoice = new("CalRemix/Assets/Sounds/Helpers/WonderFannyTalk");
 
         public static void LoadWonderFlowerMessages()
         {

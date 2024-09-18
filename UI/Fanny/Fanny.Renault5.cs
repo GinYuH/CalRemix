@@ -8,7 +8,7 @@ namespace CalRemix.UI
 {
     public partial class ScreenHelperManager : ModSystem
     {
-        public static readonly SoundStyle VroomVroom = new SoundStyle("CalRemix/Sounds/Fanny/Renault") with { PlayOnlyIfFocused = false};
+        public static readonly SoundStyle VroomVroom = new SoundStyle("CalRemix/Assets/Sounds/Helpers/Renault") with { PlayOnlyIfFocused = false};
         public static HelperMessage RenaultAd;
 
         public static void LoadRenault5()

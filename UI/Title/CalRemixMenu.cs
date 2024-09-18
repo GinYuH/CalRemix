@@ -20,13 +20,13 @@ namespace CalRemix.UI.Title
         public override void Load()
         {
             Instance = this;
-            blankTexture = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Blank");
+            blankTexture = ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
             logoTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Logo");
         }
         public override Asset<Texture2D> SunTexture => blankTexture;
         public override Asset<Texture2D> MoonTexture => blankTexture;
         public override Asset<Texture2D> Logo => logoTexture;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu");
+        public override int Music => CalRemixMusic.Menu;
         public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<MenuBgStyle>();
         public override string DisplayName => "Remixed Calamity Style";
         public class MenuItem
@@ -63,7 +63,7 @@ namespace CalRemix.UI.Title
                 Vector2 position = DetermineSide(randomSide);
                 Vector2 velocity = DetermineVelocity(randomSide).RotatedByRandom(MathHelper.ToRadians(135f));
                 float rotate = MathHelper.ToRadians(1f + Main.rand.NextFloat(2f));
-                Texture2D texturePath = (Texture2D)TextureAssets.Item[CalRemix.CalamityAddonItems[Main.rand.Next(CalRemix.CalamityAddonItems.Count)].Type];
+                Texture2D texturePath = (Texture2D)TextureAssets.Item[CalRemixAddon.Items[Main.rand.Next(CalRemixAddon.Items.Count)].Type];
                 MenuItems.Add(new MenuItem(600, Main.rand.NextBool() ? -1 : 1, rotate, position, velocity, texturePath));
             }
             for (int j = 0; j < MenuItems.Count; j++)

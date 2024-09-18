@@ -4,8 +4,8 @@ using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
-using CalRemix.Retheme;
-using CalRemix.World;
+using CalRemix.Core.Retheme;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -495,11 +495,11 @@ namespace CalRemix.UI.Anomaly109
                     {
                         foreach (KeyValuePair<int, string> p in RethemeList.Items)
                         {
-                            TextureAssets.Item[p.Key] = ModContent.Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                            TextureAssets.Item[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                         }
                         foreach (KeyValuePair<int, string> p in RethemeList.Projs)
                         {
-                            TextureAssets.Projectile[p.Key] = ModContent.Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                            TextureAssets.Projectile[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                         }
                         Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
                     }
@@ -523,7 +523,7 @@ namespace CalRemix.UI.Anomaly109
                     {
                         foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
                         {
-                            TextureAssets.Npc[p.Key] = ModContent.Request<Texture2D>("CalRemix/Retheme/" + p.Value);
+                            TextureAssets.Npc[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                         }
                     }
                     else

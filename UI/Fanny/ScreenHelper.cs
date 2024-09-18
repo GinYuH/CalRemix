@@ -34,7 +34,6 @@ namespace CalRemix.UI
         private int helperFrame;
         private int helperFrameCounter;
 
-
         #region Main Speaking / Stopping code
         //Default placeholder message used when not speaking
         public HelperMessage NoMessage;
@@ -630,7 +629,7 @@ namespace CalRemix.UI
                 .SetAvailabilityCondition(() => Main.hardMode);
 
             LoadScreenHelper(GonerFanny, "FannyGoner")
-                .SetVoiceStyle(ScreenHelperManager.HappySFX with { MaxInstances = 0 })
+                .SetVoiceStyle(ScreenHelperManager.NothingSound with { MaxInstances = 0 })
                 .SetTextboxStyle("     ", new HelperTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black))
                 .SetExtraAnimations(false, false, false)
                 .SetPositionData(false, 840, 0.35f);

@@ -1,4 +1,4 @@
-﻿using CalRemix.NPCs.PandemicPanic;
+﻿using CalRemix.Content.NPCs.PandemicPanic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace CalRemix.UI
 
         public static string InvasionName => PandemicPanic.InvadersWinning ? "Pandemic Panic - Side: Invader" : PandemicPanic.DefendersWinning ? "Pandemic Panic - Side: Defender" : "Pandemic Panic - Side: None";
         public static Color InvasionBarColor => PandemicPanic.InvadersWinning ? Color.Red : PandemicPanic.DefendersWinning ? Color.Lime : Color.White;
-        public static Texture2D IconTexture => PandemicPanic.InvadersWinning ? ModContent.Request<Texture2D>("CalRemix/NPCs/PandemicPanic/RedBloodCell").Value : PandemicPanic.DefendersWinning ? ModContent.Request<Texture2D>("CalRemix/NPCs/PandemicPanic/Ecolium").Value : ModContent.Request<Texture2D>("CalRemix/NPCs/PandemicPanic/RedBloodCell").Value;
+        public static Texture2D IconTexture => PandemicPanic.InvadersWinning ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/PandemicPanic/RedBloodCell").Value : PandemicPanic.DefendersWinning ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/PandemicPanic/Ecolium").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/PandemicPanic/RedBloodCell").Value;
 
         public static void DrawBlueBar(SpriteBatch spriteBatch, Vector2 barDrawPosition, int barOffsetY)
         {

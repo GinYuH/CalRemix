@@ -4,12 +4,12 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
-using CalRemix.Biomes;
-using CalRemix.Items;
-using CalRemix.Items.Bags;
-using CalRemix.Items.Pets;
-using CalRemix.Items.Placeables;
-using CalRemix.Subworlds;
+using CalRemix.Core.Biomes;
+using CalRemix.Content.Items;
+using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Pets;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Core.Subworlds;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,10 +58,10 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3);
 
             HelperMessage.New("InfernumAbyss", "Try looking for chests down here! I’ve heard there’s unique treasures to be found! A spelunker potion should help!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && ModLoader.HasMod("InfernumMode"));
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && CalRemixAddon.Infernum != null);
 
             HelperMessage.New("NoInfernumAbyss", "Try hunting the creatures for new weapons! Hunter, Battle and Zerg potions should help!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && !ModLoader.HasMod("InfernumMode"));
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer2 && CalRemixAddon.Infernum == null);
 
             HelperMessage.New("RodAbyss", "It sure takes a while to get to the bottom of the Abyss... Maybe try using that teleporting thingamabob you have?",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyss && (Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>()))).AddItemDisplay(ItemID.RodofDiscord);

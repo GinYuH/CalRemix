@@ -1,4 +1,4 @@
-﻿using CalRemix.Items.Lore;
+﻿using CalRemix.Content.Items.Lore;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,9 +14,9 @@ namespace CalRemix.UI.TheInsacredTexts
 {
     public class LoreUIState : UIState
     {
+        private static readonly SoundStyle PageFlip = new("CalRemix/Assets/Sounds/PageFlip");
         public static int inputCooldown = 0;
         public static int page = 0;
-        private SoundStyle Use = new($"{nameof(CalRemix)}/Sounds/PageFlip");
         public override void Update(GameTime gameTime)
         {
             bool shouldShow = !Main.gameMenu;
@@ -44,13 +44,13 @@ namespace CalRemix.UI.TheInsacredTexts
                 inputCooldown--;
             if (Main.keyState.IsKeyDown(Keys.Right) && page < LoreDeath.Page.Length - 1 & inputCooldown <= 0)
             {
-                SoundEngine.PlaySound(Use, Main.LocalPlayer.Center);
+                SoundEngine.PlaySound(PageFlip, Main.LocalPlayer.Center);
                 page++;
                 inputCooldown = 12;
             }
             else if (Main.keyState.IsKeyDown(Keys.Left) && page > 0 & inputCooldown <= 0)
             {
-                SoundEngine.PlaySound(Use, Main.LocalPlayer.Center);
+                SoundEngine.PlaySound(PageFlip, Main.LocalPlayer.Center);
                 page--;
                 inputCooldown = 12;
             }
@@ -59,7 +59,7 @@ namespace CalRemix.UI.TheInsacredTexts
 
         private static void DrawPage(SpriteBatch spriteBatch)
         {
-            Texture2D texture = (page % 2 == 0) ? ModContent.Request<Texture2D>($"{nameof(CalRemix)}/UI/TheInsacredTexts/Page1", AssetRequestMode.ImmediateLoad).Value : ModContent.Request<Texture2D>($"{nameof(CalRemix)}/UI/TheInsacredTexts/Page2", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = (page % 2 == 0) ? ModContent.Request<Texture2D>("CalRemix/UI/TheInsacredTexts/Page1", AssetRequestMode.ImmediateLoad).Value : ModContent.Request<Texture2D>("CalRemix/UI/TheInsacredTexts/Page2", AssetRequestMode.ImmediateLoad).Value;
             spriteBatch.Draw(texture, new Vector2((Main.screenWidth / 2) - texture.Width / 2, (Main.screenHeight / 2) - texture.Height / 2), Color.White);
             Vector2 topCenter = new(Main.screenWidth / 2, (Main.screenHeight / 2) - texture.Height / 2);
             Color color = new(197, 179, 174);
@@ -69,7 +69,7 @@ namespace CalRemix.UI.TheInsacredTexts
             {
                 Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, title, (int)topCenter.X - (FontAssets.MouseText.Value.MeasureString(title).X / 2), (int)topCenter.Y + (texture.Height / 2) - 80, Color.DarkRed, color, Vector2.Zero, 1.2f);
                 Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, subtitle, (int)topCenter.X - (FontAssets.MouseText.Value.MeasureString(subtitle).X / 2), (int)topCenter.Y + (texture.Height / 2) - 40, Color.DarkRed, color, Vector2.Zero);
-                Texture2D logo = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/UI/TheInsacredTexts/Logo", AssetRequestMode.ImmediateLoad).Value;
+                Texture2D logo = ModContent.Request<Texture2D>("CalRemix/UI/TheInsacredTexts/Logo", AssetRequestMode.ImmediateLoad).Value;
                 spriteBatch.Draw(logo, new Vector2((Main.screenWidth / 2) - logo.Width / 2, (Main.screenHeight / 2) - (logo.Height / 2) + 60), Color.White);
             }
             else

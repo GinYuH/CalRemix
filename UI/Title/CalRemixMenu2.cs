@@ -20,13 +20,13 @@ namespace CalRemix.UI.Title
         public override void Load()
         {
             Instance = this;
-            blankTexture = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Blank");
+            blankTexture = ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
             logoTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Logo2");
         }
         public override Asset<Texture2D> SunTexture => blankTexture;
         public override Asset<Texture2D> MoonTexture => blankTexture;
         public override Asset<Texture2D> Logo => logoTexture;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrazyLaPaint");
+        public override int Music => CalRemixMusic.Menu2;
         public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<MenuBgStyle>();
         public override string DisplayName => "Ultimate Calamity Stylepilled Menu";
         public class Star
@@ -90,7 +90,7 @@ namespace CalRemix.UI.Title
                 Vector2 position = new((rand) ? Main.screenWidth + 100f : -100f, Main.screenHeight * Main.rand.NextFloat(0.1f, 0.9f));
 
                 int rand2 = Main.rand.Next(10);
-                Texture2D characterTexture = ModContent.Request<Texture2D>("CalRemix/Items/Weapons/Ogscule").Value;
+                Texture2D characterTexture = ModContent.Request<Texture2D>("CalRemix/Content/Items/Weapons/Ogscule").Value;
                 int direction = (rand) ? 0 : 1;
                 Vector2 velocity = (rand) ? -Vector2.UnitX : Vector2.UnitX;
 
@@ -111,7 +111,7 @@ namespace CalRemix.UI.Title
                 {
                     characterTexture = Main.rand.Next(new Texture2D[]
                     {
-                        ModContent.Request<Texture2D>("CalRemix/Items/Bags/SideGar").Value,
+                        ModContent.Request<Texture2D>("CalRemix/Content/Items/Bags/SideGar").Value,
                         ModContent.Request<Texture2D>("CalRemix/UI/Title/FrontGar").Value,
                         ModContent.Request<Texture2D>("CalRemix/UI/Title/RearGar").Value
                     });
@@ -123,9 +123,9 @@ namespace CalRemix.UI.Title
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value;
                     direction = (rand) ? 1 : 0;
                 }
-                else if (rand2 == 4 && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/OnyxKinsman").Value))
+                else if (rand2 == 4 && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/OnyxKinsman").Value))
                 {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/NPCs/Minibosses/OnyxKinsman").Value;
+                    characterTexture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/OnyxKinsman").Value;
                     direction = (rand) ? 0 : 1;
                     velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(4f, 4.5f) : Vector2.UnitX * Main.rand.NextFloat(4f, 4.5f);
                 }
@@ -133,9 +133,9 @@ namespace CalRemix.UI.Title
                 {
                     characterTexture = Main.rand.Next(new Texture2D[] 
                     { 
-                        ModContent.Request<Texture2D>("CalRemix/Items/Weapons/Ogscule").Value,
-                        ModContent.Request<Texture2D>("CalRemix/Items/Accessories/Baroclaw").Value,
-                        ModContent.Request<Texture2D>("CalRemix/NPCs/Bosses/Acideye/MutatedEye").Value 
+                        ModContent.Request<Texture2D>("CalRemix/Content/Items/Weapons/Ogscule").Value,
+                        ModContent.Request<Texture2D>("CalRemix/Content/Items/Accessories/Baroclaw").Value,
+                        ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/MutatedEye").Value 
                     });
                     direction = (rand) ? 0 : 1;
                     velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f) : Vector2.UnitX * Main.rand.NextFloat(1.5f, 1.75f);

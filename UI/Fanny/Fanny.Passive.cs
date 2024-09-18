@@ -18,7 +18,7 @@ namespace CalRemix.UI
     public partial class ScreenHelperManager : ModSystem
     {
         //Loads fanny messages that have a chance to happen anywhere
-        public static readonly SoundStyle HappySFX = new($"{nameof(CalRemix)}/Sounds/Happy");
+        internal static readonly SoundStyle NothingSound = new("CalRemix/Assets/Sounds/None");
         public static void LoadPassiveMessages()
         {
             HelperMessage.New("GonerFanny", "",

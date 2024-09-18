@@ -1,5 +1,5 @@
 ﻿using CalamityMod;
-using CalRemix.World;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent;

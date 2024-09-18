@@ -5,7 +5,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
-using CalRemix.Items.Weapons;
+using CalRemix.Content.Items.Weapons;
 using Terraria;
 using Terraria.ModLoader;
 
