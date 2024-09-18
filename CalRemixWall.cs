@@ -1,8 +1,9 @@
-﻿using Terraria;
+﻿using static Terraria.ModLoader.ModContent;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Biomes;
-using CalRemix.NPCs.Bosses.Carcinogen;
+using CalRemix.Core.Biomes;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix
 {
@@ -17,11 +18,11 @@ namespace CalRemix
                 {
                     if (type == WallID.Wood || type == WallID.Planked)
                     {
-                        if (!NPC.AnyNPCs(ModContent.NPCType<Carcinogen>()))
+                        if (!NPC.AnyNPCs(NPCType<Carcinogen>()))
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                NPC.SpawnOnPlayer(Main.myPlayer, ModContent.NPCType<Carcinogen>());
+                                NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Carcinogen>());
                             }
                         }
                     }

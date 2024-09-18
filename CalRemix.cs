@@ -1,10 +1,11 @@
+using static Terraria.ModLoader.ModContent;
 using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalRemix.CrossCompatibility.OutboundCompatibility;
-using CalRemix.NPCs;
-using CalRemix.NPCs.Minibosses;
-using CalRemix.NPCs.Bosses.Wulfwyrm;
-using CalRemix.Items.Accessories;
+using CalRemix.Core.OutboundCompatibility;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.Items.Accessories;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -12,45 +13,30 @@ using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
-using CalRemix.Backgrounds.Plague;
-using Terraria.Graphics.Effects;
 using CalamityMod.NPCs.HiveMind;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.Scenes;
-using Terraria.Graphics.Shaders;
 using System.Reflection;
-using Microsoft.Xna.Framework.Graphics;
-using CalRemix.Subworlds;
-using ReLogic.Content;
-using Terraria.GameContent;
-using Terraria.Audio;
 using System.IO;
 using CalamityMod.NPCs.OldDuke;
 using CalRemix.UI.Title;
-using CalRemix.NPCs.Bosses.Carcinogen;
-using System.Linq;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.NPCs.Bosses.Hypnos;
-using CalamityMod.UI;
-using CalRemix.NPCs.Bosses.Phytogen;
-using CalamityMod.NPCs.SupremeCalamitas;
-using CalRemix.NPCs.Bosses.Origen;
-using CalRemix.NPCs.Bosses.Ionogen;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Bosses.Origen;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalamityMod.NPCs.CalClone;
-using CalRemix.NPCs.Bosses.Oxygen;
-using CalRemix.NPCs.Bosses.Hydrogen;
+using CalRemix.Content.NPCs.Bosses.Oxygen;
+using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalRemix.NPCs.Bosses.Pathogen;
-using Terraria.DataStructures;
-using CalamityMod.Events;
+using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalamityMod.NPCs.Crabulon;
-using CalRemix.NPCs.Bosses.Acideye;
+using CalRemix.Content.NPCs.Bosses.Acideye;
 using CalamityMod.NPCs.Leviathan;
-using CalRemix.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.Poly;
 using CalamityMod.NPCs.ExoMechs;
-using CalRemix.NPCs.Bosses.Losbaf;
+using CalRemix.Content.Items.Ammo;
 
 namespace CalRemix
 {
@@ -61,46 +47,12 @@ namespace CalRemix
     }
     public class CalRemix : Mod
     {
+        internal static Mod CalMod = ModLoader.GetMod("CalamityMod");
+        internal static Mod CalMusic = ModLoader.GetMod("CalamityModMusic");
         public static CalRemix instance;
-        public static Mod CalVal;
 
         public static int CosmiliteCoinCurrencyId;
         public static int KlepticoinCurrencyId;
-
-        internal static Effect SlendermanShader;
-        internal static Effect ShieldShader;
-        internal static Effect LeanShader;
-
-        public static Asset<Texture2D> sunOG = null;
-        public static Asset<Texture2D> sunReal = null;
-        public static Asset<Texture2D> sunCreepy = null;
-        public static Asset<Texture2D> sunOxy = null;
-        public static Asset<Texture2D> sunOxy2 = null;
-        public static Asset<Texture2D> brian = null;
-
-        public static Type calvalFanny = null;
-        public static Type calvalFannyBox = null;
-
-        public static readonly SoundStyle Silence = new($"{nameof(CalRemix)}/Sounds/EmptySound");
-
-        public static readonly List<string> CalamityAddons = new List<string>()
-        {
-            "ApothTestMod",
-            "Bloopsitems",
-            "CalamityHunt",
-            "CalamityLootSwap",
-            "CalamityMod",
-            "CalamityModMusic",
-            "CalRemix",
-            "CalValEX",
-            "CJMOD",
-            "Clamity",
-            "CatalystMod",
-            "InfernumMode",
-            "NoxusBoss",
-            "UnCalamityModMusic"
-        };
-        public static List<ModItem> CalamityAddonItems = new List<ModItem>();
 
         public static List<int> oreList = new List<int>
         {
@@ -115,165 +67,6 @@ namespace CalRemix
         };
         // Defer mod call handling to the extraneous mod call manager.
         public override object Call(params object[] args) => ModCallManager.Call(args);
-        private static void RegisterSceneFilter(ScreenShaderData passReg, string registrationName, EffectPriority priority = EffectPriority.High)
-        {
-            string prefixedRegistrationName = "CalRemix:" + registrationName;
-            Terraria.Graphics.Effects.Filters.Scene[prefixedRegistrationName] = new Filter(passReg, priority);
-            Terraria.Graphics.Effects.Filters.Scene[prefixedRegistrationName].Load();
-        }
-
-        private static void RegisterScreenShader(Effect shader, string passName, string registrationName, EffectPriority priority = EffectPriority.High)
-        {
-            Ref<Effect> shaderPointer = new(shader);
-            ScreenShaderData passParamRegistration = new(shaderPointer, passName);
-            RegisterSceneFilter(passParamRegistration, registrationName, priority);
-        }
-        private static void RegisterMiscShader(Effect shader, string passName, string registrationName)
-        {
-            Ref<Effect> shaderPointer = new(shader);
-            MiscShaderData passParamRegistration = new(shaderPointer, passName);
-            GameShaders.Misc["CalRemix/" + registrationName] = passParamRegistration;
-        }
-
-        public override void Load()
-        {
-            instance = this;
-            ModLoader.TryGetMod("CalValEX", out CalVal);
-
-
-            if (CalVal != null)
-            {
-                Type[] r = CalVal.Code.GetTypes();
-                foreach (Type mn in r)
-                {
-                    if (mn.Name == "Fanny")
-                    {
-                        calvalFanny = mn;
-                    }
-                    if (mn.Name == "FannyTextbox")
-                    {
-                        calvalFannyBox = mn;
-                    }
-                    if (calvalFannyBox !=null && calvalFanny != null)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
-
-            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.Ammo.CosmiliteCoinCurrency(ModContent.ItemType<Items.Ammo.CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
-            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new Items.Ammo.KlepticoinCurrency(ModContent.ItemType<Items.Ammo.Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
-
-            if (!Main.dedServ)
-            {
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:CalamitySky"] = new Filter(new ScreenShaderData("FilterMoonLord"), EffectPriority.High);
-                SkyManager.Instance["CalRemix:CalamitySky"] = new CalamitySky();
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Exosphere"] = new Filter(new ExosphereScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:Exosphere"] = new ExosphereSky();
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Fanny"] = new Filter(new FannyScreenShaderData("FilterMiniTower").UseColor(FannySky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
-
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:AcidSight"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("CalRemix/Effects/AcidSight", AssetRequestMode.ImmediateLoad), "AcidPass"), EffectPriority.VeryHigh);
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:LeanVision"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("CalRemix/Effects/LeanVision", AssetRequestMode.ImmediateLoad), "LeanPass"), EffectPriority.VeryHigh);
-                Terraria.Graphics.Effects.Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
-                SkyManager.Instance["CalRemix:TrueStory"] = new StorySky();
-            }
-
-            AssetRepository calAss = instance.Assets;
-            Effect LoadShader(string path) => calAss.Request<Effect>("Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
-            SlendermanShader = LoadShader("SlendermanStatic");
-            RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
-            ShieldShader = LoadShader("HoloShield");
-            RegisterScreenShader(ShieldShader, "ShieldPass", "HoloShieldShader");
-
-            sunOG = TextureAssets.Sun3;
-            sunReal = TextureAssets.Sun;
-            brian = TextureAssets.Npc[NPCID.BrainofCthulhu];
-            sunCreepy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Eclipse");
-            sunOxy = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun");
-            sunOxy2 = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/Oxysun2");
-        }
-
-        public override void Unload()
-        {
-            PlagueGlobalNPC.PlagueHelper = null;
-            instance = null;
-            CalVal = null;
-        }
-        public override void PostSetupContent()
-        {
-            // Calamity Calls
-            Mod cal = ModLoader.GetMod("CalamityMod");
-            cal.Call("DeclareMiniboss", ModContent.NPCType<LifeSlime>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<Clamitas>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<OnyxKinsman>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<CyberDraedon>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<PlagueEmperor>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<YggdrasilEnt>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<KingMinnowsPrime>());
-            cal.Call("DeclareMiniboss", ModContent.NPCType<Dendritiator>());
-            cal.Call("MakeItemExhumable", ModContent.ItemType<YharimsGift>(), ModContent.ItemType<YharimsCurse>());
-            cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<Hypnos>(), ModContent.NPCType<HypnosPlug>());
-            cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<Phytogen>(), ModContent.NPCType<PineappleFrond>());
-            //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<SignalDrone>());
-            //cal.Call("DeclareOneToManyRelationshipForHealthBar", ModContent.NPCType<DerellectBoss>(), ModContent.NPCType<DerellectPlug>());
-
-            AddEnchantments(cal);
-            LoadBossRushEntries(cal);
-            AddHiveBestiary(ModContent.NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
-            AddHiveBestiary(ModContent.NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
-            AddHiveBestiary(ModContent.NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
-            RefreshBestiary();
-
-            try
-            {
-                // Yes I am nullchecking all of these
-                if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    return;
-                if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    return;
-                ModMenu menu = Main.rand.NextBool(4) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
-                if (menu is null)
-                    return;
-                MenuStuff(menu);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
-                Console.WriteLine("CalRemixMenu");
-                Console.WriteLine(e.ToString());
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
-            }
-            for (int i = 0; i < ItemLoader.ItemCount; i++)
-            {
-                if (ItemLoader.GetItem(i) is null)
-                    continue;
-                ModItem item = ItemLoader.GetItem(i);
-                if (!CalamityAddons.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
-                    continue;
-                CalamityAddonItems.Add(item);
-            }
-        }
-        private void MenuStuff(ModMenu menu)
-        {
-            if (menu.FullName is null)
-                return;
-            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, [Main.rand.Next(-2, 3)]);
-            typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, menu.FullName);
-
-            if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || menu is null)
-                return;
-            if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || menu.FullName is null)
-                return;
-        }
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
             RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
@@ -295,19 +88,99 @@ namespace CalRemix
                     }
             }
         }
+        public override void Load()
+        {
+            instance = this;
+            PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
+
+            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new CosmiliteCoinCurrency(ItemType<CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
+            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new KlepticoinCurrency(ItemType<Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
+        }
+
+        public override void Unload()
+        {
+            instance = null;
+            PlagueGlobalNPC.PlagueHelper = null;
+        }
+        public override void PostSetupContent()
+        {
+            // Calamity Calls
+            Mod cal = CalMod;
+            cal.Call("DeclareMiniboss", NPCType<LifeSlime>());
+            cal.Call("DeclareMiniboss", NPCType<Clamitas>());
+            cal.Call("DeclareMiniboss", NPCType<OnyxKinsman>());
+            cal.Call("DeclareMiniboss", NPCType<CyberDraedon>());
+            cal.Call("DeclareMiniboss", NPCType<PlagueEmperor>());
+            cal.Call("DeclareMiniboss", NPCType<YggdrasilEnt>());
+            cal.Call("DeclareMiniboss", NPCType<KingMinnowsPrime>());
+            cal.Call("DeclareMiniboss", NPCType<Dendritiator>());
+            cal.Call("MakeItemExhumable", ItemType<YharimsGift>(), ItemType<YharimsCurse>());
+            cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<Hypnos>(), NPCType<HypnosPlug>());
+            cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<Phytogen>(), NPCType<PineappleFrond>());
+            //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<SignalDrone>());
+            //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<DerellectPlug>());
+
+            AddEnchantments(cal);
+            LoadBossRushEntries(cal);
+            AddHiveBestiary(NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
+            AddHiveBestiary(NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
+            AddHiveBestiary(NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
+            RefreshBestiary();
+
+            // Menu
+            try
+            {
+                if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
+                    return;
+                if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
+                    return;
+                ModMenu menu = Main.rand.NextBool(4) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
+                if (menu is null)
+                    return;
+                MenuStuff(menu);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+                Console.WriteLine("CalRemixMenu");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+            }
+            for (int i = 0; i < ItemLoader.ItemCount; i++)
+            {
+                if (ItemLoader.GetItem(i) is null)
+                    continue;
+                ModItem item = ItemLoader.GetItem(i);
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
+                    continue;
+                CalRemixAddon.Items.Add(item);
+            }
+        }
+        private void MenuStuff(ModMenu menu)
+        {
+            if (menu.FullName is null)
+                return;
+            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, [Main.rand.Next(-2, 3)]);
+            typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, menu.FullName);
+
+            if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || menu is null)
+                return;
+            if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || menu.FullName is null)
+                return;
+        }
 
         internal void AddEnchantments(Mod cal)
         {
             LocalizedText defiant = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Defiant.Name");
             LocalizedText defiantDesc = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Defiant.Description");
-            cal.Call("CreateEnchantment", defiant, defiantDesc, 150, new Predicate<Item>(DefiantEnchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneDefiant", delegate (Player player)
+            cal.Call("CreateEnchantment", defiant, defiantDesc, 150, new Predicate<Item>(DefiantEnchantable), "CalRemix/Assets/ExtraTextures/Enchantments/EnchantmentRuneDefiant", delegate (Player player)
             {
                 player.GetModPlayer<CalRemixPlayer>().earthEnchant = true;
             });
 
             LocalizedText fallacious = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Name");
             LocalizedText fallaciousDesc = Language.GetOrRegister($"Mods.{nameof(CalRemix)}.Enchantments.Fallacious.Description");
-            cal.Call("CreateEnchantment", fallacious, fallaciousDesc, 156, new Predicate<Item>(FallaciousEnchantable), "CalRemix/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
+            cal.Call("CreateEnchantment", fallacious, fallaciousDesc, 156, new Predicate<Item>(FallaciousEnchantable), "CalRemix/Assets/ExtraTextures/Enchantments/EnchantmentRuneFallacious", delegate (Player player)
             {
                 player.GetModPlayer<CalRemixPlayer>().amongusEnchant = true;
             });
@@ -324,21 +197,21 @@ namespace CalRemix
         {
             List<(int, int, Action<int>, int, bool, float, int[], int[])> brEntries = (List<(int, int, Action<int>, int, bool, float, int[], int[])>)cal.Call("GetBossRushEntries");
 
-            AddToBossRush(ref brEntries, NPCID.KingSlime, ModContent.NPCType<WulfwyrmHead>(), [ModContent.NPCType<WulfwyrmBody>(), ModContent.NPCType<WulfwyrmTail>()]);
-            AddToBossRush(ref brEntries, NPCID.KingSlime, ModContent.NPCType<Origen>(), [ModContent.NPCType<OrigenCore>()], [ModContent.NPCType<OrigenCore>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<Crabulon>(), ModContent.NPCType<Acideye>(), [ModContent.NPCType<MutatedEye>()]);
-            AddToBossRush(ref brEntries, NPCID.Deerclops, ModContent.NPCType<Carcinogen>(), [ModContent.NPCType<CarcinogenShield>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<CalamitasClone>(), ModContent.NPCType<Ionogen>(), [ModContent.NPCType<IonogenShield>()]);
-            AddToBossRush(ref brEntries, NPCID.Plantera, ModContent.NPCType<Oxygen>(), [ModContent.NPCType<OxygenShield>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<Anahita>(), ModContent.NPCType<Polyphemalus>(), [ModContent.NPCType<Astigmageddon>(), ModContent.NPCType<Exotrexia>(), ModContent.NPCType<Conjunctivirus>(), ModContent.NPCType<Cataractacomb>()], [ModContent.NPCType<Astigmageddon>(), ModContent.NPCType<Exotrexia>(), ModContent.NPCType<Conjunctivirus>(), ModContent.NPCType<Cataractacomb>()]);
-            AddToBossRush(ref brEntries, NPCID.Golem, ModContent.NPCType<Phytogen>(), [ModContent.NPCType<PhytogenShield>(), ModContent.NPCType<PineappleFrond>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<PlaguebringerGoliath>(), ModContent.NPCType<Hydrogen>(), [ModContent.NPCType<HydrogenShield>()]);
-            AddToBossRush(ref brEntries, NPCID.CultistBoss, ModContent.NPCType<Pathogen>(), [ModContent.NPCType<PathogenShield>()]);
-            AddToBossRush(ref brEntries, ModContent.NPCType<Draedon>(), ModContent.NPCType<Hypnos>(), [ModContent.NPCType<AergiaNeuron>(), ModContent.NPCType<HypnosPlug>()]);
-            //AddToBossRush(ref brEntries, ModContent.NPCType<SupremeCalamitas>(), ModContent.NPCType<Losbaf>(), [ModContent.NPCType<Losbaf>()]);
+            AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<WulfwyrmHead>(), [NPCType<WulfwyrmBody>(), NPCType<WulfwyrmTail>()]);
+            AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<Origen>(), [NPCType<OrigenCore>()], [NPCType<OrigenCore>()]);
+            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()]);
+            AddToBossRush(ref brEntries, NPCID.Deerclops, NPCType<Carcinogen>(), [NPCType<CarcinogenShield>()]);
+            AddToBossRush(ref brEntries, NPCType<CalamitasClone>(), NPCType<Ionogen>(), [NPCType<IonogenShield>()]);
+            AddToBossRush(ref brEntries, NPCID.Plantera, NPCType<Oxygen>(), [NPCType<OxygenShield>()]);
+            AddToBossRush(ref brEntries, NPCType<Anahita>(), NPCType<Polyphemalus>(), [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()]);
+            AddToBossRush(ref brEntries, NPCID.Golem, NPCType<Phytogen>(), [NPCType<PhytogenShield>(), NPCType<PineappleFrond>()]);
+            AddToBossRush(ref brEntries, NPCType<PlaguebringerGoliath>(), NPCType<Hydrogen>(), [NPCType<HydrogenShield>()]);
+            AddToBossRush(ref brEntries, NPCID.CultistBoss, NPCType<Pathogen>(), [NPCType<PathogenShield>()]);
+            AddToBossRush(ref brEntries, NPCType<Draedon>(), NPCType<Hypnos>(), [NPCType<AergiaNeuron>(), NPCType<HypnosPlug>()]);
+            //AddToBossRush(ref brEntries, NPCType<SupremeCalamitas>(), NPCType<Losbaf>(), [NPCType<Losbaf>()]);
             foreach (var entry in brEntries)
             {
-                if (entry.Item1 == ModContent.NPCType<OldDuke>())
+                if (entry.Item1 == NPCType<OldDuke>())
                 {
                     brEntries.Remove(entry);
                     break;
@@ -386,15 +259,15 @@ namespace CalRemix
         {
             NPCID.Sets.NPCBestiaryDrawModifiers modifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
             modifiers.Hide = false;
-            if (id == ModContent.NPCType<DankCreeper>())
+            if (id == NPCType<DankCreeper>())
             {
-                modifiers.CustomTexturePath = "CalRemix/Retheme/HiveMind/DankCreeper";
+                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/DankCreeper";
             }
-            if (id == ModContent.NPCType<HiveBlob>())
+            if (id == NPCType<HiveBlob>())
             {
-                modifiers.CustomTexturePath = "CalRemix/Retheme/HiveMind/HiveBlob";
+                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/HiveBlob";
             }
-            if (id == ModContent.NPCType<DarkHeart>())
+            if (id == NPCType<DarkHeart>())
             {
                 modifiers.PortraitPositionXOverride = 10;
                 modifiers.PortraitPositionYOverride = 20;
@@ -407,7 +280,7 @@ namespace CalRemix
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption,
         new FlavorTextBestiaryInfoElement(entryText)
             });
-            int associatedNPCType = ModContent.NPCType<HiveMind>();
+            int associatedNPCType = NPCType<HiveMind>();
             b.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
             ContentSamples.NpcsByNetId[id].ModNPC?.SetBestiary(Main.BestiaryDB, b);
         }

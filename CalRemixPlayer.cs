@@ -16,42 +16,43 @@ using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Particles;
-using CalRemix.Projectiles;
-using CalRemix.Projectiles.Weapons;
-using CalRemix.Projectiles.Accessories;
-using CalRemix.NPCs.Minibosses;
-using CalRemix.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.Projectiles;
+using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Projectiles.Accessories;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Items.Materials;
+using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Buffs.StatDebuffs;
-using CalRemix.Buffs;
-using CalRemix.Items.Accessories;
-using CalRemix.Walls;
+using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Walls;
 using Terraria.Graphics.Effects;
 using CalRemix.UI;
-using CalRemix.NPCs.Bosses.Phytogen;
-using CalRemix.NPCs.Bosses.Hydrogen;
-using CalRemix.Items.Potions.Recovery;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Bosses.Hydrogen;
+using CalRemix.Content.Items.Potions.Recovery;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
-using CalRemix.NPCs.Bosses.Losbaf;
-using CalRemix.World;
-using CalRemix.ExtraTextures;
-using CalRemix.Items.Bags;
-using CalRemix.Items.Tools;
-using CalRemix.Subworlds;
+using CalRemix.Content.NPCs.Bosses.Losbaf;
+using CalRemix.Core.World;
+using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Tools;
+using CalRemix.Core.Subworlds;
 using SubworldLibrary;
-using CalRemix.NPCs.Bosses.Hypnos;
-using CalRemix.Projectiles.Hostile;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
 using CalamityMod.Events;
 using System;
-using CalRemix.Items.Armor;
+using CalRemix.Content.Items.Armor;
 using CalamityMod.NPCs.DevourerofGods;
-using CalRemix.Items.Weapons;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content;
+using CalRemix.Content.Cooldowns;
 
 namespace CalRemix
 {
@@ -277,9 +278,9 @@ namespace CalRemix
 		public override void UpdateEquips()
         {
 			if (CalRemixWorld.remixJump)
-				Player.GetJumpState<CalRemixJump>().Enable();
+				Player.GetJumpState<DefaultJump>().Enable();
 			else
-                Player.GetJumpState<CalRemixJump>().Disable();
+                Player.GetJumpState<DefaultJump>().Disable();
         }
 		public override void PreUpdate()
         {
@@ -688,10 +689,13 @@ namespace CalRemix
 		{
 			if (amongusEnchant && hit.Crit)
 			{
-                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
+				if (Main.myPlayer == Player.whoAmI)
+                {
+                    CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
+                    SoundEngine.PlaySound(SoundID.NPCHit1);
+                }
                 Main.LocalPlayer.statLife -= (int)MathHelper.Clamp(damageDone / 7, 0, Player.statLife - 1);
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
-				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
+                hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
             }
             if (earthEnchant)
             {
@@ -712,7 +716,7 @@ namespace CalRemix
             {
 				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
                 target.AddBuff(ModContent.BuffType<Wither>(), 120);
-				target.GetGlobalNPC<CalRemixGlobalNPC>().wither = helmet.souls;
+				target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
                 if (target.life <= 0 && target.value > 0 && item.type == ModContent.ItemType<TwistedNetheriteSword>())
                     helmet.souls += 2;
             }
@@ -723,7 +727,7 @@ namespace CalRemix
 			{
 				CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
 				Main.LocalPlayer.statLife -= (int)MathHelper.Clamp(damageDone / 7, 0, Player.statLife - 1);
-				SoundEngine.PlaySound(new SoundStyle($"{nameof(CalRemix)}/Sounds/Stab"));
+				SoundEngine.PlaySound(SoundID.NPCHit1, Player.Center);
 				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
 			}
 			if (moonFist && proj.DamageType == DamageClass.Melee)
@@ -741,7 +745,7 @@ namespace CalRemix
             {
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
                 target.AddBuff(ModContent.BuffType<Wither>(), 120);
-                target.GetGlobalNPC<CalRemixGlobalNPC>().wither = helmet.souls;
+                target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
             }
         }
 
@@ -895,7 +899,7 @@ namespace CalRemix
         }
 		public override void FrameEffects()
 		{
-			if (Player.GetJumpState<CalRemixJump>().Active)
+			if (Player.GetJumpState<DefaultJump>().Active)
 				Player.armorEffectDrawShadow = true;
 		}
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -915,7 +919,7 @@ namespace CalRemix
 				return;
 			if (deicide > 1800)
 			{
-				Texture2D texture = ModContent.Request<Texture2D>("CalRemix/ExtraTextures/DarkWreath").Value;
+				Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/DarkWreath").Value;
                 Vector2 position = Player.Center - new Vector2(texture.Width / 2, texture.Height / 2) - Main.screenPosition + Vector2.UnitY * Player.gfxOffY;
 				position = new Vector2((int)position.X, (int)position.Y);
                 Main.spriteBatch.Draw(texture, position, Color.White);

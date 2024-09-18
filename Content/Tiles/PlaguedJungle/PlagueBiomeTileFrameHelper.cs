@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ID;
 
-namespace CalRemix
+namespace CalRemix.Content.Tiles.PlaguedJungle
 {
     public class PlagueBiomeTileFrameHelper
     {

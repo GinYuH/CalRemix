@@ -1,18 +1,19 @@
-﻿using Terraria;
+﻿using static Terraria.ModLoader.ModContent;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items.Pets;
 using System.Collections.Generic;
 using CalamityMod.Tiles.Astral;
-using CalRemix.Tiles;
+using CalRemix.Content.Tiles;
 using CalamityMod;
 using CalamityMod.Items.PermanentBoosters;
 using Microsoft.Xna.Framework;
 using CalamityMod.Tiles.Furniture;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Tiles.DraedonStructures;
-using CalRemix.NPCs;
-using CalRemix.NPCs.Minibosses;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Minibosses;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.Items.Accessories;
@@ -22,11 +23,11 @@ using CalRemix.UI;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Tiles.SunkenSea;
 using Terraria.Enums;
-using CalRemix.NPCs.Bosses.Phytogen;
-using CalRemix.NPCs.Bosses.Hypnos;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.World;
+using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Core.World;
 
 namespace CalRemix
 {
@@ -74,19 +75,19 @@ namespace CalRemix
         public override void RightClick(int i, int j, int type)
         {
             Player player = Main.LocalPlayer;
-            if (type == ModContent.TileType<AstralBeacon>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>() && CalRemixWorld.permanenthealth)
+            if (type == TileType<AstralBeacon>() && player.HeldItem.type == ItemType<BloodyVein>() && CalRemixWorld.permanenthealth)
             {
                 SoundEngine.PlaySound(SoundID.Item9, player.Center);
                 if (!player.Calamity().eCore)
-					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ModContent.ItemType<EtherealCore>());
+					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ItemType<EtherealCore>());
 				else if (Main.rand.NextBool(20))
-					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ModContent.ItemType<EtherealCore>());
+					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ItemType<EtherealCore>());
 			}
-            if (type == ModContent.TileType<LabHologramProjector>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>() && !NPC.AnyNPCs(ModContent.NPCType<CyberDraedon>()))
+            if (type == TileType<LabHologramProjector>() && player.HeldItem.type == ItemType<BloodyVein>() && !NPC.AnyNPCs(NPCType<CyberDraedon>()))
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
                 SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
-                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<CyberDraedon>());
+                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
                 if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
@@ -96,17 +97,17 @@ namespace CalRemix
                 {
                     NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
                 }
-                player.ConsumeItem(ModContent.ItemType<BloodyVein>());
+                player.ConsumeItem(ItemType<BloodyVein>());
             }
-            if (type == ModContent.TileType<WulfrumLure>() && player.HeldItem.type == ModContent.ItemType<DraedonPowerCell>())
+            if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
                 Main.NewText("If you are seeing this, you are likely using the outdated Fandom wiki, please do not use it. Use wiki.gg for Calamity and the recipe browser mod for remix", Color.LightSeaGreen);
             }
-            if (type == ModContent.TileType<LabHologramProjector>() && player.HeldItem.type == ModContent.ItemType<BloodyVein>() && !NPC.AnyNPCs(ModContent.NPCType<CyberDraedon>()))
+            if (type == TileType<LabHologramProjector>() && player.HeldItem.type == ItemType<BloodyVein>() && !NPC.AnyNPCs(NPCType<CyberDraedon>()))
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
                 SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
-                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<CyberDraedon>());
+                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
                 if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
@@ -116,13 +117,13 @@ namespace CalRemix
                 {
                     NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
                 }
-                player.ConsumeItem(ModContent.ItemType<BloodyVein>(), true);
+                player.ConsumeItem(ItemType<BloodyVein>(), true);
             }
-            bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<RoseStone>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
-            if (type == ModContent.TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
+            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
+            if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
-                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, ModContent.NPCType<OnyxKinsman>());
+                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<OnyxKinsman>());
                 if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
@@ -133,7 +134,7 @@ namespace CalRemix
                     NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
                 }
             }
-            if (type == ModContent.TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && NPC.CountNPCS(ModContent.NPCType<HypnosDraedon>()) <= 0)
+            if (type == TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && NPC.CountNPCS(NPCType<HypnosDraedon>()) <= 0)
             {
                 Terraria.Audio.SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
 
@@ -150,7 +151,7 @@ namespace CalRemix
                 }
 
             }
-            if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BloodyVein>() && !PandemicPanic.IsActive)
+            if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && !PandemicPanic.IsActive)
             {
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
@@ -168,11 +169,11 @@ namespace CalRemix
         public override void MouseOver(int i, int j, int type)
         {
             Player player = Main.LocalPlayer;
-            if (type == ModContent.TileType<LabHologramProjector>() || TileID.Sets.CountsAsWaterSource[type])
+            if (type == TileType<LabHologramProjector>() || TileID.Sets.CountsAsWaterSource[type])
             {
-                if (player.HeldItem.type == ModContent.ItemType<BloodyVein>())
+                if (player.HeldItem.type == ItemType<BloodyVein>())
                 {
-                    player.cursorItemIconID = ModContent.ItemType<BloodyVein>();
+                    player.cursorItemIconID = ItemType<BloodyVein>();
                 }
                 player.noThrow = 2;
                 player.cursorItemIconEnabled = true;
@@ -200,7 +201,7 @@ namespace CalRemix
                         {
                             Tile tileCount = Framing.GetTileSafely(x, y);
 
-                            if (tileCount.TileType == ModContent.TileType<MiracleFruitPlaced>())
+                            if (tileCount.TileType == TileType<MiracleFruitPlaced>())
                                 berryCount++;
                         }
                     }
@@ -211,7 +212,7 @@ namespace CalRemix
                         {
                             if (exclusionlist.Contains(Main.tile[i + 1, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
                             {
-                                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<MiracleFruitPlaced>(), true);
+                                WorldGen.PlaceObject(i, j - 1, TileType<MiracleFruitPlaced>(), true);
                             }
                         }
                     }
@@ -233,7 +234,7 @@ namespace CalRemix
                     {
                         Tile tileCount = Framing.GetTileSafely(x, y);
 
-                        if (tileCount.TileType == ModContent.TileType<CosmichidPlant>())
+                        if (tileCount.TileType == TileType<CosmichidPlant>())
                             cosmicCount++;
                     }
                 }
@@ -242,7 +243,7 @@ namespace CalRemix
                 {
                     if (exclusionlist.Contains(Main.tile[i, j - 1].TileType) && Main.tile[i, j].Slope == 0 && !Main.tile[i, j].IsHalfBlock)
                     {
-                        WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CosmichidPlant>(), true);
+                        WorldGen.PlaceObject(i, j - 1, TileType<CosmichidPlant>(), true);
                     }
                 }
             }
@@ -284,7 +285,7 @@ namespace CalRemix
                             {
                                 for (int y = LocationY - checkRad; y <= LocationY + checkRad; y++)
                                 {
-                                    if (Main.tile[x, y].TileType == ModContent.TileType<MeldGunkPlaced>())
+                                    if (Main.tile[x, y].TileType == TileType<MeldGunkPlaced>())
                                     {
                                         getMelded = true;
                                         break;
@@ -309,7 +310,7 @@ namespace CalRemix
                                 }
                                 if (somethingConverted)
                                 {
-                                    Main.tile[i, j].TileType = (ushort)ModContent.TileType<MeldGunkPlaced>();
+                                    Main.tile[i, j].TileType = (ushort)TileType<MeldGunkPlaced>();
                                     WorldGen.SquareTileFrame(i, j, true);
                                 }
                             }
@@ -322,12 +323,12 @@ namespace CalRemix
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
             Tile t = Main.tile[i, j];
-            if (type == ModContent.TileType<IonCubePlaced>() && t.TileFrameX == 0 && t.TileFrameY == 0)
+            if (type == TileType<IonCubePlaced>() && t.TileFrameX == 0 && t.TileFrameY == 0)
             {
                 IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
                 if (cube == null)
                 {
-                    TileEntity.PlaceEntityNet(i, j, ModContent.TileEntityType<IonCubeTE>());
+                    TileEntity.PlaceEntityNet(i, j, TileEntityType<IonCubeTE>());
                 }
             }
             if (!Main.dedServ)
@@ -336,24 +337,24 @@ namespace CalRemix
                 {
                     if (!roxm.alreadySeen)
                     {
-                        if (type == ModContent.TileType<RoxTile>())
+                        if (type == TileType<RoxTile>())
                         {
                             roxm.ActivateMessage();
                         }
                     }
                     if (!KinsmanMessage.alreadySeen)
                     {
-                        if (type == ModContent.TileType<OnyxExcavatorTile>() && RemixDowned.downedEarthElemental)
+                        if (type == TileType<OnyxExcavatorTile>() && RemixDowned.downedEarthElemental)
                         {
                             Player player = Main.LocalPlayer;
-                            bool e = player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<WifeinaBottle>()) || player.HasItem(ModContent.ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ModContent.ItemType<EyeoftheStorm>()) || player.HasItem(ModContent.ItemType<PearlofEnthrallment>()) || player.HasItem(ModContent.ItemType<InfectedRemote>());
+                            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
                             if (e)
                                 KinsmanMessage.ActivateMessage();
                         }
                     }
                     if (!GrimeMessage.alreadySeen)
                     {
-                        if (type == ModContent.TileType<GrimesandPlaced>())
+                        if (type == TileType<GrimesandPlaced>())
                         {
                             GrimeMessage.ActivateMessage();
                         }
@@ -361,7 +362,7 @@ namespace CalRemix
                 }
                 if (CalRemixWorld.reargar)
                 {
-                    if (type == ModContent.TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
+                    if (type == TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
                     {
                         Main.tile[i, j].TileType = (ushort)TileID.Mud;
                     }
@@ -396,7 +397,7 @@ namespace CalRemix
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalamityMod.CalamityUtils.SpawnOre(ModContent.TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
+                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
                         Main.NewText("The sky islands pollute with grime...", Color.Brown);
                         CalRemixWorld.grime = true;
                         CalRemixWorld.UpdateWorldBool();
@@ -411,13 +412,13 @@ namespace CalRemix
                     {
                         if (Main.netMode != NetmodeID.Server && Main.rand.NextBool(60)) // roughly 10% when considering the piles are 6 tiles in size
                         {
-                            NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, ModContent.NPCType<GulletWorm>());
+                            NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, NPCType<GulletWorm>());
                         }
                     }
                 }
             }
             Player player = Main.LocalPlayer;
-            if (player.ZoneJungle && !NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+            if (player.ZoneJungle && !NPC.AnyNPCs(NPCType<Phytogen>()))
             {
                  if (!effectOnly && !fail && Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                  {
@@ -433,28 +434,28 @@ namespace CalRemix
 
                          if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
                          {
-                             NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Phytogen>());
+                             NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
                          }
                      }
                  }
             }
             if (!noItem)
             {
-                if (type == ModContent.TileType<Navystone>())
+                if (type == TileType<Navystone>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.Navystone>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.Navystone>());
                 }
-                if (type == ModContent.TileType<EutrophicSand>())
+                if (type == TileType<EutrophicSand>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.EutrophicSand>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.EutrophicSand>());
                 }
-                if (type == ModContent.TileType<HardenedEutrophicSand>())
+                if (type == TileType<HardenedEutrophicSand>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.HardenedEutrophicSand>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.HardenedEutrophicSand>());
                 }
-                if (type == ModContent.TileType<SeaPrism>())
+                if (type == TileType<SeaPrism>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ModContent.ItemType<CalamityMod.Items.Placeables.SeaPrism>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SeaPrism>());
                 }
             }
         }
@@ -555,7 +556,7 @@ namespace CalRemix
             }
 
             position3 = new Vector2(num3, num4) + vector3;
-            if (tile.TileType != ModContent.TileType<EutrophicGlass>())
+            if (tile.TileType != TileType<EutrophicGlass>())
             {
                 Rectangle value = new Rectangle(num, num2, 16, 2);
                 Main.spriteBatch.Draw(texture, position3, value, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);

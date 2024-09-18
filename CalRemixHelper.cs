@@ -48,9 +48,9 @@ namespace CalRemix
             return false;
         }
 
-        public static CalRemixGlobalNPC Remix(this NPC npc)
+        public static CalRemixNPC Remix(this NPC npc)
         {
-            return npc.GetGlobalNPC<CalRemixGlobalNPC>();
+            return npc.GetGlobalNPC<CalRemixNPC>();
         }
 
     }

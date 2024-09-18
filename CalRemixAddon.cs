@@ -1,3 +1,4 @@
+using static Terraria.ModLoader.ModContent;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -7,44 +8,100 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Pets;
-using CalRemix.NPCs.Minibosses;
-using CalRemix.NPCs.Bosses.Wulfwyrm;
-using CalRemix.NPCs.Bosses.Poly;
-using CalRemix.NPCs.Bosses.BossScule;
-using CalRemix.NPCs.Bosses.Acideye;
-using static Terraria.ModLoader.ModContent;
-using CalRemix.NPCs.Bosses.Carcinogen;
-using CalRemix.NPCs.TownNPCs;
-using CalRemix.NPCs.Bosses.Phytogen;
-using CalRemix.NPCs.Bosses.Hydrogen;
-using CalRemix.Items.Placeables;
-using CalRemix.NPCs.Bosses.Ionogen;
-using CalRemix.NPCs.Bosses.Oxygen;
-using CalRemix.NPCs.PandemicPanic;
-using CalRemix.NPCs.Bosses.Hypnos;
-using CalRemix.NPCs.Bosses.Pathogen;
-using CalRemix.NPCs.Bosses.Origen;
-using CalRemix.World;
-using CalRemix.Items.SummonItems;
-using CalRemix.Items.Lore;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.BossScule;
+using CalRemix.Content.NPCs.Bosses.Acideye;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Bosses.Hydrogen;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
+using CalRemix.Content.NPCs.Bosses.Oxygen;
+using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Content.NPCs.Bosses.Pathogen;
+using CalRemix.Content.NPCs.Bosses.Origen;
+using CalRemix.Core.World;
+using CalRemix.Content.Items.SummonItems;
+using CalRemix.Content.Items.Lore;
 
-namespace CalRemix.CrossCompatibility
+namespace CalRemix
 {
-    public class ModSupport : ModSystem
+    public class CalRemixAddon : ModSystem
     {
-        internal Mod BossChecklist;
-        internal Mod MusicDisplay;
-        internal Mod Wikithis;
-        internal Mod Census;
+        public static Mod CalVal;
+        public static Mod Catalyst;
+        public static Mod Infernum;
+        public static Mod Wrath;
+
+        public static Mod BossChecklist;
+        public static Mod MusicDisplay;
+        public static Mod Wikithis;
+        public static Mod Census;
+
+        public static Type calvalFanny = null;
+        public static Type calvalFannyBox = null;
+
+        public static readonly List<string> Names = new List<string>()
+        {
+            "ApothTestMod",
+            "Bloopsitems",
+            "CalamityHunt",
+            "CalamityLootSwap",
+            "CalamityMod",
+            "CalamityModMusic",
+            "CalRemix",
+            "CalValEX",
+            "CJMOD",
+            "Clamity",
+            "CatalystMod",
+            "InfernumMode",
+            "NoxusBoss",
+            "UnCalamityModMusic"
+        };
+        public static List<ModItem> Items = new List<ModItem>();
         public override void Load()
         {
+            ModLoader.TryGetMod("CalValEX", out CalVal);
+            ModLoader.TryGetMod("CatalystMod", out Catalyst);
+            ModLoader.TryGetMod("InfernumMode", out Infernum);
+            ModLoader.TryGetMod("NoxusBoss", out Wrath);
+
             ModLoader.TryGetMod("BossChecklist", out BossChecklist);
-            ModLoader.TryGetMod("Census", out Mod Census);
+            ModLoader.TryGetMod("Census", out Census);
             ModLoader.TryGetMod("MusicDisplay", out MusicDisplay);
             ModLoader.TryGetMod("Wikithis", out Wikithis);
+
+            if (CalVal != null)
+            {
+                Type[] r = CalVal.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "Fanny")
+                    {
+                        calvalFanny = mn;
+                    }
+                    if (mn.Name == "FannyTextbox")
+                    {
+                        calvalFannyBox = mn;
+                    }
+                    if (calvalFannyBox != null && calvalFanny != null)
+                    {
+                        break;
+                    }
+                }
+            }
         }
         public override void Unload()
         {
+            CalVal = null;
+            Catalyst = null;
+            Infernum = null;
+            Wrath = null;
+
             BossChecklist = null;
             Census = null;
             MusicDisplay = null;
@@ -67,7 +124,7 @@ namespace CalRemix.CrossCompatibility
             Mod bc = BossChecklist;
             // Bosses
             Action<SpriteBatch, Rectangle, Color> calamityPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Bosses/BossScule/TheCalamity_BC").Value;
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/TheCalamity_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
             };
@@ -77,7 +134,7 @@ namespace CalRemix.CrossCompatibility
                 ["customPortrait"] = calamityPortrait
             });
             Action<SpriteBatch, Rectangle, Color> wfportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Bosses/Wulfwyrm/WulfwyrmBossChecklist").Value;
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Wulfwyrm/WulfwyrmBossChecklist").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
             };
@@ -99,7 +156,7 @@ namespace CalRemix.CrossCompatibility
                 ["spawnItems"] = ItemID.WoodWall,
             });
             Action<SpriteBatch, Rectangle, Color> plportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Bosses/Poly/Polyphemalus").Value;
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Poly/Polyphemalus").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
             };
@@ -137,12 +194,12 @@ namespace CalRemix.CrossCompatibility
                 ["spawnItems"] = ItemType<BloodyVein>()
             });
             /*
-                $"Jam a [i:{ModContent.ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
+                $"Jam a [i:{ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
                 "An imperfection after allÅ, what a shame.",
              */
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Minibosses/Clamitas_BC").Value;
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
             };
@@ -151,7 +208,7 @@ namespace CalRemix.CrossCompatibility
                 ["customPortrait"] = clPortrait
             });
             Action<SpriteBatch, Rectangle, Color> cdPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Minibosses/CyberDraedon").Value;
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/CyberDraedon").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, new Color(0, 255, 255, 125));
             };
@@ -164,8 +221,8 @@ namespace CalRemix.CrossCompatibility
             bc.Call("LogMiniBoss", Mod, "LifeSlime", 16.7f, () => RemixDowned.downedLifeSlime, NPCType<LifeSlime>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "OnyxKinsman", 7.5f, () => RemixDowned.downedOnyxKinsman, NPCType<OnyxKinsman>(), new Dictionary<string, object>());
             Action<SpriteBatch, Rectangle, Color> pePortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
-                Texture2D texture = Request<Texture2D>("CalRemix/NPCs/Minibosses/PlagueEmperor").Value;
-                Texture2D texture2 = Request<Texture2D>("CalRemix/NPCs/Minibosses/PlagueEmperorEyes").Value;
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperor").Value;
+                Texture2D texture2 = Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorEyes").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
                 sb.Draw(texture2, centered, color);
@@ -183,17 +240,17 @@ namespace CalRemix.CrossCompatibility
         {
             if (Census is null)
                 return;
-            Census.Call("TownNPCCondition", ModContent.NPCType<ZER0>(), "Have [i:CalRemix/Ogscule] in your inventory during Godseeker mode");
-            Census.Call("TownNPCCondition", ModContent.NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
+            Census.Call("TownNPCCondition", NPCType<ZER0>(), "Have [i:CalRemix/Ogscule] in your inventory during Godseeker mode");
+            Census.Call("TownNPCCondition", NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
 
-            Census.Call("TownNPCCondition", ModContent.NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");
+            Census.Call("TownNPCCondition", NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");
 
-            Census.Call("TownNPCCondition", ModContent.NPCType<WALTER>(), "Defeat Pathogen");
-            Census.Call("TownNPCCondition", ModContent.NPCType<IRON>(), "Defeat Ionogen");
-            Census.Call("TownNPCCondition", ModContent.NPCType<SIIVA>(), "Defeat Phytogen");
-            Census.Call("TownNPCCondition", ModContent.NPCType<UNCANNY>(), "Defeat Carcinogen");
-            Census.Call("TownNPCCondition", ModContent.NPCType<KABLOOEY>(), "Defeat Hydrogen");
-            Census.Call("TownNPCCondition", ModContent.NPCType<BALLER>(), "Defeat Oxygen");
+            Census.Call("TownNPCCondition", NPCType<WALTER>(), "Defeat Pathogen");
+            Census.Call("TownNPCCondition", NPCType<IRON>(), "Defeat Ionogen");
+            Census.Call("TownNPCCondition", NPCType<SIIVA>(), "Defeat Phytogen");
+            Census.Call("TownNPCCondition", NPCType<UNCANNY>(), "Defeat Carcinogen");
+            Census.Call("TownNPCCondition", NPCType<KABLOOEY>(), "Defeat Hydrogen");
+            Census.Call("TownNPCCondition", NPCType<BALLER>(), "Defeat Oxygen");
         }
         internal void AddMusicDisplayEntries()
         {
@@ -211,9 +268,9 @@ namespace CalRemix.CrossCompatibility
             AddMusic("TheEyesareAnger", "The Eyes are Anger", "GummyLeeches");
 
         }
-        internal void AddMusic(string realName, string name, string author)
+        internal void AddMusic(string file, string name, string author)
         {
-            MusicDisplay.Call("AddMusic", (short)MusicLoader.GetMusicSlot(Mod, $"Sounds/Music/{realName}"), name, author, Mod.DisplayName);
+            MusicDisplay.Call("AddMusic", (short)MusicLoader.GetMusicSlot(Mod, $"CalRemix/Assets/Music/{file}"), name, author, Mod.DisplayName);
         }
     }
 }
