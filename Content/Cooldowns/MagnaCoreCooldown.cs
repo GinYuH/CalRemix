@@ -1,0 +1,17 @@
+﻿using CalamityMod.Cooldowns;
+using Microsoft.Xna.Framework;
+using Terraria.Localization;
+
+namespace CalRemix.Content.Cooldowns
+{
+    public class MagnaCoreCooldown : CooldownHandler
+    {
+        public static new string ID => "MagnaCore";
+        public override bool ShouldDisplay => true;
+        public override LocalizedText DisplayName => Language.GetOrRegister("Magna Comet Cooldown");
+        public override string Texture => "CalRemix/Content/Cooldowns/MagnaCooldown";
+        public override Color OutlineColor => new Color(208, 237, 133);
+        public override Color CooldownStartColor => new Color(70, 86, 110);
+        public override Color CooldownEndColor => new Color(109, 143, 194);
+    }
+}
