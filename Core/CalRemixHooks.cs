@@ -32,18 +32,20 @@ using CalamityMod.NPCs.HiveMind;
 using CalamityMod.Events;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
+using CalRemix.UI.Title;
 
 namespace CalRemix.Core
 {
     internal class CalRemixHooks : ModSystem
     {
+        private static float extraDist = 222;
         public override void Load()
         {
-            IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
-            IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
-            On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
+            On_Star.Fall += StopStarfall;
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
 
+            IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
+            IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
 
             On_Main.DrawDust += DrawStatic;
             On_Main.DrawLiquid += DrawTsarBomba;
@@ -54,86 +56,18 @@ namespace CalRemix.Core
             On_UIWorldCreation.BuildPage += AddRemixOption;
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
+
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
+            On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
         }
-
-        public static void AddRemixOption(Terraria.GameContent.UI.States.On_UIWorldCreation.orig_BuildPage orig, UIWorldCreation self)
+        private static void StopStarfall(On_Star.orig_Fall orig, Star self)
         {
+            if (CalRemixMenu.Instance.IsSelected && Main.gameMenu)
+                return;
             orig(self);
-            if (File.Exists(Anomaly109UI.a109path))
-            {
-                UIElement mainElement = new UIElement
-                {
-                    Width = StyleDimension.FromPixels(46),
-                    Height = StyleDimension.FromPixels(46),
-                    Left = StyleDimension.FromPixels(280f),
-                    Top = StyleDimension.FromPixels(450f),
-                    HAlign = 0.5f,
-                    VAlign = 0f
-                };
-
-                UIPanel backgroundPanel = new UIPanel
-                {
-                    Width = new StyleDimension(46f, 0f),
-                    Height = new StyleDimension(46, 0f)
-
-                }.WithFadedMouseOver();
-
-                RemixButton flame = new RemixButton
-                {
-                    Width = new StyleDimension(40f, 0f),
-                    Height = new StyleDimension(40, 0f),
-                    Left = new StyleDimension(-5f, 0f),
-                    Top = new StyleDimension(-2f, 0f),
-                    PaddingLeft = 4f,
-                    PaddingRight = 4f
-                };
-
-                mainElement.OnLeftClick += ToggleStratus;
-                mainElement.OnMouseOver += MausHover;
-                mainElement.Append(backgroundPanel);
-                backgroundPanel.Append(flame);
-                self.Append(mainElement);
-            }
-            CalRemixWorld.stratusDungeonDisabled = false;
         }
 
-        public static void MausHover(UIMouseEvent evt, UIElement listeningElement)
-        {
-            SoundEngine.PlaySound(SoundID.MenuTick);
-        }
-
-        public static void ToggleStratus(UIMouseEvent evt, UIElement listeningElement)
-        {
-            CalRemixWorld.stratusDungeonDisabled = !CalRemixWorld.stratusDungeonDisabled;
-            SoundStyle toplay = !CalRemixWorld.stratusDungeonDisabled ? SoundID.MenuOpen : SoundID.MenuClose;
-            SoundEngine.PlaySound(toplay);
-        }
-
-        private static void AcidsighterToggle(ILContext il)
-        {
-            var c = new ILCursor(il);
-            var d = typeof(NPC).GetField("downedBoss1", BindingFlags.Public | BindingFlags.Static);
-            if (c.TryGotoNext(i => i.MatchLdsfld(d)))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(RemixDowned).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
-            }
-        }
-        private static void AcidsighterToggle2(ILContext il)
-        {
-            var c = new ILCursor(il);
-            var d = typeof(NPC).GetField("downedBoss1", BindingFlags.Public | BindingFlags.Static);
-            if (c.TryGotoNext(i => i.MatchLdsfld(d)))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(RemixDowned).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
-            }
-        }
-        private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
         /*
         private static void HookDerellectSpawn(ILContext il)
         {
@@ -164,9 +98,31 @@ namespace CalRemix.Core
             });
         }
         */
+        private static void AcidsighterToggle(ILContext il)
+        {
+            var c = new ILCursor(il);
+            var d = typeof(NPC).GetField("downedBoss1", BindingFlags.Public | BindingFlags.Static);
+            if (c.TryGotoNext(i => i.MatchLdsfld(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(RemixDowned).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
+            }
+        }
+        private static void AcidsighterToggle2(ILContext il)
+        {
+            var c = new ILCursor(il);
+            var d = typeof(NPC).GetField("downedBoss1", BindingFlags.Public | BindingFlags.Static);
+            if (c.TryGotoNext(i => i.MatchLdsfld(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? d : typeof(RemixDowned).GetField("downedAcidsighter", BindingFlags.Public | BindingFlags.Static));
+            }
+        }
 
         // Freeze most UI elements
-        public static void FreezeIcon(Terraria.UI.On_UIElement.orig_Draw orig, UIElement self, SpriteBatch spriteBatch)
+        private static void FreezeIcon(On_UIElement.orig_Draw orig, UIElement self, SpriteBatch spriteBatch)
         {
             orig(self, spriteBatch);
             float wid = self.GetOuterDimensions().Width;
@@ -177,9 +133,7 @@ namespace CalRemix.Core
                 spriteBatch.Draw(Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
             }
         }
-
-
-        public static bool SendToFannyDimension(Terraria.On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
+        private static bool SendToFannyDimension(On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
         {
             bool flag = false;
             FieldInfo leftMapping = typeof(Terraria.IngameOptions).GetField("_leftSideCategoryMapping", BindingFlags.NonPublic | BindingFlags.Static);
@@ -226,8 +180,57 @@ namespace CalRemix.Core
             }
             return false;
         }
+        private static void AddRemixOption(On_UIWorldCreation.orig_BuildPage orig, UIWorldCreation self)
+        {
+            orig(self);
+            if (File.Exists(Anomaly109UI.a109path))
+            {
+                UIElement mainElement = new UIElement
+                {
+                    Width = StyleDimension.FromPixels(46),
+                    Height = StyleDimension.FromPixels(46),
+                    Left = StyleDimension.FromPixels(280f),
+                    Top = StyleDimension.FromPixels(450f),
+                    HAlign = 0.5f,
+                    VAlign = 0f
+                };
 
-        public static SlotId LazerSoundOverride(Terraria.Audio.On_SoundPlayer.orig_Play orig, SoundPlayer self, [In] ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback)
+                UIPanel backgroundPanel = new UIPanel
+                {
+                    Width = new StyleDimension(46f, 0f),
+                    Height = new StyleDimension(46, 0f)
+
+                }.WithFadedMouseOver();
+
+                RemixButton flame = new RemixButton
+                {
+                    Width = new StyleDimension(40f, 0f),
+                    Height = new StyleDimension(40, 0f),
+                    Left = new StyleDimension(-5f, 0f),
+                    Top = new StyleDimension(-2f, 0f),
+                    PaddingLeft = 4f,
+                    PaddingRight = 4f
+                };
+
+                mainElement.OnLeftClick += ToggleStratus;
+                mainElement.OnMouseOver += MausHover;
+                mainElement.Append(backgroundPanel);
+                backgroundPanel.Append(flame);
+                self.Append(mainElement);
+            }
+            CalRemixWorld.stratusDungeonDisabled = false;
+        }
+        private static void MausHover(UIMouseEvent evt, UIElement listeningElement)
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+        }
+        private static void ToggleStratus(UIMouseEvent evt, UIElement listeningElement)
+        {
+            CalRemixWorld.stratusDungeonDisabled = !CalRemixWorld.stratusDungeonDisabled;
+            SoundStyle toplay = !CalRemixWorld.stratusDungeonDisabled ? SoundID.MenuOpen : SoundID.MenuClose;
+            SoundEngine.PlaySound(toplay);
+        }
+        private static SlotId LazerSoundOverride(On_SoundPlayer.orig_Play orig, SoundPlayer self, [In] ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback)
         {
             if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer crp))
             {
@@ -262,8 +265,7 @@ namespace CalRemix.Core
                 return orig(self, ref style, position, updateCallback);
             }
         }
-
-        public static SlotId PlayInerr(in SoundStyle style, Vector2? position, SoundUpdateCallback c)
+        private static SlotId PlayInerr(in SoundStyle style, Vector2? position, SoundUpdateCallback c)
         {
             FieldInfo tracc = typeof(Terraria.Audio.SoundPlayer).GetField("_trackedSounds", BindingFlags.NonPublic | BindingFlags.Instance);
             ReLogic.Utilities.SlotVector<ActiveSound> consumeHover = (ReLogic.Utilities.SlotVector<ActiveSound>)tracc.GetValue(Terraria.Audio.SoundEngine.SoundPlayer);
@@ -290,8 +292,7 @@ namespace CalRemix.Core
             ActiveSound value = new ActiveSound(styleCopy, position, c);
             return consumeHover.Add(value);
         }
-
-        public static void SoldierShots(Terraria.On_Player.orig_ItemCheck_Shoot orig, Player self, int i, Item sItem, int weaponDamage)
+        private static void SoldierShots(On_Player.orig_ItemCheck_Shoot orig, Player self, int i, Item sItem, int weaponDamage)
         {
             //if (!sItem.channel && sItem.DamageType != DamageClass.Summon)
             for (int e = 0; e < Main.maxPlayers; e++)
@@ -335,9 +336,7 @@ namespace CalRemix.Core
             }
             orig(self, i, sItem, weaponDamage);
         }
-
-        public static float extraDist = 222;
-        public static void DrawStatic(Terraria.On_Main.orig_DrawDust orig, Terraria.Main self)
+        private static void DrawStatic(On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
             if (NPC.AnyNPCs(NPCType<TallMan>()))
@@ -393,7 +392,7 @@ namespace CalRemix.Core
                 Main.spriteBatch.End();
             }
         }
-        public static void DrawTsarBomba(Terraria.On_Main.orig_DrawLiquid orig, Terraria.Main self, bool a, int b, float c, bool d)
+        private static void DrawTsarBomba(On_Main.orig_DrawLiquid orig, Main self, bool a, int b, float c, bool d)
         {
             orig(self, a, b, c, d);
             if (NPC.AnyNPCs(NPCType<Hydrogen>()))
@@ -406,7 +405,7 @@ namespace CalRemix.Core
                 Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, new Color(gus, gus, gus, (int)hydr.localAI[0]), 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
             }
         }
-        private static int KillHiveMind(Terraria.On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
+        private static int KillHiveMind(On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
             if (type == NPCID.DungeonGuardian)
                 return 0;
@@ -441,23 +440,22 @@ namespace CalRemix.Core
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
             }
         }
-        private static void KillDungeonGuardians(Terraria.On_NPC.orig_SpawnOnPlayer orig, int player, int type)
+        private static void KillDungeonGuardians(On_NPC.orig_SpawnOnPlayer orig, int player, int type)
         {
             if (type == NPCID.DungeonGuardian)
                 return;
             else
                 orig(player, type);
         }
-        public static void NoOldDuke(On.CalamityMod.CalamityUtils.orig_SpawnOldDuke orig, int playerIndex)
+        private static void NoOldDuke(On.CalamityMod.CalamityUtils.orig_SpawnOldDuke orig, int playerIndex)
         {
             SetOldDukeDead();
         }
-
-        public static void NoOldDuke2(On.CalamityMod.NPCs.CalamityGlobalNPC.orig_OldDukeSpawn orig, int plr, int type, int baitType)
+        private static void NoOldDuke2(On.CalamityMod.NPCs.CalamityGlobalNPC.orig_OldDukeSpawn orig, int plr, int type, int baitType)
         {
             SetOldDukeDead();
         }
-        public static void SetOldDukeDead()
+        private static void SetOldDukeDead()
         {
             CalamityMod.NPCs.CalamityGlobalNPC.SetNewShopVariable(new int[] { NPCType<SEAHOE>() }, DownedBossSystem.downedBoomerDuke);
 
@@ -468,5 +466,6 @@ namespace CalRemix.Core
             AcidRainEvent.OldDukeHasBeenEncountered = true;
             CalamityNetcode.SyncWorld();
         }
+        private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
     }
 }

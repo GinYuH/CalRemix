@@ -5,9 +5,19 @@ using Terraria.GameContent;
 using Terraria.UI;
 using Terraria;
 using Microsoft.Xna.Framework;
+using System.ComponentModel;
+using Terraria.ModLoader.Config;
 
 namespace CalRemix
 {
+    public class CalRemixConfig : ModConfig
+    {
+        public static CalRemixConfig instance;
+        public override ConfigScope Mode => ConfigScope.ClientSide;
+
+        [DefaultValue(true)]
+        public bool randomMenu;
+    }
     public class RemixButton : UIElement
     {
         protected override void DrawSelf(SpriteBatch spriteBatch)

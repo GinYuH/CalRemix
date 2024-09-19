@@ -51,11 +51,9 @@ namespace CalRemix.UI.Title
                 texture = _texture;
             }
         }
-
         public static List<MenuItem> MenuItems { get; internal set; } = new List<MenuItem>();
         public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation, ref float logoScale, ref Color drawColor)
         {
-
             // Floating Items
             if (Main.rand.NextBool(5) && MenuItems.Count < 200)
             {

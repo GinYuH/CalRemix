@@ -134,7 +134,7 @@ namespace CalRemix
                     return;
                 if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
                     return;
-                ModMenu menu = Main.rand.NextBool(4) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
+                ModMenu menu = Main.rand.NextBool(4) && CalRemixConfig.instance.randomMenu ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
                 if (menu is null)
                     return;
                 MenuStuff(menu);
