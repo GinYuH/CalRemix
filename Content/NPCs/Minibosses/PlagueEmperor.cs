@@ -154,11 +154,11 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Minibosses/PlagueEmperorGlow", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorGlow", AssetRequestMode.ImmediateLoad).Value;
             spriteBatch.Draw(texture, NPC.position + new Vector2(NPC.width, NPC.height) / 2f - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
             if (activated)
             {
-                Texture2D eyes = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Minibosses/PlagueEmperorEyes", AssetRequestMode.ImmediateLoad).Value;
+                Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorEyes", AssetRequestMode.ImmediateLoad).Value;
                 spriteBatch.Draw(eyes, NPC.position + new Vector2(NPC.width, NPC.height) / 2f - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, eyes.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
             }
         }

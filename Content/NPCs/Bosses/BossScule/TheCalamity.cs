@@ -25,7 +25,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         public ref float State => ref NPC.ai[1];
         private const float EndTime = 4800;
         public Player Target => Main.player[NPC.target];
-        public static readonly SoundStyle TeleportSFX = new($"{nameof(CalRemix)}/Sounds/Teleport");
+        public static readonly SoundStyle TeleportSFX = new("CalRemix/Sounds/Teleport");
         public override bool CheckActive() => Target.HasBuff(ModContent.BuffType<Calamitized>());
         public override void SetStaticDefaults()
         {
@@ -177,9 +177,9 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Bosses/BossScule/CalamityGlow", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityGlow", AssetRequestMode.ImmediateLoad).Value;
             spriteBatch.Draw(glow, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, glow.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
-            Texture2D eye = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Bosses/BossScule/CalamityEye", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityEye", AssetRequestMode.ImmediateLoad).Value;
             spriteBatch.Draw(eye, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
         }
         public override void DrawEffects(ref Color drawColor)

@@ -109,10 +109,10 @@ namespace CalRemix.Content.NPCs.Bosses.Losbaf
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Bosses/Losbaf/LosbafGlow", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Losbaf/LosbafGlow", AssetRequestMode.ImmediateLoad).Value;
             spriteBatch.Draw(glow, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, glow.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
 
-            Texture2D eyes = ModContent.Request<Texture2D>($"{nameof(CalRemix)}/NPCs/Bosses/Losbaf/LosbafEyes", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Losbaf/LosbafEyes", AssetRequestMode.ImmediateLoad).Value;
             Rectangle rect = new(0, eyeFrame * (eyes.Height / 6), eyes.Width / 2, eyes.Height / 6);
             spriteBatch.Draw(eyes, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rect, new Color(255, 255, 255, 255), NPC.rotation, rect.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
         }
