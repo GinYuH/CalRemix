@@ -25,7 +25,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Maser Phage");
-            Main.npcFrameCount[NPC.type] = 18;
+            Main.npcFrameCount[NPC.type] = 7;
         }
 
         public override void SetDefaults()
@@ -41,7 +41,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             AIType = -1;
-            NPC.scale = 4f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
             NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
             NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
@@ -205,9 +204,9 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     NPC.frameCounter = 0.0;
                     NPC.frame.Y += frameHeight;
                 }
-                if (NPC.frame.Y > frameHeight * 11)
+                if (NPC.frame.Y > frameHeight * 6 || NPC.frame.Y == 0)
                 {
-                    NPC.frame.Y = 0;
+                    NPC.frame.Y = frameHeight;
                 }
             }
         }
