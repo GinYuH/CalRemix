@@ -18,7 +18,6 @@ namespace CalRemix.Content.Items.Accessories
 {
     public class ZenithArcanum : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/TheEvolution";
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -28,9 +27,7 @@ namespace CalRemix.Content.Items.Accessories
             "20 % increase to summon damage and defense\n" +
             "+ 4 life regeneration, 15 % increased pick speed, and + 8 max minions\n" +
             "Increased minion knockback\n" +
-            "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits"); 
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 10));
-            ItemID.Sets.AnimatesAsSoul[Type] = true;
+            "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits");
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Materials
 			DisplayName.SetDefault("Essential Essence Bar");
       		Tooltip.SetDefault("Flowing with pure energy");
 			Item.ResearchUnlockCount = 5;
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 6));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 		public override void SetDefaults()
