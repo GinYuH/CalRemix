@@ -76,6 +76,7 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.Content.Items.Ammo;
 using CalamityMod.Items.Potions.Alcohol;
 using CalRemix.Content.Items.Pets;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix
 {
@@ -678,6 +679,7 @@ namespace CalRemix
             if (shop.NpcType == NPCType<DILF>())
             {
                 shop.Add(new NPCShop.Entry(ItemType<ColdheartIcicle>()));
+                shop.Add(new NPCShop.Entry(ItemType<TheGenerator>(), new Condition("Conditions.DownedGens", () => RemixDowned.DownedGens)));
             }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)

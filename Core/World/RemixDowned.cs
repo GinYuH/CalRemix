@@ -6,6 +6,8 @@ namespace CalRemix.Core.World
 {
     public class RemixDowned : ModSystem
     {
+        public static bool DownedGens => downedOrigen && downedCarcinogen && downedPhytogen && downedHydrogen && downedOxygen && downedIonogen && downedPathogen;
+
         public static bool downedCalamity = false;
         public static bool downedExcavator = false;
         public static bool downedAcidsighter = false;
