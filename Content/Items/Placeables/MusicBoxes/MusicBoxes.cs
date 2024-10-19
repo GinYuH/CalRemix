@@ -37,15 +37,41 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
-    public class ARMusicBox : RemixMusicBox
+    public class AcidRainTier2MusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, CalRemixMusic.AcidRainTier2, Type, TileType<Tiles.MusicBoxes.ARMusicBox>());
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.AcidRainTier2, Type, TileType<Tiles.MusicBoxes.AcidRainTier2MusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = TileType<Tiles.MusicBoxes.ARMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.AcidRainTier2MusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(CalRemix.CalMusic.Find<ModItem>("AcidRainTier3MusicBox").Type).
+                AddIngredient(CalRemix.CalMusic.Find<ModItem>("SulphurousSeaDayMusicBox").Type).
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+            CreateRecipe().
+                AddIngredient(CalRemix.CalMusic.Find<ModItem>("AcidRainTier3MusicBox").Type).
+                AddIngredient(CalRemix.CalMusic.Find<ModItem>("SulphurousSeaNightMusicBox").Type).
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+        }
+    }
+    public class CarcinogenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Carcinogen, Type, TileType<Tiles.MusicBoxes.CarcinogenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.CarcinogenMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
@@ -76,15 +102,15 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
-    public class EolMusicBox : RemixMusicBox
+    public class EmpressofLightDayMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, CalRemixMusic.EmpressofLightDay, Type, TileType<Tiles.MusicBoxes.EolMusicBox>());
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.EmpressofLightDay, Type, TileType<Tiles.MusicBoxes.EmpressofLightDayMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = TileType<Tiles.MusicBoxes.EolMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.EmpressofLightDayMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
@@ -111,6 +137,32 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         public override void SetDefaults()
         {
             Item.createTile = TileType<Tiles.MusicBoxes.HypnosMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class HydrogenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Hydrogen, Type, TileType<Tiles.MusicBoxes.HydrogenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.HydrogenMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class IonogenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Ionogen, Type, TileType<Tiles.MusicBoxes.IonogenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.IonogenMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
@@ -154,28 +206,65 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
-    public class PolyphemalusGFBMusicBox : RemixMusicBox
+    public class PolyphemalusAltMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, CalRemixMusic.PolyphemalusAlt, Type, TileType<Tiles.MusicBoxes.PolyphemalusGFBMusicBox>());
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.PolyphemalusAlt, Type, TileType<Tiles.MusicBoxes.PolyphemalusAltMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = TileType<Tiles.MusicBoxes.PolyphemalusGFBMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.PolyphemalusAltMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
-    public class TitleMusicBox : RemixMusicBox
+    public class TheCalamityMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Menu, Type, TileType<Tiles.MusicBoxes.TitleMusicBox>());
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.TheCalamity, Type, TileType<Tiles.MusicBoxes.TheCalamityMusicBox>());
         }
         public override void SetDefaults()
         {
-            Item.createTile = TileType<Tiles.MusicBoxes.TitleMusicBox>();
+            Item.createTile = TileType<Tiles.MusicBoxes.TheCalamityMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class MenuMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Menu, Type, TileType<Tiles.MusicBoxes.MenuMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.MenuMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<AcidsighterMusicBox>().
+                AddIngredient<EmpressofLightDayMusicBox>().
+                AddIngredient<HypnosMusicBox>().
+                AddIngredient<PlaguedJungleMusicBox>().
+                AddIngredient<PolyphemalusAltMusicBox>().
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+        }
+    }
+    public class VernalPassMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.VernalPass, Type, TileType<Tiles.MusicBoxes.VernalPassMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.VernalPassMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);

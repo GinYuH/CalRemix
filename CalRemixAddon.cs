@@ -256,21 +256,52 @@ namespace CalRemix
         {
             if (MusicDisplay is null)
                 return;
-            AddMusic("Opticatalysis", "Opticatalysis", "DEMON GIRLFRIEND");
-            AddMusic("AntarcticReinsertion", "Antarctic Reinsertion", "Jteoh");
-            AddMusic("Gegenschein", "Gegenschein", "Jteoh");
-            AddMusic("TropicofCancer", "Tropic of Cancer", "Jteoh");
-            AddMusic("SignalInterruption", "Signal Interruption", "Sploopo");
-            AddMusic("ScourgeoftheScrapyard", "Scourge of the Scrapyard", "Sploopo");
-            AddMusic("LaRuga", "La Ruga's Ambience", "Sploopo");
-            AddMusic("PlaguedJungle", "Everlasting Dark", "HeartPlusUp");
-            AddMusic("EyesofFlame", "Eyes of Flame (Remix)", "DM DOKURO");
-            AddMusic("TheEyesareAnger", "The Eyes are Anger", "GummyLeeches");
+            AddMusic(CalRemixMusic.Exosphere, "CanAnybodyHearMe", "Jteoh");
 
+            AddMusic(CalRemixMusic.AsbestosCaves, "Fibrous Whisper", "Jteoh");
+            AddMusic(CalRemixMusic.PlaguedJungle, "Everlasting Dark", "HeartPlusUp");
+            AddMusic(CalRemixMusic.BaronStrait, "The End Zone", "Jteoh");
+            AddMusic(CalRemixMusic.VernalPass, "Vajrabhairava's Rest", "Jteoh");
+
+            AddMusic(CalRemixMusic.AcidRainTier2, "Tropic of Cancer", "Jteoh");
+            AddMusic(CalRemixMusic.PandemicPanic, "Pandemic Panic", "Jteoh");
+
+            AddMusic(CalRemixMusic.CryoSlime, "Antarctic Reinsertion", "Jteoh");
+            AddMusic(CalRemixMusic.LaRuga, "La Ruga's Ambience", "Sploopo");
+
+            AddMusic(CalRemixMusic.TheCalamity, "Stained, Smeared Calamity", "Jteoh");
+            AddMusic(CalRemixMusic.WulfrumExcavator, "Scourge of the Scrapyard", "Sploopo");
+            AddMusic(CalRemixMusic.Origen, "Antarctic Reinforcement (Structured Mix)", "Jteoh");
+            AddMusic(CalRemixMusic.Acidsighter, "Opticatalysis", "DEMON GIRLFRIEND");
+            AddMusic(CalRemixMusic.Carcinogen, "Oncologic Reinforcement", "Jteoh");
+
+            AddMusic(CalRemixMusic.Derellect, "Signal Interruption", "Sploopo");
+            AddMusic(CalRemixMusic.Polyphemalus, "Eyes of Flame (Arranged)", "DM DOKURO");
+            AddMusic(CalRemixMusic.PolyphemalusAlt, "The Eyes are Anger", "GummyLeeches");
+            AddMusic(CalRemixMusic.Phytogen, "Botanic Reinforcement", "Jteoh");
+            AddMusic(CalRemixMusic.Hydrogen, "Atomic Reinforcement", "Jteoh");
+            AddMusic(CalRemixMusic.Oxygen, "Aerobic Reinforcement", "Jteoh");
+            AddMusic(CalRemixMusic.Ionogen, "Ionic Reinforcement", "Jteoh");
+            AddMusic(CalRemixMusic.Pathogen, "Microbic Reinforcement", "Jteoh");
+            AddMusic(CalRemixMusic.EmpressofLightDay, "Gegenschein", "Jteoh");
+
+            AddMusic(CalRemixMusic.Pyrogen, "Infernal Seal", "ThePurified");
+            AddMusic(CalRemixMusic.DevourerofGods, "Last Battle (Ballos Mix)", "DM DOKURO");
+            AddMusic(CalRemixMusic.Hypnos, "Cerebral Augmentations", "The Exiled Fellow");
+
+            AddMusic(CalRemixMusic.ExoMechs, "Omniscius Calculus", "Jteoh");
+            AddMusic(CalRemixMusic.ExoTwins, "Omicron Venata", "Jteoh");
+            AddMusic(CalRemixMusic.Ares, "Delta Duella", "Jteoh");
+            AddMusic(CalRemixMusic.Thanatos, "Epsilon Termina", "Jteoh");
+            AddMusic(CalRemixMusic.ExoTwinsThanatos, "Omicron Termina", "Jteoh");
+            AddMusic(CalRemixMusic.ExoTwinsAres, "Delta Venata", "Jteoh");
+            AddMusic(CalRemixMusic.ThanatosAres, "Epsilon Duella", "Jteoh");
+
+            AddMusic(CalRemixMusic.Menu, "This is Where the Magic Happens", "Jteoh");
         }
-        internal void AddMusic(string file, string name, string author)
+        internal void AddMusic(int music, string name, string author)
         {
-            MusicDisplay.Call("AddMusic", (short)MusicLoader.GetMusicSlot(Mod, $"CalRemix/Assets/Music/{file}"), name, author, Mod.DisplayName);
+            MusicDisplay.Call("AddMusic", (short)music, name, author, Mod.DisplayName);
         }
     }
 }

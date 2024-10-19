@@ -355,7 +355,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
 
             //lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
             LeadingConditionRule box = new(new Conditions.ZenithSeedIsNotUp());
-            lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusGFBMusicBox>())));
+            lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusAltMusicBox>())));
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

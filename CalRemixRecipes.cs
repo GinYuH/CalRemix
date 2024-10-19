@@ -42,6 +42,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Critters;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Placeables.MusicBoxes;
 
 namespace CalRemix
 {
@@ -95,28 +96,40 @@ namespace CalRemix
                 box.AddIngredient(ItemID.MusicBox)
                 .AddIngredient<ConquestFragment>(30)
                 .AddCondition(new Condition("After Calamitas Clone is defeated", () => DownedBossSystem.downedCalamitasClone))
-                .AddTile(TileID.WorkBenches)
+                .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
                 Recipe box2 = Recipe.Create(music.Find<ModItem>("Interlude2MusicBox").Type);
                 box2.AddIngredient(ItemID.MusicBox)
                 .AddIngredient<ConquestFragment>(30)
                 .AddCondition(new Condition("After Moon Lord is defeated", () => NPC.downedMoonlord))
-                .AddTile(TileID.WorkBenches)
+                .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
                 Recipe box3 = Recipe.Create(music.Find<ModItem>("DevourerofGodsEulogyMusicBox").Type);
                 box3.AddIngredient(ItemID.MusicBox)
                 .AddIngredient<ConquestFragment>(30)
                 .AddCondition(new Condition("After the Devourer of Gods is defeated", () => DownedBossSystem.downedDoG))
-                .AddTile(TileID.WorkBenches)
+                .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
                 Recipe box4 = Recipe.Create(music.Find<ModItem>("Interlude3MusicBox").Type);
                 box4.AddIngredient(ItemID.MusicBox)
                 .AddIngredient<ConquestFragment>(30)
                 .AddCondition(new Condition("After Yharon is defeated", () => DownedBossSystem.downedYharon))
-                .AddTile(TileID.WorkBenches)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+
+                Recipe box5 = Recipe.Create(music.Find<ModItem>("AcidRainTier1MusicBox").Type);
+                box5.AddIngredient<AcidRainTier2MusicBox>()
+                .AddIngredient(music.Find<ModItem>("SulphurousSeaDayMusicBox").Type)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+
+                Recipe box6 = Recipe.Create(music.Find<ModItem>("AcidRainTier1MusicBox").Type);
+                box6.AddIngredient<AcidRainTier2MusicBox>()
+                .AddIngredient(music.Find<ModItem>("SulphurousSeaNightMusicBox").Type)
+                .AddTile(TileID.TinkerersWorkbench)
                 .Register();
             }
             {

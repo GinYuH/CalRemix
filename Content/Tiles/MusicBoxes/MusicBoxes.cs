@@ -49,31 +49,45 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             }
         }
     }
-	public class AcidsighterMusicBox : PlacedRemixMusicBox
-    {
-		public override void SetStaticDefaults()
-        {
-            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.AcidsighterMusicBox>());
-            base.SetStaticDefaults();
-        }
-		public override void MouseOver(int i, int j)
-		{
-			Player player = Main.LocalPlayer;
-            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.AcidsighterMusicBox>();
-            base.MouseOver(i, j);
-        }
-    }
-    public class ARMusicBox : PlacedRemixMusicBox
+    public class AcidsighterMusicBox : PlacedRemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.ARMusicBox>());
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.AcidsighterMusicBox>());
             base.SetStaticDefaults();
         }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.ARMusicBox>();
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.AcidsighterMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class AcidRainTier2MusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.AcidRainTier2MusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.AcidRainTier2MusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class CarcinogenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.CarcinogenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.CarcinogenMusicBox>();
             base.MouseOver(i, j);
         }
     }
@@ -105,17 +119,17 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
-    public class EolMusicBox : PlacedRemixMusicBox
+    public class EmpressofLightDayMusicBox : PlacedRemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.EolMusicBox>());
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.EmpressofLightDayMusicBox>());
             base.SetStaticDefaults();
         }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.EolMusicBox>();
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.EmpressofLightDayMusicBox>();
             base.MouseOver(i, j);
         }
     }
@@ -144,6 +158,34 @@ namespace CalRemix.Content.Tiles.MusicBoxes
         {
             Player player = Main.LocalPlayer;
             player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.HypnosMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class HydrogenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.HydrogenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.HydrogenMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class IonogenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.IonogenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.IonogenMusicBox>();
             base.MouseOver(i, j);
         }
     }
@@ -189,31 +231,59 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
-    public class PolyphemalusGFBMusicBox : PlacedRemixMusicBox
+    public class PolyphemalusAltMusicBox : PlacedRemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.PolyphemalusGFBMusicBox>());
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.PolyphemalusAltMusicBox>());
             base.SetStaticDefaults();
         }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.PolyphemalusGFBMusicBox>();
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.PolyphemalusAltMusicBox>();
             base.MouseOver(i, j);
         }
     }
-    public class TitleMusicBox : PlacedRemixMusicBox
+    public class TheCalamityMusicBox : PlacedRemixMusicBox
     {
         public override void SetStaticDefaults()
         {
-            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.TitleMusicBox>());
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.TheCalamityMusicBox>());
             base.SetStaticDefaults();
         }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.TitleMusicBox>();
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.TheCalamityMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class MenuMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.MenuMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.MenuMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class VernalPassMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.VernalPassMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.VernalPassMusicBox>();
             base.MouseOver(i, j);
         }
     }

@@ -64,12 +64,14 @@ namespace CalRemix.Core.World
 
         public static bool ogslime = false;
 
-        public static int lifeTiles;
         public static int asbestosTiles;
+        public static int lifeTiles;
+        public static int vernalTiles;
         public static int PlagueTiles;
         public static int PlagueDesertTiles;
         public static int baronTiles;
         public static int MeldTiles;
+
         public static int ShrineTimer = -20;
         public static bool loadedRecipeInjections = false;
 
@@ -872,6 +874,7 @@ namespace CalRemix.Core.World
         {
             asbestosTiles = 0;
             lifeTiles = 0;
+            vernalTiles = 0;
             PlagueTiles = 0;
             PlagueDesertTiles = 0;
             MeldTiles = 0;
@@ -882,6 +885,7 @@ namespace CalRemix.Core.World
             // Life Ore tiles
             lifeTiles = tileCounts[TileType<LifeOreTile>()];
             asbestosTiles = tileCounts[TileType<AsbestosPlaced>()];
+            vernalTiles = tileCounts[TileType<CalamityMod.Tiles.VernalSoil>()];
             PlagueTiles = tileCounts[TileType<PlaguedGrass>()] +
             tileCounts[TileType<PlaguedMud>()] +
             tileCounts[TileType<PlaguedStone>()] +

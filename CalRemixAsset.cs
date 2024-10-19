@@ -50,8 +50,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:TrueStory"] = new StorySky();
             }
 
-            AssetRepository calAss = Mod.Assets;
-            Effect LoadShader(string path) => calAss.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
+            AssetRepository remixAsset = Mod.Assets;
+            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             ShieldShader = LoadShader("HoloShield");
@@ -94,6 +94,7 @@ namespace CalRemix
         public static readonly int AsbestosCaves = Set("FibrousWhisper");
         public static readonly int PlaguedJungle = Set("PlaguedJungle");
         public static readonly int BaronStrait = Set("TheEndZone");
+        public static readonly int VernalPass = Set("VajrabhairavasRest");
 
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
@@ -106,6 +107,7 @@ namespace CalRemix
         public static readonly int LaRuga = Set("LaRuga");
 
         // Bosses
+        public static readonly int TheCalamity = Set("StainedSmearedCalamity");
         public static readonly int WulfrumExcavator = Set("ScourgeoftheScrapyard");
         public static readonly int Origen = Set("AntarcticReinforcementStructuredMix");
         public static readonly int Acidsighter = Set("Opticatalysis");

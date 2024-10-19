@@ -25,7 +25,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         public ref float State => ref NPC.ai[1];
         private const float EndTime = 4800;
         public Player Target => Main.player[NPC.target];
-        public static readonly SoundStyle TeleportSFX = new("CalRemix/Sounds/Teleport");
         public override bool CheckActive() => Target.HasBuff(ModContent.BuffType<Calamitized>());
         public override void SetStaticDefaults()
         {
@@ -47,11 +46,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.HitSound = null;
-            NPC.DeathSound = TeleportSFX;
             NPC.value = 0;
             NPC.netAlways = true;
             NPC.dontTakeDamage = true;
             NPC.alpha = 0;
+                
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -59,7 +58,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             NPC.life = 22;
             if (!Main.dedServ)
             {
-                Music = MusicID.OtherworldlySpace;
+                Music = CalRemixMusic.TheCalamity;
                 Main.newMusic = Music;
                 Main.musicFade[Main.curMusic] = 0f;
                 Main.musicFade[Main.newMusic] = 1f;
@@ -161,7 +160,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         private void Teleport(Vector2 pos)
         {
-            SoundEngine.PlaySound(TeleportSFX with { Volume = 0.85f}, Target.Center);
             NPC.Center = pos;
             NPC.velocity = Vector2.Zero;
             NPC.netUpdate = true;
