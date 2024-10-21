@@ -33,7 +33,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.cursed);
 
             HelperMessage.New("OctFebruary", "Did you know? 31 in Octagonal is the same as 25 in Decimal! That means OCT 31 is the same as DEC 25! Happy Halloween and Merry Christmas!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => System.DateTime.Now.Month == 4 && System.DateTime.Now.Day == 14).SetHoverTextOverride("Thanks Fanny! I'll heal.");
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => System.DateTime.Now.Month == 4 && System.DateTime.Now.Day == 14).SetHoverTextOverride("I did not know that! Thank you, Fanny!");
             
             HelperMessage.New("DungeonGuardian", "It appears you're approaching the Dungeon. Normally this place is guarded by viscious guardians, but I've disabled them for you my dear friend.",
                 "FannyNuhuh", NearDungeonEntrance);
@@ -65,8 +65,8 @@ namespace CalRemix.UI
         }
         private static bool DarkArea()
         {
-            Vector3 vector = Lighting.GetColor((int)Main.LocalPlayer.Center.X / 16, (int)Main.LocalPlayer.Center.Y / 16).ToVector3();
-            return vector.Length() >= 0.15f;
+            Color light = Lighting.GetColor((int)Main.LocalPlayer.Center.X / 16, (int)Main.LocalPlayer.Center.Y / 16);
+            return light.R <= 5 || light.G <= 5 || light.B <= 5;
         }
     }
 }
