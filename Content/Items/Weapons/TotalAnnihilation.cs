@@ -1,4 +1,6 @@
-﻿using CalamityMod.Projectiles.Ranged;
+﻿using CalamityMod.Items.Materials;
+using CalamityMod.Projectiles.Ranged;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
@@ -28,7 +30,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.knockBack = 6.75f; // The knockback of your flail, this is dynamically adjusted in the projectile code.
             Item.width = 58; // Hitbox width of the item.
             Item.height = 52; // Hitbox height of the item.
-            Item.damage = 32; // The damage of your flail, this is dynamically adjusted in the projectile code.
+            Item.damage = 196; // The damage of your flail, this is dynamically adjusted in the projectile code.
             Item.crit = 7; // Critical damage chance %
             Item.scale = 1.1f; 
             Item.noUseGraphic = true; // This makes sure the item does not get shown when the player swings his hand
@@ -42,10 +44,16 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true; // This makes sure the item does not deal damage from the swinging animation
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        public override void AddRecipes()
         {
-            // Aside from SetDefaults, when making a copy of a vanilla weapon you may have to hunt down other bits of code. This code makes the item draw in full brightness when dropped.
-            return Color.White;
+            CreateRecipe().
+            AddIngredient(ItemID.Mace).
+            AddIngredient(ItemID.FlamingMace).
+            AddIngredient(ItemID.LunarBar, 5).
+            AddIngredient<LifeAlloy>(5).
+            AddIngredient<ElementalBar>(5).
+            AddTile(TileID.LunarCraftingStation).
+            Register();
         }
     }
 }
