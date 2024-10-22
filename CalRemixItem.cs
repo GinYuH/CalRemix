@@ -597,7 +597,6 @@ namespace CalRemix
                 GetModItem(ItemType<FlameLickedShell>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<PermafrostsConcoction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticHeart>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ItemType<AmbrosialAmpoule>() || item.type == ItemType<TheVerbotenOne>())
             {
@@ -633,6 +632,7 @@ namespace CalRemix
                 GetModItem(ItemType<Affliction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<LeviathanAmbergris>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
                 player.sporeSac = true;
                 GetModItem(ItemType<Abaddon>()).UpdateAccessory(player, hideVisual);
                 player.magmaStone = true;
