@@ -300,14 +300,30 @@ Mods: {
 				Description: You're sneezing out blood!
 			}
 
-			MedicallyIntelligent.DisplayName: Medically Intelligent
+			MedicallyIntelligent: {
+				DisplayName: Medically Intelligent
+				Description: Mods.CalRemix.Buffs.MedicallyIntelligent.Description
+			}
 
 			Warath: {
 				DisplayName: Warath
 				Description: Your minions are angry
 			}
 
-			AergiaNeuronBuff.DisplayName: Aergia Neuron
+			AergiaNeuronBuff: {
+				DisplayName: Aergia Neuron
+				Description: Mods.CalRemix.Buffs.AergiaNeuronBuff.Description
+			}
+
+			Wither: {
+				DisplayName: Wither
+				Description: Mods.CalRemix.Buffs.Wither.Description
+			}
+
+			ExtensionCordDebuff: {
+				DisplayName: Extension Cord Debuff
+				Description: Mods.CalRemix.Buffs.ExtensionCordDebuff.Description
+			}
 		}
 
 		Items: {
@@ -2185,7 +2201,10 @@ Mods: {
 				Tooltip: Fires an irritating spread of infected orbs
 			}
 
-			IonogenRelic.Tooltip: The battery acid melted it...
+			IonogenRelic: {
+				Tooltip: The battery acid melted it...
+				DisplayName: Ionogen Relic
+			}
 
 			PHD: {
 				DisplayName: PHD
@@ -2226,7 +2245,10 @@ Mods: {
 				Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
 			}
 
-			Sandrat.DisplayName: Minor Sandrat
+			Sandrat: {
+				DisplayName: Minor Sandrat
+				Tooltip: ""
+			}
 
 			FiberBaby: {
 				DisplayName: Fiber Baby
@@ -2383,8 +2405,15 @@ Mods: {
 					'''
 			}
 
-			Quadnoculars.DisplayName: Quadnoculars
-			Aurikia5220.DisplayName: Aurikia5220
+			Quadnoculars: {
+				DisplayName: Quadnoculars
+				Tooltip: ""
+			}
+
+			Aurikia5220: {
+				DisplayName: Aurikia5220
+				Tooltip: ""
+			}
 
 			OnyxStaff: {
 				DisplayName: Onyx Staff
@@ -2401,7 +2430,340 @@ Mods: {
 				Tooltip: Tagged enemies are struck by lightning when hit by minions
 			}
 
-			BeetleHead.DisplayName: Beetle Juice-Chan Head
+			BeetleHead: {
+				DisplayName: Beetle Juice-Chan Head
+				Tooltip: ""
+			}
+
+			TwistedNetheriteHelmet: {
+				DisplayName: Twisted Netherite Helmet
+				Tooltip: ""
+			}
+
+			TwistedNetheriteBoots: {
+				DisplayName: Twisted Netherite Boots
+				Tooltip: ""
+			}
+
+			CarcinogenMask: {
+				DisplayName: Carcinogen Mask
+				Tooltip: ""
+			}
+
+			HydrogenMask: {
+				DisplayName: Hydrogen Mask
+				Tooltip: ""
+			}
+
+			IonogenMask: {
+				DisplayName: Ionogen Mask
+				Tooltip: ""
+			}
+
+			OxygenMask: {
+				DisplayName: Oxygen Mask
+				Tooltip: ""
+			}
+
+			PathogenMask: {
+				DisplayName: Pathogen Mask
+				Tooltip: ""
+			}
+
+			PhytogenMask: {
+				DisplayName: Phytogen Mask
+				Tooltip: ""
+			}
+
+			TwistedNetheriteChestplate: {
+				DisplayName: Twisted Netherite Chestplate
+				Tooltip: ""
+			}
+
+			TwistedNetheriteLeggings: {
+				DisplayName: Twisted Netherite Leggings
+				Tooltip: ""
+			}
+
+			CarcinogenBag: {
+				DisplayName: Carcinogen Bag
+				Tooltip: ""
+			}
+
+			HydrogenBag: {
+				DisplayName: Hydrogen Bag
+				Tooltip: ""
+			}
+
+			IonogenBag: {
+				DisplayName: Ionogen Bag
+				Tooltip: ""
+			}
+
+			OrigenBag: {
+				DisplayName: Origen Bag
+				Tooltip: ""
+			}
+
+			OxygenBag: {
+				DisplayName: Oxygen Bag
+				Tooltip: ""
+			}
+
+			PathogenBag: {
+				DisplayName: Pathogen Bag
+				Tooltip: ""
+			}
+
+			PhytogenBag: {
+				DisplayName: Phytogen Bag
+				Tooltip: ""
+			}
+
+			PolyphemalusBag: {
+				DisplayName: Polyphemalus Bag
+				Tooltip: ""
+			}
+
+			WulfwyrmBag: {
+				DisplayName: Wulfwyrm Bag
+				Tooltip: ""
+			}
+
+			TwistedNetheriteBar: {
+				DisplayName: Twisted Netherite Bar
+				Tooltip: ""
+			}
+
+			TheGenerator: {
+				DisplayName: The Generator
+				Tooltip: ""
+			}
+
+			TheInactiveGenerator: {
+				DisplayName: The Inactive Generator
+				Tooltip: ""
+			}
+
+			AcidRainTier2MusicBox: {
+				DisplayName: Acid Rain Tier2 Music Box
+				Tooltip: ""
+			}
+
+			CarcinogenMusicBox: {
+				DisplayName: Carcinogen Music Box
+				Tooltip: ""
+			}
+
+			EmpressofLightDayMusicBox: {
+				DisplayName: Empressof Light Day Music Box
+				Tooltip: ""
+			}
+
+			ApingasLarryMusicBox: {
+				DisplayName: Apingas Larry Music Box
+				Tooltip: ""
+			}
+
+			ApingasMusicBox: {
+				DisplayName: Apingas Music Box
+				Tooltip: ""
+			}
+
+			ApingasThanosMusicBox: {
+				DisplayName: Apingas Thanos Music Box
+				Tooltip: ""
+			}
+
+			LarryMusicBox: {
+				DisplayName: Larry Music Box
+				Tooltip: ""
+			}
+
+			ThanosLarryMusicBox: {
+				DisplayName: Thanos Larry Music Box
+				Tooltip: ""
+			}
+
+			ThanosMusicBox: {
+				DisplayName: Thanos Music Box
+				Tooltip: ""
+			}
+
+			XOMusicBox: {
+				DisplayName: X O Music Box
+				Tooltip: ""
+			}
+
+			HydrogenMusicBox: {
+				DisplayName: Hydrogen Music Box
+				Tooltip: ""
+			}
+
+			IonogenMusicBox: {
+				DisplayName: Ionogen Music Box
+				Tooltip: ""
+			}
+
+			MenuMusicBox: {
+				DisplayName: Menu Music Box
+				Tooltip: ""
+			}
+
+			PolyphemalusAltMusicBox: {
+				DisplayName: Polyphemalus Alt Music Box
+				Tooltip: ""
+			}
+
+			TheCalamityMusicBox: {
+				DisplayName: The Calamity Music Box
+				Tooltip: ""
+			}
+
+			VernalPassMusicBox: {
+				DisplayName: Vernal Pass Music Box
+				Tooltip: ""
+			}
+
+			CarcinogenTrophy: {
+				DisplayName: Carcinogen Trophy
+				Tooltip: ""
+			}
+
+			HydrogenTrophy: {
+				DisplayName: Hydrogen Trophy
+				Tooltip: ""
+			}
+
+			IonogenTrophy: {
+				DisplayName: Ionogen Trophy
+				Tooltip: ""
+			}
+
+			OrigenTrophy: {
+				DisplayName: Origen Trophy
+				Tooltip: ""
+			}
+
+			OxygenTrophy: {
+				DisplayName: Oxygen Trophy
+				Tooltip: ""
+			}
+
+			PathogenTrophy: {
+				DisplayName: Pathogen Trophy
+				Tooltip: ""
+			}
+
+			PhytogenTrophy: {
+				DisplayName: Phytogen Trophy
+				Tooltip: ""
+			}
+
+			AdrenalinePotion: {
+				DisplayName: Adrenaline Potion
+				Tooltip: ""
+			}
+
+			EnragePotion: {
+				DisplayName: Enrage Potion
+				Tooltip: ""
+			}
+
+			FlightPotion: {
+				DisplayName: Flight Potion
+				Tooltip: ""
+			}
+
+			GreaterAdrenalinePotion: {
+				DisplayName: Greater Adrenaline Potion
+				Tooltip: ""
+			}
+
+			GreaterEnragePotion: {
+				DisplayName: Greater Enrage Potion
+				Tooltip: ""
+			}
+
+			GreaterFlightPotion: {
+				DisplayName: Greater Flight Potion
+				Tooltip: ""
+			}
+
+			LesserAdrenalinePotion: {
+				DisplayName: Lesser Adrenaline Potion
+				Tooltip: ""
+			}
+
+			LesserEnragePotion: {
+				DisplayName: Lesser Enrage Potion
+				Tooltip: ""
+			}
+
+			LesserFlightPotion: {
+				DisplayName: Lesser Flight Potion
+				Tooltip: ""
+			}
+
+			SuperAdrenalinePotion: {
+				DisplayName: Super Adrenaline Potion
+				Tooltip: ""
+			}
+
+			SuperEnragePotion: {
+				DisplayName: Super Enrage Potion
+				Tooltip: ""
+			}
+
+			SuperFlightPotion: {
+				DisplayName: Super Flight Potion
+				Tooltip: ""
+			}
+
+			TwistedNetheriteAxe: {
+				DisplayName: Twisted Netherite Axe
+				Tooltip: ""
+			}
+
+			TwistedNetheritePickaxe: {
+				DisplayName: Twisted Netherite Pickaxe
+				Tooltip: ""
+			}
+
+			TwistedNetheriteScythe: {
+				DisplayName: Twisted Netherite Scythe
+				Tooltip: ""
+			}
+
+			TwistedNetheriteShovel: {
+				DisplayName: Twisted Netherite Shovel
+				Tooltip: ""
+			}
+
+			PlanetaryAnnihilation: {
+				DisplayName: Planetary Annihilation
+				Tooltip: ""
+			}
+
+			TwistedNetheriteSword: {
+				DisplayName: Twisted Netherite Sword
+				Tooltip: ""
+			}
+
+			WhippedBouquetBlade: {
+				DisplayName: Whipped Bouquet Blade
+				Tooltip: ""
+			}
+
+			WindTurbineBlade: {
+				DisplayName: Wind Turbine Blade
+				Tooltip: ""
+			}
+
+			TotalAnnihilation: {
+				DisplayName: Total Annihilation
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -2859,6 +3221,8 @@ Mods: {
 			HypnosDraedon.DisplayName: Draedon
 			Sandrat.DisplayName: Minor Sandrat
 			MushroomElemental.DisplayName: Mushroom Elemental
+			ChampEye.DisplayName: Champ Eye
+			EternalChampEye.DisplayName: Eternal Champ Eye
 		}
 
 		Projectiles: {
@@ -3078,6 +3442,13 @@ Mods: {
 			PyrogenWaveFlare.DisplayName: Pyro Flare
 			PyrogenOrbitalFlare.DisplayName: Pyro Flare
 			PyrogenZigZagFlare.DisplayName: Pyro Flare
+			TwistedNetheriteSoulExplosion.DisplayName: Twisted Netherite Soul Explosion
+			Juice.DisplayName: Juice
+			CalamityBeam.DisplayName: Calamity Beam
+			ExtensionCordWhip.DisplayName: Extension Cord Whip
+			PlanetaryAnnihilationProj.DisplayName: Planetary Annihilation Proj
+			TotalAnnihilationProj.DisplayName: Total Annihilation Proj
+			TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
 		}
 
 		Tiles: {
@@ -3139,6 +3510,13 @@ Mods: {
 					Header: Fanny
 					Label: Toggle Fanny
 					Tooltip: Enables/disables Fanny.
+				}
+
+				DisplayName: Cal Remix Config
+
+				randomMenu: {
+					Label: random Menu
+					Tooltip: ""
 				}
 			}
 		}
