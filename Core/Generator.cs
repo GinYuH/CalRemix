@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using ReLogic.Content;
 using Terraria;
 using System.Diagnostics.CodeAnalysis;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix.Core
 {
@@ -55,18 +56,6 @@ namespace CalRemix.Core
             string glowPath = path + (glow ? "Glow" : string.Empty);
             return RequestIfExists(glowPath, out Asset<Texture2D> t) ? t.Value : Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank").Value;
         }
-        public static void Copy(CustomGen from, CustomGen to)
-        {
-            to.CoreTexture = from.CoreTexture;
-            to.CoreColor = from.CoreColor;
-            to.CoreGlow = from.CoreGlow;
-            to.CoreVisible = from.CoreVisible;
-
-            to.ShieldTexture = from.ShieldTexture;
-            to.ShieldColor = from.ShieldColor;
-            to.ShieldGlow = from.ShieldGlow;
-            to.ShieldVisible = from.ShieldVisible;
-        }
         public static void DrawGenToSpritebatch(SpriteBatch spritebatch, CustomGen gen, Vector2 position)
         {
             float rotation = MathHelper.TwoPi / 2 * (Main.GlobalTimeWrappedHourly % 2);
@@ -88,6 +77,25 @@ namespace CalRemix.Core
                 if (gen.CoreGlow)
                     spritebatch.Draw(coreGlow, position, null, Color.White, 0f, core.Size() * 0.5f, 1f, SpriteEffects.None, 0);
             }
+        }
+    }
+    public class GenSerializer : TagSerializer<CustomGen, TagCompound>
+    {
+        public override TagCompound Serialize(CustomGen value) => new()
+        {
+            ["CoreTexture"] = value.CoreTexture,
+            ["CoreColor"] = value.CoreColor,
+            ["CoreGlow"] = value.CoreGlow,
+            ["CoreVisible"] = value.CoreVisible,
+
+            ["ShieldTexture"] = value.ShieldTexture,
+            ["ShieldColor"] = value.ShieldColor,
+            ["ShieldGlow"] = value.ShieldGlow,
+            ["ShieldVisible"] = value.ShieldVisible
+        };
+        public override CustomGen Deserialize(TagCompound tag)
+        {
+            return new(tag.GetInt("CoreTexture"), tag.Get<Color>("CoreColor"), tag.GetBool("CoreGlow"), tag.GetBool("CoreVisible"), tag.GetInt("ShieldTexture"), tag.Get<Color>("ShieldColor"), tag.GetBool("ShieldGlow"), tag.GetBool("ShieldVisible"));
         }
     }
 }

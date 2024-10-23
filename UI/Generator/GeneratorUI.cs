@@ -1,11 +1,10 @@
 ﻿using static Terraria.ModLoader.ModContent;
+using static CalRemix.Core.CustomGen;
 using CalamityMod;
-using CalRemix.Content.Items.Misc;
 using CalRemix.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Terraria;
@@ -13,7 +12,6 @@ using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static CalRemix.Core.CustomGen;
 using Terraria.Audio;
 using Terraria.ID;
 
@@ -35,7 +33,7 @@ namespace CalRemix.UI.Generator
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            if (Main.LocalPlayer.GetModPlayer<GeneratorPlayer>().generating)
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().generatingGen)
             {
                 int layerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
                 if (layerIndex != -1)
@@ -74,10 +72,10 @@ namespace CalRemix.UI.Generator
                 return;
             if (Main.LocalPlayer is null)
                 return;
-            if (Main.LocalPlayer.dead || !Main.LocalPlayer.TryGetModPlayer(out GeneratorPlayer p) || !p.generating)
+            if (Main.LocalPlayer.dead || !Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer p) || !p.generatingGen)
                 return;
             Main.blockInput = true;
-            pendingGen = Main.LocalPlayer.GetModPlayer<GeneratorPlayer>().gen;
+            pendingGen = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().customGen;
             Main.playerInventory = false;
             if (BackDelay > 0)
                 BackDelay--;
@@ -87,7 +85,7 @@ namespace CalRemix.UI.Generator
                 if (Inputting)
                     SetInput(pendingGen);
                 Main.blockInput = false;
-                Main.LocalPlayer.GetModPlayer<GeneratorPlayer>().generating = false;
+                Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().generatingGen = false;
                 return;
             }
             base.Draw(spriteBatch);
@@ -108,7 +106,7 @@ namespace CalRemix.UI.Generator
         }
         private static void DrawMenu(SpriteBatch spriteBatch)
         {
-            Rectangle background = RectFromCenter((int)(bgWidth * 0.5f), (int)(bgHeight * 0.5f), (int)(bgHeight * 0.45f), (int)(bgHeight * 0.45f));
+            Rectangle background = RectFromCenter((int)(bgWidth * 0.5f), (int)(bgHeight * 0.5f), 440, 440);
             Rectangle border = RectFromCenter((int)(bgWidth * 0.5f), (int)(bgHeight * 0.5f), background.Width + 8, background.Height + 8);
 
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, border, Color.White);
@@ -141,7 +139,7 @@ namespace CalRemix.UI.Generator
             Texture2D texture = Request<Texture2D>("CalRemix/UI/Generator/Music").Value;
 
             Rectangle button = RectFromCenter((int)pos.X, (int)pos.Y, texture.Width, texture.Height);
-            int frameX = (Main.LocalPlayer.GetModPlayer<GeneratorPlayer>().music) ? 0 : 1;
+            int frameX = (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().genMusic) ? 0 : 1;
             int frameY = (button.Contains(Main.mouseX, Main.mouseY)) ? 1 : 0;
             Rectangle rect = new(frameX * (texture.Width / 2), frameY * (texture.Height / 2), (texture.Width / 2 - 1), (texture.Height / 2 - 1));
             spriteBatch.Draw(texture, pos, rect, Color.White, 0, rect.Size() * 0.5f, 1, SpriteEffects.None, 0);
@@ -152,7 +150,7 @@ namespace CalRemix.UI.Generator
                 if (Main.mouseLeftRelease && Main.mouseLeft)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
-                    Main.LocalPlayer.GetModPlayer<GeneratorPlayer>().music = (Main.LocalPlayer.GetModPlayer<GeneratorPlayer>().music == false);
+                    Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().genMusic = (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().genMusic == false);
                 }
             }
         }
