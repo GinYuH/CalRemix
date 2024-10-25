@@ -37,6 +37,7 @@ using CalamityMod.NPCs.Leviathan;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.Items.Ammo;
+using CalamityMod.Items.Materials;
 
 namespace CalRemix
 {
@@ -127,33 +128,40 @@ namespace CalRemix
             AddHiveBestiary(NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
             RefreshBestiary();
 
-            // Menu
-            try
-            {
-                if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    return;
-                if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    return;
-                ModMenu menu = Main.rand.NextBool(4) && CalRemixConfig.instance.randomMenu ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
-                if (menu is null)
-                    return;
-                MenuStuff(menu);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
-                Console.WriteLine("CalRemixMenu");
-                Console.WriteLine(e.ToString());
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
-            }
             for (int i = 0; i < ItemLoader.ItemCount; i++)
             {
                 if (ItemLoader.GetItem(i) is null)
                     continue;
                 ModItem item = ItemLoader.GetItem(i);
+                if (item.Type == ItemType<WulfrumMetalScrap>())
+                    continue;
                 if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
                     continue;
                 CalRemixAddon.Items.Add(item);
+            }
+
+            // Menu
+            if (GetInstance<CalRemixConfig>().forcedMenu)
+            {
+                try
+                {
+                    CalRemixConfig config = GetInstance<CalRemixConfig>();
+                    if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
+                        return;
+                    if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
+                        return;
+                    ModMenu menu = ((Main.rand.NextBool(4) && config.randomMenu) || config.useSecondMenu) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
+                    if (menu is null)
+                        return;
+                    MenuStuff(menu);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+                    Console.WriteLine("CalRemixMenu");
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+                }
             }
         }
         private void MenuStuff(ModMenu menu)
