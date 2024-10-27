@@ -115,7 +115,7 @@ namespace CalRemix.Content.Items.Misc
 
             var position = (player.mount.Type != MountID.None) ? player.MountedCenter - Vector2.UnitY * (player.height * 0.45f) : player.Center;
             position -= Main.screenPosition;
-            position = new Vector2((int)position.X, (int)position.Y);
+            position = new Vector2((int)position.X, (int)position.Y + player.gfxOffY);
 
             float lighting = Lighting.GetColor((int)player.Center.X / 16, (int)player.Center.Y / 16).ToVector3().Length();
             Color color = (gen.CoreColor * lighting);
