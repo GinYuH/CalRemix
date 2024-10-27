@@ -34,7 +34,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             NPC.aiStyle = -1;
             NPC.damage = 100;
             NPC.width = 54; //324
-            NPC.height = 80; //216
+            NPC.height = 120; //216
             NPC.defense = 22;
             NPC.lifeMax = 10000;
             NPC.knockBackResist = 0.75f;
