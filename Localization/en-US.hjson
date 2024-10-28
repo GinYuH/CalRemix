@@ -3518,6 +3518,16 @@ Mods: {
 					Label: random Menu
 					Tooltip: ""
 				}
+
+				forcedMenu: {
+					Label: forced Menu
+					Tooltip: ""
+				}
+
+				useSecondMenu: {
+					Label: use Second Menu
+					Tooltip: ""
+				}
 			}
 		}
 

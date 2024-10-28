@@ -17,6 +17,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Items.Potions;
 using System.Runtime.Serialization;
 using Terraria.GameContent.ObjectInteractions;
+using CalRemix.Core.Retheme;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -52,7 +53,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             P21 = 5,
             P22 = 6,
             Hellstorm = 7,
-            HellstormFatal = 8
+            HellstormFatal = 8,
+            Transitioning = 9
         }
 
         public PyroPhaseType AIState
@@ -63,10 +65,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public int chargeLimit = 4;
         public int charges = 0;
+        public int deathTimer = 0;
+        public int healthPercent = 0;
 
-        public static readonly SoundStyle HitSound = new("CalamityMod/Sounds/NPCHit/CryogenHit", 3);
-        public static readonly SoundStyle TransitionSound = new("CalamityMod/Sounds/NPCHit/CryogenPhaseTransitionCrack");
-        public static readonly SoundStyle DeathSound = new("CalamityMod/Sounds/NPCKilled/CryogenDeath");
+        public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenHit", 3);
+        public static readonly SoundStyle TransitionSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenTransition");
+        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenDeath");
         public static readonly SoundStyle FlareSound = new("CalamityMod/Sounds/Custom/Yharon/YharonFireball", 3);
 
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase1";
@@ -87,7 +91,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public float lifeRatio => NPC.life / (float)NPC.lifeMax;
         public static float BaseDifficultyScale => MathHelper.Clamp((CalamityMod.Events.BossRushEvent.BossRushActive.ToInt() * 3 + CalamityWorld.revenge.ToInt() + Main.expertMode.ToInt()) * 0.5f, 0f, 1f);
 
-        public static float Phase2LifeRatio => MathHelper.Lerp(0.6f, 0.5f, BaseDifficultyScale);
+        public static bool phase2 = false;
 
         internal static void LoadHeadIcons()
         {
@@ -129,7 +133,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.height = 88;
             NPC.defense = 60;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(322600, 375700, 1350000); ;
+            NPC.LifeMaxNERB(161300, 187850, 675000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -158,6 +162,33 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 int bitSprite = i % 6;
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);  
             }
+            phase2 = false; //weird bug fix
+        }
+
+        public override bool CheckDead()
+        {
+            //if (NPC.life < 1) {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+
+                NPC.netUpdate = true;
+                if (phase2)
+                {
+                    NPC.life = 0;
+                    NPC.HitEffect();
+                    NPC.NPCLoot();
+                    NPC.active = false;
+                    NPC.netUpdate = true;
+                    NPC.justHit = true;
+                    SoundStyle sound = DeathSound;
+                    SoundEngine.PlaySound(sound, NPC.Center);
+                }
+                else
+                {
+                    HandlePhaseTransition();
+                }
+            }
+            return false;
         }
 
         public override void AI()
@@ -345,7 +376,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 NPC.velocity.X *= 0.7f; //slow down just in case onscreen
                                 NPC.velocity.X *= 0.7f;
-                                if (charges == chargeLimit) //dashed enough times! switch attacks...
+                                if (charges >= chargeLimit) //dashed enough times! switch attacks...
                                 {
                                     int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, DustID.FlameBurst);
                                     Main.dust[d].noGravity = true;
@@ -593,6 +624,29 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 {
                     break;
                 }
+                case (int)PyroPhaseType.Transitioning: //switching to phase 2; do absolutely nothing until finished
+                    {
+                        deathTimer++;
+                        NPC.velocity.X *= 0.5f;
+                        NPC.velocity.Y *= 0.5f;
+                        if (deathTimer > 60){ //wait one second before refilling all health
+                            healthPercent++;
+                            if (NPC.life <= NPC.lifeMax * 0.33f) {
+                                NPC.life = 1 + (int)((float)Math.Pow(Utils.GetLerpValue(300, 530, healthPercent, true), 3) * (NPC.lifeMax - 1));
+                            }
+                        }
+                        if (deathTimer >= 160)
+                        { //ensure health is 100% filled just in case
+                            if (NPC.life < NPC.lifeMax)
+                            {
+                                NPC.life = NPC.lifeMax;
+
+                            }
+                            NPC.dontTakeDamage = false;
+                            AIState = PyroPhaseType.Idle;
+                        }
+                        break;
+                    }
             }
 
             base.AI();
@@ -606,19 +660,19 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             switch (AIState)
             {
                 case PyroPhaseType.Idle:
-                    AIState = lifeRatio < Phase2LifeRatio ? PyroPhaseType.Idle : PyroPhaseType.Charge;
+                    AIState = phase2 ? PyroPhaseType.Idle : PyroPhaseType.Charge;
                     break;
 
                 case PyroPhaseType.Charge:
-                    AIState = lifeRatio < Phase2LifeRatio ? PyroPhaseType.Idle : PyroPhaseType.Rain;
+                    AIState = phase2 ? PyroPhaseType.Idle : PyroPhaseType.Rain;
                     break;
 
                 case PyroPhaseType.Rain:
-                    AIState = lifeRatio < Phase2LifeRatio ? PyroPhaseType.PullintoShield : PyroPhaseType.PullintoShield;
+                    AIState = phase2 ? PyroPhaseType.PullintoShield : PyroPhaseType.PullintoShield;
                     break;
 
                 case PyroPhaseType.PullintoShield:
-                    AIState = lifeRatio < Phase2LifeRatio ? PyroPhaseType.Idle : PyroPhaseType.Idle;
+                    AIState = phase2 ? PyroPhaseType.Idle : PyroPhaseType.Idle;
                     break;
             }
 
@@ -673,27 +727,18 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 Main.dust[d].velocity = (Main.dust[d].position - NPC.Center).SafeNormalize(Vector2.One) * Main.rand.Next(10, 18);
             }
         }
-        private void HandlePhaseTransition(int newPhase)
+        private void HandlePhaseTransition() //has died for the first time
         {
+            NPC.ai[1] = 0;
+            AttackTimer = 0;
+            CalamityUtils.KillAllHostileProjectiles();
+            NPC.life = 1;
+            NPC.active = true;
+            NPC.dontTakeDamage = true;
             SoundStyle sound = TransitionSound;
             SoundEngine.PlaySound(sound, NPC.Center);
-
-            currentPhase = newPhase;
-            switch (currentPhase)
-            {
-                case 0: break;
-
-                case 1: break;
-
-                case 2: break;
-
-                case 3: break;
-
-                case 4: break;
-
-                case 5: break;
-
-            }
+            phase2 = true;
+            AIState = PyroPhaseType.Transitioning;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -702,11 +747,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 return true;
             }
-            bool p2 = NPC.life < NPC.lifeMax * 0.5f;
-            Texture2D texture = p2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
-            Texture2D bloomTx = p2 ? BloomTexture2.Value : BloomTexture.Value;
-            Texture2D additiveTx = p2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
-            Texture2D gm = p2 ? Glowmask2.Value : Glowmask.Value;
+            Texture2D texture = phase2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
+            Texture2D bloomTx = phase2 ? BloomTexture2.Value : BloomTexture.Value;
+            Texture2D additiveTx = phase2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
+            Texture2D gm = phase2 ? Glowmask2.Value : Glowmask.Value;
 
             Vector2 pos = NPC.Center - screenPos;
             Vector2 ringOrigin = RingTexture.Value.Size() / 2;
