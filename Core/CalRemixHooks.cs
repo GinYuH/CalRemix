@@ -63,7 +63,7 @@ namespace CalRemix.Core
         }
         private static void StopStarfall(On_Star.orig_Fall orig, Star self)
         {
-            if (CalRemixMenu.Instance.IsSelected && Main.gameMenu)
+            if (GetInstance<CalRemixMenu>().IsSelected && Main.gameMenu)
                 return;
             orig(self);
         }
