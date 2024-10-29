@@ -120,12 +120,9 @@ namespace CalRemix
             cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<Phytogen>(), NPCType<PineappleFrond>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<DerellectPlug>());
-
             AddEnchantments(cal);
-            LoadBossRushEntries(cal);
-            AddHiveBestiary(NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
-            AddHiveBestiary(NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
-            AddHiveBestiary(NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
+            if (!ModLoader.HasMod("InfernumMode"))
+                LoadBossRushEntries(cal);
             RefreshBestiary();
 
             for (int i = 0; i < ItemLoader.ItemCount; i++)
@@ -261,36 +258,6 @@ namespace CalRemix
                 pr2 = customAction;
             }
             brEntries.Insert(bossidx, (NPCType, -1, pr2, 45, needsNight, 0f, extraNPCs, headID));
-        }
-
-        public static void AddHiveBestiary(int id, string entryText)
-        {
-            NPCID.Sets.NPCBestiaryDrawModifiers modifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
-            modifiers.Hide = false;
-            if (id == NPCType<DankCreeper>())
-            {
-                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/DankCreeper";
-            }
-            if (id == NPCType<HiveBlob>())
-            {
-                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/HiveBlob";
-            }
-            if (id == NPCType<DarkHeart>())
-            {
-                modifiers.PortraitPositionXOverride = 10;
-                modifiers.PortraitPositionYOverride = 20;
-            }
-
-            NPCID.Sets.NPCBestiaryDrawOffset[id] = modifiers;
-            BestiaryEntry b = new BestiaryEntry();
-            b.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption,
-        new FlavorTextBestiaryInfoElement(entryText)
-            });
-            int associatedNPCType = NPCType<HiveMind>();
-            b.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
-            ContentSamples.NpcsByNetId[id].ModNPC?.SetBestiary(Main.BestiaryDB, b);
         }
 
         public static void RefreshBestiary()
