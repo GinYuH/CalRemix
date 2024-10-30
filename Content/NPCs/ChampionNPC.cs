@@ -59,7 +59,8 @@ namespace CalRemix
             Crown = 23, // Big health
             Skull = 24, // Double damage, damages all enemies on death
             Brown = 25, // Leaves behind temporary blocks
-            Rainbow = 26 // Mix of a bunch
+            Rainbow = 26, // Mix of a bunch
+            OrangeRed = 27, // split, then split again
         }
 
         public static WeightedRandom<int> ChampionWeights = new WeightedRandom<int>();
@@ -94,6 +95,7 @@ namespace CalRemix
             ChampionWeights.Add((int)ChampionID.Skull, 0.1f);
             ChampionWeights.Add((int)ChampionID.Brown, 0.1f);
             ChampionWeights.Add((int)ChampionID.Rainbow, 0.01f);
+            ChampionWeights.Add((int)ChampionID.OrangeRed, 0.01f);
         }
 
         public override void OnSpawn(NPC npc, IEntitySource source)
@@ -111,7 +113,7 @@ namespace CalRemix
             {
                 // Grab a champion
                 championType = ChampionWeights.Get();
-                //championType = (int)ChampionID.Pulsating;
+                //championType = (int)ChampionID.OrangeRed;
                 // All champions except the size based ones default at slightly larger
                 if (championType > 0 && championType != (int)ChampionID.Small && championType != (int)ChampionID.Large)
                 {
@@ -220,6 +222,7 @@ namespace CalRemix
                     (int)ChampionID.Skull => Color.DarkGray,
                     (int)ChampionID.Brown => Color.Brown,
                     (int)ChampionID.Rainbow => Main.DiscoColor,
+                    (int)ChampionID.OrangeRed => Color.OrangeRed,
                     _ => drawColor
                 };
                 if (ret != drawColor)
@@ -504,6 +507,15 @@ namespace CalRemix
             if (kingMinion)
             {
                 Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemID.Star);
+            }
+            // Orange red champions spawn pulsating green champions on death
+            if (championType == (int)ChampionID.OrangeRed)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    int buddy = NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, npc.type);
+                    Main.npc[buddy].GetGlobalNPC<ChampionNPC>().championType = (int)ChampionID.PulsingGreen;
+                }
             }
         }
 
