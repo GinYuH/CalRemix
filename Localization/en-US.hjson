@@ -3518,11 +3518,90 @@ Mods: {
 					Label: random Menu
 					Tooltip: ""
 				}
+
+				forcedMenu: {
+					Label: forced Menu
+					Tooltip: ""
+				}
+
+				useSecondMenu: {
+					Label: use Second Menu
+					Tooltip: ""
+				}
 			}
 		}
 
 		InfoDisplays.ElementDisplay.DisplayName: Element Display
 		Emotes.HypnosEmote.Command: hypnosemote
 		BossChecklistIntegration.PandemicPanic.EntryName: Pandemic Panic
+
+		InfernumIntegration: {
+			Origen:
+				'''
+				Frozen Fortress
+				Origen
+				'''
+			Carcinogen:
+				'''
+				Coughing Tomb
+				Carcinogen
+				'''
+			Ionogen:
+				'''
+				Microplastic Menace
+				Ionogen
+				'''
+			Phytogen:
+				'''
+				Healthy Fruit Snack
+				Phytogen
+				'''
+			Hydrogen:
+				'''
+				Ticking Time Bomb
+				Hydrogen
+				'''
+			Pathogen:
+				'''
+				Illness Incarnate
+				Pathogen
+				'''
+			Pyrogen:
+				'''
+				Searing Arsenal
+				Pyrogen
+				'''
+			Oxygen:
+				'''
+				Turbulent Marble
+				Oxygen
+				'''
+			Calamity: The Calamity
+			Polyphemalus:
+				'''
+				Eyes United
+				Polyphemalus
+				'''
+			Derellect:
+				'''
+				Material Mind
+				The Derellect
+				'''
+			Hypnos:
+				'''
+				Mind of Malice
+				XP-00 Hypnos
+				'''
+			Acidsighter:
+				'''
+				Blighted Eye
+				Acidsighter
+				'''
+			WulfrumExcavator:
+				'''
+				Raggedy Helminth
+				Wulfrum Excavator
+				'''
+		}
 	}
 }

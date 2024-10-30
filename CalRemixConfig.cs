@@ -16,7 +16,13 @@ namespace CalRemix
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [DefaultValue(true)]
+        public bool forcedMenu;
+
+        [DefaultValue(true)]
         public bool randomMenu;
+
+        [DefaultValue(false)]
+        public bool useSecondMenu;
     }
     public class RemixButton : UIElement
     {

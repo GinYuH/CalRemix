@@ -37,6 +37,7 @@ using CalamityMod.NPCs.Leviathan;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.Items.Ammo;
+using CalamityMod.Items.Materials;
 
 namespace CalRemix
 {
@@ -119,41 +120,45 @@ namespace CalRemix
             cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<Phytogen>(), NPCType<PineappleFrond>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<DerellectPlug>());
-
             AddEnchantments(cal);
-            LoadBossRushEntries(cal);
-            AddHiveBestiary(NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
-            AddHiveBestiary(NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
-            AddHiveBestiary(NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
+            if (!ModLoader.HasMod("InfernumMode"))
+                LoadBossRushEntries(cal);
             RefreshBestiary();
 
-            // Menu
-            try
-            {
-                if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    return;
-                if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                    return;
-                ModMenu menu = Main.rand.NextBool(4) && CalRemixConfig.instance.randomMenu ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
-                if (menu is null)
-                    return;
-                MenuStuff(menu);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
-                Console.WriteLine("CalRemixMenu");
-                Console.WriteLine(e.ToString());
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
-            }
             for (int i = 0; i < ItemLoader.ItemCount; i++)
             {
                 if (ItemLoader.GetItem(i) is null)
                     continue;
                 ModItem item = ItemLoader.GetItem(i);
+                if (item.Type == ItemType<WulfrumMetalScrap>())
+                    continue;
                 if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
                     continue;
                 CalRemixAddon.Items.Add(item);
+            }
+
+            // Menu
+            if (GetInstance<CalRemixConfig>().forcedMenu)
+            {
+                try
+                {
+                    CalRemixConfig config = GetInstance<CalRemixConfig>();
+                    if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
+                        return;
+                    if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
+                        return;
+                    ModMenu menu = ((Main.rand.NextBool(4) && config.randomMenu) || config.useSecondMenu) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
+                    if (menu is null)
+                        return;
+                    MenuStuff(menu);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+                    Console.WriteLine("CalRemixMenu");
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+                }
             }
         }
         private void MenuStuff(ModMenu menu)
@@ -253,36 +258,6 @@ namespace CalRemix
                 pr2 = customAction;
             }
             brEntries.Insert(bossidx, (NPCType, -1, pr2, 45, needsNight, 0f, extraNPCs, headID));
-        }
-
-        public static void AddHiveBestiary(int id, string entryText)
-        {
-            NPCID.Sets.NPCBestiaryDrawModifiers modifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
-            modifiers.Hide = false;
-            if (id == NPCType<DankCreeper>())
-            {
-                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/DankCreeper";
-            }
-            if (id == NPCType<HiveBlob>())
-            {
-                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/HiveBlob";
-            }
-            if (id == NPCType<DarkHeart>())
-            {
-                modifiers.PortraitPositionXOverride = 10;
-                modifiers.PortraitPositionYOverride = 20;
-            }
-
-            NPCID.Sets.NPCBestiaryDrawOffset[id] = modifiers;
-            BestiaryEntry b = new BestiaryEntry();
-            b.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption,
-        new FlavorTextBestiaryInfoElement(entryText)
-            });
-            int associatedNPCType = NPCType<HiveMind>();
-            b.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
-            ContentSamples.NpcsByNetId[id].ModNPC?.SetBestiary(Main.BestiaryDB, b);
         }
 
         public static void RefreshBestiary()

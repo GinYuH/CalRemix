@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using static Terraria.ModLoader.ModContent;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -53,6 +54,8 @@ using CalamityMod.NPCs.DevourerofGods;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content;
 using CalRemix.Content.Cooldowns;
+using CalRemix.Core;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix
 {
@@ -150,28 +153,57 @@ namespace CalRemix
         public int ionDialogue = -1;
 		public int ionQuestLevel = -1;
 
+        public CustomGen customGen = new(1, Color.White, false, true, 3, Color.White, false, true);
+        public bool generatingGen = false;
+        public bool genActive = false;
+        public bool genMusic = true;
+        private static readonly List<PlayerDrawLayer> HiddenLayers =
+        [
+            PlayerDrawLayers.Wings,
+            PlayerDrawLayers.HeadBack,
+            PlayerDrawLayers.Torso,
+            PlayerDrawLayers.Skin,
+            PlayerDrawLayers.Leggings,
+            PlayerDrawLayers.Shoes,
+            PlayerDrawLayers.Robe,
+            PlayerDrawLayers.SkinLongCoat,
+            PlayerDrawLayers.ArmorLongCoat,
+            PlayerDrawLayers.Head,
+            PlayerDrawLayers.Shield,
+            PlayerDrawLayers.ArmOverItem,
+            PlayerDrawLayers.HandOnAcc
+        ];
         public int[] MinionList =
 		{
-			ModContent.ProjectileType<PlantationStaffSummon>(),
-			ModContent.ProjectileType<AtlasSoldier>(),
-			ModContent.ProjectileType<CosmilampMinion>(),
-			ModContent.ProjectileType<FieryDraconid>(),
-			ModContent.ProjectileType<SepulcherMinion>(),
-			ModContent.ProjectileType<CosmicEnergySpiral>(),
-			ModContent.ProjectileType<EndoCooperBody>(),
-			ModContent.ProjectileType<MagicUmbrella>(),
-			ModContent.ProjectileType<SiriusMinion>(),
-			ModContent.ProjectileType<SarosAura>()
+			ProjectileType<PlantationStaffSummon>(),
+			ProjectileType<AtlasSoldier>(),
+			ProjectileType<CosmilampMinion>(),
+			ProjectileType<FieryDraconid>(),
+			ProjectileType<SepulcherMinion>(),
+			ProjectileType<CosmicEnergySpiral>(),
+			ProjectileType<EndoCooperBody>(),
+			ProjectileType<MagicUmbrella>(),
+			ProjectileType<SiriusMinion>(),
+			ProjectileType<SarosAura>()
 
 		};
 
 		public int[] abnormalEnemyList = // immune to effects like Moon Fist's instant kill
 		{
-			/*ModContent.NPCType<SignalDrone>(),
-			ModContent.NPCType<DerellectPlug>(),*/
-			ModContent.NPCType<LifeSlime>()
+			/*NPCType<SignalDrone>(),
+			NPCType<DerellectPlug>(),*/
+			NPCType<LifeSlime>()
 		};
-
+        public override void SaveData(TagCompound tag)
+        {
+            tag["GeneratorPlayerGen"] = customGen;
+            tag["GeneratorPlayerMusic"] = genMusic;
+        }
+        public override void LoadData(TagCompound tag)
+        {
+            customGen = tag.Get<CustomGen>("GeneratorPlayerGen");
+            genMusic = tag.GetBool("GeneratorPlayerMusic");
+        }
         public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
@@ -181,45 +213,45 @@ namespace CalRemix
 					Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
 				}
 			}
-			if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ModContent.ProjectileType<Claw>()) <= 0)
+			if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
             {
 				if (!Player.HasCooldown(BaroclawCooldown.ID))
 				{
 					float XDist = 120;
 					clawPosition = Main.MouseWorld;
-					Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
-					int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ModContent.ProjectileType<Claw>(), 30, 0);
+					Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ProjectileType<Claw>(), 30, 0);
+					int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ProjectileType<Claw>(), 30, 0);
 					Main.projectile[p].spriteDirection *= -1;
 				}
             }
             if (CalRemixKeybinds.StealthPotKeybind.JustPressed && Player.Calamity().rogueStealth < Player.Calamity().rogueStealthMax / 2 && Player.Calamity().wearingRogueArmor)
             {
-				if (Player.HasItem(ModContent.ItemType<SuperStealthPotion>()))
+				if (Player.HasItem(ItemType<SuperStealthPotion>()))
                 {
                     CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.25f));
                     Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.25f;
-                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
-                    Player.ConsumeItem(ModContent.ItemType<SuperStealthPotion>());
+                    Player.ConsumeItem(ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ItemType<SuperStealthPotion>());
                 }
-                else if (Player.HasItem(ModContent.ItemType<GreaterStealthPotion>()))
+                else if (Player.HasItem(ItemType<GreaterStealthPotion>()))
                 {
                     CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.2f));
                     Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.2f;
-                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
-                    Player.ConsumeItem(ModContent.ItemType<GreaterStealthPotion>());
+                    Player.ConsumeItem(ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ItemType<GreaterStealthPotion>());
                 }
-                else if (Player.HasItem(ModContent.ItemType<StealthPotion>()))
+                else if (Player.HasItem(ItemType<StealthPotion>()))
                 {
                     CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.15f));
                     Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.15f;
-                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
-                    Player.ConsumeItem(ModContent.ItemType<StealthPotion>());
+                    Player.ConsumeItem(ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ItemType<StealthPotion>());
                 }
-                else if (Player.HasItem(ModContent.ItemType<LesserStealthPotion>()))
+                else if (Player.HasItem(ItemType<LesserStealthPotion>()))
                 {
                     CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.1f));
                     Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.1f;
-                    Player.ConsumeItem(ModContent.ItemType<LesserStealthPotion>());
+                    Player.ConsumeItem(ItemType<LesserStealthPotion>());
                 }
 				if (Main.myPlayer == Player.whoAmI)
 					SoundEngine.PlaySound(SoundID.Item3, Player.Center);
@@ -228,7 +260,7 @@ namespace CalRemix
             {
                 if (!Player.HasCooldown(IonLightningCooldown.ID))
                 {
-                    int io = Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - Vector2.UnitY * 3200f, Vector2.UnitY, ModContent.ProjectileType<IonogenLightning>(), 0, 0, Player.whoAmI, 0f, -1, 61);
+                    int io = Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - Vector2.UnitY * 3200f, Vector2.UnitY, ProjectileType<IonogenLightning>(), 0, 0, Player.whoAmI, 0f, -1, 61);
 					Main.projectile[io].timeLeft = 22;
 					SoundEngine.PlaySound(CommonCalamitySounds.LightningSound, Player.Center);
 					double dam = Player.Hurt(PlayerDeathReason.ByProjectile(Player.whoAmI, io), 1, 0, dodgeable: false);
@@ -240,7 +272,7 @@ namespace CalRemix
 					Player.AddCooldown("Ionic", 300);
                 }
             }
-            if (CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+            if (CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
 				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
 				if (!Player.HasCooldown(SoulExplosionCooldown.ID) && helmet.souls > 0)
@@ -250,9 +282,9 @@ namespace CalRemix
                     for (int i = 0; i < maxSouls; i++)
                     {
                         Vector2 velocity = -Vector2.UnitY.RotatedByRandom(0.52999997138977051) * Main.rand.NextFloat(2.5f, 4f);
-                        Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, velocity, ModContent.ProjectileType<SepulcherSoul>(), 0, 0f);
+                        Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, velocity, ProjectileType<SepulcherSoul>(), 0, 0f);
                     }
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwistedNetheriteSoulExplosion>(), (int)(Math.Log(helmet.souls) + 1) * 1000, 0f, Player.whoAmI, ai1: 1600);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<TwistedNetheriteSoulExplosion>(), (int)(Math.Log(helmet.souls) + 1) * 1000, 0f, Player.whoAmI, ai1: 1600);
 					helmet.souls = 0;
                     Player.AddCooldown("SoulExplosion", 1800);
                 }
@@ -286,9 +318,9 @@ namespace CalRemix
         {
             if (Main.myPlayer == Player.whoAmI)
             {
-                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == ModContent.GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(ModContent.NPCType<Losbaf>()) || NPC.AnyNPCs(ModContent.NPCType<Hypnos>()))
+                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(NPCType<Losbaf>()) || NPC.AnyNPCs(NPCType<Hypnos>()))
                     Player.Calamity().monolithExoShader = 30;
-                if (Main.mouseItem.type == ModContent.ItemType<CirrusCouch>() || Main.mouseItem.type == ModContent.ItemType<CrystalHeartVodka>())
+                if (Main.mouseItem.type == ItemType<CirrusCouch>() || Main.mouseItem.type == ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
             }
             if (ScreenHelpersUIState.GonerFanny != null)
@@ -333,7 +365,7 @@ namespace CalRemix
             }
 			if (Player.ZoneRockLayerHeight)
 			{
-				if (!NPC.AnyNPCs(ModContent.NPCType<Phytogen>()))
+				if (!NPC.AnyNPCs(NPCType<Phytogen>()))
 				{
 					int plagueEnemies = 0;
 					int plagueToSpawnPhytogen = 6;
@@ -344,7 +376,7 @@ namespace CalRemix
 							plagueEnemies++;
 							if (plagueEnemies >= plagueToSpawnPhytogen)
 							{
-								NPC.SpawnOnPlayer(Player.whoAmI, ModContent.NPCType<Phytogen>());
+								NPC.SpawnOnPlayer(Player.whoAmI, NPCType<Phytogen>());
 								break;
 							}
 						}
@@ -355,17 +387,17 @@ namespace CalRemix
 			{
 				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
 				{
-					if (!NPC.AnyNPCs(ModContent.NPCType<Hydrogen>()))
-						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, ModContent.NPCType<Hydrogen>());
+					if (!NPC.AnyNPCs(NPCType<Hydrogen>()))
+						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
 				}
 			}
         }
 
         public override bool PreItemCheck()
         {
-            if (Player.HeldItem.type == ModContent.ItemType<CirrusCouch>() || Player.HeldItem.type == ModContent.ItemType<CrystalHeartVodka>())
+            if (Player.HeldItem.type == ItemType<CirrusCouch>() || Player.HeldItem.type == ItemType<CrystalHeartVodka>())
                 Player.HeldItem.stack = 0;
-            if (Player.HeldItem.type == ModContent.ItemType<TwistedNetheriteShovel>() && Player.itemAnimation == Player.itemAnimationMax && Player.IsTargetTileInItemRange(Player.HeldItem))
+            if (Player.HeldItem.type == ItemType<TwistedNetheriteShovel>() && Player.itemAnimation == Player.itemAnimationMax && Player.IsTargetTileInItemRange(Player.HeldItem))
             {
                 for (int i = Player.tileTargetX - 4; i <= Player.tileTargetX + 4; i++)
                 {
@@ -381,7 +413,7 @@ namespace CalRemix
             /*
             if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
-                if (NPC.CountNPCS(ModContent.NPCType<DerellectBoss>()) >= 1)
+                if (NPC.CountNPCS(NPCType<DerellectBoss>()) >= 1)
 				{
 					Player.itemTime = 0;
 					Player.itemAnimation = 0; // looks weird but has to be done or else you get stuck holding it forever
@@ -518,7 +550,7 @@ namespace CalRemix
 					if (!target.active || !target.Hitbox.Intersects(Utils.CenteredRectangle(Main.MouseWorld, new Vector2(35f, 62f))) || target.immortal || target.dontTakeDamage || target.townNPC || NPCID.Sets.ActsLikeTownNPC[target.type] || NPCID.Sets.CountsAsCritter[target.type])
 						continue;
 
-					target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 1200);
+					target.AddBuff(BuffType<BrimstoneFlames>(), 1200);
 				}
             }
 
@@ -550,20 +582,20 @@ namespace CalRemix
                 BuffID.ShadowFlame, //doesn't do anything
                 BuffID.Daybreak, //doesn't do anything
                 BuffID.Burning,
-                ModContent.BuffType<Shadowflame>(),
-                ModContent.BuffType<BrimstoneFlames>(),
-                ModContent.BuffType<HolyFlames>(),
-                ModContent.BuffType<GodSlayerInferno>(),
+                BuffType<Shadowflame>(),
+                BuffType<BrimstoneFlames>(),
+                BuffType<HolyFlames>(),
+                BuffType<GodSlayerInferno>(),
                 BuffID.Chilled,
                 BuffID.Frozen,
-                ModContent.BuffType<GlacialState>(),
+                BuffType<GlacialState>(),
             };
                 for (var i = 0; i < immuneDebuffs.Length; ++i)
                     Player.buffImmune[immuneDebuffs[i]] = false;
                 if (Player.yoraiz0rEye == 0)
                     Player.yoraiz0rEye = 3;
             }
-			if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == ModContent.WallType<StratusWallRemix>())
+			if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == WallType<StratusWallRemix>())
 			{
                 dungeon2 = true;
 			}
@@ -650,7 +682,8 @@ namespace CalRemix
 			phytogenSoul = false;
 			oxygenSoul = false;
 			pathogenSoul = false;
-			if (!CalamityUtils.AnyProjectiles(ModContent.ProjectileType<Fridge>()))
+            genActive = false;
+            if (!CalamityUtils.AnyProjectiles(ProjectileType<Fridge>()))
 			{
                 fridge = false;
             }
@@ -674,12 +707,12 @@ namespace CalRemix
 				{
 					rewardPool.Clear();
 				}
-				rewardPool.Add(ModContent.ItemType<Elderberry>());
+				rewardPool.Add(ItemType<Elderberry>());
 			}
         }
 		public override void OnHitNPC(NPC npc, NPC.HitInfo hit, int damageDone)
 		{
-			if (npc.life <= 0 && npc.value > 0 && twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+			if (npc.life <= 0 && npc.value > 0 && twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
 				helmet.souls++;
@@ -702,7 +735,7 @@ namespace CalRemix
             }
             if (moonFist && item.DamageType == DamageClass.Melee)
 			{
-				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
+				target.AddBuff(BuffType<Nightwither>(), 300, false);
 				if (target.boss == false && !abnormalEnemyList.Contains(target.type)) 
 				{				
 					if (Main.rand.NextBool(10))
@@ -712,12 +745,12 @@ namespace CalRemix
 					
 				}
 			}
-			if (twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+			if (twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
 				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
-                target.AddBuff(ModContent.BuffType<Wither>(), 120);
+                target.AddBuff(BuffType<Wither>(), 120);
 				target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
-                if (target.life <= 0 && target.value > 0 && item.type == ModContent.ItemType<TwistedNetheriteSword>())
+                if (target.life <= 0 && target.value > 0 && item.type == ItemType<TwistedNetheriteSword>())
                     helmet.souls += 2;
             }
         }
@@ -732,7 +765,7 @@ namespace CalRemix
 			}
 			if (moonFist && proj.DamageType == DamageClass.Melee)
 			{
-				target.AddBuff(ModContent.BuffType<Nightwither>(), 300, false);
+				target.AddBuff(BuffType<Nightwither>(), 300, false);
 				if (target.boss == false) 
 				{				
 					if(Main.rand.NextBool(10))
@@ -741,10 +774,10 @@ namespace CalRemix
 					}		
 				}
             }
-            if (twistedNetherite && Player.armor[0].type == ModContent.ItemType<TwistedNetheriteHelmet>())
+            if (twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
-                target.AddBuff(ModContent.BuffType<Wither>(), 120);
+                target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
             }
         }
@@ -756,12 +789,12 @@ namespace CalRemix
 			{
 				if (npc.type == NPCID.BlueJellyfish || npc.type == NPCID.PinkJellyfish || npc.type == NPCID.GreenJellyfish ||
 					npc.type == NPCID.FungoFish || npc.type == NPCID.BloodJelly || npc.type == NPCID.AngryNimbus || npc.type == NPCID.GigaZapper ||
-					npc.type == NPCID.MartianTurret || npc.type == ModContent.NPCType<Stormlion>() || npc.type == ModContent.NPCType<GhostBell>() || npc.type == ModContent.NPCType<BoxJellyfish>())
+					npc.type == NPCID.MartianTurret || npc.type == NPCType<Stormlion>() || npc.type == NPCType<GhostBell>() || npc.type == NPCType<BoxJellyfish>())
 					calplayer.contactDamageReduction += 1;
 				var source = Main.LocalPlayer.GetSource_OnHurt(npc);
 				Vector2 playercenter = Main.LocalPlayer.Center;
 				Vector2 spawnvector = new Vector2(playercenter.X - 4, playercenter.Y - 4);
-				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
+				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
 			}
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
@@ -769,7 +802,7 @@ namespace CalRemix
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)
 			{
-				if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ModContent.ProjectileType<DestroyerElectricLaser>() ||
+				if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ProjectileType<DestroyerElectricLaser>() ||
 					proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
 					calplayer.projectileDamageReduction += 1;
 			}
@@ -780,46 +813,46 @@ namespace CalRemix
             int roll = Main.rand.Next(100);
             if (inWater && Player.ZoneJungle && Main.hardMode && roll >= 0 && roll <= 7)
             {
-                itemDrop = ModContent.ItemType<Babilfish>();
+                itemDrop = ItemType<Babilfish>();
             }
             if (inWater && Main.bloodMoon && Main.rand.NextBool(6))
             {
-                itemDrop = ModContent.ItemType<GrandioseGland>();
+                itemDrop = ItemType<GrandioseGland>();
             }
 			if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10) && CalRemixWorld.sidegar)
 			{
-				itemDrop = ModContent.ItemType<SideGar>();
+				itemDrop = ItemType<SideGar>();
             }
             if (inWater && Player.ZoneJungle && DownedBossSystem.downedProvidence && Main.rand.NextBool(10) && CalRemixWorld.reargar)
             {
-                itemDrop = ModContent.ItemType<RearGar>();
+                itemDrop = ItemType<RearGar>();
             }
             if (inWater && Player.Calamity().ZoneSulphur && DownedBossSystem.downedPolterghast && Main.rand.NextBool(10) && CalRemixWorld.frontgar)
             {
-                itemDrop = ModContent.ItemType<FrontGar>();
+                itemDrop = ItemType<FrontGar>();
             }
             if (inWater && (Player.ZoneCrimson || Player.ZoneCorrupt) && !Main.dayTime && attempt.common && Main.rand.NextBool(10))
             {
-                itemDrop = ModContent.ItemType<TarGar>();
+                itemDrop = ItemType<TarGar>();
             }
             if (inWater && Player.Calamity().ZoneAbyss && attempt.rare && Main.rand.NextBool(10))
             {
-                itemDrop = ModContent.ItemType<ShadowGar>();
+                itemDrop = ItemType<ShadowGar>();
             }
             if (inWater && Player.Calamity().ZoneAbyssLayer4 && attempt.legendary)
             {
-                itemDrop = ModContent.ItemType<RipperShark>();
+                itemDrop = ItemType<RipperShark>();
             }
         }
         public void SpawnPhantomHeart()
         {
             if (Main.rand.NextBool(6000) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && !Player.GetModPlayer<CalamityPlayer>().pHeart)
             {
-                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
+                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
             }
             else if (Main.rand.NextBool(10800) && Player.ZoneDungeon && DownedBossSystem.downedPolterghast && Player.GetModPlayer<CalamityPlayer>().pHeart)
             {
-                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ModContent.ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
+                Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
             }
         }
         public void StealthCut(float amt)
@@ -848,7 +881,7 @@ namespace CalRemix
 					{
 						for (int slot = 0; slot < Chest.maxItems; slot++)
 						{
-							if (!NPC.AnyNPCs(ModContent.NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ModContent.ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+							if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
 							{
 								// is the rest of the chest empty
 								int ok = 0;
@@ -864,7 +897,7 @@ namespace CalRemix
 
                                     //if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int npc = NPC.NewNPC(Player.GetSource_FromThis(), i * 16, j * 16 + 1200, ModContent.NPCType<WulfwyrmHead>());
+                                        int npc = NPC.NewNPC(Player.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>());
                                         Main.npc[npc].timeLeft *= 20;
                                         CalamityUtils.BossAwakenMessage(npc);
 										Main.npc[npc].velocity.Y = -20;
@@ -919,7 +952,7 @@ namespace CalRemix
 				return;
 			if (deicide > 1800)
 			{
-				Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/DarkWreath").Value;
+				Texture2D texture = Request<Texture2D>("CalRemix/Assets/ExtraTextures/DarkWreath").Value;
                 Vector2 position = Player.Center - new Vector2(texture.Width / 2, texture.Height / 2) - Main.screenPosition + Vector2.UnitY * Player.gfxOffY;
 				position = new Vector2((int)position.X, (int)position.Y);
                 Main.spriteBatch.Draw(texture, position, Color.White);
@@ -942,7 +975,7 @@ namespace CalRemix
             {
                 anomaly109UI = false;
                 SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
-				Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
+				Player.AddBuff(BuffType<GarBoost>(), 60);
 			}
         }
 
@@ -952,7 +985,20 @@ namespace CalRemix
             {
                 anomaly109UI = false;
                 SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
-                Player.AddBuff(ModContent.BuffType<GarBoost>(), 60);
+                Player.AddBuff(BuffType<GarBoost>(), 60);
+            }
+        }
+        public override void HideDrawLayers(PlayerDrawSet drawInfo)
+        {
+            if (genActive && customGen.CoreVisible)
+            {
+                foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.Layers)
+                {
+                    if (layer == null)
+                        continue;
+                    if (HiddenLayers.Contains(layer))
+                        layer.Hide();
+                }
             }
         }
     }

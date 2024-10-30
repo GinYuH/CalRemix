@@ -18,7 +18,7 @@ namespace CalRemix.Core.World
             int plagueY2 = 0;
             if (CalamityWorld.JungleLabCenter != Vector2.Zero)
             {
-                PlaguedSpray.Convert((int)(CalamityWorld.JungleLabCenter.X / 16), (int)(CalamityWorld.JungleLabCenter.Y / 16), 222 * (WorldGen.GetWorldSize() + 1));
+                PlaguedSpray.Convert((int)(CalamityWorld.JungleLabCenter.X / 16), (int)(CalamityWorld.JungleLabCenter.Y / 16), 111 * (WorldGen.GetWorldSize() + 1));
                 plagueX = (int)(CalamityWorld.JungleLabCenter.X / 16);
                 plagueY = (int)(CalamityWorld.JungleLabCenter.Y / 16);
                 gennedplague = true;
@@ -31,7 +31,7 @@ namespace CalRemix.Core.World
                     {
                         if (Main.tile[i, j].TileType == TileID.Mud && Main.rand.NextBool(2222))
                         {
-                            PlaguedSpray.Convert(i, j, 222 * (WorldGen.GetWorldSize() + 1));
+                            PlaguedSpray.Convert(i, j, 111 * (WorldGen.GetWorldSize() + 1));
                             plagueX = i;
                             plagueY = j;
                             gennedplague = true;
@@ -54,12 +54,15 @@ namespace CalRemix.Core.World
                 {
                     if (Main.tile[plagueX, j].HasTile && !Main.tile[plagueX, j - 1].HasTile)
                     {
-                        PlaguedSpray.Convert(plagueX, j, 111 * (WorldGen.GetWorldSize() + 1));
-                        plagueY2 = j;
-                        break;
+                        if (Main.tile[plagueX, j].TileType == TileID.Mud || Main.tile[plagueX, j].TileType == TileID.JungleGrass)
+                        {
+                            PlaguedSpray.Convert(plagueX, j, 55 * (WorldGen.GetWorldSize() + 1));
+                            plagueY2 = j;
+                            break;
+                        }
                     }
                 }
-                for (int i = plagueX - 33 * (WorldGen.GetWorldSize() + 1); i < 33 * (WorldGen.GetWorldSize() + 1) + plagueX; i++)
+                for (int i = plagueX - 15 * (WorldGen.GetWorldSize() + 1); i < 15 * (WorldGen.GetWorldSize() + 1) + plagueX; i++)
                 {
                     for (int j = plagueY2; j < plagueY; j++)
                     {

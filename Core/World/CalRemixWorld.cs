@@ -666,23 +666,9 @@ namespace CalRemix.Core.World
                 trueStory++;
             }
         }
-        public static void RefreshBestiary(BestiaryEntry entry, NPC npc, string text)
-        {
-            entry.AddTags(BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption);
-            entry.Info.Add(new FlavorTextBestiaryInfoElement(text));
-            npc.ModNPC?.SetBestiary(Main.BestiaryDB, entry);
-        }
+
         public override void PostUpdateWorld()
         {
-            NPC heart = ContentSamples.NpcsByNetId[NPCType<DarkHeart>()];
-            if (!BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(heart.type).Info.Contains(BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption))
-            {
-                NPC creep = ContentSamples.NpcsByNetId[NPCType<DankCreeper>()];
-                NPC blob = ContentSamples.NpcsByNetId[NPCType<HiveBlob>()];
-                RefreshBestiary(BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(creep.type), creep, "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
-                RefreshBestiary(BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(heart.type), heart, "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
-                RefreshBestiary(BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(blob.type), blob, "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
-            }
             if (meldCountdown > 0)
             {
                 meldCountdown--;

@@ -174,6 +174,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                 // Move towards the player
                 case (int)PhaseType.Idle:
                     {
+                        NPC.Calamity().newAI[2]++;
                         int phaseTime = 90;
                         NPC.ai[1]++;
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 5;
