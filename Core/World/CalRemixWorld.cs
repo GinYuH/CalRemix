@@ -892,6 +892,11 @@ namespace CalRemix.Core.World
         {
             int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
+            int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
+            tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
+                progress.Message = "Building a Wintery Castle";
+                FrozenStronghold.GenerateFrozenStronghold();
+            }));
             tasks.Insert(GraniteIndex, new PassLegacy("Asbestos", (progress, passConfig) =>
             {
                 progress.Message = "Spreading the True Plague";
@@ -952,8 +957,7 @@ namespace CalRemix.Core.World
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Origen Workshop", (progress, config) => { OrigenWorkshop.GenerateOrigenWorkshop(); }));
-                tasks.Insert(FinalIndex, new PassLegacy("Frozen Stronghold", (progress, config) => { FrozenStronghold.GenerateFrozenStronghold(); }));
-                tasks.Insert(FinalIndex, new PassLegacy("Building a bomb", (progress, config) =>
+                tasks.Insert(FinalIndex, new PassLegacy("Building a Bomb", (progress, config) =>
                 {
                     Rectangle sus = FindCentralGeode();
                     int hydrogenRadius = 10;
