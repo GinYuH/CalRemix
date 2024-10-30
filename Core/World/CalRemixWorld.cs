@@ -53,6 +53,7 @@ using CalRemix.Content.Items.Lore;
 using CalamityMod.Schematics;
 using CalamityMod.Items.Potions;
 using CalRemix.Core.Scenes;
+using CalRemix.Content.Walls;
 
 namespace CalRemix.Core.World
 {
@@ -951,6 +952,7 @@ namespace CalRemix.Core.World
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Origen Workshop", (progress, config) => { OrigenWorkshop.GenerateOrigenWorkshop(); }));
+                tasks.Insert(FinalIndex, new PassLegacy("Frozen Stronghold", (progress, config) => { FrozenStronghold.GenerateFrozenStronghold(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Building a bomb", (progress, config) =>
                 {
                     Rectangle sus = FindCentralGeode();

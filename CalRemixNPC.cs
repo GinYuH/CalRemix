@@ -678,6 +678,7 @@ namespace CalRemix
             }
             if (shop.NpcType == NPCType<DILF>())
             {
+                shop.Add(new NPCShop.Entry(ItemType<FrostflakeBrick>()));
                 shop.Add(new NPCShop.Entry(ItemType<ColdheartIcicle>()));
                 shop.Add(new NPCShop.Entry(ItemType<TheGenerator>(), new Condition("Conditions.DownedGens", () => RemixDowned.DownedGens)));
             }

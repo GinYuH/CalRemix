@@ -28,6 +28,7 @@ using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Core.World;
+using CalRemix.Content.Walls;
 
 namespace CalRemix
 {
@@ -368,6 +369,33 @@ namespace CalRemix
                     }
                 }
             }
+        }
+
+        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
+        {
+            if (type == TileType<CryonicBrick>())
+            {
+                return Main.hardMode;
+            }
+            return true;
+        }
+
+        public override bool CanExplode(int i, int j, int type)
+        {
+            if (type == TileType<CryonicBrick>())
+            {
+                return Main.hardMode;
+            }
+            return true;
+        }
+
+        public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
+        {
+            if (type == TileType<CryonicBrick>())
+            {
+                return Main.hardMode;
+            }
+            return true;
         }
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
