@@ -2,6 +2,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
 using Terraria;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -34,6 +35,12 @@ namespace CalRemix.Content.Items.Placeables
             recipe.AddIngredient(ModContent.ItemType<FrostflakeWall>(), 4);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
+
+            CreateRecipe(100).
+                AddIngredient(ModContent.ItemType<DeliciousMeat>()).
+                AddIngredient(TileID.Stone, 100).
+                AddTile(TileID.Anvils).
+                Register();
         }
     }
 }
