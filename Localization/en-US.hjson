@@ -2786,6 +2786,8 @@ Mods: {
 					Tooltip: ""
 				}
 			}
+
+			AltaroftheAblessed.DisplayName: Altar of the Ablessed
 		}
 
 		NPCs: {
@@ -3510,6 +3512,7 @@ Mods: {
 			OxygenTrophyPlaced.MapEntry: Oxygen Trophy
 			PathogenTrophyPlaced.MapEntry: Pathogen Trophy
 			PhytogenTrophyPlaced.MapEntry: Phytogen Trophy
+			AltaroftheAblessedPlaced.MapEntry: Altarofthe Ablessed Placed
 		}
 
 		Enchantments: {
