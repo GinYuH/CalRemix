@@ -37,14 +37,15 @@ namespace CalRemix.Core.World
             int assIce = ModContent.TileType<AstralIce>();
             int assSnow = ModContent.TileType<AstralSnow>();
             bool shouldbreak = false;
+            int snowBottom = GenVars.snowTop;
             for (int att = 0; att < 100000; att++)
             {
                 if (shouldbreak)
                 {
                     break;
                 }
-                int i = WorldGen.genRand.Next(GenVars.snowOriginLeft, GenVars.snowOriginRight);
-                int j = WorldGen.genRand.Next(GenVars.snowTop - 100, GenVars.snowTop + 22);
+                int i = WorldGen.genRand.Next(GenVars.snowOriginLeft - 200, GenVars.snowOriginRight + 200);
+                int j = WorldGen.genRand.Next(GenVars.snowTop - 250, snowBottom);
                 
                 // At attempt 199 dont bother with rng and just generate the stronghold immediately
                 Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Frozen Stronghold"].GetLength(0), RemixSchematics.TileMaps["Frozen Stronghold"].GetLength(1));
@@ -103,13 +104,10 @@ namespace CalRemix.Core.World
 
         public static void FillStrongholdChest(Chest c, int Type, bool place)
         {
-            if (place)
-                CalculateLoot(ref c);
-            else
-                CalculateLoot(ref c);
+            CalculateLoot(ref c, place);
         }
 
-        public static void CalculateLoot(ref Chest c)
+        public static void CalculateLoot(ref Chest c, bool first)
         {
             WeightedRandom<(int, int, int)> items = new WeightedRandom<(int, int, int)>();
             // Blocks
@@ -200,6 +198,8 @@ namespace CalRemix.Core.World
             for (int i = 0; i < Chest.maxItems; i++)
             {
                 (int, int, int) choice = items.Get();
+                if (first)
+                    choice = items.Get();
                 Item item = c.item[i];
                 item.SetDefaults(choice.Item1);
                 item.stack = Main.rand.Next(choice.Item2, choice.Item3);

@@ -43,6 +43,7 @@ using CalRemix.Content.Items.Critters;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalamityMod.Items.Placeables;
 
 namespace CalRemix
 {
@@ -274,6 +275,10 @@ namespace CalRemix
                 if (recipe.HasIngredient(ItemType<GrandScale>()))
                 {
                     recipe.DisableRecipe();
+                }
+                if (recipe.HasResult(ItemType<CryonicBrick>()) && recipe.HasIngredient(ItemType<CryonicOre>()))
+                {
+                    recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ItemType<ShadowspecBar>()))
                 {
