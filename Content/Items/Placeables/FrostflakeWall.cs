@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.useTime = 7;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.createWall = ModContent.WallType<FrostflakeWallPlaced>();
+            Item.createWall = ModContent.WallType<FrostflakeWallFriendlyPlaced>();
         }
 
         public override void AddRecipes()

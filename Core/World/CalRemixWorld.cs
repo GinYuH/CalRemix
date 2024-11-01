@@ -54,6 +54,7 @@ using CalamityMod.Schematics;
 using CalamityMod.Items.Potions;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Walls;
+using CalamityMod.Tiles;
 
 namespace CalRemix.Core.World
 {
@@ -72,6 +73,7 @@ namespace CalRemix.Core.World
         public static int PlagueDesertTiles;
         public static int baronTiles;
         public static int MeldTiles;
+        public static int strongholdTiles;
 
         public static int ShrineTimer = -20;
         public static bool loadedRecipeInjections = false;
@@ -578,9 +580,9 @@ namespace CalRemix.Core.World
                 if (reargar)
                 {
                     RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
                     RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
                 }
                 if (frontgar)
                 {
@@ -827,7 +829,7 @@ namespace CalRemix.Core.World
                 {
                     var postDuke = new LeadingConditionRule(DropHelper.PostProv());
                     postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
-                    postDuke.Add(ItemType<UelibloomBar>(), new Fraction(15, 100), 4, 7);
+                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
                     Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
                     Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
                 }
@@ -866,6 +868,7 @@ namespace CalRemix.Core.World
             PlagueDesertTiles = 0;
             MeldTiles = 0;
             baronTiles = 0;
+            strongholdTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -882,6 +885,7 @@ namespace CalRemix.Core.World
             tileCounts[TileType<Sporezol>()];
             PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
             MeldTiles = tileCounts[TileType<MeldGunkPlaced>()];
+            strongholdTiles = tileCounts[TileType<FrostflakeBrickPlaced>()] + tileCounts[TileType<CryonicBrick>()];
             baronTiles = tileCounts[TileType<BrinerackPlaced>()] + tileCounts[TileType<TanzaniteGlassPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()] + tileCounts[TileType<BaronsandPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;

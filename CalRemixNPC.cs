@@ -77,6 +77,7 @@ using CalRemix.Content.Items.Ammo;
 using CalamityMod.Items.Potions.Alcohol;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Misc;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix
 {
@@ -1270,6 +1271,11 @@ namespace CalRemix
                 spawnRate = (int)(spawnRate * 0.2f);
                 maxSpawns *= 8;
             }
+            if (player.InModBiome<FrozenStrongholdBiome>())
+            {
+                spawnRate = (int)(spawnRate * 0.3f);
+                maxSpawns *= 12;
+            }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
@@ -1284,6 +1290,16 @@ namespace CalRemix
             if (CalRemixWorld.oxydayTime > 0)
             {
                 pool.Add(NPCID.Dandelion, 100);
+            }
+            if (spawnInfo.Player.InModBiome<FrozenStrongholdBiome>())
+            {
+                foreach (var n in pool)
+                {
+                    if (n.Key != ModContent.NPCType<FrozenMummy>() && n.Key != ModContent.NPCType<EnchantedSkull>() && n.Key != ModContent.NPCType<EnchantedTome>())
+                    {
+                        pool.Remove(n);
+                    }
+                }
             }
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {

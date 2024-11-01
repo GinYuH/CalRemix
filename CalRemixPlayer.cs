@@ -56,6 +56,7 @@ using CalRemix.Content;
 using CalRemix.Content.Cooldowns;
 using CalRemix.Core;
 using Terraria.ModLoader.IO;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix
 {
@@ -608,6 +609,14 @@ namespace CalRemix
                 if (timeSmoked > 0)
                     timeSmoked--;
             }
+			// Kick people from chests in pre hardmode
+			if (Player.chest > -1)
+			{
+				if (Player.InModBiome<FrozenStrongholdBiome>() && !Main.hardMode)
+				{
+					Player.chest = -1;
+				}
+			}
             #region stealth cuts
             if (tvo) //Verboten one
 			{

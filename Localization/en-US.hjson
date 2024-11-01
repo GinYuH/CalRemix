@@ -147,6 +147,11 @@ Mods: {
 				DisplayName: Baron Strait
 				TownNPCDialogueName: the Baron Strait Biome
 			}
+
+			FrozenStrongholdBiome: {
+				DisplayName: Frozen Stronghold
+				TownNPCDialogueName: the Frozen Stronghold Biome
+			}
 		}
 
 		Buffs: {
@@ -2764,6 +2769,23 @@ Mods: {
 				DisplayName: Total Annihilation
 				Tooltip: ""
 			}
+
+			FrostflakeBrick: {
+				DisplayName: Frostflake Brick
+				Tooltip: ""
+			}
+
+			FrostflakeWall: {
+				DisplayName: Frostflake Wall
+				Tooltip: ""
+			}
+
+			Dyes: {
+				WulfrumDye: {
+					DisplayName: Wulfrum Dye
+					Tooltip: ""
+				}
+			}
 		}
 
 		NPCs: {
@@ -3121,6 +3143,7 @@ Mods: {
 				}
 
 				DisplayName: Archwitch
+				Census.SpawnCondition: Conditions unknown
 			}
 
 			UNCANNY: {
@@ -3140,6 +3163,7 @@ Mods: {
 				}
 
 				DisplayName: Archwizard
+				Census.SpawnCondition: Conditions unknown
 			}
 
 			IRON: {
@@ -3159,6 +3183,7 @@ Mods: {
 				}
 
 				DisplayName: Archmagian
+				Census.SpawnCondition: Conditions unknown
 			}
 
 			KABLOOEY: {
@@ -3178,6 +3203,7 @@ Mods: {
 				}
 
 				DisplayName: Archdiviner
+				Census.SpawnCondition: Conditions unknown
 			}
 
 			SIIVA: {
@@ -3197,6 +3223,7 @@ Mods: {
 				}
 
 				DisplayName: Archdruid
+				Census.SpawnCondition: Conditions unknown
 			}
 
 			WALTER: {
@@ -3216,6 +3243,7 @@ Mods: {
 				}
 
 				DisplayName: Archmagus
+				Census.SpawnCondition: Conditions unknown
 			}
 
 			HypnosDraedon.DisplayName: Draedon
@@ -3223,6 +3251,9 @@ Mods: {
 			MushroomElemental.DisplayName: Mushroom Elemental
 			ChampEye.DisplayName: Champ Eye
 			EternalChampEye.DisplayName: Eternal Champ Eye
+			EnchantedSkull.DisplayName: Enchanted Skull
+			EnchantedTome.DisplayName: Enchanted Tome
+			FrozenMummy.DisplayName: Frozen Mummy
 		}
 
 		Projectiles: {

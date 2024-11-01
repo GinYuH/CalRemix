@@ -4,11 +4,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalamityMod.Walls;
 
 namespace CalRemix
 {
     public class CalRemixWall : GlobalWall
     {
+        public override void SetStaticDefaults()
+        {
+            //TileID.Sets.HousingWalls[WallType<CryonicBrickWall>()] = false;
+            //Main.wallHouse[WallType<CryonicBrickWall>()] = false;
+        }
         public override void KillWall(int i, int j, int type, ref bool fail)
         {
             if (Main.LocalPlayer.InModBiome<AsbestosBiome>())

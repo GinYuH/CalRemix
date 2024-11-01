@@ -103,6 +103,14 @@ namespace CalRemix.Core.World
 
         public static void FillStrongholdChest(Chest c, int Type, bool place)
         {
+            if (place)
+                CalculateLoot(ref c);
+            else
+                CalculateLoot(ref c);
+        }
+
+        public static void CalculateLoot(ref Chest c)
+        {
             WeightedRandom<(int, int, int)> items = new WeightedRandom<(int, int, int)>();
             // Blocks
             items.Add((ItemID.IceBlock, 236, 514), 999);
@@ -138,7 +146,7 @@ namespace CalRemix.Core.World
             items.Add((ItemID.FrozenKey, 1, 2), 40);
             items.Add((ItemID.IceBow, 1, 2), 60);
             items.Add((ItemID.IceFeather, 1, 2), 60);
-            items.Add((ModContent.ItemType<AncientIceChunk>(), 1, 2), 60);
+            items.Add((ModContent.ItemType<AncientIceChunk>(), 1, 2), 40);
             items.Add((ModContent.ItemType<FrostBarrier>(), 1, 2), 120);
             items.Add((ModContent.ItemType<CryonicOre>(), 1, 5), 200);
             items.Add((ModContent.ItemType<EssenceofEleum>(), 1, 5), 200);
