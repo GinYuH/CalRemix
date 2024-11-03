@@ -37,7 +37,8 @@ namespace CalRemix.Core.World
             int assIce = ModContent.TileType<AstralIce>();
             int assSnow = ModContent.TileType<AstralSnow>();
             bool shouldbreak = false;
-            int snowBottom = GenVars.snowTop;
+            int snowTop = CalRemixAddon.Remnants != null ? 0 : GenVars.snowTop - 250;
+            int snowBottom = CalRemixAddon.Remnants != null ? Main.maxTilesY / 4 : GenVars.snowTop;
             for (int att = 0; att < 100000; att++)
             {
                 if (shouldbreak)
@@ -45,7 +46,7 @@ namespace CalRemix.Core.World
                     break;
                 }
                 int i = WorldGen.genRand.Next(GenVars.snowOriginLeft - 200, GenVars.snowOriginRight + 200);
-                int j = WorldGen.genRand.Next(GenVars.snowTop - 250, snowBottom);
+                int j = WorldGen.genRand.Next(snowTop, snowBottom);
                 
                 // At attempt 199 dont bother with rng and just generate the stronghold immediately
                 Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Frozen Stronghold"].GetLength(0), RemixSchematics.TileMaps["Frozen Stronghold"].GetLength(1));
@@ -64,7 +65,7 @@ namespace CalRemix.Core.World
                         if (att < 50000)
                         {
                             // Check to see if there are 90 blocks of air above
-                            int blocksToCheck = WorldGen.GetWorldSize() == 1 ? 30 : 70;
+                            int blocksToCheck = WorldGen.GetWorldSize() == 1 || CalRemixAddon.Remnants == null ? 30 : 70;
                             if (att > 30000)
                                 blocksToCheck = (int)(blocksToCheck * 0.5f);
                             if (att > 40000)

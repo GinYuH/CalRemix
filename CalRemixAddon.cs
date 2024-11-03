@@ -53,6 +53,8 @@ namespace CalRemix
         public static Type calvalFanny = null;
         public static Type calvalFannyBox = null;
 
+        public static Mod Remnants;
+
         public static readonly List<string> Names = new List<string>()
         {
             "ApothTestMod",
@@ -82,6 +84,8 @@ namespace CalRemix
             ModLoader.TryGetMod("Census", out Census);
             ModLoader.TryGetMod("MusicDisplay", out MusicDisplay);
             ModLoader.TryGetMod("Wikithis", out Wikithis);
+
+            ModLoader.TryGetMod("Remnants", out Remnants);
 
             if (CalVal != null)
             {
@@ -114,6 +118,8 @@ namespace CalRemix
             Census = null;
             MusicDisplay = null;
             Wikithis = null;
+
+            Remnants = null;
         }
         public override void PostSetupContent()
         {
