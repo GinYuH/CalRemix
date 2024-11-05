@@ -248,7 +248,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             float val = 0;
             if (spawnInfo.Player.Calamity().ZoneAbyssLayer4)
-                val = SpawnCondition.CaveJellyfish.Chance * 0.0022f;
+                val = SpawnCondition.CaveJellyfish.Chance * 0.22f;
 
             if (DownedBossSystem.downedExoMechs && spawnInfo.Player.ZoneForest)
                 val = SpawnCondition.OverworldNightMonster.Chance * 0.000022f;
