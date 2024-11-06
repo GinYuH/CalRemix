@@ -127,6 +127,10 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow, maxWidth: 1000, fontSize: 0.8f)
                 .ChainAfter();
 
+            HelperMessage.New("Dyes", "I've always thought dyes were a bit worthless. I mean come on! True beauty comes from the inside! No need to pretty yourself up on the outside! So my solution to this was making it so that all dyes now make you stronger! Have fun coming up with dye combos! Or just equipping the same dye in every slot, that works too.",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any((Item i) => i.dye > 0)).AddItemDisplay(ModContent.ItemType<ElementalDye>());
+
+
             #endregion
 
             #region CrossMod

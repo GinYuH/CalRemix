@@ -122,6 +122,8 @@ namespace CalRemix.Core.World
         public static bool remixJump = true;
         public static bool hydrogenBomb = true;
         public static bool baronStrait = true;
+        public static bool dyeStats = true;
+        public static bool champions = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -217,6 +219,7 @@ namespace CalRemix.Core.World
             shrinetoggle = true;
             lifeoretoggle = true;
             itemChanges = true;
+            dyeStats = true;
             if (itemChanges)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
@@ -271,6 +274,7 @@ namespace CalRemix.Core.World
             remixJump = true;
             hydrogenBomb = true;
             baronStrait = true;
+            champions = true;
 
             loadedRecipeInjections = false;
 
@@ -331,6 +335,8 @@ namespace CalRemix.Core.World
             remixJump = true;
             hydrogenBomb = true;
             baronStrait = true;
+            dyeStats = false;
+            champions = false;
 
             loadedRecipeInjections = false;
 
@@ -385,6 +391,8 @@ namespace CalRemix.Core.World
             tag["109remixJump"] = remixJump;
             tag["109hydrogen"] = hydrogenBomb;
             tag["109baron"] = baronStrait;
+            tag["109dye"] = dyeStats;
+            tag["109champ"] = champions;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -444,6 +452,8 @@ namespace CalRemix.Core.World
             remixJump = tag.Get<bool>("109remixJump");
             hydrogenBomb = tag.Get<bool>("109hydrogen");
             baronStrait = tag.Get<bool>("109baron");
+            dyeStats = tag.Get<bool>("109dye");
+            champions = tag.Get<bool>("109champ");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -500,6 +510,8 @@ namespace CalRemix.Core.World
             writer.Write(remixJump);
             writer.Write(hydrogenBomb);
             writer.Write(baronStrait);
+            writer.Write(dyeStats);
+            writer.Write(champions);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -557,6 +569,8 @@ namespace CalRemix.Core.World
             remixJump = reader.ReadBoolean();
             hydrogenBomb = reader.ReadBoolean();
             baronStrait = reader.ReadBoolean();
+            dyeStats = reader.ReadBoolean();
+            champions = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();

@@ -2,6 +2,7 @@
 using CalamityMod.CalPlayer;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
@@ -99,7 +100,7 @@ namespace CalRemix
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
             // Only naturally spawned enemies can become champions
-            if (source is EntitySource_SpawnNPC && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode)
+            if (source is EntitySource_SpawnNPC && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode && CalRemixWorld.champions)
             {
                 TrySpawnChampion(npc);
             }

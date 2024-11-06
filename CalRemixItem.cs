@@ -730,7 +730,7 @@ namespace CalRemix
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (CalRemixPlayer.dyeStats.ContainsKey(item.type))
+            if (CalRemixPlayer.dyeStats.ContainsKey(item.type) && CalRemixWorld.dyeStats)
             {
                 DyeStats stats = CalRemixPlayer.dyeStats[item.type];
                 string ret = "";

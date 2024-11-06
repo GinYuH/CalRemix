@@ -33,6 +33,7 @@ using CalamityMod.Events;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Core
 {
@@ -54,6 +55,7 @@ namespace CalRemix.Core
             //On_Player.ItemCheck_Shoot += SoldierShots;
             On_IngameOptions.DrawLeftSide += SendToFannyDimension;
             On_UIWorldCreation.BuildPage += AddRemixOption;
+            On_Player.UpdateItemDye += AddDyeStats;
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
 
@@ -63,9 +65,198 @@ namespace CalRemix.Core
         }
         private static void StopStarfall(On_Star.orig_Fall orig, Star self)
         {
+            orig(self);
+            return;
             if (GetInstance<CalRemixMenu>().IsSelected && Main.gameMenu)
                 return;
             orig(self);
+        }
+
+        private static void AddDyeStats(Terraria.On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot, bool isSetToHidden, Item armorItem, Item dyeItem)
+        {
+            orig(self, isNotInVanitySlot, isSetToHidden, armorItem, dyeItem);
+            if (armorItem.IsAir || !CalRemixWorld.dyeStats)
+            {
+                return;
+            }
+            bool itemVisibleAnyways = armorItem.wingSlot > 0 || armorItem.type == ItemID.FlyingCarpet || armorItem.type == ItemID.PortableStool || armorItem.type == 5126 || armorItem.type == ItemID.UnicornHornHat || armorItem.type == ItemID.AngelHalo;
+            bool hiddenFunctional = isNotInVanitySlot && isSetToHidden;
+            bool shouldDyeWork = false;
+            if (armorItem.shieldSlot > 0 && armorItem.shieldSlot < ArmorIDs.Shield.Count && (self.cShieldFallback == -1 || !hiddenFunctional))
+            {
+                shouldDyeWork = true;
+            }
+            if (!itemVisibleAnyways && hiddenFunctional)
+            {
+                return;
+            }
+            if (armorItem.handOnSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.handOffSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.backSlot > 0)
+            {
+                if (ArmorIDs.Back.Sets.DrawInBackpackLayer[armorItem.backSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else if (ArmorIDs.Back.Sets.DrawInTailLayer[armorItem.backSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.frontSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.shoeSlot > 0)
+            {
+                if (armorItem.type == ItemID.FlameWakerBoots || armorItem.type == ItemID.HellfireTreads)
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.waistSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.shieldSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.neckSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.faceSlot > 0)
+            {
+                if (ArmorIDs.Face.Sets.DrawInFaceHeadLayer[armorItem.faceSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else if (ArmorIDs.Face.Sets.DrawInFaceFlowerLayer[armorItem.faceSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.beardSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.balloonSlot > 0)
+            {
+                if (ArmorIDs.Balloon.Sets.DrawInFrontOfBackArmLayer[armorItem.balloonSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.wingSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.FlyingCarpet)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.FloatingTube)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.PortableStool || armorItem.type == 5126)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.UnicornHornHat)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.AngelHalo)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.CritterShampoo)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.LeinforsAccessory)
+            {
+                shouldDyeWork = true;
+            }
+            if (shouldDyeWork)
+            {
+                CountDyes(ref self, dyeItem.type);
+            }
+        }
+
+        public static void CountDyes(ref Player player, int id)
+        {
+            if (player.TryGetModPlayer(out CalRemixPlayer p))
+            {
+                if (CalRemixPlayer.dyeStats.ContainsKey(id))
+                {
+                    DyeStats d = CalRemixPlayer.dyeStats[id];
+                    p.dyesRed += d.red;
+                    p.dyesOrange += d.orange;
+                    p.dyesYellow += d.yellow;
+                    p.dyesLime += d.lime;
+                    p.dyesGreen += d.green;
+                    p.dyesCyan += d.cyan;
+                    p.dyesLightBlue += d.skyblue;
+                    p.dyesDarkBlue += d.blue;
+                    p.dyesTeal += d.teal;
+                    p.dyesPurple += d.purple;
+                    p.dyesViolet += d.violet;
+                    p.dyesBrown += d.brown;
+                    p.dyesPink += d.pink;
+                    p.dyesSilver += d.silver;
+                    p.dyesBlack += d.black;
+                }
+            }
+        }
+        public static void CountDyes(Player player, int id)
+        {
+            if (player.TryGetModPlayer(out CalRemixPlayer p))
+            {
+                if (CalRemixPlayer.dyeStats.ContainsKey(id))
+                {
+                    DyeStats d = CalRemixPlayer.dyeStats[id];
+                    p.dyesRed += d.red;
+                    p.dyesOrange += d.orange;
+                    p.dyesYellow += d.yellow;
+                    p.dyesLime += d.lime;
+                    p.dyesGreen += d.green;
+                    p.dyesCyan += d.cyan;
+                    p.dyesLightBlue += d.skyblue;
+                    p.dyesDarkBlue += d.blue;
+                    p.dyesTeal += d.teal;
+                    p.dyesPurple += d.purple;
+                    p.dyesViolet += d.violet;
+                    p.dyesBrown += d.brown;
+                    p.dyesPink += d.pink;
+                    p.dyesSilver += d.silver;
+                    p.dyesBlack += d.black;
+                }
+            }
         }
 
         /*

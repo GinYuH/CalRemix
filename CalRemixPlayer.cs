@@ -362,10 +362,13 @@ namespace CalRemix
 			else
                 Player.GetJumpState<DefaultJump>().Disable();
 
-            for (int i = 0; i < 3; i++)
-                CalRemixHooks.CountDyes(Player, Player.dye[i].type);
-            for (int i = 0; i < 5; i++)
-                CalRemixHooks.CountDyes(Player, Player.miscDyes[i].type);
+            if (CalRemixWorld.dyeStats)
+            {
+                for (int i = 0; i < 3; i++)
+                    CalRemixHooks.CountDyes(Player, Player.dye[i].type);
+                for (int i = 0; i < 5; i++)
+                    CalRemixHooks.CountDyes(Player, Player.miscDyes[i].type);
+            }
         }
 		public override void PreUpdate()
         {
