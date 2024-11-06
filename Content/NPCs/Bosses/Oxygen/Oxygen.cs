@@ -25,6 +25,7 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Bosses.Oxygen
 {
@@ -475,6 +476,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             npcLoot.Add(ModContent.ItemType<OxygenTrophy>(), 10);
             npcLoot.AddNormalOnly(ModContent.ItemType<OxygenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofOxygen>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<ShardofGlass>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOxygen, ModContent.ItemType<KnowledgeOxygen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()

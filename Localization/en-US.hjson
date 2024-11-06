@@ -2788,6 +2788,11 @@ Mods: {
 			}
 
 			AltaroftheAblessed.DisplayName: Altar of the Ablessed
+
+			ShardofGlass: {
+				DisplayName: Shard of Glass
+				Tooltip: Durability
+			}
 		}
 
 		NPCs: {
