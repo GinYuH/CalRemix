@@ -57,9 +57,31 @@ using CalRemix.Content.Cooldowns;
 using CalRemix.Core;
 using Terraria.ModLoader.IO;
 using CalRemix.Core.Biomes;
+using CalamityMod.Projectiles.Magic;
+using CalamityMod.Items.Dyes;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix
 {
+	public struct DyeStats(int red = 0, int orange = 0, int yellow = 0, int lime = 0, int green = 0, int cyan = 0, int teal = 0, int skyblue = 0, int blue = 0, int purple = 0, int violet = 0, int pink = 0, int brown = 0, int black = 0, int silver = 0)
+	{
+		public int red = red;
+        public int orange = orange;
+        public int yellow = yellow;
+        public int lime = lime;
+        public int green = green;
+        public int cyan = cyan;
+        public int teal = teal;
+        public int skyblue = skyblue;
+        public int blue = blue;
+        public int purple = purple;
+        public int violet = violet;
+        public int brown = brown;
+        public int pink = pink;
+        public int silver = silver;
+        public int black = black;
+	}
+
     public class CalRemixPlayer : ModPlayer
 	{
         public bool earthEnchant;
@@ -158,6 +180,25 @@ namespace CalRemix
         public bool generatingGen = false;
         public bool genActive = false;
         public bool genMusic = true;
+
+		public int dyesRed = 0;
+        public int dyesOrange = 0;
+        public int dyesYellow = 0;
+        public int dyesLime = 0;
+        public int dyesGreen = 0;
+        public int dyesTeal = 0;
+        public int dyesCyan = 0;
+        public int dyesLightBlue = 0;
+        public int dyesDarkBlue = 0;
+        public int dyesPurple = 0;
+        public int dyesViolet = 0;
+        public int dyesPink = 0;
+        public int dyesBlack = 0;
+        public int dyesBrown = 0;
+        public int dyesSilver = 0;
+
+		public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
+
         private static readonly List<PlayerDrawLayer> HiddenLayers =
         [
             PlayerDrawLayers.Wings,
@@ -195,6 +236,12 @@ namespace CalRemix
 			NPCType<DerellectPlug>(),*/
 			NPCType<LifeSlime>()
 		};
+
+        public override void Load()
+        {
+            LoadDyeStats();
+        }
+
         public override void SaveData(TagCompound tag)
         {
             tag["GeneratorPlayerGen"] = customGen;
@@ -314,6 +361,11 @@ namespace CalRemix
 				Player.GetJumpState<DefaultJump>().Enable();
 			else
                 Player.GetJumpState<DefaultJump>().Disable();
+
+            for (int i = 0; i < 3; i++)
+                CalRemixHooks.CountDyes(Player, Player.dye[i].type);
+            for (int i = 0; i < 5; i++)
+                CalRemixHooks.CountDyes(Player, Player.miscDyes[i].type);
         }
 		public override void PreUpdate()
         {
@@ -391,7 +443,7 @@ namespace CalRemix
 					if (!NPC.AnyNPCs(NPCType<Hydrogen>()))
 						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
 				}
-			}
+            }
         }
 
         public override bool PreItemCheck()
@@ -616,7 +668,21 @@ namespace CalRemix
 				{
 					Player.chest = -1;
 				}
-			}
+            }
+
+            Player.GetDamage<GenericDamageClass>() += dyesRed;
+            Player.GetKnockback<GenericDamageClass>() += (float)(dyesPurple * 0.01f);
+            Player.GetAttackSpeed<GenericDamageClass>() += (float)(dyesOrange * 0.01f);
+            Player.GetCritChance<GenericDamageClass>() += (float)(dyesCyan * 0.01f);
+            Player.moveSpeed += (float)(dyesYellow * 0.01f);
+            Player.luck += dyesLime;
+            Player.jumpSpeed += dyesGreen;
+            Player.endurance += (float)(dyesTeal * 0.01f);
+            Player.statDefense += dyesDarkBlue;
+            Player.aggro += dyesViolet;
+            Player.tileRangeX += dyesBrown;
+            Player.tileRangeY += dyesBrown;
+            Player.wingTimeMax += dyesLightBlue * 10;
             #region stealth cuts
             if (tvo) //Verboten one
 			{
@@ -692,6 +758,21 @@ namespace CalRemix
 			oxygenSoul = false;
 			pathogenSoul = false;
             genActive = false;
+			dyesRed = 0;
+			dyesOrange = 0;
+			dyesYellow = 0;
+			dyesLime = 0;
+			dyesGreen = 0;
+			dyesCyan = 0;
+			dyesTeal = 0;
+			dyesLightBlue = 0;
+			dyesDarkBlue = 0;
+			dyesPurple = 0;
+			dyesViolet = 0;
+			dyesSilver = 0;
+			dyesBlack = 0;
+			dyesBrown = 0;
+			dyesPink = 0;
             if (!CalamityUtils.AnyProjectiles(ProjectileType<Fridge>()))
 			{
                 fridge = false;
@@ -939,7 +1020,16 @@ namespace CalRemix
                 Player.lifeRegen -= 240;
             }
         }
-		public override void FrameEffects()
+
+        public override void UpdateLifeRegen()
+        {
+            bool positive = Player.lifeRegen > 0;
+            Player.lifeRegen += dyesPink;
+            if (Player.lifeRegen <= 0 && positive)
+                Player.lifeRegen = 1;
+        }
+
+        public override void FrameEffects()
 		{
 			if (Player.GetJumpState<DefaultJump>().Active)
 				Player.armorEffectDrawShadow = true;
@@ -1009,6 +1099,169 @@ namespace CalRemix
                         layer.Hide();
                 }
             }
+        }
+
+		public static void LoadDyeStats()
+		{
+			// Basics
+			dyeStats.Add(ItemID.RedDye, new DyeStats(red: 1));
+            dyeStats.Add(ItemID.OrangeDye, new DyeStats(orange: 1));
+            dyeStats.Add(ItemID.YellowDye, new DyeStats(yellow: 1));
+            dyeStats.Add(ItemID.LimeDye, new DyeStats(lime: 1));
+            dyeStats.Add(ItemID.GreenDye, new DyeStats(green: 1));
+            dyeStats.Add(ItemID.CyanDye, new DyeStats(cyan: 1));
+			dyeStats.Add(ItemID.TealDye, new DyeStats(teal: 1));
+            dyeStats.Add(ItemID.SkyBlueDye, new DyeStats(skyblue: 1));
+            dyeStats.Add(ItemID.BlueDye, new DyeStats(blue: 1));
+            dyeStats.Add(ItemID.PurpleDye, new DyeStats(purple: 1));
+            dyeStats.Add(ItemID.VioletDye, new DyeStats(violet: 1));
+            dyeStats.Add(ItemID.PinkDye, new DyeStats(pink: 1));
+            dyeStats.Add(ItemID.BrownDye, new DyeStats(brown: 1));
+            dyeStats.Add(ItemID.SilverDye, new DyeStats(silver: 1));
+            dyeStats.Add(ItemID.BlackDye, new DyeStats(black: 1));
+			// Bright
+            dyeStats.Add(ItemID.BrightRedDye, new DyeStats(red: 2));
+            dyeStats.Add(ItemID.BrightOrangeDye, new DyeStats(orange: 2));
+            dyeStats.Add(ItemID.BrightYellowDye, new DyeStats(yellow: 2));
+            dyeStats.Add(ItemID.BrightLimeDye, new DyeStats(lime: 2));
+            dyeStats.Add(ItemID.BrightGreenDye, new DyeStats(green: 2));
+            dyeStats.Add(ItemID.BrightCyanDye, new DyeStats(cyan: 2));
+            dyeStats.Add(ItemID.BrightTealDye, new DyeStats(teal: 2));
+            dyeStats.Add(ItemID.BrightSkyBlueDye, new DyeStats(skyblue: 2));
+            dyeStats.Add(ItemID.BrightBlueDye, new DyeStats(blue: 2));
+            dyeStats.Add(ItemID.BrightPurpleDye, new DyeStats(purple: 2));
+            dyeStats.Add(ItemID.BrightVioletDye, new DyeStats(violet: 2));
+            dyeStats.Add(ItemID.BrightPinkDye, new DyeStats(pink: 2));
+            dyeStats.Add(ItemID.BrightBrownDye, new DyeStats(brown: 2));
+            dyeStats.Add(ItemID.BrightSilverDye, new DyeStats(silver: 2));
+			// Fancy crafts
+            dyeStats.Add(ItemID.FlameDye, new DyeStats(red: 1, orange : 1, yellow: 1));
+            dyeStats.Add(ItemID.GreenFlameDye, new DyeStats(green: 1, lime: 1, yellow: 1));
+            dyeStats.Add(ItemID.BlueFlameDye, new DyeStats(blue: 1, cyan: 1, skyblue: 1));
+            dyeStats.Add(ItemID.YellowGradientDye, new DyeStats(lime: 1, orange: 1, yellow: 1));
+            dyeStats.Add(ItemID.CyanGradientDye, new DyeStats(blue: 1, cyan: 1, skyblue: 1));
+            dyeStats.Add(ItemID.VioletGradientDye, new DyeStats(purple: 1, violet: 1, pink: 1));
+            dyeStats.Add(ItemID.RainbowDye, new DyeStats(lime: 1, orange: 1, yellow: 1, blue: 1, cyan: 1, skyblue: 1, purple: 1, violet: 1, pink: 1));
+            dyeStats.Add(ItemID.IntenseFlameDye, new DyeStats(red: 2, orange: 2, yellow: 2));
+            dyeStats.Add(ItemID.IntenseGreenFlameDye, new DyeStats(green: 2, lime: 2, yellow: 2));
+            dyeStats.Add(ItemID.IntenseBlueFlameDye, new DyeStats(blue: 2, cyan: 2, skyblue: 2));
+            dyeStats.Add(ItemID.IntenseRainbowDye, new DyeStats(lime: 2, orange: 2, yellow: 2, blue: 2, cyan: 2, skyblue: 2, purple: 2, violet: 2, pink: 2));
+            // Black combos
+			dyeStats.Add(ItemID.RedandBlackDye, new DyeStats(red: -1));
+            dyeStats.Add(ItemID.OrangeandBlackDye, new DyeStats(orange: -1));
+            dyeStats.Add(ItemID.YellowandBlackDye, new DyeStats(yellow: -1));
+            dyeStats.Add(ItemID.LimeandBlackDye, new DyeStats(lime: -1));
+            dyeStats.Add(ItemID.GreenandBlackDye, new DyeStats(green: -1));
+            dyeStats.Add(ItemID.CyanandBlackDye, new DyeStats(cyan: -1));
+            dyeStats.Add(ItemID.TealandBlackDye, new DyeStats(teal: -1));
+            dyeStats.Add(ItemID.SkyBlueandBlackDye, new DyeStats(skyblue: -1));
+            dyeStats.Add(ItemID.BlueandBlackDye, new DyeStats(blue: -1));
+            dyeStats.Add(ItemID.PurpleandBlackDye, new DyeStats(purple: -1));
+            dyeStats.Add(ItemID.VioletandBlackDye, new DyeStats(violet: -1));
+            dyeStats.Add(ItemID.PinkandBlackDye, new DyeStats(pink: -1));
+            dyeStats.Add(ItemID.BrownAndBlackDye, new DyeStats(brown: -1));
+            dyeStats.Add(ItemID.SilverAndBlackDye, new DyeStats(silver: -1));
+            dyeStats.Add(ItemID.FlameAndBlackDye, new DyeStats(red: -1, orange: -1, yellow: -1));
+            dyeStats.Add(ItemID.GreenFlameAndBlackDye, new DyeStats(green: -1, lime: -1, yellow: -1));
+            dyeStats.Add(ItemID.BlueFlameAndBlackDye, new DyeStats(blue: -1, cyan: -1, skyblue: -1));
+            // Silver combos
+            dyeStats.Add(ItemID.RedandSilverDye, new DyeStats(red: 5, cyan: -5));
+            dyeStats.Add(ItemID.OrangeandSilverDye, new DyeStats(orange: 5, skyblue: -5));
+            dyeStats.Add(ItemID.YellowandSilverDye, new DyeStats(yellow: 5, blue: -5));
+            dyeStats.Add(ItemID.LimeandSilverDye, new DyeStats(lime: 5, purple: -5));
+            dyeStats.Add(ItemID.GreenandSilverDye, new DyeStats(green: 5, violet: -5));
+            dyeStats.Add(ItemID.CyanandSilverDye, new DyeStats(cyan: 5, pink: -5));
+            dyeStats.Add(ItemID.TealandSilverDye, new DyeStats(teal: 5, red: -5));
+            dyeStats.Add(ItemID.SkyBlueandSilverDye, new DyeStats(skyblue: 5, orange: -5));
+            dyeStats.Add(ItemID.BlueandSilverDye, new DyeStats(blue: 5, yellow: -5));
+            dyeStats.Add(ItemID.PurpleandSilverDye, new DyeStats(purple: 5, lime: -5));
+            dyeStats.Add(ItemID.VioletandSilverDye, new DyeStats(violet: 5, green: -5));
+            dyeStats.Add(ItemID.PinkandSilverDye, new DyeStats(pink: 5, cyan: -5));
+            dyeStats.Add(ItemID.BrownAndSilverDye, new DyeStats(brown: 5, teal: -5));
+            dyeStats.Add(ItemID.BlackAndWhiteDye, new DyeStats(silver: 5, black: 5));
+            dyeStats.Add(ItemID.FlameAndSilverDye, new DyeStats(red: 5, orange: 5, yellow: 5, cyan: -5, skyblue: -5, blue: -5));
+            dyeStats.Add(ItemID.GreenFlameAndSilverDye, new DyeStats(green: 5, lime: 5, yellow: 5, violet: -5, purple: -5, blue: -5));
+            dyeStats.Add(ItemID.BlueFlameAndSilverDye, new DyeStats(blue: 5, cyan: 5, skyblue: 5, yellow: -5, pink: -5, orange: -5));
+            // Strange
+            dyeStats.Add(ItemID.AcidDye, new DyeStats(green: 3, lime: 2));
+            dyeStats.Add(ItemID.BlueAcidDye, new DyeStats(blue: 3, skyblue: 2));
+            dyeStats.Add(ItemID.RedAcidDye, new DyeStats(red: 3, orange: 2));
+            dyeStats.Add(ItemID.ChlorophyteDye, new DyeStats(green: 4));
+            dyeStats.Add(ItemID.GelDye, new DyeStats(blue: 3));
+            dyeStats.Add(ItemID.GlowingMushroom, new DyeStats(blue: 3, teal: 2));
+            dyeStats.Add(ItemID.GrimDye, new DyeStats(red: 3, brown: 4));
+            dyeStats.Add(ItemID.HadesDye, new DyeStats(skyblue: 4, cyan: 3));
+            dyeStats.Add(ItemID.BurningHadesDye, new DyeStats(orange: 4, yellow: 3));
+            dyeStats.Add(ItemID.ShadowflameHadesDye, new DyeStats(purple: 4, violet: 3));
+            dyeStats.Add(ItemID.LivingOceanDye, new DyeStats(skyblue: 1, blue: 4));
+            dyeStats.Add(ItemID.LivingFlameDye, new DyeStats(red: 4, orange: 1));
+            dyeStats.Add(ItemID.LivingRainbowDye, new DyeStats(lime: 3, orange: 3, yellow: 3, blue: 3, cyan: 3, skyblue: 3, purple: 3, violet: 3, pink: 3));
+            dyeStats.Add(ItemID.MartianArmorDye, new DyeStats(teal: 4, cyan: 2));
+            dyeStats.Add(ItemID.MidnightRainbowDye, new DyeStats(lime: -1, orange: -1, yellow: -1, blue: -1, cyan: -1, skyblue: -1, purple: -1, violet: -1, pink: -1));
+            dyeStats.Add(ItemID.MirageDye, new DyeStats(red: 2, blue: 2, green: 2));
+            dyeStats.Add(ItemID.NegativeDye, new DyeStats(lime: -3, orange: -3, yellow: -3, blue: -3, cyan: -3, skyblue: -3, purple: -3, violet: -3, pink: -3));
+            dyeStats.Add(ItemID.PixieDye, new DyeStats(yellow: 5));
+            dyeStats.Add(ItemID.PhaseDye, new DyeStats(purple: -4));
+            dyeStats.Add(ItemID.PurpleOozeDye, new DyeStats(purple: 5));
+            dyeStats.Add(ItemID.ReflectiveDye, new DyeStats(silver: 2));
+            dyeStats.Add(ItemID.ReflectiveCopperDye, new DyeStats(orange: 4, brown: 4));
+            dyeStats.Add(ItemID.ReflectiveGoldDye, new DyeStats(yellow: 4, brown: 4));
+            dyeStats.Add(ItemID.ReflectiveObsidianDye, new DyeStats(blue: -4));
+            dyeStats.Add(ItemID.ReflectiveMetalDye, new DyeStats(silver: -4));
+            dyeStats.Add(ItemID.ShadowDye, new DyeStats(black: 22));
+            dyeStats.Add(ItemID.ShiftingSandsDye, new DyeStats(orange: 3, yellow: 3, brown: 3));
+            dyeStats.Add(3024, new DyeStats(purple: 6));
+            dyeStats.Add(ItemID.TwilightDye, new DyeStats(purple: -5));
+            dyeStats.Add(ItemID.WispDye, new DyeStats(silver: 5));
+            dyeStats.Add(ItemID.InfernalWispDye, new DyeStats(red: 3, yellow: 4));
+            dyeStats.Add(ItemID.UnicornWispDye, new DyeStats(pink: 3, violet: 4));
+            // Crafted
+            dyeStats.Add(ItemID.PinkGelDye, new DyeStats(pink: 3, blue: 1));
+            dyeStats.Add(ItemID.ShiftingPearlSandsDye, new DyeStats(pink: 3, orange: 3, yellow: 3, brown: 3));
+            dyeStats.Add(ItemID.NebulaDye, new DyeStats(pink: 5, purple: 5, violet: 5));
+            dyeStats.Add(ItemID.SolarDye, new DyeStats(red: 5, orange: 5, yellow: 5));
+            dyeStats.Add(ItemID.VortexDye, new DyeStats(green: 5, teal: 5, lime: 5));
+            dyeStats.Add(ItemID.StardustDye, new DyeStats(blue: 5, skyblue: 5, cyan: 5));
+            dyeStats.Add(ItemID.VoidDye, new DyeStats(green: -20));
+            // Other
+            dyeStats.Add(ItemID.LokisDye, new DyeStats(brown: 5));
+            dyeStats.Add(ItemID.TeamDye, new DyeStats(red: -22, pink: -22, orange: -22, blue: -22, green: -22, silver: -22));
+            dyeStats.Add(ItemID.BloodbathDye, new DyeStats(red: 6));
+            dyeStats.Add(ItemID.FogboundDye, new DyeStats(silver: 6));
+            dyeStats.Add(4778, new DyeStats(blue: 4, yellow: 4));
+            // Calamity
+            dyeStats.Add(ItemType<AerialiteDye>(), new DyeStats(skyblue: 2, cyan: 2));
+            dyeStats.Add(ItemType<AstralBlueDye>(), new DyeStats(blue: 3, orange: 2));
+            dyeStats.Add(ItemType<AstralOrangeDye>(), new DyeStats(blue: 2, orange: 3));
+            dyeStats.Add(ItemType<AstralSwirlDye>(), new DyeStats(blue: 3, orange: 3));
+            dyeStats.Add(ItemType<AstralDye>(), new DyeStats(blue: 2, orange: 2));
+            dyeStats.Add(ItemType<AuricDye>(), new DyeStats(yellow: 7));
+            dyeStats.Add(ItemType<BloodflareDye>(), new DyeStats(red: 4, orange: 2, violet: 2));
+            dyeStats.Add(ItemType<BlueCosmicFlameDye>(), new DyeStats(blue: 6, pink: 2));
+            dyeStats.Add(ItemType<PinkCosmicFlameDye>(), new DyeStats(pink: 6, blue: 2));
+            dyeStats.Add(ItemType<SwirlingCosmicFlameDye>(), new DyeStats(pink: 6, blue: 6));
+            dyeStats.Add(ItemType<BlueStatigelDye>(), new DyeStats(blue: 3, pink: 1));
+            dyeStats.Add(ItemType<PinkStatigelDye>(), new DyeStats(pink: 3, blue: 1));
+            dyeStats.Add(ItemType<SlimeGodDye>(), new DyeStats(blue: 2, pink: 2));
+            dyeStats.Add(ItemType<BrimflameDye>(), new DyeStats(red: 2, pink: 2));
+            dyeStats.Add(ItemType<CalamitousDye>(), new DyeStats(red: 7, pink: 1));
+            dyeStats.Add(ItemType<CeaselessDye>(), new DyeStats(black: 69));
+            dyeStats.Add(ItemType<CosmiliteDye>(), new DyeStats(blue: 5, pink: 5));
+            dyeStats.Add(ItemType<CryonicDye>(), new DyeStats(skyblue: 3, teal: 3));
+            dyeStats.Add(ItemType<DefiledFlameDye>(), new DyeStats(green: 5, skyblue: -5555));
+            dyeStats.Add(ItemType<DragonSoulDye>(), new DyeStats(orange: 7, yellow: 6));
+            dyeStats.Add(ItemType<ElementalDye>(), new DyeStats(blue: 5, orange: 5, green: 5, purple: 5));
+            dyeStats.Add(ItemType<EndothermicDye>(), new DyeStats(teal: 6, cyan: 6));
+            dyeStats.Add(ItemType<ExoDye>(), new DyeStats(blue: 7, yellow: 7, red: 3, green: 7, orange: -7, violet: -7, cyan: -3, skyblue: -7));
+            dyeStats.Add(ItemType<NecroplasmicDye>(), new DyeStats(pink: 6, violet: 4));
+            dyeStats.Add(ItemType<NightmareDye>(), new DyeStats(orange: 5, yellow: 5));
+            dyeStats.Add(ItemType<ProfanedFlameDye>(), new DyeStats(orange: 6, yellow: 4));
+            dyeStats.Add(ItemType<ProfanedMoonlightDye>(), new DyeStats(teal: 5, green: 5, orange: 5, yellow: 5));
+            dyeStats.Add(ItemType<ReaverDye>(), new DyeStats(green: 4, lime: 3));
+            dyeStats.Add(ItemType<ShadowspecDye>(), new DyeStats(purple: 10, red: -10));
+            dyeStats.Add(ItemType<StratusDye>(), new DyeStats(blue: 5, skyblue: -5));
+            // Remix
+            dyeStats.Add(ItemType<LucreciaDye>(), new DyeStats(purple: 10, pink: 10));
         }
     }
 }

@@ -51,6 +51,8 @@ using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Cooldowns;
 using CalamityMod.Items.Potions.Alcohol;
+using CalRemix.Core;
+using System;
 
 namespace CalRemix
 {
@@ -724,6 +726,56 @@ namespace CalRemix
                     item.active = false;
                 }
             }
+        }
+
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (CalRemixPlayer.dyeStats.ContainsKey(item.type))
+            {
+                DyeStats stats = CalRemixPlayer.dyeStats[item.type];
+                string ret = "";
+                if (stats.red != 0)
+                    ret += $"[c/ff0000:Damage " + WhichIncrement(stats.red) + " by " + Math.Abs(stats.red) + "%]\n";
+                if (stats.orange != 0)
+                    ret += $"[c/ffa200:Weapon speed " + WhichIncrement(stats.orange) + " by " + Math.Abs(stats.orange) + "%]\n";
+                if (stats.yellow != 0)
+                    ret += $"[c/ffff00:Movement speed " + WhichIncrement(stats.yellow) + " by " + Math.Abs(stats.yellow) + "%]\n";
+                if (stats.lime != 0)
+                    ret += $"[c/a2ff00:Luck " + WhichIncrement(stats.lime) + " by " + Math.Abs(stats.lime) + "]\n";
+                if (stats.green != 0)
+                    ret += $"[c/00ff00:Jump speed " + WhichIncrement(stats.green) + " by " + Math.Abs(stats.green) + "%]\n";
+                if (stats.cyan != 0)
+                    ret += $"[c/00ffff:Critical strike chance " + WhichIncrement(stats.cyan) + " by " + Math.Abs(stats.cyan) + "%]\n";
+                if (stats.teal != 0)
+                    ret += $"[c/008080:Damage reduction " + WhichIncrement(stats.teal) + " by " + Math.Abs(stats.teal) + "%]\n";
+                if (stats.skyblue != 0)
+                    ret += $"[c/66a3ff:Flight time " + WhichIncrement(stats.skyblue) + " by " + Math.Abs(stats.skyblue) * 10 + "]\n";
+                if (stats.blue != 0)
+                    ret += $"[c/0000ff:Defense " + WhichIncrement(stats.blue) + " by " + Math.Abs(stats.blue) + "]\n";
+                if (stats.purple != 0)
+                    ret += $"[c/9400cf:Weapon knockback " + WhichIncrement(stats.purple) + " by " + Math.Abs(stats.purple) + "%]\n";
+                if (stats.violet != 0)
+                    ret += $"[c/ff00b7:Enemy aggro " + WhichIncrement(stats.violet) + " by " + Math.Abs(stats.violet) + "]\n";
+                if (stats.pink != 0)
+                    ret += $"[c/ff45a2:Life regeneration " + WhichIncrement(stats.pink) + " by " + Math.Abs(stats.pink) + "]\n";
+                if (stats.brown != 0)
+                    ret += $"[c/7a4b00:Building range " + WhichIncrement(stats.brown) + " by " + Math.Abs(stats.brown) + "]\n";
+                if (stats.silver != 0)
+                    ret += $"[c/ffffff:Charisma " + WhichIncrement(stats.silver) + " by " + Math.Abs(stats.silver) + "]\n";
+                if (stats.black != 0)
+                    ret += $"[c/000000:Evil " + WhichIncrement(stats.black) + " by " + Math.Abs(stats.black) + "]\n";
+                tooltips.Add(new TooltipLine(Mod, "DyeStats", ret));
+            }
+        }
+
+        public string WhichIncrement(int stat)
+        {
+            if (stat > 0)
+                return "increased";
+            else if (stat < 0)
+                return "decreased";
+            else
+                return "not changed";
         }
     }
 }
