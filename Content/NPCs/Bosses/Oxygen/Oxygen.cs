@@ -477,6 +477,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             npcLoot.AddNormalOnly(ModContent.ItemType<OxygenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofOxygen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<ShardofGlass>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<Aerospray>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOxygen, ModContent.ItemType<KnowledgeOxygen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()

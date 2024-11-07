@@ -55,6 +55,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<OxygenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofOxygen>());
             itemLoot.Add(ModContent.ItemType<ShardofGlass>());
+            itemLoot.Add(ModContent.ItemType<Aerospray>());
             itemLoot.AddRevBagAccessories();
         }
 

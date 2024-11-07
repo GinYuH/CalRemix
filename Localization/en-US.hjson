@@ -2793,6 +2793,11 @@ Mods: {
 				DisplayName: Shard of Glass
 				Tooltip: Durability
 			}
+
+			Aerospray: {
+				DisplayName: Aerospray
+				Tooltip: Releases pressurized mist that increases in size but decreases in damage as it travels
+			}
 		}
 
 		NPCs: {
@@ -3487,6 +3492,7 @@ Mods: {
 			PlanetaryAnnihilationProj.DisplayName: Planetary Annihilation Proj
 			TotalAnnihilationProj.DisplayName: Total Annihilation Proj
 			TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
+			AerosprayMist.DisplayName: Mist
 		}
 
 		Tiles: {
