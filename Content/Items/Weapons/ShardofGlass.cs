@@ -50,8 +50,7 @@ namespace CalRemix.Content.Items.Weapons
                 SoundEngine.PlaySound(SoundID.Shatter with { Volume = 2 }, player.position);
                 for (int i = 0; i < 30; i++)
                 {
-                    Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("OxygenShrap" + Main.rand.Next(1, 7)).Type);
-                    Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("Oxygen" + Main.rand.Next(1, 7)).Type);
+                    Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
                 }
                 player.HeldItem.SetDefaults();
             }
@@ -59,8 +58,8 @@ namespace CalRemix.Content.Items.Weapons
             {
                 SoundEngine.PlaySound(SoundID.Shatter with { Volume = 0.7f, Pitch = 1 }, player.position);
 
-                Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("OxygenShrap" + Main.rand.Next(1, 7)).Type);
-                Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("Oxygen" + Main.rand.Next(1, 7)).Type);
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
             }
         }
 
