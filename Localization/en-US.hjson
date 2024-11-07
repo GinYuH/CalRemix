@@ -3493,6 +3493,7 @@ Mods: {
 			TotalAnnihilationProj.DisplayName: Total Annihilation Proj
 			TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
 			AerosprayMist.DisplayName: Mist
+			PineappleSentry.DisplayName: Animated Statue
 		}
 
 		Tiles: {

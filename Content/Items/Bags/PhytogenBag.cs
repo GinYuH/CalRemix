@@ -55,6 +55,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<PhytogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPhytogen>());
             itemLoot.Add(ModContent.ItemType<Juicer>());
+            itemLoot.Add(ModContent.ItemType<PineappleStaff>());
             itemLoot.AddRevBagAccessories();
         }
     }

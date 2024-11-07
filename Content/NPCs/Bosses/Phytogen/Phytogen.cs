@@ -563,6 +563,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             npcLoot.AddNormalOnly(ModContent.ItemType<PhytogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPhytogen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<Juicer>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<PineappleStaff>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPhytogen, ModContent.ItemType<KnowledgePhytogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
