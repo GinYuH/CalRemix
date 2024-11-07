@@ -673,7 +673,7 @@ namespace CalRemix
 				}
             }
 
-            Player.GetDamage<GenericDamageClass>() += dyesRed;
+            Player.GetDamage<GenericDamageClass>() += (float)(dyesRed * 0.01f);
             Player.GetKnockback<GenericDamageClass>() += (float)(dyesPurple * 0.01f);
             Player.GetAttackSpeed<GenericDamageClass>() += (float)(dyesOrange * 0.01f);
             Player.GetCritChance<GenericDamageClass>() += (float)(dyesCyan * 0.01f);
