@@ -14,6 +14,8 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Placeables.Relics;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Bosses.Origen
 {
@@ -166,6 +168,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
             npcLoot.Add(ModContent.ItemType<IOU>());
             npcLoot.Add(ModContent.ItemType<PaletteUncleanser>());
             npcLoot.Add(ModContent.ItemType<OrigenPoint>());
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || CalamityWorld.revenge), ModContent.ItemType<OrigenRelic>()));
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOrigen, ModContent.ItemType<KnowledgeOrigen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()
