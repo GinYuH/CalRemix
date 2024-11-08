@@ -54,6 +54,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<HydrogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofHydrogen>());
             itemLoot.Add(ModContent.ItemType<BallisticMissword>());
+            itemLoot.Add(ModContent.ItemType<ThrowingMissiles>());
             itemLoot.AddRevBagAccessories();
         }
     }

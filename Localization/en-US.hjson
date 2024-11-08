@@ -2798,6 +2798,15 @@ Mods: {
 				DisplayName: Aerospray
 				Tooltip: Releases pressurized mist that increases in size but decreases in damage as it travels
 			}
+
+			ThrowingMissiles: {
+				DisplayName: Throwing Missiles
+				Tooltip:
+					'''
+					Flings erratically moving missiles which home on enemies
+					Stealth strikes unleash a swarm of missiles
+					'''
+			}
 		}
 
 		NPCs: {
@@ -3494,6 +3503,7 @@ Mods: {
 			TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
 			AerosprayMist.DisplayName: Mist
 			PineappleSentry.DisplayName: Animated Statue
+			HydrogenShellFriendly.DisplayName: Missile
 		}
 
 		Tiles: {
