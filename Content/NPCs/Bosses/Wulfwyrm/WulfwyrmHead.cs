@@ -25,6 +25,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Bags;
 using Terraria.ModLoader.IO;
+using CalRemix.Content.Items.Placeables.Relics;
 
 namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 {
@@ -832,6 +833,8 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 ModContent.ItemType<WulfrumKnife>(),
             };
             normalRule.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
+
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || CalamityWorld.revenge), ModContent.ItemType<WulfwyrmRelic>()));
 
             // Rod
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<WulfwyrmHead>() && info.npc.ModNPC<WulfwyrmHead>().PylonCharged), ModContent.ItemType<WulfrumRod>()));
