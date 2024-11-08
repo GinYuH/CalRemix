@@ -28,6 +28,7 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Core.World;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.NPCs.TownNPCs;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -815,6 +816,15 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+            int[] itemIDs =
+            {
+                ModContent.ItemType<PyroclasticFlow>(),
+                ModContent.ItemType<PlumeflameBow>(),
+                ModContent.ItemType<Magmasher>(),
+                ModContent.ItemType<TheFirestorm>(),
+                //ModContent.ItemType<RazorTeeth>()
+            };
             npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofHavoc>(), 1, 8, 10);
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());
             npcLoot.Add(ModContent.ItemType<PyrogenTrophy>(), 10);

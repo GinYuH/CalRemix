@@ -2818,6 +2818,14 @@ Mods: {
 			}
 
 			KnowledgePyrogen.DisplayName: The Archseer
+			PlumeflameBow.Tooltip: Shoots magmatic arrows that are trailed by extremely hot volcanic mist
+			PyroclasticFlow.Tooltip: Creates molten bombs on enemy hits
+			Weapons.Rogue.Magmasher.Tooltip:
+				'''
+				Throws out hammers that explode on enemy hits
+				Stealth strikes cause consecutive explosions to increase in size and damage
+				'''
+			TheFirestorm.Tooltip: Rapidly fires molten globs which follow your cursor
 		}
 
 		NPCs: {
@@ -3535,6 +3543,7 @@ Mods: {
 			AerosprayMist.DisplayName: Mist
 			PineappleSentry.DisplayName: Animated Statue
 			HydrogenShellFriendly.DisplayName: Missile
+			MagmaticArrow.DisplayName: Magmatic Arrow
 		}
 
 		Tiles: {

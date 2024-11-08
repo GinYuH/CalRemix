@@ -10,6 +10,7 @@ using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Materials;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -55,6 +56,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<PyrogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPyrogen>());
             itemLoot.AddRevBagAccessories();
+            itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<PyroclasticFlow>(), ModContent.ItemType<PlumeflameBow>(), ModContent.ItemType<TheFirestorm>(), ModContent.ItemType<Magmasher>(), ModContent.ItemType<RazorTeeth>()));
         }
     }
 }
