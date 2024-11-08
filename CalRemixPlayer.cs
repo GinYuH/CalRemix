@@ -128,6 +128,7 @@ namespace CalRemix
 		public bool pathogenSoul;
 		public bool oxygenSoul;
 		public bool phytogenSoul;
+        public bool pyrogenSoul;
 		public int timeSmoked;
         public int deicide = 0;
         public Particle ring;
@@ -758,6 +759,7 @@ namespace CalRemix
 			origenSoul = false;
 			ionogenSoul = false;
 			phytogenSoul = false;
+            pyrogenSoul = false;
 			oxygenSoul = false;
 			pathogenSoul = false;
             genActive = false;

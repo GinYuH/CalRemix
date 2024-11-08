@@ -1270,7 +1270,7 @@ Mods: {
 					'''
 					Right click to fling the spear outwards and reel in enemies
 					Left clicking when a chained enemy is about to touch you causes you to parry them, creating a blood explosion
-					'If you live for yourself you’ve only got yourself to blame.'
+					'If you live for yourself you've only got yourself to blame.'
 					'''
 			}
 
@@ -2807,6 +2807,17 @@ Mods: {
 					Stealth strikes unleash a swarm of missiles
 					'''
 			}
+
+			SoulofPyrogen: {
+				DisplayName: Soul of Pyrogen
+				Tooltip:
+					'''
+					Increases critical strike chance to 100%
+					Disables flight, mounts, and hooks
+					'''
+			}
+
+			KnowledgePyrogen.DisplayName: The Archseer
 		}
 
 		NPCs: {
@@ -3156,15 +3167,15 @@ Mods: {
 					HateCrowded: This crowd is suffocating. I long for some fresh air and space.
 					LoveSpace: Open spaces are ideal. They let the wind move freely and invigorate me.
 					LikeNPC: "{NPCName} understands the importance of fresh air. We get along splendidly."
-					DislikeNPC: "{NPCName}'s dirt-covered antics are the antithesis of what I appreciate. I’d rather avoid him."
+					DislikeNPC: "{NPCName}'s dirt-covered antics are the antithesis of what I appreciate. I'd rather avoid him."
 					LikeBiome: The {BiomeName} is where I feel most at home. The fresh, open air is invigorating.
 					DislikeBiome: The {BiomeName} is stifling and oppressive.
 					LikeNPC_Princess: "{NPCName} brings a breath of fresh air into any room. I always enjoy her company."
-					Princess_LovesNPC: "{NPCName} is so amazing with the wind! I think she’s really cool and fun to be around."
+					Princess_LovesNPC: "{NPCName} is so amazing with the wind! I think she's really cool and fun to be around."
 				}
 
 				DisplayName: Archwitch
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Defeat Oxygen
 			}
 
 			UNCANNY: {
@@ -3180,22 +3191,22 @@ Mods: {
 					LoveSpace: Plenty of room to stretch out and enjoy a good smoke.
 					FarFromHome: Far from my cave, I long for the comfort of its familiar shadows.
 					NoHome: A gambler without a home? Just another roll of the dice.
-					Content: Surrounded by smoke and chance, life’s just as I like it.
+					Content: Surrounded by smoke and chance, life's just as I like it.
 				}
 
 				DisplayName: Archwizard
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Defeat Carcinogen
 			}
 
 			IRON: {
 				TownNPCMood: {
-					Content: Everything’s electrifyingly perfect right now!
+					Content: Everything's electrifyingly perfect right now!
 					NoHome: No home to call my own—just a wandering spark in the void.
 					FarFromHome: Being away from my base is a drag. I miss the familiar hum of my gear.
 					DislikeCrowded: So many people around, it's stifling. I need more breathing room.
 					HateCrowded: I can barely move with all these people. Space is a rare commodity here!.
 					LoveSpace: Wide-open spaces are my jam. Plenty of room to let my energy flow.
-					LikeNPC: "{NPCName} and I get along great. They’ve got some impressive tech!"
+					LikeNPC: "{NPCName} and I get along great. They've got some impressive tech!"
 					DislikeNPC: "{NPCName} is a thorn in my side. Their antics are nothing but trouble."
 					LikeBiome: The {BiomeName} is my kind of place. The volcanic energy is exhilarating.
 					DislikeBiome: The {BiomeName} is too dense and tangled. Not my favorite place to be.
@@ -3204,59 +3215,59 @@ Mods: {
 				}
 
 				DisplayName: Archmagian
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Defeat Ionogen
 			}
 
 			KABLOOEY: {
 				TownNPCMood: {
-					Content: I’m at ease. Everything is under control—no explosions today.
-					NoHome: Without a home, I’m a lone wanderer, always on the edge.
+					Content: I'm at ease. Everything is under control—no explosions today.
+					NoHome: Without a home, I'm a lone wanderer, always on the edge.
 					FarFromHome: Being away from my domain weighs on me. I long for the familiar.
 					DislikeCrowded: Too many people here. I prefer a quieter, more secluded place.
 					HateCrowded: This crowd is overwhelming. I need to get away before I lose my cool.
 					LoveSpace: I relish having ample space. It allows me to breathe and think clearly.
 					LikeNPC: "{NPCName} has a knack for navigating the chaos. I appreciate their resourcefulness."
 					DislikeNPC: "{NPCName}'s presence feels too serene and detached. It's hard to relate."
-					LikeBiome: "{BiomeName} holds a special place for me. Even in its ruin, it’s a reminder of a different time."
-					DislikeBiome: The {BiomeName} is a harsh and unforgiving place. I’d rather stay away from it.
+					LikeBiome: "{BiomeName} holds a special place for me. Even in its ruin, it's a reminder of a different time."
+					DislikeBiome: The {BiomeName} is a harsh and unforgiving place. I'd rather stay away from it.
 					LikeNPC_Princess: "{NPCName} is a beacon of light in a world that can be so dark. I value her presence."
 					Princess_LovesNPC: "{NPCName} is a bit scary sometimes, but I know they have a good heart. I like them!"
 				}
 
 				DisplayName: Archdiviner
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Defeat Hydrogen
 			}
 
 			SIIVA: {
 				TownNPCMood: {
-					Content: Everything is flourishing just as it should. I’m content with how things are.
+					Content: Everything is flourishing just as it should. I'm content with how things are.
 					NoHome: Without a home, I feel like a leaf blown by the wind, aimless and lost.
 					FarFromHome: Being away from my jungle home makes me yearn for the lush greenery and vibrant life.
 					DislikeCrowded: There are too many people here. I miss the tranquility of the forest.
 					HateCrowded: The sheer number of people is overwhelming. I long for the peaceful solitude of my jungle.
-					LoveSpace: Open spaces allow nature to thrive. It’s where I feel most at peace.
+					LoveSpace: Open spaces allow nature to thrive. It's where I feel most at peace.
 					LikeNPC: "{NPCName} is like a distant kin to me. Their connection to nature is inspiring."
 					DislikeNPC: "{NPCName} is a blight on nature. I can't stand their destructive tendencies."
-					LikeBiome: "{BiomeName} is my sanctuary. It’s where I feel most alive and at home."
-					DislikeBiome: "{BiomeName} is too cold and barren. It’s not where I feel at ease."
+					LikeBiome: "{BiomeName} is my sanctuary. It's where I feel most alive and at home."
+					DislikeBiome: "{BiomeName} is too cold and barren. It's not where I feel at ease."
 					LikeNPC_Princess: "{NPCName} embodies the purity and joy of life. I cherish her presence."
-					Princess_LovesNPC: "{NPCName} is wonderful! She’s so in tune with nature."
+					Princess_LovesNPC: "{NPCName} is wonderful! She's so in tune with nature."
 				}
 
 				DisplayName: Archdruid
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Defeat Phytogen
 			}
 
 			WALTER: {
 				TownNPCMood: {
 					Content: Everything is going splendidly. The ingredients are just right.
-					NoHome: Without a proper home, I’m always on the move, searching for my next alchemical haven.
+					NoHome: Without a proper home, I'm always on the move, searching for my next alchemical haven.
 					FarFromHome: Being away from my laboratory makes it difficult to perfect my formulas.
 					DislikeCrowded: Too many people around. I prefer working in solitude where my thoughts can flow freely.
 					HateCrowded: This crowd is a nightmare. I need quiet to concentrate on my alchemical experiments!
 					LoveSpace: Wide-open spaces give me the freedom to gather and experiment with my ingredients.
 					LikeNPC: "{NPCName} is a master of potions and an invaluable ally in my work."
-					DislikeNPC: "{NPCName} is a threat to my alchemical secrets. I’d rather avoid them."
+					DislikeNPC: "{NPCName} is a threat to my alchemical secrets. I'd rather avoid them."
 					LikeBiome: "{BiomeName} is perfect for my alchemy. The variety of mushrooms is simply inspiring."
 					DislikeBiome: "{BiomeName} is too vast and devoid of useful ingredients."
 					LikeNPC_Princess: "{NPCName} is a charming young spirit. Her presence is a welcome distraction from my alchemical pursuits."
@@ -3264,7 +3275,27 @@ Mods: {
 				}
 
 				DisplayName: Archmagus
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Defeat Pathogen
+			}
+
+			EDGY: {
+				TownNPCMood: {
+					Content: Everything's under control, as it should be. I'm perfectly at ease.
+					NoHome: Without a place to settle, I'm a wandering ember.
+					FarFromHome: Being away from my domain feels unnatural. I miss the intensity.
+					DislikeCrowded: Too many people close by. I'd prefer a little less company.
+					HateCrowded: The crowd here is smothering. I need space to breathe... and burn.
+					LoveSpace: Having space to myself allows the flames to thrive, uncontained and free.
+					LikeNPC: "{NPCName} and I make quite the team. Together, we're unstoppable."
+					DislikeNPC: The {NPCName} is nothing but a nuisance. Golf? They belong in the depths.
+					LikeBiome: The {BiomeName} is the perfect place for me. It's raw, intense, and beautifully chaotic.
+					DislikeBiome: The {BiomeName}? That frigid wasteland offers nothing but discomfort. I avoid it if I can.
+					LikeNPC_Princess: "{NPCName} brings a gentle warmth. Even I find her presence calming."
+					Princess_LovesNPC: "{NPCName} is amazing! She's so strong but so calm, like a flame you can trust."
+				}
+
+				DisplayName: Archseer
+				Census.SpawnCondition: Defeat Pyrogen
 			}
 
 			HypnosDraedon.DisplayName: Draedon
@@ -3535,6 +3566,7 @@ Mods: {
 			PathogenTrophyPlaced.MapEntry: Pathogen Trophy
 			PhytogenTrophyPlaced.MapEntry: Phytogen Trophy
 			AltaroftheAblessedPlaced.MapEntry: Altarofthe Ablessed Placed
+			PyrogenTrophyPlaced.MapEntry: Pyrogen Trophy
 		}
 
 		Enchantments: {

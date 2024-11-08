@@ -18,6 +18,16 @@ using CalamityMod.Items.Potions;
 using System.Runtime.Serialization;
 using Terraria.GameContent.ObjectInteractions;
 using CalRemix.Core.Retheme;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Core.World;
+using CalamityMod.Items.Materials;
+using CalRemix.Content.NPCs.TownNPCs;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -801,6 +811,26 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ModContent.ItemType<SupremeHealingPotion>();
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofHavoc>(), 1, 8, 10);
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());
+            npcLoot.Add(ModContent.ItemType<PyrogenTrophy>(), 10);
+            //npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PyrogenRelic>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);
+            npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPyrogen>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgePyrogen>(), desc: DropHelper.FirstKillText);
+        }
+        public override void OnKill()
+        {
+            if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EDGY>());
+            }
+            RemixDowned.downedPyrogen = true;
+            CalRemixWorld.UpdateWorldBool();
         }
     }
 }
