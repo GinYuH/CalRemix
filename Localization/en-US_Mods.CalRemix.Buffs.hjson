@@ -1,0 +1,179 @@
+AstralEffigyBuff: {
+	DisplayName: Astral Effigy
+	Description: The astral infection empowers you
+}
+
+AtlasSoldierBuff: {
+	DisplayName: Atlas Soldier
+	Description: The atlas soldier will protect you
+}
+
+CosmicConflictBuff: {
+	DisplayName: Cosmic Conflict Construct
+	Description: The cosmic conflict construct will protect you
+}
+
+CosmicElementalBuff: {
+	DisplayName: Cosmic Elemental
+	Description: The cosmic elemental will protect you
+}
+
+EarthElementalBuff: {
+	DisplayName: Earth Elemental
+	Description: The earth elemental will protect you
+}
+
+HallowEffigyBuff: {
+	DisplayName: Hallow Effigy
+	Description: The hallow empowers you
+}
+
+MethHigh: {
+	DisplayName: Sunken Power
+	Description: You feel euphoric and ready for anything
+}
+
+MethLow: {
+	DisplayName: Sunken Withdrawal
+	Description: You feel like garbage
+}
+
+MicrobialClusterBuff: {
+	DisplayName: Microbial Cluster
+	Description: "'Where is it?'"
+}
+
+MoonfistBuff: {
+	DisplayName: Moon Empowerment
+	Description: Hit me all you want, you can't un51 the recipe
+}
+
+TheDreamingGhostBuff: {
+	DisplayName: The Dreaming Ghost
+	Description: Aren't they beautiful?
+}
+
+ValfreyBurn: {
+	DisplayName: Valfrey Burn
+	Description: Your power is being absorbed
+}
+
+Scorinfestation: {
+	DisplayName: Scorinfestation
+	Description: Consumed by magma
+}
+
+StatueBuff: {
+	DisplayName: Animated Statue
+	Description: Perfectly balanced
+}
+
+MackerelBuff: {
+	DisplayName: Holy Mackerel
+	Description: The mackerel will protect you
+}
+
+Leaves: {
+	DisplayName: Leaves Power
+	Description: The leaves are powerful
+}
+
+Anxiety: {
+	DisplayName: Calamitous Anxiety
+	Description: Something is watching your every move
+}
+
+Dysphoria: {
+	DisplayName: Calamitous Dysphoria
+	Description: You feel like something is out of place, but don't know what it is
+}
+
+Euphoria: {
+	DisplayName: Calamitous Euphoria
+	Description: You feel ready to face the entire world!
+}
+
+GarBoost: {
+	DisplayName: Gar Mana Boost
+	Description: Temporary unlimited mana
+}
+
+Horse: {
+	DisplayName: Chaotic Horse
+	Description: Flying away!
+}
+
+Calamitized: {
+	DisplayName: Calamitized
+	Description: You are counted as being dead to the Calamity
+}
+
+CorrosiveEyeBuff: {
+	DisplayName: Corrosive Eye Buff
+	Description: The corrosive eyes are orbiting you
+}
+
+EntropicallyFed: {
+	DisplayName: Entropically Fed
+	Description: CHAOS CHAOS
+}
+
+ILoveLean: {
+	DisplayName: Lean Vision
+	Description: I LOVE LEAN!!!
+}
+
+Fairied: {
+	DisplayName: Fairied
+	Description: You can fly like a fairy?
+}
+
+ElementalAffinity: {
+	DisplayName: Elemental Affinity
+	Description: You feel like the master of the elements
+}
+
+BrimstoneMadness: {
+	DisplayName: Brimstone Madness
+	Description: Maybe you shouldn't have taken all those enchantments
+}
+
+Acid: {
+	DisplayName: Light Acid Trip
+	Description: You're not on acid, everyone else is
+}
+
+HayFeaver: {
+	DisplayName: Hay Fever
+	Description: You're sneezing out blood!
+}
+
+MedicallyIntelligent: {
+	DisplayName: Medically Intelligent
+	Description: Mods.CalRemix.Buffs.MedicallyIntelligent.Description
+}
+
+Warath: {
+	DisplayName: Warath
+	Description: Your minions are angry
+}
+
+AergiaNeuronBuff: {
+	DisplayName: Aergia Neuron
+	Description: Mods.CalRemix.Buffs.AergiaNeuronBuff.Description
+}
+
+Wither: {
+	DisplayName: Wither
+	Description: Mods.CalRemix.Buffs.Wither.Description
+}
+
+ExtensionCordDebuff: {
+	DisplayName: Extension Cord Debuff
+	Description: Mods.CalRemix.Buffs.ExtensionCordDebuff.Description
+}
+
+MoltenToolsBuff: {
+	DisplayName: Molten Tools
+	Description: Charge!!!
+}

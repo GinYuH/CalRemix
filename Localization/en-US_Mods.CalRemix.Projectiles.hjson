@@ -1,0 +1,227 @@
+ArmofAgony.DisplayName: Arm of agony
+AssortMinion.DisplayName: Nucleate Gello
+BrimstoneGenerator.DisplayName: Brimstone Portal
+CalHeart.DisplayName: Calamitous Heart
+CosmicConflict.DisplayName: Cosmic Crystal Conflict
+CosmicElementalMinion.DisplayName: Cosmic Elemental
+CriticalSlimeCore.DisplayName: Critical Slime Core
+DarksunTornado.DisplayName: Tornado
+EarthElementalMinion.DisplayName: Earth Elemental
+MarniteOrb.DisplayName: The Orb
+MicrobeParticle.DisplayName: Microbial Cluster
+NucleateGelloMinion.DisplayName: Nucleate Gello
+SlimeCore.DisplayName: Slime Core
+SlimeRay.DisplayName: Slime Ray
+FallingPhantomHeart.DisplayName: Phantom Heart
+HornetShot.DisplayName: 22 Hornet Round
+LifeIcicle.DisplayName: Cryonic Icicle
+LifeMeteor.DisplayName: Hydrothermic Meteor
+LifeThorn.DisplayName: Reaver Thorn
+MicrobialClusterPet.DisplayName: Microbial Cluster
+AcesLowCard.DisplayName: Spades
+AeroBoltBolt.DisplayName: Air Ball
+Arbiter.DisplayName: Arbiter of Judgement
+AtlasSoldier.DisplayName: Atlas Soldier
+AxisExoBullet.DisplayName: Exo Bullet
+ButterflyMinion.DisplayName: Butterfly
+ChainSawProjectile.DisplayName: Chain-Saw
+CoralShard.DisplayName: Dead Coral Shard
+CrescentSlash.DisplayName: Crescent Slash
+DarkEnergySentry.DisplayName: Dark Energy
+ExoPike.DisplayName: Gravitonomy Beam
+ExoPikePhantom.DisplayName: Gravitonomy Beam
+HadoSoundwave.DisplayName: Hadopelagic Soundwave
+LumChunk.DisplayName: Lumenyl Shard
+LumenousMine.DisplayName: Lumenous Mine
+NystagmusProjectileBlue.DisplayName: Nystagmus Projectile Blue
+NystagmusProjectileGray.DisplayName: Nystagmus Projectile Gray
+NystagmusProjectileGreen.DisplayName: Nystagmus Projectile Green
+NystagmusProjectileRed.DisplayName: Nystagmus Projectile Red
+PikeSpear.DisplayName: Exo shiv
+PinkCrystallineButterfly.DisplayName: Pink Crystalline Butterfly
+PinkSquare.DisplayName: Square
+PrismachromancyProjectile.DisplayName: Prismachromancy Projectile
+PurpleCrystallineButterfly.DisplayName: Pink Crystalline Butterfly
+Reef.DisplayName: Grand Reef
+ShadowPulse.DisplayName: Shadow Pulse
+ShadowsDescentBall.DisplayName: Shadow Ball
+SkeeterBullet.DisplayName: Sunskater
+TendonTidesDisc.DisplayName: Tendon Tides
+TenebrisTidesDisc.DisplayName: Tenebris Tides
+TetrachromancyProjectile.DisplayName: Tetrachromancy Projectile
+ThunderBoltBolt.DisplayName: Lightning Ball
+TitanTidesDisc.DisplayName: Titan Tides
+TotalityEnergy.DisplayName: Exo Rammer
+TotalityScythe.DisplayName: Exo Scythe
+TotalityTidesDisc.DisplayName: Totality Tides
+UnsealedBlackhole.DisplayName: Unsealed Singularity
+UnsealedBomb.DisplayName: Unsealed Singularity
+ExcavatorLaser.DisplayName: Wulfrum Beam
+ExcavatorShot.DisplayName: Wulfrum Laser
+Yharnado.DisplayName: Yharnado
+RockOrb.DisplayName: Rock Orb
+RockFire.DisplayName: Rock Fire
+RockBullet.DisplayName: Rock Bullet
+NucleusCrystal.DisplayName: Nucleus Crystal
+GodSlayerPulse.DisplayName: God Slayer Pulse
+GodSlayerFireball.DisplayName: God Slayer Fireball
+EldritchSpirit.DisplayName: Eldritch Spirit
+EldritchPulse.DisplayName: Eldritch Pulse
+DraconicPulse.DisplayName: Draconic Pulse
+DraconicFireball.DisplayName: Draconic Fireball
+CosmicGuardianTail.DisplayName: Cosmic Guardian Tail
+CosmicGuardianHead.DisplayName: Cosmic Guardian Head
+CosmicGuardianBody.DisplayName: Cosmic Guardian Body
+
+Summon: {
+	RockRay.DisplayName: Rock Ray
+	EldritchRay.DisplayName: Eldritch Ray
+	SlimeRay.DisplayName: Slime Ray
+}
+
+ProfaneNucleus.DisplayName: Profane Nucleus
+
+Melee: {
+	GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
+	ChainSpearStab.DisplayName: Chain Spear Stab
+}
+
+GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
+Claw.DisplayName: Giant Claw
+dimusBEAM.DisplayName: Exodimus Beam
+ExodimusPROJ.DisplayName: Exodiumus dagger
+OgsculeBeam.DisplayName: Ogscule Beam
+LaserSlash.DisplayName: Laser Slash
+OnyxBullet.DisplayName: Onyx Bullet
+AspidShot.DisplayName: Aspid Shot
+OgsculeBeamHostile.DisplayName: Ogscule Beam
+PlaguedFallingSand.DisplayName: Plagued Sand Ball
+PlagueSpit.DisplayName: Plague Spit
+IchorSpark.DisplayName: Ichor Spark
+IchorDaggerProj.DisplayName: Ichor Dagger
+HolyMackerel.DisplayName: Holy Mackerel
+GearShield.DisplayName: Gear Shield
+FlameFrostArrow.DisplayName: Flame Frost Arrow
+DeicideFist.DisplayName: Sacrilegious Fist
+CursedSpearProj.DisplayName: Cursed Spear
+CoalBucket.DisplayName: Coal Bucket
+Coal.DisplayName: Coal
+CaneOrb.DisplayName: Cane Orb
+BoneBundle.DisplayName: Bone Bundle
+Bone.DisplayName: Bone
+AnimatedStatue.DisplayName: Animated Statue
+HomingAstralFireball.DisplayName: Homing Astral Fireball
+AstralFireball.DisplayName: Astral Fireball
+BrownSpray.DisplayName: Brown Spray
+PlaguedSpray.DisplayName: Plagued Spray
+SDOMGRay.DisplayName: SDOMG Deathray
+ChainSpearProj.DisplayName: Chain Spear
+HeavenPiercerProj.DisplayName: Heaven Piercer
+DemonCoreProj.DisplayName: Demon Core
+ShadowCloud.DisplayName: Shadow Cloud
+DriftSpark.DisplayName: Drift Spark
+Cake.DisplayName: Cake
+Frosting.DisplayName: Frosting
+DeadYharim.DisplayName: Dead Yharim
+HeavenPiercerLaser.DisplayName: Helix Laser
+BananaBomb.DisplayName: Banana Bomb
+EvilPlagueSeeker.DisplayName: Plague Seeker
+YggThorn.DisplayName: Yggdrasil Thorn
+WulfrumLeechDaggerSwordProjectile.DisplayName: Wulfrum Leech Dagger
+ColdheartIcicleProjectile.DisplayName: Coldheart Icicle
+SnowgraveSigil.DisplayName: Snowgrave
+WreathProjectile.DisplayName: Wreath
+GreenBall.DisplayName: Green Bag
+GreenDust.DisplayName: Dust
+RedBall.DisplayName: Red Bag
+RedDust.DisplayName: Dust
+CarolBell.DisplayName: Carol Bell
+CarolWave.DisplayName: Carol Wave
+MinnowsSmallShockwave.DisplayName: Minnows Small Shockwave
+MinnowsLargeShockwave.DisplayName: Minnows Large Shockwave
+MinnowsDeathAnimation.DisplayName: Minnows Death Animation
+AcidShot.DisplayName: Acid Shot
+AcidTooth.DisplayName: Acid Tooth
+AgentPoon.DisplayName: Agent Poon
+CausticTendril.DisplayName: Caustic Tendril
+CorrosiveEye.DisplayName: Corrosive Eye
+OnyxBlast.DisplayName: Onyx Blast
+OnyxFist.DisplayName: Onyx Fist
+PlasmaflashBolt.DisplayName: Plasmaflash Bolt
+PungentShot.DisplayName: Pungent Shot
+RazorTooth.DisplayName: Razor Tooth
+SaltCube.DisplayName: Salt Cube
+SaltWater.DisplayName: Salt Water
+SulphurArrow.DisplayName: Sulphur Arrow
+Twepoon.DisplayName: Twepoon
+Twetwepoon.DisplayName: Twetwepoon
+AcidBomb.DisplayName: Acid Bomb
+AcidTeeth.DisplayName: Acid Teeth
+CalamityLaser.DisplayName: Calamity Laser
+Darkscule.DisplayName: Darkscule
+DarkVein.DisplayName: Dark Vein
+PungentBomb.DisplayName: Pungent Bomb
+PizzaWheelHostile.DisplayName: Pizza
+RedstoneFireball.DisplayName: Redstone Fireball
+RedstonePillar.DisplayName: Redstone Pillar
+OnyxGunsawProjectile.DisplayName: Somewhat cost-efficient chainsaw
+AsbestosDrop.DisplayName: Asbestos Drop
+CigarCinder.DisplayName: Cigar Cinder
+Cigar.DisplayName: Cigar
+OnyxPrismTooth.DisplayName: Onyx Prism Tooth
+PinkGreySpray.DisplayName: Pink Grey Spray
+GreenGreySpray.DisplayName: Green Grey Spray
+BlueGreySpray.DisplayName: Blue Grey Spray
+PineappleFrondProj.DisplayName: Frond
+Potpourri.DisplayName: Potpourri
+PyrogenFlare.DisplayName: Pyrogen Flare
+JungleDragonYharon.DisplayName: Yharon
+HydrogenMine.DisplayName: Mine
+HydrogenShell.DisplayName: Missile
+HydrogenWarhead.DisplayName: Warhead
+Fridge.DisplayName: Fridge
+IonogenLightning.DisplayName: Ionogen Lightning
+OxygenBubble.DisplayName: Bubble
+OxygenCloud.DisplayName: Cloud
+OxygenDebris.DisplayName: Debris
+Oxshard.DisplayName: Oxygen Shard
+EosinineProj.DisplayName: Eosinine
+TobaccoSeed.DisplayName: Seed
+MaserDeathray.DisplayName: Maser Beam
+BlueExoPulseLaser.DisplayName: Blue Exo Pulse Laser
+ExothermalSickle.DisplayName: Exothermal Sickle
+LargeTeslaSphere.DisplayName: Large Tesla Sphere
+RedExoPulseLaser.DisplayName: Red Exo Pulse Laser
+PathogenBloodDrop.DisplayName: Blood
+PathogenBloodThorn.DisplayName: Blood Thorn
+PathogenCaltrop.DisplayName: White Blood Cell
+PathogenCell1.DisplayName: Hostile Blood Cell
+AspidShotFriendly.DisplayName: Infection Glob
+Creep.DisplayName: Creep
+WarBolt.DisplayName: Warbolt
+WarglaiveProjectile.DisplayName: Warglaive
+WarrowProjectile.DisplayName: Warrow
+WaraxeReloadedHoldout.DisplayName: Waraxe Reloaded
+FiberBabyHoldout.DisplayName: Fiber Baby
+AsbestosDropFriendly.DisplayName: Asbestos Drop
+CigarSmoke.DisplayName: Cigar Smoke
+AergiaNeuronCore.DisplayName: Aergia Neuron Core
+AergiaNeuronSummon.DisplayName: Aergia Neuron Core
+BlueExoPulseLaserFriendly.DisplayName: Blue Exo Pulse Laser
+Scrap.DisplayName: Scrap
+OrigenPointProjectile.DisplayName: Point
+OnyxFragment.DisplayName: Onyx Fragment
+PyrogenWaveFlare.DisplayName: Pyro Flare
+PyrogenOrbitalFlare.DisplayName: Pyro Flare
+PyrogenZigZagFlare.DisplayName: Pyro Flare
+TwistedNetheriteSoulExplosion.DisplayName: Twisted Netherite Soul Explosion
+Juice.DisplayName: Juice
+CalamityBeam.DisplayName: Calamity Beam
+ExtensionCordWhip.DisplayName: Extension Cord Whip
+PlanetaryAnnihilationProj.DisplayName: Planetary Annihilation Proj
+TotalAnnihilationProj.DisplayName: Total Annihilation Proj
+TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
+AerosprayMist.DisplayName: Mist
+PineappleSentry.DisplayName: Animated Statue
+HydrogenShellFriendly.DisplayName: Missile
+MagmaticArrow.DisplayName: Magmatic Arrow
