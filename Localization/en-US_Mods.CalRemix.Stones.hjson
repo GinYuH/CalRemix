@@ -1320,3 +1320,12 @@
 		Attacks inflict Wither
 		'''
 }
+
+"Calamity: Community Remix/ShreadedLungsStone": {
+	DisplayName: Shreaded Lungs Stone
+	Tooltip:
+		'''
+		Immunity to Shreaded Lungs
+		Attacks inflict Shreaded Lungs
+		'''
+}

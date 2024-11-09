@@ -420,6 +420,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<CarcinogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<Asbestos>(), 1, 216, 224);
             npcLoot.AddNormalOnly(ModContent.ItemType<FiberBaby>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<Chainsmoker>());
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofCarcinogen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<CarcinogenMask>(), 7);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());

@@ -79,6 +79,7 @@ using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs;
 
 namespace CalRemix
 {
@@ -89,6 +90,7 @@ namespace CalRemix
         public bool grappled = false;
         public bool witherDebuff = false;
         public int wither = 0;
+        public int shreadedLungs = 0;
         public int clawed = 0;
         private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         public Vector2 clawPosition = Vector2.Zero;
@@ -663,6 +665,8 @@ namespace CalRemix
                 npc.position += new Vector2(Main.rand.NextFloat(-1f, 2f), Main.rand.NextFloat(-1f, 2f));
                 npc.frameCounter += 2;
             }
+            if (shreadedLungs > 0)
+                shreadedLungs--;
         }
         public override void ModifyShop(NPCShop shop)
         {
@@ -1220,6 +1224,18 @@ namespace CalRemix
                     npc.lifeRegen -= 240;
                     if (damage < 120)
                         damage = 120;
+                }
+            }
+            if (shreadedLungs > 0)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 12;
+                if (damage < 12)
+                {
+                    damage = 12;
                 }
             }
         }

@@ -23,6 +23,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.timeLeft = 120;
             Projectile.tileCollide = false;
             Projectile.penetrate = 5;
+            Projectile.DamageType = DamageClass.Magic;
         }
         public override void AI()
         {
