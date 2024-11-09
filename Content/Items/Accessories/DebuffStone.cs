@@ -114,7 +114,7 @@ namespace CalRemix.Content.Items.Accessories
 
         public override void ResetEffects()
         {
-            for (int i = 1; i < debuffStones.Count; i++) 
+            for (int i = 0; i < debuffStones.Count; i++) 
             {
                 debuffStones[i] = false;
             }
