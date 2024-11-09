@@ -178,4 +178,7 @@ MoltenToolsBuff: {
 	Description: Charge!!!
 }
 
-ShreadedLungs.DisplayName: Shreaded Lungs
+ShreadedLungs: {
+	DisplayName: Shreaded Lungs
+	Description: No that isn't a typo!
+}

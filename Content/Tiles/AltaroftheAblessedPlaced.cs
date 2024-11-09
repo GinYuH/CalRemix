@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
@@ -58,7 +59,7 @@ namespace CalRemix.Content.Tiles
             Player localPlayer = Main.LocalPlayer;
             localPlayer.noThrow = 2;
             localPlayer.cursorItemIconEnabled = true;
-            localPlayer.cursorItemIconID = ModContent.ItemType<Cold>();            
+            localPlayer.cursorItemIconID = ModContent.ItemType<FocusedConvergence>();            
         }
 
         public override void AnimateTile(ref int frame, ref int frameCounter)

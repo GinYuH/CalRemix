@@ -2499,3 +2499,14 @@ PhreaticChanneler: {
 }
 
 Stonecutter.DisplayName: Stonecutter
+FocusedConvergence.DisplayName: " "
+
+Chainsmoker: {
+	DisplayName: Chainsmoker
+	Tooltip:
+		'''
+		Sprays enemies with smoke
+		Releasing the weapon after a short period causes it to shoot a fireball
+		The fireball creates explosions when touching smoked enemies
+		'''
+}
