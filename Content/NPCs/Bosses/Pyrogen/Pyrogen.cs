@@ -824,7 +824,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 ModContent.ItemType<PlumeflameBow>(),
                 ModContent.ItemType<Magmasher>(),
                 ModContent.ItemType<TheFirestorm>(),
-                //ModContent.ItemType<RazorTeeth>()
+                ModContent.ItemType<PhreaticChanneler>()
             };
             npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofHavoc>(), 1, 8, 10);
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());

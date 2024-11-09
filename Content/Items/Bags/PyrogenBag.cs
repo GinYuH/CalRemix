@@ -56,7 +56,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<PyrogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPyrogen>());
             itemLoot.AddRevBagAccessories();
-            itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<PyroclasticFlow>(), ModContent.ItemType<PlumeflameBow>(), ModContent.ItemType<TheFirestorm>(), ModContent.ItemType<Magmasher>(), ModContent.ItemType<RazorTeeth>()));
+            itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<PyroclasticFlow>(), ModContent.ItemType<PlumeflameBow>(), ModContent.ItemType<TheFirestorm>(), ModContent.ItemType<Magmasher>(), ModContent.ItemType<PhreaticChanneler>()));
         }
     }
 }

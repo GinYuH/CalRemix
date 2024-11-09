@@ -116,6 +116,7 @@ namespace CalRemix
         public bool mackerel;
 		public bool neuron;
 		public bool corrosiveEye;
+        public bool moltool;
         public bool blaze;
         public bool pearl;
         public bool astralEye;
@@ -720,6 +721,7 @@ namespace CalRemix
             dreamingGhost = false;
 			statue = false;
 			mackerel = false;
+            moltool = false;
 			neuron = false;
             soldier = false;
 			corrosiveEye = false;

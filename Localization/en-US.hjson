@@ -329,6 +329,11 @@ Mods: {
 				DisplayName: Extension Cord Debuff
 				Description: Mods.CalRemix.Buffs.ExtensionCordDebuff.Description
 			}
+
+			MoltenToolsBuff: {
+				DisplayName: Molten Tools
+				Description: Charge!!!
+			}
 		}
 
 		Items: {
@@ -2826,6 +2831,11 @@ Mods: {
 				Stealth strikes cause consecutive explosions to increase in size and damage
 				'''
 			TheFirestorm.Tooltip: Rapidly fires molten globs which follow your cursor
+
+			PhreaticChanneler: {
+				DisplayName: Phreatic Channeler
+				Tooltip: Summons molten tools which swiftly slice apart enemies
+			}
 		}
 
 		NPCs: {
