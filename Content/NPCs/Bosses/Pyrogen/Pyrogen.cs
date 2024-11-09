@@ -829,7 +829,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofHavoc>(), 1, 8, 10);
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());
             npcLoot.Add(ModContent.ItemType<PyrogenTrophy>(), 10);
-            //npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PyrogenRelic>());
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PyrogenRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPyrogen>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgePyrogen>(), desc: DropHelper.FirstKillText);
