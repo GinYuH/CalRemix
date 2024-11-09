@@ -29,6 +29,7 @@ using CalRemix.Core.World;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.NPCs.TownNPCs;
 using Terraria.GameContent.ItemDropRules;
+using CalamityMod.NPCs.TownNPCs;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -835,9 +836,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         }
         public override void OnKill()
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
+            if (!NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EDGY>());
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WITCH>());
             }
             RemixDowned.downedPyrogen = true;
             CalRemixWorld.UpdateWorldBool();

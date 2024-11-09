@@ -14,7 +14,6 @@ namespace CalRemix.Content.Items.Weapons
 {
     public class ThrowingMissiles : ModItem
     {
-        public override string Texture => "CalRemix/Content/Projectiles/Hostile/HydrogenShell";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Throwing Missiles");

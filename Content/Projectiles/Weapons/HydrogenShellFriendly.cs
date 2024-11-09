@@ -2,6 +2,7 @@
 using CalamityMod.Graphics.Primitives;
 using CalamityMod.Walls;
 using CalRemix.Core.World;
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -14,12 +15,12 @@ namespace CalRemix.Content.Projectiles.Weapons
 {
     public class HydrogenShellFriendly : ModProjectile
     {
-        public override string Texture => "CalRemix/Content/Projectiles/Hostile/HydrogenShell";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Missile");
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 11;
+            Main.projFrames[Type] = 4;
         }
         public override void SetDefaults()
         {
@@ -32,13 +33,21 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2 - 0.2f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Projectile.ai[1]++;
             int timeBeforeHome = 30;
             if (Projectile.ai[1] > timeBeforeHome)
             {
                 CalamityUtils.HomeInOnNPC(Projectile, true, 1200, 10, 10);
             }
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 5)
+            {
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+            }
+            if (Projectile.frame >= 4)
+                Projectile.frame = 0;
         }
         public override void OnKill(int timeLeft)
         {
@@ -119,7 +128,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Vector2 trailOffset = Projectile.Size * 0.5f;
             trailOffset += (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
             PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset), 61);
-            Main.EntitySpriteDraw(texture, centered, null, Projectile.GetAlpha(lightColor), Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, centered, texture.Frame(1, 4, 0, Projectile.frame), Projectile.GetAlpha(lightColor), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 8), Projectile.scale, SpriteEffects.None, 0);
 
             return false;
         }

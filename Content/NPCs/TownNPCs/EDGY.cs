@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using CalamityMod;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Magic;
+using CalamityMod.Projectiles.Summon;
 using CalamityMod.UI.CalamitasEnchants;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
@@ -63,18 +65,18 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.8f;
             AnimationType = NPCID.Guide;
+            SpawnModBiomes = new int[] { ModContent.GetInstance<BrimstoneCragsBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.SurfaceMushroom,
                 new FlavorTextBestiaryInfoElement("A very tempered and collected individual. Despite the wild nature of fire, she holds a very cold and collected attitude. Some say this is to help better control the flames. She, alongside Permafrost were at the forefront of the armada's offense against Yharim's armies. Working together, two polarizing elements combine to shatter the target, and nothing could withstand temperature shock. No matter the machine, they would eventually break through with enough time and support. It would take a devil of a machine to quell them. Maybe even multiple.")
             });
         }
 
-        public override bool CanTownNPCSpawn(int numTownNPCs) => RemixDowned.downedPyrogen;
+        public override bool CanTownNPCSpawn(int numTownNPCs) => DownedBossSystem.downedCalamitasClone;
 
         public override List<string> SetNPCNameList() => new List<string>() { "Cinder" };
 
@@ -127,7 +129,10 @@ namespace CalRemix.Content.NPCs.TownNPCs
                         {
                             n.AddBuff(BuffID.OnFire3, 600);
                             n.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 600);
-                            n.AddBuff(ModContent.BuffType<HolyFlames>(), 600);
+                            if (NPC.downedMoonlord)
+                                n.AddBuff(ModContent.BuffType<HolyFlames>(), 600);
+                            if (DownedBossSystem.downedDoG)
+                                n.AddBuff(ModContent.BuffType<Dragonfire>(), 600);
                         }
                     }
                     SoundEngine.PlaySound(SoundID.CoinPickup);
@@ -152,13 +157,13 @@ namespace CalRemix.Content.NPCs.TownNPCs
 
         public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
         {
-            cooldown = 10;
-            randExtraCooldown = 50;
+            cooldown = 2;
+            randExtraCooldown = 5;
         }
 
         public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
         {
-            projType = ProjectileID.InfernoFriendlyBolt;
+            projType = ModContent.ProjectileType<BrimstoneDartMinion>();
             attackDelay = 1;
         }
 

@@ -78,6 +78,7 @@ using CalamityMod.Items.Potions.Alcohol;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Core.Biomes;
+using CalamityMod.NPCs.CalClone;
 
 namespace CalRemix
 {
@@ -1078,6 +1079,13 @@ namespace CalRemix
             if (npc.type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
             {
                 Main.NewText("... and is never coming back.", Color.DarkBlue);
+            }
+            if (npc.type == ModContent.NPCType<CalamitasClone>())
+            {
+                if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
+                {
+                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<EDGY>());
+                }
             }
         }
         public override bool CheckDead(NPC npc)

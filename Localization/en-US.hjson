@@ -3303,7 +3303,7 @@ Mods: {
 				}
 
 				DisplayName: Archseer
-				Census.SpawnCondition: Defeat Pyrogen
+				Census.SpawnCondition: Defeat the Calamitas Clone
 			}
 
 			HypnosDraedon.DisplayName: Draedon

@@ -1,5 +1,9 @@
-﻿using CalRemix.Content.Buffs;
+﻿using CalamityMod;
+using CalamityMod.Rarities;
+using CalamityMod.World;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.World;
@@ -196,6 +200,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CalamitousCertificate>()));
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CalamityRelic>());
         }
         private static void Talk(string text, Color color)
         {
