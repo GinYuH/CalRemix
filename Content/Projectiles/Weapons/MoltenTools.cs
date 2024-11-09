@@ -6,6 +6,8 @@ using CalRemix.Content.Buffs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -20,6 +22,8 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
             Main.projFrames[Type] = 6;
         }
 
@@ -49,6 +53,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Projectile.frame = Main.rand.Next(0, 6);
                 Projectile.localAI[0] = 1;
             }
+            Projectile.ai[2]++;
             Lighting.AddLight(Projectile.Center, TorchID.Orange);
             Player player = Main.player[Projectile.owner];
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
@@ -67,9 +72,28 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             Projectile.rotation += 0.075f;
 
-            Projectile.ChargingMinionAI(2500f, 2800f, 3000f, 500f, 1, 20f, 30f, 17f, new Vector2(0f, -60f), 20f, 18f, true, true);
+            if (CalamityUtils.MinionHoming(Projectile.Center, 2500, player) != null)
+            {
+                Projectile.ChargingMinionAI(2500f, 2800f, 3000f, 500f, 1, 20f, 30f, 17f, new Vector2(0f, -60f), 20f, 18f, true, true);
+            }
+            else
+            {
+                Vector2 rotPos = player.Center;
+                float currot = (Projectile.ai[2]) * 0.03f;
+                rotPos += new Vector2(MathF.Cos(currot) * 220, MathF.Sin(currot) * 45);
+                Projectile.velocity = Vector2.Zero;
+                if (Projectile.Distance(rotPos) > 80)
+                    Projectile.Center = Vector2.Lerp(Projectile.Center, rotPos, 0.3f);
+                else
+                    Projectile.Center = rotPos;
+            }
         }
 
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            if (Projectile.oldPos[1].X > Projectile.position.X)
+                overPlayers.Add(index);
+        }
 
         public override bool PreDraw(ref Color drawColor)
         {

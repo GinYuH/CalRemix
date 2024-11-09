@@ -101,7 +101,7 @@ namespace CalRemix.Content.Items.Accessories
                 int ingID = 0;
                 if (debuffType == BuffID.PotionSickness || debuffType == BuffID.ManaSickness || debuffType == BuffID.ChaosState)
                     ingID = ItemID.GoldWaterStriderCage;
-                while (ingID == 0 || ContentSamples.ItemsByType[ingID].ModItem is DebuffStone)
+                while (ingID == 0 || ContentSamples.ItemsByType[ingID].ModItem is DebuffStone || ItemID.Sets.Deprecated[ingID])
                     ingID = Main.rand.Next(0, ItemLoader.ItemCount);
                 Recipe.Create(Type).AddIngredient(ItemID.MagmaStone).AddIngredient(ingID).DisableDecraft().AddTile(ModContent.TileType<StonecutterPlaced>()).Register();
             }

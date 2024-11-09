@@ -30,5 +30,10 @@ namespace CalRemix.Content.Items.Placeables
             Item.rare = ItemRarityID.LightRed;
             Item.createTile = ModContent.TileType<StonecutterPlaced>();
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().AddIngredient(ItemID.StoneBlock, 3996).AddTile(TileID.HeavyWorkBench).Register();
+        }
     }
 }
