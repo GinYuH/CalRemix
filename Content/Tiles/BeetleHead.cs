@@ -8,13 +8,8 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria.GameContent.ItemDropRules;
-using System.Linq;
-using Terraria.GameContent.Animations;
 using CalamityMod.DataStructures;
 using Terraria.GameContent;
-using Steamworks;
-using System.Runtime.ConstrainedExecution;
 
 namespace CalRemix.Content.Tiles
 {

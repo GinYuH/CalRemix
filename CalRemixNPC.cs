@@ -79,7 +79,6 @@ using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.CalClone;
-using CalamityMod.NPCs;
 
 namespace CalRemix
 {

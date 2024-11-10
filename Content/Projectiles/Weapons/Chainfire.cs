@@ -1,11 +1,6 @@
-﻿using CalamityMod;
-using CalamityMod.Particles;
-using CalamityMod.Projectiles.Typeless;
-using CalRemix.Content.Buffs;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+﻿using CalamityMod.Projectiles.Typeless;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,14 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using CalamityMod.Items;
 using CalRemix.Content.Projectiles.Weapons;
-using CalRemix.Content.Projectiles;
-using CalamityMod;
-using CalamityMod.CalPlayer;
-using CalamityMod.Projectiles.Magic;
 
 namespace CalRemix.Content.Items.Weapons
 {

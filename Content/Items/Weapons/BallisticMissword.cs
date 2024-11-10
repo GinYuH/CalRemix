@@ -1,7 +1,4 @@
-﻿using CalamityMod.Rarities;
-using CalRemix.Content.Projectiles.Weapons;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CalamityMod;
-using CalRemix.Core.Biomes;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;

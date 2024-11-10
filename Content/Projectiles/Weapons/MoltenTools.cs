@@ -1,7 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.Summon;
-using CalamityMod.CalPlayer;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;

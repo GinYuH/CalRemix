@@ -2,15 +2,11 @@
 using CalamityMod;
 using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalamityMod.Rarities;
-using CalRemix.Content.Projectiles.Accessories;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using CalamityMod.Items.Accessories.Wings;
 
 namespace CalRemix.Content.Items.Accessories
 {

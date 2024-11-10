@@ -15,9 +15,6 @@ using CalamityMod.Events;
 using static CalamityMod.World.CalamityWorld;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Items.Potions;
-using System.Runtime.Serialization;
-using Terraria.GameContent.ObjectInteractions;
-using CalRemix.Core.Retheme;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Bags;
@@ -27,7 +24,6 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Core.World;
 using CalamityMod.Items.Materials;
-using CalRemix.Content.NPCs.TownNPCs;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.NPCs.TownNPCs;
 

@@ -40,9 +40,7 @@ using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.Cryogen;
-using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Leviathan;
-using System.Reflection;
 
 namespace CalRemix.Core.Retheme
 {

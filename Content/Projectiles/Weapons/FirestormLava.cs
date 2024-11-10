@@ -1,5 +1,4 @@
 ﻿using System;
-using CalamityMod.Items.Weapons.Magic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -7,7 +6,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalRemix.Content.Items.Weapons;
-using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 
 namespace CalRemix.Content.Projectiles.Weapons

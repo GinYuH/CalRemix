@@ -28,7 +28,6 @@ using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Core.World;
-using CalRemix.Content.Walls;
 
 namespace CalRemix
 {

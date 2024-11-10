@@ -1,18 +1,13 @@
-﻿using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Projectiles.Melee;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Buffs.DamageOverTime;
 using Terraria.Audio;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Typeless;
-using MonoMod.Core.Utils;
-using System;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {

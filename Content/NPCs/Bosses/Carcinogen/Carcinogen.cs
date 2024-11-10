@@ -11,7 +11,6 @@ using CalamityMod.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Items.Placeables;
 using CalamityMod.Events;
-using CalRemix.Core.Biomes;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Content.Items.Placeables.Relics;

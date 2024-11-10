@@ -7,10 +7,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Placeables.MusicBoxes;
-using CalRemix.Content.Items.Accessories;
 using CalamityMod;
 using CalRemix.Core.World;
-using Terraria.Audio;
 using CalRemix.Content.Items.Tools;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly

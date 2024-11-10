@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using CalamityMod.World;
 using CalamityMod.Events;
-using CalamityMod.Items.Materials;
 using System;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Placeables.Trophies;

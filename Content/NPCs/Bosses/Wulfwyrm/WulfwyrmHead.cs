@@ -24,7 +24,6 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Bags;
-using Terraria.ModLoader.IO;
 using CalRemix.Content.Items.Placeables.Relics;
 
 namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm

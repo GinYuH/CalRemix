@@ -22,7 +22,6 @@ using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
-using Terraria.UI;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Lore;
 

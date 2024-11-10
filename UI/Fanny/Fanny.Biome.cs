@@ -5,7 +5,6 @@ using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Core.Biomes;
-using CalRemix.Content.Items;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Placeables;

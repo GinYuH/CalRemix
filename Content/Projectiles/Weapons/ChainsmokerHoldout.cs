@@ -1,17 +1,11 @@
-﻿using System.IO;
-using CalamityMod.Items.Weapons.Ranged;
+﻿using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Projectiles.BaseProjectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using CalRemix.Content.Items.Weapons;
-using CalamityMod.CalPlayer;
-using CalamityMod.Items.Armor.Silva;
-using CalRemix.Core.Retheme;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {

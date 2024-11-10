@@ -51,7 +51,6 @@ using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Cooldowns;
 using CalamityMod.Items.Potions.Alcohol;
-using CalRemix.Core;
 using System;
 
 namespace CalRemix

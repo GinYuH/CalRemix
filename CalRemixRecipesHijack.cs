@@ -12,7 +12,6 @@ using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Items.Tools.ClimateChange;
 using System.Collections.Generic;
-using Terraria.ModLoader;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;

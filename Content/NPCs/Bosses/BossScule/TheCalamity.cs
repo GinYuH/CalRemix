@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Rarities;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Lore;
@@ -11,7 +10,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;

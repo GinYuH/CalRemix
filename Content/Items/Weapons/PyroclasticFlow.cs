@@ -1,9 +1,6 @@
-﻿using System;
-using CalamityMod;
+﻿using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Particles;
-using CalamityMod.Projectiles.Melee;
-using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;

@@ -2,7 +2,6 @@ using CalamityMod;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

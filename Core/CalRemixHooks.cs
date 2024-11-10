@@ -33,7 +33,6 @@ using CalamityMod.Events;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
-using CalRemix.Core.Biomes;
 
 namespace CalRemix.Core
 {

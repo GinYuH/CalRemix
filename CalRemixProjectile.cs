@@ -23,8 +23,6 @@ using Terraria.GameContent;
 using CalRemix.Content.NPCs.Bosses.Oxygen;
 using Terraria.Audio;
 using CalRemix.Core.World;
-using CalamityMod.Items.Weapons.Melee;
-using CalRemix.Core.Retheme;
 
 namespace CalRemix.Content.Projectiles
 {

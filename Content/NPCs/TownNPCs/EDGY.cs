@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CalamityMod;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.Particles;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Summon;
-using CalamityMod.UI.CalamitasEnchants;
-using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

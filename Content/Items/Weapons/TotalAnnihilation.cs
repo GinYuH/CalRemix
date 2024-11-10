@@ -1,9 +1,6 @@
 ﻿using CalamityMod.Items.Materials;
-using CalamityMod.Projectiles.Ranged;
 using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Weapons;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

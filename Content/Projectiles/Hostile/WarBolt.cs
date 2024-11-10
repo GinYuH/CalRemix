@@ -1,10 +1,5 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Projectiles.Rogue;
-using Microsoft.Xna.Framework;
+﻿using CalamityMod.Buffs.StatDebuffs;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

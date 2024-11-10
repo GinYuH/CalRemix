@@ -57,13 +57,12 @@ using CalRemix.Content.Cooldowns;
 using CalRemix.Core;
 using Terraria.ModLoader.IO;
 using CalRemix.Core.Biomes;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Items.Dyes;
 using CalRemix.Content.Items.Misc;
 
 namespace CalRemix
 {
-	public struct DyeStats(int red = 0, int orange = 0, int yellow = 0, int lime = 0, int green = 0, int cyan = 0, int teal = 0, int skyblue = 0, int blue = 0, int purple = 0, int violet = 0, int pink = 0, int brown = 0, int black = 0, int silver = 0)
+    public struct DyeStats(int red = 0, int orange = 0, int yellow = 0, int lime = 0, int green = 0, int cyan = 0, int teal = 0, int skyblue = 0, int blue = 0, int purple = 0, int violet = 0, int pink = 0, int brown = 0, int black = 0, int silver = 0)
 	{
 		public int red = red;
         public int orange = orange;

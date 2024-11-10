@@ -1,5 +1,4 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Rarities;
 using CalamityMod.Sounds;
 using CalRemix.Content.Projectiles.Weapons;

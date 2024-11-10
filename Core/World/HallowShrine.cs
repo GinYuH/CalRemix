@@ -3,14 +3,10 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.Schematics;
 using CalamityMod;
-using CalamityMod.Tiles.Abyss;
 using System;
-using CalRemix.Content.Tiles;
-using Terraria.DataStructures;
 using CalRemix.Content.Items.Placeables;
 using Terraria.ID;
 using CalamityMod.Items.Potions;
-using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.World
 {

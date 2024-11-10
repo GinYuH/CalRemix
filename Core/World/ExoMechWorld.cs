@@ -15,8 +15,6 @@ using CalRemix.Content.NPCs.Bosses.Losbaf;
 using System.IO;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
-using CalamityMod;
-using System.Collections.Immutable;
 
 namespace CalRemix
 {

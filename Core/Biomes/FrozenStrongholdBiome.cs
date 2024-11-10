@@ -1,13 +1,10 @@
 ﻿using CalamityMod;
 using CalamityMod.Tiles;
-using CalamityMod.Walls;
 using CalRemix.Content.Tiles;
-using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Capture;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Core.Biomes

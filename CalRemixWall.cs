@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalamityMod.Walls;
 
 namespace CalRemix
 {

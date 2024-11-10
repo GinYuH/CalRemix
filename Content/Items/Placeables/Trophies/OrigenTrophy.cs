@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Trophies;
 
 namespace CalRemix.Content.Items.Placeables.Trophies

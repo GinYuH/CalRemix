@@ -9,7 +9,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Placeables.MusicBoxes;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Tools;
 

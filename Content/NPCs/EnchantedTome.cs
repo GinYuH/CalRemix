@@ -2,17 +2,9 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
-using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.UI;
-using System.Linq;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.Core.World;
 using CalRemix.Core.Biomes;
 using CalamityMod.NPCs;
 using CalRemix.Content.Tiles;

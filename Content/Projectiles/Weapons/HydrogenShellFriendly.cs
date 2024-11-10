@@ -1,8 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Graphics.Primitives;
-using CalamityMod.Walls;
-using CalRemix.Core.World;
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

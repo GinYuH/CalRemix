@@ -1,7 +1,5 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Misc;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

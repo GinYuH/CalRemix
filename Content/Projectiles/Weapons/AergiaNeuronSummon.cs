@@ -1,8 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Sounds;
-using CalRemix.Content.Buffs;
-using Microsoft.Xna.Framework;
-using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;

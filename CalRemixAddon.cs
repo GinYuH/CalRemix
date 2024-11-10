@@ -28,11 +28,8 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Lore;
 using Terraria.Audio;
-using Terraria.Localization;
 using CalamityMod.Sounds;
 using CalamityMod.NPCs.Perforator;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Typeless;
 using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 

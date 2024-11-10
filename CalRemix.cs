@@ -13,8 +13,6 @@ using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
-using CalamityMod.NPCs.HiveMind;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using System.Reflection;
 using System.IO;

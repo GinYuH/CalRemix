@@ -1,20 +1,15 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.Alcohol;
 using CalamityMod.Items;
-using CalamityMod.Items.Potions.Alcohol;
-using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace CalRemix.Content.Items.Accessories
+namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of cheat mods
 {
     public class DebuffStoneSystem : ModSystem
     {

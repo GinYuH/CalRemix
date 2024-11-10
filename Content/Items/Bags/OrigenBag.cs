@@ -6,10 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Items.Placeables;
-using CalamityMod.Items.Placeables;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Armor;
 
 namespace CalRemix.Content.Items.Bags
 {
