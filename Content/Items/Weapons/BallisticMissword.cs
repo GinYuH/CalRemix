@@ -39,7 +39,7 @@ namespace CalRemix.Content.Items.Weapons
                 player.itemAnimation = 0;
                 Vector2 pos = player.Center + player.Center.DirectionTo((Vector2)player.HandPosition).SafeNormalize(Vector2.UnitY) * 80;
                 int p = Projectile.NewProjectile(player.GetSource_FromThis(), pos, Vector2.Zero, ProjectileID.GrenadeIII, (int)(Item.damage * 0.01f), Item.knockBack, player.whoAmI);
-                player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, p), Item.damage, 0);
+                player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, p), (int)(Item.damage * 0.3f), 0);
                 Main.projectile[p].Kill();
                 SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ExoPlasmaExplosionSound, player.position);
 
