@@ -92,7 +92,8 @@ namespace CalRemix.Core.Scenes
         {
             if (!PandemicPanic.IsActive)
                 return;
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.DarkRed * 0.4f);
+            if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>() != null && !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.DarkRed * 0.4f);
             for (int i = 0; i < cells.Count; i++)
             {
                 BloodCell c = cells[i];
