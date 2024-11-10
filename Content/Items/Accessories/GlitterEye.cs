@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,6 +11,8 @@ namespace CalRemix.Content.Items.Accessories
         {
             Item.ResearchUnlockCount = 1;
             DisplayName.SetDefault("Glittering Astral Eye");
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 4));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
         }
 
         public override void SetDefaults()

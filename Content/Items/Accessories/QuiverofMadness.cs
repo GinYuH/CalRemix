@@ -15,7 +15,6 @@ namespace CalRemix.Content.Items.Accessories
 {
     public class QuiverofMadness : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/QuiverofNihility";
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
