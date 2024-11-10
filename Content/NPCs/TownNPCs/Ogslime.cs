@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.Player;
+using CalRemix.Content.Items.ZAccessories;
 
 namespace CalRemix.Content.NPCs.TownNPCs
 {
@@ -95,7 +96,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
                 Item item = ContentSamples.ItemsByType[i];
                 if (item.ModItem != null)
                 {
-                    if (item.ModItem.Mod == Mod)
+                    if (item.ModItem.Mod == Mod && item.ModItem is not DebuffStone)
                     {
                         itemNames.Add(item.Name);
                     }

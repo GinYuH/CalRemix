@@ -36,6 +36,7 @@ using CalRemix.Content.NPCs.Bosses.Poly;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.Items.Ammo;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.ZAccessories;
 
 namespace CalRemix
 {
@@ -130,7 +131,7 @@ namespace CalRemix
                 ModItem item = ItemLoader.GetItem(i);
                 if (item.Type == ItemType<WulfrumMetalScrap>())
                     continue;
-                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone)
                     continue;
                 CalRemixAddon.Items.Add(item);
             }
