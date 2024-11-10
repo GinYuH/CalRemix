@@ -26,6 +26,7 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Bosses.Pathogen
 {
@@ -513,6 +514,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<PathogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPathogen>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<SickStick>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPathogen, ModContent.ItemType<KnowledgePathogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()

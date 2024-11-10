@@ -1338,3 +1338,12 @@ FolvsStone: {
 		Attacks inflict Folv's
 		'''
 }
+
+"Calamity: Community Remix/SickCellBuffStone": {
+	DisplayName: Sick Cell Stone
+	Tooltip:
+		'''
+		Immunity to Sick Cell
+		Attacks inflict Sick Cell
+		'''
+}

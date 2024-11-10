@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -51,6 +52,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<PathogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPathogen>());
+            itemLoot.Add(ModContent.ItemType<SickStick>());
             itemLoot.Add(ItemID.Heart);
             itemLoot.AddRevBagAccessories();
         }

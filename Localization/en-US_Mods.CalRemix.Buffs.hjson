@@ -182,3 +182,8 @@ ShreadedLungs: {
 	DisplayName: Shreaded Lungs
 	Description: No that isn't a typo!
 }
+
+SickCellBuff: {
+	DisplayName: Sick Cell
+	Description: That's totally sick!
+}

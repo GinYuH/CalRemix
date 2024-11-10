@@ -19,7 +19,7 @@ namespace CalRemix.Content.Projectiles
             AIType = ProjectileID.BulletHighVelocity;
             Projectile.tileCollide = false;
             Projectile.penetrate = 22;
-            Projectile.timeLeft = 2222;
+            Projectile.timeLeft = 222;
         }
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{

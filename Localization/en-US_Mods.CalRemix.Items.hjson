@@ -2510,3 +2510,13 @@ Chainsmoker: {
 		The fireball creates explosions when touching smoked enemies
 		'''
 }
+
+SickStick: {
+	DisplayName: Sick Stick
+	Tooltip:
+		'''
+		Summons sickened cells
+		All cells after the first cell maintain a constant distance to the original cell
+		The greater the distance from the first cell, the more damage
+		'''
+}
