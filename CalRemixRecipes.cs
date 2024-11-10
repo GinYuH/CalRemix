@@ -217,6 +217,14 @@ namespace CalRemix
                 recipe.DisableDecraft();
                 recipe.Register();
             }
+            {
+                Recipe recipe = Recipe.Create(ItemID.EmpressButterfly, 1);
+                recipe.AddRecipeGroup(RecipeGroupID.Butterflies);
+                recipe.AddIngredient(ItemID.PearlstoneBlock);
+                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.DisableDecraft();
+                recipe.Register();
+            }
 
             #region DP stuff
             // Alcohol...

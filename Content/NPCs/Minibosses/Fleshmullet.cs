@@ -16,7 +16,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 //using CalamityMod.CalPlayer;
 
-namespace CalRemix.Content.NPCs
+namespace CalRemix.Content.NPCs.Minibosses
 {
     public class Fleshmullet : ModNPC
     {
@@ -51,7 +51,6 @@ namespace CalRemix.Content.NPCs
 
         public override void AI()
         {
-            NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
             NPC.ai[3] = NPC.whoAmI;
             NPC.realLife = NPC.whoAmI;
             NPC.TargetClosest();
