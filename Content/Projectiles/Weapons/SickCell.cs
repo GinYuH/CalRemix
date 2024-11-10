@@ -42,7 +42,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, TorchID.Orange);
+            Lighting.AddLight(Projectile.Center, TorchID.Green);
             Player player = Main.player[Projectile.owner];
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             bool isMinion = Projectile.type == ModContent.ProjectileType<SickCell>();
@@ -65,7 +65,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Projectile.localAI[0] += 0.03f;
                 NPC n = CalamityUtils.MinionHoming(Projectile.Center, 2100, player);
                 Projectile.scale = 1 + Math.Abs(MathF.Sin(Projectile.localAI[0])) * 0.3f;
-                if (n != null)
+                if (n != null && n.active && n.life > 0)
                 {
                     Projectile.velocity = Projectile.DirectionTo(n.Center) * 10;
                 }
