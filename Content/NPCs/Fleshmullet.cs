@@ -13,6 +13,7 @@ using CalamityMod.Graphics.Primitives;
 using CalamityMod.NPCs.CalamityAIs.CalamityRegularEnemyAIs;
 using CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies;
 using Terraria.Audio;
+using Terraria.GameContent;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs
@@ -25,6 +26,7 @@ namespace CalRemix.Content.NPCs
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 15;
+            NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
         }
 
         public override void SetDefaults()
@@ -43,15 +45,17 @@ namespace CalRemix.Content.NPCs
             NPC.noGravity = true;
             NPC.damage = 50;
             NPC.boss = true;
+            NPC.aiStyle = -1;
             Music = MusicID.Boss2;
         }
 
         public override void AI()
         {
+            NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
             NPC.ai[3] = NPC.whoAmI;
             NPC.realLife = NPC.whoAmI;
             NPC.TargetClosest();
-            CalRemixNPC.WormAI(NPC, 12, 0.25f, Main.player[NPC.target], Main.player[NPC.target].Center, canFlyByDefault: true);
+            CalRemixNPC.WormAI(NPC, 12, 0.25f, Main.player[NPC.target], Main.player[NPC.target].Center);
             if (Main.rand.NextBool(300))
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -0.8f }, NPC.Center);
@@ -68,7 +72,6 @@ namespace CalRemix.Content.NPCs
 
         public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
                 new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The Underworld is full of some tremendously devilish creatures. Fleshmullets are arguably one of the most vile, consuming any and all lifeforms that draw near the searing lava."),
@@ -89,6 +92,7 @@ namespace CalRemix.Content.NPCs
             {
                 if (!Main.hardMode)
                 {
+                    NPC.boss = false;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int w = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, NPCID.WallofFlesh);
@@ -148,7 +152,8 @@ namespace CalRemix.Content.NPCs
                 else
                     PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunctionSmall, RibbonTrailColorFunction), 66);
             }
-            return base.PreDraw(spriteBatch, screenPos, drawColor);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + NPC.gfxOffY * Vector2.UnitY, NPC.frame, drawColor, NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Width() / 2, TextureAssets.Npc[NPC.type].Height() / 4), NPC.scale, SpriteEffects.None, 0);
+            return false;
         }
 
         public float RibbonTrailWidthFunction(float completion)

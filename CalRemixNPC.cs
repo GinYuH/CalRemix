@@ -1744,7 +1744,7 @@ namespace CalRemix
                                 }
                             }
                             Vector2 pos = target != null ? target.position : prowlPoint;
-                            if (npc.position.Y > pos.Y || (double)(pos.Y / 16f) > Main.worldSurface)
+                            if (false)
                             {
                                 flag6 = true;
                                 if (Math.Abs(npc.velocity.X) < speed / 2f)
