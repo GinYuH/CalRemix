@@ -5,6 +5,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -40,10 +41,35 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             NPC.DeathSound = SoundID.NPCDeath8;
             NPC.aiStyle = -1;
             AIType = -1;
+            NPC.netAlways = true;
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToElectricity = false;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            foreach (var v in Segments)
+            {
+                writer.Write(v.position.X);
+                writer.Write(v.position.Y);
+                writer.Write(v.locked);
+                writer.Write(v.oldPosition.X);
+                writer.Write(v.oldPosition.Y);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            List<VerletSimulatedSegment> segs = new List<VerletSimulatedSegment>();
+            for (int i = 0; i < 30; i++)
+            {
+                VerletSimulatedSegment v = new VerletSimulatedSegment(new Vector2(reader.ReadSingle(), reader.ReadSingle()), reader.ReadBoolean());
+                v.oldPosition = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+                segs.Add(v);
+            }
+            Segments = segs;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -64,7 +90,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            if (Segments != null && Main.netMode != NetmodeID.Server)
+            if (Segments != null)
             for (int i = 0; i < segmentCount; i++)
             {
                 if (target.getRect().Intersects(new Rectangle((int)Segments[i].position.X, (int)Segments[i].position.Y, 10, 10)) && Main.npc[(int)NPC.ai[0]].ai[0] > 0)
@@ -115,7 +141,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 NPC.active = false;
                 return;
             }
-            if (Main.netMode != NetmodeID.Server)
+            //if (Main.netMode != NetmodeID.Server)
             {
                 if (Segments is null)
                 {
@@ -168,15 +194,18 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 if (NPC.ai[2] > 60)
                 {
                     NPC.velocity = Vector2.Zero;
+                    NPC.netUpdate = true;
                 }
                 else if (Collision.IsWorldPointSolid(NPC.Center))
                 {
                     NPC.velocity = NPC.DirectionTo(phyto.Center) * 10;
+                    NPC.netUpdate = true;
                 }
             }
             if (NPC.Distance(NPC.Center) > maxDist)
             {
                 NPC.velocity = NPC.DirectionTo(safeZone.Center.ToVector2()) * 10;
+                NPC.netUpdate = true;
             }
         }
 

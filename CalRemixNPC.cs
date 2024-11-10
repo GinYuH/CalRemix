@@ -510,6 +510,18 @@ namespace CalRemix
                     }
                 }
             }
+            if (npc.type == NPCID.WallofFlesh)
+            {
+                if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive)
+                {
+                    npc.active = false;
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Fleshmullet>());
+                    }
+                }
+            }
             return true;
         }
         public override void AI(NPC npc)
@@ -574,7 +586,8 @@ namespace CalRemix
             {
                 if (!NPCID.Sets.BossBestiaryPriority.Contains(npc.type) || npc.Calamity().CanHaveBossHealthBar)
                 {
-                    if (Main.tile[(int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16].TileType == TileType<GrimesandPlaced>())
+                    Tile t = CalamityUtils.ParanoidTileRetrieval((int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16);
+                    if (t.TileType == TileType<GrimesandPlaced>())
                     {
                         npc.StrikeInstantKill();
                         for (int i = 0; i < 30; i++)

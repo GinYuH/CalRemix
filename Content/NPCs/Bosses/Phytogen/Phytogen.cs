@@ -109,7 +109,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
         public override void OnSpawn(IEntitySource source)
         {
             NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<PhytogenShield>(), ai0: NPC.whoAmI);
-            if (Main.netMode == NetmodeID.SinglePlayer) // sorry cant bother
+            //if (Main.netMode == NetmodeID.SinglePlayer) // sorry cant bother
             for (int i = 0; i < 2; i++)
             {
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + (i + 1) * 64, (int)NPC.position.Y, ModContent.NPCType<PineappleFrond>(), ai0: NPC.whoAmI, ai1: i, ai3: Main.rand.Next(120, 240));
@@ -374,7 +374,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                                         Vector2 velocity = new Vector2(0f, vineSpeed);
                                         velocity = velocity.RotatedBy(variance * i);
 
-                                        if (Main.netMode == NetmodeID.SinglePlayer)
+                                        //if (Main.netMode == NetmodeID.SinglePlayer)
                                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.5f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
                                     }
                                     DustExplosion();
