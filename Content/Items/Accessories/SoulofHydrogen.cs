@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Accessories
         {
             DisplayName.SetDefault("Soul of Hydrogen");
             Tooltip.SetDefault("7% increase to all damage\nThrowable explosives deal extremely increased damage and split once upon detonation");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 6));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }

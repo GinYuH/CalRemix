@@ -44,6 +44,8 @@ using CalRemix.Content.NPCs;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Content.Items.Lore;
 using CalamityMod.Tiles;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using Terraria.Audio;
 
 namespace CalRemix.Core.World
 {
@@ -670,6 +672,58 @@ namespace CalRemix.Core.World
             if (trueStory < maxStoryTime)
             {
                 trueStory++;
+            }
+            ExcavatorSummon();
+        }
+
+        public static void ExcavatorSummon()
+        {
+            foreach (Player p in Main.ActivePlayers)
+            {
+                CalRemixPlayer crp = p.GetModPlayer<CalRemixPlayer>();
+                if (p.chest == -1 && crp.RecentChest >= 0 && Main.chest[crp.RecentChest] != null)
+                {
+                    int i = Main.chest[crp.RecentChest].x;
+                    int j = Main.chest[crp.RecentChest].y;
+                    int chestenum = Chest.FindChest(i, j);
+                    if (chestenum >= 0)
+                    {
+                        Chest cheste = Main.chest[crp.RecentChest];
+                        if (Main.tile[cheste.x, cheste.y].TileType == TileID.Containers && (Main.tile[i, j].TileFrameX == 432 || Main.tile[i, j].TileFrameX == 450))
+                        {
+                            for (int slot = 0; slot < Chest.maxItems; slot++)
+                            {
+                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+                                {
+                                    // is the rest of the chest empty
+                                    int ok = 0;
+                                    for (int q = 0; q < Chest.maxItems; q++) ok += cheste.item[q].stack;
+                                    if (ok == 1)
+                                    {
+                                        cheste.item[slot] = new Item();
+
+                                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                                            NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, chestenum, slot, cheste.item[slot].stack, cheste.item[slot].prefix, cheste.item[slot].type);
+
+                                        SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
+
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            int npc = NPC.NewNPC(p.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>());
+                                            Main.npc[npc].timeLeft *= 20;
+                                            CalamityUtils.BossAwakenMessage(npc);
+                                            Main.npc[npc].velocity.Y = -20;
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                crp.RecentChest = p.chest;
             }
         }
 
