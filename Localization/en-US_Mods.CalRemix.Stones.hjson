@@ -1329,3 +1329,12 @@
 		Attacks inflict Shreaded Lungs
 		'''
 }
+
+FolvsStone: {
+	DisplayName: Folv's Stone
+	Tooltip:
+		'''
+		Immunity to Folv's
+		Attacks inflict Folv's
+		'''
+}
