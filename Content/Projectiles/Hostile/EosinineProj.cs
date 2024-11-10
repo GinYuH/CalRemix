@@ -9,7 +9,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 {
     public class EosinineProj : ModProjectile
     {
-        public override string Texture => "CalRemix/Content/NPCs/PandemicPanic/Eosinine";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eosinine");
@@ -18,8 +17,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.aiStyle = -1;
-            Projectile.width = 42;
-            Projectile.height = 42;
+            Projectile.width = 30;
+            Projectile.height = 30;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 300;
             Projectile.hostile = true;
@@ -39,7 +38,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             Vector2 position = Projectile.Center - Main.screenPosition;
             Vector2 origin = texture.Size() * 0.5f;
             Color color = Color.MediumPurple * 0.3f;
-            Vector2 scale = new Vector2(Projectile.scale * MathHelper.Max(0.2f, 1 - Math.Abs((Projectile.velocity.Y / 10))), Projectile.scale * MathHelper.Max(0.2f, Math.Abs(Projectile.velocity.Y / 10)));
+            Vector2 scale = new Vector2(Projectile.scale * MathHelper.Max(0.2f, 1 - Math.Abs((Projectile.velocity.Y / 10))), Projectile.scale * MathHelper.Max(0.2f, Math.Abs(Projectile.velocity.Y / 10))) * 2;
             for (int i = 0; i < 10; i++)
             {
                 Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 2 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));
