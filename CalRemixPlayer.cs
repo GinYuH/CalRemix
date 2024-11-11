@@ -942,7 +942,6 @@ namespace CalRemix
             {
                 itemDrop = ItemType<RipperShark>();
             }
-            CalRemixWorld.RoachCountdown = -1;
             if (attempt.playerFishingConditions.BaitItemType == ItemType<LabRoach>() && CalRemixWorld.roachDuration <= 0)
             {
                 CalRemixWorld.RoachCountdown = -1;
