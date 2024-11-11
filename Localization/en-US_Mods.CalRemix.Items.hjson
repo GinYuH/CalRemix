@@ -2520,3 +2520,5 @@ SickStick: {
 		The greater the distance from the first cell, the more damage
 		'''
 }
+
+LabRoach.DisplayName: Lab Roach

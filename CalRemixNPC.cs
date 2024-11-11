@@ -1312,9 +1312,21 @@ namespace CalRemix
                 spawnRate = (int)(spawnRate * 0.3f);
                 maxSpawns *= 12;
             }
+            if (CalRemixWorld.roachDuration > 0)
+            {
+                spawnRate = 3;
+                maxSpawns *= 15;
+            }
         }
+
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
+            if (CalRemixWorld.roachDuration > 0)
+            {
+                pool.Clear();
+                pool.Add(NPCType<LabRoach>(), 22f);
+                return;
+            }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)
             {

@@ -59,6 +59,7 @@ using Terraria.ModLoader.IO;
 using CalRemix.Core.Biomes;
 using CalamityMod.Items.Dyes;
 using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Critters;
 
 namespace CalRemix
 {
@@ -941,6 +942,13 @@ namespace CalRemix
             {
                 itemDrop = ItemType<RipperShark>();
             }
+            CalRemixWorld.RoachCountdown = -1;
+            if (attempt.playerFishingConditions.BaitItemType == ItemType<LabRoach>() && CalRemixWorld.roachDuration <= 0)
+            {
+                CalRemixWorld.RoachCountdown = -1;
+                CalRemixWorld.UnleashRoaches();
+                itemDrop = ItemID.None;
+            }
         }
         public void SpawnPhantomHeart()
         {
@@ -953,6 +961,7 @@ namespace CalRemix
                 Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
             }
         }
+
         public void StealthCut(float amt)
         {
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();

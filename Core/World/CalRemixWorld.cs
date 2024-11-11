@@ -46,14 +46,17 @@ using CalRemix.Content.Items.Lore;
 using CalamityMod.Tiles;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using Terraria.Audio;
+using CalRemix.Core.Scenes;
 
 namespace CalRemix.Core.World
 {
     public class CalRemixWorld : ModSystem
     {
+        public const int ROACHDURATIONSECONDS = 22;
+        public const int maxStoryTime = 660;
+
         public static bool worldFullyStarted = false;
         public static int worldLoadCounter = 0;
-        public const int maxStoryTime = 660;
 
         public static bool ogslime = false;
 
@@ -66,7 +69,9 @@ namespace CalRemix.Core.World
         public static int MeldTiles;
         public static int strongholdTiles;
 
-        public static int ShrineTimer = -20;
+        public static int ShrineTimer = -20; 
+        public static int RoachCountdown = 0;
+        public static int roachDuration = 0;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -195,6 +200,8 @@ namespace CalRemix.Core.World
             grime = false;
             meldCountdown = 72000;
             trueStory = 0;
+            RoachCountdown = 0;
+            roachDuration = 0;
 
             alloyBars = true;
             essenceBars = true;
@@ -298,6 +305,8 @@ namespace CalRemix.Core.World
             yharimBars = true;
             meldCountdown = 72000;
             trueStory = 0;
+            RoachCountdown = 0;
+            roachDuration = 0;
 
             alloyBars = true;
             essenceBars = true;
@@ -356,6 +365,7 @@ namespace CalRemix.Core.World
             tag["grime"] = grime;
             tag["meld"] = meldCountdown;
             tag["trueStory"] = trueStory;
+            tag["roachDuration"] = roachDuration;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -419,6 +429,7 @@ namespace CalRemix.Core.World
             grime = tag.Get<bool>("grime");
             meldCountdown = tag.Get<int>("meld");
             trueStory = tag.Get<int>("trueStory");
+            roachDuration = tag.Get<int>("roachDuration");
 
             alloyBars = tag.Get<bool>("109alloybar");
             essenceBars = tag.Get<bool>("109essencebar");
@@ -479,6 +490,8 @@ namespace CalRemix.Core.World
             writer.Write(grime);
             writer.Write(meldCountdown);
             writer.Write(trueStory);
+            writer.Write(RoachCountdown);
+            writer.Write(roachDuration);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -540,6 +553,8 @@ namespace CalRemix.Core.World
             grime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
             trueStory = reader.ReadInt32();
+            RoachCountdown = reader.ReadInt32();
+            roachDuration = reader.ReadInt32();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -873,6 +888,56 @@ namespace CalRemix.Core.World
                     Main.LocalPlayer.position.X = (Main.spawnTileX + 60) * 16;
                 }
             }
+            // Roach Mayhem!!!
+            // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && roachDuration > -2)
+            {
+                RoachCountdown++;
+            }
+            // After 5 minutes, set the timer to -1 and start Roach Mayhem
+            if (RoachCountdown > CalamityUtils.SecondsToFrames(300))
+            {
+                UnleashRoaches();
+            }
+            // Spawn three explosions
+            int expDelay = 40;
+            int startFire = ROACHDURATIONSECONDS - 6;
+            bool firstExp = roachDuration == CalamityUtils.SecondsToFrames(startFire);
+            bool secondExp = roachDuration == CalamityUtils.SecondsToFrames(startFire) - expDelay;
+            bool thirdExp = roachDuration == CalamityUtils.SecondsToFrames(startFire) - expDelay * 2;
+            if (firstExp || secondExp || thirdExp)
+            {
+                Vector2 pos = firstExp ? new Vector2(Main.screenWidth * 0.05f, Main.screenHeight) : secondExp ? new Vector2(Main.screenWidth * 0.35f, Main.screenHeight) : new Vector2(Main.screenWidth * 0.7f, Main.screenHeight);
+                RoachScene.explosions.Add(new RealisticExplosion(pos));
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/EpicExplosion"));
+            }
+            // Regularly play alarms while decrementing the event duration
+            // Do not decrement if the countdown hasn't finished (marked by it being -1)
+            if (roachDuration > -2 && RoachCountdown <= -1)
+            {
+                if (roachDuration > 0 && Main.LocalPlayer.miscCounter % 90 == 0)
+                {
+                    SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Ares.AresBody.EnragedSound);
+                }
+                roachDuration--;
+            }
+            // When the event is 1 frame from being over, clear the explosion list
+            if (roachDuration == -1)
+            {
+                if (RoachScene.explosions.Count > 0)
+                {
+                    RoachScene.explosions.Clear();
+                }
+                UpdateWorldBool();
+            }
+        }
+
+        public static void UnleashRoaches()
+        {
+            RoachCountdown = -1;
+            SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/BlackFriday"));
+            roachDuration = CalamityUtils.SecondsToFrames(ROACHDURATIONSECONDS);
+            UpdateWorldBool();
         }
 
         public static void AddLootDynamically(int npcType, bool npc = false)
