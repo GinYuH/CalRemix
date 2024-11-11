@@ -2005,6 +2005,7 @@ Mods: {
 			}
 
 			IonCube.DisplayName: Ion Cube
+			LabRoach.DisplayName: Lab Roach
 		}
 
 		NPCs: {
@@ -2234,6 +2235,7 @@ Mods: {
 			GildedSpirit.DisplayName: Gilded Spirit
 			Ionogen.DisplayName: Ionogen
 			IonogenShield.DisplayName: Ionogen's Shield
+			LabRoach.DisplayName: Lab Roach
 		}
 
 		Projectiles: {
@@ -2438,6 +2440,7 @@ Mods: {
 			TanzaniteGlassPlaced.MapEntry: Tanzanite Glass Placed
 			MovieSignPlaced.MapEntry: Moviesign
 			IonCubePlaced.MapEntry: Ion Cube Placed
+			LabRoachBannerPlaced.MapEntry: Lab Roach Banner Placed
 		}
 
 		Enchantments: {

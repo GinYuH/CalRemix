@@ -1250,10 +1250,21 @@ namespace CalRemix
                 spawnRate = NPC.downedMoonlord ? (int)(spawnRate * 0.2f) : NPC.downedPlantBoss ? (int)(spawnRate * 0.4f) : (int)(spawnRate * 0.6f);
                 maxSpawns *= NPC.downedMoonlord ? 16 : NPC.downedBoss3 ? 12 : 8;
             }
+            if (CalRemixWorld.roachDuration > 0)
+            {
+                spawnRate = 3;
+                maxSpawns *= 15;
+            }
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
+            if (CalRemixWorld.roachDuration > 0)
+            {
+                pool.Clear();
+                pool.Add(ModContent.NPCType<NPCs.LabRoach>(), 22f);
+                return;
+            }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)
             {

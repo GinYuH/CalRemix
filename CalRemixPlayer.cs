@@ -857,6 +857,11 @@ namespace CalRemix
             {
                 itemDrop = ModContent.ItemType<RipperShark>();
             }
+			if (attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<LabRoach>() && CalRemixWorld.roachDuration <= 0)
+			{
+				CalRemixWorld.UnleashRoaches();
+				itemDrop = ItemID.None;
+			}
         }
         public void SpawnPhantomHeart()
         {
