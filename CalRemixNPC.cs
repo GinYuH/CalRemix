@@ -512,7 +512,7 @@ namespace CalRemix
             }
             if (npc.type == NPCID.WallofFlesh)
             {
-                if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive)
+                if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.mullet)
                 {
                     npc.active = false;
 

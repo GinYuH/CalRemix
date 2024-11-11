@@ -115,6 +115,8 @@ namespace CalRemix.Core.World
         public static bool baronStrait = true;
         public static bool dyeStats = true;
         public static bool champions = true;
+        public static bool astralBlight = true;
+        public static bool mullet = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -266,6 +268,8 @@ namespace CalRemix.Core.World
             hydrogenBomb = true;
             baronStrait = true;
             champions = true;
+            astralBlight = true;
+            mullet = true;
 
             loadedRecipeInjections = false;
 
@@ -328,6 +332,8 @@ namespace CalRemix.Core.World
             baronStrait = true;
             dyeStats = false;
             champions = false;
+            astralBlight = false;
+            mullet = false;
 
             loadedRecipeInjections = false;
 
@@ -384,6 +390,8 @@ namespace CalRemix.Core.World
             tag["109baron"] = baronStrait;
             tag["109dye"] = dyeStats;
             tag["109champ"] = champions;
+            tag["109blight"] = astralBlight;
+            tag["109mullet"] = mullet;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -445,6 +453,8 @@ namespace CalRemix.Core.World
             baronStrait = tag.Get<bool>("109baron");
             dyeStats = tag.Get<bool>("109dye");
             champions = tag.Get<bool>("109champ");
+            astralBlight = tag.Get<bool>("109blight");
+            mullet = tag.Get<bool>("109mullet");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -503,6 +513,8 @@ namespace CalRemix.Core.World
             writer.Write(baronStrait);
             writer.Write(dyeStats);
             writer.Write(champions);
+            writer.Write(astralBlight);
+            writer.Write(mullet);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -562,6 +574,8 @@ namespace CalRemix.Core.World
             baronStrait = reader.ReadBoolean();
             dyeStats = reader.ReadBoolean();
             champions = reader.ReadBoolean();
+            astralBlight = reader.ReadBoolean();
+            mullet = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
@@ -759,7 +773,7 @@ namespace CalRemix.Core.World
 
                     Color messageColor = Color.Magenta;
                     CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
-                    if (CalRemixAddon.CalVal != null)
+                    if (CalRemixAddon.CalVal != null && astralBlight)
                     {
                         ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);
                     }
