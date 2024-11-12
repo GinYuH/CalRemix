@@ -918,6 +918,7 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyNuhuh", 19);
             ScreenHelperPortrait.LoadPortrait("FannyStare", 1);
             ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
 
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);

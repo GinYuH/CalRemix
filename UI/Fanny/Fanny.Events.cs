@@ -64,6 +64,8 @@ namespace CalRemix.UI
 
             HelperMessage.New("PandemicPanic", "An invasion has begun with giant immune system cells duking it out with invading microbes! You can side with the immune cells or the microbes by taking out more of the other side. Just remember, no matter who you choose, it’s going to be a cell-ebration of epic proportions! Stay sharp and choose wisely!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive);
+
+            HelperMessage.New("MeteorStarboard", "Wow! You sure are getting lots of stars tonight! You must have said something really funny to get all those. After all, every star you get is a community contribution!", "FannyAwooga", (ScreenHelperSceneMetrics metrics) => Terraria.Star.starfallBoost >= 3);
         }
     }
 }

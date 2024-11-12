@@ -69,6 +69,9 @@ namespace CalRemix.UI
             HelperMessage.New("Thrust", "Did you know you can parry enemy attacks with your sword? Just right click the moment something is about to hit you, and you'll block it with ease!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>(), cooldown: 300, onlyPlayOnce: false);
 
+
+
+
             HelperMessage.New("Frozen1", "I'm back! It was quite chilly in there, but luckily, I was able to thaw myself out! Hopefully it doesn't happen again!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => fannyTimesFrozen == 1).SetHoverTextOverride("...");
 

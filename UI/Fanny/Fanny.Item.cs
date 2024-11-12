@@ -5,6 +5,7 @@ using CalamityMod.Items.Dyes;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
+using CalamityMod.Items.Placeables.LivingFire;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
@@ -130,7 +131,7 @@ namespace CalRemix.UI
             HelperMessage.New("Dyes", "I've always thought dyes were a bit worthless. I mean come on! True beauty comes from the inside! No need to pretty yourself up on the outside! So my solution to this was making it so that all dyes now make you stronger! Have fun coming up with dye combos! Or just equipping the same dye in every slot, that works too.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any((Item i) => i.dye > 0)).AddItemDisplay(ModContent.ItemType<ElementalDye>());
 
-
+            
             #endregion
 
             #region CrossMod
