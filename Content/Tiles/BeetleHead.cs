@@ -74,6 +74,7 @@ namespace CalRemix.Content.Tiles
                 BeetleTE cables = new BeetleTE();
                 GetTEFromCoords(i, j, out cables);
                 Vector2 weirdOffset = new Vector2(224, 176);
+                Color stringColor = WorldGen.paintColor(tile.TileColor);
                 //if (tile.TileFrameX == 0 && tile.TileFrameY == 0)
                 {
                     GetTEFromCoords(i, j, out cables);
@@ -135,7 +136,7 @@ namespace CalRemix.Content.Tiles
                                     SpriteEffects fx = i % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                                     Vector2 pos = v.position - Vector2.UnitX * s2u.Width / 2 + weirdOffset + posAdd;
                                     Color baseColor = Lighting.GetColor((int)(v.position.X / 16f), (int)(v.position.Y / 16f));
-                                    Color c = u < 9 ? Utils.MultiplyRGB(baseColor, Color.LightGray) : baseColor;
+                                    Color c = u < 9 ? Utils.MultiplyRGB(baseColor, stringColor) : baseColor;
                                     Main.EntitySpriteDraw(s2u, pos - Main.screenPosition, final, c, finalRot, fingalorigin, scalee, fx, 0);
                                 }
                                 if (s2u == Seg3)
