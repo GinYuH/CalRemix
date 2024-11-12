@@ -53,6 +53,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<PathogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPathogen>());
             itemLoot.Add(ModContent.ItemType<SickStick>());
+            itemLoot.Add(ModContent.ItemType<Mutagen>());
             itemLoot.Add(ItemID.Heart);
             itemLoot.AddRevBagAccessories();
         }
