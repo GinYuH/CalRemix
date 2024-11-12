@@ -59,6 +59,22 @@ namespace CalRemix.Content.NPCs.Minibosses
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -0.8f }, NPC.Center);
             }
+            if (NPC.Calamity().newAI[0] == 0)
+            {
+                NPC.Calamity().newAI[0] = 1;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 200, NPCType<FleshmulletEye>());
+                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y + 200, NPCType<FleshmulletEye>());
+                }
+            }
+            foreach (Projectile p in Main.ActiveProjectiles)
+            {
+                if (p.type == ProjectileID.EyeLaser)
+                {
+                    p.damage = (int)(NPC.damage * 0.25f);
+                }
+            }
         }
 
         public override void FindFrame(int frameHeight)
