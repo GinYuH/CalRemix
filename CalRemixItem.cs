@@ -52,6 +52,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Cooldowns;
 using CalamityMod.Items.Potions.Alcohol;
 using System;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
 
 namespace CalRemix
 {
@@ -438,6 +439,20 @@ namespace CalRemix
             if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
+            }
+            if (item.type == ItemType<CryoKey>() && item.lavaWet)
+            {
+                if (!NPC.AnyNPCs(NPCType<Pyrogen>()))
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                        int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
+                        NPC blug = Main.npc[n];
+                        // todo: use blug to enrage him
+                    }
+                    item.active = false;
+                }
             }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)

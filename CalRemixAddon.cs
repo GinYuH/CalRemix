@@ -207,6 +207,10 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
+            bc.Call("LogBoss", Mod, "Pyrogen", 19.6f, () => RemixDowned.downedPyrogen, NPCType<Pyrogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<MoltenMatter>(),
+            });
             bc.Call("LogBoss", Mod, "XP-00 Hypnos", 22.5f, () => RemixDowned.downedHypnos, NPCType<Hypnos>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<BloodyVein>()

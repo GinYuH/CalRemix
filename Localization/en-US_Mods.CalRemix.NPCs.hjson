@@ -218,7 +218,17 @@ Carcinogen: {
 Wolfmole.DisplayName: Legendary Wolfmole
 MoldMan.DisplayName: Mold Man
 CarcinogenShield.DisplayName: Carcinogen Shield
-Pyrogen.DisplayName: Pyrogen
+
+Pyrogen: {
+	DisplayName: Pyrogen
+
+	BossChecklistIntegration: {
+		EntryName: Pyrogen
+		SpawnInfo: Use [i:CalRemix/MoltenMatter].
+		DespawnMessage: "[c/fc5603:The scrap furnace cools off.]"
+	}
+}
+
 PyrogenShield.DisplayName: Pyrogen Shield
 
 Phytogen: {

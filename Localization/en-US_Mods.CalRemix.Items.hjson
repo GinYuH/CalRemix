@@ -2531,3 +2531,10 @@ Mutagen: {
 		'A glimpse into a [c/4f1e49:Dark] and [c/d1ed98:Twisted] alternate reality...'
 		'''
 }
+
+AncientConsole.DisplayName: Ancient Console
+
+MoltenMatter: {
+	DisplayName: Molten Matter
+	Tooltip: Summons Pyrogen when used in the Underworld
+}

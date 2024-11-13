@@ -47,6 +47,8 @@ using CalamityMod.Tiles;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using Terraria.Audio;
 using CalRemix.Core.Scenes;
+using CalRemix.Content.Tiles.Plates;
+using CalamityMod.Tiles.Plates;
 
 namespace CalRemix.Core.World
 {
@@ -68,6 +70,14 @@ namespace CalRemix.Core.World
         public static int baronTiles;
         public static int MeldTiles;
         public static int strongholdTiles;
+        public static int elumplateTiles;
+        public static int aeroplateTiles;
+        public static int havocplateTiles;
+        public static int cinderplateTiles;
+        public static int navyplateTiles;
+        public static int plagueplateTiles;
+        public static int bloodplateTiles;
+        public static int onyxplateTiles;
 
         public static int ShrineTimer = -20; 
         public static int RoachCountdown = 0;
@@ -569,6 +579,10 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
+            if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
+            {
+                AncientConsoleGen.GenerateConsole();
+            }
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
             else
@@ -969,6 +983,14 @@ namespace CalRemix.Core.World
             MeldTiles = 0;
             baronTiles = 0;
             strongholdTiles = 0;
+            elumplateTiles = 0;
+            onyxplateTiles = 0;
+            havocplateTiles = 0;
+            cinderplateTiles = 0;
+            plagueplateTiles = 0;
+            aeroplateTiles = 0;
+            navyplateTiles = 0;
+            bloodplateTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -990,6 +1012,14 @@ namespace CalRemix.Core.World
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
             CalamityMod.Systems.BiomeTileCounterSystem.SunkenSeaTiles += tileCounts[TileType<NavystoneSafe>()] + tileCounts[TileType<SeaPrismSafe>()] + tileCounts[TileType<EutrophicSandSafe>()] + tileCounts[TileType<HardenedEutrophicSandSafe>()];
+            aeroplateTiles = tileCounts[TileType<AeroplateTile>()];
+            bloodplateTiles = tileCounts[TileType<BloodplateTile>()];
+            onyxplateTiles = tileCounts[TileType<Onyxplate>()];
+            havocplateTiles = tileCounts[TileType<Havocplate>()];
+            cinderplateTiles = tileCounts[TileType<Cinderplate>()];
+            elumplateTiles = tileCounts[TileType<Elumplate>()];
+            navyplateTiles = tileCounts[TileType<Navyplate>()];
+            plagueplateTiles = tileCounts[TileType<PlagueContainmentCells>()];
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
@@ -1060,6 +1090,7 @@ namespace CalRemix.Core.World
                     CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
+                tasks.Insert(FinalIndex, new PassLegacy("Engineering a bronze device", (progress, config) => { AncientConsoleGen.GenerateConsole(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Origen Workshop", (progress, config) => { OrigenWorkshop.GenerateOrigenWorkshop(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Building a Bomb", (progress, config) =>
                 {
