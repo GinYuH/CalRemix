@@ -357,4 +357,18 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class AsbestosMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.AsbestosMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.AsbestosMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
 }
