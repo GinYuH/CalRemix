@@ -287,4 +287,60 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class PyrogenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.PyrogenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.PyrogenMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class OxygenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.OxygenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.OxygenMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class PhytogenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.PhytogenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.PhytogenMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class PathogenMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.PathogenMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.PathogenMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
 }

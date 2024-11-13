@@ -269,4 +269,56 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
+    public class OxygenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Oxygen, Type, TileType<Tiles.MusicBoxes.OxygenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.OxygenMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class PyrogenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Pyrogen, Type, TileType<Tiles.MusicBoxes.PyrogenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.PyrogenMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class PhytogenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Phytogen, Type, TileType<Tiles.MusicBoxes.PhytogenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.PhytogenMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class PathogenMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Pathogen, Type, TileType<Tiles.MusicBoxes.PathogenMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.PathogenMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
 }
