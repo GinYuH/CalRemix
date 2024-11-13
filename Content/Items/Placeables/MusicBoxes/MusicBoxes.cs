@@ -321,4 +321,17 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
+    public class BaronStraitMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.BaronStrait, Type, TileType<Tiles.MusicBoxes.BaronStraitMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.BaronStraitMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
 }
