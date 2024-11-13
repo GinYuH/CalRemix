@@ -64,6 +64,32 @@ namespace CalRemix.UI
             HelperMessage.New("Norcheese", "Something, something, you dirty cheater.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().NorfleetCounter >= 4).SpokenByEvilFanny();
 
+            HelperMessage anniv1 = HelperMessage.New("Annivenriersary1", "HAPPY 20TH ANNIVERSARY, $0! We've had a lot of fun adventures over these last two decades, and here's to two more!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DownedBossSystem.downedProvidence && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && NPC.downedPlantBoss && Main.rand.NextBool(10000), 6, cantBeClickedOff: true);
+
+            HelperMessage anniv2 = HelperMessage.New("Annivenriersary2", "... Fanny? What the fuck are you talking about? It's barely been one year, let alone twenty of them. Did you eat another lotus, or something?",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(anniv1, delay: 3, startTimerOnMessageSpoken: true);
+
+            HelperMessage anniv3 = HelperMessage.New("Annivenriersary3", "Trapper-Chan LOVES celebrating, but twenty seems strange... a-are you okay, Fanny-Kun?",
+                "TrapperDefault", HelperMessage.AlwaysShow, 4, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(anniv2, delay: 3, startTimerOnMessageSpoken: true);
+
+            HelperMessage anniv4 = HelperMessage.New("Annivenriersary4", "... but, no, it's been 20 years, hasn't it?",
+                "FannySob", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).ChainAfter(anniv3, delay: 3, startTimerOnMessageSpoken: true);
+
+            HelperMessage anniv5 = HelperMessage.New("Annivenriersary5", "Bruh everyone is Everywhere At The End of Time",
+                "CrimSonDefault", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(anniv4, delay: 3, startTimerOnMessageSpoken: true);
+
+            HelperMessage anniv6 = HelperMessage.New("Annivenriersary6", " ",
+                "FannySob", HelperMessage.AlwaysShow, 1, cantBeClickedOff: true).ChainAfter(anniv5);
+
+            HelperMessage anniv7 = HelperMessage.New("Annivenriersary7", " ",
+                "FannySob", HelperMessage.AlwaysShow, 1, cantBeClickedOff: true).ChainAfter(anniv6);
+
+            HelperMessage.New("Annivenriersary8", "Okay, so I may've been off by a couple years...",
+                "FannySob", HelperMessage.AlwaysShow).ChainAfter(anniv7);
+
+            HelperMessage.New("Annivenriersary9", "BRO you can't Just change Your Dam Mind When I Agree. Cringe! Cringe! Uninstalling this shi rn Fr Fr",
+                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(anniv7, delay: 4);
         }
         private static bool DarkArea()
         {

@@ -653,7 +653,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
-                .SetAvailabilityCondition(() => NPC.downedGolemBoss)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && Main.hardMode)
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
@@ -932,6 +932,11 @@ namespace CalRemix.UI
 
             //Trapper bulb chan
             ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperUwaa", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperHappy", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperWTF", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperHuh", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperDisgust", 1);
 
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);

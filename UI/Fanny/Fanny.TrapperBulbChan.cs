@@ -25,7 +25,7 @@ namespace CalRemix.UI
                 .ChainAfter();
 
             HelperMessage trap1 = HelperMessage.New("TrapperBeginning3", "Trapper Bulb Chan here! HAIIII!!! ^v^",
-                "TrapperDefault", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(fan1, delay: 3);
+                "TrapperHappy", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(fan1, delay: 3);
 
             HelperMessage fan2 = HelperMessage.New("TrapperBeginning4", "Woah there! Where did you come from?",
                 "FannyAwooga", HelperMessage.AlwaysShow, 7, cantBeClickedOff: true).ChainAfter(fan1, delay: 5);
@@ -37,7 +37,7 @@ namespace CalRemix.UI
                 "FannyNuhuh", HelperMessage.AlwaysShow, 7).ChainAfter(fan2);
 
             HelperMessage trap3 = HelperMessage.New("TrapperBeginning7", "Teehee, just keep blooming and shining, and remember to water your dreams, nyan!",
-                "TrapperDefault", HelperMessage.AlwaysShow, 6).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(trap2);
+                "TrapperHappy", HelperMessage.AlwaysShow, 6).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(trap2);
 
             HelperMessage ff = HelperMessage.New("TrapperBeginning8", "Oh come fucking on.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(fan3, startTimerOnMessageSpoken: true, delay: 10);
@@ -52,13 +52,13 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow, 3, cantBeClickedOff: true).ChainAfter(polfan1, delay: 3f, startTimerOnMessageSpoken: true);
 
             HelperMessage polfantrap2 = HelperMessage.New("Poltrapper4", "Hai, Fanny-kun! But you know, even the scariest things can be defeated with a smile and a bit of courage, desu yo! Ganbatte, adventurer!",
-                "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(poltrap, delay: 2, startTimerOnMessageSpoken: true);
+                "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(poltrap, delay: 2, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Poltrapper5", "You heard her, friend! Face those spooky souls with a grin and a giggle!",
                 "FannyNuhuh", HelperMessage.AlwaysShow).ChainAfter(polfantrap2, delay: 4);
 
             HelperMessage.New("Trapperbulbdotdotdot", "Ohhh, I see you found a... whaaa!!! It's like a distant memory of me, >m<! How strange to see myself in this form, but remember, even in stillness, there's beauty and purpose, nyan! Let's cherish every moment and bloom brightly together, even in different forms, desu! ^v^",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TrapperBulb>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+                "TrapperWTF", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TrapperBulb>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Lucy", "Ohayo! Trapper Bulb Chan here, desu! ^_^ Oh, you’ve got Lucy the Axe with you? Kawaii! Lucy-chan, you’re so sharp and strong, just like a samurai’s spirit, nya~",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LucyTheAxe)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
@@ -79,7 +79,7 @@ namespace CalRemix.UI
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "CalamityHunt", "NuclearLemonade")).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Kitten", "Nyaa~! Look at this adorable kitty-chan, desu! So fuzzy and purrfect, like a tiny bundle of nyan-tastic joy! OwO You’re such a kawaii little neko, aren’t you? Let’s be the bestest of friends and have lots of fun together, nya~! ^w^ Remember to give this sweet kitty-chan all the pets and snuggles, nyaaa~!",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TownCat)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+                "TrapperUwaa", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TownCat)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Shipping", "Omo, omo! Trapper Bulb Chan here, and look at this—it's the Flying Dutchman, desu! spooky and cool, nya~! But you know what would be even cooler? If the Flying Dutchman-chan had a special someone to sail the seas with! OwO Imagine the adventures and romance, sailing through the moonlit waters together, nya~! Let's find a perfect ship for this ship, teehee~! ^w^",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.PirateShip)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
@@ -106,10 +106,10 @@ namespace CalRemix.UI
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCorrupt).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
 
             HelperMessage rival = HelperMessage.New("Rival", "Ohhh… So NOT Sugoi… That reminds me of Maneater Bulb Chan. Between you and me, you should probably avoid those enemies. >:(!!!! Maneater Bulb Chan was a big meanie head, and was always super jealous of how much cuter I was.",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.ManEater)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+                "TrapperHuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.ManEater)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Rival2", "I’d say ‘Shame about the accident…’ But… Eh.",
-                "TrapperDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(rival).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDisgust", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(rival).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
 
             HelperMessage.New("MurkyPaste", "Ohhh… So Sugoi… That reminds me of Murky Paste Chan! You know, we all kind of hated Murky Paste chan. I have no clue why they were a part of the club. :/ Shame about the accident…",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.ToxicSludge)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
@@ -121,7 +121,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CalRemixWorld.trapperFriendsLearned >= 8, 6, cantBeClickedOff: true);
 
             HelperMessage revelation2 = HelperMessage.New("Revelation2", "Ow, dun worry bout it, nya~ Just a wittle secret of mine, uwu",
-                "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation1, delay: 3, startTimerOnMessageSpoken: true);
+                "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation1, delay: 3, startTimerOnMessageSpoken: true);
 
             HelperMessage revelation3 = HelperMessage.New("Revelation3", "Awh, shucks!~ You’re all my friends, nya~! I suppowse I cowld tell you guys..",
                 "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation2, startTimerOnMessageSpoken: true);
@@ -130,13 +130,13 @@ namespace CalRemix.UI
                 "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation3, startTimerOnMessageSpoken: true);
 
             HelperMessage revelation5 = HelperMessage.New("Revelation5", "And that’s what happened to them..!~ Sowwy if I trauwmatizzed you guys.. OwO",
-                "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation4, startTimerOnMessageSpoken: true);
+                "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation4, startTimerOnMessageSpoken: true);
 
             HelperMessage revelation7 = HelperMessage.New("Revelation7", "Oh... oh my god. I think I’m genuinely gonna be sick. Why... how... when...",
                 "FannyDisturbed", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(revelation5, delay: 3, startTimerOnMessageSpoken: true);
             
             HelperMessage revelation6 = HelperMessage.New("Revelation6", "Holy shit. Even by my standards.. Jesus christ. Wow.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !ChildSafety.Disabled, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(revelation5, delay: 5, startTimerOnMessageSpoken: true);
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(revelation5, delay: 5, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Revelation8", "The alpha leads the beta follows the sigma follows",
                 "CrimSonDefault", HelperMessage.AlwaysShow, 30, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(revelation5, delay: 8);

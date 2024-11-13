@@ -693,6 +693,7 @@ namespace CalRemix
             if (shop.NpcType == NPCID.Steampunker)
             {
                 shop.Add(new NPCShop.Entry(ItemType<PlaguedSolution>()));
+                shop.Add(new NPCShop.Entry(ItemID.CellPhone));
             }
             if (shop.NpcType == NPCType<DILF>())
             {

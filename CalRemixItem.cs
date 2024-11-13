@@ -337,6 +337,13 @@ namespace CalRemix
                     }
                 }
             }
+            if (item.type == ItemID.CellPhone)
+            {
+                if (!player.GetModPlayer<CalRemixPlayer>().gottenCellPhone)
+                {
+                    player.GetModPlayer<CalRemixPlayer>().gottenCellPhone = true;
+                }
+            }
         }
         public static List<int> cosmicItems = new List<int>();
         public static void TransformItem(ref Item item, int transformType)
