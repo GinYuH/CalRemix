@@ -41,8 +41,12 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
 
         public Rectangle teleportPos = new Rectangle();
 
-        public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/IonogenHit", 3);
-        public static readonly SoundStyle ExplosionSound = new("CalRemix/Assets/Sounds/GenBosses/HydrogenExplode");
+        public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/OxygenHit", 4);
+        public static readonly SoundStyle FinalHitSound = new("CalRemix/Assets/Sounds/GenBosses/OxygenFinalHit", 4);
+        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/OxygenDeath");
+        public static readonly SoundStyle CrackSound = new("CalRemix/Assets/Sounds/GenBosses/OxygenCrack");
+        public static readonly SoundStyle ShatterSound = new("CalRemix/Assets/Sounds/GenBosses/OxygenShatter");
+        public static readonly SoundStyle AttackSound = new("CalRemix/Assets/Sounds/GenBosses/OxygenAttack", 4);
 
         public enum PhaseType
         {
@@ -93,7 +97,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             NPC.boss = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.DeathSound = CalamityMod.NPCs.Providence.Providence.HurtSound;
+            NPC.DeathSound = DeathSound;
             NPC.Calamity().VulnerableToCold = false;
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToElectricity = false;
@@ -251,7 +255,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                             int cloudDist = 1200; // Horizontal distance from the player
                             int cloudStart = 800 + Main.rand.Next(0, 64); // The origin height of the top cloud
                             float cloudSpeed = death ? 16 : rev ? 12 : 10; // Speed of the clouds
-                            SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
+                            SoundEngine.PlaySound(AttackSound, NPC.Center);
                             for (int i = 0; i < cloudAmt / 2; i++)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
@@ -403,7 +407,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             if (DepthLevel < 4)
             {
                 modifiers.SetMaxDamage(1);
-                Shard();
+                Shard(trans: false);
                 NPC.life += 1;
             }
         }
@@ -414,19 +418,23 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             if (DepthLevel < 4)
             {
                 modifiers.SetMaxDamage(1);
-                Shard();
+                Shard(trans: false);
                 NPC.life += 1;
             }
         }
 
-        public void Shard(int amt = 10, bool ignoreCooldown = false)
+        public void Shard(int amt = 10, bool ignoreCooldown = false, bool trans = true)
         {
             if (NPC.Calamity().newAI[1] <= 0 || ignoreCooldown)
             {
                 int shardSpeed = Main.rand.Next(7, 11);
                 for (int i = 0; i < amt; i++)
                 {
-                    SoundEngine.PlaySound(SoundID.Item20 with { Volume = 0.2f, Pitch = 0.4f }, NPC.Center);
+                    if (trans)
+                    {
+                        SoundStyle crac = MaxDepthLevel == 4 ? ShatterSound : CrackSound;
+                        SoundEngine.PlaySound(crac, NPC.Center);
+                    }
                     Vector2 square = new Vector2(Main.rand.Next((int)NPC.position.X, (int)NPC.position.X + NPC.width), Main.rand.Next((int)NPC.position.Y, (int)NPC.position.Y + NPC.height));
                     int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<Oxshard>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, ai1: Main.rand.Next(1, 7));
                     Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
@@ -441,7 +449,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             if (NPC.soundDelay == 0)
             {
                 NPC.soundDelay = 3;
-                SoundStyle hite = MaxDepthLevel == 4 ? SoundID.NPCHit3 : HitSound;
+                SoundStyle hite = MaxDepthLevel == 4 ? FinalHitSound : HitSound;
                 SoundEngine.PlaySound(hite, NPC.Center);
             }
             for (int k = 0; k < 5; k++)
