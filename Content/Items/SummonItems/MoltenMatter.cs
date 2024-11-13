@@ -9,6 +9,7 @@ using CalamityMod.Items.Placeables;
 using CalamityMod.Rarities;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.Items.Placeables.Plates.Molten;
+using CalRemix.Content.Tiles;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -59,7 +60,7 @@ namespace CalRemix.Content.Items.SummonItems
                 .AddIngredient<MoltenPlagueplate>(20)
                 .AddIngredient<MoltenElumplate>(20)
                 .AddIngredient<MoltenOnyxplate>(20)
-                .AddTile(TileID.Hellforge)
+                .AddTile(ModContent.TileType<AncientConsole>())
                 .Register();
         }
     }
