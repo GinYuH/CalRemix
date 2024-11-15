@@ -17,7 +17,7 @@ namespace CalRemix.Core.Scenes
             return false;
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/DemonChase");
+        public override int Music => CalRemixMusic.DemonChase;
     }
     public class RealisticExplosion
     {

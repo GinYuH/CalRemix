@@ -106,6 +106,7 @@ namespace CalRemix
 
         // Minibosses
         public static readonly int LaRuga = Set("LaRuga");
+        public static readonly int DemonChase = Set("DemonChase");
 
         // Bosses
         public static readonly int TheCalamity = Set("StainedSmearedCalamity");
@@ -139,6 +140,7 @@ namespace CalRemix
         // Misc
         public static readonly int Menu = Set("Menu");
         public static readonly int Menu2 = Set("CrazyLaPaint");
+        public static readonly int TrueStory = Set("TrueStory");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }
