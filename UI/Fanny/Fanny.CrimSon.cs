@@ -22,19 +22,6 @@ namespace CalRemix.UI
 {
     public partial class ScreenHelperManager : ModSystem
     {
-        public static List<int> medicalItems =
-        [
-            ItemID.Vitamins,
-            ModContent.ItemType<StressPills>(),
-            ModContent.ItemType<Laudanum>(),
-            ItemID.LesserHealingPotion,
-            ItemID.HealingPotion,
-            ItemID.GreaterHealingPotion,
-            ItemID.SuperHealingPotion,
-            ModContent.ItemType<OmegaHealingPotion>(),
-            ModContent.ItemType<SupremeHealingPotion>()
-        ];
-
         public static void LoadCrimSon()
         {
             HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", "It is Dangerous to Go Alone. Take This.", "CrimSonDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone, 6, cantBeClickedOff: true)
@@ -56,7 +43,7 @@ namespace CalRemix.UI
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => !Main.LocalPlayer.HasItem(ItemID.Pizza) && Main.LocalPlayer.inventory.Any((Item i) => ItemID.Sets.IsFood[i.type]) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(EatFood).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("CrimMedicalAid", "Give me Painkillers.",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => medicalItems.Contains(i.type)) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.healLife > 0) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
             
             HelperMessage.New("CrimBandage", "Change my bandages.",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.Cobweb)).AddStartEvent(GetBandage).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
@@ -106,9 +93,9 @@ namespace CalRemix.UI
         {
             foreach (Item i in Main.LocalPlayer.inventory)
             {
-                if (medicalItems.Contains(i.type))
+                if (i.healLife > 0)
                 {
-                    SoundEngine.PlaySound(BetterSoundID.ItemEat);
+                    SoundEngine.PlaySound(BetterSoundID.ItemDrink);
                     Main.LocalPlayer.ConsumeItem(i.type);
                     Main.LocalPlayer.QuickSpawnItem(new EntitySource_Misc(""), ModContent.ItemType<BloodOrb>());
                     break;
