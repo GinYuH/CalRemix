@@ -56,7 +56,7 @@ namespace CalRemix.UI
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => !Main.LocalPlayer.HasItem(ItemID.Pizza) && Main.LocalPlayer.inventory.Any((Item i) => ItemID.Sets.IsFood[i.type]) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(EatFood).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("CrimMedicalAid", "Give me Painkillers.",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => medicalItems.Contains(i.type)), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => medicalItems.Contains(i.type)) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
             
             HelperMessage.New("CrimBandage", "Change my bandages.",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.Cobweb)).AddStartEvent(GetBandage).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
