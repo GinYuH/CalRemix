@@ -34,7 +34,7 @@ namespace CalRemix.UI
 
             HelperMessage.New("ML6", "I'm getting a bit of deja vu here.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
-                .ChainAfter(delay: 4f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
+                .ChainAfter(ml5, delay: 4f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
 
              HelperMessage.New("ML7", "It appears that the red moon will start yielding bountiful harvests of Blood Orbs now! You should take advantage of this opportunity to craft lotsa potions! I'm personally a fan of the Inferno Potion myself.",
@@ -47,17 +47,32 @@ namespace CalRemix.UI
             HelperMessage.New("ML9", "I should also mention that if you have a certain thief in one of your towns, they'll start selling the flawless Celestial Reaper, which can be used to cut down herbs significantly faster than the normal Sickle.",
                 "FannyIdle", HelperMessage.AlwaysShow, 6).ChainAfter().AddItemDisplay(ModContent.ItemType<CelestialReaper>());
 
-            HelperMessage.New("ML10", "Oh oh I should also mention-",
+            HelperMessage ml10 = HelperMessage.New("ML10", "Oh oh I should also mention-",
                 "FannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).ChainAfter();
 
-            HelperMessage.New("ML11", "Oh my god shut up already, how much can one boss unlock!?",
+            HelperMessage ml11 = HelperMessage.New("ML11", "Oh my god shut up already, how much can one boss unlock!?",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
-                .ChainAfter(delay: 2f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
+                .ChainAfter(ml10, delay: 2f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
-            HelperMessage.New("ML12", "It appears this encounter is going to have to be cut short buddy, I need to go do something.",
+            HelperMessage ml12 = HelperMessage.New("ML12", "HELLO !!!",
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, 18, cantBeClickedOff: true)
+                .ChainAfter(ml11, delay: 3f, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage ml13 = HelperMessage.New("ML13", "I'm out.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 4, cantBeClickedOff: true)
+                .ChainAfter(ml11).SpokenByEvilFanny();
+
+            HelperMessage ml14 = HelperMessage.New("ML14", "Wait! Evil Fanny, come back! Don't worry friend, I'll make sure she comes back. Just give me a second to chat with her.",
                 "FannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
-                .ChainAfter(startTimerOnMessageSpoken : true).AddEndEvent(Violence);
+                .ChainAfter(ml13).AddEndEvent(Violence);
 
+            HelperMessage ml15 = HelperMessage.New("ML15", "IT IS SUCH A PLEASURE TO MEET YOU, MY NEW FRIEND! My name? Ohoho, I am none other then the incredible, fantastical, miraculous Miracle Boy!",
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
+                .ChainAfter(ml12).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage.New("ML16", "I have so much to teach you, especially with all the drovel that utterly unscrumptious flame was spewing...",
+                "MiracleBoyIdle", HelperMessage.AlwaysShow)
+                .ChainAfter(ml15).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
         }
 
         private static void Violence()
