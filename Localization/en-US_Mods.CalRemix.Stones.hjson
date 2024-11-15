@@ -1347,3 +1347,75 @@ FolvsStone: {
 		Attacks inflict Sick Cell
 		'''
 }
+
+"Calamity: Hunt of the Old God/AbsorptionStone": {
+	DisplayName: Gobbed Stone
+	Tooltip:
+		'''
+		Immunity to Gobbed
+		Attacks inflict Gobbed
+		'''
+}
+
+"Calamity: Hunt of the Old God/FusionBurnStone": {
+	DisplayName: Fusion Burn Stone
+	Tooltip:
+		'''
+		Immunity to Fusion Burn
+		Attacks inflict Fusion Burn
+		'''
+}
+
+"Calamity: Hunt of the Old God/GobbedStone": {
+	DisplayName: Gobbed Stone
+	Tooltip:
+		'''
+		Immunity to Gobbed
+		Attacks inflict Gobbed
+		'''
+}
+
+"Calamity: Hunt of the Old God/PaladinPalanquinBuffStone": {
+	DisplayName: Paladin Palanquin Stone
+	Tooltip:
+		'''
+		Immunity to Paladin Palanquin
+		Attacks inflict Paladin Palanquin
+		'''
+}
+
+"Calamity: Hunt of the Old God/SlimeCaneBuffStone": {
+	DisplayName: Slime Soirée Stone
+	Tooltip:
+		'''
+		Immunity to Slime Soirée
+		Attacks inflict Slime Soirée
+		'''
+}
+
+"Calamity: Hunt of the Old God/SplendorJamBuffStone": {
+	DisplayName: Malice Mode Stone
+	Tooltip:
+		'''
+		Immunity to Malice Mode
+		Attacks inflict Malice Mode
+		'''
+}
+
+"Calamity: Hunt of the Old God/SwampedStone": {
+	DisplayName: Swamped Stone
+	Tooltip:
+		'''
+		Immunity to Swamped
+		Attacks inflict Swamped
+		'''
+}
+
+"Calamity: Hunt of the Old God/BloatBabyBuffStone": {
+	DisplayName: Bloat Baby Stone
+	Tooltip:
+		'''
+		Immunity to Bloat Baby
+		Attacks inflict Bloat Baby
+		'''
+}

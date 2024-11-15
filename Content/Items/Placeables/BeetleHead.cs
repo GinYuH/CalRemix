@@ -37,7 +37,7 @@ namespace CalRemix.Content.Items.Placeables
                 AddIngredient(ModContent.ItemType<AncientBoneDust>(), 1).
                 AddIngredient(ItemID.Vine, 8).
                 AddTile(TileID.Loom).
-                AddCondition(new Condition("After learning about The Incident", () => CalRemixWorld.trapperFriendsLearned >= 8)).
+                AddCondition(new Condition("After learning about The Incident", () => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned >= 8)).
                 Register();
         }
     }

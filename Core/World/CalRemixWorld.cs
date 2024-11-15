@@ -142,8 +142,6 @@ namespace CalRemix.Core.World
 
         public static bool stratusDungeonDisabled = false;
 
-        public static int trapperFriendsLearned = 0;
-
         public static List<int> DungeonWalls = new List<int>
         {
             WallID.BlueDungeonUnsafe,
@@ -227,7 +225,6 @@ namespace CalRemix.Core.World
             oxydayTime = 0;
 
             // Fanny
-            trapperFriendsLearned = 0;
 
             // A109
             alloyBars = true;
@@ -284,7 +281,6 @@ namespace CalRemix.Core.World
         public override void SaveWorldData(TagCompound tag)
         {
             tag["ogslime"] = ogslime;
-            tag["trapperfriends"] = trapperFriendsLearned;
 
             tag["guideHasExisted"] = guideHasExisted;
             tag["deusDeadInSnow"] = deusDeadInSnow;
@@ -347,7 +343,6 @@ namespace CalRemix.Core.World
         public override void LoadWorldData(TagCompound tag)
         {
             ogslime = tag.Get<bool>("ogslime");
-            trapperFriendsLearned = tag.Get<int>("trapperfriends");
 
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
@@ -452,7 +447,6 @@ namespace CalRemix.Core.World
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(ogslime);
-            writer.Write(trapperFriendsLearned);
             writer.Write(guideHasExisted);
             writer.Write(deusDeadInSnow);
             writer.Write(generatedCosmiliteSlag);
@@ -516,7 +510,6 @@ namespace CalRemix.Core.World
         public override void NetReceive(BinaryReader reader)
         {
             ogslime = reader.ReadBoolean();
-            trapperFriendsLearned = reader.ReadInt32();
             guideHasExisted = reader.ReadBoolean();
             deusDeadInSnow = reader.ReadBoolean();
             generatedCosmiliteSlag = reader.ReadBoolean();

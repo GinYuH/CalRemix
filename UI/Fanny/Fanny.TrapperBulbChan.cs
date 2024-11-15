@@ -5,6 +5,7 @@ using CalamityMod.NPCs.Polterghast;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Core.World;
 using System.Linq;
+using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -91,34 +92,34 @@ namespace CalRemix.UI
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneNormalCaverns).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("AncientBoneDust2", "I wonder where they are now… I can’t find them anywhere I look, Nya!~ (but in a sad way)",
-                "TrapperDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(bone).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(bone).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage.New("BeetleJuiceBeetleJuice", "Ohhh… So Sugoi… That reminds me of Beetle Juice Chan! BJ was the most epicly fun member of the club, and was super duper full of energy! :D They never liked my nickname for them, though. :( Not sure why. >_<; Shame about the accident…",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Derpling)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(GiveHead);
 
             HelperMessage.New("Bloodscene", "Ohhh… So Sugoi… That reminds me of Bloodletting Essence Chan! Don’t let the red hair desu-evice you, she was the sweetest member of the club! UwU So punk and so fierce, but with an adorably soft inside.~ Shame about the accident…",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCrimson).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCrimson).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage.New("DemonAsh", "Ohhh… So Sugoi… That reminds me of Demonic Bone Ash Chan! They were the cool and collected club founder, and always helped us bloom!~ ^_^ I heard rumors that they had a super duper secret crush on Ancient Bone Dust Chan, hehehe! OwO Shame about the accident…",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage.New("FetidEssence", "Ohhh… So Sugoi… That reminds me of Fetid Essence Chan! They were the wild card of the club, and always had something silly planned to keep us on our toes. :O All their hijinks felt like something out of an anime episode! Shame about the accident…",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCorrupt).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCorrupt).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage rival = HelperMessage.New("Rival", "Ohhh… So NOT Sugoi… That reminds me of Maneater Bulb Chan. Between you and me, you should probably avoid those enemies. >:(!!!! Maneater Bulb Chan was a big meanie head, and was always super jealous of how much cuter I was.",
                 "TrapperHuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.ManEater)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Rival2", "I’d say ‘Shame about the accident…’ But… Eh.",
-                "TrapperDisgust", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(rival).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDisgust", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(rival).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage.New("MurkyPaste", "Ohhh… So Sugoi… That reminds me of Murky Paste Chan! You know, we all kind of hated Murky Paste chan. I have no clue why they were a part of the club. :/ Shame about the accident…",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.ToxicSludge)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.ToxicSludge)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage.New("MurkySludge", "Ohhh… So Sugoi… That reminds me of Murky Sludge Chan! They were twin siblings with Murky Paste chan, but you’d nya-ver guess. Everyone looooved them so much, they were the most popular at the school by far… Except for me!~ Shame about the accident…",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.MotherSlime)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => CalRemixWorld.trapperFriendsLearned++);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.MotherSlime)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage revelation1 = HelperMessage.New("Revelation1", "Hey Trapper-Bulb Chan.. haha.. what’s that “incident” you’ve mentioned multiple times? Even as the flame of burning knowledge, not even I know what goes on outside of here, heh!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => CalRemixWorld.trapperFriendsLearned >= 8, 6, cantBeClickedOff: true);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned >= 8, 6, cantBeClickedOff: true);
 
             HelperMessage revelation2 = HelperMessage.New("Revelation2", "Ow, dun worry bout it, nya~ Just a wittle secret of mine, uwu",
                 "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation1, delay: 3, startTimerOnMessageSpoken: true);
@@ -127,7 +128,7 @@ namespace CalRemix.UI
                 "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation2, startTimerOnMessageSpoken: true);
 
             HelperMessage revelation4 = HelperMessage.New("Revelation4", "Tooo starrrrttt...",
-                "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation3, startTimerOnMessageSpoken: true);
+                "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation3, startTimerOnMessageSpoken: true).AddEndEvent(() => Thread.Sleep(2200));
 
             HelperMessage revelation5 = HelperMessage.New("Revelation5", "And that’s what happened to them..!~ Sowwy if I trauwmatizzed you guys.. OwO",
                 "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation4, startTimerOnMessageSpoken: true);
@@ -146,7 +147,7 @@ namespace CalRemix.UI
         public static void GiveHead()
         {
             Main.LocalPlayer.QuickSpawnItem(new EntitySource_Misc(""), ModContent.ItemType<BeetleHead>());
-            CalRemixWorld.trapperFriendsLearned++;
+            Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++;
         }
     }
 }
