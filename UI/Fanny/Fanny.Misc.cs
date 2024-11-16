@@ -61,17 +61,32 @@ namespace CalRemix.UI
             HelperMessage.New("Multiplayer", "The atmosphere seems a lot more social than what I'm used to. Be wary of ruptures in reality!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.netMode != NetmodeID.SinglePlayer);
 
+            HelperMessage.New("Adrenaboy1", "My-my! You sure are bolting like chili bean potatoes, my friend!",
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().adrenalineModeActive, 8, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage.New("Adrenaboy2", "Ha-ha! Good one, Miracle Boy!",
+                "FannyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("Adrenaboy3", "Explain it then.",
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage.New("Adrenaboy4", "Well.. uh.. chili is spicy.. and adrenaline is what you get as a flight or fight response..",
+                "FannyDisturbed", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("Adrenaboy5", "That wasn't the intention of my joke, flame.",
+                "MiracleBoyIdle", HelperMessage.AlwaysShow).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
             HelperMessage.New("Norcheese", "Something, something, you dirty cheater.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().NorfleetCounter >= 4).SpokenByEvilFanny();
 
             HelperMessage anniv1 = HelperMessage.New("Annivenriersary1", "HAPPY 20TH ANNIVERSARY, $0! We've had a lot of fun adventures over these last two decades, and here's to two more!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DownedBossSystem.downedProvidence && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && NPC.downedPlantBoss && Main.rand.NextBool(10000), 6, cantBeClickedOff: true);
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DownedBossSystem.downedProvidence && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && NPC.downedPlantBoss && Main.rand.NextBool(10000), 6, cantBeClickedOff: true).AddDynamicText(HelperMessage.GetPlayerName);
 
             HelperMessage anniv2 = HelperMessage.New("Annivenriersary2", "... Fanny? What the fuck are you talking about? It's barely been one year, let alone twenty of them. Did you eat another lotus, or something?",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(anniv1, delay: 3, startTimerOnMessageSpoken: true);
 
             HelperMessage anniv3 = HelperMessage.New("Annivenriersary3", "Trapper-Chan LOVES celebrating, but twenty seems strange... a-are you okay, Fanny-Kun?",
-                "TrapperDefault", HelperMessage.AlwaysShow, 4, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(anniv2, delay: 3, startTimerOnMessageSpoken: true);
+                "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(anniv2, delay: 3, startTimerOnMessageSpoken: true);
 
             HelperMessage anniv4 = HelperMessage.New("Annivenriersary4", "... but, no, it's been 20 years, hasn't it?",
                 "FannySob", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).ChainAfter(anniv3, delay: 3, startTimerOnMessageSpoken: true);
