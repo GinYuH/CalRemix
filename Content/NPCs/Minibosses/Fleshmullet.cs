@@ -101,6 +101,12 @@ namespace CalRemix.Content.NPCs.Minibosses
 
             return SpawnCondition.Underworld.Chance * 0.22f;
         }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemID.Hungerfish);
+        }
+
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
