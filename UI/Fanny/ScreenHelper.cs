@@ -649,7 +649,7 @@ namespace CalRemix.UI
                 .SetTextboxTheme(new HelperTextboxTheme("MiracleBoy_9Slice", new Vector2(16, 16), "MiracleBoy_Background", new Vector2(16, 16)))
                 .SetTextboxFormatting(null, 0, 16)
                 .SetPositionData(true, 120, 0.42f)
-                .SetAvailabilityCondition(() => NPC.downedMoonlord);
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked);
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })

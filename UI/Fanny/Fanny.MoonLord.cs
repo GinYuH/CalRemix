@@ -14,7 +14,7 @@ namespace CalRemix.UI
         public static void LoadMoonLordDeath()
         {
             HelperMessage startMessage = HelperMessage.New("ML1", "Blegh, I think I swallowed one of that thing's bones. Well, it's time for Godseeker Mode. You will face a sequence of challenges, each more difficult than the last with little to no breathing between encounters.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedMoonlord, 7).AddDelay(0.4f);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedMoonlord && Main.hardMode, 7).AddDelay(0.4f);
 
 
             HelperMessage.New("ML2", "Almost sounds like a boss rush or something.",
@@ -52,7 +52,7 @@ namespace CalRemix.UI
 
             HelperMessage ml11 = HelperMessage.New("ML11", "Oh my god shut up already, how much can one boss unlock!?",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
-                .ChainAfter(ml10, delay: 2f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
+                .ChainAfter(ml10, delay: 2f, startTimerOnMessageSpoken: true).SpokenByEvilFanny().AddStartEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked = true);
 
             HelperMessage ml12 = HelperMessage.New("ML12", "HELLO !!!",
                 "MiracleBoyIdle", HelperMessage.AlwaysShow, 18, cantBeClickedOff: true)

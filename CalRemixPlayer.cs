@@ -186,6 +186,7 @@ namespace CalRemix
 
         public bool gottenCellPhone = false;
         public int trapperFriendsLearned = 0;
+        public bool miracleUnlocked = false;
 
 		public int dyesRed = 0;
         public int dyesOrange = 0;
@@ -254,6 +255,7 @@ namespace CalRemix
             tag["GeneratorPlayerMusic"] = genMusic;
             tag["CellPhone"] = gottenCellPhone;
             tag["TrappFriends"] = trapperFriendsLearned;
+            tag["MiracleUnlocked"] = miracleUnlocked;
         }
         public override void LoadData(TagCompound tag)
         {
@@ -261,6 +263,7 @@ namespace CalRemix
             genMusic = tag.GetBool("GeneratorPlayerMusic");
             gottenCellPhone = tag.GetBool("CellPhone");
             trapperFriendsLearned = tag.GetInt("TrappFriends");
+            miracleUnlocked = tag.GetBool("MiracleUnlocked");
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
 		{
