@@ -703,85 +703,76 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            EnemyLoot(npc, npcLoot);
+            MiniBossLoot(npc, npcLoot);
+            BossLoot(npc, npcLoot);
+        }
+        private static void EnemyLoot(NPC npc, NPCLoot npcLoot)
+        {
+            #region Pre-Hardmode
+            if (NPCID.Sets.DemonEyes[npc.type])
+            {
+                npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ItemType<Ogscule>());
+            }
             if (npc.type == NPCID.Vulture)
             {
-                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsHardmode());
+                LeadingConditionRule mainRule = new(new Conditions.IsHardmode());
                 mainRule.Add(ItemType<DesertFeather>(), 1, 3, 5);
                 npcLoot.Add(mainRule);
             }
-            if (npc.type == NPCType<GreatSandShark>())
+            if (npc.type == NPCID.LarvaeAntlion)
             {
-                LeadingConditionRule toothRule = new LeadingConditionRule(new Conditions.IsExpert());
-                toothRule.Add(ItemType<SandSharkToothNecklace>(), 1, hideLootReport: !Main.expertMode);
-                toothRule.AddFail(ItemType<SandSharkToothNecklace>(), 2, hideLootReport: Main.expertMode);
-                npcLoot.Add(toothRule);
-
-                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsExpert());
-                LeadingConditionRule normal = npcLoot.DefineNormalOnlyDropSet();
-                int[] itemIDs = new int[6]
-                {
-                    ItemType<Tumbleweed>(),
-                    ItemType<SandstormGun>(),
-                    ItemType<ShiftingSands>(),
-                    ItemType<SandSharknadoStaff>(),
-                    ItemType<Sandslasher>(),
-                    ItemType<DuststormInABottle>()
-                };
-                mainRule.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, itemIDs), hideLootReport: !Main.expertMode);
-                mainRule.AddFail(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, itemIDs), hideLootReport: Main.expertMode);
-                npcLoot.Add(mainRule);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<GrandScale>());
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.LightShard);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DarkShard);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DungeonDesertKey);
+                npcLoot.Add(ItemType<AntlionOre>(), 6, 7, 13);
             }
-            if (npc.type == NPCType<DesertScourgeHead>())
+            if (npc.type == NPCType<Stormlion>() || npc.type == NPCID.Antlion || npc.type == NPCID.WalkingAntlion || npc.type == NPCID.GiantWalkingAntlion || npc.type == NPCID.FlyingAntlion || npc.type == NPCID.GiantFlyingAntlion)
             {
-                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
-                mainRule.Add(ItemType<ParchedScale>(), 1, 25, 30);
-                npcLoot.Add(mainRule);
-            }
-            if (npc.type == NPCType<Yharon>())
-            {
-                npcLoot.Add(ItemType<MovieSign>(), 100);
-            }
-            if (npc.type == NPCType<PrimordialWyrmHead>())
-            {
-                npcLoot.Add(ItemType<SubnauticalPlate>(), 1, 22, 34);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<HalibutCannon>());
-            }
-            if (npc.type == NPCType<MirageJelly>())
-            {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<MirageJellyItem>(), 7, 5));
-            }
-            if (npc.type == NPCType<CragmawMire>())
-            {
-                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => DownedBossSystem.downedPolterghast);
-                postPolter.Add(ItemType<NucleateGello>(), 10, hideLootReport: !DownedBossSystem.downedPolterghast);
-                postPolter.AddFail(ItemType<NucleateGello>(), hideLootReport: DownedBossSystem.downedPolterghast);
-            }
-            if (npc.type == NPCType<NuclearTerror>())
-            {
-                npcLoot.Add(ItemType<Microxodonta>(), 3);
-            }
-            if (npc.type == NPCID.GraniteFlyer)
-            {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<CosmicStone>(), 20, 10));
-            }
-            if (npc.type == NPCType<Horse>())
-            {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<RockStone>(), 5, 3));
-            }
-            if (npc.type == NPCType<Providence>())
-            {
-                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
-                hm.Add(ItemType<ProfanedNucleus>(), 4);
-                npcLoot.Add(hm);
+                npcLoot.Add(ItemType<AntlionOre>(), 1, 13, 23);
             }
             if (npc.type == NPCType<Cnidrion>())
             {
                 npcLoot.AddIf(() => RemixDowned.downedExcavator, ItemType<DesertMedallion>());
             }
+            if (npc.type == NPCID.GoblinThief)
+            {
+                npcLoot.AddNormalOnly(ItemType<Warglaive>(), 40, 25, 68);
+                npcLoot.AddIf(() => Main.expertMode, ItemType<Warglaive>(), 20, 37, 120);
+            }
+            if (npc.type == NPCID.GoblinPeon)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<Warbell>(), 40, 20));
+            }
+            if (npc.type == NPCID.GoblinSorcerer)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<Warstaff>(), 20, 10));
+            }
+            if (npc.type == NPCID.GoblinArcher)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<Warbow>(), 40, 20));
+                npcLoot.AddNormalOnly(ItemType<WarArrow>(), 40, 25, 68);
+                npcLoot.AddIf(() => Main.expertMode, ItemType<WarArrow>(), 20, 37, 120);
+            }
+            if (npc.type == NPCID.GoblinWarrior)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<WaraxeReloaded>(), 20, 10));
+            }
+            if (npc.type == NPCType<HiveTumor>())
+            {
+                npcLoot.AddIf(() => CalRemixWorld.grimesandToggle, ItemID.DemoniteOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
+            }
+            if (npc.type == NPCType<PerforatorCyst>())
+            {
+                npcLoot.AddIf(() => CalRemixWorld.grimesandToggle, ItemID.CrimtaneOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
+            }
+            if (npc.type == NPCType<MirageJelly>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<MirageJellyItem>(), 7, 5));
+            }
+            if (npc.type == NPCID.GraniteFlyer)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<CosmicStone>(), 20, 10));
+            }
+            #endregion
+            #region Hardmode
             if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
@@ -792,55 +783,12 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<EssenceofBabil>(), 3);
             }
-            if (npc.type == NPCID.Plantera)
-            {
-                LeadingConditionRule exp = new LeadingConditionRule(new Conditions.NotExpert());
-                exp.Add(ItemType<EssenceofBabil>(), 1, 4, 8, hideLootReport: Main.expertMode);
-                npcLoot.Add(exp);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.JungleKey);
-            }
-            if (npc.type == NPCID.WallofFlesh)
-            {
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
-            }
-            if (npc.type == NPCID.QueenSlimeBoss)
-            {
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedKey);
-            }
             if (npc.type == NPCID.Wolf)
             {
                 LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
                 postPolter.Add(ItemType<CoyoteVenom>(), 3, hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ItemType<CoyoteVenom>(), 4, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
-            }
-            if (npc.type == NPCType<SupremeCalamitas>())
-            {
-                npcLoot.Add(ItemType<YharimBar>(), 1, 6, 8);
-            }
-            if (npc.type == NPCType<Crabulon>())
-            {
-                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
-                mainRule.Add(ItemType<DeliciousMeat>(), 1, 4, 7);
-                mainRule.Add(ItemType<CrabLeaves>(), 1, 4, 7);
-                mainRule.Add(ItemType<OddMushroom>(), 5);
-                npcLoot.Add(mainRule);
-            }
-            if (npc.type == NPCID.DukeFishron)
-            {
-                npcLoot.Add(ItemType<DeliciousMeat>(), 2, 45, 92);
-            }
-            if (npc.type == NPCType<Leviathan>() || npc.type == NPCType<Anahita>())
-            {
-                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
-                LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.NotExpert());
-                mainRule.OnSuccess(leadingConditionRule.Add(ItemType<CrocodileScale>(), 1, 20, 30));
-                npcLoot.Add(mainRule);
-            }
-            if (NPCID.Sets.DemonEyes[npc.type])
-            {
-                npcLoot.AddIf(() => Main.LocalPlayer.armor[0].type == ItemID.WoodHelmet && Main.LocalPlayer.armor[1].type == ItemID.WoodBreastplate && Main.LocalPlayer.armor[2].type == ItemID.WoodGreaves, ItemType<Ogscule>());
             }
             if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == NPCType<AstralSlime>())
             {
@@ -865,12 +813,6 @@ namespace CalRemix
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ItemType<ClamChowder>(), 20);
-                npcLoot.Add(hm);
-            }
-            if (npc.type == NPCType<GiantClam>())
-            {
-                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
-                hm.Add(ItemType<ClamChowder>(), 2);
                 npcLoot.Add(hm);
             }
             if (npc.type == NPCType<StellarCulex>())
@@ -912,10 +854,12 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<AstralPearl>(), 20);
             }
+            #endregion
+            #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
             {
                 LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
-                postPolter.Add(ItemType<CursedSpear>(), new Fraction(2, 30) , hideLootReport: !Main.expertMode);
+                postPolter.Add(ItemType<CursedSpear>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
                 postPolter.AddFail(ItemType<CursedSpear>(), 25, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
             }
@@ -930,35 +874,12 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => DownedBossSystem.downedCalamitas && DownedBossSystem.downedExoMechs, ItemType<NO>(), 10, 1, 1, ui: false);
             }
-            if (npc.type == NPCType<HiveTumor>())
-            {
-                npcLoot.AddIf(()=> CalRemixWorld.grimesandToggle, ItemID.DemoniteOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
-            }
-            if (npc.type == NPCType<PerforatorCyst>())
-            {
-                npcLoot.AddIf(() => CalRemixWorld.grimesandToggle, ItemID.CrimtaneOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
-            }
             if (npc.type == NPCType<Sulflounder>())
             {
                 LeadingConditionRule flound = new LeadingConditionRule(new Conditions.IsExpert());
                 flound.Add(ItemType<FlounderMortar>(), 10, hideLootReport: !Main.expertMode);
                 flound.AddFail(ItemType<FlounderMortar>(), new Fraction(2, 30), hideLootReport: Main.expertMode);
                 npcLoot.Add(flound);
-            }
-            if (CalRemixAddon.Wrath != null)
-            {
-                if (CalRemixAddon.Wrath.TryFind("EntropicGod", out ModNPC noxus) && npc.type == noxus.Type)
-                {
-                    LeadingConditionRule bar = new LeadingConditionRule(new Conditions.IsExpert());
-                    bar.Add(ItemType<EntropicBar>(), 10);
-                    bar.AddFail(ItemType<EntropicBar>(), 20);
-                    npcLoot.Add(bar);
-
-                    LeadingConditionRule frond = new LeadingConditionRule(new Conditions.IsExpert());
-                    frond.Add(ItemType<EntropicFrond>(), 1, 25, 35);
-                    frond.AddFail(ItemType<EntropicFrond>(), 1, 35, 45);
-                    npcLoot.Add(bar);
-                }
             }
             if (npc.type == NPCType<FlakCrab>())
             {
@@ -980,55 +901,148 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ItemType<MutatedTruffle>(), 20);
             }
-            if (npc.type == NPCType<Mauler>())
-            {
-                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ItemType<FetidEmesis>(), 4);
-            }
             if (npc.type == NPCType<CragmawMire>())
             {
+                LeadingConditionRule postPolter = npcLoot.DefineConditionalDropSet(() => DownedBossSystem.downedPolterghast);
+                postPolter.Add(ItemType<NucleateGello>(), 10);
+                postPolter.AddFail(ItemType<NucleateGello>());
+                npcLoot.Add(postPolter);
                 npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ItemType<SepticSkewer>(), 4);
-            }
-            if (npc.type == NPCType<NuclearTerror>())
-            {
-                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ItemType<OldDukeScales>(), 4);
-            }
-            if (npc.type == NPCType<DevourerofGodsHead>())
-            {
-                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.NotExpert());
-                mainRule.Add(ItemType<Lean>(), 1, 3, 4);
             }
             if (npc.type == NPCID.BigMimicCorruption || npc.type == NPCID.BigMimicCrimson || npc.type == NPCID.BigMimicHallow)
             {
                 npcLoot.Add(ItemType<GreaterStealthPotion>(), 1, 5, 10);
+                npcLoot.Add(ItemType<GreaterFlightPotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterAdrenalinePotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterEnragePotion>(), 1, 5, 10);
-                npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterFlightPotion>(), 1, 5, 10);
             }
-            if (npc.type == NPCID.GoblinThief)
+            #endregion
+        }
+        private static void MiniBossLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (npc.type == NPCType<GiantClam>())
             {
-                npcLoot.AddNormalOnly(ItemType<Warglaive>(), 40, 25, 68);
-                npcLoot.AddIf(()=>Main.expertMode, ItemType<Warglaive>(), 20, 37, 120);
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<ClamChowder>(), 2);
+                npcLoot.Add(hm);
             }
-            if (npc.type == NPCID.GoblinPeon)
+            if (npc.type == NPCType<Horse>())
             {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<Warbell>(), 40, 20));
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<RockStone>(), 5, 3));
             }
-            if (npc.type == NPCID.GoblinSorcerer)
+            if (npc.type == NPCType<GreatSandShark>())
             {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<Warstaff>(), 20, 10));
+                LeadingConditionRule toothRule = new LeadingConditionRule(new Conditions.IsExpert());
+                toothRule.Add(ItemType<SandSharkToothNecklace>(), 1, hideLootReport: !Main.expertMode);
+                toothRule.AddFail(ItemType<SandSharkToothNecklace>(), 2, hideLootReport: Main.expertMode);
+                npcLoot.Add(toothRule);
+
+                LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsExpert());
+                LeadingConditionRule normal = npcLoot.DefineNormalOnlyDropSet();
+                int[] itemIDs = new int[6]
+                {
+                    ItemType<Tumbleweed>(),
+                    ItemType<SandstormGun>(),
+                    ItemType<ShiftingSands>(),
+                    ItemType<SandSharknadoStaff>(),
+                    ItemType<Sandslasher>(),
+                    ItemType<DuststormInABottle>()
+                };
+                mainRule.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, itemIDs), hideLootReport: !Main.expertMode);
+                mainRule.AddFail(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, itemIDs), hideLootReport: Main.expertMode);
+                npcLoot.Add(mainRule);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<GrandScale>());
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.LightShard);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DarkShard);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.DungeonDesertKey);
             }
-            if (npc.type == NPCID.GoblinArcher)
+            if (npc.type == NPCType<Mauler>())
             {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<Warbow>(), 40, 20));
-                npcLoot.AddNormalOnly(ItemType<WarArrow>(), 40, 25, 68);
-                npcLoot.AddIf(() => Main.expertMode, ItemType<WarArrow>(), 20, 37, 120);
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ItemType<FetidEmesis>(), 4);
             }
-            if (npc.type == NPCID.GoblinWarrior)
+            if (npc.type == NPCType<NuclearTerror>())
             {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<WaraxeReloaded>(), 20, 10));
+                npcLoot.Add(ItemType<Microxodonta>(), 3);
+                npcLoot.AddIf(() => DownedBossSystem.downedPolterghast, ItemType<OldDukeScales>(), 4);
             }
         }
+        private static void BossLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (npc.type == NPCType<DesertScourgeHead>())
+            {
+                npcLoot.AddNormalOnly(ItemType<ParchedScale>(), 1, 25, 30);
+            }
+            if (npc.type == NPCType<Crabulon>())
+            {
+                npcLoot.AddNormalOnly(ItemType<DeliciousMeat>(), 1, 4, 7);
+                npcLoot.AddNormalOnly(ItemType<CrabLeaves>(), 1, 4, 7);
+                npcLoot.AddNormalOnly(ItemType<OddMushroom>(), 5);
+            }
+            if (npc.type == NPCID.WallofFlesh)
+            {
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
+            }
+            if (npc.type == NPCID.QueenSlimeBoss)
+            {
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedKey);
+            }
+            if (npc.type == NPCID.Plantera)
+            {
+                npcLoot.AddNormalOnly(ItemType<EssenceofBabil>(), 1, 4, 8);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.JungleKey);
+            }
+            if (npc.type == NPCType<Leviathan>() || npc.type == NPCType<Anahita>())
+            {
+                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
+                mainRule.Add(ItemType<CrocodileScale>(), 1, 20, 30);
+                npcLoot.AddNormalOnly(mainRule);
+            }
+            if (npc.type == NPCType<AstrumAureus>())
+            {
+                npcLoot.AddNormalOnly(ItemType<SoulofBright>(), 1, 4, 6);
+            }
+            if (npc.type == NPCID.DukeFishron)
+            {
+                npcLoot.AddNormalOnly(ItemType<DeliciousMeat>(), 2, 45, 92);
+            }
+            if (npc.type == NPCType<Providence>())
+            {
+                npcLoot.AddNormalOnly(ItemType<ProfanedNucleus>(), 4);
+            }
+            if (npc.type == NPCType<DevourerofGodsHead>())
+            {
+                npcLoot.AddNormalOnly(ItemType<Lean>(), 1, 3, 4);
+            }
+            if (npc.type == NPCType<Yharon>())
+            {
+                npcLoot.AddNormalOnly(ItemType<MovieSign>(), 100);
+            }
+            if (npc.type == NPCType<SupremeCalamitas>())
+            {
+                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 6, 8);
+            }
+            if (npc.type == NPCType<PrimordialWyrmHead>())
+            {
+                npcLoot.Add(ItemType<SubnauticalPlate>(), 1, 22, 34);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<HalibutCannon>());
+            }
+            if (CalRemixAddon.Wrath != null)
+            {
+                if (CalRemixAddon.Wrath.TryFind("EntropicGod", out ModNPC noxus) && npc.type == noxus.Type)
+                {
+                    LeadingConditionRule bar = new LeadingConditionRule(new Conditions.IsExpert());
+                    bar.Add(ItemType<EntropicBar>(), 10);
+                    bar.AddFail(ItemType<EntropicBar>(), 20);
+                    npcLoot.Add(bar);
 
+                    LeadingConditionRule frond = new LeadingConditionRule(new Conditions.IsExpert());
+                    frond.Add(ItemType<EntropicFrond>(), 1, 25, 35);
+                    frond.AddFail(ItemType<EntropicFrond>(), 1, 35, 45);
+                    npcLoot.Add(frond);
+                }
+            }
+        }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             GeneralHitStuff(npc, hit, damageDone, player);
@@ -1211,7 +1225,8 @@ namespace CalRemix
         public override void ResetEffects(NPC npc)
         {
             vBurn = false;
-            witherDebuff = false;
+            if (!npc.HasBuff<Wither>())
+                witherDebuff = false;
             if (!witherDebuff)
                 wither = 0;
 
@@ -1319,7 +1334,6 @@ namespace CalRemix
                 maxSpawns *= 15;
             }
         }
-
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             if (CalRemixWorld.roachDuration > 0)

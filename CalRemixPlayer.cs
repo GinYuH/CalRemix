@@ -21,7 +21,6 @@ using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.NPCs.Minibosses;
-using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using System.Collections.Generic;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Buffs.DamageOverTime;
@@ -38,7 +37,6 @@ using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Accessories.Vanity;
-using CalRemix.Content.NPCs.Bosses.Losbaf;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Tools;
@@ -84,86 +82,69 @@ namespace CalRemix
 
     public class CalRemixPlayer : ModPlayer
 	{
-        public bool earthEnchant;
-		public bool amongusEnchant;
-		public bool brimPortal;
-		public bool arcanumHands;
-		public bool marnite;
-		public bool roguebox;
-		public int eclipseaura = -1;
-		public int marnitetimer = 1200;
-		public bool soldier;
-		public bool astEffigy;
-		public bool halEffigy;
-		public bool nothing;
-		public bool miragel;
-		public bool godfather;
-		public bool tvo;
-		public bool nuclegel;
-		public bool assortegel;
-		public bool amalgel;
-		public bool verboten;
-		public bool cosmele;
-		public bool earthele;
-		public bool crystalconflict;
-		public bool moonFist;
-		public bool cursed;
-		public bool cart;
-		public bool tvohide;
-		public bool wormMeal;
-        public bool dreamingGhost;
-        public bool statue;
-        public bool mackerel;
-		public bool neuron;
-		public bool corrosiveEye;
-        public bool moltool;
-        public bool sickcell;
+        // General
+        public int commonItemHoldTimer;
+        public int remixJumpCount;
+        public int RecentChest = -1;
+        public bool anomaly109UI;
+        public bool fridge;
+        public bool clockBar;
+
+        public bool gottenCellPhone = false;
+        public bool miracleUnlocked = false;
+        public int trapperFriendsLearned = 0;
+        public int ionDialogue = -1;
+        public int ionQuestLevel = -1;
+
+        public CustomGen customGen = new(1, Color.White, false, true, 3, Color.White, false, true);
+        public bool generatingGen = false;
+        public bool genActive = false;
+        public bool genMusic = true;
+
+        // Biome
+        public bool dungeon2;
+        public bool ZoneLife;
+        public bool ZonePlague;
+        public bool ZonePlagueDesert;
+
+        // Accessories
+        public bool brimPortal;
+        public bool arcanumHands;
+        public bool marnite;
+        public bool roguebox;
+        public bool miragel;
+        public bool godfather;
+        public bool tvo;
+        public bool nuclegel;
+        public bool assortegel;
+        public bool amalgel;
+        public bool verboten;
+        public bool cosmele;
+        public bool earthele;
+        public bool crystalconflict;
+        public bool moonFist;
+        public bool cursed;
+        public bool cart;
+        public bool tvohide;
+        public bool wormMeal;
+        public bool invGar;
+        public int VerbotenMode = 1;
+
+        public int timeSmoked;
+        public bool carcinogenSoul;
+        public bool carcinogenSoulVanity;
+        public bool hydrogenSoul;
+        public bool ionogenSoul;
+        public bool origenSoul;
+        public bool pathogenSoul;
+        public bool oxygenSoul;
+        public bool phytogenSoul;
+        public bool pyrogenSoul;
+
+        public int blazeCount = 0;
         public bool blaze;
         public bool pearl;
         public bool astralEye;
-		public bool flamingIce;
-		public bool carcinogenSoul;
-        public bool carcinogenSoulVanity;
-        public bool hydrogenSoul;
-		public bool ionogenSoul;
-		public bool origenSoul;
-		public bool pathogenSoul;
-		public bool oxygenSoul;
-		public bool phytogenSoul;
-        public bool pyrogenSoul;
-		public int timeSmoked;
-        public int deicide = 0;
-        public Particle ring;
-		public Particle ring2;
-		public Particle aura;
-        public bool ZoneLife;
-		public float cosdam = 0;
-        public int blazeCount = 0;
-        public int VerbotenMode = 1;
-		public int RecentChest = -1;
-		public bool baroclaw;
-		public bool fridge;
-		public bool ZonePlague;
-        public bool ZonePlagueDesert;
-        public Vector2 clawPosition = Vector2.Zero;
-		public bool bananaClown;
-        public bool twistedNetherite;
-        public bool twistedNetheriteBoots;
-        public bool invGar;
-        public bool clockBar;
-        public bool anomaly109UI;
-		public bool dungeon2;
-		public bool hayFever;
-		public bool phd;
-		public int remixJumpCount;
-
-        public int chainSawCharge;
-        public int chainSawHitCooldown = 0;
-        public int chainSawLevel1 = 1;
-        public int chainSawLevel2 = 30 * 5;
-        public int chainSawLevel3 = 30 * 10;
-        public int chainSawChargeCritMax = 30 * 15;
-        public int chainSawChargeMax = 30 * 20;
 
         public bool polyShieldChargeEnabled;
         public int polyShieldCooldown;
@@ -174,21 +155,68 @@ namespace CalRemix
         public int dashBuffer = 5;
         public int dashBufferEarly = 5;
         public int dashBufferLate = 5;
-		public Vector2 polyShieldChargeDir = new Vector2(0, 0);
+        public Vector2 polyShieldChargeDir = new Vector2(0, 0);
 
-        public int ionDialogue = -1;
-		public int ionQuestLevel = -1;
+        public bool baroclaw;
+        public Vector2 clawPosition = Vector2.Zero;
 
-        public CustomGen customGen = new(1, Color.White, false, true, 3, Color.White, false, true);
-        public bool generatingGen = false;
-        public bool genActive = false;
-        public bool genMusic = true;
+        public bool infraredSights;
+        public bool infraredSightsScanning;
+        public int infraredSightsCounter;
 
-        public bool gottenCellPhone = false;
-        public int trapperFriendsLearned = 0;
-        public bool miracleUnlocked = false;
+        public int eclipseaura = -1;
+        public Particle ring;
+        public Particle ring2;
+        public Particle aura;
 
-		public int dyesRed = 0;
+        // Weapons
+        public int chainSawCharge;
+        public int chainSawHitCooldown = 0;
+        public int chainSawLevel1 = 1;
+        public int chainSawLevel2 = 30 * 5;
+        public int chainSawLevel3 = 30 * 10;
+        public int chainSawChargeCritMax = 30 * 15;
+        public int chainSawChargeMax = 30 * 20;
+        public int roxCooldown;
+
+        // Tools
+        public bool phd;
+
+        // Armor
+        public bool bananaClown;
+        public bool twistedNetherite;
+        public bool twistedNetheriteBoots;
+
+        // Minions
+        public bool soldier;
+        public bool dreamingGhost;
+        public bool statue;
+        public bool mackerel;
+        public bool neuron;
+        public bool corrosiveEye;
+        public bool sickcell;
+        public bool moltool;
+        public bool onyxFist;
+        public bool fractalCrawler;
+        public bool exolotl;
+
+        // Pets
+        public bool nothing;
+
+        // Buffs
+        public bool hayFever;
+
+        // Tiles
+        public float cosdam = 0;
+        public bool astEffigy;
+        public bool halEffigy;
+
+        // Enchantments
+        public bool earthEnchant;
+        public bool amongusEnchant;
+
+        // Dyes
+        public int dyesRed = 0;
         public int dyesOrange = 0;
         public int dyesYellow = 0;
         public int dyesLime = 0;
@@ -206,7 +234,7 @@ namespace CalRemix
 
 		public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
 
-        private static readonly List<PlayerDrawLayer> HiddenLayers =
+        private static readonly List<PlayerDrawLayer> HiddenGenLayers =
         [
             PlayerDrawLayers.Wings,
             PlayerDrawLayers.HeadBack,
@@ -218,6 +246,8 @@ namespace CalRemix
             PlayerDrawLayers.SkinLongCoat,
             PlayerDrawLayers.ArmorLongCoat,
             PlayerDrawLayers.Head,
+            PlayerDrawLayers.FrontAccBack,
+            PlayerDrawLayers.FrontAccFront,
             PlayerDrawLayers.Shield,
             PlayerDrawLayers.ArmOverItem,
             PlayerDrawLayers.HandOnAcc
@@ -267,7 +297,7 @@ namespace CalRemix
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
 		{
-			if (CalamityMod.CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
+			if (CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
 			{
 				if (!Player.HasCooldown(EclipseAuraCooldown.ID) && Player.GetModPlayer<CalRemixPlayer>().eclipseaura <= -1)
 				{
@@ -350,6 +380,16 @@ namespace CalRemix
                     Player.AddCooldown("SoulExplosion", 1800);
                 }
             }
+			if (CalRemixKeybinds.InfraredSightsKeybind.JustPressed && infraredSights)
+			{
+				if (!Player.HasCooldown(InfraredSightsCooldown.ID))
+                {
+					if (Main.myPlayer == Player.whoAmI)
+						CombatText.NewText(Player.getRect(), Color.Red, "Scanning...", true);
+                    infraredSightsScanning = true;
+                    Player.AddCooldown("InfraredSights", 3600);
+                }
+			}
         }
 
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
@@ -387,7 +427,7 @@ namespace CalRemix
         {
             if (Main.myPlayer == Player.whoAmI)
             {
-                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(NPCType<Losbaf>()) || NPC.AnyNPCs(NPCType<Hypnos>()))
+                if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(NPCType<Hypnos>()))
                     Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ItemType<CirrusCouch>() || Main.mouseItem.type == ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
@@ -401,8 +441,13 @@ namespace CalRemix
 			{
 				SpawnPhantomHeart();
 			}
-
-			if (VerbotenMode >= 5)
+			if (infraredSightsScanning)
+            {
+                InfraredLogic();
+            }
+            if (roxCooldown > 0)
+                roxCooldown--;
+            if (VerbotenMode >= 5)
 			{
 				VerbotenMode = 1;
             }
@@ -464,6 +509,8 @@ namespace CalRemix
 
         public override bool PreItemCheck()
         {
+            if (Main.myPlayer == Player.whoAmI)
+                ManageItemsInUse(Player, Player.HeldItem, Main.mouseItem, ref commonItemHoldTimer);
             if (Player.HeldItem.type == ItemType<CirrusCouch>() || Player.HeldItem.type == ItemType<CrystalHeartVodka>())
                 Player.HeldItem.stack = 0;
             if (Player.HeldItem.type == ItemType<TwistedNetheriteShovel>() && Player.itemAnimation == Player.itemAnimationMax && Player.IsTargetTileInItemRange(Player.HeldItem))
@@ -722,7 +769,6 @@ namespace CalRemix
             }
             #endregion
         }
-
         public override void ResetEffects()
 		{
 			brimPortal = false;
@@ -737,7 +783,7 @@ namespace CalRemix
 			neuron = false;
             soldier = false;
 			corrosiveEye = false;
-            marnitetimer = 0;
+            onyxFist = false;
 			astEffigy = false;
 			halEffigy = false;
 			nothing = false;
@@ -758,7 +804,6 @@ namespace CalRemix
 			blaze = false;
 			pearl = false;
 			astralEye = false;
-			flamingIce = false;
 			bananaClown = false;
 			twistedNetherite = false;
 			twistedNetheriteBoots = false;
@@ -767,7 +812,10 @@ namespace CalRemix
 			invGar = false;
 			hayFever = false;
 			phd = false;
-			carcinogenSoul = false;
+			infraredSights = false;
+            exolotl = false;
+            fractalCrawler = false;
+            carcinogenSoul = false;
 			carcinogenSoulVanity = false;
 			hydrogenSoul = false;
 			origenSoul = false;
@@ -828,8 +876,8 @@ namespace CalRemix
             }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
-		{
-			if (amongusEnchant && hit.Crit)
+        {
+            if (amongusEnchant && hit.Crit)
 			{
 				if (Main.myPlayer == Player.whoAmI)
                 {
@@ -920,6 +968,27 @@ namespace CalRemix
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
             int roll = Main.rand.Next(100);
+            if (attempt.bobberType == ProjectileType<TyrantBobber>() && Player.ActiveItem().type == ItemType<TheCodseeker>() && Main.rand.NextBool(100))
+            {
+                if (Main.myPlayer == Player.whoAmI)
+                    SoundEngine.PlaySound(SoundID.ScaryScream);
+                if (Player.HeldItem.type == ItemType<TheCodseeker>())
+                    Player.HeldItem.ChangeItemType(ItemID.WoodFishingPole);
+                else if (Main.myPlayer == Player.whoAmI && Main.mouseItem.type == ItemType<TheCodseeker>())
+                    Main.mouseItem.ChangeItemType(ItemID.WoodFishingPole);
+                foreach (Projectile p in Main.projectile)
+                {
+                    if (p != null)
+                        continue;
+                    if (p.owner == Player.whoAmI && p.type == ProjectileType<TyrantBobber>())
+                        p.Kill();
+                }
+            }
+
+            if (inWater && Player.Calamity().ZoneSulphur && roll < 5)
+            {
+                itemDrop = ItemType<BlobfishPlushie>();
+            }
             if (inWater && Player.ZoneJungle && Main.hardMode && roll >= 0 && roll <= 7)
             {
                 itemDrop = ItemType<Babilfish>();
@@ -988,7 +1057,7 @@ namespace CalRemix
         }
 		public override void UpdateBadLifeRegen()
         {
-            if (flamingIce)
+            if (Held(Player, ItemType<FlamingIceBow>()))
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
@@ -1019,30 +1088,36 @@ namespace CalRemix
 		}
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            bool deicide = Held(Player, ItemType<Deicide>());
+            bool flamingIce = Held(Player, ItemType<FlamingIceBow>());
+
             if (flamingIce && Main.rand.NextBool(10))
             {
                 int index = Dust.NewDust(Player.position, Player.width, Player.height, (Main.rand.NextBool()) ? DustID.IceTorch : DustID.Torch, Main.rand.Next(-2, 3), -5f);
                 drawInfo.DustCache.Add(index);
             }
-            if (deicide > 0)
+            if (deicide && commonItemHoldTimer > 0)
             {
-                Color c = Color.Lerp(Color.Red, Color.White, Utils.GetLerpValue(-10f, 3000f, deicide, true));
+                Color c = Color.Lerp(Color.Red, Color.White, Utils.GetLerpValue(-10f, 3000f, commonItemHoldTimer, true));
                 g = c.G;
                 b = c.B;
             }
             if (drawInfo.shadow != 0)
-				return;
-			if (deicide > 1800)
-			{
-				Texture2D texture = Request<Texture2D>("CalRemix/Assets/ExtraTextures/DarkWreath").Value;
-                Vector2 position = Player.Center - new Vector2(texture.Width / 2, texture.Height / 2) - Main.screenPosition + Vector2.UnitY * Player.gfxOffY;
-				position = new Vector2((int)position.X, (int)position.Y);
-                Main.spriteBatch.Draw(texture, position, Color.White);
-            }
-            if (deicide > 3000 && Main.rand.NextBool(5))
+                return;
+            if (deicide)
             {
-				int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Smoke, SpeedY: -4f, newColor: Color.DarkGray);
-				drawInfo.DustCache.Add(index);
+                if (commonItemHoldTimer > 1800)
+                {
+                    Texture2D texture = Request<Texture2D>("CalRemix/Assets/ExtraTextures/DarkWreath").Value;
+                    Vector2 position = Player.Center - new Vector2(texture.Width / 2, texture.Height / 2) - Main.screenPosition + Vector2.UnitY * Player.gfxOffY;
+                    position = new Vector2((int)position.X, (int)position.Y);
+                    Main.spriteBatch.Draw(texture, position, Color.White);
+                }
+                if (commonItemHoldTimer > 3000 && Main.rand.NextBool(5))
+                {
+                    int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Smoke, SpeedY: -4f, newColor: Color.DarkGray);
+                    drawInfo.DustCache.Add(index);
+                }
             }
             if (hayFever)
             {
@@ -1078,12 +1153,47 @@ namespace CalRemix
                 {
                     if (layer == null)
                         continue;
-                    if (HiddenLayers.Contains(layer))
+                    if (HiddenGenLayers.Contains(layer))
                         layer.Hide();
                 }
             }
         }
-
+        public void InfraredLogic()
+        {
+            if (infraredSightsCounter >= 300)
+            {
+                infraredSightsCounter = 0;
+                infraredSightsScanning = false;
+                NPC npc = null;
+                try
+                {
+                    foreach (NPC n in Main.npc)
+                    {
+                        if (n is null)
+                            continue;
+                        if (!n.whoAmI.WithinBounds(Main.maxNPCs))
+                            continue;
+                        if (!n.CanBeChasedBy())
+                            continue;
+                        if (npc != null)
+                        {
+                            if (npc.lifeMax > n.lifeMax)
+                                continue;
+                        }
+                        npc = n;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                if (npc is null)
+                    Main.NewText("* Infrared Sights: No available data.");
+                else
+                    Main.NewText($"* Infrared Sights: {npc.TypeName}\n* Contact Damage: {npc.damage}\n* Defense: {npc.defense}");
+            }
+            infraredSightsCounter++;
+        }
 		public static void LoadDyeStats()
 		{
 			// Basics
@@ -1246,5 +1356,36 @@ namespace CalRemix
             // Remix
             dyeStats.Add(ItemType<LucreciaDye>(), new DyeStats(purple: 10, pink: 10));
         }
+        private static void ManageItemsInUse(Player player, Item h, Item m, ref int c)
+        {
+            if (Held(player, ItemType<FiberBaby>()))
+            {
+                Item item = (h.type == ItemType<FiberBaby>()) ? h : m;
+                if (player.ownedProjectileCounts[ProjectileType<FiberBabyHoldout>()] < 1)
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<FiberBabyHoldout>(), item.damage, 0, player.whoAmI);
+            }
+            if (!player.channel)
+                c = 0;
+            else if (Held(player, ItemType<Deicide>()))
+            {
+                if (c < 3601)
+                    c++;
+            }
+            else if (Held(player, ItemType<DualCane>()))
+            {
+                if (c < 40)
+                {
+                    if (c == 0)
+                        SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact);
+                    c++;
+                }
+            }
+            else if (Held(player, ItemType<SDOMG>()))
+            {
+                if (c < 600 && player.altFunctionUse != 2)
+                    c++;
+            }
+        }
+        private static bool Held(Player player, int id) => id == player.HeldItem.type || id == Main.mouseItem.type;
     }
 }

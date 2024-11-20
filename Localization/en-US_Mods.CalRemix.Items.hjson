@@ -269,24 +269,6 @@ Klepticoin: {
 	Tooltip: The change of the gods
 }
 
-KnowledgeDerellect: {
-	DisplayName: The Derellect
-	Tooltip:
-		'''
-		A twisted mother computer created with lab-grown souls.
-		It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
-		'''
-}
-
-KnowledgeExcavator: {
-	DisplayName: The Wulfrum Excavator
-	Tooltip:
-		'''
-		The first big project of the legendary weaponsmith, Draedon.
-		Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns.
-		'''
-}
-
 CoreofBabil: {
 	DisplayName: Core of Babil
 	Tooltip: ""
@@ -338,8 +320,8 @@ Cosmichid: {
 }
 
 DerellectMusicBox: {
-	DisplayName: Music Box (Signal Interruption)
-	Tooltip: ""
+	DisplayName: Music Box (The Derellect)
+	Tooltip: Plays 'Signal Interruption' by Sploopo
 }
 
 DerellectTrophyInv: {
@@ -435,11 +417,7 @@ ChainSaw: {
 
 DarkEnergyStaff: {
 	DisplayName: Dark Energy Staff
-	Tooltip:
-		'''
-		Summons a dark energy turret to fight for you
-		Two can exist at once
-		'''
+	Tooltip: Summons a dark energy turret to fight for you
 }
 
 EcologicalCollapse: {
@@ -514,9 +492,8 @@ Morpho: {
 	Tooltip:
 		'''
 		Swings a doomblade that shoots crescent slashes
-		Using RMB summons an Arbiter of Judgement that does not consume minion slots
+		Right click summons an Arbiter of Judgement that does not consume minion slots
 		Attacks from the blade and arbiter inflict Whispering Death and Valfrey Burn
-		'Now all will witness its true power!'
 		'''
 }
 
@@ -694,7 +671,7 @@ Baroclaw: {
 	Tooltip:
 		'''
 		The crab secret revealed!
-		Press ; to chain a nearby enemy with crab claws
+		Press {0} to chain a nearby enemy with crab claws
 		'''
 }
 
@@ -1380,10 +1357,13 @@ IgnitedCommunity: {
 	DisplayName: Ignited Community
 	Tooltip:
 		'''
-		'It is filled with full power.'
-		Increases damage by 35% and critical strike chance by 7%, 
-		Increases defense by 35 and damage reduction by 7%
-		Increases max health by 12%, life regeneration by 2 HP/s, and movement speed by 10%
+		'It is filled with incredible power, utilizing the full capabilities of both Communities.'
+		Increases damage by 10% and critical strike chance by 5%
+		Increases max health by 10%, damage reduction by 5%, defense by 10, and life regen by 1 HP/s
+		Increases movement speed by 10% and flight time by 20%
+		Adds the Rage meter and increases Rage Mode damage by 25%
+		For every Remix recipe used, gain additional damage and defense up to max 45% damage and 90 defense
+		Bonus: {0}% Damage & +{1} Defense
 		'''
 }
 
@@ -1414,7 +1394,7 @@ PoisonedSclera: {
 
 EntropicFrond: {
 	DisplayName: Entropic Frond
-	Tooltip: Grants power for short time
+	Tooltip: Grants power for a short time
 }
 
 ProfanedVocalizer: {
@@ -1513,18 +1493,13 @@ ExcavatorMusicBox: {
 }
 
 LaRugaMusicBox: {
-	DisplayName: Music Box (La Ruga's Ambience)
+	DisplayName: Music Box (La Ruga)
 	Tooltip: Plays ominous ambience by Sploopo
-}
-
-PolyphemalusGFBMusicBox: {
-	DisplayName: Music Box (Polyphemalus - Alternate)
-	Tooltip: Plays 'The Eyes are Anger' by GummyLeeches
 }
 
 PolyphemalusMusicBox: {
 	DisplayName: Music Box (Polyphemalus)
-	Tooltip: Plays 'Eyes of Flame (Remix)' by DM DOKURO
+	Tooltip: Plays 'Eyes of Flame (Arranged)' by DM DOKURO
 }
 
 Dualpoon: {
@@ -1634,16 +1609,6 @@ Wolfmole: {
 Asbestos: {
 	DisplayName: Asbestos Block
 	Tooltip: ""
-}
-
-EolMusicBox: {
-	DisplayName: Music Box (Daytime Empress of Light)
-	Tooltip: Plays 'Gegenschein' by Jteoh
-}
-
-ARMusicBox: {
-	DisplayName: Music Box (Acid Rain - Tier 2)
-	Tooltip: Plays 'Tropic of Cancer' by Jteoh
 }
 
 AsbestosWall: {
@@ -1813,18 +1778,22 @@ HypnosMask: {
 }
 
 HypnosMusicBox: {
-	DisplayName: Hypnos Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XP-00 Hypnos)
+	Tooltip: Plays 'Cerebral Augmentations' by The Exiled Fellow
 }
 
 Keraunos: {
-	Tooltip: ""
 	DisplayName: Keraunos
+	Tooltip:
+		'''
+		Sends out a signal to every Exo Mech created
+		Use at your own risk
+		'''
 }
 
 Caduceus: {
-	Tooltip: ""
 	DisplayName: Caduceus
+	Tooltip: Does something?
 }
 
 OrigenDoor: {
@@ -1953,7 +1922,7 @@ SoulofIonogen: {
 	Tooltip:
 		'''
 		7% increase to all damage
-		Tap ] to strike yourself with lightning
+		Tap {0} to strike yourself with lightning
 		This lightning deals 1 point of damage, activating onhit effects
 		This effect has a 10 second cooldown
 		'''
@@ -2025,14 +1994,6 @@ ScrapBag: {
 		'''
 }
 
-KnowledgeCarcinogen.DisplayName: The Archwizard
-KnowledgeHydrogen.DisplayName: The Archdiviner
-KnowledgeIonogen.DisplayName: The Archmagian
-KnowledgeOrigen.DisplayName: The Originator
-KnowledgeOxygen.DisplayName: The Archwitch
-KnowledgePathogen.DisplayName: The Archmagus
-KnowledgePhytogen.DisplayName: The Archdruid
-
 IOU: {
 	DisplayName: IOU an Originator
 	Tooltip:
@@ -2078,7 +2039,7 @@ CalamitySword: {
 
 Quadnoculars: {
 	DisplayName: Quadnoculars
-	Tooltip: ""
+	Tooltip: Fires lasers that light enemies on fire for a long time
 }
 
 Aurikia5220: {
@@ -2157,48 +2118,48 @@ TwistedNetheriteLeggings: {
 }
 
 CarcinogenBag: {
-	DisplayName: Carcinogen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Carcinogen)
+	Tooltip: Right Click to open
 }
 
 HydrogenBag: {
-	DisplayName: Hydrogen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Hydrogen)
+	Tooltip: Right Click to open
 }
 
 IonogenBag: {
-	DisplayName: Ionogen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Ionogen)
+	Tooltip: Right Click to open
 }
 
 OrigenBag: {
-	DisplayName: Origen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Origen)
+	Tooltip: Right Click to open
 }
 
 OxygenBag: {
-	DisplayName: Oxygen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Oxygen)
+	Tooltip: Right Click to open
 }
 
 PathogenBag: {
-	DisplayName: Pathogen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Pathogen)
+	Tooltip: Right Click to open
 }
 
 PhytogenBag: {
-	DisplayName: Phytogen Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Phytogen)
+	Tooltip: Right Click to open
 }
 
 PolyphemalusBag: {
-	DisplayName: Polyphemalus Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Polyphemalus)
+	Tooltip: Right Click to open
 }
 
 WulfwyrmBag: {
-	DisplayName: Wulfwyrm Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Wulfrum Excavator)
+	Tooltip: Right Click to open
 }
 
 TwistedNetheriteBar: {
@@ -2208,92 +2169,102 @@ TwistedNetheriteBar: {
 
 TheGenerator: {
 	DisplayName: The Generator
-	Tooltip: ""
+	Tooltip:
+		'''
+		Conjures a magical construct surrounding yourself
+		Use to open the interface to customize your construct
+		Right click to reset your construct
+		Right click in your inventory to disable the generator
+		'''
 }
 
 TheInactiveGenerator: {
 	DisplayName: The Inactive Generator
-	Tooltip: ""
+	Tooltip:
+		'''
+		Use to open the interface to customize your construct
+		Right click in your inventory to enable the generator
+		'''
 }
 
 AcidRainTier2MusicBox: {
-	DisplayName: Acid Rain Tier2 Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Acid Rain - Tier 2)
+	Tooltip: Plays 'Tropic of Cancer' by Jteoh
 }
 
 CarcinogenMusicBox: {
-	DisplayName: Carcinogen Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Carcinogen)
+	Tooltip: Plays 'Oncologic Reinforcement' by Jteoh
 }
 
 EmpressofLightDayMusicBox: {
-	DisplayName: Empressof Light Day Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Daytime Empress of Light)
+	Tooltip: Plays 'Gegenschein' by Jteoh
 }
 
 ApingasLarryMusicBox: {
-	DisplayName: Apingas Larry Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XS-01 Artemis, XS-03 Apollo, & XF-09 Ares)
+	Tooltip: Plays 'Delta Venata' by Jteoh
 }
 
 ApingasMusicBox: {
-	DisplayName: Apingas Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XS-01 Artemis & XS-03 Apollo)
+	Tooltip: Plays 'Omicron Venata' by Jteoh
 }
 
 ApingasThanosMusicBox: {
-	DisplayName: Apingas Thanos Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XS-01 Artemis, XS-03 Apollo, & XM-05 Thanatos)
+	Tooltip: Plays 'Omicron Termina' by Jteoh
 }
 
 LarryMusicBox: {
-	DisplayName: Larry Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XF-09 Ares)
+	Tooltip: Plays 'Delta Duella' by Jteoh
 }
 
 ThanosLarryMusicBox: {
-	DisplayName: Thanos Larry Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XM-05 Thanatos & XF-09 Ares)
+	Tooltip: Plays 'Epsilon Duella' by Jteoh
 }
 
 ThanosMusicBox: {
-	DisplayName: Thanos Music Box
-	Tooltip: ""
+	DisplayName: Music Box (XM-05 Thanatos)
+	Tooltip: Plays 'Epsilon Termina' by Jteoh
 }
 
 XOMusicBox: {
-	DisplayName: X O Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Fabricational Quartet)
+	Tooltip: Plays 'Omniscius Calculus' by Jteoh
 }
 
 HydrogenMusicBox: {
-	DisplayName: Hydrogen Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Hydrogen)
+	Tooltip: Plays 'Atomic Reinforcement' by Jteoh
 }
 
 IonogenMusicBox: {
-	DisplayName: Ionogen Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Ionogen)
+	Tooltip: Plays 'Ionic Reinforcement' by Jteoh
 }
 
 MenuMusicBox: {
-	DisplayName: Menu Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Remixed Calamity Title)
+	Tooltip: Plays 'This Is Where the Magic Happens' by Jteoh
 }
 
 PolyphemalusAltMusicBox: {
-	DisplayName: Polyphemalus Alt Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Polyphemalus)
+	Tooltip: Plays 'The Eyes are Anger' by GummyLeeches
 }
 
 TheCalamityMusicBox: {
-	DisplayName: The Calamity Music Box
-	Tooltip: ""
+	DisplayName: Music Box (The Calamity)
+	Tooltip: Plays 'Stained, Smeared Calamity' by Jteoh
 }
 
 VernalPassMusicBox: {
-	DisplayName: Vernal Pass Music Box
-	Tooltip: ""
+	DisplayName: Music Box (Vernal Pass)
+	Tooltip: Plays 'Vajrabhairava's Rest' by Jteoh
 }
 
 CarcinogenTrophy: {
@@ -2418,7 +2389,7 @@ PlanetaryAnnihilation: {
 
 TwistedNetheriteSword: {
 	DisplayName: Twisted Netherite Sword
-	Tooltip: ""
+	Tooltip: Grants 2 more souls for the helmet upon enemy kills
 }
 
 WhippedBouquetBlade: {
@@ -2429,6 +2400,11 @@ WhippedBouquetBlade: {
 WindTurbineBlade: {
 	DisplayName: Wind Turbine Blade
 	Tooltip: ""
+}
+
+Wind: {
+	Tooltip: ""
+	DisplayName: Wind
 }
 
 TotalAnnihilation: {
@@ -2451,9 +2427,17 @@ Dyes: {
 		DisplayName: Wulfrum Dye
 		Tooltip: ""
 	}
+
+	LucreciaDye: {
+		DisplayName: Lucrecia Dye
+		Tooltip: ""
+	}
 }
 
-AltaroftheAblessed.DisplayName: Altar of the Ablessed
+AltaroftheAblessed: {
+	DisplayName: Altar of the Ablessed
+	Tooltip: ""
+}
 
 ShardofGlass: {
 	DisplayName: Shard of Glass
@@ -2483,23 +2467,48 @@ SoulofPyrogen: {
 		'''
 }
 
-KnowledgePyrogen.DisplayName: The Archseer
-PlumeflameBow.Tooltip: Shoots magmatic arrows that are trailed by extremely hot volcanic mist
-PyroclasticFlow.Tooltip: Creates molten bombs on enemy hits
-Weapons.Rogue.Magmasher.Tooltip:
-	'''
-	Throws out hammers that explode on enemy hits
-	Stealth strikes cause consecutive explosions to increase in size and damage
-	'''
-TheFirestorm.Tooltip: Rapidly fires molten globs which follow your cursor
+PlumeflameBow: {
+	Tooltip: Shoots magmatic arrows that are trailed by extremely hot volcanic mist
+	DisplayName: Plumeflame Bow
+}
+
+PyroclasticFlow: {
+	Tooltip: Creates molten bombs on enemy hits
+	DisplayName: Pyroclastic Flow
+}
+
+Weapons: {
+	Rogue: {
+		Magmasher: {
+			Tooltip:
+				'''
+				Throws out hammers that explode on enemy hits
+				Stealth strikes cause consecutive explosions to increase in size and damage
+				'''
+			DisplayName: Magmasher
+		}
+	}
+}
+
+TheFirestorm: {
+	Tooltip: Rapidly fires molten globs which follow your cursor
+	DisplayName: The Firestorm
+}
 
 PhreaticChanneler: {
 	DisplayName: Phreatic Channeler
 	Tooltip: Summons molten tools which swiftly slice apart enemies
 }
 
-Stonecutter.DisplayName: Stonecutter
-FocusedConvergence.DisplayName: " "
+Stonecutter: {
+	DisplayName: Stonecutter
+	Tooltip: ""
+}
+
+FocusedConvergence: {
+	DisplayName: " "
+	Tooltip: ""
+}
 
 Chainsmoker: {
 	DisplayName: Chainsmoker
@@ -2521,7 +2530,10 @@ SickStick: {
 		'''
 }
 
-LabRoach.DisplayName: Lab Roach
+LabRoach: {
+	DisplayName: Lab Roach
+	Tooltip: ""
+}
 
 Mutagen: {
 	DisplayName: Mutagen
@@ -2532,9 +2544,297 @@ Mutagen: {
 		'''
 }
 
-AncientConsole.DisplayName: Ancient Console
+AncientConsole: {
+	DisplayName: Ancient Console
+	Tooltip: ""
+}
 
 MoltenMatter: {
 	DisplayName: Molten Matter
 	Tooltip: Summons Pyrogen when used in the Underworld
 }
+
+InfraredSights: {
+	DisplayName: Infrared Sights
+	Tooltip: Tap {0} to scan enemies for contact damage and defense after 5 seconds
+}
+
+PyrogenMask: {
+	DisplayName: Pyrogen Mask
+	Tooltip: ""
+}
+
+PyrogenBag: {
+	DisplayName: Treasure Bag (Pyrogen)
+	Tooltip: Right Click to open
+}
+
+TheCalamityBag: {
+	DisplayName: Treasure Bag (The Calamity)
+	Tooltip: Right Click to open
+}
+
+LabRoachBanner: {
+	DisplayName: Lab Roach Banner
+	Tooltip: ""
+}
+
+AsbestosMusicBox: {
+	DisplayName: Music Box (Asbestos Caves)
+	Tooltip: Plays 'Fibrous Whisper' by Jteoh
+}
+
+BaronStraitMusicBox: {
+	DisplayName: Music Box (Baron Strait)
+	Tooltip: Plays 'The End Zone' by Jteoh
+}
+
+OxygenMusicBox: {
+	DisplayName: Music Box (Oxygen)
+	Tooltip: Plays 'Aerobic Reinforcement' by Jteoh
+}
+
+PathogenMusicBox: {
+	DisplayName: Music Box (Pathogen)
+	Tooltip: Plays 'Microbic Reinforcement' by Jteoh
+}
+
+PhytogenMusicBox: {
+	DisplayName: Music Box (Phytogen)
+	Tooltip: Plays 'Botanic Reinforcement' by Jteoh
+}
+
+PyrogenMusicBox: {
+	DisplayName: Music Box (Pyrogen)
+	Tooltip: Plays 'Volcanic Reinforcement' by The Purified
+}
+
+MoltenAeroplate: {
+	DisplayName: Molten Aeroplate
+	Tooltip: ""
+}
+
+MoltenBloodplate: {
+	DisplayName: Molten Bloodplate
+	Tooltip: ""
+}
+
+MoltenCinderplate: {
+	DisplayName: Molten Cinderplate
+	Tooltip: ""
+}
+
+MoltenElumplate: {
+	DisplayName: Molten Elumplate
+	Tooltip: ""
+}
+
+MoltenHavocplate: {
+	DisplayName: Molten Havocplate
+	Tooltip: ""
+}
+
+MoltenNavyplate: {
+	DisplayName: Molten Navyplate
+	Tooltip: ""
+}
+
+MoltenOnyxplate: {
+	DisplayName: Molten Onyxplate
+	Tooltip: ""
+}
+
+MoltenPlagueplate: {
+	DisplayName: Molten Plagueplate
+	Tooltip: ""
+}
+
+CalamityRelic: {
+	DisplayName: The Calamity Relic
+	Tooltip: ""
+}
+
+HypnosRelic: {
+	DisplayName: Hypnos Relic
+	Tooltip: ""
+}
+
+OrigenRelic: {
+	DisplayName: Origen Relic
+	Tooltip: ""
+}
+
+PyrogenRelic: {
+	DisplayName: Pyrogen Relic
+	Tooltip: ""
+}
+
+WulfwyrmRelic: {
+	DisplayName: Wulfrum Excavator Relic
+	Tooltip: ""
+}
+
+PyrogenTrophy: {
+	DisplayName: Pyrogen Trophy
+	Tooltip: ""
+}
+
+TheCodseeker: {
+	DisplayName: The Codseeker
+	Tooltip: Has a small chance for a fish to take the corpse
+}
+
+DaggerofLiberty: {
+	DisplayName: Dagger of Liberty
+	Tooltip:
+		'''
+		Throws daggers that explode on hit
+		Stealth strikes throw 5 high-velocity piercing daggers
+		'''
+}
+
+PineappleStaff: {
+	DisplayName: Pineapple Staff
+	Tooltip: ""
+}
+
+XenonCutlass: {
+	DisplayName: Xenon Cutlass
+	Tooltip: ""
+}
+
+BlobfishPlushie: {
+	DisplayName: Blobfish Plushie
+	Tooltip: ""
+}
+
+RoseBow: {
+	DisplayName: Rose Bow
+	Tooltip:
+		'''
+		'Even if you can't see me, I'll be by your side'
+		Fires a fast stream of arrows
+		Wooden arrows are converted into energy arrows that slash hit enemies
+		'''
+}
+
+CirnogenicStaff: {
+	DisplayName: Cirnogenic Staff
+	Tooltip: Summon an encharted ice star to protect you
+}
+
+Hyperion: {
+	DisplayName: Hyperion
+	Tooltip: ski blok
+}
+
+ClamorNoxus: {
+	DisplayName: Clamor Noxus
+	Tooltip:
+		'''
+		And the sun was extinguished in an instant...
+		Fires stars and noxlings from the sky that swarm enemies
+		'''
+}
+
+EXOLOTLStaff: {
+	DisplayName: EXO-LOTL Staff
+	Tooltip:
+		'''
+		Summons a high tech EXO-LOTL to fight for you
+		'What? Got any better suggestions?'
+		'''
+}
+
+LightmixBar: {
+	DisplayName: Lightmix Bar
+	Tooltip: A pure, white metal, so magnificent and awesome as to regard explanation
+}
+
+ThePrincess: {
+	DisplayName: The Princess
+	Tooltip:
+		'''
+		Casts a holy fireball that explodes into 6 flames
+		'So you're telling me that the princess imploded, and then turned into ice?'
+		-Taco, the shrine maiden
+		'''
+}
+
+TheFirstFracturer: {
+	DisplayName: The First Fracturer
+	Tooltip: Swings horizontal light blades at a short range that converge onto the cursor
+}
+
+FracturingFist: {
+	DisplayName: Fracturing Fist
+	Tooltip:
+		'''
+		Fires a fist that splits into two more fists upon collision
+		Stealth strikes make the split fists ricochet between up to 4 enemies
+		'''
+}
+
+SkullFracture: {
+	DisplayName: Skull Fracture
+	Tooltip: Shoot homing sky flares
+}
+
+Rox: {
+	DisplayName: Rox
+	Tooltip:
+		'''
+		The sword was holding back its power...
+		Unleashes a storm of rock shards
+		Right click to perform a ground pound that explodes into rock shards on impact
+		'''
+}
+
+FractureStaff: {
+	DisplayName: Fracture Staff
+	Tooltip: Summons a fractal crawler to fight for you
+}
+
+SoulofBright: {
+	DisplayName: Soul of Bright
+	Tooltip: "'The essence of stellar creatures'"
+}
+
+KnowledgeCalamity: {
+	DisplayName: The Calamity
+	LoreText:
+		'''
+		What was your intention flailing about?
+		If you desired mockery of my word, your goal failed.
+		My attention will never be discarded as I can see the true potential within you.
+		Although, I do suggest quitting the behavior of play-fighting an imagined threat.";
+		'''
+}
+
+KnowledgeDerellect: {
+	DisplayName: The Derellect
+	LoreText:
+		'''
+		A twisted mother computer created with lab-grown souls.
+		It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
+		'''
+	Tooltip: ""
+}
+
+KnowledgeExcavator: {
+	DisplayName: The Wulfrum Excavator
+	LoreText:
+		'''
+		The first big project of the legendary weaponsmith, Draedon.
+		Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns.
+		'''
+}
+
+KnowledgeCarcinogen.DisplayName: The Archwizard
+KnowledgeHydrogen.DisplayName: The Archdiviner
+KnowledgeIonogen.DisplayName: The Archmagian
+KnowledgeOrigen.DisplayName: The Originator
+KnowledgeOxygen.DisplayName: The Archwitch
+KnowledgePathogen.DisplayName: The Archmagus
+KnowledgePhytogen.DisplayName: The Archdruid
+KnowledgePyrogen.DisplayName: The Archseer

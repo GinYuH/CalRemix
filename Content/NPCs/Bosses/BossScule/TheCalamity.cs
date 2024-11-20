@@ -1,7 +1,9 @@
-﻿using CalamityMod;
-using CalamityMod.World;
+﻿using CalamityMod.World;
+using CalamityMod;
 using CalRemix.Content.Buffs;
-using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Projectiles.Hostile;
@@ -17,6 +19,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalRemix.Content.Items.Lore;
 
 namespace CalRemix.Content.NPCs.Bosses.BossScule
 {
@@ -197,8 +200,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CalamitousCertificate>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<TheCalamityBag>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<CalamitousCertificate>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<InfraredSights>()));
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CalamityRelic>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedCalamity, ModContent.ItemType<KnowledgeCalamity>(), desc: DropHelper.FirstKillText);
         }
         private static void Talk(string text, Color color)
         {

@@ -10,27 +10,6 @@ namespace CalRemix.Content.Projectiles
 {
     public abstract class DungeonSpray : ModProjectile
 	{
-        internal static readonly int[] StratusTiles = 
-        {
-            ModContent.TileType<StratusBricks>(),
-            ModContent.TileType<StratusBathtub>(),
-            ModContent.TileType<StratusBed>(),
-            ModContent.TileType<StratusBookcase>(),
-            ModContent.TileType<StratusCandelabra>(),
-            ModContent.TileType<StratusCandle>(),
-            ModContent.TileType<StratusChair>(),
-            ModContent.TileType<StratusChandelier>(),
-            ModContent.TileType<StratusClock>(),
-            ModContent.TileType<StratusDoorClosed>(),
-            ModContent.TileType<StratusDoorOpen>(),
-            ModContent.TileType<StratusDresser>(),
-            ModContent.TileType<StratusLamp>(),
-            ModContent.TileType<StratusLantern>(),
-            ModContent.TileType<StratusPiano>(),
-            ModContent.TileType<StratusPlatform>(),
-            ModContent.TileType<StratusSofa>(),
-            ModContent.TileType<StratusTable>()
-        };
 		public override void SetDefaults()
 		{
 			Projectile.width = 6;

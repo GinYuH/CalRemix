@@ -42,7 +42,6 @@ namespace CalRemix.Core
         private static float extraDist = 222;
         public override void Load()
         {
-            On_Star.Fall += StopStarfall;
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
@@ -63,10 +62,12 @@ namespace CalRemix.Core
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
         }
+        public override void PostSetupContent()
+        {
+            On_Star.Fall += StopStarfall;
+        }
         private static void StopStarfall(On_Star.orig_Fall orig, Star self)
         {
-            orig(self);
-            return;
             if (GetInstance<CalRemixMenu>().IsSelected && Main.gameMenu)
                 return;
             orig(self);

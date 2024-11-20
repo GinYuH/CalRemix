@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -57,6 +58,15 @@ namespace CalRemix.Content.Items.Accessories
                 drawOffset: new(0f, 0f)
             );
             return false;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine t = tooltips.Find((TooltipLine t) => t.Text.Contains("{0}"));
+            if (t != null)
+            {
+                string newText = t.Text.Replace("{0}", CalRemixKeybinds.IonoLightningKeybind.TooltipHotkeyString());
+                t.Text = newText;
+            }
         }
     }
 }

@@ -1,16 +1,5 @@
 Mods: {
-	CalamityModMusic: {
-		Items: {
-			AcidRainTier1MusicBox: {
-				DisplayName: Music Box (Acid Rain - Tier 1)
-				Tooltip:
-					'''
-					Plays 'corrosion!' by RoverdriveX
-					This music box contains a placeholder song
-					'''
-			}
-		}
-	}
+	CalamityModMusic.Items.AcidRainTier1MusicBox.DisplayName: Music Box (Acid Rain - Tier 1)
 
 	CalRemix: {
 		Currencies: {
@@ -87,6 +76,7 @@ Mods: {
 			"Polypebral Dash.DisplayName": Polypebral Dash
 			"Quick Stealth.DisplayName": Quick Stealth
 			"Ionic Lightning.DisplayName": Ionic Lightning
+			"Infrared Sights.DisplayName": Infrared  Sights
 		}
 
 		Configs: {
@@ -94,28 +84,21 @@ Mods: {
 
 			CalRemixConfig: {
 				Headers.CalRemixHeader: Calamity Community Remix
-
-				FannyToggle: {
-					Header: Fanny
-					Label: Toggle Fanny
-					Tooltip: Enables/disables Fanny.
-				}
-
-				DisplayName: Cal Remix Config
+				DisplayName: Remix Menu Config
 
 				randomMenu: {
-					Label: random Menu
-					Tooltip: ""
+					Label: Randomize Menu
+					Tooltip: Gives a chance to swap menu variants
 				}
 
 				forcedMenu: {
-					Label: forced Menu
-					Tooltip: ""
+					Label: Force Start
+					Tooltip: Forces the game to start with the remix menu
 				}
 
 				useSecondMenu: {
-					Label: use Second Menu
-					Tooltip: ""
+					Label: Always Use Second Menu
+					Tooltip: When any remix menu is started, always use the second variant
 				}
 			}
 		}
@@ -165,7 +148,11 @@ Mods: {
 				Turbulent Marble
 				Oxygen
 				'''
-			Calamity: The Calamity
+			Calamity:
+				'''
+				Acquitted Acolyte
+				The Calamity
+				'''
 			Polyphemalus:
 				'''
 				Eyes United
@@ -183,7 +170,7 @@ Mods: {
 				'''
 			Acidsighter:
 				'''
-				Blighted Eye
+				Wandering Blight
 				Acidsighter
 				'''
 			WulfrumExcavator:

@@ -11,7 +11,6 @@ using CalamityMod.NPCs.ExoMechs.Apollo;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
-using CalRemix.Content.NPCs.Bosses.Losbaf;
 using System.IO;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
@@ -22,10 +21,10 @@ namespace CalRemix
     {
         public static bool ExoMayhem = false;
         public static bool AllExoQuartetActive => (NPC.AnyNPCs(NPCType<Artemis>()) || NPC.AnyNPCs(NPCType<Apollo>())) && NPC.AnyNPCs(NPCType<AresBody>()) && NPC.AnyNPCs(NPCType<ThanatosHead>());
-        public static bool AllExoMechActive => AllExoQuartetActive && NPC.AnyNPCs(NPCType<Hypnos>()) && NPC.AnyNPCs(NPCType<Losbaf>());
+        public static bool AllExoMechActive => AllExoQuartetActive && NPC.AnyNPCs(NPCType<Hypnos>());
         public static bool AnyDraedonActive => NPC.AnyNPCs(NPCType<Draedon>()) || NPC.AnyNPCs(NPCType<HypnosDraedon>());
         public static bool AnyExoQuartetActive => NPC.AnyNPCs(NPCType<Artemis>()) || NPC.AnyNPCs(NPCType<Apollo>()) || NPC.AnyNPCs(NPCType<AresBody>()) || NPC.AnyNPCs(NPCType<ThanatosHead>());
-        public static bool AnyExoMechActive => AnyExoQuartetActive || NPC.AnyNPCs(NPCType<Hypnos>()) || NPC.AnyNPCs(NPCType<Losbaf>());
+        public static bool AnyExoMechActive => AnyExoQuartetActive || NPC.AnyNPCs(NPCType<Hypnos>());
         public static bool AnyExosOrDraedonActive => AnyExoMechActive || AnyDraedonActive;
         public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
         {

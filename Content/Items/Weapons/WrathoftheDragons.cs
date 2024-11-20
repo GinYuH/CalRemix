@@ -52,7 +52,6 @@ DisplayName.SetDefault("Wrath of the Dragons");
                 AddIngredient(ModContent.ItemType<AuricBar>(), 5).
                 AddIngredient(ModContent.ItemType<EffulgentFeather>(), 3).
                 AddIngredient(ModContent.ItemType<CoreofSunlight>(), 10).
-                AddIngredient(ModContent.ItemType<YharimBar>(), 3).
                 AddTile(ModContent.TileType<CosmicAnvil>()).
                 Register();
         }

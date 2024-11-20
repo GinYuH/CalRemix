@@ -40,7 +40,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             SoundEngine.PlaySound(SoundID.Item112, Projectile.Center);
             for (int a = 0; a < 4; a++)
-                Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, (-Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(45f)) * 6f, ModContent.ProjectileType<PungentShot>(), Projectile.damage, Projectile.knockBack);
+                Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, (-Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(45f)) * 6f, ModContent.ProjectileType<PungentShot>(), Projectile.damage / 3, Projectile.knockBack);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

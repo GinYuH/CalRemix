@@ -84,6 +84,7 @@ ProfaneNucleus.DisplayName: Profane Nucleus
 Melee: {
 	GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
 	ChainSpearStab.DisplayName: Chain Spear Stab
+	WindTurbine.DisplayName: Wind Turbine
 }
 
 GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
@@ -218,9 +219,9 @@ TwistedNetheriteSoulExplosion.DisplayName: Twisted Netherite Soul Explosion
 Juice.DisplayName: Juice
 CalamityBeam.DisplayName: Calamity Beam
 ExtensionCordWhip.DisplayName: Extension Cord Whip
-PlanetaryAnnihilationProj.DisplayName: Planetary Annihilation Proj
-TotalAnnihilationProj.DisplayName: Total Annihilation Proj
-TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
+PlanetaryAnnihilationProj.DisplayName: Planetary Annihilation
+TotalAnnihilationProj.DisplayName: Total Annihilation
+TotalAnnihilationProjOrbital.DisplayName: Total Annihilation
 AerosprayMist.DisplayName: Mist
 PineappleSentry.DisplayName: Animated Statue
 HydrogenShellFriendly.DisplayName: Missile
@@ -229,3 +230,27 @@ Chainfire.DisplayName: Flame
 Chainsmog.DisplayName: Smog
 FriendlyCell1.DisplayName: Friendly Blood Cell
 MutantSeeker.DisplayName: Seeker
+TyrantBobber.DisplayName: Tyrant Bobber
+FirestormLava.DisplayName: Firestorm Lava
+MagmasherHammer.DisplayName: Magmasher Hammer
+MoltenTools.DisplayName: Molten Tools
+QuadLaser.DisplayName: Quad Laser
+SickCell.DisplayName: Sick Cell
+XenonSlash.DisplayName: Xenon Slash
+BlobfishProjectile.DisplayName: Blobfish Plushie
+PlushieCotton.DisplayName: Plushie Cotton
+RoseArrow.DisplayName: Rose Arrow
+RoseSlash.DisplayName: Rose Slash
+WindTurbine.DisplayName: Wind Turbine
+Noxling.DisplayName: Noxling
+DaggerofLibertyProj.DisplayName: Dagger of Liberty
+LibertyExplosion.DisplayName: Liberty Explosion
+EXOLOTL.DisplayName: EXO-LOTL
+PrincessFlame.DisplayName: Princess Flame
+HyperionExplosion.DisplayName: Hyperion Explosion
+SkyFire.DisplayName: Sky Fire
+FracturingFistProj.DisplayName: Fracturing Fist
+FractalCrawler.DisplayName: Fractal Crawler
+CirnogenicSentry.DisplayName: Cirnogenic Sentry
+Rox.DisplayName: Rox
+RoxProj.DisplayName: Rox

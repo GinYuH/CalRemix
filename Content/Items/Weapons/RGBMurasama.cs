@@ -32,7 +32,6 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient<Murasama>().
                 AddIngredient<ExoPrism>(10).
                 AddIngredient<CoreofCalamity>(5).
-                AddIngredient<ElementalBar>(6).
                 AddTile<DraedonsForge>().
                 Register();
         }

@@ -28,7 +28,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedMud>();
 			AddMapEntry(new Color(206, 255, 115));
 			TileID.Sets.Grass[Type] = true;
-			TileID.Sets.Conversion.Grass[Type] = true;
+			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<PlaguedMud>();
 		}

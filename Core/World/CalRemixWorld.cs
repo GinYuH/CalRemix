@@ -132,6 +132,7 @@ namespace CalRemix.Core.World
         public static bool champions = true;
         public static bool astralBlight = true;
         public static bool mullet = true;
+        public static bool deliciousMeat = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -262,6 +263,7 @@ namespace CalRemix.Core.World
             champions = true;
             astralBlight = true;
             mullet = true;
+            deliciousMeat = true;
         }
 
         public override void OnWorldLoad()
@@ -329,6 +331,7 @@ namespace CalRemix.Core.World
             tag["109champ"] = champions;
             tag["109blight"] = astralBlight;
             tag["109mullet"] = mullet;
+            tag["109deliciousMeat"] = deliciousMeat;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -391,6 +394,7 @@ namespace CalRemix.Core.World
             champions = tag.Get<bool>("109champ");
             astralBlight = tag.Get<bool>("109blight");
             mullet = tag.Get<bool>("109mullet");
+            deliciousMeat = tag.Get<bool>("109deliciousMeat");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -495,6 +499,7 @@ namespace CalRemix.Core.World
             writer.Write(champions);
             writer.Write(astralBlight);
             writer.Write(mullet);
+            writer.Write(deliciousMeat);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -558,6 +563,7 @@ namespace CalRemix.Core.World
             champions = reader.ReadBoolean();
             astralBlight = reader.ReadBoolean();
             mullet = reader.ReadBoolean();
+            deliciousMeat = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();

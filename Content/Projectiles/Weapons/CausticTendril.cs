@@ -20,7 +20,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 44;
+            Projectile.timeLeft = 11;
             Projectile.penetrate = 1;
         }
         public override void OnSpawn(IEntitySource source)

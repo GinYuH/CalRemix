@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.mana = 6;
 			Item.noMelee = true;
             Item.shoot = ModContent.ProjectileType<CausticTendril>();
-            Item.shootSpeed = 10f;
+            Item.shootSpeed = 22f;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

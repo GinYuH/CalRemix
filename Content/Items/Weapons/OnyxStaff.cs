@@ -17,7 +17,6 @@ public class OnyxStaff : ModItem
         DisplayName.SetDefault("Onyx Staff");
         Tooltip.SetDefault("Casts volatile onyx fragments that explode on contact with tiles");
         Item.staff[Type] = true;
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 
     public override void SetDefaults()
@@ -42,8 +41,8 @@ public class OnyxStaff : ModItem
     }
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(7)).RotatedByRandom(MathHelper.ToRadians(15)), type, damage, knockback);
-        Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(-7)).RotatedByRandom(MathHelper.ToRadians(15)), type, damage, knockback);
+        Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(7)).RotatedByRandom(MathHelper.ToRadians(15)) * Main.rand.NextFloat(0.75f, 0.85f), type, damage, knockback);
+        Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(-7)).RotatedByRandom(MathHelper.ToRadians(15)) * Main.rand.NextFloat(0.75f, 0.85f), type, damage, knockback);
         return true;
     }
     public override bool CanUseItem(Player player)

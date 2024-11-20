@@ -13,15 +13,6 @@ namespace CalRemix.Content.Items.Weapons;
 
 public class DarkEnergyStaff : ModItem
 {
-
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Dark Energy Staff");
-        Tooltip.SetDefault("Summons a dark energy turret to fight for you\n" +
-                "Two can exist at once"); 
-        Item.ResearchUnlockCount = 1;
-    }
-
     public override void SetDefaults()
     {
         Item.rare = ModContent.RarityType<Turquoise>();
@@ -45,16 +36,12 @@ public class DarkEnergyStaff : ModItem
         position = Main.MouseWorld;
         velocity.X = 0f;
         velocity.Y = 0f;
-        if (player.ownedProjectileCounts[ModContent.ProjectileType<DarkEnergySentry>()] < 2)
+        int num = Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<DarkEnergySentry>(), damage / 2, knockback, Main.myPlayer);
+        if (Main.projectile.IndexInRange(num))
         {
-            int num = Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<DarkEnergySentry>(), damage / 2, knockback, Main.myPlayer);
-            if (Main.projectile.IndexInRange(num))
-            {
-                Main.projectile[num].originalDamage = Item.damage;
-                player.UpdateMaxTurrets();
-            }
+            Main.projectile[num].originalDamage = Item.damage;
         }
-
+        player.UpdateMaxTurrets();
         return false;
     }
     public override void AddRecipes()

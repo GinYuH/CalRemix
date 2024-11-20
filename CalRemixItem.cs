@@ -59,6 +59,7 @@ namespace CalRemix
     public class CalRemixItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
+        internal string devItem = string.Empty;
         public bool Scoriad = false;
         public int NonScoria = -1;
         private static readonly Dictionary<int, int> GemCrawl = new()
@@ -475,6 +476,14 @@ namespace CalRemix
             {
                 itemLoot.Add(ItemType<EssenceofBabil>(), 1, 5, 9);
             }
+            else if (item.type == ItemID.FishronBossBag)
+            {
+                itemLoot.Add(ItemType<DeliciousMeat>(), 2, 45, 92);
+            }
+            else if (item.type == ItemType<AstrumAureusBag>())
+            {
+                itemLoot.Add(ItemType<SoulofBright>(), 1, 10, 12);
+            }
             else if (item.type == ItemType<ProvidenceBag>())
             {
                 itemLoot.Add(ItemType<ProfanedNucleus>());
@@ -485,13 +494,14 @@ namespace CalRemix
                 itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 1, 3);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<CosmiliteBar>());
                 itemLoot.AddIf(()=> !CalRemixWorld.cosmislag, ItemType<CosmiliteBar>(), 1, 55, 65);
-
             }
             else if (item.type == ItemType<YharonBag>())
             {
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
                 yhar.Add(ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
                 yhar.AddFail(ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
+                itemLoot.Add(yhar);
+                itemLoot.Add(ItemType<MovieSign>(), 100);
             }
             else if (item.type == ItemType<CrabulonBag>())
             {
@@ -523,6 +533,7 @@ namespace CalRemix
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
                 yhar.Add(ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
                 yhar.AddFail(ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+                itemLoot.Add(yhar);
             }
             else if (item.type == ItemType<StarterBag>())
             {
@@ -751,6 +762,14 @@ namespace CalRemix
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (devItem != string.Empty)
+            {
+                string text = CalamityUtils.ColorMessage("- Lightmix Dedicated Item ", Color.Crimson);
+                text += CalamityUtils.ColorMessage((devItem.Equals("Remix")) ? " " : $": {devItem} ", Color.Gold);
+                text += CalamityUtils.ColorMessage("-", Color.Crimson);
+                TooltipLine tip = new(Mod, "CalRemix:Dev", text);
+                tooltips.Add(tip);
+            }
             if (CalRemixPlayer.dyeStats.ContainsKey(item.type) && CalRemixWorld.dyeStats)
             {
                 DyeStats stats = CalRemixPlayer.dyeStats[item.type];

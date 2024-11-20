@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -48,10 +49,11 @@ namespace CalRemix.Content.Items.Bags
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemID.Nazar, 1, 8, 10);
+            itemLoot.Add(ItemID.FrozenKey, 3);
             itemLoot.Add(ModContent.ItemType<SoulofOrigen>());
+            itemLoot.Add(ModContent.ItemType<IOU>());
             itemLoot.Add(ModContent.ItemType<PaletteUncleanser>());
-            itemLoot.Add(ModContent.ItemType<OrigenBag>());
-            //itemLoot.Add(ModContent.ItemType<OrigenMask>(), 7);
+            itemLoot.Add(ModContent.ItemType<OrigenPoint>());
             itemLoot.AddRevBagAccessories();
         }
     }

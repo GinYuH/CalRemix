@@ -46,11 +46,8 @@ namespace CalRemix.Content.Items.Weapons
         }
         public override void UpdateInventory(Player player)
         {
-            if (!player.channel)
-                player.GetModPlayer<CalRemixPlayer>().deicide = 0;
-            else if (player.GetModPlayer<CalRemixPlayer>().deicide < 3601 && player.channel && (player.HeldItem == Item || player.inventory[58] == Item))
+            if (player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer < 3601 && player.channel && (player.HeldItem == Item || player.inventory[58] == Item))
             {
-                player.GetModPlayer<CalRemixPlayer>().deicide++;
                 if (player.Calamity().rageModeActive && raged && Main.myPlayer == player.whoAmI)
                 {
                     Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, player.DirectionTo(Main.MouseWorld) * 8f, ModContent.ProjectileType<HornetShot>(), Item.damage * 22, 0, player.whoAmI);
@@ -59,17 +56,17 @@ namespace CalRemix.Content.Items.Weapons
                 if (player.Calamity().rage <= 0)
                     raged = true;
             }
-            if (player.GetModPlayer<CalRemixPlayer>().deicide >= 3600)
+            if (player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer >= 3600)
             {
                 Projectile proj = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<IchorBlob>(), 0, 0, player.whoAmI);
                 proj.hostile = false;
-                player.dead = true;
+                player.Hurt(PlayerDeathReason.ByPlayerItem(player.whoAmI, Item), player.statLifeMax2, 0, dodgeable: false);
             }
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            float multiplier = (player.GetModPlayer<CalRemixPlayer>().deicide > 1800) ? 1.3f : 1f;
-            if (player.GetModPlayer<CalRemixPlayer>().deicide > 600)
+            float multiplier = (player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer > 1800) ? 1.3f : 1f;
+            if (player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer > 600)
                 Projectile.NewProjectile(source, position, velocity * 8f, ModContent.ProjectileType<DeicideFist>(), (int)(damage / 5 * multiplier), knockback, player.whoAmI, ai0: 1);
             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<DeicideFist>(), (int)(damage * multiplier), knockback, player.whoAmI);
             return false;

@@ -23,7 +23,8 @@ namespace CalRemix.UI.ElementalSystem
         Slash,
         Stab,
         Unholy,
-        Water
+        Water,
+        Wind
     }
     public class ElementLists : ModSystem
     {
@@ -282,4 +283,5 @@ namespace CalRemix.UI.ElementalSystem
     public class Stab : ElementIcon { }
     public class Unholy : ElementIcon { }
     public class Water : ElementIcon { }
+    public class Wind : ElementIcon { }
 }

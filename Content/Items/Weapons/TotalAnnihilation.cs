@@ -46,9 +46,7 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
             AddIngredient(ItemID.Mace).
             AddIngredient(ItemID.FlamingMace).
-            AddIngredient(ItemID.LunarBar, 5).
-            AddIngredient<LifeAlloy>(5).
-            AddIngredient<ElementalBar>(5).
+            AddIngredient<ElementalBar>().
             AddTile(TileID.LunarCraftingStation).
             Register();
         }

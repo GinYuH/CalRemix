@@ -1,5 +1,4 @@
 ﻿using CalRemix.Content.Projectiles.Weapons;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,20 +21,6 @@ public class FiberBaby : ModItem
         Item.rare = ItemRarityID.Orange;
         Item.value = Item.sellPrice(gold: 2);
     }
-
-    public override void UpdateInventory(Player player)
-    {
-        if (player.ownedProjectileCounts[ModContent.ProjectileType<FiberBabyHoldout>()] < 1)
-        {
-            Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<FiberBabyHoldout>(), Item.damage, 0, player.whoAmI);
-        }
-    }
-
-    public override bool CanUseItem(Player player)
-    {
-        if (player.ownedProjectileCounts[ModContent.ProjectileType<FiberBabyHoldout>()] < 1)
-            return true;
-        return false;
-    }
+    public override bool CanUseItem(Player player) => player.ownedProjectileCounts[ModContent.ProjectileType<FiberBabyHoldout>()] < 1;
 }
 

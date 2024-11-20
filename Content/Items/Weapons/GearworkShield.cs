@@ -135,7 +135,6 @@ public class GearworkShield : ModItem
         CreateRecipe().
             AddIngredient<OrnateShield>(1).
             AddIngredient(ItemID.EoCShield).
-            AddIngredient<EssenceofLaw>(10).
             AddIngredient<RuinousSoul>(5).
             AddTile(TileID.LunarCraftingStation).
             Register();

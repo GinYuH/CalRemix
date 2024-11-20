@@ -1,23 +1,22 @@
 AstralEffigyPlaced.MapEntry: Astral Effigy
 CosmichidPlant.MapEntry: Cosmichid
-DerellectMusicBoxPlaced.MapEntry: Music Box (The Derellect)
 DerellectTrophyPlaced.MapEntry: Derellect Trophy
 HallowEffigyPlaced.MapEntry: Hallow Effigy
 LifeOreTile.MapEntry: Life Ore
 MiracleFruitPlaced.MapEntry: Miracle Froota
-CosmiliteSlagPlaced.MapEntry: Cosmilite Slag Placed
-MeldGunkPlaced.MapEntry: Meld Gunk Placed
-GrimesandPlaced.MapEntry: Grimesand Placed
-Anomaly109Placed.MapEntry: Anomaly109 Placed
-ArsenicOrePlaced.MapEntry: Arsenic Ore Placed
-BanishedPlatingPlaced.MapEntry: Banished Plating Placed
-BaronBrinePlaced.MapEntry: Baron Brine Placed
-BaronsandPlaced.MapEntry: Baronsand Placed
-BrinerackPlaced.MapEntry: Brinerack Placed
-TanzaniteGlassPlaced.MapEntry: Tanzanite Glass Placed
+CosmiliteSlagPlaced.MapEntry: Cosmilite Slag
+MeldGunkPlaced.MapEntry: Meld Gunk
+GrimesandPlaced.MapEntry: Grimesand
+Anomaly109Placed.MapEntry: Anomaly109
+ArsenicOrePlaced.MapEntry: Arsenic Ore
+BanishedPlatingPlaced.MapEntry: Banished Plating
+BaronBrinePlaced.MapEntry: Baron Brine
+BaronsandPlaced.MapEntry: Baronsand
+BrinerackPlaced.MapEntry: Brinerack
+TanzaniteGlassPlaced.MapEntry: Tanzanite Glass
 MovieSignPlaced.MapEntry: Moviesign
-IonCubePlaced.MapEntry: Ion Cube Placed
-HypnosTrophyPlaced.MapEntry: Hypnos Trophy Placed
+IonCubePlaced.MapEntry: Ion Cube
+HypnosTrophyPlaced.MapEntry: Hypnos Trophy
 CarcinogenTrophyPlaced.MapEntry: Carcinogen Trophy
 HydrogenTrophyPlaced.MapEntry: Hydrogen Trophy
 IonogenTrophyPlaced.MapEntry: Ionogen Trophy
@@ -25,8 +24,8 @@ OrigenTrophyPlaced.MapEntry: Origen Trophy
 OxygenTrophyPlaced.MapEntry: Oxygen Trophy
 PathogenTrophyPlaced.MapEntry: Pathogen Trophy
 PhytogenTrophyPlaced.MapEntry: Phytogen Trophy
-AltaroftheAblessedPlaced.MapEntry: Altarofthe Ablessed Placed
+AltaroftheAblessedPlaced.MapEntry: Altar ofthe Ablessed
 PyrogenTrophyPlaced.MapEntry: Pyrogen Trophy
-StonecutterPlaced.MapEntry: Stonecutter Placed
-LabRoachBannerPlaced.MapEntry: Lab Roach Banner Placed
+StonecutterPlaced.MapEntry: Stonecutter
+LabRoachBannerPlaced.MapEntry: Lab Roach Banner
 AncientConsole.MapEntry: Ancient Console

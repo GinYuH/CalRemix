@@ -1419,3 +1419,18 @@ FolvsStone: {
 		Attacks inflict Bloat Baby
 		'''
 }
+
+"Calamity: Community Remix/OnyxFistBuffStone": {
+	DisplayName: Calamity:  Community  Remix/ Onyx Fist Buff Stone
+	Tooltip: ""
+}
+
+"Calamity: Community Remix/EXOLOTLBuffStone": {
+	Tooltip: ""
+	DisplayName: Calamity:  Community  Remix/ E X O L O T L Buff Stone
+}
+
+"Calamity: Community Remix/FractalCrawlerBuffStone": {
+	DisplayName: Calamity:  Community  Remix/ Fractal Crawler Buff Stone
+	Tooltip: ""
+}

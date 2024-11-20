@@ -20,7 +20,7 @@ namespace CalRemix.Content.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 280;
+            Item.damage = 240;
             Item.mana = 20;
             Item.width = 40;
             Item.height = 42;

@@ -51,6 +51,8 @@ namespace CalRemix.Content.Projectiles.Weapons
                 }
                 Timer = 0;
             }
+            if (Projectile.Center.Distance(Owner.Center) > 800)
+                Projectile.Center = Owner.Center;
         }
         private void CheckActive()
         {

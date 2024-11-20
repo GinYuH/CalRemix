@@ -38,7 +38,7 @@ namespace CalRemix.Content.Items.Placeables
 
             CreateRecipe(100).
                 AddIngredient(ModContent.ItemType<DeliciousMeat>()).
-                AddIngredient(TileID.Stone, 100).
+                AddIngredient(ItemID.StoneBlock, 100).
                 AddTile(TileID.Anvils).
                 Register();
         }

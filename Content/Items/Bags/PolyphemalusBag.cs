@@ -5,7 +5,7 @@ using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.Content.Items.Tools;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.Items.Bags
 {

@@ -187,3 +187,18 @@ SickCellBuff: {
 	DisplayName: Sick Cell
 	Description: That's totally sick!
 }
+
+OnyxFistBuff: {
+	DisplayName: Onyx Fist
+	Description: Fisticuffs!
+}
+
+EXOLOTLBuff: {
+	DisplayName: EXO-LOTL
+	Description: Great for distracting cats!
+}
+
+FractalCrawlerBuff: {
+	DisplayName: Fractal Crawler
+	Description: The fractal crawler will protect you
+}

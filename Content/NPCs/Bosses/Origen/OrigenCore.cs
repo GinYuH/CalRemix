@@ -15,6 +15,7 @@ using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Placeables.Relics;
 using Terraria.GameContent.ItemDropRules;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Content.NPCs.Bosses.Origen
 {
@@ -160,13 +161,13 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemID.Nazar, 1, 8, 10);
-            npcLoot.Add(ItemID.FrozenKey, 3);
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ItemID.Nazar, 1, 8, 10));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ItemID.FrozenKey, 3));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<SoulofOrigen>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<IOU>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<PaletteUncleanser>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<OrigenPoint>()));
             npcLoot.Add(ModContent.ItemType<OrigenTrophy>(), 10);
-            npcLoot.Add(ModContent.ItemType<SoulofOrigen>());
-            npcLoot.Add(ModContent.ItemType<IOU>());
-            npcLoot.Add(ModContent.ItemType<PaletteUncleanser>());
-            npcLoot.Add(ModContent.ItemType<OrigenPoint>());
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || CalamityWorld.revenge), ModContent.ItemType<OrigenRelic>()));
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedOrigen, ModContent.ItemType<KnowledgeOrigen>(), desc: DropHelper.FirstKillText);
         }

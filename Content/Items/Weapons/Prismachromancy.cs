@@ -49,7 +49,7 @@ public class Prismachromancy : ModItem
             AddIngredient<Tetrachromancy>().
             AddIngredient(ItemID.FairyQueenMagicItem).
             AddIngredient(ItemID.RainbowRod).
-            AddIngredient<ElementalBar>(5).
+            AddIngredient(ItemID.LunarBar, 5).
             AddTile(TileID.LunarCraftingStation).
             Register();
     }
