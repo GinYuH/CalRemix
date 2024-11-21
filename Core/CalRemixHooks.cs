@@ -61,6 +61,8 @@ namespace CalRemix.Core
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
+            On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
+            On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
         }
         public override void PostSetupContent()
         {
@@ -698,5 +700,7 @@ namespace CalRemix.Core
             CalamityNetcode.SyncWorld();
         }
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
+        private static bool DoGMusicDeath(On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase1MusicScene self) => false;
+        private static bool DoGMusicDeath2(On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase2MusicScene self) => false;
     }
 }
