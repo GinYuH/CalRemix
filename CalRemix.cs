@@ -203,11 +203,11 @@ namespace CalRemix
 
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<WulfwyrmHead>(), [NPCType<WulfwyrmBody>(), NPCType<WulfwyrmTail>()]);
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<Origen>(), [NPCType<OrigenCore>()], [NPCType<OrigenCore>()]);
-            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()]);
+            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()], needsNight: true);
             AddToBossRush(ref brEntries, NPCID.Deerclops, NPCType<Carcinogen>(), [NPCType<CarcinogenShield>()]);
             AddToBossRush(ref brEntries, NPCType<CalamitasClone>(), NPCType<Ionogen>(), [NPCType<IonogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.Plantera, NPCType<Oxygen>(), [NPCType<OxygenShield>()]);
-            AddToBossRush(ref brEntries, NPCType<Anahita>(), NPCType<Polyphemalus>(), [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()]);
+            AddToBossRush(ref brEntries, NPCType<Anahita>(), NPCType<Polyphemalus>(), [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], true);
             AddToBossRush(ref brEntries, NPCID.Golem, NPCType<Phytogen>(), [NPCType<PhytogenShield>(), NPCType<PineappleFrond>()]);
             AddToBossRush(ref brEntries, NPCType<PlaguebringerGoliath>(), NPCType<Hydrogen>(), [NPCType<HydrogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.CultistBoss, NPCType<Pathogen>(), [NPCType<PathogenShield>()]);

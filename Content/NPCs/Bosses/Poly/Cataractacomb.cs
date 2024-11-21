@@ -10,6 +10,7 @@ using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalamityMod;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Tools;
+using CalamityMod.Events;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly
 {
@@ -82,7 +83,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             {
                 NPC.TargetClosest();
             }
-            NPC.Calamity().CurrentlyEnraged = Main.dayTime;
+            NPC.Calamity().CurrentlyEnraged = Main.dayTime && !BossRushEvent.BossRushActive;
             var eyesLeft = 0;
             AIShare["index"] = 0;
             NPC astigmadeddon = null;
@@ -257,7 +258,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
                     {
                         phase = -1;
                         subphase = 0;
-                        timer = NPC.Calamity().CurrentlyEnraged ? 175 : 0;
+                        timer = NPC.Calamity().CurrentlyEnraged || BossRushEvent.BossRushActive ? 175 : 0;
                     }
                 }
             }

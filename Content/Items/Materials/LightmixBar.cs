@@ -22,6 +22,7 @@ namespace CalRemix.Content.Items.Materials
         }
 		public override void SetDefaults()
         {
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(1, 92);
             Item.rare = ModContent.RarityType<HotPink>();
             Item.Remix().devItem = "Remix";

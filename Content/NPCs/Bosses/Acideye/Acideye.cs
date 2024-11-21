@@ -24,6 +24,7 @@ using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Bags;
 using CalamityMod.Events;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Acideye
 {
@@ -91,7 +92,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
                 NPC.velocity.Y--;
                 return;
             }
-            NPC.Calamity().CurrentlyEnraged = Main.dayTime;
+            NPC.Calamity().CurrentlyEnraged = Main.dayTime && !BossRushEvent.BossRushActive;
             Timer++;
             switch (Phase)
             {
@@ -575,10 +576,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
-            {
-                new FlavorTextBestiaryInfoElement("A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.")
-            });
+            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value)]);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

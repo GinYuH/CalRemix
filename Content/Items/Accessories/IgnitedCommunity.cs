@@ -28,12 +28,9 @@ namespace CalRemix.Content.Items.Accessories
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Text.Contains("{0}") && t.Text.Contains("{1}"));
-            if (line != null && !ModLoader.HasMod("MagicStorage"))
-            {
-                string newText = line.Text.Replace("{0}",$"{count}");
-                newText = newText.Replace("{1}", $"{count * 2}");
-                line.Text = newText;
-            }
+            string newText = line.Text.Replace("{0}", $"{count}");
+            newText = newText.Replace("{1}", $"{count * 2}");
+            line.Text = newText;
         }
 
         public override void SetDefaults()

@@ -182,6 +182,7 @@ FBIGUY: {
 
 Acideye: {
 	DisplayName: Acidsighter
+	Bestiary: A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.
 	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
 }
 
@@ -189,6 +190,13 @@ MutatedEye.DisplayName: Mutated Eye
 
 TheCalamity: {
 	DisplayName: The Calamity
+	Bestiary: An entity made of unseen light tken form by the anger and grievances of many. It learned self-control aas a follower.
+	Quote1: I will test your dodging abilities. Good Luck.
+	Quote2: Your skills are proficient, but how will you fare against the ones after me?
+	Quote3: Your foes will often hold predictable patterns; see past them and strike.
+	Quote4: Keep avoiding anything that seems dangerous.
+	Quote5: You have passed the test. Well done.
+	Quote6: Strike me down and take your reward.
 	BossChecklistIntegration.SpawnInfo: Use the [i:CalRemix/Slumbering]
 }
 

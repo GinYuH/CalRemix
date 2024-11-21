@@ -58,6 +58,7 @@ using CalRemix.Core.Biomes;
 using CalamityMod.Items.Dyes;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Critters;
+using CalRemix.Content.NPCs.Bosses.BossScule;
 
 namespace CalRemix
 {
@@ -205,6 +206,8 @@ namespace CalRemix
 
         // Buffs
         public bool hayFever;
+        public int calamitizedCounter;
+        public int calamitizedHitCooldown;
 
         // Tiles
         public float cosdam = 0;
@@ -438,19 +441,19 @@ namespace CalRemix
 					Main.musicVolume = 0;
 			}
             if (CalRemixWorld.permanenthealth)
-			{
 				SpawnPhantomHeart();
-			}
-			if (infraredSightsScanning)
-            {
+
+            if (calamitizedHitCooldown > 0)
+                calamitizedHitCooldown--;
+
+            if (infraredSightsScanning)
                 InfraredLogic();
-            }
+
             if (roxCooldown > 0)
                 roxCooldown--;
+
             if (VerbotenMode >= 5)
-			{
 				VerbotenMode = 1;
-            }
             if (chainSawCharge >= chainSawLevel1)
             {
                 Player.ClearBuff(BuffID.Darkness);
@@ -840,6 +843,11 @@ namespace CalRemix
 			dyesBlack = 0;
 			dyesBrown = 0;
 			dyesPink = 0;
+            if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
+            {
+                calamitizedHitCooldown = 0;
+                calamitizedCounter = 0;
+            }
             if (!CalamityUtils.AnyProjectiles(ProjectileType<Fridge>()))
 			{
                 fridge = false;

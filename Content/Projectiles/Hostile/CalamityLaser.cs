@@ -74,11 +74,24 @@ namespace CalRemix.Content.Projectiles.Hostile
             {
                 foreach (Player p in Main.player)
                 {
-                    if (p.Hitbox.Intersects(Projectile.Hitbox))
+                    if (p.Hitbox.Intersects(Projectile.Hitbox) && p.Remix().calamitizedHitCooldown <= 0)
                     {
-                        if (Main.myPlayer == p.whoAmI)
+                        p.Remix().calamitizedHitCooldown = 60;
+                        if (Main.myPlayer == p.whoAmI && !p.HasBuff<Calamitized>())
                             SoundEngine.PlaySound(CalamityPlayer.DefenseDamageSound, p.Center);
-                        p.AddBuff(ModContent.BuffType<Calamitized>(), 1800);
+                        if (p.Remix().calamitizedCounter <= 0)
+                            p.AddBuff(ModContent.BuffType<Calamitized>(), 1800);
+                        else
+                        {
+                            if (Main.myPlayer == p.whoAmI)
+                            {
+                                if (p.Remix().calamitizedCounter == 1)
+                                    CombatText.NewText(p.getRect(), Color.Red, "Don't get hit again!", true);
+                                else
+                                    CombatText.NewText(p.getRect(), Color.Red, $"{p.Remix().calamitizedCounter} hits left!", true);
+                            }
+                            p.Remix().calamitizedCounter--;
+                        }
                         Projectile.Kill();
                     }
                 }
@@ -89,14 +102,14 @@ namespace CalRemix.Content.Projectiles.Hostile
                     Projectile.netUpdate = true;
                 }
 
-                Projectile.rotation = Projectile.velocity.ToRotation();
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             }
             else if (OldVelocity == Vector2.Zero)
             {
                 OldVelocity = Projectile.velocity;
                 Projectile.velocity = Vector2.Zero;
                 Projectile.netUpdate = true;
-                Projectile.rotation = OldVelocity.ToRotation();
+                Projectile.rotation = OldVelocity.ToRotation() + MathHelper.PiOver2;
             }
             TelegraphDelay++;
         }
