@@ -53,6 +53,8 @@ using CalRemix.Content.Cooldowns;
 using CalamityMod.Items.Potions.Alcohol;
 using System;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Placeables.FurnitureAbyss;
 
 namespace CalRemix
 {
@@ -62,6 +64,28 @@ namespace CalRemix
         internal string devItem = string.Empty;
         public bool Scoriad = false;
         public int NonScoria = -1;
+        internal static List<int> Torch = new()
+        {
+            ItemID.RainbowTorch,
+            ItemID.UltrabrightTorch,
+            ItemID.IchorTorch,
+            ItemID.BoneTorch,
+            ItemID.CursedTorch,
+            ItemID.DemonTorch,
+            ItemID.IceTorch,
+            ItemID.JungleTorch,
+            ItemID.CrimsonTorch,
+            ItemID.CorruptTorch,
+            ItemID.HallowedTorch,
+            ItemID.Torch,
+            ItemType<AstralTorch>(),
+            ItemType<SulphurousTorch>(),
+            ItemType<GloomTorch>(),
+            ItemType<AbyssTorch>(),
+            ItemType<AlgalPrismTorch>(),
+            ItemType<NavyPrismTorch>(),
+            ItemType<RefractivePrismTorch>()
+        };
         private static readonly Dictionary<int, int> GemCrawl = new()
         {
             { ItemID.Ruby, NPCType<CrawlerRuby>() },
@@ -106,6 +130,10 @@ namespace CalRemix
             else if (item.type == ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<TitanFinger>();
+            }
+            else if (item.type == ItemType<CosmiliteBar>())
+            {
+                item.rare = CalRemixWorld.cosmislag ? ItemRarityID.Purple : RarityType<DarkBlue>();
             }
             if (CalRemixWorld.fearmonger)
             {
@@ -288,18 +316,8 @@ namespace CalRemix
             }
             return true;
         }
-        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
-        {
-            if (player.GetModPlayer<CalRemixPlayer>().clockBar)
-                return Main.rand.NextFloat() >= 0.66f;
-            return true;
-        }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (item.type == ItemType<ClockGatlignum>())
-            {
-                player.GetModPlayer<CalRemixPlayer>().clockBar = true;
-            }
             if (CalRemixWorld.permanenthealth)
             {
                 if (item.type == ItemType<Elderberry>() && item.stack > 1)
@@ -769,6 +787,127 @@ namespace CalRemix
                 text += CalamityUtils.ColorMessage("-", Color.Crimson);
                 TooltipLine tip = new(Mod, "CalRemix:Dev", text);
                 tooltips.Add(tip);
+            }
+            if (CalRemixWorld.aspids)
+            {
+                if (item.type == ItemType<CryoKey>())
+                {
+                    var line = new TooltipLine(Mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                    tooltips.Add(line);
+                }
+            }
+            if (CalRemixWorld.clamitas)
+            {
+                if (item.type == ItemType<EyeofDesolation>())
+                {
+                    var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                    tooltips.Add(line);
+                }
+            }
+            if (CalRemixWorld.plaguetoggle)
+            {
+                if (item.type == ItemType<Abombination>())
+                {
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
+                }
+            }
+            if (CalRemixWorld.fearmonger)
+            {
+                if (item.type == ItemType<FearmongerGreathelm>())
+                {
+                    tooltips.FindAndReplace("+60 max mana and ", "");
+                    tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(Mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerPlateMail>())
+                {
+                    tooltips.FindAndReplace("+100 max life and ", "");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(Mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerGreaves>())
+                {
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(Mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+            }
+            if (Torch.Contains(item.type))
+            {
+                var line = new TooltipLine(Mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
+                line.OverrideColor = Color.OrangeRed;
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<PhantomicArtifact>())
+            {
+                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<GrandGelatin>())
+            {
+                var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<TheAbsorber>())
+            {
+                var line = new TooltipLine(Mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<TheSponge>())
+            {
+                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<AmbrosialAmpoule>())
+            {
+                var line = new TooltipLine(Mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<AbyssalDivingGear>())
+            {
+                var line = new TooltipLine(Mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<AbyssalDivingSuit>())
+            {
+                var line = new TooltipLine(Mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<TheAmalgam>())
+            {
+                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<DesertMedallion>())
+            {
+                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<HadalStew>())
+            {
+                var line = new TooltipLine(Mod, "HadalStewRemix", "Grants a handful of combat buffs");
+                tooltips.Add(line);
             }
             if (CalRemixPlayer.dyeStats.ContainsKey(item.type) && CalRemixWorld.dyeStats)
             {

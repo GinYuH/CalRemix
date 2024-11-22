@@ -357,6 +357,7 @@ namespace CalRemix
 
             AddMusic(CalRemixMusic.Pyrogen, "Volcanic Reinforcement", "The Purified");
             AddMusic(CalRemixMusic.DevourerofGods, "Last Battle (Ballos Mix)", "DM DOKURO");
+            AddMusic(CalRemixMusic.DevourerofGodsFinalForm, "Univesal Collapse?", "SiivaGunner");
             AddMusic(CalRemixMusic.Hypnos, "Cerebral Augmentations", "The Exiled Fellow");
 
             AddMusic(CalRemixMusic.ExoMechs, "Omniscius Calculus", "Jteoh");

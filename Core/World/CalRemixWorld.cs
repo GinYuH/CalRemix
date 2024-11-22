@@ -404,48 +404,6 @@ namespace CalRemix.Core.World
 
             ScreenHelperManager.screenHelpersEnabled = tag.Get<bool>("109fanny");
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
-
-            if (!Main.dedServ)
-            {
-                if (itemChanges)
-                {
-                    foreach (KeyValuePair<int, string> p in RethemeList.Items)
-                    {
-                        TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                    }
-                    foreach (KeyValuePair<int, string> p in RethemeList.Projs)
-                    {
-                        TextureAssets.Projectile[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                    }
-                    Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
-                }
-                else
-                {
-                    foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
-                    {
-                        TextureAssets.Item[p.Key] = p.Value;
-                    }
-                    foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
-                    {
-                        TextureAssets.Projectile[p.Key] = p.Value;
-                    }
-                    Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
-                }
-                if (npcChanges)
-                {
-                    foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
-                    {
-                        TextureAssets.Npc[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                    }
-                }
-                else
-                {
-                    foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
-                    {
-                        TextureAssets.Npc[p.Key] = p.Value;
-                    }
-                }
-            }
         }
 
         public override void NetSend(BinaryWriter writer)

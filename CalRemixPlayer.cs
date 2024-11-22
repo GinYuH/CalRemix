@@ -89,7 +89,6 @@ namespace CalRemix
         public int RecentChest = -1;
         public bool anomaly109UI;
         public bool fridge;
-        public bool clockBar;
 
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;
@@ -810,7 +809,6 @@ namespace CalRemix
 			bananaClown = false;
 			twistedNetherite = false;
 			twistedNetheriteBoots = false;
-            clockBar = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;

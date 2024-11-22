@@ -5,6 +5,7 @@ using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
+using CalamityMod.NPCs.Providence;
 
 namespace CalRemix.Core.Retheme
 {
@@ -16,10 +17,7 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
             IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw += CryogenShield;
             IL.CalamityMod.NPCs.CalamityAIs.CalamityBossAIs.AstrumAureusAI.VanillaAstrumAureusAI += AureusAI;
-            /*
             IL.CalamityMod.NPCs.AstrumAureus.AureusSpawn.PreDraw += AureusSpawn;
-            IL.CalamityMod.NPCs.Providence.Providence.PreDraw += Providence;
-             */
 
             // IL.CalamityMod.Items.Weapons.PreDraw += ;
 
@@ -87,7 +85,7 @@ namespace CalRemix.Core.Retheme
                 c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_Cyan") : typeof(Color).GetMethod("get_White"));
             }
         }
-        private static void Providence(ILContext il)
+        private static void ProvidenceColors(ILContext il)
         {
             var c = new ILCursor(il);
             if (c.TryGotoNext(i => i.MatchCall<Color>("get_Cyan")))
@@ -312,7 +310,7 @@ namespace CalRemix.Core.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Core/Retheme/Blank");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
             }
         }
         private static void ViolenceThrownProjectile(ILContext il)
@@ -334,7 +332,7 @@ namespace CalRemix.Core.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? "CalamityMod/Projectiles/Boss/HolyBlast" : "CalamityMod/Projectiles/Boss/HolyBlastNight");
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? "CalamityMod/Projectiles/Boss/HolyBlast" : "CalamityMod/Projectiles/Boss/HolyBlastNight");
             }
         }
         #endregion

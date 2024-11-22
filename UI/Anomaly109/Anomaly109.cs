@@ -8,7 +8,6 @@ using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -485,55 +483,34 @@ namespace CalRemix.UI.Anomaly109
     {
         public static List<Anomaly109Option> options = new List<Anomaly109Option> { };
         public static bool helpUnlocked = false;
+        public static bool finalizeOptionInit = false;
+        public override void PreUpdateWorld()
+        {
+            if (!finalizeOptionInit)
+            {
+                Anomaly109Option i = options.Find((Anomaly109Option o) => o.title.Equals("item_changes"));
+                i.toggle();
+                i.toggle();
+                Anomaly109Option n = options.Find((Anomaly109Option o) => o.title.Equals("npc_changes"));
+                n.toggle();
+                n.toggle();
+                finalizeOptionInit = true;
+            }
+        }
         public override void OnWorldLoad()
         {
             if (options.Count == 0)
             {
                 options.Add(new Anomaly109Option("emitem", "item_changes", "Toggles visual changes for certain items and projectiles", () =>
                 {
-                    if (!CalRemixWorld.itemChanges)
-                    {
-                        foreach (KeyValuePair<int, string> p in RethemeList.Items)
-                        {
-                            TextureAssets.Item[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                        }
-                        foreach (KeyValuePair<int, string> p in RethemeList.Projs)
-                        {
-                            TextureAssets.Projectile[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                        }
-                        Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
-                    }
-                    else
-                    {
-                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
-                        {
-                            TextureAssets.Item[p.Key] = p.Value;
-                        }
-                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
-                        {
-                            TextureAssets.Projectile[p.Key] = p.Value;
-                        }
-                        Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
-                    }
+                    RethemeItem.ChangeTextures();
                     CalRemixWorld.itemChanges = !CalRemixWorld.itemChanges;
                 }, new Condition("", () => CalRemixWorld.itemChanges)));
                 options.Add(new Anomaly109Option("creativefreedom", "npc_changes", "Toggles visual changes for some (not all) NPCs and bosses", () =>
                 {
-                    if (!CalRemixWorld.npcChanges)
-                    {
-                        foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
-                        {
-                            TextureAssets.Npc[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                        }
-                    }
-                    else
-                    {
-                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
-                        {
-                            TextureAssets.Npc[p.Key] = p.Value;
-                        }
-                    }
+                    RethemeNPC.ChangeTextures();
                     CalRemixWorld.npcChanges = !CalRemixWorld.npcChanges;
+                    RethemeNPC.UpdateTextures();
                 }, new Condition("", () => CalRemixWorld.npcChanges)));
                 options.Add(new Anomaly109Option("talkywalky", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.bossdialogue = !CalRemixWorld.bossdialogue; }, new Condition("", () => CalRemixWorld.bossdialogue)));
                 options.Add(new Anomaly109Option("space", "remix_jump", "Toggles the default double jump", () => { CalRemixWorld.remixJump = !CalRemixWorld.remixJump; }, new Condition("", () => CalRemixWorld.remixJump)));
@@ -612,6 +589,7 @@ namespace CalRemix.UI.Anomaly109
                 options.Add(new Anomaly109Option("rotgut", "enemy_champions", "Toggles the spawning of champion variant enemies", () => { CalRemixWorld.champions = !CalRemixWorld.champions; }, new Condition("", () => CalRemixWorld.champions)));
                 options.Add(new Anomaly109Option("thesealed", "la_ruga", "...", () => { CalRemixWorld.laruga = !CalRemixWorld.laruga; }, new Condition("", () => CalRemixWorld.laruga)));
             }
+
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -691,7 +669,7 @@ namespace CalRemix.UI.Anomaly109
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "ExampleMod: Example Resource Bar",
+                    "CalRemix:Anomaly109Interface",
                     delegate
                     {
                         Anomaly109UserInterface.Draw(Main.spriteBatch, new GameTime());

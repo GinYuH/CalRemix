@@ -35,6 +35,7 @@ using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee.Yoyos;
 using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.NPCs.Providence;
 
 namespace CalRemix.Core.Retheme
 {
@@ -84,8 +85,6 @@ namespace CalRemix.Core.Retheme
             { NPCType<Cryogen>(), "Cryogen/CryogenPhase1" },
             { NPCType<CryogenShield>(), "Cryogen/CryogenShield" },
             { NPCType<CalamitasClone>(), "Cal/Calamitas" },
-            { NPCType<Cataclysm>(), "Cal/Cataclysm" },
-            { NPCType<Catastrophe>(), "Cal/Catastrophe" },
             { NPCType<Anahita>(), "Levi/Anahita" },
             { NPCType<Leviathan>(), "Levi/Levi" },
             { NPCType<AquaticAberration>(), "Levi/AquaticAberration" },
@@ -96,6 +95,7 @@ namespace CalRemix.Core.Retheme
             { NPCType<AstrumDeusTail>(), "AD/Tail" },
             #endregion
             #region Godseeker Mode
+            { NPCType<Providence>(), "Providence/Providence" },
             { NPCType<Bumblefuck>(), "Birb/Birb" },
             { NPCType<Bumblefuck2>(), "Birb/Birb2" },
             { NPCType<WildBumblefuck>(), "Birb/Birb2" },
@@ -267,12 +267,12 @@ namespace CalRemix.Core.Retheme
             { ProjectileType<VoidEssence>(), "VoidEssence" },
             { ProjectileType<MutatedTruffleMinion>(), "GassyDuke" },
             #region Desert Sockourge
-            #endregion
             { ProjectileType<SaharaSlicersBlade>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBladeAlt>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBolt>(), "DS/SaharaSlicersBolt" },
             { ProjectileType<BrittleStarMinion>(), "DS/BrittleStarMinion" },
             { ProjectileType<ScourgeoftheDesertProj>(), "DS/ScourgeoftheDesert" },
+            #endregion
             #region Crab
             { ProjectileType<MycorootProj>(), "Crabulon/Mycoroot" },
             { ProjectileType<InfestedClawmerangProj>(), "Crabulon/Shroomerang" },
