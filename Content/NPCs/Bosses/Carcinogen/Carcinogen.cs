@@ -65,7 +65,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(6000, 8000, 300000);
+            NPC.LifeMaxNERB(3000, 4000, 150000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -259,10 +259,11 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                 // Shoot spinning flames around itself
                 case (int)PhaseType.FireBlender:
                     {
-                        int normalSpeed = 4; // Speed Carcinogen moves before shooting fire
-                        int fireSpeed = 2; // Speed Carcinogen moves while shooting fire
+                        float playerDistance = (NPC.Center - Target.Center).Length(); //Distance to the player (used for scaling speed)
+                        float normalSpeed = 4 * playerDistance / 300; // Speed Carcinogen moves before shooting fire
+                        float fireSpeed = 2 * playerDistance / 300; // Speed Carcinogen moves while shooting fire
                         int firePoints = death ? 5 : 4; // How many points of fire Carcinogen shoots out
-                        float fireProjSpeed = death ? 10 : rev ? 9 : 8; // Fire projectile speed, effectively range
+                        float fireProjSpeed = death ? 13 : rev ? 11 : 10; // Fire projectile speed, effectively range
                         float fireRateMultiplier = 0.02f; // Makes the spacing between the points sane
                         int projType = ProjectileID.Flames; // Burn baby burn!
                         NPC.ai[1]++;
