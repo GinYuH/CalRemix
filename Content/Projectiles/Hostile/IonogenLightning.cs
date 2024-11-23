@@ -69,6 +69,10 @@ namespace CalRemix.Content.Projectiles.Hostile
             {
                 SoundEngine.PlaySound(CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrimstoneShotSound, Projectile.Center);
             }
+            if (Projectile.ai[2] % 30 == 0)
+            {
+                Projectile.netUpdate = true;
+            }
             if (Main.getGoodWorld)
             {
                 float one = Projectile.whoAmI % 2 == 0 && Main.zenithWorld ? -0.004f : 0.004f;

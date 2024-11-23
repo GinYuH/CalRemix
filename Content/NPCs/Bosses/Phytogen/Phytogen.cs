@@ -374,7 +374,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                                         Vector2 velocity = new Vector2(0f, vineSpeed);
                                         velocity = velocity.RotatedBy(variance * i);
 
-                                        //if (Main.netMode == NetmodeID.SinglePlayer)
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
                                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.5f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
                                     }
                                     DustExplosion();

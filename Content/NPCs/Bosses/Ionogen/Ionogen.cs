@@ -163,19 +163,23 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
 
                             if (NPC.ai[2] % lightningRate == 0)
                             {
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                int type = ModContent.ProjectileType<IonogenLightning>();
+                                SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
+                                // Fire the lightning bolts
+                                for (int k = 0; k < totalProjectiles; k++)
                                 {
-                                    int type = ModContent.ProjectileType<IonogenLightning>();
-                                    SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
-                                    // Fire the lightning bolts
-                                    for (int k = 0; k < totalProjectiles; k++)
+                                    Vector2 laserVelocity = spinningPoint.RotatedBy(radians * k + Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2));
+
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Vector2 laserVelocity = spinningPoint.RotatedBy(radians * k + Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2));
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, laserVelocity, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                     }
+                                }
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
                                     // Fire one directly at the player too because lol
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
-                                }
+                                }                                
                             }
                             // Ngl this sound doesn't even sound very electricky, but Teslastaff and Crystal Gauntlets already use it so meh
                             if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<IonogenLightning>()) && NPC.ai[1] % 5 == 0)
