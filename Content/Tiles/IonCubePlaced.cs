@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Core.World;
@@ -9,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -137,6 +139,10 @@ namespace CalRemix.Content.Tiles
         {
             Tile tile = Main.tile[i, j];
             IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+            if (cube != null)
+            {
+                DoGuyBehaviour(cube);
+            }
             if (tile.TileFrameX == 0 && tile.TileFrameY == 0 && cube != null)
             {
                 Player p = Main.LocalPlayer;
@@ -189,6 +195,153 @@ namespace CalRemix.Content.Tiles
                 }
             }
         }
+
+        // Why isn't in this in the Tile Entity's behaviour you may ask?
+        // Well, all of his data is controlled by the local player, so i guess the player is in charge of it
+        public static void DoGuyBehaviour(IonCubeTE guy)
+        {
+            bool shouldUpdate = false;
+            guy.positionX = MathHelper.Lerp(guy.positionX, guy.desiredX, 0.05f);
+            guy.positionY = MathHelper.Lerp(guy.positionY, guy.desiredX, 0.05f);
+            guy.rotation = guy.rotation.AngleLerp(guy.desiredRotation, 0.05f);
+            if (guy.textLifeTime > 0)
+            {
+                guy.textLifeTime--;
+            }
+            CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
+            bool finalQuest = CalRemixWorld.ionQuestLevel >= IonCubeTE.dialogue.Count - 1;
+            if (finalQuest ? player.ionDialogue > -1 : (Main.LocalPlayer.Distance(guy.Position.ToVector2() * 16) < 480 && Collision.CanHitLine(guy.Position.ToVector2() * 16, 1, 1, Main.LocalPlayer.Center, 1, 1)))
+            {
+                if (CalRemixWorld.ionQuestLevel == -1)
+                {
+                    shouldUpdate = true;
+                    CalRemixWorld.ionQuestLevel = 0;
+
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.IonQuestLevel);
+                    packet.Write((byte)0);
+                    packet.Send();
+
+                    player.ionDialogue = 0;
+                    guy.ManualTalk();
+                }
+                if (IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].Condition != null)
+                {
+                    if (IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].Condition.Invoke())
+                    {
+                        shouldUpdate = true;
+                        int lov = CalRemixWorld.ionQuestLevel + 1;
+                        CalRemixWorld.ionQuestLevel = lov;
+
+                        ModPacket packet = CalRemix.instance.GetPacket();
+                        packet.Write((byte)RemixMessageType.IonQuestLevel);
+                        packet.Write((byte)lov);
+                        packet.Send();
+
+                        player.ionDialogue = 0;
+                        guy.ManualTalk();
+                    }
+                }
+                if (player.ionDialogue > -1)
+                {
+                    if (guy.textLifeTime < 1)
+                    {
+                        if (player.ionDialogue < IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].Line.Count - 1)
+                        {
+                            shouldUpdate = true;
+                            player.ionDialogue++;
+                        }
+                        else
+                        {
+                            shouldUpdate = true;
+                            if (CalRemixWorld.ionQuestLevel >= IonCubeTE.dialogue.Count - 1)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int num = NPC.NewNPC(new EntitySource_WorldEvent(), guy.Position.X * 16, guy.Position.Y * 16, ModContent.NPCType<Ionogen>());
+                                    if (Main.npc.IndexInRange(num))
+                                    {
+                                        CalamityUtils.BossAwakenMessage(num);
+                                    }
+                                }
+                                else                                     
+                                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, Main.myPlayer, ModContent.NPCType<Ionogen>());
+                            }
+                            player.ionDialogue = -1;
+                        }
+                    }
+                }
+                if (player.ionDialogue >= 0 && guy.textLifeTime == 0)
+                {
+                    shouldUpdate = true;
+                    guy.ManualTalk();
+                }
+            }
+            if (guy.lookingAtItem > 0)
+            {
+                guy.lookingAtItem--;
+            }
+            if (CalRemixWorld.ionQuestLevel > -1)
+            {
+                if (IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && guy.lookingAtItem == -1 && player.ionDialogue == -1)
+                {
+                    foreach (Item i in Main.item)
+                    {
+                        if (i.Distance(guy.Position.ToVector2() * 16) < 72 && i.active && i.type == IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].RequiredItem)
+                        {
+                            shouldUpdate = true;
+                            int lov = CalRemixWorld.ionQuestLevel + 1;
+                            CalRemixWorld.ionQuestLevel = lov;
+
+                            ModPacket packet = CalRemix.instance.GetPacket();
+                            packet.Write((byte)RemixMessageType.IonQuestLevel);
+                            packet.Write((byte)lov);
+                            packet.Send();
+
+                            guy.lookingAtItem = 240;
+                            guy.lookedAtItem = i.whoAmI;
+                            player.ionDialogue = 0;
+                            guy.ManualTalk();
+                            break;
+                        }
+                    }
+                }
+            }
+            if (guy.lookedAtItem > -1)
+            {
+                if (Main.item[guy.lookedAtItem] != null)
+                {
+                    Main.item[guy.lookedAtItem].noGrabDelay = 999;
+                }
+            }
+            if (guy.lookingAtItem == 0 && Main.item[guy.lookedAtItem].active && Main.item[guy.lookedAtItem].type == IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel - 1].RequiredItem)
+            {
+                shouldUpdate = true;
+                Main.item[guy.lookedAtItem].active = false;
+                guy.lookingAtItem = -1;
+            }
+            // FUCK YOUUUUUUUUUUUUU
+            if (Main.netMode != NetmodeID.SinglePlayer && shouldUpdate)
+            {
+                NetMessage.SendData(MessageID.RequestTileEntityInteraction, -1, -1, null, guy.Position.X, guy.Position.Y, guy.Type);
+                NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, guy.Type, guy.Position.X, guy.Position.Y);
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.SyncIonmaster);
+                packet.Write(guy.ID);
+                packet.Write(guy.positionX);
+                packet.Write(guy.positionY);
+                packet.Write(guy.desiredX);
+                packet.Write(guy.desiredY);
+                packet.Write(guy.displayText);
+                packet.Write(guy.textLifeTime);
+                packet.Write(guy.lookedAtItem);
+                packet.Write(guy.lookingAtItem);
+                packet.Write(guy.rotation);
+                packet.Write(guy.desiredRotation);
+                packet.Send();
+            }
+        }
+
         private static Color GetDrawColour(int i, int j, Color colour)
         {
             int colType = Main.tile[i, j].TileColor;
@@ -328,98 +481,6 @@ namespace CalRemix.Content.Tiles
 
         public override void Update()
         {
-            positionX = MathHelper.Lerp(positionX, desiredX, 0.05f);
-            positionY = MathHelper.Lerp(positionY, desiredX, 0.05f);
-            rotation = rotation.AngleLerp(desiredRotation, 0.05f);
-            if (textLifeTime > 0)
-            {
-                textLifeTime--;
-            }
-            CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
-            bool finalQuest = CalRemixWorld.ionQuestLevel >= dialogue.Count - 1;
-            if (finalQuest ? player.ionDialogue > -1 : (Main.LocalPlayer.Distance(Position.ToVector2() * 16) < 480 && Collision.CanHitLine(Position.ToVector2() * 16, 1, 1, Main.LocalPlayer.Center, 1, 1)))
-            {
-                if (CalRemixWorld.ionQuestLevel == -1)
-                {
-                    CalRemixWorld.ionQuestLevel = 0;
-                    player.ionDialogue = 0;
-                    ManualTalk();
-                }
-                if (dialogue[CalRemixWorld.ionQuestLevel].Condition != null)
-                {
-                    if (dialogue[CalRemixWorld.ionQuestLevel].Condition.Invoke())
-                    {
-                        CalRemixWorld.ionQuestLevel++;
-                        player.ionDialogue = 0;
-                        ManualTalk();
-                    }
-                }
-                if (player.ionDialogue > -1)
-                {
-                    if (textLifeTime < 1)
-                    {
-                        if (player.ionDialogue < dialogue[CalRemixWorld.ionQuestLevel].Line.Count - 1)
-                        {
-                            player.ionDialogue++;
-                        }
-                        else
-                        {
-                            if (CalRemixWorld.ionQuestLevel >= dialogue.Count - 1)
-                            {
-                                int num = NPC.NewNPC(new EntitySource_WorldEvent(), Position.X * 16, Position.Y * 16, ModContent.NPCType<Ionogen>());
-                                if (Main.npc.IndexInRange(num))
-                                {
-                                    CalamityUtils.BossAwakenMessage(num);
-                                }
-                            }
-                            player.ionDialogue = -1;
-                        }
-                    }
-                }
-                if (player.ionDialogue >= 0 && textLifeTime == 0)
-                {
-                    ManualTalk();
-                }
-            }
-            if (lookingAtItem > 0)
-            {
-                lookingAtItem--;
-            }
-            if (CalRemixWorld.ionQuestLevel > -1)
-            {
-                if (dialogue[CalRemixWorld.ionQuestLevel].RequiredItem != -1 && lookingAtItem == -1 && player.ionDialogue == -1)
-                {
-                    foreach (Item i in Main.item)
-                    {
-                        if (i.Distance(Position.ToVector2() * 16) < 72 && i.active && i.type == dialogue[CalRemixWorld.ionQuestLevel].RequiredItem)
-                        {
-                            CalRemixWorld.ionQuestLevel++;
-                            lookingAtItem = 240;
-                            lookedAtItem = i.whoAmI;
-                            player.ionDialogue = 0;
-                            ManualTalk();
-                            break;
-                        }
-                    }
-                }
-            }
-            if (lookedAtItem > -1)
-            {
-                if (Main.item[lookedAtItem] != null)
-                {
-                    Main.item[lookedAtItem].noGrabDelay = 999;
-                }
-            }
-            if (lookingAtItem == 0 && Main.item[lookedAtItem].active && Main.item[lookedAtItem].type == dialogue[CalRemixWorld.ionQuestLevel - 1].RequiredItem)
-            {
-                Main.item[lookedAtItem].active = false;
-                lookingAtItem = -1;
-            }
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                NetMessage.SendData(MessageID.RequestTileEntityInteraction, -1, -1, null, Position.X, Position.Y, Type);
-                NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, Type, Position.X, Position.Y);
-            }
         }
 
         public void ManualTalk()

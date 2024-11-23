@@ -37,13 +37,18 @@ using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.Items.Ammo;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.ZAccessories;
+using Terraria.DataStructures;
+using CalRemix.Content.Tiles;
+using CalRemix.Core.World;
 
 namespace CalRemix
 {
     enum RemixMessageType
     {
         HypnosSummoned,
-        PandemicPanicStart
+        PandemicPanicStart,
+        SyncIonmaster,
+        IonQuestLevel
     }
     public class CalRemix : Mod
     {
@@ -84,6 +89,46 @@ namespace CalRemix
                         int player = reader.ReadByte();
 
                         PandemicPanic.StartEvent(Main.player[player]);
+                        break;
+                    }
+                case RemixMessageType.SyncIonmaster:
+                    {
+                        int kennyID = reader.ReadByte();
+                        float posX = reader.ReadSingle();
+                        float posY = reader.ReadSingle();
+                        float desiredX = reader.ReadSingle();
+                        float desiredY = reader.ReadSingle();
+                        string text = reader.ReadString();
+                        int textLife = reader.ReadInt32();
+                        int lookedItem = reader.ReadInt32();
+                        int itemTimer = reader.ReadInt32();
+                        float rotation = reader.ReadSingle();
+                        float desRotation = reader.ReadSingle();
+
+                        if (TileEntity.ByID.TryGetValue(kennyID, out TileEntity t))
+                        {
+                            if (t is IonCubeTE kendrick)
+                            {
+                                kendrick.positionX = posX;
+                                kendrick.positionY = posY;
+                                kendrick.desiredX = desiredX;
+                                kendrick.desiredY = desiredY;
+                                kendrick.rotation = rotation;
+                                kendrick.desiredRotation = desRotation;
+                                kendrick.lookedAtItem = lookedItem;
+                                kendrick.lookingAtItem = itemTimer;
+                                kendrick.displayText = text;
+                                kendrick.textLifeTime = textLife;
+                            }
+                        }
+
+                        break;
+                    }
+                case RemixMessageType.IonQuestLevel:
+                    {
+                        int level = reader.ReadByte();
+
+                        CalRemixWorld.ionQuestLevel = level;
                         break;
                     }
             }
