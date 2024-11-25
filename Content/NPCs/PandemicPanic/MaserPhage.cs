@@ -41,9 +41,10 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             AIType = -1;
+            NPC.scale = 3f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
-            NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
-            NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
+            NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadLarge.HitSound;
+            NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadLarge.DeathSound;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 
@@ -77,7 +78,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     if (FireRate % 5f == 0f)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                     }
                     if (FireRate >= 180f)
                     {
@@ -101,7 +102,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
                                 if (Main.netMode != NetmodeID.Server)
                                 { 
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 40, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
                                     Main.projectile[p].ModProjectile<MaserDeathray>().NPCOwner = NPC.whoAmI;
                                 }
                             }

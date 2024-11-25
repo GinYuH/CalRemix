@@ -644,12 +644,12 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 if (PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning)
                 {
                     maxSpawns += 8;
-                    spawnRate = 4;
+                    spawnRate = 8;
                 }
                 else
                 {
                     maxSpawns += 4;
-                    spawnRate = 8;
+                    spawnRate = 16;
                 }
             }
         }
@@ -669,7 +669,8 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.6f * defMult);
                 pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
                 pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
-                pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
+                if (!NPC.AnyNPCs(ModContent.NPCType<Eosinine>()))
+                    pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Dendritiator>()))
                     pool.Add(ModContent.NPCType<Dendritiator>(), 0.025f * defMult);
 
