@@ -138,6 +138,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<TheOldReaper>(), "TheReaper" },
             { ItemType<CadaverousCarrion>(), "CadaverousCarrion" },
             { ItemType<MutatedTruffle>(), "MutatedTruffle" },
+            { ItemType<MetalMonstrosity>(), "MetalMonstrosity" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },
@@ -266,6 +267,7 @@ namespace CalRemix.Core.Retheme
             { ProjectileType<NadirSpear>(), "NadirSpear" },
             { ProjectileType<VoidEssence>(), "VoidEssence" },
             { ProjectileType<MutatedTruffleMinion>(), "GassyDuke" },
+            { ProjectileType<MetalChunk>(), "MetalMonstrosity" },
             #region Desert Sockourge
             { ProjectileType<SaharaSlicersBlade>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBladeAlt>(), "DS/SaharaSlicer" },

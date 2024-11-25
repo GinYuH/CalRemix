@@ -909,6 +909,24 @@ namespace CalRemix
                 var line = new TooltipLine(Mod, "HadalStewRemix", "Grants a handful of combat buffs");
                 tooltips.Add(line);
             }
+            if (item.type == ItemType<MetalMonstrosity>())
+            {
+                int idx = -1;
+                for (int i = 0; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Name == "Tooltip0")
+                    {
+                        idx = i;
+                    }
+                    if (tooltips[i].Text.Contains("hurt"))
+                    {
+                        tooltips.RemoveAt(i);
+                    }
+                }
+
+                var line = new TooltipLine(Mod, "MetalMonstrosityRemix", "'Just looking at it makes you feel ill...'");
+                tooltips.Insert(idx, line);
+            }
             if (CalRemixPlayer.dyeStats.ContainsKey(item.type) && CalRemixWorld.dyeStats)
             {
                 DyeStats stats = CalRemixPlayer.dyeStats[item.type];
