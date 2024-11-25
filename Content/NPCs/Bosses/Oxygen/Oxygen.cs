@@ -407,7 +407,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             if (DepthLevel < 4)
             {
                 modifiers.SetMaxDamage(1);
-                Shard(trans: false);
+                //Shard(trans: false);
                 NPC.life += 1;
             }
         }
@@ -418,7 +418,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
             if (DepthLevel < 4)
             {
                 modifiers.SetMaxDamage(1);
-                Shard(trans: false);
+                //Shard(trans: false);
                 NPC.life += 1;
             }
         }
@@ -466,11 +466,16 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                 {
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Cloud, hit.HitDirection, -1f, 0, default, 1f);
                 }
+                if (Main.netMode != NetmodeID.Server)
                 for (int i = 0; i < 20; i++)
                 {
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(NPC.width, NPC.height).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("OxygenShrap" + Main.rand.Next(1, 7)).Type);
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(NPC.width, NPC.height).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("Oxygen" + Main.rand.Next(1, 7)).Type);
                 }
+            }
+            if (DepthLevel < 4)
+            {
+                Shard(trans: false);
             }
         }
 
