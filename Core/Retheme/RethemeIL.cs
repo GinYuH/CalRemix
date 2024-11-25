@@ -17,7 +17,6 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
             IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw += CryogenShield;
             IL.CalamityMod.NPCs.CalamityAIs.CalamityBossAIs.AstrumAureusAI.VanillaAstrumAureusAI += AureusAI;
-            IL.CalamityMod.NPCs.AstrumAureus.AureusSpawn.PreDraw += AureusSpawn;
 
             // IL.CalamityMod.Items.Weapons.PreDraw += ;
 
@@ -73,38 +72,6 @@ namespace CalRemix.Core.Retheme
                 c.Index++;
                 c.Emit(OpCodes.Pop);
                 c.EmitDelegate(() => !CalRemixWorld.npcChanges ? (float)1.3 : (float)0.0);
-            }
-        }
-        private static void AureusSpawn(ILContext il)
-        {
-            var c = new ILCursor(il);
-            if (c.TryGotoNext(i => i.MatchCall<Color>("get_Cyan")))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_Cyan") : typeof(Color).GetMethod("get_White"));
-            }
-        }
-        private static void ProvidenceColors(ILContext il)
-        {
-            var c = new ILCursor(il);
-            if (c.TryGotoNext(i => i.MatchCall<Color>("get_Cyan")))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_Cyan") : typeof(Color).GetMethod("get_White"));
-            }
-            if (c.TryGotoNext(i => i.MatchCall<Color>("get_BlueViolet")))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_BlueViolet") : typeof(Color).GetMethod("get_White"));
-            }
-            if (c.TryGotoNext(i => i.MatchCall<Color>("get_BlueViolet")))
-            {
-                c.Index++;
-                c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_BlueViolet") : typeof(Color).GetMethod("get_White"));
             }
         }
         #endregion
