@@ -28,6 +28,7 @@ using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Core.World;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix
 {
@@ -447,7 +448,7 @@ namespace CalRemix
             Player player = Main.LocalPlayer;
             if (player.ZoneJungle && !NPC.AnyNPCs(NPCType<Phytogen>()))
             {
-                 if (!effectOnly && !fail && Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
+                 if (!effectOnly && !fail && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                  {
                      CalamityGlobalTile.GetTreeBottom(i, j, out int treeX, out int treeY);
                      TreeTypes treeType = WorldGen.GetTreeType(Main.tile[treeX, treeY].TileType);
@@ -461,7 +462,20 @@ namespace CalRemix
 
                          if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
                          {
-                             NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
+                            }
+                            else
+                            {
+                                ModPacket packet = CalRemix.CalMod.GetPacket();
+                                packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
+                                packet.Write(Main.LocalPlayer.position.X);
+                                packet.Write(Main.LocalPlayer.position.Y);
+                                packet.Write(NPCType<Phytogen>());
+                                packet.Write(Main.myPlayer);
+                                packet.Send();
+                            }
                          }
                      }
                  }

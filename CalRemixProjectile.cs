@@ -25,6 +25,7 @@ using Terraria.Audio;
 using CalRemix.Core.World;
 using CalRemix.Content.Walls;
 using System.Linq;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
 
 namespace CalRemix.Content.Projectiles
 {
@@ -138,7 +139,24 @@ namespace CalRemix.Content.Projectiles
                 {
                     SoundEngine.PlaySound(SoundID.Shatter with { Volume = 1 });
                     projectile.Kill();
-                    NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int num = NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
+                        if (Main.npc.IndexInRange(num))
+                        {
+                            CalamityUtils.BossAwakenMessage(num);
+                        }
+                    }
+                    else
+                    {
+                        ModPacket packet = CalRemix.CalMod.GetPacket();
+                        packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
+                        packet.Write(projectile.position.X);
+                        packet.Write(656);
+                        packet.Write(NPCType<Oxygen>());
+                        packet.Write(Main.myPlayer);
+                        packet.Send();
+                    }
                 }
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)

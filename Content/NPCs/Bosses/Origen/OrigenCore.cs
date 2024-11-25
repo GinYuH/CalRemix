@@ -16,6 +16,7 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Placeables.Relics;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Bags;
 
 namespace CalRemix.Content.NPCs.Bosses.Origen
 {
@@ -162,6 +163,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.AddNormalOnly(ItemDropRule.Common(ItemID.Nazar, 1, 8, 10));
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<OrigenBag>());
             npcLoot.AddNormalOnly(ItemDropRule.Common(ItemID.FrozenKey, 3));
             npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<SoulofOrigen>()));
             npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<IOU>()));
