@@ -157,14 +157,14 @@ namespace CalRemix
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     ModPacket packet = Mod.GetPacket();
-                    packet.Write((byte)RemixMessageType.PandemicPanicStart);
-                    packet.Write((byte)Main.myPlayer);
+                    packet.Write((byte)RemixMessageType.StartPandemicPanic);
                     packet.Send();
                 }
                 else
                 {
-                    PandemicPanic.StartEvent(Main.LocalPlayer);
+                    PandemicPanic.StartEvent();
                 }
+                CalRemixWorld.UpdateWorldBool();
             }
         }
         public override void MouseOver(int i, int j, int type)

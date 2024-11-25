@@ -49,6 +49,9 @@ using Terraria.Audio;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace CalRemix.Core.World
 {
@@ -605,8 +608,26 @@ namespace CalRemix.Core.World
             {
                 if (NPC.downedBoss3 && Main.time == 1 && oxydayTime <= 0 && Main.rand.NextBool(4))
                 {
-                    oxydayTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
-                    Main.NewText("The wind is blowing harshly!", Color.LightBlue);
+                    int oxTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        oxydayTime = oxTime;
+                    }
+                    else
+                    {
+                        ModPacket packet = CalRemix.instance.GetPacket();
+                        packet.Write((byte)RemixMessageType.OxydayTime);
+                        packet.Write(oxTime);
+                        packet.Send();
+                    }
+                    if (Main.netMode == NetmodeID.SinglePlayer)
+                    {
+                        Main.NewText("The wind is blowing harshly!", Color.LightBlue);
+                    }
+                    else if (Main.netMode == NetmodeID.Server)
+                    {
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The wind is blowing harshly!"), Color.LightBlue);
+                    }
                 }
             }
             if (oxydayTime > 0)
@@ -629,13 +650,46 @@ namespace CalRemix.Core.World
                 }
                 if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
                 {
-                    oxydayTime = 0;
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        oxydayTime = 0;
+                    }
+                    else
+                    {
+                        ModPacket packet = CalRemix.instance.GetPacket();
+                        packet.Write((byte)RemixMessageType.OxydayTime);
+                        packet.Write(0);
+                        packet.Send();
+                    }
+                    if (Main.netMode == NetmodeID.SinglePlayer)
+                    {
+                        Main.NewText("The wind calms down...", Color.LightBlue);
+                    }
+                    else if (Main.netMode == NetmodeID.Server)
+                    {
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The wind calms down..."), Color.LightBlue);
+                    }
                 }
             }
             NPC.savedWizard = false;
             if (trueStory < maxStoryTime)
             {
-                trueStory++;
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    trueStory++;
+                }
+                else
+                {
+                    int td = trueStory + 1;
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.TrueStory);
+                    packet.Write(td);
+                    packet.Send();
+                }
+                if (trueStory >= maxStoryTime)
+                {
+                    UpdateWorldBool();
+                }
             }
             ExcavatorSummon();
         }

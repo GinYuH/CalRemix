@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 
@@ -172,8 +173,11 @@ namespace CalRemix.UI.Title
             }
 
             // Logo and Final Stuff
-            Main.time = 27000.0;
-            Main.dayTime = true;
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.time = 27000.0;
+                Main.dayTime = true;
+            }
             Texture2D Glow = ModContent.Request<Texture2D>("CalRemix/UI/Title/LogoGlow2").Value;
             Rectangle rect = new(0, Frame * (Logo.Value.Height / 5), Logo.Value.Width, Logo.Value.Height / 5);
             spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 471f) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), rect, Main.DiscoColor, 0, Glow.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);

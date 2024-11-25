@@ -46,9 +46,14 @@ namespace CalRemix
     enum RemixMessageType
     {
         HypnosSummoned,
-        PandemicPanicStart,
         SyncIonmaster,
-        IonQuestLevel
+        IonQuestLevel,
+        OxydayTime,
+        TrueStory,
+        StartPandemicPanic,
+        EndPandemicPanic,
+        KillDefender,
+        KillInvader
     }
     public class CalRemix : Mod
     {
@@ -82,13 +87,6 @@ namespace CalRemix
                         int player = reader.ReadByte();
 
                         Hypnos.SummonDraedon(Main.player[player]);
-                        break;
-                    }
-                case RemixMessageType.PandemicPanicStart:
-                    {
-                        int player = reader.ReadByte();
-
-                        PandemicPanic.StartEvent(Main.player[player]);
                         break;
                     }
                 case RemixMessageType.SyncIonmaster:
@@ -129,6 +127,50 @@ namespace CalRemix
                         int level = reader.ReadByte();
 
                         CalRemixWorld.ionQuestLevel = level;
+                        break;
+                    }
+                case RemixMessageType.OxydayTime:
+                    {
+                        int oxygenTime = reader.ReadByte();
+
+                        CalRemixWorld.oxydayTime = oxygenTime;
+                        break;
+                    }
+                case RemixMessageType.TrueStory:
+                    {
+                        int storyCounter = reader.ReadByte();
+
+                        CalRemixWorld.trueStory = storyCounter;
+                        break;
+                    }
+                case RemixMessageType.StartPandemicPanic:
+                    {
+                        PandemicPanic.IsActive = true;
+                        PandemicPanic.DefendersKilled = 0;
+                        PandemicPanic.InvadersKilled = 0;
+                        break;
+                    }
+                case RemixMessageType.EndPandemicPanic:
+                    {
+                        PandemicPanic.IsActive = false;
+                        PandemicPanic.DefendersKilled = 0;
+                        PandemicPanic.InvadersKilled = 0;
+                        PandemicPanic.LockedFinalSide = 0;
+                        PandemicPanic.SummonedPathogen = false;
+                        break;
+                    }
+                case RemixMessageType.KillDefender:
+                    {
+                        int killCount = reader.ReadByte();
+
+                        PandemicPanic.DefendersKilled = killCount;
+                        break;
+                    }
+                case RemixMessageType.KillInvader:
+                    {
+                        int killCount = reader.ReadByte();
+
+                        PandemicPanic.InvadersKilled = killCount;
                         break;
                     }
             }

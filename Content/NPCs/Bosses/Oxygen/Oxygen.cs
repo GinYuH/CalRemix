@@ -436,8 +436,12 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                         SoundEngine.PlaySound(crac, NPC.Center);
                     }
                     Vector2 square = new Vector2(Main.rand.Next((int)NPC.position.X, (int)NPC.position.X + NPC.width), Main.rand.Next((int)NPC.position.Y, (int)NPC.position.Y + NPC.height));
-                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<Oxshard>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, ai1: Main.rand.Next(1, 7));
-                    Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
+
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<Oxshard>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, ai1: Main.rand.Next(1, 7));
+                        Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
+                    }
                 }
                 NPC.Calamity().newAI[1] = 40;
             }
@@ -495,7 +499,17 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                 NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BALLER>());
             }
             RemixDowned.downedOxygen = true;
-            CalRemixWorld.oxydayTime = 0;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                CalRemixWorld.oxydayTime = 0;
+            }
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.OxydayTime);
+                packet.Write(0);
+                packet.Send();
+            }
             CalRemixWorld.UpdateWorldBool();
         }
 

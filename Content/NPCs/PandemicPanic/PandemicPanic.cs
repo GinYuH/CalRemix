@@ -11,6 +11,10 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Core.World;
+using Terraria.Chat;
+using Terraria.Localization;
+using CalamityMod.Projectiles.Typeless;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.Content.NPCs.PandemicPanic
 {
@@ -44,12 +48,12 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         /// <summary>
         /// Defender NPC kill count
         /// </summary>
-        public static float DefendersKilled = 0;
+        public static int DefendersKilled = 0;
 
         /// <summary>
         /// Invader NPC kill count
         /// </summary>
-        public static float InvadersKilled = 0;
+        public static int InvadersKilled = 0;
 
         /// <summary>
         /// Total kills, duh
@@ -179,12 +183,28 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             }
         }
 
-        public static void StartEvent(Player player)
+        public static void StartEvent()
         {
-            IsActive = true;
-            DefendersKilled = 0;
-            InvadersKilled = 0;
-            Main.NewText("Microbes are going to war!", Color.Red);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                IsActive = true;
+                DefendersKilled = 0;
+                InvadersKilled = 0;
+            }
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.StartPandemicPanic);
+                packet.Send();
+            }
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.NewText("Microbes are going to war!", Color.Red);
+            }
+            else if (Main.netMode == NetmodeID.Server)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Microbes are going to war!"), Color.Red);
+            }
         }
 
         public static void EndEvent()
@@ -198,12 +218,31 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 Main.npc[path].active = false;
             }
             string winner = InvadersWinning ? "The invaders successfully spread their influence." : DefendersWinning ? "The defenders successfully offered their protection." : "The microbes all retreat...";
-            Main.NewText(winner, InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory);
-            DefendersKilled = 0;
-            InvadersKilled = 0;
-            LockedFinalSide = 0;
-            SummonedPathogen = false;
-            IsActive = false;
+            Color c = InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory;
+
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.NewText(winner, c);
+            }
+            else if (Main.netMode == NetmodeID.Server)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(winner), c);
+            }
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                IsActive = false;
+                DefendersKilled = 0;
+                InvadersKilled = 0;
+                LockedFinalSide = 0;
+                SummonedPathogen = false;
+            }
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.EndPandemicPanic);
+                packet.Send();
+            }
             CalRemixWorld.UpdateWorldBool();
         }
 
@@ -227,19 +266,19 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SaveWorldData(TagCompound tag)
         {
-            tag["BioDefenders"] = DefendersKilled;
-            tag["BioInvaders"] = InvadersKilled;
+            tag["PanDefenders"] = DefendersKilled;
+            tag["PanInvaders"] = InvadersKilled;
             tag["PathoSummon"] = SummonedPathogen;
-            tag["BioActive"] = IsActive;
+            tag["PanActive"] = IsActive;
             tag["LockedFinalSide"] = LockedFinalSide;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            IsActive = tag.Get<bool>("BioActive");
+            IsActive = tag.Get<bool>("PanActive");
             SummonedPathogen = tag.Get<bool>("PathoSummon");
-            DefendersKilled = tag.Get<float>("BioDefenders");
-            InvadersKilled = tag.Get<float>("BioInvaders");
+            DefendersKilled = tag.Get<int>("PanDefenders");
+            InvadersKilled = tag.Get<int>("PanInvaders");
             LockedFinalSide = tag.Get<int>("LockedFinalSide");
         }
 
@@ -254,8 +293,8 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void NetReceive(BinaryReader reader)
         {
-            DefendersKilled = reader.ReadSingle();
-            InvadersKilled = reader.ReadSingle();
+            DefendersKilled = reader.ReadInt32();
+            InvadersKilled = reader.ReadInt32();
             SummonedPathogen = reader.ReadBoolean();
             IsActive = reader.ReadBoolean();
             LockedFinalSide = reader.ReadInt32();
@@ -369,8 +408,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                         continue;
                     int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.33f) : n.damage;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                            npc.SimpleStrikeNPC(dam, n.direction, false);
+                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), dam, 0, Main.myPlayer, npc.whoAmI);
                     hitCooldown = 20;
                     if (npc.life <= 0 && n.type == ModContent.NPCType<Malignant>()/* && NPC.CountNPCS(ModContent.NPCType<Malignant>()) < 22*/)
                     {
@@ -379,14 +417,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                         Main.npc[np].lifeMax = Main.npc[np].life = (int)MathHelper.Max(1, n.lifeMax / 2);
                         Main.npc[np].damage = (int)MathHelper.Max(1, n.damage * 0.75f);
                         Main.npc[np].scale = MathHelper.Max(0.2f, n.scale * 0.8f);
-                    }
-                    if (npc.life <= 0)
-                    {
-                        PandemicPanic.DefendersKilled++;
-                        if (npc.type == ModContent.NPCType<Dendritiator>())
-                        {
-                            PandemicPanic.DefendersKilled += 4;
-                        }
                     }
                     break;
                 }
@@ -406,17 +436,9 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                         continue;
                     int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.1f) : n.damage;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        npc.SimpleStrikeNPC(dam * (Main.expertMode ? 2 : 4), n.direction, false);
+                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), dam * (Main.expertMode ? 2 : 4), 0, Main.myPlayer, npc.whoAmI);
                     n.penetrate--;
                     hitCooldown = 20;
-                    if (npc.life <= 0)
-                    {
-                        PandemicPanic.DefendersKilled++;
-                        if (npc.type == ModContent.NPCType<Dendritiator>())
-                        {
-                            PandemicPanic.DefendersKilled += 4;
-                        }
-                    }
                     break;
                 }
             }
@@ -454,16 +476,8 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                         continue;
                     float damageMult = npc.type == ModContent.NPCType<Pathogen>() ? 0.2f : 1f;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        npc.SimpleStrikeNPC((int)(n.damage * damageMult), n.direction, false);
+                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), (int)(n.damage * damageMult), 0, Main.myPlayer, npc.whoAmI);
                     hitCooldown = armhit && npc.type != ModContent.NPCType<Pathogen>() ? 1 : 20;
-                    if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
-                    {
-                        PandemicPanic.InvadersKilled++;
-                        if (npc.type == ModContent.NPCType<MaserPhage>())
-                        {
-                            PandemicPanic.InvadersKilled += 4;
-                        }
-                    }
                     break;
                 }
                 if (hitCooldown > 0)
@@ -481,15 +495,26 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     if (!n.getRect().Intersects(npc.getRect()))
                         continue;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        npc.SimpleStrikeNPC(n.damage * (Main.expertMode ? 2 : 4), n.direction, false);
+                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), n.damage * (Main.expertMode ? 2 : 4), 0, Main.myPlayer, npc.whoAmI);
                     n.penetrate--;
                     hitCooldown = 20;
                     if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
                     {
-                        PandemicPanic.InvadersKilled++;
+                        int killCount = PandemicPanic.InvadersKilled + 1;
                         if (npc.type == ModContent.NPCType<MaserPhage>())
                         {
-                            PandemicPanic.InvadersKilled += 4;
+                            killCount += 4;
+                        }
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            PandemicPanic.InvadersKilled = killCount;
+                        }
+                        else
+                        {
+                            ModPacket packet = Mod.GetPacket();
+                            packet.Write((byte)RemixMessageType.KillInvader);
+                            packet.Write(killCount);
+                            packet.Send();
                         }
                     }
                     break;
@@ -502,17 +527,49 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         {
             if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
             {
+                int defKill = 0;
+                int invKill = 0;
                 if (PandemicPanic.InvaderNPCs.Contains(npc.type))
-                    PandemicPanic.InvadersKilled++;
+                    invKill = PandemicPanic.InvadersKilled + 1;
                 if (PandemicPanic.DefenderNPCs.Contains(npc.type))
-                    PandemicPanic.DefendersKilled++;
+                    defKill = PandemicPanic.DefendersKilled + 1;
                 if (npc.type == ModContent.NPCType<Dendritiator>())
                 {
-                    PandemicPanic.DefendersKilled += 4;
+                    defKill += 4;
                 }
                 if (npc.type == ModContent.NPCType<MaserPhage>())
                 {
-                    PandemicPanic.InvadersKilled += 4;
+                    invKill += 4;
+                }
+
+
+                if (invKill == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        PandemicPanic.DefendersKilled = defKill;
+                    }
+                    else
+                    {
+                        ModPacket packet = Mod.GetPacket();
+                        packet.Write((byte)RemixMessageType.KillDefender);
+                        packet.Write(defKill);
+                        packet.Send();
+                    }
+                }
+                else if (defKill == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        PandemicPanic.InvadersKilled = invKill;
+                    }
+                    else
+                    {
+                        ModPacket packet = Mod.GetPacket();
+                        packet.Write((byte)RemixMessageType.KillInvader);
+                        packet.Write(invKill);
+                        packet.Send();
+                    }
                 }
             }
         }
@@ -523,17 +580,49 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             {
                 if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
                 {
+                    int defKill = 0;
+                    int invKill = 0;
                     if (PandemicPanic.InvaderNPCs.Contains(npc.type))
-                        PandemicPanic.InvadersKilled++;
+                        invKill = PandemicPanic.InvadersKilled + 1;
                     if (PandemicPanic.DefenderNPCs.Contains(npc.type))
-                        PandemicPanic.DefendersKilled++;
+                        defKill = PandemicPanic.DefendersKilled + 1;
                     if (npc.type == ModContent.NPCType<Dendritiator>())
                     {
-                        PandemicPanic.DefendersKilled += 4;
+                        defKill += 4;
                     }
                     if (npc.type == ModContent.NPCType<MaserPhage>())
                     {
-                        PandemicPanic.InvadersKilled += 4;
+                        invKill += 4;
+                    }
+
+
+                    if (invKill == 0)
+                    {
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            PandemicPanic.DefendersKilled = defKill;
+                        }
+                        else
+                        {
+                            ModPacket packet = Mod.GetPacket();
+                            packet.Write((byte)RemixMessageType.KillDefender);
+                            packet.Write(defKill);
+                            packet.Send();
+                        }
+                    }
+                    else if (defKill == 0)
+                    {
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            PandemicPanic.InvadersKilled = invKill;
+                        }
+                        else
+                        {
+                            ModPacket packet = Mod.GetPacket();
+                            packet.Write((byte)RemixMessageType.KillInvader);
+                            packet.Write(invKill);
+                            packet.Send();
+                        }
                     }
                 }
             }
