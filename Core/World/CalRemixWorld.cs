@@ -539,10 +539,10 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
-            if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
+            /*if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
             {
-                AncientConsoleGen.GenerateConsole();
-            }
+                IonAltar.GenerateIonAltar();
+            }*/
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
             else
