@@ -62,7 +62,7 @@ namespace CalRemix.Content.Tiles
                     }
                     else
                     {
-                        if (CalRemixWorld.ionQuestLevel >= 5)
+                        if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -222,7 +222,7 @@ namespace CalRemix.Content.Tiles
                 guy.textLifeTime--;
             }
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
-            bool finalQuest = CalRemixWorld.ionQuestLevel >= IonCubeTE.dialogue.Count - 1;
+            bool finalQuest = CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1);
             if (finalQuest ? player.ionDialogue > -1 : (Main.LocalPlayer.Distance(guy.Position.ToVector2() * 16) < 480 && Collision.CanHitLine(guy.Position.ToVector2() * 16, 1, 1, Main.LocalPlayer.Center, 1, 1)))
             {
                 if (CalRemixWorld.ionQuestLevel == -1)
@@ -273,7 +273,7 @@ namespace CalRemix.Content.Tiles
                         else
                         {
                             shouldUpdate = true;
-                            if (CalRemixWorld.ionQuestLevel >= IonCubeTE.dialogue.Count - 1)
+                            if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
                             {
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)

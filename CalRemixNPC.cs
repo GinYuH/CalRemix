@@ -1075,6 +1075,7 @@ namespace CalRemix
                 if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
                 {
                     CalRemixWorld.wizardDisabled = true;
+                    Main.NewText("... and is never coming back.", Color.DarkBlue);
                     CalRemixWorld.UpdateWorldBool();
                 }
             }
@@ -1106,10 +1107,6 @@ namespace CalRemix
                         CystMessage.ActivateMessage();
                     }
                 }
-            }
-            if (npc.type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
-            {
-                Main.NewText("... and is never coming back.", Color.DarkBlue);
             }
             if (npc.type == ModContent.NPCType<CalamitasClone>())
             {
