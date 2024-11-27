@@ -520,6 +520,8 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             Vector2 drawPos = NPC.Center - screenPos;
             // Draws Oxygen's core which is just some bloom
             spriteBatch.EnterShaderRegion(BlendState.Additive);
