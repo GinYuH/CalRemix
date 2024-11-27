@@ -139,7 +139,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 finalPoints.Add(baseVec);
             }
 
-            // 29FEB2024: Ozzatron: hopefully ported this correctly to the new prim system by Toasty
+            // 29FEB2024: Ozzatron: hopefully ported this correctly to the new prim system by Imogen
             PrimitiveRenderer.RenderTrail(finalPoints, new(BackgroundWidthFunction, BackgroundColorFunction, smoothen: false, shader: GameShaders.Misc["CalamityMod:TeslaTrail"]), 75);
             PrimitiveRenderer.RenderTrail(finalPoints, new(WidthFunction, ColorFunction, smoothen: false, shader: GameShaders.Misc["CalamityMod:TeslaTrail"]), 75);
 

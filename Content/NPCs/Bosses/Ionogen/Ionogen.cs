@@ -69,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(40000, 48000, 300000);
+            NPC.LifeMaxNERB(30000, 36000, 300000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -146,12 +146,12 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                         NPC.velocity *= 0.97f;
                         int lightningTime = LightningLife; // How long the lightning should linger
                         int startLightning = 30; // When to start creating lightning
-                        int lightningRate = lightningTime + 30; // How often lightning should spawn
+                        int lightningRate = lightningTime + 20; // How often lightning should spawn
                         int rounds = death ? 4 : rev ? 3 : 2; // Amount of times lightning should spawn
                         int phaseTime = rounds * lightningRate; // How long the attack lasts
                         if (NPC.ai[1] > startLightning)
                         {
-                            int totalProjectiles = 8; // Total amount of lightning bolts
+                            int totalProjectiles = death ? 24 : rev ? 18 : 12; // Total amount of lightning bolts
 
                             float radians = MathHelper.TwoPi / totalProjectiles;
                             float velocity = 6f;
@@ -216,7 +216,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                                 for (int i = 0; i < acidCount; i++)
                                 {
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(acidSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.5f), 3f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed*1.5f, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.4f), 3f, Main.myPlayer);
                                 }
                             }
                             NPC.ai[2]++;
@@ -243,7 +243,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                         int startSucc = 60; // When to start succing
                         int phaseTime = death ? 420 : rev ? 390 : 360; // How long the attack lasts
                         float succStrength = Target.maxRunSpeed * 2; // Succ strength
-                        int lightningRate = rev ? 40 : 60; // How often new lightning is spawned
+                        int lightningRate = rev ? 30 : 40; // How often new lightning is spawned
                         int succRate = 120; // How often the player is succ'd
                         Target.mount.Dismount(Main.LocalPlayer); // No lol
                         Target.Calamity().infiniteFlight = true; // But fine
