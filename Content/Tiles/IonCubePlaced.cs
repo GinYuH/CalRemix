@@ -230,10 +230,13 @@ namespace CalRemix.Content.Tiles
                     shouldUpdate = true;
                     CalRemixWorld.ionQuestLevel = 0;
 
-                    ModPacket packet = CalRemix.instance.GetPacket();
-                    packet.Write((byte)RemixMessageType.IonQuestLevel);
-                    packet.Write((byte)0);
-                    packet.Send();
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    {
+                        ModPacket packet = CalRemix.instance.GetPacket();
+                        packet.Write((byte)RemixMessageType.IonQuestLevel);
+                        packet.Write((byte)0);
+                        packet.Send();
+                    }
 
                     player.ionDialogue = 0;
                     guy.ManualTalk();
@@ -246,10 +249,13 @@ namespace CalRemix.Content.Tiles
                         int lov = CalRemixWorld.ionQuestLevel + 1;
                         CalRemixWorld.ionQuestLevel = lov;
 
-                        ModPacket packet = CalRemix.instance.GetPacket();
-                        packet.Write((byte)RemixMessageType.IonQuestLevel);
-                        packet.Write((byte)lov);
-                        packet.Send();
+                        if (Main.netMode != NetmodeID.SinglePlayer)
+                        {
+                            ModPacket packet = CalRemix.instance.GetPacket();
+                            packet.Write((byte)RemixMessageType.IonQuestLevel);
+                            packet.Write((byte)lov);
+                            packet.Send();
+                        }
 
                         player.ionDialogue = 0;
                         guy.ManualTalk();
@@ -315,12 +321,15 @@ namespace CalRemix.Content.Tiles
                             int lov = CalRemixWorld.ionQuestLevel + 1;
                             CalRemixWorld.ionQuestLevel = lov;
 
-                            ModPacket packet = CalRemix.instance.GetPacket();
-                            packet.Write((byte)RemixMessageType.IonQuestLevel);
-                            packet.Write((byte)lov);
-                            packet.Send();
+                            if (Main.netMode != NetmodeID.SinglePlayer)
+                            {
+                                ModPacket packet = CalRemix.instance.GetPacket();
+                                packet.Write((byte)RemixMessageType.IonQuestLevel);
+                                packet.Write((byte)lov);
+                                packet.Send();
+                            }
 
-                            guy.lookingAtItem = 240;
+                                guy.lookingAtItem = 240;
                             guy.lookedAtItem = i.whoAmI;
                             player.ionDialogue = 0;
                             guy.ManualTalk();

@@ -1035,7 +1035,6 @@ namespace CalRemix.Core.World
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
             int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
             tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
@@ -1083,6 +1082,7 @@ namespace CalRemix.Core.World
                 }
                 AsbestosBiome.GenerateAllHouses();
             }));
+            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
             if (FinalIndex != -1)
             {
                 if (!stratusDungeonDisabled)

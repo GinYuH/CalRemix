@@ -45,7 +45,7 @@ namespace CalRemix.Core.World
                                     for (int l = 1; l < 22; l++)
                                     {
                                         Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - l);
-                                        if (above.HasTile && z < 50)
+                                        if (above.IsTileSolidGround() && z < 50)
                                             break;
 
                                         bool liquidCheck = above.LiquidAmount <= 0;
