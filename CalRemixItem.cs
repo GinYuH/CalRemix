@@ -55,6 +55,7 @@ using System;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
+using CalRemix.UI;
 
 namespace CalRemix
 {
@@ -107,6 +108,7 @@ namespace CalRemix
             ItemType<SoulofHydrogen>(),
             ItemType<SoulofCryogen>(),
             ItemType<SoulofCarcinogen>(),
+            ItemType<SoulofPyrogen>(),
         };
 
         public override void SetDefaults(Item item)
@@ -698,13 +700,13 @@ namespace CalRemix
             // This is intentional
             //
             // I hate this so much
-            if (modplayer.origenSoul)
+            /*if (modplayer.origenSoul)
             {
                 if (genSouls.Contains(item.type))
                 {
                     player.statDefense += NPC.downedMoonlord ? 40 : Main.hardMode ? 8 : 4;
                 }
-            }
+            }*/
         }
 
         public override void OnConsumeItem(Item item, Player player)
@@ -776,6 +778,16 @@ namespace CalRemix
                     item.active = false;
                 }
             }
+        }
+
+        public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded)
+        {
+            if (item.type == ItemType<SoulofCryogen>())
+            {
+                return slot == GetInstance<SoulSlot>().Type;
+            }
+            else
+                return true;
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -907,6 +919,11 @@ namespace CalRemix
             if (item.type == ItemType<HadalStew>())
             {
                 var line = new TooltipLine(Mod, "HadalStewRemix", "Grants a handful of combat buffs");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<SoulofCryogen>())
+            {
+                var line = new TooltipLine(Mod, "SoulofCryogenRemix", CalamityUtils.ColorMessage("Boosts Cold damage", Color.LightSkyBlue));
                 tooltips.Add(line);
             }
             if (item.type == ItemType<MetalMonstrosity>())

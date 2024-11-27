@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -16,7 +17,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Ionogen");
-            Tooltip.SetDefault("7% increase to all damage\nTap ] to strike yourself with lightning\nThis lightning deals 1 point of damage, activating onhit effects\nThis effect has a 5 second cooldown");
+            Tooltip.SetDefault("7% increase to all damage\nTap ] to strike yourself with lightning\nThis lightning deals 1 point of damage, activating onhit effects\nThis effect has a 5 second cooldown\n" + CalamityUtils.ColorMessage("Boosts Machine damage", Color.LightGray));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -67,6 +68,11 @@ namespace CalRemix.Content.Items.Accessories
                 string newText = t.Text.Replace("{0}", CalRemixKeybinds.IonoLightningKeybind.TooltipHotkeyString());
                 t.Text = newText;
             }
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return slot == ModContent.GetInstance<SoulSlot>().Type;
         }
     }
 }

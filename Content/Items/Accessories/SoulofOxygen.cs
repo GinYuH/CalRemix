@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
+using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -15,7 +16,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Oxygen");
-            Tooltip.SetDefault("14% increase to all damage\nIncreases the pitch of all sounds");
+            Tooltip.SetDefault("14% increase to all damage\nIncreases the pitch of all sounds\n" + CalamityUtils.ColorMessage("Boosts Wind damage", Color.White));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 6));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -57,6 +58,11 @@ namespace CalRemix.Content.Items.Accessories
                 drawOffset: new(0f, 0f)
             );
             return false;
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return slot == ModContent.GetInstance<SoulSlot>().Type;
         }
     }
 }
