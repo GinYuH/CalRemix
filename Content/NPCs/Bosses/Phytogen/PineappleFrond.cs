@@ -188,8 +188,9 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 NPC.ai[2] = 0;
                 NPC.ai[3] = Main.rand.Next(120, 240);
             }
-            
-            if (Collision.IsWorldPointSolid(NPC.Center) || Main.tile[(int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)].WallType > 0 || BossRushEvent.BossRushActive)
+
+            Tile t = CalamityUtils.ParanoidTileRetrieval((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
+            if (Collision.IsWorldPointSolid(NPC.Center) || t.WallType > 0 || BossRushEvent.BossRushActive || NPC.ai[2] > 300)
             {
                 if (NPC.ai[2] > 60)
                 {
