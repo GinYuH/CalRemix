@@ -56,6 +56,8 @@ using CalamityMod.BiomeManagers;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Terraria.Audio;
 using CalRemix.Scenes;
+using CalamityMod.Buffs.StatDebuffs;
+using System.Net;
 
 namespace CalRemix
 {
@@ -75,6 +77,7 @@ namespace CalRemix
         public static int ShrineTimer = -20;
         public static int RoachCountdown = 0;
         public static int roachDuration = 0;
+        public static bool downedRoach = false;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -187,6 +190,7 @@ namespace CalRemix
             canGenerateBaron = false;
             grime = false;
             meldCountdown = 72000;
+            downedRoach = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -281,6 +285,7 @@ namespace CalRemix
             essenceBars = true;
             yharimBars = true;
             meldCountdown = 72000;
+            downedRoach = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -331,7 +336,7 @@ namespace CalRemix
             tag["canBaron"] = canGenerateBaron;
             tag["grime"] = grime;
             tag["meld"] = meldCountdown;
-            tag["roachDuration"] = roachDuration;
+            tag["downedRoach"] = downedRoach;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -383,7 +388,7 @@ namespace CalRemix
             canGenerateBaron = tag.Get<bool>("canBaron");
             grime = tag.Get<bool>("grime");
             meldCountdown = tag.Get<int>("meld");
-            roachDuration = tag.Get<int>("roachDuration");
+            downedRoach = tag.Get<bool>("downedRoach");
 
             alloyBars = tag.Get<bool>("109alloybar");
             essenceBars = tag.Get<bool>("109essencebar");
@@ -433,6 +438,7 @@ namespace CalRemix
             writer.Write(grime);
             writer.Write(meldCountdown);
             writer.Write(roachDuration);
+            writer.Write(downedRoach);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -483,6 +489,7 @@ namespace CalRemix
             grime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
+            downedRoach = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -716,15 +723,17 @@ namespace CalRemix
             }
             // Roach Mayhem!!!
             // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
-            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && roachDuration > -2)
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && !downedRoach)
             {
                 RoachCountdown++;
             }
             // After 5 minutes, set the timer to -1 and start Roach Mayhem
-            if (RoachCountdown > CalamityUtils.SecondsToFrames(300))
+            if (RoachCountdown > CalamityUtils.SecondsToFrames(300) && !downedRoach)
             {
-                RoachCountdown = -1;
-                UnleashRoaches();
+                downedRoach = true;
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Sounds/BlackFriday"));
+                roachDuration = CalamityUtils.SecondsToFrames(ROACHDURATIONSECONDS);
+                UpdateWorldBool();
             }
             // Spawn three explosions
             int expDelay = 40;
@@ -740,7 +749,7 @@ namespace CalRemix
             }
             // Regularly play alarms while decrementing the event duration
             // Do not decrement if the countdown hasn't finished (marked by it being -1)
-            if (roachDuration > -2 && RoachCountdown <= -1)
+            if (roachDuration > 0)
             {
                 if (roachDuration > 0 && Main.LocalPlayer.miscCounter % 90 == 0)
                 {
@@ -749,7 +758,7 @@ namespace CalRemix
                 roachDuration--;
             }
             // When the event is 1 frame from being over, clear the explosion list
-            if (roachDuration == -1)
+            if (roachDuration == 1)
             {
                 if (RoachScene.explosions.Count > 0)
                 {
