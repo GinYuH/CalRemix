@@ -197,14 +197,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 packet.Write((byte)RemixMessageType.StartPandemicPanic);
                 packet.Send();
             }
-            if (Main.netMode == NetmodeID.SinglePlayer)
-            {
-                Main.NewText("Microbes are going to war!", Color.Red);
-            }
-            else if (Main.netMode == NetmodeID.Server)
-            {
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Microbes are going to war!"), Color.Red);
-            }
+            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.PandemicPanicBegin", Color.Red);
         }
 
         public static void EndEvent()
@@ -217,17 +210,10 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 Main.npc[path].NPCLoot();
                 Main.npc[path].active = false;
             }
-            string winner = InvadersWinning ? "The invaders successfully spread their influence." : DefendersWinning ? "The defenders successfully offered their protection." : "The microbes all retreat...";
+            string winner = InvadersWinning ? "BadEnd" : DefendersWinning ? "GoodEnd" : "NeutralEnd";
             Color c = InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory;
 
-            if (Main.netMode == NetmodeID.SinglePlayer)
-            {
-                Main.NewText(winner, c);
-            }
-            else if (Main.netMode == NetmodeID.Server)
-            {
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(winner), c);
-            }
+            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.PandemicPanic" + winner, c);
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {

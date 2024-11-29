@@ -518,7 +518,6 @@ namespace CalRemix.Core
                     }
                     dirX *= dist;
                     dirY *= dist;
-                    Main.NewText("A");
 
                     if (sItem.ModItem?.Shoot(p, (EntitySource_ItemUse_WithAmmo)self.GetSource_ItemUse_WithPotentialAmmo(sItem, i), pointPoisition, new Vector2(dirX, dirY), sItem.shoot, weaponDamage, KnockBack) == true)
                     {

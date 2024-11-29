@@ -8,6 +8,7 @@ using System.IO;
 using CalRemix.Content.Buffs;
 using CalamityMod.CalPlayer;
 using CalRemix.Content.NPCs.Bosses.BossScule;
+using Terraria.Localization;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
@@ -86,9 +87,9 @@ namespace CalRemix.Content.Projectiles.Hostile
                             if (Main.myPlayer == p.whoAmI)
                             {
                                 if (p.Remix().calamitizedCounter == 1)
-                                    CombatText.NewText(p.getRect(), Color.Red, "Don't get hit again!", true);
+                                    CombatText.NewText(p.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.NPCs.TheCalamity.Laser1").Value, true);
                                 else
-                                    CombatText.NewText(p.getRect(), Color.Red, $"{p.Remix().calamitizedCounter} hits left!", true);
+                                    CombatText.NewText(p.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.NPCs.TheCalamity.Laser2").Format(p.Remix().calamitizedCounter), true);
                             }
                             p.Remix().calamitizedCounter--;
                         }

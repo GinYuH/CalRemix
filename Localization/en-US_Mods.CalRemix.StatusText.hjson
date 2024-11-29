@@ -1,0 +1,28 @@
+ByeSAC: Nope. Get that out of here.
+ByeWizard: ... and is never coming back.
+CertificateSent: You have been mailed your certificate.
+CertificateOwned: Certificate has already been mailed.
+FuckFandom: If you are seeing this, you are likely using the outdated Fandom wiki, please do not use it. Use wiki.gg for Calamity and the recipe browser mod for remix
+GrimeTheSkies: The sky islands pollute with grime...
+GaleforceBegin: The wind is blowing harshly!
+GaleforceEnd: The wind calms down...
+BiomassMigration: Floating Biomasses are migrating!
+PandemicPanicBegin: Microbes are going to war!
+PandemicPanicBadEnd: The invaders successfully spread their influence.
+PandemicPanicNeutralEnd: The microbes all retreat...
+PandemicPanicGoodEnd: The defenders successfully offered their protection.
+YharonAwakens: Jungle Dragon, Yharon has awoken!
+FridgeAwaken: Quick! In if you want to live!
+FridgeLeave: You're welcome!
+GearworkRecord: AI States Recorded!
+GearworkCooldown: Ability on cooldown!
+GearworkApply: AI States Applied!
+GearworkNA: No stored AI!
+InfaredScan: Scanning...
+InfaredNoData: * Infrared Sights: No available data.
+InfaredData:
+	'''
+	* Infared Sights: {0}
+	* Contact damage: {1}
+	* Defense: {2}
+	'''

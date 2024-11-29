@@ -29,6 +29,7 @@ using CalamityMod.Tiles.DraedonSummoner;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Core.World;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using Terraria.Localization;
 
 namespace CalRemix
 {
@@ -102,7 +103,7 @@ namespace CalRemix
             }
             if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
-                Main.NewText("If you are seeing this, you are likely using the outdated Fandom wiki, please do not use it. Use wiki.gg for Calamity and the recipe browser mod for remix", Color.LightSeaGreen);
+                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
             if (type == TileType<LabHologramProjector>() && player.HeldItem.type == ItemType<BloodyVein>() && !NPC.AnyNPCs(NPCType<CyberDraedon>()))
             {
@@ -425,8 +426,9 @@ namespace CalRemix
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
-                        Main.NewText("The sky islands pollute with grime...", Color.Brown);
+                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);                       
+                        
+                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
                         CalRemixWorld.generatedGrime = true;
                         CalRemixWorld.UpdateWorldBool();
                     }

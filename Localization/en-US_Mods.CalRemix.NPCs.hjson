@@ -45,6 +45,11 @@ CyberDraedon: {
 		EntryName: Cyber Draedon
 		SpawnInfo: Insert a [i:CalamityMod/BloodyVein] into a [i:CalamityMod/LabHologramProjectorItem].
 	}
+
+	Dialogue1: Organic breach detected. Preparing extermination.
+	Dialogue2: Threat detained. Returning to normal operation.
+	Dialogue3: Most interesting- a worthy research subject.
+	Dialogue4: Disabling laser inhibitors.
 }
 
 Clamitas: {
@@ -197,6 +202,8 @@ TheCalamity: {
 	Quote4: Keep avoiding anything that seems dangerous.
 	Quote5: You have passed the test. Well done.
 	Quote6: Strike me down and take your reward.
+	Laser1: Don't get hit again!
+	Laser2: "{0} hits left!"
 	BossChecklistIntegration.SpawnInfo: Use the [i:CalRemix/Slumbering]
 }
 

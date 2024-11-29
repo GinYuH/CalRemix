@@ -126,7 +126,6 @@ namespace CalRemix.Content.NPCs.Bosses.Derellect
                                 }
                             }
                             NPC thestron = Main.npc[(int)NPC.ai[3]];
-                            Main.NewText("The strongest is a " + thestron.FullName);
                             offx = thestron.Center.X - target.Center.X > 0 ? -600 : 600;
                             offy = Main.rand.Next(-20, 21);                            
                         }

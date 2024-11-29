@@ -540,7 +540,7 @@ namespace CalRemix
                 SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
                 if (cirrus.cirrus)
                 {
-                    Main.NewText("Nope. Get that out of here.", Color.Red);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeSAC", Color.Red);
                     npc.active = false;
                 }
             }
@@ -1075,7 +1075,7 @@ namespace CalRemix
                 if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
                 {
                     CalRemixWorld.wizardDisabled = true;
-                    Main.NewText("... and is never coming back.", Color.DarkBlue);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeWizard", Color.DarkBlue);
                     CalRemixWorld.UpdateWorldBool();
                 }
             }

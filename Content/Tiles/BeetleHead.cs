@@ -96,7 +96,6 @@ namespace CalRemix.Content.Tiles
                             {
                                 VerletSimulatedSegment v = cables.Segments[u];
                                 int ct = cables.Segments.Count;
-                                //Main.NewText(v.position);
                                 Texture2D s2u = Seg1;
                                 Texture2D prev2u = Seg1;
                                 switch (u)
@@ -148,7 +147,6 @@ namespace CalRemix.Content.Tiles
                     }
                     else
                     {
-                        Main.NewText("Cables was null");
                     }
                 }
             }

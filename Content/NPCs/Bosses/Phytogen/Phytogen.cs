@@ -131,7 +131,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), (int)NPC.Center.X + 3000, NPC.Center.Y, -60, 0, ModContent.ProjectileType<JungleDragonYharon>(), 0, 0, Main.myPlayer);
-                    Main.NewText("Yharon, Dragon of Rebirth has awoken!", Color.MediumPurple);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.YharonAwakens", Color.MediumPurple); 
                     SoundEngine.PlaySound(CalamityMod.NPCs.Yharon.Yharon.FireSound);
                 }
             }

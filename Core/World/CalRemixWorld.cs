@@ -620,14 +620,7 @@ namespace CalRemix.Core.World
                         packet.Write(oxTime);
                         packet.Send();
                     }
-                    if (Main.netMode == NetmodeID.SinglePlayer)
-                    {
-                        Main.NewText("The wind is blowing harshly!", Color.LightBlue);
-                    }
-                    else if (Main.netMode == NetmodeID.Server)
-                    {
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The wind is blowing harshly!"), Color.LightBlue);
-                    }
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.SkyBlue);
                 }
             }
             if (oxydayTime > 0)
@@ -639,7 +632,7 @@ namespace CalRemix.Core.World
                 // roughly once per 6 minutes
                 if (Main.rand.NextBool(22222))
                 {
-                    Main.NewText("Floating Biomasses are migrating!", Color.DarkCyan);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.BiomassMigration", Color.DeepSkyBlue);
                     int amt = 22;
                     for (int i = 0; i < amt; i++)
                     {
@@ -661,14 +654,7 @@ namespace CalRemix.Core.World
                         packet.Write(0);
                         packet.Send();
                     }
-                    if (Main.netMode == NetmodeID.SinglePlayer)
-                    {
-                        Main.NewText("The wind calms down...", Color.LightBlue);
-                    }
-                    else if (Main.netMode == NetmodeID.Server)
-                    {
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The wind calms down..."), Color.LightBlue);
-                    }
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
                 }
             }
             NPC.savedWizard = false;

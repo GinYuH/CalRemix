@@ -59,6 +59,9 @@ using CalamityMod.Items.Dyes;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Critters;
 using CalRemix.Content.NPCs.Bosses.BossScule;
+using Microsoft.Xna.Framework.Input;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace CalRemix
 {
@@ -387,7 +390,7 @@ namespace CalRemix
 				if (!Player.HasCooldown(InfraredSightsCooldown.ID))
                 {
 					if (Main.myPlayer == Player.whoAmI)
-						CombatText.NewText(Player.getRect(), Color.Red, "Scanning...", true);
+						CombatText.NewText(Player.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.StatusText.InfaredScan").Value, true);
                     infraredSightsScanning = true;
                     Player.AddCooldown("InfraredSights", 3600);
                 }
@@ -1081,10 +1084,7 @@ namespace CalRemix
 
         public override void UpdateLifeRegen()
         {
-            bool positive = Player.lifeRegen > 0;
-            Player.lifeRegen += dyesPink;
-            if (Player.lifeRegen <= 0 && positive)
-                Player.lifeRegen = 1;
+            Player.lifeRegen += (int)MathHelper.Min(dyesPink, 0);
         }
 
         public override void FrameEffects()
@@ -1194,9 +1194,20 @@ namespace CalRemix
                     Console.WriteLine(e);
                 }
                 if (npc is null)
-                    Main.NewText("* Infrared Sights: No available data.");
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
-                    Main.NewText($"* Infrared Sights: {npc.TypeName}\n* Contact Damage: {npc.damage}\n* Defense: {npc.defense}");
+                {
+                    string f = Language.GetText("Mods.CalRemix.StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
+
+                    if (Main.netMode == NetmodeID.SinglePlayer)
+                    {
+                        Main.NewText(f);
+                    }
+                    else
+                    {
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(f), Color.White);
+                    }
+                }
             }
             infraredSightsCounter++;
         }

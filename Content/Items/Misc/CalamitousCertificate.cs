@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalamityMod.Rarities;
 using Steamworks;
+using Terraria.Localization;
+using CalamityMod;
 
 namespace CalRemix.Content.Items.Misc
 {
@@ -32,13 +34,13 @@ namespace CalRemix.Content.Items.Misc
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + $"/Trial Award for {SteamFriends.GetPersonaName()}.png";
                 if (!File.Exists(path))
                 {
-                    Main.NewText("You have been mailed your certificate.", Color.Red);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.CertificateSent", Color.Brown);
                     Texture2D texture = ModContent.Request<Texture2D>($"{Mod.Name}/Content/Items/Misc/CalamitousCertificate_Full", AssetRequestMode.ImmediateLoad).Value;
                     FileStream stream = new(path, FileMode.Create);
                     texture.SaveAsPng(stream, texture.Width, texture.Height);
                 }
                 else
-                    CombatText.NewText(player.getRect(), Color.Red, "Certificate has already been mailed.", true);
+                    CombatText.NewText(player.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.StatusText.CertificateOwned").Value, true);
             }
             return true;
         }
