@@ -3449,6 +3449,8 @@ Mods: {
 			PlanetaryAnnihilationProj.DisplayName: Planetary Annihilation Proj
 			TotalAnnihilationProj.DisplayName: Total Annihilation Proj
 			TotalAnnihilationProjOrbital.DisplayName: Total Annihilation Proj Orbital
+			PyrogenFlareStatic.DisplayName: Pyrogen Flare Static
+			PyrogenFlareStatic2.DisplayName: Pyrogen Flare Static2
 		}
 
 		Tiles: {

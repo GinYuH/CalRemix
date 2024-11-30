@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Core.Retheme;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -116,6 +117,22 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 stopAi1 = true;
                                 NPC.localAI[1] = 0;
                             }
+
+                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            float rotOffset = 0;
+                            NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
+                            break;
+                        }
+                    case 9: //switching phase; default guarding behavior but without contact damage
+                        {
+                            NPC.damage = 0;
+                            NPC.localAI[1] += 8f;
+                            float distance = 100;
+                            distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double rad = deg * (Math.PI / 180);
+                            float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
+                            float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
                             float rotOffset = 0;

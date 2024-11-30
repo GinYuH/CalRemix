@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -18,6 +19,9 @@ using CalamityMod.Items.Potions;
 using System.Runtime.Serialization;
 using Terraria.GameContent.ObjectInteractions;
 using CalRemix.Core.Retheme;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Buffs;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -26,6 +30,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
     {
         public ref float Phase => ref NPC.ai[0];
         private int currentPhase = 1;
+        private double rotation;
+        private double rotationIncrement;
+        private int rotationDirection;
+
         public ref Player Target => ref Main.player[NPC.target];
 
 
@@ -50,7 +58,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             Rain = 2,
             PullintoShield = 3,
             ThrowShieldBits = 4,
-            P21 = 5,
+            PonceSpin = 5,
             P22 = 6,
             Hellstorm = 7,
             HellstormFatal = 8,
@@ -66,12 +74,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public int chargeLimit = 4;
         public int charges = 0;
         public int deathTimer = 0;
-        public int healthPercent = 0;
+        public ref float Time => ref NPC.ai[0];
 
         public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenHit", 3);
         public static readonly SoundStyle TransitionSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenTransition");
         public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenDeath");
-        public static readonly SoundStyle FlareSound = new("CalamityMod/Sounds/Custom/Yharon/YharonFireball", 3);
+        public static readonly SoundStyle FlareSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenAttack", 4);
+        public static readonly SoundStyle ChargeSound = new("CalamityMod/Sounds/Custom/Yharon/YharonFireball", 3);
 
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase1";
 
@@ -150,10 +159,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToElectricity = false;
             NPC.Calamity().VulnerableToCold = true;
+            rotationIncrement = 0.0246399424 * 0.3 * 15;
             if (!Main.dedServ)
                 Music = CalRemixMusic.Pyrogen;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(rotationDirection);
+            writer.Write(rotation);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            rotation = reader.ReadDouble();
+            rotationDirection = reader.ReadInt32();
+        }
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -359,14 +379,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 if (predictiveCharge) {
                                     NPC.velocity = Vector2.Normalize(predictiveVector) * chargeVelocity;
                                     NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X);
-                                    SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
+                                    SoundEngine.PlaySound(ChargeSound, NPC.Center);
                                     charges++;
                                 }
                                 else
                                 {
                                     NPC.velocity = NPC.DirectionTo(Target.Center) * chargeVelocity;
                                     NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X);
-                                    SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
+                                    SoundEngine.PlaySound(ChargeSound, NPC.Center);
                                     charges++;
                                     break;
                                 }                         
@@ -375,7 +395,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             if (AttackTimer == 120) //finished dash! check what to do next...
                             {
                                 NPC.velocity.X *= 0.7f; //slow down just in case onscreen
-                                NPC.velocity.X *= 0.7f;
+                                NPC.velocity.Y *= 0.7f;
                                 if (charges >= chargeLimit) //dashed enough times! switch attacks...
                                 {
                                     int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, DustID.FlameBurst);
@@ -604,13 +624,86 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                     break;
                 }
-                case (int)PyroPhaseType.ThrowShieldBits: //throws shield bits, then pulls them back in at new position 
+                case (int)PyroPhaseType.ThrowShieldBits: //scrapped attack
                 {
                     break;
                 }
-                case (int)PyroPhaseType.P21: //phase 2 first attack, ???
+                case (int)PyroPhaseType.PonceSpin: //spins around the player and leaves stationary fireballs to trap the player in, then relentlessly pursues them while leaving a trail that forces awkward movement
                 {
-                    break;
+                        int flareRate = 10;
+                        int timeToCharge = 300;
+                        int chargingTime = 0;
+                        float chargeVelocity = 35; //stays the same
+                        AttackTimer++;
+
+
+                        if (AttackTimer == 10)
+                        {
+                            for (int i = 0; i < 10; i++)
+                            {
+                                int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, DustID.FlameBurst);
+                                Main.dust[d].noGravity = true;
+                                DustExplosion();
+                                NPC.velocity.X = 0f;
+                                NPC.velocity.Y = 0f;
+                                NPC.position = new Vector2(Target.Center.X, Target.Center.Y - 400);
+                                DustExplosion();
+                                NPC.ai[1] = 0;
+                            }
+                        }
+                        if (AttackTimer >= 15 && AttackTimer <= 70) //create a border of flares
+                        {
+                            int spintimer = 65;
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                 NPC.Center = player.Center + new Vector2(500, 0).RotatedBy(rotation);
+                            }
+                            foreach (Player victim in Main.ActivePlayers) //LITERALLY cannot be assed to figure this out so you just can't move during the ring setup
+                            {
+                                victim.velocity = Vector2.Zero;
+                            }
+                            NPC.Center = player.Center + new Vector2(500, 0).RotatedBy(rotation);
+                            rotation += rotationIncrement * rotationDirection;
+                                if (AttackTimer % flareRate == 0)
+                                SoundEngine.PlaySound(FlareSound, NPC.Center);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PyrogenFlareStatic>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                        }
+
+                        if (AttackTimer > 70)
+                        {
+                            flareRate = 20;
+                            player = Main.player[NPC.target];
+                            Vector2 pyrogenCenter = new Vector2(NPC.Center.X, NPC.Center.Y);
+                            float playerXDist = player.Center.X - pyrogenCenter.X;
+                            float playerYDist = player.Center.Y - pyrogenCenter.Y;
+                            float playerDistance = (float)Math.Sqrt(playerXDist * playerXDist + playerYDist * playerYDist);
+
+                            float pyrogenSpeed = CalamityWorld.revenge ? 10f : 7f;
+                            pyrogenSpeed += Main.getGoodWorld ? 8f : 6f;
+
+                            playerDistance = pyrogenSpeed / playerDistance;
+                            playerXDist *= playerDistance;
+                            playerYDist *= playerDistance;
+
+                            float inertia = 25f;
+
+                            NPC.velocity.X = (NPC.velocity.X * inertia + playerXDist) / (inertia + 1f);
+                            NPC.velocity.Y = (NPC.velocity.Y * inertia + playerYDist) / (inertia + 1f);
+                            NPC.rotation = NPC.velocity.X * 0.1f;
+                            if (AttackTimer % flareRate == 0)
+                            {
+                                SoundEngine.PlaySound(FlareSound, NPC.Center);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PyrogenFlareStatic2>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                            }
+                        }
+                        if (AttackTimer >= 700)
+                        {
+                            SafeTeleport();
+                            CalamityUtils.KillAllHostileProjectiles();
+                            SelectNextAttack();
+                        }
+                        break;
                 }
                 case (int)PyroPhaseType.P22: //phase 2 second attack, ???
                 {
@@ -629,10 +722,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         deathTimer++;
                         NPC.velocity.X *= 0.5f;
                         NPC.velocity.Y *= 0.5f;
-                        if (deathTimer > 60){ //wait one second before refilling all health
-                            healthPercent++;
-                            if (NPC.life <= NPC.lifeMax * 0.33f) {
-                                NPC.life = 1 + (int)((float)Math.Pow(Utils.GetLerpValue(300, 530, healthPercent, true), 3) * (NPC.lifeMax - 1));
+                        NPC.rotation = NPC.velocity.X * 0.5f;
+
+                        if (deathTimer > 60){ //wait one second before refilling all health; couldn't make this work so i'm just leaving it like it is for now
+                            if (NPC.life <= NPC.lifeMax) {
+                                NPC.life = 1 + (int)((float)Math.Pow(Utils.GetLerpValue(300, 530, Time, true), 3) * (NPC.lifeMax - 1));
                             }
                         }
                         if (deathTimer >= 160)
@@ -643,6 +737,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
                             }
                             NPC.dontTakeDamage = false;
+                            deathTimer = 0;
                             AIState = PyroPhaseType.Idle;
                         }
                         break;
@@ -655,28 +750,65 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public void SelectNextAttack()
         {
-            // cycle through attacks based on current HP. chosen attack depends 
+            // cycle through attacks in order, entirely random in phase 2
 
-            switch (AIState)
+            if (!phase2)
             {
-                case PyroPhaseType.Idle:
-                    AIState = phase2 ? PyroPhaseType.Idle : PyroPhaseType.Charge;
-                    break;
+                switch (AIState)
+                {
+                    case PyroPhaseType.Idle:
+                        AIState = PyroPhaseType.Charge;
+                        break;
 
-                case PyroPhaseType.Charge:
-                    AIState = phase2 ? PyroPhaseType.Idle : PyroPhaseType.Rain;
-                    break;
+                    case PyroPhaseType.Charge:
+                        AIState = PyroPhaseType.Rain;
+                        break;
 
-                case PyroPhaseType.Rain:
-                    AIState = phase2 ? PyroPhaseType.PullintoShield : PyroPhaseType.PullintoShield;
-                    break;
+                    case PyroPhaseType.Rain:
+                        AIState = PyroPhaseType.PullintoShield;
+                        break;
 
-                case PyroPhaseType.PullintoShield:
-                    AIState = phase2 ? PyroPhaseType.Idle : PyroPhaseType.Idle;
-                    break;
+                    case PyroPhaseType.PullintoShield:
+                        AIState = PyroPhaseType.Idle;
+                        break;
+                }
             }
+            else
+            {
 
-            if (attackTotal == 5) //fifth attack in each cycle will always be hellstorm
+                int choice = Main.rand.Next(4);
+                switch (choice)
+                {
+                    case 0:
+                        AIState = PyroPhaseType.Charge;
+                        break;
+                    case 1:
+                        AIState = PyroPhaseType.Rain;
+                        break;
+                    case 2:
+                        AIState = PyroPhaseType.PullintoShield;
+                        break;
+                    case 3:
+                        rotation = MathHelper.ToRadians(Main.rand.Next(360));
+                        if (Main.player[NPC.target].velocity.X > 0)
+                            rotationDirection = 1;
+                        else if (Main.player[NPC.target].velocity.X < 0)
+                            rotationDirection = -1;
+                        else
+                            rotationDirection = Main.player[NPC.target].direction;
+                        AIState = PyroPhaseType.PonceSpin;
+                        break;
+                    default:
+                        AIState = PyroPhaseType.Idle;
+                        break;
+                }
+
+
+            }
+            
+
+
+            if (attackTotal == 5) //hellstorm is now unused
             {
                 AIState = PyroPhaseType.Idle; attackTotal = 0; //replace with storm when added
             }
@@ -771,7 +903,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
-        new FlavorTextBestiaryInfoElement("Having absorbed the energy of the fallen goddess, this elemental construct's seal is supreme amongst its kin. Fate is often cruel to the kind, and mistakes repeated are the most bitter form of punishment.")
+        new FlavorTextBestiaryInfoElement("A brimstone prison subject to a desperate possession by the soul of a goddess. Its chaotic, ill-fitting energies make it extremely erratic and unstable, as well as incredibly unpredictable in combat.")
             });
         }
 
@@ -798,9 +930,24 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             }
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            potionType = ModContent.ItemType<SupremeHealingPotion>();
+            LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+            int[] itemIDs =
+            {
+                //ModContent.ItemType<PyroclasticFlow>(),
+                //ModContent.ItemType<PlumeflameBow>(),
+                //ModContent.ItemType<Magmasher>(),
+                //ModContent.ItemType<TheFirestorm>(),
+                //ModContent.ItemType<PhreaticChanneler>()
+            };
+            //npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofHavoc>(), 1, 8, 10);
+            //npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());
+            //npcLoot.Add(ModContent.ItemType<PyrogenTrophy>(), 10);
+            //npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PyrogenRelic>());
+            //npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);
+            //npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPyrogen>());
+            //npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgePyrogen>(), desc: DropHelper.FirstKillText);
         }
     }
 }
