@@ -16,7 +16,6 @@ using CalamityMod.Items.Armor.Vanity;
 using CalamityMod.Items.LoreItems;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Mounts;
-using CalamityMod.Items.Placeables.Furniture.BossRelics;
 using CalamityMod.Items.TreasureBags;
 using CalRemix.Content.Items.Placeables;
 using Terraria.GameContent.ItemDropRules;
@@ -24,16 +23,12 @@ using Terraria.Audio;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Core.World;
-using ReLogic.Content;
-using Steamworks;
-using CalRemix.Content.NPCs.Bosses.Origen;
 using System.Collections.Generic;
-using static CalRemix.UI.Title.CalRemixMenu2;
 using CalamityMod.Skies;
 using CalamityMod.NPCs.ExoMechs.Ares;
-using CalamityMod.NPCs.ExoMechs.Apollo;
 using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Placeables.Relics;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -913,7 +908,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             npcLoot.Add(ModContent.ItemType<HypnosTrophyInv>());
 
             // Relic
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ModContent.ItemType<DraedonRelic>()));
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ModContent.ItemType<HypnosRelic>()));
 
             // Lore item
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !RemixDowned.downedHypnos), ModContent.ItemType<LoreExoMechs>()));

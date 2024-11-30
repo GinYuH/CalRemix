@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles
@@ -41,7 +42,8 @@ namespace CalRemix.Content.Projectiles
                         if (Projectile.ai[0] == 90)
                         {
                             SoundEngine.PlaySound(SoundID.LucyTheAxeTalk);
-                            CombatText.NewText(Projectile.getRect(), Color.White, "Quick! In if you want to live!", true);
+
+                            CombatText.NewText(Projectile.getRect(), Color.White, Language.GetOrRegister("Mods.CalRemix.StatusText.FridgeAwaken").Value, true);
                         }
                         if (Main.LocalPlayer.getRect().Intersects(Projectile.getRect()))
                         {
@@ -62,7 +64,7 @@ namespace CalRemix.Content.Projectiles
                         if (Projectile.ai[2] == 60)
                         {
                             SoundEngine.PlaySound(SoundID.LucyTheAxeTalk);
-                            CombatText.NewText(Projectile.getRect(), Color.White, "You're welcome!", true);
+                            CombatText.NewText(Projectile.getRect(), Color.White, Language.GetOrRegister("Mods.CalRemix.StatusText.FridgeLeave").Value, true);
                             Projectile.ai[1] = 3;
                             Projectile.timeLeft = 120;
                         }

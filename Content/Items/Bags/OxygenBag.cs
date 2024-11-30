@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Items.Placeables;
-using CalamityMod.Items.Placeables;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Armor;
 
@@ -54,6 +52,8 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<EssenceofBabil>(), 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<OxygenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofOxygen>());
+            itemLoot.Add(ModContent.ItemType<ShardofGlass>());
+            itemLoot.Add(ModContent.ItemType<Aerospray>());
             itemLoot.AddRevBagAccessories();
         }
 

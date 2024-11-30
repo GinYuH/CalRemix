@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Items.Placeables;
 using CalamityMod.Items.Placeables;
 using CalRemix.Content.Items.Armor;
 
@@ -54,6 +53,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<HydrogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofHydrogen>());
             itemLoot.Add(ModContent.ItemType<BallisticMissword>());
+            itemLoot.Add(ModContent.ItemType<ThrowingMissiles>());
             itemLoot.AddRevBagAccessories();
         }
     }

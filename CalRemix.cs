@@ -13,8 +13,6 @@ using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
-using CalamityMod.NPCs.HiveMind;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using System.Reflection;
 using System.IO;
@@ -38,13 +36,24 @@ using CalRemix.Content.NPCs.Bosses.Poly;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.Items.Ammo;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.ZAccessories;
+using Terraria.DataStructures;
+using CalRemix.Content.Tiles;
+using CalRemix.Core.World;
 
 namespace CalRemix
 {
     enum RemixMessageType
     {
         HypnosSummoned,
-        PandemicPanicStart
+        SyncIonmaster,
+        IonQuestLevel,
+        OxydayTime,
+        TrueStory,
+        StartPandemicPanic,
+        EndPandemicPanic,
+        KillDefender,
+        KillInvader
     }
     public class CalRemix : Mod
     {
@@ -80,11 +89,88 @@ namespace CalRemix
                         Hypnos.SummonDraedon(Main.player[player]);
                         break;
                     }
-                case RemixMessageType.PandemicPanicStart:
+                case RemixMessageType.SyncIonmaster:
                     {
-                        int player = reader.ReadByte();
+                        int kennyID = reader.ReadByte();
+                        float posX = reader.ReadSingle();
+                        float posY = reader.ReadSingle();
+                        float desiredX = reader.ReadSingle();
+                        float desiredY = reader.ReadSingle();
+                        string text = reader.ReadString();
+                        int textLife = reader.ReadInt32();
+                        int lookedItem = reader.ReadInt32();
+                        int itemTimer = reader.ReadInt32();
+                        float rotation = reader.ReadSingle();
+                        float desRotation = reader.ReadSingle();
 
-                        PandemicPanic.StartEvent(Main.player[player]);
+                        if (TileEntity.ByID.TryGetValue(kennyID, out TileEntity t))
+                        {
+                            if (t is IonCubeTE kendrick)
+                            {
+                                kendrick.positionX = posX;
+                                kendrick.positionY = posY;
+                                kendrick.desiredX = desiredX;
+                                kendrick.desiredY = desiredY;
+                                kendrick.rotation = rotation;
+                                kendrick.desiredRotation = desRotation;
+                                kendrick.lookedAtItem = lookedItem;
+                                kendrick.lookingAtItem = itemTimer;
+                                kendrick.displayText = text;
+                                kendrick.textLifeTime = textLife;
+                            }
+                        }
+
+                        break;
+                    }
+                case RemixMessageType.IonQuestLevel:
+                    {
+                        int level = reader.ReadByte();
+
+                        CalRemixWorld.ionQuestLevel = level;
+                        break;
+                    }
+                case RemixMessageType.OxydayTime:
+                    {
+                        int oxygenTime = reader.ReadByte();
+
+                        CalRemixWorld.oxydayTime = oxygenTime;
+                        break;
+                    }
+                case RemixMessageType.TrueStory:
+                    {
+                        int storyCounter = reader.ReadByte();
+
+                        CalRemixWorld.trueStory = storyCounter;
+                        break;
+                    }
+                case RemixMessageType.StartPandemicPanic:
+                    {
+                        PandemicPanic.IsActive = true;
+                        PandemicPanic.DefendersKilled = 0;
+                        PandemicPanic.InvadersKilled = 0;
+                        break;
+                    }
+                case RemixMessageType.EndPandemicPanic:
+                    {
+                        PandemicPanic.IsActive = false;
+                        PandemicPanic.DefendersKilled = 0;
+                        PandemicPanic.InvadersKilled = 0;
+                        PandemicPanic.LockedFinalSide = 0;
+                        PandemicPanic.SummonedPathogen = false;
+                        break;
+                    }
+                case RemixMessageType.KillDefender:
+                    {
+                        int killCount = reader.ReadByte();
+
+                        PandemicPanic.DefendersKilled = killCount;
+                        break;
+                    }
+                case RemixMessageType.KillInvader:
+                    {
+                        int killCount = reader.ReadByte();
+
+                        PandemicPanic.InvadersKilled = killCount;
                         break;
                     }
             }
@@ -120,12 +206,9 @@ namespace CalRemix
             cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<Phytogen>(), NPCType<PineappleFrond>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<DerellectPlug>());
-
             AddEnchantments(cal);
-            LoadBossRushEntries(cal);
-            AddHiveBestiary(NPCType<DankCreeper>(), "When threatened by outside forces, chunks of the Hive Mind knocked loose in combat will animate in attempt to subdue their attacker. Each Creeper knocked loose shrinks the brain ever so slightly- though this is an inherently selfdestructive self defense mechanism, any survivors will rejoin with the main body should the threat pass.");
-            AddHiveBestiary(NPCType<HiveBlob>(), "Clustering globs ejected from the Hive Mind. The very nature of these balls of matter act as a common example of the convergent properties that the Corruption's microorganisms possess.");
-            AddHiveBestiary(NPCType<DarkHeart>(), "Flying sacs filled with large amounts of caustic liquid. The Hive Mind possesses a seemingly large amount of these hearts, adding to its strange biology.");
+            if (!ModLoader.HasMod("InfernumMode"))
+                LoadBossRushEntries(cal);
             RefreshBestiary();
 
             for (int i = 0; i < ItemLoader.ItemCount; i++)
@@ -135,7 +218,7 @@ namespace CalRemix
                 ModItem item = ItemLoader.GetItem(i);
                 if (item.Type == ItemType<WulfrumMetalScrap>())
                     continue;
-                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null)
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone)
                     continue;
                 CalRemixAddon.Items.Add(item);
             }
@@ -207,11 +290,11 @@ namespace CalRemix
 
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<WulfwyrmHead>(), [NPCType<WulfwyrmBody>(), NPCType<WulfwyrmTail>()]);
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<Origen>(), [NPCType<OrigenCore>()], [NPCType<OrigenCore>()]);
-            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()]);
+            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()], needsNight: true);
             AddToBossRush(ref brEntries, NPCID.Deerclops, NPCType<Carcinogen>(), [NPCType<CarcinogenShield>()]);
             AddToBossRush(ref brEntries, NPCType<CalamitasClone>(), NPCType<Ionogen>(), [NPCType<IonogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.Plantera, NPCType<Oxygen>(), [NPCType<OxygenShield>()]);
-            AddToBossRush(ref brEntries, NPCType<Anahita>(), NPCType<Polyphemalus>(), [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()]);
+            AddToBossRush(ref brEntries, NPCType<Anahita>(), NPCType<Polyphemalus>(), [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], [NPCType<Astigmageddon>(), NPCType<Exotrexia>(), NPCType<Conjunctivirus>(), NPCType<Cataractacomb>()], true);
             AddToBossRush(ref brEntries, NPCID.Golem, NPCType<Phytogen>(), [NPCType<PhytogenShield>(), NPCType<PineappleFrond>()]);
             AddToBossRush(ref brEntries, NPCType<PlaguebringerGoliath>(), NPCType<Hydrogen>(), [NPCType<HydrogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.CultistBoss, NPCType<Pathogen>(), [NPCType<PathogenShield>()]);
@@ -261,36 +344,6 @@ namespace CalRemix
                 pr2 = customAction;
             }
             brEntries.Insert(bossidx, (NPCType, -1, pr2, 45, needsNight, 0f, extraNPCs, headID));
-        }
-
-        public static void AddHiveBestiary(int id, string entryText)
-        {
-            NPCID.Sets.NPCBestiaryDrawModifiers modifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
-            modifiers.Hide = false;
-            if (id == NPCType<DankCreeper>())
-            {
-                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/DankCreeper";
-            }
-            if (id == NPCType<HiveBlob>())
-            {
-                modifiers.CustomTexturePath = "CalRemix/Core/Retheme/HiveMind/HiveBlob";
-            }
-            if (id == NPCType<DarkHeart>())
-            {
-                modifiers.PortraitPositionXOverride = 10;
-                modifiers.PortraitPositionYOverride = 20;
-            }
-
-            NPCID.Sets.NPCBestiaryDrawOffset[id] = modifiers;
-            BestiaryEntry b = new BestiaryEntry();
-            b.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption,
-        new FlavorTextBestiaryInfoElement(entryText)
-            });
-            int associatedNPCType = NPCType<HiveMind>();
-            b.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
-            ContentSamples.NpcsByNetId[id].ModNPC?.SetBestiary(Main.BestiaryDB, b);
         }
 
         public static void RefreshBestiary()

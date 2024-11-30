@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -649,11 +650,11 @@ namespace CalRemix.UI
                 .SetTextboxTheme(new HelperTextboxTheme("MiracleBoy_9Slice", new Vector2(16, 16), "MiracleBoy_Background", new Vector2(16, 16)))
                 .SetTextboxFormatting(null, 0, 16)
                 .SetPositionData(true, 120, 0.42f)
-                .SetAvailabilityCondition(() => NPC.downedMoonlord);
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked);
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
-                .SetAvailabilityCondition(() => NPC.downedGolemBoss)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && Main.hardMode)
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
@@ -918,6 +919,7 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyNuhuh", 19);
             ScreenHelperPortrait.LoadPortrait("FannyStare", 1);
             ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
 
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);
@@ -931,6 +933,11 @@ namespace CalRemix.UI
 
             //Trapper bulb chan
             ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperUwaa", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperHappy", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperWTF", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperHuh", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperDisgust", 1);
 
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);
@@ -975,6 +982,7 @@ namespace CalRemix.UI
                     {
                         if (message.CanPlayMessage() && message.CheckExtraConditions(sceneMetrics))
                         {
+                            message.Text = Language.GetOrRegister("Mods.CalRemix.Fanny." + message.Identifier).Value;
                             message.PlayMessage(speaker);
                             break;
                         }
@@ -1267,6 +1275,8 @@ namespace CalRemix.UI
         {
             HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
 
+            Language.GetOrRegister("Mods.CalRemix.Fanny" + identifier);
+
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
 
@@ -1500,26 +1510,21 @@ namespace CalRemix.UI
             currentSpeaker = speaker;
             alreadySeen = true;
 
-            bool needsReformatting = textSegments.Count > 0;
-
             //if the helper has custom text, we change the formatting to match
             if (speaker.textboxFormatting != null)
             {
                 if (textSize != speaker.textboxFormatting.defaultTextSize)
                 {
                     textSize = speaker.textboxFormatting.defaultTextSize;
-                    needsReformatting = true;
                 }
                 if (speaker.textboxFormatting.maximumWidth != 0 && speaker.textboxFormatting.maximumWidth != maxTextWidth)
                 {
                     maxTextWidth = (int)speaker.textboxFormatting.maximumWidth;
-                    needsReformatting = true;
                 }
             }
 
             //Recalculate the text as its played if we have dynamic text segments, or if the speaker's custom formatting changed
-            if (needsReformatting)
-                FormatText(FontAssets.MouseText.Value, maxTextWidth);
+            FormatText(FontAssets.MouseText.Value, maxTextWidth);
 
             //Immediately play message start effects if the message doesnt have a delay
             if (delayTime == 0)
@@ -1582,7 +1587,7 @@ namespace CalRemix.UI
 
             //This is the setence as we are building it
             string formattedSetence = "";
-            string baseText = originalText;
+            string baseText = Language.GetOrRegister("Mods.CalRemix.Fanny." + Identifier).Value;
             if (textSegments.Count > 0)
             {
                 int i = 0;

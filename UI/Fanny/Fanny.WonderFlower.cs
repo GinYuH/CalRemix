@@ -13,7 +13,7 @@ namespace CalRemix.UI
         public static void LoadWonderFlowerMessages()
         {
             HelperMessage.New("Wonder_Wings", "Onward and upward!",
-                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.wingTimeMax > 0, 15, maxWidth: 500)
+                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.wingTimeMax > 0 && !Main.LocalPlayer.ZoneUnderworldHeight, 15, maxWidth: 500)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
 
             HelperMessage.New("Wonder_Tracers", "Onward and upward... and sideward!",

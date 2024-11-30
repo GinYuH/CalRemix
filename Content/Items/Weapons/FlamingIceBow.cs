@@ -26,22 +26,12 @@ namespace CalRemix.Content.Items.Weapons
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item5;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 23;
+			Item.damage = 123;
 			Item.knockBack = 2f; 
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.PurificationPowder;
 			Item.shootSpeed = 18f;
 			Item.useAmmo = AmmoID.Arrow;
-        }
-        public override bool CanUseItem(Player player) => player.GetModPlayer<CalRemixPlayer>().flamingIce;
-        public override void UpdateInventory(Player player)
-        {
-            if (player.HeldItem == Item || player.inventory[58] == Item)
-                player.GetModPlayer<CalRemixPlayer>().flamingIce = true;
-        }
-        public override bool CanConsumeAmmo(Item ammo, Player player)
-        {
-            return true;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -50,10 +40,7 @@ namespace CalRemix.Content.Items.Weapons
             Projectile.NewProjectile(source, pos, velocity, ModContent.ProjectileType<FlameFrostArrow>(), damage, knockback, player.whoAmI);
             return false;
         }
-        public override Vector2? HoldoutOffset()
-        {
-            return new Vector2(-4f, -0f);
-        }
+        public override Vector2? HoldoutOffset() => new Vector2(-4f, -0f);
         public override void AddRecipes()
         {
             CreateRecipe().

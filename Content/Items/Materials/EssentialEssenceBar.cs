@@ -31,7 +31,6 @@ namespace CalRemix.Content.Items.Materials
                 AddIngredient<SoulFlux>(5).
                 AddIngredient<GrandioseGland>().
                 AddIngredient<GreenDemonHead>().
-                AddIngredient<AlloyBar>().
                 AddIngredient(ItemID.CobaltBar).
                 AddIngredient(ItemID.PalladiumBar).
                 AddIngredient(ItemID.MythrilBar).
@@ -45,7 +44,6 @@ namespace CalRemix.Content.Items.Materials
                 AddIngredient<ScoriaBar>().
                 AddIngredient<CryonicBar>().
                 AddIngredient<AstralBar>().
-                AddIngredient<DeliciousMeat>(55).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }

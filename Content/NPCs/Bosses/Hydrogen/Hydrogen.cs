@@ -174,6 +174,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                 // Move towards the player
                 case (int)PhaseType.Idle:
                     {
+                        NPC.Calamity().newAI[2]++;
                         int phaseTime = 90;
                         NPC.ai[1]++;
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 5;
@@ -385,6 +386,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
             npcLoot.AddNormalOnly(ModContent.ItemType<SeaPrism>(), 1, 8, 10);
             npcLoot.AddNormalOnly(ModContent.ItemType<HydrogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<BallisticMissword>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<ThrowingMissiles>());
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<HydrogenRelic>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedHydrogen, ModContent.ItemType<KnowledgeHydrogen>(), desc: DropHelper.FirstKillText);
         }

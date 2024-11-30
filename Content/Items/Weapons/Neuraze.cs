@@ -1,15 +1,11 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Items.Placeables;
 using Terraria.DataStructures;
 using System.Collections.Generic;
 using CalamityMod.Rarities;
-using CalamityMod.Sounds;
-using CalamityMod;
 
 namespace CalRemix.Content.Items.Weapons
 {

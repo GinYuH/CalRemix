@@ -21,7 +21,9 @@ namespace CalRemix.Content.Items.Materials
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 5).
+                AddIngredient(ItemID.LunarBar, 5).
+                AddIngredient<LifeAlloy>(5).
+                AddIngredient<GalacticaSingularity>(5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

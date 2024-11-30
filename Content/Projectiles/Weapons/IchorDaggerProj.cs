@@ -30,14 +30,14 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void AI()
         {
-            if (Projectile.Calamity().stealthStrike && Projectile.timeLeft % 48 == 0)
+            if (Projectile.Calamity().stealthStrike && Projectile.timeLeft % 54 == 0)
             {
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(22.5f)) * 0.5f, ProjectileID.GoldenShowerFriendly, Projectile.damage / 5, Projectile.knockBack / 2, Projectile.owner);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(22.5f)) * 0.5f, ProjectileID.GoldenShowerFriendly, Projectile.damage * 2, Projectile.knockBack / 2, Projectile.owner);
                 proj.DamageType = DamageClass.Default;
             }
-            if (Projectile.Calamity().stealthStrike && Projectile.timeLeft % 12 == 0)
+            if (Projectile.Calamity().stealthStrike && Projectile.timeLeft % 24 == 0)
             {
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(11.25f)) * 0.25f, ModContent.ProjectileType<IchorSpark>(), Projectile.damage / 5, Projectile.knockBack / 2, Projectile.owner);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(11.25f)) * 0.25f, ModContent.ProjectileType<IchorSpark>(), Projectile.damage, Projectile.knockBack / 2, Projectile.owner);
                 proj.DamageType = DamageClass.Default;
             }
             if (Main.rand.NextBool(2))

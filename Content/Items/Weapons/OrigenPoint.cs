@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System.Collections.Generic;
-using Terraria.Utilities;
-using CalRemix.Content.NPCs.Bosses.Origen;
 using CalRemix.Content.Projectiles.Weapons;
 
 namespace CalRemix.Content.Items.Weapons

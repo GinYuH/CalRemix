@@ -19,6 +19,10 @@ namespace CalRemix.Content.Buffs
                 player.DelBuff(buffIndex);
                 buffIndex--;
             }
+            if (buffIndex <= 0 && NPC.AnyNPCs(ModContent.NPCType<TheCalamity>()))
+            {
+                player.Remix().calamitizedCounter = TheCalamity.CalamitySetCounter();
+            }
         }
     }
 }

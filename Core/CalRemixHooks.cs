@@ -33,6 +33,8 @@ using CalamityMod.Events;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
+using CalRemix.Core.Scenes;
+using Terraria.Localization;
 
 namespace CalRemix.Core
 {
@@ -41,7 +43,6 @@ namespace CalRemix.Core
         private static float extraDist = 222;
         public override void Load()
         {
-            On_Star.Fall += StopStarfall;
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
@@ -54,18 +55,212 @@ namespace CalRemix.Core
             //On_Player.ItemCheck_Shoot += SoldierShots;
             On_IngameOptions.DrawLeftSide += SendToFannyDimension;
             On_UIWorldCreation.BuildPage += AddRemixOption;
+            On_Player.UpdateItemDye += AddDyeStats;
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
+            On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
+            On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
+        }
+        public override void PostSetupContent()
+        {
+            On_Star.Fall += StopStarfall;
         }
         private static void StopStarfall(On_Star.orig_Fall orig, Star self)
         {
-            if (CalRemixMenu.Instance.IsSelected && Main.gameMenu)
+            if (GetInstance<CalRemixMenu>().IsSelected && Main.gameMenu)
                 return;
             orig(self);
+        }
+
+        private static void AddDyeStats(Terraria.On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot, bool isSetToHidden, Item armorItem, Item dyeItem)
+        {
+            orig(self, isNotInVanitySlot, isSetToHidden, armorItem, dyeItem);
+            if (armorItem.IsAir || !CalRemixWorld.dyeStats)
+            {
+                return;
+            }
+            bool itemVisibleAnyways = armorItem.wingSlot > 0 || armorItem.type == ItemID.FlyingCarpet || armorItem.type == ItemID.PortableStool || armorItem.type == 5126 || armorItem.type == ItemID.UnicornHornHat || armorItem.type == ItemID.AngelHalo;
+            bool hiddenFunctional = isNotInVanitySlot && isSetToHidden;
+            bool shouldDyeWork = false;
+            if (armorItem.shieldSlot > 0 && armorItem.shieldSlot < ArmorIDs.Shield.Count && (self.cShieldFallback == -1 || !hiddenFunctional))
+            {
+                shouldDyeWork = true;
+            }
+            if (!itemVisibleAnyways && hiddenFunctional)
+            {
+                return;
+            }
+            if (armorItem.handOnSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.handOffSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.backSlot > 0)
+            {
+                if (ArmorIDs.Back.Sets.DrawInBackpackLayer[armorItem.backSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else if (ArmorIDs.Back.Sets.DrawInTailLayer[armorItem.backSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.frontSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.shoeSlot > 0)
+            {
+                if (armorItem.type == ItemID.FlameWakerBoots || armorItem.type == ItemID.HellfireTreads)
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.waistSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.shieldSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.neckSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.faceSlot > 0)
+            {
+                if (ArmorIDs.Face.Sets.DrawInFaceHeadLayer[armorItem.faceSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else if (ArmorIDs.Face.Sets.DrawInFaceFlowerLayer[armorItem.faceSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.beardSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.balloonSlot > 0)
+            {
+                if (ArmorIDs.Balloon.Sets.DrawInFrontOfBackArmLayer[armorItem.balloonSlot])
+                {
+                    shouldDyeWork = true;
+                }
+                else
+                {
+                    shouldDyeWork = true;
+                }
+            }
+            if (armorItem.wingSlot > 0)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.FlyingCarpet)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.FloatingTube)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.PortableStool || armorItem.type == 5126)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.UnicornHornHat)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.AngelHalo)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.CritterShampoo)
+            {
+                shouldDyeWork = true;
+            }
+            if (armorItem.type == ItemID.LeinforsAccessory)
+            {
+                shouldDyeWork = true;
+            }
+            if (shouldDyeWork)
+            {
+                CountDyes(ref self, dyeItem.type);
+            }
+        }
+
+        public static void CountDyes(ref Player player, int id)
+        {
+            if (player.TryGetModPlayer(out CalRemixPlayer p))
+            {
+                if (CalRemixPlayer.dyeStats.ContainsKey(id))
+                {
+                    DyeStats d = CalRemixPlayer.dyeStats[id];
+                    p.dyesRed += d.red;
+                    p.dyesOrange += d.orange;
+                    p.dyesYellow += d.yellow;
+                    p.dyesLime += d.lime;
+                    p.dyesGreen += d.green;
+                    p.dyesCyan += d.cyan;
+                    p.dyesLightBlue += d.skyblue;
+                    p.dyesDarkBlue += d.blue;
+                    p.dyesTeal += d.teal;
+                    p.dyesPurple += d.purple;
+                    p.dyesViolet += d.violet;
+                    p.dyesBrown += d.brown;
+                    p.dyesPink += d.pink;
+                    p.dyesSilver += d.silver;
+                    p.dyesBlack += d.black;
+                }
+            }
+        }
+        public static void CountDyes(Player player, int id)
+        {
+            if (player.TryGetModPlayer(out CalRemixPlayer p))
+            {
+                if (CalRemixPlayer.dyeStats.ContainsKey(id))
+                {
+                    DyeStats d = CalRemixPlayer.dyeStats[id];
+                    p.dyesRed += d.red;
+                    p.dyesOrange += d.orange;
+                    p.dyesYellow += d.yellow;
+                    p.dyesLime += d.lime;
+                    p.dyesGreen += d.green;
+                    p.dyesCyan += d.cyan;
+                    p.dyesLightBlue += d.skyblue;
+                    p.dyesDarkBlue += d.blue;
+                    p.dyesTeal += d.teal;
+                    p.dyesPurple += d.purple;
+                    p.dyesViolet += d.violet;
+                    p.dyesBrown += d.brown;
+                    p.dyesPink += d.pink;
+                    p.dyesSilver += d.silver;
+                    p.dyesBlack += d.black;
+                }
+            }
         }
 
         /*
@@ -324,7 +519,6 @@ namespace CalRemix.Core
                     }
                     dirX *= dist;
                     dirY *= dist;
-                    Main.NewText("A");
 
                     if (sItem.ModItem?.Shoot(p, (EntitySource_ItemUse_WithAmmo)self.GetSource_ItemUse_WithPotentialAmmo(sItem, i), pointPoisition, new Vector2(dirX, dirY), sItem.shoot, weaponDamage, KnockBack) == true)
                     {
@@ -404,7 +598,46 @@ namespace CalRemix.Core
                 int gus = (int)(255f * hydr.localAI[0] / 100);
                 Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, new Color(gus, gus, gus, (int)hydr.localAI[0]), 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
             }
+            if (CalRemixWorld.roachDuration > 0)
+            {
+                float duration = CalRemixWorld.ROACHDURATIONSECONDS;
+                string bf = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach1").Value;
+                string mayhem = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach2").Value;
+                float bfWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
+                float mayhemWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
+                float bfY = Main.screenHeight * 0.4f;
+                float mayhemY = Main.screenHeight * 0.6f;
+                Vector2 bfOff = new Vector2(-3000, bfY);
+                Vector2 mayhemOff = new Vector2(3000, mayhemY);
+                Vector2 bfLocation = new Vector2(Main.screenWidth * 0.34f, bfY) + Main.rand.NextVector2Square(-10, 10);
+                Vector2 mayhemLocation = new Vector2(Main.screenWidth * 0.32f, mayhemY) + Main.rand.NextVector2Square(-10, 10);
+                float bfCompletion = Utils.GetLerpValue(CalamityUtils.SecondsToFrames(duration - 2), CalamityUtils.SecondsToFrames(duration - 4), CalRemixWorld.roachDuration, true);
+                float mayhemCompletion = Utils.GetLerpValue(CalamityUtils.SecondsToFrames(duration - 4), CalamityUtils.SecondsToFrames(duration - 6), CalRemixWorld.roachDuration, true);
+                float textOpacity = Utils.GetLerpValue(CalamityUtils.SecondsToFrames(duration - 12), CalamityUtils.SecondsToFrames(duration - 10), CalRemixWorld.roachDuration, true);
+                Utils.DrawBorderString(Main.spriteBatch, bf, Vector2.Lerp(bfOff, bfLocation, bfCompletion), Color.Red * textOpacity, (Main.screenWidth / 2 / bfWidth) + 0.1f * (float)Math.Cos(Main.GlobalTimeWrappedHourly * 22));
+                Utils.DrawBorderString(Main.spriteBatch, mayhem, Vector2.Lerp(mayhemOff, mayhemLocation, mayhemCompletion), Color.Red * textOpacity, (Main.screenWidth / 2 / mayhemWidth) + 0.1f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 22));
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Red * 0.22f * Utils.GetLerpValue(CalamityUtils.SecondsToFrames(CalRemixWorld.ROACHDURATIONSECONDS), CalamityUtils.SecondsToFrames(CalRemixWorld.ROACHDURATIONSECONDS - 3), CalRemixWorld.roachDuration, true), 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+                Texture2D explosion = Request<Texture2D>("CalRemix/Assets/ExtraTextures/RealisticExplosion").Value;
+                for (int i = 0; i < RoachScene.explosions.Count; i++)
+                {
+                    RealisticExplosion v = RoachScene.explosions[i];
+                    RoachScene.explosions[i].frameCounter = v.frameCounter + 1;
+                    if (v.frameCounter > 3)
+                    {
+                        v.frameCounter = 0;
+                        v.frameX++;
+                        if (v.frameX > 5)
+                        {
+                            v.frameX = 0;
+                            v.frameY++;
+                        }
+                    }
+                    if (v.frameY < 3)
+                        Main.spriteBatch.Draw(explosion, v.position, explosion.Frame(6, 3, v.frameX, v.frameY), Color.White, 0f, new Vector2(0, explosion.Height * 0.2f), 12f, SpriteEffects.None, 0);
+                }
+            }
         }
+
         private static int KillHiveMind(On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
             if (type == NPCID.DungeonGuardian)
@@ -467,5 +700,7 @@ namespace CalRemix.Core
             CalamityNetcode.SyncWorld();
         }
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
+        private static bool DoGMusicDeath(On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase1MusicScene self) => false;
+        private static bool DoGMusicDeath2(On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase2MusicScene self) => false;
     }
 }

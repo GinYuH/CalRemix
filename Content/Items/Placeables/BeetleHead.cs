@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
 using CalamityMod.Items;
+using CalamityMod.Items.Materials;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -27,6 +29,16 @@ namespace CalRemix.Content.Items.Placeables
             Item.height = 12;
             Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.rare = ItemRarityID.Yellow;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<AncientBoneDust>(), 1).
+                AddIngredient(ItemID.Vine, 8).
+                AddTile(TileID.Loom).
+                AddCondition(new Condition("After learning about The Incident", () => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned >= 8)).
+                Register();
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using CalamityMod;
 using CalamityMod.Items;
-using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

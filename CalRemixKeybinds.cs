@@ -8,6 +8,7 @@ namespace CalRemix
         public static ModKeybind PolyDashKeybind { get; private set; }
         public static ModKeybind StealthPotKeybind { get; private set; }
         public static ModKeybind IonoLightningKeybind { get; private set; }
+        public static ModKeybind InfraredSightsKeybind { get; private set; }
         public override void Load()
         {
             // Register keybinds
@@ -15,6 +16,7 @@ namespace CalRemix
             PolyDashKeybind = KeybindLoader.RegisterKeybind(Mod, "Polypebral Dash", "Mouse4");
             StealthPotKeybind = KeybindLoader.RegisterKeybind(Mod, "Quick Stealth", "L");
             IonoLightningKeybind = KeybindLoader.RegisterKeybind(Mod, "Ionic Lightning", "]");
+            InfraredSightsKeybind = KeybindLoader.RegisterKeybind(Mod, "Infrared Sights", "NumPad0");
         }
         public override void Unload()
         {
@@ -22,6 +24,7 @@ namespace CalRemix
             PolyDashKeybind = null;
             StealthPotKeybind = null;
             IonoLightningKeybind = null;
+            InfraredSightsKeybind = null;
         }
     }
 }

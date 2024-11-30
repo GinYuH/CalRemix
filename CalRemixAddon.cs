@@ -27,6 +27,11 @@ using CalRemix.Content.NPCs.Bosses.Origen;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Lore;
+using Terraria.Audio;
+using CalamityMod.Sounds;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
 
 namespace CalRemix
 {
@@ -44,6 +49,8 @@ namespace CalRemix
 
         public static Type calvalFanny = null;
         public static Type calvalFannyBox = null;
+
+        public static Mod Remnants;
 
         public static readonly List<string> Names = new List<string>()
         {
@@ -74,6 +81,8 @@ namespace CalRemix
             ModLoader.TryGetMod("Census", out Census);
             ModLoader.TryGetMod("MusicDisplay", out MusicDisplay);
             ModLoader.TryGetMod("Wikithis", out Wikithis);
+
+            ModLoader.TryGetMod("Remnants", out Remnants);
 
             if (CalVal != null)
             {
@@ -106,6 +115,8 @@ namespace CalRemix
             Census = null;
             MusicDisplay = null;
             Wikithis = null;
+
+            Remnants = null;
         }
         public override void PostSetupContent()
         {
@@ -116,7 +127,14 @@ namespace CalRemix
                 Wikithis.Call("AddModURL", Mod, "https://terrariamods.wiki.gg/wiki/Calamity_Community_Remix/{}");
                 Wikithis.Call("AddWikiTexture", Mod, Request<Texture2D>("CalRemix/icon_small"));
             }
+            AddInfernumCards();
         }
+
+        public void comp()
+        {
+
+        }
+
         internal void AddBossChecklistEntries()
         {
             if (BossChecklist is null)
@@ -138,7 +156,7 @@ namespace CalRemix
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0);
             };
-            bc.Call("LogBoss", Mod, "WulfrumExcavator", 0.22f, () => RemixDowned.downedExcavator, NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "WulfwyrmHead", 0.22f, () => RemixDowned.downedExcavator, NPCType<WulfwyrmHead>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<EnergyCore>(),
                 ["customPortrait"] = wfportrait
@@ -147,7 +165,7 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<OrigenDoor>(),
             });
-            bc.Call("LogBoss", Mod, "Acidsighter", 2.1f, () => RemixDowned.downedAcidsighter, NPCType<Acideye>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Acideye", 2.1f, () => RemixDowned.downedAcidsighter, NPCType<Acideye>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<PoisonedSclera>(),
             });
@@ -189,7 +207,11 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
-            bc.Call("LogBoss", Mod, "XP-00 Hypnos", 22.5f, () => RemixDowned.downedHypnos, NPCType<Hypnos>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Pyrogen", 19.6f, () => RemixDowned.downedPyrogen, NPCType<Pyrogen>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<MoltenMatter>(),
+            });
+            bc.Call("LogBoss", Mod, "Hypnos", 22.5f, () => RemixDowned.downedHypnos, NPCType<Hypnos>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<BloodyVein>()
             });
@@ -236,7 +258,7 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
         }
-        internal void AddCensusEntries()
+        internal static void AddCensusEntries()
         {
             if (Census is null)
                 return;
@@ -251,6 +273,54 @@ namespace CalRemix
             Census.Call("TownNPCCondition", NPCType<UNCANNY>(), "Defeat Carcinogen");
             Census.Call("TownNPCCondition", NPCType<KABLOOEY>(), "Defeat Hydrogen");
             Census.Call("TownNPCCondition", NPCType<BALLER>(), "Defeat Oxygen");
+        }
+        internal void AddInfernumCards()
+        {
+            if (Infernum is null)
+                return;
+            MakeCard(NPCType<Polyphemalus>(), (horz, anim) => Color.Lerp(Color.White, Color.Pink, horz), "Polyphemalus", SoundID.Roar, SoundID.ForceRoar);
+            MakeCard(NPCType<Origen>(), (horz, anim) => Color.Cyan, "Origen", BetterSoundID.ItemIceBreak, BetterSoundID.ItemMissileFireSqueak);
+            MakeCard(NPCType<Carcinogen>(), (horz, anim) => Color.Lerp(Color.White, Color.Brown, anim), "Carcinogen", BetterSoundID.ItemFireballImpact, Carcinogen.DeathSound);
+            MakeCard(NPCType<Ionogen>(), (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Ionogen", SoundID.DD2_LightningAuraZap, SoundID.Thunder);
+            MakeCard(NPCType<Phytogen>(), (horz, anim) => Color.Lerp(Color.Lime, Color.Yellow, anim), "Phytogen", SoundID.Grass, SoundID.NPCDeath1);
+            MakeCard(NPCType<Oxygen>(), (horz, anim) => Color.Lerp(Color.LightBlue, Color.SeaGreen, anim), "Oxygen", Oxygen.HitSound, SoundID.Shatter);
+            MakeCard(NPCType<Pathogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pathogen", PerforatorHeadLarge.HitSound, PerforatorHeadSmall.HitSound);
+            MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", BetterSoundID.ItemInfernoFork, BetterSoundID.ItemInfernoExplosion);
+            MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
+            MakeCard(NPCType<WulfwyrmHead>(), (horz, anim) => Color.Lerp(Color.LightGreen, Color.LightBlue, horz), "WulfrumExcavator", SoundID.NPCHit4, BetterSoundID.ItemThisStupidFuckingLaser);
+            MakeCard(NPCType<Acideye>(), (horz, anim) => Color.Lerp(Color.LimeGreen, Color.Lime, anim), "Acidsighter", SoundID.Roar, SoundID.NPCDeath1);
+            MakeCard(NPCType<TheCalamity>(), (horz, anim) => Color.Red, "Calamity", BetterSoundID.ItemThisStupidFuckingLaser, BetterSoundID.ItemThisStupidFuckingLaser, 360);
+            MakeCard(NPCType<Hypnos>(), (horz, anim) => Main.DiscoColor, "Hypnos", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
+        }
+        internal void MakeCard(int type, Func<float, float, Color> color, string title, SoundStyle tickSound, SoundStyle endSound, int time = 300, float size = 1f)
+        {
+            MakeCard(()=> NPC.AnyNPCs(type), color, title, tickSound, endSound, time, size);
+        }
+        internal void MakeCard(Func<bool> condition, Func<float, float, Color> color, string title, SoundStyle tickSound, SoundStyle endSound, int time = 300, float size = 1f)
+        {
+            // Initialize the base instance for the intro card. Alternative effects may be added separately.
+            Func<float, float, Color> textColorSelectionDelegate = color;
+            object instance = Infernum.Call("InitializeIntroScreen", Mod.GetLocalization("InfernumIntegration." + title), time, true, condition, textColorSelectionDelegate);
+            Infernum.Call("IntroScreenSetupLetterDisplayCompletionRatio", instance, new Func<int, float>(animationTimer => MathHelper.Clamp(animationTimer / (float)time * 1.36f, 0f, 1f)));
+
+            // dnc but needed or else it errors
+            Action onCompletionDelegate = comp;
+            Infernum.Call("IntroScreenSetupCompletionEffects", instance, onCompletionDelegate);
+
+            // Letter addition sound.
+            Func<SoundStyle> chooseLetterSoundDelegate = () => tickSound;
+            Infernum.Call("IntroScreenSetupLetterAdditionSound", instance, chooseLetterSoundDelegate);
+            
+            // Main sound.
+            Func<SoundStyle> chooseMainSoundDelegate = () => endSound;
+            Func<int, int, float, float, bool> why = (_, _2, _3, _4) => true;
+            Infernum.Call("IntroScreenSetupMainSound", instance, why, chooseMainSoundDelegate);
+
+            // Text scale.
+            Infernum.Call("IntroScreenSetupTextScale", instance, size);
+
+            // Register the intro card.
+            Infernum.Call("RegisterIntroScreen", instance);
         }
         internal void AddMusicDisplayEntries()
         {
@@ -271,7 +341,7 @@ namespace CalRemix
 
             AddMusic(CalRemixMusic.TheCalamity, "Stained, Smeared Calamity", "Jteoh");
             AddMusic(CalRemixMusic.WulfrumExcavator, "Scourge of the Scrapyard", "Sploopo");
-            AddMusic(CalRemixMusic.Origen, "Antarctic Reinforcement (Structured Mix)", "Jteoh");
+            AddMusic(CalRemixMusic.Origen, "Antarctic Reinforcement (Structured Mix)", "DM Dokuro");
             AddMusic(CalRemixMusic.Acidsighter, "Opticatalysis", "DEMON GIRLFRIEND");
             AddMusic(CalRemixMusic.Carcinogen, "Oncologic Reinforcement", "Jteoh");
 
@@ -285,8 +355,9 @@ namespace CalRemix
             AddMusic(CalRemixMusic.Pathogen, "Microbic Reinforcement", "Jteoh");
             AddMusic(CalRemixMusic.EmpressofLightDay, "Gegenschein", "Jteoh");
 
-            AddMusic(CalRemixMusic.Pyrogen, "Infernal Seal", "ThePurified");
+            AddMusic(CalRemixMusic.Pyrogen, "Volcanic Reinforcement", "The Purified");
             AddMusic(CalRemixMusic.DevourerofGods, "Last Battle (Ballos Mix)", "DM DOKURO");
+            AddMusic(CalRemixMusic.DevourerofGodsFinalForm, "Univesal Collapse?", "SiivaGunner");
             AddMusic(CalRemixMusic.Hypnos, "Cerebral Augmentations", "The Exiled Fellow");
 
             AddMusic(CalRemixMusic.ExoMechs, "Omniscius Calculus", "Jteoh");
@@ -297,7 +368,7 @@ namespace CalRemix
             AddMusic(CalRemixMusic.ExoTwinsAres, "Delta Venata", "Jteoh");
             AddMusic(CalRemixMusic.ThanatosAres, "Epsilon Duella", "Jteoh");
 
-            AddMusic(CalRemixMusic.Menu, "This is Where the Magic Happens", "Jteoh");
+            AddMusic(CalRemixMusic.Menu, "This Is Where the Magic Happens", "Jteoh");
         }
         internal void AddMusic(int music, string name, string author)
         {

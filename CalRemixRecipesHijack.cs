@@ -12,7 +12,6 @@ using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Items.Tools.ClimateChange;
 using System.Collections.Generic;
-using Terraria.ModLoader;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
@@ -42,6 +41,7 @@ namespace CalRemix
         public static List<(int, int, int)> crocodileCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> venomCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> shimmerEssenceCrafts = new List<(int, int, int)> { };
+        public static List<(int, int, int)> deliciousMeatCrafts = new List<(int, int, int)> { };
 
         public override void Load()
         {
@@ -53,6 +53,7 @@ namespace CalRemix
             alloyBarCrafts.Add((ItemType<DefiledGreatsword>(), ItemType<AlloyBar>(), 340));
             alloyBarCrafts.Add((ItemType<Aestheticus>(), ItemType<AlloyBar>(), 1));
             alloyBarCrafts.Add((ItemType<AgedLaboratoryElectricPanelItem>(), ItemType<AlloyBar>(), 1));
+            alloyBarCrafts.Add((ItemType<EssentialEssenceBar>(), ItemType<AlloyBar>(), 1));
             alloyBarCrafts.Add((ItemType<FracturedArk>(), ItemType<AlloyBar>(), 92));
             alloyBarCrafts.Add((ItemType<JellyChargedBattery>(), ItemType<AlloyBar>(), 3));
             alloyBarCrafts.Add((ItemID.LifeCrystal, ItemType<AlloyBar>(), 1));
@@ -87,6 +88,7 @@ namespace CalRemix
             essenceBarCrafts.Add((ItemType<AbyssBlade>(), ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ItemType<CoreofCalamity>(), ItemType<EssentialEssenceBar>(), 2));
             essenceBarCrafts.Add((ItemType<AstralBeaconItem>(), ItemType<EssentialEssenceBar>(), 40));
+            essenceBarCrafts.Add((ItemType<Confection>(), ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ItemType<AstrealDefeat>(), ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ItemType<ClockworkBow>(), ItemType<EssentialEssenceBar>(), 40));
             essenceBarCrafts.Add((ItemType<CosmicRainbow>(), ItemType<EssentialEssenceBar>(), 40));
@@ -146,6 +148,8 @@ namespace CalRemix
             yharimBarCrafts.Add((ItemType<TheDreamingGhost>(), ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ItemType<TyrantShield>(), ItemType<YharimBar>(), 124));
             yharimBarCrafts.Add((ItemType<UniversalStone>(), ItemType<YharimBar>(), 100));
+            yharimBarCrafts.Add((ItemType<WrathoftheCosmos>(), ItemType<YharimBar>(), 3));
+            yharimBarCrafts.Add((ItemType<WrathoftheDragons>(), ItemType<YharimBar>(), 3));
             yharimBarCrafts.Add((ItemType<ZenithArcanum>(), ItemType<YharimBar>(), 99));
             yharimBarCrafts.Add((ItemID.Zenith, ItemType<YharimBar>(), 193));
             #endregion
@@ -166,18 +170,21 @@ namespace CalRemix
             venomCrafts.Add((ItemType<PlaguebringerVisor>(), ItemType<CoyoteVenom>(), 1));
             venomCrafts.Add((ItemType<PlaguebringerCarapace>(), ItemType<CoyoteVenom>(), 1));
             venomCrafts.Add((ItemType<PlagueCellCanister>(), ItemType<CoyoteVenom>(), 1));
+            venomCrafts.Add((ItemType<CirnogenicStaff>(), ItemType<CoyoteVenom>(), 1));
             #endregion
             #region Shimmer Essences
-            shimmerEssenceCrafts.Add((ItemType<SunSpiritStaff>(), ItemType<EssenceofZot>(), 2));
             shimmerEssenceCrafts.Add((ItemType<AstrealDefeat>(), ItemType<EssenceofZot>(), 5));
+            shimmerEssenceCrafts.Add((ItemType<ChainSpear>(), ItemType<EssenceofZot>(), 10));
             shimmerEssenceCrafts.Add((ItemType<CosmicAnvilItem>(), ItemType<EssenceofZot>(), 10));
             shimmerEssenceCrafts.Add((ItemType<CosmicWorm>(), ItemType<EssenceofZot>(), 30));
             shimmerEssenceCrafts.Add((ItemType<DaawnlightSpiritOrigin>(), ItemType<EssenceofZot>(), 4));
+            shimmerEssenceCrafts.Add((ItemType<SunSpiritStaff>(), ItemType<EssenceofZot>(), 2));
             shimmerEssenceCrafts.Add((ItemType<Crystalline>(), ItemType<EssenceofCrystal>(), 5));
             shimmerEssenceCrafts.Add((ItemType<LunicEye>(), ItemType<EssenceofCrystal>(), 15));
             shimmerEssenceCrafts.Add((ItemType<StormSurge>(), ItemType<EssenceofCrystal>(), 5));
             shimmerEssenceCrafts.Add((ItemType<EnchantedAxe>(), ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ItemID.EnchantedSword, ItemType<EssenceofLaw>(), 5));
+            shimmerEssenceCrafts.Add((ItemType<GearworkShield>(), ItemType<EssenceofLaw>(), 10));
             shimmerEssenceCrafts.Add((ItemType<SpiritGlyph>(), ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ItemID.Starfury, ItemType<EssenceofLaw>(), 5));
             shimmerEssenceCrafts.Add((ItemType<EpidemicShredder>(), ItemType<EssenceofMyst>(), 105));
@@ -185,6 +192,20 @@ namespace CalRemix
             shimmerEssenceCrafts.Add((ItemType<PlagueReaperMask>(), ItemType<EssenceofMyst>(), 11));
             shimmerEssenceCrafts.Add((ItemType<PlagueReaperStriders>(), ItemType<EssenceofMyst>(), 17));
             shimmerEssenceCrafts.Add((ItemType<PlagueReaperVest>(), ItemType<EssenceofMyst>(), 19));
+            shimmerEssenceCrafts.Add((ItemType<XenonCutlass>(), ItemType<EssenceofMyst>(), 10));
+            #endregion
+
+            #region Delicious Meat
+            deliciousMeatCrafts.Add((ItemType<Abaddon>(), ItemType<DeliciousMeat>(), 100));
+            deliciousMeatCrafts.Add((ItemType<DefiledGreatsword>(), ItemType<DeliciousMeat>(), 800));
+            deliciousMeatCrafts.Add((ItemType<DraedonsForge>(), ItemType<DeliciousMeat>(), 65536));
+            deliciousMeatCrafts.Add((ItemType<EssentialEssenceBar>(), ItemType<DeliciousMeat>(), 55));
+            deliciousMeatCrafts.Add((ItemID.MoneyTrough, ItemType<DeliciousMeat>(), 100));
+            deliciousMeatCrafts.Add((ItemType<RuinMedallion>(), ItemType<DeliciousMeat>(), 50));
+            deliciousMeatCrafts.Add((ItemType<SupremeHealingPotion>(), ItemType<DeliciousMeat>(), 8192));
+            deliciousMeatCrafts.Add((ItemType<TyrantShield>(), ItemType<DeliciousMeat>(), 349));
+            deliciousMeatCrafts.Add((ItemType<ZenPotion>(), ItemType<DeliciousMeat>(), 256));
+            deliciousMeatCrafts.Add((ItemType<ZergPotion>(), ItemType<DeliciousMeat>(), 256));
             #endregion
         }
     }

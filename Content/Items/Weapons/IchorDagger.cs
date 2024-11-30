@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Weapons
 		{
             Item.width = 1;
 			Item.height = 1;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.LightRed;
             Item.value = Item.sellPrice(gold: 7, silver: 20);
             Item.useTime = 15; 
 			Item.useAnimation = 15;
@@ -41,12 +41,15 @@ namespace CalRemix.Content.Items.Weapons
             CalamityPlayer calamityPlayer = player.Calamity();
             if (calamityPlayer.StealthStrikeAvailable())
             {
-                int num = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+                int num = Projectile.NewProjectile(source, position, velocity * 1.5f, type, damage, knockback, player.whoAmI);
                 if (num.WithinBounds(1000))
-                {
                     Main.projectile[num].Calamity().stealthStrike = true;
-                }
-
+                int num2 = Projectile.NewProjectile(source, position, (velocity * Main.rand.NextFloat(1f, 1.25f)).RotatedByRandom(MathHelper.ToRadians(45f)), type, damage, knockback, player.whoAmI);
+                if (num2.WithinBounds(1000))
+                    Main.projectile[num2].Calamity().stealthStrike = true;
+                int num3 = Projectile.NewProjectile(source, position, (velocity * Main.rand.NextFloat(1f, 1.25f)).RotatedByRandom(MathHelper.ToRadians(45f)), type, damage, knockback, player.whoAmI);
+                if (num3.WithinBounds(1000))
+                    Main.projectile[num3].Calamity().stealthStrike = true;
                 return false;
             }
             else

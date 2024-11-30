@@ -24,7 +24,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Bags;
-using Terraria.ModLoader.IO;
+using CalRemix.Content.Items.Placeables.Relics;
 
 namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 {
@@ -207,10 +207,10 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             }
 
             // Create segments on the first frame.
-            if (NPC.localAI[0] == 0f)
+            if (NPC.ai[3] == 0f)
             {
                 SpawnSegments();
-                NPC.localAI[0] = 1f;
+                NPC.ai[3] = 1f;
             }
 
             if (ChargeState == 4)
@@ -241,26 +241,27 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public void SpawnSegments()
         {
-            int previousSegment = NPC.whoAmI;
-
-
-
-            for (int i = 0; i < SegmentCount; i++)
+            //if (Main.netMode != NetmodeID.MultiplayerClient)
             {
+                int previousSegment = NPC.whoAmI;
+                for (int i = 0; i < SegmentCount; i++)
+                {
 
-                int nextSegmentIndex;
-                if (i < SegmentCount - 1)
-                    nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmBody>(), NPC.whoAmI);
-                else
-                    nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmTail>(), NPC.whoAmI);
-                Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;
-                Main.npc[nextSegmentIndex].ai[2] = NPC.whoAmI;
-                Main.npc[nextSegmentIndex].ai[1] = previousSegment;
-                Main.npc[previousSegment].ai[0] = nextSegmentIndex;
+                    int nextSegmentIndex;
+                    if (i < SegmentCount - 1)
+                        nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmBody>(), NPC.whoAmI);
+                    else
+                        nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmTail>(), NPC.whoAmI);
+                    Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;
+                    Main.npc[nextSegmentIndex].ai[2] = NPC.whoAmI;
+                    Main.npc[nextSegmentIndex].ai[1] = previousSegment;
+                    Main.npc[previousSegment].ai[0] = nextSegmentIndex;
 
-                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, nextSegmentIndex, 0f, 0f, 0f, 0);
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, nextSegmentIndex, 0f, 0f, 0f, 0);
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, previousSegment, 0f, 0f, 0f, 0);
 
-                previousSegment = nextSegmentIndex;
+                    previousSegment = nextSegmentIndex;
+                }
             }
         }
 
@@ -317,7 +318,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                     SoundEngine.PlaySound(SoundID.Item33, Target.Center);
 
                 // Create lasers.
-                //if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     // Loop through the linked list of worm body segments until the tail is reached.
                     List<NPC> segments = new();
@@ -832,6 +833,8 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 ModContent.ItemType<WulfrumKnife>(),
             };
             normalRule.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
+
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || CalamityWorld.revenge), ModContent.ItemType<WulfwyrmRelic>()));
 
             // Rod
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<WulfwyrmHead>() && info.npc.ModNPC<WulfwyrmHead>().PylonCharged), ModContent.ItemType<WulfrumRod>()));

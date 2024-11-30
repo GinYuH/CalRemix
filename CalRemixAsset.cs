@@ -95,6 +95,7 @@ namespace CalRemix
         public static readonly int PlaguedJungle = Set("PlaguedJungle");
         public static readonly int BaronStrait = Set("TheEndZone");
         public static readonly int VernalPass = Set("VajrabhairavasRest");
+        public static readonly int FrozenStronghold = Set("LockedAway");
 
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
@@ -105,6 +106,7 @@ namespace CalRemix
 
         // Minibosses
         public static readonly int LaRuga = Set("LaRuga");
+        public static readonly int DemonChase = Set("DemonChase");
 
         // Bosses
         public static readonly int TheCalamity = Set("StainedSmearedCalamity");
@@ -125,6 +127,7 @@ namespace CalRemix
 
         public static readonly int Pyrogen = Set("VolcanicReinforcement");
         public static readonly int DevourerofGods = Set("DoGRemix");
+        public static readonly int DevourerofGodsFinalForm = Set("DoGRemix2");
         public static readonly int Hypnos = Set("CerebralAugmentations");
 
         public static readonly int ExoMechs = Set("Exos/XO");
@@ -138,6 +141,7 @@ namespace CalRemix
         // Misc
         public static readonly int Menu = Set("Menu");
         public static readonly int Menu2 = Set("CrazyLaPaint");
+        public static readonly int TrueStory = Set("TrueStory");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }

@@ -35,8 +35,8 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             AIType = -1;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
             NPC.alpha = 128;
-            NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
-            NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
+            NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadSmall.HitSound;
+            NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadSmall.DeathSound;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 

@@ -8,7 +8,6 @@ using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -485,66 +483,47 @@ namespace CalRemix.UI.Anomaly109
     {
         public static List<Anomaly109Option> options = new List<Anomaly109Option> { };
         public static bool helpUnlocked = false;
+        public static bool finalizeOptionInit = false;
+        public override void PreUpdateWorld()
+        {
+            if (!finalizeOptionInit)
+            {
+                Anomaly109Option i = options.Find((Anomaly109Option o) => o.title.Equals("item_changes"));
+                i.toggle();
+                i.toggle();
+                Anomaly109Option n = options.Find((Anomaly109Option o) => o.title.Equals("npc_changes"));
+                n.toggle();
+                n.toggle();
+                finalizeOptionInit = true;
+            }
+        }
         public override void OnWorldLoad()
         {
             if (options.Count == 0)
             {
                 options.Add(new Anomaly109Option("emitem", "item_changes", "Toggles visual changes for certain items and projectiles", () =>
                 {
-                    if (!CalRemixWorld.itemChanges)
-                    {
-                        foreach (KeyValuePair<int, string> p in RethemeList.Items)
-                        {
-                            TextureAssets.Item[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                        }
-                        foreach (KeyValuePair<int, string> p in RethemeList.Projs)
-                        {
-                            TextureAssets.Projectile[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                        }
-                        Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
-                    }
-                    else
-                    {
-                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
-                        {
-                            TextureAssets.Item[p.Key] = p.Value;
-                        }
-                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
-                        {
-                            TextureAssets.Projectile[p.Key] = p.Value;
-                        }
-                        Main.RegisterItemAnimation(ModContent.ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
-                    }
+                    RethemeItem.ChangeTextures();
                     CalRemixWorld.itemChanges = !CalRemixWorld.itemChanges;
                 }, new Condition("", () => CalRemixWorld.itemChanges)));
                 options.Add(new Anomaly109Option("creativefreedom", "npc_changes", "Toggles visual changes for some (not all) NPCs and bosses", () =>
                 {
-                    if (!CalRemixWorld.npcChanges)
-                    {
-                        foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
-                        {
-                            TextureAssets.Npc[p.Key] = ModContent.Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                        }
-                    }
-                    else
-                    {
-                        foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
-                        {
-                            TextureAssets.Npc[p.Key] = p.Value;
-                        }
-                    }
+                    RethemeNPC.ChangeTextures();
                     CalRemixWorld.npcChanges = !CalRemixWorld.npcChanges;
+                    RethemeNPC.UpdateTextures();
                 }, new Condition("", () => CalRemixWorld.npcChanges)));
                 options.Add(new Anomaly109Option("talkywalky", "boss_dialogue", "Toggles boss dialogue", () => { CalRemixWorld.bossdialogue = !CalRemixWorld.bossdialogue; }, new Condition("", () => CalRemixWorld.bossdialogue)));
                 options.Add(new Anomaly109Option("space", "remix_jump", "Toggles the default double jump", () => { CalRemixWorld.remixJump = !CalRemixWorld.remixJump; }, new Condition("", () => CalRemixWorld.remixJump)));
+                options.Add(new Anomaly109Option("colour", "dye_stats", "Toggles stat boosts from dyes", () => { CalRemixWorld.dyeStats = !CalRemixWorld.dyeStats; }, new Condition("", () => CalRemixWorld.dyeStats)));
                 options.Add(new Anomaly109Option("coughingbaby", "hydrogen_explosions", "Toggles Hydrogen's explosions", () => { CalRemixWorld.hydrogenBomb = !CalRemixWorld.hydrogenBomb; }, new Condition("", () => CalRemixWorld.hydrogenBomb)));
                 options.Add(new Anomaly109Option("bloodorange", "permanent_upgrades", "Toggles permanent upgrade recipe removals and alt obtainment methods", () => { CalRemixWorld.permanenthealth = !CalRemixWorld.permanenthealth; }, new Condition("", () => CalRemixWorld.permanenthealth)));
                 options.Add(new Anomaly109Option("terragrim", "alloy_bars", "Toggles Alloy Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.alloyBars, Recipes.alloyBarCrafts); CalRemixWorld.alloyBars = !CalRemixWorld.alloyBars; }, new Condition("", () => CalRemixWorld.alloyBars)));
                 options.Add(new Anomaly109Option("starfury", "essential_essence_bars", "Toggles Essential Essence Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.essenceBars, Recipes.essenceBarCrafts); CalRemixWorld.essenceBars = !CalRemixWorld.essenceBars; }, new Condition("", () => CalRemixWorld.essenceBars)));
                 options.Add(new Anomaly109Option("defiledgreatsword", "yharim_bars", "Toggles Yharim Bars from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.yharimBars, Recipes.yharimBarCrafts); CalRemixWorld.yharimBars = !CalRemixWorld.yharimBars; }, new Condition("", () => CalRemixWorld.yharimBars)));
+                options.Add(new Anomaly109Option("thelorde", "delicious_meat", "Toggles Delicious Meat from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.deliciousMeat, Recipes.deliciousMeatCrafts); CalRemixWorld.deliciousMeat = !CalRemixWorld.deliciousMeat; }, new Condition("", () => CalRemixWorld.deliciousMeat)));
                 options.Add(new Anomaly109Option("babilzot", "shimmer_essences", "Toggles Shimmer Essences from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.shimmerEssences, Recipes.shimmerEssenceCrafts); CalRemixWorld.shimmerEssences = !CalRemixWorld.shimmerEssences; }, new Condition("", () => CalRemixWorld.shimmerEssences)));
                 options.Add(new Anomaly109Option("leviathan", "crocodile_scales", "Toggles Crocodile Scales from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.crocodile, Recipes.crocodileCrafts); CalRemixWorld.crocodile = !CalRemixWorld.crocodile; }, new Condition("", () => CalRemixWorld.crocodile)));
-                options.Add(new Anomaly109Option("ceaselessvoid", "coyote_venom", "Toggles Coyote Venom drops and recipe injections", () => { Recipes.MassModifyIngredient(CalRemixWorld.wolfvenom, Recipes.venomCrafts); CalRemixWorld.wolfvenom = !CalRemixWorld.wolfvenom; }, new Condition("", () => CalRemixWorld.wolfvenom)));
+                options.Add(new Anomaly109Option("ceaselessvoid", "coyote_venom", "Toggles Coyote Venom from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.wolfvenom, Recipes.venomCrafts); CalRemixWorld.wolfvenom = !CalRemixWorld.wolfvenom; }, new Condition("", () => CalRemixWorld.wolfvenom)));
                 options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () =>
                 {
                     if (!CalRemixWorld.reargar)
@@ -582,6 +561,7 @@ namespace CalRemix.UI.Anomaly109
                 options.Add(new Anomaly109Option("meldosaurus", "meld_gunk", "Toggles Meld Gunk initial generation and spread", () => { CalRemixWorld.meldGunk = !CalRemixWorld.meldGunk; }, new Condition("", () => CalRemixWorld.meldGunk)));
                 options.Add(new Anomaly109Option("beewasp", "plagued_jungle", "Toggles the initial generation of the Plagued Jungle and related requirements", () => { CalRemixWorld.plaguetoggle = !CalRemixWorld.plaguetoggle; }, new Condition("", () => CalRemixWorld.plaguetoggle)));
                 options.Add(new Anomaly109Option("shrineys", "hardmode_shrines", "Toggles the initial generation for Hardmode shrines", () => { CalRemixWorld.shrinetoggle = !CalRemixWorld.shrinetoggle; }, new Condition("", () => CalRemixWorld.shrinetoggle)));
+                options.Add(new Anomaly109Option("blightful", "astral_blight", "Toggles the initial generation for the Astral Blight (Calamity's Vanities)", () => { CalRemixWorld.astralBlight = !CalRemixWorld.astralBlight; }, new Condition("", () => CalRemixWorld.astralBlight)));
                 options.Add(new Anomaly109Option("livinglife", "life_ore", "Toggles the initial generation for Life Ore", () => { CalRemixWorld.lifeoretoggle = !CalRemixWorld.lifeoretoggle; }, new Condition("", () => CalRemixWorld.lifeoretoggle)));
                 options.Add(new Anomaly109Option("grimethegame", "grimesand", "Toggles generation of Grimesand and its requirement for evil 2 bosses", () => { CalRemixWorld.grimesandToggle = !CalRemixWorld.grimesandToggle; }, new Condition("", () => CalRemixWorld.grimesandToggle)));
                 options.Add(new Anomaly109Option("thedevourerofgods", "cosmilite_slag", "Toggles initial generation of Cosmilite Slag and nerfed Cosmilite gear", () =>
@@ -604,9 +584,12 @@ namespace CalRemix.UI.Anomaly109
                 options.Add(new Anomaly109Option("havoc", "clamitas", "Toggles the Clamitas miniboss and the Eye of Desolation recipe removal", () => { CalRemixWorld.clamitas = !CalRemixWorld.clamitas; }, new Condition("", () => CalRemixWorld.clamitas)));
                 options.Add(new Anomaly109Option("applesand", "banana_clown", "Toggles Banana Clowns", () => { CalRemixWorld.clowns = !CalRemixWorld.clowns; }, new Condition("", () => CalRemixWorld.clowns)));
                 options.Add(new Anomaly109Option("banban", "green_demon", "Toggles Green Demons", () => { CalRemixWorld.greenDemon = !CalRemixWorld.greenDemon; }, new Condition("", () => CalRemixWorld.greenDemon)));
+                options.Add(new Anomaly109Option("wallofflesh", "wof_fleshmullet", "Toggles Wall of Flesh's second phase", () => { CalRemixWorld.mullet = !CalRemixWorld.mullet; }, new Condition("", () => CalRemixWorld.mullet)));
                 options.Add(new Anomaly109Option("banished", "baron_strait", "Toggles the initial generation of the Baron Strait", () => { CalRemixWorld.baronStrait = !CalRemixWorld.baronStrait; }, new Condition("", () => CalRemixWorld.baronStrait)));
+                options.Add(new Anomaly109Option("rotgut", "enemy_champions", "Toggles the spawning of champion variant enemies", () => { CalRemixWorld.champions = !CalRemixWorld.champions; }, new Condition("", () => CalRemixWorld.champions)));
                 options.Add(new Anomaly109Option("thesealed", "la_ruga", "...", () => { CalRemixWorld.laruga = !CalRemixWorld.laruga; }, new Condition("", () => CalRemixWorld.laruga)));
             }
+
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -686,7 +669,7 @@ namespace CalRemix.UI.Anomaly109
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "ExampleMod: Example Resource Bar",
+                    "CalRemix:Anomaly109Interface",
                     delegate
                     {
                         Anomaly109UserInterface.Draw(Main.spriteBatch, new GameTime());

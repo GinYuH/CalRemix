@@ -514,6 +514,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PathogenRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<PathogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPathogen>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<SickStick>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<Mutagen>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPathogen, ModContent.ItemType<KnowledgePathogen>(), desc: DropHelper.FirstKillText);
         }
         public override void OnKill()

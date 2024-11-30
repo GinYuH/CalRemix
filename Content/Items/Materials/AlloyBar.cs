@@ -33,7 +33,7 @@ namespace CalRemix.Content.Items.Materials
                 AddIngredient(ItemID.CrimtaneBar).
                 AddIngredient(ItemID.MeteoriteBar).
                 AddIngredient(ModContent.ItemType<WulfrumMetalScrap>()).
-                AddIngredient(ModContent.ItemType<SeaRemains>()).
+                AddIngredient(ModContent.ItemType<AntlionBar>()).
                 AddIngredient(ModContent.ItemType<AerialiteBar>()).
                 AddTile(TileID.Furnaces).
                 Register();

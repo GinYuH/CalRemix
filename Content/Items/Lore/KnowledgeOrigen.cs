@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Items.Lore;
-using CalRemix.Content.Items.Placeables.Trophies;
+﻿using CalRemix.Content.Items.Placeables.Trophies;
 using Terraria;
 using Terraria.ID;
 

@@ -2,6 +2,7 @@
 using CalamityMod.DataStructures;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -29,6 +30,30 @@ namespace CalRemix.Content.Projectiles.Hostile
             Projectile.tileCollide = false;
             Projectile.timeLeft = 300;
             AIType = -1;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            foreach (var v in Segments)
+            {
+                writer.Write(v.position.X);
+                writer.Write(v.position.Y);
+                writer.Write(v.locked);
+                writer.Write(v.oldPosition.X);
+                writer.Write(v.oldPosition.Y);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            List<VerletSimulatedSegment> segs = new List<VerletSimulatedSegment>();
+            for (int i = 0; i < 10; i++)
+            {
+                VerletSimulatedSegment v = new VerletSimulatedSegment(new Vector2(reader.ReadSingle(), reader.ReadSingle()), reader.ReadBoolean());
+                v.oldPosition = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+                segs.Add(v);
+            }
+            Segments = segs;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -110,6 +135,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             if ((Projectile.localAI[0] > 60 && Collision.IsWorldPointSolid(Projectile.Center)) || (Projectile.localAI[0] > 90 && Main.tile[(int)(Segments[(int)Projectile.ai[0]].position.X / 16), (int)(Segments[(int)Projectile.ai[0]].position.Y / 16)].WallType > 0))
             {
                 Projectile.velocity = Vector2.Zero;
+                Projectile.netUpdate = true;
             }
             foreach (Player target in Main.player)
             {

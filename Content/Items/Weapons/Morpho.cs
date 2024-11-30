@@ -16,17 +16,6 @@ namespace CalRemix.Content.Items.Weapons;
 
 public class Morpho : ModItem
 {
-
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Morpho Doomblade");
-        Tooltip.SetDefault("Swings a doomblade that shoots crescent slashes\n"
-            + "Using RMB summons an Arbiter of Judgement that does not consume minion slots\n"
-            + "Attacks from the blade and arbiter inflict Whispering Death and Valfrey Burn\n"
-            + "\'Now all will witness its true power!\'"); 
-        Item.ResearchUnlockCount = 1;
-    }
-
     public override void SetDefaults()
     {
         Item.damage = 1430;
@@ -56,10 +45,7 @@ public class Morpho : ModItem
         Item.UseSound = SoundID.Item39 with { Pitch = 0.5f };
         return true;
     }
-    public override bool AltFunctionUse(Player player)
-    {
-        return true;
-    }
+    public override bool AltFunctionUse(Player player) => true;
     public override void MeleeEffects(Player player, Rectangle hitbox)
     {
         if (Main.rand.NextBool(3))

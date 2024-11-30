@@ -123,7 +123,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
 				NPC.EncourageDespawn(10);
 				return;
 			}
-            NPC.Calamity().CurrentlyEnraged = CheckEnrage(player);
+            NPC.Calamity().CurrentlyEnraged = CheckEnrage(player) && !BossRushEvent.BossRushActive;
             Vector2 abovePlayer = (player.Center + new Vector2(0, -500));
             if (phase == -1)
             {

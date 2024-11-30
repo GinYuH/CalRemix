@@ -11,6 +11,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -38,7 +39,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<RockBullet>();
             Item.shootSpeed = 12f;
-            Item.Calamity().devItem = true;
+            Item.Remix().devItem = "KitsuLilly";
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -65,7 +66,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ModContent.ItemType<AshesofAnnihilation>(), 5).
                 AddIngredient(ModContent.ItemType<AscendantSpiritEssence>(), 10).
                 AddIngredient(ModContent.ItemType<Rock>()).
-                AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5).
+                AddIngredient(ModContent.ItemType<LightmixBar>(), 5).
                 AddTile(ModContent.TileType<DraedonsForge>()).
                 Register();
         }

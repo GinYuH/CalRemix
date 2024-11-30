@@ -28,6 +28,8 @@ using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Core.World;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using Terraria.Localization;
 
 namespace CalRemix
 {
@@ -101,7 +103,7 @@ namespace CalRemix
             }
             if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
-                Main.NewText("If you are seeing this, you are likely using the outdated Fandom wiki, please do not use it. Use wiki.gg for Calamity and the recipe browser mod for remix", Color.LightSeaGreen);
+                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
             if (type == TileType<LabHologramProjector>() && player.HeldItem.type == ItemType<BloodyVein>() && !NPC.AnyNPCs(NPCType<CyberDraedon>()))
             {
@@ -156,14 +158,14 @@ namespace CalRemix
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     ModPacket packet = Mod.GetPacket();
-                    packet.Write((byte)RemixMessageType.PandemicPanicStart);
-                    packet.Write((byte)Main.myPlayer);
+                    packet.Write((byte)RemixMessageType.StartPandemicPanic);
                     packet.Send();
                 }
                 else
                 {
-                    PandemicPanic.StartEvent(Main.LocalPlayer);
+                    PandemicPanic.StartEvent();
                 }
+                CalRemixWorld.UpdateWorldBool();
             }
         }
         public override void MouseOver(int i, int j, int type)
@@ -370,6 +372,33 @@ namespace CalRemix
             }
         }
 
+        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
+        {
+            if (type == TileType<CryonicBrick>())
+            {
+                return Main.hardMode;
+            }
+            return true;
+        }
+
+        public override bool CanExplode(int i, int j, int type)
+        {
+            if (type == TileType<CryonicBrick>())
+            {
+                return Main.hardMode;
+            }
+            return true;
+        }
+
+        public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
+        {
+            if (type == TileType<CryonicBrick>())
+            {
+                return Main.hardMode;
+            }
+            return true;
+        }
+
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (!Main.dedServ)
@@ -393,13 +422,14 @@ namespace CalRemix
             }
             if (CalRemixWorld.grimesandToggle)
             {
-                if (!CalRemixWorld.grime)
+                if (!CalRemixWorld.generatedGrime)
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
-                        Main.NewText("The sky islands pollute with grime...", Color.Brown);
-                        CalRemixWorld.grime = true;
+                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);                       
+                        
+                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
+                        CalRemixWorld.generatedGrime = true;
                         CalRemixWorld.UpdateWorldBool();
                     }
                 }
@@ -420,7 +450,7 @@ namespace CalRemix
             Player player = Main.LocalPlayer;
             if (player.ZoneJungle && !NPC.AnyNPCs(NPCType<Phytogen>()))
             {
-                 if (!effectOnly && !fail && Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
+                 if (!effectOnly && !fail && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                  {
                      CalamityGlobalTile.GetTreeBottom(i, j, out int treeX, out int treeY);
                      TreeTypes treeType = WorldGen.GetTreeType(Main.tile[treeX, treeY].TileType);
@@ -434,7 +464,20 @@ namespace CalRemix
 
                          if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
                          {
-                             NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
+                            }
+                            else
+                            {
+                                ModPacket packet = CalRemix.CalMod.GetPacket();
+                                packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
+                                packet.Write(Main.LocalPlayer.position.X);
+                                packet.Write(Main.LocalPlayer.position.Y);
+                                packet.Write(NPCType<Phytogen>());
+                                packet.Write(Main.myPlayer);
+                                packet.Send();
+                            }
                          }
                      }
                  }

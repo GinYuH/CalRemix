@@ -9,7 +9,6 @@ namespace CalRemix.Content.Items.Weapons
 {
     public class DualCane : ModItem
 	{
-        private int charge = 0;
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
@@ -27,7 +26,7 @@ namespace CalRemix.Content.Items.Weapons
 			Item.useAnimation = 45;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = true;
-            Item.UseSound = SoundID.DD2_DarkMageHealImpact;
+            Item.UseSound = SoundID.Item9;
             Item.DamageType = DamageClass.Magic;
 			Item.damage = 47;
 			Item.knockBack = 7f; 
@@ -37,21 +36,9 @@ namespace CalRemix.Content.Items.Weapons
 			Item.shoot = ProjectileID.PurificationPowder;
 			Item.shootSpeed = 13f;
         }
-        public override void UpdateInventory(Player player)
-        {
-            if (!player.channel)
-            {
-                charge = 0;
-                Item.UseSound = SoundID.DD2_DarkMageHealImpact;
-                return;
-            }
-            Item.UseSound = SoundID.Item9;
-            if (charge < 40 && player.channel && (player.HeldItem == Item || player.inventory[58] == Item))
-                charge++;
-        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (charge >= 40)
+            if (player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer >= 40)
             {
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CaneOrb>(), damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CaneOrb>(), damage, knockback, player.whoAmI, ai1: 1);

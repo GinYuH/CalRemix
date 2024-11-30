@@ -53,7 +53,6 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ItemID.SliceOfCake, 12).
                 AddIngredient<RuinousSoul>(14).
                 AddIngredient(ItemID.BambooBlock, 64).
-                AddIngredient<EssentialEssenceBar>(40).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

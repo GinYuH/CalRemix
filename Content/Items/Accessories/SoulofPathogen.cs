@@ -2,14 +2,12 @@
 using CalamityMod;
 using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalamityMod.Rarities;
-using CalRemix.Content.Projectiles.Accessories;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -18,7 +16,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Pathogen");
-            Tooltip.SetDefault("7% increase to all damage\nEnables the ability to lifesteal from any enemy\n'Note: lifesteal sold separately'");
+            Tooltip.SetDefault("7% increase to all damage\nEnables the ability to lifesteal from any enemy\n'Note: lifesteal sold separately'\n" + CalamityUtils.ColorMessage("Boosts Unholy damage", Color.Red));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -60,6 +58,11 @@ namespace CalRemix.Content.Items.Accessories
                 drawOffset: new(0f, 0f)
             );
             return false;
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return slot == ModContent.GetInstance<SoulSlot>().Type;
         }
     }
 }

@@ -1,0 +1,1436 @@
+20Stone: {
+	DisplayName: Poisoned Stone
+	Tooltip:
+		'''
+		Immunity to Poisoned
+		Attacks inflict Poisoned
+		'''
+}
+
+21Stone: {
+	DisplayName: Potion Sickness Stone
+	Tooltip:
+		'''
+		Immunity to Potion Sickness
+		Attacks inflict Potion Sickness
+		'''
+}
+
+22Stone: {
+	DisplayName: Darkness Stone
+	Tooltip:
+		'''
+		Immunity to Darkness
+		Attacks inflict Darkness
+		'''
+}
+
+23Stone: {
+	DisplayName: Cursed Stone
+	Tooltip:
+		'''
+		Immunity to Cursed
+		Attacks inflict Cursed
+		'''
+}
+
+24Stone: {
+	DisplayName: On Fire! Stone
+	Tooltip:
+		'''
+		Immunity to On Fire!
+		Attacks inflict On Fire!
+		'''
+}
+
+25Stone: {
+	DisplayName: Tipsy Stone
+	Tooltip:
+		'''
+		Immunity to Tipsy
+		Attacks inflict Tipsy
+		'''
+}
+
+28Stone: {
+	DisplayName: Werewolf Stone
+	Tooltip:
+		'''
+		Immunity to Werewolf
+		Attacks inflict Werewolf
+		'''
+}
+
+30Stone: {
+	DisplayName: Bleeding Stone
+	Tooltip:
+		'''
+		Immunity to Bleeding
+		Attacks inflict Bleeding
+		'''
+}
+
+31Stone: {
+	DisplayName: Confused Stone
+	Tooltip:
+		'''
+		Immunity to Confused
+		Attacks inflict Confused
+		'''
+}
+
+32Stone: {
+	DisplayName: Slow Stone
+	Tooltip:
+		'''
+		Immunity to Slow
+		Attacks inflict Slow
+		'''
+}
+
+33Stone: {
+	DisplayName: Weak Stone
+	Tooltip:
+		'''
+		Immunity to Weak
+		Attacks inflict Weak
+		'''
+}
+
+34Stone: {
+	DisplayName: Merfolk Stone
+	Tooltip:
+		'''
+		Immunity to Merfolk
+		Attacks inflict Merfolk
+		'''
+}
+
+35Stone: {
+	DisplayName: Silenced Stone
+	Tooltip:
+		'''
+		Immunity to Silenced
+		Attacks inflict Silenced
+		'''
+}
+
+36Stone: {
+	DisplayName: Broken Armor Stone
+	Tooltip:
+		'''
+		Immunity to Broken Armor
+		Attacks inflict Broken Armor
+		'''
+}
+
+37Stone: {
+	DisplayName: Horrified Stone
+	Tooltip:
+		'''
+		Immunity to Horrified
+		Attacks inflict Horrified
+		'''
+}
+
+38Stone: {
+	DisplayName: The Tongue Stone
+	Tooltip:
+		'''
+		Immunity to The Tongue
+		Attacks inflict The Tongue
+		'''
+}
+
+39Stone: {
+	DisplayName: Cursed Inferno Stone
+	Tooltip:
+		'''
+		Immunity to Cursed Inferno
+		Attacks inflict Cursed Inferno
+		'''
+}
+
+44Stone: {
+	DisplayName: Frostburn Stone
+	Tooltip:
+		'''
+		Immunity to Frostburn
+		Attacks inflict Frostburn
+		'''
+}
+
+46Stone: {
+	DisplayName: Chilled Stone
+	Tooltip:
+		'''
+		Immunity to Chilled
+		Attacks inflict Chilled
+		'''
+}
+
+47Stone: {
+	DisplayName: Frozen Stone
+	Tooltip:
+		'''
+		Immunity to Frozen
+		Attacks inflict Frozen
+		'''
+}
+
+67Stone: {
+	DisplayName: Burning Stone
+	Tooltip:
+		'''
+		Immunity to Burning
+		Attacks inflict Burning
+		'''
+}
+
+68Stone: {
+	DisplayName: Suffocation Stone
+	Tooltip:
+		'''
+		Immunity to Suffocation
+		Attacks inflict Suffocation
+		'''
+}
+
+69Stone: {
+	DisplayName: Ichor Stone
+	Tooltip:
+		'''
+		Immunity to Ichor
+		Attacks inflict Ichor
+		'''
+}
+
+70Stone: {
+	DisplayName: Acid Venom Stone
+	Tooltip:
+		'''
+		Immunity to Acid Venom
+		Attacks inflict Acid Venom
+		'''
+}
+
+80Stone: {
+	DisplayName: Blackout Stone
+	Tooltip:
+		'''
+		Immunity to Blackout
+		Attacks inflict Blackout
+		'''
+}
+
+86Stone: {
+	DisplayName: Water Candle Stone
+	Tooltip:
+		'''
+		Immunity to Water Candle
+		Attacks inflict Water Candle
+		'''
+}
+
+87Stone: {
+	DisplayName: Cozy Fire Stone
+	Tooltip:
+		'''
+		Immunity to Cozy Fire
+		Attacks inflict Cozy Fire
+		'''
+}
+
+88Stone: {
+	DisplayName: Chaos State Stone
+	Tooltip:
+		'''
+		Immunity to Chaos State
+		Attacks inflict Chaos State
+		'''
+}
+
+89Stone: {
+	DisplayName: Heart Lamp Stone
+	Tooltip:
+		'''
+		Immunity to Heart Lamp
+		Attacks inflict Heart Lamp
+		'''
+}
+
+94Stone: {
+	DisplayName: Mana Sickness Stone
+	Tooltip:
+		'''
+		Immunity to Mana Sickness
+		Attacks inflict Mana Sickness
+		'''
+}
+
+103Stone: {
+	DisplayName: Wet Stone
+	Tooltip:
+		'''
+		Immunity to Wet
+		Attacks inflict Wet
+		'''
+}
+
+119Stone: {
+	DisplayName: Lovestruck Stone
+	Tooltip:
+		'''
+		Immunity to Lovestruck
+		Attacks inflict Lovestruck
+		'''
+}
+
+120Stone: {
+	DisplayName: Stinky Stone
+	Tooltip:
+		'''
+		Immunity to Stinky
+		Attacks inflict Stinky
+		'''
+}
+
+137Stone: {
+	DisplayName: Slime Stone
+	Tooltip:
+		'''
+		Immunity to Slime
+		Attacks inflict Slime
+		'''
+}
+
+144Stone: {
+	DisplayName: Electrified Stone
+	Tooltip:
+		'''
+		Immunity to Electrified
+		Attacks inflict Electrified
+		'''
+}
+
+145Stone: {
+	DisplayName: Moon Bite Stone
+	Tooltip:
+		'''
+		Immunity to Moon Bite
+		Attacks inflict Moon Bite
+		'''
+}
+
+146Stone: {
+	DisplayName: Happy! Stone
+	Tooltip:
+		'''
+		Immunity to Happy!
+		Attacks inflict Happy!
+		'''
+}
+
+147Stone: {
+	DisplayName: Banner Stone
+	Tooltip:
+		'''
+		Immunity to Banner
+		Attacks inflict Banner
+		'''
+}
+
+148Stone: {
+	DisplayName: Feral Bite Stone
+	Tooltip:
+		'''
+		Immunity to Feral Bite
+		Attacks inflict Feral Bite
+		'''
+}
+
+149Stone: {
+	DisplayName: Webbed Stone
+	Tooltip:
+		'''
+		Immunity to Webbed
+		Attacks inflict Webbed
+		'''
+}
+
+156Stone: {
+	DisplayName: Stoned Stone
+	Tooltip:
+		'''
+		Immunity to Stoned
+		Attacks inflict Stoned
+		'''
+}
+
+157Stone: {
+	DisplayName: Peace Candle Stone
+	Tooltip:
+		'''
+		Immunity to Peace Candle
+		Attacks inflict Peace Candle
+		'''
+}
+
+158Stone: {
+	DisplayName: Star in a Bottle Stone
+	Tooltip:
+		'''
+		Immunity to Star in a Bottle
+		Attacks inflict Star in a Bottle
+		'''
+}
+
+160Stone: {
+	DisplayName: Dazed Stone
+	Tooltip:
+		'''
+		Immunity to Dazed
+		Attacks inflict Dazed
+		'''
+}
+
+163Stone: {
+	DisplayName: Obstructed Stone
+	Tooltip:
+		'''
+		Immunity to Obstructed
+		Attacks inflict Obstructed
+		'''
+}
+
+164Stone: {
+	DisplayName: Distorted Stone
+	Tooltip:
+		'''
+		Immunity to Distorted
+		Attacks inflict Distorted
+		'''
+}
+
+194Stone: {
+	DisplayName: Mighty Wind Stone
+	Tooltip:
+		'''
+		Immunity to Mighty Wind
+		Attacks inflict Mighty Wind
+		'''
+}
+
+195Stone: {
+	DisplayName: Withered Armor Stone
+	Tooltip:
+		'''
+		Immunity to Withered Armor
+		Attacks inflict Withered Armor
+		'''
+}
+
+196Stone: {
+	DisplayName: Withered Weapon Stone
+	Tooltip:
+		'''
+		Immunity to Withered Weapon
+		Attacks inflict Withered Weapon
+		'''
+}
+
+197Stone: {
+	DisplayName: Oozed Stone
+	Tooltip:
+		'''
+		Immunity to Oozed
+		Attacks inflict Oozed
+		'''
+}
+
+199Stone: {
+	DisplayName: Creative Shock Stone
+	Tooltip:
+		'''
+		Immunity to Creative Shock
+		Attacks inflict Creative Shock
+		'''
+}
+
+215Stone: {
+	DisplayName: The Bast Defense Stone
+	Tooltip:
+		'''
+		Immunity to The Bast Defense
+		Attacks inflict The Bast Defense
+		'''
+}
+
+320Stone: {
+	DisplayName: Sparkle Slime Stone
+	Tooltip:
+		'''
+		Immunity to Sparkle Slime
+		Attacks inflict Sparkle Slime
+		'''
+}
+
+321Stone: {
+	DisplayName: Cerebral Mindtrick Stone
+	Tooltip:
+		'''
+		Immunity to Cerebral Mindtrick
+		Attacks inflict Cerebral Mindtrick
+		'''
+}
+
+332Stone: {
+	DisplayName: Peckish Stone
+	Tooltip:
+		'''
+		Immunity to Peckish
+		Attacks inflict Peckish
+		'''
+}
+
+333Stone: {
+	DisplayName: Hungry Stone
+	Tooltip:
+		'''
+		Immunity to Hungry
+		Attacks inflict Hungry
+		'''
+}
+
+334Stone: {
+	DisplayName: Starving Stone
+	Tooltip:
+		'''
+		Immunity to Starving
+		Attacks inflict Starving
+		'''
+}
+
+350Stone: {
+	DisplayName: Shadow Candle Stone
+	Tooltip:
+		'''
+		Immunity to Shadow Candle
+		Attacks inflict Shadow Candle
+		'''
+}
+
+353Stone: {
+	DisplayName: Shimmering Stone
+	Tooltip:
+		'''
+		Immunity to Shimmering
+		Attacks inflict Shimmering
+		'''
+}
+
+"Calamity Mod/AlcoholPoisoningStone": {
+	DisplayName: Alcohol Poisoning Stone
+	Tooltip:
+		'''
+		Immunity to Alcohol Poisoning
+		Attacks inflict Alcohol Poisoning
+		'''
+}
+
+"Calamity Mod/AstralInfectionDebuffStone": {
+	DisplayName: Astral Infection Stone
+	Tooltip:
+		'''
+		Immunity to Astral Infection
+		Attacks inflict Astral Infection
+		'''
+}
+
+"Calamity Mod/BanishingFireStone": {
+	DisplayName: Banishing Fire Stone
+	Tooltip:
+		'''
+		Immunity to Banishing Fire
+		Attacks inflict Banishing Fire
+		'''
+}
+
+"Calamity Mod/BrainRotStone": {
+	DisplayName: Brain Rot Stone
+	Tooltip:
+		'''
+		Immunity to Brain Rot
+		Attacks inflict Brain Rot
+		'''
+}
+
+"Calamity Mod/BrimstoneFlamesStone": {
+	DisplayName: Brimstone Flames Stone
+	Tooltip:
+		'''
+		Immunity to Brimstone Flames
+		Attacks inflict Brimstone Flames
+		'''
+}
+
+"Calamity Mod/BurningBloodStone": {
+	DisplayName: Burning Blood Stone
+	Tooltip:
+		'''
+		Immunity to Burning Blood
+		Attacks inflict Burning Blood
+		'''
+}
+
+"Calamity Mod/CrushDepthStone": {
+	DisplayName: Crush Depth Stone
+	Tooltip:
+		'''
+		Immunity to Crush Depth
+		Attacks inflict Crush Depth
+		'''
+}
+
+"Calamity Mod/DragonfireStone": {
+	DisplayName: Dragonfire Stone
+	Tooltip:
+		'''
+		Immunity to Dragonfire
+		Attacks inflict Dragonfire
+		'''
+}
+
+"Calamity Mod/ElementalMixStone": {
+	DisplayName: Elemental Mix Stone
+	Tooltip:
+		'''
+		Immunity to Elemental Mix
+		Attacks inflict Elemental Mix
+		'''
+}
+
+"Calamity Mod/GodSlayerInfernoStone": {
+	DisplayName: God Slayer Inferno Stone
+	Tooltip:
+		'''
+		Immunity to God Slayer Inferno
+		Attacks inflict God Slayer Inferno
+		'''
+}
+
+"Calamity Mod/HolyFlamesStone": {
+	DisplayName: Holy Flames Stone
+	Tooltip:
+		'''
+		Immunity to Holy Flames
+		Attacks inflict Holy Flames
+		'''
+}
+
+"Calamity Mod/HolyInfernoStone": {
+	DisplayName: Holy Inferno Stone
+	Tooltip:
+		'''
+		Immunity to Holy Inferno
+		Attacks inflict Holy Inferno
+		'''
+}
+
+"Calamity Mod/ManaBurnStone": {
+	DisplayName: Mana Burn Stone
+	Tooltip:
+		'''
+		Immunity to Mana Burn
+		Attacks inflict Mana Burn
+		'''
+}
+
+"Calamity Mod/MiracleBlightStone": {
+	DisplayName: Miracle Blight Stone
+	Tooltip:
+		'''
+		Immunity to Miracle Blight
+		Attacks inflict Miracle Blight
+		'''
+}
+
+"Calamity Mod/NightwitherStone": {
+	DisplayName: Moon Burnt Stone
+	Tooltip:
+		'''
+		Immunity to Moon Burnt
+		Attacks inflict Moon Burnt
+		'''
+}
+
+"Calamity Mod/PlagueStone": {
+	DisplayName: Plague Stone
+	Tooltip:
+		'''
+		Immunity to Plague
+		Attacks inflict Plague
+		'''
+}
+
+"Calamity Mod/RancorBurnStone": {
+	DisplayName: Rancor Burn Stone
+	Tooltip:
+		'''
+		Immunity to Rancor Burn
+		Attacks inflict Rancor Burn
+		'''
+}
+
+"Calamity Mod/RiptideDebuffStone": {
+	DisplayName: Riptide Stone
+	Tooltip:
+		'''
+		Immunity to Riptide
+		Attacks inflict Riptide
+		'''
+}
+
+"Calamity Mod/SagePoisonStone": {
+	DisplayName: Sage Poison Stone
+	Tooltip:
+		'''
+		Immunity to Sage Poison
+		Attacks inflict Sage Poison
+		'''
+}
+
+"Calamity Mod/SearingLavaStone": {
+	DisplayName: Searing Lava Stone
+	Tooltip:
+		'''
+		Immunity to Searing Lava
+		Attacks inflict Searing Lava
+		'''
+}
+
+"Calamity Mod/ShadowflameStone": {
+	DisplayName: Shadowflame Stone
+	Tooltip:
+		'''
+		Immunity to Shadowflame
+		Attacks inflict Shadowflame
+		'''
+}
+
+"Calamity Mod/ShellfishClapsStone": {
+	DisplayName: Shellfish Claps Stone
+	Tooltip:
+		'''
+		Immunity to Shellfish Claps
+		Attacks inflict Shellfish Claps
+		'''
+}
+
+"Calamity Mod/ShredStone": {
+	DisplayName: Shred Stone
+	Tooltip:
+		'''
+		Immunity to Shred
+		Attacks inflict Shred
+		'''
+}
+
+"Calamity Mod/SnapClamDebuffStone": {
+	DisplayName: Clammed Stone
+	Tooltip:
+		'''
+		Immunity to Clammed
+		Attacks inflict Clammed
+		'''
+}
+
+"Calamity Mod/SulphuricPoisoningStone": {
+	DisplayName: Sulphuric Poisoning Stone
+	Tooltip:
+		'''
+		Immunity to Sulphuric Poisoning
+		Attacks inflict Sulphuric Poisoning
+		'''
+}
+
+"Calamity Mod/VaporfiedStone": {
+	DisplayName: Vaporfied Stone
+	Tooltip:
+		'''
+		Immunity to Vaporfied
+		Attacks inflict Vaporfied
+		'''
+}
+
+"Calamity Mod/VulnerabilityHexStone": {
+	DisplayName: Vulnerability Hex Stone
+	Tooltip:
+		'''
+		Immunity to Vulnerability Hex
+		Attacks inflict Vulnerability Hex
+		'''
+}
+
+"Calamity Mod/WeakBrimstoneFlamesStone": {
+	DisplayName: Weak Brimstone Flames Stone
+	Tooltip:
+		'''
+		Immunity to Weak Brimstone Flames
+		Attacks inflict Weak Brimstone Flames
+		'''
+}
+
+"Calamity Mod/AbsorberAfflictionStone": {
+	DisplayName: Absorber Affliction Stone
+	Tooltip:
+		'''
+		Immunity to Absorber Affliction
+		Attacks inflict Absorber Affliction
+		'''
+}
+
+"Calamity Mod/AndromedaCrippleStone": {
+	DisplayName: Andromeda Cripple Stone
+	Tooltip:
+		'''
+		Immunity to Andromeda Cripple
+		Attacks inflict Andromeda Cripple
+		'''
+}
+
+"Calamity Mod/ArmorCrunchStone": {
+	DisplayName: Armor Crunch Stone
+	Tooltip:
+		'''
+		Immunity to Armor Crunch
+		Attacks inflict Armor Crunch
+		'''
+}
+
+"Calamity Mod/ClamityStone": {
+	DisplayName: Clamity Stone
+	Tooltip:
+		'''
+		Immunity to Clamity
+		Attacks inflict Clamity
+		'''
+}
+
+"Calamity Mod/CrumblingStone": {
+	DisplayName: Crumbling Stone
+	Tooltip:
+		'''
+		Immunity to Crumbling
+		Attacks inflict Crumbling
+		'''
+}
+
+"Calamity Mod/DoGExtremeGravityStone": {
+	DisplayName: Extreme Gravity Stone
+	Tooltip:
+		'''
+		Immunity to Extreme Gravity
+		Attacks inflict Extreme Gravity
+		'''
+}
+
+"Calamity Mod/EnragedStone": {
+	DisplayName: Enraged Stone
+	Tooltip:
+		'''
+		Immunity to Enraged
+		Attacks inflict Enraged
+		'''
+}
+
+"Calamity Mod/EutrophicationStone": {
+	DisplayName: Eutrophication Stone
+	Tooltip:
+		'''
+		Immunity to Eutrophication
+		Attacks inflict Eutrophication
+		'''
+}
+
+"Calamity Mod/FishAlertStone": {
+	DisplayName: Fish Alert Stone
+	Tooltip:
+		'''
+		Immunity to Fish Alert
+		Attacks inflict Fish Alert
+		'''
+}
+
+"Calamity Mod/FrozenLungsStone": {
+	DisplayName: Frozen Lungs Stone
+	Tooltip:
+		'''
+		Immunity to Frozen Lungs
+		Attacks inflict Frozen Lungs
+		'''
+}
+
+"Calamity Mod/GalvanicCorrosionStone": {
+	DisplayName: Galvanic Corrosion Stone
+	Tooltip:
+		'''
+		Immunity to Galvanic Corrosion
+		Attacks inflict Galvanic Corrosion
+		'''
+}
+
+"Calamity Mod/GlacialStateStone": {
+	DisplayName: Glacial State Stone
+	Tooltip:
+		'''
+		Immunity to Glacial State
+		Attacks inflict Glacial State
+		'''
+}
+
+"Calamity Mod/IcarusFollyStone": {
+	DisplayName: Icarus' Folly Stone
+	Tooltip:
+		'''
+		Immunity to Icarus' Folly
+		Attacks inflict Icarus' Folly
+		'''
+}
+
+"Calamity Mod/IrradiatedStone": {
+	DisplayName: Irradiated Stone
+	Tooltip:
+		'''
+		Immunity to Irradiated
+		Attacks inflict Irradiated
+		'''
+}
+
+"Calamity Mod/KamiFluStone": {
+	DisplayName: Kami Flu Stone
+	Tooltip:
+		'''
+		Immunity to Kami Flu
+		Attacks inflict Kami Flu
+		'''
+}
+
+"Calamity Mod/MarkedforDeathStone": {
+	DisplayName: Marked for Death Stone
+	Tooltip:
+		'''
+		Immunity to Marked for Death
+		Attacks inflict Marked for Death
+		'''
+}
+
+"Calamity Mod/NOUStone": {
+	DisplayName: NO U Stone
+	Tooltip:
+		'''
+		Immunity to NO U
+		Attacks inflict NO U
+		'''
+}
+
+"Calamity Mod/PearlAuraStone": {
+	DisplayName: Pearl Aura Stone
+	Tooltip:
+		'''
+		Immunity to Pearl Aura
+		Attacks inflict Pearl Aura
+		'''
+}
+
+"Calamity Mod/ProfanedWeaknessStone": {
+	DisplayName: Profaned Weakness Stone
+	Tooltip:
+		'''
+		Immunity to Profaned Weakness
+		Attacks inflict Profaned Weakness
+		'''
+}
+
+"Calamity Mod/TemporalSadnessStone": {
+	DisplayName: Temporal Sadness Stone
+	Tooltip:
+		'''
+		Immunity to Temporal Sadness
+		Attacks inflict Temporal Sadness
+		'''
+}
+
+"Calamity Mod/TimeDistortionStone": {
+	DisplayName: Time Distortion Stone
+	Tooltip:
+		'''
+		Immunity to Time Distortion
+		Attacks inflict Time Distortion
+		'''
+}
+
+"Calamity Mod/WarpedStone": {
+	DisplayName: Warped Stone
+	Tooltip:
+		'''
+		Immunity to Warped
+		Attacks inflict Warped
+		'''
+}
+
+"Calamity Mod/WeakPetrificationStone": {
+	DisplayName: Weak Petrification Stone
+	Tooltip:
+		'''
+		Immunity to Weak Petrification
+		Attacks inflict Weak Petrification
+		'''
+}
+
+"Calamity Mod/WhisperingDeathStone": {
+	DisplayName: Whispering Death Stone
+	Tooltip:
+		'''
+		Immunity to Whispering Death
+		Attacks inflict Whispering Death
+		'''
+}
+
+"Calamity Mod/WitherDebuffStone": {
+	DisplayName: Wither Stone
+	Tooltip:
+		'''
+		Immunity to Wither
+		Attacks inflict Wither
+		'''
+}
+
+"Calamity: Community Remix/AcidStone": {
+	DisplayName: You're not on acid, everyone else is Stone
+	Tooltip:
+		'''
+		Immunity to You're not on acid, everyone else is
+		Attacks inflict You're not on acid, everyone else is
+		'''
+}
+
+"Calamity: Community Remix/AergiaNeuronBuffStone": {
+	DisplayName: Aergia Neuron Stone
+	Tooltip:
+		'''
+		Immunity to Aergia Neuron
+		Attacks inflict Aergia Neuron
+		'''
+}
+
+"Calamity: Community Remix/AnxietyStone": {
+	DisplayName: Calamitous Anxiety Stone
+	Tooltip:
+		'''
+		Immunity to Calamitous Anxiety
+		Attacks inflict Calamitous Anxiety
+		'''
+}
+
+"Calamity: Community Remix/AstralEffigyBuffStone": {
+	DisplayName: Astral Effigy Stone
+	Tooltip:
+		'''
+		Immunity to Astral Effigy
+		Attacks inflict Astral Effigy
+		'''
+}
+
+"Calamity: Community Remix/AtlasSoldierBuffStone": {
+	DisplayName: Atlas Soldier Stone
+	Tooltip:
+		'''
+		Immunity to Atlas Soldier
+		Attacks inflict Atlas Soldier
+		'''
+}
+
+"Calamity: Community Remix/BrimstoneMadnessStone": {
+	DisplayName: Maybe you shouldn't have taken all those enchantments Stone
+	Tooltip:
+		'''
+		Immunity to Maybe you shouldn't have taken all those enchantments
+		Attacks inflict Maybe you shouldn't have taken all those enchantments
+		'''
+}
+
+"Calamity: Community Remix/CalamitizedStone": {
+	DisplayName: Calamitized Stone
+	Tooltip:
+		'''
+		Immunity to Calamitized
+		Attacks inflict Calamitized
+		'''
+}
+
+"Calamity: Community Remix/CorrosiveEyeBuffStone": {
+	DisplayName: Corrosive Eye Stone
+	Tooltip:
+		'''
+		Immunity to Corrosive Eye
+		Attacks inflict Corrosive Eye
+		'''
+}
+
+"Calamity: Community Remix/CosmicConflictBuffStone": {
+	DisplayName: Cosmic Conflict Construct Stone
+	Tooltip:
+		'''
+		Immunity to Cosmic Conflict Construct
+		Attacks inflict Cosmic Conflict Construct
+		'''
+}
+
+"Calamity: Community Remix/CosmicElementalBuffStone": {
+	DisplayName: Cosmic Elemental Stone
+	Tooltip:
+		'''
+		Immunity to Cosmic Elemental
+		Attacks inflict Cosmic Elemental
+		'''
+}
+
+"Calamity: Community Remix/DysphoriaStone": {
+	DisplayName: Calamitous Dysphoria Stone
+	Tooltip:
+		'''
+		Immunity to Calamitous Dysphoria
+		Attacks inflict Calamitous Dysphoria
+		'''
+}
+
+"Calamity: Community Remix/EarthElementalBuffStone": {
+	DisplayName: Earth Elemental Stone
+	Tooltip:
+		'''
+		Immunity to Earth Elemental
+		Attacks inflict Earth Elemental
+		'''
+}
+
+"Calamity: Community Remix/ElementalAffinityStone": {
+	DisplayName: You feel like the master of the elements Stone
+	Tooltip:
+		'''
+		Immunity to You feel like the master of the elements
+		Attacks inflict You feel like the master of the elements
+		'''
+}
+
+"Calamity: Community Remix/EntropicallyFedStone": {
+	DisplayName: Entropically Fed Stone
+	Tooltip:
+		'''
+		Immunity to Entropically Fed
+		Attacks inflict Entropically Fed
+		'''
+}
+
+"Calamity: Community Remix/EuphoriaStone": {
+	DisplayName: Calamitous Euphoria Stone
+	Tooltip:
+		'''
+		Immunity to Calamitous Euphoria
+		Attacks inflict Calamitous Euphoria
+		'''
+}
+
+"Calamity: Community Remix/ExtensionCordDebuffStone": {
+	DisplayName: Extension Cord Debuff Stone
+	Tooltip:
+		'''
+		Immunity to Extension Cord Debuff
+		Attacks inflict Extension Cord Debuff
+		'''
+}
+
+"Calamity: Community Remix/FairiedStone": {
+	DisplayName: Fairy Float Stone
+	Tooltip:
+		'''
+		Immunity to Fairy Float
+		Attacks inflict Fairy Float
+		'''
+}
+
+"Calamity: Community Remix/GarBoostStone": {
+	DisplayName: Gar Mana Boost Stone
+	Tooltip:
+		'''
+		Immunity to Gar Mana Boost
+		Attacks inflict Gar Mana Boost
+		'''
+}
+
+"Calamity: Community Remix/HallowEffigyBuffStone": {
+	DisplayName: Hallow Effigy Stone
+	Tooltip:
+		'''
+		Immunity to Hallow Effigy
+		Attacks inflict Hallow Effigy
+		'''
+}
+
+"Calamity: Community Remix/HayFeaverStone": {
+	DisplayName: Hay Fever Stone
+	Tooltip:
+		'''
+		Immunity to Hay Fever
+		Attacks inflict Hay Fever
+		'''
+}
+
+"Calamity: Community Remix/ILoveLeanStone": {
+	DisplayName: I LOVE LEAN! Stone
+	Tooltip:
+		'''
+		Immunity to I LOVE LEAN!
+		Attacks inflict I LOVE LEAN!
+		'''
+}
+
+"Calamity: Community Remix/LeavesStone": {
+	DisplayName: Leaves Power Stone
+	Tooltip:
+		'''
+		Immunity to Leaves Power
+		Attacks inflict Leaves Power
+		'''
+}
+
+"Calamity: Community Remix/MackerelBuffStone": {
+	DisplayName: MackerelBuff Stone
+	Tooltip:
+		'''
+		Immunity to MackerelBuff
+		Attacks inflict MackerelBuff
+		'''
+}
+
+"Calamity: Community Remix/MedicallyIntelligentStone": {
+	DisplayName: Medically Intelligent Stone
+	Tooltip:
+		'''
+		Immunity to Medically Intelligent
+		Attacks inflict Medically Intelligent
+		'''
+}
+
+"Calamity: Community Remix/MethHighStone": {
+	DisplayName: Sunken Power Stone
+	Tooltip:
+		'''
+		Immunity to Sunken Power
+		Attacks inflict Sunken Power
+		'''
+}
+
+"Calamity: Community Remix/MethLowStone": {
+	DisplayName: Sunken Withdrawal Stone
+	Tooltip:
+		'''
+		Immunity to Sunken Withdrawal
+		Attacks inflict Sunken Withdrawal
+		'''
+}
+
+"Calamity: Community Remix/MicrobialClusterBuffStone": {
+	DisplayName: Microbial Cluster Stone
+	Tooltip:
+		'''
+		Immunity to Microbial Cluster
+		Attacks inflict Microbial Cluster
+		'''
+}
+
+"Calamity: Community Remix/MoltenToolsBuffStone": {
+	DisplayName: Molten Tools Stone
+	Tooltip:
+		'''
+		Immunity to Molten Tools
+		Attacks inflict Molten Tools
+		'''
+}
+
+"Calamity: Community Remix/MoonfistBuffStone": {
+	DisplayName: Moon Empowerment Stone
+	Tooltip:
+		'''
+		Immunity to Moon Empowerment
+		Attacks inflict Moon Empowerment
+		'''
+}
+
+"Calamity: Community Remix/ScorinfestationStone": {
+	DisplayName: Scorinfestation Stone
+	Tooltip:
+		'''
+		Immunity to Scorinfestation
+		Attacks inflict Scorinfestation
+		'''
+}
+
+"Calamity: Community Remix/StatueBuffStone": {
+	DisplayName: Animated Statue Stone
+	Tooltip:
+		'''
+		Immunity to Animated Statue
+		Attacks inflict Animated Statue
+		'''
+}
+
+"Calamity: Community Remix/TheDreamingGhostBuffStone": {
+	DisplayName: The Dreaming Ghost Stone
+	Tooltip:
+		'''
+		Immunity to The Dreaming Ghost
+		Attacks inflict The Dreaming Ghost
+		'''
+}
+
+"Calamity: Community Remix/ValfreyBurnStone": {
+	DisplayName: Valfrey Burn Stone
+	Tooltip:
+		'''
+		Immunity to Valfrey Burn
+		Attacks inflict Valfrey Burn
+		'''
+}
+
+"Calamity: Community Remix/WarathStone": {
+	DisplayName: Warath Stone
+	Tooltip:
+		'''
+		Immunity to Warath
+		Attacks inflict Warath
+		'''
+}
+
+"Calamity: Community Remix/WitherStone": {
+	DisplayName: Wither Stone
+	Tooltip:
+		'''
+		Immunity to Wither
+		Attacks inflict Wither
+		'''
+}
+
+"Calamity: Community Remix/ShreadedLungsStone": {
+	DisplayName: Shreaded Lungs Stone
+	Tooltip:
+		'''
+		Immunity to Shreaded Lungs
+		Attacks inflict Shreaded Lungs
+		'''
+}
+
+FolvsStone: {
+	DisplayName: Folv's Stone
+	Tooltip:
+		'''
+		Immunity to Folv's
+		Attacks inflict Folv's
+		'''
+}
+
+"Calamity: Community Remix/SickCellBuffStone": {
+	DisplayName: Sick Cell Stone
+	Tooltip:
+		'''
+		Immunity to Sick Cell
+		Attacks inflict Sick Cell
+		'''
+}
+
+"Calamity: Hunt of the Old God/AbsorptionStone": {
+	DisplayName: Gobbed Stone
+	Tooltip:
+		'''
+		Immunity to Gobbed
+		Attacks inflict Gobbed
+		'''
+}
+
+"Calamity: Hunt of the Old God/FusionBurnStone": {
+	DisplayName: Fusion Burn Stone
+	Tooltip:
+		'''
+		Immunity to Fusion Burn
+		Attacks inflict Fusion Burn
+		'''
+}
+
+"Calamity: Hunt of the Old God/GobbedStone": {
+	DisplayName: Gobbed Stone
+	Tooltip:
+		'''
+		Immunity to Gobbed
+		Attacks inflict Gobbed
+		'''
+}
+
+"Calamity: Hunt of the Old God/PaladinPalanquinBuffStone": {
+	DisplayName: Paladin Palanquin Stone
+	Tooltip:
+		'''
+		Immunity to Paladin Palanquin
+		Attacks inflict Paladin Palanquin
+		'''
+}
+
+"Calamity: Hunt of the Old God/SlimeCaneBuffStone": {
+	DisplayName: Slime Soirée Stone
+	Tooltip:
+		'''
+		Immunity to Slime Soirée
+		Attacks inflict Slime Soirée
+		'''
+}
+
+"Calamity: Hunt of the Old God/SplendorJamBuffStone": {
+	DisplayName: Malice Mode Stone
+	Tooltip:
+		'''
+		Immunity to Malice Mode
+		Attacks inflict Malice Mode
+		'''
+}
+
+"Calamity: Hunt of the Old God/SwampedStone": {
+	DisplayName: Swamped Stone
+	Tooltip:
+		'''
+		Immunity to Swamped
+		Attacks inflict Swamped
+		'''
+}
+
+"Calamity: Hunt of the Old God/BloatBabyBuffStone": {
+	DisplayName: Bloat Baby Stone
+	Tooltip:
+		'''
+		Immunity to Bloat Baby
+		Attacks inflict Bloat Baby
+		'''
+}
+
+"Calamity: Community Remix/OnyxFistBuffStone": {
+	DisplayName: Calamity:  Community  Remix/ Onyx Fist Buff Stone
+	Tooltip: ""
+}
+
+"Calamity: Community Remix/EXOLOTLBuffStone": {
+	Tooltip: ""
+	DisplayName: Calamity:  Community  Remix/ E X O L O T L Buff Stone
+}
+
+"Calamity: Community Remix/FractalCrawlerBuffStone": {
+	DisplayName: Calamity:  Community  Remix/ Fractal Crawler Buff Stone
+	Tooltip: ""
+}

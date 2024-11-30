@@ -11,6 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 {
     public class Frosting : ModProjectile
     {
+        public ref float State => ref Projectile.ai[0];
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
         private static SoundStyle Splootch = SoundID.NPCDeath21 with { MaxInstances = 1 };
@@ -18,8 +19,6 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             DisplayName.SetDefault("Frosting");
             Main.projFrames[Type] = 6;
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
-            ProjectileID.Sets.TrailingMode[Type] = 0;
         }
         public override void SetDefaults()
         {
@@ -56,7 +55,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Alpha = 255f;
             }
             Projectile.alpha = (int)(100.0 + (double)Alpha * 0.7);
-            if (Projectile.velocity.Y != 0f && Projectile.oldPos[9].Distance(Projectile.position) > 4f)
+            if (Projectile.velocity.Y != 0f && State != 1f)
             {
                 Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) - MathF.PI / 2f;
                 Projectile.frameCounter++;
@@ -87,6 +86,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 }
                 if (Projectile.frame > 5)
                     Projectile.frame = 5;
+                State = 1f;
             }
 
             Projectile.velocity.X *= 0.995f;

@@ -8,13 +8,8 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria.GameContent.ItemDropRules;
-using System.Linq;
-using Terraria.GameContent.Animations;
 using CalamityMod.DataStructures;
 using Terraria.GameContent;
-using Steamworks;
-using System.Runtime.ConstrainedExecution;
 
 namespace CalRemix.Content.Tiles
 {
@@ -79,6 +74,7 @@ namespace CalRemix.Content.Tiles
                 BeetleTE cables = new BeetleTE();
                 GetTEFromCoords(i, j, out cables);
                 Vector2 weirdOffset = new Vector2(224, 176);
+                Color stringColor = WorldGen.paintColor(tile.TileColor);
                 //if (tile.TileFrameX == 0 && tile.TileFrameY == 0)
                 {
                     GetTEFromCoords(i, j, out cables);
@@ -100,7 +96,6 @@ namespace CalRemix.Content.Tiles
                             {
                                 VerletSimulatedSegment v = cables.Segments[u];
                                 int ct = cables.Segments.Count;
-                                //Main.NewText(v.position);
                                 Texture2D s2u = Seg1;
                                 Texture2D prev2u = Seg1;
                                 switch (u)
@@ -140,7 +135,7 @@ namespace CalRemix.Content.Tiles
                                     SpriteEffects fx = i % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                                     Vector2 pos = v.position - Vector2.UnitX * s2u.Width / 2 + weirdOffset + posAdd;
                                     Color baseColor = Lighting.GetColor((int)(v.position.X / 16f), (int)(v.position.Y / 16f));
-                                    Color c = u < 9 ? Utils.MultiplyRGB(baseColor, Color.LightGray) : baseColor;
+                                    Color c = u < 9 ? Utils.MultiplyRGB(baseColor, stringColor) : baseColor;
                                     Main.EntitySpriteDraw(s2u, pos - Main.screenPosition, final, c, finalRot, fingalorigin, scalee, fx, 0);
                                 }
                                 if (s2u == Seg3)
@@ -152,7 +147,6 @@ namespace CalRemix.Content.Tiles
                     }
                     else
                     {
-                        Main.NewText("Cables was null");
                     }
                 }
             }

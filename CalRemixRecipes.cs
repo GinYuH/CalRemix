@@ -27,8 +27,6 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Armor.PlagueReaper;
-using CalamityMod.Items.Armor.Prismatic;
-using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Fearmonger;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,23 +41,19 @@ using CalRemix.Content.Items.Critters;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Armor.DesertProwler;
+using CalamityMod.Items.Armor.Prismatic;
+using CalamityMod.Items.Armor.Silva;
+using System;
 
 namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup Blinkchid, Daychid, Moonchid, Deathchid, Waterchid, Firechid, Shiverchid;
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar;
-        public static RecipeGroup AnyButterfly;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly;
         public override void Unload()
         {
-            Blinkchid = null;
-            Daychid = null;
-            Moonchid = null;
-            Deathchid = null;
-            Waterchid = null;
-            Firechid = null;
-            Shiverchid = null;
             GreaterEvil = null;
             EvilBar = null;
             T4Bar = null;
@@ -68,14 +62,6 @@ namespace CalRemix
         }
         public override void AddRecipeGroups()
         {
-            CosmichidGroup(Blinkchid, "Blinkchid", ItemID.Blinkroot);
-            CosmichidGroup(Daychid, "Daychid", ItemID.Daybloom);
-            CosmichidGroup(Moonchid, "Moonchid", ItemID.Moonglow);
-            CosmichidGroup(Deathchid, "Deathchid", ItemID.Deathweed);
-            CosmichidGroup(Waterchid, "Waterchid", ItemID.Waterleaf);
-            CosmichidGroup(Firechid, "Firechid", ItemID.Fireblossom);
-            CosmichidGroup(Shiverchid, "Shiverchid", ItemID.Shiverthorn);
-
             GreaterEvil = new RecipeGroup(() => "Any Greater Evil Flesh", ItemType<RottenMatter>(), ItemType<BloodSample>());
             RecipeGroup.RegisterGroup("CalRemix:GreaterEvil", GreaterEvil);
             EvilBar = new RecipeGroup(() => "Any Evil Bar", ItemID.DemoniteBar, ItemID.CrimtaneBar);
@@ -84,139 +70,133 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
             HMT1Bar = new RecipeGroup(() => "Any Tier 1 Hardmode Bar", ItemID.CobaltBar, ItemID.PalladiumBar);
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
-
             AnyButterfly = new RecipeGroup(() => "Any Normal Butterfly", ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
-            RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", HMT1Bar);
+            RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", AnyButterfly);
         }
         public override void AddRecipes()
         {
+            Recipe.Create(ItemType<LoreAwakening>())
+            .AddIngredient<Slumbering>()
+            .Register();
+
+            Recipe.Create(ItemID.PlatinumCoin, 100)
+            .AddIngredient<CosmiliteCoin>(1)
+            .Register();
+
+            Recipe.Create(ItemType<DubiousPlating>(), 4)
+            .AddIngredient(ItemType<ArsenicOre>(), 8)
+            .AddIngredient(ItemID.Bone)
+            .AddRecipeGroup("AnyGoldBar")
+            .AddTile(TileID.Furnaces)
+            .Register();
+
+            Recipe.Create(ItemType<MidasPrime>(), 1)
+            .AddIngredient<MinnowsPrimeItem>()
+            .AddTile(TileID.CookingPots)
+            .Register();
+
+            Recipe.Create(ItemType<HalibutCannon>())
+            .AddIngredient<FlounderMortar>()
+            .AddIngredient<ReaperTooth>(20)
+            .AddIngredient<Lumenyl>(20)
+            .AddIngredient<SubnauticalPlate>(5)
+            .AddTile<CalamityMod.Tiles.Furniture.CraftingStations.CosmicAnvil>()
+            .Register();
+
+            Recipe.Create(ItemID.CookedFish, 1)
+            .AddIngredient<CrocodileHerringItem>()
+            .AddTile(TileID.CookingPots)
+            .Register();
+
+            Recipe.Create(ItemType<CirrusDress>(), 1)
+            .AddIngredient(ItemID.Silk, 6)
+            .AddIngredient(ItemID.AshBlock, 10)
+            .AddTile(TileID.Loom)
+            .Register();
+
+            Recipe.Create(ItemID.WaterBucket, 1)
+            .AddIngredient(ItemID.EmptyBucket)
+            .AddIngredient(ItemType<SoulofHydrogen>(), 2)
+            .AddIngredient(ItemType<SoulofOxygen>())
+            .DisableDecraft()
+            .Register();
+
+            Recipe.Create(ItemID.EmpressButterfly, 1)
+            .AddRecipeGroup(RecipeGroupID.Butterflies)
+            .AddIngredient(ItemID.PearlstoneBlock)
+            .AddTile(TileID.MythrilAnvil)
+            .DisableDecraft()
+            .Register();
+
+            #region Anomaly Toggled
+            Recipe.Create(ItemType<LifeAlloy>())
+            .AddIngredient<LifeOre>(5)
+            .AddCondition(new Condition("While the Anomaly 109 \'life_ore\' setting is enabled", () => CalRemixWorld.alloyBars))
+            .AddTile(TileID.AdamantiteForge)
+            .Register();
+
+            Recipe.Create(ItemType<PlagueCellCanister>(), 1)
+            .AddRecipeGroup(RecipeGroupID.IronBar)
+            .AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom))
+            .Register();
+
+            Recipe.Create(ItemType<CosmiliteBar>(), 1)
+            .AddIngredient<CosmiliteSlag>(5)
+            .AddTile(TileID.LunarCraftingStation)
+            .AddCondition(new Condition("While the Anomaly 109 \'cosmilite_slag\' setting is enabled", () => CalRemixWorld.cosmislag))
+            .Register();
+
+            Recipe.Create(ItemType<CryoKey>(), 1)
+            .AddIngredient(ItemID.ShadowKey)
+            .AddIngredient(ItemType<CryoKeyMold>())
+            .AddIngredient(ItemID.SoulofLight, 5)
+            .AddIngredient(ItemID.SoulofNight, 5)
+            .AddIngredient(ItemID.SoulofFlight, 5)
+            .AddCondition(new Condition("While the Anomaly 109 \'primal_aspids\' setting is enabled", () => CalRemixWorld.aspids))
+            .Register();
+            #endregion
+            #region Music Boxes
             Mod music = CalRemix.CalMusic;
-            {
-                Recipe box = Recipe.Create(music.Find<ModItem>("Interlude1MusicBox").Type);
-                box.AddIngredient(ItemID.MusicBox)
-                .AddIngredient<ConquestFragment>(30)
-                .AddCondition(new Condition("After Calamitas Clone is defeated", () => DownedBossSystem.downedCalamitasClone))
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
+            Recipe.Create(music.Find<ModItem>("Interlude1MusicBox").Type)
+            .AddIngredient(ItemID.MusicBox)
+            .AddIngredient<ConquestFragment>(30)
+            .AddCondition(new Condition("After Calamitas Clone is defeated", () => DownedBossSystem.downedCalamitasClone))
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
 
-                Recipe box2 = Recipe.Create(music.Find<ModItem>("Interlude2MusicBox").Type);
-                box2.AddIngredient(ItemID.MusicBox)
-                .AddIngredient<ConquestFragment>(30)
-                .AddCondition(new Condition("After Moon Lord is defeated", () => NPC.downedMoonlord))
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
+            Recipe.Create(music.Find<ModItem>("Interlude2MusicBox").Type)
+            .AddIngredient(ItemID.MusicBox)
+            .AddIngredient<ConquestFragment>(30)
+            .AddCondition(new Condition("After Moon Lord is defeated", () => NPC.downedMoonlord))
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
 
-                Recipe box3 = Recipe.Create(music.Find<ModItem>("DevourerofGodsEulogyMusicBox").Type);
-                box3.AddIngredient(ItemID.MusicBox)
-                .AddIngredient<ConquestFragment>(30)
-                .AddCondition(new Condition("After the Devourer of Gods is defeated", () => DownedBossSystem.downedDoG))
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
+            Recipe.Create(music.Find<ModItem>("DevourerofGodsEulogyMusicBox").Type)
+            .AddIngredient(ItemID.MusicBox)
+            .AddIngredient<ConquestFragment>(30)
+            .AddCondition(new Condition("After the Devourer of Gods is defeated", () => DownedBossSystem.downedDoG))
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
 
-                Recipe box4 = Recipe.Create(music.Find<ModItem>("Interlude3MusicBox").Type);
-                box4.AddIngredient(ItemID.MusicBox)
-                .AddIngredient<ConquestFragment>(30)
-                .AddCondition(new Condition("After Yharon is defeated", () => DownedBossSystem.downedYharon))
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
+            Recipe.Create(music.Find<ModItem>("Interlude3MusicBox").Type)
+            .AddIngredient(ItemID.MusicBox)
+            .AddIngredient<ConquestFragment>(30)
+            .AddCondition(new Condition("After Yharon is defeated", () => DownedBossSystem.downedYharon))
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
 
-                Recipe box5 = Recipe.Create(music.Find<ModItem>("AcidRainTier1MusicBox").Type);
-                box5.AddIngredient<AcidRainTier2MusicBox>()
-                .AddIngredient(music.Find<ModItem>("SulphurousSeaDayMusicBox").Type)
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
+            Recipe.Create(music.Find<ModItem>("AcidRainTier1MusicBox").Type)
+            .AddIngredient<AcidRainTier2MusicBox>()
+            .AddIngredient(music.Find<ModItem>("SulphurousSeaDayMusicBox").Type)
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
 
-                Recipe box6 = Recipe.Create(music.Find<ModItem>("AcidRainTier1MusicBox").Type);
-                box6.AddIngredient<AcidRainTier2MusicBox>()
-                .AddIngredient(music.Find<ModItem>("SulphurousSeaNightMusicBox").Type)
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
-            }
-            {
-                Recipe slumbering = Recipe.Create(ItemType<LoreAwakening>());
-                slumbering.AddIngredient<Slumbering>()
-                .Register();
-            }
-            {
-                Recipe alloy = Recipe.Create(ItemType<LifeAlloy>());
-                alloy.AddIngredient<LifeOre>(5)
-                .AddCondition(new Condition("While the Anomaly 109 \'life_ore\' setting is enabled", () => CalRemixWorld.alloyBars))
-                .AddTile(TileID.AdamantiteForge)
-                .Register();
-            }
-            {
-                Recipe coin = Recipe.Create(ItemID.PlatinumCoin, 100);
-                coin.AddIngredient<CosmiliteCoin>(1);
-                coin.Register();
-            }
-            {
-                Recipe cell = Recipe.Create(ItemType<PlagueCellCanister>(), 1);
-                cell.AddRecipeGroup(RecipeGroupID.IronBar);
-                cell.AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom));
-                cell.Register();
-            }
-            {
-                Recipe cell = Recipe.Create(ItemType<DubiousPlating>(), 4);
-                cell.AddIngredient(ItemType<ArsenicOre>(), 8);
-                cell.AddIngredient(ItemID.Bone);
-                cell.AddRecipeGroup("AnyGoldBar");
-                cell.AddTile(TileID.Furnaces);
-                cell.Register();
-            }
-            {
-                Recipe bar = Recipe.Create(ItemType<CosmiliteBar>(), 1);
-                bar.AddIngredient<CosmiliteSlag>(5);
-                bar.AddTile(TileID.LunarCraftingStation)
-                .AddCondition(new Condition("While the Anomaly 109 \'cosmilite_slag\' setting is enabled", () => CalRemixWorld.cosmislag));
-                bar.Register();
-            }
-            {
-                Recipe bar = Recipe.Create(ItemType<MidasPrime>(), 1);
-                bar.AddIngredient<MinnowsPrimeItem>();
-                bar.AddTile(TileID.CookingPots);
-                bar.Register();
-            }
-            {
-                Recipe halibut = Recipe.Create(ItemType<HalibutCannon>());
-                halibut.AddIngredient<FlounderMortar>();
-                halibut.AddIngredient<ReaperTooth>(20);
-                halibut.AddIngredient<Lumenyl>(20);
-                halibut.AddIngredient<SubnauticalPlate>(5)
-                .AddTile<CalamityMod.Tiles.Furniture.CraftingStations.CosmicAnvil>()
-                .Register();
-            }
-            {
-                Recipe bar = Recipe.Create(ItemID.CookedFish, 1);
-                bar.AddIngredient<CrocodileHerringItem>();
-                bar.AddTile(TileID.CookingPots);
-                bar.Register();
-            }
-            {
-                Recipe ash = Recipe.Create(ItemType<CirrusDress>(), 1);
-                ash.AddIngredient(ItemID.Silk, 6);
-                ash.AddIngredient(ItemID.AshBlock, 10);
-                ash.AddTile(TileID.Loom);
-                ash.Register();
-            }
-            {
-                Recipe recipe = Recipe.Create(ItemType<CryoKey>(), 1)
-                .AddIngredient(ItemID.ShadowKey)
-                .AddIngredient(ItemType<CryoKeyMold>())
-                .AddIngredient(ItemID.SoulofLight, 5)
-                .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.SoulofFlight, 5)
-                .AddCondition(new Condition("While the Anomaly 109 \'primal_aspids\' setting is enabled", () => CalRemixWorld.aspids))
-                .Register();
-            }
-            {
-                Recipe recipe = Recipe.Create(ItemID.WaterBucket, 1);
-                recipe.AddIngredient(ItemID.EmptyBucket);
-                recipe.AddIngredient(ItemType<SoulofHydrogen>(), 2);
-                recipe.AddIngredient(ItemType<SoulofOxygen>());
-                recipe.DisableDecraft();
-                recipe.Register();
-            }
-
+            Recipe.Create(music.Find<ModItem>("AcidRainTier1MusicBox").Type)
+            .AddIngredient<AcidRainTier2MusicBox>()
+            .AddIngredient(music.Find<ModItem>("SulphurousSeaNightMusicBox").Type)
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
+            #endregion
             #region DP stuff
             // Alcohol...
             AlcoholRecipe(ItemType<CaribbeanRum>(), ItemType<Vodka>(), ItemID.BambooBlock, ItemType<LivingShard>(), 20, 20);
@@ -244,12 +224,12 @@ namespace CalRemix
             CandleRecipe(ItemType<WeightlessCandle>(), ItemID.SoulofFlight, 3422, ItemType<EssenceofEleum>(), 357);
             // Bloody Mary exception
             {
-                Recipe recipe = Recipe.Create(ItemType<BloodyMary>(), 5);
-                recipe.AddIngredient<Margarita>(5);
-                recipe.AddIngredient<BloodOrb>(30);
-                recipe.AddIngredient<AureusCell>(1);
-                recipe.AddTile(TileID.AlchemyTable);
-                recipe.Register();
+                Recipe.Create(ItemType<BloodyMary>(), 5)
+                .AddIngredient<Margarita>(5)
+                .AddIngredient<BloodOrb>(30)
+                .AddIngredient<AureusCell>(1)
+                .AddTile(TileID.AlchemyTable)
+                .Register();
             }
             #endregion
         }
@@ -258,15 +238,192 @@ namespace CalRemix
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
                 Recipe recipe = Main.recipe[i];
-
-                CosmichidChange(recipe, "Blinkchid", ItemID.Blinkroot);
-                CosmichidChange(recipe, "Daychid", ItemID.Daybloom);
-                CosmichidChange(recipe, "Moonchid", ItemID.Moonglow);
-                CosmichidChange(recipe, "Deathchid", ItemID.Deathweed);
-                CosmichidChange(recipe, "Waterchid", ItemID.Waterleaf);
-                CosmichidChange(recipe, "Firechid", ItemID.Fireblossom);
-                CosmichidChange(recipe, "Shiverchid", ItemID.Shiverthorn);
-
+                if (recipe.HasResult(ItemType<CoreofCalamity>()))
+                {
+                    recipe.RemoveIngredient(ItemType<AshesofCalamity>());
+                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<UnholyCore>());
+                }
+                if (recipe.HasResult(ItemType<AngelicShotgun>()))
+                {
+                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
+                    recipe.AddIngredient(ItemType<CoreofBabil>(), 7);
+                }
+                if (recipe.HasResult(ItemType<TwistingThunder>()))
+                {
+                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
+                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
+                }
+                if (recipe.HasResult(ItemID.NightsEdge))
+                {
+                    recipe.AddIngredient(ItemType<TaintedBlade>());
+                    recipe.RemoveIngredient(ItemType<PurifiedGel>());
+                }
+                if (recipe.HasResult(ItemType<FracturedArk>()) && !recipe.HasIngredient(ItemID.Terragrim))
+                {
+                    recipe.RemoveRecipeGroup(RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs["AnyCopperBar"]].RegisteredId);
+                    if (recipe.HasIngredient(ItemID.CopperBar))
+                        recipe.RemoveIngredient(ItemID.CopperBar);
+                    if (recipe.HasIngredient(ItemID.TinBar))
+                        recipe.RemoveIngredient(ItemID.TinBar);
+                    recipe.RemoveIngredient(ItemType<PurifiedGel>());
+                    recipe.AddIngredient(ItemID.Starfury);
+                    recipe.AddIngredient(ItemID.Gel, 5);
+                    recipe.AddIngredient(ItemID.Diamond, 10);
+                }
+                if (recipe.HasResult(ItemType<AstrealDefeat>()))
+                {
+                    recipe.AddIngredient(ItemType<ContinentalGreatbow>());
+                    recipe.AddIngredient(ItemType<DarkechoGreatbow>());
+                    recipe.AddIngredient(ItemType<BladedgeRailbow>());
+                    recipe.RemoveIngredient(ItemType<AshesofCalamity>());
+                }
+                if (recipe.HasResult(ItemType<SpiritGlyph>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Diamond);
+                    recipe.RemoveIngredient(ItemID.Obsidian);
+                    recipe.AddRecipeGroup(RecipeGroupID.IronBar, 15);
+                }
+                if (recipe.HasIngredient<CosmiliteBar>() && !recipe.HasIngredient<NightmareFuel>() && !recipe.HasIngredient<DarksunFragment>() && !recipe.HasIngredient<AscendantSpiritEssence>() && !recipe.HasIngredient<EndothermicEnergy>())
+                {
+                    if (recipe.createItem.damage > 1)
+                    {
+                        CalRemixItem.cosmicItems.Add(recipe.createItem.type);
+                    }
+                }
+                #region Replacement
+                if (recipe.HasResult(ItemType<DesertProwlerHat>()) || recipe.HasResult(ItemType<DesertProwlerShirt>()) || recipe.HasResult(ItemType<DesertProwlerPants>()))
+                {
+                    Replace(recipe, ItemType<StormlionMandible>(), ItemType<AntlionBar>());
+                }
+                if (recipe.HasResult(ItemType<AcesHigh>()))
+                {
+                    Replace(recipe, ItemID.Revolver, ItemType<AcesLow>());
+                }
+                if (recipe.HasResult(ItemType<SpearofDestiny>()) && recipe.HasIngredient(ItemType<CursedDagger>()))
+                {
+                    Replace(recipe, ItemType<CursedDagger>(), ItemType<CursedSpear>());
+                }
+                if (recipe.HasResult(ItemType<Supernova>()))
+                {
+                    Replace(recipe, ItemType<SealedSingularity>(), ItemType<UnsealedSingularity>());
+                }
+                if (recipe.HasIngredient(ItemType<AureusCell>()))
+                {
+                    if (!recipe.createItem.consumable && recipe.createItem.createTile <= TileID.Dirt)
+                        Replace(recipe, ItemType<AureusCell>(), ItemType<SoulofBright>());
+                }
+                if (recipe.HasResult(ItemType<Apotheosis>()))
+                {
+                    Replace(recipe, ItemID.SpellTome, ItemType<WrathoftheCosmos>());
+                }
+                if (recipe.HasResult(ItemType<Voidragon>()))
+                {
+                    Replace(recipe, ItemType<Seadragon>(), ItemType<Megaskeet>());
+                }
+                bool shard = (recipe.HasResult(ItemType<SeaRemains>()) || recipe.HasResult(ItemType<MonstrousKnives>()) || recipe.HasResult(ItemType<FirestormCannon>()) || recipe.HasResult(ItemType<NavyFishingRod>()) || recipe.HasResult(ItemType<EutrophicShelf>()) || recipe.HasResult(ItemType<AquamarineStaff>()) || recipe.HasResult(ItemType<Riptide>()) || recipe.HasResult(ItemType<SeashineSword>()) || recipe.HasResult(ItemType<StormSurge>()) || recipe.HasResult(ItemType<SeafoamBomb>()));
+                if (recipe.HasIngredient(ItemType<PearlShard>()) && shard)
+                {
+                    Replace(recipe, ItemType<PearlShard>(), ItemType<ParchedScale>());
+                }
+                if (recipe.HasIngredient(ItemType<PearlShard>()) && !shard)
+                {
+                    Replace(recipe, ItemType<PearlShard>(), ItemType<ConquestFragment>());
+                }
+                if (recipe.HasResult(ItemType<TearsofHeaven>()))
+                {
+                    Replace(recipe, ItemID.WaterBolt, ItemType<SaltWaterBolt>());
+                    recipe.AddIngredient(ItemType<PlasmaflashBolt>());
+                }
+                if (recipe.HasResult(ItemType<CoreofEleum>()) || recipe.HasResult(ItemType<CoreofHavoc>()) || recipe.HasResult(ItemType<CoreofSunlight>()))
+                {
+                    Replace(recipe, ItemID.Ectoplasm, ItemID.HallowedBar);
+                }
+                if (recipe.HasResult(ItemType<Fabstaff>()))
+                {
+                    Replace(recipe, ItemID.RainbowRod, ItemType<BucketofCoal>());
+                    Replace(recipe, ItemType<Necroplasm>(), ItemID.MartianConduitPlating, 1000);
+                }
+                if (!recipe.HasResult(ItemType<HauntedBar>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
+                {
+                    Replace(recipe, ItemType<RuinousSoul>(), ItemType<HauntedBar>());
+                    recipe.RemoveIngredient(ItemType<Necroplasm>());
+                }
+                if (!recipe.HasResult(ItemType<ElementalBar>()) && recipe.HasIngredient(ItemID.LunarBar) && recipe.HasIngredient(ItemType<LifeAlloy>()) && recipe.HasIngredient(ItemType<GalacticaSingularity>()))
+                {
+                    recipe.TryGetIngredient(ItemID.LunarBar, out Item lunarBar);
+                    recipe.TryGetIngredient(ItemType<LifeAlloy>(), out Item lifeAlloy);
+                    recipe.TryGetIngredient(ItemType<GalacticaSingularity>(), out Item galacticaSingularity);
+                    if (galacticaSingularity.stack % 5 == 0 && galacticaSingularity.stack > 1 && galacticaSingularity.stack == lunarBar.stack && galacticaSingularity.stack == lifeAlloy.stack)
+                    {
+                        Replace(recipe, ItemType<GalacticaSingularity>(), ItemType<ElementalBar>(), galacticaSingularity.stack / 5);
+                        recipe.RemoveIngredient(ItemID.LunarBar);
+                        recipe.RemoveIngredient(ItemType<LifeAlloy>());
+                    }
+                }
+                if (recipe.HasResult(ItemType<PrismaticHelmet>()) || recipe.HasResult(ItemType<PrismaticRegalia>()) || recipe.HasResult(ItemType<PrismaticGreaves>()))
+                {
+                    Replace(recipe, ItemType<ExodiumCluster>(), ItemType<OrnateCloth>());
+                }
+                if (recipe.HasResult(ItemType<SilvaArmor>()) || recipe.HasResult(ItemType<SilvaLeggings>()) || recipe.HasResult(ItemType<SilvaHeadMagic>()) || recipe.HasResult(ItemType<SilvaHeadSummon>()) || recipe.HasResult(ItemType<SilvaWings>()))
+                {
+                    Replace(recipe, ItemType<EffulgentFeather>(), ItemType<OrnateCloth>());
+                }
+                if (recipe.HasResult(ItemType<Endogenesis>()))
+                {
+                    Replace(recipe, ItemType<CryogenicStaff>(), ItemType<CirnogenicStaff>());
+                }
+                #endregion
+                #region Add
+                if (recipe.HasResult(ItemType<StormfrontRazor>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 4);
+                }
+                if (recipe.HasResult(ItemType<EmpyreanMask>()))
+                {
+                    recipe.AddIngredient(ItemType<CoreofBabil>(), 2);
+                }
+                if (recipe.HasResult(ItemType<EmpyreanCloak>()))
+                {
+                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
+                }
+                if (recipe.HasResult(ItemType<EmpyreanCuisses>()))
+                {
+                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                }
+                if (recipe.HasResult(ItemType<ClaretCannon>()))
+                {
+                    recipe.AddIngredient(ItemType<UnholyBloodCells>(), 25);
+                }
+                if (recipe.HasResult(ItemType<MidnightSunBeacon>()))
+                {
+                    recipe.AddIngredient(ItemType<CosmiliteSlag>(), 10);
+                    recipe.AddIngredient(ItemType<UnholyEssence>(), 10);
+                }
+                if (recipe.HasResult(ItemType<ShadowspecBar>()))
+                {
+                    recipe.AddIngredient<SubnauticalPlate>();
+                }
+                #endregion
+                #region Remove
+                if (recipe.HasResult(ItemType<DefiledGreatsword>()))
+                {
+                    recipe.RemoveIngredient(ItemType<UelibloomBar>());
+                }
+                if (recipe.HasResult(ItemType<PlantationStaff>()))
+                {
+                    recipe.RemoveIngredient(ItemType<EyeOfNight>());
+                }
+                if (recipe.HasResult(ItemType<EpidemicShredder>()) || recipe.HasResult(ItemType<PlagueReaperMask>()) || recipe.HasResult(ItemType<PlagueReaperStriders>()) || recipe.HasResult(ItemType<PlagueReaperVest>()))
+                {
+                    recipe.RemoveIngredient(ItemID.Nanites);
+                }
+                if (recipe.HasResult(ItemType<PlaguebringerCarapace>()) || recipe.HasResult(ItemType<PlaguebringerPistons>()) || recipe.HasResult(ItemType<PlaguebringerVisor>()))
+                {
+                    recipe.RemoveIngredient(ItemType<PlagueCellCanister>());
+                }
+                #endregion
+                #region Disables
                 if (recipe.HasResult(ItemType<FabsolsVodka>()))
                 {
                     recipe.DisableRecipe();
@@ -275,66 +432,32 @@ namespace CalRemix
                 {
                     recipe.DisableRecipe();
                 }
-                if (recipe.HasResult(ItemType<ShadowspecBar>()))
+                if (recipe.HasResult(ItemType<FracturedArk>()) && recipe.HasIngredient(ItemID.Terragrim))
                 {
-                    recipe.AddIngredient<SubnauticalPlate>();
+                    recipe.DisableRecipe();
                 }
-                if (recipe.HasResult(ItemType<AstralChunk>()))
+                if (recipe.HasResult(ItemType<CryonicBrick>()) && recipe.HasIngredient(ItemType<CryonicOre>()))
                 {
-                    recipe.RemoveIngredient(ItemID.FallenStar);
-                    recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
+                    recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<ProfanedShard>()))
+                if (recipe.HasResult(ItemType<StratusBricks>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Drops from Yggdrasil Ents in Hallow and Hell.", () => false));
+                    recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<AcesHigh>()))
+                if (recipe.HasIngredient(ItemType<StratusBricks>()) && !recipe.HasResult(ItemType<StratusPlatform>()))
                 {
-                    recipe.AddIngredient<AcesLow>();
+                    recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<CosmicImmaterializer>()))
+                if (recipe.HasResult(ItemType<GravityNormalizerPotion>()))
                 {
-                    recipe.RemoveIngredient(ItemType<SanctifiedSpark>());
-                    recipe.AddIngredient(ItemType<DarkEnergyStaff>());
+                    recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<Supernova>()))
+                if (recipe.HasResult(ItemType<AstralInjection>()))
                 {
-                    recipe.RemoveIngredient(ItemType<SealedSingularity>());
-                    recipe.AddIngredient(ItemType<UnsealedSingularity>());
-                    recipe.AddIngredient(ItemType<ProfanedNucleus>());
+                    recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<Apotheosis>()))
-                {
-                    recipe.RemoveIngredient(ItemID.SpellTome);
-                    recipe.AddIngredient(ItemType<WrathoftheCosmos>());
-                }
-                if (recipe.HasResult(ItemType<Voidragon>()))
-                {
-                    recipe.RemoveIngredient(ItemType<Seadragon>());
-                    recipe.AddIngredient(ItemType<Megaskeet>());
-                }
-                bool shard = (recipe.HasResult(ItemType<SeaRemains>()) || recipe.HasResult(ItemType<MonstrousKnives>()) || recipe.HasResult(ItemType<FirestormCannon>()) );
-                if (recipe.HasIngredient(ItemType<PearlShard>()) && shard)
-		        {
-                    recipe.RemoveIngredient(ItemType<PearlShard>());
-                    recipe.AddIngredient(ItemType<ParchedScale>());
-                }
-                bool shard2 = recipe.HasResult(ItemType<NavyFishingRod>()) || recipe.HasResult(ItemType<EutrophicShelf>()) || recipe.HasResult(ItemType<AquamarineStaff>()) || recipe.HasResult(ItemType<Riptide>()) || recipe.HasResult(ItemType<SeashineSword>()) || recipe.HasResult(ItemType<StormSurge>()) || recipe.HasResult(ItemType<SeafoamBomb>());
-                if (recipe.HasIngredient(ItemType<PearlShard>()) && shard2)
-                {
-                    recipe.RemoveIngredient(ItemType<PearlShard>());
-                }
-                if (recipe.TryGetIngredient(ItemType<PearlShard>(), out Item pShard) && !(shard || shard))
-                {
-                    pShard.type = ItemType<ConquestFragment>();
-                }
-                if (recipe.HasResult(ItemType<TearsofHeaven>()))
-                {
-                    recipe.RemoveIngredient(ItemID.WaterBolt);
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<PlasmaflashBolt>());
-                    recipe.AddIngredient(ItemType<SaltWaterBolt>());
-                }
+                #endregion
+                #region Anomaly Recipes
                 if (recipe.HasResult(ItemType<Elderberry>()))
                 {
                     recipe.AddCondition(new Condition("Locked recipe. Trade with the Dye Trader Post-Providence.", () => !CalRemixWorld.permanenthealth));
@@ -398,22 +521,11 @@ namespace CalRemix
                 {
                     recipe.AddCondition(new Condition("Locked recipe. Make the other Seafood.", () => !CalRemixWorld.seafood));
                 }
-                if (recipe.HasResult(ItemType<StratusBricks>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
+                if (recipe.HasResult(ItemType<ProfanedShard>()))
                 {
-                    recipe.DisableDecraft();
+                    recipe.AddCondition(new Condition("Locked recipe. Drops from Yggdrasil Ents in Hallow and Hell.", () => false));
                 }
-                if (recipe.HasIngredient(ItemType<StratusBricks>()) && !recipe.HasResult(ItemType<StratusPlatform>()))
-                {
-                    recipe.DisableDecraft();
-                }
-                if (recipe.HasResult(ItemType<GravityNormalizerPotion>()))
-                {
-                    recipe.DisableDecraft();
-                }
-                if (recipe.HasResult(ItemType<AstralInjection>()))
-                {
-                    recipe.DisableDecraft();
-                }
+                #endregion 
                 #region Accessory edits
                 if (recipe.HasResult(ItemType<GrandGelatin>()))
                 {
@@ -481,237 +593,14 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<PhantomicArtifact>()))
                 {
                     recipe.RemoveIngredient(ItemType<HallowedRune>());
-                    recipe.RemoveIngredient(ItemType<RuinousSoul>());
                     recipe.RemoveIngredient(ItemType<BloodOrb>());
                     recipe.RemoveIngredient(ItemType<ExodiumCluster>());
                     recipe.RemoveTile(TileID.LunarCraftingStation);
                     recipe.AddIngredient(ItemType<CalamityMod.Items.Placeables.Plates.Navyplate>(), 25);
-                    recipe.AddIngredient(ItemType<RuinousSoul>(), 5);
                     recipe.AddIngredient(ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
                 }
                 #endregion
-                #region Babil
-                if (recipe.HasResult(ItemType<StormfrontRazor>()))
-                {
-                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 4);
-                }
-                if (recipe.HasResult(ItemType<CoreofEleum>()) || recipe.HasResult(ItemType<CoreofHavoc>()) || recipe.HasResult(ItemType<CoreofSunlight>()))
-                {
-                    recipe.RemoveIngredient(ItemID.Ectoplasm);
-                    recipe.AddIngredient(ItemID.HallowedBar);
-                }
-                if (recipe.HasResult(ItemType<CoreofCalamity>()))
-                {
-                    recipe.RemoveIngredient(ItemType<AshesofCalamity>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
-                    recipe.AddIngredient(ItemType<UnholyCore>());
-                }
-                if (recipe.HasResult(ItemType<AngelicShotgun>()))
-                {
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 7);
-                }
-                if (recipe.HasResult(ItemType<TwistingThunder>()))
-                {
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
-                }
-                if (recipe.HasResult(ItemType<EmpyreanMask>()))
-                {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 2);
-                }
-                if (recipe.HasResult(ItemType<EmpyreanCloak>()))
-                {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
-                }
-                if (recipe.HasResult(ItemType<EmpyreanCuisses>()))
-                {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
-                }
-                #endregion
-                #region Coyote Venom
-                if (recipe.HasResult(ItemType<PlaguebringerPistons>()) || recipe.HasResult(ItemType<PlaguebringerVisor>()))
-                {
-                    recipe.RemoveIngredient(ItemType<PlagueCellCanister>());
-                }
-                if (recipe.HasResult(ItemType<PlaguebringerCarapace>()))
-                {
-                    recipe.RemoveIngredient(ItemType<PlagueCellCanister>());
-                }
-                #endregion
-                #region Alloy Bar Recipes
-                if (recipe.HasResult(ItemID.NightsEdge))
-                {
-                    recipe.AddIngredient(ItemType<TaintedBlade>());
-                    recipe.RemoveIngredient(ItemType<PurifiedGel>());
-                }
-                if (recipe.HasResult(ItemType<DefiledGreatsword>()))
-                {
-                    recipe.RemoveIngredient(ItemType<UelibloomBar>());
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 800);
-                }
-                if (recipe.HasResult(ItemType<FracturedArk>()) && recipe.HasIngredient(ItemID.Terragrim))
-                {
-                    recipe.DisableRecipe();
-                }
-                if (recipe.HasResult(ItemType<FracturedArk>()) && !recipe.HasIngredient(ItemID.Terragrim))
-                {
-                    recipe.RemoveRecipeGroup(RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs["AnyCopperBar"]].RegisteredId);
-                    if (recipe.HasIngredient(ItemID.CopperBar))
-                        recipe.RemoveIngredient(ItemID.CopperBar);
-                    if (recipe.HasIngredient(ItemID.TinBar))
-                        recipe.RemoveIngredient(ItemID.TinBar);
-                    recipe.RemoveIngredient(ItemType<PurifiedGel>());
-                    recipe.AddIngredient(ItemID.Starfury);
-                    recipe.AddIngredient(ItemID.Gel, 5);
-                    recipe.AddIngredient(ItemID.Diamond, 10);
-                }
-                if (recipe.HasResult(ItemID.MoneyTrough))
-                {
-                    recipe.RemoveIngredient(ItemID.PiggyBank);
-                    recipe.RemoveIngredient(ItemID.GoldCoin);
-                    recipe.RemoveIngredient(ItemID.Feather);
-                    recipe.RemoveIngredient(ItemType<BloodOrb>());
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 100);
-                }
-                #endregion
-                #region Essences
-                // Zot
-                if (recipe.HasResult(ItemType<AstrealDefeat>()))
-                {
-                    recipe.AddIngredient(ItemType<ContinentalGreatbow>());
-                    recipe.AddIngredient(ItemType<DarkechoGreatbow>());
-                    recipe.AddIngredient(ItemType<BladedgeRailbow>());
-                    recipe.RemoveIngredient(ItemType<AshesofCalamity>());
-                }
-                //Law
-                if (recipe.HasResult(ItemType<SpiritGlyph>()))
-                {
-                    recipe.RemoveIngredient(ItemID.Diamond);
-                    recipe.RemoveIngredient(ItemID.Obsidian);
-                    recipe.AddRecipeGroup(RecipeGroupID.IronBar, 15);
-                }
-                // Myst
-                if (recipe.HasResult(ItemType<EpidemicShredder>()))
-                {
-                    recipe.RemoveIngredient(ItemID.Nanites);
-                }
-                if (recipe.HasResult(ItemType<PlantationStaff>()))
-                {
-                    recipe.RemoveIngredient(ItemType<EyeOfNight>());
-                }
-                if (recipe.HasResult(ItemType<PlagueReaperMask>()))
-                {
-                    recipe.RemoveIngredient(ItemID.Nanites);
-                }
-                if (recipe.HasResult(ItemType<PlagueReaperStriders>()))
-                {
-                    recipe.RemoveIngredient(ItemID.Nanites);
-                }
-                if (recipe.HasResult(ItemType<PlagueReaperVest>()))
-                {
-                    recipe.RemoveIngredient(ItemID.Nanites);
-                }
-                #endregion
-                #region Delicious Meat
-                if (recipe.HasResult(ItemType<ZenPotion>()))
-                {
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 256);
-                }
-                if (recipe.HasResult(ItemType<ZergPotion>()))
-                {
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 256);
-                }
-                if (recipe.HasResult(ItemType<SupremeHealingPotion>()))
-                {
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 8192);
-                }
-                if (recipe.HasResult(ItemType<DraedonsForge>()))
-                {
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 65536);
-                }
-                if (recipe.HasResult(ItemType<Abaddon>()))
-                {
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 100);
-                }
-                if (recipe.HasResult(ItemType<RuinMedallion>()))
-                {
-                    recipe.AddIngredient(ItemType<DeliciousMeat>(), 50);
-                }
-                #endregion
-                if (recipe.HasResult(ItemType<PrismaticHelmet>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 8);
-                }
-                if (recipe.HasResult(ItemType<PrismaticRegalia>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 8);
-                }
-                if (recipe.HasResult(ItemType<PrismaticGreaves>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 8);
-                }
-                if (recipe.HasResult(ItemType<SilvaArmor>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 12);
-                }
-                if (recipe.HasResult(ItemType<SilvaLeggings>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 12);
-                }
-                if (recipe.HasResult(ItemType<SilvaHeadMagic>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 12);
-                }
-                if (recipe.HasResult(ItemType<SilvaHeadSummon>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 12);
-                }
-                if (recipe.HasResult(ItemType<SilvaWings>()))
-                {
-                    recipe.AddIngredient(ItemType<OrnateCloth>(), 12);
-                }
-                if (recipe.HasResult(ItemType<ClaretCannon>()))
-                {
-                    recipe.AddIngredient(ItemType<UnholyBloodCells>(), 25);
-                }
-                if (recipe.HasResult(ItemType<MidnightSunBeacon>()))
-                {
-                    recipe.AddIngredient(ItemType<CosmiliteSlag>(), 10);
-                    recipe.AddIngredient(ItemType<UnholyEssence>(), 10);
-                }
-                if (recipe.HasResult(ItemType<Fabstaff>()))
-                {
-                    recipe.RemoveIngredient(ItemID.RainbowRod);
-                    recipe.RemoveIngredient(ItemType<Necroplasm>());
-                    recipe.AddIngredient(ItemType<BucketofCoal>());
-                    recipe.AddIngredient(ItemID.MartianConduitPlating, 1000);
-                }
-                if (!recipe.HasResult(ItemType<HauntedBar>()) && recipe.TryGetIngredient(ItemType<RuinousSoul>(), out Item rSoul))
-                {
-                    recipe.RemoveIngredient(ItemType<RuinousSoul>());
-                    recipe.AddIngredient(ItemType<HauntedBar>(), rSoul.stack);
-                }
-                if (!recipe.HasResult(ItemType<ElementalBar>()) && recipe.TryGetIngredient(ItemType<GalacticaSingularity>(), out Item ing))
-                {
-                    if (ing.stack % 5 == 0 && ing.stack > 1)
-                    {
-                        recipe.RemoveIngredient(ItemType<GalacticaSingularity>());
-                        recipe.AddIngredient(ItemType<ElementalBar>(), ing.stack);
-                    }
-                }
-            }
-            for (int i = 0; i < Recipe.numRecipes; i++)
-            {
-                Recipe recipe = Main.recipe[i];
-                if (recipe.HasIngredient<CosmiliteBar>() && !recipe.HasIngredient<NightmareFuel>() && !recipe.HasIngredient<DarksunFragment>() && !recipe.HasIngredient<AscendantSpiritEssence>() && !recipe.HasIngredient<EndothermicEnergy>())
-                {
-                    if (recipe.createItem.damage > 1)
-                    {
-                        CalRemixItem.cosmicItems.Add(recipe.createItem.type);
-                    }
-                }
             }
 
             string wiz = NPCShopDatabase.GetShopNameFromVanillaIndex(7); // wizard index
@@ -771,7 +660,6 @@ namespace CalRemix
             info.Invoke(null, null); // FUCK YOU
             Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
-
         public static void MassRemoveIngredient(List<(int, int, int)> results)
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
@@ -797,7 +685,6 @@ namespace CalRemix
                 }
             }
         }
-
         public static void MassAddIngredient(List<(int, int, int)> itemList)
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
@@ -823,7 +710,6 @@ namespace CalRemix
                 }
             }
         }
-
         public void AlcoholRecipe(int result, int drinkingredient, int midgredient, int lastgredient, int blorbcount, int midnum = 5)
         {
             int lastnum = 1;
@@ -853,18 +739,14 @@ namespace CalRemix
             recipe.AddTile(TileID.CrystalBall);
             recipe.Register();
         }
-        public void CosmichidGroup(RecipeGroup group, string name, int herb)
+        private static void Replace(Recipe recipe, int from, int to, int stack = 0)
         {
-            group = new RecipeGroup(() => $"{Lang.GetItemNameValue(herb)} or Cosmichid",
-            herb, ItemType<Cosmichid>());
-            RecipeGroup.RegisterGroup("CalRemix:" + name, group);
-        }
-        public void CosmichidChange(Recipe recipe, string group, int herb)
-        {
-            if (recipe.TryGetIngredient(herb, out Item item))
+            if (recipe.TryGetIngredient(from, out Item r))
+                r.ChangeItemWithStack(to, stack);
+            else
             {
-                recipe.AddRecipeGroup("CalRemix:" + group, item.stack);
-                recipe.RemoveIngredient(item);
+                ContentSamples.ItemsByType.TryGetValue(from, out Item item);
+                Console.WriteLine($"CalRemix: Unable to find ingredient {item.Name} for {recipe.createItem.Name}");
             }
         }
     }

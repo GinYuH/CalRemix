@@ -22,7 +22,6 @@ using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
-using Terraria.UI;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Lore;
 
@@ -70,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(40000, 48000, 300000);
+            NPC.LifeMaxNERB(30000, 36000, 300000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -147,12 +146,12 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                         NPC.velocity *= 0.97f;
                         int lightningTime = LightningLife; // How long the lightning should linger
                         int startLightning = 30; // When to start creating lightning
-                        int lightningRate = lightningTime + 30; // How often lightning should spawn
+                        int lightningRate = lightningTime + 20; // How often lightning should spawn
                         int rounds = death ? 4 : rev ? 3 : 2; // Amount of times lightning should spawn
                         int phaseTime = rounds * lightningRate; // How long the attack lasts
                         if (NPC.ai[1] > startLightning)
                         {
-                            int totalProjectiles = 8; // Total amount of lightning bolts
+                            int totalProjectiles = death ? 24 : rev ? 18 : 12; // Total amount of lightning bolts
 
                             float radians = MathHelper.TwoPi / totalProjectiles;
                             float velocity = 6f;
@@ -164,19 +163,23 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
 
                             if (NPC.ai[2] % lightningRate == 0)
                             {
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                int type = ModContent.ProjectileType<IonogenLightning>();
+                                SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
+                                // Fire the lightning bolts
+                                for (int k = 0; k < totalProjectiles; k++)
                                 {
-                                    int type = ModContent.ProjectileType<IonogenLightning>();
-                                    SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
-                                    // Fire the lightning bolts
-                                    for (int k = 0; k < totalProjectiles; k++)
+                                    Vector2 laserVelocity = spinningPoint.RotatedBy(radians * k + Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2));
+
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Vector2 laserVelocity = spinningPoint.RotatedBy(radians * k + Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2));
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, laserVelocity, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                     }
+                                }
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
                                     // Fire one directly at the player too because lol
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
-                                }
+                                }                                
                             }
                             // Ngl this sound doesn't even sound very electricky, but Teslastaff and Crystal Gauntlets already use it so meh
                             if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<IonogenLightning>()) && NPC.ai[1] % 5 == 0)
@@ -213,7 +216,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                                 for (int i = 0; i < acidCount; i++)
                                 {
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(acidSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.5f), 3f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed*1.5f, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.4f), 3f, Main.myPlayer);
                                 }
                             }
                             NPC.ai[2]++;
@@ -240,7 +243,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                         int startSucc = 60; // When to start succing
                         int phaseTime = death ? 420 : rev ? 390 : 360; // How long the attack lasts
                         float succStrength = Target.maxRunSpeed * 2; // Succ strength
-                        int lightningRate = rev ? 40 : 60; // How often new lightning is spawned
+                        int lightningRate = rev ? 30 : 40; // How often new lightning is spawned
                         int succRate = 120; // How often the player is succ'd
                         Target.mount.Dismount(Main.LocalPlayer); // No lol
                         Target.Calamity().infiniteFlight = true; // But fine

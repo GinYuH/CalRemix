@@ -50,7 +50,6 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ModContent.ItemType<CosmiliteBar>(), 12).
                 AddIngredient(ModContent.ItemType<AscendantSpiritEssence>(), 4).
                 AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 15).
-                AddIngredient(ModContent.ItemType<YharimBar>(), 3).
                 AddTile(ModContent.TileType<CosmicAnvil>()).
                 Register();
         }

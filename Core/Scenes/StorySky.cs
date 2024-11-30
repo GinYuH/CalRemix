@@ -1,14 +1,10 @@
-﻿using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Core.World;
+﻿using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 
 namespace CalRemix.Core.Scenes
 {

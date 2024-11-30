@@ -2,14 +2,12 @@
 using CalamityMod;
 using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalamityMod.Rarities;
-using CalRemix.Content.Projectiles.Accessories;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -18,8 +16,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Hydrogen");
-            Tooltip.SetDefault("7% increase to all damage\nThrowable explosives deal extremely increased damage and split once upon detonation");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 6));
+            Tooltip.SetDefault("7% increase to all damage\nThrowable explosives deal extremely increased damage and split once upon detonation\n" + CalamityUtils.ColorMessage("Boosts Water damage", Color.SkyBlue));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
@@ -60,6 +58,11 @@ namespace CalRemix.Content.Items.Accessories
                 drawOffset: new(0f, 0f)
             );
             return false;
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return slot == ModContent.GetInstance<SoulSlot>().Type;
         }
     }
 }

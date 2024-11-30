@@ -1,4 +1,7 @@
+using CalamityMod;
+using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Accessories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,6 +9,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace CalRemix.UI.ElementalSystem
 {
@@ -23,12 +27,15 @@ namespace CalRemix.UI.ElementalSystem
         Slash,
         Stab,
         Unholy,
-        Water
+        Water,
+        Wind
     }
+
     public class ElementLists : ModSystem
     {
         public static List<Dictionary<int, Element[]>> ItemList = new();
         public static List<Dictionary<int, Tuple<Element[], Element[]>>> NPCList = new();
+        public static Dictionary<Predicate<Player>, Element> soulBoosts = new Dictionary<Predicate<Player>, Element>() { };
         public override void PostSetupContent()
         {
             //ItemList.Add(VanillaElements.Item);
@@ -38,6 +45,15 @@ namespace CalRemix.UI.ElementalSystem
             NPCList.Add(VanillaElements.Bosses);
             NPCList.Add(ToNPCList(Mod, RemixElements.Bosses));
             NPCList.Add(ToNPCList(CalRemix.CalMod, CalamityElements.Bosses));
+            
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().pathogenSoul, Element.Unholy);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().pyrogenSoul, Element.Fire);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().oxygenSoul, Element.Wind);
+            soulBoosts.Add((Player p) => p.Calamity() != null && p.Calamity().cryogenSoul, Element.Cold);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().carcinogenSoul, Element.Dark);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().phytogenSoul, Element.Poison);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().hydrogenSoul, Element.Water);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().ionogenSoul, Element.Machine);
         }
         private static Dictionary<int, Element[]> ToItemList(Mod mod, Dictionary<string, Element[]> list)
         {
@@ -209,14 +225,15 @@ namespace CalRemix.UI.ElementalSystem
             {
                 float multiplier = 1f;
                 Element[] e = item.GetGlobalItem<ElementItem>().element;
+                bool origen = player.Remix().origenSoul;
                 if (weak != null)
                 {
                     foreach (Element w in weak)
                     {
                         if (e.Contains(w) && !player.HasBuff<ElementalAffinity>())
-                            multiplier += 0.05f;
+                            multiplier += ElementWithSoul(player, 0.05f, w);
                         else if (e.Contains(w) && !player.HasBuff<ElementalAffinity>())
-                            multiplier += 0.35f;
+                            multiplier += ElementWithSoul(player, 0.35f, w);
                     }
                 }
                 if (resist != null)
@@ -224,12 +241,30 @@ namespace CalRemix.UI.ElementalSystem
                     foreach (Element r in resist)
                     {
                         if (e.Contains(r))
-                            multiplier -= 0.25f;
+                            multiplier += ElementWithSoul(player, -0.25f, r);
+
                     }
                 }
                 modifiers.FinalDamage *= multiplier;
             }
         }
+
+        public float ElementWithSoul(Player player, float baseMult, Element element)
+        {
+            foreach (var v in ElementLists.soulBoosts)
+            {
+                if (v.Key.Invoke(player) && v.Value == element)
+                {
+                    baseMult *= 1.22f;
+                }
+            }
+            if (player.Remix().origenSoul)
+            {
+                baseMult *= -0.5f;
+            }
+            return baseMult;
+        }
+
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.GetGlobalProjectile<ElementProj>().element != null)
@@ -241,9 +276,9 @@ namespace CalRemix.UI.ElementalSystem
                     foreach (Element w in weak)
                     {
                         if (e.Contains(w) && !Main.player[projectile.owner].HasBuff<ElementalAffinity>())
-                            multiplier += 0.05f;
+                            multiplier += ElementWithSoul(Main.player[projectile.owner], 0.05f, w);
                         else if (e.Contains(w) && !Main.player[projectile.owner].HasBuff<ElementalAffinity>())
-                            multiplier += 0.35f;
+                            multiplier += ElementWithSoul(Main.player[projectile.owner], 0.35f, w);
                     }
                 }
                 if (resist != null)
@@ -251,7 +286,7 @@ namespace CalRemix.UI.ElementalSystem
                     foreach (Element r in resist)
                     {
                         if (e.Contains(r))
-                            multiplier -= 0.25f;
+                            multiplier += ElementWithSoul(Main.player[projectile.owner], -0.25f, r);
                     }
                 }
                 modifiers.FinalDamage *= multiplier;
@@ -282,4 +317,5 @@ namespace CalRemix.UI.ElementalSystem
     public class Stab : ElementIcon { }
     public class Unholy : ElementIcon { }
     public class Water : ElementIcon { }
+    public class Wind : ElementIcon { }
 }

@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Items.Weapons;
-using CalRemix.Content.Projectiles.Hostile;
+﻿using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
