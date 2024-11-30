@@ -34,6 +34,7 @@ using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
 using CalRemix.Core.Scenes;
+using Terraria.Localization;
 
 namespace CalRemix.Core
 {
@@ -600,8 +601,8 @@ namespace CalRemix.Core
             if (CalRemixWorld.roachDuration > 0)
             {
                 float duration = CalRemixWorld.ROACHDURATIONSECONDS;
-                string bf = "BLACK FRIDAY";
-                string mayhem = "ROACH MAYHEM";
+                string bf = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach1").Value;
+                string mayhem = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach2").Value;
                 float bfWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
                 float mayhemWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
                 float bfY = Main.screenHeight * 0.4f;
