@@ -727,8 +727,11 @@ namespace CalRemix
             {
                 RoachCountdown++;
             }
+            DateTime date = DateTime.Now;
+            int roachGate = date.Hour < 12 ? 300 : date.Hour < 18 ? 180 : date.Hour < 23 ? 60 : 10;
+            roachGate = 2;
             // After 5 minutes, set the timer to -1 and start Roach Mayhem
-            if (RoachCountdown > CalamityUtils.SecondsToFrames(300) && !downedRoach)
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day >= 29 && !downedRoach && Main.rand.NextBool(600))
             {
                 downedRoach = true;
                 SoundEngine.PlaySound(new SoundStyle("CalRemix/Sounds/BlackFriday"));
