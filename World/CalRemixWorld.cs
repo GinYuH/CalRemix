@@ -77,7 +77,7 @@ namespace CalRemix
         public static int ShrineTimer = -20;
         public static int RoachCountdown = 0;
         public static int roachDuration = 0;
-        public static bool downedRoach = false;
+        public static bool downedRoache = false;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -190,7 +190,7 @@ namespace CalRemix
             canGenerateBaron = false;
             grime = false;
             meldCountdown = 72000;
-            downedRoach = false;
+            downedRoache = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -285,7 +285,7 @@ namespace CalRemix
             essenceBars = true;
             yharimBars = true;
             meldCountdown = 72000;
-            downedRoach = false;
+            downedRoache = false;
 
             alloyBars = true;
             essenceBars = true;
@@ -336,7 +336,7 @@ namespace CalRemix
             tag["canBaron"] = canGenerateBaron;
             tag["grime"] = grime;
             tag["meld"] = meldCountdown;
-            tag["downedRoach"] = downedRoach;
+            tag["downedRoache"] = downedRoache;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -388,7 +388,7 @@ namespace CalRemix
             canGenerateBaron = tag.Get<bool>("canBaron");
             grime = tag.Get<bool>("grime");
             meldCountdown = tag.Get<int>("meld");
-            downedRoach = tag.Get<bool>("downedRoach");
+            downedRoache = tag.Get<bool>("downedRoache");
 
             alloyBars = tag.Get<bool>("109alloybar");
             essenceBars = tag.Get<bool>("109essencebar");
@@ -438,7 +438,7 @@ namespace CalRemix
             writer.Write(grime);
             writer.Write(meldCountdown);
             writer.Write(roachDuration);
-            writer.Write(downedRoach);
+            writer.Write(downedRoache);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -489,7 +489,7 @@ namespace CalRemix
             grime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
-            downedRoach = reader.ReadBoolean();
+            downedRoache = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -723,17 +723,14 @@ namespace CalRemix
             }
             // Roach Mayhem!!!
             // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
-            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && !downedRoach)
+            if (!downedRoache)
             {
                 RoachCountdown++;
             }
-            DateTime date = DateTime.Now;
-            int roachGate = date.Hour < 12 ? 300 : date.Hour < 18 ? 180 : date.Hour < 23 ? 60 : 10;
-            roachGate = 2;
             // After 5 minutes, set the timer to -1 and start Roach Mayhem
-            if (DateTime.Now.Month == 11 && DateTime.Now.Day >= 29 && !downedRoach && Main.rand.NextBool(600))
+            if (!downedRoache && Main.rand.NextBool(600))
             {
-                downedRoach = true;
+                downedRoache = true;
                 SoundEngine.PlaySound(new SoundStyle("CalRemix/Sounds/BlackFriday"));
                 roachDuration = CalamityUtils.SecondsToFrames(ROACHDURATIONSECONDS);
                 UpdateWorldBool();
