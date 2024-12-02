@@ -123,6 +123,22 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
+                    case 4: //switching phase; default guarding behavior but without contact damage
+                        {
+                            NPC.damage = 0;
+                            NPC.localAI[1] += 8f;
+                            float distance = 100;
+                            distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double rad = deg * (Math.PI / 180);
+                            float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
+                            float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
+
+                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            float rotOffset = 0;
+                            NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
+                            break;
+                        }
                     case 9: //switching phase; default guarding behavior but without contact damage
                         {
                             NPC.damage = 0;
@@ -190,6 +206,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.Calamity().newAI[0] == 4)
+                return false;
             Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;
             spriteBatch.Draw(BloomTexture.Value, npcOffset, NPC.frame, Color.White with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);

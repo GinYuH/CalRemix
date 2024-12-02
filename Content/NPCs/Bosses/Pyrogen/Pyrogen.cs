@@ -32,6 +32,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -643,10 +644,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         int waveAmount = 2; // total amount of sequences
                         int attackTime = shootChain + (waveTime + waitTime) * waveAmount; // total attack time
                         int withdrawChain = attackTime - 120; // when to withdraw the chain
-                        int projectileAmount = 30; // how many fireballs make up the walls
-                        float projectileSpeed = 15; // speed of fireballs
+                        int projectileAmount = 40; // how many fireballs make up the walls
+                        float projectileSpeed = 18; // speed of fireballs
                         float shotSpacing = 60; // amount of pixels between each fireball's position
-                        float spawnDistX = 1200; // how far the fireballs spawn away from the player
+                        float spawnDistX = 1200; // how far the fireballs spawn away from Pyrogen
                         int hookHitTime = 30; // how long it takes for the hook to hit the player
                         int safeableSpawnRange = 4; // the range centered on the middle at which one fireball will be removed for the player to move through
                         NPC.velocity = Vector2.Zero;
@@ -688,14 +689,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         // shoot the chain at the player
                         if (AttackTimer == shootChain)
                         {
+                            SoundEngine.PlaySound(BetterSoundID.ItemBeesKnees with { Pitch = 0.4f }, NPC.Center);
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, -1, NPC.whoAmI, Target.whoAmI, 0);
-                                Projectile proj = Main.projectile[p];
-                                proj.localAI[1] = withdrawChain; 
+                                foreach (Player playere in Main.ActivePlayers)
+                                {
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, Main.myPlayer, NPC.whoAmI, playere.whoAmI, 0);
+                                    Projectile proj = Main.projectile[p];
+                                    proj.localAI[1] = withdrawChain;
+                                }
                             }
                         }
-
+                        foreach (Player playere in Main.ActivePlayers)
+                        {
+                            playere.Calamity().infiniteFlight = true;
+                        }
                         // the fireball which will never be shot, never to hit the player, never to have any dreams, never t
                         int noFire = Main.rand.Next(-safeableSpawnRange / 2, safeableSpawnRange);
                         bool startAttacking = AttackTimer > (shootChain + hookHitTime);
@@ -703,7 +711,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         // spawn fireball firewalls
                         if (AttackTimer % waveInterval == 0 && startAttacking && notOnCooldown)
                         {
-                            SoundEngine.PlaySound(BrimstoneMonster.SpawnSound with { Volume = 2f }, Target.Center);
+                            SoundEngine.PlaySound(CommonCalamitySounds.SwiftSliceSound, Target.Center);
                             for (int i = -(projectileAmount / 2); i < (projectileAmount / 2); i++)
                             {
                                 if (i != noFire)
@@ -711,10 +719,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         bool goRight = NPC.DirectionTo(Target.Center).X.DirectionalSign() == 1;
-                                        Vector2 spawnPos = new Vector2(Target.Center.X + (goRight ? -spawnDistX : spawnDistX), Target.Center.Y + i * shotSpacing);
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.UnitX * NPC.DirectionTo(Target.Center).X.DirectionalSign() * projectileSpeed, ModContent.ProjectileType<PyrogenFlareStatic>(), (int)(NPC.damage / 8f), 0);
-                                        Main.projectile[p].frame = Main.rand.Next(1, 4);
-                                        Main.projectile[p].frameCounter = Main.rand.Next(1, 4);
+                                        Vector2 spawnPos = new Vector2(NPC.Center.X + (goRight ? -spawnDistX : spawnDistX), Target.Center.Y + i * shotSpacing);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.UnitX * NPC.DirectionTo(Target.Center).X.DirectionalSign() * projectileSpeed, ModContent.ProjectileType<PyrogenTool>(), 100, 0);
                                     }
                                 }
                             }
@@ -858,7 +864,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 switch (AIState)
                 {
                     case PyroPhaseType.Idle:
-                        AIState = PyroPhaseType.Charge;
+                        AIState = PyroPhaseType.FireWall;
                         break;
 
                     case PyroPhaseType.Charge:
@@ -1024,13 +1030,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.FlameBurst, hit.HitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Torch, hit.HitDirection, -1f, 0, default, 1f);
             }
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 20; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.FlameBurst, hit.HitDirection, -1f, 0, default, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Torch, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
         }

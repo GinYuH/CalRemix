@@ -1,9 +1,12 @@
 ﻿using CalamityMod;
+using CalamityMod.DataStructures;
 using CalRemix.Content.NPCs.Bosses.BossScule;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -26,13 +29,18 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public ref float MaxAttackTime => ref Projectile.localAI[1];
 
+        public List<VerletSimulatedSegment> Segments;
+        int segmentCount = 40;
+
         public override void SetDefaults()
         {
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.timeLeft = 22222;
             Projectile.ignoreWater = true;
-            Projectile.timeLeft = 480;
+            Projectile.netImportant = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
         }
@@ -41,12 +49,28 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             writer.Write(Projectile.localAI[0]);
             writer.Write(Projectile.localAI[1]);
+            foreach (var v in Segments)
+            {
+                writer.Write(v.position.X);
+                writer.Write(v.position.Y);
+                writer.Write(v.locked);
+                writer.Write(v.oldPosition.X);
+                writer.Write(v.oldPosition.Y);
+            }
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             Projectile.localAI[0] = reader.ReadSingle();
             Projectile.localAI[1] = reader.ReadSingle();
+            List<VerletSimulatedSegment> segs = new List<VerletSimulatedSegment>();
+            for (int i = 0; i < 10; i++)
+            {
+                VerletSimulatedSegment v = new VerletSimulatedSegment(new Vector2(reader.ReadSingle(), reader.ReadSingle()), reader.ReadBoolean());
+                v.oldPosition = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+                segs.Add(v);
+            }
+            Segments = segs;
         }
 
 
@@ -60,6 +84,34 @@ namespace CalRemix.Content.Projectiles.Hostile
                 Projectile.Kill();
                 return;
             }
+
+            if (Segments == null)
+            {
+                Segments = new List<VerletSimulatedSegment>(segmentCount);
+                for (int i = 0; i < segmentCount; i++)
+                {
+                    VerletSimulatedSegment segment = new VerletSimulatedSegment(Projectile.Center);
+                    Segments.Add(segment);
+                }
+
+                Segments[0].locked = true;
+                Segments[Segments.Count - 1].locked = true;
+            }
+            else
+            {
+                Segments[0].oldPosition = Segments[0].position;
+                Segments[0].position = Projectile.Center;
+
+                Segments[^1].oldPosition = Segments[^1].position;
+                Segments[^1].position = n.Center;
+
+                Segments = VerletSimulatedSegment.SimpleSimulation(Segments, MathHelper.Lerp(8, 16, n.Distance(Projectile.Center) / 1200f), loops: segmentCount, gravity: 0.2f);
+
+                Projectile.netUpdate = true;
+                Projectile.netSpam = 0;
+            }
+
+
             bool validPlayer = true;
             if (p == null || !p.active || p.dead)
             {
@@ -79,11 +131,12 @@ namespace CalRemix.Content.Projectiles.Hostile
                 // Harmlessly grab the player and attempt to pull them in. this is resistable
                 if (AttackType == 0)
                 {
+                    Vector2 playerOff = p.DirectionTo(n.Center) * (AttackTime > 60 ? 80 : 120);
                     Projectile.localAI[0]++;
                     // Go back to Pyrogen
                     if (AttackTime > MaxAttackTime)
                     {
-                        Projectile.position = Vector2.Lerp(p.Center, n.Center, Utils.GetLerpValue(MaxAttackTime, MaxAttackTime + hitPlayerTime, AttackTime, true));
+                        Projectile.position = Vector2.Lerp(p.Center + playerOff, n.Center, Utils.GetLerpValue(MaxAttackTime, MaxAttackTime + hitPlayerTime, AttackTime, true));
                         if (Projectile.Hitbox.Intersects(n.Hitbox))
                         {
                             Projectile.Kill();
@@ -93,7 +146,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     // Launch towards the player then glue to their position
                     else
                     {
-                        Projectile.position = Vector2.Lerp(n.Center, p.Center, Utils.GetLerpValue(0, hitPlayerTime, AttackTime, true));
+                        Projectile.position = Vector2.Lerp(n.Center, p.Center + playerOff, Utils.GetLerpValue(0, hitPlayerTime, AttackTime, true));
                     }
                     if (Projectile.localAI[0] == hitPlayerTime)
                     {
@@ -118,28 +171,34 @@ namespace CalRemix.Content.Projectiles.Hostile
             Texture2D reelTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonHit").Value;
             Texture2D endTexture = AttackTime > 60 ? reelTexture : TextureAssets.Projectile[Projectile.type].Value;
             Texture2D chainTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonChain").Value;
-            NPC owner = Main.npc[(int)NPCIndex];
-            Vector2 distToProj = Projectile.Center;
-            float projRotation = Projectile.AngleTo(owner.Center) - 1.57f;
-            bool doIDraw = true;
-
-            while (doIDraw)
+            
+            NPC phyto = Main.npc[(int)NPCIndex];
+            if (phyto == null || !phyto.active || phyto.type != ModContent.NPCType<Pyrogen>())
             {
-                float distance = (owner.Center - distToProj).Length();
-                if (distance < (chainTexture.Height + 1))
+                return false;
+            }
+            if (Segments != null)
+            {
+                for (int i = 0; i < Segments.Count; i++)
                 {
-                    doIDraw = false;
-                }
-                else if (!float.IsNaN(distance))
-                {
-                    Color drawColor = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
-                    distToProj += Projectile.SafeDirectionTo(owner.Center) * chainTexture.Height;
-                    Main.EntitySpriteDraw(chainTexture, distToProj - Main.screenPosition,
-                        new Rectangle(0, 0, chainTexture.Width, chainTexture.Height), drawColor, projRotation,
-                        Utils.Size(chainTexture) / 2f, 1f, SpriteEffects.None, 0);
+                    VerletSimulatedSegment seg = Segments[i];
+                    float rot = 0f;
+                    if (i > 0)
+                        rot = seg.position.DirectionTo(Segments[i - 1].position).ToRotation() + MathHelper.PiOver2;
+                    else
+                        rot = Projectile.rotation;
+                    if (i > 0)
+                        Main.EntitySpriteDraw(chainTexture, seg.position - Main.screenPosition, null, Projectile.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, chainTexture.Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    else
+                        Main.EntitySpriteDraw(endTexture, seg.position - Main.screenPosition, null, lightColor, rot, new Vector2(endTexture.Width / 2, endTexture.Height), Projectile.scale, SpriteEffects.None, 0);
                 }
             }
-            return true;
+            return false;
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(Projectile.whoAmI);
         }
     }
 }
