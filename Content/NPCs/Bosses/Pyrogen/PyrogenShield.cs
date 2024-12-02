@@ -52,6 +52,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             Lighting.AddLight(NPC.Center, TorchID.Red);
             NPC pyro = Main.npc[(int)NPC.ai[0]];
+            NPC.dontTakeDamage = false;
             if (pyro.active && pyro.type == ModContent.NPCType<Pyrogen>())
             {
                 NPC.Calamity().newAI[0] = pyro.ai[0];
@@ -70,7 +71,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -79,7 +79,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             if (!stopAi1) { 
                                 NPC.localAI[1] += 1f;
                             }
-                            Vector2 idealpos = NPC.Center;
 
                             float distance = MathHelper.Clamp(MathHelper.Lerp(50, 300, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, 300);
                             distance += pyro.width >= pyro.height ? pyro.width : pyro.height;
@@ -119,23 +118,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             }
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
-                    case 4: //switching phase; default guarding behavior but without contact damage
+                    case 4 or 7: //starlo and obsidian storm attacks, disappear
                         {
                             NPC.damage = 0;
+                            NPC.dontTakeDamage = true;
                             NPC.localAI[1] += 8f;
-                            float distance = 100;
-                            distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -143,15 +140,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         {
                             NPC.damage = 0;
                             NPC.localAI[1] += 8f;
-                            float distance = 100;
-                            distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -159,15 +154,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         {
                             NPC.damage = 220;
                             NPC.localAI[1] += 8f;
-                            float distance = 100;
-                            distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                         }
                         break;
@@ -206,7 +199,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (NPC.Calamity().newAI[0] == 4)
+            if (NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7)
                 return false;
             Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;
@@ -220,7 +213,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
-            if (NPC.Calamity().newAI[0] == 4)
+            if (NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7)
                 return false;
             return null;
         }
