@@ -33,6 +33,7 @@ using CalRemix.Content.Items.Lore;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
+using CalamityMod.Particles;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -326,8 +327,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     {
                         {
                             AttackTimer++;
-                            int tpDistX = 1500;
-                            int tpDistY = 1000;
+                            int tpDist = 1000;
                             int chargeDelaySub = death ? 30 : rev ? 35 : 40; //pause before dash length
                             float chargeLimit = death ? 6 : rev ? 5 : 4;
                             float chargeVelocity = 35; //stays the same
@@ -347,8 +347,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float inertia = 25f;
 
                             Vector2 predictiveVector = player.Center + player.velocity * 20f - NPC.Center;
-
-
 
                             if (AttackTimer == 2) //reset position immediately to prep charge
                             {
@@ -414,7 +412,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     DustExplosion();
                                     NPC.velocity.X = 0f;
                                     NPC.velocity.Y = 0f;
-                                    NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
+                                    NPC.position = Target.Center + Main.rand.NextVector2Circular(222, 222).SafeNormalize(Vector2.UnitY) * 600;
                                     DustExplosion();
                                     NPC.ai[1] = 0;
                                     SelectNextAttack();
@@ -427,7 +425,15 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 }
                             }
                                 NPC.rotation = NPC.velocity.X * 0.1f;
-                    }
+
+                            if (AttackTimer < chargeDelaySub && AttackTimer >= 3)
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    Vector2 predictiveVectore = predictiveCharge ? predictiveVector + NPC.Center : Target.Center;
+                                    SquareParticle spark = new SquareParticle(NPC.Center + Main.rand.NextVector2Square(-200, 200), NPC.DirectionTo(predictiveVectore) * NPC.Distance(predictiveVectore) / 10f, false, 30, Main.rand.NextFloat(3, 4), (predictiveCharge ? Color.Red : Color.Orange) * 0.9f);
+                                    GeneralParticleHandler.SpawnParticle(spark);
+                                }
+                        }
                         break;
                     }
                 case (int)PyroPhaseType.Rain: //moves above the player, rains projectiles down in an even spread; twice in phase 2
@@ -437,7 +443,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             int stop = 90;
                             int stop2 = 170;
                             int dash = 91;
-                            int flareRate = 15;
+                            int flareRate = 10;
                             bool canShootFlares = false;
                             int endPhase = 170;
 
@@ -448,12 +454,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             if (revenge)
                             {
                                 stop -= 5;
-                                flareRate = 12;
+                                flareRate = 7;
                             }
                             if (death)
                             {
                                 stop -= 5;
-                                flareRate = 10;
+                                flareRate = 5;
                             }
 
                             if (AttackTimer < stop)
@@ -537,17 +543,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 CalamityUtils.KillAllHostileProjectiles();
                             }
 
-                            if (AttackTimer < 20 && AttackTimer > 1) //YANK player in with boss
-                            {
-                                foreach (Player victim in Main.ActivePlayers)
-                                {
-                                    victim.velocity = Vector2.Zero;
-                                    victim.position = Vector2.Lerp(victim.position, NPC.Center, AttackTimer / BlackholeSafeTime / 2);
-                                }
-                            }
 
-                            if (AttackTimer == BlackholeSafeTime)
+
+                            // shoot the chain at the player
+                            if (AttackTimer == 1)
                             {
+                                SoundEngine.PlaySound(BetterSoundID.ItemBeesKnees with { Pitch = 0.4f }, NPC.Center);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    foreach (Player playere in Main.ActivePlayers)
+                                    {
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, Main.myPlayer, NPC.whoAmI, playere.whoAmI, 1);
+                                        Projectile proj = Main.projectile[p];
+                                        proj.localAI[1] = 30;
+                                    }
+                                }
                             }
 
                             float randomVariance = NPC.ai[1];
@@ -623,6 +633,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             if (AttackTimer >= 730) //all done!
                             {
                                 SelectNextAttack();
+                                CalamityUtils.KillAllHostileProjectiles();
                             }
 
                             foreach (Player victim in Main.ActivePlayers)
@@ -728,8 +739,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
                         if (AttackTimer >= attackTime)
                         {
+                            SelectNextAttack();
                             SafeTeleport();
-                            //CalamityUtils.KillAllHostileProjectiles();
+                            CalamityUtils.KillAllHostileProjectiles();
                             AttackTimer = 0;
                         }
 
@@ -864,7 +876,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 switch (AIState)
                 {
                     case PyroPhaseType.Idle:
-                        AIState = PyroPhaseType.FireWall;
+                        AIState = PyroPhaseType.Charge;
                         break;
 
                     case PyroPhaseType.Charge:

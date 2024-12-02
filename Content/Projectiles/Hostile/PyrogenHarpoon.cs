@@ -128,10 +128,10 @@ namespace CalRemix.Content.Projectiles.Hostile
             int maxDistOfScale = 4000; // how far it takes for it to reach the max pull force
             if (validPlayer)
             {
+                Vector2 playerOff = p.DirectionTo(n.Center) * (AttackTime > 60 ? 80 : 120);
                 // Harmlessly grab the player and attempt to pull them in. this is resistable
                 if (AttackType == 0)
                 {
-                    Vector2 playerOff = p.DirectionTo(n.Center) * (AttackTime > 60 ? 80 : 120);
                     Projectile.localAI[0]++;
                     // Go back to Pyrogen
                     if (AttackTime > MaxAttackTime)
@@ -159,6 +159,35 @@ namespace CalRemix.Content.Projectiles.Hostile
                     }
                 }
                 else if (AttackType == 1)
+                {
+                    Projectile.localAI[0]++;
+                    // Go back to Pyrogen
+                    if (AttackTime > MaxAttackTime)
+                    {
+                        Projectile.velocity = Projectile.DirectionTo(n.Center) * MathHelper.Lerp(12, 24, Utils.GetLerpValue(0, 1000, Projectile.Distance(n.Center), true));
+                        if (Projectile.Hitbox.Intersects(n.Hitbox))
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                    }
+                    // Launch towards the player then glue to their position
+                    else
+                    {
+                        Projectile.position = Vector2.Lerp(n.Center, p.Center + playerOff, Utils.GetLerpValue(0, MaxAttackTime, AttackTime, true));
+                    }
+                    if (Projectile.localAI[0] == MaxAttackTime)
+                    {
+                        Projectile.netUpdate = true;
+                    }
+                    // Drag the player inwards
+                    else if (AttackTime > MaxAttackTime && Projectile.Distance(n.Center) > 200)
+                    {
+                        p.position = Projectile.position - playerOff;
+                        p.velocity = Projectile.velocity;
+                    }
+                }
+                else if (AttackType == 2)
                 {
 
                 }

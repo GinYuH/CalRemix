@@ -79,7 +79,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
             else
             {
-                Projectile.localAI[2] += Projectile.localAI[1] == 1 ? -1f : 1f;
+                Projectile.localAI[2] += 0.5f * (Projectile.localAI[1] == 1 ? -1f : 1f);
                 float distance = 100;
                 distance = Projectile.localAI[2] * 10;
                 double deg = 360 / Projectile.ai[1] * Projectile.ai[0] + Projectile.localAI[2] * 1.22f;
@@ -100,7 +100,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
             for (int i = 0; i < 10; i++)
             {
-                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FlameBurst, 0f, 0f);
+                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
                 d.velocity = new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
             }
 

@@ -217,5 +217,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             //spriteBatch.ExitShaderRegion();
             return false;
         }
+
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            if (NPC.Calamity().newAI[0] == 4)
+                return false;
+            return null;
+        }
     }
 }
