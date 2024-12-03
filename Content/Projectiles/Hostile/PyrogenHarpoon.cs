@@ -49,6 +49,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             writer.Write(Projectile.localAI[0]);
             writer.Write(Projectile.localAI[1]);
+            writer.Write(Projectile.localAI[2]);
             foreach (var v in Segments)
             {
                 writer.Write(v.position.X);
@@ -63,6 +64,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Projectile.localAI[0] = reader.ReadSingle();
             Projectile.localAI[1] = reader.ReadSingle();
+            Projectile.localAI[2] = reader.ReadSingle();
             List<VerletSimulatedSegment> segs = new List<VerletSimulatedSegment>();
             for (int i = 0; i < 10; i++)
             {
@@ -189,7 +191,39 @@ namespace CalRemix.Content.Projectiles.Hostile
                 }
                 else if (AttackType == 2)
                 {
-
+                    Projectile.localAI[0]++;
+                    float comp = Utils.GetLerpValue(0, hitPlayerTime, AttackTime, true);
+                    int dist = (int)Projectile.localAI[2];
+                    hitPlayerTime = 60;
+                    if (AttackTime <= hitPlayerTime)
+                    {
+                        Projectile.position = Vector2.Lerp(n.Center, n.Center + n.Center.DirectionTo(p.Center) * dist, comp);
+                        if (AttackTime % 5 == 0)
+                        {
+                            int projSpeed = 16;
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.Pi) * projSpeed, ModContent.ProjectileType<PyrogenFlare>(), (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(-MathHelper.Pi) * -projSpeed, ModContent.ProjectileType<PyrogenFlare>(), (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
+                        }
+                    }
+                    else
+                    {
+                        comp = Utils.GetLerpValue(hitPlayerTime, hitPlayerTime + 20, AttackTime, true);
+                        Projectile.position = Vector2.Lerp(n.Center + n.Center.DirectionTo(p.Center) * dist, n.Center, comp);
+                        if (Projectile.Hitbox.Intersects(n.Hitbox))
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                    }
+                    if (p.Hitbox.Intersects(Projectile.Hitbox))
+                    {
+                        MaxAttackTime = -22;
+                    }
+                    if (MaxAttackTime == -22)
+                    {
+                        p.position = Projectile.position - playerOff;
+                        p.velocity = Projectile.velocity;
+                    }
                 }
             }
             Projectile.rotation = n.SafeDirectionTo(p.Center).ToRotation() + MathHelper.PiOver2;

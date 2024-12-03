@@ -28,6 +28,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
+            Projectile.friendly = false;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 320;
             CooldownSlot = ImmunityCooldownID.Bosses;
@@ -45,12 +46,19 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
 
-            Player target = Main.player[(int)Projectile.ai[0]];
-            Vector2 distance = target.Center - Projectile.Center;
-            distance *= 6;
-            Projectile.velocity = (Projectile.velocity * 24f + distance) / 25f;
-            Projectile.velocity.Normalize();
-            Projectile.velocity *= 9;
+            if (Projectile.ai[1] == 1 && Projectile.timeLeft > 180)
+                Projectile.timeLeft = 180;
+
+            float speed = Projectile.ai[1] == 1 ? 13 : 9;
+            if (Projectile.ai[1] == 0 || (Projectile.ai[1] == 1 && Projectile.ai[2]++ > 30))
+            {
+                Player target = Main.player[(int)Projectile.ai[0]];
+                Vector2 distance = target.Center - Projectile.Center;
+                distance *= 6;
+                Projectile.velocity = (Projectile.velocity * 24f + distance) / 25f;
+                Projectile.velocity.Normalize();
+                Projectile.velocity *= speed;
+            }
             if (!Main.dedServ)
             {
                 if (Main.rand.NextBool(10))

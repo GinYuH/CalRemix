@@ -71,7 +71,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             PullintoShield = 3,
             FireWall = 4,
             PonceSpin = 5,
-            P22 = 6,
+            FireChain = 6,
             Hellstorm = 7,
             HellstormFatal = 8,
             Transitioning = 9
@@ -767,8 +767,47 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                         break;
                 }
-                case (int)PyroPhaseType.P22: //phase 2 second attack, ???
+                case (int)PyroPhaseType.FireChain: // Shoot a hostile chain that spawns fireballs
                 {
+                        int attackTime = 300; // how long the attack lasts
+                        int shootHook = 60; // when to shoot the hook
+                        float minDist = 600; // the minimum distance the hook can be shot out
+                        float distMultiplier = 0.8f; // how far the hook shoots out relative to the player
+                        float hookDist = MathHelper.Max(Target.Distance(NPC.Center) * distMultiplier, minDist); // the final distance the hook shoots
+                        int moveSpeed = 4; // speed Pyrogen moves
+
+                        AttackTimer++;
+
+                        if (AttackTimer == 1)
+                        {
+                            ClearingTeleport();
+                        }
+                        // shoot the hook at the player
+                        if (AttackTimer == shootHook)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemBeesKnees with { Pitch = 0.4f }, NPC.Center);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                foreach (Player playere in Main.ActivePlayers)
+                                {
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, Main.myPlayer, NPC.whoAmI, playere.whoAmI, 2);
+                                    Projectile proj = Main.projectile[p];
+                                    proj.localAI[2] = hookDist; 
+                                }
+                            }
+                        }
+
+                        // move
+                        NPC.velocity = NPC.SafeDirectionTo(Target.Center) * moveSpeed;
+
+
+                        if (AttackTimer > attackTime)
+                        {
+                            CalamityUtils.KillAllHostileProjectiles();
+                            SelectNextAttack();
+                            SafeTeleport();
+                        }
+
                     break;
                 }
                 case (int)PyroPhaseType.Hellstorm: //spins really fast, pulling projectiles and the player in, then fires a shrapnel bomb at the end of the attack duration; 50 dr
@@ -834,16 +873,17 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public void Hellstorm(bool end = false)
         {
-            int startAbsorbing = 60;
-            int stopAbsorbing = 360;
-            int fireRate = 5;
-            int shootBombGate = stopAbsorbing + 60;
-            int endAttack = shootBombGate + 300;
-            int maxSpawnRad = 2000;
-            int minSpawnRad = 1800;
-            int projSpeed = 12;
-            int bombProjAmount = 22;
+            int startAbsorbing = 60; // when projectiles should start appearing
+            int stopAbsorbing = 360; // when projectiles should stop appearing
+            int fireRate = 5; // how often projectiles are spawned
+            int shootBombGate = stopAbsorbing + 60; // when does the bomb appear
+            int endAttack = shootBombGate + 300; // when the attack ends
+            int maxSpawnRad = 2000; // max dist projectiles can spawn
+            int minSpawnRad = 1800; // min dist projectiles can spawn
+            int projSpeed = 12; // speed of projectiles
+            int bombProjAmount = 22; // how many projectiles the bomb explodes into
 
+            // for desperation, spawn twice as many projectiles
             if (end)
             {
                 fireRate /= 2;
@@ -858,6 +898,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 ClearingTeleport();
             }
 
+            // spawn projectiles around the player if he should start absorbing and before he should either stop absorbing or infinite if in desperation
             if (AttackTimer > startAbsorbing && (AttackTimer < stopAbsorbing || end))
             {
                 if (AttackTimer % fireRate == 0)
@@ -872,11 +913,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 }
             }
 
+            // only start ticking down to the bomb when no more fragments are left
             if ((!(AttackTimer == stopAbsorbing && CalamityUtils.AnyProjectiles(ModContent.ProjectileType<ObsidianFragment>()))) || end)
             {
                 AttackTimer++;
             }
 
+            // spawn the bomb
             if (!end && AttackTimer == shootBombGate)
             {
                 SoundEngine.PlaySound(BetterSoundID.ItemGrenadeExplosion with { Pitch = -0.2f, Volume = 2 }, NPC.Center);
@@ -888,6 +931,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 NPC.position = NPC.position - NPC.DirectionTo(Target.Center) * 40;
             }
 
+            // eat shards that come in contact
             foreach (Projectile p in Main.ActiveProjectiles)
             {
                 if (p.type == ModContent.ProjectileType<ObsidianFragment>() && p.ai[1] == 0)
@@ -906,6 +950,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 }
             }
 
+            // end the attack when it's not desperation
             if (AttackTimer > endAttack && !end)
             {
                 SelectNextAttack();
@@ -951,7 +996,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             else
             {
 
-                int choice = Main.rand.Next(5);
+                int choice = Main.rand.Next(7);
                 switch (choice)
                 {
                     case 0:
@@ -979,6 +1024,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     case 5:
                         AIState = PyroPhaseType.FireWall;
                         break;
+                    case 6:
+                        AIState = PyroPhaseType.FireChain;
+                        break;
                     default:
                         AIState = PyroPhaseType.Idle;
                         break;
@@ -998,6 +1046,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             AttackTimer = 0f;
             charges = 0;
             NPC.damage = 200;
+            NPC.Calamity().DR = 0.3f;
             NPC.netUpdate = true;
         }
 

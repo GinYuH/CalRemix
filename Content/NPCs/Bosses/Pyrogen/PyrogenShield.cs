@@ -18,6 +18,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public bool stopAi1 = false;
         public static Asset<Texture2D> BloomTexture = null;
         public static Asset<Texture2D> Glow = null;
+
+        public bool ShouldHide => NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7 || NPC.Calamity().newAI[0] == 8;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pyrogen's Shield");
@@ -121,7 +124,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
-                    case 4 or 7: //starlo and obsidian storm attacks, disappear
+                    case 4 or 7 or 8: //starlo and obsidian storm attacks, disappear
                         {
                             NPC.damage = 0;
                             NPC.dontTakeDamage = true;
@@ -199,7 +202,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7)
+            if (ShouldHide)
                 return false;
             Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;
@@ -213,7 +216,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
-            if (NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7)
+            if (ShouldHide)
                 return false;
             return null;
         }
