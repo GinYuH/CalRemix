@@ -79,11 +79,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                     case 3: //all players are pulled in with the boss; rotate out further in this case
                         {
-                            if (!stopAi1) { 
-                                NPC.localAI[1] += 1f;
-                            }
+                            NPC.localAI[1] += 1f;
 
-                            float distance = MathHelper.Clamp(MathHelper.Lerp(50, 300, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, 300);
+                            int maxDist = 500;
+                            float distance = MathHelper.Clamp(MathHelper.Lerp(50, maxDist, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, maxDist);
                             distance += pyro.width >= pyro.height ? pyro.width : pyro.height;
 
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly * 660 + NPC.localAI[1];
@@ -101,7 +100,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 NPC.damage = 200;
                             }
 
-                            if (NPC.localAI[1] < Pyrogen.BlackholeSafeTime * 2)
+                            if (NPC.localAI[1] < Pyrogen.BlackholeSafeTime * 4)
                             {
                                 NPC.damage = 0;
                             }

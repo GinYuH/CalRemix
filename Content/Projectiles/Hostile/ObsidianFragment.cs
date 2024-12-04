@@ -41,7 +41,8 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
             Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
             CalamityUtils.DrawAfterimagesCentered(Projectile, 0, Color.Purple, 3, texture);
-            Main.EntitySpriteDraw(texture, centered, null, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            //Main.EntitySpriteDraw(texture, centered, null, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4, texture);
             return false;
         }
     }

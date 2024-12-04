@@ -23,8 +23,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.Calamity().DealsDefenseDamage = true;
-            Projectile.width = 64;
-            Projectile.height = 66;
+            Projectile.width = 22;
+            Projectile.height = 22;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
@@ -70,6 +70,12 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             return Projectile.position.Y > Main.player[(int)Projectile.ai[0]].Bottom.Y;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            PyrogenFlare.DrawPyrogenFlare(Projectile, lightColor);
+            return false;
         }
     }
 }

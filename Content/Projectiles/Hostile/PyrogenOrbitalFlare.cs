@@ -23,8 +23,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.Calamity().DealsDefenseDamage = true;
-            Projectile.width = 64;
-            Projectile.height = 66;
+            Projectile.width = 22;
+            Projectile.height = 22;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
@@ -79,7 +79,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
             else
             {
-                Projectile.localAI[2] += 0.5f * (Projectile.localAI[1] == 1 ? -1f : 1f);
+                Projectile.localAI[2] += 0.75f * (Projectile.localAI[1] == 1 ? -1f : 1f);
                 float distance = 100;
                 distance = Projectile.localAI[2] * 10;
                 double deg = 360 / Projectile.ai[1] * Projectile.ai[0] + Projectile.localAI[2] * 1.22f;
@@ -104,6 +104,12 @@ namespace CalRemix.Content.Projectiles.Hostile
                 d.velocity = new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
             }
 
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            PyrogenFlare.DrawPyrogenFlare(Projectile, lightColor);
+            return false;
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,8 +25,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.Calamity().DealsDefenseDamage = true;
-            Projectile.width = 64;
-            Projectile.height = 66;
+            Projectile.width = 22;
+            Projectile.height = 22;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
@@ -85,6 +87,18 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             return Projectile.position.Y > Main.player[(int)Projectile.ai[0]].Bottom.Y;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawPyrogenFlare(Projectile, lightColor);
+            return false;
+        }
+
+        public static void DrawPyrogenFlare(Projectile p, Color lightColor)
+        {
+            Texture2D piss = TextureAssets.Projectile[p.type].Value;
+            Main.EntitySpriteDraw(TextureAssets.Projectile[p.type].Value, p.Center - Main.screenPosition, TextureAssets.Projectile[p.type].Frame(1, 5, 0, p.frame), lightColor, p.rotation, new Vector2(piss.Width / 2, piss.Height / 10), p.scale, 0, 0);
         }
     }
 }

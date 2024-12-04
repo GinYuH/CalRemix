@@ -34,6 +34,9 @@ using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
+using CalRemix.Content.NPCs.TownNPCs;
+using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.Items.Weapons.Ranged;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -361,6 +364,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 SafeTeleport();
                             }
 
+                            if (AttackTimer % 6 == 0 && AttackTimer < chargeDelaySub)
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.ItemInfernoFork with { Pitch = 1f }, Target.Center);
+                            }
                             //decide what kind of dash to use
                             if (AttackTimer >= 3 && AttackTimer < chargeDelaySub)
                             {
@@ -391,14 +398,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 if (predictiveCharge) {
                                     NPC.velocity = Vector2.Normalize(predictiveVector) * chargeVelocity;
                                     NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X);
-                                    SoundEngine.PlaySound(ChargeSound, NPC.Center);
+                                    SoundEngine.PlaySound(ChargeSound with { Pitch = 0.4f }, Target.Center);
                                     charges++;
                                 }
                                 else
                                 {
                                     NPC.velocity = NPC.DirectionTo(Target.Center) * chargeVelocity;
                                     NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X);
-                                    SoundEngine.PlaySound(ChargeSound, NPC.Center);
+                                    SoundEngine.PlaySound(ChargeSound with { Pitch = 0.2f }, Target.Center);
                                     charges++;
                                     break;
                                 }                         
@@ -415,7 +422,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     DustExplosion();
                                     NPC.velocity.X = 0f;
                                     NPC.velocity.Y = 0f;
-                                    NPC.position = Target.Center + Main.rand.NextVector2Circular(222, 222).SafeNormalize(Vector2.Zero) * 600;
+                                    Vector2 tpos = Main.rand.NextVector2Circular(222, 222);
+                                    NPC.position = Target.Center + tpos.SafeNormalize(Vector2.Zero) * 600;
                                     DustExplosion();
                                     NPC.ai[1] = 0;
                                     SelectNextAttack();
@@ -587,30 +595,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 NPC.Calamity().newAI[0] = Main.rand.Next(0, 3);
                             }
 
-                            if (AttackTimer == 700) //reject player from shield since attack has concluded
-                            {
-                                foreach (Player victim in Main.ActivePlayers)
-                                {
-                                    distanceRequired = 900f;
-                                    float distance = Vector2.Distance(victim.Center, NPC.Center);
-                                    if (distance < distanceRequired)
-                                    {
-                                        victim.velocity = NPC.DirectionTo(victim.Center) * 22;
-                                    }
-                                }
-                            }
-
                             if (AttackTimer >= 730) //all done!
                             {
                                 SelectNextAttack();
                                 CalamityUtils.KillAllHostileProjectiles();
                             }
-
+                            InfiniteFlight();
+                            if (AttackTimer > BlackholeSafeTime * 2)
                             foreach (Player victim in Main.ActivePlayers)
                             {
-                                if (victim.Calamity() != null)
+                                distanceRequired = 630f;
+                                float distance = Vector2.Distance(victim.Center, NPC.Center);
+                                if (distance > distanceRequired)
                                 {
-                                    victim.Calamity().infiniteFlight = true;
+                                    Vector2 dir = NPC.DirectionTo(victim.Center);
+                                    victim.position = NPC.Center + dir * 600;
                                 }
                             }
                         }
@@ -654,10 +653,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 }
                             }
                         }
-                        foreach (Player playere in Main.ActivePlayers)
-                        {
-                            playere.Calamity().infiniteFlight = true;
-                        }
+                        InfiniteFlight();
                         // the fireball which will never be shot, never to hit the player, never to have any dreams, never t
                         int noFire = Main.rand.Next(-safeableSpawnRange / 2, safeableSpawnRange);
                         bool startAttacking = AttackTimer > (shootChain + hookHitTime);
@@ -698,6 +694,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         float chargeVelocity = 35; //stays the same
                         AttackTimer++;
 
+                        if (AttackTimer == 1)
+                        {
+                            rotationDirection = rotationDirection == 1 ? -1 : 1;
+                        }
+
 
                         if (AttackTimer == 10)
                         {
@@ -725,7 +726,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 victim.velocity = Vector2.Zero;
                             }
-                            NPC.Center = player.Center + new Vector2(500, 0).RotatedBy(rotation);
+                            NPC.Center = player.Center + Vector2.UnitY.RotatedBy(rotation) * 500;
                             rotation += rotationIncrement * rotationDirection;
                                 if (AttackTimer % flareRate == 0)
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
@@ -759,6 +760,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PyrogenFlareStatic2>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             }
                         }
+                        InfiniteFlight();
                         if (AttackTimer >= 700)
                         {
                             SafeTeleport();
@@ -769,8 +771,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 }
                 case (int)PyroPhaseType.FireChain: // Shoot a hostile chain that spawns fireballs
                 {
-                        int attackTime = 300; // how long the attack lasts
-                        int shootHook = 60; // when to shoot the hook
+                        int attackTime = 360; // how long the attack lasts
+                        int shootHook = 120; // when to shoot the hook
                         float minDist = 600; // the minimum distance the hook can be shot out
                         float distMultiplier = 0.8f; // how far the hook shoots out relative to the player
                         float hookDist = MathHelper.Max(Target.Distance(NPC.Center) * distMultiplier, minDist); // the final distance the hook shoots
@@ -807,11 +809,20 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             SelectNextAttack();
                             SafeTeleport();
                         }
+                        if (AttackTimer < shootHook)
+                            for (int i = 0; i < 20; i++)
+                            {
+                                Vector2 predictiveVector = Vector2.Zero;
+                                Vector2 predictiveVectore = predictiveCharge ? predictiveVector + NPC.Center : Target.Center;
+                                SquareParticle spark = new SquareParticle(NPC.Center + Main.rand.NextVector2Square(-22, 22), NPC.DirectionTo(predictiveVectore) * NPC.Distance(predictiveVectore) / 10f, false, 30, Main.rand.NextFloat(3, 4), (predictiveCharge ? Color.Red : Color.Orange) * 0.9f);
+                                GeneralParticleHandler.SpawnParticle(spark);
+                            }
 
-                    break;
+                        break;
                 }
                 case (int)PyroPhaseType.Hellstorm: //spins really fast, pulling projectiles and the player in, then fires a shrapnel bomb at the end of the attack duration; 50 dr
                 {
+                        InfiniteFlight();
                         Hellstorm();
                     break;
                 }
@@ -831,6 +842,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             SoundStyle sound = DeathSound;
                             SoundEngine.PlaySound(sound, NPC.Center);
                         }
+                        InfiniteFlight();
                         Hellstorm(true);
                     break;
                 }
@@ -869,6 +881,17 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     }
             }
             base.AI();
+        }
+
+        public static void InfiniteFlight()
+        {
+            foreach (Player victim in Main.ActivePlayers)
+            {
+                if (victim.Calamity() != null)
+                {
+                    victim.Calamity().infiniteFlight = true;
+                }
+            }
         }
 
         public void Hellstorm(bool end = false)
@@ -950,6 +973,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 }
             }
 
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.active && !p.dead)
+                {
+                    p.velocity = Vector2.Lerp(p.velocity, p.velocity + p.SafeDirectionTo(NPC.Center) * 3, Utils.GetLerpValue(200, 8000, p.Distance(NPC.Center), true));
+                }
+            }
+
             // end the attack when it's not desperation
             if (AttackTimer > endAttack && !end)
             {
@@ -962,6 +993,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public void SelectNextAttack()
         {
+            if (AIState != PyroPhaseType.Idle)
+                attackTotal++;
+
             // cycle through attacks in order, entirely random in phase 2
 
             if (!phase2)
@@ -969,7 +1003,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 switch (AIState)
                 {
                     case PyroPhaseType.Idle:
-                        AIState = PyroPhaseType.Hellstorm;
+                        AIState = PyroPhaseType.Charge;
                         break;
 
                     case PyroPhaseType.Charge:
@@ -985,7 +1019,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         break;
 
                     case PyroPhaseType.FireWall:
-                        AIState = PyroPhaseType.Hellstorm;
+                        AIState = PyroPhaseType.Idle;
                         break;
 
                     case PyroPhaseType.Hellstorm:
@@ -995,8 +1029,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             }
             else
             {
-
-                int choice = Main.rand.Next(7);
+                int choice = Main.rand.Next(6);
                 switch (choice)
                 {
                     case 0:
@@ -1019,12 +1052,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         AIState = PyroPhaseType.PonceSpin;
                         break;
                     case 4:
-                        AIState = PyroPhaseType.Hellstorm;
-                        break;
-                    case 5:
                         AIState = PyroPhaseType.FireWall;
                         break;
-                    case 6:
+                    case 5:
                         AIState = PyroPhaseType.FireChain;
                         break;
                     default:
@@ -1032,14 +1062,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         break;
                 }
 
-
             }
-            
 
-
-            if (attackTotal == 5) //hellstorm is now unused
+            if (attackTotal == 4)
             {
-                AIState = PyroPhaseType.Idle; attackTotal = 0; //replace with storm when added
+                AIState = PyroPhaseType.Hellstorm; 
+                attackTotal = 0;
             }
 
             NPC.ai[1] = 0;
@@ -1048,6 +1076,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.damage = 200;
             NPC.Calamity().DR = 0.3f;
             NPC.netUpdate = true;
+            foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (n.type == ModContent.NPCType<PyrogenShield>() && n.ai[0] == NPC.whoAmI)
+                {
+                    n.localAI[1] = 0;
+                }
+            }
         }
 
         public void SafeTeleport(int maxRad = 2000, int avoidRad = 1500) //instantly teleport somewhere, but never get too close to the player when doing so; bias towards being offscreen
@@ -1149,8 +1184,24 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             Texture2D bloomTx = phase2 ? BloomTexture2.Value : BloomTexture.Value;
             Texture2D additiveTx = phase2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
             Texture2D gm = phase2 ? Glowmask2.Value : Glowmask.Value;
+            Texture2D vortex = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/GreyscaleVortex").Value;
 
             Vector2 pos = NPC.Center - screenPos;
+
+            if (Phase == (int)PyroPhaseType.Hellstorm || Phase == (int)PyroPhaseType.HellstormFatal)
+            {
+                float comp = Utils.GetLerpValue(0, 60, AttackTimer, true);
+                float vortexScale = MathHelper.Lerp(1.3f, 0.6f, comp);
+                if (Phase == (int)PyroPhaseType.Hellstorm && AttackTimer > 600)
+                {
+                    comp = Utils.GetLerpValue(720, 600, AttackTimer, true);
+                    vortexScale = MathHelper.Lerp(0, 0.6f, comp);
+                }
+                Color vortexColor = Color.Orange * comp * 0.8f;
+                Main.EntitySpriteDraw(vortex, pos, null, vortexColor, -Main.GlobalTimeWrappedHourly * 4, vortex.Size() / 2, vortexScale, SpriteEffects.None, 0);
+            }
+
+
             Vector2 ringOrigin = RingTexture.Value.Size() / 2;
             float ringRotation = -Main.GlobalTimeWrappedHourly;
             Main.EntitySpriteDraw(RingTexture.Value, pos, null, Color.White, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
@@ -1162,6 +1213,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             Main.EntitySpriteDraw(texture, pos, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(gm, pos, null, Color.White, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(additiveTx, pos, null, Color.White with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            
             return false;
         }
 
@@ -1214,6 +1266,16 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPyrogen>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgePyrogen>(), desc: DropHelper.FirstKillText);
+        }
+
+        public override void OnKill()
+        {
+            if (!NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
+            {
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WITCH>());
+            }
+            RemixDowned.downedPyrogen = true;
+            CalRemixWorld.UpdateWorldBool();
         }
     }
 }

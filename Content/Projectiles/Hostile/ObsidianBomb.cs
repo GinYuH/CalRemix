@@ -57,7 +57,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-            Main.EntitySpriteDraw(texture, centered, null, lightColor, 0, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            //Main.EntitySpriteDraw(texture, centered, null, lightColor, 0, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4);
             return false;
         }
     }
