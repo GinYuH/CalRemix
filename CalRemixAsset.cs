@@ -19,7 +19,6 @@ namespace CalRemix
     {
         internal static Effect SlendermanShader;
         internal static Effect ShieldShader;
-        internal static Effect LeanShader;
 
         public static Asset<Texture2D> sunOG = null;
         public static Asset<Texture2D> sunReal = null;
@@ -31,8 +30,9 @@ namespace CalRemix
         {
             if (!Main.dedServ)
             {
-                Filters.Scene["CalRemix:AcidSight"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/AcidSight", AssetRequestMode.ImmediateLoad), "AcidPass"), EffectPriority.VeryHigh);
-                Filters.Scene["CalRemix:LeanVision"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/LeanVision", AssetRequestMode.ImmediateLoad), "LeanPass"), EffectPriority.VeryHigh);
+                Filters.Scene["CalRemix:AcidSight"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/AcidSight"), "AcidPass"), EffectPriority.VeryHigh);
+                Filters.Scene["CalRemix:LeanVision"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/LeanVision"), "LeanPass"), EffectPriority.VeryHigh);
+                Filters.Scene["CalRemix:PyrogenHeat"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/PyrogenHeat"), "PyroPass"), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
 
@@ -51,7 +51,7 @@ namespace CalRemix
             }
 
             AssetRepository remixAsset = Mod.Assets;
-            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
+            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             ShieldShader = LoadShader("HoloShield");
