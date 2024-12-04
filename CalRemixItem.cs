@@ -470,7 +470,7 @@ namespace CalRemix
                         Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
                         int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
                         NPC blug = Main.npc[n];
-                        // todo: use blug to enrage him
+                        blug.ModNPC<Pyrogen>().enrageCounter = 2222222;
                     }
                     item.active = false;
                 }

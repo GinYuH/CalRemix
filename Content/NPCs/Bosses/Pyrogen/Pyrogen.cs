@@ -37,6 +37,7 @@ using CalamityMod.Particles;
 using CalRemix.Content.NPCs.TownNPCs;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.Items.Weapons.Ranged;
+using rail;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -63,6 +64,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public int attackSubTotal = 0;
         public int attackTotal = 0; //counts how many attacks have been used- for hellstorm, since it's position in the cycle is set
+        public int enrageCounter = 0;
 
         public const float BlackholeSafeTime = 40;
 
@@ -187,6 +189,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             writer.Write(rotation);
             writer.Write(phase2);
             writer.Write(phase3);
+            writer.Write(enrageCounter);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -194,6 +197,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             rotationDirection = reader.ReadInt32();
             phase2 = reader.ReadBoolean();
             phase3 = reader.ReadBoolean();
+            enrageCounter = reader.ReadInt32();
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -267,10 +271,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 return;
             }
 
-
-            //  if ((int)NPC.ai[4] + 1 > currentPhase)
-            // HandlePhaseTransition((int)NPC.ai[4] + 1);
-
             Lighting.AddLight(NPC.Center, TorchID.Red);
 
 
@@ -333,10 +333,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     {
                         {
                             AttackTimer++;
-                            int tpDist = 1000;
                             int chargeDelaySub = death ? 30 : rev ? 35 : 40; //pause before dash length
                             float chargeLimit = death ? 6 : rev ? 5 : 4;
                             float chargeVelocity = 35; //stays the same
+
+                            if (enrageCounter > 0)
+                            {
+                                chargeDelaySub = (int)(chargeDelaySub * 0.8f);
+                            }
 
                             player = Main.player[NPC.target];
                             Vector2 pyrogenCenter = new Vector2(NPC.Center.X, NPC.Center.Y);
@@ -473,6 +477,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 flareRate = 5;
                             }
 
+                            if (enrageCounter > 0)
+                            {
+                                flareRate = (int)(flareRate * 0.5f);
+                            }
+
                             if (AttackTimer < stop)
                             {
                                 Vector2 playerpos = new Vector2(Main.player[NPC.target].Center.X - 600, Main.player[NPC.target].Center.Y - 400); //head for top left
@@ -516,6 +525,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             AttackTimer++;
                             NPC.velocity = Vector2.Zero;
                             float distanceRequired = 2000f;
+                            bool masterRage = enrageCounter > 0 || master;
 
                             if (AttackTimer == 1)
                             {
@@ -546,8 +556,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 5 == 0 && firing)
                                 {
-                                    int firePoints = 8;
-                                    int fireProjSpeed = master ? 4 : 4; // Ice blast speed
+                                    int firePoints = masterRage ? 12 : 8;
+                                    int fireProjSpeed = masterRage ? 6 : 4;
                                     float variance = MathHelper.TwoPi / firePoints;
                                     SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
                                     for (int i = 0; i < firePoints; i++)
@@ -564,7 +574,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 {
                                     SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
                                     int dir = Main.rand.NextBool().ToInt();
-                                    int totalObjects = master ? 16 : 10;
+                                    int totalObjects = masterRage ? 16 : 10;
                                     for (int i = 0; i < totalObjects; i++)
                                     {
                                         int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PyrogenOrbitalFlare>(), dmg, 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
@@ -575,8 +585,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 if (AttackTimer > BlackholeSafeTime * 2 && AttackTimer % 5 == 0 && firing)
                                 {
-                                    int firePoints = 8;
-                                    int fireProjSpeed = master ? 4 : 4; // Ice blast speed
+                                    int firePoints = masterRage ? 12 : 8;
+                                    int fireProjSpeed = masterRage ? 6 : 4; 
                                     float variance = MathHelper.TwoPi / firePoints;
                                     SoundEngine.PlaySound(BetterSoundID.ItemFireball, NPC.Center);
                                     for (int i = 0; i < firePoints; i++)
@@ -633,6 +643,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         NPC.velocity = Vector2.Zero;
                         NPC.rotation = 0;
                         AttackTimer++;
+
+                        if (enrageCounter > 0)
+                        {
+                            waveInterval = (int)(waveInterval * 0.5f);
+                        }
 
                         if (AttackTimer == 1)
                         {
@@ -693,6 +708,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         int chargingTime = 0;
                         float chargeVelocity = 35; //stays the same
                         AttackTimer++;
+
+                        if (enrageCounter > 0)
+                        {
+                            flareRate = (int)(flareRate * 0.8f);
+                        }
 
                         if (AttackTimer == 1)
                         {
@@ -777,6 +797,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         float distMultiplier = 0.8f; // how far the hook shoots out relative to the player
                         float hookDist = MathHelper.Max(Target.Distance(NPC.Center) * distMultiplier, minDist); // the final distance the hook shoots
                         int moveSpeed = 4; // speed Pyrogen moves
+
+                        if (enrageCounter > 0)
+                        {
+                            moveSpeed = 8;
+                        }
 
                         AttackTimer++;
 
@@ -880,6 +905,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         break;
                     }
             }
+
+            if (enrageCounter > 0)
+            {
+                enrageCounter--;
+            }
             base.AI();
         }
 
@@ -907,7 +937,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             int bombProjAmount = 22; // how many projectiles the bomb explodes into
 
             // for desperation, spawn twice as many projectiles
-            if (end)
+            if (end || enrageCounter > 0)
             {
                 fireRate /= 2;
             }
