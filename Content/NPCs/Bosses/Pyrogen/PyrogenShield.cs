@@ -203,11 +203,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             if (ShouldHide)
                 return false;
+            Color color = Main.zenithWorld ? Color.Blue : drawColor;
+            Color white = Main.zenithWorld ? Color.Cyan : Color.White;
             Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;
-            spriteBatch.Draw(BloomTexture.Value, npcOffset, NPC.frame, Color.White with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(sprite, npcOffset, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(sprite.Width /2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Glow.Value, npcOffset, NPC.frame, Color.White, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(BloomTexture.Value, npcOffset, NPC.frame, white with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite, npcOffset, NPC.frame, NPC.GetAlpha(color), NPC.rotation, new Vector2(sprite.Width /2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Glow.Value, npcOffset, NPC.frame, white, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
             //spriteBatch.EnterShaderRegion(BlendState.Additive);
             //spriteBatch.ExitShaderRegion();
             return false;

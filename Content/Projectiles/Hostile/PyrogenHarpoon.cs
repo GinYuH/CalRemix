@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalamityMod.Projectiles.Boss;
 using CalRemix.Content.NPCs.Bosses.BossScule;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
@@ -200,9 +201,10 @@ namespace CalRemix.Content.Projectiles.Hostile
                         Projectile.position = Vector2.Lerp(n.Center, n.Center + n.Center.DirectionTo(p.Center) * dist, comp);
                         if (AttackTime % 5 == 0)
                         {
+                            int type = Main.zenithWorld ? ModContent.ProjectileType<IceBomb>() : ModContent.ProjectileType<PyrogenFlare>();
                             int projSpeed = 16;
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.Pi) * projSpeed, ModContent.ProjectileType<PyrogenFlare>(), (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(-MathHelper.Pi) * -projSpeed, ModContent.ProjectileType<PyrogenFlare>(), (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.Pi) * projSpeed, type, (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(-MathHelper.Pi) * -projSpeed, type, (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
                         }
                     }
                     else
@@ -234,7 +236,8 @@ namespace CalRemix.Content.Projectiles.Hostile
             Texture2D reelTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonHit").Value;
             Texture2D endTexture = AttackTime > 60 ? reelTexture : TextureAssets.Projectile[Projectile.type].Value;
             Texture2D chainTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonChain").Value;
-            
+
+            Color color = Main.zenithWorld ? Color.Blue : lightColor;
             NPC phyto = Main.npc[(int)NPCIndex];
             if (phyto == null || !phyto.active || phyto.type != ModContent.NPCType<Pyrogen>())
             {
@@ -251,9 +254,9 @@ namespace CalRemix.Content.Projectiles.Hostile
                     else
                         rot = Projectile.rotation;
                     if (i > 0)
-                        Main.EntitySpriteDraw(chainTexture, seg.position - Main.screenPosition, null, Projectile.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, chainTexture.Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                        Main.EntitySpriteDraw(chainTexture, seg.position - Main.screenPosition, null, Projectile.GetAlpha(Main.zenithWorld ? Color.Cyan : Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, chainTexture.Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
                     else
-                        Main.EntitySpriteDraw(endTexture, seg.position - Main.screenPosition, null, lightColor, rot, new Vector2(endTexture.Width / 2, endTexture.Height), Projectile.scale, SpriteEffects.None, 0);
+                        Main.EntitySpriteDraw(endTexture, seg.position - Main.screenPosition, null, color, rot, new Vector2(endTexture.Width / 2, endTexture.Height), Projectile.scale, SpriteEffects.None, 0);
                 }
             }
             return false;

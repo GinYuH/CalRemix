@@ -1,5 +1,8 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -68,9 +71,26 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Texture2D sprite = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 npcOffset = Projectile.Center - Main.screenPosition;
-            Main.EntitySpriteDraw(PyrogenShield.BloomTexture.Value, npcOffset, sprite.Frame(1, Main.projFrames[Type], 0, Projectile.frame), Color.White with { A = 0 }, Projectile.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(sprite, npcOffset, sprite.Frame(1, Main.projFrames[Type], 0, Projectile.frame), Projectile.GetAlpha(drawColor), Projectile.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(PyrogenShield.Glow.Value, npcOffset, sprite.Frame(1, Main.projFrames[Type], 0, Projectile.frame), Color.White, Projectile.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            Rectangle frame = sprite.Frame(1, Main.projFrames[Type], 0, Projectile.frame);
+            float height = Main.zenithWorld ? 2 : 12;
+            float extraRot = Main.zenithWorld ? MathHelper.PiOver4 : 0;
+
+            if (Main.zenithWorld)
+            {
+                sprite = Projectile.frame switch
+                {
+                    0 or 1 => TextureAssets.Item[ModContent.ItemType<SnowstormStaff>()].Value,
+                    2 or 3 => TextureAssets.Item[ModContent.ItemType<Icebreaker>()].Value,
+                    _ => TextureAssets.Item[ModContent.ItemType<Avalanche>()].Value
+                };
+
+            }
+            if (!Main.zenithWorld)
+            Main.EntitySpriteDraw(PyrogenShield.BloomTexture.Value, npcOffset, Main.zenithWorld ? null : frame, Color.White with { A = 0 }, Projectile.rotation, new Vector2(sprite.Width / 2, sprite.Height / height), 1f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(sprite, npcOffset, Main.zenithWorld ? null : frame, Projectile.GetAlpha(drawColor), Projectile.rotation - extraRot, new Vector2(sprite.Width / 2, sprite.Height / height), 1f, SpriteEffects.None, 0);
+
+            if (!Main.zenithWorld)
+                Main.EntitySpriteDraw(PyrogenShield.Glow.Value, npcOffset, Main.zenithWorld ? null : frame, Color.White, Projectile.rotation, new Vector2(sprite.Width / 2, sprite.Height / height), 1f, SpriteEffects.None, 0);
             return false;
         }
     }

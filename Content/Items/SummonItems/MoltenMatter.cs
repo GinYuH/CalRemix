@@ -10,6 +10,9 @@ using CalamityMod.Rarities;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.Items.Placeables.Plates.Molten;
 using CalRemix.Content.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -51,6 +54,41 @@ namespace CalRemix.Content.Items.SummonItems
             }
             return true;
         }
+
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameI, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Color overlay = Main.zenithWorld ? Color.Blue : Color.White;
+            spriteBatch.Draw(texture, position, null, overlay, 0f, origin, scale, 0, 0);
+            return false;
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Color overlay = Main.zenithWorld ? Color.Blue : lightColor;
+            spriteBatch.Draw(texture, Item.position - Main.screenPosition, null, overlay, 0f, Vector2.Zero, 1f, 0, 0);
+            return false;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            if (Main.zenithWorld)
+                Item.SetNameOverride("Modicum Matter");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            if (Main.zenithWorld)
+            foreach (var v in list)
+            {
+                if (v.Text.Contains("Pyrogen"))
+                {
+                    v.Text.Replace("Pyrogen", "Cryogen");
+                }
+            }
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe()

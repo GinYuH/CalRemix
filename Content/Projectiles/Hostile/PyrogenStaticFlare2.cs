@@ -43,12 +43,20 @@ namespace CalRemix.Content.Projectiles.Hostile
             if (Projectile.frame > 3)
                 Projectile.frame = 0;
 
-            Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
+            if (Main.zenithWorld)
+            {
+                Lighting.AddLight(Projectile.Center, 0.2f, 1.6f, 1.6f);
+            }
+            else
+            {
+                Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
+            }
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             if (!Main.dedServ)
             {
                 if (Main.rand.NextBool(10))
                 {
-                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
+                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f);
                 }
             }
         }
@@ -58,10 +66,11 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override void OnKill(int timeLeft)
         {
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
             for (int i = 0; i < 10; i++)
             {
-                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
+                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f);
                 d.velocity = new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
             }
 

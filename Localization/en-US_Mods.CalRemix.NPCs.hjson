@@ -239,7 +239,7 @@ Pyrogen: {
 
 	BossChecklistIntegration: {
 		EntryName: Pyrogen
-		SpawnInfo: Use [i:CalRemix/MoltenMatter].
+		SpawnInfo: Use [i:CalRemix/MoltenMatter] crafted at the Brimstone Crag's Ancient Console.
 		DespawnMessage: "[c/fc5603:The scrap furnace cools off.]"
 	}
 }
