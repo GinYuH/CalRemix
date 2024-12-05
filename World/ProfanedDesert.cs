@@ -70,8 +70,6 @@ namespace CalRemix.World
                 Main.LocalPlayer.respawnTimer = Math.Max(Main.LocalPlayer.respawnTimer, 5 * 60);
             }
 
-            gotJumpscared = false;
-
             CheckForDesertificationStart();
             if (scorchedWorld)
                 WorldEffects();
