@@ -892,6 +892,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         NPC.velocity.Y *= 0.5f;
                         NPC.rotation = NPC.velocity.X * 0.5f;
 
+                        if (deathTimer == 1 && !phase3)
+                        {
+                            if (Main.netMode != NetmodeID.Server)
+                            {
+                                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("PyrogenDoor").Type);
+                            }
+                        }
+
                         if (deathTimer > 60){ //wait one second before refilling all health; couldn't make this work so i'm just leaving it like it is for now
                             if (NPC.life <= NPC.lifeMax) {
                                 NPC.life = 1 + (int)((float)Math.Pow(Utils.GetLerpValue(300, 530, Time, true), 3) * (NPC.lifeMax - 1));
