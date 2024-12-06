@@ -19,6 +19,7 @@ using ReLogic.Content;
 using CalamityMod;
 using CalamityMod.Items.Placeables.FurnitureProfaned;
 using CalamityMod.Tiles.FurnitureProfaned;
+using CalRemix.Core.World;
 
 namespace CalRemix.World
 {
@@ -90,7 +91,7 @@ namespace CalRemix.World
             if (!CanGenerate)
                 return;
 
-            if (Main.LocalPlayer.dead && NPC.AnyNPCs(ModContent.NPCType<Providence>()))
+            if (Main.LocalPlayer.dead && NPC.AnyNPCs(ModContent.NPCType<Providence>()) && CalRemixWorld.profanedDesert)
             {
                 gotJumpscared = true;
 
