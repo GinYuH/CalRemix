@@ -2838,3 +2838,12 @@ KnowledgeOxygen.DisplayName: The Archwitch
 KnowledgePathogen.DisplayName: The Archmagus
 KnowledgePhytogen.DisplayName: The Archdruid
 KnowledgePyrogen.DisplayName: The Archseer
+
+RetromansPowerStar: {
+	DisplayName: Retroman's Power Star
+	Tooltip:
+		'''
+		Transforms you into the Retro Man 
+		 Item dedicated to QuestNinja
+		'''
+}

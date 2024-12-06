@@ -132,6 +132,7 @@ namespace CalRemix
         public bool wormMeal;
         public bool invGar;
         public int VerbotenMode = 1;
+        public bool retroman = false;
 
         public int timeSmoked;
         public bool carcinogenSoul;
@@ -844,6 +845,8 @@ namespace CalRemix
 			dyesBlack = 0;
 			dyesBrown = 0;
 			dyesPink = 0;
+            retroman = false;
+
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
                 calamitizedHitCooldown = 0;
@@ -1091,6 +1094,9 @@ namespace CalRemix
 		{
 			if (Player.GetJumpState<DefaultJump>().Active)
 				Player.armorEffectDrawShadow = true;
+
+            if (retroman)
+                GetInstance<RetromansPowerStar>().SetSet(Player);
 		}
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
