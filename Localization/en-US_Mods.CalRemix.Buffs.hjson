@@ -173,6 +173,11 @@ ExtensionCordDebuff: {
 	Description: Mods.CalRemix.Buffs.ExtensionCordDebuff.Description
 }
 
+Deplatformed: {
+	DisplayName: Deplatformed
+	Description: The construct's molten force is overpowering your platforms
+}
+
 MoltenToolsBuff: {
 	DisplayName: Molten Tools
 	Description: Charge!!!

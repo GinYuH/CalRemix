@@ -56,6 +56,7 @@ using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalRemix.UI;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
 
 namespace CalRemix
 {
@@ -467,10 +468,13 @@ namespace CalRemix
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                        Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
                         int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
                         NPC blug = Main.npc[n];
                         blug.ModNPC<Pyrogen>().enrageCounter = 2222222;
+                        blug.ModNPC<Pyrogen>().ultraEnraged = true;
+                        SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
+                        SoundEngine.PlaySound(sound, blug.Center);
                     }
                     item.active = false;
                 }

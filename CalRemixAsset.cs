@@ -126,6 +126,8 @@ namespace CalRemix
         public static readonly int EmpressofLightDay = Set("Gegenschein");
 
         public static readonly int Pyrogen = Set("VolcanicReinforcement");
+        public static readonly int Cryogen = Set("NotVolcanicReinforcement");
+
         public static readonly int DevourerofGods = Set("DoGRemix");
         public static readonly int DevourerofGodsFinalForm = Set("DoGRemix2");
         public static readonly int Hypnos = Set("CerebralAugmentations");

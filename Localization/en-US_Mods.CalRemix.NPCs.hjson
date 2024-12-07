@@ -483,21 +483,25 @@ WALTER: {
 EDGY: {
 	TownNPCMood: {
 		Content: Everything's under control, as it should be. I'm perfectly at ease.
-		NoHome: Without a place to settle, I'm a wandering ember.
+		NoHome: Though I appreciate my freedom, I would enjoy a home I'm not trapped in.
 		FarFromHome: Being away from my domain feels unnatural. I miss the intensity.
-		DislikeCrowded: Too many people close by. I'd prefer a little less company.
-		HateCrowded: The crowd here is smothering. I need space to breathe... and burn.
+		DislikeCrowded: I can't focus on my own thoughts with this many voices around.
+		HateCrowded: It's taking me a lot of restraint not to burn all these people to a crisp.
 		LoveSpace: Having space to myself allows the flames to thrive, uncontained and free.
-		LikeNPC: "{NPCName} and I make quite the team. Together, we're unstoppable."
+		LikeNPC: "{NPCName} has been teaching me to control my magics more effectively. I wouldn't expect such warmth from one so cold."
 		DislikeNPC: The {NPCName} is nothing but a nuisance. Golf? They belong in the depths.
-		LikeBiome: The {BiomeName} is the perfect place for me. It's raw, intense, and beautifully chaotic.
-		DislikeBiome: The {BiomeName}? That frigid wasteland offers nothing but discomfort. I avoid it if I can.
+		LikeBiome: The {BiomeName} is the perfect place for me. Its beautiful chaos provides the perfect environment for my flames to spread.
+		DislikeBiome: This {BiomeName} brings forth memories of atrocities I never committed. It's hard to cope with.
 		LikeNPC_Princess: "{NPCName} brings a gentle warmth. Even I find her presence calming."
 		Princess_LovesNPC: "{NPCName} is amazing! She's so strong but so calm, like a flame you can trust."
+		BestiaryGirl_HatesNPC: "{NPCName} won't stop begging me for answers to her 'burning questions', and I despise her for it."
+		Stylist_HatesNPC: "{NPCName} has been trying to goad me to lower my cowl. I'd rather have my privacy respected."
+		LoveNPC: "{NPCName}'s presence is oddly comforting, as though they understand exactly what I feel."
+		HateNPC: I hate {NPCName}.
 	}
 
-	DisplayName: Archseer
-	Census.SpawnCondition: Defeat the Calamitas Clone
+	DisplayName: Clone
+	Census.SpawnCondition: Free it from a construct... twice
 }
 
 HypnosDraedon.DisplayName: Draedon

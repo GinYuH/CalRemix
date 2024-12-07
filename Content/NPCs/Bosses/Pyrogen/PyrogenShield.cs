@@ -203,7 +203,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             if (ShouldHide)
                 return false;
-            Color color = Main.zenithWorld ? Color.Blue : drawColor;
+            Color color = Main.zenithWorld ? Color.Cyan : drawColor;
             Color white = Main.zenithWorld ? Color.Cyan : Color.White;
             Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;

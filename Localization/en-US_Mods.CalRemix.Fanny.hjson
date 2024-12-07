@@ -2140,3 +2140,6 @@ spid: {
 gslimeAwakening: {
 	$parentVal: Mods.CalRemix.FannyOgslimeAwakening
 }
+
+OreExc: Mods.CalRemix.Fanny.OreExc
+reExc: Mods.CalRemix.FannyOreExc
