@@ -12,12 +12,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Cooldowns;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.Items.Accessories
 {
     public class MagnaCore : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/EtherealTalisman";
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -25,7 +25,9 @@ namespace CalRemix.Content.Items.Accessories
             Tooltip.SetDefault("30% increased magic damage, 25% increased magic critical strike chance, and 100% decreased mana usage\n"+
             "+ 250 max mana\n"+
             "Increases pickup range for mana stars\n" +
-            "Using a Mana Potion causes a burst of granite energy to assault enemies"); 
+            "Using a Mana Potion causes a burst of granite energy to assault enemies");
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 5));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
         }
 
         public override void SetDefaults()

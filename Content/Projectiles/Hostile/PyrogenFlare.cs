@@ -1,8 +1,10 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,11 +25,12 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.Calamity().DealsDefenseDamage = true;
-            Projectile.width = 64;
-            Projectile.height = 66;
+            Projectile.width = 22;
+            Projectile.height = 22;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
+            Projectile.friendly = false;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 320;
             CooldownSlot = ImmunityCooldownID.Bosses;
@@ -43,19 +46,34 @@ namespace CalRemix.Content.Projectiles.Hostile
             if (Projectile.frame > 3)
                 Projectile.frame = 0;
 
-            Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
+            if (Main.zenithWorld)
+            {
+                Lighting.AddLight(Projectile.Center, 0.2f, 1.6f, 1.6f);
+            }
+            else
+            {
+                Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
+            }
 
-            Player target = Main.player[(int)Projectile.ai[0]];
-            Vector2 distance = target.Center - Projectile.Center;
-            distance *= 6;
-            Projectile.velocity = (Projectile.velocity * 24f + distance) / 25f;
-            Projectile.velocity.Normalize();
-            Projectile.velocity *= 9;
+            if (Projectile.ai[1] == 1 && Projectile.timeLeft > 180)
+                Projectile.timeLeft = 180;
+
+            float speed = Projectile.ai[1] == 1 ? 13 : 9;
+            if (Projectile.ai[1] == 0 || (Projectile.ai[1] == 1 && Projectile.ai[2]++ > 30))
+            {
+                Player target = Main.player[(int)Projectile.ai[0]];
+                Vector2 distance = target.Center - Projectile.Center;
+                distance *= 6;
+                Projectile.velocity = (Projectile.velocity * 24f + distance) / 25f;
+                Projectile.velocity.Normalize();
+                Projectile.velocity *= speed;
+            }
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             if (!Main.dedServ)
             {
                 if (Main.rand.NextBool(10))
                 {
-                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
+                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f);
                 }
             }
         }
@@ -65,10 +83,11 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override void OnKill(int timeLeft)
         {
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
             for (int i = 0; i < 10; i++)
             {
-                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FlameBurst, 0f, 0f);
+                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f);
                 d.velocity = new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
             }
 
@@ -77,6 +96,18 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             return Projectile.position.Y > Main.player[(int)Projectile.ai[0]].Bottom.Y;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawPyrogenFlare(Projectile, lightColor);
+            return false;
+        }
+
+        public static void DrawPyrogenFlare(Projectile p, Color lightColor)
+        {
+            Texture2D piss = TextureAssets.Projectile[p.type].Value;
+            Main.EntitySpriteDraw(TextureAssets.Projectile[p.type].Value, p.Center - Main.screenPosition, TextureAssets.Projectile[p.type].Frame(1, 5, 0, p.frame), lightColor, p.rotation, new Vector2(piss.Width / 2, piss.Height / 10), p.scale, 0, 0);
         }
     }
 }

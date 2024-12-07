@@ -8,12 +8,6 @@ namespace CalRemix.Content.Items.Weapons;
 
 public class Unloxcalibur : ModItem
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Unloxcalibur");
-        Tooltip.SetDefault("An average broadsword"); 
-        Item.ResearchUnlockCount = 1;
-    }
     public override void SetDefaults()
     {
         Item.damage = 100;

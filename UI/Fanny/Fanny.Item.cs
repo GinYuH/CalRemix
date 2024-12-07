@@ -5,6 +5,7 @@ using CalamityMod.Items.Dyes;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
+using CalamityMod.Items.Placeables.LivingFire;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
@@ -111,8 +112,14 @@ namespace CalRemix.UI
             HelperMessage.New("Onion", "I'd be weary about eating that strange plant. You can only get one, so it might be useful to hang on to it for later.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>())).AddItemDisplay(ModContent.ItemType<CelestialOnion>());
 
-            HelperMessage.New("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
+            HelperMessage sama = HelperMessage.New("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny();
+
+            HelperMessage mgra = HelperMessage.New("Muracrimsona1", "Lmao this item is \"perfectly balanced\" am i right?? Standig here i realize like mgr",
+                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(sama, 5, true);
+
+            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU WHY WERE YOU EVEN HIRED!?",
+                "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(mgra, 3, true);
 
             HelperMessage.New("CleavageFurrow", "One time, I went to the pond on a bright summer afternoon! One of the frogs leaped from its lily pad and locked eyes with me. I believe it had a cleavage furrow? Oh, what a dopey little smile that fella had!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<UniverseSplitter>())).SetHoverTextOverride("Very cool, Fanny!");
@@ -127,6 +134,10 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow, maxWidth: 1000, fontSize: 0.8f)
                 .ChainAfter();
 
+            HelperMessage.New("Dyes", "I've always thought dyes were a bit worthless. I mean come on! True beauty comes from the inside! No need to pretty yourself up on the outside! So my solution to this was making it so that all dyes now make you stronger! Have fun coming up with dye combos! Or just equipping the same dye in every slot, that works too.",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any((Item i) => i.dye > 0)).AddItemDisplay(ModContent.ItemType<ElementalDye>());
+
+            
             #endregion
 
             #region CrossMod

@@ -1,14 +1,9 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Projectiles.BaseProjectiles;
-using CalRemix.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 using static CalamityMod.CalamityUtils;
 

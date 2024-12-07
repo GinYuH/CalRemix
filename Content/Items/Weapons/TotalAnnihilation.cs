@@ -1,9 +1,6 @@
 ﻿using CalamityMod.Items.Materials;
-using CalamityMod.Projectiles.Ranged;
 using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Weapons;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,9 +46,7 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
             AddIngredient(ItemID.Mace).
             AddIngredient(ItemID.FlamingMace).
-            AddIngredient(ItemID.LunarBar, 5).
-            AddIngredient<LifeAlloy>(5).
-            AddIngredient<ElementalBar>(5).
+            AddIngredient<ElementalBar>().
             AddTile(TileID.LunarCraftingStation).
             Register();
         }

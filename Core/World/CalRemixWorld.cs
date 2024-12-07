@@ -8,11 +8,6 @@ using System.IO;
 using CalamityMod.World;
 using System;
 using CalRemix.Content.Tiles;
-using CalamityMod.Tiles.Astral;
-using CalamityMod.Tiles.AstralDesert;
-using CalamityMod.Tiles.AstralSnow;
-using CalamityMod.Tiles.FurnitureMonolith;
-using CalRemix.Content.Items.Placeables;
 using CalamityMod.Walls;
 using CalamityMod;
 using Microsoft.Xna.Framework;
@@ -38,8 +33,6 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using CalamityMod.NPCs.AquaticScourge;
-using Terraria.GameContent.Bestiary;
-using CalamityMod.NPCs.HiveMind;
 using Terraria.GameContent.Generation;
 using SubworldLibrary;
 using CalRemix.Core.Subworlds;
@@ -50,17 +43,25 @@ using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Content.Items.Lore;
-using CalamityMod.Schematics;
-using CalamityMod.Items.Potions;
+using CalamityMod.Tiles;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using Terraria.Audio;
 using CalRemix.Core.Scenes;
+using CalRemix.Content.Tiles.Plates;
+using CalamityMod.Tiles.Plates;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace CalRemix.Core.World
 {
     public class CalRemixWorld : ModSystem
     {
+        public const int ROACHDURATIONSECONDS = 22;
+        public const int maxStoryTime = 660;
+
         public static bool worldFullyStarted = false;
         public static int worldLoadCounter = 0;
-        public const int maxStoryTime = 660;
 
         public static bool ogslime = false;
 
@@ -71,8 +72,19 @@ namespace CalRemix.Core.World
         public static int PlagueDesertTiles;
         public static int baronTiles;
         public static int MeldTiles;
+        public static int strongholdTiles;
+        public static int elumplateTiles;
+        public static int aeroplateTiles;
+        public static int havocplateTiles;
+        public static int cinderplateTiles;
+        public static int navyplateTiles;
+        public static int plagueplateTiles;
+        public static int bloodplateTiles;
+        public static int onyxplateTiles;
 
-        public static int ShrineTimer = -20;
+        public static int ShrineTimer = -20; 
+        public static int RoachCountdown = 0;
+        public static int roachDuration = 0;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -82,7 +94,7 @@ namespace CalRemix.Core.World
         public static bool generatedStrain = false;
         public static bool generatedHydrogen = false;
         public static bool canGenerateBaron = false;
-        public static bool grime = false;
+        public static bool generatedGrime = false;
         public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
@@ -119,6 +131,12 @@ namespace CalRemix.Core.World
         public static bool remixJump = true;
         public static bool hydrogenBomb = true;
         public static bool baronStrait = true;
+        public static bool dyeStats = true;
+        public static bool champions = true;
+        public static bool astralBlight = true;
+        public static bool mullet = true;
+        public static bool deliciousMeat = true;
+        public static bool profanedDesert = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -183,159 +201,90 @@ namespace CalRemix.Core.World
                 NetMessage.SendData(MessageID.WorldData);
             }
         }
+
+        public static void ResetFlags()
+        {
+            // Misc ints
+            meldCountdown = 72000;
+            trueStory = 0;
+            RoachCountdown = 0;
+            roachDuration = 0;
+
+            // Misc bools
+            guideHasExisted = false;
+            deusDeadInSnow = false;
+            ogslime = false;
+            loadedRecipeInjections = false;
+
+            // Worldgen
+            generatedCosmiliteSlag = false;
+            generatedPlague = false;
+            generatedStrain = false;
+            canGenerateBaron = false;
+            generatedHydrogen = false;
+            generatedGrime = false;
+
+            // Gen boss stuff
+            ionQuestLevel = -1;
+            wizardDisabled = false;
+            oxydayTime = 0;
+
+            // Fanny
+
+            // A109
+            alloyBars = true;
+            essenceBars = true;
+            yharimBars = true;
+            shimmerEssences = true;
+            meldGunk = true;
+            cosmislag = true;
+            reargar = true;
+            sidegar = true;
+            frontgar = true;
+            crocodile = true;
+            permanenthealth = true;
+            starbuster = true;
+            plaguetoggle = true;
+            shrinetoggle = true;
+            lifeoretoggle = true;
+            itemChanges = true;
+            npcChanges = true;
+            bossdialogue = true;
+            grimesandToggle = true;
+            clowns = true;
+            aspids = true;
+            clamitas = true;
+            wolfvenom = true;
+            fearmonger = true;
+            seafood = true;
+            laruga = true;
+            acidsighter = true;
+            greenDemon = true;
+            remixJump = true;
+            hydrogenBomb = true;
+            baronStrait = true;
+            dyeStats = true;
+            champions = true;
+            astralBlight = true;
+            mullet = true;
+            deliciousMeat = true;
+            profanedDesert = true;
+        }
+
         public override void OnWorldLoad()
         {
-            ogslime = false;
-
-            guideHasExisted = false;
-            deusDeadInSnow = false;
-            generatedCosmiliteSlag = false;
-            generatedPlague = false;
-            generatedStrain = false;
-            canGenerateBaron = false;
-            generatedHydrogen = false;
-            grime = false;
-            meldCountdown = 72000;
-            trueStory = 0;
-
-            alloyBars = true;
-            essenceBars = true;
-            yharimBars = true;
-            shimmerEssences = true;
-            meldGunk = true;
-            cosmislag = true;
-            reargar = true;
-            sidegar = true;
-            frontgar = true;
-            crocodile = true;
-            permanenthealth = true;
-            starbuster = true;
-            plaguetoggle = true;
-            shrinetoggle = true;
-            lifeoretoggle = true;
-            itemChanges = true;
-            if (itemChanges)
-            {
-                foreach (KeyValuePair<int, string> p in RethemeList.Items)
-                {
-                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                }
-                foreach (KeyValuePair<int, string> p in RethemeList.Projs)
-                {
-                    TextureAssets.Projectile[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                }
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
-            }
-            else
-            {
-                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
-                {
-                    TextureAssets.Item[p.Key] = p.Value;
-                }
-                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
-                {
-                    TextureAssets.Projectile[p.Key] = p.Value;
-                }
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
-            }
-            npcChanges = true;
-            if (npcChanges)
-            {
-                foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
-                {
-                    TextureAssets.Npc[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
-                }
-            }
-            else
-            {
-                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
-                {
-                    TextureAssets.Npc[p.Key] = p.Value;
-                }
-            }
+            ResetFlags();
             FindCentralGeode();
-            bossdialogue = true;
-            grimesandToggle = true;
-            clowns = true;
-            aspids = true;
-            clamitas = true;
-            wolfvenom = true;
-            fearmonger = true;
-            seafood = true;
-            laruga = true;
-            acidsighter = true;
-            greenDemon = true;
-            remixJump = true;
-            hydrogenBomb = true;
-            baronStrait = true;
-
-            loadedRecipeInjections = false;
-
-            ionQuestLevel = -1;
-            wizardDisabled = false;
-            hydrogenLocation = Vector2.Zero;
-            oxydayTime = 0;
         }
+
         public override void OnWorldUnload()
         {
+            ResetFlags();
             worldFullyStarted = false;
             worldLoadCounter = 0;
-
-            ogslime = false;
-
-            guideHasExisted = false;
-            deusDeadInSnow = false;
-            generatedCosmiliteSlag = false;
-            generatedPlague = false;
-            generatedStrain = false;
-            canGenerateBaron = false;
-            generatedHydrogen = false;
-
-            alloyBars = true;
-            essenceBars = true;
-            yharimBars = true;
-            meldCountdown = 72000;
-            trueStory = 0;
-
-            alloyBars = true;
-            essenceBars = true;
-            yharimBars = true;
-            shimmerEssences = true;
-            meldGunk = true;
-            cosmislag = true;
-            reargar = true;
-            sidegar = true;
-            frontgar = true;
-            crocodile = true;
-            permanenthealth = true;
-            starbuster = true;
-            plaguetoggle = true;
-            shrinetoggle = true;
-            lifeoretoggle = true;
-            itemChanges = true;
-            npcChanges = true;
-            bossdialogue = true;
-            grimesandToggle = true;
-            clowns = true;
-            aspids = true;
-            clamitas = true;
-            wolfvenom = true;
-            fearmonger = true;
-            seafood = true;
-            laruga = true;
-            acidsighter = true;
-            greenDemon = true;
-            remixJump = true;
-            hydrogenBomb = true;
-            baronStrait = true;
-
-            loadedRecipeInjections = false;
-
-            ionQuestLevel = -1;
-            wizardDisabled = false;
             hydrogenLocation = Vector2.Zero;
-            oxydayTime = 0;
         }
+
         public override void SaveWorldData(TagCompound tag)
         {
             tag["ogslime"] = ogslime;
@@ -347,9 +296,10 @@ namespace CalRemix.Core.World
             tag["astrain"] = generatedStrain;
             tag["canBaron"] = canGenerateBaron;
             tag["genHydrogen"] = generatedHydrogen;
-            tag["grime"] = grime;
+            tag["grime"] = generatedGrime;
             tag["meld"] = meldCountdown;
             tag["trueStory"] = trueStory;
+            tag["roachDuration"] = roachDuration;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -382,6 +332,12 @@ namespace CalRemix.Core.World
             tag["109remixJump"] = remixJump;
             tag["109hydrogen"] = hydrogenBomb;
             tag["109baron"] = baronStrait;
+            tag["109dye"] = dyeStats;
+            tag["109champ"] = champions;
+            tag["109blight"] = astralBlight;
+            tag["109mullet"] = mullet;
+            tag["109deliciousMeat"] = deliciousMeat;
+            tag["109profaned"] = profanedDesert;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -391,13 +347,11 @@ namespace CalRemix.Core.World
 
             tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
-
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             ogslime = tag.Get<bool>("ogslime");
-
 
             guideHasExisted = tag.Get<bool>("guideHasExisted");
             deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
@@ -406,9 +360,10 @@ namespace CalRemix.Core.World
             generatedStrain = tag.Get<bool>("astrain");
             canGenerateBaron = tag.Get<bool>("canBaron");
             generatedHydrogen = tag.Get<bool>("genHydrogen");
-            grime = tag.Get<bool>("grime");
+            generatedGrime = tag.Get<bool>("grime");
             meldCountdown = tag.Get<int>("meld");
             trueStory = tag.Get<int>("trueStory");
+            roachDuration = tag.Get<int>("roachDuration");
 
             alloyBars = tag.Get<bool>("109alloybar");
             essenceBars = tag.Get<bool>("109essencebar");
@@ -441,6 +396,12 @@ namespace CalRemix.Core.World
             remixJump = tag.Get<bool>("109remixJump");
             hydrogenBomb = tag.Get<bool>("109hydrogen");
             baronStrait = tag.Get<bool>("109baron");
+            dyeStats = tag.Get<bool>("109dye");
+            champions = tag.Get<bool>("109champ");
+            astralBlight = tag.Get<bool>("109blight");
+            mullet = tag.Get<bool>("109mullet");
+            deliciousMeat = tag.Get<bool>("109deliciousMeat");
+            profanedDesert = tag.Get<bool>("109profaned");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -462,9 +423,11 @@ namespace CalRemix.Core.World
             writer.Write(generatedStrain);
             writer.Write(canGenerateBaron);
             writer.Write(generatedHydrogen);
-            writer.Write(grime);
+            writer.Write(generatedGrime);
             writer.Write(meldCountdown);
             writer.Write(trueStory);
+            writer.Write(RoachCountdown);
+            writer.Write(roachDuration);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -497,6 +460,12 @@ namespace CalRemix.Core.World
             writer.Write(remixJump);
             writer.Write(hydrogenBomb);
             writer.Write(baronStrait);
+            writer.Write(dyeStats);
+            writer.Write(champions);
+            writer.Write(astralBlight);
+            writer.Write(mullet);
+            writer.Write(deliciousMeat);
+            writer.Write(profanedDesert);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -519,9 +488,11 @@ namespace CalRemix.Core.World
             generatedStrain = reader.ReadBoolean();
             canGenerateBaron = reader.ReadBoolean();
             generatedHydrogen = reader.ReadBoolean();
-            grime = reader.ReadBoolean();
+            generatedGrime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
             trueStory = reader.ReadInt32();
+            RoachCountdown = reader.ReadInt32();
+            roachDuration = reader.ReadInt32();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -554,6 +525,12 @@ namespace CalRemix.Core.World
             remixJump = reader.ReadBoolean();
             hydrogenBomb = reader.ReadBoolean();
             baronStrait = reader.ReadBoolean();
+            dyeStats = reader.ReadBoolean();
+            champions = reader.ReadBoolean();
+            astralBlight = reader.ReadBoolean();
+            mullet = reader.ReadBoolean();
+            deliciousMeat = reader.ReadBoolean();
+            profanedDesert = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
@@ -568,6 +545,10 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
+            /*if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
+            {
+                IonAltar.GenerateIonAltar();
+            }*/
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
             else
@@ -577,9 +558,9 @@ namespace CalRemix.Core.World
                 if (reargar)
                 {
                     RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
                     RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<UelibloomBar>());
+                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
                 }
                 if (frontgar)
                 {
@@ -633,8 +614,19 @@ namespace CalRemix.Core.World
             {
                 if (NPC.downedBoss3 && Main.time == 1 && oxydayTime <= 0 && Main.rand.NextBool(4))
                 {
-                    oxydayTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
-                    Main.NewText("The wind is blowing harshly!", Color.LightBlue);
+                    int oxTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        oxydayTime = oxTime;
+                    }
+                    else
+                    {
+                        ModPacket packet = CalRemix.instance.GetPacket();
+                        packet.Write((byte)RemixMessageType.OxydayTime);
+                        packet.Write(oxTime);
+                        packet.Send();
+                    }
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.SkyBlue);
                 }
             }
             if (oxydayTime > 0)
@@ -646,7 +638,7 @@ namespace CalRemix.Core.World
                 // roughly once per 6 minutes
                 if (Main.rand.NextBool(22222))
                 {
-                    Main.NewText("Floating Biomasses are migrating!", Color.DarkCyan);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.BiomassMigration", Color.DeepSkyBlue);
                     int amt = 22;
                     for (int i = 0; i < amt; i++)
                     {
@@ -657,13 +649,91 @@ namespace CalRemix.Core.World
                 }
                 if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
                 {
-                    oxydayTime = 0;
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        oxydayTime = 0;
+                    }
+                    else
+                    {
+                        ModPacket packet = CalRemix.instance.GetPacket();
+                        packet.Write((byte)RemixMessageType.OxydayTime);
+                        packet.Write(0);
+                        packet.Send();
+                    }
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
                 }
             }
             NPC.savedWizard = false;
             if (trueStory < maxStoryTime)
             {
-                trueStory++;
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    trueStory++;
+                }
+                else
+                {
+                    int td = trueStory + 1;
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.TrueStory);
+                    packet.Write(td);
+                    packet.Send();
+                }
+                if (trueStory >= maxStoryTime)
+                {
+                    UpdateWorldBool();
+                }
+            }
+            ExcavatorSummon();
+        }
+
+        public static void ExcavatorSummon()
+        {
+            foreach (Player p in Main.ActivePlayers)
+            {
+                CalRemixPlayer crp = p.GetModPlayer<CalRemixPlayer>();
+                if (p.chest == -1 && crp.RecentChest >= 0 && Main.chest[crp.RecentChest] != null)
+                {
+                    int i = Main.chest[crp.RecentChest].x;
+                    int j = Main.chest[crp.RecentChest].y;
+                    int chestenum = Chest.FindChest(i, j);
+                    if (chestenum >= 0)
+                    {
+                        Chest cheste = Main.chest[crp.RecentChest];
+                        if (Main.tile[cheste.x, cheste.y].TileType == TileID.Containers && (Main.tile[i, j].TileFrameX == 432 || Main.tile[i, j].TileFrameX == 450))
+                        {
+                            for (int slot = 0; slot < Chest.maxItems; slot++)
+                            {
+                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+                                {
+                                    // is the rest of the chest empty
+                                    int ok = 0;
+                                    for (int q = 0; q < Chest.maxItems; q++) ok += cheste.item[q].stack;
+                                    if (ok == 1)
+                                    {
+                                        cheste.item[slot] = new Item();
+
+                                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                                            NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, chestenum, slot, cheste.item[slot].stack, cheste.item[slot].prefix, cheste.item[slot].type);
+
+                                        SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
+
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            int npc = NPC.NewNPC(p.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>());
+                                            Main.npc[npc].timeLeft *= 20;
+                                            CalamityUtils.BossAwakenMessage(npc);
+                                            Main.npc[npc].velocity.Y = -20;
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                crp.RecentChest = p.chest;
             }
         }
 
@@ -699,7 +769,7 @@ namespace CalRemix.Core.World
 
                     Color messageColor = Color.Magenta;
                     CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
-                    if (CalRemixAddon.CalVal != null)
+                    if (CalRemixAddon.CalVal != null && astralBlight)
                     {
                         ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);
                     }
@@ -799,6 +869,56 @@ namespace CalRemix.Core.World
                     Main.LocalPlayer.position.X = (Main.spawnTileX + 60) * 16;
                 }
             }
+            // Roach Mayhem!!!
+            // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && roachDuration > -2)
+            {
+                RoachCountdown++;
+            }
+            // After 5 minutes, set the timer to -1 and start Roach Mayhem
+            if (RoachCountdown > CalamityUtils.SecondsToFrames(300))
+            {
+                UnleashRoaches();
+            }
+            // Spawn three explosions
+            int expDelay = 40;
+            int startFire = ROACHDURATIONSECONDS - 6;
+            bool firstExp = roachDuration == CalamityUtils.SecondsToFrames(startFire);
+            bool secondExp = roachDuration == CalamityUtils.SecondsToFrames(startFire) - expDelay;
+            bool thirdExp = roachDuration == CalamityUtils.SecondsToFrames(startFire) - expDelay * 2;
+            if (firstExp || secondExp || thirdExp)
+            {
+                Vector2 pos = firstExp ? new Vector2(Main.screenWidth * 0.05f, Main.screenHeight) : secondExp ? new Vector2(Main.screenWidth * 0.35f, Main.screenHeight) : new Vector2(Main.screenWidth * 0.7f, Main.screenHeight);
+                RoachScene.explosions.Add(new RealisticExplosion(pos));
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/EpicExplosion"));
+            }
+            // Regularly play alarms while decrementing the event duration
+            // Do not decrement if the countdown hasn't finished (marked by it being -1)
+            if (roachDuration > -2 && RoachCountdown <= 0)
+            {
+                if (roachDuration > 0 && Main.LocalPlayer.miscCounter % 90 == 0)
+                {
+                    SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Ares.AresBody.EnragedSound);
+                }
+                roachDuration--;
+            }
+            // When the event is 1 frame from being over, clear the explosion list
+            if (roachDuration == -1)
+            {
+                if (RoachScene.explosions.Count > 0)
+                {
+                    RoachScene.explosions.Clear();
+                }
+                UpdateWorldBool();
+            }
+        }
+
+        public static void UnleashRoaches()
+        {
+            RoachCountdown = -1;
+            SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/BlackFriday"));
+            roachDuration = CalamityUtils.SecondsToFrames(ROACHDURATIONSECONDS);
+            UpdateWorldBool();
         }
 
         public static void AddLootDynamically(int npcType, bool npc = false)
@@ -826,7 +946,7 @@ namespace CalRemix.Core.World
                 {
                     var postDuke = new LeadingConditionRule(DropHelper.PostProv());
                     postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
-                    postDuke.Add(ItemType<UelibloomBar>(), new Fraction(15, 100), 4, 7);
+                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
                     Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
                     Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
                 }
@@ -865,6 +985,15 @@ namespace CalRemix.Core.World
             PlagueDesertTiles = 0;
             MeldTiles = 0;
             baronTiles = 0;
+            strongholdTiles = 0;
+            elumplateTiles = 0;
+            onyxplateTiles = 0;
+            havocplateTiles = 0;
+            cinderplateTiles = 0;
+            plagueplateTiles = 0;
+            aeroplateTiles = 0;
+            navyplateTiles = 0;
+            bloodplateTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -881,16 +1010,29 @@ namespace CalRemix.Core.World
             tileCounts[TileType<Sporezol>()];
             PlagueDesertTiles = tileCounts[TileType<PlaguedSand>()];
             MeldTiles = tileCounts[TileType<MeldGunkPlaced>()];
+            strongholdTiles = tileCounts[TileType<FrostflakeBrickPlaced>()] + tileCounts[TileType<CryonicBrick>()];
             baronTiles = tileCounts[TileType<BrinerackPlaced>()] + tileCounts[TileType<TanzaniteGlassPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()] + tileCounts[TileType<BaronsandPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
             Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
             CalamityMod.Systems.BiomeTileCounterSystem.SunkenSeaTiles += tileCounts[TileType<NavystoneSafe>()] + tileCounts[TileType<SeaPrismSafe>()] + tileCounts[TileType<EutrophicSandSafe>()] + tileCounts[TileType<HardenedEutrophicSandSafe>()];
+            aeroplateTiles = tileCounts[TileType<AeroplateTile>()];
+            bloodplateTiles = tileCounts[TileType<BloodplateTile>()];
+            onyxplateTiles = tileCounts[TileType<Onyxplate>()];
+            havocplateTiles = tileCounts[TileType<Havocplate>()];
+            cinderplateTiles = tileCounts[TileType<Cinderplate>()];
+            elumplateTiles = tileCounts[TileType<Elumplate>()];
+            navyplateTiles = tileCounts[TileType<Navyplate>()];
+            plagueplateTiles = tileCounts[TileType<PlagueContainmentCells>()];
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
+            int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
+            tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
+                progress.Message = "Building a Wintery Castle";
+                FrozenStronghold.GenerateFrozenStronghold();
+            }));
             tasks.Insert(GraniteIndex, new PassLegacy("Asbestos", (progress, passConfig) =>
             {
                 progress.Message = "Spreading the True Plague";
@@ -932,6 +1074,7 @@ namespace CalRemix.Core.World
                 }
                 AsbestosBiome.GenerateAllHouses();
             }));
+            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
             if (FinalIndex != -1)
             {
                 if (!stratusDungeonDisabled)
@@ -950,8 +1093,9 @@ namespace CalRemix.Core.World
                     CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
+                tasks.Insert(FinalIndex, new PassLegacy("Engineering a bronze device", (progress, config) => { AncientConsoleGen.GenerateConsole(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Origen Workshop", (progress, config) => { OrigenWorkshop.GenerateOrigenWorkshop(); }));
-                tasks.Insert(FinalIndex, new PassLegacy("Building a bomb", (progress, config) =>
+                tasks.Insert(FinalIndex, new PassLegacy("Building a Bomb", (progress, config) =>
                 {
                     Rectangle sus = FindCentralGeode();
                     int hydrogenRadius = 10;

@@ -9,8 +9,6 @@ using ReLogic.Content;
 using CalamityMod.NPCs.ProfanedGuardians;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.Accessories;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
@@ -18,10 +16,8 @@ using Terraria.ID;
 using System.Collections.Generic;
 using CalamityMod;
 using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.AstrumAureus;
-using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.ExoMechs.Ares;
@@ -31,18 +27,16 @@ using CalRemix.Core.Retheme.NoFab;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Melee.Spears;
-using CalamityMod.Rarities;
 using CalamityMod.Items.Accessories.Vanity;
 using CalRemix.Core.World;
-using CalamityMod.Items.Potions;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.Cryogen;
-using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Leviathan;
-using System.Reflection;
+using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.Providence;
 
 namespace CalRemix.Core.Retheme
 {
@@ -80,29 +74,98 @@ namespace CalRemix.Core.Retheme
             }
         }
     }
-    public class RNPC : GlobalNPC
+    public class RethemeNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override void SetStaticDefaults()
+        public static void ChangeTextures()
         {
-            DesertScourgeBody.BodyTexture2 = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/DS/Body2")  : Request<Texture2D>("CalamityMod/NPCs/DesertScourge/DesertScourgeBody2");
-            DesertScourgeBody.BodyTexture3 = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/DS/Body2") : Request<Texture2D>("CalamityMod/NPCs/DesertScourge/DesertScourgeBody3");
-            DesertScourgeBody.BodyTexture4 = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/DS/Body2") : Request<Texture2D>("CalamityMod/NPCs/DesertScourge/DesertScourgeBody4");
-            Crabulon.Texture_Glow = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Crabulon/CrabulonGlow") : Request<Texture2D>("CalamityMod/NPCs/Crabulon/CrabulonGlow");
-            Crabulon.AltTexture_Glow = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Crabulon/CrabulonAltGlow") : Request<Texture2D>("CalamityMod/NPCs/Crabulon/CrabulonAltGlow");
-            Crabulon.AttackTexture_Glow = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Crabulon/CrabulonAttackGlow") : Request<Texture2D>("CalamityMod/NPCs/Crabulon/CrabulonAttackGlow");
-            HiveMind.Phase2Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/HiveMind/HiveMindP2") : Request<Texture2D>("CalamityMod/NPCs/HiveMind/HiveMindP2");
-            PerforatorCyst.GlowTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Perfs/CystGlow") : Request<Texture2D>("CalamityMod/NPCs/Perforator/PerforatorCystGlow");
-            //PerforatorBodyLarge.AltTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Perfs/LBodyAlt") : Request<Texture2D>("CalamityMod/NPCs/Perforator/PerforatorBodyLargeAlt");
+            if (!CalRemixWorld.npcChanges)
+            {
+                foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
+                {
+                    TextureAssets.Npc[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                }
+            }
+            else
+            {
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.NPCs)
+                {
+                    TextureAssets.Npc[p.Key] = p.Value;
+                }
+            }
+        }
+        public static void UpdateTextures()
+        {
+            DesertScourgeBody.BodyTexture2 = NPCTextureChange("DS/Body2", "DesertScourge/DesertScourgeBody2");
+            DesertScourgeBody.BodyTexture3 = NPCTextureChange("DS/Body2", "DesertScourge/DesertScourgeBody3");
+            DesertScourgeBody.BodyTexture4 = NPCTextureChange("DS/Body2", "DesertScourge/DesertScourgeBody4");
+            Crabulon.Texture_Glow = NPCTextureChange("Crabulon/CrabulonGlow", "Crabulon/CrabulonGlow");
+            Crabulon.AltTexture_Glow = NPCTextureChange("Crabulon/CrabulonAltGlow", "Crabulon/CrabulonAltGlow");
+            Crabulon.AttackTexture_Glow = NPCTextureChange("Crabulon/CrabulonAttackGlow", "Crabulon/CrabulonAttackGlow");
+            HiveMind.Phase2Texture = NPCTextureChange("HiveMind/HiveMindP2", "HiveMind/HiveMindP2");
+            PerforatorCyst.GlowTexture = NPCTextureChange("Perfs/CystGlow", "Perforator/PerforatorCystGlow");
+            PerforatorBodyLarge.AltTexture = NPCTextureChange("Perfs/LBodyAlt", "Perforator/PerforatorBodyLargeAlt");
 
-            Cryogen.Phase2Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Cryogen/CryogenPhase2") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase2");
-            Cryogen.Phase3Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Cryogen/CryogenPhase3") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase3");
-            Cryogen.Phase4Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Cryogen/CryogenPhase4") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase4");
-            Cryogen.Phase5Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Cryogen/CryogenPhase5") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase5");
-            Cryogen.Phase6Texture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Cryogen/CryogenPhase6") : Request<Texture2D>("CalamityMod/NPCs/Cryogen/Cryogen_Phase6");
-            Anahita.ChargeTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Levi/AnahitaStab") : Request<Texture2D>("CalamityMod/NPCs/Leviathan/AnahitaStabbing");
-            Leviathan.AttackTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Levi/LeviAttack") : Request<Texture2D>("CalamityMod/NPCs/Leviathan/LeviathanAttack");
-            //AstrumAureus.WalkTexture = CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/Levi/LeviAttack") : Request<Texture2D>("CalamityMod/NPCs/AstrumAureus/LeviathanAttack");
+            Cryogen.Phase2Texture = NPCTextureChange("Cryogen/CryogenPhase2", "Cryogen/Cryogen_Phase2");
+            Cryogen.Phase3Texture = NPCTextureChange("Cryogen/CryogenPhase3", "Cryogen/Cryogen_Phase3");
+            Cryogen.Phase4Texture = NPCTextureChange("Cryogen/CryogenPhase4", "Cryogen/Cryogen_Phase4");
+            Cryogen.Phase5Texture = NPCTextureChange("Cryogen/CryogenPhase5", "Cryogen/Cryogen_Phase5");
+            Cryogen.Phase6Texture = NPCTextureChange("Cryogen/CryogenPhase6", "Cryogen/Cryogen_Phase6");
+            CalamitasClone.GlowTexture = NPCTextureChange("Cal/CalamitasGlow", "CalClone/CalamitasCloneGlow");
+            Anahita.ChargeTexture = NPCTextureChange("Levi/AnahitaStab", "Leviathan/AnahitaStabbing");
+            Leviathan.AttackTexture = NPCTextureChange("Levi/LeviAttack", "Leviathan/LeviathanAttack");
+
+            #region Providence
+            ProvidenceTextureChange(ref Providence.TextureAlt, "TextureAlt");
+            ProvidenceTextureChange(ref Providence.TextureAltNight, "TextureAltNight");
+            ProvidenceTextureChange(ref Providence.TextureAltNight_Glow, "TextureAltNight_Glow");
+            ProvidenceTextureChange(ref Providence.TextureAltNight_Glow_2, "TextureAltNight_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureAlt_Glow, "TextureAlt_Glow");
+            ProvidenceTextureChange(ref Providence.TextureAlt_Glow_2, "TextureAlt_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureAttack, "TextureAttack");
+            ProvidenceTextureChange(ref Providence.TextureAttackAlt, "TextureAttackAlt");
+            ProvidenceTextureChange(ref Providence.TextureAttackAltNight, "TextureAttackAltNight");
+            ProvidenceTextureChange(ref Providence.TextureAttackAltNight_Glow, "TextureAttackAltNight_Glow");
+            ProvidenceTextureChange(ref Providence.TextureAttackAltNight_Glow_2, "TextureAttackAltNight_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureAttackAlt_Glow, "TextureAttackAlt_Glow");
+            ProvidenceTextureChange(ref Providence.TextureAttackAlt_Glow_2, "TextureAttackAlt_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureAttackNight, "TextureAttackNight");
+            ProvidenceTextureChange(ref Providence.TextureAttackNight_Glow, "TextureAttackNight_Glow");
+            ProvidenceTextureChange(ref Providence.TextureAttackNight_Glow_2, "TextureAttackNight_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureAttack_Glow, "TextureAttack_Glow");
+            ProvidenceTextureChange(ref Providence.TextureAttack_Glow_2, "TextureAttack_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureDefense, "TextureDefense");
+            ProvidenceTextureChange(ref Providence.TextureDefenseAlt, "TextureDefenseAlt");
+            ProvidenceTextureChange(ref Providence.TextureDefenseAltNight, "TextureDefenseAltNight");
+            ProvidenceTextureChange(ref Providence.TextureDefenseAltNight_Glow, "TextureDefenseAltNight_Glow");
+            ProvidenceTextureChange(ref Providence.TextureDefenseAltNight_Glow_2, "TextureDefenseAltNight_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureDefenseAlt_Glow, "TextureDefenseAlt_Glow");
+            ProvidenceTextureChange(ref Providence.TextureDefenseAlt_Glow_2, "TextureDefenseAlt_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureDefenseNight, "TextureDefenseNight");
+            ProvidenceTextureChange(ref Providence.TextureDefenseNight_Glow, "TextureDefenseNight_Glow");
+            ProvidenceTextureChange(ref Providence.TextureDefenseNight_Glow_2, "TextureDefenseNight_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureDefense_Glow, "TextureDefense_Glow");
+            ProvidenceTextureChange(ref Providence.TextureDefense_Glow_2, "TextureDefense_Glow_2");
+            ProvidenceTextureChange(ref Providence.TextureNight, "TextureNight");
+            ProvidenceTextureChange(ref Providence.TextureNight_Glow, "TextureNight_Glow");
+            ProvidenceTextureChange(ref Providence.TextureNight_Glow_2, "TextureNight_Glow_2");
+            ProvidenceTextureChange(ref Providence.Texture_Glow, "Texture_Glow");
+            ProvidenceTextureChange(ref Providence.Texture_Glow_2, "Texture_Glow_2");
+            #endregion
+        }
+        private static Asset<Texture2D> NPCTextureChange(string remix, string original)
+        {
+            return CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/" + remix) : Request<Texture2D>("CalamityMod/NPCs/" + original);
+        }
+        private static void ProvidenceTextureChange(ref Asset<Texture2D> asset, string name)
+        {
+            string newName = name.Replace("_", "");
+            newName = newName.Replace("Texture", "Providence");
+            if (newName.Contains("Glow"))
+                newName = "Glowmasks/" + newName;
+            if (newName.Contains("Night"))
+                newName = newName.Replace("Night", "") + "Night";
+            asset = NPCTextureChange($"Providence/{newName}", $"Providence/{newName}");
         }
         public override void ModifyTypeName(NPC npc, ref string typeName)
         {
@@ -161,35 +224,40 @@ namespace CalRemix.Core.Retheme
             }
         }
     }
-    public class RItem : GlobalItem
+    public class RethemeItem : GlobalItem
     {
-        internal static List<int> Torch = new()
+        public static void ChangeTextures()
         {
-            ItemID.RainbowTorch,
-            ItemID.UltrabrightTorch,
-            ItemID.IchorTorch,
-            ItemID.BoneTorch,
-            ItemID.CursedTorch,
-            ItemID.DemonTorch,
-            ItemID.IceTorch,
-            ItemID.JungleTorch,
-            ItemID.CrimsonTorch,
-            ItemID.CorruptTorch,
-            ItemID.HallowedTorch,
-            ItemID.Torch,
-            ItemType<AstralTorch>(),
-            ItemType<SulphurousTorch>(),
-            ItemType<GloomTorch>(),
-            ItemType<AbyssTorch>(),
-            ItemType<AlgalPrismTorch>(),
-            ItemType<NavyPrismTorch>(),
-            ItemType<RefractivePrismTorch>()
-        };
+            if (!CalRemixWorld.itemChanges)
+            {
+                foreach (KeyValuePair<int, string> p in RethemeList.Items)
+                {
+                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                }
+                foreach (KeyValuePair<int, string> p in RethemeList.Projs)
+                {
+                    TextureAssets.Projectile[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                }
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+            }
+            else
+            {
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
+                {
+                    TextureAssets.Item[p.Key] = p.Value;
+                }
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
+                {
+                    TextureAssets.Projectile[p.Key] = p.Value;
+                }
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+            }
+        }
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(ItemType<Fabstaff>(), new DrawAnimationVertical(6, 6));
-            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Core/Retheme/Blank");
-            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Core/Retheme/Blank");
+            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
+            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
             TextureAssets.Item[ItemType<Fabstaff>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/InterfacerStaff");
             TextureAssets.Item[ItemType<Fabsol>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/DiscordianSigil");
             TextureAssets.Item[ItemType<CirrusDress>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/AshsCloak");
@@ -220,8 +288,6 @@ namespace CalRemix.Core.Retheme
                 item.defense -= 8;
                 item.bodySlot = EquipLoader.GetEquipSlot(Mod, "AshsCloakBody", EquipType.Body);
             }
-            else if (item.type == ItemType<CosmiliteBar>())
-                item.rare = CalRemixWorld.cosmislag ? ItemRarityID.Purple : RarityType<DarkBlue>();
             else if (RethemeMaster.OriginalItemNames.ContainsKey(item.type))
             {
                 string name = CalRemixWorld.itemChanges ? RethemeList.ItemNames.GetValueOrDefault(item.type) : RethemeMaster.OriginalItemNames.GetValueOrDefault(item.type);
@@ -265,133 +331,11 @@ namespace CalRemix.Core.Retheme
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            Mod mod = Mod;
             if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
                 tooltips.Clear();
-            if (CalRemixWorld.aspids)
-            {
-                if (item.type == ItemType<CryoKey>())
-                {
-                    var line = new TooltipLine(mod, "CryoKeyRemix", "Drops from Primal Aspids");
-                    tooltips.Add(line);
-                }
-            }
-            if (CalRemixWorld.clamitas)
-            {
-                if (item.type == ItemType<EyeofDesolation>())
-                {
-                    var line = new TooltipLine(mod, "EyeofDesolationRemix", "Drops from Clamitas");
-                    tooltips.Add(line);
-                }
-            }
-            if (CalRemixWorld.plaguetoggle)
-            {
-                if (item.type == ItemType<Abombination>())
-                {
-                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
-                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
-                }
-            }
-            if (CalRemixWorld.fearmonger)
-            {
-                if (item.type == ItemType<FearmongerGreathelm>())
-                {
-                    tooltips.FindAndReplace("+60 max mana and ", "");
-                    tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
-                    for (int i = 0; i < tooltips.Count; i++)
-                    {
-                        if (tooltips[i].Text.Contains("Pumpkin"))
-                        {
-                            tooltips.RemoveAt(i);
-                            break;
-                        }
-                    }
-                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
-                }
-                if (item.type == ItemType<FearmongerPlateMail>())
-                {
-                    tooltips.FindAndReplace("+100 max life and ", "");
-                    for (int i = 0; i < tooltips.Count; i++)
-                    {
-                        if (tooltips[i].Text.Contains("Pumpkin"))
-                        {
-                            tooltips.RemoveAt(i);
-                        }
-                    }
-                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
-                }
-                if (item.type == ItemType<FearmongerGreaves>())
-                {
-                    for (int i = 0; i < tooltips.Count; i++)
-                    {
-                        if (tooltips[i].Text.Contains("Pumpkin"))
-                        {
-                            tooltips.RemoveAt(i);
-                            break;
-                        }
-                    }
-                    tooltips.Add(new TooltipLine(mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
-                }
-            }
-            if (Torch.Contains(item.type))
-            {
-                var line = new TooltipLine(mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
-                line.OverrideColor = Color.OrangeRed;
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<PhantomicArtifact>())
-            {
-                var line = new TooltipLine(mod, "PhantomicSoulArtifact", "Judgement");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<GrandGelatin>())
-            {
-                var line = new TooltipLine(mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAbsorber>())
-            {
-                var line = new TooltipLine(mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheSponge>())
-            {
-                var line = new TooltipLine(mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AmbrosialAmpoule>())
-            {
-                var line = new TooltipLine(mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingGear>())
-            {
-                var line = new TooltipLine(mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingSuit>())
-            {
-                var line = new TooltipLine(mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAmalgam>())
-            {
-                var line = new TooltipLine(mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<DesertMedallion>())
-            {
-                var line = new TooltipLine(mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<HadalStew>())
-            {
-                var line = new TooltipLine(mod, "HadalStewRemix", "Grants a handful of combat buffs");
-                tooltips.Add(line);
-            }
         }
     }
-    public class RProj : GlobalProjectile
+    public class RethemeProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
         public override void SetStaticDefaults()

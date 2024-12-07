@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Core.World;
+﻿using CalRemix.Core.World;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -19,5 +18,6 @@ namespace CalRemix.Core.Scenes
                 SkyManager.Instance.Activate("CalRemix:TrueStory", player.position);
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override int Music => CalRemixMusic.TrueStory;
     }
 }

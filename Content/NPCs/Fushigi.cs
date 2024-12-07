@@ -13,6 +13,8 @@ using System;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Core.World;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs
 {
@@ -67,8 +69,20 @@ namespace CalRemix.Content.NPCs
             }
             if (NPC.position.Y < 656)
             {
-                CalRemixWorld.oxydayTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
-                Main.NewText("The wind is blowing harshly!", Color.LightBlue);
+                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.LightBlue);
+                int oxTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    CalRemixWorld.oxydayTime = oxTime;
+                }
+                else
+                {
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.OxydayTime);
+                    packet.Write(oxTime);
+                    packet.Send();
+                }
+                CalRemixWorld.UpdateWorldBool();
                 NPC.active = false;
             }
             foreach (Player player in Main.ActivePlayers)

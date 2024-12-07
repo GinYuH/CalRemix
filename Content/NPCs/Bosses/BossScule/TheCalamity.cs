@@ -1,13 +1,16 @@
-﻿using CalRemix.Content.Buffs;
-using CalRemix.Content.Items.Lore;
+﻿using CalamityMod.World;
+using CalamityMod;
+using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -15,6 +18,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalRemix.Content.Items.Lore;
+using Terraria.GameContent.Bestiary;
 
 namespace CalRemix.Content.NPCs.Bosses.BossScule
 {
@@ -50,7 +55,12 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             NPC.netAlways = true;
             NPC.dontTakeDamage = true;
             NPC.alpha = 0;
-                
+
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface]);
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -68,17 +78,29 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                 NPC.TargetClosest();
                 NPC.Center = new Vector2(Target.Center.X, Target.Center.Y - 256);
             }
+            foreach (Player p in Main.player)
+            {
+                if (p.active)
+                    p.Remix().calamitizedCounter = CalamitySetCounter();
+            }
         }
         public override void AI()
         {
-            if (Target.whoAmI < 0 || Target.whoAmI == 255 || Target.dead || !Target.active)
-                NPC.TargetClosest();
-            if (Target.HasBuff(ModContent.BuffType<Calamitized>()))
+            NPC.TargetClosest();
+            bool allDead = true;
+            foreach (Player p in Main.player)
+            {
+                if (p.active && !p.dead && !p.HasBuff(ModContent.BuffType<Calamitized>()))
+                    allDead = false;
+            }
+            if (allDead)
             {
                 NPC.velocity.X += 1.1f * ((Target.Center.X > NPC.Center.X) ? -1 : 1);
                 NPC.EncourageDespawn(10);
                 return;
             }
+            NPC.direction = (Target.Center.X < NPC.Center.X) ? -1 : 1;
+            NPC.spriteDirection = NPC.direction;
             switch (State)
             {
                 case 0:
@@ -86,11 +108,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                         NPC.alpha++;
                     else
                         Timer++;
-                    string og = string.Empty;
-                    if (Timer == 0 && Target.HasItem(ModContent.ItemType<Ogscule>()))
-                        og = "Is that... me? Anyway, ";
-                    if (Timer == 60)
-                        Talk(og + "I will test your abilities. Good Luck.", Color.Red);
+                    if (Timer == 60) 
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote1").Value, Color.Red);
                     if (Timer >= 180)
                     {
                         Timer = 0;
@@ -105,11 +124,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                         Timer++;
                     }
                     if (Timer == 1200)
-                        Talk("Your dodging skills are proficient, but how will you fare against the ones after me?", Color.Red);
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote2").Value, Color.Red);
                     if (Timer == 2400)
-                        Talk("Your foes will often hold predictable patterns; see past them and strike.", Color.Red);
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote3").Value, Color.Red);
                     if (Timer == 3600)
-                        Talk("Keep avoiding anything that seems dangerous.", Color.Red);
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote4").Value, Color.Red);
                     if (Timer == EndTime)
                     {
                         foreach (Projectile p in Main.projectile)
@@ -117,11 +136,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                             if (p.type == ModContent.ProjectileType<CalamityLaser>() || p.type == ModContent.ProjectileType<DarkVein>() || p.type == ModContent.ProjectileType<Darkscule>())
                                 p.active = false;
                         }
-                        Talk("You have passed the test. Well done.", Color.Red);
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote5").Value, Color.Red);
                         NPC.dontTakeDamage = false;
                     }
                     if (Timer == EndTime + 180)
-                        Talk("Strike me down and take your reward.", Color.Red);
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote6").Value, Color.Red);
                     if (Timer < 2400 && Timer % 60f == 0 && Main.netMode != NetmodeID.Server)
                     {
                         Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 600f;
@@ -154,10 +173,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                     break;
             }
         }
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        {
-            return false;
-        }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         private void Teleport(Vector2 pos)
         {
             NPC.Center = pos;
@@ -166,27 +182,27 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[Type].Value;
+            Texture2D texture = Target.HasItem(ModContent.ItemType<Ogscule>()) ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/TheCalamityWorm").Value : TextureAssets.Npc[Type].Value;
             Rectangle sourceRectangle = new(0, 0, texture.Width, texture.Height);
             Vector2 origin = sourceRectangle.Size() / 2f;
             Vector2 draw = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);
-            spriteBatch.Draw(texture, draw, sourceRectangle, new Color(255, 0, 0, NPC.alpha), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+            SpriteEffects spriteEffects = (NPC.spriteDirection < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            spriteBatch.Draw(texture, draw, sourceRectangle, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
+            Texture2D eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityEye").Value;
+            spriteBatch.Draw(eye, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY) + (Target.HasItem(ModContent.ItemType<Ogscule>()) ? Vector2.UnitY * NPC.height * -0.65f : Vector2.Zero), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
             return false;
-        }
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityGlow", AssetRequestMode.ImmediateLoad).Value;
-            spriteBatch.Draw(glow, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, glow.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
-            Texture2D eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityEye", AssetRequestMode.ImmediateLoad).Value;
-            spriteBatch.Draw(eye, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
         }
         public override void DrawEffects(ref Color drawColor)
         {
-            if (!Terraria.Graphics.Effects.Filters.Scene["BloodMoon"].IsActive())
+            if (Timer > 0 && State < 1 || State >= 1)
             {
-                Terraria.Graphics.Effects.Filters.Scene.Activate("BloodMoon", Main.player[Main.myPlayer].position);
+                if (!Terraria.Graphics.Effects.Filters.Scene["BloodMoon"].IsActive())
+                {
+                    Terraria.Graphics.Effects.Filters.Scene.Activate("BloodMoon", Main.player[Main.myPlayer].position);
+                }
+                else
+                    Terraria.Graphics.Effects.Filters.Scene["BloodMoon"].GetShader().UseIntensity(2 / 255f * NPC.alpha);
             }
-            Terraria.Graphics.Effects.Filters.Scene["BloodMoon"].GetShader().UseIntensity(2/255f * NPC.alpha);
         }
         public override void OnKill()
         {
@@ -195,7 +211,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CalamitousCertificate>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<TheCalamityBag>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<CalamitousCertificate>()));
+            npcLoot.AddNormalOnly(ItemDropRule.Common(ModContent.ItemType<InfraredSights>()));
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CalamityRelic>());
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedCalamity, ModContent.ItemType<KnowledgeCalamity>(), desc: DropHelper.FirstKillText);
         }
         private static void Talk(string text, Color color)
         {
@@ -203,6 +223,17 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(text, color);
+        }
+        internal static int CalamitySetCounter()
+        {
+            int counter = 3;
+            if (Main.masterMode || CalamityWorld.death || Main.getGoodWorld || Main.zenithWorld)
+                counter = 0;
+            else if (CalamityWorld.revenge)
+                counter = 1;
+            else if (Main.expertMode)
+                counter = 2;
+            return counter;
         }
     }
 }

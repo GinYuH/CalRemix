@@ -51,12 +51,14 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.Write(NPC.localAI[0]);
             writer.Write(NPC.chaseable);
             writer.Write(NPC.dontTakeDamage);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+            NPC.localAI[0] = reader.ReadSingle();
             NPC.chaseable = reader.ReadBoolean();
             NPC.dontTakeDamage = reader.ReadBoolean();
         }

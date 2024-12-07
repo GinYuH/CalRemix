@@ -90,13 +90,13 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void OnSpawn(IEntitySource source)
         {
-            Talk("Organic breach detected. Preparing extermination.", Color.Cyan);
+            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue1", Color.Cyan);
         }
         public override void AI()
         {
             if (Target.dead && !killed)
             {
-                Talk("Threat detained. Returning to normal operation.", Color.Cyan);
+                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue2", Color.Cyan);
                 killed = true;
             }
             NPC.velocity.X *= 0.922f;
@@ -108,9 +108,9 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.life < NPC.lifeMax / 2f && !phaseTwo)
             {
                 if (Main.rand.NextBool(2))
-                    Talk("Most interesting- a worthy research subject.", Color.Cyan);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue3", Color.Cyan);
                 else
-                    Talk("Disabling laser inhibitors.", Color.Cyan);
+                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue4", Color.Cyan);
                 phaseTwo = true;
             }
             foreach (Player player in Main.player)
@@ -207,13 +207,6 @@ namespace CalRemix.Content.NPCs.Minibosses
             Vector2 draw = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);
             spriteBatch.Draw(texture, draw, sourceRectangle, new Color(0, 255, 255, NPC.alpha), NPC.rotation, origin, NPC.scale, effect, 0f);
             return false;
-        }
-        private static void Talk(string text, Color color)
-        {
-            if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
-            else if (Main.netMode == NetmodeID.SinglePlayer)
-                Main.NewText(text, color);
         }
     }
 }

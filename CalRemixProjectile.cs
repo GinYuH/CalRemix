@@ -23,8 +23,9 @@ using Terraria.GameContent;
 using CalRemix.Content.NPCs.Bosses.Oxygen;
 using Terraria.Audio;
 using CalRemix.Core.World;
-using CalamityMod.Items.Weapons.Melee;
-using CalRemix.Core.Retheme;
+using CalRemix.Content.Walls;
+using System.Linq;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
 
 namespace CalRemix.Content.Projectiles
 {
@@ -41,7 +42,19 @@ namespace CalRemix.Content.Projectiles
         public bool whipGonged = false;
         NPC exc;
         public override bool InstancePerEntity => true;
-
+        public int[] baronStraitTiles =
+        {
+            TileType<BanishedPlatingPlaced>(),
+            TileType<BaronBrinePlaced>(),
+            TileType<BaronsandPlaced>(),
+            TileType<BrinerackPlaced>(),
+            TileType<TanzaniteGlassPlaced>(),
+        };
+        public int[] baronStraitWalls =
+        {
+            WallType<BanishedPlatingWallPlaced>(),
+            WallType<BaronsandWallPlaced>()
+        };
         public override void SetStaticDefaults()
         {
             Main.projFrames[ProjectileType<MutatedTruffleMinion>()] = 1;
@@ -73,6 +86,7 @@ namespace CalRemix.Content.Projectiles
             if (projectile.type == ProjectileID.PureSpray)
             {
                 PlagueToPureConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
+                BaronStraitConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
             }
             if (projectile.type == ProjectileID.CorruptSpray || projectile.type == ProjectileID.CrimsonSpray || projectile.type == ProjectileID.HallowSpray || projectile.type == ProjectileType<AstralSpray>() || projectile.type == ProjectileID.MushroomSpray)
             {
@@ -125,13 +139,30 @@ namespace CalRemix.Content.Projectiles
                 {
                     SoundEngine.PlaySound(SoundID.Shatter with { Volume = 1 });
                     projectile.Kill();
-                    NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int num = NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
+                        if (Main.npc.IndexInRange(num))
+                        {
+                            CalamityUtils.BossAwakenMessage(num);
+                        }
+                    }
+                    else
+                    {
+                        ModPacket packet = CalRemix.CalMod.GetPacket();
+                        packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
+                        packet.Write(projectile.position.X);
+                        packet.Write(656);
+                        packet.Write(NPCType<Oxygen>());
+                        packet.Write(Main.myPlayer);
+                        packet.Send();
+                    }
                 }
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;
             if (modPlayer.pearl)
-                CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 1);
+                CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 10);
             eye++;
             if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
                 Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, projectile.velocity * 0.75f, ProjectileType<HomingAstralFireball>(), 10, 0, projectile.owner);
@@ -208,9 +239,14 @@ namespace CalRemix.Content.Projectiles
                             Main.tile[k, l].TileType = TileID.Stone;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == WallType<PlaguedVineWall>() || wall == WallType<PlaguedVineWallSafe>())
+                        if (wall == WallType<PlaguedVineWall>())
                         {
-                            Main.tile[k, l].WallType = WallID.GrassUnsafe;
+                            Main.tile[k, l].WallType = WallID.Jungle;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (wall == WallType<PlaguedVineWallSafe>())
+                        {
+                            Main.tile[k, l].WallType = WallID.JungleUnsafe;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
                         if (wall == WallType<PlaguedStoneWall>() || wall == WallType<PlaguedStoneWallSafe>())
@@ -221,6 +257,16 @@ namespace CalRemix.Content.Projectiles
                         if (type == TileType<PlaguedClay>())
                         {
                             Main.tile[k, l].TileType = TileID.ClayBlock;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (type == TileType<PlagueGrassShort>())
+                        {
+                            ushort junglePlant = Main.rand.NextBool() ? TileID.JunglePlants : TileID.JunglePlants2;
+                            Main.tile[k, l].TileType = junglePlant;
+                            if (junglePlant == TileID.JunglePlants)
+                                Main.tile[k, l].TileFrameX = Main.rand.NextBool() ? (short)Main.rand.Next(6) : (short)Main.rand.Next(10, 23);
+                            else if (junglePlant == TileID.JunglePlants2)
+                                Main.tile[k, l].TileFrameX = Main.rand.NextBool() ? (short)Main.rand.Next(8) : (short)Main.rand.Next(9, 17);
                             WorldGen.SquareTileFrame(k, l, true);
                         }
                     }
@@ -250,9 +296,14 @@ namespace CalRemix.Content.Projectiles
                             Main.tile[k, l].TileType = TileID.Copper;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
-                        if (wall == WallType<PlaguedMudWall>() || wall == WallType<PlaguedMudWallSafe>())
+                        if (wall == WallType<PlaguedMudWall>())
                         {
                             Main.tile[k, l].WallType = WallID.MudUnsafe;
+                            WorldGen.SquareWallFrame(k, l, true);
+                        }
+                        if (wall == WallType<PlaguedMudWallSafe>())
+                        {
+                            Main.tile[k, l].WallType = WallID.MudWallEcho;
                             WorldGen.SquareWallFrame(k, l, true);
                         }
                         if (type == TileType<PlaguedHive>())
@@ -273,6 +324,38 @@ namespace CalRemix.Content.Projectiles
                         if (type == TileType<PlaguedClay>())
                         {
                             Main.tile[k, l].TileType = TileID.ClayBlock;
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                    }
+                }
+            }
+        }
+        public void BaronStraitConvert(int i, int j, int size = 4)
+        {
+            for (int k = i - size; k <= i + size; k++)
+            {
+                for (int l = j - size; l <= j + size; l++)
+                {
+                    if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size))
+                    {
+                        Tile tile = Main.tile[k, l];
+                        int type = Main.tile[k, l].TileType;
+                        int wall = Main.tile[k, l].WallType;
+                        int liquid = tile.LiquidType;
+
+                        if (baronStraitTiles.Contains(type) && tile.HasTile)
+                        {
+                            tile.HasTile = false;
+                            if (type == TileType<BrinerackPlaced>() || type == TileType<BaronBrinePlaced>())
+                            {
+                                liquid = LiquidID.Water;
+                                tile.LiquidAmount = 255;
+                            }
+                            WorldGen.SquareTileFrame(k, l, true);
+                        }
+                        if (baronStraitWalls.Contains(wall))
+                        {
+                            tile.WallType = WallID.None;
                             WorldGen.SquareTileFrame(k, l, true);
                         }
                     }

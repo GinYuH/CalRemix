@@ -9,11 +9,6 @@ namespace CalRemix.Content.Items.Weapons
 {
 	public class PungentBomber : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Pungent Bomber");
-            Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() 
 		{
 			Item.width = 10;
@@ -33,7 +28,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.myPlayer == player.whoAmI)
-                Projectile.NewProjectile(Item.GetSource_OnHit(target), new Vector2(player.Center.X + (player.direction > 0 ? 32f : -32f) * Item.scale, player.Center.Y), Vector2.Zero, ModContent.ProjectileType<PungentBomb>(), Item.damage / 2, 0, player.whoAmI);
+                Projectile.NewProjectile(Item.GetSource_OnHit(target), new Vector2(player.Center.X + (player.direction > 0 ? 32f : -32f) * Item.scale, player.Center.Y), Vector2.Zero, ModContent.ProjectileType<PungentBomb>(), Item.damage / 4, 0, player.whoAmI);
         }
     }
 }

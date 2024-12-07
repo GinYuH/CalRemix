@@ -29,7 +29,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.value = 0;
             Item.rare = ItemRarityID.Orange;
             Item.createTile = ModContent.TileType<MovieSignPlaced>();
-            Item.Calamity().devItem = true;
+            Item.Calamity().donorItem = true;
         }
     }
 }

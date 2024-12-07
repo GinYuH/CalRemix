@@ -2,15 +2,13 @@
 using CalamityMod.CalPlayer;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
-using Newtonsoft.Json.Linq;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -101,7 +99,7 @@ namespace CalRemix
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
             // Only naturally spawned enemies can become champions
-            if (source is EntitySource_SpawnNPC && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode)
+            if (source is EntitySource_SpawnNPC && !npc.boss && !npc.friendly && !npc.dontTakeDamage && Main.hardMode && CalRemixWorld.champions)
             {
                 TrySpawnChampion(npc);
             }

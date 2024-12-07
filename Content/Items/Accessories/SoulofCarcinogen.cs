@@ -2,14 +2,13 @@
 using CalamityMod;
 using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Accessories;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -19,7 +18,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Carcinogen");
-            Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...");
+            Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...\n" + CalamityUtils.ColorMessage("Boosts Dark damage", Color.LightSlateGray));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -85,6 +84,11 @@ namespace CalRemix.Content.Items.Accessories
                 drawOffset: new(0f, 0f)
             );
             return false;
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return slot == ModContent.GetInstance<SoulSlot>().Type;
         }
     }
     public class CigarDrawLayer : PlayerDrawLayer

@@ -35,11 +35,11 @@ namespace CalRemix.Content.NPCs
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.damage = 400;
+            NPC.damage = 80;
             NPC.width = 112;
             NPC.height = 112;
             NPC.defense = 4;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 6000;
             NPC.knockBackResist = 0.6f;
             NPC.value = Item.buyPrice(1);
             NPC.noGravity = false;
@@ -78,7 +78,7 @@ namespace CalRemix.Content.NPCs
                             Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / (float)(3 - 1)));
                             perturbedSpeed += new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
                             int type = Main.rand.NextBool(3) ? ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.SevensStrikerGrape>() : ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.SevensStrikerOrange>();
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, type, 50, 0f);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, type, 20, 0f);
                             Main.projectile[p].hostile = true;
                             Main.projectile[p].friendly = false;
                             Main.projectile[p].DamageType = DamageClass.Generic;
@@ -91,7 +91,7 @@ namespace CalRemix.Content.NPCs
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int type = ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AMR2>();
-                        int dmg = Main.expertMode ? 375 : 500;
+                        int dmg = Main.expertMode ? 37 : 50;
                         int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitY * 14, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
                         Main.projectile[p].hostile = true;
                         Main.projectile[p].friendly = false;
@@ -143,7 +143,7 @@ namespace CalRemix.Content.NPCs
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int type = ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AMR2>();
-                            int dmg = Main.expertMode ? 375 : 500;
+                            int dmg = Main.expertMode ? 37 : 50;
                             int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitY * 14, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
                             Main.projectile[p].hostile = true;
                             Main.projectile[p].friendly = false;
@@ -166,7 +166,7 @@ namespace CalRemix.Content.NPCs
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int type = ModContent.ProjectileType<CalamityMod.Projectiles.Ranged.AMR2>();
-                        int dmg = Main.expertMode ? 375 : 500;
+                        int dmg = Main.expertMode ? 75 : 50;
                         int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitY * 14, new Vector2(NPC.direction * 22, 0), type, dmg, 0f);
                         Main.projectile[p].hostile = true;
                         Main.projectile[p].friendly = false;

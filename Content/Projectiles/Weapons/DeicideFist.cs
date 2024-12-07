@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons
@@ -67,11 +68,11 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            SpriteEffects effects = (Projectile.spriteDirection == -1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            Texture2D value = ModContent.Request<Texture2D>(Texture).Value;
-            Vector2 position = Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY;
-            Rectangle rectangle = value.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
-            Main.EntitySpriteDraw(value, position, rectangle, Projectile.GetAlpha(lightColor), Projectile.rotation, rectangle.Size() * 0.5f, Projectile.scale, effects);
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
+            SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            Rectangle rect = new(0, Projectile.frame * texture.Height / 4, texture.Width, texture.Height / 4);
+            Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
+            Main.EntitySpriteDraw(texture, centered, rect, new Color(255, 255, 255, Projectile.alpha), Projectile.rotation, new Vector2(texture.Width, texture.Height / 4) / 2, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }

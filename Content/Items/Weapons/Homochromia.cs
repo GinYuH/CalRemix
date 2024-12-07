@@ -68,7 +68,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient<Heterochromia>().
                 AddIngredient(ItemID.FairyQueenRangedItem).
                 AddIngredient<DarkechoGreatbow>().
-                AddIngredient<ElementalBar>(5).
+                AddIngredient(ItemID.LunarBar, 5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

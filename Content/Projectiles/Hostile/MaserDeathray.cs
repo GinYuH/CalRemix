@@ -57,7 +57,7 @@ public class MaserDeathray : BaseLaserbeamProjectile
         NPC npc = Main.npc[NPCOwner];
         if (npc != null && npc.active)
         {
-            Projectile.Center = npc.Center - Vector2.UnitY * 37 + Projectile.velocity * 100;
+            Projectile.Center = npc.Center - Vector2.UnitY * 100 + Projectile.velocity * 100;
         }
         else
         {

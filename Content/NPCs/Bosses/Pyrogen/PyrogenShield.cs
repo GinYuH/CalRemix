@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Core.Retheme;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -17,6 +18,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public bool stopAi1 = false;
         public static Asset<Texture2D> BloomTexture = null;
         public static Asset<Texture2D> Glow = null;
+
+        public bool ShouldHide => NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7 || NPC.Calamity().newAI[0] == 8;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pyrogen's Shield");
@@ -51,6 +55,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             Lighting.AddLight(NPC.Center, TorchID.Red);
             NPC pyro = Main.npc[(int)NPC.ai[0]];
+            NPC.dontTakeDamage = false;
             if (pyro.active && pyro.type == ModContent.NPCType<Pyrogen>())
             {
                 NPC.Calamity().newAI[0] = pyro.ai[0];
@@ -69,18 +74,15 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
                     case 3: //all players are pulled in with the boss; rotate out further in this case
                         {
-                            if (!stopAi1) { 
-                                NPC.localAI[1] += 1f;
-                            }
-                            Vector2 idealpos = NPC.Center;
+                            NPC.localAI[1] += 1f;
 
-                            float distance = MathHelper.Clamp(MathHelper.Lerp(50, 300, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, 300);
+                            int maxDist = 500;
+                            float distance = MathHelper.Clamp(MathHelper.Lerp(50, maxDist, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, maxDist);
                             distance += pyro.width >= pyro.height ? pyro.width : pyro.height;
 
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly * 660 + NPC.localAI[1];
@@ -98,7 +100,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 NPC.damage = 200;
                             }
 
-                            if (NPC.localAI[1] < Pyrogen.BlackholeSafeTime * 2)
+                            if (NPC.localAI[1] < Pyrogen.BlackholeSafeTime * 4)
                             {
                                 NPC.damage = 0;
                             }
@@ -118,7 +120,35 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             }
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
+                            NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
+                            break;
+                        }
+                    case 4 or 7 or 8: //starlo and obsidian storm attacks, disappear
+                        {
+                            NPC.damage = 0;
+                            NPC.dontTakeDamage = true;
+                            NPC.localAI[1] += 8f;
+                            float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double rad = deg * (Math.PI / 180);
+                            float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
+                            float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
+
+                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
+                            break;
+                        }
+                    case 9: //switching phase; default guarding behavior but without contact damage
+                        {
+                            NPC.damage = 0;
+                            NPC.localAI[1] += 8f;
+                            float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double rad = deg * (Math.PI / 180);
+                            float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
+                            float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
+
+                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -126,15 +156,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         {
                             NPC.damage = 220;
                             NPC.localAI[1] += 8f;
-                            float distance = 100;
-                            distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
+                            float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
                             double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
                             NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
-                            float rotOffset = 0;
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                         }
                         break;
@@ -173,14 +201,25 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (ShouldHide)
+                return false;
+            Color color = Main.zenithWorld ? Color.Cyan : drawColor;
+            Color white = Main.zenithWorld ? Color.Cyan : Color.White;
             Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;
-            spriteBatch.Draw(BloomTexture.Value, npcOffset, NPC.frame, Color.White with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(sprite, npcOffset, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(sprite.Width /2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Glow.Value, npcOffset, NPC.frame, Color.White, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(BloomTexture.Value, npcOffset, NPC.frame, white with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite, npcOffset, NPC.frame, NPC.GetAlpha(color), NPC.rotation, new Vector2(sprite.Width /2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Glow.Value, npcOffset, NPC.frame, white, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
             //spriteBatch.EnterShaderRegion(BlendState.Additive);
             //spriteBatch.ExitShaderRegion();
             return false;
+        }
+
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            if (ShouldHide)
+                return false;
+            return null;
         }
     }
 }

@@ -2,10 +2,7 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.Core.Biomes;
 using System;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Boss;

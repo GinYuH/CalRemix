@@ -53,6 +53,7 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<Asbestos>(), 1, 216, 224);
             itemLoot.Add(ModContent.ItemType<SoulofCarcinogen>());
             itemLoot.Add(ModContent.ItemType<FiberBaby>());
+            itemLoot.Add(ModContent.ItemType<Chainsmoker>());
             itemLoot.Add(ModContent.ItemType<CarcinogenMask>(), 7);
             itemLoot.AddRevBagAccessories();
         }

@@ -2,15 +2,13 @@
 using CalamityMod;
 using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalamityMod.Rarities;
-using CalRemix.Content.Projectiles.Accessories;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using CalamityMod.Items.Accessories.Wings;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -19,7 +17,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Origen");
-            Tooltip.SetDefault("7% increase to all damage\nGrants additional defense for each elemental construct soul worn\nOnly applies to souls equipped in slots below this one");
+            Tooltip.SetDefault("7% increase to all damage\n" + CalamityUtils.ColorMessage("Inverts Elemental damage", OrigenPoint.origenPalette[Main.rand.Next(0, OrigenPoint.origenPalette.Count - 1)]));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -55,6 +53,11 @@ namespace CalRemix.Content.Items.Accessories
                 drawOffset: new(0f, 0f)
             );
             return false;
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return slot == ModContent.GetInstance<SoulSlot>().Type;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CalRemix.Content.Buffs;
+using CalRemix.Content.Projectiles;
+using CalRemix.Content.Projectiles.Weapons;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -9,6 +11,13 @@ namespace CalRemix
 {
     public static class CalRemixHelper
     {
+        public static CalRemixItem Remix(this Item item) => item.GetGlobalItem<CalRemixItem>();
+        public static CalRemixNPC Remix(this NPC npc) => npc.GetGlobalNPC<CalRemixNPC>();
+        public static CalRemixPlayer Remix(this Player player) => player.GetModPlayer<CalRemixPlayer>();
+        public static CalRemixProjectile Remix(this Projectile projectile) => projectile.GetGlobalProjectile<CalRemixProjectile>();
+        /// <summary>
+        /// Checks if the player has a stack of an item.
+        /// </summary>
         public static bool HasStack(this Player player, int itemType, int stackNum)
         {
             for (int i = 0; i < 58; i++)
@@ -18,6 +27,9 @@ namespace CalRemix
             }
             return false;
         }
+        /// <summary>
+        /// Consumes an item stack from the player.
+        /// </summary>
         public static void ConsumeStack(this Player player, int itemType, int stackNum)
         {
             for(int i = 0; i < 58; i++)
@@ -26,7 +38,9 @@ namespace CalRemix
                 if (player.HasStack(itemType, stackNum)) item.stack -= stackNum;
             }
         }
-
+        /// <summary>
+        /// Checks if the player has every item of a given list.
+        /// </summary>
         public static bool HasItems(this Player player, List<int> items)
         {
             for (int i = 0; i < items.Count; i++)
@@ -38,6 +52,9 @@ namespace CalRemix
             }
             return true;
         }
+        /// <summary>
+        /// Checks if the player has an item from a mod.
+        /// </summary>
         public static bool HasCrossModItem(Player player, string ModName, string ItemName)
         {
             if (ModLoader.HasMod(ModName))
@@ -47,12 +64,30 @@ namespace CalRemix
             }
             return false;
         }
-
-        public static CalRemixNPC Remix(this NPC npc)
+        /// <summary>
+        /// Changes item to the specified type. If stack is non-zero, change to the stack parameter.
+        /// </summary>
+        public static Item ChangeItemWithStack(this Item item, int to, int stack = 0)
         {
-            return npc.GetGlobalNPC<CalRemixNPC>();
+            bool flag = item.favorited;
+            stack = (stack <= 0) ? item.stack : stack;
+            item.SetDefaults(to);
+            item.favorited = flag;
+            item.stack = stack;
+            return item;
         }
-
+        /// <summary>
+        /// Updates buff and checks if the player is dead. If dead, sets minion bool to false. If not, update timeLeft.
+        /// </summary>
+        public static void CheckMinionCondition(this Projectile projectile, int buff, bool minionBool)
+        {
+            Player player = Main.player[projectile.owner];
+            player.AddBuff(buff, 3600);
+            if (player.dead)
+                minionBool = false;
+            if (minionBool)
+                projectile.timeLeft = 2;
+        }
     }
 
     public static class RarityHelper

@@ -69,6 +69,10 @@ namespace CalRemix.Content.Projectiles.Hostile
             {
                 SoundEngine.PlaySound(CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrimstoneShotSound, Projectile.Center);
             }
+            if (Projectile.ai[2] % 30 == 0)
+            {
+                Projectile.netUpdate = true;
+            }
             if (Main.getGoodWorld)
             {
                 float one = Projectile.whoAmI % 2 == 0 && Main.zenithWorld ? -0.004f : 0.004f;
@@ -135,7 +139,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 finalPoints.Add(baseVec);
             }
 
-            // 29FEB2024: Ozzatron: hopefully ported this correctly to the new prim system by Toasty
+            // 29FEB2024: Ozzatron: hopefully ported this correctly to the new prim system by Imogen
             PrimitiveRenderer.RenderTrail(finalPoints, new(BackgroundWidthFunction, BackgroundColorFunction, smoothen: false, shader: GameShaders.Misc["CalamityMod:TeslaTrail"]), 75);
             PrimitiveRenderer.RenderTrail(finalPoints, new(WidthFunction, ColorFunction, smoothen: false, shader: GameShaders.Misc["CalamityMod:TeslaTrail"]), 75);
 

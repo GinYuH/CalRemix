@@ -5,7 +5,6 @@ using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -19,6 +18,7 @@ namespace CalRemix.Content.Items.Accessories
     public class IgnitedCommunity : ModItem
     {
         public int count = 0;
+        public const int MaxLevel = 45;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -27,16 +27,10 @@ namespace CalRemix.Content.Items.Accessories
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
-            if (line != null)
-                line.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
-            TooltipLine line2 = tooltips.Find((TooltipLine t) => t.Text.Contains("Maxes out at extra 30% damage and 60 defense"));
-            if (line2 != null && !ModLoader.HasMod("MagicStorage"))
-            {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:IgnitedStats", $"Remix Items crafted: {count} ({count}% damage and {count * 2} defense)");
-                lineAdd.OverrideColor = CalamityUtils.ColorSwap(Color.OrangeRed, Color.Gold, 3f);
-                tooltips.Insert(tooltips.IndexOf(line2) + 1, lineAdd);
-            }
+            TooltipLine line = tooltips.Find((TooltipLine t) => t.Text.Contains("{0}") && t.Text.Contains("{1}"));
+            string newText = line.Text.Replace("{0}", $"{count}");
+            newText = newText.Replace("{1}", $"{count * 2}");
+            line.Text = newText;
         }
 
         public override void SetDefaults()
@@ -44,17 +38,20 @@ namespace CalRemix.Content.Items.Accessories
             Item.width = 22;
             Item.height = 22;
             Item.rare = ModContent.RarityType<CalamityRed>();
-            Item.Calamity().donorItem = true;
+            Item.Remix().devItem = "Remix";
             Item.accessory = true;
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<GenericDamageClass>() += 0.35f;
-            player.statDefense += 35;
-            player.GetCritChance<GenericDamageClass>() += 7f;
-            player.endurance += 0.07f;
-            player.statLifeMax2 = (int)(player.statLifeMax2 * 1.12);
-            player.lifeRegen += 4;
+            player.Calamity().shatteredCommunity = true;
+            player.Calamity().RageDamageBoost += 25f * 0.01f;
+            player.GetDamage<GenericDamageClass>() += 0.1f + count * 0.01f;
+            player.GetCritChance<GenericDamageClass>() += 5f;
+            player.statLifeMax2 = (int)(player.statLifeMax2 * 1.1f); 
+            player.wingTimeMax = (int)(player.wingTimeMax * 1.2f);
+            player.statDefense += 10 + count * 2;
+            player.endurance += 0.05f;
+            player.lifeRegen += 2;
             player.moveSpeed += 0.1f;
         }
         public override void PostUpdate()
@@ -66,6 +63,7 @@ namespace CalRemix.Content.Items.Accessories
         {
             CreateRecipe().
                 AddIngredient<ShatteredCommunity>(1).
+                AddIngredient<LightmixBar>(5).
                 AddIngredient<ConquestFragment>(220).
                 AddTile<DraedonsForge>().
                 Register();
@@ -78,8 +76,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void LoadData(TagCompound tag)
         {
             count = tag.GetInt("count");
-            if (count > 30)
-                count = 30;
+            if (count > MaxLevel)
+                count = MaxLevel;
         }
         public override void NetSend(BinaryWriter writer)
         {
@@ -96,8 +94,52 @@ namespace CalRemix.Content.Items.Accessories
         {
             ModContent.ItemType<TheInsacredTexts>(),
             ModContent.ItemType<Anomaly109>(),
+            ModContent.ItemType<ElementalBar>(),
+            ModContent.ItemType<HauntedBar>(),
             ModContent.ItemType<Slumbering>()
         };
+        public override void PostAddRecipes()
+        {
+            if (!ModLoader.HasMod("MagicStorage"))
+            {
+                for (int i = 0; i < Recipe.numRecipes; i++)
+                {
+                    Recipe recipe = Main.recipe[i];
+                    recipe.AddOnCraftCallback(Crafted);
+                }
+            }
+        }
+        private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
+        {
+            if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !ignoredRecipes.Contains(recipe.createItem.type))
+            {
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
+                {
+                    foreach (Item i in Main.LocalPlayer.inventory)
+                    {
+                        if (i.type == ModContent.ItemType<IgnitedCommunity>())
+                        {
+                            IgnitedCommunity ig = i.ModItem as IgnitedCommunity;
+                            if (ig.count < IgnitedCommunity.MaxLevel)
+                                ig.count++;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 3; i < 10; i++)
+                    {
+                        if (Main.LocalPlayer.armor[i].type == ModContent.ItemType<IgnitedCommunity>())
+                        {
+                            IgnitedCommunity ig = Main.LocalPlayer.armor[i].ModItem as IgnitedCommunity;
+                            if (ig.count < IgnitedCommunity.MaxLevel)
+                                ig.count++;
+                        }
+                    }
+                }
+            }
+        }
 
     }
+
 }

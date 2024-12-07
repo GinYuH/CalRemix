@@ -11,7 +11,6 @@ using CalamityMod.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Items.Placeables;
 using CalamityMod.Events;
-using CalRemix.Core.Biomes;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Content.Items.Placeables.Relics;
@@ -66,7 +65,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(6000, 8000, 300000);
+            NPC.LifeMaxNERB(3000, 4000, 150000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
@@ -218,8 +217,11 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                             // Spawn droplets in pairs, distance increasing with each pair
                             if (NPC.ai[3] % fireRate == 0)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X + NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X - NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X + NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X - NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
+                                }
                             }
                             NPC.velocity.Y *= 0.98f;
                             // Do the attack again in Death Mode, if it's been done twice or it's not Death Mode, go to the fire blender
@@ -260,10 +262,11 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                 // Shoot spinning flames around itself
                 case (int)PhaseType.FireBlender:
                     {
-                        int normalSpeed = 4; // Speed Carcinogen moves before shooting fire
-                        int fireSpeed = 2; // Speed Carcinogen moves while shooting fire
+                        float playerDistance = (NPC.Center - Target.Center).Length(); //Distance to the player (used for scaling speed)
+                        float normalSpeed = 4 * playerDistance / 300; // Speed Carcinogen moves before shooting fire
+                        float fireSpeed = 2 * playerDistance / 300; // Speed Carcinogen moves while shooting fire
                         int firePoints = death ? 5 : 4; // How many points of fire Carcinogen shoots out
-                        float fireProjSpeed = death ? 10 : rev ? 9 : 8; // Fire projectile speed, effectively range
+                        float fireProjSpeed = death ? 13 : rev ? 11 : 10; // Fire projectile speed, effectively range
                         float fireRateMultiplier = 0.02f; // Makes the spacing between the points sane
                         int projType = ProjectileID.Flames; // Burn baby burn!
                         NPC.ai[1]++;
@@ -291,11 +294,14 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                                 velocity = velocity.RotatedBy(variance * i + NPC.ai[1] * fireRateMultiplier);
                                 if (NPC.ai[2] == 1)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, projType, (int)(0.25f * NPC.damage), 0, Main.myPlayer);
-                                    Main.projectile[p].friendly = false;
-                                    Main.projectile[p].hostile = true;
-                                    Main.projectile[p].DamageType = DamageClass.Default;
-                                    Main.projectile[p].tileCollide = false;
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, projType, (int)(0.25f * NPC.damage), 0, Main.myPlayer);
+                                        Main.projectile[p].friendly = false;
+                                        Main.projectile[p].hostile = true;
+                                        Main.projectile[p].DamageType = DamageClass.Default;
+                                        Main.projectile[p].tileCollide = false;
+                                    }
                                 }
                                 else
                                 {
@@ -333,7 +339,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                         else if (NPC.ai[1] == spinTime)
                         {
                             SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             NPC.velocity = NPC.DirectionTo(Target.Center) * dashSpeed;
                             // Spawn a circle of cinders in M*ster mode
                             if (master)
@@ -345,7 +352,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                                 {
                                     Vector2 velocity = new Vector2(0f, cinderSpeed);
                                     velocity = velocity.RotatedBy(variance * i);
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<CigarCinder>(), (int)(0.25f * NPC.damage), 0, Main.myPlayer);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<CigarCinder>(), (int)(0.25f * NPC.damage), 0, Main.myPlayer);
                                 }
                             }
                         }
@@ -356,7 +364,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                             if (NPC.ai[1] % bombRate == 0)
                             {
                                 SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             }
                             // Change attack
                             if (NPC.ai[1] > phaseTime)
@@ -420,6 +429,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<CarcinogenBag>());
             npcLoot.AddNormalOnly(ModContent.ItemType<Asbestos>(), 1, 216, 224);
             npcLoot.AddNormalOnly(ModContent.ItemType<FiberBaby>());
+            npcLoot.AddNormalOnly(ModContent.ItemType<Chainsmoker>());
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofCarcinogen>());
             npcLoot.AddNormalOnly(ModContent.ItemType<CarcinogenMask>(), 7);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CarcinogenRelic>());

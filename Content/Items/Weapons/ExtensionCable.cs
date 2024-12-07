@@ -1,9 +1,6 @@
-﻿using CalamityMod;
-using CalamityMod.Items;
+﻿using CalamityMod.Items;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons

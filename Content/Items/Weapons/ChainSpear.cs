@@ -76,7 +76,6 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
                 AddIngredient(ItemID.Trident).
                 AddIngredient<YateveoBloom>().
-                AddIngredient<EssenceofZot>(10).
                 AddIngredient<CosmiliteBar>(5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();

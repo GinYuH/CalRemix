@@ -15,6 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using static Terraria.ModLoader.ModContent;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -34,7 +35,9 @@ namespace CalRemix.Content.Items.Accessories
             "You leave behind a trail of spores, toxic clouds, plague bees, and brine\n"+
             "Standing still generates an aura that slows enemies, and increases defense and life regen\n"+
             "All weapons have a chance to fire out mini birbs and miniature suns\n"+
-            "50% of the items stats are granted to team members"); 
+            "50% of the items stats are granted to team members");
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 10));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
         }
 
         public override void SetDefaults()

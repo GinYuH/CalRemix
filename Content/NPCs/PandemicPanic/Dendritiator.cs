@@ -26,8 +26,8 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             NPC.npcSlots = 1f;
             NPC.aiStyle = -1;
             NPC.damage = 120;
-            NPC.width = 34; //324
-            NPC.height = 34; //216
+            NPC.width = 62; //324
+            NPC.height = 62; //216
             NPC.defense = 5;
             NPC.lifeMax = 10000;
             NPC.knockBackResist = 0f;
@@ -35,8 +35,8 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             NPC.noTileCollide = true;
             AIType = -1;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
-            NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.HitSound;
-            NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadMedium.DeathSound;
+            NPC.HitSound = CalamityMod.NPCs.Perforator.PerforatorHeadLarge.HitSound;
+            NPC.DeathSound = CalamityMod.NPCs.Perforator.PerforatorHeadLarge.DeathSound;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 
@@ -81,7 +81,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 return true;
 
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Vector2 position = NPC.Center - Main.screenPosition;
+            Vector2 position = NPC.Center - Main.screenPosition + Vector2.UnitY * 22;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 8);
             Color color = NPC.GetAlpha(Color.Lime * 0.6f);
             Vector2 scale = Vector2.One;

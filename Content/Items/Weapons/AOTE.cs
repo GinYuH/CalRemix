@@ -1,29 +1,23 @@
 using CalRemix.Content.Items.Accessories;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons;
-
 public class AOTE : ModItem
 {
-    private static readonly SoundStyle UseSound = new("CalRemix/Assets/Sounds/AOTETeleport");
+    private static readonly SoundStyle UseSound = new SoundStyle("CalRemix/Assets/Sounds/AOTETeleport") with { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Aspect of the End");
         Tooltip.SetDefault("hi pixel");
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
-        ItemID.Sets.AnimatesAsSoul[Type] = true;
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.staff[Type] = true;
     }
-
     public override void SetDefaults()
     {
         Item.damage = 175;
-        Item.DamageType = DamageClass.MeleeNoSpeed;
+        Item.DamageType = DamageClass.Magic;
         Item.mana = 50;
         Item.width = 10;
         Item.height = 10;
@@ -33,14 +27,30 @@ public class AOTE : ModItem
         Item.knockBack = 6;
         Item.rare = ItemRarityID.Cyan;
         Item.value = Item.sellPrice(gold:30);
-        Item.UseSound = UseSound with { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        Item.UseSound = UseSound;
         Item.useTurn = true;
         Item.autoReuse = true;
-
+    }
+    public override bool AltFunctionUse(Player player) => true;
+    public override bool CanUseItem(Player player)
+    {
+        if (player.altFunctionUse != 2)
+        {
+            Item.UseSound = SoundID.Item1;
+            Item.mana = 0;
+            Item.useStyle = ItemUseStyleID.Swing;
+        }
+        else
+        {
+            Item.UseSound = UseSound;
+            Item.mana = 50;
+            Item.useStyle = ItemUseStyleID.Shoot;
+        }
+        return true;
     }
     public override bool? UseItem(Player player)
     {
-        if (player.whoAmI == Main.myPlayer && player.ItemAnimationJustStarted)
+        if (player.altFunctionUse == 2 && player.whoAmI == Main.myPlayer && player.ItemAnimationJustStarted)
             player.Center += player.DirectionTo(Main.MouseWorld) * 128f;
         return true;
     }

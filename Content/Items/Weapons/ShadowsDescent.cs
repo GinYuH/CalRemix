@@ -30,7 +30,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.width = 1;
 			Item.height = 1;
 			Item.rare = ModContent.RarityType<HotPink>();
-            Item.Calamity().devItem = true;
+            Item.Calamity().donorItem = true;
             Item.value = CalamityGlobalItem.RarityHotPinkBuyPrice;
             Item.useTime = 19; 
 			Item.useAnimation = 19;
@@ -89,7 +89,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ItemID.RazorbladeTyphoon).
                 AddIngredient(ItemID.DeathSickle).
                 AddIngredient<AscendantSpiritEssence>(3).
-                AddIngredient<ShadowspecBar>(5).
+                AddIngredient<AshesofAnnihilation>(5).
                 AddTile<DraedonsForge>().
                 Register();
         }

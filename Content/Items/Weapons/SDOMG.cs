@@ -16,7 +16,6 @@ namespace CalRemix.Content.Items.Weapons
 {
 	public class SDOMG : ModItem
 	{
-        private int spread = 0;
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
@@ -55,17 +54,7 @@ namespace CalRemix.Content.Items.Weapons
                 return false;
             return Main.rand.NextFloat() >= 0.75f;
         }
-        public override void UpdateInventory(Player player)
-        {
-            if (!player.channel)
-                spread = 0;
-            else if (spread < 600 && player.altFunctionUse != 2 && player.channel && (player.HeldItem == Item || player.inventory[58] == Item))
-                spread++;
-        }
-        public override bool AltFunctionUse(Player player)
-        {
-            return true;
-        }
+        public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
@@ -97,12 +86,9 @@ namespace CalRemix.Content.Items.Weapons
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (player.altFunctionUse != 2)
-                velocity = velocity.RotatedByRandom(MathHelper.ToRadians(75-(spread/10)));
+                velocity = velocity.RotatedByRandom(MathHelper.ToRadians(75-(player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer/10)));
         }
-        public override Vector2? HoldoutOffset()
-        {
-            return new Vector2(-2f, -2f);
-        }
+        public override Vector2? HoldoutOffset() => new Vector2(-2f, -2f);
         public override void AddRecipes()
         {
             CreateRecipe().

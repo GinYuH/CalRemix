@@ -4,11 +4,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalamityMod;
+using CalRemix.Content.NPCs.Bosses.Oxygen;
 
 namespace CalRemix
 {
     public class CalRemixWall : GlobalWall
     {
+        public override void SetStaticDefaults()
+        {
+            //TileID.Sets.HousingWalls[WallType<CryonicBrickWall>()] = false;
+            //Main.wallHouse[WallType<CryonicBrickWall>()] = false;
+        }
         public override void KillWall(int i, int j, int type, ref bool fail)
         {
             if (Main.LocalPlayer.InModBiome<AsbestosBiome>())
@@ -23,6 +30,16 @@ namespace CalRemix
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Carcinogen>());
+                            }
+                            else
+                            {
+                                ModPacket packet = CalRemix.CalMod.GetPacket();
+                                packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
+                                packet.Write(Main.LocalPlayer.position.X);
+                                packet.Write(Main.LocalPlayer.position.Y);
+                                packet.Write(NPCType<Carcinogen>());
+                                packet.Write(Main.myPlayer);
+                                packet.Send();
                             }
                         }
                     }

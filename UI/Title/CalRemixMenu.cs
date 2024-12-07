@@ -4,6 +4,7 @@ using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.UI.Title
@@ -80,10 +81,13 @@ namespace CalRemix.UI.Title
             }
 
             // Logo and Final Stuff
-            Main.dayTime = false;
-            Main.raining = false;
-            Main.UseStormEffects = false;
-            Main.time = Main.nightLength - (1800 * 3);
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.dayTime = false;
+                Main.raining = false;
+                Main.UseStormEffects = false;
+                Main.time = Main.nightLength - (1800 * 3);
+            }
             for (int i = 0; i < Main.cloud.Length; i++)
             {
                 Main.cloud[i].Alpha = 255;

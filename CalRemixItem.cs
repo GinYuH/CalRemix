@@ -51,14 +51,43 @@ using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Cooldowns;
 using CalamityMod.Items.Potions.Alcohol;
+using System;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Placeables.FurnitureAbyss;
+using CalRemix.UI;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
 
 namespace CalRemix
 {
     public class CalRemixItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
+        internal string devItem = string.Empty;
         public bool Scoriad = false;
         public int NonScoria = -1;
+        internal static List<int> Torch = new()
+        {
+            ItemID.RainbowTorch,
+            ItemID.UltrabrightTorch,
+            ItemID.IchorTorch,
+            ItemID.BoneTorch,
+            ItemID.CursedTorch,
+            ItemID.DemonTorch,
+            ItemID.IceTorch,
+            ItemID.JungleTorch,
+            ItemID.CrimsonTorch,
+            ItemID.CorruptTorch,
+            ItemID.HallowedTorch,
+            ItemID.Torch,
+            ItemType<AstralTorch>(),
+            ItemType<SulphurousTorch>(),
+            ItemType<GloomTorch>(),
+            ItemType<AbyssTorch>(),
+            ItemType<AlgalPrismTorch>(),
+            ItemType<NavyPrismTorch>(),
+            ItemType<RefractivePrismTorch>()
+        };
         private static readonly Dictionary<int, int> GemCrawl = new()
         {
             { ItemID.Ruby, NPCType<CrawlerRuby>() },
@@ -80,6 +109,7 @@ namespace CalRemix
             ItemType<SoulofHydrogen>(),
             ItemType<SoulofCryogen>(),
             ItemType<SoulofCarcinogen>(),
+            ItemType<SoulofPyrogen>(),
         };
 
         public override void SetDefaults(Item item)
@@ -103,6 +133,10 @@ namespace CalRemix
             else if (item.type == ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<TitanFinger>();
+            }
+            else if (item.type == ItemType<CosmiliteBar>())
+            {
+                item.rare = CalRemixWorld.cosmislag ? ItemRarityID.Purple : RarityType<DarkBlue>();
             }
             if (CalRemixWorld.fearmonger)
             {
@@ -285,18 +319,8 @@ namespace CalRemix
             }
             return true;
         }
-        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
-        {
-            if (player.GetModPlayer<CalRemixPlayer>().clockBar)
-                return Main.rand.NextFloat() >= 0.66f;
-            return true;
-        }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (item.type == ItemType<ClockGatlignum>())
-            {
-                player.GetModPlayer<CalRemixPlayer>().clockBar = true;
-            }
             if (CalRemixWorld.permanenthealth)
             {
                 if (item.type == ItemType<Elderberry>() && item.stack > 1)
@@ -334,6 +358,13 @@ namespace CalRemix
                         item.stack = stacke;
                         Scoriad = false;
                     }
+                }
+            }
+            if (item.type == ItemID.CellPhone)
+            {
+                if (!player.GetModPlayer<CalRemixPlayer>().gottenCellPhone)
+                {
+                    player.GetModPlayer<CalRemixPlayer>().gottenCellPhone = true;
                 }
             }
         }
@@ -431,6 +462,23 @@ namespace CalRemix
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
+            if (item.type == ItemType<CryoKey>() && item.lavaWet)
+            {
+                if (!NPC.AnyNPCs(NPCType<Pyrogen>()))
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
+                        int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
+                        NPC blug = Main.npc[n];
+                        blug.ModNPC<Pyrogen>().enrageCounter = 2222222;
+                        blug.ModNPC<Pyrogen>().ultraEnraged = true;
+                        SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
+                        SoundEngine.PlaySound(sound, blug.Center);
+                    }
+                    item.active = false;
+                }
+            }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -452,6 +500,14 @@ namespace CalRemix
             {
                 itemLoot.Add(ItemType<EssenceofBabil>(), 1, 5, 9);
             }
+            else if (item.type == ItemID.FishronBossBag)
+            {
+                itemLoot.Add(ItemType<DeliciousMeat>(), 2, 45, 92);
+            }
+            else if (item.type == ItemType<AstrumAureusBag>())
+            {
+                itemLoot.Add(ItemType<SoulofBright>(), 1, 10, 12);
+            }
             else if (item.type == ItemType<ProvidenceBag>())
             {
                 itemLoot.Add(ItemType<ProfanedNucleus>());
@@ -462,13 +518,14 @@ namespace CalRemix
                 itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 1, 3);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<CosmiliteBar>());
                 itemLoot.AddIf(()=> !CalRemixWorld.cosmislag, ItemType<CosmiliteBar>(), 1, 55, 65);
-
             }
             else if (item.type == ItemType<YharonBag>())
             {
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
                 yhar.Add(ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
                 yhar.AddFail(ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
+                itemLoot.Add(yhar);
+                itemLoot.Add(ItemType<MovieSign>(), 100);
             }
             else if (item.type == ItemType<CrabulonBag>())
             {
@@ -500,6 +557,7 @@ namespace CalRemix
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
                 yhar.Add(ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
                 yhar.AddFail(ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+                itemLoot.Add(yhar);
             }
             else if (item.type == ItemType<StarterBag>())
             {
@@ -646,13 +704,13 @@ namespace CalRemix
             // This is intentional
             //
             // I hate this so much
-            if (modplayer.origenSoul)
+            /*if (modplayer.origenSoul)
             {
                 if (genSouls.Contains(item.type))
                 {
                     player.statDefense += NPC.downedMoonlord ? 40 : Main.hardMode ? 8 : 4;
                 }
-            }
+            }*/
         }
 
         public override void OnConsumeItem(Item item, Player player)
@@ -724,6 +782,218 @@ namespace CalRemix
                     item.active = false;
                 }
             }
+        }
+
+        public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded)
+        {
+            if (item.type == ItemType<SoulofCryogen>())
+            {
+                return slot == GetInstance<SoulSlot>().Type;
+            }
+            else
+                return true;
+        }
+
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (devItem != string.Empty)
+            {
+                string text = CalamityUtils.ColorMessage("- Lightmix Dedicated Item ", Color.Crimson);
+                text += CalamityUtils.ColorMessage((devItem.Equals("Remix")) ? " " : $": {devItem} ", Color.Gold);
+                text += CalamityUtils.ColorMessage("-", Color.Crimson);
+                TooltipLine tip = new(Mod, "CalRemix:Dev", text);
+                tooltips.Add(tip);
+            }
+            if (CalRemixWorld.aspids)
+            {
+                if (item.type == ItemType<CryoKey>())
+                {
+                    var line = new TooltipLine(Mod, "CryoKeyRemix", "Drops from Primal Aspids");
+                    tooltips.Add(line);
+                }
+            }
+            if (CalRemixWorld.clamitas)
+            {
+                if (item.type == ItemType<EyeofDesolation>())
+                {
+                    var line = new TooltipLine(Mod, "EyeofDesolationRemix", "Drops from Clamitas");
+                    tooltips.Add(line);
+                }
+            }
+            if (CalRemixWorld.plaguetoggle)
+            {
+                if (item.type == ItemType<Abombination>())
+                {
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle");
+                    tooltips.FindAndReplace("the Jungle", "the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]");
+                }
+            }
+            if (CalRemixWorld.fearmonger)
+            {
+                if (item.type == ItemType<FearmongerGreathelm>())
+                {
+                    tooltips.FindAndReplace("+60 max mana and ", "");
+                    tooltips.FindAndReplace("20% increased summon damage and +2 max minions", "+1 max minions");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(Mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerPlateMail>())
+                {
+                    tooltips.FindAndReplace("+100 max life and ", "");
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(Mod, "FearmongerRemix", "+Set bonus: 1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+                if (item.type == ItemType<FearmongerGreaves>())
+                {
+                    for (int i = 0; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Text.Contains("Pumpkin"))
+                        {
+                            tooltips.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    tooltips.Add(new TooltipLine(Mod, "FearmongerRemix", "+Set bonus: +1 max minions\nThe minion damage nerf while wielding weaponry is reduced\nAll minion attacks grant regeneration"));
+                }
+            }
+            if (Torch.Contains(item.type))
+            {
+                var line = new TooltipLine(Mod, "TorchRemix", "Can be used as ammo for the Driftorcher");
+                line.OverrideColor = Color.OrangeRed;
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<PhantomicArtifact>())
+            {
+                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", "Judgement");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<GrandGelatin>())
+            {
+                var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<TheAbsorber>())
+            {
+                var line = new TooltipLine(Mod, "AbsorberRemix", "Your health is capped at 50% while the accessory is visable");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<TheSponge>())
+            {
+                var line = new TooltipLine(Mod, "SpongeRemix", "Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi\nYour health is capped at 50% while the accessory is visable");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<AmbrosialAmpoule>())
+            {
+                var line = new TooltipLine(Mod, "AmbrosiaRemix", "Effects of Honew Dew, and increased mining speed and defense while underground");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<AbyssalDivingGear>())
+            {
+                var line = new TooltipLine(Mod, "DivingGearRemix", "Pacifies all normal ocean enemies");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<AbyssalDivingSuit>())
+            {
+                var line = new TooltipLine(Mod, "DivingSuitRemix", "Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem\nReveals treasure while the accessory is visible");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<TheAmalgam>())
+            {
+                var line = new TooltipLine(Mod, "AmalgamRemix", "Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution\nYou passively rain down brimstone flames and leave behind a trail of gas and bees\nMana Overloader effect while the accessory is visible");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<DesertMedallion>())
+            {
+                var line = new TooltipLine(Mod, "MedallionRemix", "Drops from Cnidrions after defeating the Wulfrum Excavator");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<HadalStew>())
+            {
+                var line = new TooltipLine(Mod, "HadalStewRemix", "Grants a handful of combat buffs");
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<SoulofCryogen>())
+            {
+                var line = new TooltipLine(Mod, "SoulofCryogenRemix", CalamityUtils.ColorMessage("Boosts Cold damage", Color.LightSkyBlue));
+                tooltips.Add(line);
+            }
+            if (item.type == ItemType<MetalMonstrosity>())
+            {
+                int idx = -1;
+                for (int i = 0; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Name == "Tooltip0")
+                    {
+                        idx = i;
+                    }
+                    if (tooltips[i].Text.Contains("hurt"))
+                    {
+                        tooltips.RemoveAt(i);
+                    }
+                }
+
+                var line = new TooltipLine(Mod, "MetalMonstrosityRemix", "'Just looking at it makes you feel ill...'");
+                tooltips.Insert(idx, line);
+            }
+            if (CalRemixPlayer.dyeStats.ContainsKey(item.type) && CalRemixWorld.dyeStats)
+            {
+                DyeStats stats = CalRemixPlayer.dyeStats[item.type];
+                string ret = "";
+                if (stats.red != 0)
+                    ret += $"[c/ff0000:Damage " + WhichIncrement(stats.red) + " by " + Math.Abs(stats.red) + "%]\n";
+                if (stats.orange != 0)
+                    ret += $"[c/ffa200:Weapon speed " + WhichIncrement(stats.orange) + " by " + Math.Abs(stats.orange) + "%]\n";
+                if (stats.yellow != 0)
+                    ret += $"[c/ffff00:Movement speed " + WhichIncrement(stats.yellow) + " by " + Math.Abs(stats.yellow) + "%]\n";
+                if (stats.lime != 0)
+                    ret += $"[c/a2ff00:Luck " + WhichIncrement(stats.lime) + " by " + Math.Abs(stats.lime) + "]\n";
+                if (stats.green != 0)
+                    ret += $"[c/00ff00:Jump speed " + WhichIncrement(stats.green) + " by " + Math.Abs(stats.green) + "%]\n";
+                if (stats.cyan != 0)
+                    ret += $"[c/00ffff:Critical strike chance " + WhichIncrement(stats.cyan) + " by " + Math.Abs(stats.cyan) + "%]\n";
+                if (stats.teal != 0)
+                    ret += $"[c/008080:Damage reduction " + WhichIncrement(stats.teal) + " by " + Math.Abs(stats.teal) + "%]\n";
+                if (stats.skyblue != 0)
+                    ret += $"[c/66a3ff:Flight time " + WhichIncrement(stats.skyblue) + " by " + Math.Abs(stats.skyblue) * 10 + "]\n";
+                if (stats.blue != 0)
+                    ret += $"[c/0000ff:Defense " + WhichIncrement(stats.blue) + " by " + Math.Abs(stats.blue) + "]\n";
+                if (stats.purple != 0)
+                    ret += $"[c/9400cf:Weapon knockback " + WhichIncrement(stats.purple) + " by " + Math.Abs(stats.purple) + "%]\n";
+                if (stats.violet != 0)
+                    ret += $"[c/ff00b7:Enemy aggro " + WhichIncrement(stats.violet) + " by " + Math.Abs(stats.violet) + "]\n";
+                if (stats.pink != 0)
+                    ret += $"[c/ff45a2:Life regeneration " + WhichIncrement(stats.pink) + " by " + Math.Abs(stats.pink) + "]\n";
+                if (stats.brown != 0)
+                    ret += $"[c/7a4b00:Building range " + WhichIncrement(stats.brown) + " by " + Math.Abs(stats.brown) + "]\n";
+                if (stats.silver != 0)
+                    ret += $"[c/ffffff:Charisma " + WhichIncrement(stats.silver) + " by " + Math.Abs(stats.silver) + "]\n";
+                if (stats.black != 0)
+                    ret += $"[c/000000:Evil " + WhichIncrement(stats.black) + " by " + Math.Abs(stats.black) + "]\n";
+                tooltips.Add(new TooltipLine(Mod, "DyeStats", ret));
+            }
+        }
+
+        public string WhichIncrement(int stat)
+        {
+            if (stat > 0)
+                return "increased";
+            else if (stat < 0)
+                return "decreased";
+            else
+                return "not changed";
         }
     }
 }

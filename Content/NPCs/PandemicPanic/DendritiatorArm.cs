@@ -4,6 +4,7 @@ using CalamityMod.Graphics.Primitives;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -37,11 +38,36 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             NPC.HitSound = SoundID.NPCHit7;
             NPC.DeathSound = SoundID.NPCDeath8;
             NPC.aiStyle = -1;
+            NPC.netAlways = true;
             AIType = -1;
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToElectricity = false;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            foreach (var v in Segments)
+            {
+                writer.Write(v.position.X);
+                writer.Write(v.position.Y);
+                writer.Write(v.locked);
+                writer.Write(v.oldPosition.X);
+                writer.Write(v.oldPosition.Y);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            List<VerletSimulatedSegment> segs = new List<VerletSimulatedSegment>();
+            for (int i = 0; i < 30; i++)
+            {
+                VerletSimulatedSegment v = new VerletSimulatedSegment(new Vector2(reader.ReadSingle(), reader.ReadSingle()), reader.ReadBoolean());
+                v.oldPosition = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+                segs.Add(v);
+            }
+            Segments = segs;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -62,6 +88,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
+            if (Segments != null)
             for (int i = segmentCount - 1; i > 5; i--)
             {
                 if (target.getRect().Intersects(new Rectangle((int)Segments[i].position.X, (int)Segments[i].position.Y, 10, 10)))
@@ -109,6 +136,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 NPC.velocity = NPC.DirectionTo(gotoe) * 16;
                 NPC.ai[2] = 0;
                 NPC.ai[3] = Main.rand.Next(120, 240);
+                NPC.netUpdate = true;
             }
 
             if (Collision.IsWorldPointSolid(NPC.Center) || Main.tile[(int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)].WallType > 0 || NPC.Distance(phyto.Center) > maxDist)
@@ -116,15 +144,18 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 if (NPC.ai[2] > 60)
                 {
                     NPC.velocity = Vector2.Zero;
+                    NPC.netUpdate = true;
                 }
                 else if (Collision.IsWorldPointSolid(NPC.Center))
                 {
                     NPC.velocity = NPC.DirectionTo(gotoe) * 16;
+                    NPC.netUpdate = true;
                 }
             }
             if (NPC.Distance(NPC.Center) > maxDist)
             {
                 NPC.velocity = NPC.DirectionTo(NPC.Center) * 16;
+                NPC.netUpdate = true;
             }
         }
 

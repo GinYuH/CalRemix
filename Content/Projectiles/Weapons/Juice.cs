@@ -1,10 +1,6 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

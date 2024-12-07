@@ -19,25 +19,26 @@ namespace CalRemix.Content.Projectiles
             AIType = ProjectileID.BulletHighVelocity;
             Projectile.tileCollide = false;
             Projectile.penetrate = 22;
-            Projectile.timeLeft = 2222;
+            Projectile.timeLeft = 222;
         }
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
             hitlist.Add(target.whoAmI);
             Projectile.Center = target.Center;
             NPC npc = target;
+            float curDist = 100000;
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC newTarget = Main.npc[i];
-                if (newTarget != npc && newTarget != null && !hitlist.Contains(newTarget.whoAmI) && newTarget.chaseable && !newTarget.friendly)
+                if (newTarget != npc && newTarget != null && !hitlist.Contains(newTarget.whoAmI) && newTarget.chaseable && !newTarget.friendly && newTarget.Distance(Projectile.Center) < curDist)
                 {
+                    curDist = newTarget.Distance(Projectile.Center);
                     npc = newTarget;
-                    break;
                 }
             }
             if (npc != null && npc != target && npc.active)
             {
-                Projectile.velocity = npc.velocity + Projectile.DirectionTo(npc.Center) * 22f;
+                Projectile.velocity = npc.velocity + Projectile.Center.DirectionTo(npc.Center) * 22f;
             }
         }
     }
