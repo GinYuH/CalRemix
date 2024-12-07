@@ -29,7 +29,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public bool canAfford = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Brimstone Clone");
+            DisplayName.SetDefault("Archseer");
             Main.npcFrameCount[NPC.type] = 28;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 4;
@@ -77,8 +77,8 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement("The conflicted remnants of an attempt to replicate a witch's power. The unholy nature of its magic drew a powerful construct to ensnare it, and the chaotic energies within managed to restore some level of function to its mind. Now confused and aimless, it quietly wanders the night, hoping to find a purpose in a world that's scorned it from the beginning.")
-                //new FlavorTextBestiaryInfoElement("A very tempered and collected individual. Despite the wild nature of fire, she holds a very cold and collected attitude. Some say this is to help better control the flames. She, alongside Permafrost were at the forefront of the armada's offense against Yharim's armies. Working together, two polarizing elements combine to shatter the target, and nothing could withstand temperature shock. No matter the machine, they would eventually break through with enough time and support. It would take a devil of a machine to quell them. Maybe even multiple.")
+                //new FlavorTextBestiaryInfoElement("The conflicted remnants of an attempt to replicate a witch's power. The unholy nature of its magic drew a powerful construct to ensnare it, and the chaotic energies within managed to restore some level of function to its mind. Now confused and aimless, it quietly wanders the night, hoping to find a purpose in a world that's scorned it from the beginning.")
+                new FlavorTextBestiaryInfoElement("A very tempered and collected individual. Despite the wild nature of fire, she holds a very cold and collected attitude. Some say this is to help better control the flames. She, alongside Permafrost were at the forefront of the armada's offense against Yharim's armies. Working together, two polarizing elements combine to shatter the target, and nothing could withstand temperature shock. No matter the machine, they would eventually break through with enough time and support. It would take a devil of a machine to quell them. Maybe even multiple.")
             });
         }
 

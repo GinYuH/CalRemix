@@ -41,6 +41,7 @@ using CalamityMod.Items.Weapons.Ranged;
 using rail;
 using CalRemix.UI.ElementalSystem;
 using CalRemix.Content.Projectiles.Weapons;
+using CalamityMod.NPCs.Cryogen;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -245,6 +246,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             return false;
         }
 
+        public override void BossHeadSlot(ref int index)
+        {
+            if (Main.zenithWorld)
+                index = Cryogen.cryoIconIndex;
+        }
+
         public override void AI()
         {
             NPC.TargetClosest();
@@ -296,7 +303,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
             if (biomeEnrageTimer <= 0 && !biomeEnraged) {
                 biomeEnraged = true;
-                SoundEngine.PlaySound(sound, NPC.Center);
+                SoundEngine.PlaySound(EnrageSound, NPC.Center);
             }
 
 
@@ -1348,9 +1355,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             Main.EntitySpriteDraw(additiveTx, pos, null, white with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             if (enrageCounter > 0) { 
                 if (FireDrawer is null || FireDrawer.LocalTimer >= FireDrawer.SetLifetime)
-                    FireDrawer = new FireParticleSet(int.MaxValue, 1, Main.zenithWorld ? Color.White : Color.Red * 1.25f, Main.zenithWorld ? Color.Cyan : Color.Red, 22, 10);
+                    FireDrawer = new FireParticleSet(int.MaxValue, 1, Main.zenithWorld ? Color.White : Color.Red * 1.25f, Main.zenithWorld ? Color.Cyan : Color.Red, 200, 3);
                 else
-                    FireDrawer.DrawSet(NPC.Bottom - Vector2.UnitY * (12f - NPC.gfxOffY));
+                    FireDrawer.DrawSet(NPC.Bottom - Vector2.UnitY * (4f - NPC.gfxOffY));
             }
             return false;
         }
@@ -1408,14 +1415,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPyrogen>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgePyrogen>(), desc: DropHelper.FirstKillText);
-            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgeClone>(), desc: DropHelper.FirstKillText);
         }
 
         public override void OnKill()
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
+            if (!NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EDGY>());
+                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WITCH>());
             }
             RemixDowned.downedPyrogen = true;
             CalRemixWorld.UpdateWorldBool();
