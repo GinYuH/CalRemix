@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -56,7 +57,23 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.DeathSound = DeathSound;
             NPC.DR_NERD(0.9f);
             NPC.defense = 60;
+            NPC.netAlways = true;
             NPC.LifeMaxNERB(220000, 242000, 842000); ;
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Calamity().newAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            stopAi1 = reader.ReadBoolean();
+
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Calamity().newAI[0]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(stopAi1);
         }
 
         public override void AI()
@@ -64,6 +81,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             Lighting.AddLight(NPC.Center, TorchID.Red);
             NPC pyro = Main.npc[(int)NPC.ai[0]];
             NPC.dontTakeDamage = false;
+            if (NPC.localAI[0] % 60 == 0)
+            {
+                NPC.netUpdate = true;
+            }
             if (pyro.active && pyro.type == ModContent.NPCType<Pyrogen>())
             {
                 NPC.Calamity().newAI[0] = pyro.ai[0];
@@ -76,7 +97,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.localAI[1] += 5f;
                             float distance = 50;
                             distance += pyro.width >= pyro.height ? pyro.width : pyro.height;
-                            double deg = 24 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double deg = 24 * NPC.ai[1] + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
@@ -93,7 +114,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float distance = MathHelper.Clamp(MathHelper.Lerp(50, maxDist, pyro.ai[2] / Pyrogen.BlackholeSafeTime), 50, maxDist);
                             distance += pyro.width >= pyro.height ? pyro.width : pyro.height;
 
-                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly * 660 + NPC.localAI[1];
+                            double deg = 22.5 * NPC.ai[1] + 660 * NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 4;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 4;
@@ -137,7 +158,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.dontTakeDamage = true;
                             NPC.localAI[1] += 8f;
                             float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
-                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double deg = 22.5 * NPC.ai[1] + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
@@ -151,7 +172,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.damage = 0;
                             NPC.localAI[1] += 8f;
                             float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
-                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double deg = 22.5 * NPC.ai[1] + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
@@ -165,7 +186,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.damage = 220;
                             NPC.localAI[1] += 8f;
                             float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
-                            double deg = 22.5 * NPC.ai[1] + Main.GlobalTimeWrappedHourly + NPC.localAI[1];
+                            double deg = 22.5 * NPC.ai[1] + NPC.localAI[1];
                             double rad = deg * (Math.PI / 180);
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;

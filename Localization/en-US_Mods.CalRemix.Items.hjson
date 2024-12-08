@@ -2849,8 +2849,3 @@ RetromansPowerStar: {
 }
 
 KnowledgeClone.DisplayName: The Archseer
-
-SylvanSlasher: {
-	DisplayName: Sylvan Slasher
-	Tooltip: "Enemy hits restore stealth"
-}

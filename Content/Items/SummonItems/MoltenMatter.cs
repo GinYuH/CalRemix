@@ -43,15 +43,12 @@ namespace CalRemix.Content.Items.SummonItems
         }
         public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer)
-            {
-                SoundEngine.PlaySound(SoundID.Roar, player.position);
-                int type = ModContent.NPCType<Pyrogen>();
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-            }
+            SoundEngine.PlaySound(SoundID.Roar, player.position);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<Pyrogen>());
+            else
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, player.whoAmI, ModContent.NPCType<Pyrogen>());
+
             return true;
         }
 

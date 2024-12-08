@@ -15,7 +15,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-            Main.instance.LoadProjectile(ProjectileID.DeerclopsRangedProjectile);
+            if (!Main.dedServ)
+                Main.instance.LoadProjectile(ProjectileID.DeerclopsRangedProjectile);
         }
         public override void SetDefaults()
         {
