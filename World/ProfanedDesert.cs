@@ -23,6 +23,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Tiles;
 using Terraria.Audio;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.World
 {
@@ -186,7 +187,7 @@ namespace CalRemix.World
 
 
             int noiseSeed = WorldGen.genRand.Next(0, int.MaxValue);
-            int baseHeight = 400;
+            int baseHeight = (int)Main.worldSurface;
             ushort groundType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
             ushort surfaceType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
             ushort crystalType = (ushort)ModContent.TileType<CalamityMod.Tiles.FurnitureProfaned.ProfanedCrystal>();
@@ -240,7 +241,7 @@ namespace CalRemix.World
             //Frame the tiles at the surface
             for (int i = 0; i < Main.maxTilesX; i++)
             {
-                for (int j = baseHeight - 50; j < baseHeight + 150; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < baseHeight + 150; j++)
                 {
                     WorldGen.TileFrame(i, j, true);
 
@@ -253,7 +254,7 @@ namespace CalRemix.World
             {
                 int x = WorldGen.genRand.Next(5, Main.maxTilesX - 5);
 
-                for (int j = baseHeight - 50; j < baseHeight + 150; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < baseHeight + 150; j++)
                 {
                     if (Main.tile[x, j].HasTile)
                     {
@@ -300,7 +301,7 @@ namespace CalRemix.World
             {
                 int x = WorldGen.genRand.Next(5, Main.maxTilesX - 5);
 
-                for (int j = baseHeight - 50; j < baseHeight + 150; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < baseHeight + 150; j++)
                 {
                     if (Main.tile[x, j].HasTile && Main.tile[x, j].TileType == (ushort)ModContent.TileType<TorrefiedTephraPlaced>() && !Main.tile[x, j - 1].HasTile)
                     {
@@ -329,6 +330,7 @@ namespace CalRemix.World
         public override void LoadWorldData(TagCompound tag)
         {
             gotJumpscared = false;
+            scorchedWorld = false;
             if (tag.TryGet("GotProfanedDesertJumpscare", out bool jumpscared))
                 gotJumpscared = jumpscared;
             if (tag.TryGet("ScorchedWorld", out bool scrch))
@@ -344,6 +346,7 @@ namespace CalRemix.World
         public override void ClearWorld()
         {
             duplicateWorldStatus = default;
+            flashTimer = -1;
             //saveWorldStatus = default;
         }
         #endregion
