@@ -2849,3 +2849,23 @@ RetromansPowerStar: {
 }
 
 KnowledgeClone.DisplayName: The Archseer
+
+SylvanSlasher: {
+	Tooltip: Restores stealth on hit
+	DisplayName: Sylvan Slasher
+}
+
+IrateJelly: {
+	Tooltip: Activating Rage will deal 50% of your max health as damage
+	DisplayName: Irate Jelly
+}
+
+InvigoratingJelly: {
+	Tooltip: Activating Adrenaline will defile your soul
+	DisplayName: Invigorating Jelly
+}
+
+ElasticJelly: {
+	Tooltip: Increases wing flight time by 10%
+	DisplayName: Elastic Jelly
+}

@@ -530,6 +530,9 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<GrandGelatin>()))
                 {
                     recipe.AddIngredient<MirageJellyItem>();
+                    recipe.AddIngredient<ElasticJelly>();
+                    recipe.AddIngredient<IrateJelly>();
+                    recipe.AddIngredient<InvigoratingJelly>();
                 }
                 if (recipe.HasResult(ItemType<TheAbsorber>()))
                 {

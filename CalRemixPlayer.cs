@@ -115,7 +115,6 @@ namespace CalRemix
         public bool arcanumHands;
         public bool marnite;
         public bool roguebox;
-        public bool miragel;
         public bool godfather;
         public bool tvo;
         public bool nuclegel;
@@ -133,6 +132,11 @@ namespace CalRemix
         public bool invGar;
         public int VerbotenMode = 1;
         public bool retroman = false;
+
+        public bool miragel;
+        public bool elastigel;
+        public bool invigel;
+        public bool irategel;
 
         public int timeSmoked;
         public bool carcinogenSoul;
@@ -396,6 +400,10 @@ namespace CalRemix
                     Player.AddCooldown("InfraredSights", 3600);
                 }
 			}
+            if (CalamityKeybinds.RageHotKey.JustPressed && Player.Calamity().rage >= Player.Calamity().rageMax && irategel)
+            {
+                Player.Hurt(new PlayerDeathReason(), Player.statLifeMax2 / 2, 0);
+            }
         }
 
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
@@ -774,6 +782,19 @@ namespace CalRemix
 				StealthCut(0.05f);
             }
             #endregion
+
+            if (elastigel)
+            {
+                Player.wingTimeMax = (int)(Player.wingTimeMax * 1.1);
+            }
+
+            if (invigel)
+            {
+                if (calplayer.adrenalineModeActive)
+                {
+                    Player.wingTime = 0;
+                }
+            }
         }
         public override void ResetEffects()
 		{
@@ -794,6 +815,9 @@ namespace CalRemix
 			halEffigy = false;
 			nothing = false;
 			miragel = false;
+            elastigel = false;
+            invigel = false;
+            irategel = false;
 			nuclegel = false;
 			assortegel = false;
 			amalgel = false;

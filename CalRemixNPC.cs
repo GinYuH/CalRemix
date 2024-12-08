@@ -771,6 +771,18 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<CosmicStone>(), 20, 10));
             }
+            if (npc.type == NPCID.BloodJelly)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<IrateJelly>(), 7, 5));
+            }
+            if (npc.type == NPCType<BoxJellyfish>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<ElasticJelly>(), 7, 5));
+            }
+            if (npc.type == NPCType<CannonballJellyfish>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<InvigoratingJelly>(), 7, 5));
+            }
             #endregion
             #region Hardmode
             if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)

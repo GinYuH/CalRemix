@@ -637,6 +637,9 @@ namespace CalRemix
             if (item.type == ItemType<GrandGelatin>())
             {
                 modplayer.miragel = true;
+                modplayer.elastigel = true;
+                modplayer.irategel = true;
+                modplayer.invigel = true;
             }
             if (item.type == ItemType<TheAbsorber>())
             {
@@ -644,6 +647,10 @@ namespace CalRemix
                 {
                     calplayer.regenator = true;
                 }
+
+                modplayer.elastigel = true;
+                modplayer.invigel = true;
+                modplayer.irategel = true;
             }
             if (item.type == ItemType<TheSponge>() || item.type == ItemType<TheGodfather>() || item.type == ItemType<TheVerbotenOne>())
             {
@@ -658,6 +665,10 @@ namespace CalRemix
                 GetModItem(ItemType<FlameLickedShell>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<PermafrostsConcoction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticHeart>()).UpdateAccessory(player, hideVisual);
+
+                modplayer.elastigel = true;
+                modplayer.invigel = true;
+                modplayer.irategel = true;
             }
             if (item.type == ItemType<AmbrosialAmpoule>() || item.type == ItemType<TheVerbotenOne>())
             {
@@ -883,6 +894,12 @@ namespace CalRemix
             if (item.type == ItemType<GrandGelatin>())
             {
                 var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
+                tooltips.Add(line);
+                line = new TooltipLine(Mod, "GrandGelatinRemix", "Increases wing flight time by 10%");
+                tooltips.Add(line);
+                line = new TooltipLine(Mod, "GrandGelatinRemix", "Activating Rage will deal 50% of your health as damage");
+                tooltips.Add(line);
+                line = new TooltipLine(Mod, "GrandGelatinRemix", "Activating Adrenaline will defile your soul");
                 tooltips.Add(line);
             }
             if (item.type == ItemType<TheAbsorber>())
