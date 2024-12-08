@@ -187,7 +187,7 @@ namespace CalRemix.World
 
 
             int noiseSeed = WorldGen.genRand.Next(0, int.MaxValue);
-            int baseHeight = (int)Main.worldSurface;
+            int baseHeight = (int)Main.worldSurface - 50;
             ushort groundType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
             ushort surfaceType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
             ushort crystalType = (ushort)ModContent.TileType<CalamityMod.Tiles.FurnitureProfaned.ProfanedCrystal>();
@@ -329,8 +329,6 @@ namespace CalRemix.World
         }
         public override void LoadWorldData(TagCompound tag)
         {
-            gotJumpscared = false;
-            scorchedWorld = false;
             if (tag.TryGet("GotProfanedDesertJumpscare", out bool jumpscared))
                 gotJumpscared = jumpscared;
             if (tag.TryGet("ScorchedWorld", out bool scrch))
@@ -347,6 +345,8 @@ namespace CalRemix.World
         {
             duplicateWorldStatus = default;
             flashTimer = -1;
+            gotJumpscared = false;
+            scorchedWorld = false;
             //saveWorldStatus = default;
         }
         #endregion

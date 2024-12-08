@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace CalRemix.Core.Backgrounds
 {
@@ -6,7 +7,7 @@ namespace CalRemix.Core.Backgrounds
     {
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
-            b -= 1650f;
+            b -= WorldGen.GetWorldSize() == 2 ? 950f : 700f;
             return BackgroundTextureLoader.GetBackgroundSlot("CalRemix/Core/Backgrounds/ProfanedDesertBG");
         }
 
