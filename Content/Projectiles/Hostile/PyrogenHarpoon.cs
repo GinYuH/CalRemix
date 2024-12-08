@@ -233,11 +233,12 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D reelTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonHit").Value;
-            Texture2D endTexture = AttackTime > 60 ? reelTexture : TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D chainTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonChain").Value;
+            Texture2D baseTexture = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/CryogenHarpoon").Value : TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D reelTexture = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/CryogenHarpoonHit").Value : ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonHit").Value;
+            Texture2D endTexture = AttackTime > 60 ? reelTexture : baseTexture;
+            Texture2D chainTexture = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/CryoHarpoonChain").Value : ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonChain").Value;
 
-            Color color = Main.zenithWorld ? Color.Blue : lightColor;
+            Color color = lightColor;
             NPC phyto = Main.npc[(int)NPCIndex];
             if (phyto == null || !phyto.active || phyto.type != ModContent.NPCType<Pyrogen>())
             {

@@ -952,10 +952,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.active = false;
                             NPC.netUpdate = true;
                             NPC.justHit = true;
-                            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Pyrogen1").Type, 1f);
-                            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Pyrogen2").Type, 1f);
-                            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Pyrogen3").Type, 1f);
-                            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Pyrogen4").Type, 1f);
+                            string path = Main.zenithWorld ? "CryogenGore" : "Pyrogen";
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>(path + i).Type, 1f);
+                            }
                             SoundStyle sound = DeathSound;
                             SoundEngine.PlaySound(sound, NPC.Center);
                         }
