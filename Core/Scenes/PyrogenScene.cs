@@ -13,7 +13,7 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<Pyrogen>()))
+            if (NPC.AnyNPCs(ModContent.NPCType<Pyrogen>()) && !Main.zenithWorld)
             {
                 NPC npc = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Pyrogen>())];
                 if (npc.ModNPC<Pyrogen>().phase2 || !npc.ModNPC<Pyrogen>().phase2 && npc.ModNPC<Pyrogen>().Phase == (int)PyroPhaseType.Transitioning)
