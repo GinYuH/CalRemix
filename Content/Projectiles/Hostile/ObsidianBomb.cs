@@ -39,9 +39,10 @@ namespace CalRemix.Content.Projectiles.Hostile
                 ProjCircle(14, 0.67f * Count);
             if (CalamityWorld.revenge)
                 ProjCircle(10, 0.33f * Count);
+            int dust = Main.zenithWorld ? DustID.SnowBlock : DustID.Obsidian;
             for (int i = 0; i < 300; i++)
             {
-                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Obsidian, Scale: Main.rand.NextFloat(1, 5));
+                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dust, Scale: Main.rand.NextFloat(1, 5));
                 Main.dust[d].velocity = (Main.dust[d].position - Projectile.Center).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(4, 22);
             }
         }
@@ -55,10 +56,15 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-            //Main.EntitySpriteDraw(texture, centered, null, lightColor, 0, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
-            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4);
+            Texture2D texture = Main.zenithWorld ? TextureAssets.Projectile[ProjectileID.DeerclopsRangedProjectile].Value : TextureAssets.Projectile[Type].Value;
+            if (Main.zenithWorld)
+            {
+                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, texture.Frame(3, 4, 0, 3), lightColor, Projectile.rotation, texture.Size() / 8, 5f, 0, 0);
+            }
+            else
+            {
+                CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4);
+            }
             return false;
         }
     }

@@ -1089,6 +1089,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 NPC.position = NPC.position - NPC.DirectionTo(Target.Center) * 40;
             }
 
+            int dust = Main.zenithWorld ? DustID.SnowBlock : DustID.Obsidian;
             // eat shards that come in contact
             foreach (Projectile p in Main.ActiveProjectiles)
             {
@@ -1099,7 +1100,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         SoundEngine.PlaySound(BetterSoundID.ItemExplosion, NPC.Center);
                         for (int i = 0; i < 25; i++)
                         {
-                            int d = Dust.NewDust(p.position, p.width, p.height, DustID.Obsidian, Scale: Main.rand.NextFloat(1f, 2f));
+                            int d = Dust.NewDust(p.position, p.width, p.height, dust, Scale: Main.rand.NextFloat(1f, 2f));
                             Main.dust[d].velocity = (Main.dust[d].position - p.Center).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(2, 4);
                             Main.dust[d].noGravity = true;
                         }
