@@ -1013,7 +1013,7 @@ namespace CalRemix.Core.World
             strongholdTiles = tileCounts[TileType<FrostflakeBrickPlaced>()] + tileCounts[TileType<CryonicBrick>()];
             baronTiles = tileCounts[TileType<BrinerackPlaced>()] + tileCounts[TileType<TanzaniteGlassPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()] + tileCounts[TileType<BaronsandPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
-            Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
+            Main.SceneMetrics.SandTileCount += PlagueDesertTiles + tileCounts[TileType<TorrefiedTephraPlaced>()];
             CalamityMod.Systems.BiomeTileCounterSystem.SunkenSeaTiles += tileCounts[TileType<NavystoneSafe>()] + tileCounts[TileType<SeaPrismSafe>()] + tileCounts[TileType<EutrophicSandSafe>()] + tileCounts[TileType<HardenedEutrophicSandSafe>()];
             aeroplateTiles = tileCounts[TileType<AeroplateTile>()];
             bloodplateTiles = tileCounts[TileType<BloodplateTile>()];
@@ -1023,6 +1023,7 @@ namespace CalRemix.Core.World
             elumplateTiles = tileCounts[TileType<Elumplate>()];
             navyplateTiles = tileCounts[TileType<Navyplate>()];
             plagueplateTiles = tileCounts[TileType<PlagueContainmentCells>()];
+            Main.SceneMetrics.HolyTileCount += tileCounts[TileType<TorrefiedTephraPlaced>()];
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
