@@ -19,6 +19,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public static Asset<Texture2D> BloomTexture = null;
         public static Asset<Texture2D> Glow = null;
 
+        public static Asset<Texture2D> TextureC = null;
+        public static Asset<Texture2D> BloomTextureC = null;
+        public static Asset<Texture2D> GlowC = null;
+
         public bool ShouldHide => NPC.Calamity().newAI[0] == 4 || NPC.Calamity().newAI[0] == 7 || NPC.Calamity().newAI[0] == 8;
 
         public override void SetStaticDefaults()
@@ -29,6 +33,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 BloomTexture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenShieldAura");
                 Glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenShield_Glow");
+
+                TextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenShield");
+                BloomTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenShieldAura");
+                GlowC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenShield_Glow");
             }
             this.HideFromBestiary();
         }
@@ -203,13 +211,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             if (ShouldHide)
                 return false;
-            Color color = Main.zenithWorld ? Color.Cyan : drawColor;
-            Color white = Main.zenithWorld ? Color.Cyan : Color.White;
-            Texture2D sprite = TextureAssets.Npc[NPC.type].Value;
+            Color color = drawColor;
+            Color white = Color.White;
+            Texture2D sprite = Main.zenithWorld ? TextureC.Value : TextureAssets.Npc[NPC.type].Value;
             Vector2 npcOffset = NPC.Center - screenPos;
-            spriteBatch.Draw(BloomTexture.Value, npcOffset, NPC.frame, white with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Main.zenithWorld ? BloomTextureC.Value : BloomTexture.Value, npcOffset, NPC.frame, white with { A = 0 }, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
             spriteBatch.Draw(sprite, npcOffset, NPC.frame, NPC.GetAlpha(color), NPC.rotation, new Vector2(sprite.Width /2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Glow.Value, npcOffset, NPC.frame, white, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Main.zenithWorld ? GlowC.Value : Glow.Value, npcOffset, NPC.frame, white, NPC.rotation, new Vector2(sprite.Width / 2, sprite.Height / 12), 1f, SpriteEffects.None, 0);
             //spriteBatch.EnterShaderRegion(BlendState.Additive);
             //spriteBatch.ExitShaderRegion();
             return false;

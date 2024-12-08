@@ -119,6 +119,18 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public static Asset<Texture2D> Glowmask2;
         public static Asset<Texture2D> BloomExtra;
 
+        public static Asset<Texture2D> Phase1TextureC;
+        public static Asset<Texture2D> Phase2TextureC;
+        public static Asset<Texture2D> AdditiveTextureC;
+        public static Asset<Texture2D> AdditiveTexture2C;
+        public static Asset<Texture2D> BloomTextureC;
+        public static Asset<Texture2D> BloomTexture2C;
+        public static Asset<Texture2D> RingTextureC;
+        public static Asset<Texture2D> RingBloomTextureC;
+        public static Asset<Texture2D> GlowmaskC;
+        public static Asset<Texture2D> Glowmask2C;
+        public static Asset<Texture2D> BloomExtraC;
+
         public static int cryoIconIndex;
         public static int pyroIconIndex;
         public float lifeRatio => NPC.life / (float)NPC.lifeMax;
@@ -156,6 +168,18 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 Glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase1_Glow", AssetRequestMode.AsyncLoad);
                 Glowmask2 = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase2_Glow", AssetRequestMode.AsyncLoad);
                 BloomExtra = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenBloomExtra", AssetRequestMode.AsyncLoad);
+
+                Phase1TextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase1", AssetRequestMode.AsyncLoad);
+                Phase2TextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase2", AssetRequestMode.AsyncLoad);
+                AdditiveTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenAdditive", AssetRequestMode.AsyncLoad);
+                AdditiveTexture2C = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenAdditive2", AssetRequestMode.AsyncLoad);
+                BloomTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenBloom1", AssetRequestMode.AsyncLoad);
+                BloomTexture2C = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenBloom2", AssetRequestMode.AsyncLoad);
+                RingTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenRing", AssetRequestMode.AsyncLoad);
+                RingBloomTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenRingAdditive", AssetRequestMode.AsyncLoad);
+                GlowmaskC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase1_Glow", AssetRequestMode.AsyncLoad);
+                Glowmask2C = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase2_Glow", AssetRequestMode.AsyncLoad);
+                BloomExtraC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenBloomExtra", AssetRequestMode.AsyncLoad);
             }
         }
 
@@ -1317,14 +1341,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 return true;
             }
-            Texture2D texture = phase2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
-            Texture2D bloomTx = phase2 ? BloomTexture2.Value : BloomTexture.Value;
-            Texture2D additiveTx = phase2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
-            Texture2D gm = phase2 ? Glowmask2.Value : Glowmask.Value;
-            Texture2D vortex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Vortex").Value;
+            Texture2D texture = phase2 ? (Main.zenithWorld ? Phase2TextureC.Value : Phase2Texture.Value) : (Main.zenithWorld ? Phase1TextureC.Value : TextureAssets.Npc[Type].Value);
+            Texture2D bloomTx = phase2 ? (Main.zenithWorld ? BloomTexture2C.Value : BloomTexture2.Value) : (Main.zenithWorld ? BloomTextureC.Value : BloomTexture.Value);
+            Texture2D additiveTx = phase2 ? (Main.zenithWorld ? AdditiveTexture2C.Value : AdditiveTexture2.Value) : (Main.zenithWorld ? AdditiveTextureC.Value : AdditiveTexture.Value);
+            Texture2D gm = phase2 ? (Main.zenithWorld ? Glowmask2C.Value : Glowmask2.Value) : (Main.zenithWorld ? GlowmaskC.Value : Glowmask.Value);
+            Texture2D vortex = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Vortex").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Vortex").Value;
 
-            Color color = Main.zenithWorld ? Color.Cyan : drawColor;
-            Color white = Main.zenithWorld ? Color.Cyan : Color.White;
+            Color color = drawColor;
+            Color white = Color.White;
 
             Vector2 pos = NPC.Center - screenPos;
 
@@ -1344,12 +1368,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
             Vector2 ringOrigin = RingTexture.Value.Size() / 2;
             float ringRotation = -Main.GlobalTimeWrappedHourly;
-            Main.EntitySpriteDraw(RingTexture.Value, pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw((Main.zenithWorld ? RingTextureC.Value : RingTexture.Value), pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
-            Main.EntitySpriteDraw(RingBloomTexture.Value, pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw((Main.zenithWorld ? RingBloomTextureC.Value : RingBloomTexture.Value), pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(bloomTx, pos, null, white, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.ExitShaderRegion();
-            Main.EntitySpriteDraw(BloomExtra.Value, pos, null, white * 0.05f, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw((Main.zenithWorld ? BloomExtraC.Value : BloomExtra.Value), pos, null, white * 0.05f, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(texture, pos, null, color, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(gm, pos, null, white, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(additiveTx, pos, null, white with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);

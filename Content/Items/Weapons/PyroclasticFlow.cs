@@ -28,7 +28,6 @@ namespace CalRemix.Content.Items.Weapons
             Item.useTurn = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 7.25f;
-            Item.scale = 3f;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.value = CalamityGlobalItem.RarityTurquoiseBuyPrice;
@@ -64,6 +63,10 @@ namespace CalRemix.Content.Items.Weapons
                 int fireDust = Dust.NewDust(new Vector2((float)hitbox.X, (float)hitbox.Y), hitbox.Width, hitbox.Height, DustID.Torch, (float)(player.direction * 2), 0f, 150, default, 1.5f);
                 Main.dust[fireDust].velocity *= 0.2f;
             }
+        }
+        public override void UseItemFrame(Player player)
+        {
+            player.itemLocation = (Vector2)player.HandPosition;
         }
     }
 }
