@@ -1449,6 +1449,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WITCH>());
             }
+            int rad = 4;
+            Point p = NPC.Center.ToTileCoordinates();
+            for (int i = p.X - rad; i < p.X + rad; i++)
+            {
+                for (int j = p.Y - rad; j < p.Y + rad; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (!t.HasTile && t.LiquidAmount <= 0)
+                    {
+                        t.LiquidType = LiquidID.Lava;
+                        t.LiquidAmount = 255;
+                    }
+                }
+            }
+
             RemixDowned.downedPyrogen = true;
             CalRemixWorld.UpdateWorldBool();
         }

@@ -500,7 +500,7 @@ EDGY: {
 		HateNPC: I hate {NPCName}.
 	}
 
-	DisplayName: Clone
+	DisplayName: Archseer
 	Census.SpawnCondition: Free it from a construct... twice
 }
 

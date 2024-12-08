@@ -8,6 +8,8 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Armor;
+using Terraria.Audio;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -56,6 +58,14 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<Chainsmoker>());
             itemLoot.Add(ModContent.ItemType<CarcinogenMask>(), 7);
             itemLoot.AddRevBagAccessories();
+        }
+        public override void RightClick(Player player)
+        {
+            SoundEngine.PlaySound(Carcinogen.DeathSound, player.Center);
+            for (int i = 0; i < Main.maxDust; i++)
+            {
+                Dust.NewDust(player.Center - Vector2.One * 80, 160, 160, DustID.Smoke, Scale: Main.rand.NextFloat(2, 6));
+            }
         }
     }
 }

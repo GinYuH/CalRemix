@@ -55,5 +55,15 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.AddRevBagAccessories();
             itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<PyroclasticFlow>(), ModContent.ItemType<PlumeflameBow>(), ModContent.ItemType<TheFirestorm>(), ModContent.ItemType<Magmasher>(), ModContent.ItemType<PhreaticChanneler>()));
         }
+        public override void RightClick(Player player)
+        {
+            Point p = player.Bottom.ToTileCoordinates();
+            Tile t = CalamityUtils.ParanoidTileRetrieval(p.X, p.Y);
+            if (!t.HasTile && t.LiquidAmount <= 0)
+            {
+                t.LiquidType = LiquidID.Lava;
+                t.LiquidAmount = 255;
+            }
+        }
     }
 }

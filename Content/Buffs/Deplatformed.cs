@@ -29,15 +29,17 @@ namespace CalRemix.Content.Buffs
 
             if (!Collision.SolidCollision(player.BottomLeft, player.width, 16))
             {
-                if (player.velocity.Y >= 0 && (PlatformCheck(beneathMe.TileType) || PlatformCheck(beneathTile.TileType)))
+                if (PlatformCheck(beneathMe.TileType) || PlatformCheck(beneathTile.TileType))
                 {
-                    player.position.Y += 2;
+                    if (player.velocity.Y >= 0)
+                    {
+                        player.position.Y += 2;
+                    }
+                    if (player.velocity.Y == 0)
+                    {
+                        player.position.Y += 16;
+                    }
                 }
-                if (player.velocity.Y == 0)
-                {
-                    player.position.Y += 16;
-                }
-
             }
             //kill the debuff when pyro stops storming, no matter how he does
             if (!NPC.AnyNPCs(ModContent.NPCType<Pyrogen>()))

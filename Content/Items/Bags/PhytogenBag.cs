@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Armor;
+using CalamityMod.Tiles.Abyss;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -54,6 +55,22 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<Juicer>());
             itemLoot.Add(ModContent.ItemType<PineappleStaff>());
             itemLoot.AddRevBagAccessories();
+        }
+        public override void RightClick(Player player)
+        {
+            int rad = 6;
+            Point p = player.position.ToTileCoordinates();
+            for (int i = p.X - rad; i < p.X + rad; i++)
+            {
+                for (int j = p.Y - rad; j < p.Y + rad; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.HasTile && TileID.Sets.CanBeClearedDuringOreRunner[t.TileType])
+                    {
+                        t.TileType = (ushort)ModContent.TileType<PlantyMush>();
+                    }
+                }
+            }
         }
     }
 }
