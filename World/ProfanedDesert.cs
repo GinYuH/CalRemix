@@ -20,6 +20,9 @@ using CalamityMod;
 using CalamityMod.Items.Placeables.FurnitureProfaned;
 using CalamityMod.Tiles.FurnitureProfaned;
 using CalRemix.Core.World;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Tiles;
+using Terraria.Audio;
 
 namespace CalRemix.World
 {
@@ -42,6 +45,10 @@ namespace CalRemix.World
         public static bool lockRespawn = false;   //Prevents the player from respawning while the worldgen is taking place
         public static bool gotJumpscared = false; //If the world already got turned into a desert once (saved on the world file which was spared, not the desert world file)
         public static bool scorchedWorld = false; //If the world is a profaned desert world and should get a special icon
+        public static int flashTimer = -1;
+        public const int flashPeak = 60;
+        public const int flashPause = flashPeak + 120;
+        public const int flashTotal = flashPeak + flashPause + 60;
 
         //Only generates in singleplayer in non cloud save worlds, and only if the player's world didn't already get desert-ed once
         bool CanGenerate => !gotJumpscared &&!Main.ActiveWorldFileData.IsCloudSave && Main.netMode == NetmodeID.SinglePlayer;
@@ -75,6 +82,11 @@ namespace CalRemix.World
             if (scorchedWorld)
                 WorldEffects();
 
+            if (flashTimer >= 0 && flashTimer < flashTotal)
+            {
+                flashTimer++;
+            }
+
             //After requesting the save of the world, and it got confirmed saved, we can proceed
             if (saveWorldStatus == FileStatus.Validated)
             {
@@ -94,6 +106,10 @@ namespace CalRemix.World
             if (Main.LocalPlayer.dead && NPC.AnyNPCs(ModContent.NPCType<Providence>()) && CalRemixWorld.profanedDesert)
             {
                 gotJumpscared = true;
+
+                flashTimer = 0;
+
+                SoundEngine.PlaySound(Providence.HolyRaySound);
 
                 //Set the request and then save the world with the gotjumpscared change
                 //SaveAndPlay is multithreaded, so we can't do our changes immediately
@@ -171,8 +187,8 @@ namespace CalRemix.World
 
             int noiseSeed = WorldGen.genRand.Next(0, int.MaxValue);
             int baseHeight = 400;
-            ushort groundType = TileID.Sandstone;
-            ushort surfaceType = TileID.HardenedSand;
+            ushort groundType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
+            ushort surfaceType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
             ushort crystalType = (ushort)ModContent.TileType<CalamityMod.Tiles.FurnitureProfaned.ProfanedCrystal>();
 
             Main.spawnTileX = Main.maxTilesX / 2;
@@ -286,7 +302,7 @@ namespace CalRemix.World
 
                 for (int j = baseHeight - 50; j < baseHeight + 150; j++)
                 {
-                    if (Main.tile[x, j].HasTile && Main.tile[x, j].TileType == TileID.HardenedSand && !Main.tile[x, j - 1].HasTile)
+                    if (Main.tile[x, j].HasTile && Main.tile[x, j].TileType == (ushort)ModContent.TileType<TorrefiedTephraPlaced>() && !Main.tile[x, j - 1].HasTile)
                     {
                         j--;
                         WorldGen.PlaceTile(x, j, TileID.ExposedGems, true, false, -1, 6);

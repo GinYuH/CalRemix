@@ -35,6 +35,7 @@ using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
 using CalRemix.Core.Scenes;
 using Terraria.Localization;
+using CalRemix.World;
 
 namespace CalRemix.Core
 {
@@ -635,6 +636,15 @@ namespace CalRemix.Core
                     if (v.frameY < 3)
                         Main.spriteBatch.Draw(explosion, v.position, explosion.Frame(6, 3, v.frameX, v.frameY), Color.White, 0f, new Vector2(0, explosion.Height * 0.2f), 12f, SpriteEffects.None, 0);
                 }
+            }
+            if (ProfanedDesert.flashTimer >= 0 && ProfanedDesert.flashTimer < ProfanedDesert.flashPeak)
+            {
+                Color ce = Color.Lerp(default, Color.White, Utils.GetLerpValue(0, ProfanedDesert.flashPeak, ProfanedDesert.flashTimer, true));
+                if (ProfanedDesert.flashTimer > ProfanedDesert.flashPause)
+                {
+                    ce = Color.Lerp(Color.White, default, Utils.GetLerpValue(0, ProfanedDesert.flashPause, ProfanedDesert.flashTotal, true));
+                }
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, ce, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
             }
         }
 

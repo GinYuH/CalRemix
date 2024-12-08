@@ -1482,10 +1482,20 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 for (int j = p.Y - rad; j < p.Y + rad; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (!t.HasTile && t.LiquidAmount <= 0)
+                    if (Main.zenithWorld)
                     {
-                        t.LiquidType = LiquidID.Lava;
-                        t.LiquidAmount = 255;
+                        if (!t.HasTile)
+                        {
+                            t.ResetToType(TileID.IceBlock);
+                        }
+                    }
+                    else
+                    {
+                        if (!t.HasTile && t.LiquidAmount <= 0)
+                        {
+                            t.LiquidType = LiquidID.Lava;
+                            t.LiquidAmount = 255;
+                        }
                     }
                 }
             }

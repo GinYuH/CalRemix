@@ -79,6 +79,7 @@ using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.CalClone;
+using CalRemix.World;
 
 namespace CalRemix
 {
@@ -1349,6 +1350,22 @@ namespace CalRemix
             {
                 pool.Clear();
                 pool.Add(NPCType<LabRoach>(), 22f);
+                return;
+            }
+            if (ProfanedDesert.scorchedWorld)
+            {
+                pool.Clear();
+                pool.Add(NPCType<ScornEater>(), 1);
+                if (!NPC.AnyNPCs(NPCType<ProfanedEnergyBody>()))
+                    pool.Add(NPCType<ProfanedEnergyBody>(), 1);
+                pool.Add(NPCType<ImpiousImmolator>(), 1);
+                pool.Add(NPCType<YggdrasilEnt>(), 0.05f);
+                if (CalRemixAddon.CalVal != null)
+                {
+                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("ProvFly").Type, 1);
+                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
+                }
+
                 return;
             }
             //Wizard can't respawn
