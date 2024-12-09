@@ -511,6 +511,7 @@ namespace CalRemix
             else if (item.type == ItemType<ProvidenceBag>())
             {
                 itemLoot.Add(ItemType<ProfanedNucleus>());
+                itemLoot.Add(ItemType<TorrefiedTephra>(), 1, 200, 222);
             }
             else if (item.type == ItemType<DevourerofGodsBag>())
             {

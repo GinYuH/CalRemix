@@ -1022,6 +1022,7 @@ namespace CalRemix
             if (npc.type == NPCType<Providence>())
             {
                 npcLoot.AddNormalOnly(ItemType<ProfanedNucleus>(), 4);
+                npcLoot.AddNormalOnly(ItemType<TorrefiedTephra>(), 1, 200, 222);
             }
             if (npc.type == NPCType<DevourerofGodsHead>())
             {
