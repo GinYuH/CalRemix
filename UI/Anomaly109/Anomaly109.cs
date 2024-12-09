@@ -221,9 +221,8 @@ namespace CalRemix.UI.Anomaly109
                 {
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "Click to open browser", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
 
-                    if (Main.mouseLeft && ClickCooldown <= 0)
+                    if (Main.mouseLeft && Main.mouseLeftRelease)
                     {
-                        ClickCooldown = 30;
                         SoundEngine.PlaySound(SoundID.MenuOpen);
                         Utils.OpenToURL("https://calamitymod.wiki.gg/wiki/User:Lilsigtum/Sandbox2");
                     }
@@ -252,7 +251,7 @@ namespace CalRemix.UI.Anomaly109
             optionRect = new Rectangle();
             for (int i = CurrentPage * 12; i < Anomaly109Manager.options.Count(); i++)
             {
-                if (i >= CurrentPage * 12 + CurrentPage * 12 && i > 11)
+                if (i >=  12 + CurrentPage * 12 && i > 11)
                 {
                     break;
                 }
@@ -322,7 +321,7 @@ namespace CalRemix.UI.Anomaly109
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, option.message, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, statusLiteral, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 52, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, status, (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20 + FontAssets.MouseText.Value.MeasureString(statusLiteral).X, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 52, statusColor * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
-                    if (Main.mouseLeft && ClickCooldown <= 0 && option.unlocked)
+                    if (Main.mouseLeft && Main.mouseLeftRelease && option.unlocked)
                     {
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
                         option.toggle();
@@ -336,7 +335,7 @@ namespace CalRemix.UI.Anomaly109
         private static void DrawArrows(SpriteBatch spriteBatch, Rectangle mainframe)
         {
             Rectangle maus = new Rectangle((int)(Main.MouseWorld.X - Main.screenPosition.X), (int)(Main.MouseWorld.Y - Main.screenPosition.Y), 10, 10);
-            int maxPages = Anomaly109Manager.options.Count() / 12;
+            int maxPages = (int)Math.Ceiling(Anomaly109Manager.options.Count() / 12f) - 1;
             Rectangle arrowframer = new Rectangle(mainframe.Right - (int)(mainframe.Width * 0.0775f), mainframe.Bottom - (int)(mainframe.Height * 0.125f), (int)(mainframe.Width * 0.05f), (int)(mainframe.Width * 0.05f));
             Rectangle arrowframel = new Rectangle(mainframe.Left + (int)(mainframe.Width * 0.036f), mainframe.Bottom - (int)(mainframe.Height * 0.125f), (int)(mainframe.Width * 0.05f), (int)(mainframe.Width * 0.05f));
             if (CurrentPage < maxPages)
@@ -354,12 +353,11 @@ namespace CalRemix.UI.Anomaly109
             {
                 if (CurrentPage < maxPages)
                 {
-                    if (Main.mouseLeft && ClickCooldown <= 0)
+                    if (Main.mouseLeft && Main.mouseLeftRelease)
                     {
                         Main.LocalPlayer.releaseUseItem = true;
                         CurrentPage++;
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
-                        ClickCooldown = 8;
                     }
                 }
             }
@@ -368,12 +366,11 @@ namespace CalRemix.UI.Anomaly109
             {
                 if (CurrentPage > 0)
                 {
-                    if (Main.mouseLeft && CurrentPage > 0 && ClickCooldown <= 0)
+                    if (Main.mouseLeft && CurrentPage > 0 && Main.mouseLeftRelease)
                     {
                         Main.LocalPlayer.releaseUseItem = true;
                         CurrentPage--;
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
-                        ClickCooldown = 8;
                     }
                 }
                 else if (Main.mouseLeft)
@@ -435,11 +432,10 @@ namespace CalRemix.UI.Anomaly109
                 {
                     Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, "KILL KILL KILL KILL KILL", (int)(Main.MouseWorld.X - Main.screenPosition.X) + 20, (int)(Main.MouseWorld.Y - Main.screenPosition.Y) + 20, Color.DarkRed * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
                 }
-                if (Main.mouseLeft && ClickCooldown <= 0)
+                if (Main.mouseLeft && Main.mouseLeftRelease)
                 {
                     ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
                     CalRemixWorld.UpdateWorldBool();
-                    ClickCooldown = 12;
                     if (ScreenHelperManager.screenHelpersEnabled)
                     {
                         fannyFreezeTime = 0;
