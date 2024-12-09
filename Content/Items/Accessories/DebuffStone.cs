@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of cheat mods
@@ -46,7 +47,7 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         public int debuffType;
         protected override bool CloneNewInstances => true;
 
-        public override string Name => debuffType < BuffID.Count ? debuffType + "Stone" : BuffLoader.GetBuff(debuffType).Mod.DisplayName + "/" + BuffLoader.GetBuff(debuffType).Name + "Stone";
+        public override string Name => debuffType < BuffID.Count ? debuffType + "Stone" : BuffLoader.GetBuff(debuffType).Mod.Name + "/" + BuffLoader.GetBuff(debuffType).Name + "Stone";
         public override string Texture => "CalRemix/Content/Items/Accessories/DebuffStone";
 
         public DebuffStone(int type)
@@ -69,6 +70,28 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
             Item.value = CalamityGlobalItem.RarityWhiteBuyPrice;
             Item.rare = ItemRarityID.White;
             Item.accessory = true;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            for (int s = 0; s < tooltips.Count; s++)
+            {
+                TooltipLine v = tooltips[s];
+                int idx = -1;
+                for (int i = 0; i < v.Text.Length; i++)
+                {
+                    if (v.Text[i] == '/')
+                    {
+                        idx = i;
+                        break;
+                    }
+                }
+                if (idx != -1)
+                {
+                    v.Text = v.Text.Remove(0, idx + 1);
+                    break;
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

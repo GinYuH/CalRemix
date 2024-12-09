@@ -529,7 +529,7 @@
 		'''
 }
 
-"Calamity Mod/AlcoholPoisoningStone": {
+CalamityMod/AlcoholPoisoningStone: {
 	DisplayName: Alcohol Poisoning Stone
 	Tooltip:
 		'''
@@ -538,7 +538,7 @@
 		'''
 }
 
-"Calamity Mod/AstralInfectionDebuffStone": {
+CalamityMod/AstralInfectionDebuffStone: {
 	DisplayName: Astral Infection Stone
 	Tooltip:
 		'''
@@ -547,7 +547,7 @@
 		'''
 }
 
-"Calamity Mod/BanishingFireStone": {
+CalamityMod/BanishingFireStone: {
 	DisplayName: Banishing Fire Stone
 	Tooltip:
 		'''
@@ -556,7 +556,7 @@
 		'''
 }
 
-"Calamity Mod/BrainRotStone": {
+CalamityMod/BrainRotStone: {
 	DisplayName: Brain Rot Stone
 	Tooltip:
 		'''
@@ -565,7 +565,7 @@
 		'''
 }
 
-"Calamity Mod/BrimstoneFlamesStone": {
+CalamityMod/BrimstoneFlamesStone: {
 	DisplayName: Brimstone Flames Stone
 	Tooltip:
 		'''
@@ -574,7 +574,7 @@
 		'''
 }
 
-"Calamity Mod/BurningBloodStone": {
+CalamityMod/BurningBloodStone: {
 	DisplayName: Burning Blood Stone
 	Tooltip:
 		'''
@@ -583,7 +583,7 @@
 		'''
 }
 
-"Calamity Mod/CrushDepthStone": {
+CalamityMod/CrushDepthStone: {
 	DisplayName: Crush Depth Stone
 	Tooltip:
 		'''
@@ -592,7 +592,7 @@
 		'''
 }
 
-"Calamity Mod/DragonfireStone": {
+CalamityMod/DragonfireStone: {
 	DisplayName: Dragonfire Stone
 	Tooltip:
 		'''
@@ -601,7 +601,7 @@
 		'''
 }
 
-"Calamity Mod/ElementalMixStone": {
+CalamityMod/ElementalMixStone: {
 	DisplayName: Elemental Mix Stone
 	Tooltip:
 		'''
@@ -610,7 +610,7 @@
 		'''
 }
 
-"Calamity Mod/GodSlayerInfernoStone": {
+CalamityMod/GodSlayerInfernoStone: {
 	DisplayName: God Slayer Inferno Stone
 	Tooltip:
 		'''
@@ -619,7 +619,7 @@
 		'''
 }
 
-"Calamity Mod/HolyFlamesStone": {
+CalamityMod/HolyFlamesStone: {
 	DisplayName: Holy Flames Stone
 	Tooltip:
 		'''
@@ -628,7 +628,7 @@
 		'''
 }
 
-"Calamity Mod/HolyInfernoStone": {
+CalamityMod/HolyInfernoStone: {
 	DisplayName: Holy Inferno Stone
 	Tooltip:
 		'''
@@ -637,7 +637,7 @@
 		'''
 }
 
-"Calamity Mod/ManaBurnStone": {
+CalamityMod/ManaBurnStone: {
 	DisplayName: Mana Burn Stone
 	Tooltip:
 		'''
@@ -646,7 +646,7 @@
 		'''
 }
 
-"Calamity Mod/MiracleBlightStone": {
+CalamityMod/MiracleBlightStone: {
 	DisplayName: Miracle Blight Stone
 	Tooltip:
 		'''
@@ -655,7 +655,7 @@
 		'''
 }
 
-"Calamity Mod/NightwitherStone": {
+CalamityMod/NightwitherStone: {
 	DisplayName: Moon Burnt Stone
 	Tooltip:
 		'''
@@ -664,7 +664,7 @@
 		'''
 }
 
-"Calamity Mod/PlagueStone": {
+CalamityMod/PlagueStone: {
 	DisplayName: Plague Stone
 	Tooltip:
 		'''
@@ -673,7 +673,7 @@
 		'''
 }
 
-"Calamity Mod/RancorBurnStone": {
+CalamityMod/RancorBurnStone: {
 	DisplayName: Rancor Burn Stone
 	Tooltip:
 		'''
@@ -682,7 +682,7 @@
 		'''
 }
 
-"Calamity Mod/RiptideDebuffStone": {
+CalamityMod/RiptideDebuffStone: {
 	DisplayName: Riptide Stone
 	Tooltip:
 		'''
@@ -691,7 +691,7 @@
 		'''
 }
 
-"Calamity Mod/SagePoisonStone": {
+CalamityMod/SagePoisonStone: {
 	DisplayName: Sage Poison Stone
 	Tooltip:
 		'''
@@ -700,7 +700,7 @@
 		'''
 }
 
-"Calamity Mod/SearingLavaStone": {
+CalamityMod/SearingLavaStone: {
 	DisplayName: Searing Lava Stone
 	Tooltip:
 		'''
@@ -709,7 +709,7 @@
 		'''
 }
 
-"Calamity Mod/ShadowflameStone": {
+CalamityMod/ShadowflameStone: {
 	DisplayName: Shadowflame Stone
 	Tooltip:
 		'''
@@ -718,7 +718,7 @@
 		'''
 }
 
-"Calamity Mod/ShellfishClapsStone": {
+CalamityMod/ShellfishClapsStone: {
 	DisplayName: Shellfish Claps Stone
 	Tooltip:
 		'''
@@ -727,7 +727,7 @@
 		'''
 }
 
-"Calamity Mod/ShredStone": {
+CalamityMod/ShredStone: {
 	DisplayName: Shred Stone
 	Tooltip:
 		'''
@@ -736,7 +736,7 @@
 		'''
 }
 
-"Calamity Mod/SnapClamDebuffStone": {
+CalamityMod/SnapClamDebuffStone: {
 	DisplayName: Clammed Stone
 	Tooltip:
 		'''
@@ -745,7 +745,7 @@
 		'''
 }
 
-"Calamity Mod/SulphuricPoisoningStone": {
+CalamityMod/SulphuricPoisoningStone: {
 	DisplayName: Sulphuric Poisoning Stone
 	Tooltip:
 		'''
@@ -754,7 +754,7 @@
 		'''
 }
 
-"Calamity Mod/VaporfiedStone": {
+CalamityMod/VaporfiedStone: {
 	DisplayName: Vaporfied Stone
 	Tooltip:
 		'''
@@ -763,7 +763,7 @@
 		'''
 }
 
-"Calamity Mod/VulnerabilityHexStone": {
+CalamityMod/VulnerabilityHexStone: {
 	DisplayName: Vulnerability Hex Stone
 	Tooltip:
 		'''
@@ -772,7 +772,7 @@
 		'''
 }
 
-"Calamity Mod/WeakBrimstoneFlamesStone": {
+CalamityMod/WeakBrimstoneFlamesStone: {
 	DisplayName: Weak Brimstone Flames Stone
 	Tooltip:
 		'''
@@ -781,7 +781,7 @@
 		'''
 }
 
-"Calamity Mod/AbsorberAfflictionStone": {
+CalamityMod/AbsorberAfflictionStone: {
 	DisplayName: Absorber Affliction Stone
 	Tooltip:
 		'''
@@ -790,7 +790,7 @@
 		'''
 }
 
-"Calamity Mod/AndromedaCrippleStone": {
+CalamityMod/AndromedaCrippleStone: {
 	DisplayName: Andromeda Cripple Stone
 	Tooltip:
 		'''
@@ -799,7 +799,7 @@
 		'''
 }
 
-"Calamity Mod/ArmorCrunchStone": {
+CalamityMod/ArmorCrunchStone: {
 	DisplayName: Armor Crunch Stone
 	Tooltip:
 		'''
@@ -808,7 +808,7 @@
 		'''
 }
 
-"Calamity Mod/ClamityStone": {
+CalamityMod/ClamityStone: {
 	DisplayName: Clamity Stone
 	Tooltip:
 		'''
@@ -817,7 +817,7 @@
 		'''
 }
 
-"Calamity Mod/CrumblingStone": {
+CalamityMod/CrumblingStone: {
 	DisplayName: Crumbling Stone
 	Tooltip:
 		'''
@@ -826,7 +826,7 @@
 		'''
 }
 
-"Calamity Mod/DoGExtremeGravityStone": {
+CalamityMod/DoGExtremeGravityStone: {
 	DisplayName: Extreme Gravity Stone
 	Tooltip:
 		'''
@@ -835,7 +835,7 @@
 		'''
 }
 
-"Calamity Mod/EnragedStone": {
+CalamityMod/EnragedStone: {
 	DisplayName: Enraged Stone
 	Tooltip:
 		'''
@@ -844,7 +844,7 @@
 		'''
 }
 
-"Calamity Mod/EutrophicationStone": {
+CalamityMod/EutrophicationStone: {
 	DisplayName: Eutrophication Stone
 	Tooltip:
 		'''
@@ -853,7 +853,7 @@
 		'''
 }
 
-"Calamity Mod/FishAlertStone": {
+CalamityMod/FishAlertStone: {
 	DisplayName: Fish Alert Stone
 	Tooltip:
 		'''
@@ -862,7 +862,7 @@
 		'''
 }
 
-"Calamity Mod/FrozenLungsStone": {
+CalamityMod/FrozenLungsStone: {
 	DisplayName: Frozen Lungs Stone
 	Tooltip:
 		'''
@@ -871,7 +871,7 @@
 		'''
 }
 
-"Calamity Mod/GalvanicCorrosionStone": {
+CalamityMod/GalvanicCorrosionStone: {
 	DisplayName: Galvanic Corrosion Stone
 	Tooltip:
 		'''
@@ -880,7 +880,7 @@
 		'''
 }
 
-"Calamity Mod/GlacialStateStone": {
+CalamityMod/GlacialStateStone: {
 	DisplayName: Glacial State Stone
 	Tooltip:
 		'''
@@ -889,7 +889,7 @@
 		'''
 }
 
-"Calamity Mod/IcarusFollyStone": {
+CalamityMod/IcarusFollyStone: {
 	DisplayName: Icarus' Folly Stone
 	Tooltip:
 		'''
@@ -898,7 +898,7 @@
 		'''
 }
 
-"Calamity Mod/IrradiatedStone": {
+CalamityMod/IrradiatedStone: {
 	DisplayName: Irradiated Stone
 	Tooltip:
 		'''
@@ -907,7 +907,7 @@
 		'''
 }
 
-"Calamity Mod/KamiFluStone": {
+CalamityMod/KamiFluStone: {
 	DisplayName: Kami Flu Stone
 	Tooltip:
 		'''
@@ -916,7 +916,7 @@
 		'''
 }
 
-"Calamity Mod/MarkedforDeathStone": {
+CalamityMod/MarkedforDeathStone: {
 	DisplayName: Marked for Death Stone
 	Tooltip:
 		'''
@@ -925,7 +925,7 @@
 		'''
 }
 
-"Calamity Mod/NOUStone": {
+CalamityMod/NOUStone: {
 	DisplayName: NO U Stone
 	Tooltip:
 		'''
@@ -934,7 +934,7 @@
 		'''
 }
 
-"Calamity Mod/PearlAuraStone": {
+CalamityMod/PearlAuraStone: {
 	DisplayName: Pearl Aura Stone
 	Tooltip:
 		'''
@@ -943,7 +943,7 @@
 		'''
 }
 
-"Calamity Mod/ProfanedWeaknessStone": {
+CalamityMod/ProfanedWeaknessStone: {
 	DisplayName: Profaned Weakness Stone
 	Tooltip:
 		'''
@@ -952,7 +952,7 @@
 		'''
 }
 
-"Calamity Mod/TemporalSadnessStone": {
+CalamityMod/TemporalSadnessStone: {
 	DisplayName: Temporal Sadness Stone
 	Tooltip:
 		'''
@@ -961,7 +961,7 @@
 		'''
 }
 
-"Calamity Mod/TimeDistortionStone": {
+CalamityMod/TimeDistortionStone: {
 	DisplayName: Time Distortion Stone
 	Tooltip:
 		'''
@@ -970,7 +970,7 @@
 		'''
 }
 
-"Calamity Mod/WarpedStone": {
+CalamityMod/WarpedStone: {
 	DisplayName: Warped Stone
 	Tooltip:
 		'''
@@ -979,7 +979,7 @@
 		'''
 }
 
-"Calamity Mod/WeakPetrificationStone": {
+CalamityMod/WeakPetrificationStone: {
 	DisplayName: Weak Petrification Stone
 	Tooltip:
 		'''
@@ -988,7 +988,7 @@
 		'''
 }
 
-"Calamity Mod/WhisperingDeathStone": {
+CalamityMod/WhisperingDeathStone: {
 	DisplayName: Whispering Death Stone
 	Tooltip:
 		'''
@@ -997,7 +997,7 @@
 		'''
 }
 
-"Calamity Mod/WitherDebuffStone": {
+CalamityMod/WitherDebuffStone: {
 	DisplayName: Wither Stone
 	Tooltip:
 		'''
@@ -1006,7 +1006,7 @@
 		'''
 }
 
-"Calamity: Community Remix/AcidStone": {
+CalRemix/AcidStone: {
 	DisplayName: You're not on acid, everyone else is Stone
 	Tooltip:
 		'''
@@ -1015,7 +1015,7 @@
 		'''
 }
 
-"Calamity: Community Remix/AergiaNeuronBuffStone": {
+CalRemix/AergiaNeuronBuffStone: {
 	DisplayName: Aergia Neuron Stone
 	Tooltip:
 		'''
@@ -1024,7 +1024,7 @@
 		'''
 }
 
-"Calamity: Community Remix/AnxietyStone": {
+CalRemix/AnxietyStone: {
 	DisplayName: Calamitous Anxiety Stone
 	Tooltip:
 		'''
@@ -1033,7 +1033,7 @@
 		'''
 }
 
-"Calamity: Community Remix/AstralEffigyBuffStone": {
+CalRemix/AstralEffigyBuffStone: {
 	DisplayName: Astral Effigy Stone
 	Tooltip:
 		'''
@@ -1042,7 +1042,7 @@
 		'''
 }
 
-"Calamity: Community Remix/AtlasSoldierBuffStone": {
+CalRemix/AtlasSoldierBuffStone: {
 	DisplayName: Atlas Soldier Stone
 	Tooltip:
 		'''
@@ -1051,7 +1051,7 @@
 		'''
 }
 
-"Calamity: Community Remix/BrimstoneMadnessStone": {
+CalRemix/BrimstoneMadnessStone: {
 	DisplayName: Maybe you shouldn't have taken all those enchantments Stone
 	Tooltip:
 		'''
@@ -1060,7 +1060,7 @@
 		'''
 }
 
-"Calamity: Community Remix/CalamitizedStone": {
+CalRemix/CalamitizedStone: {
 	DisplayName: Calamitized Stone
 	Tooltip:
 		'''
@@ -1069,7 +1069,7 @@
 		'''
 }
 
-"Calamity: Community Remix/CorrosiveEyeBuffStone": {
+CalRemix/CorrosiveEyeBuffStone: {
 	DisplayName: Corrosive Eye Stone
 	Tooltip:
 		'''
@@ -1078,7 +1078,7 @@
 		'''
 }
 
-"Calamity: Community Remix/CosmicConflictBuffStone": {
+CalRemix/CosmicConflictBuffStone: {
 	DisplayName: Cosmic Conflict Construct Stone
 	Tooltip:
 		'''
@@ -1087,7 +1087,7 @@
 		'''
 }
 
-"Calamity: Community Remix/CosmicElementalBuffStone": {
+CalRemix/CosmicElementalBuffStone: {
 	DisplayName: Cosmic Elemental Stone
 	Tooltip:
 		'''
@@ -1096,7 +1096,16 @@
 		'''
 }
 
-"Calamity: Community Remix/DysphoriaStone": {
+CalRemix/DeplatformedStone: {
+	DisplayName: Deplatformed Stone
+	Tooltip:
+		'''
+		Immunity to Deplatformed
+		Attacks inflict Deplatformed
+		'''
+}
+
+CalRemix/DysphoriaStone: {
 	DisplayName: Calamitous Dysphoria Stone
 	Tooltip:
 		'''
@@ -1105,7 +1114,7 @@
 		'''
 }
 
-"Calamity: Community Remix/EarthElementalBuffStone": {
+CalRemix/EarthElementalBuffStone: {
 	DisplayName: Earth Elemental Stone
 	Tooltip:
 		'''
@@ -1114,7 +1123,7 @@
 		'''
 }
 
-"Calamity: Community Remix/ElementalAffinityStone": {
+CalRemix/ElementalAffinityStone: {
 	DisplayName: You feel like the master of the elements Stone
 	Tooltip:
 		'''
@@ -1123,7 +1132,7 @@
 		'''
 }
 
-"Calamity: Community Remix/EntropicallyFedStone": {
+CalRemix/EntropicallyFedStone: {
 	DisplayName: Entropically Fed Stone
 	Tooltip:
 		'''
@@ -1132,7 +1141,7 @@
 		'''
 }
 
-"Calamity: Community Remix/EuphoriaStone": {
+CalRemix/EuphoriaStone: {
 	DisplayName: Calamitous Euphoria Stone
 	Tooltip:
 		'''
@@ -1141,7 +1150,16 @@
 		'''
 }
 
-"Calamity: Community Remix/ExtensionCordDebuffStone": {
+CalRemix/EXOLOTLBuffStone: {
+	DisplayName: EXO-LOTL Stone
+	Tooltip:
+		'''
+		Immunity to EXO-LOTL
+		Attacks inflict EXO-LOTL
+		'''
+}
+
+CalRemix/ExtensionCordDebuffStone: {
 	DisplayName: Extension Cord Debuff Stone
 	Tooltip:
 		'''
@@ -1150,7 +1168,7 @@
 		'''
 }
 
-"Calamity: Community Remix/FairiedStone": {
+CalRemix/FairiedStone: {
 	DisplayName: Fairy Float Stone
 	Tooltip:
 		'''
@@ -1159,7 +1177,16 @@
 		'''
 }
 
-"Calamity: Community Remix/GarBoostStone": {
+CalRemix/FractalCrawlerBuffStone: {
+	DisplayName: Fractal Crawler Stone
+	Tooltip:
+		'''
+		Immunity to Fractal Crawler
+		Attacks inflict Fractal Crawler
+		'''
+}
+
+CalRemix/GarBoostStone: {
 	DisplayName: Gar Mana Boost Stone
 	Tooltip:
 		'''
@@ -1168,7 +1195,7 @@
 		'''
 }
 
-"Calamity: Community Remix/HallowEffigyBuffStone": {
+CalRemix/HallowEffigyBuffStone: {
 	DisplayName: Hallow Effigy Stone
 	Tooltip:
 		'''
@@ -1177,7 +1204,7 @@
 		'''
 }
 
-"Calamity: Community Remix/HayFeaverStone": {
+CalRemix/HayFeaverStone: {
 	DisplayName: Hay Fever Stone
 	Tooltip:
 		'''
@@ -1186,7 +1213,7 @@
 		'''
 }
 
-"Calamity: Community Remix/ILoveLeanStone": {
+CalRemix/ILoveLeanStone: {
 	DisplayName: I LOVE LEAN! Stone
 	Tooltip:
 		'''
@@ -1195,7 +1222,7 @@
 		'''
 }
 
-"Calamity: Community Remix/LeavesStone": {
+CalRemix/LeavesStone: {
 	DisplayName: Leaves Power Stone
 	Tooltip:
 		'''
@@ -1204,7 +1231,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MackerelBuffStone": {
+CalRemix/MackerelBuffStone: {
 	DisplayName: MackerelBuff Stone
 	Tooltip:
 		'''
@@ -1213,7 +1240,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MedicallyIntelligentStone": {
+CalRemix/MedicallyIntelligentStone: {
 	DisplayName: Medically Intelligent Stone
 	Tooltip:
 		'''
@@ -1222,7 +1249,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MethHighStone": {
+CalRemix/MethHighStone: {
 	DisplayName: Sunken Power Stone
 	Tooltip:
 		'''
@@ -1231,7 +1258,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MethLowStone": {
+CalRemix/MethLowStone: {
 	DisplayName: Sunken Withdrawal Stone
 	Tooltip:
 		'''
@@ -1240,7 +1267,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MicrobialClusterBuffStone": {
+CalRemix/MicrobialClusterBuffStone: {
 	DisplayName: Microbial Cluster Stone
 	Tooltip:
 		'''
@@ -1249,7 +1276,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MoltenToolsBuffStone": {
+CalRemix/MoltenToolsBuffStone: {
 	DisplayName: Molten Tools Stone
 	Tooltip:
 		'''
@@ -1258,7 +1285,7 @@
 		'''
 }
 
-"Calamity: Community Remix/MoonfistBuffStone": {
+CalRemix/MoonfistBuffStone: {
 	DisplayName: Moon Empowerment Stone
 	Tooltip:
 		'''
@@ -1267,7 +1294,16 @@
 		'''
 }
 
-"Calamity: Community Remix/ScorinfestationStone": {
+CalRemix/OnyxFistBuffStone: {
+	DisplayName: Onyx Fist Stone
+	Tooltip:
+		'''
+		Immunity to Onyx Fist
+		Attacks inflict Onyx Fist
+		'''
+}
+
+CalRemix/ScorinfestationStone: {
 	DisplayName: Scorinfestation Stone
 	Tooltip:
 		'''
@@ -1276,7 +1312,25 @@
 		'''
 }
 
-"Calamity: Community Remix/StatueBuffStone": {
+CalRemix/ShreadedLungsStone: {
+	DisplayName: Shreaded Lungs Stone
+	Tooltip:
+		'''
+		Immunity to Shreaded Lungs
+		Attacks inflict Shreaded Lungs
+		'''
+}
+
+CalRemix/SickCellBuffStone: {
+	DisplayName: Sick Cell Stone
+	Tooltip:
+		'''
+		Immunity to Sick Cell
+		Attacks inflict Sick Cell
+		'''
+}
+
+CalRemix/StatueBuffStone: {
 	DisplayName: Animated Statue Stone
 	Tooltip:
 		'''
@@ -1285,7 +1339,7 @@
 		'''
 }
 
-"Calamity: Community Remix/TheDreamingGhostBuffStone": {
+CalRemix/TheDreamingGhostBuffStone: {
 	DisplayName: The Dreaming Ghost Stone
 	Tooltip:
 		'''
@@ -1294,7 +1348,7 @@
 		'''
 }
 
-"Calamity: Community Remix/ValfreyBurnStone": {
+CalRemix/ValfreyBurnStone: {
 	DisplayName: Valfrey Burn Stone
 	Tooltip:
 		'''
@@ -1303,7 +1357,7 @@
 		'''
 }
 
-"Calamity: Community Remix/WarathStone": {
+CalRemix/WarathStone: {
 	DisplayName: Warath Stone
 	Tooltip:
 		'''
@@ -1312,21 +1366,12 @@
 		'''
 }
 
-"Calamity: Community Remix/WitherStone": {
+CalRemix/WitherStone: {
 	DisplayName: Wither Stone
 	Tooltip:
 		'''
 		Immunity to Wither
 		Attacks inflict Wither
-		'''
-}
-
-"Calamity: Community Remix/ShreadedLungsStone": {
-	DisplayName: Shreaded Lungs Stone
-	Tooltip:
-		'''
-		Immunity to Shreaded Lungs
-		Attacks inflict Shreaded Lungs
 		'''
 }
 
@@ -1337,1815 +1382,4 @@ FolvsStone: {
 		Immunity to Folv's
 		Attacks inflict Folv's
 		'''
-}
-
-"Calamity: Community Remix/SickCellBuffStone": {
-	DisplayName: Sick Cell Stone
-	Tooltip:
-		'''
-		Immunity to Sick Cell
-		Attacks inflict Sick Cell
-		'''
-}
-
-"Calamity: Hunt of the Old God/AbsorptionStone": {
-	DisplayName: Gobbed Stone
-	Tooltip:
-		'''
-		Immunity to Gobbed
-		Attacks inflict Gobbed
-		'''
-}
-
-"Calamity: Hunt of the Old God/FusionBurnStone": {
-	DisplayName: Fusion Burn Stone
-	Tooltip:
-		'''
-		Immunity to Fusion Burn
-		Attacks inflict Fusion Burn
-		'''
-}
-
-"Calamity: Hunt of the Old God/GobbedStone": {
-	DisplayName: Gobbed Stone
-	Tooltip:
-		'''
-		Immunity to Gobbed
-		Attacks inflict Gobbed
-		'''
-}
-
-"Calamity: Hunt of the Old God/PaladinPalanquinBuffStone": {
-	DisplayName: Paladin Palanquin Stone
-	Tooltip:
-		'''
-		Immunity to Paladin Palanquin
-		Attacks inflict Paladin Palanquin
-		'''
-}
-
-"Calamity: Hunt of the Old God/SlimeCaneBuffStone": {
-	DisplayName: Slime Soirée Stone
-	Tooltip:
-		'''
-		Immunity to Slime Soirée
-		Attacks inflict Slime Soirée
-		'''
-}
-
-"Calamity: Hunt of the Old God/SplendorJamBuffStone": {
-	DisplayName: Malice Mode Stone
-	Tooltip:
-		'''
-		Immunity to Malice Mode
-		Attacks inflict Malice Mode
-		'''
-}
-
-"Calamity: Hunt of the Old God/SwampedStone": {
-	DisplayName: Swamped Stone
-	Tooltip:
-		'''
-		Immunity to Swamped
-		Attacks inflict Swamped
-		'''
-}
-
-"Calamity: Hunt of the Old God/BloatBabyBuffStone": {
-	DisplayName: Bloat Baby Stone
-	Tooltip:
-		'''
-		Immunity to Bloat Baby
-		Attacks inflict Bloat Baby
-		'''
-}
-
-"Calamity: Community Remix/OnyxFistBuffStone": {
-	DisplayName: Calamity:  Community  Remix/ Onyx Fist Buff Stone
-	Tooltip: ""
-}
-
-"Calamity: Community Remix/EXOLOTLBuffStone": {
-	Tooltip: ""
-	DisplayName: Calamity:  Community  Remix/ E X O L O T L Buff Stone
-}
-
-"Calamity: Community Remix/FractalCrawlerBuffStone": {
-	DisplayName: Calamity:  Community  Remix/ Fractal Crawler Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AbyssalShadowBuffStone": {
-	DisplayName: Thorium  Mod/ Abyssal Shadow Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AbyssalShadowBuff2Stone": {
-	DisplayName: Thorium  Mod/ Abyssal Shadow Buff2 Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AbyssalShadowBuff3Stone": {
-	DisplayName: Thorium  Mod/ Abyssal Shadow Buff3 Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AbyssalShellBuffStone": {
-	DisplayName: Thorium  Mod/ Abyssal Shell Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AbyssalWeightStone": {
-	DisplayName: Thorium  Mod/ Abyssal Weight Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AirStrikeShieldBuffStone": {
-	DisplayName: Thorium  Mod/ Air Strike Shield Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AquaAffinityStone": {
-	DisplayName: Thorium  Mod/ Aqua Affinity Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AquamancerStone": {
-	DisplayName: Thorium  Mod/ Aquamancer Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AquaticAptitudeStone": {
-	DisplayName: Thorium  Mod/ Aquatic Aptitude Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ArcanePotionBuffStone": {
-	DisplayName: Thorium  Mod/ Arcane Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ArtilleryBuffStone": {
-	DisplayName: Thorium  Mod/ Artillery Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AssassinPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Assassin Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AmpedUpStone": {
-	DisplayName: Thorium  Mod/ Amped Up Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AudioOverloadStone": {
-	DisplayName: Thorium  Mod/ Audio Overload Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ConductorsStandBuffStone": {
-	DisplayName: Thorium  Mod/ Conductors Stand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CreativeBlockStone": {
-	DisplayName: Thorium  Mod/ Creative Block Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CreativityPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Creativity Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EarwormPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Earworm Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/InspirationReachPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Inspiration Reach Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MaestroSetDebuffStone": {
-	DisplayName: Thorium  Mod/ Maestro Set Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MetronomeBuffStone": {
-	DisplayName: Thorium  Mod/ Metronome Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MetronomeDebuffStone": {
-	DisplayName: Thorium  Mod/ Metronome Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ShockAbsorberBuffStone": {
-	DisplayName: Thorium  Mod/ Shock Absorber Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SoloistsHatSetBuffStone": {
-	DisplayName: Thorium  Mod/ Soloists Hat Set Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ZunpetBuffStone": {
-	DisplayName: Thorium  Mod/ Zunpet Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BatRepellentBuffStone": {
-	DisplayName: Thorium  Mod/ Bat Repellent Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BeetleCarapaceStone": {
-	DisplayName: Thorium  Mod/ Beetle Carapace Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BlightFeverStone": {
-	DisplayName: Thorium  Mod/ Blight Fever Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodHarvestStone": {
-	DisplayName: Thorium  Mod/ Blood Harvest Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodRushStone": {
-	DisplayName: Thorium  Mod/ Blood Rush Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodyWandDebuffStone": {
-	DisplayName: Thorium  Mod/ Bloody Wand Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BouncingFlamePotionBuffStone": {
-	DisplayName: Thorium  Mod/ Bouncing Flame Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BubbledStone": {
-	DisplayName: Thorium  Mod/ Bubbled Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CactusFruitBuffStone": {
-	DisplayName: Thorium  Mod/ Cactus Fruit Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ChaosStateStone": {
-	DisplayName: Thorium  Mod/ Chaos State Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CharmedStone": {
-	DisplayName: Thorium  Mod/ Charmed Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ChillStone": {
-	DisplayName: Thorium  Mod/ Chill Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ChokingAuraStone": {
-	DisplayName: Thorium  Mod/ Choking Aura Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CobblerBuffStone": {
-	DisplayName: Thorium  Mod/ Cobbler Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ConflagrationPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Conflagration Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CorporealStone": {
-	DisplayName: Thorium  Mod/ Corporeal Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CorrosionStone": {
-	DisplayName: Thorium  Mod/ Corrosion Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CursedHurlStone": {
-	DisplayName: Thorium  Mod/ Cursed Hurl Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DarknessWithinStone": {
-	DisplayName: Thorium  Mod/ Darkness Within Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DecayingFleshStone": {
-	DisplayName: Thorium  Mod/ Decaying Flesh Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DeepFreezeCoatingBuffStone": {
-	DisplayName: Thorium  Mod/ Deep Freeze Coating Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DepthBreathStone": {
-	DisplayName: Thorium  Mod/ Depth Breath Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DepthDamageStone": {
-	DisplayName: Thorium  Mod/ Depth Damage Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DepthSpeedStone": {
-	DisplayName: Thorium  Mod/ Depth Speed Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DestabilizedStone": {
-	DisplayName: Thorium  Mod/ Destabilized Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DevilDaggerBuffStone": {
-	DisplayName: Thorium  Mod/ Devil Dagger Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EmergencyAirTankStone": {
-	DisplayName: Thorium  Mod/ Emergency Air Tank Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EscapeRocketBuffStone": {
-	DisplayName: Thorium  Mod/ Escape Rocket Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ExplosiveCoatingBuffStone": {
-	DisplayName: Thorium  Mod/ Explosive Coating Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FishRepellentBuffStone": {
-	DisplayName: Thorium  Mod/ Fish Repellent Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FlawlessChrysalisDebuffStone": {
-	DisplayName: Thorium  Mod/ Flawless Chrysalis Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FlawlessChrysalisEndBuffStone": {
-	DisplayName: Thorium  Mod/ Flawless Chrysalis End Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FlawlessChrysalisStartBuffStone": {
-	DisplayName: Thorium  Mod/ Flawless Chrysalis Start Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FleshFrenzyStone": {
-	DisplayName: Thorium  Mod/ Flesh Frenzy Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FreezingStone": {
-	DisplayName: Thorium  Mod/ Freezing Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FrenzyPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Frenzy Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FullStomachStone": {
-	DisplayName: Thorium  Mod/ Full Stomach Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FungalGrowthStone": {
-	DisplayName: Thorium  Mod/ Fungal Growth Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GhastlyCarapaceBuffStone": {
-	DisplayName: Thorium  Mod/ Ghastly Carapace Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GorgonCoatingBuffStone": {
-	DisplayName: Thorium  Mod/ Gorgon Coating Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GougeStone": {
-	DisplayName: Thorium  Mod/ Gouge Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GraniteSurgeStone": {
-	DisplayName: Thorium  Mod/ Granite Surge Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GraveLimbDebuffStone": {
-	DisplayName: Thorium  Mod/ Grave Limb Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AltarBuffStone": {
-	DisplayName: Thorium  Mod/ Altar Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AuraDamageReductionStone": {
-	DisplayName: Thorium  Mod/ Aura Damage Reduction Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BeltoftheQuickResponseBuffStone": {
-	DisplayName: Thorium  Mod/ Beltofthe Quick Response Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodBoostStone": {
-	DisplayName: Thorium  Mod/ Blood Boost Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloomBoostStone": {
-	DisplayName: Thorium  Mod/ Bloom Boost Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloomingSetBuffStone": {
-	DisplayName: Thorium  Mod/ Blooming Set Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BubbleBulwarkWandBuffStone": {
-	DisplayName: Thorium  Mod/ Bubble Bulwark Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CelestialSetAllyBuffStone": {
-	DisplayName: Thorium  Mod/ Celestial Set Ally Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CelestialSetDebuffStone": {
-	DisplayName: Thorium  Mod/ Celestial Set Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CosmicFluxStaffDamageBuffStone": {
-	DisplayName: Thorium  Mod/ Cosmic Flux Staff Damage Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CosmicFluxStaffHealBuffStone": {
-	DisplayName: Thorium  Mod/ Cosmic Flux Staff Heal Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CrystalWishBuffStone": {
-	DisplayName: Thorium  Mod/ Crystal Wish Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CuredStone": {
-	DisplayName: Thorium  Mod/ Cured Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DarkContagionDebuffStone": {
-	DisplayName: Thorium  Mod/ Dark Contagion Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DarkEffigyBuffStone": {
-	DisplayName: Thorium  Mod/ Dark Effigy Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DistortedTimeBoostStone": {
-	DisplayName: Thorium  Mod/ Distorted Time Boost Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DistortedTimeEnemyStone": {
-	DisplayName: Thorium  Mod/ Distorted Time Enemy Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DragonHeartWandBuffStone": {
-	DisplayName: Thorium  Mod/ Dragon Heart Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamCatcherBuffStone": {
-	DisplayName: Thorium  Mod/ Dream Catcher Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamMegaphoneBuffStone": {
-	DisplayName: Thorium  Mod/ Dream Megaphone Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamMegaphoneDebuffStone": {
-	DisplayName: Thorium  Mod/ Dream Megaphone Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamWeaversHoodDebuffStone": {
-	DisplayName: Thorium  Mod/ Dream Weavers Hood Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamWeaversHoodDreamAllyBuffStone": {
-	DisplayName: Thorium  Mod/ Dream Weavers Hood Dream Ally Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamWeaversHoodDreamBuffStone": {
-	DisplayName: Thorium  Mod/ Dream Weavers Hood Dream Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamWeaversMaskBuffStone": {
-	DisplayName: Thorium  Mod/ Dream Weavers Mask Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DreamWeaversMaskDebuffStone": {
-	DisplayName: Thorium  Mod/ Dream Weavers Mask Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EnfeebleStone": {
-	DisplayName: Thorium  Mod/ Enfeeble Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ForgottenCrossNecklaceBuffStone": {
-	DisplayName: Thorium  Mod/ Forgotten Cross Necklace Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GlowingPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Glowing Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HolyGlareStone": {
-	DisplayName: Thorium  Mod/ Holy Glare Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HolyPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Holy Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/KarmicHolderBuffStone": {
-	DisplayName: Thorium  Mod/ Karmic Holder Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LiberatedStone": {
-	DisplayName: Thorium  Mod/ Liberated Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeBinderSetBuffStone": {
-	DisplayName: Thorium  Mod/ Life Binder Set Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeQuartzShieldBuffStone": {
-	DisplayName: Thorium  Mod/ Life Quartz Shield Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeQuartzShieldDebuffStone": {
-	DisplayName: Thorium  Mod/ Life Quartz Shield Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeRecoveryStone": {
-	DisplayName: Thorium  Mod/ Life Recovery Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeSpiritBuffStone": {
-	DisplayName: Thorium  Mod/ Life Spirit Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LilCherubsWandBuffStone": {
-	DisplayName: Thorium  Mod/ Lil Cherubs Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LilDevilsWandBuffStone": {
-	DisplayName: Thorium  Mod/ Lil Devils Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MarrowScepterBuffStone": {
-	DisplayName: Thorium  Mod/ Marrow Scepter Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MortalityStone": {
-	DisplayName: Thorium  Mod/ Mortality Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/NullZoneBuffStone": {
-	DisplayName: Thorium  Mod/ Null Zone Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OutofTouchStone": {
-	DisplayName: Thorium  Mod/ Outof Touch Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PhoenixStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Phoenix Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ProtectiveEnergyStone": {
-	DisplayName: Thorium  Mod/ Protective Energy Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/QuickRecoveryStone": {
-	DisplayName: Thorium  Mod/ Quick Recovery Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SerpentsBubbleWandBuffStone": {
-	DisplayName: Thorium  Mod/ Serpents Bubble Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ShieldDroneBeaconBuffStone": {
-	DisplayName: Thorium  Mod/ Shield Drone Beacon Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SmitingHammerDebuffStone": {
-	DisplayName: Thorium  Mod/ Smiting Hammer Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SoulEssenceStone": {
-	DisplayName: Thorium  Mod/ Soul Essence Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpiritualistBuffStone": {
-	DisplayName: Thorium  Mod/ Spiritualist Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpiritualistProtectionBuffStone": {
-	DisplayName: Thorium  Mod/ Spiritualist Protection Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpiritualistRecoveryBuffStone": {
-	DisplayName: Thorium  Mod/ Spiritualist Recovery Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpiritualistRevengeBuffStone": {
-	DisplayName: Thorium  Mod/ Spiritualist Revenge Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SupportSashBuffStone": {
-	DisplayName: Thorium  Mod/ Support Sash Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TemplarSetBuffStone": {
-	DisplayName: Thorium  Mod/ Templar Set Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/VerdantOrnamentBuffStone": {
-	DisplayName: Thorium  Mod/ Verdant Ornament Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WhisperingDaggerBuffStone": {
-	DisplayName: Thorium  Mod/ Whispering Dagger Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HoneyRecorderDebuffStone": {
-	DisplayName: Thorium  Mod/ Honey Recorder Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HydrationBuffStone": {
-	DisplayName: Thorium  Mod/ Hydration Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/IlluminatedNPCStone": {
-	DisplayName: Thorium  Mod/ Illuminated N P C Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/IncandescentSparkDebuffStone": {
-	DisplayName: Thorium  Mod/ Incandescent Spark Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/InsanityStone": {
-	DisplayName: Thorium  Mod/ Insanity Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/InsectRepellentBuffStone": {
-	DisplayName: Thorium  Mod/ Insect Repellent Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/JellyBuffStone": {
-	DisplayName: Thorium  Mod/ Jelly Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/KineticPotionBuffStone": {
-	DisplayName: Thorium  Mod/ Kinetic Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LegacyDebuffStone": {
-	DisplayName: Thorium  Mod/ Legacy Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LichSetBuffStone": {
-	DisplayName: Thorium  Mod/ Lich Set Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeTransfusionStone": {
-	DisplayName: Thorium  Mod/ Life Transfusion Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LifeWaterBuffStone": {
-	DisplayName: Thorium  Mod/ Life Water Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LightCurseStone": {
-	DisplayName: Thorium  Mod/ Light Curse Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LiquefiedStone": {
-	DisplayName: Thorium  Mod/ Liquefied Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MagickStaffDebuffStone": {
-	DisplayName: Thorium  Mod/ Magick Staff Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MasterMarksmansScouterDebuffStone": {
-	DisplayName: Thorium  Mod/ Master Marksmans Scouter Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MidnightOilBuffStone": {
-	DisplayName: Thorium  Mod/ Midnight Oil Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MirroroftheBeholderDebuffStone": {
-	DisplayName: Thorium  Mod/ Mirrorofthe Beholder Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MistletoeBuffStone": {
-	DisplayName: Thorium  Mod/ Mistletoe Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AmphibianEggBuffStone": {
-	DisplayName: Thorium  Mod/ Amphibian Egg Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AquamarineMinecartBuffStone": {
-	DisplayName: Thorium  Mod/ Aquamarine Minecart Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BathtubCartBuffStone": {
-	DisplayName: Thorium  Mod/ Bathtub Cart Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ColeopteraKeepsakeBuffStone": {
-	DisplayName: Thorium  Mod/ Coleoptera Keepsake Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CrackedBattleHornBuffStone": {
-	DisplayName: Thorium  Mod/ Cracked Battle Horn Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CyberneticSphereBuffStone": {
-	DisplayName: Thorium  Mod/ Cybernetic Sphere Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DesecratedHeartBuffStone": {
-	DisplayName: Thorium  Mod/ Desecrated Heart Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FakeCoinBuffStone": {
-	DisplayName: Thorium  Mod/ Fake Coin Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GoldenScaleBuffStone": {
-	DisplayName: Thorium  Mod/ Golden Scale Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HowToSpeakWhaleABiographyBuffStone": {
-	DisplayName: Thorium  Mod/ How To Speak Whale A Biography Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MagmaCharmBuffStone": {
-	DisplayName: Thorium  Mod/ Magma Charm Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MassiveCrabClawBuffStone": {
-	DisplayName: Thorium  Mod/ Massive Crab Claw Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MediumRareSteakBuffStone": {
-	DisplayName: Thorium  Mod/ Medium Rare Steak Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MoltenCollarBuffStone": {
-	DisplayName: Thorium  Mod/ Molten Collar Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/NimbusBuffStone": {
-	DisplayName: Thorium  Mod/ Nimbus Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OldDebtStone": {
-	DisplayName: Thorium  Mod/ Old Debt Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OpalMinecartBuffStone": {
-	DisplayName: Thorium  Mod/ Opal Minecart Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OtherworldlyRuneBuffStone": {
-	DisplayName: Thorium  Mod/ Otherworldly Rune Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RocketCartBuffStone": {
-	DisplayName: Thorium  Mod/ Rocket Cart Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SinisterAcornBuffStone": {
-	DisplayName: Thorium  Mod/ Sinister Acorn Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpectralFangBuffStone": {
-	DisplayName: Thorium  Mod/ Spectral Fang Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SuperAnvilBuffStone": {
-	DisplayName: Thorium  Mod/ Super Anvil Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TomeoftheVoidGazersChariotBuffStone": {
-	DisplayName: Thorium  Mod/ Tomeofthe Void Gazers Chariot Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/VampireCatalystBuffStone": {
-	DisplayName: Thorium  Mod/ Vampire Catalyst Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MyceliumVeinsStone": {
-	DisplayName: Thorium  Mod/ Mycelium Veins Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/NapalmDebuffStone": {
-	DisplayName: Thorium  Mod/ Napalm Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/NecroticSkullBuffStone": {
-	DisplayName: Thorium  Mod/ Necrotic Skull Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/NinjaBuffStone": {
-	DisplayName: Thorium  Mod/ Ninja Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EnragedBuffStone": {
-	DisplayName: Thorium  Mod/ Enraged Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SeaShantySingerBuffStone": {
-	DisplayName: Thorium  Mod/ Sea Shanty Singer Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SnowSingaBuffStone": {
-	DisplayName: Thorium  Mod/ Snow Singa Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OceansBufferStone": {
-	DisplayName: Thorium  Mod/ Oceans Buffer Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OceansBufferExhaustStone": {
-	DisplayName: Thorium  Mod/ Oceans Buffer Exhaust Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OozedStone": {
-	DisplayName: Thorium  Mod/ Oozed Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ParalyzedStone": {
-	DisplayName: Thorium  Mod/ Paralyzed Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PearlPikeBuffStone": {
-	DisplayName: Thorium  Mod/ Pearl Pike Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AbyssalWhistleBuffStone": {
-	DisplayName: Thorium  Mod/ Abyssal Whistle Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AlienResearchNotesBuffStone": {
-	DisplayName: Thorium  Mod/ Alien Research Notes Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AmnesiacBuffStone": {
-	DisplayName: Thorium  Mod/ Amnesiac Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AncientRatBuffStone": {
-	DisplayName: Thorium  Mod/ Ancient Rat Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/AnglerBowlBuffStone": {
-	DisplayName: Thorium  Mod/ Angler Bowl Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BalloonBallBuffStone": {
-	DisplayName: Thorium  Mod/ Balloon Ball Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BioFeederBuffStone": {
-	DisplayName: Thorium  Mod/ Bio Feeder Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BlisterBuffStone": {
-	DisplayName: Thorium  Mod/ Blister Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodSausageBuffStone": {
-	DisplayName: Thorium  Mod/ Blood Sausage Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ChaoticMarbleBuffStone": {
-	DisplayName: Thorium  Mod/ Chaotic Marble Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ClownfishPetBuffStone": {
-	DisplayName: Thorium  Mod/ Clownfish Pet Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DavyJonesLockBoxBuffStone": {
-	DisplayName: Thorium  Mod/ Davy Jones Lock Box Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DemosGuidanceBuffStone": {
-	DisplayName: Thorium  Mod/ Demos Guidance Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DiscardedClothBuffStone": {
-	DisplayName: Thorium  Mod/ Discarded Cloth Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DiverPlushieBuffStone": {
-	DisplayName: Thorium  Mod/ Diver Plushie Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DoomSayersPennyBuffStone": {
-	DisplayName: Thorium  Mod/ Doom Sayers Penny Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DrachmaBuffStone": {
-	DisplayName: Thorium  Mod/ Drachma Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EmptyWormholePotionBuffStone": {
-	DisplayName: Thorium  Mod/ Empty Wormhole Potion Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EnergizedQuadCubeBuffStone": {
-	DisplayName: Thorium  Mod/ Energized Quad Cube Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ExoticMynaEggBuffStone": {
-	DisplayName: Thorium  Mod/ Exotic Myna Egg Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/Experiment3BuffStone": {
-	DisplayName: Thorium  Mod/ Experiment3 Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FerretBuffStone": {
-	DisplayName: Thorium  Mod/ Ferret Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/FrozenBalloonBuffStone": {
-	DisplayName: Thorium  Mod/ Frozen Balloon Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/GlassShardBuffStone": {
-	DisplayName: Thorium  Mod/ Glass Shard Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HolyGoatBuffStone": {
-	DisplayName: Thorium  Mod/ Holy Goat Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LilMogBuffStone": {
-	DisplayName: Thorium  Mod/ Lil Mog Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LittlePhylacteryBuffStone": {
-	DisplayName: Thorium  Mod/ Little Phylactery Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MaidBuffStone": {
-	DisplayName: Thorium  Mod/ Maid Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ModelGunBuffStone": {
-	DisplayName: Thorium  Mod/ Model Gun Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MoleCrateBuffStone": {
-	DisplayName: Thorium  Mod/ Mole Crate Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/OmegaBuffStone": {
-	DisplayName: Thorium  Mod/ Omega Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PartridgeBuffStone": {
-	DisplayName: Thorium  Mod/ Partridge Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PickleBuffStone": {
-	DisplayName: Thorium  Mod/ Pickle Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PinkSlimeBuffStone": {
-	DisplayName: Thorium  Mod/ Pink Slime Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PurifiersRingBuffStone": {
-	DisplayName: Thorium  Mod/ Purifiers Ring Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RottenMeatBuffStone": {
-	DisplayName: Thorium  Mod/ Rotten Meat Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SkunkBuffStone": {
-	DisplayName: Thorium  Mod/ Skunk Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SnowyOwlBuffStone": {
-	DisplayName: Thorium  Mod/ Snowy Owl Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/StormCloudBuffStone": {
-	DisplayName: Thorium  Mod/ Storm Cloud Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SubterraneanAnglerBuffStone": {
-	DisplayName: Thorium  Mod/ Subterranean Angler Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SuspiciousMoisturizerBottleBuffStone": {
-	DisplayName: Thorium  Mod/ Suspicious Moisturizer Bottle Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SweetBeetBuffStone": {
-	DisplayName: Thorium  Mod/ Sweet Beet Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SwordOfDestinyBuffStone": {
-	DisplayName: Thorium  Mod/ Sword Of Destiny Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TentacleBallBuffStone": {
-	DisplayName: Thorium  Mod/ Tentacle Ball Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TortleScuteBuffStone": {
-	DisplayName: Thorium  Mod/ Tortle Scute Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WhisperingShellBuffStone": {
-	DisplayName: Thorium  Mod/ Whispering Shell Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WyvernPetBuffStone": {
-	DisplayName: Thorium  Mod/ Wyvern Pet Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PetrifyStone": {
-	DisplayName: Thorium  Mod/ Petrify Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PhylacteryBuffStone": {
-	DisplayName: Thorium  Mod/ Phylactery Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PotentExtractBuffStone": {
-	DisplayName: Thorium  Mod/ Potent Extract Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PurifiedWatersStone": {
-	DisplayName: Thorium  Mod/ Purified Waters Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RapierBadgeBuffStone": {
-	DisplayName: Thorium  Mod/ Rapier Badge Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RapierBuffStone": {
-	DisplayName: Thorium  Mod/ Rapier Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RealityBearerStone": {
-	DisplayName: Thorium  Mod/ Reality Bearer Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RefreshingBubbleStone": {
-	DisplayName: Thorium  Mod/ Refreshing Bubble Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RevivalExhaustionStone": {
-	DisplayName: Thorium  Mod/ Revival Exhaustion Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SandshroudPouchBuffStone": {
-	DisplayName: Thorium  Mod/ Sandshroud Pouch Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SandshroudPouchDebuffStone": {
-	DisplayName: Thorium  Mod/ Sandshroud Pouch Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SchmelzeDebuffStone": {
-	DisplayName: Thorium  Mod/ Schmelze Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ScytheofUndoingBuffStone": {
-	DisplayName: Thorium  Mod/ Scytheof Undoing Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SeedofHopeBuffStone": {
-	DisplayName: Thorium  Mod/ Seedof Hope Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ShambleBallDebuffStone": {
-	DisplayName: Thorium  Mod/ Shamble Ball Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SheathBuffStone": {
-	DisplayName: Thorium  Mod/ Sheath Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SingedStone": {
-	DisplayName: Thorium  Mod/ Singed Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SkeletonRepellentBuffStone": {
-	DisplayName: Thorium  Mod/ Skeleton Repellent Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpearmintDebuffStone": {
-	DisplayName: Thorium  Mod/ Spearmint Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpectralBladeBuffStone": {
-	DisplayName: Thorium  Mod/ Spectral Blade Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SpiritsGraceBuffStone": {
-	DisplayName: Thorium  Mod/ Spirits Grace Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SporeCoatingBuffStone": {
-	DisplayName: Thorium  Mod/ Spore Coating Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SporedStone": {
-	DisplayName: Thorium  Mod/ Spored Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/StaggeredStone": {
-	DisplayName: Thorium  Mod/ Staggered Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/StrangeSkullDebuffStone": {
-	DisplayName: Thorium  Mod/ Strange Skull Debuff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/StunnedStone": {
-	DisplayName: Thorium  Mod/ Stunned Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ArsenalStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Arsenal Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerBountyStone": {
-	DisplayName: Thorium  Mod/ Banner Bounty Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerConfusionStone": {
-	DisplayName: Thorium  Mod/ Banner Confusion Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerDamageStone": {
-	DisplayName: Thorium  Mod/ Banner Damage Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerDefenseStone": {
-	DisplayName: Thorium  Mod/ Banner Defense Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerFalconStone": {
-	DisplayName: Thorium  Mod/ Banner Falcon Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerGhostStone": {
-	DisplayName: Thorium  Mod/ Banner Ghost Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerLifeRegenStone": {
-	DisplayName: Thorium  Mod/ Banner Life Regen Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerPiousStone": {
-	DisplayName: Thorium  Mod/ Banner Pious Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerPowerStone": {
-	DisplayName: Thorium  Mod/ Banner Power Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BannerPrecisionStone": {
-	DisplayName: Thorium  Mod/ Banner Precision Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BeholderStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Beholder Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BlobhornCoralStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Blobhorn Coral Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodFeasterStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Blood Feaster Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodPactStone": {
-	DisplayName: Thorium  Mod/ Blood Pact Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodyPaganStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Bloody Pagan Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ButterflyStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Butterfly Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CorrodlingStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Corrodling Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CorruptlingStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Corruptling Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/CrimsonHoundStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Crimson Hound Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/DraconicMagmaStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Draconic Magma Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EmberStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Ember Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EnchantedCaneBuffStone": {
-	DisplayName: Thorium  Mod/ Enchanted Cane Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/EyeofOdinBuffStone": {
-	DisplayName: Thorium  Mod/ Eyeof Odin Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/HailBomberBuffStone": {
-	DisplayName: Thorium  Mod/ Hail Bomber Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/IceFairyStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Ice Fairy Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LadyLightBuffStone": {
-	DisplayName: Thorium  Mod/ Lady Light Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LivingWoodAcornBuffStone": {
-	DisplayName: Thorium  Mod/ Living Wood Acorn Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MantisCaneBuffStone": {
-	DisplayName: Thorium  Mod/ Mantis Cane Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MastersLibramBuffStone": {
-	DisplayName: Thorium  Mod/ Masters Libram Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MeteorHeadStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Meteor Head Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/MoltenBannerBuffStone": {
-	DisplayName: Thorium  Mod/ Molten Banner Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/NebulaReflectionBuffStone": {
-	DisplayName: Thorium  Mod/ Nebula Reflection Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/PrehistoricAmberStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Prehistoric Amber Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/RosySlimeStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Rosy Slime Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SeahorseWandBuffStone": {
-	DisplayName: Thorium  Mod/ Seahorse Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SteamgunnerControllerBuffStone": {
-	DisplayName: Thorium  Mod/ Steamgunner Controller Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/StormHatchlingStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Storm Hatchling Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TabooWandBuffStone": {
-	DisplayName: Thorium  Mod/ Taboo Wand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TerrariumEnigmaStaffBuffStone": {
-	DisplayName: Thorium  Mod/ Terrarium Enigma Staff Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TheBlackCaneBuffStone": {
-	DisplayName: Thorium  Mod/ The Black Cane Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ValkyrieBladeBuffStone": {
-	DisplayName: Thorium  Mod/ Valkyrie Blade Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ViscountCaneBuffStone": {
-	DisplayName: Thorium  Mod/ Viscount Cane Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/YarnBallBuffStone": {
-	DisplayName: Thorium  Mod/ Yarn Ball Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SunderedStone": {
-	DisplayName: Thorium  Mod/ Sundered Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TerrariumBacklashStone": {
-	DisplayName: Thorium  Mod/ Terrarium Backlash Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TerrariumDefenderBuffStone": {
-	DisplayName: Thorium  Mod/ Terrarium Defender Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/BloodLotusStone": {
-	DisplayName: Thorium  Mod/ Blood Lotus Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/LastStandBuffStone": {
-	DisplayName: Thorium  Mod/ Last Stand Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/SprintStone": {
-	DisplayName: Thorium  Mod/ Sprint Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ThrowingSpeedStone": {
-	DisplayName: Thorium  Mod/ Throwing Speed Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ToxicCoatingBuffStone": {
-	DisplayName: Thorium  Mod/ Toxic Coating Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TrueStrikeStone": {
-	DisplayName: Thorium  Mod/ True Strike Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TrueStrikeTiredStone": {
-	DisplayName: Thorium  Mod/ True Strike Tired Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/TunedStone": {
-	DisplayName: Thorium  Mod/ Tuned Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ValadiumSetBuffStone": {
-	DisplayName: Thorium  Mod/ Valadium Set Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/VampiresCurseBuffStone": {
-	DisplayName: Thorium  Mod/ Vampires Curse Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WarmongerBuffStone": {
-	DisplayName: Thorium  Mod/ Warmonger Buff Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WidowsKissStone": {
-	DisplayName: Thorium  Mod/ Widows Kiss Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WindBurstStone": {
-	DisplayName: Thorium  Mod/ Wind Burst Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/WitherStone": {
-	DisplayName: Thorium  Mod/ Wither Stone
-	Tooltip: ""
-}
-
-"Thorium Mod/ZombieRepellentBuffStone": {
-	DisplayName: Thorium  Mod/ Zombie Repellent Buff Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/BattleCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Battle Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/BlurringStone": {
-	DisplayName: Alchemist N P C  Lite/ Blurring Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/BuilderCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Builder Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/CalamityCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Calamity Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/CorrosionStone": {
-	DisplayName: Alchemist N P C  Lite/ Corrosion Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/DiscordBuffStone": {
-	DisplayName: Alchemist N P C  Lite/ Discord Buff Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/ExcavationStone": {
-	DisplayName: Alchemist N P C  Lite/ Excavation Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/ExplorerCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Explorer Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/FishingCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Fishing Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/FortitudeStone": {
-	DisplayName: Alchemist N P C  Lite/ Fortitude Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/GreaterDangersenseStone": {
-	DisplayName: Alchemist N P C  Lite/ Greater Dangersense Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/LongInvincibleStone": {
-	DisplayName: Alchemist N P C  Lite/ Long Invincible Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/MageCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Mage Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/NinjaSkillStone": {
-	DisplayName: Alchemist N P C  Lite/ Ninja Skill Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/RangerCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Ranger Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/StationUltimaBuffStone": {
-	DisplayName: Alchemist N P C  Lite/ Station Ultima Buff Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/SummonerCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Summoner Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/SunshineStone": {
-	DisplayName: Alchemist N P C  Lite/ Sunshine Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/TankCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Tank Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/ThoriumCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Thorium Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/TitanSkinStone": {
-	DisplayName: Alchemist N P C  Lite/ Titan Skin Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/TrapsBuffStone": {
-	DisplayName: Alchemist N P C  Lite/ Traps Buff Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/TrueDiscordBuffStone": {
-	DisplayName: Alchemist N P C  Lite/ True Discord Buff Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/UniversalCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Universal Comb Stone
-	Tooltip: ""
-}
-
-"AlchemistNPC Lite/VanTankCombStone": {
-	DisplayName: Alchemist N P C  Lite/ Van Tank Comb Stone
-	Tooltip: ""
-}
-
-"Calamity: Community Remix/DeplatformedStone": {
-	DisplayName: Calamity:  Community  Remix/ Deplatformed Stone
-	Tooltip: ""
 }

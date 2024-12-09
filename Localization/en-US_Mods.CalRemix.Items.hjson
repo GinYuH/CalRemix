@@ -2849,7 +2849,11 @@ RetromansPowerStar: {
 }
 
 KnowledgeClone.DisplayName: The Archseer
-TorrefiedTephra.DisplayName: Torrefied Tephra
+
+TorrefiedTephra: {
+	DisplayName: Torrefied Tephra
+	Tooltip: ""
+}
 
 ElasticJelly: {
 	DisplayName: Elastic Jelly
@@ -2864,4 +2868,9 @@ InvigoratingJelly: {
 IrateJelly: {
 	DisplayName: Irate Jelly
 	Tooltip: Activating Rage will deal 50% of your health as damage
+}
+
+SylvanSlasher: {
+	DisplayName: Sylvan Slasher
+	Tooltip: ""
 }
