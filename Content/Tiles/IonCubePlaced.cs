@@ -1,7 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
-using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Core.World;
@@ -10,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

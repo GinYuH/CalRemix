@@ -3,12 +3,10 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.Polterghast;
 using CalRemix.Content.Items.Placeables;
-using CalRemix.Core.World;
 using System.Linq;
 using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 

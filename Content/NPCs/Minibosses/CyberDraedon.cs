@@ -11,8 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System.IO;
-using Terraria.Chat;
-using Terraria.Localization;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.BiomeManagers;
 using CalRemix.UI;

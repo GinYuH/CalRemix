@@ -1,7 +1,5 @@
 using CalamityMod;
-using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Content.Buffs;
-using CalRemix.Content.Items.Accessories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,7 +7,6 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace CalRemix.UI.ElementalSystem
 {

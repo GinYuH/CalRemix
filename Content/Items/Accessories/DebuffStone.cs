@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of cheat mods

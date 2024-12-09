@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using CalamityMod;
+﻿using CalamityMod;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Summon;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -15,10 +16,6 @@ using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using CalRemix.Core.World;
-using CalRemix.Content.NPCs.Eclipse;
-using CalRemix.Core.OutboundCompatibility;
-using CalRemix.Content.Buffs;
 
 namespace CalRemix.Content.NPCs.TownNPCs
 {

@@ -1,5 +1,4 @@
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Rarities;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Materials
 {
-	public class HauntedBar : ModItem
+    public class HauntedBar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

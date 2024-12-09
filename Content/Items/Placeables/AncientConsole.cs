@@ -1,9 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using CalRemix.Content.Tiles;
 using CalamityMod.Rarities;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.Placeables.FurnitureAshen;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items.Materials;

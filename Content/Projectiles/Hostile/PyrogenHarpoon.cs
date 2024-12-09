@@ -1,17 +1,12 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Projectiles.Boss;
-using CalRemix.Content.NPCs.Bosses.BossScule;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;

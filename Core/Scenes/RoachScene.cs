@@ -1,6 +1,4 @@
-﻿using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.Projectiles.Magic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;

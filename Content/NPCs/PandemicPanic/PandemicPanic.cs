@@ -11,10 +11,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Core.World;
-using Terraria.Chat;
-using Terraria.Localization;
 using CalamityMod.Projectiles.Typeless;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.Content.NPCs.PandemicPanic
 {

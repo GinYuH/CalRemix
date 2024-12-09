@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles.Plates;
-using CalRemix.Content.Items.Materials;
 using CalRemix.Core.World;
 using CalamityMod.Items.Placeables.Plates;
 using CalRemix.Content.Tiles.Plates.Molten;

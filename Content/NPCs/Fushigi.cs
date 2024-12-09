@@ -13,8 +13,6 @@ using System;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Core.World;
-using Terraria.Chat;
-using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs
 {

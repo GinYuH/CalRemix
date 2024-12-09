@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items;
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

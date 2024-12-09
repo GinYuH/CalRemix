@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Weapons.Ranged;
 
 namespace CalRemix.Content.Items.Weapons

@@ -1,5 +1,4 @@
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Materials
 {
-	public class EssentialEssenceBar : ModItem
+    public class EssentialEssenceBar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

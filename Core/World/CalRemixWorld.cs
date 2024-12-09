@@ -27,9 +27,6 @@ using CalamityMod.Tiles.FurnitureVoid;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.Bumblebirb;
-using CalRemix.Core.Retheme;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using CalamityMod.NPCs.AquaticScourge;
@@ -49,10 +46,6 @@ using Terraria.Audio;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using Terraria.Chat;
-using Terraria.Localization;
-using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Core.World
 {

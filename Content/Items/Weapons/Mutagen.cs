@@ -1,14 +1,7 @@
-﻿using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Items;
+﻿using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Items.Materials;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Placeables;
-using Terraria.Audio;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;

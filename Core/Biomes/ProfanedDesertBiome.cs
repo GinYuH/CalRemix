@@ -1,5 +1,4 @@
-﻿using CalRemix.Core.World;
-using CalRemix.World;
+﻿using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Capture;

@@ -14,12 +14,8 @@ using CalamityMod.World;
 using Terraria.DataStructures;
 using CalamityMod.Events;
 using static CalamityMod.World.CalamityWorld;
-using static CalamityMod.NPCs.CalamityGlobalNPC;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Items.Potions;
-using System.Runtime.Serialization;
-using Terraria.GameContent.ObjectInteractions;
-using CalRemix.Core.Retheme;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Buffs;
 using Terraria.GameContent.ItemDropRules;
@@ -31,19 +27,11 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
-using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
-using CalRemix.Content.NPCs.TownNPCs;
 using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.Items.Weapons.Ranged;
-using rail;
-using CalRemix.UI.ElementalSystem;
-using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.NPCs.Cryogen;
-using System.Reflection.Metadata;
-using System.Runtime;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {

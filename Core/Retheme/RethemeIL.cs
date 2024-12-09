@@ -5,7 +5,6 @@ using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
-using CalamityMod.NPCs.Providence;
 
 namespace CalRemix.Core.Retheme
 {

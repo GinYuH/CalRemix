@@ -1,9 +1,7 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.Accessories;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Core.World;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.UI

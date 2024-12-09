@@ -1,6 +1,4 @@
-﻿using CalRemix.Content.Buffs;
-using CalRemix.Content.Projectiles;
-using CalRemix.Content.Projectiles.Weapons;
+﻿using CalRemix.Content.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
