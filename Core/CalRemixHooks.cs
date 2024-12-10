@@ -67,7 +67,6 @@ namespace CalRemix.Core
             On_Player.UpdateItemDye += AddDyeStats;
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
-            On_Main.DrawMap += DisableMapDuringCutscene;
             On_Main.DrawInfoAccs += DisableInfoDuringCutscene;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
@@ -730,11 +729,6 @@ namespace CalRemix.Core
                 return;
             else
                 orig(player, type);
-        }
-
-        public static void DisableMapDuringCutscene(On_Main.orig_DrawMap orig, Main self, GameTime gameTime)
-        {
-            orig(self, gameTime);
         }
 
         public static void DisableInfoDuringCutscene(On_Main.orig_DrawInfoAccs orig, Main self)
