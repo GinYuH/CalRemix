@@ -49,7 +49,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public void ProjCircle(float speed, float rotoff)
         {
             for (int a = 0; a < Count; a++)
-                Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, a / (float)Count)).RotatedBy(rotoff) * speed, ModContent.ProjectileType<ObsidianFragment>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(0, 6), 1);
+                Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, a / (float)Count)).RotatedBy(rotoff) * speed, ModContent.ProjectileType<ObsidianFragment>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Main.myPlayer, Main.rand.Next(0, 6), 1);
         }
 
 

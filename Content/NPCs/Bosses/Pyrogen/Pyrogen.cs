@@ -776,7 +776,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     {
                                         bool goRight = NPC.DirectionTo(Target.Center).X.DirectionalSign() == 1;
                                         Vector2 spawnPos = new Vector2(NPC.Center.X + (goRight ? -spawnDistX : spawnDistX), Target.Center.Y + i * shotSpacing);
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.UnitX * NPC.DirectionTo(Target.Center).X.DirectionalSign() * projectileSpeed, ModContent.ProjectileType<PyrogenTool>(), 100, 0);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.UnitX * NPC.DirectionTo(Target.Center).X.DirectionalSign() * projectileSpeed, ModContent.ProjectileType<PyrogenTool>(), Main.expertMode ? 40 : 100, 0);
                                     }
                                 }
                             }
@@ -1077,7 +1077,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     Vector2 pos = NPC.Center + norm * Main.rand.Next(minSpawnRad, maxSpawnRad);
                     //if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(NPC.Center) * projSpeed, ModContent.ProjectileType<ObsidianFragment>(), 100, 0, -1, Main.rand.Next(0, 6));
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(NPC.Center) * projSpeed, ModContent.ProjectileType<ObsidianFragment>(), Main.expertMode ? 50 : 100, 0, -1, Main.rand.Next(0, 6));
                     }
                 }
             }
@@ -1095,7 +1095,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 SoundEngine.PlaySound(BetterSoundID.ItemMeteorImpact with { Pitch = -0.2f, Volume = 2 }, NPC.Center);
                 //if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center) * 10, ModContent.ProjectileType<ObsidianBomb>(), 200, 0, -1, bombProjAmount);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center) * 10, ModContent.ProjectileType<ObsidianBomb>(), Main.expertMode ? 150 : 200, 0, -1, bombProjAmount);
                 }
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.position = NPC.position - NPC.DirectionTo(Target.Center) * 40;
