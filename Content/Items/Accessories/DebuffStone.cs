@@ -1,43 +1,19 @@
 ﻿using CalamityMod;
 using CalamityMod.Items;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of cheat mods
 {
-    public class DebuffStoneSystem : ModSystem
-    {
-        public override void Load()
-        {
-            Mod cal = ModLoader.GetMod("CalamityMod");
-            for (int i = 1; i < BuffLoader.BuffCount; i++)
-            {
-                // Sorry, only vanilla buffs get kicked out
-                if (i < BuffID.Count)
-                {
-                    if (!Main.debuff[i])
-                        continue;
-                }
-                // Only Calamity debuffs from these two folders
-                if (i > BuffID.Count)
-                {
-                    if (BuffLoader.GetBuff(i).Mod == cal)
-                        if (!BuffLoader.GetBuff(i).Texture.Contains("DamageOverTime") && 
-                            !BuffLoader.GetBuff(i).Texture.Contains("StatDebuffs"))
-                            continue;
-                }
-                DebuffStone d = new DebuffStone(i);
-                ModContent.GetInstance<CalRemix>().AddContent(d);
-            }            
-        }
-    }
-
     [Autoload(false)]
     public class DebuffStone : ModItem, ILocalizedModType
     {
@@ -57,9 +33,18 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            string debuffName = debuffType < BuffID.Count ? Lang.GetBuffName(debuffType) : BuffLoader.GetBuff(debuffType).DisplayName.Value;
-            DisplayName.SetDefault(debuffName + " Stone");
-            Tooltip.SetDefault("Immunity to " + debuffName + "\nAttacks inflict " + debuffName);
+#if !DEBUG
+            try
+            {
+                string debuffName = debuffType < BuffID.Count ? Lang.GetBuffName(debuffType) : BuffLoader.GetBuff(debuffType).DisplayName.Value;
+                DisplayName.SetDefault(debuffName + " Stone");
+                Tooltip.SetDefault("Immunity to " + debuffName + "\nAttacks inflict " + debuffName);
+            }
+            catch
+            {
+
+            }
+#endif
         }
 
         public override void SetDefaults()
@@ -73,24 +58,6 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            for (int s = 0; s < tooltips.Count; s++)
-            {
-                TooltipLine v = tooltips[s];
-                int idx = -1;
-                for (int i = 0; i < v.Text.Length; i++)
-                {
-                    if (v.Text[i] == '/')
-                    {
-                        idx = i;
-                        break;
-                    }
-                }
-                if (idx != -1)
-                {
-                    v.Text = v.Text.Remove(0, idx + 1);
-                    break;
-                }
-            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

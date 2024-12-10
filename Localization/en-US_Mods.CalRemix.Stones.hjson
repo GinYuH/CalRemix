@@ -1383,3 +1383,2838 @@ FolvsStone: {
 		Attacks inflict Folv's
 		'''
 }
+
+CalRemix/HorseStone: {
+	DisplayName: Chaotic Horse Stone
+	Tooltip:
+		'''
+		Immunity to Chaotic Horse
+		Attacks inflict Chaotic Horse
+		'''
+}
+
+ThoriumMod/AbyssalShellBuffStone: {
+	DisplayName: Abyssal Shell Stone
+	Tooltip:
+		'''
+		Immunity to Abyssal Shell
+		Attacks inflict Abyssal Shell
+		'''
+}
+
+ThoriumMod/AbyssalWeightStone: {
+	DisplayName: Abyssal Weight Stone
+	Tooltip:
+		'''
+		Immunity to Abyssal Weight
+		Attacks inflict Abyssal Weight
+		'''
+}
+
+ThoriumMod/AirStrikeShieldBuffStone: {
+	DisplayName: Air Strike Shield Stone
+	Tooltip:
+		'''
+		Immunity to Air Strike Shield
+		Attacks inflict Air Strike Shield
+		'''
+}
+
+ThoriumMod/AquaAffinityStone: {
+	DisplayName: Aqua Affinity Stone
+	Tooltip:
+		'''
+		Immunity to Aqua Affinity
+		Attacks inflict Aqua Affinity
+		'''
+}
+
+ThoriumMod/AquamancerStone: {
+	DisplayName: Aquamancer Stone
+	Tooltip:
+		'''
+		Immunity to Aquamancer
+		Attacks inflict Aquamancer
+		'''
+}
+
+ThoriumMod/AquaticAptitudeStone: {
+	DisplayName: Aquatic Aptitude Stone
+	Tooltip:
+		'''
+		Immunity to Aquatic Aptitude
+		Attacks inflict Aquatic Aptitude
+		'''
+}
+
+ThoriumMod/ArcanePotionBuffStone: {
+	DisplayName: Arcane Energy Stone
+	Tooltip:
+		'''
+		Immunity to Arcane Energy
+		Attacks inflict Arcane Energy
+		'''
+}
+
+ThoriumMod/ArtilleryBuffStone: {
+	DisplayName: Artillery Stone
+	Tooltip:
+		'''
+		Immunity to Artillery
+		Attacks inflict Artillery
+		'''
+}
+
+ThoriumMod/AssassinPotionBuffStone: {
+	DisplayName: Assassin Stone
+	Tooltip:
+		'''
+		Immunity to Assassin
+		Attacks inflict Assassin
+		'''
+}
+
+ThoriumMod/AmpedUpStone: {
+	DisplayName: Amped Up Stone
+	Tooltip:
+		'''
+		Immunity to Amped Up
+		Attacks inflict Amped Up
+		'''
+}
+
+ThoriumMod/AudioOverloadStone: {
+	DisplayName: Audio Overload Stone
+	Tooltip:
+		'''
+		Immunity to Audio Overload
+		Attacks inflict Audio Overload
+		'''
+}
+
+ThoriumMod/ConductorsStandBuffStone: {
+	DisplayName: Conductor Stone
+	Tooltip:
+		'''
+		Immunity to Conductor
+		Attacks inflict Conductor
+		'''
+}
+
+ThoriumMod/CreativeBlockStone: {
+	DisplayName: Creative Block Stone
+	Tooltip:
+		'''
+		Immunity to Creative Block
+		Attacks inflict Creative Block
+		'''
+}
+
+ThoriumMod/CreativityPotionBuffStone: {
+	DisplayName: Creativity Stone
+	Tooltip:
+		'''
+		Immunity to Creativity
+		Attacks inflict Creativity
+		'''
+}
+
+ThoriumMod/EarwormPotionBuffStone: {
+	DisplayName: Earworm Stone
+	Tooltip:
+		'''
+		Immunity to Earworm
+		Attacks inflict Earworm
+		'''
+}
+
+ThoriumMod/InspirationReachPotionBuffStone: {
+	DisplayName: Inspirational Reach Stone
+	Tooltip:
+		'''
+		Immunity to Inspirational Reach
+		Attacks inflict Inspirational Reach
+		'''
+}
+
+ThoriumMod/MaestroSetDebuffStone: {
+	DisplayName: Fallen Chorus Stone
+	Tooltip:
+		'''
+		Immunity to Fallen Chorus
+		Attacks inflict Fallen Chorus
+		'''
+}
+
+ThoriumMod/MetronomeBuffStone: {
+	DisplayName: Tick Stone
+	Tooltip:
+		'''
+		Immunity to Tick
+		Attacks inflict Tick
+		'''
+}
+
+ThoriumMod/MetronomeDebuffStone: {
+	DisplayName: Tock Stone
+	Tooltip:
+		'''
+		Immunity to Tock
+		Attacks inflict Tock
+		'''
+}
+
+ThoriumMod/ShockAbsorberBuffStone: {
+	DisplayName: Shock Absorbtion Stone
+	Tooltip:
+		'''
+		Immunity to Shock Absorbtion
+		Attacks inflict Shock Absorbtion
+		'''
+}
+
+ThoriumMod/SoloistsHatSetBuffStone: {
+	DisplayName: Endless Creativity Stone
+	Tooltip:
+		'''
+		Immunity to Endless Creativity
+		Attacks inflict Endless Creativity
+		'''
+}
+
+ThoriumMod/ZunpetBuffStone: {
+	DisplayName: Zunpet Energy Stone
+	Tooltip:
+		'''
+		Immunity to Zunpet Energy
+		Attacks inflict Zunpet Energy
+		'''
+}
+
+ThoriumMod/BatRepellentBuffStone: {
+	DisplayName: Repellent : Bats Stone
+	Tooltip:
+		'''
+		Immunity to Repellent : Bats
+		Attacks inflict Repellent : Bats
+		'''
+}
+
+ThoriumMod/BeetleCarapaceStone: {
+	DisplayName: Beetle Carapace Stone
+	Tooltip:
+		'''
+		Immunity to Beetle Carapace
+		Attacks inflict Beetle Carapace
+		'''
+}
+
+ThoriumMod/BlightFeverStone: {
+	DisplayName: Blight Fever Stone
+	Tooltip:
+		'''
+		Immunity to Blight Fever
+		Attacks inflict Blight Fever
+		'''
+}
+
+ThoriumMod/BloodHarvestStone: {
+	DisplayName: Blood Harvest Stone
+	Tooltip:
+		'''
+		Immunity to Blood Harvest
+		Attacks inflict Blood Harvest
+		'''
+}
+
+ThoriumMod/BloodRushStone: {
+	DisplayName: Blood Rush Stone
+	Tooltip:
+		'''
+		Immunity to Blood Rush
+		Attacks inflict Blood Rush
+		'''
+}
+
+ThoriumMod/BloodyWandDebuffStone: {
+	DisplayName: Bloody Stone
+	Tooltip:
+		'''
+		Immunity to Bloody
+		Attacks inflict Bloody
+		'''
+}
+
+ThoriumMod/BouncingFlamePotionBuffStone: {
+	DisplayName: Bouncing Flames Stone
+	Tooltip:
+		'''
+		Immunity to Bouncing Flames
+		Attacks inflict Bouncing Flames
+		'''
+}
+
+ThoriumMod/BubbledStone: {
+	DisplayName: Bubbled Stone
+	Tooltip:
+		'''
+		Immunity to Bubbled
+		Attacks inflict Bubbled
+		'''
+}
+
+ThoriumMod/CactusFruitBuffStone: {
+	DisplayName: Prickly & Tasty Stone
+	Tooltip:
+		'''
+		Immunity to Prickly & Tasty
+		Attacks inflict Prickly & Tasty
+		'''
+}
+
+ThoriumMod/ChaosStateStone: {
+	DisplayName: Chaos State: Teleportation Stone
+	Tooltip:
+		'''
+		Immunity to Chaos State: Teleportation
+		Attacks inflict Chaos State: Teleportation
+		'''
+}
+
+ThoriumMod/CharmedStone: {
+	DisplayName: Charmed Stone
+	Tooltip:
+		'''
+		Immunity to Charmed
+		Attacks inflict Charmed
+		'''
+}
+
+ThoriumMod/ChillStone: {
+	DisplayName: Chill Stone
+	Tooltip:
+		'''
+		Immunity to Chill
+		Attacks inflict Chill
+		'''
+}
+
+ThoriumMod/ChokingAuraStone: {
+	DisplayName: Choking Aura Stone
+	Tooltip:
+		'''
+		Immunity to Choking Aura
+		Attacks inflict Choking Aura
+		'''
+}
+
+ThoriumMod/CobblerBuffStone: {
+	DisplayName: Shined Shoes Stone
+	Tooltip:
+		'''
+		Immunity to Shined Shoes
+		Attacks inflict Shined Shoes
+		'''
+}
+
+ThoriumMod/ConflagrationPotionBuffStone: {
+	DisplayName: Conflagrate Stone
+	Tooltip:
+		'''
+		Immunity to Conflagrate
+		Attacks inflict Conflagrate
+		'''
+}
+
+ThoriumMod/CorporealStone: {
+	DisplayName: Corporeal Stone
+	Tooltip:
+		'''
+		Immunity to Corporeal
+		Attacks inflict Corporeal
+		'''
+}
+
+ThoriumMod/CorrosionStone: {
+	DisplayName: Corrosion Stone
+	Tooltip:
+		'''
+		Immunity to Corrosion
+		Attacks inflict Corrosion
+		'''
+}
+
+ThoriumMod/CursedHurlStone: {
+	DisplayName: Cursed Hurl Stone
+	Tooltip:
+		'''
+		Immunity to Cursed Hurl
+		Attacks inflict Cursed Hurl
+		'''
+}
+
+ThoriumMod/DarknessWithinStone: {
+	DisplayName: Darkness Within Stone
+	Tooltip:
+		'''
+		Immunity to Darkness Within
+		Attacks inflict Darkness Within
+		'''
+}
+
+ThoriumMod/DecayingFleshStone: {
+	DisplayName: Decaying Flesh Stone
+	Tooltip:
+		'''
+		Immunity to Decaying Flesh
+		Attacks inflict Decaying Flesh
+		'''
+}
+
+ThoriumMod/DeepFreezeCoatingBuffStone: {
+	DisplayName: Thrown Weapon Imbue : Deep Freeze Stone
+	Tooltip:
+		'''
+		Immunity to Thrown Weapon Imbue : Deep Freeze
+		Attacks inflict Thrown Weapon Imbue : Deep Freeze
+		'''
+}
+
+ThoriumMod/DepthBreathStone: {
+	DisplayName: Depth: Breath Stone
+	Tooltip:
+		'''
+		Immunity to Depth: Breath
+		Attacks inflict Depth: Breath
+		'''
+}
+
+ThoriumMod/DepthDamageStone: {
+	DisplayName: Depth: Damage Stone
+	Tooltip:
+		'''
+		Immunity to Depth: Damage
+		Attacks inflict Depth: Damage
+		'''
+}
+
+ThoriumMod/DepthSpeedStone: {
+	DisplayName: Depth: Speed Stone
+	Tooltip:
+		'''
+		Immunity to Depth: Speed
+		Attacks inflict Depth: Speed
+		'''
+}
+
+ThoriumMod/DestabilizedStone: {
+	DisplayName: Destabilized Stone
+	Tooltip:
+		'''
+		Immunity to Destabilized
+		Attacks inflict Destabilized
+		'''
+}
+
+ThoriumMod/DevilDaggerBuffStone: {
+	DisplayName: Demonic Dance Stone
+	Tooltip:
+		'''
+		Immunity to Demonic Dance
+		Attacks inflict Demonic Dance
+		'''
+}
+
+ThoriumMod/EmergencyAirTankStone: {
+	DisplayName: Emergency Air Tank Stone
+	Tooltip:
+		'''
+		Immunity to Emergency Air Tank
+		Attacks inflict Emergency Air Tank
+		'''
+}
+
+ThoriumMod/EscapeRocketBuffStone: {
+	DisplayName: Escape Rocket Stone
+	Tooltip:
+		'''
+		Immunity to Escape Rocket
+		Attacks inflict Escape Rocket
+		'''
+}
+
+ThoriumMod/ExplosiveCoatingBuffStone: {
+	DisplayName: Thrown Weapon Imbue : Explosive Stone
+	Tooltip:
+		'''
+		Immunity to Thrown Weapon Imbue : Explosive
+		Attacks inflict Thrown Weapon Imbue : Explosive
+		'''
+}
+
+ThoriumMod/FishRepellentBuffStone: {
+	DisplayName: Repellent : Fish Stone
+	Tooltip:
+		'''
+		Immunity to Repellent : Fish
+		Attacks inflict Repellent : Fish
+		'''
+}
+
+ThoriumMod/FlawlessChrysalisDebuffStone: {
+	DisplayName: Recovering Stone
+	Tooltip:
+		'''
+		Immunity to Recovering
+		Attacks inflict Recovering
+		'''
+}
+
+ThoriumMod/FlawlessChrysalisEndBuffStone: {
+	DisplayName: Unleashed Stone
+	Tooltip:
+		'''
+		Immunity to Unleashed
+		Attacks inflict Unleashed
+		'''
+}
+
+ThoriumMod/FlawlessChrysalisStartBuffStone: {
+	DisplayName: Metamorphosis Stone
+	Tooltip:
+		'''
+		Immunity to Metamorphosis
+		Attacks inflict Metamorphosis
+		'''
+}
+
+ThoriumMod/FleshFrenzyStone: {
+	DisplayName: Flesh Frenzy Stone
+	Tooltip:
+		'''
+		Immunity to Flesh Frenzy
+		Attacks inflict Flesh Frenzy
+		'''
+}
+
+ThoriumMod/FreezingStone: {
+	DisplayName: Freezing Stone
+	Tooltip:
+		'''
+		Immunity to Freezing
+		Attacks inflict Freezing
+		'''
+}
+
+ThoriumMod/FrenzyPotionBuffStone: {
+	DisplayName: Frenzy Stone
+	Tooltip:
+		'''
+		Immunity to Frenzy
+		Attacks inflict Frenzy
+		'''
+}
+
+ThoriumMod/FullStomachStone: {
+	DisplayName: Full Stomach Stone
+	Tooltip:
+		'''
+		Immunity to Full Stomach
+		Attacks inflict Full Stomach
+		'''
+}
+
+ThoriumMod/FungalGrowthStone: {
+	DisplayName: Fungal Growth Stone
+	Tooltip:
+		'''
+		Immunity to Fungal Growth
+		Attacks inflict Fungal Growth
+		'''
+}
+
+ThoriumMod/GhastlyCarapaceBuffStone: {
+	DisplayName: Ghastly Soul Stone
+	Tooltip:
+		'''
+		Immunity to Ghastly Soul
+		Attacks inflict Ghastly Soul
+		'''
+}
+
+ThoriumMod/GorgonCoatingBuffStone: {
+	DisplayName: Thrown Weapon Imbue : Gorgon Juice Stone
+	Tooltip:
+		'''
+		Immunity to Thrown Weapon Imbue : Gorgon Juice
+		Attacks inflict Thrown Weapon Imbue : Gorgon Juice
+		'''
+}
+
+ThoriumMod/GougeStone: {
+	DisplayName: Gouge Stone
+	Tooltip:
+		'''
+		Immunity to Gouge
+		Attacks inflict Gouge
+		'''
+}
+
+ThoriumMod/GraniteSurgeStone: {
+	DisplayName: Granite Surge Stone
+	Tooltip:
+		'''
+		Immunity to Granite Surge
+		Attacks inflict Granite Surge
+		'''
+}
+
+ThoriumMod/GraveLimbDebuffStone: {
+	DisplayName: Cryptic Grasp Stone
+	Tooltip:
+		'''
+		Immunity to Cryptic Grasp
+		Attacks inflict Cryptic Grasp
+		'''
+}
+
+ThoriumMod/AltarBuffStone: {
+	DisplayName: Spiritual Connection Stone
+	Tooltip:
+		'''
+		Immunity to Spiritual Connection
+		Attacks inflict Spiritual Connection
+		'''
+}
+
+ThoriumMod/AuraDamageReductionStone: {
+	DisplayName: Aura : Damage Reduction Stone
+	Tooltip:
+		'''
+		Immunity to Aura : Damage Reduction
+		Attacks inflict Aura : Damage Reduction
+		'''
+}
+
+ThoriumMod/BeltoftheQuickResponseBuffStone: {
+	DisplayName: Speed Burst Stone
+	Tooltip:
+		'''
+		Immunity to Speed Burst
+		Attacks inflict Speed Burst
+		'''
+}
+
+ThoriumMod/BloodBoostStone: {
+	DisplayName: Blood Boost Stone
+	Tooltip:
+		'''
+		Immunity to Blood Boost
+		Attacks inflict Blood Boost
+		'''
+}
+
+ThoriumMod/BloomBoostStone: {
+	DisplayName: Bloom Boost Stone
+	Tooltip:
+		'''
+		Immunity to Bloom Boost
+		Attacks inflict Bloom Boost
+		'''
+}
+
+ThoriumMod/BloomingSetBuffStone: {
+	DisplayName: Overgrowth Stone
+	Tooltip:
+		'''
+		Immunity to Overgrowth
+		Attacks inflict Overgrowth
+		'''
+}
+
+ThoriumMod/BubbleBulwarkWandBuffStone: {
+	DisplayName: Bulwark Bubble Stone
+	Tooltip:
+		'''
+		Immunity to Bulwark Bubble
+		Attacks inflict Bulwark Bubble
+		'''
+}
+
+ThoriumMod/CelestialSetAllyBuffStone: {
+	DisplayName: Aura : Holy Shine Stone
+	Tooltip:
+		'''
+		Immunity to Aura : Holy Shine
+		Attacks inflict Aura : Holy Shine
+		'''
+}
+
+ThoriumMod/CelestialSetDebuffStone: {
+	DisplayName: Holy Aura Stone
+	Tooltip:
+		'''
+		Immunity to Holy Aura
+		Attacks inflict Holy Aura
+		'''
+}
+
+ThoriumMod/CosmicFluxStaffDamageBuffStone: {
+	DisplayName: Radiant Nova Stone
+	Tooltip:
+		'''
+		Immunity to Radiant Nova
+		Attacks inflict Radiant Nova
+		'''
+}
+
+ThoriumMod/CosmicFluxStaffHealBuffStone: {
+	DisplayName: Healing Nova Stone
+	Tooltip:
+		'''
+		Immunity to Healing Nova
+		Attacks inflict Healing Nova
+		'''
+}
+
+ThoriumMod/CrystalWishBuffStone: {
+	DisplayName: Crystal Wish Stone
+	Tooltip:
+		'''
+		Immunity to Crystal Wish
+		Attacks inflict Crystal Wish
+		'''
+}
+
+ThoriumMod/CuredStone: {
+	DisplayName: Cured Stone
+	Tooltip:
+		'''
+		Immunity to Cured
+		Attacks inflict Cured
+		'''
+}
+
+ThoriumMod/DarkContagionDebuffStone: {
+	DisplayName: Dark Contagion Stone
+	Tooltip:
+		'''
+		Immunity to Dark Contagion
+		Attacks inflict Dark Contagion
+		'''
+}
+
+ThoriumMod/DarkEffigyBuffStone: {
+	DisplayName: Effigy's Expense Stone
+	Tooltip:
+		'''
+		Immunity to Effigy's Expense
+		Attacks inflict Effigy's Expense
+		'''
+}
+
+ThoriumMod/DistortedTimeBoostStone: {
+	DisplayName: Distorted Time Stone
+	Tooltip:
+		'''
+		Immunity to Distorted Time
+		Attacks inflict Distorted Time
+		'''
+}
+
+ThoriumMod/DistortedTimeEnemyStone: {
+	DisplayName: Distorted Time Stone
+	Tooltip:
+		'''
+		Immunity to Distorted Time
+		Attacks inflict Distorted Time
+		'''
+}
+
+ThoriumMod/DragonHeartWandBuffStone: {
+	DisplayName: Dragon Heart Stone
+	Tooltip:
+		'''
+		Immunity to Dragon Heart
+		Attacks inflict Dragon Heart
+		'''
+}
+
+ThoriumMod/DreamCatcherBuffStone: {
+	DisplayName: Dream Catcher Stone
+	Tooltip:
+		'''
+		Immunity to Dream Catcher
+		Attacks inflict Dream Catcher
+		'''
+}
+
+ThoriumMod/DreamMegaphoneBuffStone: {
+	DisplayName: Dream Megaphone Stone
+	Tooltip:
+		'''
+		Immunity to Dream Megaphone
+		Attacks inflict Dream Megaphone
+		'''
+}
+
+ThoriumMod/DreamMegaphoneDebuffStone: {
+	DisplayName: Dream Megaphone Stone
+	Tooltip:
+		'''
+		Immunity to Dream Megaphone
+		Attacks inflict Dream Megaphone
+		'''
+}
+
+ThoriumMod/DreamWeaversHoodDebuffStone: {
+	DisplayName: Awake Stone
+	Tooltip:
+		'''
+		Immunity to Awake
+		Attacks inflict Awake
+		'''
+}
+
+ThoriumMod/DreamWeaversHoodDreamAllyBuffStone: {
+	DisplayName: Dreaming Stone
+	Tooltip:
+		'''
+		Immunity to Dreaming
+		Attacks inflict Dreaming
+		'''
+}
+
+ThoriumMod/DreamWeaversHoodDreamBuffStone: {
+	DisplayName: The Dream Stone
+	Tooltip:
+		'''
+		Immunity to The Dream
+		Attacks inflict The Dream
+		'''
+}
+
+ThoriumMod/DreamWeaversMaskBuffStone: {
+	DisplayName: Distorted Reality Stone
+	Tooltip:
+		'''
+		Immunity to Distorted Reality
+		Attacks inflict Distorted Reality
+		'''
+}
+
+ThoriumMod/DreamWeaversMaskDebuffStone: {
+	DisplayName: Rebound Stone
+	Tooltip:
+		'''
+		Immunity to Rebound
+		Attacks inflict Rebound
+		'''
+}
+
+ThoriumMod/EnfeebleStone: {
+	DisplayName: Enfeeble Stone
+	Tooltip:
+		'''
+		Immunity to Enfeeble
+		Attacks inflict Enfeeble
+		'''
+}
+
+ThoriumMod/ForgottenCrossNecklaceBuffStone: {
+	DisplayName: Holy Defense Stone
+	Tooltip:
+		'''
+		Immunity to Holy Defense
+		Attacks inflict Holy Defense
+		'''
+}
+
+ThoriumMod/GlowingPotionBuffStone: {
+	DisplayName: Illustrious Energy Stone
+	Tooltip:
+		'''
+		Immunity to Illustrious Energy
+		Attacks inflict Illustrious Energy
+		'''
+}
+
+ThoriumMod/HolyGlareStone: {
+	DisplayName: Holy Glare Stone
+	Tooltip:
+		'''
+		Immunity to Holy Glare
+		Attacks inflict Holy Glare
+		'''
+}
+
+ThoriumMod/HolyPotionBuffStone: {
+	DisplayName: Holy Power Stone
+	Tooltip:
+		'''
+		Immunity to Holy Power
+		Attacks inflict Holy Power
+		'''
+}
+
+ThoriumMod/KarmicHolderBuffStone: {
+	DisplayName: Karmic Convergence Stone
+	Tooltip:
+		'''
+		Immunity to Karmic Convergence
+		Attacks inflict Karmic Convergence
+		'''
+}
+
+ThoriumMod/LiberatedStone: {
+	DisplayName: Liberated Stone
+	Tooltip:
+		'''
+		Immunity to Liberated
+		Attacks inflict Liberated
+		'''
+}
+
+ThoriumMod/LifeBinderSetBuffStone: {
+	DisplayName: Mist Fueled Bulwark Stone
+	Tooltip:
+		'''
+		Immunity to Mist Fueled Bulwark
+		Attacks inflict Mist Fueled Bulwark
+		'''
+}
+
+ThoriumMod/LifeQuartzShieldBuffStone: {
+	DisplayName: Rose-Colored Bubble Stone
+	Tooltip:
+		'''
+		Immunity to Rose-Colored Bubble
+		Attacks inflict Rose-Colored Bubble
+		'''
+}
+
+ThoriumMod/LifeQuartzShieldDebuffStone: {
+	DisplayName: Popped Bubble Stone
+	Tooltip:
+		'''
+		Immunity to Popped Bubble
+		Attacks inflict Popped Bubble
+		'''
+}
+
+ThoriumMod/LifeRecoveryStone: {
+	DisplayName: Life Recovery Stone
+	Tooltip:
+		'''
+		Immunity to Life Recovery
+		Attacks inflict Life Recovery
+		'''
+}
+
+ThoriumMod/LifeSpiritBuffStone: {
+	DisplayName: Life Spirit Stone
+	Tooltip:
+		'''
+		Immunity to Life Spirit
+		Attacks inflict Life Spirit
+		'''
+}
+
+ThoriumMod/LilCherubsWandBuffStone: {
+	DisplayName: Lil' Cherub Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Cherub
+		Attacks inflict Lil' Cherub
+		'''
+}
+
+ThoriumMod/LilDevilsWandBuffStone: {
+	DisplayName: Lil' Devil Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Devil
+		Attacks inflict Lil' Devil
+		'''
+}
+
+ThoriumMod/MarrowScepterBuffStone: {
+	DisplayName: Bone Armor Stone
+	Tooltip:
+		'''
+		Immunity to Bone Armor
+		Attacks inflict Bone Armor
+		'''
+}
+
+ThoriumMod/MortalityStone: {
+	DisplayName: Mortality Stone
+	Tooltip:
+		'''
+		Immunity to Mortality
+		Attacks inflict Mortality
+		'''
+}
+
+ThoriumMod/NullZoneBuffStone: {
+	DisplayName: Null-Zone Stone
+	Tooltip:
+		'''
+		Immunity to Null-Zone
+		Attacks inflict Null-Zone
+		'''
+}
+
+ThoriumMod/OutofTouchStone: {
+	DisplayName: Out of Touch Stone
+	Tooltip:
+		'''
+		Immunity to Out of Touch
+		Attacks inflict Out of Touch
+		'''
+}
+
+ThoriumMod/PhoenixStaffBuffStone: {
+	DisplayName: Phoenix Stone
+	Tooltip:
+		'''
+		Immunity to Phoenix
+		Attacks inflict Phoenix
+		'''
+}
+
+ThoriumMod/ProtectiveEnergyStone: {
+	DisplayName: Protective Energy Stone
+	Tooltip:
+		'''
+		Immunity to Protective Energy
+		Attacks inflict Protective Energy
+		'''
+}
+
+ThoriumMod/QuickRecoveryStone: {
+	DisplayName: Quick Recovery Stone
+	Tooltip:
+		'''
+		Immunity to Quick Recovery
+		Attacks inflict Quick Recovery
+		'''
+}
+
+ThoriumMod/SerpentsBubbleWandBuffStone: {
+	DisplayName: Serpent's Bubble Stone
+	Tooltip:
+		'''
+		Immunity to Serpent's Bubble
+		Attacks inflict Serpent's Bubble
+		'''
+}
+
+ThoriumMod/ShieldDroneBeaconBuffStone: {
+	DisplayName: Shield Drone Stone
+	Tooltip:
+		'''
+		Immunity to Shield Drone
+		Attacks inflict Shield Drone
+		'''
+}
+
+ThoriumMod/SmitingHammerDebuffStone: {
+	DisplayName: Smiting Fire Stone
+	Tooltip:
+		'''
+		Immunity to Smiting Fire
+		Attacks inflict Smiting Fire
+		'''
+}
+
+ThoriumMod/SoulEssenceStone: {
+	DisplayName: Soul Essence Stone
+	Tooltip:
+		'''
+		Immunity to Soul Essence
+		Attacks inflict Soul Essence
+		'''
+}
+
+ThoriumMod/SpiritualistBuffStone: {
+	DisplayName: Guardian Angel Stone
+	Tooltip:
+		'''
+		Immunity to Guardian Angel
+		Attacks inflict Guardian Angel
+		'''
+}
+
+ThoriumMod/SpiritualistProtectionBuffStone: {
+	DisplayName: Guardian : Protection Stone
+	Tooltip:
+		'''
+		Immunity to Guardian : Protection
+		Attacks inflict Guardian : Protection
+		'''
+}
+
+ThoriumMod/SpiritualistRecoveryBuffStone: {
+	DisplayName: Guardian : Recovery Stone
+	Tooltip:
+		'''
+		Immunity to Guardian : Recovery
+		Attacks inflict Guardian : Recovery
+		'''
+}
+
+ThoriumMod/SpiritualistRevengeBuffStone: {
+	DisplayName: Guardian : Revenge Stone
+	Tooltip:
+		'''
+		Immunity to Guardian : Revenge
+		Attacks inflict Guardian : Revenge
+		'''
+}
+
+ThoriumMod/SupportSashBuffStone: {
+	DisplayName: Support Sash Stone
+	Tooltip:
+		'''
+		Immunity to Support Sash
+		Attacks inflict Support Sash
+		'''
+}
+
+ThoriumMod/TemplarSetBuffStone: {
+	DisplayName: Healing Mastery Stone
+	Tooltip:
+		'''
+		Immunity to Healing Mastery
+		Attacks inflict Healing Mastery
+		'''
+}
+
+ThoriumMod/VerdantOrnamentBuffStone: {
+	DisplayName: Tangy Heal Stone
+	Tooltip:
+		'''
+		Immunity to Tangy Heal
+		Attacks inflict Tangy Heal
+		'''
+}
+
+ThoriumMod/WhisperingDaggerBuffStone: {
+	DisplayName: Consuming Whispers Stone
+	Tooltip:
+		'''
+		Immunity to Consuming Whispers
+		Attacks inflict Consuming Whispers
+		'''
+}
+
+ThoriumMod/HoneyRecorderDebuffStone: {
+	DisplayName: Honey Stone
+	Tooltip:
+		'''
+		Immunity to Honey
+		Attacks inflict Honey
+		'''
+}
+
+ThoriumMod/HydrationBuffStone: {
+	DisplayName: Hydration Stone
+	Tooltip:
+		'''
+		Immunity to Hydration
+		Attacks inflict Hydration
+		'''
+}
+
+ThoriumMod/IlluminatedNPCStone: {
+	DisplayName: Illuminated Stone
+	Tooltip:
+		'''
+		Immunity to Illuminated
+		Attacks inflict Illuminated
+		'''
+}
+
+ThoriumMod/IncandescentSparkDebuffStone: {
+	DisplayName: Incandescent Burn Stone
+	Tooltip:
+		'''
+		Immunity to Incandescent Burn
+		Attacks inflict Incandescent Burn
+		'''
+}
+
+ThoriumMod/InsanityStone: {
+	DisplayName: Insanity Stone
+	Tooltip:
+		'''
+		Immunity to Insanity
+		Attacks inflict Insanity
+		'''
+}
+
+ThoriumMod/InsectRepellentBuffStone: {
+	DisplayName: Repellent : Insects Stone
+	Tooltip:
+		'''
+		Immunity to Repellent : Insects
+		Attacks inflict Repellent : Insects
+		'''
+}
+
+ThoriumMod/JellyBuffStone: {
+	DisplayName: Tasty Jelly Stone
+	Tooltip:
+		'''
+		Immunity to Tasty Jelly
+		Attacks inflict Tasty Jelly
+		'''
+}
+
+ThoriumMod/KineticPotionBuffStone: {
+	DisplayName: Kinetic Storage Stone
+	Tooltip:
+		'''
+		Immunity to Kinetic Storage
+		Attacks inflict Kinetic Storage
+		'''
+}
+
+ThoriumMod/LegacyDebuffStone: {
+	DisplayName: Legacy Burn Stone
+	Tooltip:
+		'''
+		Immunity to Legacy Burn
+		Attacks inflict Legacy Burn
+		'''
+}
+
+ThoriumMod/LichSetBuffStone: {
+	DisplayName: Soul Harvest Stone
+	Tooltip:
+		'''
+		Immunity to Soul Harvest
+		Attacks inflict Soul Harvest
+		'''
+}
+
+ThoriumMod/LifeTransfusionStone: {
+	DisplayName: Life Transfusion Stone
+	Tooltip:
+		'''
+		Immunity to Life Transfusion
+		Attacks inflict Life Transfusion
+		'''
+}
+
+ThoriumMod/LifeWaterBuffStone: {
+	DisplayName: Life Water's Gift Stone
+	Tooltip:
+		'''
+		Immunity to Life Water's Gift
+		Attacks inflict Life Water's Gift
+		'''
+}
+
+ThoriumMod/LightCurseStone: {
+	DisplayName: Light Curse Stone
+	Tooltip:
+		'''
+		Immunity to Light Curse
+		Attacks inflict Light Curse
+		'''
+}
+
+ThoriumMod/LiquefiedStone: {
+	DisplayName: Liquefied Stone
+	Tooltip:
+		'''
+		Immunity to Liquefied
+		Attacks inflict Liquefied
+		'''
+}
+
+ThoriumMod/MagickStaffDebuffStone: {
+	DisplayName: Elemental Decay Stone
+	Tooltip:
+		'''
+		Immunity to Elemental Decay
+		Attacks inflict Elemental Decay
+		'''
+}
+
+ThoriumMod/MasterMarksmansScouterDebuffStone: {
+	DisplayName: Omni Vision Stone
+	Tooltip:
+		'''
+		Immunity to Omni Vision
+		Attacks inflict Omni Vision
+		'''
+}
+
+ThoriumMod/MidnightOilBuffStone: {
+	DisplayName: Midnight Oil Stone
+	Tooltip:
+		'''
+		Immunity to Midnight Oil
+		Attacks inflict Midnight Oil
+		'''
+}
+
+ThoriumMod/MirroroftheBeholderDebuffStone: {
+	DisplayName: Revealed Stone
+	Tooltip:
+		'''
+		Immunity to Revealed
+		Attacks inflict Revealed
+		'''
+}
+
+ThoriumMod/MistletoeBuffStone: {
+	DisplayName: Season's Greeting Stone
+	Tooltip:
+		'''
+		Immunity to Season's Greeting
+		Attacks inflict Season's Greeting
+		'''
+}
+
+ThoriumMod/AmphibianEggBuffStone: {
+	DisplayName: Frog Stone
+	Tooltip:
+		'''
+		Immunity to Frog
+		Attacks inflict Frog
+		'''
+}
+
+ThoriumMod/AquamarineMinecartBuffStone: {
+	DisplayName: Aquamarine Minecart Stone
+	Tooltip:
+		'''
+		Immunity to Aquamarine Minecart
+		Attacks inflict Aquamarine Minecart
+		'''
+}
+
+ThoriumMod/BathtubCartBuffStone: {
+	DisplayName: Bathtub Cart Stone
+	Tooltip:
+		'''
+		Immunity to Bathtub Cart
+		Attacks inflict Bathtub Cart
+		'''
+}
+
+ThoriumMod/ColeopteraKeepsakeBuffStone: {
+	DisplayName: Beetle Stone
+	Tooltip:
+		'''
+		Immunity to Beetle
+		Attacks inflict Beetle
+		'''
+}
+
+ThoriumMod/CrackedBattleHornBuffStone: {
+	DisplayName: Battle Warg Stone
+	Tooltip:
+		'''
+		Immunity to Battle Warg
+		Attacks inflict Battle Warg
+		'''
+}
+
+ThoriumMod/CyberneticSphereBuffStone: {
+	DisplayName: Cybernetic Sphere Stone
+	Tooltip:
+		'''
+		Immunity to Cybernetic Sphere
+		Attacks inflict Cybernetic Sphere
+		'''
+}
+
+ThoriumMod/DesecratedHeartBuffStone: {
+	DisplayName: Starving Beast Stone
+	Tooltip:
+		'''
+		Immunity to Starving Beast
+		Attacks inflict Starving Beast
+		'''
+}
+
+ThoriumMod/FakeCoinBuffStone: {
+	DisplayName: Mimic Stone
+	Tooltip:
+		'''
+		Immunity to Mimic
+		Attacks inflict Mimic
+		'''
+}
+
+ThoriumMod/GoldenScaleBuffStone: {
+	DisplayName: Goldfish Stone
+	Tooltip:
+		'''
+		Immunity to Goldfish
+		Attacks inflict Goldfish
+		'''
+}
+
+ThoriumMod/HowToSpeakWhaleABiographyBuffStone: {
+	DisplayName: The Whale Stone
+	Tooltip:
+		'''
+		Immunity to The Whale
+		Attacks inflict The Whale
+		'''
+}
+
+ThoriumMod/MagmaCharmBuffStone: {
+	DisplayName: Molten Tardigrade Stone
+	Tooltip:
+		'''
+		Immunity to Molten Tardigrade
+		Attacks inflict Molten Tardigrade
+		'''
+}
+
+ThoriumMod/MassiveCrabClawBuffStone: {
+	DisplayName: Enemy Crab Stone
+	Tooltip:
+		'''
+		Immunity to Enemy Crab
+		Attacks inflict Enemy Crab
+		'''
+}
+
+ThoriumMod/MediumRareSteakBuffStone: {
+	DisplayName: Angry Dragon Stone
+	Tooltip:
+		'''
+		Immunity to Angry Dragon
+		Attacks inflict Angry Dragon
+		'''
+}
+
+ThoriumMod/MoltenCollarBuffStone: {
+	DisplayName: Infernal Hound Stone
+	Tooltip:
+		'''
+		Immunity to Infernal Hound
+		Attacks inflict Infernal Hound
+		'''
+}
+
+ThoriumMod/NimbusBuffStone: {
+	DisplayName: Wyvern Stone
+	Tooltip:
+		'''
+		Immunity to Wyvern
+		Attacks inflict Wyvern
+		'''
+}
+
+ThoriumMod/OldDebtStone: {
+	DisplayName: Familiar Face Stone
+	Tooltip:
+		'''
+		Immunity to Familiar Face
+		Attacks inflict Familiar Face
+		'''
+}
+
+ThoriumMod/OpalMinecartBuffStone: {
+	DisplayName: Opal Minecart Stone
+	Tooltip:
+		'''
+		Immunity to Opal Minecart
+		Attacks inflict Opal Minecart
+		'''
+}
+
+ThoriumMod/OtherworldlyRuneBuffStone: {
+	DisplayName: Apocalypse Stone
+	Tooltip:
+		'''
+		Immunity to Apocalypse
+		Attacks inflict Apocalypse
+		'''
+}
+
+ThoriumMod/RocketCartBuffStone: {
+	DisplayName: Rocket Cart Stone
+	Tooltip:
+		'''
+		Immunity to Rocket Cart
+		Attacks inflict Rocket Cart
+		'''
+}
+
+ThoriumMod/SinisterAcornBuffStone: {
+	DisplayName: Squirrel Stone
+	Tooltip:
+		'''
+		Immunity to Squirrel
+		Attacks inflict Squirrel
+		'''
+}
+
+ThoriumMod/SpectralFangBuffStone: {
+	DisplayName: Spectral Tiger Stone
+	Tooltip:
+		'''
+		Immunity to Spectral Tiger
+		Attacks inflict Spectral Tiger
+		'''
+}
+
+ThoriumMod/SuperAnvilBuffStone: {
+	DisplayName: Super Anvil Stone
+	Tooltip:
+		'''
+		Immunity to Super Anvil
+		Attacks inflict Super Anvil
+		'''
+}
+
+ThoriumMod/TomeoftheVoidGazersChariotBuffStone: {
+	DisplayName: Void Chariot Stone
+	Tooltip:
+		'''
+		Immunity to Void Chariot
+		Attacks inflict Void Chariot
+		'''
+}
+
+ThoriumMod/VampireCatalystBuffStone: {
+	DisplayName: Vampire's Gift Stone
+	Tooltip:
+		'''
+		Immunity to Vampire's Gift
+		Attacks inflict Vampire's Gift
+		'''
+}
+
+ThoriumMod/MyceliumVeinsStone: {
+	DisplayName: Mycelium Veins Stone
+	Tooltip:
+		'''
+		Immunity to Mycelium Veins
+		Attacks inflict Mycelium Veins
+		'''
+}
+
+ThoriumMod/NapalmDebuffStone: {
+	DisplayName: Napalm Stone
+	Tooltip:
+		'''
+		Immunity to Napalm
+		Attacks inflict Napalm
+		'''
+}
+
+ThoriumMod/NecroticSkullBuffStone: {
+	DisplayName: Necrotic Skull Stone
+	Tooltip:
+		'''
+		Immunity to Necrotic Skull
+		Attacks inflict Necrotic Skull
+		'''
+}
+
+ThoriumMod/NinjaBuffStone: {
+	DisplayName: Sleight of Hand Stone
+	Tooltip:
+		'''
+		Immunity to Sleight of Hand
+		Attacks inflict Sleight of Hand
+		'''
+}
+
+ThoriumMod/EnragedBuffStone: {
+	DisplayName: Enraged Stone
+	Tooltip:
+		'''
+		Immunity to Enraged
+		Attacks inflict Enraged
+		'''
+}
+
+ThoriumMod/SeaShantySingerBuffStone: {
+	DisplayName: Quick-Fire Stone
+	Tooltip:
+		'''
+		Immunity to Quick-Fire
+		Attacks inflict Quick-Fire
+		'''
+}
+
+ThoriumMod/SnowSingaBuffStone: {
+	DisplayName: Regeneration Stone
+	Tooltip:
+		'''
+		Immunity to Regeneration
+		Attacks inflict Regeneration
+		'''
+}
+
+ThoriumMod/OceansBufferStone: {
+	DisplayName: Oceans Buffer Stone
+	Tooltip:
+		'''
+		Immunity to Oceans Buffer
+		Attacks inflict Oceans Buffer
+		'''
+}
+
+ThoriumMod/OceansBufferExhaustStone: {
+	DisplayName: Exhaustion: Ocean's Buffer Stone
+	Tooltip:
+		'''
+		Immunity to Exhaustion: Ocean's Buffer
+		Attacks inflict Exhaustion: Ocean's Buffer
+		'''
+}
+
+ThoriumMod/OozedStone: {
+	DisplayName: Oozed Stone
+	Tooltip:
+		'''
+		Immunity to Oozed
+		Attacks inflict Oozed
+		'''
+}
+
+ThoriumMod/ParalyzedStone: {
+	DisplayName: Paralyzed Stone
+	Tooltip:
+		'''
+		Immunity to Paralyzed
+		Attacks inflict Paralyzed
+		'''
+}
+
+ThoriumMod/PearlPikeBuffStone: {
+	DisplayName: Grace Stone
+	Tooltip:
+		'''
+		Immunity to Grace
+		Attacks inflict Grace
+		'''
+}
+
+ThoriumMod/AbyssalWhistleBuffStone: {
+	DisplayName: Abyssal Bunny Stone
+	Tooltip:
+		'''
+		Immunity to Abyssal Bunny
+		Attacks inflict Abyssal Bunny
+		'''
+}
+
+ThoriumMod/AlienResearchNotesBuffStone: {
+	DisplayName: Research Probe Stone
+	Tooltip:
+		'''
+		Immunity to Research Probe
+		Attacks inflict Research Probe
+		'''
+}
+
+ThoriumMod/AmnesiacBuffStone: {
+	DisplayName: Amnesiac Girl Stone
+	Tooltip:
+		'''
+		Immunity to Amnesiac Girl
+		Attacks inflict Amnesiac Girl
+		'''
+}
+
+ThoriumMod/AncientRatBuffStone: {
+	DisplayName: Ancient Rat Stone
+	Tooltip:
+		'''
+		Immunity to Ancient Rat
+		Attacks inflict Ancient Rat
+		'''
+}
+
+ThoriumMod/AnglerBowlBuffStone: {
+	DisplayName: Anglor the little Angler Stone
+	Tooltip:
+		'''
+		Immunity to Anglor the little Angler
+		Attacks inflict Anglor the little Angler
+		'''
+}
+
+ThoriumMod/BalloonBallBuffStone: {
+	DisplayName: Tanuki Girl Stone
+	Tooltip:
+		'''
+		Immunity to Tanuki Girl
+		Attacks inflict Tanuki Girl
+		'''
+}
+
+ThoriumMod/BioFeederBuffStone: {
+	DisplayName: Bio-Feeder Stone
+	Tooltip:
+		'''
+		Immunity to Bio-Feeder
+		Attacks inflict Bio-Feeder
+		'''
+}
+
+ThoriumMod/BlisterBuffStone: {
+	DisplayName: Flying Blister Stone
+	Tooltip:
+		'''
+		Immunity to Flying Blister
+		Attacks inflict Flying Blister
+		'''
+}
+
+ThoriumMod/BloodSausageBuffStone: {
+	DisplayName: Blood Sausage Stone
+	Tooltip:
+		'''
+		Immunity to Blood Sausage
+		Attacks inflict Blood Sausage
+		'''
+}
+
+ThoriumMod/ChaoticMarbleBuffStone: {
+	DisplayName: Chaotic Creature Stone
+	Tooltip:
+		'''
+		Immunity to Chaotic Creature
+		Attacks inflict Chaotic Creature
+		'''
+}
+
+ThoriumMod/ClownfishPetBuffStone: {
+	DisplayName: Clownfish Stone
+	Tooltip:
+		'''
+		Immunity to Clownfish
+		Attacks inflict Clownfish
+		'''
+}
+
+ThoriumMod/DavyJonesLockBoxBuffStone: {
+	DisplayName: Davy Jones' Lock Box Stone
+	Tooltip:
+		'''
+		Immunity to Davy Jones' Lock Box
+		Attacks inflict Davy Jones' Lock Box
+		'''
+}
+
+ThoriumMod/DemosGuidanceBuffStone: {
+	DisplayName: Restorative Lantern Stone
+	Tooltip:
+		'''
+		Immunity to Restorative Lantern
+		Attacks inflict Restorative Lantern
+		'''
+}
+
+ThoriumMod/DiscardedClothBuffStone: {
+	DisplayName: Cloth Geist Stone
+	Tooltip:
+		'''
+		Immunity to Cloth Geist
+		Attacks inflict Cloth Geist
+		'''
+}
+
+ThoriumMod/DiverPlushieBuffStone: {
+	DisplayName: Princess Jellyfish Stone
+	Tooltip:
+		'''
+		Immunity to Princess Jellyfish
+		Attacks inflict Princess Jellyfish
+		'''
+}
+
+ThoriumMod/DoomSayersPennyBuffStone: {
+	DisplayName: Doom Sayer's Penny Stone
+	Tooltip:
+		'''
+		Immunity to Doom Sayer's Penny
+		Attacks inflict Doom Sayer's Penny
+		'''
+}
+
+ThoriumMod/DrachmaBuffStone: {
+	DisplayName: Curious Coinling Stone
+	Tooltip:
+		'''
+		Immunity to Curious Coinling
+		Attacks inflict Curious Coinling
+		'''
+}
+
+ThoriumMod/EmptyWormholePotionBuffStone: {
+	DisplayName: Useless Friend Stone
+	Tooltip:
+		'''
+		Immunity to Useless Friend
+		Attacks inflict Useless Friend
+		'''
+}
+
+ThoriumMod/EnergizedQuadCubeBuffStone: {
+	DisplayName: Energized Quad-Cube Stone
+	Tooltip:
+		'''
+		Immunity to Energized Quad-Cube
+		Attacks inflict Energized Quad-Cube
+		'''
+}
+
+ThoriumMod/ExoticMynaEggBuffStone: {
+	DisplayName: Exotic Myna Stone
+	Tooltip:
+		'''
+		Immunity to Exotic Myna
+		Attacks inflict Exotic Myna
+		'''
+}
+
+ThoriumMod/Experiment3BuffStone: {
+	DisplayName: Experiment #3 Stone
+	Tooltip:
+		'''
+		Immunity to Experiment #3
+		Attacks inflict Experiment #3
+		'''
+}
+
+ThoriumMod/FerretBuffStone: {
+	DisplayName: Ferret Stone
+	Tooltip:
+		'''
+		Immunity to Ferret
+		Attacks inflict Ferret
+		'''
+}
+
+ThoriumMod/FrozenBalloonBuffStone: {
+	DisplayName: Frozen Balloon Stone
+	Tooltip:
+		'''
+		Immunity to Frozen Balloon
+		Attacks inflict Frozen Balloon
+		'''
+}
+
+ThoriumMod/GlassShardBuffStone: {
+	DisplayName: Glass Shard Stone
+	Tooltip:
+		'''
+		Immunity to Glass Shard
+		Attacks inflict Glass Shard
+		'''
+}
+
+ThoriumMod/HolyGoatBuffStone: {
+	DisplayName: The Holy Goat Stone
+	Tooltip:
+		'''
+		Immunity to The Holy Goat
+		Attacks inflict The Holy Goat
+		'''
+}
+
+ThoriumMod/LilMogBuffStone: {
+	DisplayName: Lil' Mog Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Mog
+		Attacks inflict Lil' Mog
+		'''
+}
+
+ThoriumMod/LittlePhylacteryBuffStone: {
+	DisplayName: Lil' Necromancer Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Necromancer
+		Attacks inflict Lil' Necromancer
+		'''
+}
+
+ThoriumMod/MaidBuffStone: {
+	DisplayName: Lil' Maid Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Maid
+		Attacks inflict Lil' Maid
+		'''
+}
+
+ThoriumMod/ModelGunBuffStone: {
+	DisplayName: Lyrist Stone
+	Tooltip:
+		'''
+		Immunity to Lyrist
+		Attacks inflict Lyrist
+		'''
+}
+
+ThoriumMod/MoleCrateBuffStone: {
+	DisplayName: Skull Cat Stone
+	Tooltip:
+		'''
+		Immunity to Skull Cat
+		Attacks inflict Skull Cat
+		'''
+}
+
+ThoriumMod/OmegaBuffStone: {
+	DisplayName: Omega Drive Stone
+	Tooltip:
+		'''
+		Immunity to Omega Drive
+		Attacks inflict Omega Drive
+		'''
+}
+
+ThoriumMod/PartridgeBuffStone: {
+	DisplayName: Partridge Stone
+	Tooltip:
+		'''
+		Immunity to Partridge
+		Attacks inflict Partridge
+		'''
+}
+
+ThoriumMod/PickleBuffStone: {
+	DisplayName: Totally Normal Dog Stone
+	Tooltip:
+		'''
+		Immunity to Totally Normal Dog
+		Attacks inflict Totally Normal Dog
+		'''
+}
+
+ThoriumMod/PinkSlimeBuffStone: {
+	DisplayName: Pink Slime Stone
+	Tooltip:
+		'''
+		Immunity to Pink Slime
+		Attacks inflict Pink Slime
+		'''
+}
+
+ThoriumMod/PurifiersRingBuffStone: {
+	DisplayName: Purifier's Ring Stone
+	Tooltip:
+		'''
+		Immunity to Purifier's Ring
+		Attacks inflict Purifier's Ring
+		'''
+}
+
+ThoriumMod/RottenMeatBuffStone: {
+	DisplayName: Fly Stone
+	Tooltip:
+		'''
+		Immunity to Fly
+		Attacks inflict Fly
+		'''
+}
+
+ThoriumMod/SkunkBuffStone: {
+	DisplayName: Skunk Stone
+	Tooltip:
+		'''
+		Immunity to Skunk
+		Attacks inflict Skunk
+		'''
+}
+
+ThoriumMod/SnowyOwlBuffStone: {
+	DisplayName: Lost Snowy Owl Stone
+	Tooltip:
+		'''
+		Immunity to Lost Snowy Owl
+		Attacks inflict Lost Snowy Owl
+		'''
+}
+
+ThoriumMod/StormCloudBuffStone: {
+	DisplayName: Storm Cloud Stone
+	Tooltip:
+		'''
+		Immunity to Storm Cloud
+		Attacks inflict Storm Cloud
+		'''
+}
+
+ThoriumMod/SubterraneanAnglerBuffStone: {
+	DisplayName: Subterranean Angler Stone
+	Tooltip:
+		'''
+		Immunity to Subterranean Angler
+		Attacks inflict Subterranean Angler
+		'''
+}
+
+ThoriumMod/SuspiciousMoisturizerBottleBuffStone: {
+	DisplayName: Living Hand Stone
+	Tooltip:
+		'''
+		Immunity to Living Hand
+		Attacks inflict Living Hand
+		'''
+}
+
+ThoriumMod/SweetBeetBuffStone: {
+	DisplayName: Beet Cookie Stone
+	Tooltip:
+		'''
+		Immunity to Beet Cookie
+		Attacks inflict Beet Cookie
+		'''
+}
+
+ThoriumMod/SwordOfDestinyBuffStone: {
+	DisplayName: Sword of Destiny Stone
+	Tooltip:
+		'''
+		Immunity to Sword of Destiny
+		Attacks inflict Sword of Destiny
+		'''
+}
+
+ThoriumMod/TentacleBallBuffStone: {
+	DisplayName: Tentacle Ball Stone
+	Tooltip:
+		'''
+		Immunity to Tentacle Ball
+		Attacks inflict Tentacle Ball
+		'''
+}
+
+ThoriumMod/TortleScuteBuffStone: {
+	DisplayName: Tortle Sage Stone
+	Tooltip:
+		'''
+		Immunity to Tortle Sage
+		Attacks inflict Tortle Sage
+		'''
+}
+
+ThoriumMod/WhisperingShellBuffStone: {
+	DisplayName: Whispering Shell Stone
+	Tooltip:
+		'''
+		Immunity to Whispering Shell
+		Attacks inflict Whispering Shell
+		'''
+}
+
+ThoriumMod/WyvernPetBuffStone: {
+	DisplayName: Wyvern Pup Stone
+	Tooltip:
+		'''
+		Immunity to Wyvern Pup
+		Attacks inflict Wyvern Pup
+		'''
+}
+
+ThoriumMod/PetrifyStone: {
+	DisplayName: Petrify Stone
+	Tooltip:
+		'''
+		Immunity to Petrify
+		Attacks inflict Petrify
+		'''
+}
+
+ThoriumMod/PhylacteryBuffStone: {
+	DisplayName: Lich's Backup Stone
+	Tooltip:
+		'''
+		Immunity to Lich's Backup
+		Attacks inflict Lich's Backup
+		'''
+}
+
+ThoriumMod/PotentExtractBuffStone: {
+	DisplayName: Hallucination Stone
+	Tooltip:
+		'''
+		Immunity to Hallucination
+		Attacks inflict Hallucination
+		'''
+}
+
+ThoriumMod/PurifiedWatersStone: {
+	DisplayName: Purified Waters Stone
+	Tooltip:
+		'''
+		Immunity to Purified Waters
+		Attacks inflict Purified Waters
+		'''
+}
+
+ThoriumMod/RapierBadgeBuffStone: {
+	DisplayName: Counter Strike Stone
+	Tooltip:
+		'''
+		Immunity to Counter Strike
+		Attacks inflict Counter Strike
+		'''
+}
+
+ThoriumMod/RapierBuffStone: {
+	DisplayName: Parry Stance Stone
+	Tooltip:
+		'''
+		Immunity to Parry Stance
+		Attacks inflict Parry Stance
+		'''
+}
+
+ThoriumMod/RealityBearerStone: {
+	DisplayName: Reality Bearer Stone
+	Tooltip:
+		'''
+		Immunity to Reality Bearer
+		Attacks inflict Reality Bearer
+		'''
+}
+
+ThoriumMod/RefreshingBubbleStone: {
+	DisplayName: Refreshing Bubble Stone
+	Tooltip:
+		'''
+		Immunity to Refreshing Bubble
+		Attacks inflict Refreshing Bubble
+		'''
+}
+
+ThoriumMod/RevivalExhaustionStone: {
+	DisplayName: Revival Exhaustion Stone
+	Tooltip:
+		'''
+		Immunity to Revival Exhaustion
+		Attacks inflict Revival Exhaustion
+		'''
+}
+
+ThoriumMod/SandshroudPouchBuffStone: {
+	DisplayName: Yoyo Protection Stone
+	Tooltip:
+		'''
+		Immunity to Yoyo Protection
+		Attacks inflict Yoyo Protection
+		'''
+}
+
+ThoriumMod/SandshroudPouchDebuffStone: {
+	DisplayName: Yoyo Exhaustion Stone
+	Tooltip:
+		'''
+		Immunity to Yoyo Exhaustion
+		Attacks inflict Yoyo Exhaustion
+		'''
+}
+
+ThoriumMod/SchmelzeDebuffStone: {
+	DisplayName: Schmelze Fury Stone
+	Tooltip:
+		'''
+		Immunity to Schmelze Fury
+		Attacks inflict Schmelze Fury
+		'''
+}
+
+ThoriumMod/ScytheofUndoingBuffStone: {
+	DisplayName: Scythe of Undoing Stone
+	Tooltip:
+		'''
+		Immunity to Scythe of Undoing
+		Attacks inflict Scythe of Undoing
+		'''
+}
+
+ThoriumMod/SeedofHopeBuffStone: {
+	DisplayName: Seed of Hope Stone
+	Tooltip:
+		'''
+		Immunity to Seed of Hope
+		Attacks inflict Seed of Hope
+		'''
+}
+
+ThoriumMod/ShambleBallDebuffStone: {
+	DisplayName: Shackled Stone
+	Tooltip:
+		'''
+		Immunity to Shackled
+		Attacks inflict Shackled
+		'''
+}
+
+ThoriumMod/SheathBuffStone: {
+	DisplayName: Sheath Stone
+	Tooltip:
+		'''
+		Immunity to Sheath
+		Attacks inflict Sheath
+		'''
+}
+
+ThoriumMod/SingedStone: {
+	DisplayName: Singed Stone
+	Tooltip:
+		'''
+		Immunity to Singed
+		Attacks inflict Singed
+		'''
+}
+
+ThoriumMod/SkeletonRepellentBuffStone: {
+	DisplayName: Repellent : Skeletons Stone
+	Tooltip:
+		'''
+		Immunity to Repellent : Skeletons
+		Attacks inflict Repellent : Skeletons
+		'''
+}
+
+ThoriumMod/SpearmintDebuffStone: {
+	DisplayName: Snake Bite Stone
+	Tooltip:
+		'''
+		Immunity to Snake Bite
+		Attacks inflict Snake Bite
+		'''
+}
+
+ThoriumMod/SpectralBladeBuffStone: {
+	DisplayName: Mightily Enchanted Stone
+	Tooltip:
+		'''
+		Immunity to Mightily Enchanted
+		Attacks inflict Mightily Enchanted
+		'''
+}
+
+ThoriumMod/SpiritsGraceBuffStone: {
+	DisplayName: Spirit's Grace Stone
+	Tooltip:
+		'''
+		Immunity to Spirit's Grace
+		Attacks inflict Spirit's Grace
+		'''
+}
+
+ThoriumMod/SporeCoatingBuffStone: {
+	DisplayName: Thrown Weapon Imbue : Spores Stone
+	Tooltip:
+		'''
+		Immunity to Thrown Weapon Imbue : Spores
+		Attacks inflict Thrown Weapon Imbue : Spores
+		'''
+}
+
+ThoriumMod/SporedStone: {
+	DisplayName: Spored Stone
+	Tooltip:
+		'''
+		Immunity to Spored
+		Attacks inflict Spored
+		'''
+}
+
+ThoriumMod/StaggeredStone: {
+	DisplayName: Staggered Stone
+	Tooltip:
+		'''
+		Immunity to Staggered
+		Attacks inflict Staggered
+		'''
+}
+
+ThoriumMod/StrangeSkullDebuffStone: {
+	DisplayName: Karma Stone
+	Tooltip:
+		'''
+		Immunity to Karma
+		Attacks inflict Karma
+		'''
+}
+
+ThoriumMod/StunnedStone: {
+	DisplayName: Stunned Stone
+	Tooltip:
+		'''
+		Immunity to Stunned
+		Attacks inflict Stunned
+		'''
+}
+
+ThoriumMod/ArsenalStaffBuffStone: {
+	DisplayName: Arsenal Staff Stone
+	Tooltip:
+		'''
+		Immunity to Arsenal Staff
+		Attacks inflict Arsenal Staff
+		'''
+}
+
+ThoriumMod/BannerBountyStone: {
+	DisplayName: Bounty Banner Stone
+	Tooltip:
+		'''
+		Immunity to Bounty Banner
+		Attacks inflict Bounty Banner
+		'''
+}
+
+ThoriumMod/BannerConfusionStone: {
+	DisplayName: Hive Mind Stone
+	Tooltip:
+		'''
+		Immunity to Hive Mind
+		Attacks inflict Hive Mind
+		'''
+}
+
+ThoriumMod/BannerDamageStone: {
+	DisplayName: Battle Banner Stone
+	Tooltip:
+		'''
+		Immunity to Battle Banner
+		Attacks inflict Battle Banner
+		'''
+}
+
+ThoriumMod/BannerDefenseStone: {
+	DisplayName: Combative Banner Stone
+	Tooltip:
+		'''
+		Immunity to Combative Banner
+		Attacks inflict Combative Banner
+		'''
+}
+
+ThoriumMod/BannerFalconStone: {
+	DisplayName: Falcon Stone
+	Tooltip:
+		'''
+		Immunity to Falcon
+		Attacks inflict Falcon
+		'''
+}
+
+ThoriumMod/BannerGhostStone: {
+	DisplayName: Sacrificial Effigy Stone
+	Tooltip:
+		'''
+		Immunity to Sacrificial Effigy
+		Attacks inflict Sacrificial Effigy
+		'''
+}
+
+ThoriumMod/BannerLifeRegenStone: {
+	DisplayName: Morale Banner Stone
+	Tooltip:
+		'''
+		Immunity to Morale Banner
+		Attacks inflict Morale Banner
+		'''
+}
+
+ThoriumMod/BannerPiousStone: {
+	DisplayName: Pious Banner Stone
+	Tooltip:
+		'''
+		Immunity to Pious Banner
+		Attacks inflict Pious Banner
+		'''
+}
+
+ThoriumMod/BannerPowerStone: {
+	DisplayName: Power Banner Stone
+	Tooltip:
+		'''
+		Immunity to Power Banner
+		Attacks inflict Power Banner
+		'''
+}
+
+ThoriumMod/BannerPrecisionStone: {
+	DisplayName: Precision Banner Stone
+	Tooltip:
+		'''
+		Immunity to Precision Banner
+		Attacks inflict Precision Banner
+		'''
+}
+
+ThoriumMod/BeholderStaffBuffStone: {
+	DisplayName: Beholding Stone
+	Tooltip:
+		'''
+		Immunity to Beholding
+		Attacks inflict Beholding
+		'''
+}
+
+ThoriumMod/BlobhornCoralStaffBuffStone: {
+	DisplayName: Blobfish Stone
+	Tooltip:
+		'''
+		Immunity to Blobfish
+		Attacks inflict Blobfish
+		'''
+}
+
+ThoriumMod/BloodFeasterStaffBuffStone: {
+	DisplayName: Blood Zombie Stone
+	Tooltip:
+		'''
+		Immunity to Blood Zombie
+		Attacks inflict Blood Zombie
+		'''
+}
+
+ThoriumMod/BloodPactStone: {
+	DisplayName: Blood Pact Stone
+	Tooltip:
+		'''
+		Immunity to Blood Pact
+		Attacks inflict Blood Pact
+		'''
+}
+
+ThoriumMod/BloodyPaganStaffBuffStone: {
+	DisplayName: Malicious Face Stone
+	Tooltip:
+		'''
+		Immunity to Malicious Face
+		Attacks inflict Malicious Face
+		'''
+}
+
+ThoriumMod/ButterflyStaffBuffStone: {
+	DisplayName: Butterfly Swarm Stone
+	Tooltip:
+		'''
+		Immunity to Butterfly Swarm
+		Attacks inflict Butterfly Swarm
+		'''
+}
+
+ThoriumMod/CorrodlingStaffBuffStone: {
+	DisplayName: Corrodling Stone
+	Tooltip:
+		'''
+		Immunity to Corrodling
+		Attacks inflict Corrodling
+		'''
+}
+
+ThoriumMod/CorruptlingStaffBuffStone: {
+	DisplayName: Corruptling Stone
+	Tooltip:
+		'''
+		Immunity to Corruptling
+		Attacks inflict Corruptling
+		'''
+}
+
+ThoriumMod/CrimsonHoundStaffBuffStone: {
+	DisplayName: Crimson Hound Stone
+	Tooltip:
+		'''
+		Immunity to Crimson Hound
+		Attacks inflict Crimson Hound
+		'''
+}
+
+ThoriumMod/DraconicMagmaStaffBuffStone: {
+	DisplayName: Dragon Melter Stone
+	Tooltip:
+		'''
+		Immunity to Dragon Melter
+		Attacks inflict Dragon Melter
+		'''
+}
+
+ThoriumMod/EmberStaffBuffStone: {
+	DisplayName: Molten Ember Stone
+	Tooltip:
+		'''
+		Immunity to Molten Ember
+		Attacks inflict Molten Ember
+		'''
+}
+
+ThoriumMod/EnchantedCaneBuffStone: {
+	DisplayName: Enchanted Barrier Stone
+	Tooltip:
+		'''
+		Immunity to Enchanted Barrier
+		Attacks inflict Enchanted Barrier
+		'''
+}
+
+ThoriumMod/EyeofOdinBuffStone: {
+	DisplayName: Eye of Odin Stone
+	Tooltip:
+		'''
+		Immunity to Eye of Odin
+		Attacks inflict Eye of Odin
+		'''
+}
+
+ThoriumMod/HailBomberBuffStone: {
+	DisplayName: Hail Bomber Stone
+	Tooltip:
+		'''
+		Immunity to Hail Bomber
+		Attacks inflict Hail Bomber
+		'''
+}
+
+ThoriumMod/IceFairyStaffBuffStone: {
+	DisplayName: Icy Fairy Stone
+	Tooltip:
+		'''
+		Immunity to Icy Fairy
+		Attacks inflict Icy Fairy
+		'''
+}
+
+ThoriumMod/LadyLightBuffStone: {
+	DisplayName: Sparkly Sparkle Stone
+	Tooltip:
+		'''
+		Immunity to Sparkly Sparkle
+		Attacks inflict Sparkly Sparkle
+		'''
+}
+
+ThoriumMod/LivingWoodAcornBuffStone: {
+	DisplayName: Sprout Loyalty Stone
+	Tooltip:
+		'''
+		Immunity to Sprout Loyalty
+		Attacks inflict Sprout Loyalty
+		'''
+}
+
+ThoriumMod/MantisCaneBuffStone: {
+	DisplayName: Razor Mantis Stone
+	Tooltip:
+		'''
+		Immunity to Razor Mantis
+		Attacks inflict Razor Mantis
+		'''
+}
+
+ThoriumMod/MastersLibramBuffStone: {
+	DisplayName: Enchanted Tome Stone
+	Tooltip:
+		'''
+		Immunity to Enchanted Tome
+		Attacks inflict Enchanted Tome
+		'''
+}
+
+ThoriumMod/MeteorHeadStaffBuffStone: {
+	DisplayName: Meteor Head Stone
+	Tooltip:
+		'''
+		Immunity to Meteor Head
+		Attacks inflict Meteor Head
+		'''
+}
+
+ThoriumMod/MoltenBannerBuffStone: {
+	DisplayName: Molten Banner Stone
+	Tooltip:
+		'''
+		Immunity to Molten Banner
+		Attacks inflict Molten Banner
+		'''
+}
+
+ThoriumMod/NebulaReflectionBuffStone: {
+	DisplayName: Mirror Image Stone
+	Tooltip:
+		'''
+		Immunity to Mirror Image
+		Attacks inflict Mirror Image
+		'''
+}
+
+ThoriumMod/PrehistoricAmberStaffBuffStone: {
+	DisplayName: Rampage Stone
+	Tooltip:
+		'''
+		Immunity to Rampage
+		Attacks inflict Rampage
+		'''
+}
+
+ThoriumMod/RosySlimeStaffBuffStone: {
+	DisplayName: Rosy Slime Stone
+	Tooltip:
+		'''
+		Immunity to Rosy Slime
+		Attacks inflict Rosy Slime
+		'''
+}
+
+ThoriumMod/SeahorseWandBuffStone: {
+	DisplayName: Seahorse Stone
+	Tooltip:
+		'''
+		Immunity to Seahorse
+		Attacks inflict Seahorse
+		'''
+}
+
+ThoriumMod/SteamgunnerControllerBuffStone: {
+	DisplayName: Steamgunner Drone Stone
+	Tooltip:
+		'''
+		Immunity to Steamgunner Drone
+		Attacks inflict Steamgunner Drone
+		'''
+}
+
+ThoriumMod/StormHatchlingStaffBuffStone: {
+	DisplayName: Hatchling Stone
+	Tooltip:
+		'''
+		Immunity to Hatchling
+		Attacks inflict Hatchling
+		'''
+}
+
+ThoriumMod/TabooWandBuffStone: {
+	DisplayName: Dark Risen Stone
+	Tooltip:
+		'''
+		Immunity to Dark Risen
+		Attacks inflict Dark Risen
+		'''
+}
+
+ThoriumMod/TerrariumEnigmaStaffBuffStone: {
+	DisplayName: Enigma Stone
+	Tooltip:
+		'''
+		Immunity to Enigma
+		Attacks inflict Enigma
+		'''
+}
+
+ThoriumMod/TheBlackCaneBuffStone: {
+	DisplayName: Lee's Weapons Stone
+	Tooltip:
+		'''
+		Immunity to Lee's Weapons
+		Attacks inflict Lee's Weapons
+		'''
+}
+
+ThoriumMod/ValkyrieBladeBuffStone: {
+	DisplayName: Valkyrie Blade Stone
+	Tooltip:
+		'''
+		Immunity to Valkyrie Blade
+		Attacks inflict Valkyrie Blade
+		'''
+}
+
+ThoriumMod/ViscountCaneBuffStone: {
+	DisplayName: Blood Drinker Stone
+	Tooltip:
+		'''
+		Immunity to Blood Drinker
+		Attacks inflict Blood Drinker
+		'''
+}
+
+ThoriumMod/YarnBallBuffStone: {
+	DisplayName: Baby Kitty Stone
+	Tooltip:
+		'''
+		Immunity to Baby Kitty
+		Attacks inflict Baby Kitty
+		'''
+}
+
+ThoriumMod/SunderedStone: {
+	DisplayName: Sundered Stone
+	Tooltip:
+		'''
+		Immunity to Sundered
+		Attacks inflict Sundered
+		'''
+}
+
+ThoriumMod/TerrariumBacklashStone: {
+	DisplayName: Terrarium Backlash Stone
+	Tooltip:
+		'''
+		Immunity to Terrarium Backlash
+		Attacks inflict Terrarium Backlash
+		'''
+}
+
+ThoriumMod/TerrariumDefenderBuffStone: {
+	DisplayName: Terraria's Kiss Stone
+	Tooltip:
+		'''
+		Immunity to Terraria's Kiss
+		Attacks inflict Terraria's Kiss
+		'''
+}
+
+ThoriumMod/BloodLotusStone: {
+	DisplayName: Blood Lotus Stone
+	Tooltip:
+		'''
+		Immunity to Blood Lotus
+		Attacks inflict Blood Lotus
+		'''
+}
+
+ThoriumMod/LastStandBuffStone: {
+	DisplayName: Last Stand Stone
+	Tooltip:
+		'''
+		Immunity to Last Stand
+		Attacks inflict Last Stand
+		'''
+}
+
+ThoriumMod/SprintStone: {
+	DisplayName: Sprint Stone
+	Tooltip:
+		'''
+		Immunity to Sprint
+		Attacks inflict Sprint
+		'''
+}
+
+ThoriumMod/ThrowingSpeedStone: {
+	DisplayName: Burst of Speed Stone
+	Tooltip:
+		'''
+		Immunity to Burst of Speed
+		Attacks inflict Burst of Speed
+		'''
+}
+
+ThoriumMod/ToxicCoatingBuffStone: {
+	DisplayName: Thrown Weapon Imbue : Toxic Stone
+	Tooltip:
+		'''
+		Immunity to Thrown Weapon Imbue : Toxic
+		Attacks inflict Thrown Weapon Imbue : Toxic
+		'''
+}
+
+ThoriumMod/TrueStrikeStone: {
+	DisplayName: True Strikes Stone
+	Tooltip:
+		'''
+		Immunity to True Strikes
+		Attacks inflict True Strikes
+		'''
+}
+
+ThoriumMod/TrueStrikeTiredStone: {
+	DisplayName: Critically Exhausted Stone
+	Tooltip:
+		'''
+		Immunity to Critically Exhausted
+		Attacks inflict Critically Exhausted
+		'''
+}
+
+ThoriumMod/TunedStone: {
+	DisplayName: Tuned Stone
+	Tooltip:
+		'''
+		Immunity to Tuned
+		Attacks inflict Tuned
+		'''
+}
+
+ThoriumMod/ValadiumSetBuffStone: {
+	DisplayName: Gravity Proficiency Stone
+	Tooltip:
+		'''
+		Immunity to Gravity Proficiency
+		Attacks inflict Gravity Proficiency
+		'''
+}
+
+ThoriumMod/VampiresCurseBuffStone: {
+	DisplayName: Vampire's Curse Stone
+	Tooltip:
+		'''
+		Immunity to Vampire's Curse
+		Attacks inflict Vampire's Curse
+		'''
+}
+
+ThoriumMod/WarmongerBuffStone: {
+	DisplayName: Warmonger Stone
+	Tooltip:
+		'''
+		Immunity to Warmonger
+		Attacks inflict Warmonger
+		'''
+}
+
+ThoriumMod/WidowsKissStone: {
+	DisplayName: Widow's Kiss Stone
+	Tooltip:
+		'''
+		Immunity to Widow's Kiss
+		Attacks inflict Widow's Kiss
+		'''
+}
+
+ThoriumMod/WindBurstStone: {
+	DisplayName: Wind Burst Stone
+	Tooltip:
+		'''
+		Immunity to Wind Burst
+		Attacks inflict Wind Burst
+		'''
+}
+
+ThoriumMod/WitherStone: {
+	DisplayName: Wither Stone
+	Tooltip:
+		'''
+		Immunity to Wither
+		Attacks inflict Wither
+		'''
+}
+
+ThoriumMod/ZombieRepellentBuffStone: {
+	DisplayName: Repellent : Zombies Stone
+	Tooltip:
+		'''
+		Immunity to Repellent : Zombies
+		Attacks inflict Repellent : Zombies
+		'''
+}
