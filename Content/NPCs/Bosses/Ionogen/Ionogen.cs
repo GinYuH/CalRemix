@@ -98,15 +98,18 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
         {
             NPC.TargetClosest();
             // Start a thunderstorm
-            Main.raining = true;
-            Main.cloudBGActive = 1f;
-            Main.numCloudsTemp = Main.maxClouds;
-            Main.numClouds = Main.numCloudsTemp;
-            Main.windSpeedCurrent = 0.72f;
-            Main.windSpeedTarget = Main.windSpeedCurrent;
-            Main.weatherCounter = 60 * 60;
-            Main.rainTime = Main.weatherCounter;
-            Main.maxRaining = 0.89f;
+            if (!CalamityMod.CalamityConfig.Instance.BossesStopWeather)
+            {
+                Main.raining = true;
+                Main.cloudBGActive = 1f;
+                Main.numCloudsTemp = Main.maxClouds;
+                Main.numClouds = Main.numCloudsTemp;
+                Main.windSpeedCurrent = 0.72f;
+                Main.windSpeedTarget = Main.windSpeedCurrent;
+                Main.weatherCounter = 60 * 60;
+                Main.rainTime = Main.weatherCounter;
+                Main.maxRaining = 0.89f;
+            }
             // Generic setup
             float lifeRatio = NPC.life / NPC.lifeMax;
             bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
