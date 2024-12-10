@@ -639,15 +639,6 @@ namespace CalRemix.Core
                         Main.spriteBatch.Draw(explosion, v.position, explosion.Frame(6, 3, v.frameX, v.frameY), Color.White, 0f, new Vector2(0, explosion.Height * 0.2f), 12f, SpriteEffects.None, 0);
                 }
             }
-            if (ProfanedDesert.flashTimer >= 0 && ProfanedDesert.flashTimer < ProfanedDesert.flashTotal)
-            {
-                Color ce = Color.Lerp(default, Color.White, Utils.GetLerpValue(0, ProfanedDesert.flashPeak, ProfanedDesert.flashTimer, true));
-                if (ProfanedDesert.flashTimer > ProfanedDesert.flashPause)
-                {
-                    ce = Color.Lerp(Color.White, default, Utils.GetLerpValue(ProfanedDesert.flashPause, ProfanedDesert.flashTotal, ProfanedDesert.flashTimer, true));
-                }
-                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, ce, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
-            }
         }
 
         private static int KillHiveMind(On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
@@ -695,16 +686,21 @@ namespace CalRemix.Core
 
         public static void DisableMapDuringCutscene(On_Main.orig_DrawMap orig, Main self, GameTime gameTime)
         {
-            if (ProfanedDesert.flashTimer > 0 && ProfanedDesert.flashTimer < ProfanedDesert.flashTotal)
-                return;
             orig(self, gameTime);
         }
 
         public static void DisableInfoDuringCutscene(On_Main.orig_DrawInfoAccs orig, Main self)
         {
-            if (ProfanedDesert.flashTimer > 0 && ProfanedDesert.flashTimer < ProfanedDesert.flashTotal)
-                return;
             orig(self);
+            if (ProfanedDesert.flashTimer >= 0 && ProfanedDesert.flashTimer < ProfanedDesert.flashTotal)
+            {
+                Color ce = Color.Lerp(default, Color.White, Utils.GetLerpValue(0, ProfanedDesert.flashPeak, ProfanedDesert.flashTimer, true));
+                if (ProfanedDesert.flashTimer > ProfanedDesert.flashPause)
+                {
+                    ce = Color.Lerp(Color.White, default, Utils.GetLerpValue(ProfanedDesert.flashPause, ProfanedDesert.flashTotal, ProfanedDesert.flashTimer, true));
+                }
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, ce, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+            }
         }
 
         private static void NoOldDuke(On.CalamityMod.CalamityUtils.orig_SpawnOldDuke orig, int playerIndex)

@@ -32,6 +32,7 @@ using CalamityMod.Sounds;
 using CalamityMod.Particles;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Cryogen;
+using CalRemix.World;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -320,7 +321,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             int torch = Main.zenithWorld ? TorchID.Ice : TorchID.Red;   
             Lighting.AddLight(NPC.Center, torch);
 
-            if (!player.ZoneUnderworldHeight && !ultraEnraged)
+            if (!player.ZoneUnderworldHeight && !ultraEnraged && !ProfanedDesert.scorchedWorld)
             {
                 if (biomeEnrageTimer > 0)
                     biomeEnrageTimer--;

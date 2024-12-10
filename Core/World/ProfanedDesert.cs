@@ -76,7 +76,7 @@ namespace CalRemix.World
             if (scorchedWorld)
                 WorldEffects();
 
-            if (flashTimer >= 0 && flashTimer < flashTotal)
+            if (flashTimer >= 0 && flashTimer < flashTotal && !(Main.LocalPlayer.dead && flashTimer > (flashPause - 1)))
             {
                 flashTimer++;
             }
