@@ -375,7 +375,7 @@ namespace CalRemix.Core
             // Fannies don't show up if disabled
             if (wid < 500 && !((self is ScreenHelper || self is ScreenHelperTextbox) && !ScreenHelperManager.screenHelpersEnabled) && (CalRemixAddon.CalVal != null && self.GetType() != CalRemixAddon.calvalFanny && self.GetType() != CalRemixAddon.calvalFannyBox))
             {
-                spriteBatch.Draw(Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
+                spriteBatch.Draw(Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock").Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
             }
         }
         private static bool SendToFannyDimension(On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)

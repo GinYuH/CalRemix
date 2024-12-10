@@ -35,7 +35,7 @@ namespace CalRemix.Content.Items.Misc
                 if (!File.Exists(path))
                 {
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.CertificateSent", Color.Brown);
-                    Texture2D texture = ModContent.Request<Texture2D>($"{Mod.Name}/Content/Items/Misc/CalamitousCertificate_Full", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D texture = ModContent.Request<Texture2D>($"{Mod.Name}/Content/Items/Misc/CalamitousCertificate_Full").Value;
                     FileStream stream = new(path, FileMode.Create);
                     texture.SaveAsPng(stream, texture.Width, texture.Height);
                 }

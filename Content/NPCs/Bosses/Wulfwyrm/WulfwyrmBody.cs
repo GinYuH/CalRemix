@@ -127,7 +127,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D roll = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Wulfwyrm/WulfwyrmWheels", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D roll = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Wulfwyrm/WulfwyrmWheels").Value;
             Rectangle sourceRectangle = new Rectangle(0, (int)NPC.localAI[0] * roll.Height / 3, roll.Width, roll.Height / 3);
             Vector2 origin = sourceRectangle.Size() / 2f;
             Vector2 draw = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);

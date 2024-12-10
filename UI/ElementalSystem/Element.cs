@@ -89,6 +89,11 @@ namespace CalRemix.UI.ElementalSystem
                     element = p;
             }
         }
+        public override GlobalItem Clone(Item from, Item to)
+        {
+            to.GetGlobalItem<ElementItem>().element = from.GetGlobalItem<ElementItem>().element;
+            return to.GetGlobalItem<ElementItem>();
+        }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item is null)

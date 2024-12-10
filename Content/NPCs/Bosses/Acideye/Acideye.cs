@@ -589,7 +589,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         {
             if (Phase < 4)
             {
-                Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/Acideye_Glow", AssetRequestMode.ImmediateLoad).Value;
+                Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/Acideye_Glow").Value;
                 Rectangle rect = new((Attack == 1 && Phase > 1 || Phase == 4 && Attack == 0 && Subphase == 1) ? texture.Width / 2 : 0, NPC.frame.Y, texture.Width / 2, texture.Height / Main.npcFrameCount[Type]);
                 spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rect, new Color(255, 255, 255, 255), NPC.rotation, rect.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
             }

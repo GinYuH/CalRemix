@@ -52,7 +52,7 @@ namespace CalRemix.World
             On_AWorldListItem.GetIcon += On_AWorldListItem_GetIcon;
             if (!Main.dedServ)
             {
-                ScorchedWorldIcon = ModContent.Request<Texture2D>("CalRemix/Core/World/ScorchedWorldIcon", AssetRequestMode.ImmediateLoad);
+                ScorchedWorldIcon = ModContent.Request<Texture2D>("CalRemix/Core/World/ScorchedWorldIcon");
             }
         }
 

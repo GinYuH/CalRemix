@@ -259,7 +259,7 @@ namespace CalRemix.Core.Retheme
         {
             if (npc.life > 0)
             {
-                Texture2D mask = Request<Texture2D>("CalRemix/Core/Retheme/Guardians/DreamMask" + num, AssetRequestMode.ImmediateLoad).Value;
+                Texture2D mask = Request<Texture2D>("CalRemix/Core/Retheme/Guardians/DreamMask" + num).Value;
                 Vector2 draw = npc.Center - screenPos + new Vector2(0f, npc.gfxOffY);
                 SpriteEffects spriteEffects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                 spriteBatch.Draw(mask, draw, null, drawColor, npc.rotation, mask.Size() / 2f, npc.scale, spriteEffects, 0f);
