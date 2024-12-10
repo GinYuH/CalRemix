@@ -36,6 +36,8 @@ using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee.Yoyos;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.NPCs.Providence;
+using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Core.Retheme
 {
@@ -252,6 +254,8 @@ namespace CalRemix.Core.Retheme
             #region Exos
             { ItemType<MiracleMatter>(), "Exo/Matter" },
             { ItemType<Exoblade>(), "Exo/Blade" },
+            { ItemType<Exosphear>(), "Exo/GravitonomyPike" },
+            { ItemType<Axisdriver>(), "Exo/Axisdriver" },
             { ItemType<HeavenlyGale>(), "Exo/Gale" },
             { ItemType<Photoviscerator>(), "Exo/Vis" },
             { ItemType<MagnomalyCannon>(), "Exo/Cannon" },
@@ -323,8 +327,10 @@ namespace CalRemix.Core.Retheme
             #endregion
             #region Exo
             { ProjectileType<ExobladeProj>(), "Exo/Blade" },
-            { ProjectileType<PhotovisceratorHoldout>(), "Exo/Vis" },
-            { ProjectileType<CelestusProj>(), "Exo/Celestus" },
+            { ProjectileType<PikeSpear>(), "Exo/PikeProj" },
+            { ProjectileType<HeavenlyGaleProj>(), "Exo/GaleProj" },
+            { ProjectileType<PhotovisceratorHoldout>(), "Exo/VisProj" },
+            { ProjectileType<CelestusProj>(), "Exo/CelestusProj" },
             { ProjectileType<SupernovaBomb>(), "Exo/Supernova" },
             #endregion
         };

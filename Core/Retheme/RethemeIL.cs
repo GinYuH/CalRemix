@@ -5,6 +5,7 @@ using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
+using CalamityMod.NPCs.Providence;
 
 namespace CalRemix.Core.Retheme
 {
@@ -16,9 +17,20 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
             IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw += CryogenShield;
             IL.CalamityMod.NPCs.CalamityAIs.CalamityBossAIs.AstrumAureusAI.VanillaAstrumAureusAI += AureusAI;
+            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|83_0", BindingFlags.NonPublic | BindingFlags.Instance), ProvidenceColors);
 
+            #region Items
             // IL.CalamityMod.Items.Weapons.PreDraw += ;
-
+            IL.CalamityMod.Items.Weapons.Melee.Exoblade.PostDrawInWorld += ExobladeGlow;
+            IL.CalamityMod.Items.Weapons.Ranged.HeavenlyGale.PostDrawInWorld += GaleGlow;
+            IL.CalamityMod.Items.Weapons.Ranged.Photoviscerator.PostDrawInWorld += VisGlow;
+            IL.CalamityMod.Items.Weapons.Magic.SubsumingVortex.PostDrawInWorld += VortexGlow;
+            IL.CalamityMod.Items.Weapons.Magic.VividClarity.PostDrawInWorld += ClarityGlow;
+            IL.CalamityMod.Items.Weapons.Summon.CosmicImmaterializer.PostDrawInWorld += ImmaterializerGlow;
+            IL.CalamityMod.Items.Weapons.Rogue.Celestus.PostDrawInWorld += CelestusGlow;
+            IL.CalamityMod.Items.Weapons.Rogue.Supernova.PostDrawInWorld += SupernovaGlow;
+            #endregion
+            #region Projectiles
             // IL.CalamityMod.Projectiles.PreDraw += ;
             IL.CalamityMod.Projectiles.Rogue.InfestedClawmerangProj.PreDraw += InfestedClawmerangProj;
             IL.CalamityMod.Projectiles.Summon.DankCreeperMinion.PreDraw += DankCreeperMinion;
@@ -29,17 +41,24 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI += EldritchTentacle;
             IL.CalamityMod.Projectiles.Summon.CrimslimeMinion.PreDraw += CrimslimeMinion;
             IL.CalamityMod.Projectiles.Summon.CorroslimeMinion.PreDraw += CorroslimeMinion;
+
             IL.CalamityMod.Projectiles.Summon.GastricBelcher.PreDraw += GastricBelcher;
             IL.CalamityMod.Projectiles.Rogue.LeonidProgenitorBombshell.PreDraw += LeonidProgenitorBombshell;
+
             MonoModHooks.Modify(typeof(ReaperProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance), TheOldReaper);
             IL.CalamityMod.Projectiles.Melee.DragonRageStaff.PreDraw += DragonRageStaff;
             IL.CalamityMod.Projectiles.Summon.FieryDraconid.PreDraw += FieryDraconid;
             IL.CalamityMod.Projectiles.Rogue.FinalDawnProjectile.PreDraw += FinalDawnProjectile;
+
             IL.CalamityMod.Projectiles.Melee.ExobladeProj.DrawBlade += ExobladeProj;
             IL.CalamityMod.Projectiles.Ranged.HeavenlyGaleProj.PreDraw += HeavenlyGaleProj;
+            IL.CalamityMod.Projectiles.Ranged.PhotovisceratorHoldout.PostDraw += PhotoProj;
             IL.CalamityMod.Projectiles.Rogue.CelestusProj.PostDraw += CelestusProj;
+            IL.CalamityMod.Projectiles.Rogue.SupernovaBomb.PreDraw += SupernovaProj;
+
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
+            #endregion
         }
         #region NPCs
         private static void Crabulon(ILContext il)
@@ -73,8 +92,118 @@ namespace CalRemix.Core.Retheme
                 c.EmitDelegate(() => !CalRemixWorld.npcChanges ? (float)1.3 : (float)0.0);
             }
         }
+        private static void ProvidenceColors(ILContext il)
+        {
+            var c = new ILCursor(il);
+            if (c.TryGotoNext(i => i.MatchCall<Color>("get_Cyan")))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_Cyan") : typeof(Color).GetMethod("get_White"));
+            }
+            if (c.TryGotoNext(i => i.MatchCall<Color>("get_BlueViolet")))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_BlueViolet") : typeof(Color).GetMethod("get_White"));
+            }
+            if (c.TryGotoNext(i => i.MatchCall<Color>("get_BlueViolet")))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.npcChanges ? typeof(Color).GetMethod("get_BlueViolet") : typeof(Color).GetMethod("get_White"));
+            }
+        }
         #endregion
         #region Items
+        private static void ExobladeGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Melee/ExobladeGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void GaleGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Ranged/HeavenlyGaleGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void VisGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Ranged/PhotovisceratorGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void VortexGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Magic/SubsumingVortexGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void ClarityGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Magic/VividClarityGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void ImmaterializerGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Summon/CosmicImmaterializerGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void CelestusGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Rogue/CelestusGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
+        private static void SupernovaGlow(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Rogue/SupernovaGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+            }
+        }
         #endregion
         #region Projectiles
         private static void InfestedClawmerangProj(ILContext il)
@@ -268,6 +397,17 @@ namespace CalRemix.Core.Retheme
                 c.EmitDelegate(() => !CalRemixWorld.itemChanges ? e : "CalRemix/Core/Retheme/Exo/GaleProjGlow");
             }
         }
+        private static void PhotoProj(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Projectiles/Ranged/PhotovisceratorHoldoutGlow";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Core/Retheme/Exo/VisProjGlow");
+            }
+        }
         private static void CelestusProj(ILContext il)
         {
             var c = new ILCursor(il);
@@ -276,7 +416,18 @@ namespace CalRemix.Core.Retheme
             {
                 c.Index++;
                 c.Emit(OpCodes.Pop);
-                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Assets/ExtraTextures/Blank");
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Core/Retheme/Exo/CelestusProjGlow");
+            }
+        }
+        private static void SupernovaProj(ILContext il)
+        {
+            var c = new ILCursor(il);
+            string d = "CalamityMod/Items/Weapons/Rogue/Supernova";
+            if (c.TryGotoNext(i => i.MatchLdstr(d)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => !CalRemixWorld.itemChanges ? d : "CalRemix/Core/Retheme/Exo/Supernova");
             }
         }
         private static void ViolenceThrownProjectile(ILContext il)
