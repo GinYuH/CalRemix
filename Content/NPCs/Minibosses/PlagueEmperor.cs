@@ -17,6 +17,7 @@ using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalRemix.Content.Projectiles.Hostile;
 using System.IO;
 using CalRemix.Core.World;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs.Minibosses
 {
@@ -53,6 +54,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.lavaImmune = true;
             NPC.noGravity = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PlagueBiome>().Type };
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -131,7 +133,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
 		        new FlavorTextBestiaryInfoElement("This creature claims dominion over the Plague. The emperor will eliminate anyone that comes too close to it.")
             });
         }

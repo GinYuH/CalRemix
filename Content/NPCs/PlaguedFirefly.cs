@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalRemix.Core.Biomes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,6 +31,13 @@ namespace CalRemix.Content.NPCs
             NPC.catchItem = (short)ModContent.ItemType<Items.Critters.PlaguedFirefly>();
             NPC.noGravity = true;
             NPC.friendly = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PlagueBiome>().Type };
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+        new FlavorTextBestiaryInfoElement("You would not bee-lieve your eyes.")
+            });
         }
 
         public override bool? CanBeHitByItem(Player player, Item item)

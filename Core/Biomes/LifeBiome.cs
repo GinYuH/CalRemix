@@ -17,7 +17,6 @@ namespace CalRemix.Core.Biomes
 		public override string BestiaryIcon => "CalRemix/Core/Biomes/LifeIcon";
 		public override string BackgroundPath => "Terraria/Images/MapBG2";
 		public override Color? BackgroundColor => Color.Lime;
-		//public override string Name => "Life Heart";
 
 		// Use SetStaticDefaults to assign the display name
 		public override void SetStaticDefaults()

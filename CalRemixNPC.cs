@@ -28,6 +28,7 @@ using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.NPCs.PlagueEnemies;
 using CalamityMod.NPCs.PrimordialWyrm;
 using CalamityMod.NPCs.ProfanedGuardians;
 using CalamityMod.NPCs.Providence;
@@ -74,11 +75,13 @@ using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -151,6 +154,33 @@ namespace CalRemix
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
             }
         }
+
+        public static void AddModBiomeToBestiary(int curNPC, int npcID, ModBiome biome, BestiaryEntry entry)
+        {
+            if (curNPC == npcID)
+                entry.Info.Add(LoaderManager.Get<BiomeLoader>().Get(biome.Type).ModBiomeBestiaryInfoElement);
+        }
+        public static void AddModBiomeToBestiary(int curNPC, int npcID, int biomeID, BestiaryEntry entry)
+        {
+            if (curNPC == npcID)
+                entry.Info.Add(LoaderManager.Get<BiomeLoader>().Get(biomeID).ModBiomeBestiaryInfoElement);
+        }
+
+        public static void RemoveVanillaBiomeFromBestiary(int curNPC, int npcID, SpawnConditionBestiaryInfoElement biome, BestiaryEntry entry)
+        {
+            if (curNPC == npcID)
+                if (entry.Info.Contains(biome))
+                    entry.Info.Remove(biome);
+        }
+
+        public static void ConvertPlagueEnemy(int curNPC, int npcID, BestiaryEntry entry)
+        {
+            RemoveVanillaBiomeFromBestiary(curNPC, npcID, BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle, entry);
+            RemoveVanillaBiomeFromBestiary(curNPC, npcID, BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle, entry);
+            AddModBiomeToBestiary(curNPC, npcID, GetInstance<PlagueBiome>().Type, entry);
+        }
+
+
         public override bool PreAI(NPC npc)
         {
             if (CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
@@ -1451,6 +1481,31 @@ namespace CalRemix
                 return drawColor.MultiplyRGB(Color.YellowGreen);
             return null;
         }
+
+        public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            int desertID = GetInstance<ProfanedDesertBiome>().Type;
+
+            AddModBiomeToBestiary(npc.type, NPCType<ScornEater>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ImpiousImmolator>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedEnergyBody>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedGuardianCommander>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedGuardianDefender>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedGuardianHealer>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Providence>(), desertID, bestiaryEntry);
+
+            AddModBiomeToBestiary(npc.type, NPCID.Dandelion, GetInstance<GaleforceDayBiome>(), bestiaryEntry);
+
+            ConvertPlagueEnemy(npc.type, NPCType<PlaguebringerGoliath>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PlagueCharger>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PlagueChargerLarge>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PlaguebringerMiniboss>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<Viruling>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<Plagueshell>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PestilentSlime>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<Melter>(), bestiaryEntry);
+        }
+
         private static void Talk(string text, Color color)
         {
             if (!CalRemixWorld.bossdialogue)
