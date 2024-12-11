@@ -39,7 +39,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             
             if (Main.zenithWorld)
             {
-                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, texture.Frame(3, 4, (int)MathHelper.Min(Projectile.ai[0], 3), 3), lightColor, Projectile.rotation, texture.Size() / 8, Projectile.scale * 2, 0, 0);
+                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, texture.Frame(3, 4, (int)MathHelper.Min(Projectile.ai[0] / 2f, 2), 3), lightColor, Projectile.rotation, texture.Size() / 8, Projectile.scale * 2, 0, 0);
             }
             else
             {
