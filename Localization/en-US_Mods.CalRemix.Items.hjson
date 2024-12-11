@@ -2282,6 +2282,12 @@ IonogenTrophy: {
 	Tooltip: ""
 }
 
+OldIonogenTrophy: {
+	DisplayName: Ancient Ionogen Trophy
+	Tooltip: ""
+}
+
+
 OrigenTrophy: {
 	DisplayName: Origen Trophy
 	Tooltip: ""
@@ -2874,3 +2880,5 @@ SylvanSlasher: {
 	DisplayName: Sylvan Slasher
 	Tooltip: ""
 }
+
+OldIonogenTrophy.Tooltip: Help me

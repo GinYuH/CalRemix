@@ -4,11 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Localization;
-using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.Tiles.Trophies
 {
-    public class IonogenTrophyPlaced : ModTile
+    public class OldIonogenTrophyPlaced : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +18,7 @@ namespace CalRemix.Content.Tiles.Trophies
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
-            name.SetDefault("Ionogen Trophy");
+            name.SetDefault("Ancient Ionogen Trophy");
             AddMapEntry(new Color(255, 255, 255), name);
         }
     }
