@@ -110,36 +110,36 @@ namespace CalRemix.Content.Items.Accessories
             }
         }
         private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
-        {
-            if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !ignoredRecipes.Contains(recipe.createItem.type))
             {
-                if (Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
+            if (item.ModItem is not null) { 
+                if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !ignoredRecipes.Contains(recipe.createItem.type))
                 {
-                    foreach (Item i in Main.LocalPlayer.inventory)
+                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
                     {
-                        if (i.type == ModContent.ItemType<IgnitedCommunity>())
+                        foreach (Item i in Main.LocalPlayer.inventory)
                         {
-                            IgnitedCommunity ig = i.ModItem as IgnitedCommunity;
-                            if (ig.count < IgnitedCommunity.MaxLevel)
-                                ig.count++;
+                            if (i.type == ModContent.ItemType<IgnitedCommunity>())
+                            {
+                                IgnitedCommunity ig = i.ModItem as IgnitedCommunity;
+                                if (ig.count < IgnitedCommunity.MaxLevel)
+                                    ig.count++;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    for (int i = 3; i < 10; i++)
+                    else
                     {
-                        if (Main.LocalPlayer.armor[i].type == ModContent.ItemType<IgnitedCommunity>())
+                        for (int i = 3; i < 10; i++)
                         {
-                            IgnitedCommunity ig = Main.LocalPlayer.armor[i].ModItem as IgnitedCommunity;
-                            if (ig.count < IgnitedCommunity.MaxLevel)
-                                ig.count++;
+                            if (Main.LocalPlayer.armor[i].type == ModContent.ItemType<IgnitedCommunity>())
+                            {
+                                IgnitedCommunity ig = Main.LocalPlayer.armor[i].ModItem as IgnitedCommunity;
+                                if (ig.count < IgnitedCommunity.MaxLevel)
+                                    ig.count++;
+                            }
                         }
                     }
                 }
             }
         }
-
     }
-
 }
