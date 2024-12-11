@@ -49,7 +49,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.width = 30;
             NPC.height = 24;
-            NPC.damage = 270;
+            NPC.damage = 300;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.HitSound = HitSound;
@@ -91,7 +91,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 {
                     case 0 or 1 or 2: //default guarding behavior
                         {
-                            NPC.damage = 220;
+                            NPC.damage = 300;
                             stopAi1 = false;
                             NPC.localAI[1] += 5f;
                             float distance = 50;
@@ -182,7 +182,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                     default: //default guarding behavior
                         {
-                            NPC.damage = 220;
+                            NPC.damage = 300;
                             NPC.localAI[1] += 8f;
                             float distance = pyro.width >= pyro.height ? pyro.width : pyro.height;
                             double deg = 22.5 * NPC.ai[1] + NPC.localAI[1];

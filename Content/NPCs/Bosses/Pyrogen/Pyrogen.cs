@@ -871,7 +871,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.rotation = NPC.velocity.X * 0.1f;
                             if (AttackTimer % flareRate == 0)
                             {
-                                int type = Main.zenithWorld ? ModContent.ProjectileType<IceBomb>() : ModContent.ProjectileType<PyrogenFlareStatic2>();
+                                int type = Main.zenithWorld ? ModContent.ProjectileType<IceBlast>() : ModContent.ProjectileType<PyrogenFlareStatic2>();
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
