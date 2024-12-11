@@ -29,6 +29,7 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Placeables.Relics;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -263,7 +264,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             ExoMechsSky.CreateLightningBolt(22, true);
                             Terraria.Audio.SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.FlareSound, NPC.Center);
                             assemblagePieces.Clear();
-                            Main.NewText(NPC.FullName + " has awoken!", new Color(175, 75, 255));
+                            Main.NewText(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.DisplayName").Value + " has awoken!", new Color(175, 75, 255));
                             ChangePhase(1);
                         }
                         if (assemblagePieces != null && assemblagePieces.Count > 0)
@@ -1009,7 +1010,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             }
             else
             {
-                typeName = ContentSamples.NpcsByNetId[Type].TypeName;
+                typeName = Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.DisplayName").Value;
             }
         }
 

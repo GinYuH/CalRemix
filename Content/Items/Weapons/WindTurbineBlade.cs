@@ -44,6 +44,8 @@ namespace CalRemix.Content.Items.Weapons
                 Projectile p = Projectile.NewProjectileDirect(source, position, Vector2.Normalize(velocity) * 7f, ProjectileID.WeatherPainShot, damage * 2, knockback);
                 p.DamageType = DamageClass.Melee;
                 hitCounter = 0;
+                Projectile p2 = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback);
+                p2.scale = 2f;
                 return false;
             }
             return true;

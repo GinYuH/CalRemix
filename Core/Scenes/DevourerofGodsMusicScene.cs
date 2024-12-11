@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Core.Scenes
 {
+    /*
     public class DevourerofGodsMusicScene : ModSceneEffect
     {
         public override bool IsSceneEffectActive(Player player) => NPC.AnyNPCs(ModContent.NPCType<DevourerofGodsHead>());
@@ -25,4 +26,5 @@ namespace CalRemix.Core.Scenes
             }
         }
     }
+    */
 }
