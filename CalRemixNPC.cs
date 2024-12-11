@@ -4,6 +4,7 @@ using CalamityMod.Events;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.SummonItems;
@@ -54,6 +55,7 @@ using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
@@ -836,6 +838,11 @@ namespace CalRemix
             if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == NPCType<AstralSlime>())
             {
                 npcLoot.Add(ItemType<TitanFinger>(), 50);
+            }
+            if (npc.type == NPCType<Nova>())
+            {
+                LeadingConditionRule leadingConditionRule = npcLoot.DefineConditionalDropSet((DropAttemptInfo info) => CalRemixWorld.permanenthealth && info.npc.ai[3] <= -10000f && CheckAstralOreBlocks(info.npc));
+                leadingConditionRule.Add(ItemType<CometShard>());
             }
             if (npc.type == NPCType<Atlas>())
             {
@@ -2002,6 +2009,20 @@ namespace CalRemix
                     }
                 }
             }
+        }
+        public static bool CheckAstralOreBlocks(NPC npc)
+        {
+            for (int i = -5; i < npc.width + 5; i++)
+            {
+                for (int j = -5; j < npc.height + 5; j++)
+                {
+                    int x = (npc.position + Vector2.UnitX * i).ToSafeTileCoordinates().X;
+                    int y = (npc.position + Vector2.UnitY * i).ToSafeTileCoordinates().Y;
+                    if (Main.tile[x, y].TileType == TileType<AstralOre>())
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }
