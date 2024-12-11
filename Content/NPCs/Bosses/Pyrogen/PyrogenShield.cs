@@ -49,7 +49,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.width = 30;
             NPC.height = 24;
-            NPC.damage = 220;
+            NPC.damage = 270;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.HitSound = HitSound;

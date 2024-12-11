@@ -60,6 +60,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.GameContent.Events;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -85,7 +86,10 @@ namespace CalRemix
 
     public class CalRemixPlayer : ModPlayer
 	{
-        // General
+
+        public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
+
+    // General
         public int commonItemHoldTimer;
         public int remixJumpCount;
         public int RecentChest = -1;
@@ -421,7 +425,11 @@ namespace CalRemix
 			}
 			
         }
-		public override void UpdateEquips()
+
+
+
+
+        public override void UpdateEquips()
         {
 			if (CalRemixWorld.remixJump)
 				Player.GetJumpState<DefaultJump>().Enable();
@@ -554,6 +562,13 @@ namespace CalRemix
 			*/
             return true;
         }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {     
+            if (Main.zenithWorld) SoundEngine.PlaySound(glassBreakSound, Player.Center);
+            return false;
+        }
+
         public override void PostUpdateMiscEffects()
         {       
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();

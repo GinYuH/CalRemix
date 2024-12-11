@@ -985,7 +985,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         {
                             if (Main.netMode != NetmodeID.Server)
                             {
-                                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("PyrogenDoor").Type);
+                                if (!Main.zenithWorld) Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("PyrogenDoor").Type);
+                                else Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("CryogenDoor").Type);
                             }
                         }
 
