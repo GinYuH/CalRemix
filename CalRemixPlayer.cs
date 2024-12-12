@@ -565,8 +565,9 @@ namespace CalRemix
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {     
-            if (Main.zenithWorld) SoundEngine.PlaySound(glassBreakSound, Player.Center);
-            return false;
+            if (Main.zenithWorld) 
+                SoundEngine.PlaySound(glassBreakSound, Player.Center);
+            return true;
         }
 
         public override void PostUpdateMiscEffects()

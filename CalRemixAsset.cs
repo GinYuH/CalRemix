@@ -96,6 +96,7 @@ namespace CalRemix
         public static readonly int BaronStrait = Set("TheEndZone");
         public static readonly int VernalPass = Set("VajrabhairavasRest");
         public static readonly int FrozenStronghold = Set("LockedAway");
+        public static readonly int ProfanedDesert = Set("Insurgent");
 
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
