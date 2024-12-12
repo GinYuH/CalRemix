@@ -51,7 +51,7 @@ namespace CalRemix
             }
 
             AssetRepository remixAsset = Mod.Assets;
-            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path).Value;
+            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             ShieldShader = LoadShader("HoloShield");
