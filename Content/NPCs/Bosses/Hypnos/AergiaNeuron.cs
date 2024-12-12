@@ -1265,7 +1265,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
 
 
                     Texture2D shield = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/HypnosShield").Value;
-                    spriteBatch.Draw(shield, npcOffset - new Vector2(0, 40), null, Color.White, NPC.rotation, shield.Size() / 2, NPC.scale, spriteEffects, 0f);
+                    spriteBatch.Draw(shield, npcOffset - new Vector2(0, 40 * hypnos.scale), null, Color.White, NPC.rotation, shield.Size() / 2, hypnos.scale, spriteEffects, 0f);
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);

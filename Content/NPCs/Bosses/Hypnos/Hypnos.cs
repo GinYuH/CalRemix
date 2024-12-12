@@ -94,10 +94,6 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
 
         public override void AI()
         {
-            if (Main.getGoodWorld)
-            {
-                NPC.scale = 1.75f;
-            }
             //Boss zen
             Main.player[Main.myPlayer].Calamity().isNearbyBoss = true;
             Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatBuffs.BossEffects>(), 10, true);
@@ -879,7 +875,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                 foreach (HypnosAssemblagePiece piece in assemblagePieces)
                 {
                     Texture2D tex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/Assemblage" + piece.texture).Value;
-                    spriteBatch.Draw(tex, piece.position - screenPos + Vector2.UnitY * 40, null, NPC.GetAlpha(drawColor) * (0.00392156863f * piece.opacity), 0, tex.Size() / 2, 1f, piece.leftSide ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1);
+                    spriteBatch.Draw(tex, piece.position - screenPos + Vector2.UnitY * 40, null, NPC.GetAlpha(drawColor) * (0.00392156863f * piece.opacity), 0, tex.Size() / 2, NPC.scale, piece.leftSide ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1);
                 }
                 if (NPC.ai[1] > 240)
                 {
