@@ -12,6 +12,7 @@ using CalRemix.Core.Subworlds;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalRemix.World;
 
 namespace CalRemix.UI
 {
@@ -124,6 +125,18 @@ namespace CalRemix.UI
 
             HelperMessage.New("Asbestos", "Asbestos is a naturally occurring fibrous silicate mineral. It's a rockin' place to be, but be careful breaking the walls of houses in these caves, you might attract a crippled smoker named Carcinoma! He's a real pain in the asbestos! Be careful where you swing that hammer!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.InModBiome<AsbestosBiome>()).AddItemDisplay(ItemID.CopperHammer);
+
+            HelperMessage apoc = HelperMessage.New("Apocalypse1", "Oh no.. oh no! Look what you've done! Ohhh we're really in the thick of it now...",
+               "FannyApocalypse", (ScreenHelperSceneMetrics scene) => ProfanedDesert.scorchedWorld && !Main.LocalPlayer.dead, 9, cantBeClickedOff: true);
+
+            HelperMessage.New("Apocalypse2", "everybody knows",
+               "CrimSonDefault").SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("Apocalypse3", "Fanny you dim-wick, take that stupid thing off.",
+               "EvilFannyIdle").SpokenByEvilFanny().ChainAfter(apoc, delay: 7, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("Apocalypse4", "Aww jeez, okay...",
+               "FannySob").ChainAfter(delay: 2, startTimerOnMessageSpoken: true);
 
         }
 

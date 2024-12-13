@@ -33,6 +33,6 @@ namespace CalRemix.Core.Biomes
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
-        public override int Music => CalRemixMusic.BaronStrait;
+        public override int Music => CalRemixMusic.ProfanedDesert;
     }
 }

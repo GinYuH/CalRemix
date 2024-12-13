@@ -75,9 +75,6 @@ namespace CalRemix.UI
             HelperMessage.New("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LifeCrystal));
 
-            HelperMessage.New("YharimBar", "Is that a Yharim Bar? You'll need a lot of them for various recipes!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>())).AddItemDisplay(ModContent.ItemType<YharimBar>());
-
             HelperMessage.New("Jump", "Did you know? You can press the \"space\" button to jump!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!");
 

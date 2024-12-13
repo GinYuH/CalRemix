@@ -75,11 +75,11 @@ namespace CalRemix.Content.Items.SummonItems
         public override void ModifyTooltips(List<TooltipLine> list)
         {
             if (Main.zenithWorld)
-            foreach (var v in list)
+            for (int i = 0; i < list.Count; i++)
             {
-                if (v.Text.Contains("Pyrogen"))
+                if (list[i].Text.Contains("Pyrogen"))
                 {
-                    v.Text.Replace("Pyrogen", "Cryogen");
+                        list[i].Text.Replace("Pyrogen", "Cryogen");
                 }
             }
         }

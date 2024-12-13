@@ -81,8 +81,7 @@ namespace CalRemix.Core.Retheme
         {
             if (CalRemixWorld.npcChanges)
                 return false;
-            orig(self, player);
-            return true;
+            return orig(self, player);
         }
     }
     public class RethemeNPC : GlobalNPC

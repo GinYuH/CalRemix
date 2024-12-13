@@ -920,6 +920,7 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyStare", 1);
             ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
             ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
+            ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
 
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);
@@ -927,6 +928,9 @@ namespace CalRemix.UI
             //Miracle Boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIdle", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIceCream", 10, 6, 5,  6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyRead", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyGnaw", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoySob", 2, 6);
 
             //Crim Son
             ScreenHelperPortrait.LoadPortrait("CrimSonDefault", 42, 6, 6);
@@ -982,7 +986,7 @@ namespace CalRemix.UI
                     {
                         if (message.CanPlayMessage() && message.CheckExtraConditions(sceneMetrics))
                         {
-                            message.Text = Language.GetOrRegister("Mods.CalRemix.Fanny." + message.Identifier).Value;
+                            //message.Text = Language.GetOrRegister("Mods.CalRemix.Fanny." + message.Identifier).Value;
                             message.PlayMessage(speaker);
                             break;
                         }
@@ -1275,7 +1279,7 @@ namespace CalRemix.UI
         {
             HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
 
-            Language.GetOrRegister("Mods.CalRemix.Fanny" + identifier);
+            //Language.GetOrRegister("Mods.CalRemix.Fanny" + identifier);
 
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
@@ -1587,7 +1591,7 @@ namespace CalRemix.UI
 
             //This is the setence as we are building it
             string formattedSetence = "";
-            string baseText = Language.GetOrRegister("Mods.CalRemix.Fanny." + Identifier).Value;
+            string baseText = originalText;
             if (textSegments.Count > 0)
             {
                 int i = 0;
