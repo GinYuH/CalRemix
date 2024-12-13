@@ -99,21 +99,29 @@ Mods: {
 			DisplayName: Calamity Community Remix Config
 
 			CalRemixConfig: {
-				DisplayName: Menu Config
+				Headers.CalRemixHeader: Calamity Community Remix
+
+				FannyToggle: {
+					Header: Fanny
+					Label: Toggle Fanny
+					Tooltip: Enables/disables Fanny.
+				}
+
+				DisplayName: Cal Remix Config
 
 				randomMenu: {
-					Label: Randomize Menu
-					Tooltip: Selects any variant of the menu
+					Label: random Menu
+					Tooltip: ""
 				}
 
 				forcedMenu: {
-					Label: Forced Override
-					Tooltip: Only allows Remix menus to display on start
+					Label: forced Menu
+					Tooltip: ""
 				}
 
 				useSecondMenu: {
-					Label: Only Use Second Menu
-					Tooltip: The second menu will always show up instead
+					Label: use Second Menu
+					Tooltip: ""
 				}
 			}
 		}

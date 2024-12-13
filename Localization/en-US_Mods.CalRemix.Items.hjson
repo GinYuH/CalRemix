@@ -2879,3 +2879,12 @@ SylvanSlasher: {
 	DisplayName: Sylvan Slasher
 	Tooltip: ""
 }
+
+DiviningRod: {
+	Tooltip:
+		'''
+		Homes in on the presence of powerful elemental magic
+		In the event there are multiple sources, it will home in on the one most approachable for your current progression
+		'''
+	DisplayName: Divining Rod
+}

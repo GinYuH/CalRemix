@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +14,6 @@ namespace CalRemix.Content.Tiles.Trophies
 {
     public class PhytogenTrophyPlaced : ModTile
     {
-        public bool ate = false;
         public static readonly SoundStyle EatSound = new("CalRemix/Assets/Sounds/TrophyEat");
 
         public override void SetStaticDefaults()
@@ -28,22 +28,29 @@ namespace CalRemix.Content.Tiles.Trophies
             name.SetDefault("Phytogen Trophy");
             AddMapEntry(new Color(255, 255, 255), name);
         }
-        #region famine
+
+
+
+        #region famine 
         /*
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            if (!ate) Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemType<PhytogenTrophy>());
-            else Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.WeaponRack);
-            ate = false;
+            Tile tile = Main.tile[i, j];
+            if (tile.TileFrameY >= 55) yield return new Item(ItemID.WeaponRack);
+            else yield return new Item(ModContent.ItemType<PhytogenTrophy>());
         }
+
 
         public override bool RightClick(int i, int j)
         {
-            if (!ate)
+            Tile tile = Main.tile[i, j];
+
+
+            short frameAdjustment = (short)(54);
+            if (tile.TileFrameY <= 54)
             {
                 ToggleTile(i, j);
                 SoundEngine.PlaySound(EatSound, new Vector2(i * 16, j * 16));
-                ate = true;
                 Player player = Main.player[Main.myPlayer];
                 player.AddBuff(BuffID.WellFed2, 36000);
                 return true;
@@ -55,15 +62,12 @@ namespace CalRemix.Content.Tiles.Trophies
         {
             Tile tile = Main.tile[i, j];
             int topX = i - tile.TileFrameX % 54 / 18;
-            int topY = j - tile.TileFrameY % 50 / 18;
-
-            short frameAdjustment = (short)(54);
-
+            int topY = j - tile.TileFrameY % 54 / 18;
             for (int x = topX; x < topX + 3; x++)
             {
                 for (int y = topY; y < topY + 2; y++)
                 {
-                    Main.tile[x, y].TileFrameY += frameAdjustment;
+                    Main.tile[x, y].TileFrameY += 54;
                 }
             }
 
@@ -71,7 +75,8 @@ namespace CalRemix.Content.Tiles.Trophies
             {
                 NetMessage.SendTileSquare(-1, topX, topY, 3, 2);
             }
-        } */
+        }
+       */
         #endregion
     }
 }

@@ -255,11 +255,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 else if (phase2)
                 {
                     HandlePhaseTransition(true);
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 140;
                     NPC.life = 10;
                 }
                 else
                 {
                     HandlePhaseTransition(false);
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 100;
                     NPC.life = 10;
                 }
             }
@@ -965,7 +967,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             string path = Main.zenithWorld ? "CryogenGore" : "Pyrogen";
                             for (int i = 1; i <= 4; i++)
                             {
-                                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>(path + i).Type, 1f);
+                                Gore.NewGore(NPC.GetSource_Death(), NPC.position, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>(path + i).Type, 1f);
                             }
                             SoundStyle sound = DeathSound;
                             SoundEngine.PlaySound(sound, NPC.Center);
@@ -1080,6 +1082,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(NPC.Center) * projSpeed, ModContent.ProjectileType<ObsidianFragment>(), Main.expertMode ? 50 : 100, 0, -1, Main.rand.Next(0, 6));
                     }
+                    if (end) Main.LocalPlayer.Calamity().GeneralScreenShakePower = 80; //shake! SHAKE! SHAAAAAAKE!
                 }
             }
 
@@ -1421,7 +1424,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
+            int dust = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
             for (int k = 0; k < 5; k++)
             {
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, hit.HitDirection, -1f, 0, default, 1f);
