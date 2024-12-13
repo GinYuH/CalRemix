@@ -381,7 +381,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                         if (NPC.ai[1] > 180)
                         {
-                            int dustType = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
+                            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
                             for (int i = 0; i < 10; i++)
                             {
                                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -493,7 +493,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 NPC.velocity.X *= 0.7f; //slow down just in case onscreen
                                 NPC.velocity.Y *= 0.7f;
-                                int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.FlameBurst;
+                                int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
                                 if (charges >= chargeLimit) //dashed enough times! switch attacks...
                                 {
                                     int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -815,7 +815,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
                         if (AttackTimer == 10)
                         {
-                            int dustType = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
+                            int dustType = Main.zenithWorld ? DustID.SnowflakeIce : DustID.Torch;
                             for (int i = 0; i < 10; i++)
                             {
                                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -1253,7 +1253,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 else continue;
             }
 
-            int dustType = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
+            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             for (int i = 0; i < 10; i++)
             {
                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -1306,7 +1306,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public void DustExplosion()
         {
-            int dust = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             for (int i = 0; i < 40; i++)
             {
                 int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, Main.rand.NextFloat(-22, 22), Main.rand.NextFloat(-22, 22), Scale: Main.rand.NextFloat(0.8f, 2f));
@@ -1424,7 +1424,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            int dust = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             for (int k = 0; k < 5; k++)
             {
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, hit.HitDirection, -1f, 0, default, 1f);

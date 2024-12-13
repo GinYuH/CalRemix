@@ -62,7 +62,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<Dragonfire>(), 120);
+            if (!Main.zenithWorld) target.AddBuff(ModContent.BuffType<Dragonfire>(), 120);
+            else target.AddBuff(ModContent.BuffType<GlacialState>(), 120);
         }
         public override void OnKill(int timeLeft)
         {

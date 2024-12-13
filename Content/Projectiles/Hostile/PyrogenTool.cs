@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Tool");
+            DisplayName.SetDefault("Pyro Blade");
             Main.projFrames[Projectile.type] = 6;
         }
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenShield";
@@ -64,7 +64,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<Dragonfire>(), 120);
+            if (!Main.zenithWorld) target.AddBuff(ModContent.BuffType<Dragonfire>(), 120);
+            else target.AddBuff(ModContent.BuffType<GlacialState>(), 120);
         }
         public override void OnKill(int timeLeft)
         {
