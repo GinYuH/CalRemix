@@ -8,7 +8,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
+using Terraria.ModLoader; 
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
