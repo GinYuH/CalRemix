@@ -207,3 +207,8 @@ FractalCrawlerBuff: {
 	DisplayName: Fractal Crawler
 	Description: The fractal crawler will protect you
 }
+
+DestructivePresence: {
+	DisplayName: Destructive Presence
+	Description: Something dangerous lingers nearby
+}

@@ -140,6 +140,7 @@ namespace CalRemix.Core.World
         public static Vector2 hydrogenLocation = new Vector2(0, 0);
 
         public static bool stratusDungeonDisabled = false;
+        public static NPC butterflyEffect = null;
 
         public static List<int> DungeonWalls = new List<int>
         {
@@ -583,6 +584,8 @@ namespace CalRemix.Core.World
                 loadedRecipeInjections = true;
                 //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
             }
+            if (butterflyEffect != null && !NPC.AnyNPCs(NPCType<FunnyButterfly>()))
+                butterflyEffect = null;
             if (Main.eclipse)
             {
                 if (TextureAssets.Sun3 == CalRemixAsset.sunOG)

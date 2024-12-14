@@ -4218,3 +4218,12 @@ ThoriumMod/ZombieRepellentBuffStone: {
 		Attacks inflict Repellent : Zombies
 		'''
 }
+
+CalRemix/DestructivePresenceStone: {
+	Tooltip:
+		'''
+		Immunity to Destructive Presence
+		Attacks inflict Destructive Presence
+		'''
+	DisplayName: Destructive Presence Stone
+}
