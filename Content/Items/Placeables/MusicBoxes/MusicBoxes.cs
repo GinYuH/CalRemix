@@ -1,3 +1,4 @@
+using CalRemix.Content.Items.Placeables.MusicBoxes.ExoMechs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,6 +9,16 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
 {
     public abstract class RemixMusicBox : ModItem
     {
+        public static readonly int[] ExoMechMusicBoxes =
+        [
+            ItemType<ApingasMusicBox>(),
+            ItemType<LarryMusicBox>(),
+            ItemType<ThanosMusicBox>(),
+            ItemType<ApingasLarryMusicBox>(),
+            ItemType<ApingasThanosMusicBox>(),
+            ItemType<ThanosLarryMusicBox>(),
+            ItemType<XOMusicBox>()
+        ];
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
