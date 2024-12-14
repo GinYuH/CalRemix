@@ -1,4 +1,6 @@
-﻿using CalamityMod.Buffs.DamageOverTime;
+﻿#region Clops
+/*
+using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -83,3 +85,5 @@ namespace CalRemix.Content.Items.Tools
 
     }
 }
+*/
+#endregion
