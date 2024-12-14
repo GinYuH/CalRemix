@@ -2888,3 +2888,13 @@ DiviningRod: {
 		'''
 	DisplayName: Divining Rod
 }
+
+TheButterflyEffect: {
+	Tooltip:
+		'''
+		Releases a vicious force of nature to turn everything and everyone into ash
+		Caution is extremely advised as it will never leave unless captured
+		There can only be one
+		'''
+	DisplayName: The Butterfly Effect
+}

@@ -1,7 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
-using CalRemix.Content.Buffs;
-using CalRemix.Content.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -46,7 +44,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 SoundEngine.PlaySound(SoundID.DD2_BetsySummon);
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, ModContent.DustType<ValfreyDust>(), Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
+                Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, DustID.Flare, Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
             }
         }
         public override void AI()
@@ -79,7 +77,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, ModContent.DustType<ValfreyDust>(), Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
+                            Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, DustID.Flare, Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
                         }
                         float x = Main.rand.NextBool() ? Main.rand.NextFloat(-200, -180) : Main.rand.NextFloat(180, 200);
                         float y = Main.rand.NextBool() ? Main.rand.NextFloat(-200, -180) : Main.rand.NextFloat(180, 200);
@@ -101,13 +99,13 @@ namespace CalRemix.Content.Projectiles.Weapons
                 SoundEngine.PlaySound(SoundID.DD2_BetsySummon);
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, ModContent.DustType<ValfreyDust>(), Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
+                Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, DustID.Flare, Main.rand.Next(-3, 4), Main.rand.Next(-3, 4));
             }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<WhisperingDeath>(), 120);
-            target.AddBuff(ModContent.BuffType<ValfreyBurn>(), 120);
+            target.AddBuff(BuffID.OnFire3, 120);
         }
     }
 }

@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using CalamityMod.Buffs.StatDebuffs;
-using CalRemix.Content.Buffs;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {
@@ -43,7 +42,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<WhisperingDeath>(), 120);
-            target.AddBuff(ModContent.BuffType<ValfreyBurn>(), 120);
+            target.AddBuff(BuffID.OnFire3, 120);
         }
     }
 }
