@@ -13,7 +13,6 @@ namespace CalRemix.Content.Projectiles.Weapons
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chain-Saw");
-			Main.projFrames[base.Projectile.type] = 8;
 		}
 
 		public override void SetDefaults()
@@ -27,7 +26,6 @@ namespace CalRemix.Content.Projectiles.Weapons
 			base.Projectile.ownerHitCheck = true;
 			base.Projectile.DamageType = DamageClass.Melee;
 			Projectile.aiStyle = 20;
-			base.Projectile.scale = 1.5f;
             Projectile.usesLocalNPCImmunity= true;
             Projectile.localNPCHitCooldown = 5;
 		}

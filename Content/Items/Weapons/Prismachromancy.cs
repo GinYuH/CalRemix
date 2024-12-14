@@ -2,7 +2,6 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria;
-using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Weapons;
 
 namespace CalRemix.Content.Items.Weapons;
@@ -13,8 +12,6 @@ public class Prismachromancy : ModItem
     {
         DisplayName.SetDefault("Prismachromancy");
         Tooltip.SetDefault("Dazzle them!");
-        Main.RegisterItemAnimation(base.Item.type, new DrawAnimationVertical(12, 8));
-        ItemID.Sets.AnimatesAsSoul[base.Type] = true;
         Item.staff[Type] = true;
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
