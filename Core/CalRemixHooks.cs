@@ -39,6 +39,7 @@ using CalRemix.World;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MonoMod.RuntimeDetour;
 using CalRemix.Content.Items.ZAccessories;
+using CalamityMod.Items.Accessories;
 
 namespace CalRemix.Core
 {
@@ -49,6 +50,25 @@ namespace CalRemix.Core
         public static MethodInfo resizeMethod = typeof(ModContent).GetMethod("ResizeArrays", BindingFlags.Static | BindingFlags.NonPublic);
         public static Hook loadStoneHook;
         public delegate void orig_ResizeArrays(bool optional);
+
+        public static MethodInfo drawMethod = typeof(SpriteBatch).GetMethod("PushSprite", BindingFlags.Instance | BindingFlags.NonPublic);
+        public static Hook drawHook;
+        public delegate void orig_PushSprite(SpriteBatch sb, Texture2D texture,
+            float sourceX,
+            float sourceY,
+            float sourceW,
+            float sourceH,
+            float destinationX,
+            float destinationY,
+            float destinationW,
+            float destinationH,
+            Color color,
+            float originX,
+            float originY,
+            float rotationSin,
+            float rotationCos,
+            float depth,
+            byte effects);
 
         public override void Load()
         {
@@ -76,11 +96,34 @@ namespace CalRemix.Core
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
+            //drawHook = new Hook(drawMethod, DrawRotated);
+            
         }
 
         public override void Unload()
         {
             loadStoneHook = null;
+            drawHook = null;
+        }
+
+        public static void DrawRotated(orig_PushSprite orig, SpriteBatch self, Texture2D texture,
+            float sourceX,
+            float sourceY,
+            float sourceW,
+            float sourceH,
+            float destinationX,
+            float destinationY,
+            float destinationW,
+            float destinationH,
+            Color color,
+            float originX,
+            float originY,
+            float rotationSin,
+            float rotationCos,
+            float depth,
+            byte effects)
+        {
+            orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW * (1.22f + MathF.Cos(Main.GlobalTimeWrappedHourly * 2)), destinationH * (1.22f + MathF.Sin(Main.GlobalTimeWrappedHourly * 2)), color, originX, originY, rotationSin, rotationCos, depth, effects);
         }
 
         public static void ResizeArraysWithRocks(orig_ResizeArrays orig, bool unloading)
