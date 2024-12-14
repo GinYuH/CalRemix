@@ -37,6 +37,8 @@ using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Providence;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace CalRemix.Core.Retheme
 {
@@ -114,6 +116,7 @@ namespace CalRemix.Core.Retheme
             CalamitasClone.GlowTexture = NPCTextureChange("Cal/CalamitasGlow", "CalClone/CalamitasCloneGlow");
             Anahita.ChargeTexture = NPCTextureChange("Levi/AnahitaStab", "Leviathan/AnahitaStabbing");
             Leviathan.AttackTexture = NPCTextureChange("Levi/LeviAttack", "Leviathan/LeviathanAttack");
+
 
             #region Providence
             ProvidenceTextureChange(ref Providence.TextureAlt, "TextureAlt");
@@ -201,7 +204,60 @@ namespace CalRemix.Core.Retheme
             {
                 typeName = "Calamity Witch";
             }
+            else if (typeName.Contains("Skeletron"))
+            {
+                typeName = typeName.Replace("Skeletron", "Dungen");
+            }
         }
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (!CalRemixWorld.npcChanges)
+                return true;
+
+            if (npc.type == NPCID.SkeletronHead)
+            {
+                bool rushingSkeletron = (npc.ai[1] == 1f || npc.ai[1] == 2f);
+                drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
+
+                    Texture2D hand;
+                if (npc.life / (float)npc.lifeMax > 0.98f)
+                    hand = Request<Texture2D>("CalRemix/Core/Retheme/Skeletron/DungenHand2", AssetRequestMode.AsyncLoad).Value;
+                else
+                    hand = Request<Texture2D>("CalRemix/Core/Retheme/Skeletron/DungenHand", AssetRequestMode.AsyncLoad).Value;
+
+                Vector2 drawCenter = npc.Center - screenPos;
+                float rotationBase = Main.GlobalTimeWrappedHourly * 3f;
+
+                for (int i = 0; i < 8; i++)
+                {
+                    SpriteEffects spriteEffects = (i % 2 == 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                    float rotation = i / 8f * MathHelper.TwoPi + rotationBase;
+                    Vector2 drawPos = drawCenter + rotation.ToRotationVector2() * (rushingSkeletron ? 30f : 80f);
+
+                    spriteBatch.Draw(hand, drawPos, null, drawColor, rotation - MathHelper.PiOver2, new Vector2(hand.Width / 2, 20), npc.scale, spriteEffects, 0f);
+                }
+
+                Texture2D face;
+                if (npc.life / (float)npc.lifeMax > 0.98f)
+                    face = Request<Texture2D>("CalRemix/Core/Retheme/Skeletron/Dungen3", AssetRequestMode.AsyncLoad).Value;
+                else if (rushingSkeletron)
+                    face = Request<Texture2D>("CalRemix/Core/Retheme/Skeletron/Dungen2", AssetRequestMode.AsyncLoad).Value;
+                else
+                    face = Request<Texture2D>("CalRemix/Core/Retheme/Skeletron/Dungen", AssetRequestMode.AsyncLoad).Value;
+
+                float drawRotation = npc.rotation;
+                if (rushingSkeletron)
+                    drawRotation = (float)Math.Sin(drawRotation * 1f) * 0.2f;
+
+                spriteBatch.Draw(face, drawCenter, null, drawColor, drawRotation, face.Size() / 2f, npc.scale, SpriteEffects.None, 0f);
+
+                return false;
+            }
+
+            return true;
+        }
+
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (!CalRemixWorld.npcChanges)
@@ -292,6 +348,10 @@ namespace CalRemix.Core.Retheme
             {
                 string name = CalRemixWorld.itemChanges ? RethemeList.ItemNames.GetValueOrDefault(item.type) : RethemeMaster.OriginalItemNames.GetValueOrDefault(item.type);
                 item.SetNameOverride(name);
+            }
+            else if (item.Name.Contains("Skeletron"))
+            {
+                item.SetNameOverride(item.Name.Replace("Skeletron", "Dungen"));
             }
         }
         public override void UpdateInventory(Item item, Player player)
