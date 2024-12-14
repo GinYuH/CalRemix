@@ -12,7 +12,6 @@ namespace CalRemix.Content.Projectiles.Weapons
     public class ChainsmokerHoldout : BaseGunHoldoutProjectile
     {
         public override int AssociatedItemID => ModContent.ItemType<Chainsmoker>();
-        public override string Texture => "CalRemix/Content/Items/Weapons/Chainsmoker";
         public override Vector2 GunTipPosition => base.GunTipPosition - Vector2.UnitX.RotatedBy(Projectile.rotation) - (Vector2.UnitY.RotatedBy(Projectile.rotation) * 7f * Projectile.spriteDirection * Owner.gravDir);
         public override float MaxOffsetLengthFromArm => 20f;
         public override float OffsetXUpwards => -5f;

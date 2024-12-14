@@ -96,7 +96,7 @@ namespace CalRemix
         public static readonly int BaronStrait = Set("TheEndZone");
         public static readonly int VernalPass = Set("VajrabhairavasRest");
         public static readonly int FrozenStronghold = Set("LockedAway");
-        public static readonly int ProfanedDesert = Set("Insurgent");
+        public static readonly int ProfanedDesert = Set("EmpireofAsh");
 
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
@@ -145,6 +145,7 @@ namespace CalRemix
         public static readonly int Menu = Set("Menu");
         public static readonly int Menu2 = Set("CrazyLaPaint");
         public static readonly int TrueStory = Set("TrueStory");
+        public static readonly int PlasticOracle = Set("OhmnOmens");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }
