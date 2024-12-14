@@ -395,7 +395,7 @@ namespace CalRemix
                 }
                 else if (slimeSay == 2 && none)
                 {
-                    Talk("You will not be forgiven for your sins. I'm now going to change my gender soon...", Color.Olive);
+                    Talk("You will not be forgiven for your sins. I'll be back, and batter than ever...", Color.Olive);
                     slimeSay = 3;
                 }
             }
@@ -1165,6 +1165,13 @@ namespace CalRemix
                 if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
                 {
                     NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<EDGY>());
+                }
+            }
+            if (npc.type == NPCID.SkeletronHead)
+            {
+                if (!NPC.AnyNPCs(NPCID.Clothier))
+                {
+                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.Clothier);
                 }
             }
         }
