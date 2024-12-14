@@ -3,9 +3,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using CalRemix.Content.NPCs.Bosses.Acideye;
-using CalamityMod;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Rarities;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.Items.Placeables.Plates.Molten;
@@ -13,6 +10,7 @@ using CalRemix.Content.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalRemix.World;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -39,19 +37,16 @@ namespace CalRemix.Content.Items.SummonItems
         }
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<Pyrogen>()) && player.ZoneUnderworldHeight;
+            return !NPC.AnyNPCs(ModContent.NPCType<Pyrogen>()) && (player.ZoneUnderworldHeight || ProfanedDesert.scorchedWorld);
         }
         public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer)
-            {
-                SoundEngine.PlaySound(SoundID.Roar, player.position);
-                int type = ModContent.NPCType<Pyrogen>();
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-            }
+            SoundEngine.PlaySound(SoundID.Roar, player.position);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<Pyrogen>());
+            else
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, player.whoAmI, ModContent.NPCType<Pyrogen>());
+
             return true;
         }
 
@@ -80,11 +75,11 @@ namespace CalRemix.Content.Items.SummonItems
         public override void ModifyTooltips(List<TooltipLine> list)
         {
             if (Main.zenithWorld)
-            foreach (var v in list)
+            for (int i = 0; i < list.Count; i++)
             {
-                if (v.Text.Contains("Pyrogen"))
+                if (list[i].Text.Contains("Pyrogen"))
                 {
-                    v.Text.Replace("Pyrogen", "Cryogen");
+                        list[i].Text.Replace("Pyrogen", "Cryogen");
                 }
             }
         }

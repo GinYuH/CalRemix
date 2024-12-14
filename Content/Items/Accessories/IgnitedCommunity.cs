@@ -111,7 +111,10 @@ namespace CalRemix.Content.Items.Accessories
         }
         private void Crafted(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
         {
-            if ((item.ModItem.Mod == Mod || recipe.Mod == Mod) && !ignoredRecipes.Contains(recipe.createItem.type))
+            bool modCheck = false;
+            if (item.ModItem != null)
+                modCheck = item.ModItem.Mod == Mod;
+            if ((modCheck || recipe.Mod == Mod) && !ignoredRecipes.Contains(recipe.createItem.type))
             {
                 if (Main.LocalPlayer.HasItem(ModContent.ItemType<IgnitedCommunity>()))
                 {
@@ -141,5 +144,4 @@ namespace CalRemix.Content.Items.Accessories
         }
 
     }
-
 }

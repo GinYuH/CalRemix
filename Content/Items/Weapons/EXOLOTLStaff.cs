@@ -7,7 +7,6 @@ using CalamityMod.Items;
 using Terraria.ModLoader;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Rarities;
-using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items.Weapons.DraedonsArsenal;
 

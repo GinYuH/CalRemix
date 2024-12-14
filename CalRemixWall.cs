@@ -1,11 +1,10 @@
-﻿using static Terraria.ModLoader.ModContent;
+﻿using CalamityMod;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Core.Biomes;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Core.Biomes;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.Oxygen;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {

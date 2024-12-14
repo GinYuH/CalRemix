@@ -8,6 +8,10 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Armor;
+using CalamityMod.Sounds;
+using CalRemix.Content.Projectiles.Hostile;
+using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -55,6 +59,18 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<ScrapBag>());
             itemLoot.Add(ModContent.ItemType<ExtensionCable>());
             itemLoot.AddRevBagAccessories();
+        }
+        public override void RightClick(Player player)
+        {
+            int io = Projectile.NewProjectile(player.GetSource_FromThis(), player.Center - Vector2.UnitY * 3200f, Vector2.UnitY, ModContent.ProjectileType<IonogenLightning>(), 0, 0, player.whoAmI, 0f, -1, 61);
+            Main.projectile[io].timeLeft = 22;
+            SoundEngine.PlaySound(CommonCalamitySounds.LightningSound, player.Center);
+            double dam = player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, io), 1, 0, dodgeable: false);
+            if (dam > 0)
+            {
+                player.statLife += (int)dam;
+                player.RemoveAllIFrames();
+            }
         }
     }
 }

@@ -2,7 +2,6 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria;
-using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Weapons;
 
 namespace CalRemix.Content.Items.Weapons;
@@ -16,8 +15,6 @@ public class Tetrachromancy : ModItem
             "Once the mouse is released, or on contact with a block, it will split into four homing eyes.\n" +
             "'Now in HD color!'\n" + 
             "'You feel a discreet, distant disproval towards the extra letter in this weapon's name'");
-        Main.RegisterItemAnimation(base.Item.type, new DrawAnimationVertical(12, 8));
-        ItemID.Sets.AnimatesAsSoul[base.Type] = true;
         Item.staff[Type] = true;
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

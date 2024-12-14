@@ -37,6 +37,9 @@ using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.Yharon;
+using CalamityMod.Systems;
+using CalamityMod.Projectiles.Rogue;
 using Newtonsoft.Json.Linq;
 using System;
 
@@ -74,6 +77,13 @@ namespace CalRemix.Core.Retheme
             {
                 OriginalItemNames.Add(p.Key, Lang.GetItemName(p.Key).Value);
             }
+            On.CalamityMod.Systems.YharonBackgroundScene.IsSceneEffectActive += NoYharonScene;
+        }
+        private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
+        {
+            if (CalRemixWorld.npcChanges)
+                return false;
+            return orig(self, player);
         }
     }
     public class RethemeNPC : GlobalNPC
@@ -105,8 +115,21 @@ namespace CalRemix.Core.Retheme
             Crabulon.AltTexture_Glow = NPCTextureChange("Crabulon/CrabulonAltGlow", "Crabulon/CrabulonAltGlow");
             Crabulon.AttackTexture_Glow = NPCTextureChange("Crabulon/CrabulonAttackGlow", "Crabulon/CrabulonAttackGlow");
             HiveMind.Phase2Texture = NPCTextureChange("HiveMind/HiveMindP2", "HiveMind/HiveMindP2");
+            #region Perforators
             PerforatorCyst.GlowTexture = NPCTextureChange("Perfs/CystGlow", "Perforator/PerforatorCystGlow");
+            PerforatorHive.GlowTexture = NPCTextureChange("Perfs/HiveGlow", "Perforator/PerforatorHiveGlow");
             PerforatorBodyLarge.AltTexture = NPCTextureChange("Perfs/LBodyAlt", "Perforator/PerforatorBodyLargeAlt");
+            PerforatorBodyLarge.AltTexture_Glow = NPCTextureChange("Perfs/LBodyAltGlow", "Perforator/PerforatorBodyLargeAltGlow");
+            PerforatorBodyLarge.Texture_Glow = NPCTextureChange("Perfs/LBodyGlow", "Perforator/PerforatorBodyLargeGlow");
+            PerforatorBodyMedium.GlowTexture = NPCTextureChange("Perfs/MBodyGlow", "Perforator/PerforatorBodyMediumGlow");
+            PerforatorBodySmall.GlowTexture = NPCTextureChange("Perfs/SBodyGlow", "Perforator/PerforatorBodySmallGlow");
+            PerforatorHeadLarge.GlowTexture = NPCTextureChange("Perfs/LHeadGlow", "Perforator/PerforatorHeadLargeGlow");
+            PerforatorHeadMedium.GlowTexture = NPCTextureChange("Perfs/MHeadGlow", "Perforator/PerforatorHeadMediumGlow");
+            PerforatorHeadSmall.GlowTexture = NPCTextureChange("Perfs/SHeadGlow", "Perforator/PerforatorHeadSmallGlow");
+            PerforatorTailLarge.GlowTexture = NPCTextureChange("Perfs/LTailGlow", "Perforator/PerforatorTailLargeGlow");
+            PerforatorTailMedium.GlowTexture = NPCTextureChange("Perfs/MTailGlow", "Perforator/PerforatorTailMediumGlow");
+            PerforatorTailSmall.GlowTexture = NPCTextureChange("Perfs/STailGlow", "Perforator/PerforatorTailSmallGlow");
+            #endregion
 
             Cryogen.Phase2Texture = NPCTextureChange("Cryogen/CryogenPhase2", "Cryogen/Cryogen_Phase2");
             Cryogen.Phase3Texture = NPCTextureChange("Cryogen/CryogenPhase3", "Cryogen/Cryogen_Phase3");
@@ -117,50 +140,67 @@ namespace CalRemix.Core.Retheme
             Anahita.ChargeTexture = NPCTextureChange("Levi/AnahitaStab", "Leviathan/AnahitaStabbing");
             Leviathan.AttackTexture = NPCTextureChange("Levi/LeviAttack", "Leviathan/LeviathanAttack");
 
+            AstrumAureus.JumpTexture = NPCTextureChange("Plague/AstrumAureusJump", "AstrumAureus/AstrumAureusJump");
+            AstrumAureus.RechargeTexture = NPCTextureChange("Plague/AstrumAureusRecharge", "AstrumAureus/AstrumAureusRecharge");
+            AstrumAureus.StompTexture = NPCTextureChange("Plague/AstrumAureusStomp", "AstrumAureus/AstrumAureusStomp");
+            AstrumAureus.WalkTexture = NPCTextureChange("Plague/AstrumAureusWalk", "AstrumAureus/AstrumAureusWalk");
+            AstrumAureus.Texture_Glow = NPCTextureChange("Plague/AstrumAureusGlow", "AstrumAureus/AstrumAureusGlow");
+            AstrumAureus.JumpTexture_Glow = NPCTextureChange("Plague/AstrumAureusJumpGlow", "AstrumAureus/AstrumAureusJumpGlow");
+            AstrumAureus.StompTexture_Glow = NPCTextureChange("Plague/AstrumAureusStompGlow", "AstrumAureus/AstrumAureusStompGlow");
+            AstrumAureus.WalkTexture_Glow = NPCTextureChange("Plague/AstrumAureusWalkGlow", "AstrumAureus/AstrumAureusWalkGlow");
 
             #region Providence
-            ProvidenceTextureChange(ref Providence.TextureAlt, "TextureAlt");
-            ProvidenceTextureChange(ref Providence.TextureAltNight, "TextureAltNight");
-            ProvidenceTextureChange(ref Providence.TextureAltNight_Glow, "TextureAltNight_Glow");
-            ProvidenceTextureChange(ref Providence.TextureAltNight_Glow_2, "TextureAltNight_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureAlt_Glow, "TextureAlt_Glow");
-            ProvidenceTextureChange(ref Providence.TextureAlt_Glow_2, "TextureAlt_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureAttack, "TextureAttack");
-            ProvidenceTextureChange(ref Providence.TextureAttackAlt, "TextureAttackAlt");
-            ProvidenceTextureChange(ref Providence.TextureAttackAltNight, "TextureAttackAltNight");
-            ProvidenceTextureChange(ref Providence.TextureAttackAltNight_Glow, "TextureAttackAltNight_Glow");
-            ProvidenceTextureChange(ref Providence.TextureAttackAltNight_Glow_2, "TextureAttackAltNight_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureAttackAlt_Glow, "TextureAttackAlt_Glow");
-            ProvidenceTextureChange(ref Providence.TextureAttackAlt_Glow_2, "TextureAttackAlt_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureAttackNight, "TextureAttackNight");
-            ProvidenceTextureChange(ref Providence.TextureAttackNight_Glow, "TextureAttackNight_Glow");
-            ProvidenceTextureChange(ref Providence.TextureAttackNight_Glow_2, "TextureAttackNight_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureAttack_Glow, "TextureAttack_Glow");
-            ProvidenceTextureChange(ref Providence.TextureAttack_Glow_2, "TextureAttack_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureDefense, "TextureDefense");
-            ProvidenceTextureChange(ref Providence.TextureDefenseAlt, "TextureDefenseAlt");
-            ProvidenceTextureChange(ref Providence.TextureDefenseAltNight, "TextureDefenseAltNight");
-            ProvidenceTextureChange(ref Providence.TextureDefenseAltNight_Glow, "TextureDefenseAltNight_Glow");
-            ProvidenceTextureChange(ref Providence.TextureDefenseAltNight_Glow_2, "TextureDefenseAltNight_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureDefenseAlt_Glow, "TextureDefenseAlt_Glow");
-            ProvidenceTextureChange(ref Providence.TextureDefenseAlt_Glow_2, "TextureDefenseAlt_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureDefenseNight, "TextureDefenseNight");
-            ProvidenceTextureChange(ref Providence.TextureDefenseNight_Glow, "TextureDefenseNight_Glow");
-            ProvidenceTextureChange(ref Providence.TextureDefenseNight_Glow_2, "TextureDefenseNight_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureDefense_Glow, "TextureDefense_Glow");
-            ProvidenceTextureChange(ref Providence.TextureDefense_Glow_2, "TextureDefense_Glow_2");
-            ProvidenceTextureChange(ref Providence.TextureNight, "TextureNight");
-            ProvidenceTextureChange(ref Providence.TextureNight_Glow, "TextureNight_Glow");
-            ProvidenceTextureChange(ref Providence.TextureNight_Glow_2, "TextureNight_Glow_2");
-            ProvidenceTextureChange(ref Providence.Texture_Glow, "Texture_Glow");
-            ProvidenceTextureChange(ref Providence.Texture_Glow_2, "Texture_Glow_2");
+            ProvTC(ref Providence.TextureAlt, "TextureAlt");
+            ProvTC(ref Providence.TextureAltNight, "TextureAltNight");
+            ProvTC(ref Providence.TextureAltNight_Glow, "TextureAltNight_Glow");
+            ProvTC(ref Providence.TextureAltNight_Glow_2, "TextureAltNight_Glow_2");
+            ProvTC(ref Providence.TextureAlt_Glow, "TextureAlt_Glow");
+            ProvTC(ref Providence.TextureAlt_Glow_2, "TextureAlt_Glow_2");
+            ProvTC(ref Providence.TextureAttack, "TextureAttack");
+            ProvTC(ref Providence.TextureAttackAlt, "TextureAttackAlt");
+            ProvTC(ref Providence.TextureAttackAltNight, "TextureAttackAltNight");
+            ProvTC(ref Providence.TextureAttackAltNight_Glow, "TextureAttackAltNight_Glow");
+            ProvTC(ref Providence.TextureAttackAltNight_Glow_2, "TextureAttackAltNight_Glow_2");
+            ProvTC(ref Providence.TextureAttackAlt_Glow, "TextureAttackAlt_Glow");
+            ProvTC(ref Providence.TextureAttackAlt_Glow_2, "TextureAttackAlt_Glow_2");
+            ProvTC(ref Providence.TextureAttackNight, "TextureAttackNight");
+            ProvTC(ref Providence.TextureAttackNight_Glow, "TextureAttackNight_Glow");
+            ProvTC(ref Providence.TextureAttackNight_Glow_2, "TextureAttackNight_Glow_2");
+            ProvTC(ref Providence.TextureAttack_Glow, "TextureAttack_Glow");
+            ProvTC(ref Providence.TextureAttack_Glow_2, "TextureAttack_Glow_2");
+            ProvTC(ref Providence.TextureDefense, "TextureDefense");
+            ProvTC(ref Providence.TextureDefenseAlt, "TextureDefenseAlt");
+            ProvTC(ref Providence.TextureDefenseAltNight, "TextureDefenseAltNight");
+            ProvTC(ref Providence.TextureDefenseAltNight_Glow, "TextureDefenseAltNight_Glow");
+            ProvTC(ref Providence.TextureDefenseAltNight_Glow_2, "TextureDefenseAltNight_Glow_2");
+            ProvTC(ref Providence.TextureDefenseAlt_Glow, "TextureDefenseAlt_Glow");
+            ProvTC(ref Providence.TextureDefenseAlt_Glow_2, "TextureDefenseAlt_Glow_2");
+            ProvTC(ref Providence.TextureDefenseNight, "TextureDefenseNight");
+            ProvTC(ref Providence.TextureDefenseNight_Glow, "TextureDefenseNight_Glow");
+            ProvTC(ref Providence.TextureDefenseNight_Glow_2, "TextureDefenseNight_Glow_2");
+            ProvTC(ref Providence.TextureDefense_Glow, "TextureDefense_Glow");
+            ProvTC(ref Providence.TextureDefense_Glow_2, "TextureDefense_Glow_2");
+            ProvTC(ref Providence.TextureNight, "TextureNight");
+            ProvTC(ref Providence.TextureNight_Glow, "TextureNight_Glow");
+            ProvTC(ref Providence.TextureNight_Glow_2, "TextureNight_Glow_2");
+            ProvTC(ref Providence.Texture_Glow, "Texture_Glow");
+            ProvTC(ref Providence.Texture_Glow_2, "Texture_Glow_2");
             #endregion
+            Yharon.GlowTexturePurple = NPCTextureChange("Yharon/YharonGlowPurple", "Yharon/YharonGlowPurple");
+            Yharon.GlowTextureGreen = NPCTextureChange("Yharon/YharonGlowGreen", "Yharon/YharonGlowGreen");
+
         }
         private static Asset<Texture2D> NPCTextureChange(string remix, string original)
         {
             return CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/" + remix) : Request<Texture2D>("CalamityMod/NPCs/" + original);
         }
-        private static void ProvidenceTextureChange(ref Asset<Texture2D> asset, string name)
+        private static void PerfTC(ref Asset<Texture2D> asset, string name)
+        {
+            string newName = name.Replace("_", "");
+            newName = newName.Replace("Texture", "Providence");
+            asset = NPCTextureChange($"Providence/{newName}", $"Providence/{newName}");
+        }
+        private static void ProvTC(ref Asset<Texture2D> asset, string name)
         {
             string newName = name.Replace("_", "");
             newName = newName.Replace("Texture", "Providence");
@@ -273,7 +313,7 @@ namespace CalRemix.Core.Retheme
         {
             if (npc.life > 0)
             {
-                Texture2D mask = Request<Texture2D>("CalRemix/Core/Retheme/Guardians/DreamMask" + num, AssetRequestMode.ImmediateLoad).Value;
+                Texture2D mask = Request<Texture2D>("CalRemix/Core/Retheme/Guardians/DreamMask" + num).Value;
                 Vector2 draw = npc.Center - screenPos + new Vector2(0f, npc.gfxOffY);
                 SpriteEffects spriteEffects = (npc.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                 spriteBatch.Draw(mask, draw, null, drawColor, npc.rotation, mask.Size() / 2f, npc.scale, spriteEffects, 0f);
@@ -405,50 +445,56 @@ namespace CalRemix.Core.Retheme
         }
         public override void SetDefaults(Projectile projectile)
         {
-            if (!CalRemixWorld.npcChanges)
-                return;
-            #region Rename
-            if (projectile.type == ProjectileType<BrimstoneBall>())
+            if (CalRemixWorld.itemChanges)
             {
-                projectile.Name = "Calamity Fireball";
+                if (projectile.type == ProjectileType<SupernovaBomb>())
+                {
+                    projectile.width = projectile.height = 54;
+                }
             }
-            else if (projectile.type == ProjectileType<BrimstoneBarrage>())
+            if (CalRemixWorld.npcChanges)
             {
-                projectile.Name = "Calamity Barrage";
+                if (projectile.type == ProjectileType<BrimstoneBall>())
+                {
+                    projectile.Name = "Calamity Fireball";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneBarrage>())
+                {
+                    projectile.Name = "Calamity Barrage";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneFire>())
+                {
+                    projectile.Name = "Calamity Fire";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneHellblast>())
+                {
+                    projectile.Name = "Calamity Hellblast";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
+                {
+                    projectile.Name = "Calamity Hellblast";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
+                {
+                    projectile.Name = "Calamity Hellfireball";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneMonster>())
+                {
+                    projectile.Name = "Calamity Monster";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneRay>())
+                {
+                    projectile.Name = "Calamity Ray";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
+                {
+                    projectile.Name = "Calamity Ray";
+                }
+                else if (projectile.type == ProjectileType<BrimstoneWave>())
+                {
+                    projectile.Name = "Calamity Flame Skull";
+                }
             }
-            else if (projectile.type == ProjectileType<BrimstoneFire>())
-            {
-                projectile.Name = "Calamity Fire";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellblast2>())
-            {
-                projectile.Name = "Calamity Hellblast";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneHellfireball>())
-            {
-                projectile.Name = "Calamity Hellfireball";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneMonster>())
-            {
-                projectile.Name = "Calamity Monster";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneTargetRay>())
-            {
-                projectile.Name = "Calamity Ray";
-            }
-            else if (projectile.type == ProjectileType<BrimstoneWave>())
-            {
-                projectile.Name = "Calamity Flame Skull";
-            }
-            #endregion
         }
         public override Color? GetAlpha(Projectile projectile, Color lightColor)
         {

@@ -28,7 +28,12 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
     {
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
-        private const float EndTime = 4800;
+        private float EndTime = Main.zenithWorld? 6000 : 4800;
+        private float Attack1 = Main.zenithWorld ? 20f : 60f;
+        private float Attack2 = Main.zenithWorld ? 80f : 180f;
+        private float Attack3 = Main.zenithWorld ? 70f : 120f;
+        private float Attack4 = Main.zenithWorld ? 90f : 180f;
+
         public Player Target => Main.player[NPC.target];
         public override bool CheckActive() => Target.HasBuff(ModContent.BuffType<Calamitized>());
         public override void SetStaticDefaults()
@@ -88,11 +93,14 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         {
             NPC.TargetClosest();
             bool allDead = true;
+
             foreach (Player p in Main.player)
             {
                 if (p.active && !p.dead && !p.HasBuff(ModContent.BuffType<Calamitized>()))
                     allDead = false;
             }
+
+
             if (allDead)
             {
                 NPC.velocity.X += 1.1f * ((Target.Center.X > NPC.Center.X) ? -1 : 1);
@@ -108,8 +116,9 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                         NPC.alpha++;
                     else
                         Timer++;
-                    if (Timer == 60) 
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote1").Value, Color.Red);
+                    if (Timer == 60)
+                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote1GFB").Value, Color.Red);
+                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote1").Value, Color.Red);
                     if (Timer >= 180)
                     {
                         Timer = 0;
@@ -123,12 +132,19 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                     {
                         Timer++;
                     }
-                    if (Timer == 1200)
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote2").Value, Color.Red);
-                    if (Timer == 2400)
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote3").Value, Color.Red);
-                    if (Timer == 3600)
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote4").Value, Color.Red);
+                    if (Timer == 1200) { 
+                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote2GFB").Value, Color.Red);
+                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote2").Value, Color.Red);
+                    }
+                    if (Timer == 2400) { 
+                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote3GFB").Value, Color.Red);
+                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote3").Value, Color.Red);
+                    }
+                    if (Timer == 3600) { 
+                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote4GFB").Value, Color.Red);
+                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote4").Value, Color.Red);
+                    }
+                    if (Main.zenithWorld && Timer == 4500) { Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote6GFB").Value, Color.Red); }
                     if (Timer == EndTime)
                     {
                         foreach (Projectile p in Main.projectile)
@@ -136,40 +152,58 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                             if (p.type == ModContent.ProjectileType<CalamityLaser>() || p.type == ModContent.ProjectileType<DarkVein>() || p.type == ModContent.ProjectileType<Darkscule>())
                                 p.active = false;
                         }
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote5").Value, Color.Red);
-                        NPC.dontTakeDamage = false;
+                        if (!Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote5").Value, Color.Red);
+                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote7GFB").Value, Color.Red);
+                         NPC.dontTakeDamage = false;
                     }
-                    if (Timer == EndTime + 180)
+                    if (!Main.zenithWorld && Timer == EndTime + 180)
                         Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote6").Value, Color.Red);
-                    if (Timer < 2400 && Timer % 60f == 0 && Main.netMode != NetmodeID.Server)
+                    if (Main.zenithWorld && Timer == EndTime + 180)
+                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote8GFB").Value, Color.Red);
+
+                    if (Timer < 2400 && Timer % Attack1 == 0 && Main.netMode != NetmodeID.Server)
                     {
                         Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 600f;
-                        Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Target.Center) * 4.5f, ModContent.ProjectileType<CalamityLaser>(), 0, 0, ai1: 1);
+                        Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, Main.zenithWorld? pos.DirectionTo(Target.Center) * 9f : pos.DirectionTo(Target.Center) * 4.5f, ModContent.ProjectileType<CalamityLaser>(), 0, 0, ai1: 1);
+                        if (Main.zenithWorld) for (int i = 0; i < 3; i++) Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Target.Center) * 14f, ModContent.ProjectileType<CalamityLaser>(), 0, 0, ai1: 1);
                     }
-                    if (Timer >= 1200 && Timer < 3600 && Timer % 180f == 0 && Main.netMode != NetmodeID.Server)
+                    if (Timer >= 1200 && Timer < 3600 && Timer % Attack2 == 0 && Main.netMode != NetmodeID.Server)
                     {
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; Main.zenithWorld? i < 4 : i < 2; i++)
                         {
                             Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 400f;
                             Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<DarkVein>(), 0, 0);
                         }
+
                     }
-                    if (Timer >= 2400 && Timer < EndTime && Timer % 120f == 0 && Main.netMode != NetmodeID.Server)
+                    if (Timer >= 2400 && Timer < EndTime && Timer % Attack3 == 0 && Main.netMode != NetmodeID.Server)
                     {
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; Main.zenithWorld ? i < 4 : i < 3; i++)
                         {
                             Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 800f;
-                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Target.Center) * 44f, ModContent.ProjectileType<CalamityLaser>(), 0, 0);
+                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, Main.zenithWorld ? pos.DirectionTo(Target.Center) * 88f : pos.DirectionTo(Target.Center) * 44f, ModContent.ProjectileType<CalamityLaser>(), 0, 0);
                         }
                     }
-                    if (Timer >= 3600 && Timer < EndTime && Timer % 180f == 0 && Main.netMode != NetmodeID.Server)
+                    if (Timer >= 3600 && Timer < EndTime && Timer % Attack4 == 0 && Main.netMode != NetmodeID.Server)
                     {
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; Main.zenithWorld ? i < 6 : i < 2; i++)
                         {
                             Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 600f;
-                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Target.Center) * 2.2f, ModContent.ProjectileType<Darkscule>(), 0, 0);
+                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, Main.zenithWorld ? pos.DirectionTo(Target.Center) * 8.8f : pos.DirectionTo(Target.Center) * 2.2f, ModContent.ProjectileType<Darkscule>(), 0, 0);
                         }
                     }
+                    if (Timer >= 4500 && Timer < EndTime && Timer % 100f == 0 && Main.netMode != NetmodeID.Server)
+                    {
+                        Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 600f;
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Target.Center) * 88f, ModContent.ProjectileType<CalamityLaser>(), 0, 0);
+
+                        }
+                        Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Target.Center) * 8.8f, ModContent.ProjectileType<Darkscule>(), 0, 0);
+                        Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<DarkVein>(), 0, 0);
+                    }
+
                     break;
             }
         }
@@ -227,8 +261,10 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         internal static int CalamitySetCounter()
         {
             int counter = 3;
-            if (Main.masterMode || CalamityWorld.death || Main.getGoodWorld || Main.zenithWorld)
+            if (Main.masterMode || CalamityWorld.death || Main.getGoodWorld)
                 counter = 0;
+            if (Main.zenithWorld) // may god have mercy on your soul
+                counter = 6;
             else if (CalamityWorld.revenge)
                 counter = 1;
             else if (Main.expertMode)

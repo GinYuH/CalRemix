@@ -16,9 +16,6 @@ using CalamityMod.Events;
 using static CalamityMod.World.CalamityWorld;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Items.Potions;
-using System.Runtime.Serialization;
-using Terraria.GameContent.ObjectInteractions;
-using CalRemix.Core.Retheme;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Buffs;
 using Terraria.GameContent.ItemDropRules;
@@ -30,14 +27,12 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
-using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
-using CalRemix.Content.NPCs.TownNPCs;
 using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.Items.Weapons.Ranged;
-using rail;
+using CalamityMod.NPCs.Cryogen;
+using CalRemix.World;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -46,9 +41,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
     {
         public ref float Phase => ref NPC.ai[0];
         private int currentPhase = 1;
+        private int biomeEnrageTimer = CalamityMod.NPCs.CalamityGlobalNPC.biomeEnrageTimerMax;
         private double rotation;
         private double rotationIncrement;
         private int rotationDirection;
+        public FireParticleSet FireDrawer = null;
 
         public ref Player Target => ref Main.player[NPC.target];
 
@@ -61,11 +58,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         float rotationMult = 3f;
         float rotationAmt = 0.03f;
         public bool predictiveCharge = false; //decides whether dash will predict player movement
+        public bool biomeEnraged = false;
+        public bool ultraEnraged = false; //stops him from enraging again if summoned by cryo key
 
         public int attackSubTotal = 0;
         public int attackTotal = 0; //counts how many attacks have been used- for hellstorm, since it's position in the cycle is set
         public int enrageCounter = 0;
-
         public const float BlackholeSafeTime = 40;
 
         public enum PyroPhaseType
@@ -98,7 +96,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenDeath");
         public static readonly SoundStyle FlareSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenAttack", 4);
         public static readonly SoundStyle ChargeSound = new("CalamityMod/Sounds/Custom/Yharon/YharonFireball", 3);
-
+        public static readonly SoundStyle EnrageSound = new("CalRemix/Assets/Sounds/GenBosses/PyrogenEnrage");
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase1";
 
         public static Asset<Texture2D> Phase2Texture;
@@ -111,6 +109,18 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public static Asset<Texture2D> Glowmask;
         public static Asset<Texture2D> Glowmask2;
         public static Asset<Texture2D> BloomExtra;
+
+        public static Asset<Texture2D> Phase1TextureC;
+        public static Asset<Texture2D> Phase2TextureC;
+        public static Asset<Texture2D> AdditiveTextureC;
+        public static Asset<Texture2D> AdditiveTexture2C;
+        public static Asset<Texture2D> BloomTextureC;
+        public static Asset<Texture2D> BloomTexture2C;
+        public static Asset<Texture2D> RingTextureC;
+        public static Asset<Texture2D> RingBloomTextureC;
+        public static Asset<Texture2D> GlowmaskC;
+        public static Asset<Texture2D> Glowmask2C;
+        public static Asset<Texture2D> BloomExtraC;
 
         public static int cryoIconIndex;
         public static int pyroIconIndex;
@@ -149,6 +159,18 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 Glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase1_Glow", AssetRequestMode.AsyncLoad);
                 Glowmask2 = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase2_Glow", AssetRequestMode.AsyncLoad);
                 BloomExtra = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenBloomExtra", AssetRequestMode.AsyncLoad);
+
+                Phase1TextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase1", AssetRequestMode.AsyncLoad);
+                Phase2TextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase2", AssetRequestMode.AsyncLoad);
+                AdditiveTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenAdditive", AssetRequestMode.AsyncLoad);
+                AdditiveTexture2C = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenAdditive2", AssetRequestMode.AsyncLoad);
+                BloomTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenBloom1", AssetRequestMode.AsyncLoad);
+                BloomTexture2C = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenBloom2", AssetRequestMode.AsyncLoad);
+                RingTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenRing", AssetRequestMode.AsyncLoad);
+                RingBloomTextureC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenRingAdditive", AssetRequestMode.AsyncLoad);
+                GlowmaskC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase1_Glow", AssetRequestMode.AsyncLoad);
+                Glowmask2C = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Pyrogen_Phase2_Glow", AssetRequestMode.AsyncLoad);
+                BloomExtraC = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/PyrogenBloomExtra", AssetRequestMode.AsyncLoad);
             }
         }
 
@@ -180,7 +202,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.Calamity().VulnerableToCold = true;
             rotationIncrement = 0.0246399424 * 0.3 * 15;
             if (!Main.dedServ)
-                Music = CalRemixMusic.Pyrogen;
+                if (!Main.zenithWorld) Music = CalRemixMusic.Pyrogen;
+                else Music = CalRemixMusic.Cryogen;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -190,23 +213,31 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             writer.Write(phase2);
             writer.Write(phase3);
             writer.Write(enrageCounter);
+            writer.Write(biomeEnrageTimer);
+            writer.Write(deathTimer);
+            writer.Write(AttackTimer);
+            writer.Write(predictiveCharge);
+            writer.Write(attackSubTotal);
+            writer.Write(charges);
+
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            rotation = reader.ReadDouble();
             rotationDirection = reader.ReadInt32();
+            rotation = reader.ReadDouble();
             phase2 = reader.ReadBoolean();
             phase3 = reader.ReadBoolean();
             enrageCounter = reader.ReadInt32();
+            biomeEnrageTimer = reader.ReadInt32();
+            deathTimer = reader.ReadInt32();
+            attackTotal = reader.ReadInt32();
+            predictiveCharge = reader.ReadBoolean();
+            attackSubTotal = reader.ReadInt32();
+            charges = reader.ReadInt32();
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            for (int i = 0; i < 15; i++)
-            {
-                int bitSprite = i % 6;
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);  
-            }
             phase2 = false; //weird bug fix
             phase3 = false; // ???
         }
@@ -214,7 +245,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public override bool CheckDead()
         {
             //if (NPC.life < 1) {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            //if (Main.netMode != NetmodeID.MultiplayerClient)
             {
 
                 NPC.netUpdate = true;
@@ -224,15 +255,23 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 else if (phase2)
                 {
                     HandlePhaseTransition(true);
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 140;
                     NPC.life = 10;
                 }
                 else
                 {
                     HandlePhaseTransition(false);
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 100;
                     NPC.life = 10;
                 }
             }
             return false;
+        }
+
+        public override void BossHeadSlot(ref int index)
+        {
+            if (Main.zenithWorld)
+                index = Cryogen.cryoIconIndex;
         }
 
         public override void AI()
@@ -243,6 +282,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
             Player player = Main.player[NPC.target];
+            if (FireDrawer != null)
+                FireDrawer.Update();
             if (Target == null || Target.dead)
             {
                 if (!player.active || player.dead || Vector2.Distance(player.Center, NPC.Center) > 5600f)
@@ -271,9 +312,39 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 return;
             }
 
+            if (!NPC.AnyNPCs(ModContent.NPCType<PyrogenShield>()))
+            for (int i = 0; i < 15; i++)
+            {
+                int bitSprite = i % 6;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);
+            }
+
             int torch = Main.zenithWorld ? TorchID.Ice : TorchID.Red;   
             Lighting.AddLight(NPC.Center, torch);
 
+            if (!player.ZoneUnderworldHeight && !ultraEnraged && !ProfanedDesert.scorchedWorld)
+            {
+                if (biomeEnrageTimer > 0)
+                    biomeEnrageTimer--;
+            }
+            else
+                biomeEnrageTimer = CalamityMod.NPCs.CalamityGlobalNPC.biomeEnrageTimerMax;
+
+            if (biomeEnrageTimer <= 0 && !biomeEnraged) {
+                biomeEnraged = true;
+                SoundEngine.PlaySound(EnrageSound, NPC.Center);
+            }
+
+
+            if (biomeEnraged && (!player.ZoneUnderworldHeight))
+                enrageCounter = 4;
+
+            if (enrageCounter == 0 && biomeEnraged)
+            {
+                biomeEnraged = false;
+                biomeEnrageTimer = CalamityMod.NPCs.CalamityGlobalNPC.biomeEnrageTimerMax;
+            }
 
             switch (Phase)
             {
@@ -310,7 +381,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                         if (NPC.ai[1] > 180)
                         {
-                            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.FlameBurst;
+                            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
                             for (int i = 0; i < 10; i++)
                             {
                                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -320,7 +391,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         if (NPC.ai[1] > 240)
                         {
                             DustExplosion();
-                            NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
                             DustExplosion();
                             NPC.ai[1] = 0;
                         }
@@ -421,7 +493,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 NPC.velocity.X *= 0.7f; //slow down just in case onscreen
                                 NPC.velocity.Y *= 0.7f;
-                                int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.FlameBurst;
+                                int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
                                 if (charges >= chargeLimit) //dashed enough times! switch attacks...
                                 {
                                     int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -430,7 +502,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     NPC.velocity.X = 0f;
                                     NPC.velocity.Y = 0f;
                                     Vector2 tpos = Main.rand.NextVector2Circular(222, 222);
-                                    NPC.position = Target.Center + tpos.SafeNormalize(Vector2.Zero) * 600;
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        NPC.position = Target.Center + tpos.SafeNormalize(Vector2.Zero) * 600;
                                     DustExplosion();
                                     NPC.ai[1] = 0;
                                     SelectNextAttack();
@@ -515,7 +588,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 if (NPC.ai[1] % flareRate == 0)
                                 {
                                     SoundEngine.PlaySound(FlareSound, NPC.Center);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                                    //if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
                                 }
                             }
 
@@ -549,7 +623,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 {
                                     foreach (Player playere in Main.ActivePlayers)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, Main.myPlayer, NPC.whoAmI, playere.whoAmI, 1);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, playere.whoAmI, NPC.whoAmI, playere.whoAmI, 1);
                                         Projectile proj = Main.projectile[p];
                                         proj.localAI[1] = 30;
                                     }
@@ -587,7 +661,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     int type = Main.zenithWorld ? ModContent.ProjectileType<IceBomb>() : ModContent.ProjectileType<PyrogenOrbitalFlare>();
                                     for (int i = 0; i < totalObjects; i++)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, dmg, 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, dmg, 0, -1, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
                                     }
                                 }
                             }
@@ -665,6 +739,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             ClearingTeleport();
                         }
 
+                        foreach (Player victim in Main.ActivePlayers) //kills platforms for the duration of the attack
+                        {
+                            if (victim.Calamity() != null)
+                            {
+                                victim.AddBuff(ModContent.BuffType<Deplatformed>(), 1);
+                            }
+                        }
+
                         // shoot the chain at the player
                         if (AttackTimer == shootChain)
                         {
@@ -673,7 +755,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 foreach (Player playere in Main.ActivePlayers)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, Main.myPlayer, NPC.whoAmI, playere.whoAmI, 0);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, playere.whoAmI, NPC.whoAmI, playere.whoAmI, 0);
                                     Projectile proj = Main.projectile[p];
                                     proj.localAI[1] = withdrawChain;
                                 }
@@ -696,7 +778,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                     {
                                         bool goRight = NPC.DirectionTo(Target.Center).X.DirectionalSign() == 1;
                                         Vector2 spawnPos = new Vector2(NPC.Center.X + (goRight ? -spawnDistX : spawnDistX), Target.Center.Y + i * shotSpacing);
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.UnitX * NPC.DirectionTo(Target.Center).X.DirectionalSign() * projectileSpeed, ModContent.ProjectileType<PyrogenTool>(), 100, 0);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.UnitX * NPC.DirectionTo(Target.Center).X.DirectionalSign() * projectileSpeed, ModContent.ProjectileType<PyrogenTool>(), Main.expertMode ? 40 : 100, 0);
                                     }
                                 }
                             }
@@ -733,7 +815,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
                         if (AttackTimer == 10)
                         {
-                            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.FlameBurst;
+                            int dustType = Main.zenithWorld ? DustID.SnowflakeIce : DustID.Torch;
                             for (int i = 0; i < 10; i++)
                             {
                                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -741,7 +823,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 DustExplosion();
                                 NPC.velocity.X = 0f;
                                 NPC.velocity.Y = 0f;
-                                NPC.position = new Vector2(Target.Center.X, Target.Center.Y - 400);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    NPC.position = new Vector2(Target.Center.X, Target.Center.Y - 400);
                                 DustExplosion();
                                 NPC.ai[1] = 0;
                             }
@@ -763,7 +846,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             rotation += rotationIncrement * rotationDirection;
                                 if (AttackTimer % flareRate == 0)
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
                         }
 
                         if (AttackTimer > 70)
@@ -789,9 +873,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             NPC.rotation = NPC.velocity.X * 0.1f;
                             if (AttackTimer % flareRate == 0)
                             {
-                                int type = Main.zenithWorld ? ModContent.ProjectileType<IceBomb>() : ModContent.ProjectileType<PyrogenFlareStatic2>();
+                                int type = Main.zenithWorld ? ModContent.ProjectileType<IceBlast>() : ModContent.ProjectileType<PyrogenFlareStatic2>();
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
                             }
                         }
                         InfiniteFlight();
@@ -831,7 +916,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             {
                                 foreach (Player playere in Main.ActivePlayers)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, Main.myPlayer, NPC.whoAmI, playere.whoAmI, 2);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center), ModContent.ProjectileType<PyrogenHarpoon>(), 0, 0, playere.whoAmI, NPC.whoAmI, playere.whoAmI, 2);
                                     Projectile proj = Main.projectile[p];
                                     proj.localAI[2] = hookDist; 
                                 }
@@ -872,12 +957,18 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         if (NPC.life <= 0)
                         {
                             CalamityUtils.KillAllHostileProjectiles();
+                            DustExplosion2();
                             NPC.life = 0;
                             NPC.HitEffect();
                             NPC.NPCLoot();
                             NPC.active = false;
                             NPC.netUpdate = true;
                             NPC.justHit = true;
+                            string path = Main.zenithWorld ? "CryogenGore" : "Pyrogen";
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                Gore.NewGore(NPC.GetSource_Death(), NPC.position, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>(path + i).Type, 1f);
+                            }
                             SoundStyle sound = DeathSound;
                             SoundEngine.PlaySound(sound, NPC.Center);
                         }
@@ -896,16 +987,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         {
                             if (Main.netMode != NetmodeID.Server)
                             {
-                                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("PyrogenDoor").Type);
+                                if (!Main.zenithWorld) Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("PyrogenDoor").Type);
+                                else Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("CryogenDoor").Type);
                             }
                         }
 
-                        if (deathTimer > 60){ //wait one second before refilling all health; couldn't make this work so i'm just leaving it like it is for now
-                            if (NPC.life <= NPC.lifeMax) {
-                                NPC.life = 1 + (int)((float)Math.Pow(Utils.GetLerpValue(300, 530, Time, true), 3) * (NPC.lifeMax - 1));
-                            }
-                        }
-                        if (deathTimer >= 160)
+                        NPC.life = (int)MathHelper.Lerp(1, NPC.lifeMax, Utils.GetLerpValue(60, 200, deathTimer, true));
+
+                        if (deathTimer >= 200)
                         { //ensure health is 100% filled just in case
                             if (NPC.life < NPC.lifeMax)
                             {
@@ -968,6 +1057,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.velocity = Vector2.Zero;
             NPC.rotation = 0;
 
+            foreach (Player victim in Main.ActivePlayers) //kills platforms for the duration of the attack
+            {
+                if (victim.Calamity() != null)
+                {
+                    victim.AddBuff(ModContent.BuffType<Deplatformed>(), 1);
+                }
+            }
+
             if (AttackTimer == 1)
             {
                 ClearingTeleport();
@@ -981,10 +1078,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     Vector2 rand = Main.rand.NextVector2Square(-22, 22);
                     Vector2 norm = rand.SafeNormalize(Vector2.Zero);
                     Vector2 pos = NPC.Center + norm * Main.rand.Next(minSpawnRad, maxSpawnRad);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    //if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(NPC.Center) * projSpeed, ModContent.ProjectileType<ObsidianFragment>(), 100, 0, Main.myPlayer, Main.rand.Next(0, 6));
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(NPC.Center) * projSpeed, ModContent.ProjectileType<ObsidianFragment>(), Main.expertMode ? 50 : 100, 0, -1, Main.rand.Next(0, 6));
                     }
+                    if (end) Main.LocalPlayer.Calamity().GeneralScreenShakePower = 80; //shake! SHAKE! SHAAAAAAKE!
                 }
             }
 
@@ -999,13 +1097,15 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 SoundEngine.PlaySound(BetterSoundID.ItemGrenadeExplosion with { Pitch = -0.2f, Volume = 2 }, NPC.Center);
                 SoundEngine.PlaySound(BetterSoundID.ItemMeteorImpact with { Pitch = -0.2f, Volume = 2 }, NPC.Center);
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center) * 10, ModContent.ProjectileType<ObsidianBomb>(), 200, 0, Main.myPlayer, bombProjAmount);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center) * 10, ModContent.ProjectileType<ObsidianBomb>(), Main.expertMode ? 150 : 200, 0, -1, bombProjAmount);
                 }
-                NPC.position = NPC.position - NPC.DirectionTo(Target.Center) * 40;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.position = NPC.position - NPC.DirectionTo(Target.Center) * 40;
             }
 
+            int dust = Main.zenithWorld ? DustID.SnowBlock : DustID.Obsidian;
             // eat shards that come in contact
             foreach (Projectile p in Main.ActiveProjectiles)
             {
@@ -1016,7 +1116,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         SoundEngine.PlaySound(BetterSoundID.ItemExplosion, NPC.Center);
                         for (int i = 0; i < 25; i++)
                         {
-                            int d = Dust.NewDust(p.position, p.width, p.height, DustID.Obsidian, Scale: Main.rand.NextFloat(1f, 2f));
+                            int d = Dust.NewDust(p.position, p.width, p.height, dust, Scale: Main.rand.NextFloat(1f, 2f));
                             Main.dust[d].velocity = (Main.dust[d].position - p.Center).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(2, 4);
                             Main.dust[d].noGravity = true;
                         }
@@ -1133,6 +1233,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 if (n.type == ModContent.NPCType<PyrogenShield>() && n.ai[0] == NPC.whoAmI)
                 {
                     n.localAI[1] = 0;
+                    n.netUpdate = true;
                 }
             }
         }
@@ -1152,7 +1253,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 else continue;
             }
 
-            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.FlameBurst;
+            int dustType = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             for (int i = 0; i < 10; i++)
             {
                 int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
@@ -1160,7 +1261,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 DustExplosion();
                 NPC.velocity.X = 0f;
                 NPC.velocity.Y = 0f;
-                NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
                 DustExplosion();
                 NPC.ai[1] = 0;
             }
@@ -1195,7 +1297,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             int d = Dust.NewDust(new Vector2(teleportPos.X, teleportPos.Y), teleportPos.Width, teleportPos.Height, dustType);
             Main.dust[d].noGravity = true;
             DustExplosion();
-            NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.position = new Vector2(teleportPos.X, teleportPos.Y);
             DustExplosion();
         }
 
@@ -1203,7 +1306,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public void DustExplosion()
         {
-            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.FlameBurst;
+            int dust = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             for (int i = 0; i < 40; i++)
             {
                 int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, Main.rand.NextFloat(-22, 22), Main.rand.NextFloat(-22, 22), Scale: Main.rand.NextFloat(0.8f, 2f));
@@ -1211,6 +1314,26 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 Main.dust[d].velocity = (Main.dust[d].position - NPC.Center).SafeNormalize(Vector2.One) * Main.rand.Next(10, 18);
             }
         }
+
+        public void DustExplosion2()
+        {
+            int dust = Main.zenithWorld ? DustID.SnowflakeIce : DustID.FlameBurst;
+            int dust2 = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
+
+            for (int i = 0; i < 60; i++)
+            {
+                int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, Main.rand.NextFloat(-22, 22), Main.rand.NextFloat(-22, 22), Scale: Main.rand.NextFloat(0.8f, 2f));
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity = (Main.dust[d].position - NPC.Center).SafeNormalize(Vector2.One) * Main.rand.Next(10, 18);
+            }
+            for (int i = 0; i < 80; i++)
+            {
+                int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, dust2, Main.rand.NextFloat(-22, 22), Main.rand.NextFloat(-22, 22), Scale: Main.rand.NextFloat(0.8f, 2f));
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity = (Main.dust[d].position - NPC.Center).SafeNormalize(Vector2.One) * Main.rand.Next(10, 18);
+            }
+        }
+
         private void HandlePhaseTransition(bool p3) //has died for the first time
         {
             NPC.ai[1] = 0;
@@ -1221,6 +1344,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.dontTakeDamage = true;
             SoundStyle sound = TransitionSound;
             SoundEngine.PlaySound(sound, NPC.Center);
+            DustExplosion();
+            DustExplosion();
+
             if (p3)
             {
                 phase3 = true;
@@ -1235,14 +1361,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 return true;
             }
-            Texture2D texture = phase2 ? Phase2Texture.Value : TextureAssets.Npc[Type].Value;
-            Texture2D bloomTx = phase2 ? BloomTexture2.Value : BloomTexture.Value;
-            Texture2D additiveTx = phase2 ? AdditiveTexture2.Value : AdditiveTexture.Value;
-            Texture2D gm = phase2 ? Glowmask2.Value : Glowmask.Value;
-            Texture2D vortex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Vortex").Value;
+            Texture2D texture = phase2 ? (Main.zenithWorld ? Phase2TextureC.Value : Phase2Texture.Value) : (Main.zenithWorld ? Phase1TextureC.Value : TextureAssets.Npc[Type].Value);
+            Texture2D bloomTx = phase2 ? (Main.zenithWorld ? BloomTexture2C.Value : BloomTexture2.Value) : (Main.zenithWorld ? BloomTextureC.Value : BloomTexture.Value);
+            Texture2D additiveTx = phase2 ? (Main.zenithWorld ? AdditiveTexture2C.Value : AdditiveTexture2.Value) : (Main.zenithWorld ? AdditiveTextureC.Value : AdditiveTexture.Value);
+            Texture2D gm = phase2 ? (Main.zenithWorld ? Glowmask2C.Value : Glowmask2.Value) : (Main.zenithWorld ? GlowmaskC.Value : Glowmask.Value);
+            Texture2D vortex = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Cryogen/Vortex").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Vortex").Value;
 
-            Color color = Main.zenithWorld ? Color.Blue : drawColor;
-            Color white = Main.zenithWorld ? Color.Cyan : Color.White;
+            Color color = drawColor;
+            Color white = Color.White;
 
             Vector2 pos = NPC.Center - screenPos;
 
@@ -1262,16 +1388,21 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
             Vector2 ringOrigin = RingTexture.Value.Size() / 2;
             float ringRotation = -Main.GlobalTimeWrappedHourly;
-            Main.EntitySpriteDraw(RingTexture.Value, pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw((Main.zenithWorld ? RingTextureC.Value : RingTexture.Value), pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
-            Main.EntitySpriteDraw(RingBloomTexture.Value, pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw((Main.zenithWorld ? RingBloomTextureC.Value : RingBloomTexture.Value), pos, null, white, ringRotation, ringOrigin, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(bloomTx, pos, null, white, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.spriteBatch.ExitShaderRegion();
-            Main.EntitySpriteDraw(BloomExtra.Value, pos, null, white * 0.05f, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw((Main.zenithWorld ? BloomExtraC.Value : BloomExtra.Value), pos, null, white * 0.05f, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(texture, pos, null, color, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(gm, pos, null, white, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
             Main.EntitySpriteDraw(additiveTx, pos, null, white with { A = 0 }, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None);
-            
+            if (enrageCounter > 0) { 
+                if (FireDrawer is null || FireDrawer.LocalTimer >= FireDrawer.SetLifetime)
+                    FireDrawer = new FireParticleSet(int.MaxValue, 1, Main.zenithWorld ? Color.White : Color.Red * 1.25f, Main.zenithWorld ? Color.Cyan : Color.Red, 200, 3);
+                else
+                    FireDrawer.DrawSet(NPC.Bottom - Vector2.UnitY * (4f - NPC.gfxOffY));
+            }
             return false;
         }
 
@@ -1319,12 +1450,16 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 ModContent.ItemType<PhreaticChanneler>()
             };
             npcLoot.AddNormalOnly(ModContent.ItemType<EssenceofHavoc>(), 1, 8, 10);
+
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());
             npcLoot.Add(ModContent.ItemType<PyrogenTrophy>(), 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PyrogenRelic>());
+            npcLoot.AddIf(() => Main.zenithWorld, ModContent.ItemType<DeliciousMeat>(), 1, 2200, 6600);
+
             npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);
             npcLoot.AddNormalOnly(ModContent.ItemType<SoulofPyrogen>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgePyrogen>(), desc: DropHelper.FirstKillText);
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedPyrogen, ModContent.ItemType<KnowledgeClone>(), desc: DropHelper.FirstKillText);
         }
 
         public override void OnKill()
@@ -1333,6 +1468,31 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WITCH>());
             }
+            int rad = 4;
+            Point p = NPC.Center.ToTileCoordinates();
+            for (int i = p.X - rad; i < p.X + rad; i++)
+            {
+                for (int j = p.Y - rad; j < p.Y + rad; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (Main.zenithWorld)
+                    {
+                        if (!t.HasTile)
+                        {
+                            t.ResetToType(TileID.IceBlock);
+                        }
+                    }
+                    else
+                    {
+                        if (!t.HasTile && t.LiquidAmount <= 0)
+                        {
+                            t.LiquidType = LiquidID.Lava;
+                            t.LiquidAmount = 255;
+                        }
+                    }
+                }
+            }
+
             RemixDowned.downedPyrogen = true;
             CalRemixWorld.UpdateWorldBool();
         }

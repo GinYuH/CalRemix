@@ -352,7 +352,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             Vector2 draw = NPC.Center - new Vector2(0,25) - screenPos + new Vector2(0f, NPC.gfxOffY);
             drawColor = Color.Lerp(drawColor, new Color(255, 0, 0, drawColor.A), Utils.GetLerpValue(0f, 255f, NPC.alpha, true));
 
-            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Fire", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Fire").Value;
             Rectangle rectFire = new Rectangle(0, (int)NPC.localAI[1] * glow.Height / 2, glow.Width, glow.Height / 2);
             Vector2 origFire = rectFire.Size() / 2f;
             if (hitAmount >= 5 && attack != 0)
@@ -363,7 +363,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Glow", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Glow").Value;
             Rectangle sourceRectangle = new Rectangle(0, 0, glow.Width, glow.Height);
             Vector2 origin = sourceRectangle.Size() / 2f;
             Vector2 draw = NPC.Center - new Vector2(0, 25) - screenPos + new Vector2(0f, NPC.gfxOffY);

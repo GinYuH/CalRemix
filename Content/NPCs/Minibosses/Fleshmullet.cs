@@ -10,8 +10,6 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Graphics.Primitives;
-using CalamityMod.NPCs.CalamityAIs.CalamityRegularEnemyAIs;
-using CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies;
 using Terraria.Audio;
 using Terraria.GameContent;
 //using CalamityMod.CalPlayer;

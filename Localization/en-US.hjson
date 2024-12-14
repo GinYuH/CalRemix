@@ -68,6 +68,11 @@ Mods: {
 				DisplayName: Frozen Stronghold
 				TownNPCDialogueName: the Frozen Stronghold Biome
 			}
+
+			ProfanedDesertBiome: {
+				DisplayName: Profaned Desert
+				TownNPCDialogueName: the Profaned Desert Biome
+			}
 		}
 
 		Enchantments: {

@@ -1,5 +1,4 @@
-﻿using CalamityMod.Items.Materials;
-using CalRemix.Content.Items.Materials;
+﻿using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;

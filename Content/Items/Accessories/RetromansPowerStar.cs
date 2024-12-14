@@ -1,14 +1,6 @@
 ﻿using Terraria;
-using CalamityMod;
-using CalamityMod.Items;
 using Terraria.ModLoader;
-using CalRemix.Content.Projectiles.Accessories;
 using Terraria.ID;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework;
-using CalRemix.UI;
 using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Accessories

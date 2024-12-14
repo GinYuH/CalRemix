@@ -5,7 +5,6 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.DataStructures;
 using CalamityMod.Items.Materials;
-using CalRemix.Content.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 
 namespace CalRemix.Content.Items.Weapons

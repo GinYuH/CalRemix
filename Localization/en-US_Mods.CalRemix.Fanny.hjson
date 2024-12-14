@@ -426,1717 +426,468 @@ KinsmenFight: Quick! Get him! He's escaping with a one of a kind item!
 Ogscule: That Ogsculian Burrower over there. A dangerous foe. The best course of action here is to jump over them to dodge their laser of doom.
 Aspid: Uh oh! A Primal Aspid! Best be wary around those buggers as killing too many may subject you to ancient ice spells!
 OgslimeAwakening: O-Ogslime!?!?
-
-emixJump: {
-	$parentVal: Mods.CalRemix.FannyRemixJump
-}
-
-owHP: {
-	$parentVal: Mods.CalRemix.FannyLowHP
-}
-
-nvisible: {
-	$parentVal: Mods.CalRemix.FannyInvisible
-}
-
-arkArea: {
-	$parentVal: Mods.CalRemix.FannyDarkArea
-}
-
-onstantDeath: {
-	$parentVal: Mods.CalRemix.FannyConstantDeath
-}
-
-ursed: {
-	$parentVal: Mods.CalRemix.FannyCursed
-}
-
-ctFebruary: {
-	$parentVal: Mods.CalRemix.FannyOctFebruary
-}
-
-ungeonGuardian: {
-	$parentVal: Mods.CalRemix.FannyDungeonGuardian
-}
-
-eldGunk: {
-	$parentVal: Mods.CalRemix.FannyMeldGunk
-}
-
-eldHeart: {
-	$parentVal: Mods.CalRemix.FannyMeldHeart
-}
-
-eldHeartNoxus: {
-	$parentVal: Mods.CalRemix.FannyMeldHeartNoxus
-}
-
-vilMinions: {
-	$parentVal: Mods.CalRemix.FannyEvilMinions
-}
-
-vilTerraBlade: {
-	$parentVal: Mods.CalRemix.FannyEvilTerraBlade
-}
-
-onGuy: {
-	$parentVal: Mods.CalRemix.FannyIonGuy
-}
-
-ultiplayer: {
-	$parentVal: Mods.CalRemix.FannyMultiplayer
-}
-
-drenaboy1: {
-	$parentVal: Mods.CalRemix.FannyAdrenaboy1
-}
-
-drenaboy2: {
-	$parentVal: Mods.CalRemix.FannyAdrenaboy2
-}
-
-drenaboy3: {
-	$parentVal: Mods.CalRemix.FannyAdrenaboy3
-}
-
-drenaboy4: {
-	$parentVal: Mods.CalRemix.FannyAdrenaboy4
-}
-
-drenaboy5: {
-	$parentVal: Mods.CalRemix.FannyAdrenaboy5
-}
-
-orcheese: {
-	$parentVal: Mods.CalRemix.FannyNorcheese
-}
-
-nnivenriersary1: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary1
-}
-
-nnivenriersary2: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary2
-}
-
-nnivenriersary3: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary3
-}
-
-nnivenriersary4: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary4
-}
-
-nnivenriersary5: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary5
-}
-
-nnivenriersary6: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary6
-}
-
-nnivenriersary7: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary7
-}
-
-nnivenriersary8: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary8
-}
-
-nnivenriersary9: {
-	$parentVal: Mods.CalRemix.FannyAnnivenriersary9
-}
-
-og1: {
-	$parentVal: Mods.CalRemix.FannyDog1
-}
-
-og2: {
-	$parentVal: Mods.CalRemix.FannyDog2
-}
-
-og3: {
-	$parentVal: Mods.CalRemix.FannyDog3
-}
-
-og4: {
-	$parentVal: Mods.CalRemix.FannyDog4
-}
-
-og5: {
-	$parentVal: Mods.CalRemix.FannyDog5
-}
-
-og6: {
-	$parentVal: Mods.CalRemix.FannyDog6
-}
-
-og7: {
-	$parentVal: Mods.CalRemix.FannyDog7
-}
-
-og8: {
-	$parentVal: Mods.CalRemix.FannyDog8
-}
-
-og9: {
-	$parentVal: Mods.CalRemix.FannyDog9
-}
-
-ogBeatEarly: {
-	$parentVal: Mods.CalRemix.FannyDogBeatEarly
-}
-
-ogBeatLate: {
-	$parentVal: Mods.CalRemix.FannyDogBeatLate
-}
-
-ogRetort: {
-	$parentVal: Mods.CalRemix.FannyDogRetort
-}
-
-oreAny: {
-	$parentVal: Mods.CalRemix.FannyLoreAny
-}
-
-oreDesert: {
-	$parentVal: Mods.CalRemix.FannyLoreDesert
-}
-
-oreCorcrim: {
-	$parentVal: Mods.CalRemix.FannyLoreCorcrim
-}
-
-oreSkeletron: {
-	$parentVal: Mods.CalRemix.FannyLoreSkeletron
-}
-
-oreSlimepod: {
-	$parentVal: Mods.CalRemix.FannyLoreSlimepod
-}
-
-oreWof: {
-	$parentVal: Mods.CalRemix.FannyLoreWof
-}
-
-oreBlood: {
-	$parentVal: Mods.CalRemix.FannyLoreBlood
-}
-
-oreEvilBlood: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilBlood
-}
-
-oreQueenSlime: {
-	$parentVal: Mods.CalRemix.FannyLoreQueenSlime
-}
-
-oreEvilQueenSlime: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilQueenSlime
-}
-
-oreMechs: {
-	$parentVal: Mods.CalRemix.FannyLoreMechs
-}
-
-oreEvilMechs: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilMechs
-}
-
-oreCryo: {
-	$parentVal: Mods.CalRemix.FannyLoreCryo
-}
-
-oreEvilCryo: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilCryo
-}
-
-oreAq: {
-	$parentVal: Mods.CalRemix.FannyLoreAq
-}
-
-oreEvilAq: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilAq
-}
-
-oreBrim: {
-	$parentVal: Mods.CalRemix.FannyLoreBrim
-}
-
-oreEvilBrim: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilBrim
-}
-
-oreCalc: {
-	$parentVal: Mods.CalRemix.FannyLoreCalc
-}
-
-oreEvilCalc: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilCalc
-}
-
-orePlant: {
-	$parentVal: Mods.CalRemix.FannyLorePlant
-}
-
-oreEvilPlant: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilPlant
-}
-
-orePBG: {
-	$parentVal: Mods.CalRemix.FannyLorePBG
-}
-
-oreEvilPBG: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilPBG
-}
-
-orePrelude: {
-	$parentVal: Mods.CalRemix.FannyLorePrelude
-}
-
-oreEvilPrelude: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilPrelude
-}
-
-oreDeus: {
-	$parentVal: Mods.CalRemix.FannyLoreDeus
-}
-
-oreEvilDeus: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilDeus
-}
-
-oreRequiem: {
-	$parentVal: Mods.CalRemix.FannyLoreRequiem
-}
-
-oreEvilRequiem: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilRequiem
-}
-
-oreBirb: {
-	$parentVal: Mods.CalRemix.FannyLoreBirb
-}
-
-oreEvilBirb: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilBirb
-}
-
-oreProv: {
-	$parentVal: Mods.CalRemix.FannyLoreProv
-}
-
-oreEvilProv: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilProv
-}
-
-orePolter: {
-	$parentVal: Mods.CalRemix.FannyLorePolter
-}
-
-oreEvilPolter: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilPolter
-}
-
-oreDog: {
-	$parentVal: Mods.CalRemix.FannyLoreDog
-}
-
-oreEvilDog: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilDog
-}
-
-oreYharon: {
-	$parentVal: Mods.CalRemix.FannyLoreYharon
-}
-
-oreEvilYharon: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilYharon
-}
-
-oreDraeodn: {
-	$parentVal: Mods.CalRemix.FannyLoreDraeodn
-}
-
-oreEvilDraedon: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilDraedon
-}
-
-oreScal: {
-	$parentVal: Mods.CalRemix.FannyLoreScal
-}
-
-oreEvilScal: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilScal
-}
-
-oreEnd: {
-	$parentVal: Mods.CalRemix.FannyLoreEnd
-}
-
-oreEvilEnd: {
-	$parentVal: Mods.CalRemix.FannyLoreEvilEnd
-}
-
-ntro: {
-	$parentVal: Mods.CalRemix.FannyIntro
-}
-
-fbintroEvil: {
-	$parentVal: Mods.CalRemix.FannyGfbintroEvil
-}
-
-fbintro: {
-	$parentVal: Mods.CalRemix.FannyGfbintro
-}
-
-onerFanny: {
-	$parentVal: Mods.CalRemix.FannyGonerFanny
-}
-
-egister: {
-	$parentVal: Mods.CalRemix.FannyRegister
-}
-
-leeping: {
-	$parentVal: Mods.CalRemix.FannySleeping
-}
-
-ungusGarden: {
-	$parentVal: Mods.CalRemix.FannyFungusGarden
-}
-
-akeGen: {
-	$parentVal: Mods.CalRemix.FannyFakeGen
-}
-
-alseRef: {
-	$parentVal: Mods.CalRemix.FannyFalseRef
-}
-
-robablyYakuza: {
-	$parentVal: Mods.CalRemix.FannyProbablyYakuza
-}
-
-reditCard: {
-	$parentVal: Mods.CalRemix.FannyCreditCard
-}
-
-link: {
-	$parentVal: Mods.CalRemix.FannyBlink
-}
-
-uckyou: {
-	$parentVal: Mods.CalRemix.FannyFuckyou
-}
-
-uigi: {
-	$parentVal: Mods.CalRemix.FannyLuigi
-}
-
-ount: {
-	$parentVal: Mods.CalRemix.FannyMount
-}
-
-ookingForPlating: {
-	$parentVal: Mods.CalRemix.FannyLookingForPlating
-}
-
-reepy: {
-	$parentVal: Mods.CalRemix.FannyCreepy
-}
-
-hage: {
-	$parentVal: Mods.CalRemix.FannyMhage
-}
-
-hrust: {
-	$parentVal: Mods.CalRemix.FannyThrust
-}
-
-rozen1: {
-	$parentVal: Mods.CalRemix.FannyFrozen1
-}
-
-rozen2: {
-	$parentVal: Mods.CalRemix.FannyFrozen2
-}
-
-rozen3: {
-	$parentVal: Mods.CalRemix.FannyFrozen3
-}
-
-rozen4: {
-	$parentVal: Mods.CalRemix.FannyFrozen4
-}
-
-rozen5: {
-	$parentVal: Mods.CalRemix.FannyFrozen5
-}
-
-rozen6: {
-	$parentVal: Mods.CalRemix.FannyFrozen6
-}
-
-traightUpEvil: {
-	$parentVal: Mods.CalRemix.FannyStraightUpEvil
-}
-
-iscordianHash: {
-	$parentVal: Mods.CalRemix.FannyDiscordianHash
-}
-
-iscordianAt: {
-	$parentVal: Mods.CalRemix.FannyDiscordianAt
-}
-
-nvasionDeath: {
-	$parentVal: Mods.CalRemix.FannyInvasionDeath
-}
-
-aining: {
-	$parentVal: Mods.CalRemix.FannyRaining
-}
-
-inding: {
-	$parentVal: Mods.CalRemix.FannyWinding
-}
-
-vilSnowLegion: {
-	$parentVal: Mods.CalRemix.FannyEvilSnowLegion
-}
-
-OA: {
-	$parentVal: Mods.CalRemix.FannyOOA
-}
-
-loodMoon: {
-	$parentVal: Mods.CalRemix.FannyBloodMoon
-}
-
-loodMoonStare: {
-	$parentVal: Mods.CalRemix.FannyBloodMoonStare
-}
-
-clipxe: {
-	$parentVal: Mods.CalRemix.FannyEclipxe
-}
-
-olloween: {
-	$parentVal: Mods.CalRemix.FannyHolloween
-}
-
-rostmas: {
-	$parentVal: Mods.CalRemix.FannyFrostmas
-}
-
-REvilkys: {
-	$parentVal: Mods.CalRemix.FannyBREvilkys
-}
-
-ite: {
-	$parentVal: Mods.CalRemix.FannyNite
-}
-
-limerain: {
-	$parentVal: Mods.CalRemix.FannySlimerain
-}
-
-owers: {
-	$parentVal: Mods.CalRemix.FannyTowers
-}
-
-anicHint: {
-	$parentVal: Mods.CalRemix.FannyPanicHint
-}
-
-xydazy: {
-	$parentVal: Mods.CalRemix.FannyOxydazy
-}
-
-andemicPanic: {
-	$parentVal: Mods.CalRemix.FannyPandemicPanic
-}
-
-eteorStarboard: {
-	$parentVal: Mods.CalRemix.FannyMeteorStarboard
-}
-
-orge: {
-	$parentVal: Mods.CalRemix.FannyForge
-}
-
-eliciousMeat: {
-	$parentVal: Mods.CalRemix.FannyDeliciousMeat
-}
-
-elocator: {
-	$parentVal: Mods.CalRemix.FannyRelocator
-}
-
-unnyMurder: {
-	$parentVal: Mods.CalRemix.FannyBunnyMurder
-}
-
-unnyVolcano: {
-	$parentVal: Mods.CalRemix.FannyBunnyVolcano
-}
-
-iamond: {
-	$parentVal: Mods.CalRemix.FannyDiamond
-}
-
-erraspark: {
-	$parentVal: Mods.CalRemix.FannyTerraspark
-}
-
-oxcaliburShimmer: {
-	$parentVal: Mods.CalRemix.FannyRoxcaliburShimmer
-}
-
-esertScourge: {
-	$parentVal: Mods.CalRemix.FannyDesertScourge
-}
-
-oodooDoll: {
-	$parentVal: Mods.CalRemix.FannyVoodooDoll
-}
-
-wentyTwo: {
-	$parentVal: Mods.CalRemix.FannyTwentyTwo
-}
-
-hadowspec: {
-	$parentVal: Mods.CalRemix.FannyShadowspec
-}
-
-ood: {
-	$parentVal: Mods.CalRemix.FannyWood
-}
-
-allowedBar: {
-	$parentVal: Mods.CalRemix.FannyHallowedBar
-}
-
-ifeCrystal: {
-	$parentVal: Mods.CalRemix.FannyLifeCrystal
-}
-
-harimBar: {
-	$parentVal: Mods.CalRemix.FannyYharimBar
-}
-
-ump: {
-	$parentVal: Mods.CalRemix.FannyJump
-}
-
-itanHeart: {
-	$parentVal: Mods.CalRemix.FannyTitanHeart
-}
-
-loodyVein: {
-	$parentVal: Mods.CalRemix.FannyBloodyVein
-}
-
-ottenEye: {
-	$parentVal: Mods.CalRemix.FannyRottenEye
-}
-
-lloyBar: {
-	$parentVal: Mods.CalRemix.FannyAlloyBar
-}
-
-ponge: {
-	$parentVal: Mods.CalRemix.FannySponge
-}
-
-arbo: {
-	$parentVal: Mods.CalRemix.FannyGarbo
-}
-
-ightfuel: {
-	$parentVal: Mods.CalRemix.FannyNightfuel
-}
-
-ndenergy: {
-	$parentVal: Mods.CalRemix.FannyEndenergy
-}
-
-arksunfrag: {
-	$parentVal: Mods.CalRemix.FannyDarksunfrag
-}
-
-nion: {
-	$parentVal: Mods.CalRemix.FannyOnion
-}
-
-urasamaBig: {
-	$parentVal: Mods.CalRemix.FannyMurasamaBig
-}
-
-uracrimsona1: {
-	$parentVal: Mods.CalRemix.FannyMuracrimsona1
-}
-
-uracrimsona2: {
-	$parentVal: Mods.CalRemix.FannyMuracrimsona2
-}
-
-leavageFurrow: {
-	$parentVal: Mods.CalRemix.FannyCleavageFurrow
-}
-
-etRock: {
-	$parentVal: Mods.CalRemix.FannyPetRock
-}
-
-ockLobster1: {
-	$parentVal: Mods.CalRemix.FannyRockLobster1
-}
-
-ockLobster2: {
-	$parentVal: Mods.CalRemix.FannyRockLobster2
-}
-
-yes: {
-	$parentVal: Mods.CalRemix.FannyDyes
-}
-
-atharsis: {
-	$parentVal: Mods.CalRemix.FannyCatharsis
-}
-
-horiumOre: {
-	$parentVal: Mods.CalRemix.FannyThoriumOre
-}
-
-cramSkull: {
-	$parentVal: Mods.CalRemix.FannyOcramSkull
-}
-
-loodGod: {
-	$parentVal: Mods.CalRemix.FannyBloodGod
-}
-
-urasama: {
-	$parentVal: Mods.CalRemix.FannyMurasama
-}
-
-ltrakill: {
-	$parentVal: Mods.CalRemix.FannyUltrakill
-}
-
-ankSouls: {
-	$parentVal: Mods.CalRemix.FannyDankSouls
-}
-
-ofu: {
-	$parentVal: Mods.CalRemix.FannyTofu
-}
-
-rsenic: {
-	$parentVal: Mods.CalRemix.FannyArsenic
-}
-
-nowbr: {
-	$parentVal: Mods.CalRemix.FannySnowbr
-}
-
-avern: {
-	$parentVal: Mods.CalRemix.FannyCavern
-}
-
-ranite: {
-	$parentVal: Mods.CalRemix.FannyGranite
-}
-
-arble: {
-	$parentVal: Mods.CalRemix.FannyMarble
-}
-
-ungalGrowths: {
-	$parentVal: Mods.CalRemix.FannyFungalGrowths
-}
-
-emCave: {
-	$parentVal: Mods.CalRemix.FannyGemCave
-}
-
-unkySea: {
-	$parentVal: Mods.CalRemix.FannySunkySea
-}
-
-ell: {
-	$parentVal: Mods.CalRemix.FannyHell
-}
-
-himmerNothing: {
-	$parentVal: Mods.CalRemix.FannyShimmerNothing
-}
-
-eteore: {
-	$parentVal: Mods.CalRemix.FannyMeteore
-}
-
-eepAbyss: {
-	$parentVal: Mods.CalRemix.FannyDeepAbyss
-}
-
-nfernumAbyss: {
-	$parentVal: Mods.CalRemix.FannyInfernumAbyss
-}
-
-oInfernumAbyss: {
-	$parentVal: Mods.CalRemix.FannyNoInfernumAbyss
-}
-
-odAbyss: {
-	$parentVal: Mods.CalRemix.FannyRodAbyss
-}
-
-laguedJungle: {
-	$parentVal: Mods.CalRemix.FannyPlaguedJungle
-}
-
-laguedJunglePhyto: {
-	$parentVal: Mods.CalRemix.FannyPlaguedJunglePhyto
-}
-
-emple: {
-	$parentVal: Mods.CalRemix.FannyTemple
-}
-
-empleWires: {
-	$parentVal: Mods.CalRemix.FannyTempleWires
-}
-
-ltars: {
-	$parentVal: Mods.CalRemix.FannyAltars
-}
-
-tupidSword: {
-	$parentVal: Mods.CalRemix.FannyStupidSword
-}
-
-rowningAbyss: {
-	$parentVal: Mods.CalRemix.FannyDrowningAbyss
-}
-
-ungleabyss: {
-	$parentVal: Mods.CalRemix.FannyJungleabyss
-}
-
-ulph: {
-	$parentVal: Mods.CalRemix.FannySulph
-}
-
-tarbuster: {
-	$parentVal: Mods.CalRemix.FannyStarbuster
-}
-
-otBlessedApple: {
-	$parentVal: Mods.CalRemix.FannyNotBlessedApple
-}
-
-ideGar: {
-	$parentVal: Mods.CalRemix.FannySideGar
-}
-
-earGar: {
-	$parentVal: Mods.CalRemix.FannyRearGar
-}
-
-rontGar: {
-	$parentVal: Mods.CalRemix.FannyFrontGar
-}
-
-gslime: {
-	$parentVal: Mods.CalRemix.FannyOgslime
-}
-
-xospheree: {
-	$parentVal: Mods.CalRemix.FannyExospheree
-}
-
-esert: {
-	$parentVal: Mods.CalRemix.FannyDesert
-}
-
-orpution: {
-	$parentVal: Mods.CalRemix.FannyCorpution
-}
-
-lantDungeon: {
-	$parentVal: Mods.CalRemix.FannyPlantDungeon
-}
-
-sbestos: {
-	$parentVal: Mods.CalRemix.FannyAsbestos
-}
-
-hrineSnow: {
-	$parentVal: Mods.CalRemix.FannyShrineSnow
-}
-
-hrineDesert: {
-	$parentVal: Mods.CalRemix.FannyShrineDesert
-}
-
-hrineCorruption: {
-	$parentVal: Mods.CalRemix.FannyShrineCorruption
-}
-
-hrineCrimson: {
-	$parentVal: Mods.CalRemix.FannyShrineCrimson
-}
-
-hrineUg: {
-	$parentVal: Mods.CalRemix.FannyShrineUg
-}
-
-hrineHallow: {
-	$parentVal: Mods.CalRemix.FannyShrineHallow
-}
-
-hrineAstral: {
-	$parentVal: Mods.CalRemix.FannyShrineAstral
-}
-
-hrineGranite: {
-	$parentVal: Mods.CalRemix.FannyShrineGranite
-}
-
-hrineMarble: {
-	$parentVal: Mods.CalRemix.FannyShrineMarble
-}
-
-hrineMushroom: {
-	$parentVal: Mods.CalRemix.FannyShrineMushroom
-}
-
-od: {
-	$parentVal: Mods.CalRemix.FannyGod
-}
-
-ee: {
-	$parentVal: Mods.CalRemix.FannyBee
-}
-
-ulfrumPylone: {
-	$parentVal: Mods.CalRemix.FannyWulfrumPylone
-}
-
-ysts: {
-	$parentVal: Mods.CalRemix.FannyCysts
-}
-
-nauwu: {
-	$parentVal: Mods.CalRemix.FannyAnauwu
-}
-
-airy: {
-	$parentVal: Mods.CalRemix.FannyFairy
-}
-
-ultists: {
-	$parentVal: Mods.CalRemix.FannyCultists
-}
-
-ncientDom: {
-	$parentVal: Mods.CalRemix.FannyAncientDom
-}
-
-rawltipede: {
-	$parentVal: Mods.CalRemix.FannyCrawltipede
-}
-
-loodworm: {
-	$parentVal: Mods.CalRemix.FannyBloodworm
-}
-
-olf: {
-	$parentVal: Mods.CalRemix.FannyWolf
-}
-
-ungeondie: {
-	$parentVal: Mods.CalRemix.FannyDungeondie
-}
-
-nglerTalk: {
-	$parentVal: Mods.CalRemix.FannyAnglerTalk
-}
-
-eimos: {
-	$parentVal: Mods.CalRemix.FannyDeimos
-}
-
-utantNPC: {
-	$parentVal: Mods.CalRemix.FannyMutantNPC
-}
-
-pdateTime: {
-	$parentVal: Mods.CalRemix.FannyUpdateTime
-}
-
-orchGod: {
-	$parentVal: Mods.CalRemix.FannyTorchGod
-}
-
-of: {
-	$parentVal: Mods.CalRemix.FannyWof
-}
-
-SFly: {
-	$parentVal: Mods.CalRemix.FannyQSFly
-}
-
-kelePrime: {
-	$parentVal: Mods.CalRemix.FannySkelePrime
-}
-
-blivionPrime: {
-	$parentVal: Mods.CalRemix.FannyOblivionPrime
-}
-
-alclone: {
-	$parentVal: Mods.CalRemix.FannyCalclone
-}
-
-umpking1: {
-	$parentVal: Mods.CalRemix.FannyPumpking1
-}
-
-umpking2: {
-	$parentVal: Mods.CalRemix.FannyPumpking2
-}
-
-oL1: {
-	$parentVal: Mods.CalRemix.FannyEoL1
-}
-
-oL2: {
-	$parentVal: Mods.CalRemix.FannyEoL2
-}
-
-oL3: {
-	$parentVal: Mods.CalRemix.FannyEoL3
-}
-
-oL4: {
-	$parentVal: Mods.CalRemix.FannyEoL4
-}
-
-oL5: {
-	$parentVal: Mods.CalRemix.FannyEoL5
-}
-
-eus: {
-	$parentVal: Mods.CalRemix.FannyDeus
-}
-
-eusSplitMod: {
-	$parentVal: Mods.CalRemix.FannyDeusSplitMod
-}
-
-Guardians: {
-	$parentVal: Mods.CalRemix.FannyPGuardians
-}
-
-oArmorDog: {
-	$parentVal: Mods.CalRemix.FannyNoArmorDog
-}
-
-ewYork: {
-	$parentVal: Mods.CalRemix.FannyNewYork
-}
-
-harRebirth: {
-	$parentVal: Mods.CalRemix.FannyYharRebirth
-}
-
-harRebirth2: {
-	$parentVal: Mods.CalRemix.FannyYharRebirth2
-}
-
-harvelQuip: {
-	$parentVal: Mods.CalRemix.FannyYharvelQuip
-}
-
-raedonEnter: {
-	$parentVal: Mods.CalRemix.FannyDraedonEnter
-}
-
-resGlue: {
-	$parentVal: Mods.CalRemix.FannyAresGlue
-}
-
-resGlue2: {
-	$parentVal: Mods.CalRemix.FannyAresGlue2
-}
-
-resGlue3: {
-	$parentVal: Mods.CalRemix.FannyAresGlue3
-}
-
-resGlue4: {
-	$parentVal: Mods.CalRemix.FannyAresGlue4
-}
-
-resGlue5: {
-	$parentVal: Mods.CalRemix.FannyAresGlue5
-}
-
-xoMayhem: {
-	$parentVal: Mods.CalRemix.FannyExoMayhem
-}
-
-caldie: {
-	$parentVal: Mods.CalRemix.FannyScaldie
-}
-
-ereftVassal: {
-	$parentVal: Mods.CalRemix.FannyBereftVassal
-}
-
-oozma: {
-	$parentVal: Mods.CalRemix.FannyGoozma
-}
-
-strageldon: {
-	$parentVal: Mods.CalRemix.FannyAstrageldon
-}
-
-utant: {
-	$parentVal: Mods.CalRemix.FannyMutant
-}
-
-horiumPrimordials: {
-	$parentVal: Mods.CalRemix.FannyThoriumPrimordials
-}
-
-byssBegin: {
-	$parentVal: Mods.CalRemix.FannyAbyssBegin
-}
-
-ryodeath: {
-	$parentVal: Mods.CalRemix.FannyCryodeath
-}
-
-ollyDeath: {
-	$parentVal: Mods.CalRemix.FannyFollyDeath
-}
-
-alcloneDeath: {
-	$parentVal: Mods.CalRemix.FannyCalcloneDeath
-}
-
-harore: {
-	$parentVal: Mods.CalRemix.FannyYharore
-}
-
-raedonExit: {
-	$parentVal: Mods.CalRemix.FannyDraedonExit
-}
-
-CalDie: {
-	$parentVal: Mods.CalRemix.FannySCalDie
-}
-
-echs: {
-	$parentVal: Mods.CalRemix.FannyMechs
-}
-
-olem: {
-	$parentVal: Mods.CalRemix.FannyGolem
-}
-
-FBDesert: {
-	$parentVal: Mods.CalRemix.FannyGFBDesert
-}
-
-FBCrab: {
-	$parentVal: Mods.CalRemix.FannyGFBCrab
-}
-
-fbHive: {
-	$parentVal: Mods.CalRemix.FannyGfbHive
-}
-
-fbPerf: {
-	$parentVal: Mods.CalRemix.FannyGfbPerf
-}
-
-fbSlimeGod: {
-	$parentVal: Mods.CalRemix.FannyGfbSlimeGod
-}
-
-fbCryogen: {
-	$parentVal: Mods.CalRemix.FannyGfbCryogen
-}
-
-fbAqua: {
-	$parentVal: Mods.CalRemix.FannyGfbAqua
-}
-
-fbBrimmy: {
-	$parentVal: Mods.CalRemix.FannyGfbBrimmy
-}
-
-fbCalclone: {
-	$parentVal: Mods.CalRemix.FannyGfbCalclone
-}
-
-fbAureus: {
-	$parentVal: Mods.CalRemix.FannyGfbAureus
-}
-
-fbFishies: {
-	$parentVal: Mods.CalRemix.FannyGfbFishies
-}
-
-fbplague: {
-	$parentVal: Mods.CalRemix.FannyGfbplague
-}
-
-fbRavager: {
-	$parentVal: Mods.CalRemix.FannyGfbRavager
-}
-
-fbAstrumDeus: {
-	$parentVal: Mods.CalRemix.FannyGfbAstrumDeus
-}
-
-fbDonuts: {
-	$parentVal: Mods.CalRemix.FannyGfbDonuts
-}
-
-fbBirb: {
-	$parentVal: Mods.CalRemix.FannyGfbBirb
-}
-
-fbProvidence: {
-	$parentVal: Mods.CalRemix.FannyGfbProvidence
-}
-
-fbCeaseless: {
-	$parentVal: Mods.CalRemix.FannyGfbCeaseless
-}
-
-fbSignus: {
-	$parentVal: Mods.CalRemix.FannyGfbSignus
-}
-
-fbStormWeaver: {
-	$parentVal: Mods.CalRemix.FannyGfbStormWeaver
-}
-
-fbPolter: {
-	$parentVal: Mods.CalRemix.FannyGfbPolter
-}
-
-fbOverdose: {
-	$parentVal: Mods.CalRemix.FannyGfbOverdose
-}
-
-fbYharon: {
-	$parentVal: Mods.CalRemix.FannyGfbYharon
-}
-
-fbExos: {
-	$parentVal: Mods.CalRemix.FannyGfbExos
-}
-
-ekate: {
-	$parentVal: Mods.CalRemix.FannyHekate
-}
-
-fbScal: {
-	$parentVal: Mods.CalRemix.FannyGfbScal
-}
-
-heLorde: {
-	$parentVal: Mods.CalRemix.FannyTheLorde
-}
-
-ntroducingEvilFanny: {
-	$parentVal: Mods.CalRemix.FannyIntroducingEvilFanny
-}
-
-ntroducingEvilFanny2: {
-	$parentVal: Mods.CalRemix.FannyIntroducingEvilFanny2
-}
-
-ntroducingEvilFanny3: {
-	$parentVal: Mods.CalRemix.FannyIntroducingEvilFanny3
-}
-
-ntroducingEvilFanny4: {
-	$parentVal: Mods.CalRemix.FannyIntroducingEvilFanny4
-}
-
-ntroducingEvilFanny5: {
-	$parentVal: Mods.CalRemix.FannyIntroducingEvilFanny5
-}
-
-L1: {
-	$parentVal: Mods.CalRemix.FannyML1
-}
-
-L2: {
-	$parentVal: Mods.CalRemix.FannyML2
-}
-
-L3: {
-	$parentVal: Mods.CalRemix.FannyML3
-}
-
-L4: {
-	$parentVal: Mods.CalRemix.FannyML4
-}
-
-L5: {
-	$parentVal: Mods.CalRemix.FannyML5
-}
-
-L6: {
-	$parentVal: Mods.CalRemix.FannyML6
-}
-
-L7: {
-	$parentVal: Mods.CalRemix.FannyML7
-}
-
-L8: {
-	$parentVal: Mods.CalRemix.FannyML8
-}
-
-L9: {
-	$parentVal: Mods.CalRemix.FannyML9
-}
-
-L10: {
-	$parentVal: Mods.CalRemix.FannyML10
-}
-
-L11: {
-	$parentVal: Mods.CalRemix.FannyML11
-}
-
-L12: {
-	$parentVal: Mods.CalRemix.FannyML12
-}
-
-L13: {
-	$parentVal: Mods.CalRemix.FannyML13
-}
-
-L14: {
-	$parentVal: Mods.CalRemix.FannyML14
-}
-
-L15: {
-	$parentVal: Mods.CalRemix.FannyML15
-}
-
-L16: {
-	$parentVal: Mods.CalRemix.FannyML16
-}
-
-abil1: {
-	$parentVal: Mods.CalRemix.FannyBabil1
-}
-
-abil2: {
-	$parentVal: Mods.CalRemix.FannyBabil2
-}
-
-abil3: {
-	$parentVal: Mods.CalRemix.FannyBabil3
-}
-
-abil4: {
-	$parentVal: Mods.CalRemix.FannyBabil4
-}
-
-abil5: {
-	$parentVal: Mods.CalRemix.FannyBabil5
-}
-
-abil6: {
-	$parentVal: Mods.CalRemix.FannyBabil6
-}
-
-abil7: {
-	$parentVal: Mods.CalRemix.FannyBabil7
-}
-
-abil8: {
-	$parentVal: Mods.CalRemix.FannyBabil8
-}
-
-abil9: {
-	$parentVal: Mods.CalRemix.FannyBabil9
-}
-
-abil10: {
-	$parentVal: Mods.CalRemix.FannyBabil10
-}
-
-abil11: {
-	$parentVal: Mods.CalRemix.FannyBabil11
-}
-
-iracleSnow: {
-	$parentVal: Mods.CalRemix.FannyMiracleSnow
-}
-
-iracleScourge: {
-	$parentVal: Mods.CalRemix.FannyMiracleScourge
-}
-
-iracle1: {
-	$parentVal: Mods.CalRemix.FannyMiracle1
-}
-
-onder_Wings: {
-	$parentVal: Mods.CalRemix.FannyWonder_Wings
-}
-
-onder_Tracers: {
-	$parentVal: Mods.CalRemix.FannyWonder_Tracers
-}
-
-enault5Advertisment: {
-	$parentVal: Mods.CalRemix.FannyRenault5Advertisment
-}
-
-rimSonIntro1: {
-	$parentVal: Mods.CalRemix.FannyCrimSonIntro1
-}
-
-rimSonIntro2: {
-	$parentVal: Mods.CalRemix.FannyCrimSonIntro2
-}
-
-rimSonIntro3: {
-	$parentVal: Mods.CalRemix.FannyCrimSonIntro3
-}
-
-rimSonIntro4: {
-	$parentVal: Mods.CalRemix.FannyCrimSonIntro4
-}
-
-rimPizza: {
-	$parentVal: Mods.CalRemix.FannyCrimPizza
-}
-
-rimFood: {
-	$parentVal: Mods.CalRemix.FannyCrimFood
-}
-
-rimMedicalAid: {
-	$parentVal: Mods.CalRemix.FannyCrimMedicalAid
-}
-
-rimBandage: {
-	$parentVal: Mods.CalRemix.FannyCrimBandage
-}
-
-tillWater: {
-	$parentVal: Mods.CalRemix.FannyStillWater
-}
-
-uildThang: {
-	$parentVal: Mods.CalRemix.FannyBuildThang
-}
-
-algyatt1: {
-	$parentVal: Mods.CalRemix.FannyCalgyatt1
-}
-
-algyatt2: {
-	$parentVal: Mods.CalRemix.FannyCalgyatt2
-}
-
-algyatt3: {
-	$parentVal: Mods.CalRemix.FannyCalgyatt3
-}
-
-utantsacep: {
-	$parentVal: Mods.CalRemix.FannyMutantsacep
-}
-
-edHealth: {
-	$parentVal: Mods.CalRemix.FannyRedHealth
-}
-
-alpaintwoo: {
-	$parentVal: Mods.CalRemix.FannyCalpaintwoo
-}
-
-raecell: {
-	$parentVal: Mods.CalRemix.FannyDraecell
-}
-
-rapperBeginning1: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning1
-}
-
-rapperBeginning2: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning2
-}
-
-rapperBeginning3: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning3
-}
-
-rapperBeginning4: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning4
-}
-
-rapperBeginning5: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning5
-}
-
-rapperBeginning6: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning6
-}
-
-rapperBeginning7: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning7
-}
-
-rapperBeginning8: {
-	$parentVal: Mods.CalRemix.FannyTrapperBeginning8
-}
-
-oltrapper1: {
-	$parentVal: Mods.CalRemix.FannyPoltrapper1
-}
-
-oltrapper2: {
-	$parentVal: Mods.CalRemix.FannyPoltrapper2
-}
-
-oltrapper3: {
-	$parentVal: Mods.CalRemix.FannyPoltrapper3
-}
-
-oltrapper4: {
-	$parentVal: Mods.CalRemix.FannyPoltrapper4
-}
-
-oltrapper5: {
-	$parentVal: Mods.CalRemix.FannyPoltrapper5
-}
-
-rapperbulbdotdotdot: {
-	$parentVal: Mods.CalRemix.FannyTrapperbulbdotdotdot
-}
-
-ucy: {
-	$parentVal: Mods.CalRemix.FannyLucy
-}
-
-eowmere: {
-	$parentVal: Mods.CalRemix.FannyMeowmere
-}
-
-eowthrower: {
-	$parentVal: Mods.CalRemix.FannyMeowthrower
-}
-
-otc: {
-	$parentVal: Mods.CalRemix.FannyAotc
-}
-
-osmicShiv: {
-	$parentVal: Mods.CalRemix.FannyCosmicShiv
-}
-
-uclemade: {
-	$parentVal: Mods.CalRemix.FannyNuclemade
-}
-
-itten: {
-	$parentVal: Mods.CalRemix.FannyKitten
-}
-
-hipping: {
-	$parentVal: Mods.CalRemix.FannyShipping
-}
-
-hipRiding: {
-	$parentVal: Mods.CalRemix.FannyShipRiding
-}
-
-ncientBoneDust: {
-	$parentVal: Mods.CalRemix.FannyAncientBoneDust
-}
-
-ncientBoneDust2: {
-	$parentVal: Mods.CalRemix.FannyAncientBoneDust2
-}
-
-eetleJuiceBeetleJuice: {
-	$parentVal: Mods.CalRemix.FannyBeetleJuiceBeetleJuice
-}
-
-loodscene: {
-	$parentVal: Mods.CalRemix.FannyBloodscene
-}
-
-emonAsh: {
-	$parentVal: Mods.CalRemix.FannyDemonAsh
-}
-
-etidEssence: {
-	$parentVal: Mods.CalRemix.FannyFetidEssence
-}
-
-ival: {
-	$parentVal: Mods.CalRemix.FannyRival
-}
-
-ival2: {
-	$parentVal: Mods.CalRemix.FannyRival2
-}
-
-urkyPaste: {
-	$parentVal: Mods.CalRemix.FannyMurkyPaste
-}
-
-urkySludge: {
-	$parentVal: Mods.CalRemix.FannyMurkySludge
-}
-
-evelation1: {
-	$parentVal: Mods.CalRemix.FannyRevelation1
-}
-
-evelation2: {
-	$parentVal: Mods.CalRemix.FannyRevelation2
-}
-
-evelation3: {
-	$parentVal: Mods.CalRemix.FannyRevelation3
-}
-
-evelation4: {
-	$parentVal: Mods.CalRemix.FannyRevelation4
-}
-
-evelation5: {
-	$parentVal: Mods.CalRemix.FannyRevelation5
-}
-
-evelation7: {
-	$parentVal: Mods.CalRemix.FannyRevelation7
-}
-
-evelation6: {
-	$parentVal: Mods.CalRemix.FannyRevelation6
-}
-
-evelation8: {
-	$parentVal: Mods.CalRemix.FannyRevelation8
-}
-
+emixJump: Mods.CalRemix.FannyRemixJump
+owHP: Mods.CalRemix.FannyLowHP
+nvisible: Mods.CalRemix.FannyInvisible
+arkArea: Mods.CalRemix.FannyDarkArea
+onstantDeath: Mods.CalRemix.FannyConstantDeath
+ursed: Mods.CalRemix.FannyCursed
+ctFebruary: Mods.CalRemix.FannyOctFebruary
+ungeonGuardian: Mods.CalRemix.FannyDungeonGuardian
+eldGunk: Mods.CalRemix.FannyMeldGunk
+eldHeart: Mods.CalRemix.FannyMeldHeart
+eldHeartNoxus: Mods.CalRemix.FannyMeldHeartNoxus
+vilMinions: Mods.CalRemix.FannyEvilMinions
+vilTerraBlade: Mods.CalRemix.FannyEvilTerraBlade
+onGuy: Mods.CalRemix.FannyIonGuy
+ultiplayer: Mods.CalRemix.FannyMultiplayer
+drenaboy1: Mods.CalRemix.FannyAdrenaboy1
+drenaboy2: Mods.CalRemix.FannyAdrenaboy2
+drenaboy3: Mods.CalRemix.FannyAdrenaboy3
+drenaboy4: Mods.CalRemix.FannyAdrenaboy4
+drenaboy5: Mods.CalRemix.FannyAdrenaboy5
+orcheese: Mods.CalRemix.FannyNorcheese
+nnivenriersary1: Mods.CalRemix.FannyAnnivenriersary1
+nnivenriersary2: Mods.CalRemix.FannyAnnivenriersary2
+nnivenriersary3: Mods.CalRemix.FannyAnnivenriersary3
+nnivenriersary4: Mods.CalRemix.FannyAnnivenriersary4
+nnivenriersary5: Mods.CalRemix.FannyAnnivenriersary5
+nnivenriersary6: Mods.CalRemix.FannyAnnivenriersary6
+nnivenriersary7: Mods.CalRemix.FannyAnnivenriersary7
+nnivenriersary8: Mods.CalRemix.FannyAnnivenriersary8
+nnivenriersary9: Mods.CalRemix.FannyAnnivenriersary9
+og1: Mods.CalRemix.FannyDog1
+og2: Mods.CalRemix.FannyDog2
+og3: Mods.CalRemix.FannyDog3
+og4: Mods.CalRemix.FannyDog4
+og5: Mods.CalRemix.FannyDog5
+og6: Mods.CalRemix.FannyDog6
+og7: Mods.CalRemix.FannyDog7
+og8: Mods.CalRemix.FannyDog8
+og9: Mods.CalRemix.FannyDog9
+ogBeatEarly: Mods.CalRemix.FannyDogBeatEarly
+ogBeatLate: Mods.CalRemix.FannyDogBeatLate
+ogRetort: Mods.CalRemix.FannyDogRetort
+oreAny: Mods.CalRemix.FannyLoreAny
+oreDesert: Mods.CalRemix.FannyLoreDesert
+oreCorcrim: Mods.CalRemix.FannyLoreCorcrim
+oreSkeletron: Mods.CalRemix.FannyLoreSkeletron
+oreSlimepod: Mods.CalRemix.FannyLoreSlimepod
+oreWof: Mods.CalRemix.FannyLoreWof
+oreBlood: Mods.CalRemix.FannyLoreBlood
+oreEvilBlood: Mods.CalRemix.FannyLoreEvilBlood
+oreQueenSlime: Mods.CalRemix.FannyLoreQueenSlime
+oreEvilQueenSlime: Mods.CalRemix.FannyLoreEvilQueenSlime
+oreMechs: Mods.CalRemix.FannyLoreMechs
+oreEvilMechs: Mods.CalRemix.FannyLoreEvilMechs
+oreCryo: Mods.CalRemix.FannyLoreCryo
+oreEvilCryo: Mods.CalRemix.FannyLoreEvilCryo
+oreAq: Mods.CalRemix.FannyLoreAq
+oreEvilAq: Mods.CalRemix.FannyLoreEvilAq
+oreBrim: Mods.CalRemix.FannyLoreBrim
+oreEvilBrim: Mods.CalRemix.FannyLoreEvilBrim
+oreCalc: Mods.CalRemix.FannyLoreCalc
+oreEvilCalc: Mods.CalRemix.FannyLoreEvilCalc
+orePlant: Mods.CalRemix.FannyLorePlant
+oreEvilPlant: Mods.CalRemix.FannyLoreEvilPlant
+orePBG: Mods.CalRemix.FannyLorePBG
+oreEvilPBG: Mods.CalRemix.FannyLoreEvilPBG
+orePrelude: Mods.CalRemix.FannyLorePrelude
+oreEvilPrelude: Mods.CalRemix.FannyLoreEvilPrelude
+oreDeus: Mods.CalRemix.FannyLoreDeus
+oreEvilDeus: Mods.CalRemix.FannyLoreEvilDeus
+oreRequiem: Mods.CalRemix.FannyLoreRequiem
+oreEvilRequiem: Mods.CalRemix.FannyLoreEvilRequiem
+oreBirb: Mods.CalRemix.FannyLoreBirb
+oreEvilBirb: Mods.CalRemix.FannyLoreEvilBirb
+oreProv: Mods.CalRemix.FannyLoreProv
+oreEvilProv: Mods.CalRemix.FannyLoreEvilProv
+orePolter: Mods.CalRemix.FannyLorePolter
+oreEvilPolter: Mods.CalRemix.FannyLoreEvilPolter
+oreDog: Mods.CalRemix.FannyLoreDog
+oreEvilDog: Mods.CalRemix.FannyLoreEvilDog
+oreYharon: Mods.CalRemix.FannyLoreYharon
+oreEvilYharon: Mods.CalRemix.FannyLoreEvilYharon
+oreDraeodn: Mods.CalRemix.FannyLoreDraeodn
+oreEvilDraedon: Mods.CalRemix.FannyLoreEvilDraedon
+oreScal: Mods.CalRemix.FannyLoreScal
+oreEvilScal: Mods.CalRemix.FannyLoreEvilScal
+oreEnd: Mods.CalRemix.FannyLoreEnd
+oreEvilEnd: Mods.CalRemix.FannyLoreEvilEnd
+ntro: Mods.CalRemix.FannyIntro
+fbintroEvil: Mods.CalRemix.FannyGfbintroEvil
+fbintro: Mods.CalRemix.FannyGfbintro
+onerFanny: Mods.CalRemix.FannyGonerFanny
+egister: Mods.CalRemix.FannyRegister
+leeping: Mods.CalRemix.FannySleeping
+ungusGarden: Mods.CalRemix.FannyFungusGarden
+akeGen: Mods.CalRemix.FannyFakeGen
+alseRef: Mods.CalRemix.FannyFalseRef
+robablyYakuza: Mods.CalRemix.FannyProbablyYakuza
+reditCard: Mods.CalRemix.FannyCreditCard
+link: Mods.CalRemix.FannyBlink
+uckyou: Mods.CalRemix.FannyFuckyou
+uigi: Mods.CalRemix.FannyLuigi
+ount: Mods.CalRemix.FannyMount
+ookingForPlating: Mods.CalRemix.FannyLookingForPlating
+reepy: Mods.CalRemix.FannyCreepy
+hage: Mods.CalRemix.FannyMhage
+hrust: Mods.CalRemix.FannyThrust
+rozen1: Mods.CalRemix.FannyFrozen1
+rozen2: Mods.CalRemix.FannyFrozen2
+rozen3: Mods.CalRemix.FannyFrozen3
+rozen4: Mods.CalRemix.FannyFrozen4
+rozen5: Mods.CalRemix.FannyFrozen5
+rozen6: Mods.CalRemix.FannyFrozen6
+traightUpEvil: Mods.CalRemix.FannyStraightUpEvil
+iscordianHash: Mods.CalRemix.FannyDiscordianHash
+iscordianAt: Mods.CalRemix.FannyDiscordianAt
+nvasionDeath: Mods.CalRemix.FannyInvasionDeath
+aining: Mods.CalRemix.FannyRaining
+inding: Mods.CalRemix.FannyWinding
+vilSnowLegion: Mods.CalRemix.FannyEvilSnowLegion
+OA: Mods.CalRemix.FannyOOA
+loodMoon: Mods.CalRemix.FannyBloodMoon
+loodMoonStare: Mods.CalRemix.FannyBloodMoonStare
+clipxe: Mods.CalRemix.FannyEclipxe
+olloween: Mods.CalRemix.FannyHolloween
+rostmas: Mods.CalRemix.FannyFrostmas
+REvilkys: Mods.CalRemix.FannyBREvilkys
+ite: Mods.CalRemix.FannyNite
+limerain: Mods.CalRemix.FannySlimerain
+owers: Mods.CalRemix.FannyTowers
+anicHint: Mods.CalRemix.FannyPanicHint
+xydazy: Mods.CalRemix.FannyOxydazy
+andemicPanic: Mods.CalRemix.FannyPandemicPanic
+eteorStarboard: Mods.CalRemix.FannyMeteorStarboard
+orge: Mods.CalRemix.FannyForge
+eliciousMeat: Mods.CalRemix.FannyDeliciousMeat
+elocator: Mods.CalRemix.FannyRelocator
+unnyMurder: Mods.CalRemix.FannyBunnyMurder
+unnyVolcano: Mods.CalRemix.FannyBunnyVolcano
+iamond: Mods.CalRemix.FannyDiamond
+erraspark: Mods.CalRemix.FannyTerraspark
+oxcaliburShimmer: Mods.CalRemix.FannyRoxcaliburShimmer
+esertScourge: Mods.CalRemix.FannyDesertScourge
+oodooDoll: Mods.CalRemix.FannyVoodooDoll
+wentyTwo: Mods.CalRemix.FannyTwentyTwo
+hadowspec: Mods.CalRemix.FannyShadowspec
+ood: Mods.CalRemix.FannyWood
+allowedBar: Mods.CalRemix.FannyHallowedBar
+ifeCrystal: Mods.CalRemix.FannyLifeCrystal
+harimBar: Mods.CalRemix.FannyYharimBar
+ump: Mods.CalRemix.FannyJump
+itanHeart: Mods.CalRemix.FannyTitanHeart
+loodyVein: Mods.CalRemix.FannyBloodyVein
+ottenEye: Mods.CalRemix.FannyRottenEye
+lloyBar: Mods.CalRemix.FannyAlloyBar
+ponge: Mods.CalRemix.FannySponge
+arbo: Mods.CalRemix.FannyGarbo
+ightfuel: Mods.CalRemix.FannyNightfuel
+ndenergy: Mods.CalRemix.FannyEndenergy
+arksunfrag: Mods.CalRemix.FannyDarksunfrag
+nion: Mods.CalRemix.FannyOnion
+urasamaBig: Mods.CalRemix.FannyMurasamaBig
+uracrimsona1: Mods.CalRemix.FannyMuracrimsona1
+uracrimsona2: Mods.CalRemix.FannyMuracrimsona2
+leavageFurrow: Mods.CalRemix.FannyCleavageFurrow
+etRock: Mods.CalRemix.FannyPetRock
+ockLobster1: Mods.CalRemix.FannyRockLobster1
+ockLobster2: Mods.CalRemix.FannyRockLobster2
+yes: Mods.CalRemix.FannyDyes
+atharsis: Mods.CalRemix.FannyCatharsis
+horiumOre: Mods.CalRemix.FannyThoriumOre
+cramSkull: Mods.CalRemix.FannyOcramSkull
+loodGod: Mods.CalRemix.FannyBloodGod
+urasama: Mods.CalRemix.FannyMurasama
+ltrakill: Mods.CalRemix.FannyUltrakill
+ankSouls: Mods.CalRemix.FannyDankSouls
+ofu: Mods.CalRemix.FannyTofu
+rsenic: Mods.CalRemix.FannyArsenic
+nowbr: Mods.CalRemix.FannySnowbr
+avern: Mods.CalRemix.FannyCavern
+ranite: Mods.CalRemix.FannyGranite
+arble: Mods.CalRemix.FannyMarble
+ungalGrowths: Mods.CalRemix.FannyFungalGrowths
+emCave: Mods.CalRemix.FannyGemCave
+unkySea: Mods.CalRemix.FannySunkySea
+ell: Mods.CalRemix.FannyHell
+himmerNothing: Mods.CalRemix.FannyShimmerNothing
+eteore: Mods.CalRemix.FannyMeteore
+eepAbyss: Mods.CalRemix.FannyDeepAbyss
+nfernumAbyss: Mods.CalRemix.FannyInfernumAbyss
+oInfernumAbyss: Mods.CalRemix.FannyNoInfernumAbyss
+odAbyss: Mods.CalRemix.FannyRodAbyss
+laguedJungle: Mods.CalRemix.FannyPlaguedJungle
+laguedJunglePhyto: Mods.CalRemix.FannyPlaguedJunglePhyto
+emple: Mods.CalRemix.FannyTemple
+empleWires: Mods.CalRemix.FannyTempleWires
+ltars: Mods.CalRemix.FannyAltars
+tupidSword: Mods.CalRemix.FannyStupidSword
+rowningAbyss: Mods.CalRemix.FannyDrowningAbyss
+ungleabyss: Mods.CalRemix.FannyJungleabyss
+ulph: Mods.CalRemix.FannySulph
+tarbuster: Mods.CalRemix.FannyStarbuster
+otBlessedApple: Mods.CalRemix.FannyNotBlessedApple
+ideGar: Mods.CalRemix.FannySideGar
+earGar: Mods.CalRemix.FannyRearGar
+rontGar: Mods.CalRemix.FannyFrontGar
+gslime: Mods.CalRemix.FannyOgslime
+xospheree: Mods.CalRemix.FannyExospheree
+esert: Mods.CalRemix.FannyDesert
+orpution: Mods.CalRemix.FannyCorpution
+lantDungeon: Mods.CalRemix.FannyPlantDungeon
+sbestos: Mods.CalRemix.FannyAsbestos
+hrineSnow: Mods.CalRemix.FannyShrineSnow
+hrineDesert: Mods.CalRemix.FannyShrineDesert
+hrineCorruption: Mods.CalRemix.FannyShrineCorruption
+hrineCrimson: Mods.CalRemix.FannyShrineCrimson
+hrineUg: Mods.CalRemix.FannyShrineUg
+hrineHallow: Mods.CalRemix.FannyShrineHallow
+hrineAstral: Mods.CalRemix.FannyShrineAstral
+hrineGranite: Mods.CalRemix.FannyShrineGranite
+hrineMarble: Mods.CalRemix.FannyShrineMarble
+hrineMushroom: Mods.CalRemix.FannyShrineMushroom
+od: Mods.CalRemix.FannyGod
+ee: Mods.CalRemix.FannyBee
+ulfrumPylone: Mods.CalRemix.FannyWulfrumPylone
+ysts: Mods.CalRemix.FannyCysts
+nauwu: Mods.CalRemix.FannyAnauwu
+airy: Mods.CalRemix.FannyFairy
+ultists: Mods.CalRemix.FannyCultists
+ncientDom: Mods.CalRemix.FannyAncientDom
+rawltipede: Mods.CalRemix.FannyCrawltipede
+loodworm: Mods.CalRemix.FannyBloodworm
+olf: Mods.CalRemix.FannyWolf
+ungeondie: Mods.CalRemix.FannyDungeondie
+nglerTalk: Mods.CalRemix.FannyAnglerTalk
+eimos: Mods.CalRemix.FannyDeimos
+utantNPC: Mods.CalRemix.FannyMutantNPC
+pdateTime: Mods.CalRemix.FannyUpdateTime
+orchGod: Mods.CalRemix.FannyTorchGod
+of: Mods.CalRemix.FannyWof
+SFly: Mods.CalRemix.FannyQSFly
+kelePrime: Mods.CalRemix.FannySkelePrime
+blivionPrime: Mods.CalRemix.FannyOblivionPrime
+alclone: Mods.CalRemix.FannyCalclone
+umpking1: Mods.CalRemix.FannyPumpking1
+umpking2: Mods.CalRemix.FannyPumpking2
+oL1: Mods.CalRemix.FannyEoL1
+oL2: Mods.CalRemix.FannyEoL2
+oL3: Mods.CalRemix.FannyEoL3
+oL4: Mods.CalRemix.FannyEoL4
+oL5: Mods.CalRemix.FannyEoL5
+eus: Mods.CalRemix.FannyDeus
+eusSplitMod: Mods.CalRemix.FannyDeusSplitMod
+Guardians: Mods.CalRemix.FannyPGuardians
+oArmorDog: Mods.CalRemix.FannyNoArmorDog
+ewYork: Mods.CalRemix.FannyNewYork
+harRebirth: Mods.CalRemix.FannyYharRebirth
+harRebirth2: Mods.CalRemix.FannyYharRebirth2
+harvelQuip: Mods.CalRemix.FannyYharvelQuip
+raedonEnter: Mods.CalRemix.FannyDraedonEnter
+resGlue: Mods.CalRemix.FannyAresGlue
+resGlue2: Mods.CalRemix.FannyAresGlue2
+resGlue3: Mods.CalRemix.FannyAresGlue3
+resGlue4: Mods.CalRemix.FannyAresGlue4
+resGlue5: Mods.CalRemix.FannyAresGlue5
+xoMayhem: Mods.CalRemix.FannyExoMayhem
+caldie: Mods.CalRemix.FannyScaldie
+ereftVassal: Mods.CalRemix.FannyBereftVassal
+oozma: Mods.CalRemix.FannyGoozma
+strageldon: Mods.CalRemix.FannyAstrageldon
+utant: Mods.CalRemix.FannyMutant
+horiumPrimordials: Mods.CalRemix.FannyThoriumPrimordials
+byssBegin: Mods.CalRemix.FannyAbyssBegin
+ryodeath: Mods.CalRemix.FannyCryodeath
+ollyDeath: Mods.CalRemix.FannyFollyDeath
+alcloneDeath: Mods.CalRemix.FannyCalcloneDeath
+harore: Mods.CalRemix.FannyYharore
+raedonExit: Mods.CalRemix.FannyDraedonExit
+CalDie: Mods.CalRemix.FannySCalDie
+echs: Mods.CalRemix.FannyMechs
+olem: Mods.CalRemix.FannyGolem
+FBDesert: Mods.CalRemix.FannyGFBDesert
+FBCrab: Mods.CalRemix.FannyGFBCrab
+fbHive: Mods.CalRemix.FannyGfbHive
+fbPerf: Mods.CalRemix.FannyGfbPerf
+fbSlimeGod: Mods.CalRemix.FannyGfbSlimeGod
+fbCryogen: Mods.CalRemix.FannyGfbCryogen
+fbAqua: Mods.CalRemix.FannyGfbAqua
+fbBrimmy: Mods.CalRemix.FannyGfbBrimmy
+fbCalclone: Mods.CalRemix.FannyGfbCalclone
+fbAureus: Mods.CalRemix.FannyGfbAureus
+fbFishies: Mods.CalRemix.FannyGfbFishies
+fbplague: Mods.CalRemix.FannyGfbplague
+fbRavager: Mods.CalRemix.FannyGfbRavager
+fbAstrumDeus: Mods.CalRemix.FannyGfbAstrumDeus
+fbDonuts: Mods.CalRemix.FannyGfbDonuts
+fbBirb: Mods.CalRemix.FannyGfbBirb
+fbProvidence: Mods.CalRemix.FannyGfbProvidence
+fbCeaseless: Mods.CalRemix.FannyGfbCeaseless
+fbSignus: Mods.CalRemix.FannyGfbSignus
+fbStormWeaver: Mods.CalRemix.FannyGfbStormWeaver
+fbPolter: Mods.CalRemix.FannyGfbPolter
+fbOverdose: Mods.CalRemix.FannyGfbOverdose
+fbYharon: Mods.CalRemix.FannyGfbYharon
+fbExos: Mods.CalRemix.FannyGfbExos
+ekate: Mods.CalRemix.FannyHekate
+fbScal: Mods.CalRemix.FannyGfbScal
+heLorde: Mods.CalRemix.FannyTheLorde
+ntroducingEvilFanny: Mods.CalRemix.FannyIntroducingEvilFanny
+ntroducingEvilFanny2: Mods.CalRemix.FannyIntroducingEvilFanny2
+ntroducingEvilFanny3: Mods.CalRemix.FannyIntroducingEvilFanny3
+ntroducingEvilFanny4: Mods.CalRemix.FannyIntroducingEvilFanny4
+ntroducingEvilFanny5: Mods.CalRemix.FannyIntroducingEvilFanny5
+L1: Mods.CalRemix.FannyML1
+L2: Mods.CalRemix.FannyML2
+L3: Mods.CalRemix.FannyML3
+L4: Mods.CalRemix.FannyML4
+L5: Mods.CalRemix.FannyML5
+L6: Mods.CalRemix.FannyML6
+L7: Mods.CalRemix.FannyML7
+L8: Mods.CalRemix.FannyML8
+L9: Mods.CalRemix.FannyML9
+L10: Mods.CalRemix.FannyML10
+L11: Mods.CalRemix.FannyML11
+L12: Mods.CalRemix.FannyML12
+L13: Mods.CalRemix.FannyML13
+L14: Mods.CalRemix.FannyML14
+L15: Mods.CalRemix.FannyML15
+L16: Mods.CalRemix.FannyML16
+abil1: Mods.CalRemix.FannyBabil1
+abil2: Mods.CalRemix.FannyBabil2
+abil3: Mods.CalRemix.FannyBabil3
+abil4: Mods.CalRemix.FannyBabil4
+abil5: Mods.CalRemix.FannyBabil5
+abil6: Mods.CalRemix.FannyBabil6
+abil7: Mods.CalRemix.FannyBabil7
+abil8: Mods.CalRemix.FannyBabil8
+abil9: Mods.CalRemix.FannyBabil9
+abil10: Mods.CalRemix.FannyBabil10
+abil11: Mods.CalRemix.FannyBabil11
+iracleSnow: Mods.CalRemix.FannyMiracleSnow
+iracleScourge: Mods.CalRemix.FannyMiracleScourge
+iracle1: Mods.CalRemix.FannyMiracle1
+onder_Wings: Mods.CalRemix.FannyWonder_Wings
+onder_Tracers: Mods.CalRemix.FannyWonder_Tracers
+enault5Advertisment: Mods.CalRemix.FannyRenault5Advertisment
+rimSonIntro1: Mods.CalRemix.FannyCrimSonIntro1
+rimSonIntro2: Mods.CalRemix.FannyCrimSonIntro2
+rimSonIntro3: Mods.CalRemix.FannyCrimSonIntro3
+rimSonIntro4: Mods.CalRemix.FannyCrimSonIntro4
+rimPizza: Mods.CalRemix.FannyCrimPizza
+rimFood: Mods.CalRemix.FannyCrimFood
+rimMedicalAid: Mods.CalRemix.FannyCrimMedicalAid
+rimBandage: Mods.CalRemix.FannyCrimBandage
+tillWater: Mods.CalRemix.FannyStillWater
+uildThang: Mods.CalRemix.FannyBuildThang
+algyatt1: Mods.CalRemix.FannyCalgyatt1
+algyatt2: Mods.CalRemix.FannyCalgyatt2
+algyatt3: Mods.CalRemix.FannyCalgyatt3
+utantsacep: Mods.CalRemix.FannyMutantsacep
+edHealth: Mods.CalRemix.FannyRedHealth
+alpaintwoo: Mods.CalRemix.FannyCalpaintwoo
+raecell: Mods.CalRemix.FannyDraecell
+rapperBeginning1: Mods.CalRemix.FannyTrapperBeginning1
+rapperBeginning2: Mods.CalRemix.FannyTrapperBeginning2
+rapperBeginning3: Mods.CalRemix.FannyTrapperBeginning3
+rapperBeginning4: Mods.CalRemix.FannyTrapperBeginning4
+rapperBeginning5: Mods.CalRemix.FannyTrapperBeginning5
+rapperBeginning6: Mods.CalRemix.FannyTrapperBeginning6
+rapperBeginning7: Mods.CalRemix.FannyTrapperBeginning7
+rapperBeginning8: Mods.CalRemix.FannyTrapperBeginning8
+oltrapper1: Mods.CalRemix.FannyPoltrapper1
+oltrapper2: Mods.CalRemix.FannyPoltrapper2
+oltrapper3: Mods.CalRemix.FannyPoltrapper3
+oltrapper4: Mods.CalRemix.FannyPoltrapper4
+oltrapper5: Mods.CalRemix.FannyPoltrapper5
+rapperbulbdotdotdot: Mods.CalRemix.FannyTrapperbulbdotdotdot
+ucy: Mods.CalRemix.FannyLucy
+eowmere: Mods.CalRemix.FannyMeowmere
+eowthrower: Mods.CalRemix.FannyMeowthrower
+otc: Mods.CalRemix.FannyAotc
+osmicShiv: Mods.CalRemix.FannyCosmicShiv
+uclemade: Mods.CalRemix.FannyNuclemade
+itten: Mods.CalRemix.FannyKitten
+hipping: Mods.CalRemix.FannyShipping
+hipRiding: Mods.CalRemix.FannyShipRiding
+ncientBoneDust: Mods.CalRemix.FannyAncientBoneDust
+ncientBoneDust2: Mods.CalRemix.FannyAncientBoneDust2
+eetleJuiceBeetleJuice: Mods.CalRemix.FannyBeetleJuiceBeetleJuice
+loodscene: Mods.CalRemix.FannyBloodscene
+emonAsh: Mods.CalRemix.FannyDemonAsh
+etidEssence: Mods.CalRemix.FannyFetidEssence
+ival: Mods.CalRemix.FannyRival
+ival2: Mods.CalRemix.FannyRival2
+urkyPaste: Mods.CalRemix.FannyMurkyPaste
+urkySludge: Mods.CalRemix.FannyMurkySludge
+evelation1: Mods.CalRemix.FannyRevelation1
+evelation2: Mods.CalRemix.FannyRevelation2
+evelation3: Mods.CalRemix.FannyRevelation3
+evelation4: Mods.CalRemix.FannyRevelation4
+evelation5: Mods.CalRemix.FannyRevelation5
+evelation7: Mods.CalRemix.FannyRevelation7
+evelation6: Mods.CalRemix.FannyRevelation6
+evelation8: Mods.CalRemix.FannyRevelation8
 "": Mods.CalRemix.Fanny.
-
-ystDeath: {
-	$parentVal: Mods.CalRemix.FannyCystDeath
-}
-
-oxcalibur: {
-	$parentVal: Mods.CalRemix.FannyRoxcalibur
-}
-
-insman: {
-	$parentVal: Mods.CalRemix.FannyKinsman
-}
-
-rimesand: {
-	$parentVal: Mods.CalRemix.FannyGrimesand
-}
-
-uricSlime: {
-	$parentVal: Mods.CalRemix.FannyAuricSlime
-}
-
-ananaClown: {
-	$parentVal: Mods.CalRemix.FannyBananaClown
-}
-
-arocrab: {
-	$parentVal: Mods.CalRemix.FannyBarocrab
-}
-
-arocrabRun: {
-	$parentVal: Mods.CalRemix.FannyBarocrabRun
-}
-
-arcinogen: {
-	$parentVal: Mods.CalRemix.FannyCarcinogen
-}
-
-ydrogen: {
-	$parentVal: Mods.CalRemix.FannyHydrogen
-}
-
-onogen: {
-	$parentVal: Mods.CalRemix.FannyIonogen
-}
-
-rigen: {
-	$parentVal: Mods.CalRemix.FannyOrigen
-}
-
-xygen: {
-	$parentVal: Mods.CalRemix.FannyOxygen
-}
-
-xygenEvil: {
-	$parentVal: Mods.CalRemix.FannyOxygenEvil
-}
-
-athogen: {
-	$parentVal: Mods.CalRemix.FannyPathogen
-}
-
-ushigi: {
-	$parentVal: Mods.CalRemix.FannyFushigi
-}
-
-"reen Demon": {
-	$parentVal: Mods.CalRemix.FannyGreen Demon
-}
-
-yberDraedonFight: {
-	$parentVal: Mods.CalRemix.FannyCyberDraedonFight
-}
-
-ingMinnows: {
-	$parentVal: Mods.CalRemix.FannyKingMinnows
-}
-
-ifeBiome: {
-	$parentVal: Mods.CalRemix.FannyLifeBiome
-}
-
-insmenFight: {
-	$parentVal: Mods.CalRemix.FannyKinsmenFight
-}
-
-gscule: {
-	$parentVal: Mods.CalRemix.FannyOgscule
-}
-
-spid: {
-	$parentVal: Mods.CalRemix.FannyAspid
-}
-
-gslimeAwakening: {
-	$parentVal: Mods.CalRemix.FannyOgslimeAwakening
-}
+ystDeath: Mods.CalRemix.FannyCystDeath
+oxcalibur: Mods.CalRemix.FannyRoxcalibur
+insman: Mods.CalRemix.FannyKinsman
+rimesand: Mods.CalRemix.FannyGrimesand
+uricSlime: Mods.CalRemix.FannyAuricSlime
+ananaClown: Mods.CalRemix.FannyBananaClown
+arocrab: Mods.CalRemix.FannyBarocrab
+arocrabRun: Mods.CalRemix.FannyBarocrabRun
+arcinogen: Mods.CalRemix.FannyCarcinogen
+ydrogen: Mods.CalRemix.FannyHydrogen
+onogen: Mods.CalRemix.FannyIonogen
+rigen: Mods.CalRemix.FannyOrigen
+xygen: Mods.CalRemix.FannyOxygen
+xygenEvil: Mods.CalRemix.FannyOxygenEvil
+athogen: Mods.CalRemix.FannyPathogen
+ushigi: Mods.CalRemix.FannyFushigi
+"reen Demon": Mods.CalRemix.FannyGreen Demon
+yberDraedonFight: Mods.CalRemix.FannyCyberDraedonFight
+ingMinnows: Mods.CalRemix.FannyKingMinnows
+ifeBiome: Mods.CalRemix.FannyLifeBiome
+insmenFight: Mods.CalRemix.FannyKinsmenFight
+gscule: Mods.CalRemix.FannyOgscule
+spid: Mods.CalRemix.FannyAspid
+gslimeAwakening: Mods.CalRemix.FannyOgslimeAwakening
+OreExc: Mods.CalRemix.Fanny.OreExc
+reExc: Mods.CalRemix.FannyOreExc
+Apocalypse1: Mods.CalRemix.Fanny.Apocalypse1
+pocalypse1: Mods.CalRemix.FannyApocalypse1
+Apocalypse2: Mods.CalRemix.Fanny.Apocalypse2
+pocalypse2: Mods.CalRemix.FannyApocalypse2
+Apocalypse3: Mods.CalRemix.Fanny.Apocalypse3
+pocalypse3: Mods.CalRemix.FannyApocalypse3
+Apocalypse4: Mods.CalRemix.Fanny.Apocalypse4
+pocalypse4: Mods.CalRemix.FannyApocalypse4
+HurtMiracle: Mods.CalRemix.Fanny.HurtMiracle
+urtMiracle: Mods.CalRemix.FannyHurtMiracle
+VeryHurtMiracle: Mods.CalRemix.Fanny.VeryHurtMiracle
+eryHurtMiracle: Mods.CalRemix.FannyVeryHurtMiracle
+MiracleRain: Mods.CalRemix.Fanny.MiracleRain
+iracleRain: Mods.CalRemix.FannyMiracleRain
+RuinousSoul: Mods.CalRemix.Fanny.RuinousSoul
+uinousSoul: Mods.CalRemix.FannyRuinousSoul
+MiracleL4: Mods.CalRemix.Fanny.MiracleL4
+iracleL4: Mods.CalRemix.FannyMiracleL4
+YharonEgg: Mods.CalRemix.Fanny.YharonEgg
+haronEgg: Mods.CalRemix.FannyYharonEgg
+Sentinels: Mods.CalRemix.Fanny.Sentinels
+entinels: Mods.CalRemix.FannySentinels
+Fishing1: Mods.CalRemix.Fanny.Fishing1
+ishing1: Mods.CalRemix.FannyFishing1
+Fishing2: Mods.CalRemix.Fanny.Fishing2
+ishing2: Mods.CalRemix.FannyFishing2
+Fishing3: Mods.CalRemix.Fanny.Fishing3
+ishing3: Mods.CalRemix.FannyFishing3
+Fishing4: Mods.CalRemix.Fanny.Fishing4
+ishing4: Mods.CalRemix.FannyFishing4
+YharBarr: Mods.CalRemix.Fanny.YharBarr
+harBarr: Mods.CalRemix.FannyYharBarr
+Hypnerd: Mods.CalRemix.Fanny.Hypnerd
+ypnerd: Mods.CalRemix.FannyHypnerd

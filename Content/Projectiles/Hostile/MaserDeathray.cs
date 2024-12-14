@@ -28,9 +28,9 @@ public class MaserDeathray : BaseLaserbeamProjectile
 
     public int NPCOwner = -1;
 
-    public override Texture2D LaserBeginTexture => ModContent.Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad).Value;
-    public override Texture2D LaserMiddleTexture => ModContent.Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad).Value;
-    public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad).Value;
+    public override Texture2D LaserBeginTexture => ModContent.Request<Texture2D>(Texture).Value;
+    public override Texture2D LaserMiddleTexture => ModContent.Request<Texture2D>(Texture).Value;
+    public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>(Texture).Value;
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Maser Beam");

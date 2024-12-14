@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Rogue;
@@ -7,7 +8,6 @@ using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Tool");
+            DisplayName.SetDefault("Pyro Blade");
             Main.projFrames[Projectile.type] = 6;
         }
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenShield";
@@ -43,12 +43,21 @@ namespace CalRemix.Content.Projectiles.Hostile
                 Projectile.localAI[0] = 1;
             }
 
-            Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
+
+            if (Main.zenithWorld)
+            {
+                Lighting.AddLight(Projectile.Center, 0.2f, 1.6f, 1.6f);
+            }
+            else
+            {
+                Lighting.AddLight(Projectile.Center, 1f, 1.6f, 0f);
+            }
+            int d = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             if (!Main.dedServ)
             {
                 if (Main.rand.NextBool(10))
                 {
-                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
+                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, d, 0f, 0f);
                 }
             }
 
@@ -56,13 +65,15 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<Dragonfire>(), 120);
+            if (!Main.zenithWorld) target.AddBuff(ModContent.BuffType<Dragonfire>(), 120);
+            else target.AddBuff(ModContent.BuffType<GlacialState>(), 120);
         }
         public override void OnKill(int timeLeft)
         {
+            int du = Main.zenithWorld ? DustID.IceTorch : DustID.Torch;
             for (int i = 0; i < 10; i++)
             {
-                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
+                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, du, 0f, 0f);
                 d.velocity = new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
             }
         }

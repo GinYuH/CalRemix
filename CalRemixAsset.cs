@@ -51,7 +51,7 @@ namespace CalRemix
             }
 
             AssetRepository remixAsset = Mod.Assets;
-            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path).Value;
+            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             ShieldShader = LoadShader("HoloShield");
@@ -96,6 +96,7 @@ namespace CalRemix
         public static readonly int BaronStrait = Set("TheEndZone");
         public static readonly int VernalPass = Set("VajrabhairavasRest");
         public static readonly int FrozenStronghold = Set("LockedAway");
+        public static readonly int ProfanedDesert = Set("EmpireofAsh");
 
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
@@ -126,6 +127,8 @@ namespace CalRemix
         public static readonly int EmpressofLightDay = Set("Gegenschein");
 
         public static readonly int Pyrogen = Set("VolcanicReinforcement");
+        public static readonly int Cryogen = Set("NotVolcanicReinforcement");
+
         public static readonly int DevourerofGods = Set("DoGRemix");
         public static readonly int DevourerofGodsFinalForm = Set("DoGRemix2");
         public static readonly int Hypnos = Set("CerebralAugmentations");
@@ -142,6 +145,7 @@ namespace CalRemix
         public static readonly int Menu = Set("Menu");
         public static readonly int Menu2 = Set("CrazyLaPaint");
         public static readonly int TrueStory = Set("TrueStory");
+        public static readonly int PlasticOracle = Set("OhmnOmens");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }

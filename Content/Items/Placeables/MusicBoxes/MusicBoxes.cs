@@ -1,3 +1,4 @@
+using CalRemix.Content.Items.Placeables.MusicBoxes.ExoMechs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,6 +9,16 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
 {
     public abstract class RemixMusicBox : ModItem
     {
+        public static readonly int[] ExoMechMusicBoxes =
+        [
+            ItemType<ApingasMusicBox>(),
+            ItemType<LarryMusicBox>(),
+            ItemType<ThanosMusicBox>(),
+            ItemType<ApingasLarryMusicBox>(),
+            ItemType<ApingasThanosMusicBox>(),
+            ItemType<ThanosLarryMusicBox>(),
+            ItemType<XOMusicBox>()
+        ];
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
@@ -343,6 +354,32 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         public override void SetDefaults()
         {
             Item.createTile = TileType<Tiles.MusicBoxes.AsbestosMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class PlasticOracleMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.PlasticOracle, Type, TileType<Tiles.MusicBoxes.PlasticOracleMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.PlasticOracleMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class ProfanedDesertMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.ProfanedDesert, Type, TileType<Tiles.MusicBoxes.ProfanedDesertMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.ProfanedDesertMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);

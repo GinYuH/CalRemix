@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Localization;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.Tiles.Trophies
 {

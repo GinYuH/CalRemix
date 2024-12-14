@@ -2,7 +2,6 @@ using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
@@ -13,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class ThePrincess : ModItem
+    public class ThePrincess : ModItem
 	{
         public override void SetStaticDefaults()
         {

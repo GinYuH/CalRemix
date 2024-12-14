@@ -1,17 +1,12 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Projectiles.Boss;
-using CalRemix.Content.NPCs.Bosses.BossScule;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -139,7 +134,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                     // Go back to Pyrogen
                     if (AttackTime > MaxAttackTime)
                     {
-                        Projectile.position = Vector2.Lerp(p.Center + playerOff, n.Center, Utils.GetLerpValue(MaxAttackTime, MaxAttackTime + hitPlayerTime, AttackTime, true));
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.position = Vector2.Lerp(p.Center + playerOff, n.Center, Utils.GetLerpValue(MaxAttackTime, MaxAttackTime + hitPlayerTime, AttackTime, true));
                         if (Projectile.Hitbox.Intersects(n.Hitbox))
                         {
                             Projectile.Kill();
@@ -149,7 +145,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                     // Launch towards the player then glue to their position
                     else
                     {
-                        Projectile.position = Vector2.Lerp(n.Center, p.Center + playerOff, Utils.GetLerpValue(0, hitPlayerTime, AttackTime, true));
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.position = Vector2.Lerp(n.Center, p.Center + playerOff, Utils.GetLerpValue(0, hitPlayerTime, AttackTime, true));
                     }
                     if (Projectile.localAI[0] == hitPlayerTime)
                     {
@@ -177,7 +174,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                     // Launch towards the player then glue to their position
                     else
                     {
-                        Projectile.position = Vector2.Lerp(n.Center, p.Center + playerOff, Utils.GetLerpValue(0, MaxAttackTime, AttackTime, true));
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.position = Vector2.Lerp(n.Center, p.Center + playerOff, Utils.GetLerpValue(0, MaxAttackTime, AttackTime, true));
                     }
                     if (Projectile.localAI[0] == MaxAttackTime)
                     {
@@ -198,7 +196,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                     hitPlayerTime = 60;
                     if (AttackTime <= hitPlayerTime)
                     {
-                        Projectile.position = Vector2.Lerp(n.Center, n.Center + n.Center.DirectionTo(p.Center) * dist, comp);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.position = Vector2.Lerp(n.Center, n.Center + n.Center.DirectionTo(p.Center) * dist, comp);
                         if (AttackTime % 5 == 0)
                         {
                             int type = Main.zenithWorld ? ModContent.ProjectileType<IceBomb>() : ModContent.ProjectileType<PyrogenFlare>();
@@ -210,7 +209,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                     else
                     {
                         comp = Utils.GetLerpValue(hitPlayerTime, hitPlayerTime + 20, AttackTime, true);
-                        Projectile.position = Vector2.Lerp(n.Center + n.Center.DirectionTo(p.Center) * dist, n.Center, comp);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.position = Vector2.Lerp(n.Center + n.Center.DirectionTo(p.Center) * dist, n.Center, comp);
                         if (Projectile.Hitbox.Intersects(n.Hitbox))
                         {
                             Projectile.Kill();
@@ -233,11 +233,12 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D reelTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonHit").Value;
-            Texture2D endTexture = AttackTime > 60 ? reelTexture : TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D chainTexture = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonChain").Value;
+            Texture2D baseTexture = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/CryogenHarpoon").Value : TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D reelTexture = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/CryogenHarpoonHit").Value : ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonHit").Value;
+            Texture2D endTexture = AttackTime > 60 ? reelTexture : baseTexture;
+            Texture2D chainTexture = Main.zenithWorld ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/CryoHarpoonChain").Value : ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PyrogenHarpoonChain").Value;
 
-            Color color = Main.zenithWorld ? Color.Blue : lightColor;
+            Color color = lightColor;
             NPC phyto = Main.npc[(int)NPCIndex];
             if (phyto == null || !phyto.active || phyto.type != ModContent.NPCType<Pyrogen>())
             {

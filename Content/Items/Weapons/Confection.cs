@@ -5,13 +5,12 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Materials;
-using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Rarities;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class Confection : ModItem
+    public class Confection : ModItem
     {
         public override void SetStaticDefaults() 
 		{

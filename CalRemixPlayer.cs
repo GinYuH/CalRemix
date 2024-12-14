@@ -1,67 +1,67 @@
-﻿using static Terraria.ModLoader.ModContent;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameInput;
-using Terraria.ID;
-using Terraria.ModLoader;
-using CalamityMod;
+﻿using CalamityMod;
+using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
-using CalamityMod.NPCs.SunkenSea;
-using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.Events;
+using CalamityMod.Items.Accessories.Vanity;
+using CalamityMod.Items.Dyes;
+using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.NPCs.Abyss;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.SunkenSea;
+using CalamityMod.Particles;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Typeless;
-using CalamityMod.Particles;
-using CalRemix.Content.Projectiles;
-using CalRemix.Content.Projectiles.Weapons;
-using CalRemix.Content.Projectiles.Accessories;
-using CalRemix.Content.NPCs.Minibosses;
-using System.Collections.Generic;
-using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Content.Items.Materials;
-using Microsoft.Xna.Framework.Graphics;
-using CalamityMod.Buffs.StatDebuffs;
-using CalRemix.Content.Buffs;
-using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Walls;
-using Terraria.Graphics.Effects;
-using CalRemix.UI;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
-using CalRemix.Content.NPCs.Bosses.Hydrogen;
-using CalRemix.Content.Items.Potions.Recovery;
-using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Accessories.Vanity;
-using CalRemix.Core.World;
-using CalRemix.Content.Items.Bags;
-using CalRemix.Content.Items.Tools;
-using CalRemix.Core.Subworlds;
-using SubworldLibrary;
-using CalRemix.Content.NPCs.Bosses.Hypnos;
-using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
-using CalamityMod.Events;
-using System;
-using CalRemix.Content.Items.Armor;
-using CalamityMod.NPCs.DevourerofGods;
-using CalRemix.Content.Items.Weapons;
 using CalRemix.Content;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
-using CalRemix.Core;
-using Terraria.ModLoader.IO;
-using CalRemix.Core.Biomes;
-using CalamityMod.Items.Dyes;
-using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Critters;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Potions.Recovery;
+using CalRemix.Content.Items.Tools;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.BossScule;
-using Microsoft.Xna.Framework.Input;
+using CalRemix.Content.NPCs.Bosses.Hydrogen;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.Projectiles;
+using CalRemix.Content.Projectiles.Accessories;
+using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Walls;
+using CalRemix.Core;
+using CalRemix.Core.Biomes;
+using CalRemix.Core.Subworlds;
+using CalRemix.Core.World;
+using CalRemix.UI;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.GameInput;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.GameContent.Events;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
@@ -86,7 +86,10 @@ namespace CalRemix
 
     public class CalRemixPlayer : ModPlayer
 	{
-        // General
+
+        public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
+
+    // General
         public int commonItemHoldTimer;
         public int remixJumpCount;
         public int RecentChest = -1;
@@ -115,7 +118,6 @@ namespace CalRemix
         public bool arcanumHands;
         public bool marnite;
         public bool roguebox;
-        public bool miragel;
         public bool godfather;
         public bool tvo;
         public bool nuclegel;
@@ -133,6 +135,11 @@ namespace CalRemix
         public bool invGar;
         public int VerbotenMode = 1;
         public bool retroman = false;
+
+        public bool miragel;
+        public bool elastigel;
+        public bool invigel;
+        public bool irategel;
 
         public int timeSmoked;
         public bool carcinogenSoul;
@@ -396,6 +403,10 @@ namespace CalRemix
                     Player.AddCooldown("InfraredSights", 3600);
                 }
 			}
+            if (CalamityKeybinds.RageHotKey.JustPressed && Player.Calamity().rage >= Player.Calamity().rageMax && irategel)
+            {
+                Player.Hurt(new PlayerDeathReason(), Player.statLifeMax2 / 2, 0);
+            }
         }
 
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
@@ -414,7 +425,11 @@ namespace CalRemix
 			}
 			
         }
-		public override void UpdateEquips()
+
+
+
+
+        public override void UpdateEquips()
         {
 			if (CalRemixWorld.remixJump)
 				Player.GetJumpState<DefaultJump>().Enable();
@@ -547,6 +562,14 @@ namespace CalRemix
 			*/
             return true;
         }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {     
+            if (Main.zenithWorld) 
+                SoundEngine.PlaySound(glassBreakSound, Player.Center);
+            return true;
+        }
+
         public override void PostUpdateMiscEffects()
         {       
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
@@ -774,6 +797,19 @@ namespace CalRemix
 				StealthCut(0.05f);
             }
             #endregion
+
+            if (elastigel)
+            {
+                Player.wingTimeMax = (int)(Player.wingTimeMax * 1.1);
+            }
+
+            if (invigel)
+            {
+                if (calplayer.adrenalineModeActive)
+                {
+                    Player.wingTime = 0;
+                }
+            }
         }
         public override void ResetEffects()
 		{
@@ -794,6 +830,9 @@ namespace CalRemix
 			halEffigy = false;
 			nothing = false;
 			miragel = false;
+            elastigel = false;
+            invigel = false;
+            irategel = false;
 			nuclegel = false;
 			assortegel = false;
 			amalgel = false;

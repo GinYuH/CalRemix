@@ -10,7 +10,6 @@ using Terraria.ModLoader;
 using CalamityMod.Buffs.StatDebuffs;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
-using CalRemix.Content.Buffs;
 
 namespace CalRemix.Content.Items.Weapons;
 
@@ -54,7 +53,7 @@ public class Morpho : ModItem
     public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
     {
         target.AddBuff(ModContent.BuffType<WhisperingDeath>(), 120);
-        target.AddBuff(ModContent.BuffType<ValfreyBurn>(), 120);
+        target.AddBuff(BuffID.OnFire3, 120);
     }
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {

@@ -39,7 +39,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override bool PreDraw(ref Color lightColor)
         {
             string pick = (Image == 0) ? "CalamityMod/Projectiles/Rogue/NychthemeronOrb" : "CalamityMod/Projectiles/Rogue/NychthemeronOrb2";
-            Texture2D texture = ModContent.Request<Texture2D>(pick, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = ModContent.Request<Texture2D>(pick).Value;
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, Vector2.Zero, Projectile.scale, (Projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
             return false;
         }

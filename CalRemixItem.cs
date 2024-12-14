@@ -1,61 +1,61 @@
-﻿using static Terraria.ModLoader.ModContent;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.DataStructures;
-using CalamityMod.CalPlayer;
-using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Accessories;
-using Microsoft.Xna.Framework;
+﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Items.PermanentBoosters;
-using CalamityMod;
-using CalRemix.Content.Items.Weapons;
-using CalamityMod.Items.Materials;
-using System.Collections.Generic;
-using CalamityMod.Items.TreasureBags;
-using CalRemix.Content.Items.Materials;
-using CalamityMod.World;
-using CalamityMod.Items.Potions;
-using CalamityMod.Items.SummonItems;
-using CalRemix.Content.Items.Potions;
-using CalamityMod.Items.Weapons.Melee;
-using Terraria.GameContent.ItemDropRules;
-using CalRemix.Content.NPCs.Minibosses;
-using CalRemix.Content.Buffs;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using CalRemix.Content.Projectiles.Accessories;
-using Terraria.Audio;
-using CalamityMod.Items.Armor.Fearmonger;
-using CalRemix.Content.Tiles;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.HiveMind;
-using CalRemix.Content.Items.Placeables;
-using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.TreasureBags.MiscGrabBags;
-using CalamityMod.Rarities;
-using CalRemix.Content.NPCs;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.NPCs.Other;
+using CalamityMod.CalPlayer;
 using CalamityMod.Items;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Items.Fishing.AstralCatches;
-using CalRemix.Content.Items.Ammo;
-using CalRemix.Content.Projectiles;
-using CalRemix.Core.World;
-using CalRemix.Content.Items.Lore;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Accessories.Wings;
-using CalRemix.Content.Items.Armor;
-using CalRemix.Content.Cooldowns;
-using CalamityMod.Items.Potions.Alcohol;
-using System;
-using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Fishing.AstralCatches;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
+using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.TreasureBags;
+using CalamityMod.Items.TreasureBags.MiscGrabBags;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.Other;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.Rarities;
+using CalamityMod.World;
+using CalRemix.Content.Buffs;
+using CalRemix.Content.Cooldowns;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Potions;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.Projectiles;
+using CalRemix.Content.Projectiles.Accessories;
+using CalRemix.Content.Tiles;
+using CalRemix.Core.World;
 using CalRemix.UI;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
@@ -467,10 +467,13 @@ namespace CalRemix
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                        Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
                         int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
                         NPC blug = Main.npc[n];
                         blug.ModNPC<Pyrogen>().enrageCounter = 2222222;
+                        blug.ModNPC<Pyrogen>().ultraEnraged = true;
+                        SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
+                        SoundEngine.PlaySound(sound, blug.Center);
                     }
                     item.active = false;
                 }
@@ -507,6 +510,7 @@ namespace CalRemix
             else if (item.type == ItemType<ProvidenceBag>())
             {
                 itemLoot.Add(ItemType<ProfanedNucleus>());
+                itemLoot.Add(ItemType<TorrefiedTephra>(), 1, 200, 222);
             }
             else if (item.type == ItemType<DevourerofGodsBag>())
             {
@@ -633,6 +637,9 @@ namespace CalRemix
             if (item.type == ItemType<GrandGelatin>())
             {
                 modplayer.miragel = true;
+                modplayer.elastigel = true;
+                modplayer.irategel = true;
+                modplayer.invigel = true;
             }
             if (item.type == ItemType<TheAbsorber>())
             {
@@ -640,6 +647,10 @@ namespace CalRemix
                 {
                     calplayer.regenator = true;
                 }
+
+                modplayer.elastigel = true;
+                modplayer.invigel = true;
+                modplayer.irategel = true;
             }
             if (item.type == ItemType<TheSponge>() || item.type == ItemType<TheGodfather>() || item.type == ItemType<TheVerbotenOne>())
             {
@@ -654,6 +665,10 @@ namespace CalRemix
                 GetModItem(ItemType<FlameLickedShell>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<PermafrostsConcoction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticHeart>()).UpdateAccessory(player, hideVisual);
+
+                modplayer.elastigel = true;
+                modplayer.invigel = true;
+                modplayer.irategel = true;
             }
             if (item.type == ItemType<AmbrosialAmpoule>() || item.type == ItemType<TheVerbotenOne>())
             {
@@ -879,6 +894,12 @@ namespace CalRemix
             if (item.type == ItemType<GrandGelatin>())
             {
                 var line = new TooltipLine(Mod, "GrandGelatinRemix", "Reduces stealth costs by 3%");
+                tooltips.Add(line);
+                line = new TooltipLine(Mod, "GrandGelatinRemix", "Increases wing flight time by 10%");
+                tooltips.Add(line);
+                line = new TooltipLine(Mod, "GrandGelatinRemix", "Activating Rage will deal 50% of your health as damage");
+                tooltips.Add(line);
+                line = new TooltipLine(Mod, "GrandGelatinRemix", "Activating Adrenaline will defile your soul");
                 tooltips.Add(line);
             }
             if (item.type == ItemType<TheAbsorber>())

@@ -1,7 +1,5 @@
 using CalamityMod;
-using CalamityMod.Items.Accessories.Wings;
 using CalRemix.Content.Buffs;
-using CalRemix.Content.Items.Accessories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,7 +7,6 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace CalRemix.UI.ElementalSystem
 {
@@ -91,6 +88,19 @@ namespace CalRemix.UI.ElementalSystem
                 if (d.TryGetValue(item.type, out Element[] p))
                     element = p;
             }
+        }
+        public override GlobalItem Clone(Item from, Item to)
+        {
+            ElementItem tu = new ElementItem();
+            bool tuHas = to.TryGetGlobalItem(out tu);
+
+            ElementItem fro = new ElementItem();
+            bool froHas = from.TryGetGlobalItem(out fro);
+            if (froHas && tuHas)
+            {
+                to.GetGlobalItem<ElementItem>().element = from.GetGlobalItem<ElementItem>().element;
+            }
+            return to.GetGlobalItem<ElementItem>();
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {

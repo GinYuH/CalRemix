@@ -17,6 +17,7 @@ using CalamityMod.Items.Pets;
 using System.IO;
 using Terraria.ModLoader.Utilities;
 using CalRemix.Core.World;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs.Minibosses
 {
@@ -59,8 +60,10 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.DeathSound = ScornEater.DeathSound;
             NPC.lavaImmune = true;
             NPC.chaseable = false;
-            NPC.noGravity = true;
+            NPC.noGravity = true; 
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ProfanedDesertBiome>().Type };            
         }
+
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(angry);

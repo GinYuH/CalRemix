@@ -35,12 +35,41 @@ using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
 using CalRemix.Core.Scenes;
 using Terraria.Localization;
+using CalRemix.World;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using MonoMod.RuntimeDetour;
+using CalRemix.Content.Items.ZAccessories;
+using CalamityMod.Items.Accessories;
 
 namespace CalRemix.Core
 {
     internal class CalRemixHooks : ModSystem
     {
         private static float extraDist = 222;
+
+        public static MethodInfo resizeMethod = typeof(ModContent).GetMethod("ResizeArrays", BindingFlags.Static | BindingFlags.NonPublic);
+        public static Hook loadStoneHook;
+        public delegate void orig_ResizeArrays(bool optional);
+
+        public static MethodInfo drawMethod = typeof(SpriteBatch).GetMethod("PushSprite", BindingFlags.Instance | BindingFlags.NonPublic);
+        public static Hook drawHook;
+        public delegate void orig_PushSprite(SpriteBatch sb, Texture2D texture,
+            float sourceX,
+            float sourceY,
+            float sourceW,
+            float sourceH,
+            float destinationX,
+            float destinationY,
+            float destinationW,
+            float destinationH,
+            Color color,
+            float originX,
+            float originY,
+            float rotationSin,
+            float rotationCos,
+            float depth,
+            byte effects);
+
         public override void Load()
         {
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
@@ -58,13 +87,77 @@ namespace CalRemix.Core
             On_Player.UpdateItemDye += AddDyeStats;
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
+            On_Main.DrawInfoAccs += DisableInfoDuringCutscene;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
+
+            loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
+            //drawHook = new Hook(drawMethod, DrawRotated);
+            
         }
+
+        public override void Unload()
+        {
+            loadStoneHook = null;
+            drawHook = null;
+        }
+
+        public static void DrawRotated(orig_PushSprite orig, SpriteBatch self, Texture2D texture,
+            float sourceX,
+            float sourceY,
+            float sourceW,
+            float sourceH,
+            float destinationX,
+            float destinationY,
+            float destinationW,
+            float destinationH,
+            Color color,
+            float originX,
+            float originY,
+            float rotationSin,
+            float rotationCos,
+            float depth,
+            byte effects)
+        {
+            orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW * (1.22f + MathF.Cos(Main.GlobalTimeWrappedHourly * 2)), destinationH * (1.22f + MathF.Sin(Main.GlobalTimeWrappedHourly * 2)), color, originX, originY, rotationSin, rotationCos, depth, effects);
+        }
+
+        public static void ResizeArraysWithRocks(orig_ResizeArrays orig, bool unloading)
+        {
+            Mod cal = ModLoader.GetMod("CalamityMod");
+            Mod ccr = ModLoader.GetMod("CalRemix");
+            FieldInfo modLoading = typeof(Mod).GetField("loading", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (modLoading != null)
+            {
+                modLoading.SetValue(ccr, true);
+                for (int i = 1; i < BuffLoader.BuffCount; i++)
+                {
+                    // Sorry, only vanilla buffs get kicked out
+                    if (i < BuffID.Count)
+                    {
+                        if (!Main.debuff[i])
+                            continue;
+                    }
+                    // Only Calamity debuffs from these two folders
+                    if (i > BuffID.Count)
+                    {
+                        if (BuffLoader.GetBuff(i).Mod == cal)
+                            if (!BuffLoader.GetBuff(i).Texture.Contains("DamageOverTime") &&
+                                !BuffLoader.GetBuff(i).Texture.Contains("StatDebuffs"))
+                                continue;
+                    }
+                    DebuffStone d = new DebuffStone(i);
+                    GetInstance<CalRemix>().AddContent(d);
+                }
+                modLoading.SetValue(GetInstance<CalRemix>(), false);
+            }
+            orig(unloading);
+        }
+
         public override void PostSetupContent()
         {
             On_Star.Fall += StopStarfall;
@@ -325,7 +418,7 @@ namespace CalRemix.Core
             // Fannies don't show up if disabled
             if (wid < 500 && !((self is ScreenHelper || self is ScreenHelperTextbox) && !ScreenHelperManager.screenHelpersEnabled) && (CalRemixAddon.CalVal != null && self.GetType() != CalRemixAddon.calvalFanny && self.GetType() != CalRemixAddon.calvalFannyBox))
             {
-                spriteBatch.Draw(Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock", AssetRequestMode.ImmediateLoad).Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
+                spriteBatch.Draw(Request<Texture2D>("CalamityMod/Projectiles/Magic/IceBlock").Value, self.GetOuterDimensions().ToRectangle(), Color.White * MathHelper.Lerp(0.8f, 0.2f, wid / 500));
             }
         }
         private static bool SendToFannyDimension(On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
@@ -680,6 +773,21 @@ namespace CalRemix.Core
             else
                 orig(player, type);
         }
+
+        public static void DisableInfoDuringCutscene(On_Main.orig_DrawInfoAccs orig, Main self)
+        {
+            orig(self);
+            if (ProfanedDesert.flashTimer >= 0 && ProfanedDesert.flashTimer < ProfanedDesert.flashTotal)
+            {
+                Color ce = Color.Lerp(default, Color.White, Utils.GetLerpValue(0, ProfanedDesert.flashPeak, ProfanedDesert.flashTimer, true));
+                if (ProfanedDesert.flashTimer > ProfanedDesert.flashPause)
+                {
+                    ce = Color.Lerp(Color.White, default, Utils.GetLerpValue(ProfanedDesert.flashPause, ProfanedDesert.flashTotal, ProfanedDesert.flashTimer, true));
+                }
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, ce, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+            }
+        }
+
         private static void NoOldDuke(On.CalamityMod.CalamityUtils.orig_SpawnOldDuke orig, int playerIndex)
         {
             SetOldDukeDead();

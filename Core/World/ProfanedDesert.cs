@@ -1,11 +1,7 @@
 ﻿using CalamityMod.NPCs.Providence;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -17,9 +13,10 @@ using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using CalamityMod;
-using CalamityMod.Items.Placeables.FurnitureProfaned;
-using CalamityMod.Tiles.FurnitureProfaned;
 using CalRemix.Core.World;
+using CalRemix.Content.Tiles;
+using Terraria.Audio;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.World
 {
@@ -42,6 +39,10 @@ namespace CalRemix.World
         public static bool lockRespawn = false;   //Prevents the player from respawning while the worldgen is taking place
         public static bool gotJumpscared = false; //If the world already got turned into a desert once (saved on the world file which was spared, not the desert world file)
         public static bool scorchedWorld = false; //If the world is a profaned desert world and should get a special icon
+        public static int flashTimer = -1;
+        public const int flashPeak = 60;
+        public const int flashPause = flashPeak + 120;
+        public const int flashTotal = flashPause + 240;
 
         //Only generates in singleplayer in non cloud save worlds, and only if the player's world didn't already get desert-ed once
         bool CanGenerate => !gotJumpscared &&!Main.ActiveWorldFileData.IsCloudSave && Main.netMode == NetmodeID.SinglePlayer;
@@ -51,7 +52,7 @@ namespace CalRemix.World
             On_AWorldListItem.GetIcon += On_AWorldListItem_GetIcon;
             if (!Main.dedServ)
             {
-                ScorchedWorldIcon = ModContent.Request<Texture2D>("CalRemix/World/ScorchedWorldIcon", AssetRequestMode.ImmediateLoad);
+                ScorchedWorldIcon = ModContent.Request<Texture2D>("CalRemix/Core/World/ScorchedWorldIcon");
             }
         }
 
@@ -75,6 +76,11 @@ namespace CalRemix.World
             if (scorchedWorld)
                 WorldEffects();
 
+            if (flashTimer >= 0 && flashTimer < flashTotal && !(Main.LocalPlayer.dead && flashTimer > (flashPause - 1)))
+            {
+                flashTimer++;
+            }
+
             //After requesting the save of the world, and it got confirmed saved, we can proceed
             if (saveWorldStatus == FileStatus.Validated)
             {
@@ -94,6 +100,10 @@ namespace CalRemix.World
             if (Main.LocalPlayer.dead && NPC.AnyNPCs(ModContent.NPCType<Providence>()) && CalRemixWorld.profanedDesert)
             {
                 gotJumpscared = true;
+
+                flashTimer = 0;
+
+                SoundEngine.PlaySound(Providence.HolyRaySound);
 
                 //Set the request and then save the world with the gotjumpscared change
                 //SaveAndPlay is multithreaded, so we can't do our changes immediately
@@ -170,9 +180,9 @@ namespace CalRemix.World
 
 
             int noiseSeed = WorldGen.genRand.Next(0, int.MaxValue);
-            int baseHeight = 400;
-            ushort groundType = TileID.Sandstone;
-            ushort surfaceType = TileID.HardenedSand;
+            int baseHeight = (int)Main.worldSurface - 50;
+            ushort groundType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
+            ushort surfaceType = (ushort)ModContent.TileType<TorrefiedTephraPlaced>();
             ushort crystalType = (ushort)ModContent.TileType<CalamityMod.Tiles.FurnitureProfaned.ProfanedCrystal>();
 
             Main.spawnTileX = Main.maxTilesX / 2;
@@ -224,7 +234,7 @@ namespace CalRemix.World
             //Frame the tiles at the surface
             for (int i = 0; i < Main.maxTilesX; i++)
             {
-                for (int j = baseHeight - 50; j < baseHeight + 150; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < baseHeight + 150; j++)
                 {
                     WorldGen.TileFrame(i, j, true);
 
@@ -237,7 +247,7 @@ namespace CalRemix.World
             {
                 int x = WorldGen.genRand.Next(5, Main.maxTilesX - 5);
 
-                for (int j = baseHeight - 50; j < baseHeight + 150; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < baseHeight + 150; j++)
                 {
                     if (Main.tile[x, j].HasTile)
                     {
@@ -284,9 +294,9 @@ namespace CalRemix.World
             {
                 int x = WorldGen.genRand.Next(5, Main.maxTilesX - 5);
 
-                for (int j = baseHeight - 50; j < baseHeight + 150; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < baseHeight + 150; j++)
                 {
-                    if (Main.tile[x, j].HasTile && Main.tile[x, j].TileType == TileID.HardenedSand && !Main.tile[x, j - 1].HasTile)
+                    if (Main.tile[x, j].HasTile && Main.tile[x, j].TileType == (ushort)ModContent.TileType<TorrefiedTephraPlaced>() && !Main.tile[x, j - 1].HasTile)
                     {
                         j--;
                         WorldGen.PlaceTile(x, j, TileID.ExposedGems, true, false, -1, 6);
@@ -312,7 +322,6 @@ namespace CalRemix.World
         }
         public override void LoadWorldData(TagCompound tag)
         {
-            gotJumpscared = false;
             if (tag.TryGet("GotProfanedDesertJumpscare", out bool jumpscared))
                 gotJumpscared = jumpscared;
             if (tag.TryGet("ScorchedWorld", out bool scrch))
@@ -328,6 +337,9 @@ namespace CalRemix.World
         public override void ClearWorld()
         {
             duplicateWorldStatus = default;
+            flashTimer = -1;
+            gotJumpscared = false;
+            scorchedWorld = false;
             //saveWorldStatus = default;
         }
         #endregion

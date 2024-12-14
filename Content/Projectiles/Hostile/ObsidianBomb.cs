@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -39,9 +38,10 @@ namespace CalRemix.Content.Projectiles.Hostile
                 ProjCircle(14, 0.67f * Count);
             if (CalamityWorld.revenge)
                 ProjCircle(10, 0.33f * Count);
+            int dust = Main.zenithWorld ? DustID.SnowBlock : DustID.Obsidian;
             for (int i = 0; i < 300; i++)
             {
-                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Obsidian, Scale: Main.rand.NextFloat(1, 5));
+                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dust, Scale: Main.rand.NextFloat(1, 5));
                 Main.dust[d].velocity = (Main.dust[d].position - Projectile.Center).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(4, 22);
             }
         }
@@ -49,16 +49,21 @@ namespace CalRemix.Content.Projectiles.Hostile
         public void ProjCircle(float speed, float rotoff)
         {
             for (int a = 0; a < Count; a++)
-                Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, a / (float)Count)).RotatedBy(rotoff) * speed, ModContent.ProjectileType<ObsidianFragment>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(0, 6), 1);
+                Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, a / (float)Count)).RotatedBy(rotoff) * speed, ModContent.ProjectileType<ObsidianFragment>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Main.myPlayer, Main.rand.Next(0, 6), 1);
         }
 
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-            //Main.EntitySpriteDraw(texture, centered, null, lightColor, 0, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
-            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4);
+            Texture2D texture = Main.zenithWorld ? TextureAssets.Projectile[ProjectileID.DeerclopsRangedProjectile].Value : TextureAssets.Projectile[Type].Value;
+            if (Main.zenithWorld)
+            {
+                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, texture.Frame(3, 4, 0, 3), lightColor, Projectile.rotation, texture.Size() / 8, 5f, 0, 0);
+            }
+            else
+            {
+                CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4);
+            }
             return false;
         }
     }

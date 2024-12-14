@@ -1,17 +1,29 @@
 ﻿using CalamityMod;
+using CalamityMod.Sounds;
+using CalamityMod.World;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
 	public class LargeTeslaSphere : ModProjectile
 	{
+		public static Asset<Texture2D> endo;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Large Tesla Sphere");
 			Main.projFrames[Projectile.type] = 6;
+			if (!Main.dedServ)
+			{
+				endo = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/ExoEndo02");
+			}
 		}
 
 		public override void SetDefaults()
@@ -33,12 +45,15 @@ namespace CalRemix.Content.Projectiles.Hostile
 			if (Projectile.frameCounter > 4)
 			{
 				Projectile.frame++;
+				Projectile.ai[1]++;
 				Projectile.frameCounter = 0;
 			}
 			if (Projectile.frame > 5)
 			{
 				Projectile.frame = 0;
 			}
+			if (Projectile.ai[1] > 3)
+				Projectile.ai[1] = 0;
 			Player target = Main.player[(int) Projectile.ai[0]];
 			if (target != null && target.active)
 			{
@@ -51,6 +66,20 @@ namespace CalRemix.Content.Projectiles.Hostile
 				}
 				//Projectile.velocity.Normalize();
 				//Projectile.velocity *= 6;
+			}
+
+			if (Main.masterMode && CalamityWorld.revenge)
+			{
+				Projectile.ai[2]++;
+				if (Projectile.ai[2] > 120 && Projectile.ai[2] % 60 == 0)
+				{
+					Vector2 endoPos = Projectile.Center - Vector2.UnitY * 80;
+					SoundEngine.PlaySound(CommonCalamitySounds.ExoLaserShootSound, Projectile.Center);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), endoPos, endoPos.DirectionTo(target.Center) * 20, ModContent.ProjectileType<BlueExoPulseLaser>(), Projectile.damage, 0, Main.myPlayer);
+					}
+				}
 			}
 
 			
@@ -78,5 +107,15 @@ namespace CalRemix.Content.Projectiles.Hostile
 				Projectile.Kill();
             }
 		}
-	}
+
+        public override void PostDraw(Color lightColor)
+        {
+			if (Main.masterMode && CalamityWorld.revenge)
+			{
+				Texture2D tex = endo.Value;
+
+				Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition - 100 * Vector2.UnitY, tex.Frame(1, 4, 0, (int)Projectile.ai[1]), lightColor, 0, new Vector2(tex.Width / 2, tex.Height / 8), Projectile.scale, Projectile.velocity.X > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
+			}
+        }
+    }
 }

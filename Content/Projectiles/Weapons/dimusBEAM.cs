@@ -26,9 +26,9 @@ public class dimusBEAM : BaseLaserbeamProjectile //I can't believe Jharim would 
     public override Color LaserOverlayColor => Color.White;
     public override Color LightCastColor => LaserOverlayColor;
 
-    public override Texture2D LaserBeginTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAMstart", AssetRequestMode.ImmediateLoad).Value;
-    public override Texture2D LaserMiddleTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAM", AssetRequestMode.ImmediateLoad).Value;
-    public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAMend", AssetRequestMode.ImmediateLoad).Value;
+    public override Texture2D LaserBeginTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAMstart").Value;
+    public override Texture2D LaserMiddleTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAM").Value;
+    public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAMend").Value;
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Exodimus Beam");

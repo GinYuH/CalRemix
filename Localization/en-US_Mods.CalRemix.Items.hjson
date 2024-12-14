@@ -2282,6 +2282,11 @@ IonogenTrophy: {
 	Tooltip: ""
 }
 
+OldIonogenTrophy: {
+	DisplayName: Ancient Ionogen Trophy
+	Tooltip: Help me
+}
+
 OrigenTrophy: {
 	DisplayName: Origen Trophy
 	Tooltip: ""
@@ -2846,4 +2851,50 @@ RetromansPowerStar: {
 		Transforms you into the Retro Man 
 		 Item dedicated to QuestNinja
 		'''
+}
+
+KnowledgeClone.DisplayName: The Archseer
+
+TorrefiedTephra: {
+	DisplayName: Torrefied Tephra
+	Tooltip: ""
+}
+
+ElasticJelly: {
+	DisplayName: Elastic Jelly
+	Tooltip: Increases wing flight time by 10%
+}
+
+InvigoratingJelly: {
+	DisplayName: Invigorating Jelly
+	Tooltip: Activating Adrenaline will defile your soul
+}
+
+IrateJelly: {
+	DisplayName: Irate Jelly
+	Tooltip: Activating Rage will deal 50% of your health as damage
+}
+
+SylvanSlasher: {
+	DisplayName: Sylvan Slasher
+	Tooltip: ""
+}
+
+DiviningRod: {
+	Tooltip:
+		'''
+		Homes in on the presence of powerful elemental magic
+		In the event there are multiple sources, it will home in on the one most approachable for your current progression
+		'''
+	DisplayName: Divining Rod
+}
+
+TheButterflyEffect: {
+	Tooltip:
+		'''
+		Releases a vicious force of nature to turn everything and everyone into ash
+		Caution is extremely advised as it will never leave unless captured
+		There can only be one
+		'''
+	DisplayName: The Butterfly Effect
 }

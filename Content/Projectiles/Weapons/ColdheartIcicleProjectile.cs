@@ -1,5 +1,6 @@
 using CalamityMod.NPCs.Providence;
 using CalamityMod.Particles;
+using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.Particles;
 using Microsoft.Xna.Framework;
 using System;
@@ -55,7 +56,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
 
             if (!(target.type == NPCID.TargetDummy
-                || target.type == ModContent.GetInstance<Providence>().Type)
+                || target.type == ModContent.GetInstance<Providence>().Type || target.type == ModContent.GetInstance<Oxygen>().Type)
                 )
             {
                 for(int i = 0; i < 6; i++)

@@ -8,6 +8,7 @@ using System;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Microsoft.Xna.Framework;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs
 {
@@ -33,12 +34,12 @@ namespace CalRemix.Content.NPCs
             NPC.knockBackResist = 0f;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath4;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PlagueBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
 		        new FlavorTextBestiaryInfoElement("This bee has been overtaken by the Plague to find more hosts to infect.")
             });
         }

@@ -1,11 +1,17 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 using CalRemix.Content.Tiles.Trophies;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.Items.Placeables.Trophies
 {
     public class IonogenTrophy : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<OldIonogenTrophy>();
+        }
         public override void SetDefaults()
         {
             Item.useStyle = 1;

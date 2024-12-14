@@ -14,7 +14,7 @@ namespace CalRemix.Core.Biomes
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
         // Populate the Bestiary Filter
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/BaronIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/BaronStraitIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG42";
         public override Color? BackgroundColor => Color.PaleGoldenrod;
 

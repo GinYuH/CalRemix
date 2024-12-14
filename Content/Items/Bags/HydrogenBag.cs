@@ -56,5 +56,10 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.Add(ModContent.ItemType<ThrowingMissiles>());
             itemLoot.AddRevBagAccessories();
         }
+        public override void RightClick(Player player)
+        {
+            int p = Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, Vector2.Zero, ProjectileID.Grenade, 22, 0, player.whoAmI);
+            Main.projectile[p].Kill();
+        }
     }
 }

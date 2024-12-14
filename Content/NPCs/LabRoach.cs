@@ -1,10 +1,8 @@
 ﻿using CalamityMod.BiomeManagers;
 using CalRemix.Core.World;
-using CalRemix.Content.Items.Placeables;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 using CalRemix.Content.Items.Placeables.Banners;
 namespace CalRemix.Content.NPCs

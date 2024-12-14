@@ -21,10 +21,9 @@ namespace CalRemix.Core.Biomes
         public override int Music => CalRemixMusic.PlaguedJungle;
 
         // Populate the Bestiary Filter
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/LifeIcon";
-		public override string BackgroundPath => "CalRemix/Core/Biomes/LifeMap";
-		public override Color? BackgroundColor => Color.DarkGreen;
-		//public override string Name => "Life Heart";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/PlagueIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG9";
+        public override Color? BackgroundColor => Color.DarkGreen;
 
 		// Use SetStaticDefaults to assign the display name
 		public override void SetStaticDefaults()

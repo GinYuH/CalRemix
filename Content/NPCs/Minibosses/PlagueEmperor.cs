@@ -17,6 +17,7 @@ using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalRemix.Content.Projectiles.Hostile;
 using System.IO;
 using CalRemix.Core.World;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs.Minibosses
 {
@@ -53,6 +54,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.lavaImmune = true;
             NPC.noGravity = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PlagueBiome>().Type };
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -131,7 +133,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
 		        new FlavorTextBestiaryInfoElement("This creature claims dominion over the Plague. The emperor will eliminate anyone that comes too close to it.")
             });
         }
@@ -154,11 +155,11 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorGlow", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorGlow").Value;
             spriteBatch.Draw(texture, NPC.position + new Vector2(NPC.width, NPC.height) / 2f - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
             if (activated)
             {
-                Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorEyes", AssetRequestMode.ImmediateLoad).Value;
+                Texture2D eyes = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/PlagueEmperorEyes").Value;
                 spriteBatch.Draw(eyes, NPC.position + new Vector2(NPC.width, NPC.height) / 2f - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, eyes.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
             }
         }

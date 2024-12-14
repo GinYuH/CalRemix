@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,6 +14,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            if (!Main.dedServ)
+                Main.instance.LoadProjectile(ProjectileID.DeerclopsRangedProjectile);
         }
         public override void SetDefaults()
         {
@@ -34,15 +35,22 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            if (Projectile.ai[0] > 0)
+            Texture2D texture = Main.zenithWorld ? TextureAssets.Projectile[ProjectileID.DeerclopsRangedProjectile].Value : TextureAssets.Projectile[Type].Value;
+            
+            if (Main.zenithWorld)
             {
-                texture = ModContent.Request<Texture2D>(Texture + (Projectile.ai[0] + 1)).Value;
+                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, texture.Frame(3, 4, (int)MathHelper.Min(Projectile.ai[0] / 2f, 2), 3), lightColor, Projectile.rotation, texture.Size() / 8, Projectile.scale * 2, 0, 0);
             }
-            Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, 0, Color.Purple, 3, texture);
-            //Main.EntitySpriteDraw(texture, centered, null, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
-            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4, texture);
+            else
+            {
+                if (Projectile.ai[0] > 0)
+                {
+                    texture = ModContent.Request<Texture2D>(Texture + (Projectile.ai[0] + 1)).Value;
+                }
+                CalamityUtils.DrawAfterimagesCentered(Projectile, 0, Color.Purple, 3, texture);
+                CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4, texture);
+            }
+            
             return false;
         }
     }

@@ -27,9 +27,6 @@ using CalamityMod.Tiles.FurnitureVoid;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.Bumblebirb;
-using CalRemix.Core.Retheme;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using CalamityMod.NPCs.AquaticScourge;
@@ -49,9 +46,6 @@ using Terraria.Audio;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using Terraria.Chat;
-using Terraria.Localization;
 
 namespace CalRemix.Core.World
 {
@@ -146,6 +140,7 @@ namespace CalRemix.Core.World
         public static Vector2 hydrogenLocation = new Vector2(0, 0);
 
         public static bool stratusDungeonDisabled = false;
+        public static NPC butterflyEffect = null;
 
         public static List<int> DungeonWalls = new List<int>
         {
@@ -351,57 +346,58 @@ namespace CalRemix.Core.World
 
         public override void LoadWorldData(TagCompound tag)
         {
-            ogslime = tag.Get<bool>("ogslime");
+            GetData(ref ogslime, "ogslime", tag);
 
-            guideHasExisted = tag.Get<bool>("guideHasExisted");
-            deusDeadInSnow = tag.Get<bool>("deusDeadInSnow");
-            generatedCosmiliteSlag = tag.Get<bool>("genSlag");
-            generatedPlague = tag.Get<bool>("plague");
-            generatedStrain = tag.Get<bool>("astrain");
-            canGenerateBaron = tag.Get<bool>("canBaron");
-            generatedHydrogen = tag.Get<bool>("genHydrogen");
-            generatedGrime = tag.Get<bool>("grime");
+            GetData(ref guideHasExisted, "guideHasExisted", tag);
+            GetData(ref deusDeadInSnow, "deusDeadInSnow", tag);
+            GetData(ref generatedCosmiliteSlag, "genSlag", tag);
+            GetData(ref generatedStrain, "astrain", tag);
+            GetData(ref canGenerateBaron, "canBaron", tag);
+            GetData(ref generatedHydrogen, "genHydrogen", tag);
+            GetData(ref generatedGrime, "grime", tag);
+
+            GetData(ref alloyBars, "109alloybar", tag);
+            GetData(ref essenceBars, "109essencebar", tag);
+            GetData(ref yharimBars, "109yharimbar", tag);
+            GetData(ref shimmerEssences, "109essenceshimmer", tag);
+            GetData(ref meldGunk, "109meldgunk", tag);
+            GetData(ref cosmislag, "109cosmilite", tag);
+            GetData(ref reargar, "109reargar", tag);
+            GetData(ref sidegar, "109sidegar", tag);
+            GetData(ref frontgar, "109frontgar", tag);
+            GetData(ref crocodile, "109crocodile", tag);
+            GetData(ref permanenthealth, "109permanenthealth", tag);
+            GetData(ref starbuster, "109starbuster", tag);
+            GetData(ref plaguetoggle, "109plague", tag);
+            GetData(ref shrinetoggle, "109shrine", tag);
+            GetData(ref lifeoretoggle, "109lifeore", tag);
+            GetData(ref itemChanges, "109itemchanges", tag);
+            GetData(ref npcChanges, "109npcchanges", tag);
+            GetData(ref bossdialogue, "109dialogue", tag);
+            GetData(ref grimesandToggle, "109grime", tag);
+            GetData(ref clowns, "109clowns", tag);
+            GetData(ref aspids, "109aspids", tag);
+            GetData(ref clamitas, "109clamitas", tag);
+            GetData(ref wolfvenom, "109coyotevenom", tag);
+            GetData(ref fearmonger, "109fearmonger", tag);
+            GetData(ref seafood, "109seafood", tag);
+            GetData(ref laruga, "109laruga", tag);
+            GetData(ref acidsighter, "109acidsighter", tag);
+            GetData(ref greenDemon, "109greenDemon", tag);
+            GetData(ref remixJump, "109remixJump", tag);
+            GetData(ref hydrogenBomb, "109hydrogen", tag);
+            GetData(ref baronStrait, "109baron", tag);
+            GetData(ref dyeStats, "109dye", tag);
+            GetData(ref champions, "109champ", tag);
+            GetData(ref astralBlight, "109blight", tag);
+            GetData(ref mullet, "109mullet", tag);
+            GetData(ref deliciousMeat, "109deliciousmeat", tag);
+            GetData(ref profanedDesert, "109profaned", tag);
+            GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
+
             meldCountdown = tag.Get<int>("meld");
             trueStory = tag.Get<int>("trueStory");
             roachDuration = tag.Get<int>("roachDuration");
-
-            alloyBars = tag.Get<bool>("109alloybar");
-            essenceBars = tag.Get<bool>("109essencebar");
-            yharimBars = tag.Get<bool>("109yharimbar");
-            shimmerEssences = tag.Get<bool>("109essenceshimmer");
-            meldGunk = tag.Get<bool>("109meldgunk");
-            cosmislag = tag.Get<bool>("109cosmilite");
-            reargar = tag.Get<bool>("109reargar");
-            sidegar = tag.Get<bool>("109sidegar");
-            frontgar = tag.Get<bool>("109frontgar");
-            crocodile = tag.Get<bool>("109crocodile");
-            permanenthealth = tag.Get<bool>("109permanenthealth");
-            starbuster = tag.Get<bool>("109starbuster");
-            plaguetoggle = tag.Get<bool>("109plague");
-            shrinetoggle = tag.Get<bool>("109shrine");
-            lifeoretoggle = tag.Get<bool>("109lifeore");
-            itemChanges = tag.Get<bool>("109itemchanges");
-            npcChanges = tag.Get<bool>("109npcchanges");
-            bossdialogue = tag.Get<bool>("109dialogue");
-            grimesandToggle = tag.Get<bool>("109grime");
-            clowns = tag.Get<bool>("109clowns");
-            aspids = tag.Get<bool>("109aspids");
-            clamitas = tag.Get<bool>("109clamitas");
-            wolfvenom = tag.Get<bool>("109coyotevenom");
-            fearmonger = tag.Get<bool>("109fearmonger");
-            seafood = tag.Get<bool>("109seafood");
-            laruga = tag.Get<bool>("109laruga");
-            acidsighter = tag.Get<bool>("109acidsighter");
-            greenDemon = tag.Get<bool>("109greenDemon");
-            remixJump = tag.Get<bool>("109remixJump");
-            hydrogenBomb = tag.Get<bool>("109hydrogen");
-            baronStrait = tag.Get<bool>("109baron");
-            dyeStats = tag.Get<bool>("109dye");
-            champions = tag.Get<bool>("109champ");
-            astralBlight = tag.Get<bool>("109blight");
-            mullet = tag.Get<bool>("109mullet");
-            deliciousMeat = tag.Get<bool>("109deliciousMeat");
-            profanedDesert = tag.Get<bool>("109profaned");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -409,8 +405,15 @@ namespace CalRemix.Core.World
             hydrogenLocation.Y = tag.Get<float>("hydrolocationY");
             oxydayTime = tag.Get<int>("oxytime");
 
-            ScreenHelperManager.screenHelpersEnabled = tag.Get<bool>("109fanny");
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
+        }
+
+        public static void GetData(ref bool baseVar, string path, TagCompound tag)
+        {
+            if (tag.ContainsKey(path))
+            {                
+                baseVar = tag.Get<bool>(path);
+            }
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -581,6 +584,8 @@ namespace CalRemix.Core.World
                 loadedRecipeInjections = true;
                 //RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<PearlShard>(), true);
             }
+            if (butterflyEffect != null && !NPC.AnyNPCs(NPCType<FunnyButterfly>()))
+                butterflyEffect = null;
             if (Main.eclipse)
             {
                 if (TextureAssets.Sun3 == CalRemixAsset.sunOG)
@@ -1013,7 +1018,7 @@ namespace CalRemix.Core.World
             strongholdTiles = tileCounts[TileType<FrostflakeBrickPlaced>()] + tileCounts[TileType<CryonicBrick>()];
             baronTiles = tileCounts[TileType<BrinerackPlaced>()] + tileCounts[TileType<TanzaniteGlassPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()] + tileCounts[TileType<BaronsandPlaced>()] + tileCounts[TileType<BaronBrinePlaced>()];
             Main.SceneMetrics.JungleTileCount += PlagueTiles;
-            Main.SceneMetrics.SandTileCount += PlagueDesertTiles;
+            Main.SceneMetrics.SandTileCount += PlagueDesertTiles + tileCounts[TileType<TorrefiedTephraPlaced>()];
             CalamityMod.Systems.BiomeTileCounterSystem.SunkenSeaTiles += tileCounts[TileType<NavystoneSafe>()] + tileCounts[TileType<SeaPrismSafe>()] + tileCounts[TileType<EutrophicSandSafe>()] + tileCounts[TileType<HardenedEutrophicSandSafe>()];
             aeroplateTiles = tileCounts[TileType<AeroplateTile>()];
             bloodplateTiles = tileCounts[TileType<BloodplateTile>()];
@@ -1023,6 +1028,7 @@ namespace CalRemix.Core.World
             elumplateTiles = tileCounts[TileType<Elumplate>()];
             navyplateTiles = tileCounts[TileType<Navyplate>()];
             plagueplateTiles = tileCounts[TileType<PlagueContainmentCells>()];
+            Main.SceneMetrics.HolyTileCount += tileCounts[TileType<TorrefiedTephraPlaced>()];
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)

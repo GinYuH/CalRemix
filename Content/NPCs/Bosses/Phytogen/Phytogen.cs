@@ -26,6 +26,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs.Bosses.Phytogen
 {
@@ -102,6 +103,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToCold = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PlagueBiome>().Type };
             if (!Main.dedServ)
                 Music = CalRemixMusic.Phytogen;
         }

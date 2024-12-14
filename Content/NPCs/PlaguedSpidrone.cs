@@ -43,6 +43,7 @@ namespace CalRemix.Content.NPCs
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = false;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PlagueBiome>().Type };
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -133,7 +134,6 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
         new FlavorTextBestiaryInfoElement("A common fungus that has grown angry from being infected by the plague.")
             });
         }

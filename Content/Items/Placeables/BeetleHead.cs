@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
-using CalRemix.Core.World;
 
 namespace CalRemix.Content.Items.Placeables
 {

@@ -5,7 +5,6 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using System;
@@ -16,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class ClamorNoxus : ModItem
+    public class ClamorNoxus : ModItem
 	{
         public override void SetStaticDefaults()
         {

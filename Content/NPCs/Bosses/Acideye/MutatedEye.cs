@@ -69,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/MutatedEye_Glow", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/MutatedEye_Glow").Value;
             spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, texture.Size() / 2f, NPC.scale, SpriteEffects.FlipHorizontally, 0f);
         }
     }

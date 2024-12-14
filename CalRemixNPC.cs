@@ -1,84 +1,91 @@
-using static Terraria.ModLoader.ModContent;
-using Terraria;
-using Terraria.ModLoader;
-using CalamityMod.NPCs.TownNPCs;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Tiles;
-using Microsoft.Xna.Framework;
-using CalamityMod.NPCs.DesertScourge;
 using CalamityMod;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.NPCs.Abyss;
-using CalamityMod.NPCs.AcidRain;
-using CalamityMod.NPCs.PrimordialWyrm;
-using CalamityMod.NPCs.AstrumAureus;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.NPCs.Ravager;
-using CalamityMod.NPCs.SlimeGod;
-using CalamityMod.NPCs.SupremeCalamitas;
-using CalamityMod.NPCs.SulphurousSea;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Minibosses;
-using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
-using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Materials;
-using System.Collections.Generic;
-using CalRemix.Content.Projectiles.Accessories;
-using CalRemix.Content.Projectiles.Weapons;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader.IO;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.Events;
-using System;
-using System.IO;
-using Terraria.Chat;
-using Terraria.Localization;
-using CalamityMod.NPCs.Crabulon;
-using CalRemix.Content.Items.Weapons;
-using CalamityMod.Items.Potions;
-using CalamityMod.NPCs.Yharon;
-using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.Projectiles.Boss;
-using CalamityMod.World;
-using System.Reflection;
-using CalamityMod.Sounds;
-using CalRemix.Content.Items.Potions;
-using CalRemix.Content.Items.Potions.Recovery;
-using CalamityMod.NPCs.Astral;
-using CalamityMod.NPCs.SunkenSea;
-using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Tiles.Ores;
 using CalamityMod.CalPlayer;
-using CalamityMod.NPCs.Leviathan;
-using CalamityMod.NPCs.HiveMind;
+using CalamityMod.Events;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Fearmonger;
-using CalamityMod.NPCs.Perforator;
-using CalRemix.UI;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.NPCs.GreatSandShark;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.NPCs.AcidRain;
+using CalamityMod.NPCs.Astral;
+using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.Crags;
-using CalRemix.Content.NPCs.TownNPCs;
-using System.Threading;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.Content.Buffs;
-using CalamityMod.NPCs.DevourerofGods;
-using Terraria.Audio;
-using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Core.World;
-using CalRemix.UI.Anomaly109;
-using CalRemix.Content.Items.Ammo;
-using CalamityMod.Items.Potions.Alcohol;
-using CalRemix.Content.Items.Pets;
-using CalRemix.Content.Items.Misc;
-using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.Crabulon;
+using CalamityMod.NPCs.Crags;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.GreatSandShark;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.Leviathan;
+using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.NPCs.PlagueEnemies;
+using CalamityMod.NPCs.PrimordialWyrm;
+using CalamityMod.NPCs.ProfanedGuardians;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.Ravager;
+using CalamityMod.NPCs.SlimeGod;
+using CalamityMod.NPCs.SulphurousSea;
+using CalamityMod.NPCs.SunkenSea;
+using CalamityMod.NPCs.SupremeCalamitas;
+using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.NPCs.Yharon;
+using CalamityMod.Projectiles.Boss;
+using CalamityMod.Sounds;
+using CalamityMod.Tiles.Ores;
+using CalamityMod.World;
+using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Pets;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalRemix.Content.Items.Potions;
+using CalRemix.Content.Items.Potions.Recovery;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Content.Projectiles.Accessories;
+using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Tiles;
+using CalRemix.Core.Biomes;
+using CalRemix.Core.World;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
+using CalRemix.World;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
@@ -150,6 +157,33 @@ namespace CalRemix
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
             }
         }
+
+        public static void AddModBiomeToBestiary(int curNPC, int npcID, ModBiome biome, BestiaryEntry entry)
+        {
+            if (curNPC == npcID)
+                entry.Info.Add(LoaderManager.Get<BiomeLoader>().Get(biome.Type).ModBiomeBestiaryInfoElement);
+        }
+        public static void AddModBiomeToBestiary(int curNPC, int npcID, int biomeID, BestiaryEntry entry)
+        {
+            if (curNPC == npcID)
+                entry.Info.Add(LoaderManager.Get<BiomeLoader>().Get(biomeID).ModBiomeBestiaryInfoElement);
+        }
+
+        public static void RemoveVanillaBiomeFromBestiary(int curNPC, int npcID, SpawnConditionBestiaryInfoElement biome, BestiaryEntry entry)
+        {
+            if (curNPC == npcID)
+                if (entry.Info.Contains(biome))
+                    entry.Info.Remove(biome);
+        }
+
+        public static void ConvertPlagueEnemy(int curNPC, int npcID, BestiaryEntry entry)
+        {
+            RemoveVanillaBiomeFromBestiary(curNPC, npcID, BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle, entry);
+            RemoveVanillaBiomeFromBestiary(curNPC, npcID, BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle, entry);
+            AddModBiomeToBestiary(curNPC, npcID, GetInstance<PlagueBiome>().Type, entry);
+        }
+
+
         public override bool PreAI(NPC npc)
         {
             if (CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
@@ -771,6 +805,18 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<CosmicStone>(), 20, 10));
             }
+            if (npc.type == NPCID.BloodJelly)
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<IrateJelly>(), 7, 5));
+            }
+            if (npc.type == NPCType<BoxJellyfish>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<ElasticJelly>(), 7, 5));
+            }
+            if (npc.type == NPCType<CannonballJellyfish>())
+            {
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<InvigoratingJelly>(), 7, 5));
+            }
             #endregion
             #region Hardmode
             if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
@@ -793,6 +839,11 @@ namespace CalRemix
             if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == NPCType<AstralSlime>())
             {
                 npcLoot.Add(ItemType<TitanFinger>(), 50);
+            }
+            if (npc.type == NPCType<Nova>())
+            {
+                LeadingConditionRule leadingConditionRule = npcLoot.DefineConditionalDropSet((DropAttemptInfo info) => CalRemixWorld.permanenthealth && info.npc.ai[3] <= -10000f && CheckAstralOreBlocks(info.npc));
+                leadingConditionRule.Add(ItemType<CometShard>());
             }
             if (npc.type == NPCType<Atlas>())
             {
@@ -1009,6 +1060,7 @@ namespace CalRemix
             if (npc.type == NPCType<Providence>())
             {
                 npcLoot.AddNormalOnly(ItemType<ProfanedNucleus>(), 4);
+                npcLoot.AddNormalOnly(ItemType<TorrefiedTephra>(), 1, 200, 222);
             }
             if (npc.type == NPCType<DevourerofGodsHead>())
             {
@@ -1339,6 +1391,22 @@ namespace CalRemix
                 pool.Add(NPCType<LabRoach>(), 22f);
                 return;
             }
+            if (ProfanedDesert.scorchedWorld)
+            {
+                pool.Clear();
+                pool.Add(NPCType<ScornEater>(), 1);
+                if (!NPC.AnyNPCs(NPCType<ProfanedEnergyBody>()))
+                    pool.Add(NPCType<ProfanedEnergyBody>(), 1);
+                pool.Add(NPCType<ImpiousImmolator>(), 1);
+                pool.Add(NPCType<YggdrasilEnt>(), 0.05f);
+                if (CalRemixAddon.CalVal != null)
+                {
+                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("ProvFly").Type, 1);
+                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
+                }
+
+                return;
+            }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)
             {
@@ -1421,6 +1489,31 @@ namespace CalRemix
                 return drawColor.MultiplyRGB(Color.YellowGreen);
             return null;
         }
+
+        public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            int desertID = GetInstance<ProfanedDesertBiome>().Type;
+
+            AddModBiomeToBestiary(npc.type, NPCType<ScornEater>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ImpiousImmolator>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedEnergyBody>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedGuardianCommander>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedGuardianDefender>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ProfanedGuardianHealer>(), desertID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Providence>(), desertID, bestiaryEntry);
+
+            AddModBiomeToBestiary(npc.type, NPCID.Dandelion, GetInstance<GaleforceDayBiome>(), bestiaryEntry);
+
+            ConvertPlagueEnemy(npc.type, NPCType<PlaguebringerGoliath>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PlagueCharger>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PlagueChargerLarge>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PlaguebringerMiniboss>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<Viruling>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<Plagueshell>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<PestilentSlime>(), bestiaryEntry);
+            ConvertPlagueEnemy(npc.type, NPCType<Melter>(), bestiaryEntry);
+        }
+
         private static void Talk(string text, Color color)
         {
             if (!CalRemixWorld.bossdialogue)
@@ -1917,6 +2010,20 @@ namespace CalRemix
                     }
                 }
             }
+        }
+        public static bool CheckAstralOreBlocks(NPC npc)
+        {
+            for (int i = -5; i < npc.width + 5; i++)
+            {
+                for (int j = -5; j < npc.height + 5; j++)
+                {
+                    int x = (npc.position + Vector2.UnitX * i).ToSafeTileCoordinates().X;
+                    int y = (npc.position + Vector2.UnitY * i).ToSafeTileCoordinates().Y;
+                    if (Main.tile[x, y].TileType == TileType<AstralOre>())
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }
