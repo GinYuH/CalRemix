@@ -51,6 +51,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
