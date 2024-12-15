@@ -4220,10 +4220,10 @@ ThoriumMod/ZombieRepellentBuffStone: {
 }
 
 CalRemix/DestructivePresenceStone: {
+	DisplayName: Destructive Presence Stone
 	Tooltip:
 		'''
 		Immunity to Destructive Presence
 		Attacks inflict Destructive Presence
 		'''
-	DisplayName: Destructive Presence Stone
 }
