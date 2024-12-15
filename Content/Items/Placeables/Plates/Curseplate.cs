@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Placeables.Plates
         public override void SetDefaults()
         {
             Item.createTile = ModContent.TileType<CurseplateTile>();
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.useAnimation = 15;
             Item.useTime = 10;

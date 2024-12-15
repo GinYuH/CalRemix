@@ -17,7 +17,7 @@ namespace CalRemix.Content.Items.Armor
             Item.width = 26;
             Item.height = 20;
             Item.value = Item.sellPrice(0, 3, 0, 0);
-            Item.rare = 6;
+            Item.rare = ItemRarityID.LightPurple;
             Item.vanity = true;
         }
 

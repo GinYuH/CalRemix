@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
+using Terraria.ID;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -14,7 +15,7 @@ namespace CalRemix.Content.Items.Placeables
 
         public override void SetDefaults()
         {
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
@@ -24,7 +25,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.createTile = ModContent.TileType<DerellectTrophyPlaced>();
             Item.width = 12;
             Item.height = 12;
-            Item.rare = 6;
+            Item.rare = ItemRarityID.LightPurple;
         }
     }
 }

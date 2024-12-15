@@ -108,7 +108,7 @@ public class ExoPike : ModProjectile
         Lighting.AddLight(Projectile.Center, TorchID.Rainbow);
         for (int i = 0; i < 1; i++)
         {
-            int DustID = Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, 43, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 1f);
+            int DustID = Dust.NewDust(Projectile.position, Projectile.width + 2, Projectile.height + 2, DustID.TintableDustLighted, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 1f);
             Main.dust[DustID].noGravity = true;
             Main.dust[DustID].scale *= 1.00f;
             Main.dust[DustID].noLight = false;

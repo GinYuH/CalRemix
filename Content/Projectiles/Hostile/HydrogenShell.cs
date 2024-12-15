@@ -133,15 +133,15 @@ namespace CalRemix.Content.Projectiles.Hostile
                         if (CalRemixWorld.SunkenSeaTiles.Contains(t.TileType))
                         {
                             WorldGen.KillTile((int)(proj.Center.X / 16) + i, (int)(proj.Center.Y / 16) + j, noItem: true);
-                            if (!t.HasTile && Main.netMode != 0)
-                                NetMessage.SendData(17, -1, -1, null, 0, i, j);
+                            if (!t.HasTile && Main.netMode != NetmodeID.SinglePlayer)
+                                NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
                         }
                     }
                     if (t != null && (t.WallType == ModContent.WallType<NavystoneWall>() || t.WallType == ModContent.WallType<EutrophicSandWall>()))
                     {
                         WorldGen.KillWall((int)(proj.Center.X / 16) + i, (int)(proj.Center.Y / 16) + j);
-                        if (t.WallType == 0 && Main.netMode != 0)
-                            NetMessage.SendData(17, -1, -1, null, 2, i, j);
+                        if (t.WallType == 0 && Main.netMode != NetmodeID.SinglePlayer)
+                            NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 2, i, j);
                     }
                 }
             }

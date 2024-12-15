@@ -30,7 +30,7 @@ public class GrandReef : ModItem
         Item.height = 60;
         Item.useTime = 50;
         Item.useAnimation = 50;
-        Item.useStyle = 5;
+        Item.useStyle = ItemUseStyleID.Shoot;
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.knockBack = 10f;

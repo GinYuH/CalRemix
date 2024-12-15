@@ -60,7 +60,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             {
                 if (Main.rand.Next(3) < num1009)
                 {
-                    int num1012 = Dust.NewDust(NPC.Center - new Vector2((float)num1010), num1010 * 2, num1010 * 2, 173, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 90, default(Color), 1.5f);
+                    int num1012 = Dust.NewDust(NPC.Center - new Vector2((float)num1010), num1010 * 2, num1010 * 2, DustID.ShadowbeamStaff, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 90, default(Color), 1.5f);
                     Main.dust[num1012].noGravity = true;
                     Main.dust[num1012].velocity *= 0.2f;
                     Main.dust[num1012].fadeIn = 1f;

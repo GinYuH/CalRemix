@@ -50,7 +50,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-                Item.shoot = 0;
+                Item.shoot = ProjectileID.None;
                 Item.shootSpeed = 0f;
                 return player.ownedProjectileCounts[ModContent.ProjectileType<ShadowsDescentBall>()] > 0;
             }

@@ -22,7 +22,7 @@ namespace CalRemix.Content.Items.Placeables.Plates.Molten
         public override void SetDefaults()
         {
             Item.createTile = PlacedID;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.useAnimation = 15;
             Item.useTime = 10;

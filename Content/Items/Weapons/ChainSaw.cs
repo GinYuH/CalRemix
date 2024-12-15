@@ -27,7 +27,7 @@ namespace CalRemix.Content.Items.Weapons
 			Item.width = 81;
 			Item.height = 30;
 			Item.value = 100000;
-			Item.rare = 8;
+			Item.rare = ItemRarityID.Yellow;
 			Item.damage = 125;
 			Item.useAnimation = 15;
 			Item.useTime = 15;
