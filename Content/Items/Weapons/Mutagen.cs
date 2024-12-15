@@ -40,7 +40,7 @@ namespace CalRemix.Content.Items.Weapons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Vector2 spawnPos = player.position + new Vector2(player.direction * 37, 0);
+            Vector2 spawnPos = player.position + velocity * 4.5f;
             for (int i = -2; i < 3; i ++)
             {
                 float perShot = MathHelper.PiOver2 / 10;
