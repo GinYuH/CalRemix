@@ -7,6 +7,8 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.NPCs.CeaselessVoid;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.ZAccessories;
@@ -21,6 +23,7 @@ using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
@@ -298,6 +301,8 @@ namespace CalRemix
             AddToBossRush(ref brEntries, NPCID.Golem, NPCType<Phytogen>(), [NPCType<PhytogenShield>(), NPCType<PineappleFrond>()]);
             AddToBossRush(ref brEntries, NPCType<PlaguebringerGoliath>(), NPCType<Hydrogen>(), [NPCType<HydrogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.CultistBoss, NPCType<Pathogen>(), [NPCType<PathogenShield>()]);
+            AddToBossRush(ref brEntries, NPCType<CeaselessVoid>(), NPCType<Pyrogen>(), [NPCType<PyrogenShield>()]);
+
             AddToBossRush(ref brEntries, NPCType<Draedon>(), NPCType<Hypnos>(), [NPCType<AergiaNeuron>(), NPCType<HypnosPlug>()]);
             //AddToBossRush(ref brEntries, NPCType<SupremeCalamitas>(), NPCType<Losbaf>(), [NPCType<Losbaf>()]);
             foreach (var entry in brEntries)
