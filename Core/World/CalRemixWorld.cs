@@ -56,6 +56,7 @@ namespace CalRemix.Core.World
 
         public static bool worldFullyStarted = false;
         public static int worldLoadCounter = 0;
+        public static bool postGenUpdate = false;
 
         public static bool ogslime = false;
 
@@ -225,6 +226,7 @@ namespace CalRemix.Core.World
             oxydayTime = 0;
 
             // Fanny
+            postGenUpdate = false;
 
             // A109
             alloyBars = true;
@@ -342,6 +344,7 @@ namespace CalRemix.Core.World
 
             tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
+            tag["genUpdate"] = postGenUpdate;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -406,6 +409,7 @@ namespace CalRemix.Core.World
             oxydayTime = tag.Get<int>("oxytime");
 
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
+            postGenUpdate = tag.Get<bool>("genUpdate");
         }
 
         public static void GetData(ref bool baseVar, string path, TagCompound tag)
@@ -479,6 +483,7 @@ namespace CalRemix.Core.World
             writer.Write(ScreenHelperManager.screenHelpersEnabled);
             writer.Write(ScreenHelperManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
+            writer.Write(postGenUpdate);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -544,6 +549,7 @@ namespace CalRemix.Core.World
             ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
             ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
+            postGenUpdate = reader.ReadBoolean();
         }
 
         public override void PreUpdateWorld()
@@ -1141,6 +1147,7 @@ namespace CalRemix.Core.World
                     BaronStrait.GenerateBaronStrait(null);
                 }));
             }
+            postGenUpdate = true;
         }
 
         public override void PostWorldGen()
