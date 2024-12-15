@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.useTime = 45;
             Item.useAnimation = 45;
-            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
             Item.UseSound = BetterSoundID.ItemSlimeMountSummon;
             Item.DamageType = DamageClass.Magic;
