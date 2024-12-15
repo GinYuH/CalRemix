@@ -23,7 +23,7 @@ public class Prismachromancy : ModItem
         Item.width = 28;
         Item.height = 56;
         Item.value = 100000;
-        Item.rare = 8;
+        Item.rare = ItemRarityID.Yellow;
         Item.damage = 100;
         Item.useAnimation = 45;
         Item.useTime = 45;

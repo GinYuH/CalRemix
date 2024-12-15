@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Placeables.Trophies
         }
         public override void SetDefaults()
         {
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
@@ -24,7 +24,7 @@ namespace CalRemix.Content.Items.Placeables.Trophies
             Item.createTile = ModContent.TileType<IonogenTrophyPlaced>();
             Item.width = 12;
             Item.height = 12;
-            Item.rare = 1;
+            Item.rare = ItemRarityID.Blue;
         }
     }
 }

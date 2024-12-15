@@ -60,7 +60,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     Main.npc[num4].realLife = NPC.whoAmI;
                     Main.npc[num4].ai[1] = num5;
                     Main.npc[num5].ai[0] = num4;
-                    NetMessage.SendData(23, -1, -1, null, num4);
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, num4);
                     num5 = num4;
                 }
             }

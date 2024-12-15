@@ -40,7 +40,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             float num72;
             for (float num70 = 0f; num70 < num69; num70 = num72 + 1f)
             {
-                int num71 = Dust.NewDust(Projectile.Center, 0, 0, 267, 0f, 0f, 0, newColor, 1f);
+                int num71 = Dust.NewDust(Projectile.Center, 0, 0, DustID.RainbowMk2, 0f, 0f, 0, newColor, 1f);
                 Main.dust[num71].position = Projectile.Center;
                 Main.dust[num71].velocity = spinningpoint.RotatedBy((double)(6.28318548f * num70 / num69), default) * value5 * (0.8f + Main.rand.NextFloat() * 0.4f);
                 Main.dust[num71].noGravity = true;
@@ -56,7 +56,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             for (float num73 = 0f; num73 < num69; num73 = num72 + 1f)
             {
-                int num74 = Dust.NewDust(Projectile.Center, 0, 0, 267, 0f, 0f, 0, newColor, 1f);
+                int num74 = Dust.NewDust(Projectile.Center, 0, 0, DustID.RainbowMk2, 0f, 0f, 0, newColor, 1f);
                 Main.dust[num74].position = Projectile.Center;
                 Main.dust[num74].velocity = spinningpoint.RotatedBy((double)(6.28318548f * num73 / num69), default) * value5 * (0.8f + Main.rand.NextFloat() * 0.4f);
                 Dust dust = Main.dust[num74];

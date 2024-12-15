@@ -19,7 +19,7 @@ namespace CalRemix.Content.Items.Lore
         {
             Item.width = 26;
             Item.height = 26;
-            Item.rare = 6;
+            Item.rare = ItemRarityID.LightPurple;
         }
     }
 }

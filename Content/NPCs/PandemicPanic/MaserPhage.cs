@@ -64,7 +64,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 if (Phase == 0f)
                 {
                     FireRate += 1f;
-                    if (FireRate >= 300f && Main.netMode != 1)
+                    if (FireRate >= 300f && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         FireRate = 0f;
                         Phase = Main.rand.NextBool(3) ? 2 : 1;

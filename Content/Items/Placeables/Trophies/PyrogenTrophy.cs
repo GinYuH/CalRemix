@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles.Trophies;
+using Terraria.ID;
 
 namespace CalRemix.Content.Items.Placeables.Trophies
 {
@@ -8,7 +9,7 @@ namespace CalRemix.Content.Items.Placeables.Trophies
     {
         public override void SetDefaults()
         {
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
@@ -18,7 +19,7 @@ namespace CalRemix.Content.Items.Placeables.Trophies
             Item.createTile = ModContent.TileType<PyrogenTrophyPlaced>();
             Item.width = 12;
             Item.height = 12;
-            Item.rare = 1;
+            Item.rare = ItemRarityID.Blue;
         }
     }
 }

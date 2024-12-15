@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace CalRemix.Content.Tiles.Plates
 {
@@ -41,8 +42,8 @@ namespace CalRemix.Content.Tiles.Plates
 
         public override bool CreateDust(int i, int j, ref int type)
         {
-            Dust.NewDust(new Vector2(i, j) * 16f, 16, 16, 6, 0f, 0f, 1, new Color(255, 255, 255), 1f);
-            Dust.NewDust(new Vector2(i, j) * 16f, 16, 16, 1, 0f, 0f, 1, new Color(51, 12, 8), 1f);
+            Dust.NewDust(new Vector2(i, j) * 16f, 16, 16, DustID.Torch, 0f, 0f, 1, new Color(255, 255, 255), 1f);
+            Dust.NewDust(new Vector2(i, j) * 16f, 16, 16, DustID.Stone, 0f, 0f, 1, new Color(51, 12, 8), 1f);
             return false;
         }
 
