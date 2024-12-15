@@ -4,6 +4,8 @@ using Terraria.ID;
 using CalRemix.Content.Tiles;
 using CalamityMod.Rarities;
 using CalamityMod.Items.Potions;
+using CalamityMod;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -13,7 +15,7 @@ namespace CalRemix.Content.Items.Placeables
         {
             Item.ResearchUnlockCount = 1;
             DisplayName.SetDefault("Anomaly 109");
-            Tooltip.SetDefault("Insert unique codes in order to disable certain aspects of your game.");
+            Tooltip.SetDefault("Insert unique codes in order to disable certain aspects of your game.\n" + CalamityUtils.ColorMessage("Must be configured in Singleplayer. Changes carry over to Multiplayer", Color.IndianRed));
         }
 
         public override void SetDefaults()

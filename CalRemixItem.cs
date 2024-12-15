@@ -593,7 +593,7 @@ namespace CalRemix
                     }
                 }
                 itemLoot.Add(ItemType<SaltBooklet>(), 1);
-                itemLoot.AddIf(()=> Main.netMode != NetmodeID.MultiplayerClient, ItemType<Anomaly109>());
+                itemLoot.Add(ItemType<Anomaly109>());
                 itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ItemType<TheInsacredTexts>());
             }
             if (CalRemixAddon.CalVal != null)
