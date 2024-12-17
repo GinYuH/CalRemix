@@ -1,11 +1,11 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Trophies;
 using Terraria.ID;
 
-namespace CalRemix.Content.Items.Placeables
+namespace CalRemix.Content.Items.Placeables.Trophies
 {
-    public class DerellectTrophyInv : ModItem
+    public class DerellectTrophy : ModItem
     {
         public override void SetStaticDefaults()
         {

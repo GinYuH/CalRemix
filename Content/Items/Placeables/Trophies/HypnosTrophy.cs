@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles;
 using Terraria.ID;
+using CalRemix.Content.Tiles.Trophies;
 
-namespace CalRemix.Content.Items.Placeables
+namespace CalRemix.Content.Items.Placeables.Trophies
 {
-    public class HypnosTrophyInv : ModItem
+    public class HypnosTrophy : ModItem
     {
         public override void SetStaticDefaults()
         {

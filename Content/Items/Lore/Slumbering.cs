@@ -45,6 +45,7 @@ namespace CalRemix.Content.Items.Lore
         {
             CreateRecipe().
                 AddIngredient<LoreAwakening>().
+                AddTile(TileID.Bookcases).
                 Register();
         }
     }

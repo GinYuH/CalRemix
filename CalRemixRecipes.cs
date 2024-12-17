@@ -46,6 +46,7 @@ using CalamityMod.Items.Armor.DesertProwler;
 using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Armor.Silva;
 using System;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix
 {
@@ -80,10 +81,16 @@ namespace CalRemix
         {
             Recipe.Create(ItemType<LoreAwakening>())
             .AddIngredient<Slumbering>()
+            .AddTile(TileID.Bookcases)
+            .Register();
+
+            Recipe.Create(ItemType<LoreExoMechs>())
+            .AddIngredient<HypnosTrophy>()
+            .AddTile(TileID.Bookcases)
             .Register();
 
             Recipe.Create(ItemID.PlatinumCoin, 100)
-            .AddIngredient<CosmiliteCoin>(1)
+            .AddIngredient<CosmiliteCoin>()
             .Register();
 
             Recipe.Create(ItemType<DubiousPlating>(), 4)
@@ -93,7 +100,7 @@ namespace CalRemix
             .AddTile(TileID.Furnaces)
             .Register();
 
-            Recipe.Create(ItemType<MidasPrime>(), 1)
+            Recipe.Create(ItemType<MidasPrime>())
             .AddIngredient<MinnowsPrimeItem>()
             .AddTile(TileID.CookingPots)
             .Register();
@@ -106,25 +113,25 @@ namespace CalRemix
             .AddTile<CalamityMod.Tiles.Furniture.CraftingStations.CosmicAnvil>()
             .Register();
 
-            Recipe.Create(ItemID.CookedFish, 1)
+            Recipe.Create(ItemID.CookedFish)
             .AddIngredient<CrocodileHerringItem>()
             .AddTile(TileID.CookingPots)
             .Register();
 
-            Recipe.Create(ItemType<CirrusDress>(), 1)
+            Recipe.Create(ItemType<CirrusDress>())
             .AddIngredient(ItemID.Silk, 6)
             .AddIngredient(ItemID.AshBlock, 10)
             .AddTile(TileID.Loom)
             .Register();
 
-            Recipe.Create(ItemID.WaterBucket, 1)
+            Recipe.Create(ItemID.WaterBucket)
             .AddIngredient(ItemID.EmptyBucket)
             .AddIngredient(ItemType<SoulofHydrogen>(), 2)
             .AddIngredient(ItemType<SoulofOxygen>())
             .DisableDecraft()
             .Register();
 
-            Recipe.Create(ItemID.EmpressButterfly, 1)
+            Recipe.Create(ItemID.EmpressButterfly)
             .AddRecipeGroup(RecipeGroupID.Butterflies)
             .AddIngredient(ItemID.PearlstoneBlock)
             .AddTile(TileID.MythrilAnvil)

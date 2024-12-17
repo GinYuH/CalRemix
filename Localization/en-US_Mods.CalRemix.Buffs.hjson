@@ -208,4 +208,7 @@ FractalCrawlerBuff: {
 	Description: The fractal crawler will protect you
 }
 
-DestructivePresence.DisplayName: Destructive Presence
+DestructivePresence: {
+	DisplayName: Destructive Presence
+	Description: Something dangerous lingers nearby
+}

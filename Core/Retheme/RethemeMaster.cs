@@ -40,7 +40,7 @@ using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Systems;
 using CalamityMod.Projectiles.Rogue;
-using Newtonsoft.Json.Linq;
+using CalamityMod.Items.LoreItems;
 using System;
 
 namespace CalRemix.Core.Retheme
@@ -383,6 +383,10 @@ namespace CalRemix.Core.Retheme
                 item.Calamity().devItem = false;
                 item.defense -= 8;
                 item.bodySlot = EquipLoader.GetEquipSlot(Mod, "AshsCloakBody", EquipType.Body);
+            }
+            else if (item.type == ItemType<LoreExoMechs>())
+            {
+                item.SetNameOverride("The Exo Mechs");
             }
             else if (RethemeMaster.OriginalItemNames.ContainsKey(item.type))
             {

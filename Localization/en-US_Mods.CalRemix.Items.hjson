@@ -329,6 +329,8 @@ DerellectTrophyInv: {
 	Tooltip: ""
 }
 
+DerellectTrophy.DisplayName: Derellect Trophy
+
 HallowEffigy: {
 	DisplayName: Hallow Effigy
 	Tooltip:
@@ -1762,6 +1764,8 @@ HypnosTrophyInv: {
 	Tooltip: ""
 }
 
+HypnosTrophy.DisplayName: Hypnos Trophy
+
 ShadyGazingSkull: {
 	DisplayName: Shady Gazing Skull
 	Tooltip: ""
@@ -2887,4 +2891,14 @@ DiviningRod: {
 		In the event there are multiple sources, it will home in on the one most approachable for your current progression
 		'''
 	DisplayName: Divining Rod
+}
+
+TheButterflyEffect: {
+	Tooltip:
+		'''
+		Releases a vicious force of nature to turn everything and everyone into ash
+		Caution is extremely advised as it will never leave unless captured
+		There can only be one
+		'''
+	DisplayName: The Butterfly Effect
 }

@@ -17,7 +17,6 @@ using CalamityMod.Items.LoreItems;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.TreasureBags;
-using CalRemix.Content.Items.Placeables;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using CalRemix.Content.Projectiles.Hostile;
@@ -30,6 +29,7 @@ using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Placeables.Relics;
 using Terraria.Localization;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -902,7 +902,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             npcLoot.Add(normalOnly);
 
             // Trophies
-            npcLoot.Add(ModContent.ItemType<HypnosTrophyInv>());
+            npcLoot.Add(ModContent.ItemType<HypnosTrophy>());
 
             // Relic
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ModContent.ItemType<HypnosRelic>()));

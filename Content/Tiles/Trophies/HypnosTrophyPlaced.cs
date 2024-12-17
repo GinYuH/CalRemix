@@ -1,4 +1,4 @@
-﻿using CalRemix.Content.Items.Placeables;
+﻿using CalRemix.Content.Items.Placeables.Trophies;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace CalRemix.Content.Tiles
+namespace CalRemix.Content.Tiles.Trophies
 {
     public class HypnosTrophyPlaced : ModTile
     {
@@ -28,7 +28,7 @@ namespace CalRemix.Content.Tiles
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemType<HypnosTrophyInv>());
+            Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemType<HypnosTrophy>());
         }
     }
 }

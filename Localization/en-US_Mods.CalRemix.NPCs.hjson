@@ -352,7 +352,7 @@ Pathogen: {
 
 PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
-Hypnos.DisplayName: Hypnos
+Hypnos.DisplayName: XP-00 Hypnos
 HypnosPlug.DisplayName: Hypnos Plug
 RemixDraedon.DisplayName: Remix Draedon
 Losbaf.DisplayName: Losbaf
@@ -523,3 +523,4 @@ FrozenMummy.DisplayName: Frozen Mummy
 Fleshmullet.DisplayName: Fleshmullet
 LabRoach.DisplayName: Lab Roach
 FleshmulletEye.DisplayName: Fleshmullet Eye
+FunnyButterfly.DisplayName: The Butterfly Effect

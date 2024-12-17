@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
-using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.Trophies;
 
-namespace CalRemix.Content.Tiles
+namespace CalRemix.Content.Tiles.Trophies
 {
     public class DerellectTrophyPlaced : ModTile
     {
@@ -28,7 +28,7 @@ namespace CalRemix.Content.Tiles
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemType<DerellectTrophyInv>());
+            Item.NewItem(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemType<DerellectTrophy>());
         }
     }
 }
