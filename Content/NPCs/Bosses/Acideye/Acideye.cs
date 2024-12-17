@@ -29,7 +29,7 @@ using Terraria.Localization;
 namespace CalRemix.Content.NPCs.Bosses.Acideye
 {
     [AutoloadBossHead]
-    public class Acideye : ModNPC
+    public class AcidEye : ModNPC
     {
         private Player Target => Main.player[NPC.target];
         public ref float Phase => ref NPC.ai[0];

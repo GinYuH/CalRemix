@@ -66,6 +66,14 @@ namespace CalRemix.UI
             HelperMessage.New("EoL5", "Bitch.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, onlyPlayOnce: false).SpokenByEvilFanny().ChainAfter();
 
+            HelperMessage.New("Abomination1", "Chat, one of the CEO of Remix decided to commit a delulu and shame me for flicker-gooning to 56 Giant Illumina Woman gyatt image tab, how tf do I doxx the CEO of this mod bruh... I wanna make him mic up against my giga-sigma phonk master rap skill, bruh.",
+                "CrimSonDefault", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss && n.life <= n.lifeMax * 1 / 10).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon));
+
+            HelperMessage.New("Abomination2", "I want nothing more than to punt you off of a cliff.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(delay: 5, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("Suffer", "Only god can save you now.",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss && n.AI_120_HallowBoss_IsGenuinelyEnraged())).SpokenByEvilFanny();
 
             HelperMessage.New("Deus", "It appears that you are once again fighting a large serpentine creature. Therefore, it's advisable to do what you've done with them before and blast it with fast single target weaponry!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<AstrumDeusHead>()));

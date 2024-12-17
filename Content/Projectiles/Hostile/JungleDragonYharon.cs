@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalRemix.Content.NPCs.Bosses.Poly;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.Yharon;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
@@ -47,5 +49,10 @@ namespace CalRemix.Content.Projectiles.Hostile
             return false;
         }
         public override bool? CanDamage() => false;
+
+        public override void OnKill(int timeLeft)
+        {
+            if (Main.zenithWorld) NPC.NewNPC(base.Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<Yharon>());
+        }
     }
 }

@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.Events;
+using CalRemix.Content.Buffs;
+using CalRemix.Content.NPCs.Bosses.Acideye;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly
 {
@@ -472,6 +474,13 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Conjunctivirus>());
             NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Exotrexia>());
             NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Cataractacomb>());
+			if (Main.zenithWorld)
+			{
+                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.EyeofCthulhu);
+                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AcidEye>());
+                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.Spazmatism);
+                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.Retinazer);
+            }
         }
         private void TurnTowards(Vector2 goal, float offset = 0, float maxSpeed = 1)
         {

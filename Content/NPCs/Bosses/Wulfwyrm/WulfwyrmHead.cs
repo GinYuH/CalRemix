@@ -164,7 +164,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void AI()
         {
             CalRemixNPC.wulfyrm = NPC.whoAmI;
-            if (Main.getGoodWorld)
+            if (Main.zenithWorld)
             {
                 this.SegmentCount *= 3;
             }
@@ -304,6 +304,15 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 flySpeed += 4f;
             }
 
+            if (Main.zenithWorld)
+            {
+                flySpeed += 2.5f;
+                laserShootSpeed *= 1.5f;
+                slowdownTime /= 4;
+                timeSpentFiringLasers /= 4;
+                laserBurstCount /= 4;
+            }
+
             // Fly towards the target.
             // If currently occupied shooting lasers, slow down.
             float wrappedAttackTimer = AttackTimer % delayPerBurst;
@@ -400,15 +409,16 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 spinSpeed += 1f;
             }
 
-
-
             // Don't do damage at first, to prevent cheap hits.
             if (AttackTimer < damageDelay)
                 NPC.damage = 0;
 
-            if (Main.getGoodWorld) // Radius tweaks on FTW to ensure the boss isn't unavoidable.
+            if (Main.zenithWorld) // SPEEEENN!!!
             {
                 spinRadius *= 3;
+                spinSpeed += 12f;
+                delayPerBurst /= 2;
+                circleTime /= 2;
             }
 
             // Initialize the spin offset angle.
@@ -490,6 +500,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             {
                 flySpeed += 4f;
             }
+
+            if (Main.zenithWorld)
+            {
+                flySpeed *= 1.5f;
+                laserShootSpeed *= 1.5f;
+            }
+
 
             // Disable contact damage altogether.
             NPC.damage = 0;
@@ -576,6 +593,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 laserShootSpeed *= 1.2f;
             }
 
+            if (Main.zenithWorld)
+            {
+                laserCount *= 2;
+                laserShootSpeed *= 2;
+                cycleCount /= 4;
+            }
+
             // Ensures the boss shouldn't telefrag the player.
             if (AttackTimer < damageDelay)
             { 
@@ -637,6 +661,8 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
             if (CalamityWorld.death && NPC.life < 0.05f)
                 flySpeed += 12f;
+
+            if (Main.zenithWorld) flySpeed *= 1.5;
 
             float speedX = flySpeed * (float)(-sinT - Math.Pow(sinT, 3D) - cosT * sin2T) / denominator;
             float speedY = flySpeed * (float)(Math.Pow(cosT, 2D) - 2D * Math.Pow(sinT, 4D) - sinT * cosT * sin2T) / denominator;

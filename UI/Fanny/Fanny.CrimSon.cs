@@ -10,6 +10,7 @@ using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.Items.DraedonMisc;
+using CalRemix.Core.World;
 
 namespace CalRemix.UI
 {
@@ -67,6 +68,9 @@ namespace CalRemix.UI
 
             HelperMessage.New("Draecell", "Ayo u gonna share bruh? I stg gimme my fanum tax",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<DraedonPowerCell>())).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).AddEndEvent(EatCell);
+            
+            HelperMessage.New("dementia", "Can you beat Calamity Mod with Dementia?", 
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.boss && n.life <= n.lifeMax * 1 / 10) && Main.rand.NextBool(100), 6, cantBeClickedOff: true, cooldown: 108000, onlyPlayOnce: false).AddStartEvent(Dementia).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
         }
 
         private static void EatFood()
@@ -110,5 +114,17 @@ namespace CalRemix.UI
             for (int i = 0; i < 200; i++)
                 Main.LocalPlayer.ConsumeItem(ModContent.ItemType<DraedonPowerCell>());
         }
+
+        private static void Dementia()
+        {
+            for (int q = 0; q < Terraria.Main.npc.Length - 1; q++)
+            {
+                if (Terraria.Main.npc[q].boss)
+                {
+                    Terraria.Main.npc[q].active = false;
+                }
+            }
+        }
+
     }
 }

@@ -185,7 +185,7 @@ FBIGUY: {
 	Census.SpawnCondition: Conditions unknown
 }
 
-Acideye: {
+AcidEye: {
 	DisplayName: Acidsighter
 	Bestiary: A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.
 	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
@@ -352,7 +352,7 @@ Pathogen: {
 
 PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
-Hypnos.DisplayName: XP-00 Hypnos
+Hypnos.DisplayName: Hypnos
 HypnosPlug.DisplayName: Hypnos Plug
 RemixDraedon.DisplayName: Remix Draedon
 Losbaf.DisplayName: Losbaf

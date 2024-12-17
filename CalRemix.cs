@@ -293,7 +293,7 @@ namespace CalRemix
 
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<WulfwyrmHead>(), [NPCType<WulfwyrmBody>(), NPCType<WulfwyrmTail>()]);
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<Origen>(), [NPCType<OrigenCore>()], [NPCType<OrigenCore>()]);
-            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()], needsNight: true);
+            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<AcidEye>(), [NPCType<MutatedEye>()], needsNight: true);
             AddToBossRush(ref brEntries, NPCID.Deerclops, NPCType<Carcinogen>(), [NPCType<CarcinogenShield>()]);
             AddToBossRush(ref brEntries, NPCType<CalamitasClone>(), NPCType<Ionogen>(), [NPCType<IonogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.Plantera, NPCType<Oxygen>(), [NPCType<OxygenShield>()]);

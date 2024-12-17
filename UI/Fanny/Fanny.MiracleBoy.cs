@@ -68,7 +68,7 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 0);
 
             HelperMessage.New("Fishing4", "... what?",
-                "FannySob").ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
+                "FannySob").ChainAfter(delay: 5, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("YharBarr", "Ugh, Yharim Bars. Look at these disgusting chunks of... whatever they are. Gross, right? They're huge, ugly, and look like something you’d find at the bottom of a trash heap. But I guess they’re useful for making endgame stuff, if you're into that kind of thing. Honestly, I wouldn’t touch them if I weren’t forced to. But hey, you do you. Just don’t expect any praise for collecting these hideous things.",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>()))
@@ -93,6 +93,10 @@ namespace CalRemix.UI
             HelperMessage.New("Hypnerd", "Hypnos, huh? Look at this brainiac—so shiny, so... fancy—but wait, what’s this? Nein nein nein! Gnnnaawww What’s with all the techy, brainy boop-bop-bop nonsense? You think you're so advanced? How cute. Watch out, Hypnos, or I'll start spouting some Gnnnwaaaa too and make your circuits fry!",
                 "MiracleBoyGnaw", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<AergiaNeuron>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage.New("Fear", "I'd sleep with one eye open if I were you.",
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.time == 27000 && Main.rand.NextBool(100)).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
 
         }
     }
