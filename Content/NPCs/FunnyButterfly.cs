@@ -24,7 +24,7 @@ namespace CalRemix.Content.NPCs
         public int Timer = 0;
         public int DrawCooldown = 0;
 
-        private const int FollowDistance = 400;
+        private const int FollowDistance = 800;
         private const int MaxOld = 10;
 
         public int[] oldDir = new int[MaxOld];
@@ -130,7 +130,10 @@ namespace CalRemix.Content.NPCs
                 if (player.Distance(NPC.Center) < FollowDistance)
                     player.AddBuff(ModContent.BuffType<DestructivePresence>(), 60);
                 if (player.Hitbox.Intersects(NPC.Hitbox) && player.statLife > 0 && !player.creativeGodMode)
+                {
+                    player.DropItems();
                     player.KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), player.statLifeMax2, 0);
+                }
                 if (Target is NPC)
                     continue;
                 if (Target == null)
@@ -145,7 +148,7 @@ namespace CalRemix.Content.NPCs
             if (Target != null)
             {
                 if (Target.Distance(NPC.Center) > (Target.Size.Length() / 2f) && Collision.CanHitLine(Target.Center, 1, 1, NPC.Center, 1, 1))
-                    NPC.velocity = NPC.SafeDirectionTo(Target.Center) * 2f;
+                    NPC.velocity = NPC.SafeDirectionTo(Target.Center) * 3f;
                 else if (Target.Hitbox.Intersects(NPC.Hitbox))
                     NPC.velocity = Vector2.Zero;
             }
