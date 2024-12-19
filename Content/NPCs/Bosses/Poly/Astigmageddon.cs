@@ -10,6 +10,7 @@ using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalamityMod;
 using CalRemix.Core.World;
 using CalamityMod.Events;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly
 {
@@ -353,8 +354,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             lastLivingPoly.Add(ItemID.EyeMask);
 
             //lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
-            LeadingConditionRule box = new(new Conditions.ZenithSeedIsNotUp());
-            lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusAltMusicBox>())));
+            npcLoot.Add(ModContent.ItemType<AstigmageddonTrophy>(), 10);
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

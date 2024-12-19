@@ -25,6 +25,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 {
@@ -662,7 +663,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             if (CalamityWorld.death && NPC.life < 0.05f)
                 flySpeed += 12f;
 
-            if (Main.zenithWorld) flySpeed *= 1.5;
+            if (Main.zenithWorld) flySpeed *= 1.5f;
 
             float speedX = flySpeed * (float)(-sinT - Math.Pow(sinT, 3D) - cosT * sin2T) / denominator;
             float speedY = flySpeed * (float)(Math.Pow(cosT, 2D) - 2D * Math.Pow(sinT, 4D) - sinT * cosT * sin2T) / denominator;
@@ -848,6 +849,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             normalRule.Add(ModContent.ItemType<EnergyCore>(), 1, 1, 2);
             normalRule.Add(ModContent.ItemType<EnergyOrb>());
             normalRule.Add(ModContent.ItemType<CalamityMod.Items.Tools.WulfrumTreasurePinger>());
+            npcLoot.Add(ModContent.ItemType<ExcavatorTrophy>(), 10);
 
             // Weapons
             int[] weapons = new int[]

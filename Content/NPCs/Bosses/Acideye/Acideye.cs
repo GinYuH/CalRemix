@@ -25,6 +25,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Bags;
 using CalamityMod.Events;
 using Terraria.Localization;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Acideye
 {
@@ -589,7 +590,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         {
             if (Phase < 4)
             {
-                Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/Acideye_Glow").Value;
+                Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/AcidEye_Glow").Value;
                 Rectangle rect = new((Attack == 1 && Phase > 1 || Phase == 4 && Attack == 0 && Subphase == 1) ? texture.Width / 2 : 0, NPC.frame.Y, texture.Width / 2, texture.Height / Main.npcFrameCount[Type]);
                 spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rect, new Color(255, 255, 255, 255), NPC.rotation, rect.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
             }
@@ -608,6 +609,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
             };
             mainRule.Add(ModContent.ItemType<DeterioratingLens>());
             mainRule.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, itemIDs));
+            npcLoot.Add(ModContent.ItemType<AcidsighterTrophy>(), 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<AcidsighterRelic>());
         }
         public override void OnKill()
