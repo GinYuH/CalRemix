@@ -25,6 +25,12 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Maser Phage");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Position = new Vector2(0, -120),
+                Velocity = 1
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 7;
         }
 

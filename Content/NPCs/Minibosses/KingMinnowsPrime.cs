@@ -61,7 +61,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
 
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns, new FlavorTextBestiaryInfoElement("JUDGEMENT.")});
+        BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon, new FlavorTextBestiaryInfoElement("JUDGEMENT.")});
         }
 
 

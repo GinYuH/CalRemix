@@ -54,12 +54,12 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Irradiated>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<SulphuricPoisoning>()] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
-                Scale = 0.5f
+                Position = new Vector2(-25, -25),
+                Rotation = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4
             };
-            NPCID.Sets.NPCBestiaryDrawModifiers value = nPCBestiaryDrawModifiers;
-            value.Frame = 1;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()
         {
@@ -584,16 +584,13 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
             Texture2D texture = TextureAssets.Npc[Type].Value;
             Rectangle rect = new((Attack == 1 && Phase > 1 || Phase == 4 && Attack == 0 && Subphase == 1) ? texture.Width / 2 : 0, NPC.frame.Y, texture.Width / 2, texture.Height / Main.npcFrameCount[Type]);
             spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rect, (Phase == 4) ? new Color(255, 255, 255, 255) : drawColor, NPC.rotation, rect.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
-            return false;
-        }
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
             if (Phase < 4)
             {
-                Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/AcidEye_Glow").Value;
-                Rectangle rect = new((Attack == 1 && Phase > 1 || Phase == 4 && Attack == 0 && Subphase == 1) ? texture.Width / 2 : 0, NPC.frame.Y, texture.Width / 2, texture.Height / Main.npcFrameCount[Type]);
-                spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rect, new Color(255, 255, 255, 255), NPC.rotation, rect.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
+                Texture2D texture2 = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/AcidEye_Glow").Value;
+                Rectangle rect2 = new((Attack == 1 && Phase > 1 || Phase == 4 && Attack == 0 && Subphase == 1) ? texture2.Width / 2 : 0, NPC.frame.Y, texture2.Width / 2, texture2.Height / Main.npcFrameCount[Type]);
+                spriteBatch.Draw(texture2, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rect2, new Color(255, 255, 255, 255), NPC.rotation, rect2.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
             }
+            return false;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

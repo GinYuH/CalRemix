@@ -134,11 +134,21 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("A common fungus that has grown angry from being infected by the plague.")
+        new FlavorTextBestiaryInfoElement("This not so itsy-bitsy spider climbed up the spout unaware that it's a plagued tree. ")
             });
         }
         public override void FindFrame(int frameHeight)
         {
+            NPC.frameCounter++;
+            if (NPC.frameCounter > 6)
+            {
+                NPC.frameCounter = 0;
+                currentFrame++;
+            }
+            if (currentFrame > yMax || currentFrame < yMin)
+            {
+                currentFrame = yMin;
+            }
             if (NPC.velocity.Y != 0 && NPC.Remix().GreenAI[1] != 0)
             {
                 NPC.frameCounter += 1.0;
@@ -188,17 +198,6 @@ namespace CalRemix.Content.NPCs
             Vector2 npcOffset = NPC.Center - screenPos;
             npcOffset -= new Vector2((float)texture.Width / 4, (float)texture.Height / 12) * NPC.scale / 2f;
             npcOffset += origin * NPC.scale + new Vector2(0f, NPC.gfxOffY);
-
-            NPC.frameCounter++;
-            if (NPC.frameCounter > 6)
-            {
-                NPC.frameCounter = 0;
-                currentFrame++;
-            }
-            if (currentFrame > yMax || currentFrame < yMin)
-            {
-                currentFrame = yMin;
-            }
             frameUsed = texture.Frame(2, 12, xColumn, currentFrame);
             spriteBatch.Draw(texture, npcOffset, frameUsed, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
             return false;

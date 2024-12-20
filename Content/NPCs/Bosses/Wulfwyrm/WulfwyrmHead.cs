@@ -119,6 +119,12 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wulfrum Excavator");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                Position = new Vector2(0, 34),
+                Rotation = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 6;
         }
 
@@ -136,6 +142,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement("An aged project of an esteemed scientist. It appears to be barely functional.")
             });
         }

@@ -23,7 +23,6 @@ namespace CalRemix.Content.NPCs
             DisplayName.SetDefault("Green Demon");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-
             if (Main.dedServ)
                 return;
             HelperMessage.New("Green Demon",

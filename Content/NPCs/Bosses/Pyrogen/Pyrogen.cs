@@ -147,6 +147,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pyrogen");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Position = new Vector2(0, 44)
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             if (!Main.dedServ)
             {
                 Phase2Texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase2", AssetRequestMode.AsyncLoad);

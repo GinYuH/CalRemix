@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System.Linq;
+using Microsoft.Xna.Framework;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs
@@ -19,7 +20,11 @@ namespace CalRemix.Content.NPCs
             Main.npcCatchable[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
-
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Position = new Vector2(0, 115)
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             if (Main.dedServ)
                 return;
             HelperMessage.New("Barocrab",

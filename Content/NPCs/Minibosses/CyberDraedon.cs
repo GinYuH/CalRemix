@@ -29,9 +29,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         public override bool CheckActive() => false;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new();
-            nPCBestiaryDrawModifiers.Scale = 0.8f;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
             if (Main.dedServ)

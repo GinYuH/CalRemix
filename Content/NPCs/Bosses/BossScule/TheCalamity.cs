@@ -64,8 +64,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value),
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface]);
+            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value), 
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement()]);
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -223,7 +223,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             SpriteEffects spriteEffects = (NPC.spriteDirection < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             spriteBatch.Draw(texture, draw, sourceRectangle, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
             Texture2D eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityEye").Value;
-            spriteBatch.Draw(eye, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY) + (Target.HasItem(ModContent.ItemType<Ogscule>()) ? Vector2.UnitY * NPC.height * -0.65f : Vector2.Zero), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY) + (Target.HasItem(ModContent.ItemType<Ogscule>()) ? Vector2.UnitY * NPC.height * -0.65f : Vector2.Zero), null, new Color(255, 0, 0, 255), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
             return false;
         }
         public override void DrawEffects(ref Color drawColor)

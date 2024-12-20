@@ -28,6 +28,8 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
 
             // Specify the debuffs it is immune to
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+
+            this.HideFromBestiary();
         }
 
 		public override void SetDefaults()

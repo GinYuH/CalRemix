@@ -29,7 +29,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         private Vector2 initPos;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<ArmorCrunch>()] = true;

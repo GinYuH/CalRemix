@@ -17,6 +17,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Basilius");
+            this.HideFromBestiary();
         }
 
         public override void SetDefaults()

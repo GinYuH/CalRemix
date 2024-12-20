@@ -61,6 +61,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().ShouldCloseHPBar = true;
             NPC.rarity = 22;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<CalamityMod.BiomeManagers.AbyssLayer4Biome>().Type };
         }
 
         public override void AI()

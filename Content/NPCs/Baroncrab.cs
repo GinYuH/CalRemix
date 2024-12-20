@@ -10,6 +10,7 @@ using System.Linq;
 using CalRemix.Core.Biomes;
 using System.Collections.Generic;
 using CalRemix.Content.Items.Placeables;
+using Microsoft.Xna.Framework;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs
@@ -23,6 +24,11 @@ namespace CalRemix.Content.NPCs
             Main.npcCatchable[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Position = new Vector2(0, 115)
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             baronTiles.Add(ItemType<BaronBrine>());
             baronTiles.Add(ItemType<TanzaniteGlass>());
             baronTiles.Add(ItemType<Brinerack>());
