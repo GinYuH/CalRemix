@@ -4227,3 +4227,12 @@ CalRemix/DestructivePresenceStone: {
 		'''
 	DisplayName: Destructive Presence Stone
 }
+
+CalRemix/StratusBeverageBuffStone: {
+	Tooltip:
+		'''
+		Immunity to Stratus Beverage
+		Attacks inflict Stratus Beverage
+		'''
+	DisplayName: Stratus Beverage Stone
+}

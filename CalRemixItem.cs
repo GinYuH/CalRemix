@@ -41,6 +41,7 @@ using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
+using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -399,6 +400,14 @@ namespace CalRemix
                 {
                     Projectile.NewProjectile(source, position, velocity * 0.75f, ProjectileType<AstralFireball>(), 25, 0f, player.whoAmI);
                     modPlayer.blazeCount = 0;
+                }
+            }
+            if (modPlayer.stratusBeverage && item != null && !item.CountsAsClass<TrueMeleeDamageClass>())
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 starvelocity = -Vector2.UnitY.RotatedByRandom(0.6152018) * Main.rand.NextFloat(2.5f, 4f);
+                    Projectile.NewProjectile(source, position, starvelocity, ProjectileType<StratusStar>(), (int)(damage * 0.33f), player.whoAmI);
                 }
             }
             return true;

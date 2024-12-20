@@ -218,6 +218,7 @@ namespace CalRemix
         public bool hayFever;
         public int calamitizedCounter;
         public int calamitizedHitCooldown;
+        public bool stratusBeverage;
 
         // Tiles
         public float cosdam = 0;
@@ -547,6 +548,7 @@ namespace CalRemix
                     }
                 }
             }
+
             /*
             if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
@@ -569,7 +571,6 @@ namespace CalRemix
                 SoundEngine.PlaySound(glassBreakSound, Player.Center);
             return true;
         }
-
         public override void PostUpdateMiscEffects()
         {       
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
@@ -855,6 +856,7 @@ namespace CalRemix
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
+            stratusBeverage = false;
 			phd = false;
 			infraredSights = false;
             exolotl = false;
@@ -1122,9 +1124,10 @@ namespace CalRemix
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 240;
             }
-        }
+            if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
+    }
 
-        public override void UpdateLifeRegen()
+    public override void UpdateLifeRegen()
         {
             Player.lifeRegen += (int)MathHelper.Min(dyesPink, 0);
         }

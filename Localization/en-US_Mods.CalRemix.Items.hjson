@@ -2902,3 +2902,13 @@ TheButterflyEffect: {
 		'''
 	DisplayName: The Butterfly Effect
 }
+
+StratusBeverage: {
+	Tooltip:
+		'''
+		May make you feel spacey
+		Causes all projectile shooting weapons to fire two extra homing stars
+		Decreases weapon damage by 33%
+		'''
+	DisplayName: Stratus Beverage
+}

@@ -55,7 +55,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             ModContent.NPCType<PlagueEmperor>()};
 
         public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/PhytogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/CarcinogenDeath");
+        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/PhytogenDeath");
 
         public enum PhaseType
         {
