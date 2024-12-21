@@ -43,11 +43,14 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using CalRemix.UI.Anomaly109;
+using CalRemix.Core.Retheme;
 
 namespace CalRemix
 {
     enum RemixMessageType
     {
+        Anomaly109Sync,
         HypnosSummoned,
         SyncIonmaster,
         IonQuestLevel,
@@ -85,6 +88,14 @@ namespace CalRemix
             RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
             switch (msgType)
             {
+                case RemixMessageType.Anomaly109Sync:
+                    {
+                        int optionIndex = reader.ReadInt32();
+                        Anomaly109Option option = Anomaly109Manager.options[optionIndex];
+                        option.toggle();
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
                 case RemixMessageType.HypnosSummoned:
                     {
                         int player = reader.ReadByte();
@@ -128,21 +139,18 @@ namespace CalRemix
                 case RemixMessageType.IonQuestLevel:
                     {
                         int level = reader.ReadByte();
-
                         CalRemixWorld.ionQuestLevel = level;
                         break;
                     }
                 case RemixMessageType.OxydayTime:
                     {
                         int oxygenTime = reader.ReadByte();
-
                         CalRemixWorld.oxydayTime = oxygenTime;
                         break;
                     }
                 case RemixMessageType.TrueStory:
                     {
                         int storyCounter = reader.ReadByte();
-
                         CalRemixWorld.trueStory = storyCounter;
                         break;
                     }
@@ -165,14 +173,12 @@ namespace CalRemix
                 case RemixMessageType.KillDefender:
                     {
                         int killCount = reader.ReadByte();
-
                         PandemicPanic.DefendersKilled = killCount;
                         break;
                     }
                 case RemixMessageType.KillInvader:
                     {
                         int killCount = reader.ReadByte();
-
                         PandemicPanic.InvadersKilled = killCount;
                         break;
                     }

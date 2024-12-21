@@ -741,14 +741,13 @@ namespace CalRemix
                 if (Player.yoraiz0rEye == 0)
                     Player.yoraiz0rEye = 3;
             }
-			if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == WallType<StratusWallRemix>())
-			{
-                dungeon2 = true;
-			}
-			else
-			{
-				dungeon2 = false;
-			}
+            if ((int)Player.position.X / 16 >= 0 && (int)Player.position.Y / 16 >= 0 && (int)Player.position.X / 16 < Main.maxTilesX && (int)Player.position.Y / 16 < Main.maxTilesY)
+            {
+                if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == WallType<StratusWallRemix>())
+                    dungeon2 = true;
+                else
+                    dungeon2 = false;
+            }
 			if (!carcinogenSoul)
 			{
                 if (timeSmoked > 0)
@@ -906,8 +905,13 @@ namespace CalRemix
 					amongusEnchant = false;
 				}
 			}
-            Filters.Scene["CalRemix:AcidSight"].Deactivate();
-            Filters.Scene["CalRemix:LeanVision"].Deactivate();
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                if (Filters.Scene["CalRemix:AcidSight"].Active)
+                    Filters.Scene["CalRemix:AcidSight"].Deactivate();
+                if (Filters.Scene["CalRemix:LeanVision"].Active)
+                    Filters.Scene["CalRemix:LeanVision"].Deactivate();
+            }
         }
         public override void GetDyeTraderReward(List<int> rewardPool)
         {

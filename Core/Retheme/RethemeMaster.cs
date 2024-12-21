@@ -194,12 +194,6 @@ namespace CalRemix.Core.Retheme
         {
             return CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/" + remix) : Request<Texture2D>("CalamityMod/NPCs/" + original);
         }
-        private static void PerfTC(ref Asset<Texture2D> asset, string name)
-        {
-            string newName = name.Replace("_", "");
-            newName = newName.Replace("Texture", "Providence");
-            asset = NPCTextureChange($"Providence/{newName}", $"Providence/{newName}");
-        }
         private static void ProvTC(ref Asset<Texture2D> asset, string name)
         {
             string newName = name.Replace("_", "");

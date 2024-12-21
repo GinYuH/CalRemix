@@ -324,8 +324,29 @@ namespace CalRemix.UI.Anomaly109
                     if (Main.mouseLeft && Main.mouseLeftRelease && option.unlocked)
                     {
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
-                        option.toggle();
-                        CalRemixWorld.UpdateWorldBool();
+
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            ModPacket packet = CalRemix.instance.GetPacket();
+                            packet.Write((byte)RemixMessageType.Anomaly109Sync);
+                            packet.Write(Anomaly109Manager.options.FindIndex(o => o.title == option.title));
+                            packet.Send();
+                        }
+                        else
+                        {
+                            option.toggle();
+                            CalRemixWorld.UpdateWorldBool();
+                        }
+                        if (option.check.IsMet())
+                        {
+                            status = "Enabled";
+                            statusColor = Color.Lime;
+                        }
+                        else
+                        {
+                            status = "Disabled";
+                            statusColor = Color.Red;
+                        }
                         ClickCooldown = 8;
                     }
                 }
@@ -616,21 +637,18 @@ namespace CalRemix.UI.Anomaly109
         public string title { get; set; }
         public string message { get; set; }
         public string key { get; set; }
-
         public Action toggle { get; set; }
-
         public Condition check { get; set; }
-
         public bool unlocked { get; set; }
-
         public Anomaly109Option(string key, string title, string message, Action toggle, Condition check, bool unlocked = false)
         {
             this.key = key;
             this.title = title;
             this.message = message;
             this.toggle = toggle;
-            this.unlocked = unlocked;
             this.check = check;
+            this.unlocked = unlocked;
+
         }
 
 
