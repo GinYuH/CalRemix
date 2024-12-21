@@ -356,6 +356,7 @@ namespace CalRemix
             AddMusic(CalRemixMusic.EmpressofLightDay, "Gegenschein", "Jteoh");
 
             AddMusic(CalRemixMusic.Pyrogen, "Volcanic Reinforcement", "The Purified");
+            AddMusic(CalRemixMusic.Generator, "The Generator", "Jteoh");
             AddMusic(CalRemixMusic.DevourerofGods, "Last Battle (Ballos Mix)", "DM DOKURO");
             AddMusic(CalRemixMusic.DevourerofGodsFinalForm, "Univesal Collapse?", "SiivaGunner");
             AddMusic(CalRemixMusic.Hypnos, "Cerebral Augmentations", "The Exiled Fellow");

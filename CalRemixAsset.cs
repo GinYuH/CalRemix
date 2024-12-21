@@ -146,6 +146,7 @@ namespace CalRemix
         public static readonly int Menu2 = Set("CrazyLaPaint");
         public static readonly int TrueStory = Set("TrueStory");
         public static readonly int PlasticOracle = Set("OhmnOmens");
+        public static readonly int Generator = Set("Generator");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }

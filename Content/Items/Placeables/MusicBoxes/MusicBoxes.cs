@@ -216,6 +216,14 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<PolyphemalusAltMusicBox>().
+                AddCondition(Condition.InGraveyard).
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+        }
     }
     public class PolyphemalusAltMusicBox : RemixMusicBox
     {
@@ -229,6 +237,14 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<PolyphemalusMusicBox>().
+                AddCondition(Condition.InGraveyard).
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+        }
     }
     public class TheCalamityMusicBox : RemixMusicBox
     {
