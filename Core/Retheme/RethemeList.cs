@@ -133,7 +133,6 @@ namespace CalRemix.Core.Retheme
             { ItemType<Nadir>(), "Nadir" },
             { ItemType<Violence>(), "Violence" },
             { ItemType<WulfrumMetalScrap>(), "Bars/WulfrumBar" },
-            { ItemType<ClockGatlignum>(), "Bars/ClockworkBar" },
             { ItemType<LifeAlloy>(), "Bars/LifeAlloy" },
             { ItemType<MeldConstruct>(), "Bars/MeldBar" },
             { ItemType<FetidEmesis>(), "FetidEmesis" },

@@ -81,8 +81,8 @@ namespace CalRemix.Core.Retheme
         }
         private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
         {
-            if (CalRemixWorld.npcChanges)
-                return false;
+            if (CalRemixWorld.npcChanges) 
+                return !NPC.AnyNPCs(NPCType<Yharon>()) && Main.LocalPlayer.Calamity().monolithYharonShader > 0;
             return orig(self, player);
         }
     }
@@ -418,14 +418,6 @@ namespace CalRemix.Core.Retheme
                 robes = true;
                 equipSlot = EquipLoader.GetEquipSlot(Mod, "AshsCloakLegs", EquipType.Legs);
             }
-        }
-        public override bool CanUseItem(Item item, Player player)
-        {
-            if (item.type == ItemType<ClockGatlignum>() && CalRemixWorld.itemChanges)
-            {
-                return false;
-            }
-            return true;
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
