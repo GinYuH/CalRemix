@@ -1092,10 +1092,13 @@ namespace CalRemix
             {
                 itemDrop = ItemType<RipperShark>();
             }
-            if (attempt.playerFishingConditions.BaitItemType == ItemType<LabRoach>() && CalRemixWorld.roachDuration <= 0)
+            if (attempt.playerFishingConditions.BaitItemType == ItemType<LabRoach>())
             {
-                CalRemixWorld.RoachCountdown = -1;
-                CalRemixWorld.UnleashRoaches();
+                if (CalRemixWorld.roachDuration <= 0)
+                {
+                    CalRemixWorld.RoachCountdown = -1;
+                    CalRemixWorld.UnleashRoaches();
+                }
                 itemDrop = ItemID.None;
             }
         }
