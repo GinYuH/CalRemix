@@ -2912,3 +2912,12 @@ StratusBeverage: {
 		'''
 	DisplayName: Stratus Beverage
 }
+
+CannibalNectar: {
+	DisplayName: Cannibal Nectar
+	Tooltip:
+		'''
+		Summons Pathogen when used in a world evil
+		'Smells like strawberry'
+		'''
+}
