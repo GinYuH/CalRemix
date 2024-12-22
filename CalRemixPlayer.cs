@@ -60,8 +60,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.GameContent.Events;
 using static Terraria.ModLoader.ModContent;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using System.Threading.Tasks;
 
 namespace CalRemix
 {
@@ -89,10 +90,13 @@ namespace CalRemix
 
         public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
 
-    // General
+        // General
+        public Task fandomCheck;
         public int commonItemHoldTimer;
         public int remixJumpCount;
         public int RecentChest = -1;
+        public int onFandom;
+        public int checkWarningDelay;
         public bool anomaly109UI;
         public bool fridge;
 
@@ -453,6 +457,16 @@ namespace CalRemix
                     Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ItemType<CirrusCouch>() || Main.mouseItem.type == ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
+                if (checkWarningDelay <= 0)
+                {
+                    Task.Run(() => Warning.CheckOnFandom(Player));
+                    checkWarningDelay = 30;
+                }
+                if (Player.miscCounter % 90 == 0 && onFandom > 0)
+                    SoundEngine.PlaySound(AresBody.EnragedSound with { MaxInstances = 3, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest });
+                if (onFandom > 0)
+                    onFandom--;
+                checkWarningDelay--;
             }
             if (ScreenHelpersUIState.GonerFanny != null)
 			{
