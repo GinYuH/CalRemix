@@ -20,6 +20,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Lore;
 using Terraria.GameContent.Bestiary;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Bosses.BossScule
 {
@@ -61,6 +62,14 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             NPC.dontTakeDamage = true;
             NPC.alpha = 0;
 
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.dontTakeDamage);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.dontTakeDamage = reader.ReadBoolean();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -155,6 +164,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                         if (!Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote5").Value, Color.Red);
                         else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote7GFB").Value, Color.Red);
                          NPC.dontTakeDamage = false;
+                        NPC.netUpdate = true;
                     }
                     if (!Main.zenithWorld && Timer == EndTime + 180)
                         Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote6").Value, Color.Red);

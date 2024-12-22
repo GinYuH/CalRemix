@@ -328,6 +328,8 @@ namespace CalRemix
                 return;
             AddMusic(CalRemixMusic.Exosphere, "CanAnybodyHearMe", "Jteoh");
 
+            AddMusic(CalRemixMusic.Generator, "Artistic Reinforcement", "Jteoh");
+
             AddMusic(CalRemixMusic.AsbestosCaves, "Fibrous Whisper", "Jteoh");
             AddMusic(CalRemixMusic.PlaguedJungle, "Everlasting Dark", "HeartPlusUp");
             AddMusic(CalRemixMusic.BaronStrait, "The End Zone", "Jteoh");

@@ -156,6 +156,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             writer.WriteVector2(TargetScreenResolution);
             writer.Write(RectangleRedirectCounter);
             writer.Write(LemniscateCircleCounter);
+            writer.Write(ChargeState);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -167,6 +168,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             TargetScreenResolution = reader.ReadVector2();
             RectangleRedirectCounter = reader.ReadInt32();
             LemniscateCircleCounter = reader.ReadInt32();
+            ChargeState = reader.ReadInt32();
         }
 
         public override void AI()
@@ -257,7 +259,10 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
                     int nextSegmentIndex;
                     if (i < SegmentCount - 1)
+                    {
                         nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmBody>(), NPC.whoAmI);
+                        Main.npc[nextSegmentIndex].localAI[1] = i % 2;
+                    }
                     else
                         nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmTail>(), NPC.whoAmI);
                     Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;

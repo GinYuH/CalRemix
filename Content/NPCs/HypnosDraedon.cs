@@ -9,6 +9,7 @@ using CalamityMod;
 using Terraria.Chat;
 using Terraria.Localization;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalamityMod.NPCs.ExoMechs;
 
 namespace CalRemix.Content.NPCs
 {
@@ -44,7 +45,10 @@ namespace CalRemix.Content.NPCs
             NPC.noTileCollide = true;
             NPC.width = NPC.height = 86;
         }
-
+        public override void ModifyTypeName(ref string typeName)
+        {
+            typeName = ContentSamples.NpcsByNetId[ModContent.NPCType<Draedon>()].TypeName;
+        }
         private void NewText(string text, Color textColor)
         {
             if (Main.netMode == NetmodeID.SinglePlayer)

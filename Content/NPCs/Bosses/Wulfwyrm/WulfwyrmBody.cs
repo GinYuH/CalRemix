@@ -52,6 +52,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
             writer.Write(NPC.chaseable);
             writer.Write(NPC.dontTakeDamage);
         }
@@ -59,6 +60,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             NPC.localAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
             NPC.chaseable = reader.ReadBoolean();
             NPC.dontTakeDamage = reader.ReadBoolean();
         }
@@ -131,7 +133,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             Rectangle sourceRectangle = new Rectangle(0, (int)NPC.localAI[0] * roll.Height / 3, roll.Width, roll.Height / 3);
             Vector2 origin = sourceRectangle.Size() / 2f;
             Vector2 draw = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);
-            if (NPC.whoAmI % 2 != 0)
+            if (NPC.localAI[1] == 1)
                 spriteBatch.Draw(roll, draw, sourceRectangle, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
             return true;
         }
@@ -151,7 +153,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 if (Main.netMode != NetmodeID.Server)
                 {
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("WulfrumExcavatorBody").Type, NPC.scale);
-                    if (NPC.whoAmI % 2 != 0)
+                    if (NPC.localAI[1] == 1)
                         Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, (Main.rand.NextBool(2) ? Mod.Find<ModGore>("WulfrumExcavatorTire").Type : Mod.Find<ModGore>("WulfrumExcavatorTire2").Type), NPC.scale);
                 }
             }
