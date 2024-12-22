@@ -29,7 +29,11 @@ namespace CalRemix.UI
         {
             string nofandom = "DO NOT USE THE FANDOM WIKI";
             float fandomwidth = FontAssets.MouseText.Value.MeasureString(nofandom).X;
-            Utils.DrawBorderString(spriteBatch, nofandom, new Vector2(Main.screenHeight / 2 - fandomwidth / 2, Main.screenHeight / 2) + Main.rand.NextVector2Square(-10, 10), Color.Red, (Main.screenWidth / fandomwidth) * 0.75f + (float)Math.Cos(Main.GlobalTimeWrappedHourly * 22) * 0.1f);
+            float fandomheight = FontAssets.MouseText.Value.MeasureString(nofandom).Y;
+            float scale = (Main.screenWidth / fandomwidth) * 0.75f + (float)Math.Cos(Main.GlobalTimeWrappedHourly * 22) * 0.1f;
+            float scaledWidth = fandomwidth * scale;
+            float scaledHeight = fandomheight * scale;
+            Utils.DrawBorderString(spriteBatch, nofandom, new Vector2((Main.screenWidth - scaledWidth) / 2, (Main.screenHeight - scaledHeight) / 2) + Main.rand.NextVector2Square(-10, 10), Color.Red, scale);
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Red * 0.22f, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
         }
     }
