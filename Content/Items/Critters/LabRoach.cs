@@ -28,22 +28,21 @@ namespace CalRemix.Content.Items.Critters
         }
 
         public override void AddRecipes()
-        {
-            foreach (var i in ContentSamples.ItemsByType)
-            {
-                if (i.Value == null)
-                    continue;
-                if (i.Value.makeNPC > 0 && i.Value.type != Type)
-                {
-                    CreateRecipe().
-                        AddIngredient(i.Value.type).
-                        AddIngredient(ModContent.ItemType<DubiousPlating>(), 20).
-                        AddIngredient(ModContent.ItemType<MysteriousCircuitry>(), 20).
-                        AddTile(ModContent.TileType<AgedLaboratoryContainmentBox>()).
-                        DisableDecraft().
-                        Register();
-                }
-            }
+        {            
+            CreateRecipe().
+                AddRecipeGroup(Recipes.AnyCritter).
+                AddIngredient(ModContent.ItemType<DubiousPlating>(), 20).
+                AddIngredient(ModContent.ItemType<MysteriousCircuitry>(), 20).
+                AddTile(ModContent.TileType<AgedLaboratoryContainmentBox>()).
+                DisableDecraft().
+                Register();
+            CreateRecipe().
+                AddRecipeGroup(Recipes.AnyCritter).
+                AddIngredient(ModContent.ItemType<DubiousPlating>(), 20).
+                AddIngredient(ModContent.ItemType<MysteriousCircuitry>(), 20).
+                AddTile(ModContent.TileType<LaboratoryContainmentBox>()).
+                DisableDecraft().
+                Register();
         }
     }
 }
