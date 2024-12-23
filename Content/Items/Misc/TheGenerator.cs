@@ -14,6 +14,11 @@ namespace CalRemix.Content.Items.Misc
 {
 	public class TheGenerator : ModItem
 	{
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 10));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
+        }
         public override void SetDefaults()
         {
             Item.width = 10;
@@ -46,16 +51,11 @@ namespace CalRemix.Content.Items.Misc
         {
             Item.ChangeItemType(ItemType<TheInactiveGenerator>());
         }
-        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            Texture2D texture = Request<Texture2D>(Texture).Value;
-            spriteBatch.Draw(texture, position - new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), Main.DiscoColor);
-            return false;
-        }
         public override void UpdateInventory(Player player)
         {
             player.GetModPlayer<CalRemixPlayer>().genActive = true;
         }
+        public override Color? GetAlpha(Color lightColor) => Main.DiscoColor;
     }
     public class TheInactiveGenerator : ModItem
     {

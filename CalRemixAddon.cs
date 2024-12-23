@@ -121,7 +121,7 @@ namespace CalRemix
         public override void PostSetupContent()
         {
             AddBossChecklistEntries();
-            AddMusicDisplayEntries();
+            // AddMusicDisplayEntries();
             if (Wikithis != null && !Main.dedServ && Main.netMode != NetmodeID.Server)
             {
                 Wikithis.Call("AddModURL", Mod, "https://terrariamods.wiki.gg/wiki/Calamity_Community_Remix/{}");
@@ -322,6 +322,7 @@ namespace CalRemix
             // Register the intro card.
             Infernum.Call("RegisterIntroScreen", instance);
         }
+        /*
         internal void AddMusicDisplayEntries()
         {
             if (MusicDisplay is null)
@@ -375,7 +376,8 @@ namespace CalRemix
         }
         internal void AddMusic(int music, string name, string author)
         {
-            MusicDisplay.Call("AddMusic", (short)music, name, author, Mod.DisplayName);
+            MusicDisplay.Call("AddMusic", music, name, author, Mod.DisplayName);
         }
+         */
     }
 }

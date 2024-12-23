@@ -139,6 +139,19 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
+    public class GeneratorMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Generator, Type, TileType<Tiles.MusicBoxes.GeneratorMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.GeneratorMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
     public class HypnosMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
@@ -396,6 +409,19 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         public override void SetDefaults()
         {
             Item.createTile = TileType<Tiles.MusicBoxes.ProfanedDesertMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class StrongholdMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.FrozenStronghold, Type, TileType<Tiles.MusicBoxes.StrongholdMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.StrongholdMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);

@@ -147,6 +147,20 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class GeneratorMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.GeneratorMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.GeneratorMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
     public class HypnosMusicBox : PlacedRemixMusicBox
     {
         public override void SetStaticDefaults()
@@ -396,6 +410,20 @@ namespace CalRemix.Content.Tiles.MusicBoxes
         {
             Player player = Main.LocalPlayer;
             player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.ProfanedDesertMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class StrongholdMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.StrongholdMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.StrongholdMusicBox>();
             base.MouseOver(i, j);
         }
     }

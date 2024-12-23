@@ -2921,3 +2921,12 @@ CannibalNectar: {
 		'Smells like strawberry'
 		'''
 }
+GeneratorMusicBox: {
+	DisplayName: Music Box (The Generator)
+	Tooltip: Plays 'Artistic Reinforcement' by Jteoh
+}
+
+StrongholdMusicBox: {
+	DisplayName: Music Box (Frozen Stronghold)
+	Tooltip: Plays 'Locked Away' by HeartPlusUp
+}
