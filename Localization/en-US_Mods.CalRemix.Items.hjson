@@ -2816,7 +2816,7 @@ KnowledgeCalamity: {
 		What was your intention flailing about?
 		If you desired mockery of my word, your goal failed.
 		My attention will never be discarded as I can see the true potential within you.
-		Although, I do suggest quitting the behavior of play-fighting an imagined threat.";
+		Although, I do suggest quitting the behavior of play-fighting an imagined threat.
 		'''
 }
 
@@ -2921,6 +2921,7 @@ CannibalNectar: {
 		'Smells like strawberry'
 		'''
 }
+
 GeneratorMusicBox: {
 	DisplayName: Music Box (The Generator)
 	Tooltip: Plays 'Artistic Reinforcement' by Jteoh
@@ -2929,4 +2930,9 @@ GeneratorMusicBox: {
 StrongholdMusicBox: {
 	DisplayName: Music Box (Frozen Stronghold)
 	Tooltip: Plays 'Locked Away' by HeartPlusUp
+}
+
+GaleforceMusicBox: {
+	DisplayName: Music Box (Galeforce Day)
+	Tooltip: Plays 'Galeforce Day Theme' by Jteoh
 }
