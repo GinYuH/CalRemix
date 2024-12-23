@@ -1124,8 +1124,20 @@ namespace CalRemix
             }
         }
 
-		// excavator summon, some code adapted from thorium mimic summoning
-		public override void UpdateAutopause() { RecentChest = Player.chest; }
+        // excavator summon, some code adapted from thorium mimic summoning
+        public override void UpdateAutopause()
+        {
+            // Kick people from chests in pre hardmode
+            if (Player.chest > -1)
+            {
+                if (Player.InModBiome<FrozenStrongholdBiome>() && !Main.hardMode)
+                {
+                    Player.chest = -1;
+                }
+            }
+            RecentChest = Player.chest;
+        }
+
         public override void PreUpdateBuffs() 
         {
         }
