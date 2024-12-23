@@ -117,7 +117,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     gore.velocity.Y -= 1f;
                 }
             }
-            if (CalRemixWorld.hydrogenBomb)
+            if (CalRemixWorld.hydrogenBomb && CalRemixWorld.postGenUpdate)
                 HydrogenExplosion(Projectile);
         }
         public static void HydrogenExplosion(Projectile proj)
