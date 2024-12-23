@@ -426,4 +426,17 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
+    public class GaleforceMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.GaleforceDay, Type, TileType<Tiles.MusicBoxes.GaleforceMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.GaleforceMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
 }

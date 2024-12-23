@@ -427,4 +427,18 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class GaleforceMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.GaleforceMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.GaleforceMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
 }

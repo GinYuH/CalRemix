@@ -101,6 +101,7 @@ namespace CalRemix
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
         public static readonly int PandemicPanic = Set("PandemicPanic");
+        public static readonly int GaleforceDay = Set("Galeforce");
 
         // NPCs
         public static readonly int CryoSlime = Set("AntarcticReinsertion");
