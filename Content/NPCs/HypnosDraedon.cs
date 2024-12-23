@@ -10,6 +10,7 @@ using Terraria.Chat;
 using Terraria.Localization;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalamityMod.NPCs.ExoMechs;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs
 {
@@ -47,7 +48,7 @@ namespace CalRemix.Content.NPCs
         }
         public override void ModifyTypeName(ref string typeName)
         {
-            typeName = ContentSamples.NpcsByNetId[ModContent.NPCType<Draedon>()].TypeName;
+            typeName = CalRemixWorld.npcChanges ? "Draedon, the Living Intellect of Samuel Graydron" : "Draedon";
         }
         private void NewText(string text, Color textColor)
         {

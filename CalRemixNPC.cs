@@ -419,12 +419,18 @@ namespace CalRemix
                 }
                 if (NPC.AnyNPCs(NPCType<DILF>()) && !guardRage && guardSay > 0)
                 {
-                    Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
-                    if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
-                        Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
-                    if (NPC.AnyNPCs(NPCType<ProfanedGuardianHealer>()))
-                        Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
-                    guardRage = true;
+                    foreach (NPC frosty in Main.ActiveNPCs)
+                    {
+                        if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
+                        {
+                            Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
+                            if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
+                                Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
+                            if (NPC.AnyNPCs(NPCType<ProfanedGuardianHealer>()))
+                                Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
+                            guardRage = true;
+                        }
+                    }
                 }
             }
             else if (npc.type == NPCType<Yharon>())
@@ -521,11 +527,16 @@ namespace CalRemix
             {
                 if (NPC.AnyNPCs(NPCType<DILF>()) && guardRage)
                 {
-                    foreach (NPC frosty in Main.npc)
+                    foreach (NPC frosty in Main.ActiveNPCs)
                     {
-                        if (frosty.type == NPCType<DILF>())
+                        if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
                         {
-                            npc.velocity = npc.DirectionTo(frosty.Center) * 10f;
+                            npc.velocity = npc.DirectionTo(frosty.Center) * 14f;
+                            if (frosty.Hitbox.Intersects(npc.Hitbox))
+                            {
+                                frosty.StrikeInstantKill();
+                                break;
+                            }
                             return false;
                         }
                     }

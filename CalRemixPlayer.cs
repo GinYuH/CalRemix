@@ -586,7 +586,33 @@ namespace CalRemix
             return true;
         }
         public override void PostUpdateMiscEffects()
-        {       
+        {   if (Main.myPlayer == Player.whoAmI)
+            {
+                if (Main.mouseItem.type == ItemType<ShardofGlass>())
+                {
+                    if (((ShardofGlass)Main.mouseItem.ModItem).durability <= 0)
+                    {
+                        SoundEngine.PlaySound(SoundID.Shatter with { Volume = 2 }, Player.position);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Gore.NewGore(Player.GetSource_FromThis(), Player.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
+                        }
+                        Main.mouseItem.TurnToAir();
+                    }
+                }
+                else if (Player.HeldItem.type == ItemType<ShardofGlass>())
+                {
+                    if (((ShardofGlass)Player.HeldItem.ModItem).durability <= 0)
+                    {
+                        SoundEngine.PlaySound(SoundID.Shatter with { Volume = 2 }, Player.position);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Gore.NewGore(Player.GetSource_FromThis(), Player.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
+                        }
+                        Player.HeldItem.TurnToAir();
+                    }
+                }
+            }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)
 			{
