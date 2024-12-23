@@ -163,7 +163,7 @@ ZER0: {
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
-	Census.SpawnCondition: Conditions unknown
+	Census.SpawnCondition: Kill the Moon Lord and have an [i:CalRemix/Ogscule] in your inventory
 }
 
 Tenryu.DisplayName: King of Constellations, Tenryu
@@ -191,11 +191,14 @@ AcidEye: {
 	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
 }
 
-MutatedEye.DisplayName: Mutated Eye
+MutatedEye: {
+	DisplayName: Mutated Eye
+	Bestiary: Babies of the acidsighter. Do not pet them as they're very messy and gross.
+}
 
 TheCalamity: {
 	DisplayName: The Calamity
-	Bestiary: An entity made of unseen light tken form by the anger and grievances of many. It learned self-control as a follower.
+	Bestiary: An entity made of unseen light taken form by the anger and grievances of many. Probably.
 	Quote1: I will test your dodging abilities. Good luck.
 	Quote2: Your skills are proficient, but how will you fare against the ones after me?
 	Quote3: Your foes will often hold predictable patterns; see past them and strike.
@@ -352,7 +355,7 @@ Pathogen: {
 
 PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
-Hypnos.DisplayName: Hypnos
+Hypnos.DisplayName: XP-00 Hypnos
 HypnosPlug.DisplayName: Hypnos Plug
 RemixDraedon.DisplayName: Remix Draedon
 Losbaf.DisplayName: Losbaf
