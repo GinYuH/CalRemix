@@ -57,11 +57,12 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage fish = HelperMessage.New("Fishing1", "Morgen, mein friend! It is not a guten one, however, as if it were, you would be fishing!",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.fishingPole > 0) && Main.time == 10800 && Main.dayTime)
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.fishingPole > 0) && Main.time == 10800 && Main.dayTime,
+                4, cantBeClickedOff: true)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("Fishing2", "Uhhh... wouldn't all the fish be asleep right now, Miracle Boy?",
-                "FannyIdle", cantBeClickedOff: true, duration: 5).ChainAfter(delay: 3, startTimerOnMessageSpoken: true).AddEndEvent(fish.EndMessage);
+                "FannyIdle", cantBeClickedOff: true, duration: 5).ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Fishing3", "Oh my god, do you EVER shut up? This is nonstop, every time I say anything! You always feel the need to contradict me, even when I'm just cracking a joke for our dear friend here. This is why everyone DESPISES you, Fanny! I wish you were more like my creamsicle, because THAT doesn't talk back so much- you're terrible! You've literally never helped in the history of forever, you were left to rot in a gutter by your own father, and now this? Say what you will about Evil Fanny, but at least she knows damn well when she isn't wanted. Because, get this: you're not. You hear me? YOU. ARE. WORTHLESS.",
                 "MiracleBoyIdle")
