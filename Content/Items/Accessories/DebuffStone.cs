@@ -72,9 +72,16 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            Texture2D debuff = TextureAssets.Buff[debuffType].Value;
-            Color[,] color = debuff.GetColorsFromTexture();
-            spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, color[16, 16], 0, origin, scale, SpriteEffects.None, 0f);
+            if (TextureAssets.Buff[debuffType] != null)
+            {
+                Texture2D debuff = TextureAssets.Buff[debuffType].Value;
+                Color[,] color = debuff.GetColorsFromTexture();
+                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, color[16, 16], 0, origin, scale, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, Color.White, 0, origin, scale, SpriteEffects.None, 0f);
+            }
             return false;
         }
 
