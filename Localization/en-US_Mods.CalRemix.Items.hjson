@@ -329,7 +329,10 @@ DerellectTrophyInv: {
 	Tooltip: ""
 }
 
-DerellectTrophy.DisplayName: Derellect Trophy
+DerellectTrophy: {
+	DisplayName: Derellect Trophy
+	Tooltip: ""
+}
 
 HallowEffigy: {
 	DisplayName: Hallow Effigy
@@ -1764,7 +1767,10 @@ HypnosTrophyInv: {
 	Tooltip: ""
 }
 
-HypnosTrophy.DisplayName: Hypnos Trophy
+HypnosTrophy: {
+	DisplayName: Hypnos Trophy
+	Tooltip: ""
+}
 
 ShadyGazingSkull: {
 	DisplayName: Shady Gazing Skull
@@ -2935,4 +2941,44 @@ StrongholdMusicBox: {
 GaleforceMusicBox: {
 	DisplayName: Music Box (Galeforce Day)
 	Tooltip: Plays 'Galeforce Day Theme' by Jteoh
+}
+
+PlasticOracleMusicBox: {
+	DisplayName: Plastic Oracle Music Box
+	Tooltip: ""
+}
+
+ProfanedDesertMusicBox: {
+	DisplayName: Profaned Desert Music Box
+	Tooltip: ""
+}
+
+AcidsighterTrophy: {
+	DisplayName: Acidsighter Trophy
+	Tooltip: ""
+}
+
+AstigmageddonTrophy: {
+	DisplayName: Astigmageddon Trophy
+	Tooltip: ""
+}
+
+CataractacombTrophy: {
+	DisplayName: Cataractacomb Trophy
+	Tooltip: ""
+}
+
+ConjunctivirusTrophy: {
+	DisplayName: Conjunctivirus Trophy
+	Tooltip: ""
+}
+
+ExcavatorTrophy: {
+	DisplayName: Excavator Trophy
+	Tooltip: ""
+}
+
+ExotrexiaTrophy: {
+	DisplayName: Exotrexia Trophy
+	Tooltip: ""
 }

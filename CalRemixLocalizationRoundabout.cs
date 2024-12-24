@@ -12,7 +12,9 @@ namespace CalRemix
 
         public override void PostSetupContent()
         {
+#if DEBUG
             refreshInfo.Invoke(null, new object[] { CalRemix.instance, null, Language.ActiveCulture });
+#endif
         }
     }
 
@@ -21,8 +23,10 @@ namespace CalRemix
         public static readonly PropertyInfo valueProp = typeof(LocalizedText).GetProperty("Value", BindingFlags.Public | BindingFlags.Instance);
         public static void SetDefault(this LocalizedText text, string value)
         {
+#if DEBUG
             LanguageManager.Instance.GetOrRegister(text.Key, () => value);
             valueProp.SetValue(text, value);
+#endif
         }
     }
 
