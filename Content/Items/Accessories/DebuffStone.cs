@@ -76,7 +76,21 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
             {
                 Texture2D debuff = TextureAssets.Buff[debuffType].Value;
                 Color[,] color = debuff.GetColorsFromTexture();
-                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, color[16, 16], 0, origin, scale, SpriteEffects.None, 0f);
+                Color mid = color[16, 16];
+                int atts = 5;
+                // if the color is too dark, attempt finding a brighter one
+                for (int i = -atts; i < atts; i++)
+                {
+                    if ((mid.R + mid.G + mid.B) < 255f)
+                    {
+                        mid = color[16 + i * 2, 16];
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, mid, 0, origin, scale, SpriteEffects.None, 0f);
             }
             else
             {
