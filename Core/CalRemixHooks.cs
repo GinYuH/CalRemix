@@ -70,6 +70,7 @@ namespace CalRemix.Core
             float depth,
             byte effects);
 
+        public static FieldInfo localField = typeof(LocalizationLoader).GetField("changedMods", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Load()
         {
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
@@ -80,7 +81,7 @@ namespace CalRemix.Core
             On_Main.DrawDust += DrawStatic;
             On_Main.DrawLiquid += DrawTsarBomba;
             On_SoundPlayer.Play += LazerSoundOverride;
-            //On_UIElement.Draw += FreezeIcon;
+            On_UIElement.Draw += FreezeIcon;
             //On_Player.ItemCheck_Shoot += SoldierShots;
             On_IngameOptions.DrawLeftSide += SendToFannyDimension;
             On_UIWorldCreation.BuildPage += AddRemixOption;
@@ -413,6 +414,12 @@ namespace CalRemix.Core
         private static void FreezeIcon(On_UIElement.orig_Draw orig, UIElement self, SpriteBatch spriteBatch)
         {
             orig(self, spriteBatch);
+
+            // Allow publishing of new updates without updating localization
+            HashSet<string> mods = (HashSet<string>)localField.GetValue(null);
+            mods.Clear();
+
+            return;
             float wid = self.GetOuterDimensions().Width;
             // Elements larger than 500 pixels aren't frozen (or else you get a giant ice block covering your screen)
             // Fannies don't show up if disabled
