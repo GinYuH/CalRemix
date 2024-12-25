@@ -302,7 +302,7 @@ Oxygen: {
 
 	BossChecklistIntegration: {
 		EntryName: Oxygen
-		SpawnInfo: Hit a golf ball into space. The boss must be led to the bottom of the Abyss to defeat it.
+		SpawnInfo: Hit a golf ball into space during a Galeforce Day. The boss must be led to the bottom of the Abyss to defeat it.
 		DespawnMessage: "[c/9cf5ff:The glass ball rises back to space.]"
 	}
 }
@@ -348,7 +348,7 @@ Pathogen: {
 
 	BossChecklistIntegration: {
 		EntryName: Pathogen
-		SpawnInfo: Use a [i:CalamityMod/BloodyVein] on a sink.
+		SpawnInfo: Spawns after killing 300 enemies of one side during the Pandemic Panic event.
 		DespawnMessage: "[c/b01e4c:The virus continues destroying immune cells.]"
 	}
 }

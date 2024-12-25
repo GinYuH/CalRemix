@@ -504,6 +504,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                 NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BALLER>());
             }
             RemixDowned.downedOxygen = true;
+            RemixDowned.downedGale = true;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 CalRemixWorld.oxydayTime = 0;

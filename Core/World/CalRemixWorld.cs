@@ -672,6 +672,8 @@ namespace CalRemix.Core.World
                         packet.Send();
                     }
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
+                    RemixDowned.downedGale = true;
+                    UpdateWorldBool();
                 }
             }
             if (wizardDisabled)

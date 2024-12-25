@@ -32,6 +32,7 @@ using CalamityMod.Sounds;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalRemix.Content.NPCs;
 
 namespace CalRemix
 {
@@ -193,7 +194,7 @@ namespace CalRemix
                 ["spawnItems"] = ItemType<FusedEye>(),
                 ["customPortrait"] = plportrait
             });
-            bc.Call("LogBoss", Mod, "Phytogen", 14.25f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
+            bc.Call("LogBoss", Mod, "Phytogen", 13.25f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
             bc.Call("LogBoss", Mod, "Hydrogen", 14.15f, () => RemixDowned.downedHydrogen, NPCType<Hydrogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.Grenade,
@@ -260,6 +261,7 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
+            bc.Call("LogEvent", Mod, "GaleforceDay", 11.749f, () => RemixDowned.downedGale, new List<int> { NPCID.Dandelion, NPCType<FloatingBiomass>() }, new Dictionary<string, object>());
         }
         internal static void AddCensusEntries()
         {

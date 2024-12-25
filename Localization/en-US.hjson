@@ -120,7 +120,18 @@ Mods: {
 
 		InfoDisplays.ElementDisplay.DisplayName: Element Display
 		Emotes.HypnosEmote.Command: hypnosemote
-		BossChecklistIntegration.PandemicPanic.EntryName: Pandemic Panic
+
+		BossChecklistIntegration: {
+			PandemicPanic: {
+				EntryName: Pandemic Panic
+				SpawnInfo: Use a [i:CalamityMod/BloodyVein] on a sink.
+			}
+
+			GaleforceDay: {
+				EntryName: Galeforce Day
+				SpawnInfo: Randomly occurs at the start of each day OR leading a Fushigi out of the Abyss and out of the top of the world.
+			}
+		}
 
 		InfernumIntegration: {
 			Origen:
