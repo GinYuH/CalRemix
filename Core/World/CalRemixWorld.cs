@@ -674,7 +674,11 @@ namespace CalRemix.Core.World
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
                 }
             }
-            NPC.savedWizard = false;
+            if (wizardDisabled)
+            {
+                NPC.savedWizard = false;
+                Main.townNPCCanSpawn[NPCID.Wizard] = false;
+            }
             if (trueStory < maxStoryTime)
             {
                 if (Main.netMode != NetmodeID.Server)
