@@ -130,6 +130,23 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
 
         public override void AI()
         {
+            bool anyArrows = false;
+            foreach (Cloud c in Main.cloud)
+            {
+                if (c.ModCloud != null)
+                {
+                    if (c.ModCloud.Mod == CalRemix.instance)
+                    {
+                        anyArrows = true;
+                        break;
+                    }    
+                }
+            }
+            if (!anyArrows)
+            {
+                for (int i = 0; i < 10; i++)
+                    Cloud.addCloud();
+            }
             // Generic boss setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;

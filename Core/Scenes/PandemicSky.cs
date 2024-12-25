@@ -105,7 +105,9 @@ namespace CalRemix.Core.Scenes
 
         public override float GetCloudAlpha()
         {
+            if (PandemicPanic.IsActive)
             return 0f;
+            return 1f;
         }
 
         public override void Activate(Vector2 position, params object[] args)
