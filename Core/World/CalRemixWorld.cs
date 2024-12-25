@@ -680,6 +680,10 @@ namespace CalRemix.Core.World
             {
                 NPC.savedWizard = false;
                 Main.townNPCCanSpawn[NPCID.Wizard] = false;
+                if (NPC.downedPlantBoss)
+                {
+                    Main.townNPCCanSpawn[NPCID.Princess] = true;
+                }
             }
             if (trueStory < maxStoryTime)
             {
