@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -25,6 +26,22 @@ namespace CalRemix.Content.Items.Placeables
             Item.createTile = ModContent.TileType<AsbestosPlaced>();
             Item.width = 12;
             Item.height = 12;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.ClayBlock, 20).
+                AddIngredient(ItemID.Cobweb).
+                AddTile(TileID.Anvils).
+                AddCondition(new Condition("On worlds generated without CalRemix 1.3+", () => !CalRemixWorld.postGenUpdate)).
+                DisableDecraft().
+                Register();
+
+            CreateRecipe().
+                AddIngredient<AsbestosWall>().
+                AddTile(TileID.WorkBenches).
+                Register();
         }
     }
 }
