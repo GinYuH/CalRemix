@@ -10,10 +10,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons;
 
-public class GearworkShield : ModItem
+public class GearworkShield: RogueWeapon
 {
     private bool recorded = false;
     private bool stealth = false;

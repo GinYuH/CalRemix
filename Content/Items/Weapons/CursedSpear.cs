@@ -10,7 +10,7 @@ using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class CursedSpear : ModItem
+	public class CursedSpear: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

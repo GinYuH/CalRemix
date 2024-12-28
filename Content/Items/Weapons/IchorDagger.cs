@@ -10,7 +10,7 @@ using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class IchorDagger : ModItem
+	public class IchorDagger: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

@@ -6,10 +6,11 @@ using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class BucketofCoal : ModItem
+	public class BucketofCoal: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

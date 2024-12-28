@@ -10,10 +10,11 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class ShadowsDescent : ModItem
+	public class ShadowsDescent: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{
