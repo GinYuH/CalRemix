@@ -2502,6 +2502,88 @@ Weapons: {
 				'''
 			DisplayName: Magmasher
 		}
+
+		BucketofCoal.DisplayName: Bucket of Coal
+		BundleBones.DisplayName: Bundle o' Bones
+		CursedSpear.DisplayName: Cursed Spear
+		DemonCore.DisplayName: Demon Core
+
+		EcologicalCollapse: {
+			DisplayName: Ecological Collapse
+			Tooltip:
+				'''
+				And there was no more ground to be seen...
+				Throws out up to 10 lumenous mines with lightning auras
+				Stealth strikes ignore the 10 mine cap, but dissipate quicker
+				'''
+		}
+
+		GearworkShield.DisplayName: Gearwork Shield
+		IchorDagger.DisplayName: Ichor Dagger
+
+		ProfanedNucleus: {
+			DisplayName: Profaned Nucleus
+			Tooltip:
+				'''
+				Throws out a molten chunk of profaned rock that explodes and splits into crystals
+				Stealth strikes leave behind lingering patches of magma
+				'''
+		}
+
+		RazorTeeth.DisplayName: Razor Teeth
+
+		ScrapBag: {
+			DisplayName: Scrap Claw
+			Tooltip:
+				'''
+				Tosses out scraps
+				Stealth strikes throw a large amount of charged scraps that linger longer
+				'''
+		}
+
+		ShadowsDescent: {
+			DisplayName: Shadow's Descent
+			Tooltip:
+				'''
+				Shoots a shadow ball that ignores gravity and slows down after a short time.While stationary, it shoots spirits and covers an area in a large shadow
+				Stealth strikes also emit dark pulses while stationary
+				Right click to delete all existing shadow balls
+				'They didn't understand its nature, so it was sealed away...'
+				'''
+		}
+
+		ThrowingMissiles: {
+			DisplayName: Throwing Missiles
+			Tooltip:
+				'''
+				Flings erratically moving missiles which home on enemies
+				Stealth strikes unleash a swarm of missiles
+				'''
+		}
+
+		UnsealedSingularity: {
+			DisplayName: Unsealed Singularity
+			Tooltip:
+				'''
+				Cold and alone in the void...Throws a volley of five void flasks which shatter on impact
+				Shattered flasks summon blackholes which pull in enemies and purple void matter
+				Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter
+				'''
+		}
+
+		Warglaive: {
+			DisplayName: Warglaive
+			Tooltip: Stealth strikes stick to tiles
+		}
+
+		WreathofBelial: {
+			DisplayName: Wreath of Belial
+			Tooltip:
+				'''
+				Throws a festive wreath that grows in size until exploding into icicle shards
+				Stealth strikes cause the wreath to suck in nearby enemies
+				'''
+		}
 	}
 }
 
