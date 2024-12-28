@@ -391,6 +391,10 @@ namespace CalRemix.Core.Retheme
             {
                 item.SetNameOverride(item.Name.Replace("Skeletron", "Dungen"));
             }
+            else if (item.type == ItemID.DaedalusStormbow)
+            {
+                item.SetNameOverride("Daedalus Bow");
+            }
         }
         public override void UpdateInventory(Item item, Player player)
         {

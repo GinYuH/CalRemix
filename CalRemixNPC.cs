@@ -55,6 +55,7 @@ using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
@@ -745,6 +746,10 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ItemType<ColdheartIcicle>()));
                 shop.Add(new NPCShop.Entry(ItemType<TheGenerator>(), new Condition("Conditions.DownedGens", () => RemixDowned.DownedGens)));
             }
+            if (shop.NpcType == NPCID.ArmsDealer)
+            {
+                shop.Add(new NPCShop.Entry(ItemType<ElectricEel>()));
+            }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
@@ -915,6 +920,10 @@ namespace CalRemix
             if (npc.type == NPCType<SightseerCollider>())
             {
                 npcLoot.Add(ItemType<AstralPearl>(), 20);
+            }
+            if (npc.type == NPCID.Deerclops)
+            {
+                npcLoot.Add(ItemType<DeerdalusStormclops>());
             }
             #endregion
             #region Godseeker Mode

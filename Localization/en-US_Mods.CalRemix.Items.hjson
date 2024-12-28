@@ -2982,3 +2982,8 @@ ExotrexiaTrophy: {
 	DisplayName: Exotrexia Trophy
 	Tooltip: ""
 }
+
+CopperStormbow: {
+	DisplayName: Copper Stormbow
+	Tooltip: Shoots arrows from the sky
+}

@@ -201,5 +201,7 @@ Mods: {
 				Wulfrum Excavator
 				'''
 		}
+
+		DamageClasses.StormbowDamageClass.DisplayName: stormbow damage
 	}
 }
