@@ -1,21 +1,23 @@
 ﻿using System;
+using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Ranged;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class DoubleHelix : ModItem, ILocalizedModType
+    public class ElementalStormsurge : ModItem, ILocalizedModType
     {
         public override void SetDefaults()
         {
@@ -29,14 +31,14 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             Item.width = 22;
             Item.height = 46;
-            Item.damage = 6;
-            Item.crit = 4;
-            Item.useTime = 32;
-            Item.useAnimation = 32;
+            Item.damage = 96;
+            Item.crit = 20;
+            Item.useTime = 2;
+            Item.useAnimation = 2;
 
-            Item.value = CalamityGlobalItem.RarityWhiteBuyPrice;
-            Item.rare = ItemRarityID.White;
-            Item.shoot = ModContent.ProjectileType<FeatherLarge>();
+            Item.value = CalamityGlobalItem.RarityPurpleBuyPrice;
+            Item.rare = ItemRarityID.Purple;
+            Item.shoot = ModContent.ProjectileType<RainbowBlast>();
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -44,11 +46,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             return true;
         }
 
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, Main.DiscoColor, 0, origin, scale, SpriteEffects.None, 0f);
+        
+            return false;
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             // big govt secret: this is actually just a really edited undines retribution. but dont tell anyone that
             // u can edit the i < whatever for extra arrows lool. lol. haha lol
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Vector2 cursorPos = Main.MouseWorld;
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
@@ -59,7 +68,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
                 // arrow position noise pass
                 cursorPos.X += Main.rand.Next(-60, 61);
-                cursorPos.Y += Main.rand.Next(-60, 61);
+                cursorPos.Y += Main.rand.Next(-60, 61); 
 
                 // if to right of player, right direct all projectiles. else, left
                 if (Main.MouseWorld.X - player.Center.X > 0)
@@ -74,20 +83,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 }
 
                 int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
-
-                // flipside
-                if (Main.MouseWorld.X - player.Center.X > 0)
-                {
-                    cursorPos.X += 200;
-                    speedX -= 5;
-                }
-                else
-                {
-                    cursorPos.X -= 200;
-                    speedX += 5;
-                }
-
-                int projectile2 = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
             }
             return false;
         }
@@ -95,9 +90,13 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<AerialiteBar>(30).
+                //AddIngredient<DemeterStormbow>(1).
                 AddIngredient(ItemID.Cobweb, 15).
-                AddTile(TileID.SkyMill).
+                AddIngredient(ItemID.DaedalusStormbow, 1).
+                AddIngredient(ItemID.LunarBar, 5).
+                AddIngredient<LifeAlloy>(5).
+                AddIngredient<GalacticaSingularity>(5).
+                AddTile(TileID.LunarCraftingStation).
                 Register();
         }
     }

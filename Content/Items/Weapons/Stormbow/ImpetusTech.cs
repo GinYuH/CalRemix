@@ -2,10 +2,10 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
+using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Ranged;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class DoubleHelix : ModItem, ILocalizedModType
+    public class ImpetusTech : ModItem, ILocalizedModType
     {
         public override void SetDefaults()
         {
@@ -48,57 +48,30 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             // big govt secret: this is actually just a really edited undines retribution. but dont tell anyone that
             // u can edit the i < whatever for extra arrows lool. lol. haha lol
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 47; i++)
             {
                 Vector2 cursorPos = Main.MouseWorld;
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
                 cursorPos.Y = player.Center.Y - 800 - (100 * (i * 0.75f));
-                float speedX = Main.rand.Next(-60, 91) * 0.02f;
-                float speedY = Main.rand.Next(-60, 91) * 0.02f;
-                speedY += 15;
 
                 // arrow position noise pass
                 cursorPos.X += Main.rand.Next(-60, 61);
-                cursorPos.Y += Main.rand.Next(-60, 61);
+                cursorPos.Y += Main.rand.Next(-60, 61); 
 
                 // if to right of player, right direct all projectiles. else, left
                 if (Main.MouseWorld.X - player.Center.X > 0)
                 {
                     cursorPos.X -= 200;
-                    speedX += 5;
                 }
                 else
                 {
                     cursorPos.X += 200;
-                    speedX -= 5;
                 }
 
-                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
-
-                // flipside
-                if (Main.MouseWorld.X - player.Center.X > 0)
-                {
-                    cursorPos.X += 200;
-                    speedX -= 5;
-                }
-                else
-                {
-                    cursorPos.X -= 200;
-                    speedX += 5;
-                }
-
-                int projectile2 = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
+                // deploy
+                NPC.NewNPCDirect(source, (int)cursorPos.X, (int)cursorPos.Y, ModContent.NPCType<AresGaussNuke>());
             }
             return false;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe().
-                AddIngredient<AerialiteBar>(30).
-                AddIngredient(ItemID.Cobweb, 15).
-                AddTile(TileID.SkyMill).
-                Register();
         }
     }
 }
