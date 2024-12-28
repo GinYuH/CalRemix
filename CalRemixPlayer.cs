@@ -1405,7 +1405,7 @@ namespace CalRemix
             dyeStats.Add(ItemID.RedAcidDye, new DyeStats(red: 3, orange: 2));
             dyeStats.Add(ItemID.ChlorophyteDye, new DyeStats(green: 4));
             dyeStats.Add(ItemID.GelDye, new DyeStats(blue: 3));
-            dyeStats.Add(ItemID.GlowingMushroom, new DyeStats(blue: 3, teal: 2));
+            dyeStats.Add(ItemID.MushroomDye, new DyeStats(blue: 3, teal: 2));
             dyeStats.Add(ItemID.GrimDye, new DyeStats(red: 3, brown: 4));
             dyeStats.Add(ItemID.HadesDye, new DyeStats(skyblue: 4, cyan: 3));
             dyeStats.Add(ItemID.BurningHadesDye, new DyeStats(orange: 4, yellow: 3));
