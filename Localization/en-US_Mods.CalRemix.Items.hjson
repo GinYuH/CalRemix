@@ -2987,3 +2987,18 @@ CopperStormbow: {
 	DisplayName: Copper Stormbow
 	Tooltip: Shoots arrows from the sky
 }
+
+AshWoodStormbow: {
+	DisplayName: Ash Wood Stormbow
+	Tooltip: Shoots flaming arrows from the sky
+}
+
+ElectricEel: {
+	DisplayName: Electric Eel
+	Tooltip: Shoots bullets from the sky
+}
+
+DeerdalusStormclops: {
+	DisplayName: Deerdalus Stormclops
+	Tooltip: Clopses icicles from the sky
+}
