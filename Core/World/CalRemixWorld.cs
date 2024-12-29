@@ -90,6 +90,7 @@ namespace CalRemix.Core.World
         public static bool generatedHydrogen = false;
         public static bool canGenerateBaron = false;
         public static bool generatedGrime = false;
+        public static bool seenMBP = false;
         public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
@@ -211,6 +212,7 @@ namespace CalRemix.Core.World
             deusDeadInSnow = false;
             ogslime = false;
             loadedRecipeInjections = false;
+            seenMBP = false;
 
             // Worldgen
             generatedCosmiliteSlag = false;
@@ -297,6 +299,7 @@ namespace CalRemix.Core.World
             tag["meld"] = meldCountdown;
             tag["trueStory"] = trueStory;
             tag["roachDuration"] = roachDuration;
+            tag["mbp"] = seenMBP;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -358,6 +361,7 @@ namespace CalRemix.Core.World
             GetData(ref canGenerateBaron, "canBaron", tag);
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
+            GetData(ref seenMBP, "mbp", tag);
 
             GetData(ref alloyBars, "109alloybar", tag);
             GetData(ref essenceBars, "109essencebar", tag);
@@ -435,6 +439,7 @@ namespace CalRemix.Core.World
             writer.Write(trueStory);
             writer.Write(RoachCountdown);
             writer.Write(roachDuration);
+            writer.Write(seenMBP);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -501,6 +506,7 @@ namespace CalRemix.Core.World
             trueStory = reader.ReadInt32();
             RoachCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
+            seenMBP = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
