@@ -3114,3 +3114,18 @@ Vinewrath: {
 	DisplayName: Vinewrath
 	Tooltip: Shoots beehives from the sky
 }
+
+Watercooler: {
+	DisplayName: Watercooler
+	Tooltip: Shoots a waterfall from the sky
+}
+
+SoulOfFlightstorm: {
+	DisplayName: Soul Of Flightstorm
+	Tooltip: Shoots flight from the sky
+}
+
+BigEater: {
+	DisplayName: The Big Eater
+	Tooltip: Shoots arrows from the sky and the ground
+}

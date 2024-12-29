@@ -46,6 +46,7 @@ using Terraria.Audio;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
+using CalRemix.Content.Items.Weapons.Stormbow;
 
 namespace CalRemix.Core.World
 {
@@ -1183,6 +1184,10 @@ namespace CalRemix.Core.World
                                 {
                                     chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
                                     chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                                }
+                                if (Main.rand.NextBool(3))
+                                {
+                                    chest.item[inventoryIndex].SetDefaults(ItemType<Watercooler>());
                                 }
                                 break;
                             }

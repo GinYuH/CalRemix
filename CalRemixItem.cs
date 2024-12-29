@@ -36,6 +36,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Minibosses;
@@ -498,6 +499,7 @@ namespace CalRemix
             if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
             {
                 itemLoot.Add(ItemType<BundleBones>(), 4, 10, 25);
+                itemLoot.Add(ItemType<Watercooler>(), 20);
             }
             if (item.type == ItemType<DesertScourgeBag>())
             {
@@ -611,6 +613,10 @@ namespace CalRemix
                 {
                     itemLoot.Add(ItemType<MovieSign>(), 22);
                 }
+            }
+            else if (item.type == ItemID.DeerclopsBossBag)
+            {
+                itemLoot.Add(ItemType<DeerdalusStormclops>(), 20);
             }
         }
 

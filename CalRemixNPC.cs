@@ -921,10 +921,6 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<AstralPearl>(), 20);
             }
-            if (npc.type == NPCID.Deerclops)
-            {
-                npcLoot.Add(ItemType<DeerdalusStormclops>());
-            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
@@ -1114,6 +1110,11 @@ namespace CalRemix
                     npcLoot.Add(frond);
                 }
             }
+            if (npc.type == NPCID.Deerclops)
+            {
+                npcLoot.AddNormalOnly(ItemType<DeerdalusStormclops>(), 20);
+            }
+
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {

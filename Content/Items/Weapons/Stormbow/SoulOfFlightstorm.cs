@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class Fruminous : ModItem, ILocalizedModType
+    public class SoulOfFlightstorm : ModItem, ILocalizedModType
     {
         public override void SetDefaults()
         {
@@ -21,20 +21,20 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 3.5f;
-            Item.UseSound = SoundID.Item5;
+            Item.UseSound = SoundID.Item13;
             Item.autoReuse = true;
             Item.shootSpeed = 12f;
 
             Item.width = 22;
             Item.height = 46;
-            Item.damage = 57;
-            Item.crit = 16;
-            Item.useTime = 28;
-            Item.useAnimation = 28;
+            Item.damage = 56;
+            Item.crit = 12;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
 
-            Item.value = CalamityGlobalItem.RarityOrangeBuyPrice;
-            Item.rare = ItemRarityID.Orange;
-            Item.shoot = ProjectileID.Hellwing;
+            Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
+            Item.rare = ItemRarityID.Pink;
+            Item.shoot = ProjectileID.ZapinatorLaser;
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -46,34 +46,32 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             // big govt secret: this is actually just a really edited undines retribution. but dont tell anyone that
             // u can edit the i < whatever for extra arrows lool. lol. haha lol
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
-                Vector2 cursorPos = player.Center; // lol
+                Vector2 cursorPos = Main.MouseWorld;
+                cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
+                cursorPos.Y = player.Center.Y - 800 - (100 * (i * 0.75f));
                 float speedX = Main.rand.Next(-60, 91) * 0.02f;
                 float speedY = Main.rand.Next(-60, 91) * 0.02f;
+                speedY += 15;
 
                 // arrow position noise pass
                 cursorPos.X += Main.rand.Next(-60, 61);
-                cursorPos.Y += Main.rand.Next(-60, 61);
-
-                int ai1 = -10;
+                cursorPos.Y += Main.rand.Next(-60, 61); 
 
                 // if to right of player, right direct all projectiles. else, left
                 if (Main.MouseWorld.X - player.Center.X > 0)
                 {
-                    cursorPos.X -= 1500;
-                    speedX += 50;
-                    ai1 = 10;
+                    cursorPos.X -= 200;
+                    speedX += 5;
                 }
                 else
                 {
-                    cursorPos.X += 1500;
-                    speedX -= 50;
+                    cursorPos.X += 200;
+                    speedX -= 5;
                 }
 
-                int batOffset = Main.rand.Next(-3, 3);
-
-                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, ai1, batOffset);
+                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
             }
             return false;
         }
@@ -81,10 +79,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.HellwingBow, 2).
+                AddIngredient(ItemID.SoulofFlight, 30).
                 AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient(ItemID.HellstoneBar, 20).
-                AddTile(TileID.Anvils).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }
