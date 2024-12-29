@@ -42,6 +42,8 @@ using CalamityMod.Systems;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.LoreItems;
 using System;
+using CalRemix.Content.DamageClasses;
+using CalamityMod.Items.Weapons.Melee;
 
 namespace CalRemix.Core.Retheme
 {
@@ -394,6 +396,47 @@ namespace CalRemix.Core.Retheme
             else if (item.type == ItemID.DaedalusStormbow)
             {
                 item.SetNameOverride("Daedalus Bow");
+            }
+            else if (item.type == ItemID.Starfury)
+            {
+                item.SetNameOverride("Starstorm");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 5;
+            }
+            else if (item.type == ItemID.StarWrath)
+            {
+                item.SetNameOverride("Starstorm 2");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 27;
+            }
+            else if (item.type == ItemID.BloodRainBow)
+            {
+                item.SetNameOverride("Blood Rain Stormbow");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+            }
+            else if (item.type == ItemID.MeteorStaff)
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 0;
+            }
+            else if (item.type == ItemID.BlizzardStaff)
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 0;
+            }
+            else if (item.type == ItemID.LunarFlareBook)
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 0;
+            }
+            else if (item.type == ItemType<TheBurningSky>())
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+            }
+            else if (item.type == ItemType<StarShower>())
+            {
+                item.SetNameOverride("Star Storm");
+                item.DamageType = GetInstance<StormbowDamageClass>();
             }
         }
         public override void UpdateInventory(Item item, Player player)

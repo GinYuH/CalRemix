@@ -61,7 +61,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             {
                 Vector2 cursorPos = Main.MouseWorld;
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
-                cursorPos.Y = player.Center.Y - 800 - (100 * (i * 0.75f));
+                cursorPos.Y = player.Center.Y - 800 - (100 * 0.75f);
                 float speedX = Main.rand.Next(-60, 91) * 0.02f;
                 float speedY = Main.rand.Next(-60, 91) * 0.02f;
                 speedY += 15;

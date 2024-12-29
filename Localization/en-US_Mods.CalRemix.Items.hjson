@@ -2502,6 +2502,88 @@ Weapons: {
 				'''
 			DisplayName: Magmasher
 		}
+
+		WreathofBelial: {
+			Tooltip:
+				'''
+				Throws a festive wreath that grows in size until exploding into icicle shards
+				Stealth strikes cause the wreath to suck in nearby enemies
+				'''
+			DisplayName: Wreath of Belial
+		}
+
+		Warglaive: {
+			Tooltip: Stealth strikes stick to tiles
+			DisplayName: Warglaive
+		}
+
+		UnsealedSingularity: {
+			Tooltip:
+				'''
+				Cold and alone in the void...Throws a volley of five void flasks which shatter on impact
+				Shattered flasks summon blackholes which pull in enemies and purple void matter
+				Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter
+				'''
+			DisplayName: Unsealed Singularity
+		}
+
+		ThrowingMissiles: {
+			Tooltip:
+				'''
+				Flings erratically moving missiles which home on enemies
+				Stealth strikes unleash a swarm of missiles
+				'''
+			DisplayName: Throwing Missiles
+		}
+
+		ShadowsDescent: {
+			Tooltip:
+				'''
+				Shoots a shadow ball that ignores gravity and slows down after a short time.While stationary, it shoots spirits and covers an area in a large shadow
+				Stealth strikes also emit dark pulses while stationary
+				Right click to delete all existing shadow balls
+				'They didn't understand its nature, so it was sealed away...'
+				'''
+			DisplayName: Shadow's Descent
+		}
+
+		ScrapBag: {
+			Tooltip:
+				'''
+				Tosses out scraps
+				Stealth strikes throw a large amount of charged scraps that linger longer
+				'''
+			DisplayName: Scrap Claw
+		}
+
+		RazorTeeth.DisplayName: Razor Teeth
+
+		ProfanedNucleus: {
+			Tooltip:
+				'''
+				Throws out a molten chunk of profaned rock that explodes and splits into crystals
+				Stealth strikes leave behind lingering patches of magma
+				'''
+			DisplayName: Profaned Nucleus
+		}
+
+		IchorDagger.DisplayName: Ichor Dagger
+		GearworkShield.DisplayName: Gearwork Shield
+
+		EcologicalCollapse: {
+			Tooltip:
+				'''
+				And there was no more ground to be seen...
+				Throws out up to 10 lumenous mines with lightning auras
+				Stealth strikes ignore the 10 mine cap, but dissipate quicker
+				'''
+			DisplayName: Ecological Collapse
+		}
+
+		DemonCore.DisplayName: Demon Core
+		CursedSpear.DisplayName: Cursed Spear
+		BundleBones.DisplayName: Bundle o' Bones
+		BucketofCoal.DisplayName: Bucket of Coal
 	}
 }
 
@@ -3004,16 +3086,31 @@ DeerdalusStormclops: {
 }
 
 DoubleHelix: {
-	DisplayName: Electric Eel
+	DisplayName: Double Helix
 	Tooltip: Shoots two streams of feathers from the sky
+}
+
+ElementalStormsurge: {
+	DisplayName: Elemental Stormsurge
+	Tooltip: Shoots dust projectiles from the sky
 }
 
 ImpetusTech: {
 	DisplayName: Impetus Tech
-	Tooltip: Mutually assures fourty seven Gauss Nukes from the sky
+	Tooltip: Mutually assures fourty seven nukes from the sky
 }
 
-ElementalStormsurge: {
-	DisplayName: ElementalStormsurge
-	Tooltip: Shoots dust from the sky
+Fruminous: {
+	DisplayName: Fruminous
+	Tooltip: Shoots flaming bats from the sides
+}
+
+DaedalusEmblem: {
+	DisplayName: Daedalus Emblem
+	Tooltip: 15% increased stormbow damage
+}
+
+Vinewrath: {
+	DisplayName: Vinewrath
+	Tooltip: Shoots beehives from the sky
 }

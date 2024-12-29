@@ -33,6 +33,7 @@ using CalamityMod.NPCs.Perforator;
 using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.DamageClasses;
 
 namespace CalRemix
 {
@@ -132,6 +133,7 @@ namespace CalRemix
                 Wikithis.Call("AddWikiTexture", Mod, Request<Texture2D>("CalRemix/icon_small"));
             }
             AddInfernumCards();
+            ColoredDamageTypesSupport();
         }
 
         public void comp()
@@ -221,7 +223,7 @@ namespace CalRemix
             });
             /*
                 $"Jam a [i:{ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
-                "An imperfection after allÅ, what a shame.",
+                "An imperfection after allÅE what a shame.",
              */
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
@@ -384,5 +386,14 @@ namespace CalRemix
             MusicDisplay.Call("AddMusic", music, name, author, Mod.DisplayName);
         }
          */
+        public static void ColoredDamageTypesSupport()
+        {
+            // i dont care about this
+            //Mod coloredDamageTypes = GetInstance<CalamityMod>().coloredDamageTypes;
+            //if (coloredDamageTypes is null)
+            //    return;
+
+            //coloredDamageTypes.Call("AddDamageType", StormbowDamageClass.Instance, RogueTooltipColor, RogueDamageColor, RogueCritColor);
+        }
     }
 }

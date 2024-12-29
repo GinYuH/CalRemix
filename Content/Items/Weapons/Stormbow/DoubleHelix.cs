@@ -34,8 +34,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.useTime = 32;
             Item.useAnimation = 32;
 
-            Item.value = CalamityGlobalItem.RarityWhiteBuyPrice;
-            Item.rare = ItemRarityID.White;
+            Item.value = CalamityGlobalItem.RarityOrangeBuyPrice;
+            Item.rare = ItemRarityID.Orange;
             Item.shoot = ModContent.ProjectileType<FeatherLarge>();
         }
 
