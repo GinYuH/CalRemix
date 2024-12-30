@@ -749,6 +749,7 @@ namespace CalRemix
             if (shop.NpcType == NPCID.ArmsDealer)
             {
                 shop.Add(new NPCShop.Entry(ItemType<ElectricEel>()));
+                shop.Add(new NPCShop.Entry(ItemType<SB90>(), Condition.Hardmode));
             }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
