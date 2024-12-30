@@ -921,6 +921,14 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<AstralPearl>(), 20);
             }
+            if (npc.type == NPCID.DD2OgreT2)
+            {
+                npcLoot.Add(ItemType<BoringStormbow>(), 10);
+            }
+            if (npc.type == NPCID.DD2OgreT3)
+            {
+                npcLoot.Add(ItemType<BoringStormbow>(), 5);
+            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)

@@ -438,6 +438,11 @@ namespace CalRemix.Core.Retheme
                 item.SetNameOverride("Star Storm");
                 item.DamageType = GetInstance<StormbowDamageClass>();
             }
+
+            if (item.Name.Contains("Relic") && item.rare == ItemRarityID.Master)
+            {
+                item.SetNameOverride(item.Name.Replace("Relic", "Treasure"));
+            }
         }
         public override void UpdateInventory(Item item, Player player)
         {

@@ -3129,3 +3129,22 @@ BigEater: {
 	DisplayName: The Big Eater
 	Tooltip: Shoots arrows from the sky and the ground
 }
+
+BoringStormbow: {
+	DisplayName: Boring Stormbow
+	Tooltip: Shoots slime from above you
+}
+
+ThreeOClock: {
+	DisplayName: Three O'Clock
+	Tooltip: Shoots arrows from the cardinal directions
+}
+
+DemeterStormbow: {
+	DisplayName: Demeter Stormbow
+	Tooltip:
+		'''
+		Shoot a Terra Hawk to annihilate your foes from the sky
+		'This goes to twelve'
+		'''
+}
