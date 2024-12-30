@@ -3132,17 +3132,18 @@ BigEater: {
 
 BoringStormbow: {
 	DisplayName: Boring Stormbow
-	Tooltip: Shoots slime from above you 
+	Tooltip: Shoots slime from above you
 }
 
 ThreeOClock: {
 	DisplayName: Three O'Clock
-	Tooltip: Shoots arrows from the cardinal directions 
+	Tooltip: Shoots arrows from the cardinal directions
 }
 
 DemeterStormbow: {
 	DisplayName: Demeter Stormbow
-	Tooltip:'''
+	Tooltip:
+		'''
 		Shoot a Terra Hawk to annihilate your foes from the sky
 		'This goes to twelve'
 		'''
@@ -3150,8 +3151,18 @@ DemeterStormbow: {
 
 SB90: {
 	DisplayName: SB90
-	Tooltip:'''
-		Unleashes a stream of armor-piercing arrows at an incredible rate from the sky
+	Tooltip:
+		'''
+		Unleashes a stream of arrows at an incredible rate from the sky
 		'It's an arrow hose'
+		'''
+}
+
+RiskOfRain: {
+	DisplayName: Risk Of Rain
+	Tooltip:
+		'''
+		Target an area to shoot electric arrows from the sky
+		'Captain! I think- we've got an arrow storm!'
 		'''
 }
