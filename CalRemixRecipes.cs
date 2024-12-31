@@ -326,7 +326,7 @@ namespace CalRemix
                 foreach (var v in ContentSamples.ItemsByType)
                 {
                     Item item = v.Value;
-                    if (item.ammo == AmmoID.Arrow)
+                    if (item.ammo == AmmoID.Arrow && recipe.HasResult(item.type))
                     {
                         recipe.AddIngredient(ItemID.Feather);
                     }
