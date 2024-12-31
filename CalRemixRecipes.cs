@@ -322,6 +322,10 @@ namespace CalRemix
                         CalRemixItem.cosmicItems.Add(recipe.createItem.type);
                     }
                 }
+                if (recipe.HasResult(ItemID.WoodenArrow))
+                {
+                    recipe.AddIngredient(ItemID.Feather);
+                }
                 #region Replacement
                 if (recipe.HasResult(ItemType<DesertProwlerHat>()) || recipe.HasResult(ItemType<DesertProwlerShirt>()) || recipe.HasResult(ItemType<DesertProwlerPants>()))
                 {
