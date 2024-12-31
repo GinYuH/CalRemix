@@ -1,4 +1,5 @@
 ﻿using System;
+using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
@@ -8,6 +9,8 @@ using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Projectiles.Weapons.Stormbow;
+using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -29,18 +32,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.shootSpeed = 12f;
 
             Item.width = 22;
-            Item.height = 46;
+            Item.height = 342;
             Item.damage = 6;
-            Item.crit = 4;
-            Item.useTime = 32;
-            Item.useAnimation = 32;
+            Item.crit = 20;
+            Item.useTime = 3;
+            Item.useAnimation = 3;
 
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(2, 13));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
 
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
             Item.rare = ModContent.RarityType<DarkBlue>();
-            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.shoot = ModContent.ProjectileType<NanomachinesSon>();
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -57,27 +60,25 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Vector2 cursorPos = Main.MouseWorld;
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
                 cursorPos.Y = player.Center.Y - 800 - (100 * (i * 0.75f));
-                float speedX = Main.rand.Next(-60, 91) * 0.02f;
-                float speedY = Main.rand.Next(-60, 91) * 0.02f;
-                speedY += 15;
 
                 // arrow position noise pass
-                cursorPos.X += Main.rand.Next(-60, 61);
-                cursorPos.Y += Main.rand.Next(-60, 61); 
+                cursorPos.X += Main.rand.Next(-120, 121);
+                cursorPos.Y += Main.rand.Next(-60, 61);
 
-                // if to right of player, right direct all projectiles. else, left
-                if (Main.MouseWorld.X - player.Center.X > 0)
+                // tile array stuff
+                // we gyatta get the highest bit of collision from the spawned point so it looks nice and chill
+                for (int ii = 0; ii < 222; ii++)
                 {
-                    cursorPos.X -= 200;
-                    speedX += 5;
-                }
-                else
-                {
-                    cursorPos.X += 200;
-                    speedX -= 5;
+                    Tile proposedTile = CalamityUtils.ParanoidTileRetrieval((int)(cursorPos.X / 16), (int)((cursorPos.Y / 16) + ii));
+                    if (proposedTile != null)
+                        if (proposedTile.IsTileSolid())
+                        {
+                            cursorPos.Y = (cursorPos.Y + (ii * 16));
+                            break;
+                        }
                 }
 
-                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
+                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, 0, 0, type, damage, knockback, player.whoAmI, 0.0f);
             }
             return false;
         }
