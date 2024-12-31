@@ -23,6 +23,6 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
             int awesomeRandomNumber = Main.rand.Next(0, BuffLoader.BuffCount);
             target.AddBuff(awesomeRandomNumber, 180);
         }
-        public override Color? GetAlpha(Color lightColor) => new Color(Main.rand.Next(0, 255), Main.rand.Next(0, 255), Main.rand.Next(0, 255), 0);
+        public override Color? GetAlpha(Color lightColor) => new Color(Main.rand.Next(0, 255), Main.rand.Next(0, 255), Main.rand.Next(0, 255), 127);
     }
 }
