@@ -3166,3 +3166,17 @@ RiskOfRain: {
 		'Captain! I think- we've got an arrow storm!'
 		'''
 }
+
+JetstreamSam: {
+	DisplayName: Jetstream Sam
+	Tooltip:
+		'''
+		A high-frequency bow that can cleanly shoot arrows from the sky through even the mightiest foe
+		[c/F41A31:'Shed!']
+		'''
+}
+
+TwinkleTwinkle: {
+	DisplayName: Twinkle Twinkle
+	Tooltip: Shoots a little star from the sky
+}

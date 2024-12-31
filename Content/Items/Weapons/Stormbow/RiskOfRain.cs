@@ -3,14 +3,18 @@ using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.FurnitureStratus;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.DamageClasses;
+using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Projectiles.Weapons.Stormbow;
+using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -66,11 +70,50 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient<JellyChargedBattery>(2).
                 AddIngredient<CosmiliteBar>(400).
                 AddIngredient<AscendantSpiritEssence>(77).
+                AddIngredient<Necroplasm>(668).
+                AddIngredient(ItemID.TungstenOre, 37).
+                AddIngredient(ItemID.BookStaff, 1).
+                AddIngredient<StratusBricks>(5000).
+                AddIngredient(ItemID.WaterBucket, 10).
+                AddIngredient<ReaperTooth>(40).
+                AddIngredient<NightmareFuel>(50).
+                AddIngredient<EndothermicEnergy>(50).
+                AddIngredient<DarksunFragment>(25).
+                AddIngredient(ItemID.Toilet, 1).
+                AddIngredient<ElectrolyteGelPack>(5).
+                AddIngredient<Water>(22).
+                AddIngredient<Those>().
+                AddIngredient<Who>().
+                AddIngredient<Know>().
                 AddIngredient(ItemID.Skull, 1).
                 AddIngredient(ItemID.Skull, 1).
                 AddIngredient(ItemID.Skull, 1).
                 AddIngredient(ItemID.Skull, 1).
                 AddIngredient(ItemID.Skull, 1).
+                AddTile<CosmicAnvil>().
+                Register();
+
+            CreateRecipe().
+                AddIngredient(ItemID.AquaScepter, 1).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddIngredient<AquasScepter>().
+                AddIngredient(ItemID.WaterBucket, 5).
+                AddIngredient<Watercooler>().
+                AddIngredient<JellyChargedBattery>(2).
+                AddIngredient<CosmiliteBar>(400).
+                AddIngredient<AscendantSpiritEssence>(77).
+                AddIngredient<Necroplasm>(668).
+                AddIngredient(ItemID.TungstenOre, 37).
+                AddIngredient(ItemID.BookStaff, 1).
+                AddIngredient<StratusBricks>(5000).
+                AddIngredient(ItemID.WaterBucket, 10).
+                AddIngredient<ReaperTooth>(40).
+                AddIngredient<NightmareFuel>(50).
+                AddIngredient<EndothermicEnergy>(50).
+                AddIngredient<DarksunFragment>(25).
+                AddIngredient(ItemID.Toilet, 1).
+                AddIngredient<ElectrolyteGelPack>(5).
+                AddIngredient<NebulousCore>().
                 AddTile<CosmicAnvil>().
                 Register();
         }
