@@ -1123,6 +1123,10 @@ namespace CalRemix
             {
                 npcLoot.AddNormalOnly(ItemType<DeerdalusStormclops>(), 20);
             }
+            if (npc.type == NPCType<PlaguebringerGoliath>())
+            {
+                npcLoot.AddNormalOnly(ItemType<Alchemists3rdTrumpet>(), 25);
+            }
 
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)

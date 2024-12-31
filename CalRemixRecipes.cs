@@ -323,6 +323,9 @@ namespace CalRemix
                     }
                 }
 
+                // this iterates over every item in the game for every recipe in the game
+                // i cant help but feel like that is, to put lightly, Fucking Abysmal And Terrible And Should Be Changed Immediately
+                // but i dont notice any major load time increase rn so its fine
                 foreach (var v in ContentSamples.ItemsByType)
                 {
                     Item item = v.Value;

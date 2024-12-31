@@ -3180,3 +3180,12 @@ TwinkleTwinkle: {
 	DisplayName: Twinkle Twinkle
 	Tooltip: Shoots a little star from the sky
 }
+
+Alchemists3rdTrumpet: {
+	DisplayName: Alchemist's 3rd Trumpet
+	Tooltip:
+		'''
+		Shoots arrows from the sky
+		Arrows can inflict any debuff
+		'''
+}

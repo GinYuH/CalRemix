@@ -618,6 +618,10 @@ namespace CalRemix
             {
                 itemLoot.Add(ItemType<DeerdalusStormclops>(), 20);
             }
+            else if (item.type == ItemType<PlaguebringerGoliathBag>())
+            {
+                itemLoot.Add(ItemType<Alchemists3rdTrumpet>(), 25);
+            }
         }
 
 
