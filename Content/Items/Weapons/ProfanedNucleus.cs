@@ -8,10 +8,11 @@ using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-    public class ProfanedNucleus : ModItem
+    public class ProfanedNucleus: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

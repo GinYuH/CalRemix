@@ -11,7 +11,7 @@ using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class FracturingFist : ModItem
+	public class FracturingFist: RogueWeapon
 	{
 		public override void SetDefaults() 
 		{

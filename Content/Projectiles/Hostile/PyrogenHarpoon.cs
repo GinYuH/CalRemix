@@ -202,8 +202,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                         {
                             int type = Main.zenithWorld ? ModContent.ProjectileType<IceBomb>() : ModContent.ProjectileType<PyrogenFlare>();
                             int projSpeed = 16;
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.Pi) * projSpeed, type, (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(-MathHelper.Pi) * -projSpeed, type, (int)(n.damage / 6f), 0, Main.myPlayer, 0, 1);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.Pi) * projSpeed, type, 100, 0, Main.myPlayer, 0, 1);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2().RotatedBy(-MathHelper.Pi) * -projSpeed, type, 100, 0, Main.myPlayer, 0, 1);
                         }
                     }
                     else

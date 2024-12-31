@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
@@ -37,7 +36,7 @@ namespace CalRemix.Content.Items.Accessories
         {
             Item.width = 22;
             Item.height = 22;
-            Item.rare = ModContent.RarityType<CalamityRed>();
+            Item.rare = ModContent.RarityType<LightmixOrange>();
             Item.Remix().devItem = "Remix";
             Item.accessory = true;
         }

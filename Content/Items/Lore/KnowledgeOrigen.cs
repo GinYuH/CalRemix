@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Lore
             DisplayName.SetDefault("The Originator");
         }
 
-        public override string LoreText => "Why wasn't this scoundrel dealt with sooner?\nI understand the concept of efficient time, yet this little deviant proved to be less than an issue.\nAgainst my wishes, I pity this construct deeply. You lived a flawed existence.\r\n";
+        public override string LoreText => "Why wasn't this scoundrel dealt with sooner?\nI understand the concept of efficient time, yet this little deviant proved to be less than an issue.\nAgainst my wishes, I pity this construct deeply. You lived a flawed existence.";
 
         public override void SetDefaults()
         {

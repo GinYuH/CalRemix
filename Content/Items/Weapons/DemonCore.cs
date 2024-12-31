@@ -11,7 +11,7 @@ using CalamityMod.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class DemonCore : ModItem
+	public class DemonCore: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

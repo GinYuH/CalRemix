@@ -7,10 +7,11 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class BlobfishPlushie : ModItem
+	public class BlobfishPlushie : RogueWeapon
 	{
 		public override void SetDefaults() 
 		{

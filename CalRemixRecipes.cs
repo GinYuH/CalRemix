@@ -52,7 +52,7 @@ namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox, AnyCritter;
         public override void Unload()
         {
             GreaterEvil = null;
@@ -76,7 +76,23 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", AnyButterfly);
             AnyExoMechMusicBox = new RecipeGroup(() => "Any Remix Exo Mech Music Box", RemixMusicBox.ExoMechMusicBoxes);
             RecipeGroup.RegisterGroup("CalRemix:AnyRemixExoMusicBox", AnyExoMechMusicBox);
+            AnyCritter = new RecipeGroup(() => "Any Critter", ItemID.Squirrel);
+            foreach (var i in ContentSamples.ItemsByType)
+            {
+                if (i.Value == null)
+                    continue;
+                if (i.Value.type == ItemID.Squirrel)
+                    continue;
+                if (i.Value.type == ItemType<LabRoach>())
+                    continue;
+                if (i.Value.makeNPC > 0)
+                {
+                    AnyCritter.ValidItems.Add(i.Value.type);
+                }
+            }
+            RecipeGroup.RegisterGroup("CalRemix:AnyCritter", AnyCritter);
         }
+
         public override void AddRecipes()
         {
             Recipe.Create(ItemType<LoreAwakening>())

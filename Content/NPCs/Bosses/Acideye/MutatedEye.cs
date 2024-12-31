@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
 using CalamityMod;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Acideye
 {
@@ -58,7 +59,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-                new FlavorTextBestiaryInfoElement("Babies of the acidsighter. Do not pet them as they're very messy and gross.")
+                new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value)
             });
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

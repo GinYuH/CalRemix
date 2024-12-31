@@ -142,6 +142,7 @@ namespace CalRemix.Content.NPCs.Minibosses
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            spriteBatch.ExitShaderRegion();
             // Mostly exo twins ribbon code
             for (int direction = -2; direction <= 2; direction += 1)
             {
@@ -167,9 +168,9 @@ namespace CalRemix.Content.NPCs.Minibosses
                     currentSegmentRotation += wrappedAngularOffset;
                 }
                 if (mainRibbon)
-                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunction, RibbonTrailColorFunction), 66);
+                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunction, RibbonTrailColorFunction));
                 else
-                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunctionSmall, RibbonTrailColorFunction), 66);
+                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunctionSmall, RibbonTrailColorFunction));
             }
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + NPC.gfxOffY * Vector2.UnitY, NPC.frame, drawColor, NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Width() / 2, TextureAssets.Npc[NPC.type].Height() / 4), NPC.scale, SpriteEffects.None, 0);
             return false;

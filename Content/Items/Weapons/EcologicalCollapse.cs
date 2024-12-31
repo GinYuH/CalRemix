@@ -15,7 +15,7 @@ using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class EcologicalCollapse : ModItem
+	public class EcologicalCollapse: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

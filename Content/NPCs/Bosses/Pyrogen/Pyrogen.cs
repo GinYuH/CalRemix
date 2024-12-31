@@ -1509,5 +1509,10 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             RemixDowned.downedPyrogen = true;
             CalRemixWorld.UpdateWorldBool();
         }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
+        }
     }
 }

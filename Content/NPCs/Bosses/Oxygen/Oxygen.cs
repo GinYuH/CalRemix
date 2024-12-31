@@ -130,6 +130,23 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
 
         public override void AI()
         {
+            bool anyArrows = false;
+            foreach (Cloud c in Main.cloud)
+            {
+                if (c.ModCloud != null)
+                {
+                    if (c.ModCloud.Mod == CalRemix.instance)
+                    {
+                        anyArrows = true;
+                        break;
+                    }    
+                }
+            }
+            if (!anyArrows)
+            {
+                for (int i = 0; i < 10; i++)
+                    Cloud.addCloud();
+            }
             // Generic boss setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
@@ -504,6 +521,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                 NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BALLER>());
             }
             RemixDowned.downedOxygen = true;
+            RemixDowned.downedGale = true;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 CalRemixWorld.oxydayTime = 0;

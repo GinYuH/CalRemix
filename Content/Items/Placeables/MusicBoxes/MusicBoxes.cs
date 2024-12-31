@@ -139,6 +139,19 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
+    public class GeneratorMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Generator, Type, TileType<Tiles.MusicBoxes.GeneratorMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.GeneratorMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
     public class HypnosMusicBox : RemixMusicBox
     {
         public override void SetStaticDefaults()
@@ -216,6 +229,14 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<PolyphemalusAltMusicBox>().
+                AddCondition(Condition.InGraveyard).
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+        }
     }
     public class PolyphemalusAltMusicBox : RemixMusicBox
     {
@@ -229,6 +250,14 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<PolyphemalusMusicBox>().
+                AddCondition(Condition.InGraveyard).
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+        }
     }
     public class TheCalamityMusicBox : RemixMusicBox
     {
@@ -380,6 +409,32 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         public override void SetDefaults()
         {
             Item.createTile = TileType<Tiles.MusicBoxes.ProfanedDesertMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class StrongholdMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.FrozenStronghold, Type, TileType<Tiles.MusicBoxes.StrongholdMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.StrongholdMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+    public class GaleforceMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.GaleforceDay, Type, TileType<Tiles.MusicBoxes.GaleforceMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.GaleforceMusicBox>();
             base.SetDefaults();
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);

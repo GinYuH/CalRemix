@@ -42,7 +42,6 @@ namespace CalRemix.Content.Items.Accessories
         {
             player.GetCritChance<GenericDamageClass>() = 100;
             player.wingTime = 0;
-            player.wingTimeMax = 0;
             player.mount.Dismount(Main.LocalPlayer);
             player.releaseHook = true;
             player.GetModPlayer<CalRemixPlayer>().pyrogenSoul = true;

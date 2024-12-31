@@ -421,7 +421,8 @@ namespace CalRemix.Core.World
                 int chest = AddAsbestosChest(chestX, j + hauseAreaY - 3);
                 if (chest != -1)
                 {
-                    for (int e = 0; e < Main.chest[chest].item.Length; e++)
+                    int asbestosAmt = CalRemixAddon.Spirit != null ? Main.chest[chest].item.Length - 4 : Main.chest[chest].item.Length;
+                    for (int e = 0; e < asbestosAmt; e++)
                     {
                         Main.chest[chest].item[e].SetDefaults(ModContent.ItemType<Asbestos>());
                         Main.chest[chest].item[e].stack = Main.rand.Next(4, 120);

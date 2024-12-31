@@ -42,6 +42,8 @@ using CalamityMod.Systems;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.LoreItems;
 using System;
+using CalRemix.Content.DamageClasses;
+using CalamityMod.Items.Weapons.Melee;
 
 namespace CalRemix.Core.Retheme
 {
@@ -81,8 +83,8 @@ namespace CalRemix.Core.Retheme
         }
         private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
         {
-            if (CalRemixWorld.npcChanges)
-                return false;
+            if (CalRemixWorld.npcChanges) 
+                return !NPC.AnyNPCs(NPCType<Yharon>()) && Main.LocalPlayer.Calamity().monolithYharonShader > 0;
             return orig(self, player);
         }
     }
@@ -193,12 +195,6 @@ namespace CalRemix.Core.Retheme
         private static Asset<Texture2D> NPCTextureChange(string remix, string original)
         {
             return CalRemixWorld.npcChanges ? Request<Texture2D>("CalRemix/Core/Retheme/" + remix) : Request<Texture2D>("CalamityMod/NPCs/" + original);
-        }
-        private static void PerfTC(ref Asset<Texture2D> asset, string name)
-        {
-            string newName = name.Replace("_", "");
-            newName = newName.Replace("Texture", "Providence");
-            asset = NPCTextureChange($"Providence/{newName}", $"Providence/{newName}");
         }
         private static void ProvTC(ref Asset<Texture2D> asset, string name)
         {
@@ -397,6 +393,56 @@ namespace CalRemix.Core.Retheme
             {
                 item.SetNameOverride(item.Name.Replace("Skeletron", "Dungen"));
             }
+            else if (item.type == ItemID.DaedalusStormbow)
+            {
+                item.SetNameOverride("Daedalus Bow");
+            }
+            else if (item.type == ItemID.Starfury)
+            {
+                item.SetNameOverride("Starstorm");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 5;
+            }
+            else if (item.type == ItemID.StarWrath)
+            {
+                item.SetNameOverride("Starstorm 2");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 27;
+            }
+            else if (item.type == ItemID.BloodRainBow)
+            {
+                item.SetNameOverride("Blood Rain Stormbow");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+            }
+            else if (item.type == ItemID.MeteorStaff)
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 0;
+            }
+            else if (item.type == ItemID.BlizzardStaff)
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 0;
+            }
+            else if (item.type == ItemID.LunarFlareBook)
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+                item.mana = 0;
+            }
+            else if (item.type == ItemType<TheBurningSky>())
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+            }
+            else if (item.type == ItemType<StarShower>())
+            {
+                item.SetNameOverride("Star Storm");
+                item.DamageType = GetInstance<StormbowDamageClass>();
+            }
+
+            if (item.Name.Contains("Relic") && item.rare == ItemRarityID.Master)
+            {
+                item.SetNameOverride(item.Name.Replace("Relic", "Treasure"));
+            }
         }
         public override void UpdateInventory(Item item, Player player)
         {
@@ -424,14 +470,6 @@ namespace CalRemix.Core.Retheme
                 robes = true;
                 equipSlot = EquipLoader.GetEquipSlot(Mod, "AshsCloakLegs", EquipType.Legs);
             }
-        }
-        public override bool CanUseItem(Item item, Player player)
-        {
-            if (item.type == ItemType<ClockGatlignum>() && CalRemixWorld.itemChanges)
-            {
-                return false;
-            }
-            return true;
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {

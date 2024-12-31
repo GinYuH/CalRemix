@@ -32,6 +32,8 @@ using CalamityMod.Sounds;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.DamageClasses;
 
 namespace CalRemix
 {
@@ -51,6 +53,7 @@ namespace CalRemix
         public static Type calvalFannyBox = null;
 
         public static Mod Remnants;
+        public static Mod Spirit;
 
         public static readonly List<string> Names = new List<string>()
         {
@@ -83,6 +86,7 @@ namespace CalRemix
             ModLoader.TryGetMod("Wikithis", out Wikithis);
 
             ModLoader.TryGetMod("Remnants", out Remnants);
+            ModLoader.TryGetMod("SpiritMod", out Spirit);
 
             if (CalVal != null)
             {
@@ -117,17 +121,19 @@ namespace CalRemix
             Wikithis = null;
 
             Remnants = null;
+            Spirit = null;
         }
         public override void PostSetupContent()
         {
             AddBossChecklistEntries();
-            AddMusicDisplayEntries();
+            // AddMusicDisplayEntries();
             if (Wikithis != null && !Main.dedServ && Main.netMode != NetmodeID.Server)
             {
                 Wikithis.Call("AddModURL", Mod, "https://terrariamods.wiki.gg/wiki/Calamity_Community_Remix/{}");
                 Wikithis.Call("AddWikiTexture", Mod, Request<Texture2D>("CalRemix/icon_small"));
             }
             AddInfernumCards();
+            ColoredDamageTypesSupport();
         }
 
         public void comp()
@@ -190,7 +196,7 @@ namespace CalRemix
                 ["spawnItems"] = ItemType<FusedEye>(),
                 ["customPortrait"] = plportrait
             });
-            bc.Call("LogBoss", Mod, "Phytogen", 14.25f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
+            bc.Call("LogBoss", Mod, "Phytogen", 13.25f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
             bc.Call("LogBoss", Mod, "Hydrogen", 14.15f, () => RemixDowned.downedHydrogen, NPCType<Hydrogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.Grenade,
@@ -217,7 +223,7 @@ namespace CalRemix
             });
             /*
                 $"Jam a [i:{ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
-                "An imperfection after allÅ, what a shame.",
+                "An imperfection after allÅE what a shame.",
              */
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
@@ -257,6 +263,7 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
+            bc.Call("LogEvent", Mod, "GaleforceDay", 11.749f, () => RemixDowned.downedGale, new List<int> { NPCID.Dandelion, NPCType<FloatingBiomass>() }, new Dictionary<string, object>());
         }
         internal static void AddCensusEntries()
         {
@@ -322,11 +329,14 @@ namespace CalRemix
             // Register the intro card.
             Infernum.Call("RegisterIntroScreen", instance);
         }
+        /*
         internal void AddMusicDisplayEntries()
         {
             if (MusicDisplay is null)
                 return;
             AddMusic(CalRemixMusic.Exosphere, "CanAnybodyHearMe", "Jteoh");
+
+            AddMusic(CalRemixMusic.Generator, "Artistic Reinforcement", "Jteoh");
 
             AddMusic(CalRemixMusic.AsbestosCaves, "Fibrous Whisper", "Jteoh");
             AddMusic(CalRemixMusic.PlaguedJungle, "Everlasting Dark", "HeartPlusUp");
@@ -356,6 +366,7 @@ namespace CalRemix
             AddMusic(CalRemixMusic.EmpressofLightDay, "Gegenschein", "Jteoh");
 
             AddMusic(CalRemixMusic.Pyrogen, "Volcanic Reinforcement", "The Purified");
+            AddMusic(CalRemixMusic.Generator, "The Generator", "Jteoh");
             AddMusic(CalRemixMusic.DevourerofGods, "Last Battle (Ballos Mix)", "DM DOKURO");
             AddMusic(CalRemixMusic.DevourerofGodsFinalForm, "Univesal Collapse?", "SiivaGunner");
             AddMusic(CalRemixMusic.Hypnos, "Cerebral Augmentations", "The Exiled Fellow");
@@ -372,7 +383,17 @@ namespace CalRemix
         }
         internal void AddMusic(int music, string name, string author)
         {
-            MusicDisplay.Call("AddMusic", (short)music, name, author, Mod.DisplayName);
+            MusicDisplay.Call("AddMusic", music, name, author, Mod.DisplayName);
+        }
+         */
+        public static void ColoredDamageTypesSupport()
+        {
+            // i dont care about this
+            //Mod coloredDamageTypes = GetInstance<CalamityMod>().coloredDamageTypes;
+            //if (coloredDamageTypes is null)
+            //    return;
+
+            //coloredDamageTypes.Call("AddDamageType", StormbowDamageClass.Instance, RogueTooltipColor, RogueDamageColor, RogueCritColor);
         }
     }
 }

@@ -28,11 +28,11 @@ namespace CalRemix.Core.Biomes
         // Calculate when the biome is active.
         public override bool IsBiomeActive(Player player)
         {
-            return CalRemixWorld.oxydayTime > 0;
+            return CalRemixWorld.oxydayTime > 0 && player.position.Y < Main.worldSurface * 16;
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;
 
-        public override int Music => MusicID.Space;
+        public override int Music => CalRemixMusic.GaleforceDay;
     }
 }

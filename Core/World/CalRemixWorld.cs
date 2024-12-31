@@ -46,6 +46,7 @@ using Terraria.Audio;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
+using CalRemix.Content.Items.Weapons.Stormbow;
 
 namespace CalRemix.Core.World
 {
@@ -90,6 +91,7 @@ namespace CalRemix.Core.World
         public static bool generatedHydrogen = false;
         public static bool canGenerateBaron = false;
         public static bool generatedGrime = false;
+        public static bool seenMBP = false;
         public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
@@ -211,6 +213,7 @@ namespace CalRemix.Core.World
             deusDeadInSnow = false;
             ogslime = false;
             loadedRecipeInjections = false;
+            seenMBP = false;
 
             // Worldgen
             generatedCosmiliteSlag = false;
@@ -297,6 +300,7 @@ namespace CalRemix.Core.World
             tag["meld"] = meldCountdown;
             tag["trueStory"] = trueStory;
             tag["roachDuration"] = roachDuration;
+            tag["mbp"] = seenMBP;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -358,6 +362,7 @@ namespace CalRemix.Core.World
             GetData(ref canGenerateBaron, "canBaron", tag);
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
+            GetData(ref seenMBP, "mbp", tag);
 
             GetData(ref alloyBars, "109alloybar", tag);
             GetData(ref essenceBars, "109essencebar", tag);
@@ -435,6 +440,7 @@ namespace CalRemix.Core.World
             writer.Write(trueStory);
             writer.Write(RoachCountdown);
             writer.Write(roachDuration);
+            writer.Write(seenMBP);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -501,6 +507,7 @@ namespace CalRemix.Core.World
             trueStory = reader.ReadInt32();
             RoachCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
+            seenMBP = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -672,9 +679,19 @@ namespace CalRemix.Core.World
                         packet.Send();
                     }
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
+                    RemixDowned.downedGale = true;
+                    UpdateWorldBool();
                 }
             }
-            NPC.savedWizard = false;
+            if (wizardDisabled)
+            {
+                NPC.savedWizard = false;
+                Main.townNPCCanSpawn[NPCID.Wizard] = false;
+                if (NPC.downedPlantBoss)
+                {
+                    Main.townNPCCanSpawn[NPCID.Princess] = true;
+                }
+            }
             if (trueStory < maxStoryTime)
             {
                 if (Main.netMode != NetmodeID.Server)
@@ -1167,6 +1184,10 @@ namespace CalRemix.Core.World
                                 {
                                     chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
                                     chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                                }
+                                if (Main.rand.NextBool(3))
+                                {
+                                    chest.item[inventoryIndex].SetDefaults(ItemType<Watercooler>());
                                 }
                                 break;
                             }

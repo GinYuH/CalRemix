@@ -55,6 +55,7 @@ using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
@@ -419,12 +420,18 @@ namespace CalRemix
                 }
                 if (NPC.AnyNPCs(NPCType<DILF>()) && !guardRage && guardSay > 0)
                 {
-                    Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
-                    if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
-                        Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
-                    if (NPC.AnyNPCs(NPCType<ProfanedGuardianHealer>()))
-                        Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
-                    guardRage = true;
+                    foreach (NPC frosty in Main.ActiveNPCs)
+                    {
+                        if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
+                        {
+                            Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
+                            if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
+                                Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
+                            if (NPC.AnyNPCs(NPCType<ProfanedGuardianHealer>()))
+                                Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
+                            guardRage = true;
+                        }
+                    }
                 }
             }
             else if (npc.type == NPCType<Yharon>())
@@ -521,11 +528,16 @@ namespace CalRemix
             {
                 if (NPC.AnyNPCs(NPCType<DILF>()) && guardRage)
                 {
-                    foreach (NPC frosty in Main.npc)
+                    foreach (NPC frosty in Main.ActiveNPCs)
                     {
-                        if (frosty.type == NPCType<DILF>())
+                        if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
                         {
-                            npc.velocity = npc.DirectionTo(frosty.Center) * 10f;
+                            npc.velocity = npc.DirectionTo(frosty.Center) * 14f;
+                            if (frosty.Hitbox.Intersects(npc.Hitbox))
+                            {
+                                frosty.StrikeInstantKill();
+                                break;
+                            }
                             return false;
                         }
                     }
@@ -734,6 +746,11 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ItemType<ColdheartIcicle>()));
                 shop.Add(new NPCShop.Entry(ItemType<TheGenerator>(), new Condition("Conditions.DownedGens", () => RemixDowned.DownedGens)));
             }
+            if (shop.NpcType == NPCID.ArmsDealer)
+            {
+                shop.Add(new NPCShop.Entry(ItemType<ElectricEel>()));
+                shop.Add(new NPCShop.Entry(ItemType<SB90>(), Condition.Hardmode));
+            }
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
@@ -904,6 +921,14 @@ namespace CalRemix
             if (npc.type == NPCType<SightseerCollider>())
             {
                 npcLoot.Add(ItemType<AstralPearl>(), 20);
+            }
+            if (npc.type == NPCID.DD2OgreT2)
+            {
+                npcLoot.Add(ItemType<BoringStormbow>(), 10);
+            }
+            if (npc.type == NPCID.DD2OgreT3)
+            {
+                npcLoot.Add(ItemType<BoringStormbow>(), 5);
             }
             #endregion
             #region Godseeker Mode
@@ -1094,6 +1119,11 @@ namespace CalRemix
                     npcLoot.Add(frond);
                 }
             }
+            if (npc.type == NPCID.Deerclops)
+            {
+                npcLoot.AddNormalOnly(ItemType<DeerdalusStormclops>(), 20);
+            }
+
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {

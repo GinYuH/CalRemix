@@ -6,6 +6,7 @@ using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Typeless;
+using CalRemix.Content.DamageClasses;
 using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.Projectiles.Accessories;
@@ -509,6 +510,18 @@ namespace CalRemix.Content.Projectiles
                 if (projectile.type == ProjectileType<ExcavatorShot>() && exc.ModNPC<WulfwyrmHead>().DeathCharge) // not even gonna bother iterating through npcs since literally no other entity uses this projectile
                 {
                     hyperCharged = true;
+                }
+            }
+
+            // hugs shoutouts to javyz for this one
+            if (projectile.position.Y < Main.player[projectile.owner].Center.Y - Main.screenHeight / 2)
+            {
+                if (projectile.owner > -1)
+                {
+                    if (!projectile.hostile)
+                    {
+                        projectile.DamageType = GetInstance<StormbowDamageClass>();
+                    }
                 }
             }
         }

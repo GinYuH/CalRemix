@@ -11,7 +11,7 @@ using CalamityMod;
 
 namespace CalRemix.Content.Items.Weapons;
 
-public class SylvanSlasher : ModItem
+public class SylvanSlasher: RogueWeapon
 {
     public override void SetStaticDefaults()
     {
