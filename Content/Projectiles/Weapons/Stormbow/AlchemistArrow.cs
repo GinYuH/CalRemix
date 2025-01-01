@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,6 +23,17 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
         {
             int awesomeRandomNumber = Main.rand.Next(0, BuffLoader.BuffCount);
             target.AddBuff(awesomeRandomNumber, 180);
+        }
+        public override void OnKill(int timeLeft)
+        {
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+            for (int i = 0; i < 5; i++)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, Main.rand.Next(0, 323)); // 323 is highest dust in vanilla too lazy to figure out how to make it dynamitcally :((
+                dust.noGravity = true;
+                dust.velocity *= 1.5f;
+                dust.scale *= 1.1f;
+            }
         }
         public override Color? GetAlpha(Color lightColor) => new Color(Main.rand.Next(0, 255), Main.rand.Next(0, 255), Main.rand.Next(0, 255), 127);
     }

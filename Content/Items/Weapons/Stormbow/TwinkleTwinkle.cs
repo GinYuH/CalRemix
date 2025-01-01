@@ -2,6 +2,7 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Rogue;
@@ -83,9 +84,11 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.CobaltBar, 30).
+                AddIngredient<Lumenyl>(30).
                 AddIngredient(ItemID.Cobweb, 15).
-                AddTile(TileID.Anvils).
+                AddIngredient<RuinousSoul>(30).
+                AddIngredient<ExodiumCluster>(30).
+                AddTile(TileID.LunarCraftingStation).
                 Register();
         }
     }
