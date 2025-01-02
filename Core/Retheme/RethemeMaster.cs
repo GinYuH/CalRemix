@@ -353,6 +353,8 @@ namespace CalRemix.Core.Retheme
             TextureAssets.Item[ItemType<Fabstaff>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/InterfacerStaff");
             TextureAssets.Item[ItemType<Fabsol>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/DiscordianSigil");
             TextureAssets.Item[ItemType<CirrusDress>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/AshsCloak");
+
+            TextureAssets.Item[ItemID.ReaverShark] = Request<Texture2D>("CalRemix/Core/Retheme/ReaverShark");
         }
         public override void SetDefaults(Item item)
         {
@@ -437,6 +439,11 @@ namespace CalRemix.Core.Retheme
             {
                 item.SetNameOverride("Star Storm");
                 item.DamageType = GetInstance<StormbowDamageClass>();
+            }
+            else if (item.type == ItemID.ReaverShark)
+            {
+                item.SetNameOverride("reef Shark");
+                item.pick = 10;
             }
 
             if (item.Name.Contains("Relic") && item.rare == ItemRarityID.Master)
