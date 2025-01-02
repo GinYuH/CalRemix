@@ -67,7 +67,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
             NPC.aiStyle = -1;
             NPC.width = 110;
             NPC.height = 110;
-            NPC.LifeMaxNERB(4000, 9760, 475000);
+            NPC.LifeMaxNERB(4000, 4880, 475000);
             NPC.defense = 10;
             NPC.damage = 25;
             NPC.knockBackResist = 0f;

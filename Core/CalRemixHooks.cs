@@ -744,6 +744,8 @@ namespace CalRemix.Core
                 return 0;
             if (type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
                 return 0;
+            if (type == NPCID.BoundWizard && CalRemixWorld.wizardDisabled)
+                return 0;
             if (!CalRemixWorld.grimesandToggle)
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);
             if (spawnSource is EntitySource_Death)

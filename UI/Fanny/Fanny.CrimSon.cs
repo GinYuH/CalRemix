@@ -70,7 +70,7 @@ namespace CalRemix.UI
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<DraedonPowerCell>())).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).AddEndEvent(EatCell);
             
             HelperMessage.New("dementia", "Can you beat Calamity Mod with Dementia?", 
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.boss && n.life <= n.lifeMax * 1 / 10) && Main.rand.NextBool(100), 6, cantBeClickedOff: true, cooldown: 108000, onlyPlayOnce: false).AddStartEvent(Dementia).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.boss && n.life <= n.lifeMax * 1 / 10) && Main.rand.NextBool(108000), 6, cantBeClickedOff: true, cooldown: 108000, onlyPlayOnce: false).AddStartEvent(Dementia).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
         }
 
         private static void EatFood()

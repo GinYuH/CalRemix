@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.damage = 50;
-            NPC.boss = true;
+            NPC.boss = !Main.hardMode;
             NPC.aiStyle = -1;
             Music = MusicID.Boss2;
         }
@@ -97,7 +97,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.CountNPCS(Type) > 1)
                 return 0f;
 
-            return SpawnCondition.Underworld.Chance * 0.022f;
+            return SpawnCondition.Underworld.Chance * 0.0022f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

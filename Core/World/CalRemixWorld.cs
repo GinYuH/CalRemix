@@ -134,6 +134,7 @@ namespace CalRemix.Core.World
         public static bool mullet = true;
         public static bool deliciousMeat = true;
         public static bool profanedDesert = true;
+        public static bool hypothetical = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -269,6 +270,7 @@ namespace CalRemix.Core.World
             mullet = true;
             deliciousMeat = true;
             profanedDesert = true;
+            hypothetical = true;
         }
 
         public override void OnWorldLoad()
@@ -339,6 +341,7 @@ namespace CalRemix.Core.World
             tag["109mullet"] = mullet;
             tag["109deliciousMeat"] = deliciousMeat;
             tag["109profaned"] = profanedDesert;
+            tag["109hypothetical"] = hypothetical;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -401,6 +404,7 @@ namespace CalRemix.Core.World
             GetData(ref mullet, "109mullet", tag);
             GetData(ref deliciousMeat, "109deliciousmeat", tag);
             GetData(ref profanedDesert, "109profaned", tag);
+            GetData(ref hypothetical, "109hypothetical", tag);
             GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
 
             meldCountdown = tag.Get<int>("meld");
@@ -479,6 +483,7 @@ namespace CalRemix.Core.World
             writer.Write(mullet);
             writer.Write(deliciousMeat);
             writer.Write(profanedDesert);
+            writer.Write(hypothetical);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -546,6 +551,7 @@ namespace CalRemix.Core.World
             mullet = reader.ReadBoolean();
             deliciousMeat = reader.ReadBoolean();
             profanedDesert = reader.ReadBoolean();
+            hypothetical = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();

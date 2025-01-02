@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalRemix.UI.Anomaly109;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -99,6 +101,12 @@ namespace CalRemix.UI.Title
                 if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value;
+                    direction = (rand) ? 1 : 0;
+                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
+                }
+                else if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && File.Exists(Anomaly109UI.a109path) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
+                {
+                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound_Evil").Value;
                     direction = (rand) ? 1 : 0;
                     velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
                 }

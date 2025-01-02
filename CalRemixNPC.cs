@@ -1600,6 +1600,8 @@ namespace CalRemix
                     pool.Remove(NPCID.BoundWizard);
                 }
             }
+            if (CalamityPlayer.areThereAnyDamnEvents)
+                return;
             if (CalRemixWorld.oxydayTime > 0)
             {
                 pool.Add(NPCID.Dandelion, 100);

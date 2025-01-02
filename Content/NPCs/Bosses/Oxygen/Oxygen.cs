@@ -364,7 +364,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                         {
                             NPC.rotation = 0;
                             NPC.ai[1] = 0;
-                            Phase = (int)PhaseType.Fling;
+                            Phase = Main.zenithWorld ? (int)PhaseType.Fling : (int)PhaseType.Orbitals;
                         }
                         break;
                     }
