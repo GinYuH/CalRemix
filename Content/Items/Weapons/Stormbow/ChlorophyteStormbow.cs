@@ -38,7 +38,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.rare = ItemRarityID.Lime;
             Item.shoot = ProjectileID.ChlorophyteArrow;
 
-            Item.SetNameOverride("Chlorophyte Stormbow");
+            Item.SetNameOverride("Chlorophyte Sporebow");
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
