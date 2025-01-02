@@ -8,7 +8,7 @@ using CalamityMod.Items.Materials;
 
 namespace CalRemix.Content.Items.Tools
 {
-    public class ReaverShark : ModItem
+    public class ReaverSharkWaitNVM : ModItem
     {
         public override void SetDefaults()
         {
