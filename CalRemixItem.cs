@@ -496,79 +496,14 @@ namespace CalRemix
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit && CalRemixWorld.permanenthealth, ItemType<Dragonfruit>(), 1);
                 itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit && CalRemixWorld.permanenthealth, ItemType<Dragonfruit>(), 20);
             }
-            if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
+            else if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
             {
                 itemLoot.Add(ItemType<BundleBones>(), 4, 10, 25);
                 itemLoot.Add(ItemType<Watercooler>(), 20);
             }
-            if (item.type == ItemType<DesertScourgeBag>())
-            {
-                itemLoot.Add(ItemType<ParchedScale>(), 1, 30, 40);
-                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<PearlShard>());
-            }
-            else if (item.type == ItemID.PlanteraBossBag)
-            {
-                itemLoot.Add(ItemType<EssenceofBabil>(), 1, 5, 9);
-            }
-            else if (item.type == ItemID.FishronBossBag)
-            {
-                itemLoot.Add(ItemType<DeliciousMeat>(), 2, 45, 92);
-            }
-            else if (item.type == ItemType<AstrumAureusBag>())
-            {
-                itemLoot.Add(ItemType<SoulofBright>(), 1, 10, 12);
-            }
-            else if (item.type == ItemType<ProvidenceBag>())
-            {
-                itemLoot.Add(ItemType<ProfanedNucleus>());
-                itemLoot.Add(ItemType<TorrefiedTephra>(), 1, 200, 222);
-            }
-            else if (item.type == ItemType<DevourerofGodsBag>())
-            {
-                itemLoot.Add(ItemType<Lean>(), 1, 6, 8);
-                itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 1, 3);
-                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<CosmiliteBar>());
-                itemLoot.AddIf(()=> !CalRemixWorld.cosmislag, ItemType<CosmiliteBar>(), 1, 55, 65);
-            }
-            else if (item.type == ItemType<YharonBag>())
-            {
-                LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
-                yhar.Add(ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
-                yhar.AddFail(ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
-                itemLoot.Add(yhar);
-                itemLoot.Add(ItemType<MovieSign>(), 100);
-            }
-            else if (item.type == ItemType<CrabulonBag>())
-            {
-                itemLoot.Add(ItemType<DeliciousMeat>(), 1, 4, 7);
-                itemLoot.Add(ItemType<CrabLeaves>(), 1, 4, 7);
-                itemLoot.Add(ItemType<OddMushroom>(), 3);
-            }
-            else if (item.type == ItemID.FishronBossBag)
-            {
-                itemLoot.Add(ItemType<DeliciousMeat>(), 2, 45, 92);
-            }
-            else if (item.type == ItemType<LeviathanBag>())
-            {
-                itemLoot.Add(ItemType<CrocodileScale>(), 1, 20, 30);
-            }
             else if (item.type == ItemID.CorruptFishingCrate || item.type == ItemID.CorruptFishingCrateHard)
             {
                 itemLoot.Add(ItemType<Grimesand>(), 1, 10, 30);
-            }
-            else if (item.type == ItemType<DraedonBag>())
-            {
-                itemLoot.Add(ItemType<DeliciousMeat>(), 1, 6000, 8000);
-                itemLoot.AddIf(() => RemixDowned.downedHypnos, ItemType<AergianTechnistaff>());
-                itemLoot.AddIf(() => RemixDowned.downedHypnos, ItemType<Neuraze>());
-                itemLoot.AddIf(() => RemixDowned.downedHypnos, ItemType<HypnosMask>(), new Fraction(2, 7));
-            }
-            else if (item.type == ItemType<CalamitasCoffer>() || item.type == ItemType<DraedonBag>())
-            {
-                LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
-                yhar.Add(ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
-                yhar.AddFail(ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
-                itemLoot.Add(yhar);
             }
             else if (item.type == ItemType<StarterBag>())
             {
@@ -581,7 +516,7 @@ namespace CalRemix
                         {
                             if (lead.ChainedRules[j] is Chains.TryIfSucceeded c)
                             {
-                                if (c.RuleToChain is CommonDrop fuck) 
+                                if (c.RuleToChain is CommonDrop fuck)
                                 {
                                     if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
                                     {
@@ -614,13 +549,198 @@ namespace CalRemix
                     itemLoot.Add(ItemType<MovieSign>(), 22);
                 }
             }
+
+            // boss bags
+            // phm
+            if (item.type == ItemID.KingSlimeBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<DesertScourgeBag>())
+            {
+                itemLoot.Add(ItemType<Duststorm>(), 1 / 3);
+                itemLoot.Add(ItemType<ParchedScale>(), 1, 30, 40);
+                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<PearlShard>());
+            }
+            else if (item.type == ItemID.EyeOfCthulhuBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<CrabulonBag>())
+            {
+                itemLoot.Add(ItemType<DeliciousMeat>(), 1, 4, 7);
+                itemLoot.Add(ItemType<CrabLeaves>(), 1, 4, 7);
+                itemLoot.Add(ItemType<OddMushroom>(), 3);
+            }
+            else if (item.type == ItemID.EaterOfWorldsBossBag)
+            {
+
+            }
+            else if (item.type == ItemID.BrainOfCthulhuBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<HiveMindBag>())
+            {
+
+            }
+            else if (item.type == ItemType<PerforatorBag>())
+            {
+
+            }
+            else if (item.type == ItemID.QueenBeeBossBag)
+            {
+
+            }
             else if (item.type == ItemID.DeerclopsBossBag)
             {
                 itemLoot.Add(ItemType<DeerdalusStormclops>(), 20);
             }
+            else if (item.type == ItemID.SkeletronBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<SlimeGodBag>())
+            {
+
+            }
+            else if (item.type == ItemID.WallOfFleshBossBag)
+            {
+
+            }
+            
+            // hm
+            else if (item.type == ItemID.QueenSlimeBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<CryogenBag>())
+            {
+
+            }
+            else if (item.type == ItemID.TwinsBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<AquaticScourgeBag>())
+            {
+                itemLoot.Add(ItemType<Rainstorm>(), 1 / 3);
+            }
+            else if (item.type == ItemID.DestroyerBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<BrimstoneWaifuBag>())
+            {
+
+            }
+            else if (item.type == ItemID.SkeletronPrimeBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<CalamitasCloneBag>())
+            {
+
+            }
+            else if (item.type == ItemID.PlanteraBossBag)
+            {
+                itemLoot.Add(ItemType<EssenceofBabil>(), 1, 5, 9);
+            }
+            else if (item.type == ItemType<LeviathanBag>())
+            {
+                itemLoot.Add(ItemType<CrocodileScale>(), 1, 20, 30);
+            }
+            else if (item.type == ItemType<AstrumAureusBag>())
+            {
+                itemLoot.Add(ItemType<SoulofBright>(), 1, 10, 12);
+            }
+            else if (item.type == ItemID.GolemBossBag)
+            {
+
+            }
+            else if (item.type == ItemID.FishronBossBag)
+            {
+                itemLoot.Add(ItemType<DeliciousMeat>(), 2, 45, 92);
+            }
             else if (item.type == ItemType<PlaguebringerGoliathBag>())
             {
-                itemLoot.Add(ItemType<Alchemists3rdTrumpet>(), 25);
+                itemLoot.Add(ItemType<Alchemists3rdTrumpet>(), 1 / 3);
+            }
+            else if (item.type == ItemID.FairyQueenBossBag)
+            {
+
+            }
+            else if (item.type == ItemType<RavagerBag>())
+            {
+
+            }
+            else if (item.type == ItemID.CultistBossBag) // lol
+            {
+
+            }
+            else if (item.type == ItemType<AstrumDeusBag>())
+            {
+
+            }
+            else if (item.type == ItemID.MoonLordBossBag)
+            {
+
+            }
+
+            // pml
+            else if (item.type == ItemType<DragonfollyBag>())
+            {
+
+            }
+            else if (item.type == ItemType<ProvidenceBag>())
+            {
+                itemLoot.Add(ItemType<ProfanedNucleus>());
+                itemLoot.Add(ItemType<TorrefiedTephra>(), 1, 200, 222);
+            }
+            else if (item.type == ItemType<SignusBag>())
+            {
+
+            }
+            else if (item.type == ItemType<StormWeaverBag>())
+            {
+
+            }
+            else if (item.type == ItemType<CeaselessVoidBag>())
+            {
+
+            }
+            else if (item.type == ItemType<PolterghastBag>())
+            {
+
+            }
+            else if (item.type == ItemType<DevourerofGodsBag>())
+            {
+                itemLoot.Add(ItemType<Lean>(), 1, 6, 8);
+                itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 1, 3);
+                itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<CosmiliteBar>());
+                itemLoot.AddIf(() => !CalRemixWorld.cosmislag, ItemType<CosmiliteBar>(), 1, 55, 65);
+            }
+            else if (item.type == ItemType<YharonBag>())
+            {
+                LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
+                yhar.Add(ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
+                itemLoot.Add(yhar);
+                itemLoot.Add(ItemType<MovieSign>(), 100);
+            }
+            else if (item.type == ItemType<DraedonBag>())
+            {
+                itemLoot.Add(ItemType<DeliciousMeat>(), 1, 6000, 8000);
+                itemLoot.AddIf(() => RemixDowned.downedHypnos, ItemType<AergianTechnistaff>());
+                itemLoot.AddIf(() => RemixDowned.downedHypnos, ItemType<Neuraze>());
+                itemLoot.AddIf(() => RemixDowned.downedHypnos, ItemType<HypnosMask>(), new Fraction(2, 7));
+            }
+            else if (item.type == ItemType<CalamitasCoffer>() || item.type == ItemType<DraedonBag>())
+            {
+                LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
+                yhar.Add(ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+                itemLoot.Add(yhar);
             }
         }
 

@@ -15,26 +15,34 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
+using CalamityMod.NPCs.AquaticScourge;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.AstrumDeus;
+using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.Crags;
+using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalamityMod.NPCs.PlagueEnemies;
+using CalamityMod.NPCs.Polterghast;
 using CalamityMod.NPCs.PrimordialWyrm;
 using CalamityMod.NPCs.ProfanedGuardians;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.Ravager;
+using CalamityMod.NPCs.Signus;
 using CalamityMod.NPCs.SlimeGod;
+using CalamityMod.NPCs.StormWeaver;
 using CalamityMod.NPCs.SulphurousSea;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.SupremeCalamitas;
@@ -1044,66 +1052,6 @@ namespace CalRemix
         }
         private static void BossLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (npc.type == NPCType<DesertScourgeHead>())
-            {
-                npcLoot.AddNormalOnly(ItemType<ParchedScale>(), 1, 25, 30);
-            }
-            if (npc.type == NPCType<Crabulon>())
-            {
-                npcLoot.AddNormalOnly(ItemType<DeliciousMeat>(), 1, 4, 7);
-                npcLoot.AddNormalOnly(ItemType<CrabLeaves>(), 1, 4, 7);
-                npcLoot.AddNormalOnly(ItemType<OddMushroom>(), 5);
-            }
-            if (npc.type == NPCID.WallofFlesh)
-            {
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
-            }
-            if (npc.type == NPCID.QueenSlimeBoss)
-            {
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedKey);
-            }
-            if (npc.type == NPCID.Plantera)
-            {
-                npcLoot.AddNormalOnly(ItemType<EssenceofBabil>(), 1, 4, 8);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.JungleKey);
-            }
-            if (npc.type == NPCType<Leviathan>() || npc.type == NPCType<Anahita>())
-            {
-                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
-                mainRule.Add(ItemType<CrocodileScale>(), 1, 20, 30);
-                npcLoot.AddNormalOnly(mainRule);
-            }
-            if (npc.type == NPCType<AstrumAureus>())
-            {
-                npcLoot.AddNormalOnly(ItemType<SoulofBright>(), 1, 4, 6);
-            }
-            if (npc.type == NPCID.DukeFishron)
-            {
-                npcLoot.AddNormalOnly(ItemType<DeliciousMeat>(), 2, 45, 92);
-            }
-            if (npc.type == NPCType<Providence>())
-            {
-                npcLoot.AddNormalOnly(ItemType<ProfanedNucleus>(), 4);
-                npcLoot.AddNormalOnly(ItemType<TorrefiedTephra>(), 1, 200, 222);
-            }
-            if (npc.type == NPCType<DevourerofGodsHead>())
-            {
-                npcLoot.AddNormalOnly(ItemType<Lean>(), 1, 3, 4);
-            }
-            if (npc.type == NPCType<Yharon>())
-            {
-                npcLoot.AddNormalOnly(ItemType<MovieSign>(), 100);
-            }
-            if (npc.type == NPCType<SupremeCalamitas>())
-            {
-                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 6, 8);
-            }
-            if (npc.type == NPCType<PrimordialWyrmHead>())
-            {
-                npcLoot.Add(ItemType<SubnauticalPlate>(), 1, 22, 34);
-                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<HalibutCannon>());
-            }
             if (CalRemixAddon.Wrath != null)
             {
                 if (CalRemixAddon.Wrath.TryFind("EntropicGod", out ModNPC noxus) && npc.type == noxus.Type)
@@ -1119,13 +1067,205 @@ namespace CalRemix
                     npcLoot.Add(frond);
                 }
             }
-            if (npc.type == NPCID.Deerclops)
+            
+            // bosses
+            // phm
+            if (npc.type == NPCID.KingSlime)
+            {
+
+            }
+            else if (npc.type == NPCType<DesertScourgeHead>())
+            {
+                npcLoot.AddNormalOnly(ItemType<ParchedScale>(), 1, 25, 30);
+                npcLoot.AddNormalOnly(ItemType<Duststorm>(), 25);
+            }
+            else if (npc.type == NPCID.EyeofCthulhu)
+            {
+
+            }
+            else if (npc.type == NPCType<Crabulon>())
+            {
+                npcLoot.AddNormalOnly(ItemType<DeliciousMeat>(), 1, 4, 7);
+                npcLoot.AddNormalOnly(ItemType<CrabLeaves>(), 1, 4, 7);
+                npcLoot.AddNormalOnly(ItemType<OddMushroom>(), 5);
+            }
+            //else if (npc.type == NPCID.Eater)
+            //{
+            //
+            //}
+            else if (npc.type == NPCID.BrainofCthulhu)
+            {
+
+            }
+            else if (npc.type == NPCType<HiveMind>())
+            {
+
+            }
+            else if (npc.type == NPCType<PerforatorHive>())
+            {
+
+            }
+            else if (npc.type == NPCID.QueenBee)
+            {
+
+            }
+            else if (npc.type == NPCID.Deerclops)
             {
                 npcLoot.AddNormalOnly(ItemType<DeerdalusStormclops>(), 20);
             }
-            if (npc.type == NPCType<PlaguebringerGoliath>())
+            else if (npc.type == NPCID.SkeletronHead)
+            {
+
+            }
+            else if (npc.type == NPCType<SlimeGodCore>())
+            {
+
+            }
+            else if(npc.type == NPCID.WallofFlesh)
+            {
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
+            }
+
+            // him
+            else if (npc.type == NPCID.QueenSlimeBoss)
+            {
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedKey);
+            }
+            else if (npc.type == NPCType<Cryogen>())
+            {
+
+            }
+            //else if (npc.type == the twins)
+            //{
+            //
+            //}
+            else if (npc.type == NPCType<AquaticScourgeHead>())
+            {
+                npcLoot.AddNormalOnly(ItemType<Rainstorm>(), 25);
+            }
+            else if (npc.type == NPCID.TheDestroyer)
+            {
+
+            }
+            else if (npc.type == NPCType<BrimstoneElemental>())
+            {
+
+            }
+            else if (npc.type == NPCID.SkeletronPrime)
+            {
+
+            }
+            else if (npc.type == NPCType<CalamitasClone>())
+            {
+
+            }
+            else if (npc.type == NPCID.Plantera)
+            {
+                npcLoot.AddNormalOnly(ItemType<EssenceofBabil>(), 1, 4, 8);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.JungleKey);
+            }
+            else if (npc.type == NPCType<Leviathan>() || npc.type == NPCType<Anahita>())
+            {
+                LeadingConditionRule mainRule = npcLoot.DefineConditionalDropSet(Leviathan.LastAnLStanding);
+                mainRule.Add(ItemType<CrocodileScale>(), 1, 20, 30);
+                npcLoot.AddNormalOnly(mainRule);
+            }
+            else if (npc.type == NPCType<AstrumAureus>())
+            {
+                npcLoot.AddNormalOnly(ItemType<SoulofBright>(), 1, 4, 6);
+            }
+            else if (npc.type == NPCID.Golem)
+            {
+
+            }
+            else if (npc.type == NPCID.DukeFishron)
+            {
+                npcLoot.AddNormalOnly(ItemType<DeliciousMeat>(), 2, 45, 92);
+            }
+            else if (npc.type == NPCType<PlaguebringerGoliath>())
             {
                 npcLoot.AddNormalOnly(ItemType<Alchemists3rdTrumpet>(), 25);
+            }
+            else if (npc.type == NPCID.HallowBoss)
+            {
+
+            }
+            else if (npc.type == NPCType<RavagerBody>())
+            {
+
+            }
+            else if (npc.type == NPCID.CultistBoss)
+            {
+
+            }
+            else if (npc.type == NPCType<AstrumDeusHead>())
+            {
+
+            }
+            else if (npc.type == NPCID.MoonLordCore)
+            {
+
+            }
+
+            // pml
+            else if (npc.type == NPCType<ProfanedGuardianCommander>())
+            {
+
+            }
+            else if (npc.type == NPCType<ProfanedGuardianDefender>())
+            {
+
+            }
+            else if (npc.type == NPCType<ProfanedGuardianHealer>())
+            {
+
+            }
+            else if (npc.type == NPCType<Providence>())
+            {
+                npcLoot.AddNormalOnly(ItemType<ProfanedNucleus>(), 4);
+                npcLoot.AddNormalOnly(ItemType<TorrefiedTephra>(), 1, 200, 222);
+            }
+            else if (npc.type == NPCType<Signus>())
+            {
+
+            }
+            else if (npc.type == NPCType<StormWeaverHead>())
+            {
+
+            }
+            else if (npc.type == NPCType<CeaselessVoid>())
+            {
+
+            }
+            else if (npc.type == NPCType<Polterghast>())
+            {
+
+            }
+            else if (npc.type == NPCType<OldDuke>())
+            {
+
+            }
+            else if (npc.type == NPCType<DevourerofGodsHead>())
+            {
+                npcLoot.AddNormalOnly(ItemType<Lean>(), 1, 3, 4);
+            }
+            else if (npc.type == NPCType<Yharon>())
+            {
+                npcLoot.AddNormalOnly(ItemType<MovieSign>(), 100);
+            }
+            //else if (npc.type == NPCType<Exoblade mechs??????>())
+            //{
+            //
+            //}
+            else if (npc.type == NPCType<SupremeCalamitas>())
+            {
+                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 6, 8);
+            }
+            else if (npc.type == NPCType<PrimordialWyrmHead>())
+            {
+                npcLoot.Add(ItemType<SubnauticalPlate>(), 1, 22, 34);
+                npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<HalibutCannon>());
             }
 
         }
