@@ -129,4 +129,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     public class ChlorophyteStormbowTheEighth : ChlorophyteStormbow { }
     // sprited by babybluesheep
     public class ChlorophyteStormbowTheNineth : ChlorophyteStormbow { }
+    // sprited by willowmaine
+    public class ChlorophyteStormbowTheTenth : ChlorophyteStormbow { }
 }
