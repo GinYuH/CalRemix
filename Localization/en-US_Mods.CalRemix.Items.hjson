@@ -3199,7 +3199,3 @@ Rainstorm: {
 	DisplayName: Sandstorm
 	Tooltip: Shoots sulphurous sand from the sky
 }
-
-ReaverSharkWaitNVM: {
-	DisplayName: Reaver Shark
-}

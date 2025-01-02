@@ -14,6 +14,7 @@ namespace CalRemix.Content.Items.Tools
         {
             Item.CloneDefaults(ItemID.ReaverShark);
             Item.pick = 65;
+            Item.SetNameOverride("Reaver Shark");
         }
         public override void AddRecipes()
         {
