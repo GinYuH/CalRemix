@@ -75,7 +75,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     speedX -= 5;
                 }
 
-                int projToShoot = ItemID.ChlorophyteArrow;
+                int projToShoot = ProjectileID.ChlorophyteArrow;
                 int awesomeRandomNumber = Main.rand.Next(0, 4);
                 // if 0, chloro arrow
                 if (awesomeRandomNumber == 1)
@@ -112,7 +112,29 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     { 
         public override void SetDefaults()
         {
+            Item.DamageType = ModContent.GetInstance<StormbowDamageClass>();
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 3.5f;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shootSpeed = 12f;
+
+            Item.width = 22;
+            Item.height = 46;
+            Item.damage = 74;
+            Item.crit = 12;
+            Item.useTime = 14;
+            Item.useAnimation = 14;
+
+            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
+            Item.rare = ItemRarityID.Lime;
+            Item.shoot = ProjectileID.ChlorophyteArrow;
+
+            Item.SetNameOverride("Chlorophyte Sporebow");
+
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.autoReuse = true;
         }
     }
     // sprited by mochi
@@ -131,4 +153,34 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     public class ChlorophyteStormbowTheNineth : ChlorophyteStormbow { }
     // sprited by willowmaine
     public class ChlorophyteStormbowTheTenth : ChlorophyteStormbow { }
+    // sprited by ibanplay
+    public class ChlorophyteStormbowTheEleventh : ChlorophyteStormbow
+    {
+        public override void SetDefaults()
+        {
+            Item.DamageType = ModContent.GetInstance<StormbowDamageClass>();
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 3.5f;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shootSpeed = 12f;
+
+            Item.width = 22;
+            Item.height = 46;
+            Item.damage = 74;
+            Item.crit = 12;
+            Item.useTime = 14;
+            Item.useAnimation = 14;
+
+            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
+            Item.rare = ItemRarityID.Lime;
+            Item.shoot = ProjectileID.ChlorophyteArrow;
+
+            Item.SetNameOverride("Chlorophyte Sporebow");
+
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.autoReuse = true;
+        }
+    }
 }

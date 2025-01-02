@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void SetDefaults()
         {
             Item.DamageType = ModContent.GetInstance<StormbowDamageClass>();
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.MowTheLawn;
             Item.noMelee = true;
             Item.knockBack = 3.5f;
             Item.UseSound = SoundID.Item5;
