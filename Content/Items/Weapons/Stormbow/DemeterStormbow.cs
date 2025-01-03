@@ -74,21 +74,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<WorldFeeder>().
+                //AddIngredient<FourOClock>().
                 AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient<Watercooler>().
-                AddIngredient<Vinewrath>().
-                AddIngredient<Fruminous>().
-                AddIngredient<LivingShard>(12).
-                AddTile(TileID.MythrilAnvil).
-                Register();
-
-            CreateRecipe().
-                AddIngredient<OfVericourse>().
-                AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient<Watercooler>().
-                AddIngredient<Vinewrath>().
-                AddIngredient<Fruminous>().
+                AddIngredient<RisingFire>().
+                AddIngredient<GiantStormbow>().
                 AddIngredient<LivingShard>(12).
                 AddTile(TileID.MythrilAnvil).
                 Register();

@@ -1134,7 +1134,7 @@ namespace CalRemix
             }
             else if (npc.type == NPCType<Cryogen>())
             {
-
+                npcLoot.AddNormalOnly(ItemType<FrostedFractals>(), 25);
             }
             //else if (npc.type == the twins)
             //{
@@ -1158,7 +1158,7 @@ namespace CalRemix
             }
             else if (npc.type == NPCType<CalamitasClone>())
             {
-
+                npcLoot.AddNormalOnly(ItemType<RisingFire>(), 25);
             }
             else if (npc.type == NPCID.Plantera)
             {

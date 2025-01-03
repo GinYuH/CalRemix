@@ -2,7 +2,9 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Projectiles.Magic;
+using CalamityMod.Projectiles.Rogue;
 using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
@@ -13,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class ExcaliburStormbow : ModItem, ILocalizedModType
+    public class RisingFire : ModItem, ILocalizedModType
     {
         public override void SetDefaults()
         {
@@ -27,14 +29,14 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             Item.width = 22;
             Item.height = 46;
-            Item.damage = 100;
-            Item.crit = 4;
-            Item.useTime = 62;
-            Item.useAnimation = 62;
+            Item.damage = 54;
+            Item.crit = 12;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
 
-            Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
-            Item.rare = ItemRarityID.Pink;
-            Item.shoot = ProjectileID.HolyArrow;
+            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
+            Item.rare = ItemRarityID.Lime;
+            Item.shoot = ModContent.ProjectileType<BrimstoneHomer>();
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -46,7 +48,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             // big govt secret: this is actually just a really edited undines retribution. but dont tell anyone that
             // u can edit the i < whatever for extra arrows lool. lol. haha lol
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Vector2 cursorPos = Main.MouseWorld;
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
@@ -74,16 +76,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
             }
             return false;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe().
-                AddIngredient(ItemID.HallowedBar, 30).
-                AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient(ItemID.SoulofMight, 6).
-                AddTile(TileID.MythrilAnvil).
-                Register();
         }
     }
 }

@@ -616,7 +616,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<CryogenBag>())
             {
-
+                itemLoot.Add(ItemType<FrostedFractals>(), 1 / 3);
             }
             else if (item.type == ItemID.TwinsBossBag)
             {
@@ -640,7 +640,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<CalamitasCloneBag>())
             {
-
+                itemLoot.Add(ItemType<RisingFire>(), 1 / 3);
             }
             else if (item.type == ItemID.PlanteraBossBag)
             {

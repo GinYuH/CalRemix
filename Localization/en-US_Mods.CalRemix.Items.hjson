@@ -3204,3 +3204,23 @@ TheFrog: {
 	DisplayName: The Frog
 	Tooltip: Shoots frogs from the sky
 }
+
+PerennialMillenial: {
+	DisplayName: Perennial Millenial
+	Tooltip: Picks flowers from the sky
+}
+
+SeaPrismStormbow: {
+	DisplayName: Sea Prism Stormbow
+	Tooltip: Shoots sea prisms from the sky
+}
+
+RisingFire: {
+	DisplayName: Rising Fire
+	Tooltip:
+		'''
+		Shoots a projectile internally referred to as "BrimstoneHomer" from the sky
+		'D'oh!'
+		(This is a reference to: The Simpsons)
+		'''
+}

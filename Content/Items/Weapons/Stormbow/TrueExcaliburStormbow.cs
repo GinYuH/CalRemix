@@ -109,10 +109,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.HallowedBar, 30).
+                AddIngredient<ExcaliburStormbow>().
                 AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient(ItemID.SoulofMight, 6).
-                AddTile(TileID.Anvils).
+                AddIngredient(ItemID.ChlorophyteBar, 30).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }
