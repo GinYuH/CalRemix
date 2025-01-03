@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 3.5f;
-            Item.UseSound = SoundID.Item5;
+            Item.UseSound = SoundID.Item11;
             Item.autoReuse = true;
             Item.shootSpeed = 16f;
             Item.noMelee = true; // This makes it so the item doesn't do damage to enemies (the projectile does that).

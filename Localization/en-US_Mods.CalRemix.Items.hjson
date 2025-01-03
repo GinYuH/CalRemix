@@ -3189,3 +3189,18 @@ Alchemists3rdTrumpet: {
 		Arrows can inflict any debuff
 		'''
 }
+
+Duststorm: {
+	DisplayName: Duststorm
+	Tooltip: Shoots sand from the sky
+}
+
+Rainstorm: {
+	DisplayName: Sandstorm
+	Tooltip: Shoots sulphurous sand from the sky
+}
+
+TheFrog: {
+	DisplayName: The Frog
+	Tooltip: Shoots frogs from the sky
+}

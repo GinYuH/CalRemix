@@ -57,7 +57,7 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
             Projectile.ai[0]++;
             if (Projectile.ai[0] >= 14)
             {
-                SoundEngine.PlaySound(SoundID.Item, Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item5, Projectile.position);
                 
                 // big govt secret: this is actually just a really edited undines retribution. but dont tell anyone that
                 // u can edit the i < whatever for extra arrows lool. lol. haha lol
