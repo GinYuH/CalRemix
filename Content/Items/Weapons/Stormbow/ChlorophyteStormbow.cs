@@ -105,56 +105,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    // sprited by split
-    public class ChlorophyteStormbowTheFirst : ChlorophyteStormbow { }
-    // sprited by split
-    public class ChlorophyteStormbowTheSecond : ChlorophyteStormbow 
-    { 
-        public override void SetDefaults()
-        {
-            Item.DamageType = ModContent.GetInstance<StormbowDamageClass>();
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.noMelee = true;
-            Item.knockBack = 3.5f;
-            Item.UseSound = SoundID.Item5;
-            Item.autoReuse = true;
-            Item.shootSpeed = 12f;
-
-            Item.width = 22;
-            Item.height = 46;
-            Item.damage = 74;
-            Item.crit = 12;
-            Item.useTime = 14;
-            Item.useAnimation = 14;
-
-            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
-            Item.rare = ItemRarityID.Lime;
-            Item.shoot = ProjectileID.ChlorophyteArrow;
-
-            Item.SetNameOverride("Chlorophyte Sporebow");
-
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.autoReuse = true;
-        }
-    }
-    // sprited by mochi
-    public class ChlorophyteStormbowTheThird : ChlorophyteStormbow { }
-    // sprited by moonbee
-    public class ChlorophyteStormbowTheFourth : ChlorophyteStormbow { }
-    // sprited by me!!!! caligulasaquarium. so its the best. yep
-    public class ChlorophyteStormbowTheFifth : ChlorophyteStormbow { }
-    // sprited by the pooper
-    public class ChlorophyteStormbowTheSixth : ChlorophyteStormbow { }
-    // sprited by yuh
-    public class ChlorophyteStormbowTheSeventh : ChlorophyteStormbow { }
-    // sprited by spoop
-    public class ChlorophyteStormbowTheEighth : ChlorophyteStormbow { }
-    // sprited by babybluesheep
-    public class ChlorophyteStormbowTheNineth : ChlorophyteStormbow { }
-    // sprited by willowmaine
-    public class ChlorophyteStormbowTheTenth : ChlorophyteStormbow { }
-    // sprited by ibanplay
-    public class ChlorophyteStormbowTheEleventh : ChlorophyteStormbow
+    public abstract class ChlorophyteStormbowSword : ChlorophyteStormbow
     {
         public override void SetDefaults()
         {
@@ -183,4 +134,29 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.autoReuse = true;
         }
     }
+
+    // sprited by split
+    public class ChlorophyteStormbowTheFirst : ChlorophyteStormbow { }
+    // sprited by split
+    public class ChlorophyteStormbowTheSecond : ChlorophyteStormbowSword { }
+    // sprited by mochi
+    public class ChlorophyteStormbowTheThird : ChlorophyteStormbow { }
+    // sprited by moonbee
+    public class ChlorophyteStormbowTheFourth : ChlorophyteStormbow { }
+    // sprited by me!!!! caligulasaquarium. so its the best. yep
+    public class ChlorophyteStormbowTheFifth : ChlorophyteStormbow { }
+    // sprited by the pooper
+    public class ChlorophyteStormbowTheSixth : ChlorophyteStormbow { }
+    // sprited by yuh
+    public class ChlorophyteStormbowTheSeventh : ChlorophyteStormbow { }
+    // sprited by spoop
+    public class ChlorophyteStormbowTheEighth : ChlorophyteStormbow { }
+    // sprited by babybluesheep
+    public class ChlorophyteStormbowTheNineth : ChlorophyteStormbow { }
+    // sprited by willowmaine
+    public class ChlorophyteStormbowTheTenth : ChlorophyteStormbow { }
+    // sprited by ibanplay
+    public class ChlorophyteStormbowTheEleventh : ChlorophyteStormbowSword { }
+    // sprited by delly
+    public class ChlorophyteStormbowTheTwelvth : ChlorophyteStormbowSword { }
 }

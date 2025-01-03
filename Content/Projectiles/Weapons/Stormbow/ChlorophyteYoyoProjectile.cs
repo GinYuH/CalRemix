@@ -54,8 +54,8 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
 
         public override void AI()
         {
-            Projectile.ai[0]++;
-            if (Projectile.ai[0] >= 14)
+            Projectile.ai[2]++;
+            if (Projectile.ai[2] >= 14)
             {
                 SoundEngine.PlaySound(SoundID.Item5, Projectile.position);
                 
@@ -91,7 +91,7 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
                     }
 
                     int projectile = Projectile.NewProjectile(Projectile.GetSource_FromThis(), cursorPos, new Vector2(speedX, speedY), projToShoot, Projectile.damage, 0);
-                    Projectile.ai[0] = 0;
+                    Projectile.ai[2] = 0;
                 }
             }
         }
