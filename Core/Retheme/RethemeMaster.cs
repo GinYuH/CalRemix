@@ -445,10 +445,18 @@ namespace CalRemix.Core.Retheme
                 item.SetNameOverride("reef Shark");
                 item.pick = 10;
             }
+            else if (item.type == ItemType<ArterialAssault>())
+            {
+                item.DamageType = GetInstance<StormbowDamageClass>();
+            }
 
             if (item.Name.Contains("Relic") && item.rare == ItemRarityID.Master)
             {
                 item.SetNameOverride(item.Name.Replace("Relic", "Treasure"));
+            }
+            else if (item.Name.Contains("Bloodstone"))
+            {
+                item.SetNameOverride(item.Name.Replace("Bloodstone", "Hemostone"));
             }
         }
         public override void UpdateInventory(Item item, Player player)

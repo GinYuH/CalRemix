@@ -13,28 +13,28 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class TrueExcaliburStormbow : ModItem, ILocalizedModType
+    public class TheSkyfall : ModItem, ILocalizedModType
     {
         public override void SetDefaults()
         {
             Item.DamageType = ModContent.GetInstance<StormbowDamageClass>();
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.MowTheLawn;
             Item.noMelee = true;
             Item.knockBack = 3.5f;
-            Item.UseSound = SoundID.Item5;
+            Item.UseSound = SoundID.Item97;
             Item.autoReuse = true;
             Item.shootSpeed = 12f;
 
             Item.width = 22;
             Item.height = 46;
-            Item.damage = 100;
+            Item.damage = 10;
             Item.crit = 4;
-            Item.useTime = 62;
-            Item.useAnimation = 62;
+            Item.useTime = 32;
+            Item.useAnimation = 32;
 
-            Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
-            Item.rare = ItemRarityID.Yellow;
-            Item.shoot = ProjectileID.HolyArrow;
+            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
+            Item.rare = ItemRarityID.Lime;
+            Item.shoot = ProjectileID.PoisonDart;
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             // big govt secret: this is actually just a really edited undines retribution. but dont tell anyone that
             // u can edit the i < whatever for extra arrows lool. lol. haha lol
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Vector2 cursorPos = Main.MouseWorld;
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
@@ -73,47 +73,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
                 int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, 0.0f);
             }
-
-            int amountOfEvil = Main.rand.Next(2, 30);
-
-            for (int i = 0; i < amountOfEvil; i++)
-            {
-                Vector2 cursorPos = Main.MouseWorld;
-                cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
-                cursorPos.Y = player.Center.Y - 800 - (100 * (i * 0.75f));
-                float speedX = Main.rand.Next(-60, 91) * 0.02f;
-                float speedY = Main.rand.Next(-60, 91) * 0.02f;
-                speedY += 15;
-
-                // arrow position noise pass
-                cursorPos.X += Main.rand.Next(-60, 61);
-                cursorPos.Y += Main.rand.Next(-60, 61);
-
-                // if to right of player, right direct all projectiles. else, left
-                if (Main.MouseWorld.X - player.Center.X > 0)
-                {
-                    cursorPos.X -= 200;
-                    speedX += 5;
-                }
-                else
-                {
-                    cursorPos.X += 200;
-                    speedX -= 5;
-                }
-
-                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, ProjectileID.LightDisc, damage, knockback, player.whoAmI, 0.0f);
-            }
             return false;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe().
-                AddIngredient<ExcaliburStormbow>().
-                AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient(ItemID.ChlorophyteBar, 30).
-                AddTile(TileID.MythrilAnvil).
-                Register();
         }
     }
 }
