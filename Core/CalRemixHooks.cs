@@ -40,6 +40,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MonoMod.RuntimeDetour;
 using CalRemix.Content.Items.ZAccessories;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Rogue;
+using System.Security.Cryptography.X509Certificates;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Core
 {
@@ -135,6 +138,19 @@ namespace CalRemix.Core
             if (modLoading != null)
             {
                 modLoading.SetValue(ccr, true);
+                // Bouncy and sticky rogue weapons
+                for (int i = ItemID.Count; i < ItemLoader.ItemCount; i++)
+                {
+                    ModItem tem = ItemLoader.GetItem(i);
+                    if (tem.Item.ModItem is RogueWeapon)
+                    {
+                        StickyRogue d = new StickyRogue(i);
+                        GetInstance<CalRemix>().AddContent(d);
+
+                        BouncyRogue s = new BouncyRogue(i);
+                        GetInstance<CalRemix>().AddContent(s);
+                    }
+                }
                 for (int i = 1; i < BuffLoader.BuffCount; i++)
                 {
                     // Sorry, only vanilla buffs get kicked out

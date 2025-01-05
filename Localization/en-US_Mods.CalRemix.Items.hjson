@@ -2556,7 +2556,10 @@ Weapons: {
 			DisplayName: Scrap Claw
 		}
 
-		RazorTeeth.DisplayName: Razor Teeth
+		RazorTeeth: {
+			DisplayName: Razor Teeth
+			Tooltip: ""
+		}
 
 		ProfanedNucleus: {
 			Tooltip:
@@ -2567,8 +2570,15 @@ Weapons: {
 			DisplayName: Profaned Nucleus
 		}
 
-		IchorDagger.DisplayName: Ichor Dagger
-		GearworkShield.DisplayName: Gearwork Shield
+		IchorDagger: {
+			DisplayName: Ichor Dagger
+			Tooltip: ""
+		}
+
+		GearworkShield: {
+			DisplayName: Gearwork Shield
+			Tooltip: ""
+		}
 
 		EcologicalCollapse: {
 			Tooltip:
@@ -2580,10 +2590,45 @@ Weapons: {
 			DisplayName: Ecological Collapse
 		}
 
-		DemonCore.DisplayName: Demon Core
-		CursedSpear.DisplayName: Cursed Spear
-		BundleBones.DisplayName: Bundle o' Bones
-		BucketofCoal.DisplayName: Bucket of Coal
+		DemonCore: {
+			DisplayName: Demon Core
+			Tooltip: ""
+		}
+
+		CursedSpear: {
+			DisplayName: Cursed Spear
+			Tooltip: ""
+		}
+
+		BundleBones: {
+			DisplayName: Bundle o' Bones
+			Tooltip: ""
+		}
+
+		BucketofCoal: {
+			DisplayName: Bucket of Coal
+			Tooltip: ""
+		}
+
+		BlobfishPlushie: {
+			DisplayName: Blobfish Plushie
+			Tooltip: ""
+		}
+
+		DaggerofLiberty: {
+			DisplayName: Daggerof Liberty
+			Tooltip: ""
+		}
+
+		FracturingFist: {
+			DisplayName: Fracturing Fist
+			Tooltip: ""
+		}
+
+		SylvanSlasher: {
+			DisplayName: Sylvan Slasher
+			Tooltip: ""
+		}
 	}
 }
 

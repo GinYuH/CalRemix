@@ -45,6 +45,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Core.Retheme;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix
 {
@@ -227,7 +228,7 @@ namespace CalRemix
                 ModItem item = ItemLoader.GetItem(i);
                 if (item.Type == ItemType<WulfrumMetalScrap>())
                     continue;
-                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone)
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone || item is BouncyRogue || item is StickyRogue)
                     continue;
                 CalRemixAddon.Items.Add(item);
             }
