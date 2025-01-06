@@ -171,7 +171,7 @@ namespace CalRemix.Content.NPCs
                 velocityClampedEvil *= -1;
             }
 
-            Main.EntitySpriteDraw(texture.Value, NPC.Bottom - Main.screenPosition, null, Color.White, NPC.rotation, texture.Size() * new Vector2(0.5f, 1f), NPC.scale * new Vector2(Utils.Clamp(velocityClamped, 0.5f, 1.5f), Utils.Clamp(velocityClampedEvil, 0.5f, 1.5f)), 0, 0);
+            Main.EntitySpriteDraw(texture.Value, NPC.Bottom - Main.screenPosition, null, Color.White * .8f, NPC.rotation, texture.Size() * new Vector2(0.5f, 1f), NPC.scale * new Vector2(Utils.Clamp(velocityClamped, 0.5f, 1.5f), Utils.Clamp(velocityClampedEvil, 0.5f, 1.5f)), 0, 0);
             return false;
         }
     }
