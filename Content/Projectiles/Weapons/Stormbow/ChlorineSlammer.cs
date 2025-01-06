@@ -43,7 +43,7 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
         {
             SoundEngine.PlaySound(SoundID.NPCHit1, Projectile.position);
 
-            Particle pulse = new DirectionalPulseRing(Projectile.Center + new Vector2(0, Projectile.height / 2), Vector2.Zero, Color.DarkCyan, new Vector2(4f, 2f), Main.rand.NextFloat(-0.2f, 0.2f), 0.01f, 1.5f, 22);
+            Particle pulse = new DirectionalPulseRing(Projectile.Center + new Vector2(0, Projectile.height / 2), Vector2.Zero, Color.DarkCyan, new Vector2(4f, 2f), Main.rand.NextFloat(-0.2f, 0.2f), 0.01f, 0.25f, 22);
             GeneralParticleHandler.SpawnParticle(pulse);
         }
         public override bool? CanDamage()

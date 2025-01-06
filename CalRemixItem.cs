@@ -602,7 +602,8 @@ namespace CalRemix
             }
             else if (item.type == ItemType<SlimeGodBag>())
             {
-
+                itemLoot.Add(ItemType<ToxicTome>(), 33);
+                itemLoot.Add(ItemType<ChlorislimeStaff>(), 33);
             }
             else if (item.type == ItemID.WallOfFleshBossBag)
             {

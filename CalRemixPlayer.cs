@@ -65,6 +65,7 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using System.Threading.Tasks;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.Projectiles.Weapons.Stormbow;
+using Mono.Cecil;
 
 namespace CalRemix
 {
@@ -216,6 +217,7 @@ namespace CalRemix
         public bool onyxFist;
         public bool fractalCrawler;
         public bool exolotl;
+        public bool cSlime3;
 
         // Pets
         public bool nothing;

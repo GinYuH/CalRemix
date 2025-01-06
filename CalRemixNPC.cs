@@ -1119,7 +1119,8 @@ namespace CalRemix
             }
             else if (npc.type == NPCType<SlimeGodCore>())
             {
-
+                npcLoot.AddNormalOnly(ItemType<ToxicTome>(), 25);
+                npcLoot.AddNormalOnly(ItemType<ChlorislimeStaff>(), 25);
             }
             else if(npc.type == NPCID.WallofFlesh)
             {

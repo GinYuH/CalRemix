@@ -117,6 +117,10 @@ namespace CalRemix.Content.NPCs
             else if (AIMode == 1 && AITimer <= 0 && Vector2.Distance(NPC.Center, player.Center) > 800)
             {
                 NPC.velocity = new Vector2(0, 1);
+                if (player.position.Y < NPC.position.Y)
+                {
+                    NPC.position.Y = player.position.Y - 800;
+                }
                 float awesomeNewPosition = player.position.X + Main.rand.Next(-750, 750);
                 NPC.position.X = awesomeNewPosition;
                 AIMode = 2;
@@ -168,11 +172,13 @@ namespace CalRemix.Content.NPCs
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             ReLogic.Content.Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
+            // horiz squish
             float velocityClamped = NPC.velocity.Y * 0.2f;
             if (velocityClamped < 0.75 && velocityClamped > -0.75)
             {
                 velocityClamped = 1;
             }
+            // vertic squish
             float velocityClampedEvil = NPC.velocity.Y * 0.2f;
             if (velocityClampedEvil < 0.75 && velocityClampedEvil > -0.75)
             {
