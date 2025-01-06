@@ -217,3 +217,8 @@ StratusBeverageBuff: {
 	Description: Seeing stars
 	DisplayName: Stratus Beverage
 }
+
+Chlorislime: {
+	Description: Chlorislime
+	DisplayName: The chlorislime will protect you
+}

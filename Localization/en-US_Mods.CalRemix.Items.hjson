@@ -3330,3 +3330,13 @@ DyeStats: {
 	Silver: Charisma {0} by {1}
 	Black: Evil {0} by {1}
 }
+
+ToxicTome: {
+	DisplayName: Alkaline Tome
+	Tooltip: Casts miniature chlorine slimes from the sky
+}
+
+ChlorislimeStaff: {
+	DisplayName: Chlorislime Staff
+	Tooltip: Summons a chlori slime to fight for you
+}
