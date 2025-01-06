@@ -21,7 +21,7 @@ using CalamityMod.Particles;
 namespace CalRemix.Content.NPCs
 {
     [AutoloadBossHead]
-    public class ChlorinePaladin : ModNPC
+    public class SplitChlorinePaladin : ModNPC
     {
         public ref float AITimer => ref NPC.ai[0];
         public ref float AIMode => ref NPC.ai[1];
@@ -33,25 +33,25 @@ namespace CalRemix.Content.NPCs
         public override void SetDefaults()
         {
             NPC.Calamity().canBreakPlayerDefense = true;
-            NPC.damage = 200;
-            NPC.width = 150;
-            NPC.height = 92;
-            NPC.scale = 1.1f;
-            NPC.defense = 12;
-            NPC.LifeMaxNERB(7500, 9000, 160000);
+            NPC.LifeMaxNERB(2000, 2400, 110000);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.BossBar = Main.BigBossProgressBar.NeverValid;
+            NPC.damage = 200;
+            NPC.width = 150;
+            NPC.height = 92;
+            NPC.scale = 0.8f;
+            NPC.defense = 8;
+            NPC.aiStyle = -1;
+            AIType = -1;
             NPC.knockBackResist = 0f;
-            NPC.value = 0f;
+            NPC.value = Item.buyPrice(0, 1, 0, 0);
             NPC.Opacity = 0.8f;
             NPC.lavaImmune = false;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.aiStyle = -1;
-            AIType = -1;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
         }
@@ -78,22 +78,6 @@ namespace CalRemix.Content.NPCs
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
-
-            if (lifeRatio <= 0.5f && Main.netMode != NetmodeID.MultiplayerClient && expertMode)
-            {
-
-                SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.Center);
-                Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
-                NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X - 30, (int)spawnAt.Y, ModContent.NPCType<SplitChlorinePaladin>());
-                NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X + 30, (int)spawnAt.Y, ModContent.NPCType<SplitChlorinePaladin>());
-
-                NPC.life = 0;
-                NPC.HitEffect();
-                NPC.active = false;
-                NPC.netUpdate = true;
-                return;
-
-            }
 
             // jump if it is time
             if (AIMode == 0 && AITimer <= 0)
@@ -168,6 +152,12 @@ namespace CalRemix.Content.NPCs
             {
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
             }
+        }
+        public override void OnKill()
+        {
+            int heartAmt = Main.rand.Next(3) + 3;
+            for (int i = 0; i < heartAmt; i++)
+                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Heart);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
