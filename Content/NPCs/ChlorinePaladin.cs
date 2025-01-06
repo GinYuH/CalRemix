@@ -16,6 +16,7 @@ using CalamityMod.World;
 using CalamityMod.NPCs.SlimeGod;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using CalamityMod.Particles;
 
 namespace CalRemix.Content.NPCs
 {
@@ -56,7 +57,8 @@ namespace CalRemix.Content.NPCs
         }
         public override void OnSpawn(IEntitySource source)
         {
-            AITimer = 200;
+            AITimer = 0;
+            AIMode = 1;
         }
         public override void AI()
         {
@@ -96,48 +98,58 @@ namespace CalRemix.Content.NPCs
             // jump if it is time
             if (AIMode == 0 && AITimer <= 0)
             {
-                NPC.velocity = new Vector2(0, -30f);
+                NPC.velocity = new Vector2(0, -45f);
                 AITimer = 50;
                 AIMode = 1;
-                Main.NewText("jumping");
+            }
+            // slow down over time to create a slightly nicer effect
+            else if (AIMode == 1 && AITimer >= 0)
+            {
+                NPC.velocity.Y *= 0.97f;
             }
             // keep jumping until offscreen and it is time
-            else if (AIMode == 1 && AITimer <= 0 && Vector2.Distance(NPC.Center, player.Center) < 500)
+            else if (AIMode == 1 && AITimer <= 0 && Vector2.Distance(NPC.Center, player.Center) < 800)
             {
-                NPC.velocity = new Vector2(0, -30f);
+                NPC.velocity = new Vector2(0, -45f);
                 AITimer = 50;
-                Main.NewText("GET AWAY FROM ME");
             }
             // teleport if it is time
-            else if (AIMode == 1 && AITimer <= 0 && Vector2.Distance(NPC.Center, player.Center) > 500)
+            else if (AIMode == 1 && AITimer <= 0 && Vector2.Distance(NPC.Center, player.Center) > 800)
             {
-                NPC.velocity = Vector2.Zero;
+                NPC.velocity = new Vector2(0, 1);
                 float awesomeNewPosition = player.position.X + Main.rand.Next(-750, 750);
                 NPC.position.X = awesomeNewPosition;
                 AIMode = 2;
-                Main.NewText("teleporting");
+                NPC.noGravity = true;
             }
             // fall
             else if (AIMode == 2 && NPC.velocity.Y > 0)
             {
-                NPC.velocity.Y *= 1.5f;
-                Main.NewText("falling");
+                NPC.velocity.Y += 1.3f;
+
+                // the evil... the EVIL IN ME.... GRAAAAAAAGHHHHHHHH I CANNOT STOP IT 
+                Particle smoke = new HeavySmokeParticle(NPC.Center, NPC.velocity * Main.rand.NextFloat(-0.2f, -0.6f), Color.DarkCyan * 0.65f, 22, Main.rand.NextFloat(2.4f, 2.55f), 0.3f, Main.rand.NextFloat(-0.2f, 0.2f), false, required: true);
+                GeneralParticleHandler.SpawnParticle(smoke);
             }
             // slam and restart
             // NPC.oldPosition == NPC.position is an evil hack to see if the npc is standing still
             else if (AIMode == 2 && NPC.oldPosition.Y == NPC.position.Y)
             {
+                NPC.noGravity = false;
                 SoundEngine.PlaySound(SoundID.AbigailCry, NPC.Center);
-                for (int ii = 0; ii < 5; ii++)
+                for (int ii = 0; ii < 22; ii++)
                 {
-                    Dust dust = Dust.NewDustDirect(NPC.Center, 20, 20, DustID.BlueCrystalShard);
-                    dust.noGravity = true;
-                    dust.velocity *= 1.5f;
-                    dust.scale *= 0.9f;
+                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X - NPC.width / 2, NPC.position.Y + (NPC.height / 3) * 2), NPC.width * 2, NPC.height / 3, DustID.BlueCrystalShard);
+                    dust.noGravity = false;
+                    dust.velocity *= 5f;
+                    dust.scale *= 4.0f;
                 }
+                Particle pulse = new DirectionalPulseRing(NPC.Center + new Vector2(0, NPC.height / 2), Vector2.Zero, Color.DarkCyan, new Vector2(4f, 2f), Main.rand.NextFloat(-0.2f, 0.2f), 0.01f, 1.5f, 22);
+                GeneralParticleHandler.SpawnParticle(pulse);
+
                 AIMode = 0;
-                AITimer = Main.rand.Next(100, 300);
-                Main.NewText("slamming");
+                // gets faster at low hp
+                AITimer = Main.rand.Next(200, 400) * lifeRatio;
             }
 
             AITimer--;
