@@ -126,7 +126,12 @@ Mods: {
 			}
 		}
 
-		InfoDisplays.ElementDisplay.DisplayName: Element Display
+		InfoDisplays: {
+			ElementDisplay.DisplayName: Element Display
+			HelperDisplay.DisplayName: Fanny Mood Tracker
+			MoodTracker.DisplayName: Mood Tracker
+		}
+
 		Emotes.HypnosEmote.Command: hypnosemote
 		BossChecklistIntegration.PandemicPanic.EntryName: Pandemic Panic
 

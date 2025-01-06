@@ -40,7 +40,7 @@ namespace CalRemix.UI
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1500000));
 
             HelperMessage.New("ProbablyYakuza", "One time, I saw someone being dragged into a car by three men. The men took around 10 minutes and 23 seconds to subdue their victim, and 2 more minutes to drive away. I did nothing to stop it.",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1500000));
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1500000)).AddEndEvent(() => MoodTracker.remorsefulMood.Activate());
 
             HelperMessage.New("CreditCard", "Heya $0 I'm feeling hungry could you send me your credit card details so I can get some food!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1500000)).SetHoverTextOverride("Sure thing Fanny!").AddDynamicText(HelperMessage.GetPlayerName);

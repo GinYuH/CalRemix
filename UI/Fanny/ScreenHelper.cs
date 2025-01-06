@@ -800,6 +800,7 @@ namespace CalRemix.UI
             }
 
             tag["FannyReadThroughDogDialogue"] = ScreenHelperManager.ReadAllDogTips;
+            tag["fannyMoodTracker"] = MoodTracker.unlocked;
         }
 
 
@@ -812,8 +813,12 @@ namespace CalRemix.UI
                 readMessages[i] = tag.ContainsKey("FannyDialogue" + msg.Identifier);
             }
 
-            if (tag.TryGet<bool>("FannyReadThroughDogDialogue", out bool readDog))
+            if (tag.TryGet("FannyReadThroughDogDialogue", out bool readDog))
                 readTroughFannyDogDialogue = readDog;
+
+            MoodTracker.unlocked = false;
+            if (tag.TryGet("fannyMoodTracker", out bool unlockedMoodDisplay))
+                MoodTracker.unlocked = unlockedMoodDisplay;
         }
 
         public override void OnEnterWorld()
@@ -954,6 +959,7 @@ namespace CalRemix.UI
         {
             //Now that the messages have been created, sort them by speaker 
             screenHelperMessageGroups = screenHelperMessages.GroupBy(m => m.DesiredSpeaker);
+            MoodTracker.moodList = MoodTracker.moodList.OrderByDescending(m => m.priority).ToList();
         }
         #endregion
 
@@ -964,10 +970,12 @@ namespace CalRemix.UI
 
             UpdateLoreCommentTracking();
             UpdateMessages();
+            UpdateFannyMood();
 
             //Dont try speaking messages if fanny is not enabled
             if (!screenHelpersEnabled)
                 return;
+
 
             //Don't even try looking for a new message if everyone is speaking already / On speak cooldown
             if (ScreenHelperUISystem.UIState.AnyAvailableScreenHelper())
@@ -981,16 +989,25 @@ namespace CalRemix.UI
                     if (!speaker.CanSpeak)
                         continue;
 
+                    HelperMessage messageToPlay = null;
+
                     //Looks at all the messages
                     foreach (HelperMessage message in messageGroup)
                     {
+                        //If we already found a message to play, we only consider messages that have been activated because those are more important and take priority
+                        if (messageToPlay != null && (message.activationTimer == 0))
+                            continue;
+
                         if (message.CanPlayMessage() && message.CheckExtraConditions(sceneMetrics))
                         {
+                            messageToPlay = message;
                             //message.Text = Language.GetOrRegister("Mods.CalRemix.Fanny." + message.Identifier).Value;
-                            message.PlayMessage(speaker);
                             break;
                         }
                     }
+
+                    if (messageToPlay != null)
+                        messageToPlay.PlayMessage(speaker);
                 }
             }
 
@@ -1002,6 +1019,8 @@ namespace CalRemix.UI
             //Clears out the scene metrics and set the screen rect
             sceneMetrics.Clear();
             screenRect = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+            foreach (FannyMood mood in MoodTracker.npcDependentMoodList)
+                mood.validConditionMet = false;
         }
 
         public void UpdateMessages()
@@ -1022,7 +1041,8 @@ namespace CalRemix.UI
 
                     //if the activated message spent 10 seconds without playing, we stop trying to play it
                     //this is to avoid scenarios where the message's condition isnt met and it ends up hanging in the air forever until it is met
-                    if (msg.activationTimer >= 600)
+                    //DONT disable activated messages with start/end events, they may be important helper unlock ones
+                    if (msg.activationTimer >= 600 && !msg.HasAnyEndEvents && !msg.HasAnyStartEvents)
                         msg.activationTimer = 0;
                 }
 
@@ -1054,11 +1074,45 @@ namespace CalRemix.UI
             }
         }
 
+        #region Moods
+
+        public void UpdateFannyMood()
+        {
+            //if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0) && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad7))
+            //    MoodTracker.Reset();
+
+
+
+            //Tick down lingering mood
+            if (MoodTracker.moodLingerTimer > 0f)
+                MoodTracker.moodLingerTimer -= 1 / 60f;
+            if (MoodTracker.moodLingerTimer <= 0)
+                MoodTracker.lingeringMood = null;
+
+            if (Main.LocalPlayer.hideInfo[MoodTracker.DisplayID] && MoodTracker.firstBlockDisableMessage.alreadySeen && !MoodTracker.firstBlockDisableMessage.InDelayPeriod)
+            {
+                if (!MoodTracker.secondBlockDisableMessage.alreadySeen)
+                {
+                    //End the already seen one
+                    if (ScreenHelpersUIState.FannyTheFire.UsedMessage == MoodTracker.firstBlockDisableMessage)
+                    {
+                        ScreenHelpersUIState.FannyTheFire.UsedMessage.EndMessage();
+                        ScreenHelpersUIState.FannyTheFire.StopTalking();
+                    }
+
+                    MoodTracker.secondBlockDisableMessage.PlayMessage(ScreenHelpersUIState.FannyTheFire);
+                }
+
+                Main.LocalPlayer.hideInfo[MoodTracker.DisplayID] = false;
+            }
+        }
+
+        #endregion
+
         #region Hooks
         public delegate void MessageActionDelegate(HelperMessage message);
         public static event MessageActionDelegate OnMessageEnd;
         public static event MessageActionDelegate OnMessageStart;
-
 
         public static void OnMessageEndCall(HelperMessage message) => OnMessageEnd?.Invoke(message);
         public static void OnMessageStartCall(HelperMessage message) => OnMessageStart?.Invoke(message);
@@ -1146,14 +1200,14 @@ namespace CalRemix.UI
     public class ScreenHelperSceneMetrics
     {
         public List<NPC> onscreenNPCs;
-        //public List<Projectile> onscreenProjectiles;
-        //public List<Item> onscreenItems;
+        public List<Projectile> onscreenProjectiles;
+        public List<Item> onscreenItems;
 
         public ScreenHelperSceneMetrics()
         {
             onscreenNPCs = new List<NPC>(Main.maxNPCs);
-            //onscreenProjectiles = new List<Projectile>(Main.maxProjectiles);
-            //onscreenItems = new List<Item>(Main.maxItems);
+            onscreenProjectiles = new List<Projectile>(Main.maxProjectiles);
+            onscreenItems = new List<Item>(Main.maxItems);
         }
 
         public void Clear()
@@ -1161,9 +1215,9 @@ namespace CalRemix.UI
             //Clear the NPCs
             onscreenNPCs.Clear();
             //Clear the Projectiles
-            //onscreenProjectiles.Clear();
+            onscreenProjectiles.Clear();
             //Clear the Items
-            //onscreenItems.Clear();
+            onscreenItems.Clear();
         }
     }
 
@@ -1672,6 +1726,11 @@ namespace CalRemix.UI
             return this;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Identifier + ": " + Text;
+        }
     }
 
     public class ScreenHelperPortrait

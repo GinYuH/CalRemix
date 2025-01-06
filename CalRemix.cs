@@ -97,7 +97,7 @@ namespace CalRemix
                         float desiredX = reader.ReadSingle();
                         float desiredY = reader.ReadSingle();
                         string text = reader.ReadString();
-                        int textLife = reader.ReadInt32();
+                        float textLife = reader.ReadSingle();
                         int lookedItem = reader.ReadInt32();
                         int itemTimer = reader.ReadInt32();
                         float rotation = reader.ReadSingle();

@@ -4,6 +4,7 @@ using CalamityMod.Items.Fishing.SunkenSeaCatches;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Core.World;
+using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -21,6 +22,9 @@ namespace CalRemix.Content.Tiles
 {
     public class IonCubePlaced : ModTile
     {
+        public static FannyMood trustfulMood;
+
+
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -35,6 +39,9 @@ namespace CalRemix.Content.Tiles
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(Color.DarkBlue, name);
+
+            if (!Main.dedServ)
+                trustfulMood = FannyMood.New("Trustful!", null, 7f, 1f, false).DisableNaturalSelection();
         }
         public override bool HasSmartInteract(int i, int j, Terraria.GameContent.ObjectInteractions.SmartInteractScanSettings settings) => true;
 
@@ -217,7 +224,12 @@ namespace CalRemix.Content.Tiles
             guy.rotation = guy.rotation.AngleLerp(guy.desiredRotation, 0.05f);
             if (guy.textLifeTime > 0)
             {
-                guy.textLifeTime--;
+                trustfulMood.Activate();
+
+                guy.textLifeTime -= (float)Main.gameTimeCache.ElapsedGameTime.TotalSeconds * 3f;
+
+                if (guy.textLifeTime < 0)
+                    guy.textLifeTime = 0;
             }
             CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             bool finalQuest = CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1);
@@ -261,7 +273,7 @@ namespace CalRemix.Content.Tiles
                 }
                 if (player.ionDialogue > -1)
                 {
-                    if (guy.textLifeTime < 1)
+                    if (guy.textLifeTime == 0)
                     {
                         if (player.ionDialogue < IonCubeTE.dialogue[CalRemixWorld.ionQuestLevel].Line.Count - 1)
                         {
@@ -397,7 +409,7 @@ namespace CalRemix.Content.Tiles
         // Text to display, color of text, and how long text should display
         public string displayText = "";
         public Color textColor = Color.White;
-        public int textLifeTime = 0;
+        public float textLifeTime = 0;
 
         // The item's index
         public int lookedAtItem = -1;
@@ -514,7 +526,7 @@ namespace CalRemix.Content.Tiles
 
         public void ManualTalk()
         {
-            textLifeTime = (int)MathHelper.Max(DialogueToDisplay().Length * 5, 180);
+            textLifeTime = MathHelper.Max((DialogueToDisplay().Length * 5) / 60f, 3f);
             displayText = DialogueToDisplay();
         }
 

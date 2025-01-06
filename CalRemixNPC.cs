@@ -1280,7 +1280,23 @@ namespace CalRemix
                 wither = 0;
 
             if (npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
+            {
                 ScreenHelperManager.sceneMetrics.onscreenNPCs.Add(npc);
+                foreach (FannyMood mood in MoodTracker.npcDependentMoodList)
+                {
+                    if (mood.validConditionMet)
+                        break;
+                    for (int i = 0; i < mood.requiredNPCs.Length; i++)
+                    {
+                        if (mood.requiredNPCs[i] == npc.type)
+                        {
+                            mood.validConditionMet = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {

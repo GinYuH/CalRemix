@@ -14,6 +14,7 @@ using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
+using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -66,6 +67,12 @@ namespace CalRemix.Content.Projectiles
             {
                 projectile.DamageType = DamageClass.Summon;
             }
+        }
+
+        public override bool PreAI(Projectile projectile)
+        {
+            ScreenHelperManager.sceneMetrics.onscreenProjectiles.Add(projectile);
+            return true;
         }
 
         public override void AI(Projectile projectile)

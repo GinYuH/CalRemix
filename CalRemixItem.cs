@@ -359,7 +359,12 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemID.CellPhone)
+            if (item.type == ItemID.CellPhone || 
+                item.type == ItemID.Shellphone ||
+                item.type == ItemID.ShellphoneDummy ||
+                item.type == ItemID.ShellphoneHell ||
+                item.type == ItemID.ShellphoneOcean ||
+                item.type == ItemID.ShellphoneSpawn)
             {
                 if (!player.GetModPlayer<CalRemixPlayer>().gottenCellPhone)
                 {
@@ -793,6 +798,8 @@ namespace CalRemix
                     item.active = false;
                 }
             }
+
+            ScreenHelperManager.sceneMetrics.onscreenItems.Add(item);
         }
 
         public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded)
