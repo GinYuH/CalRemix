@@ -80,8 +80,11 @@ namespace CalRemix.Content.Items.Weapons
             {
                 if (usesource.Item.ModItem != null)
                 {
-                    sticky = usesource.Item.ModItem is StickyRogue;
-                    projectile.tileCollide = true;
+                    if (usesource.Item.ModItem is StickyRogue)
+                    {
+                        sticky = true;
+                        projectile.tileCollide = true;
+                    }
                 }
             }
             else if (source is EntitySource_Parent parent && parent.Entity is Projectile p2)

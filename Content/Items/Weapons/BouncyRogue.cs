@@ -77,8 +77,11 @@ namespace CalRemix.Content.Items.Weapons
             {
                 if (usesource.Item.ModItem != null)
                 {
-                    Bouncy = usesource.Item.ModItem is BouncyRogue;
-                    projectile.tileCollide = true;
+                    if (usesource.Item.ModItem is BouncyRogue)
+                    {
+                        Bouncy = true;
+                        projectile.tileCollide = true;
+                    }
                 }
             }
             else if (source is EntitySource_Parent parent && parent.Entity is Projectile p2)
