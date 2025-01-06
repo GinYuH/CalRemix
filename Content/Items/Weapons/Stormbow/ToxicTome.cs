@@ -2,6 +2,7 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
+using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Projectiles.Magic;
 using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Projectiles.Weapons;
@@ -22,7 +23,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 3.5f;
-            Item.UseSound = SoundID.Item5;
+            Item.UseSound = SlimeGodCore.ShotSound;
             Item.autoReuse = true;
             Item.shootSpeed = 1f;
 
@@ -53,7 +54,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 cursorPos.X = player.Center.X + (Main.MouseWorld.X - player.Center.X);
                 cursorPos.Y = player.Center.Y - 800 - (100 * (i));
                 float speedX = 0;
-                float speedY = 1;
+                float speedY = 3;
 
                 // arrow position noise pass
                 cursorPos.X += Main.rand.Next(-60, 61);
