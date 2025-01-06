@@ -580,6 +580,10 @@ namespace CalRemix
                     }
                 }
             }
+            if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()))
+            {
+                NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<ChlorinePaladin>());
+            }
             return true;
         }
         public override void AI(NPC npc)
@@ -1123,7 +1127,8 @@ namespace CalRemix
             }
             else if (npc.type == NPCType<SlimeGodCore>())
             {
-
+                npcLoot.AddNormalOnly(ItemType<ToxicTome>(), 25);
+                npcLoot.AddNormalOnly(ItemType<ChlorislimeStaff>(), 25);
             }
             else if(npc.type == NPCID.WallofFlesh)
             {
