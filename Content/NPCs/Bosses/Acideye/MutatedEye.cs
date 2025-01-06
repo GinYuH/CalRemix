@@ -8,9 +8,7 @@ using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using ReLogic.Content;
 using CalamityMod;
-using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Acideye
 {
@@ -59,7 +57,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-                new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value)
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

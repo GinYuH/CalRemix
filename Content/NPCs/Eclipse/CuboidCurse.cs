@@ -139,7 +139,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Eclipse,
-        new FlavorTextBestiaryInfoElement("Reports date back nearly a decade of strange redstone flames appearing spontaneously across the lands. Little did they know of what nightmares had placed them.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

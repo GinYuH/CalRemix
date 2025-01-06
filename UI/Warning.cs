@@ -27,7 +27,7 @@ namespace CalRemix.UI
         }
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            string nofandom = "DO NOT USE THE FANDOM WIKI";
+            string nofandom = CalRemixHelper.LocalText("UI.FandomWarning").Value;
             float fandomwidth = FontAssets.MouseText.Value.MeasureString(nofandom).X;
             float fandomheight = FontAssets.MouseText.Value.MeasureString(nofandom).Y;
             float scale = (Main.screenWidth / fandomwidth) * 0.75f + (float)Math.Cos(Main.GlobalTimeWrappedHourly * 22) * 0.1f;

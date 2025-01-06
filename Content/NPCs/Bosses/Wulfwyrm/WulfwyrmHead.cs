@@ -143,7 +143,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-                new FlavorTextBestiaryInfoElement("An aged project of an esteemed scientist. It appears to be barely functional.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         

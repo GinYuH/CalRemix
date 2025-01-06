@@ -65,7 +65,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement("A master of the shadows, this powerful magus dominated the battlefield from behind the scenes by conjuring up plagues and diseases to weaken the onslaught of enemies. She struggled against Yharim's mechanical forces, however, so she resorted to crafting antidotes and strategizing to contribute to the battle.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

@@ -68,7 +68,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
-                new FlavorTextBestiaryInfoElement("This powerful witch used her ability to manipulate winds to turn the tide of battle during the war with Yharim. Being able to create powerful drafts with just a wave of her hands, she lifted arships into the sky to cover ground much quicker and carry troops to their stations.\r\n")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

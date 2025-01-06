@@ -65,7 +65,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement("Quick-witted and quicker on his feet, his mastery of energy is nothing to scoff at. He may be a cheery guy, but he's incredibly powerful when need be, able to fry several targets in an instant. Once Yharim insulated his forces, he was left to power the rest of the armada. He may be strong, but his jokes leave a watt to be desired.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

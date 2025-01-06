@@ -1279,66 +1279,6 @@ HalbardoftheHolidays: {
 		'''
 }
 
-Cold: {
-	DisplayName: Cold
-	Tooltip: Slow enemies down in speed and attack frequency, and weaken their damage
-}
-
-Dark: {
-	DisplayName: Dark
-	Tooltip: Incapacitate enemies, slowing their attacks and making them miss
-}
-
-Fire: {
-	DisplayName: Fire
-	Tooltip: Set enemies on fire and reduce enemy defense
-}
-
-Holy: {
-	DisplayName: Holy
-	Tooltip: Smite enemies, dealing massive damage
-}
-
-Impact: {
-	DisplayName: Impact
-	Tooltip: Bash enemies and ignores some knockback resistance
-}
-
-Machine: {
-	DisplayName: Machine
-	Tooltip: Electrocutes enemies and fries the circuits of other machines
-}
-
-Magic: {
-	DisplayName: Magic
-	Tooltip: Hex enemies, damaging them and weakening their attacks
-}
-
-Poison: {
-	DisplayName: Poison
-	Tooltip: Poison enemies and reduce their damage
-}
-
-Slash: {
-	DisplayName: Slash
-	Tooltip: Enemies bleed heavily
-}
-
-Stab: {
-	DisplayName: Stab
-	Tooltip: Slow enemies and puncture their organs
-}
-
-Unholy: {
-	DisplayName: Unholy
-	Tooltip: Curse enemies, dealing massive damage
-}
-
-Water: {
-	DisplayName: Water
-	Tooltip: Slow enemies slightly and make them begin to drown from aspiration
-}
-
 ConquestFragment: {
 	DisplayName: Conquest Fragment
 	Tooltip:
@@ -1740,21 +1680,25 @@ IonCube: {
 StealthPotion: {
 	DisplayName: Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 15% stealth
 }
 
 LesserStealthPotion: {
 	DisplayName: Lesser Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 10% stealth
 }
 
 GreaterStealthPotion: {
 	DisplayName: Greater Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 20% stealth
 }
 
 SuperStealthPotion: {
 	DisplayName: Super Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 25% stealth
 }
 
 CryoKeyMold: {
@@ -2320,61 +2264,73 @@ PhytogenTrophy: {
 AdrenalinePotion: {
 	DisplayName: Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 6% Adrenaline
 }
 
 EnragePotion: {
 	DisplayName: Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 10% rage
 }
 
 FlightPotion: {
 	DisplayName: Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 14% flight
 }
 
 GreaterAdrenalinePotion: {
 	DisplayName: Greater Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 9% Adrenaline
 }
 
 GreaterEnragePotion: {
 	DisplayName: Greater Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 15% rage
 }
 
 GreaterFlightPotion: {
 	DisplayName: Greater Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 21% flight
 }
 
 LesserAdrenalinePotion: {
 	DisplayName: Lesser Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 3% Adrenaline
 }
 
 LesserEnragePotion: {
 	DisplayName: Lesser Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 5% rage
 }
 
 LesserFlightPotion: {
 	DisplayName: Lesser Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 7% flight
 }
 
 SuperAdrenalinePotion: {
 	DisplayName: Super Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 12% Adrenaline
 }
 
 SuperEnragePotion: {
 	DisplayName: Super Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 20% rage
 }
 
 SuperFlightPotion: {
 	DisplayName: Super Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 28% flight
 }
 
 TwistedNetheriteAxe: {
@@ -2415,11 +2371,6 @@ WhippedBouquetBlade: {
 WindTurbineBlade: {
 	DisplayName: Wind Turbine Blade
 	Tooltip: ""
-}
-
-Wind: {
-	Tooltip: ""
-	DisplayName: Wind
 }
 
 TotalAnnihilation: {
@@ -2942,36 +2893,18 @@ SoulofBright: {
 	Tooltip: "'The essence of stellar creatures'"
 }
 
-KnowledgeCalamity: {
-	DisplayName: The Calamity
-	LoreText:
-		'''
-		What was your intention flailing about?
-		If you desired mockery of my word, your goal failed.
-		My attention will never be discarded as I can see the true potential within you.
-		Although, I do suggest quitting the behavior of play-fighting an imagined threat.
-		'''
-}
+KnowledgeCalamity.DisplayName: The Calamity
 
 KnowledgeDerellect: {
 	DisplayName: The Derellect
-	LoreText:
+	Tooltip:
 		'''
 		A twisted mother computer created with lab-grown souls.
 		It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
 		'''
-	Tooltip: ""
 }
 
-KnowledgeExcavator: {
-	DisplayName: The Wulfrum Excavator
-	LoreText:
-		'''
-		The first big project of the legendary weaponsmith, Draedon.
-		Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns.
-		'''
-}
-
+KnowledgeExcavator.DisplayName: The Wulfrum Excavator
 KnowledgeCarcinogen.DisplayName: The Archwizard
 KnowledgeHydrogen.DisplayName: The Archdiviner
 KnowledgeIonogen.DisplayName: The Archmagian
@@ -3268,4 +3201,132 @@ RisingFire: {
 		'D'oh!'
 		(This is a reference to: The Simpsons)
 		'''
+}
+
+Cold: {
+	DisplayName: Cold
+	Tooltip: Slow enemies down in speed and attack frequency, and weaken their damage
+}
+
+Dark: {
+	DisplayName: Dark
+	Tooltip: Incapacitate enemies, slowing their attacks and making them miss
+}
+
+Fire: {
+	DisplayName: Fire
+	Tooltip: Set enemies on fire and reduce enemy defense
+}
+
+Holy: {
+	DisplayName: Holy
+	Tooltip: Smite enemies, dealing massive damage
+}
+
+Impact: {
+	DisplayName: Impact
+	Tooltip: Bash enemies and ignores some knockback resistance
+}
+
+Machine: {
+	DisplayName: Machine
+	Tooltip: Electrocutes enemies and fries the circuits of other machines
+}
+
+Magic: {
+	DisplayName: Magic
+	Tooltip: Hex enemies, damaging them and weakening their attacks
+}
+
+Poison: {
+	DisplayName: Poison
+	Tooltip: Poison enemies and reduce their damage
+}
+
+Slash: {
+	DisplayName: Slash
+	Tooltip: Enemies bleed heavily
+}
+
+Stab: {
+	DisplayName: Stab
+	Tooltip: Slow enemies and puncture their organs
+}
+
+Unholy: {
+	DisplayName: Unholy
+	Tooltip: Curse enemies, dealing massive damage
+}
+
+Water: {
+	DisplayName: Water
+	Tooltip: Slow enemies slightly and make them begin to drown from aspiration
+}
+
+Wind: {
+	DisplayName: Wind
+	Tooltip: Lacerates enemies and exerts aerobic force onto them
+}
+
+Tooltips: {
+	ElementTip: Hold "Left Shift" for element details
+	Lightmix: Lightmix Dedicated Item
+	Stormbow: Stormbow
+	CryoKeyRemix: Drops from Primal Aspids
+	EyeofDesolationRemix: Drops from Clamitas
+	AbombinationOld: the Jungle
+	AbombinationNew: the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]
+	TorchRemix: Can be used as ammo for the Driftorcher
+	PhantomicSoulArtifact: Judgement
+	GrandGelatinRemix:
+		'''
+		Reduces stealth costs by 3%
+		Increases wing flight time by 10%
+		Activating Rage will deal 50% of your health as damage
+		Activating Adrenaline will defile your soul
+		'''
+	AbsorberRemix: Your health is capped at 50% while the accessory is visable
+	SpongeRemix:
+		'''
+		Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi
+		Your health is capped at 50% while the accessory is visable
+		'''
+	AmbrosiaRemix: Effects of Honew Dew, and increased mining speed and defense while underground
+	DivingGearRemix: Pacifies all normal ocean enemies
+	DivingSuitRemix:
+		'''
+		Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem
+		Reveals treasure while the accessory is visible
+		'''
+	AmalgamRemix:
+		'''
+		Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution
+		You passively rain down brimstone flames and leave behind a trail of gas and bees
+		Mana Overloader effect while the accessory is visible
+		'''
+	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
+	HadalStewRemix: Grants a handful of combat buffs
+	SoulofCryogenRemix: Boosts Cold damage
+	MetalMonstrosityRemix: \'Just looking at it makes you feel ill...\'
+}
+
+DyeStats: {
+	Increment: increased
+	Decrement: decreased
+	NoChange: not changed
+	Red: Damage {0} by {1}%
+	Orange: Weapon speed {0} by {1}%
+	Yellow: Movement speed {0} by {1}%
+	Lime: Luck {0} by {1}
+	Green: Jump speed {0} by {1}%
+	Cyan: Critical strike chance {0} by {1}%
+	Teal: Damage reduction {0} by {1}%
+	SkyBlue: Flight time {0} by {1}
+	Blue: Defense {0} by {1}
+	Purple: Weapon knockback {0} by {1}%
+	Violet: Enemy aggro {0} by {1}
+	Pink: Life regeneration {0} by {1}
+	Brown: Building range {0} by {1}
+	Silver: Charisma {0} by {1}
+	Black: Evil {0} by {1}
 }

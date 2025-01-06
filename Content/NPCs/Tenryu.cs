@@ -89,7 +89,7 @@ namespace CalRemix.Content.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
-		        new FlavorTextBestiaryInfoElement("The cosmic stratus sorcerer himself, a force to be reckoned with. Be careful while exploring the dungeon.")
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

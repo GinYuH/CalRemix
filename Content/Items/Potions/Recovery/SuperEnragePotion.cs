@@ -27,7 +27,7 @@ namespace CalRemix.Content.Items.Potions.Recovery
             TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("ItemName"));
             if (line != null)
             {
-                TooltipLine lineAdd = new TooltipLine(Mod, "CalRemix:RestorePotion", "Restores 20% rage");
+                TooltipLine lineAdd = new(Mod, "CalRemix:RestorePotion", CalRemixHelper.LocalText($"Items.{Name}.RestorePotion").Value);
                 tooltips.Insert(tooltips.IndexOf(line) + 1, lineAdd);
             }
         }

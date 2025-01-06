@@ -125,7 +125,7 @@ namespace CalRemix.UI.Generator
 
             if (button.Contains(Main.mouseX, Main.mouseY))
             {
-                Main.hoverItemName = "Part selected for editing";
+                Main.hoverItemName = CalRemixHelper.LocalText("UI.Generator.Mode").Value;
                 if (Main.mouseLeftRelease && Main.mouseLeft)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
@@ -146,7 +146,7 @@ namespace CalRemix.UI.Generator
 
             if (button.Contains(Main.mouseX, Main.mouseY))
             {
-                Main.hoverItemName = "Toggle interface music";
+                Main.hoverItemName = CalRemixHelper.LocalText("UI.Generator.Music").Value;
                 if (Main.mouseLeftRelease && Main.mouseLeft)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
@@ -166,7 +166,7 @@ namespace CalRemix.UI.Generator
 
             if (button.Contains(Main.mouseX, Main.mouseY))
             {
-                Main.hoverItemName = "Switch between part styles";
+                Main.hoverItemName = CalRemixHelper.LocalText("UI.Generator.Style").Value;
                 if (Main.mouseLeftRelease && Main.mouseLeft)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
@@ -194,7 +194,7 @@ namespace CalRemix.UI.Generator
 
             if (button.Contains(Main.mouseX, Main.mouseY))
             {
-                Main.hoverItemName = "Change part visibility";
+                Main.hoverItemName = CalRemixHelper.LocalText("UI.Generator.Visibility").Value;
                 if (Main.mouseLeftRelease && Main.mouseLeft)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
@@ -222,7 +222,7 @@ namespace CalRemix.UI.Generator
 
             if (button.Contains(Main.mouseX, Main.mouseY))
             {
-                Main.hoverItemName = "Toggle areas affected by part color";
+                Main.hoverItemName = CalRemixHelper.LocalText("UI.Generator.Glow").Value;
                 if (Main.mouseLeftRelease && Main.mouseLeft)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
@@ -239,7 +239,7 @@ namespace CalRemix.UI.Generator
 
             Rectangle button = RectFromCenter((int)pos.X, (int)pos.Y, 88, 22);
             if (button.Contains(Main.mouseX, Main.mouseY))
-                Main.hoverItemName = "Set the part's color using HEX";
+                Main.hoverItemName = CalRemixHelper.LocalText("UI.Generator.Color").Value;
             if (!Inputting)
                 TextInput = (Mode == 0) ? pendingGen.CoreColor.Hex3() : pendingGen.ShieldColor.Hex3();
             if (Main.mouseLeftRelease && Main.mouseLeft && button.Contains(Main.mouseX, Main.mouseY))

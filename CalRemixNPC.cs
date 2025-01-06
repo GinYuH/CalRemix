@@ -367,63 +367,66 @@ namespace CalRemix
             #region Quotes
             if (npc.type == NPCType<Crabulon>())
             {
+                string npcName = npc.ModNPC.Name;
                 if (crabSay == 0)
                 {
                     if (DateTime.Today.ToString("dd/MM").Equals("01/04") && Main.rand.NextBool(100))
-                        Talk("Buy Delicious Meat! So Very Delicious! 20% Off! Buy Today!", Color.LightSkyBlue);
+                        Talk($"{npcName}.AprilFools", Color.LightSkyBlue);
                     else
-                        Talk("Hello, are you here to place a delivery for my world-famous Delicious Meat, made with Frosted Pigron and Blue Truffles (now 70% bluer)?", Color.LightSkyBlue);
+                        Talk($"{npcName}.Death", Color.LightSkyBlue);
                     crabSay = 1;
                 }
                 else if (crabSay == 2 && npc.life < (npc.lifeMax * 3 / 4))
                 {
-                    Talk("You must be kidding. You're just another one of those desperate Delicious Meat fans that don't care to pay up for our hard work that was put into making these. For shame.", Color.LightSkyBlue);
+                    Talk($"{npcName}.2", Color.LightSkyBlue);
                     crabSay = 3;
                 }
                 else if (crabSay == 3 && npc.life < (npc.lifeMax / 3))
                 {
-                    Talk("You remind me of that giant mushroom pig flying fish thing. If it could, it would easily butcher you whole, while you're blinded by your depression or whatever.", Color.LightSkyBlue);
+                    Talk($"{npcName}.3", Color.LightSkyBlue);
                     crabSay = 4;
                 }
             }
             else if (npc.type == NPCType<SlimeGodCore>())
             {
+                string npcName = npc.ModNPC.Name;
                 bool noPals = !NPC.AnyNPCs(NPCType<CrimulanPaladin>()) && !NPC.AnyNPCs(NPCType<EbonianPaladin>());
                 bool none = noPals && !NPC.AnyNPCs(NPCType<SplitCrimulanPaladin>()) && !NPC.AnyNPCs(NPCType<SplitEbonianPaladin>());
                 bool lastCrim = noPals && NPC.CountNPCS(NPCType<SplitCrimulanPaladin>()) < 2 && !NPC.AnyNPCs(NPCType<SplitEbonianPaladin>());
                 bool lastEbon = noPals && NPC.CountNPCS(NPCType<SplitEbonianPaladin>()) < 2 && !NPC.AnyNPCs(NPCType<SplitCrimulanPaladin>());
                 if (slimeSay == 0)
                 {
-                    Talk("Hello we have suspected you committing blasphemy against sloomes", Color.Olive);
+                    Talk($"{npcName}.1", Color.Olive);
                     slimeSay = 1;
                 }
                 else if (slimeSay == 1 && (lastCrim || lastEbon))
                 {
-                    Talk("Absurd! I can't allow you to butcher the last bean bag", Color.Olive);
+                    Talk($"{npcName}.2", Color.Olive);
                     slimeSay = 2;
                 }
                 else if (slimeSay == 2 && none)
                 {
-                    Talk("You will not be forgiven for your sins. I'll be back, and batter than ever...", Color.Olive);
+                    Talk($"{npcName}.3", Color.Olive);
                     slimeSay = 3;
                 }
             }
             else if (npc.type == NPCType<ProfanedGuardianCommander>())
             {
+                string npcName = npc.ModNPC.Name;
                 if (guardSay == 0)
                 {
-                    Talk("Guardian Commander: YOU WILL BURN BY THE WILL OF THE PROFLAMED FLAMES!", Color.Yellow);
-                    Talk("Guardian Defender: Prepare to meet your end, fool.", Color.Gold);
-                    Talk("Guardian Healer: Be careful... we're some tough guardians!", Color.LavenderBlush);
+                    Talk($"{npcName}.1", Color.Yellow);
+                    Talk($"{npcName}.1D", Color.Gold);
+                    Talk($"{npcName}.1H", Color.LavenderBlush);
                     guardSay = 1;
                 }
                 if (npc.Calamity().CurrentlyEnraged && !guardOver && guardSay > 0)
                 {
-                    Talk("Guardian Commander: That is bad. We are Angry", Color.Yellow);
+                    Talk($"{npcName}.Enraged", Color.Yellow);
                     if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
-                        Talk("Guardian Defender: That is bad. We are Angry", Color.Gold);
+                        Talk($"{npcName}.EnragedD", Color.Gold);
                     if (NPC.AnyNPCs(NPCType<ProfanedGuardianHealer>()))
-                        Talk("Guardian Healer: That is bad. We are Angry", Color.LavenderBlush);
+                        Talk($"{npcName}.EnragedH", Color.LavenderBlush);
                     guardOver = true;
                 }
                 if (NPC.AnyNPCs(NPCType<DILF>()) && !guardRage && guardSay > 0)
@@ -432,11 +435,11 @@ namespace CalRemix
                     {
                         if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
                         {
-                            Talk("Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!", Color.Yellow);
+                            Talk($"{npcName}.Meat", Color.Yellow);
                             if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
-                                Talk("Guardian Defender: You... you will not get away with the prize money this time.", Color.Gold);
+                                Talk($"{npcName}.MeatD", Color.Gold);
                             if (NPC.AnyNPCs(NPCType<ProfanedGuardianHealer>()))
-                                Talk("Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.", Color.LavenderBlush);
+                                Talk($"{npcName}.MeatH", Color.LavenderBlush);
                             guardRage = true;
                         }
                     }
@@ -444,7 +447,7 @@ namespace CalRemix
             }
             else if (npc.type == NPCType<Yharon>())
             {
-
+                string npcName = npc.ModNPC.Name;
                 float hp = (float)npc.life / (float)npc.lifeMax;
                 bool flag = Main.expertMode || BossRushEvent.BossRushActive;
                 bool flag2 = CalamityWorld.revenge || BossRushEvent.BossRushActive;
@@ -459,75 +462,76 @@ namespace CalRemix
                 int y = (int)yhar.GetType().GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(yhar);
                 if (yharSay == 0)
                 {
-                    Talk("Hello! Are you here for a duel? I'll go easy on you since you're so small and weak.", Color.OrangeRed);
+                    Talk($"{npcName}.1", Color.OrangeRed);
                     yharSay = 1;
                 }
                 else if (yharSay == 1 && p2)
                 {
-                    Talk("Wow, you are quite strong! I underestimated you!", Color.OrangeRed);
+                    Talk($"{npcName}.2", Color.OrangeRed);
                     yharSay = 2;
                 }
                 else if (yharSay == 2 && p3)
                 {
-                    Talk("Well done! You can withstand my attacks while launching powerful attacks of your own!", Color.OrangeRed);
+                    Talk($"{npcName}.3", Color.OrangeRed);
                     yharSay = 3;
                 }
                 else if (yharSay == 3 && hp <= 0.55f)
                 {
-                    Talk("No more messing around. Impressive, but it's not enough to stop me!", Color.OrangeRed);
+                    Talk($"{npcName}.4", Color.OrangeRed);
                     yharSay = 4;
                 }
                 else if (yharSay == 4 && y >= 300)
                 {
-                    Talk("You're very tough, I hope I can win this...", Color.OrangeRed);
+                    Talk($"{npcName}.5", Color.OrangeRed);
                     yharSay = 5;
                 }
                 else if (yharSay == 5 && p5)
                 {
-                    Talk("I won't hold back! You may be hard to beat, but I am harder!", Color.OrangeRed);
+                    Talk($"{npcName}.6", Color.OrangeRed);
                     yharSay = 6;
                 }
                 else if (yharSay == 6 && p6)
                 {
-                    Talk("STOP! STOP! NO!", Color.OrangeRed);
+                    Talk($"{npcName}.7", Color.OrangeRed);
                     yharSay = 7;
                 }
             }
             else if (npc.type == NPCType<PrimordialWyrmHead>())
             {
+                string npcName = npc.ModNPC.Name;
                 if (jaredSay == 0)
                 {
-                    Talk("You are foolish to think you can invade our lands, mortal.", Color.Aqua);
+                    Talk($"{npcName}.1", Color.Aqua);
                     jaredSay = 1;
                 }
                 else if (jaredSay == 1 && (float)npc.life / (float)npc.lifeMax < 0.8f)
                 {
-                    Talk("Oh? So you are stronger than I thought... this will be fun. Have you come to take that little artifact we have guarded for all of eternity?", Color.Aqua);
+                    Talk($"{npcName}.2", Color.Aqua);
                     jaredSay = 2;
                 }
                 else if (jaredSay == 2 && (float)npc.life / (float)npc.lifeMax < 0.6f)
                 {
-                    Talk("Soon, you will cease to exist. How naive, to think that you possess even a fraction of my power.", Color.Aqua);
+                    Talk($"{npcName}.3", Color.Aqua);
                     jaredSay = 3;
                 }
                 else if (jaredSay == 3 && (float)npc.life / (float)npc.lifeMax < 0.4f)
                 {
-                    Talk("For millions of years, I have ruled this sea, undefeated. Your pointless existence will not change that.", Color.Aqua);
+                    Talk($"{npcName}.4", Color.Aqua);
                     jaredSay = 4;
                 }
                 else if (jaredSay == 4 && (float)npc.life / (float)npc.lifeMax < 0.2f)
                 {
-                    Talk("Do you think you can POSSIBLY defeat me? I am Jared, the primordial being, the abyssal god, and you think you could ever stand a chance?!", Color.Aqua);
+                    Talk($"{npcName}.5", Color.Aqua);
                     jaredSay = 5;
                 }
                 else if (jaredSay == 5 && (float)npc.life / (float)npc.lifeMax < 0.05f)
                 {
-                    Talk("Your actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea's young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?", Color.Aqua);
+                    Talk($"{npcName}.6", Color.Aqua);
                     jaredSay = 6;
                 }
                 else if (jaredSay == 6 && (float)npc.life / (float)npc.lifeMax < 0.01f)
                 {
-                    Talk("This is just the beginning of the calamity. Your enemies are ascending beyond your control... or was that all your intention?", Color.Aqua);
+                    Talk($"{npcName}.7", Color.Aqua);
                     jaredSay = 7;
                 }
             }
@@ -1503,38 +1507,46 @@ namespace CalRemix
         }
         public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
-            #region CrabTalk
-            if (npc.type == NPCType<Crabulon>() && crabSay <= 1)
+            #region Talk
+            if (npc.type == NPCType<Crabulon>())
             {
-                Talk("No? Please do be careful with that weapon, though, it looks kinda dangerous. Honestly, you seem quite... crabby. Get it?!", Color.LightSkyBlue);
-                crabSay = 2;
-            }
-            else if (npc.type == NPCType<Crabulon>() && npc.life <= 0 && crabSay == 4)
-            {
-                Talk("AAAAAAAAAh", Color.LightSkyBlue);
-                crabSay = 5;
+                string npcName = npc.ModNPC.Name;
+                if (crabSay <= 1)
+                {
+                    Talk($"{npcName}.Hit", Color.LightSkyBlue);
+                    crabSay = 2;
+                }
+                else if (npc.life <= 0 && crabSay == 4)
+                {
+                    Talk($"{npcName}.Death", Color.LightSkyBlue);
+                    crabSay = 5;
+                }
             }
             else if (npc.life <= 0 && npc.type == NPCType<ProfanedGuardianCommander>())
             {
-                Talk("Guardian Commander: MY MENTAL FORTITUDE IS FADING...", Color.Yellow);
+                string npcName = npc.ModNPC.Name;
+                Talk($"{npcName}.Death", Color.Yellow);
             }
             else if (npc.life <= 0 && npc.type == NPCType<ProfanedGuardianDefender>())
             {
-                Talk("Guardian Defender: Nothing... can beat my eldest sibling...", Color.Gold);
+                string npcName = npc.ModNPC.Name;
+                Talk($"{npcName}.Death", Color.Gold);
                 if (NPC.AnyNPCs(NPCType<ProfanedGuardianCommander>()))
-                    Talk("Guardian Commander: VERY SOON, YOU WILL FEEL MY PROFANED RAGE... HA-HA-HA...", Color.Yellow);
+                    Talk($"{npcName}.DeathC", Color.Yellow);
             }
             else if (npc.life <= 0 && npc.type == NPCType<ProfanedGuardianHealer>())
             {
-                Talk("Guardian Healer: Ouch!", Color.LavenderBlush);
+                string npcName = npc.ModNPC.Name;
+                Talk($"{npcName}.Death", Color.LavenderBlush);
                 if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
-                    Talk("Guardian Defender: How? How could you!?", Color.Gold);
+                    Talk($"{npcName}.DeathD", Color.Gold);
                 if (NPC.AnyNPCs(NPCType<ProfanedGuardianCommander>()))
-                    Talk("Guardian Commander: ENOUGH! YOU MAY HAVE DEFEATED ONE OF US, BUT US TWO ARE MUCH TOUGHER!", Color.Yellow);
+                    Talk($"{npcName}.DeathC", Color.Yellow);
             }
             else if (npc.life <= 0 && npc.type == NPCType<Yharon>())
             {
-                Talk("I can't believe it, you are even stronger than me. Nice job!", Color.OrangeRed);
+                string npcName = npc.ModNPC.Name;
+                Talk($"{npcName}.End", Color.OrangeRed);
             }
             #endregion
         }
@@ -1701,14 +1713,14 @@ namespace CalRemix
             ConvertPlagueEnemy(npc.type, NPCType<Melter>(), bestiaryEntry);
         }
 
-        private static void Talk(string text, Color color)
+        private static void Talk(string value, Color textColor)
         {
             if (!CalRemixWorld.bossdialogue)
                 return;
-            if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
-            else if (Main.netMode == NetmodeID.SinglePlayer)
-                Main.NewText(text, color);
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(CalRemixHelper.LocalText($"Dialog.{value}").Value, textColor);
+            else
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey($"Mods.CalRemix.Dialog.{value}"), textColor);
         }
         public static void WormAI(NPC npc, float speed, float acceleration, Entity target, Vector2 prowlPoint, int segmentType = 0, bool canFlyByDefault = false, bool makeBurrowSound = false, bool despawnOnSurface = false, float despawnSpeed = 0.2f)
         {

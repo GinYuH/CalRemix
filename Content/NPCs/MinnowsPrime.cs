@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("In ancients times, a ghastly man with a hole for a face decided to drop a bucket of fish in the Dungeon. This was the result."),
+                new FlavorTextBestiaryInfoElement (CalRemixHelper.LocalText($"Bestiary.{Name}").Value),
             });
         }
 

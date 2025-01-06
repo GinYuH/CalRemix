@@ -413,7 +413,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("In a magical blunder, this construct found itself a resident of the elemental family as an unwilling eye of her storm. While Tempest carried a plethora of cargo on Yharim's behalf, she slipped into her airstream which sparked a feedback loop outside her control."),
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value),
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
             });
         }

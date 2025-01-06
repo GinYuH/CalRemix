@@ -47,13 +47,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             CalRemixNPC.WormAI(NPC, 32, 0.7f, target, Vector2.Zero, segmentType: 1, canFlyByDefault: true);
         }
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Vicious strains of bacteria, these chains are known for their ability to heat up bodies to critical degrees.")
-            });
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.IsABestiaryIconDummy)

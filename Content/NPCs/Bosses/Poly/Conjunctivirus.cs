@@ -8,7 +8,6 @@ using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Core.World;
 using CalamityMod.Events;
 using CalRemix.Content.Items.Placeables.Trophies;
@@ -36,7 +35,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-                new FlavorTextBestiaryInfoElement("Green eye.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void SetDefaults()

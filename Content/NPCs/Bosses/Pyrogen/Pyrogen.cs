@@ -1423,7 +1423,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
-        new FlavorTextBestiaryInfoElement("A brimstone prison subject to a desperate possession by the soul of a goddess. Its chaotic, ill-fitting energies make it extremely erratic and unstable, as well as incredibly unpredictable in combat.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

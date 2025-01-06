@@ -120,7 +120,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
-		        new FlavorTextBestiaryInfoElement("A magical, living tree that contains a vast amount of divine energy. Its essence may contain the key to unlock something more sinister.")
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)

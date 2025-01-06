@@ -87,7 +87,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The Underworld is full of some tremendously devilish creatures. Fleshmullets are arguably one of the most vile, consuming any and all lifeforms that draw near the searing lava. Some say that they were formed by the cancerous remains of the great wall, but this is unproven."),
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value),
             });
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

@@ -87,7 +87,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                             if (Main.myPlayer == p.whoAmI)
                             {
                                 if (p.Remix().calamitizedCounter == 1)
-                                    CombatText.NewText(p.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.NPCs.TheCalamity.Laser1").Value, true);
+                                    CombatText.NewText(p.getRect(), Color.Red, CalRemixHelper.LocalText("NPCs.TheCalamity.Laser1").Value, true);
                                 else
                                     CombatText.NewText(p.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.NPCs.TheCalamity.Laser2").Format(p.Remix().calamitizedCounter), true);
                             }

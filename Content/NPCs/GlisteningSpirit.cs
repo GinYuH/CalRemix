@@ -55,7 +55,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
-		        new FlavorTextBestiaryInfoElement("The soul of a greedy person, or maybe the spirit of a gold coin looking for a body. Who cares, money!!!!")
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

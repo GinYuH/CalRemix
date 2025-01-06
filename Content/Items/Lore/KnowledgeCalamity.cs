@@ -1,13 +1,11 @@
 ﻿using CalRemix.Content.Items.Misc;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 
 namespace CalRemix.Content.Items.Lore
 {
     public class KnowledgeCalamity : RemixLoreItem
     {
-        public override string LoreText => Language.GetOrRegister($"Mods.CalRemix.Items.{Name}.LoreText").Value;
         public override void SetDefaults()
         {
             Item.width = 22;

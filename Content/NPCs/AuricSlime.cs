@@ -52,7 +52,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-		new FlavorTextBestiaryInfoElement("A slime that has successfully fused with godly matter. It is a wonder that these have taken so long to evolve considering how easily they can absorb other ores.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

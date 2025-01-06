@@ -331,7 +331,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("As one of Surge's failed creations, Ionogen was casted out to the sulphurous sea as a quick means of disposable. Unfortunately, the quick-evolving ecosystem claimed the outdated tech as one of its own constructs.")
+            new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

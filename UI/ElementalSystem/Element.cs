@@ -108,7 +108,7 @@ namespace CalRemix.UI.ElementalSystem
             TooltipLine j = tooltips.Find((TooltipLine t) => t.Name.Equals("JourneyResearch"));
             if (!Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             {
-                TooltipLine tip = new(Mod, "CalRemix:ElementTip", "Hold \"Left Shift\" for element details");
+                TooltipLine tip = new(Mod, "CalRemix:ElementTip", CalRemixHelper.LocalText("Items.Tooltips.ElementTip").Value);
                 tip.OverrideColor = Main.DiscoColor;
                 if (j is null)
                     tooltips.Add(tip);
@@ -132,56 +132,61 @@ namespace CalRemix.UI.ElementalSystem
             switch (e)
             {
                 case Element.Cold:
-                    l.Text = $"{Element.Cold}: Slow enemies down in speed and attack frequency, and weaken their damage";
-                    l.OverrideColor = Color.LightSkyBlue;
-                    break;
-                case Element.Dark:
-                    l.Text = $"{Element.Dark}: Incapacitate enemies, slowing their attacks and making them miss";
+                    l.Text = ElementText(Element.Cold);
                     l.OverrideColor = Color.LightSlateGray;
                     break;
+                case Element.Dark:
+                    l.Text = ElementText(Element.Dark);
+                    l.OverrideColor = Color.LightGray;
+                    break;
                 case Element.Fire:
-                    l.Text = $"{Element.Fire}: Set enemies on fire and reduce enemy defense";
+                    l.Text = ElementText(Element.Fire);
                     l.OverrideColor = Color.Orange;
                     break;
                 case Element.Holy:
-                    l.Text = $"{Element.Holy}: Smite enemies, dealing massive damage";
+                    l.Text = ElementText(Element.Holy);
                     l.OverrideColor = Color.Gold;
                     break;
                 case Element.Impact:
-                    l.Text = $"{Element.Impact}: Bash enemies and ignores some knockback resistance";
+                    l.Text = ElementText(Element.Impact);
                     l.OverrideColor = Color.LimeGreen;
                     break;
                 case Element.Machine:
-                    l.Text = $"{Element.Machine}: Electrocutes enemies and fries the circuits of other machines";
+                    l.Text = ElementText(Element.Machine);
                     l.OverrideColor = Color.LightGray;
                     break;
                 case Element.Magic:
-                    l.Text = $"{Element.Magic}: Hex enemies, damaging them and weakening their attacks";
+                    l.Text = ElementText(Element.Magic);
                     l.OverrideColor = Color.Yellow;
                     break;
                 case Element.Poison:
-                    l.Text = $"{Element.Poison}: Poison enemies and reduce their damage";
+                    l.Text = ElementText(Element.Poison);
                     l.OverrideColor = Color.Green;
                     break;
                 case Element.Slash:
-                    l.Text = $"{Element.Slash}: Enemies bleed heavily";
+                    l.Text = ElementText(Element.Slash);
                     l.OverrideColor = Color.LightBlue;
                     break;
                 case Element.Stab:
-                    l.Text = $"{Element.Stab}: Slow enemies and puncture their organs";
+                    l.Text = ElementText(Element.Stab);
                     l.OverrideColor = Color.Salmon;
                     break;
                 case Element.Unholy:
-                    l.Text = $"{Element.Unholy}: Curse enemies, dealing massive damage";
+                    l.Text = ElementText(Element.Unholy);
                     l.OverrideColor = Color.Red;
                     break;
                 case Element.Water:
-                    l.Text = $"{Element.Water}: Slow enemies slightly and make them begin to drown from aspiration";
+                    l.Text = ElementText(Element.Water);
                     l.OverrideColor = Color.SkyBlue;
+                    break;
+                case Element.Wind:
+                    l.Text = ElementText(Element.Wind);
+                    l.OverrideColor = Color.Tan;
                     break;
             }
             return l;
         }
+        private static string ElementText(Element e) => $"{e}: {CalRemixHelper.LocalText($"Items.{e}.Tooltip").Value}";
     }
     public class ElementProj : GlobalProjectile
     {

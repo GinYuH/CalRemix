@@ -62,7 +62,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement("This powerful wizard is feared across the land for his ability to manipulate the cells in the bodies of his enemies to destroy them from the inside out. Though his magics can be used for violence, they can be used for healing too which made him the leading medic against the war with Yharim.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

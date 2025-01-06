@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("A holographic replica of Draedon himself. This projection acts as a layer of defense against both software and hardware threats within the labs.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -83,15 +83,19 @@ namespace CalRemix.Content.NPCs.Minibosses
             phaseTwo = reader.ReadBoolean();
             killed = reader.ReadBoolean();
         }
+        private static void Talk(string value)
+        {
+            CalRemixHelper.GetNPCDialog($"CyberDraedon.{value}", Color.Cyan);
+        }
         public override void OnSpawn(IEntitySource source)
         {
-            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue1", Color.Cyan);
+            Talk("1");
         }
         public override void AI()
         {
             if (Target.dead && !killed)
             {
-                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue2", Color.Cyan);
+                Talk("2");
                 killed = true;
             }
             NPC.velocity.X *= 0.922f;
@@ -103,9 +107,9 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.life < NPC.lifeMax / 2f && !phaseTwo)
             {
                 if (Main.rand.NextBool(2))
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue3", Color.Cyan);
+                    Talk("3");
                 else
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.NPCs.CyberDraedon.Dialogue4", Color.Cyan);
+                    Talk("4");
                 phaseTwo = true;
             }
             foreach (Player player in Main.player)

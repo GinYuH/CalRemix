@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using CalamityMod.Items.Weapons.Rogue;
 
@@ -57,7 +56,7 @@ public class GearworkShield: RogueWeapon
                 Item.noMelee = true;
                 Item.noUseGraphic = true;
                 Item.UseSound = SoundID.DoorOpen;
-                CombatText.NewText(player.getRect(), Color.Olive, Language.GetOrRegister("Mods.CalRemix.StatusText.GearworkRecord").Value, true);
+                CombatText.NewText(player.getRect(), Color.Olive, CalRemixHelper.LocalText("StatusText.GearworkRecord").Value, true);
                 foreach (NPC npc in Main.npc)
                 {
                     if (npc is null)
@@ -76,7 +75,7 @@ public class GearworkShield: RogueWeapon
                 recorded = true;
             }
             else if (player.HasCooldown(GearworkCooldown.ID))
-                CombatText.NewText(player.getRect(), Color.LightSalmon, Language.GetOrRegister("Mods.CalRemix.StatusText.GearworkCooldown").Value, true);
+                CombatText.NewText(player.getRect(), Color.LightSalmon, CalRemixHelper.LocalText("StatusText.GearworkCooldown").Value, true);
         }
         else
         {
@@ -85,7 +84,7 @@ public class GearworkShield: RogueWeapon
                 Item.useStyle = ItemUseStyleID.Shoot;
                 Item.noUseGraphic = false;
                 Item.UseSound = SoundID.DoorClosed;
-                CombatText.NewText(player.getRect(), Color.Green, Language.GetOrRegister("Mods.CalRemix.StatusText.GearworkApply").Value, true);
+                CombatText.NewText(player.getRect(), Color.Green, CalRemixHelper.LocalText("StatusText.GearworkApply").Value, true);
                 foreach (NPC npc in Main.npc)
                 {
                     if (npc is null)
@@ -110,7 +109,7 @@ public class GearworkShield: RogueWeapon
                 player.AddCooldown(GearworkCooldown.ID, CalamityUtils.SecondsToFrames(60));
             }
             else if (!player.HasCooldown(GearworkCooldown.ID) && !recorded)
-                CombatText.NewText(player.getRect(), Color.LightSalmon, Language.GetOrRegister("Mods.CalRemix.StatusText.GearworkNA").Value, true);
+                CombatText.NewText(player.getRect(), Color.LightSalmon, CalRemixHelper.LocalText("StatusText.GearworkNA").Value, true);
             else if (player.HasCooldown(GearworkCooldown.ID))
             {
                 Item.useStyle = ItemUseStyleID.Swing;

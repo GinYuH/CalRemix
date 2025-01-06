@@ -141,7 +141,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
 			{
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-				new FlavorTextBestiaryInfoElement("An agent of a mysterious organization. His motive is to arrest the one reponsible for designing the Codebreaker.")
+				new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
 			});
 		}
 		public override List<string> SetNPCNameList() 

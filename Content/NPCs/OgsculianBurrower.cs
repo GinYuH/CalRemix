@@ -82,7 +82,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
-		new FlavorTextBestiaryInfoElement("][ [] ][ ][] [[ ][ ][ ][ ][ ][ ][[ ]] [[ [ [ ][ ][ ][  [ ]][ ][ ][ ][ ] ")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void FindFrame(int frameHeight)

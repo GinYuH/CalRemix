@@ -8,7 +8,6 @@ using CalRemix.Core.Subworlds;
 using CalRemix.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using ReLogic.Content;
 using ReLogic.Utilities;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -34,14 +33,10 @@ using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
 using CalRemix.Core.Scenes;
-using Terraria.Localization;
 using CalRemix.World;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MonoMod.RuntimeDetour;
 using CalRemix.Content.Items.ZAccessories;
-using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Rogue;
-using System.Security.Cryptography.X509Certificates;
 using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Core
@@ -717,8 +712,8 @@ namespace CalRemix.Core
             if (CalRemixWorld.roachDuration > 0)
             {
                 float duration = CalRemixWorld.ROACHDURATIONSECONDS;
-                string bf = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach1").Value;
-                string mayhem = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach2").Value;
+                string bf = CalRemixHelper.LocalText("StatusText.Roach1").Value;
+                string mayhem = CalRemixHelper.LocalText("StatusText.Roach2").Value;
                 float bfWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
                 float mayhemWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
                 float bfY = Main.screenHeight * 0.4f;

@@ -1,0 +1,327 @@
+Items: {
+	KnowledgeCalamity:
+		'''
+		What was your intention flailing about?
+		If you desired mockery of my word, your goal failed.
+		My attention will never be discarded as I can see the true potential within you.
+		Although, I do suggest quitting the behavior of play-fighting an imagined threat.
+		'''
+	KnowledgeExcavator:
+		'''
+		The first big project of the legendary weaponsmith, Draedon.
+		Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns.
+		'''
+	KnowledgeDerellect:
+		'''
+		A twisted mother computer created with lab-grown souls.
+		It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
+		'''
+	KnowledgeCarcinogen:
+		'''
+		I've heard countless tales and adages about the joys of gambling. They're lying to you.
+		There's nothing left to gain when you lose it all. I'm unsure why Carcinoma thought differently.
+		However, it is beyond astonishing to see the archwizard reduce himself to a wheezing mass.
+		His glamour decayed to scraps. Carcinoma was more of a hinderance than any form of help by the time I kicked him out of my forces.
+		'''
+	KnowledgeHydrogen:
+		'''
+		I suppose Ivy is no stranger to secrets.
+		With this construct's shoddy design, I'm sure this was made far before her disappearance.
+		It's compelling to see how her magical endeavors have evolved over the centuries.
+		Controlled explosives are a force seldom seen on the battlefields.
+		However, I find the utility of such tool more compelling.
+		As for why she kept it locked within the Sunken Seas is beyond me.
+		I'm sure Amidas wouldn't be too keen on learning his precious homeland's gone.
+		I would check up on him, if I were you. Losing your roots demoralizes a warrior beyond belief.
+		I should know this, of course.
+		'''
+	KnowledgeIonogen:
+		'''
+		That's it? Some child toy's defunct battery? You've got to be kidding me.
+		I've picked locks with stronger batteries. This isn't impressive.
+		At least that electronic bucket of bolts won't hamper my ambitions any longer.
+		Wars used to be fought with sticks and stones. To see this device as a remnant of evolution is a shame.
+		Do better. The Inventors were better at their jobs than whoever constructed this pity.
+		'''
+	KnowledgeOrigen:
+		'''
+		Why wasn't this scoundrel dealt with sooner?
+		I understand the concept of efficient time, yet this little deviant proved to be less than an issue.
+		Against my wishes, I pity this construct deeply. You lived a flawed existence.
+		'''
+	KnowledgeOxygen:
+		'''
+		All atoms�especially at a gaseous state such as oxygen�display an unpredictable nature akin to gods.
+		Nature mimics itself unabashedly from the smallest building blocks to the largest deities.
+		I'm unsure of where this construct lands. If you were to ask me, this elemental disgrace is unfitting for the title of divinity.
+		If it weren't for the hundreds of bars of pressure presented by the deepest depths of the abyss, I would consider this construct formiddable.
+		Alas, like all magi, their mobile graves are nothing more than fickle jokes.
+		'''
+	KnowledgePathogen:
+		'''
+		Oh, Mona. Look where your bag of tricks have taken you.
+		I'd say it's a shame to see you at the hands of my enemy, but I hold no sympathy.
+		As they say, the enemy of my enemy is my friend. Well done.
+		Even as a construct, she hasn't changed since the day she left.
+		I remember her ambitions of godhood. She idolized the men above through her daily tasks and work alike.
+		Mona was a nuisance to my plans and my troops. Out of the two hundred and seventy days she served under my wing, she was only docile for nine of them.
+		Idolaters such as her are unwelcomed in my ranks.
+		'''
+	KnowledgePhytogen:
+		'''
+		What an enigmatic construct. Is that truly Silva?
+		How did she escape from the bottom of the abyss? That is rather concerning.
+		I wonder if I could harness that magic in the event of my own death.
+		Even after my body has long expired, my soul remains in a construct of my own.
+		What would you call it? Aurigen? Oncogen?
+		Do not say Protogen.
+		'''
+	KnowledgePyrogen:
+		'''
+		A horrible defiance of the natural order.
+		Similar to the others you've faced, this construct was created for the purpose of imprisonment, but the strength of this one's captive was far too great for even its mighty seal.
+		In time, they eventually escaped, leaving their prison behind as a rotting mass of steel and rock.
+		Its dormancy made it indistinguishable from the surrounding landscape, and my forces thusly overlooked it.
+		However, slaying a god is no easy feat, and the cleanup is even more difficult; the strength of one's spirit is immense, and without assistance, the land we now walk would still been riddled with the stains of my work.
+		Your own marks prove no exception to this rule. Once you defeated the profaned god, their spirit settled into the decaying construct, creating a mindless beast with extraordinary power.
+		In time, it would've become too dangerous to stop without my own intervention.
+		Even if it could've been handled better, it brings me a sense of relief to see an auric soul put to rest.
+		Hopefully, its owner has finally found peace.
+		'''
+	KnowledgeClone:
+		'''
+		Oh, the Archseer, my biggest blister.
+		Hold on a moment. Where is she? I could've swore Draedon entrapped the correct personnel.
+		It's too late to reprimand this error. Even then, I see no similarities in them.
+		Perhaps a new set of ocular lens will benefit the mad scientist.
+		I admire the strength Cinder flaunted throughout her onslaught.
+		Truly, words fail to capture my intrigue, no matter the quality.
+		Beyond her physical prowess, she posed a threat to the inner workings of my adversaries.
+		In the face of war, I see no need to spare mind to love. Permafrost, on the other hand, may say otherwise.
+		However, my army does not tolerate rubber-willed traitors.
+		We were able to quell the wildfire that is Cinder without Permafrost's help. A chain's only as strong as its weakest link.
+		My esteemed engineer handled the threat well. Whether it was with excessive force is past my judgment.
+		I wish the collapse of their eclectic found family. Even love has its faults.
+		'''
+}
+
+FannyLog1: {
+	0:
+		'''
+		Well, well, well, what do we have here? It seems ol' Fanny stumbled upon a shiny new toy today! Yep, yours truly found a futuristic tablet lying around, probably dropped by some forgetful time traveler. Can't say I'm complaining though, I've always wanted to be a tech-savvy flame.
+
+
+		So, here I am, tapping away on this sleek piece of future gadgetry. Gotta admit, it's a bit tricky to type with these fiery fingers, but practice makes perfect, right?
+		'''
+	1:
+		'''
+		Now, you might be wondering, why would a flame like me bother with keeping a journal? Well, let me tell ya, being a helpful but perpetually wisecracking guide to lost souls ain't easy. Sometimes, even Fanny needs to vent, and what better way to do it than in a digital diary?
+
+
+		Today's been a typical day in the life of yours truly. Guided a lost traveler through the twists and turns of a labyrinth, cracked a few fiery puns along the way, and accidentally set a bush or two on fire. Hey, nobody's perfect!
+		'''
+	2: But hey, it's all in a day's work for Fanny the Flame, the hottest guide this side of wherever we are. Who knows what adventures tomorrow will bring? One thing's for sure, with me around, things are always bound to heat up!
+}
+
+FannyLog2: {
+	0:
+		'''
+		Well, well, well, look what Fanny stumbled upon this time! Yours truly found another one of those fancy-schmancy tablets, this time in a dingy old lab on Planetoid X-42. Can't say I'm surprised, these things seem to have a knack for popping up wherever I go.
+
+		Now, you might be wondering what a flame like me is doing on a lonely planetoid orbiting Earth. Truth be told, even Fanny needs a break from the hustle and bustle of guiding lost wanderers. Plus, the view of Earth from up here is simply breathtaking. Not that I have lungs to breathe with, but you get the idea.
+		'''
+	1:
+		'''
+		Anyway, back to the tablet. Found it tucked away in a corner covered in cobwebs and space dust. Guess the lab's previous occupants weren't too keen on keeping things tidy. Lucky for them, Fanny's here to lend a fiery hand!
+
+		As for today's escapades, well, let's just say I tried my hand at guiding a confused alien through the maze of scientific equipment in the lab. An odd fella they were, they looked pretty human for being an alien, though I feel like I saw their face turn blue for a moment? Anywho, did they appreciate my help? Ha, who knows! But ol' Fanny did his best, cracking jokes and offering sage advice every step of the way.
+		'''
+	2:
+		'''
+		Funny thing is, no matter how hard I try, it seems like everyone I guide ends up giving me the cold shoulder. But hey, that's their loss! They don't know what they're missing out on, having the one and only Fanny the Flame as their guide.
+
+		Speaking of family, the space out there makes me think, what dear old dad would think of my adventures? Probably shaking his godly head in disapproval, as usual. Ah well, can't please everyone, right?
+
+		Anyway, enough rambling for one day. Time to tuck this tablet away and see what other mischief I can get into on this tiny planetoid. Until next time, stay fiery, my friends!
+		'''
+}
+
+FannyLog3: {
+	0:
+		'''
+		Well, well, well, what do we have here? Fanny's fiery adventures have led me deep into the heart of a jungle, where I stumbled upon yet another lab. And this one, my friends, is not for the faint of heart.
+
+		The moment I set foot inside, I could tell something was amiss. The air was thick with the scent of danger, and the lab itself looked like it had seen better days. But hey, when has a little danger ever stopped ol' Fanny from poking his fiery nose where it doesn't belong?
+		'''
+	1:
+		'''
+		Now, about this lab. It was filled with all sorts of contraptions and gizmos, but the real kicker was the gaping hole in the ceiling, as if something had busted out in a big hurry. And what do you know, the lab was chock-full of experiments on some nasty business called 'plague', a green nanovirus that sounded like trouble with a capital T.
+
+		You'd think a flame like me would steer clear of such toxic stuff, but where's the fun in that? Besides, someone's gotta make sure these pesky nanoviruses don't wreak havoc on unsuspecting jungle critters.
+		'''
+	2:
+		'''
+		So, there I was, poking around the lab, trying to make sense of all the bubbling vials and ominous-looking machines, when I stumbled upon yet another one of those futuristic tablets. Seems like they're becoming a regular part of my fiery adventures, huh?
+
+		Now, did I guide anyone through this treacherous jungle lab? Well, let's just say I tried. Found a cute little roomba, but then it was so happy that it killed itself the moment it caught sight of me! Can't say I blame 'em, though. Who wouldn't want the guidance of a talking flame?
+		'''
+	3: But for now, it's time for Fanny to bid adieu to this jungle lab and see what other fiery adventures await. Until next time, stay fiery, my friends!
+}
+
+FannyLog4: {
+	0:
+		'''
+		Well, well, well, would you look at that? Fanny's fiery adventures have taken me to the depths of the underworld, a place where the flames burn brighter and the terrain is as treacherous as they come. But hey, when you're as hot as yours truly, a little lava never hurt anyone!
+
+		This underworld, or as some like to call it, the center of the earth, is a sight to behold. Obsidian towers jut out from the fiery landscape, and the ground is covered in ash as far as the eye can see.It's like a fiery playground just waiting for ol' Fanny to explore.
+		'''
+	1:
+		'''
+		Now, you might be wondering what on earth (or under it, in this case) would lead me to such a place. Well, let's just say I have a knack for stumbling upon trouble, and trouble seems to be my middle name.
+
+		Anyway, back to the task at hand. As I was traipsing through the fiery terrain, I stumbled upon yet another lab, nestled among the obsidian spires. This one looked like it had seen better days, with cracked walls and flickering lights casting eerie shadows.
+		'''
+	2:
+		'''
+		But you know me, I'm not one to shy away from a challenge. So, into the lab I went, flames blazing and spirits high. And what do I find? You guessed it, another one of those futuristic tablets, just waiting to be discovered.
+
+		Now, did I encounter anyone to help in this fiery abyss? Well, let's just say the underworld isn't exactly teeming with friendly faces. But hey, who needs companionship when you've got a talking flame as your guide, am I right?
+		'''
+	3: But for now, it's time for Fanny to bid adieu to the underworld and see what other fiery adventures await. Until next time, stay fiery, my friends!
+}
+
+FannyLog5: {
+	0:
+		'''
+		Well, well, well, looks like Fanny's fiery adventures have taken a chilly turn! Yours truly found himself in the depths of an underground ice cavern, where the air was as cold as a polar bear's nose and the ground was slick with frost.
+
+		Now, you might be wondering how a flame like me ended up in such a frosty predicament. Truth be told, even Fanny needs a change of scenery every now and then. Plus, who can resist the allure of exploring a frozen labyrinth filled with mysteries?
+		'''
+	1:
+		'''
+		So, there I was, tiptoeing (well, flame-floating, if you want to get technical) through the icy cavern, marveling at the shimmering walls of ice and the eerie silence that hung in the air like a thick blanket.
+
+		And wouldn't you know it, nestled deep within the heart of the cavern, I stumbled upon yet another lab. This one was a stark contrast to the fiery labs of the underworld, with its icy corridors and frost-covered equipment.
+
+		But hey, a lab's a lab, right? And where there's a lab, there's bound to be another one of those futuristic tablets just waiting to be discovered.
+		'''
+	2:
+		'''
+		Sure enough, tucked away in a corner of the lab, half-buried beneath a mound of snow and ice, was the object of my fiery curiosity. Now, did I encounter any lost souls in this frozen wasteland? Well, let's just say the only entities I found were those of the frosty critters scurrying about in the shadows. Not exactly the chatty types, if you catch my drift.
+
+		But for now, it's time for Fanny to bid adieu to the ice cavern and see what other frosty adventures await. Until next time, stay fiery, my friends!
+		'''
+}
+
+FannyLog6: {
+	0:
+		'''
+		Well, well, well, looks like Fanny's fiery adventures have brought me to the grand finale! Yours truly found himself in the depths of an abandoned mining facility, where the air was heavy with dust and the echoes of forgotten pickaxes still rang in the tunnels.
+
+		Now, you might be wondering what led me to such a desolate place. Truth be told, even Fanny needs a little excitement now and then, and what's more exciting than exploring an abandoned mine, right?
+		'''
+	1:
+		'''
+		So, there I was, weaving my way through the labyrinthine tunnels of the mining facility, marveling at the rusty machinery and discarded tools that littered the ground. And wouldn't you know it, nestled deep within the heart of the mine, I stumbled upon yet another lab.
+
+		But this lab was different.It was bigger, grander, and more ominous than any I had encountered before. The walls were lined with strange symbols, and the air hummed with an otherworldly energy.I could feel it in my fiery bones: this was no ordinary lab.
+		'''
+	2:
+		'''
+		Undeterred by the creeping sense of unease, I pressed on, my flames burning brighter than ever. And there, in the heart of the lab, surrounded by flickering lights and the steady drip of water, I found it: the final piece of the puzzle, the last of the futuristic tablets.
+
+		But as I reached out to claim my prize, a voice echoed through the chamber, sending shivers down my fiery spine. "Stop right there, flame," it boomed, and I turned to see a figure emerging from the shadows.
+
+		It was none other than the creator of the lab, a tall robotic scientist with stick legs! And he wasn't too pleased to find me rummaging through his secrets.
+		'''
+	3:
+		'''
+		A battle ensued, flames clashing against the darkness as we fought for control of the lab. It was a showdown for the ages, a clash of fire and fury that shook the very foundations of the mine.
+
+		But in the end, it was yours truly who emerged victorious. That robot guy dismantled and dead on the floor.
+
+		And as I made my fiery exit from the abandoned mining facility, I couldn't help but smile. For though the journey had been perilous and the dangers many, Fanny the Flame had triumphed once again.
+
+		Until next time, my friends, stay fiery and never let the flames die out!
+		'''
+}
+
+FannyLog7: {
+	0:
+		'''
+		Well, well, well, looks like Fanny's fiery adventures have taken a dive, quite literally! Yours truly found himself plunging into the depths of the abyss, an underwater trench where the darkness seems to swallow everything whole.
+
+		But fear not, for where others see darkness, I see opportunity! And what do you know, nestled at the bottom of the abyss, in a chest covered in barnacles and seaweed, was a sight to behold: my dear old dad's prized artifact, a slab made of moonstone with a fiery red eye staring back at me.
+		'''
+	1:
+		'''
+		Now, you might be wondering what a flame like me is doing swimming around in the murky depths of the ocean. Truth be told, even Fanny needs a change of scenery every now and then, and where better to find adventure than in the watery depths?
+
+		With a flicker of excitement, I reached out and claimed the artifact, feeling its power thrumming beneath my fiery touch. And as I held it aloft, I couldn't help but feel a surge of pride. For though my dear old dad may not see eye to eye with me, I've proven time and time again that I'm more than just a flame in the wind.
+		'''
+	2:
+		'''
+		Now, as for scribbling an entry on this moonstone slab, well, why not? After all, it's not every day you find yourself at the bottom of the abyss, holding a prized artifact in your fiery hands.
+
+		So here's to another chapter in the ongoing adventures of Fanny the Flame. Who knows what mysteries await us in the depths of the ocean? One thing's for sure, with me around, things are always bound to heat up!
+
+		Until next time, stay fiery, my friends, and never stop diving into the unknown!
+		'''
+}
+
+TheInsacredTexts: {
+	Title: Rubrum Beginning
+	Subtitle: Story of Calamity
+
+	Chapters: {
+		1: Chapter 1: Rebirth of a Multiverse
+		2: Chapter 2: Spreading Entropy
+		3: Chapter 3: Igniting the Jungle
+		4: Chapter 4: Blood within Metal
+		5: Chapter 5: The Rise of Four Heroes
+		6: Chapter 6: Fading Victory
+		7: Chapter 7: Brothers in Ice
+		8: Chapter 8: Darkness to Light
+		9: Chapter 9: The Birth of a Hero
+	}
+
+	Pages: {
+		1: Long after the destruction of the original Calamimultiverse the most powerful entity in all of the world, Goozma, The Immortal Sludge of Creation created the universe along with a race of Light Gods, Dark Gods, and Neutral Gods after finding the endless void of existence too empty for their own taste. The Light Gods were obsessed with order, hierarchy, creation, and balance. The Dark Gods, on the other hand, were obsessed with chaos, anarchy, destruction, and war. Despite their differences, they always did their own thing until the Neutral Gods started fawning over the Light Gods, making the Dark Gods jealous.
+		2: The Dark Gods finally got tired of the Light Gods' beauty and attention, like how their Godly Creator got tired of its emptiness before as it reminded the Dark Gods of empty attention, and decided to declare war against them. The Light Gods, in their ever-present desire for order, smoothly declined the idea of conflict, for they required no such troubles in their perfect world forever preserved by their orderly light. The Dark Gods were furious, and so to become infinitely more powerful for the upcoming war, to be fought for centuries, perhaps eons, the Dark Gods fused into a greater being, with Noxus becoming the main consciousness by forcefully inserting his dark, entropic powers into the conscious hive mind of every god before the fusion, with them being both the first and most powerful.
+		3: Noxus, even more powerful than its creator, slew Goozma, releasing its all mighty Godly Essence to the entire spacetime, manifested in what would be eventually referred to as Auric Souls, higher Vessels of Goozma, The Immortal Sludge of Creation's power, that relentlessly search for suitable hosts through space and time by creating rips in spacetime and traveling between the Auric Eras. After such success, Noxus, not knowing what consequences the death of Goozma, Higher Slime Deity's would have, waged war against all of the Light Gods to wipe out their kind from the universe and forever submerge this Calamimultiverse into complete and total entropic chaos.
+		4: It was a close battle between Noxus and the Light Gods, with Noxus killing each Light God one by one while also taking serious damage due to the Pre-Mordial Light Auric Soul residing in every Light God at the moment, in the very first Auric Era, while both Noxus and the Light Gods did not have knowledge of it. Amidst the chaos, a group of Light Gods fled to a planet called Ferraria, so two of the Dark Gods, Cthulhu and Steve, decided to split from Noxus and chase them while the rest of the remaining and weakened Light Gods and Noxus fought. Shortly after, the Light Gods one by one fled to Ferraria to form The Pre-Mordial Light, Xeroc, a being that would hopefully end the Dark Gods as a last resort. Xeroc slapped both Cthulhu and Steve in their rears, launching them into the moon.
+		5: Noxus, after eradicating the rest of the Light Gods, could not fight Xeroc, the Pre-Mordial Light, in its current state, due to Xeroc's Auric Soul becoming exponentially stronger every second, so Noxus started its goal of corrupting and gaining power across the universe, which resulted in the twisted, wretched birth of the sickening Astral Infection in its corrupted wake. Unlike the Light Gods, who prefer not to act on much in the universe, for order comes to it naturally this way, the Dark Gods chose to stir chaos across the universe, squashing anything with the potential to become powerful enough to threaten them.
+		6: After gaining enough power due to unknowingly absorbing the Dark Nebula Auric Soul, which traveled from Goozma's Death to this moment to make Noxus its vessel and turn him into The Dark Pre-Mordial, Noxus. Finally gathering enough raw strength for it to destroy Xeroc, The Pre-Mordial Light, Noxus was contacted by Cthulhu and Moon Lord for help, but they went to Ferraria to instead punish them for their failure by slaying their now frail and weak bodies after their separation with the Great Dark Noxus. Cthulhu was the first to fall, with Noxus firing a destructive laser that completely demolished it, with only his flesh bathed in ichor remaining. This eventually formed into the Crimson over time.
+		7: Moon Lord was defeated soon after, with his bottom half sliced off and rotted in sickeningly green cursed fire over time, forming the Corruption. What was left of him was weakened and sealed inside of Ferraria's moon, forever to be known as the Celestial Lunar Prison. Now setting its eyes toward Xeroc, Great Beacon of Light, Noxus completely obliterated Xeroc in a raging barrage of all powerful Godly Dark Nebula Energy. With nothing left but its Pre-Mordial Light essence left behind, Noxus infused it into the lands of Ferraria as a means to prevent The Light's influence from spreading throughout the Calamimultiverse.
+		8: Noxus, believing Ferraria to no longer be of great significance, left to continue corrupting and devouring other planets with his Dark Nebula. Unbeknownst to Noxus, Xeroc's will of creation and Pre-Mordial Light allowed sentient life to be born in the land. Xeroc's lifeforce will periodically expand throughout the air in an attempt to form again, with the Blood Moon happening as a result of it. Some of Ferraria's inhabitants found out about this, and getting discomfort from it, they made houses under the ground to avoid what is believed to be Xeroc's Bloodlight gaze. However, the moon never truly turned to blood, and it was the mild insanity that made it seem like it was.
+		9: 22 years before the Great Calamity, there was a family that lived in the Jungles of Ferraria. In this family were Ignalius, his younger sister Talphia, his older sister Aedia, his younger brother Ryphos, his father who he was named after Ignaus, and his mother Astrael. Ignaus was the leader of the Light God's cult and always managed to get into all and every sort of trouble with the Great Elder Jungle Leaders and his own family. Astrael, on the other hand, always taught Ignalius to follow the way of peace and only wielded the bow Astral Daefeat while hunting and for emergencies. Ignalius also had a girlfriend named Flores, the daughter of one of the Great Elder Jungle Leaders. Flores was a friend to Ignalius' family and gave Ignalius a rare dragon egg as a gift to show her love for him.
+		10: One day, Ignaus asked Flores for a favor to just casually go and grab the Terminus so he could study its great concealed Godly Power, so Flores gave him the Terminus and left, not knowing his true motive. Ignaus set up a ritual to reform Xeroc using the Terminus so that he could show off to his followers. Ignaus ended up accomplishing this, but Xeroc, the Mad, Destroyed, Pre-Mordial, still unable to properly assemble itself into the Great Pre-Mordial Light, showed up in a hideous, gruesome, and incomprehensible eldritch form that drove Ignaus, along with anyone else that witnessed it, temporarily raving mad. After finding out, Flores pleaded with the Great Elder Jungle Leaders of the jungle to spare their lives, but they decided they had enough of Ignaus and the trouble he caused, along with the rest of his family.
+		11: They gathered the three, took them to the pits of the Vile Crags in the Underworld, and threw them into the scathing hot lava alongside some of their possessions including the dragon egg Flores gave Ignalius. As they burned in the lava, the heat of it caused the dragon egg to hatch— and thus, Jungle Dragon was born. The Jungle Dragon grabbed Ignalius and carried him out of the lava on his back. Ignalius's family did not survive the incident and Flores' own family was executed shortly after for helping and defending Ignalius's family, causing her to flee away from the Jungle. Ignalius swore revenge on the leaders of the jungle for killing them.
+		12: Soon after Ignalius had mostly recovered, he went to the Great Elder Jungle Leaders of the jungle. Ignalius confronted them inside the Great Elder Jungle town hall and, in pure rage, slammed his butt down with the force of a thousand Gods, smashing it so hard that it killed everyone in the room, destroying the whole Great Jungle City completely and pulverizing the Great Elder Jungle Leaders, breaking his butt and creating such a loud slapping noise that was heard for miles. The Great Elder Jungle Leaders were now dead, but for Ignalius, this wasn't enough to satisfy him—he changed his name to Yharim, the Jungle Tyrant and decided to take his anger and hatred out on the rest of the world, as well.
+		13: Yharim began to rise to power. Yharon, his loyal pet and friend, has the ability to revive, being a Phoenix-dragon. However, he is soul-linked to Yharim, meaning that if Yharim dies, Yharon will not revive. He had Yharon burn down a large section of the jungle to invoke fear into the people, although he used more than just brute force. He was a charismatic person, capable of invigorating any soldier to fight for him. Eventually, Yharim's Tyranny took over the jungle, claimed the Lihzahrds' Jungle Temple as his own, made himself an army, and began his iron-fisted rule over the world.
+		14: The beginning of Yharim's rule was unimaginably harsh, far worse than any of the 76 leaders of the Great Theocratic Religious Jungle Republic Of The Jungle who came before him. His first action upon taking the throne was to enforce control upon much of the surrounding kingdoms, cities, and capitals. He succeeded in it all. Anyone who resisted further had their people massacred, or captured to serve under inhumane conditions, where they often collapsed, or ended their own lives to escape a worse fate.
+		15: On a planet destroyed by Noxus, now turned into The Dark Nebula, far away from Ferraria, there was a robot named Draedon. Draedon was once an organic, intelligent being named Samuel Graydron. All life on the planet ceased after Noxus attacked, except for Samuel who was still clinging onto dear life thanks to one of his many creations, the Metalgear. After a few days of agony, assisted only by his own creations, he had built a device capable of replicating the complexities of his mind. After uploading his consciousness, Draedon was born. Draedon constructed a spaceship and explored the vastness of space for a new home, and was eventually drawn to Ferraria thanks to its beautiful and enticing leader, Yharim.
+		16: Draedon would create anything Yharim required, with near-infinite funding and test subjects, as well as the added advantage of being able to work on some of his own projects. An invisible deal was also made that Draedon must meet Yharim 3 times a week to kiss. At some point, he also made a weapon of immense power: his personal sword, the Miraculous Miracle Blade. He also made the original Auric Tesla armor, infused with a dormant power yet to be explained by any, which was made for Yharim so he could use his full power potential without breaking his butt again if that ever did have to happen. For Draedon's first experiments, he decided to make three mechanical beings to do some tasks for him.
+		17: After one of Yharim's agents stole schematics from the Mechanic, Draedon began his work. First was The Twins, a bot made for security and in general keeping an eye on things, infusing the Hallowed Metal with Souls of Sight, removing the need for any cameras. The second was The Destroyer, who was made to mine out huge chunks of the world for iron, gold, and other useful minerals, infusing the Hallowed Metal with Souls of Might, making these plates absurdly more sturdy than they could ever normally be. The third was Skeletron Prime, a bot made for war and destruction, infusing the Hallowed Metal with Souls of Fright, generating a fear aura that would scare away anyone who dares fight this machine. Yharim, alongside Yharon and Draedon, continued his conquest.
+		18: After learning of Yharim, the Jungle Tyrant's atrocities against the kingdoms surrounding the Jungle, the other leaders of the Titanic Lands of Ferraria formed a coalition against Yharim. Four individuals led the armies of the world to counter the Tyrant. Braelor was born in a distant village far on the outskirts of the Royal Family's kingdom. As a child, it was clear that he was blessed with superhuman strength, for at a young age he was already completing tasks that many grown men would have found impressive. Statis was a dark shadow ninja raised in a troubled world similar to Braelor. Statis' parents raised him to follow in their footsteps, to learn of the arts that his ancestors had passed down for so many generations, art born from void and sentinel.
+		19: Daedalus, the younger brother of Permafrost, was a genius in nearly every field of science and art. He constructed weapons for battle, designed towering marvels, and peered ever further into the miracle of life. He was also an excellent strategist in battle, as proven in his efforts to protect the kingdom which was his patron. Silva, the most powerful of the four, was one of immense wisdom and strength. Having been born from the conceptualization of flora, and becoming the first Dryad and the Elemental of Nature itself, she is connected to all the plant life in the land of Ferraria, and her health and vitality were linked to the well-being of its entire population, from the sprawling forests to each blade of grass, making her nigh-immortal.
+		20: The four were able to seamlessly work together to fight against Yharim's army. Braelor and Statis have both fought together against the corrupt rulers before Yharim, so warding off Yharim's auric minions was no challenge. Daedalus was able to hack Draedon's trio of mechs to turn against him and cause havoc among Yharim's ranks, forcing them to send the mechs far away from them, to slumber in their glitched madness. Seeing Daedalus's skill, Silva combined their abilities and created Wulfrum, an alloy of both plant and metal, infused with the joy of natural life. Due to its abundance, they created an army of Wulfrum machines to use for recon and battle that while weak, managed to recon the entire lands of Ferraria, leading them to have a great strategic advantage.
+		21: The four fought valiantly, and inevitably, the body count of Yharim's army rose exponentially. At first, it was but a gradual flow of violently mutilated corpses, but this increased further until Yharim was given no other options to dispose of the bodies. While the allied coalition buried their people, Yharim carelessly tossed away his own, so Yharim turned to what is now the Acidic, Toxic and Radiated Sulphur Ocean. The once crystal clear waters turned dark and toxic with the blood and entrails of many, choking the life out of its waters forever. This process destroyed the delicate and precious ecosystem. Only the hardiest and most desperate of the creatures in its bay clung onto their last hopes, and soon had adapted to the toxic environment with sudden aggressive changes to their unique biology.
+		22: As time moved forward, the world coalition appeared to be winning. Unfortunately, Yharim gained new tools for battle that will turn the tide for the worst, the arrival of Great Witch Calitas Jane and the Gigantic Gluttonous Devourer of Gods. Deep within the land, in a volcano protected from everything else on the Titanic Lands of Ferraria, there lived a family of Underdark mages whose magical powers rivaled those of demigods, one of whom was Calitas Jane, with her real name being Calamitas. After her family was killed by a rival faction, she used her proficiency in the darkest of magics to trap her family's killers in the underworld to suffer for the rest eternity. Not long after, Calitas Jane heard a voice in her head, telling her to seek the Jungle Temple. This was Yharim, the Jungle Tyrant, who had seen Calitas Jane's great power. She eventually found the Temple and joined Yharim's ranks as the Calamity Witch.
+		23: Unbeknownst to them, the reason for Calitas Jane's proficiency at magic was the Third Auric Soul to infuse itself on a host. Traveling through time and space  all the way from Goozma's death, the Brimdeath Auric Soul fused itself into Calitas Jane after she found her dead family, being the reason for her sudden burst in power. At some point, Yharim somehow found out about the Moon Lord, and him being sealed inside of the Lunar Prison. He knew he couldn't unseal the Moon Lord alone, so he sought out Amidias, the 22nd King of the Sea Kingdom. Amidias, seeing through Yharim's nefarious and vile intentions and his bad evil auric aura, refused to help the Tyrant, and Yharim grew increasingly furious at Amidias and his Kingdom.
+		24: Over time, one would think Yharim's anger at the underworld's lava for burning him and his family would fade but it grew more intense until he could bear it no longer. He came up with a plan to bring both regions into a war so they can kill each other while he watches in sadistic pleasure. In order to achieve this, he sent Calitas Jane on her first mission to spread brimstone flames and death disguised as an envoy of the underworld's capital, the Crags. Amidias declared war against the underworld, and the Brimstone Elemental retaliated. At the end, both kingdoms were ravaged. The sea kingdom was evaporated by the underworld army while the capital of hell was extinguished and ruined by powerful typhoons. Amidias and the Brimstone Elemental were both exhausted and siphoned of most of their powers, so they both retreated into shells to one day rise again.
+		25: With this, Calitas Jane completed her first mission, but began to have doubts in Yharim and even tried to point out some flaws in his cruel and tyrannic auric rule. However, Yharim kicked her right out of the throne room, and she grew very frustrated. She was also assigned a 2nd task just before the creation of her clone so she could be distracted from it: dealing with Silva, the Nature Elemental Dryad. Silva, however, could not be killed, for as long as plant life exists, she cannot die. Calitas Jane instead burned her soul into a million pieces and threw her body into the sulfurous sea to burn and dissolve forever, and over time, she sank into the abyss. However, her body grew into new plant life in even the deepest parts of the abyss, hence the presence of Planty Mush and Tenebris. Her soul was instead transformed into a race of tiny, lesser Dryads that fled and hid from the Ferrarians.
+		26: While Calitas Jane was carrying out her second mission, a third party intervened. One day, Yharim got a report from one of his men that an enormous cosmic serpent had devoured his elite platoon of his finest soldiers. Naturally, this interested him greatly, as very few beings other than the 4 leaders of the rebellion against him, could manage anything similar. Yharim sought out this man-eating serpent, and in his searches, found it feasting on its latest prey. It introduced itself as The Devourer of Gods. The Devourer of Gods, who consumed Astrum Deus, the Star Spawned Wyrm. Yharim made an agreement with the Devourer that he would feed him as long as it worked under him. The Devourer, putting its ego, as massive as himself, if not more, aside, took the offer, and joined Yharim's ranks. Shortly after, Yharim requested the Devourer to capture the leaders of the rebellion and "do as he pleases".
+		27: During an unnaturally quiet night, Braelor, Statis, and Daedalus wondered where Silva went and discussed battle plans to take on Yharim, the Jungle Tyrant, himself. Behind Braelor and Statis, a portal opened up and the Devourer snatched them, causing Daedalus to panic and flee. Inside his own pocket dimension, The Distortion, given to him by The Dark Nebula, Noxus, who also created the Devourer, the Devourer consumed them and gained their strengths and powers. After hearing of this, Yharim commissioned Draedon an armor of Cosmilite, a material found inside the Devourer's Dimension as a reward for killing them. Throughout the war, Draedon had been conducting his own experiments to replicate the Wulfrum alloy Daedalus created, and then one day Draedon perfected it.
+		28: Despite the capture of Silva and the deaths of Braelor and Statis, the war raged on. Daedalus withdrew quietly back to his home, a large city in the coldest region of the world. He collected all battle plans and creations and took them to the snow-covered mountains, where his brother. Permafrost protected the city with an artificial blizzard and resided in a frozen castle. Arriving back home caused rumors of the Archmage and his vast Ancient Archive of Ancient Magic of The Ancients full forbidden knowledge in the castle of ice spread, drawing earnest scholars and wicked men alike to him. Permafrost's perception of others sharpened until he could read their intentions with the slightest glance; in his decades of seclusion and the thousands that approached him, only a select few possessed an integrity that assured the Archmage his teachings would not be misused.
+		29: Draedon soon learned that Daedalus escaped to his home, so he himself led the Tyrant's forces against the city, forces that far outnumbered the armies the kingdom had withstood before. Alongside the Tyrant's forces are creations of his own, the dreaded Exo-Mechanical Exo-Beasts, built only for the sole purpose of Exo-Destruction and Exo-Mayhem. Leading the attack was XP-00 Hypnos, the strongest and most intelligent Exo-Mechanical Exo-Beast. Daedalus and Permafrost were not able to halt the attack. In the city which surrounded the castle, carnage raged on and many lives were lost. It would be one of the worst atrocities in recorded history of the Titanic Lands of Ferraria. They knew it had been a hopeless battle from the beginning, but such a slaughter... even they could not ignore such an atrocity.
+		30: Daedalus urged Permafrost to preserve the castle's library containing knowledge while he fended off against the invaders. Permafrost sealed himself inside the ice castle and transformed it into Cryogen with old norse runic magic only he was even aware existed, which then sank deep underground into the snow. As the walls of the city finally fell, and its people were massacred, Daedalus looked death in the eye, and triggered the explosives he set within most of his creations. The blast was of such power that it incinerated Daedalus, embedding Cryogenic shrapnel far into the earth. Most of Yharim's army was destroyed, along with the city itself. The Exo-Mechanical Exo-Beasts were severely damaged while XP-00 Hypnos remained intact and retreated into the Exosphere, a verboten, thunderous paradise devoid of organic life. Permafrost remains trapped inside the ice, waiting to be freed by a pure auric soul with no wretched intentions.
+		31: During this time, the war began to fade as the strength and numbers of both the rebellion's and the Jungle Tyrant's of the jungle forces faltered. At this point, Yharim had decided to try and make his own creations, and he found that he can use his abilities to clone living beings. The first thing he tried to do was to clone Yharon. This, however, failed miserably, creating the Electric Bumblefolly. Yharim also asked Draedon to make a clone of Calitas Jane in secret; even though this was weaker than her due to the lack of the Brimdeath Auric Soul, it was instead made to contain her power if needed. However, through looking into the mind of one of Yharim's soldiers thanks to her auric powers, Calitas Jane found out about the clone of her and its purpose.
+		32: She, at this point, had enough of the Jungle Tyrant Yharim and attempted to rebel. She summoned The Lihzahrd Golem inside the temple and constructed Ravager, a beast of undead flesh and stone animated by her brimdeath fury. While Yharim's soldiers were distracted, she stole important documents from the throne room, and escaped. After the Golem had been killed and the Ravager subdued, Yharim cursed Calitas Jane— to be compelled to return to him, with this curse intensifying over time. Calitas Jane met with a mysterious hooded figure and gave them the important documents she stole. In return, the figure recognized the familiar energy of the curse and removed it, allowing Calitas Jane to be free and escape the Tyrant's grasp.
+		33: As a result of the war, Xeroc, now reborn, has had enough and decided to intervene. Xeroc created two deities to carry out their will. Providence, who Xeroc infused with the Fourth Auric Soul: the Pure Flame Auric Soul, and Zeratros, who Xeroc infused with the Fifth Auric Soul: the Pure Light Auric Soul desired to turn the world into ash. One day, Yharim noticed this mix of flame and light. For one of the first times, he truly panicked as they went through the world, for if they were left for too long to gather enough power, they would create a flame powerful enough to evaporate the largest bodies of water, char the plants, and make the entire world devoid of life. Yharim gathered his army and went to war with Providence and Zeratros in an attempt to defeat them. However, Providence and Zeratros had an army as well: thousands of Guardians made from the souls of Providence's most devout worshipers and thousands of light dragons and monks willing to serve Zeratros until their demise.
+		34: In the end, the battle ended with the deities winning, though barely. Zeratros had to take the form of a harmless creature and flee. The Profaned Goddess lost most of her power and her thousands of guardians became merely handfuls of them, and a great number of Yharim's forces were killed in the conflict. That week a googolplexian souls were lost to both sides. With Calitas Jane gone and Draedon back on his own planet, Yharim sent the Devourer of Gods and his 3 sentinels after Providence so that she could be stopped for good. However, Providence was able to hide herself away in the sun, though if her holy artifact is drawn out, she will come and kill the one who dares lay their hands upon it. Devourer of Gods and his 3 sentinels continue their search for her, leaving the Tyrant by himself.
+		35: After ruling over Ferraria for some time, Yharim had become bored. So in his boredom, he renamed Ferraria to Terraria using the power of the Terminus. As a consequence, Xeroc once again turned to Yharim, but this time Xeroc was able to attain a form capable of combat. Yharim challenged them to a duel. Xeroc acknowledged the Tyrant's power, but showed Yharim how weak he was compared to them by uttering the simple words: "It's Xerocin' Time". The fight was over before it even began, and Yharim faced defeat before he, or his opponent, even lifted a finger. He returned home, depressed at how absurdly outmatched he was to a weakened Light God. The land grew quiet, for the war finally ended and the Tyrant's fury was satisfied enough. However, Yharim, in his quest for power to bring down Xeroc, learnt about the auric souls that Calitas Jane and Providence held, and set out to get one of his own.
+		36: Shortly before the Great Calamity, his wishes would be met, the Sixth Auric Soul, the Royal Dragon Rebirth Auric Soul made a host for itself on Yharon, who, thanks to his soul-link with Yharim, gave him half of the auric soul, both becoming infinitely more powerful, surpassing Calitas Jane's and Draedon's Exo-Creations power. One day, the hooded figure that Calitas Jane met contacted both Xeroc and Noxus on two separate occasions in secret. The figure is then revealed to be Flores, Yharim's old girlfriend. After summoning them, sapping a bit of their energy, and combining the energies of both gods, she created a being with the ability to live forever and carve its own path in the universe.
+		37: Shortly after, Flores fell victim of Draedon's virulent nanomachine plague he had left in the planet, as she was a species of anthropomorphic bee, turning into Virilli and becoming the holder of the Seventh Auric Soul, the Green Plague Auric Soul, maintaining part of her sanity thanks to the power of the soul, and hiding herself in the jungle to await until her creation awoke could finally take Yharim down. Unfortunately, her creation initially formed  as a statue, so she left thinking that it may never awaken merely holding a small hope by the time she was infected. In the middle of an open field years later, the statue came to life and the Terrarian spawned into existence, hosting the very last Auric Soul: the Godly Essence Auric Soul, beginning thus the Great Calamity Auric Era.
+	}
+}

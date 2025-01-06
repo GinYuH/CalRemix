@@ -405,7 +405,7 @@ namespace CalRemix
 				if (!Player.HasCooldown(InfraredSightsCooldown.ID))
                 {
 					if (Main.myPlayer == Player.whoAmI)
-						CombatText.NewText(Player.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.StatusText.InfaredScan").Value, true);
+						CombatText.NewText(Player.getRect(), Color.Red, CalRemixHelper.LocalText("StatusText.InfaredScan").Value, true);
                     infraredSightsScanning = true;
                     Player.AddCooldown("InfraredSights", 3600);
                 }
@@ -1306,7 +1306,7 @@ namespace CalRemix
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
                 {
-                    string f = Language.GetText("Mods.CalRemix.StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
+                    string f = CalRemixHelper.LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
                     {

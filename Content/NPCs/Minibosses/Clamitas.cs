@@ -325,7 +325,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Adaption at its finest. This clam was tranformed by the harsh air of Azafure after escaping the destruction of its home. Its meat is said to have the spiciest taste among all seafoods.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

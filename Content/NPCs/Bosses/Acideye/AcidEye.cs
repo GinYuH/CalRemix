@@ -11,7 +11,6 @@ using CalamityMod;
 using CalamityMod.Dusts;
 using CalamityMod.World;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.Audio;
 using CalamityMod.Sounds;
@@ -24,7 +23,6 @@ using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Bags;
 using CalamityMod.Events;
-using Terraria.Localization;
 using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Acideye
@@ -577,7 +575,7 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value)]);
+            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)]);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

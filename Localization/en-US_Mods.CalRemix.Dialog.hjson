@@ -1,0 +1,99 @@
+TheCalamity: {
+	1: I will test your dodging abilities. Good luck.
+	2: Your skills are proficient, but how will you fare against the ones after me?
+	3: Your foes will often hold predictable patterns; see past them and strike.
+	4: Keep avoiding anything that seems dangerous.
+	5: You have passed the test. Well done.
+	6: Strike me down and take your reward.
+	GFB1: ... really? You're trying THIS? Fine, then... let's see if you can handle an unfair challenge.
+	GFB2: Not bad, but you should know already that this won't be that easy.
+	GFB3: This world is often unfair, and you should be prepared for anything thrown your way.
+	GFB4: How much are you able to take...?
+	GFB5: Your persistence is admirable. Perhaps you have what it takes?
+	GFB6: A bit more to go. Don't mess up now.
+	GFB7: ... alright, you're clearly good enough. You can leave.
+	GFB8: Don't expect things to get any easier from here on.
+}
+
+CyberDraedon: {
+	1: Organic breach detected. Preparing extermination.
+	2: Threat detained. Returning to normal operation.
+	3: Most interesting- a worthy research subject.
+	4: Disabling laser inhibitors.
+}
+
+HypnosDraedon: {
+	1: Most peculiar. Your alterations to the Codebreaker have led it to signal a foe I did not intend for you to encounter.
+	2: Your previous battles have piqued my interest, and now your creativity has, too.
+	3: You will face one of my older creations. Do not underestimate it.
+	4: Here we go.
+	5: The tethers connecting its attendants to itself are inefficient at best.
+	6: A vestige of my inexperience. Do not let this pollute your judgment of my later creations.
+	7: Fascinating. Its amygdala appears to be administering adrenaline to its mechanical components.
+	8: I did not account for this in my calculations. Your current situation appears dire indeed.
+	9: I cannot say I did not expect this to happen.
+	10: Hypnos lacks synergy with my other creations. The free will of its organic components stifles its potential as an efficient war machine.
+	11: I have ascertained everything necessary about this creation and its capabilities.
+	12: Salvage what you wish from it. You will need it more than I for what is to come.
+	13: And please. Dislodge that blood clot from my device the next time you use it.
+}
+
+Crabulon: {
+	AprilFools: Buy Delicious Meat! So Very Delicious! 20% Off! Buy Today!
+	1: Hello, are you here to place a delivery for my world-famous Delicious Meat, made with Frosted Pigron and Blue Truffles (now 70% bluer)?
+	Hit: No? Please do be careful with that weapon, though, it looks kinda dangerous. Honestly, you seem quite... crabby. Get it?!
+	2: You must be kidding. You're just another one of those desperate Delicious Meat fans that don't care to pay up for our hard work that was put into making these. For shame.
+	3: You remind me of that giant mushroom pig flying fish thing. If it could, it would easily butcher you whole, while you're blinded by your depression or whatever.
+	Death: AAAAAAAAAh
+}
+
+SlimeGodCore: {
+	1: Hello we have suspected you committing blasphemy against sloomes
+	2: Absurd! I can't allow you to butcher the last bean bag
+	3: You will not be forgiven for your sins. I'll be back, and batter than ever...
+}
+
+ProfanedGuardianCommander: {
+	Death: Guardian Commander: MY MENTAL FORTITUDE IS FADING...
+	1: Guardian Commander: YOU WILL BURN BY THE WILL OF THE PROFLAMED FLAMES!
+	1D: Guardian Defender: Prepare to meet your end, fool.
+	1H: Guardian Healer: Be careful... we're some tough guardians!
+	Enraged: Guardian Commander: That is bad. We are Angry
+	EnragedD: Guardian Defender: That is bad. We are Angry
+	EnragedH: Guardian Healer: That is bad. We are Angry
+	Meat: Guardian Commander: BURN THE DELICIOUS MEAT! ALL OF IT!
+	MeatD: Guardian Defender: You... you will not get away with the prize money this time.
+	MeatH: Guardian Healer: Guardians unite! We have a more worthy enemy to destroy.
+}
+
+ProfanedGuardianDefender: {
+	Death: Guardian Defender: Nothing... can beat my eldest sibling...
+	DeathC: Guardian Commander: VERY SOON, YOU WILL FEEL MY PROFANED RAGE... HA-HA-HA...
+}
+
+ProfanedGuardianHealer: {
+	Death: Guardian Healer: Ouch!
+	DeathD: Guardian Defender: How? How could you!?
+	DeathC: Guardian Commander: ENOUGH! YOU MAY HAVE DEFEATED ONE OF US, BUT US TWO ARE MUCH TOUGHER!
+}
+
+Yharon: {
+	1: Hello! Are you here for a duel? I'll go easy on you since you're so small and weak.
+	2: Wow, you are quite strong! I underestimated you!
+	3: Well done! You can withstand my attacks while launching powerful attacks of your own!
+	4: No more messing around. Impressive, but it's not enough to stop me!
+	5: You're very tough, I hope I can win this...
+	6: I won't hold back! You may be hard to beat, but I am harder!
+	7: STOP! STOP! NO!
+	End: I can't believe it, you are even stronger than me. Nice job!
+}
+
+PrimordialWyrmHead: {
+	1: You are foolish to think you can invade our lands, mortal.
+	2: Oh? So you are stronger than I thought... this will be fun. Have you come to take that little artifact we have guarded for all of eternity?
+	3: Soon, you will cease to exist. How naive, to think that you possess even a fraction of my power.
+	4: For millions of years, I have ruled this sea, undefeated. Your pointless existence will not change that.
+	5: Do you think you can POSSIBLY defeat me? I am Jared, the primordial being, the abyssal god, and you think you could ever stand a chance?!
+	6: our actions are useless! You came here to slaughter us and take our treasures, but we will not let that happen. You will never truly defeat us. Even if you were to kill me, dozens more of the sea's young wyrms will take my place. Do you want this? Do you want this world to erupt into chaos?
+	7: This is just the beginning of the calamity. Your enemies are ascending beyond your control... or was that all your intention?
+}
