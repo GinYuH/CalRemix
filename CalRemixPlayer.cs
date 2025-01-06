@@ -63,6 +63,8 @@ using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using System.Threading.Tasks;
+using CalRemix.Content.Items.Weapons.Stormbow;
+using CalRemix.Content.Projectiles.Weapons.Stormbow;
 
 namespace CalRemix
 {
@@ -1487,6 +1489,12 @@ namespace CalRemix
                 Item item = (h.type == ItemType<FiberBaby>()) ? h : m;
                 if (player.ownedProjectileCounts[ProjectileType<FiberBabyHoldout>()] < 1)
                     Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<FiberBabyHoldout>(), item.damage, 0, player.whoAmI);
+            }
+            if (Held(player, ItemType<TheSimpstring>()))
+            {
+                Item item = (h.type == ItemType<TheSimpstring>()) ? h : m;
+                if (player.ownedProjectileCounts[ProjectileType<TheSimpstringHoldout>()] < 1)
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<TheSimpstringHoldout>(), item.damage, 0, player.whoAmI);
             }
             if (!player.channel)
                 c = 0;
