@@ -20,6 +20,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
     [AutoloadHead]
     public class BALLER : ModNPC
     {
+        public Vector2 npcOffset;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Archwitch");
@@ -67,7 +68,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
-                new FlavorTextBestiaryInfoElement("This powerful witch used her ability to manipulate winds to turn the tide of battle during the war with Yharim. Being able to create powerful drafts with just a wave of her hands, she lifted arships into the sky to cover ground much quicker and carry troops to their stations.\r\n")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
@@ -172,15 +173,18 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             multiplier = 2f;
         }
-
+        public override void FindFrame(int frameHeight)
+        {
+            npcOffset = Vector2.UnitY * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 3) * 4;
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
-            Vector2 npcOffset = NPC.Center - screenPos + Vector2.UnitY * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 3) * 4;
+            Vector2 offset = NPC.Center - screenPos + npcOffset;
             Texture2D balloons = ModContent.Request<Texture2D>("Terraria/Images/Item_1164").Value;
             SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Texture2D npctex = ModContent.Request<Texture2D>(Texture).Value;
-            spriteBatch.Draw(balloons, npcOffset - Vector2.UnitY * 26 - Vector2.UnitX * NPC.spriteDirection * -10, null, NPC.GetAlpha(drawColor), 0f, balloons.Size() / 2, 1f, fx, 0);
-            spriteBatch.Draw(ModContent.Request<Texture2D>(Texture).Value, npcOffset, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(npctex.Width / 2, npctex.Height / 2 / Main.npcFrameCount[Type]), NPC.scale, fx, 0);
+            spriteBatch.Draw(balloons, offset - Vector2.UnitY * 26 - Vector2.UnitX * NPC.spriteDirection * -10, null, NPC.GetAlpha(drawColor), 0f, balloons.Size() / 2, 1f, fx, 0);
+            spriteBatch.Draw(ModContent.Request<Texture2D>(Texture).Value, offset, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(npctex.Width / 2, npctex.Height / 2 / Main.npcFrameCount[Type]), NPC.scale, fx, 0);
             return false;
         }
     }

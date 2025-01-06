@@ -6,10 +6,11 @@ using Terraria.DataStructures;
 using CalRemix.Content.Projectiles;
 using CalamityMod;
 using CalamityMod.CalPlayer;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-    public class Warglaive : ModItem
+    public class Warglaive: RogueWeapon
     {
         public override void SetStaticDefaults()
         {

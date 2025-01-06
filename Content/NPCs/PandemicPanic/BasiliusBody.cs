@@ -17,6 +17,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Basilius");
+            this.HideFromBestiary();
         }
 
         public override void SetDefaults()
@@ -44,13 +45,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void AI()
         {
             CalRemixNPC.WormAI(NPC, 32, 0.7f, target, Vector2.Zero, segmentType: 1, canFlyByDefault: true);
-        }
-
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Vicious strains of bacteria, these chains are known for their ability to heat up bodies to critical degrees.")
-            });
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -1,8 +1,11 @@
 ﻿using CalRemix.Content.Projectiles;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix
@@ -85,6 +88,23 @@ namespace CalRemix
                 minionBool = false;
             if (minionBool)
                 projectile.timeLeft = 2;
+        }
+        /// <summary>
+        /// Get the localized text using the provided key
+        /// </summary>
+        public static LocalizedText LocalText(string key) => Language.GetOrRegister("Mods.CalRemix." + key);
+
+        /// <summary>
+        /// Get the localized dialog using the provided key and send to all players in chat
+        /// </summary>
+        public static void GetNPCDialog(string key, Color? textColor = null)
+        {
+            if (!textColor.HasValue)
+                textColor = Color.White;
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(LocalText($"Dialog.{key}").Value, textColor.Value);
+            else
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey($"Mods.CalRemix.Dialog.{key}"), textColor.Value);
         }
     }
 

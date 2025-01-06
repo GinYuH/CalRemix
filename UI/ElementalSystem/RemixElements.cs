@@ -140,7 +140,7 @@ namespace CalRemix.UI.ElementalSystem
             { "WulfwyrmTail", new Tuple<Element[], Element[]>([Element.Magic, Element.Water, Element.Fire], [Element.Machine, Element.Slash]) },
             { "OrigenCore", new Tuple<Element[], Element[]>([Element.Impact, Element.Fire], [Element.Cold, Element.Water, Element.Slash, Element.Stab]) },
             { "Origen", new Tuple<Element[], Element[]>([Element.Impact, Element.Fire], [Element.Cold, Element.Water, Element.Slash, Element.Stab]) },
-            { "Acideye", new Tuple<Element[], Element[]>([Element.Stab, Element.Cold], [Element.Poison, Element.Water, Element.Dark]) },
+            { "AcidEye", new Tuple<Element[], Element[]>([Element.Stab, Element.Cold], [Element.Poison, Element.Water, Element.Dark]) },
             { "Carcinogen", new Tuple<Element[], Element[]>([Element.Slash, Element.Poison], [Element.Fire, Element.Wind, Element.Stab]) },
             //{ "DerellectBoss", new Tuple<Element[], Element[]>(new Element[]{ Element.Water, Element.Fire, Element.Impact }, new Element[]{ Element.Cold, Element.Poison, Element.Machine }) },
             

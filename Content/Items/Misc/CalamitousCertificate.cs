@@ -3,12 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.IO;
 using System;
-using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalamityMod.Rarities;
 using Steamworks;
-using Terraria.Localization;
 using CalamityMod;
 
 namespace CalRemix.Content.Items.Misc
@@ -40,7 +38,7 @@ namespace CalRemix.Content.Items.Misc
                     texture.SaveAsPng(stream, texture.Width, texture.Height);
                 }
                 else
-                    CombatText.NewText(player.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.StatusText.CertificateOwned").Value, true);
+                    CombatText.NewText(player.getRect(), Color.Red, CalRemixHelper.LocalText("StatusText.CertificateOwned").Value, true);
             }
             return true;
         }

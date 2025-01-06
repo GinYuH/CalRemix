@@ -43,7 +43,7 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("Oh crap! Look out! It's the Mold Man!")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void FindFrame(int frameHeight)

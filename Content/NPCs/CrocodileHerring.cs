@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("This fish species was doomed for extinction from the start considering females of the species were exponentially larger and less common. It's a wonder they somehow lived until the modern day."),
+                new FlavorTextBestiaryInfoElement (CalRemixHelper.LocalText($"Bestiary.{Name}").Value),
             });
         }
 

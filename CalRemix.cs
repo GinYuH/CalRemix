@@ -7,6 +7,8 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.PlaguebringerGoliath;
+using CalamityMod.NPCs.CeaselessVoid;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.ZAccessories;
@@ -21,6 +23,7 @@ using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
@@ -40,11 +43,15 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using CalRemix.UI.Anomaly109;
+using CalRemix.Core.Retheme;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix
 {
     enum RemixMessageType
     {
+        Anomaly109Sync,
         HypnosSummoned,
         SyncIonmaster,
         IonQuestLevel,
@@ -82,6 +89,14 @@ namespace CalRemix
             RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
             switch (msgType)
             {
+                case RemixMessageType.Anomaly109Sync:
+                    {
+                        int optionIndex = reader.ReadInt32();
+                        Anomaly109Option option = Anomaly109Manager.options[optionIndex];
+                        option.toggle();
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
                 case RemixMessageType.HypnosSummoned:
                     {
                         int player = reader.ReadByte();
@@ -125,21 +140,18 @@ namespace CalRemix
                 case RemixMessageType.IonQuestLevel:
                     {
                         int level = reader.ReadByte();
-
                         CalRemixWorld.ionQuestLevel = level;
                         break;
                     }
                 case RemixMessageType.OxydayTime:
                     {
                         int oxygenTime = reader.ReadByte();
-
                         CalRemixWorld.oxydayTime = oxygenTime;
                         break;
                     }
                 case RemixMessageType.TrueStory:
                     {
                         int storyCounter = reader.ReadByte();
-
                         CalRemixWorld.trueStory = storyCounter;
                         break;
                     }
@@ -162,14 +174,12 @@ namespace CalRemix
                 case RemixMessageType.KillDefender:
                     {
                         int killCount = reader.ReadByte();
-
                         PandemicPanic.DefendersKilled = killCount;
                         break;
                     }
                 case RemixMessageType.KillInvader:
                     {
                         int killCount = reader.ReadByte();
-
                         PandemicPanic.InvadersKilled = killCount;
                         break;
                     }
@@ -218,7 +228,7 @@ namespace CalRemix
                 ModItem item = ItemLoader.GetItem(i);
                 if (item.Type == ItemType<WulfrumMetalScrap>())
                     continue;
-                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone)
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone || item is BouncyRogue || item is StickyRogue)
                     continue;
                 CalRemixAddon.Items.Add(item);
             }
@@ -290,7 +300,7 @@ namespace CalRemix
 
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<WulfwyrmHead>(), [NPCType<WulfwyrmBody>(), NPCType<WulfwyrmTail>()]);
             AddToBossRush(ref brEntries, NPCID.KingSlime, NPCType<Origen>(), [NPCType<OrigenCore>()], [NPCType<OrigenCore>()]);
-            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<Acideye>(), [NPCType<MutatedEye>()], needsNight: true);
+            AddToBossRush(ref brEntries, NPCType<Crabulon>(), NPCType<AcidEye>(), [NPCType<MutatedEye>()], needsNight: true);
             AddToBossRush(ref brEntries, NPCID.Deerclops, NPCType<Carcinogen>(), [NPCType<CarcinogenShield>()]);
             AddToBossRush(ref brEntries, NPCType<CalamitasClone>(), NPCType<Ionogen>(), [NPCType<IonogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.Plantera, NPCType<Oxygen>(), [NPCType<OxygenShield>()]);
@@ -298,6 +308,8 @@ namespace CalRemix
             AddToBossRush(ref brEntries, NPCID.Golem, NPCType<Phytogen>(), [NPCType<PhytogenShield>(), NPCType<PineappleFrond>()]);
             AddToBossRush(ref brEntries, NPCType<PlaguebringerGoliath>(), NPCType<Hydrogen>(), [NPCType<HydrogenShield>()]);
             AddToBossRush(ref brEntries, NPCID.CultistBoss, NPCType<Pathogen>(), [NPCType<PathogenShield>()]);
+            AddToBossRush(ref brEntries, NPCType<CeaselessVoid>(), NPCType<Pyrogen>(), [NPCType<PyrogenShield>()]);
+
             AddToBossRush(ref brEntries, NPCType<Draedon>(), NPCType<Hypnos>(), [NPCType<AergiaNeuron>(), NPCType<HypnosPlug>()]);
             //AddToBossRush(ref brEntries, NPCType<SupremeCalamitas>(), NPCType<Losbaf>(), [NPCType<Losbaf>()]);
             foreach (var entry in brEntries)

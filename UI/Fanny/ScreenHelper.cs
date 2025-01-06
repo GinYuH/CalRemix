@@ -2,6 +2,7 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -650,11 +651,11 @@ namespace CalRemix.UI
                 .SetTextboxTheme(new HelperTextboxTheme("MiracleBoy_9Slice", new Vector2(16, 16), "MiracleBoy_Background", new Vector2(16, 16)))
                 .SetTextboxFormatting(null, 0, 16)
                 .SetPositionData(true, 120, 0.42f)
-                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked);
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked || (!CalRemixWorld.postGenUpdate && NPC.downedMoonlord));
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
-                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && Main.hardMode)
+                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || !CalRemixWorld.postGenUpdate) && Main.hardMode)
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).

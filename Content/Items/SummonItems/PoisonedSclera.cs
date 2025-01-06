@@ -32,14 +32,14 @@ namespace CalRemix.Content.Items.SummonItems
         }
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<Acideye>()) && player.Calamity().ZoneSulphur && !Main.dayTime;
+            return !NPC.AnyNPCs(ModContent.NPCType<AcidEye>()) && player.Calamity().ZoneSulphur && !Main.dayTime;
         }
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position);
-                int type = ModContent.NPCType<Acideye>();
+                int type = ModContent.NPCType<AcidEye>();
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else

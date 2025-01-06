@@ -9,6 +9,7 @@ using CalamityMod;
 using Terraria.Chat;
 using Terraria.Localization;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs
 {
@@ -44,13 +45,13 @@ namespace CalRemix.Content.NPCs
             NPC.noTileCollide = true;
             NPC.width = NPC.height = 86;
         }
-
-        private void NewText(string text, Color textColor)
+        public override void ModifyTypeName(ref string typeName)
         {
-            if (Main.netMode == NetmodeID.SinglePlayer)
-                Main.NewText(text, textColor);
-            else if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), textColor);
+            typeName = CalRemixWorld.npcChanges ? CalRemixHelper.LocalText($"Rename.Draedon").Value : CalamityUtils.GetText("NPCs.Draedon.DisplayName").Value;
+        }
+        private static void NewText(string value, Color textColor)
+        {
+            CalRemixHelper.GetNPCDialog($"HypnosDraedon.{value}", textColor);
         }
 
         public int PlayerWhoAmI => (int)NPC.ai[3];
@@ -81,19 +82,19 @@ namespace CalRemix.Content.NPCs
                         }
                         else if (NPC.ai[1] == basetime)
                         {
-                            NewText("Most peculiar. Your alterations to the Codebreaker have led it to signal a foe I did not intend for you to encounter.", TextColor);
+                            NewText("1", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult)
                         {
-                            NewText("Your previous battles have piqued my interest, and now your creativity has, too.", TextColor);
+                            NewText("2", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult * 2)
                         {
-                            NewText("You will face one of my older creations. Do not underestimate it.", TextColor);
+                            NewText("3", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult * 3)
                         {
-                            NewText("Here we go.", TextColorEdgy);
+                            NewText("4", TextColorEdgy);
                             NPC.ai[2] = 1;
                         }
                         else if (NPC.ai[1] == basetime + timemult * 4)
@@ -111,7 +112,7 @@ namespace CalRemix.Content.NPCs
                                 hypnos.netUpdate = true;
 							NPC.ai[1] = 0;
                             NPC.ai[0] = 1;
-                            NewText("Brain of Cthulhu has awoken?", new Color(175, 75, 255));
+                            NewText(CalRemixHelper.LocalText("StatusText.UncertainAwoken").Format(ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName), new Color(175, 75, 255));
 
                             for (int i = 0; i < 44; i++)
                             {
@@ -133,11 +134,11 @@ namespace CalRemix.Content.NPCs
                         {
                             if (NPC.ai[1] == 20)
                             {
-                                NewText("The tethers connecting its attendants to itself are inefficient at best.", TextColor);
+                                NewText("5", TextColor);
                             }
                             else if (NPC.ai[1] == timemult)
                             {
-                                NewText("A vestige of my inexperience. Do not let this pollute your judgment of my later creations.", TextColor);
+                                NewText("6", TextColor);
                                 NPC.ai[1] = 0;
                                 p2dial = true;
                             }
@@ -147,12 +148,12 @@ namespace CalRemix.Content.NPCs
                         {
                             if (NPC.ai[1] == 20)
                             {
-                                NewText("Fascinating. Its amygdala appears to be administering adrenaline to its mechanical components.", TextColor);
+                                NewText("7", TextColor);
                             }
                             else if (NPC.ai[1] == timemult)
                             {
                                 SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Draedon.LaughSound, NPC.Center);
-                                NewText("I did not account for this in my calculations. Your current situation appears dire indeed.", TextColor);
+                                NewText("8", TextColor);
                                 NPC.ai[1] = 0;
                                 revdial = true;
                             }
@@ -175,23 +176,23 @@ namespace CalRemix.Content.NPCs
                         NPC.ai[1]++;
                         if (NPC.ai[1] == basetime)
                         {
-                            NewText("I cannot say I did not expect this to happen.", TextColor);
+                            NewText("9", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult)
                         {
-                            NewText("Hypnos lacks synergy with my other creations. The free will of its organic components stifles its potential as an efficient war machine.", TextColor);
+                            NewText("10", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult * 2)
                         {
-                            NewText("I have ascertained everything necessary about this creation and its capabilities.", TextColor);
+                            NewText("11", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult * 3)
                         {
-                            NewText("Salvage what you wish from it. You will need it more than I for what is to come.", TextColor);
+                            NewText("12", TextColor);
                         }
                         else if (NPC.ai[1] == basetime + timemult * 4)
                         {
-                            NewText("And please. Dislodge that blood clot from my device the next time you use it.", TextColor);
+                            NewText("13", TextColor);
                         }
                         else if (NPC.ai[1] >= basetime + timemult * 5)
                         {

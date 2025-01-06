@@ -35,6 +35,7 @@ namespace CalRemix.Content.NPCs
             NPC.noGravity = true;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.spriteDirection = 1;
         }
         public override void AI()
         {
@@ -183,7 +184,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
-		new FlavorTextBestiaryInfoElement("Its origin is unknown when compared to other creatures that release their essences. The source of \"Babil\" remains an enigma.")
+		new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -202,12 +203,6 @@ namespace CalRemix.Content.NPCs
         {
             npcLoot.Add(ItemID.Lens, 2);
             npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<EssenceofBabil>(), 2, 1));
-        }
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = TextureAssets.Npc[Type].Value;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, drawColor, NPC.rotation, texture.Size() / 2f, NPC.scale, SpriteEffects.FlipHorizontally, 0f);
-            return false;
         }
     }
 }

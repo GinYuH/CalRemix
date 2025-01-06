@@ -639,7 +639,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (PandemicPanic.CountsAsActive)
+            if (PandemicPanic.CountsAsActive && (!NPC.TowerActiveNebula && !NPC.TowerActiveSolar && !NPC.TowerActiveStardust && !NPC.TowerActiveVortex))
             {
                 pool.Clear();
                 float defMult = PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning ? 3f : PandemicPanic.DefendersWinning ? 0.8f : 1f;

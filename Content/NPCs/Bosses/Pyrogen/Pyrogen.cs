@@ -147,6 +147,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pyrogen");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Position = new Vector2(0, 44)
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             if (!Main.dedServ)
             {
                 Phase2Texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Pyrogen/Pyrogen_Phase2", AssetRequestMode.AsyncLoad);
@@ -323,7 +328,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             int torch = Main.zenithWorld ? TorchID.Ice : TorchID.Red;   
             Lighting.AddLight(NPC.Center, torch);
 
-            if (!player.ZoneUnderworldHeight && !ultraEnraged && !ProfanedDesert.scorchedWorld)
+            if (!player.ZoneUnderworldHeight && !ultraEnraged && !ProfanedDesert.scorchedWorld && !BossRushEvent.BossRushActive)
             {
                 if (biomeEnrageTimer > 0)
                     biomeEnrageTimer--;
@@ -413,7 +418,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
                             if (enrageCounter > 0)
                             {
-                                chargeDelaySub = (int)(chargeDelaySub * 0.8f);
+                                chargeDelaySub = (int)(chargeDelaySub * 0.6f);
                             }
 
                             player = Main.player[NPC.target];
@@ -800,11 +805,13 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         int timeToCharge = 300;
                         int chargingTime = 0;
                         float chargeVelocity = 35; //stays the same
+                        int circleRadius = 500;
                         AttackTimer++;
 
                         if (enrageCounter > 0)
                         {
                             flareRate = (int)(flareRate * 0.8f);
+                            circleRadius *= (int)(circleRadius * 0.5);
                         }
 
                         if (AttackTimer == 1)
@@ -960,6 +967,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             DustExplosion2();
                             NPC.life = 0;
                             NPC.HitEffect();
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 150;
                             NPC.NPCLoot();
                             NPC.active = false;
                             NPC.netUpdate = true;
@@ -987,8 +995,8 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         {
                             if (Main.netMode != NetmodeID.Server)
                             {
-                                if (!Main.zenithWorld) Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("PyrogenDoor").Type);
-                                else Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 16, Mod.Find<ModGore>("CryogenDoor").Type);
+                                if (!Main.zenithWorld) Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 12, Mod.Find<ModGore>("PyrogenDoor").Type);
+                                else Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * 12, Mod.Find<ModGore>("CryogenDoor").Type);
                             }
                         }
 
@@ -1052,6 +1060,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 fireRate /= 2;
             }
+            if (enrageCounter > 0)
+            {
+                projSpeed = 15;
+                bombProjAmount = 30;
+            }
 
             NPC.Calamity().DR = 0.6f;
             NPC.velocity = Vector2.Zero;
@@ -1082,7 +1095,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(NPC.Center) * projSpeed, ModContent.ProjectileType<ObsidianFragment>(), Main.expertMode ? 50 : 100, 0, -1, Main.rand.Next(0, 6));
                     }
-                    if (end) Main.LocalPlayer.Calamity().GeneralScreenShakePower = 80; //shake! SHAKE! SHAAAAAAKE!
+                    if (end) Main.LocalPlayer.Calamity().GeneralScreenShakePower = 5; //shake! SHAKE! SHAAAAAAKE!
                 }
             }
 
@@ -1410,7 +1423,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
-        new FlavorTextBestiaryInfoElement("A brimstone prison subject to a desperate possession by the soul of a goddess. Its chaotic, ill-fitting energies make it extremely erratic and unstable, as well as incredibly unpredictable in combat.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
@@ -1495,6 +1508,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
             RemixDowned.downedPyrogen = true;
             CalRemixWorld.UpdateWorldBool();
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
         }
     }
 }

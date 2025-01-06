@@ -18,8 +18,7 @@ namespace CalRemix.Content.Items.Lore
 
         // By default, lore text appears in white, but this can be changed.
         public virtual Color? LoreColor => null;
-        public virtual string LoreText => string.Empty;
-
+        public virtual string LoreText => CalRemixHelper.LocalText($"Lore.Items.{Name}").Value;
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemNoGravity[Item.type] = true;

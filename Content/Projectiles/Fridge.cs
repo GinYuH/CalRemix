@@ -43,7 +43,7 @@ namespace CalRemix.Content.Projectiles
                         {
                             SoundEngine.PlaySound(SoundID.LucyTheAxeTalk);
 
-                            CombatText.NewText(Projectile.getRect(), Color.White, Language.GetOrRegister("Mods.CalRemix.StatusText.FridgeAwaken").Value, true);
+                            CombatText.NewText(Projectile.getRect(), Color.White, CalRemixHelper.LocalText("StatusText.FridgeAwaken").Value, true);
                         }
                         if (Main.LocalPlayer.getRect().Intersects(Projectile.getRect()))
                         {
@@ -64,7 +64,7 @@ namespace CalRemix.Content.Projectiles
                         if (Projectile.ai[2] == 60)
                         {
                             SoundEngine.PlaySound(SoundID.LucyTheAxeTalk);
-                            CombatText.NewText(Projectile.getRect(), Color.White, Language.GetOrRegister("Mods.CalRemix.StatusText.FridgeLeave").Value, true);
+                            CombatText.NewText(Projectile.getRect(), Color.White, CalRemixHelper.LocalText("StatusText.FridgeLeave").Value, true);
                             Projectile.ai[1] = 3;
                             Projectile.timeLeft = 120;
                         }

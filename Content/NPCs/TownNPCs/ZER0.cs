@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
 			{
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-				new FlavorTextBestiaryInfoElement("There is a rumor that this bird is really a dragon, but rumors are just rumors.")
+				new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
 			});
 		}
 		public override void AI()

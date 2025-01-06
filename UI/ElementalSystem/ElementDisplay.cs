@@ -18,34 +18,34 @@ namespace CalRemix.UI.ElementalSystem
 			if (npc is null)
 			{
 				displayColor = InactiveInfoTextColor;
-                return "No entities tracked";
+                return CalRemixHelper.LocalText("UI.Element.None").Value;
             }
             if (!npc.TryGetGlobalNPC(out ElementNPC _))
             {
                 displayColor = InactiveInfoTextColor;
-                return "No elemental info available";
+                return CalRemixHelper.LocalText("UI.Element.NoInfo").Value;
             }
             if (npc.GetGlobalNPC<ElementNPC>().weak is null && npc.GetGlobalNPC<ElementNPC>().resist is null || Main.LocalPlayer.GetModPlayer<ElementPlayer>().noElement)
             {
                 displayColor = InactiveInfoTextColor;
-                return "No elemental info available";
+                return CalRemixHelper.LocalText("UI.Element.NoInfo").Value;
             }
-            string s = "No elemental info available";
+            string s = CalRemixHelper.LocalText("UI.Element.NoInfo").Value;
             if (player.weakened > player.resisted)
             {
-                s = $"Vulnerable to {player.weakened} element";
+                s = CalRemixHelper.LocalText("UI.Element.Vulnerable").Format(player.weakened);
                 s += (player.weakened > 1) ? "s" : string.Empty;
                 displayColor = Color.Cyan;
             }
             else if (player.weakened < player.resisted)
             {
-                s = $"Resisting {player.resisted} element";
+                s = CalRemixHelper.LocalText("UI.Element.Resistant").Format(player.resisted);
                 s += (player.resisted > 1) ? "s" : string.Empty;
                 displayColor = Color.OrangeRed;
             }
             else if (player.weakened == player.resisted && player.weakened > 0 && player.resisted> 0)
             {
-                s = "Equilibrium";
+                s = CalRemixHelper.LocalText("UI.Element.Equilibrium").Value;
                 displayColor = Color.White;
             }
             else

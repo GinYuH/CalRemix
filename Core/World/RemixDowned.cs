@@ -34,6 +34,8 @@ namespace CalRemix.Core.World
         public static bool downedKingMinnowsPrime = false;
         public static bool downedDend = false;
         public static bool downedMaser = false;
+
+        public static bool downedGale = false;
         public override void OnWorldLoad()
         {
             downedCalamity = false;
@@ -62,6 +64,8 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = false;
             downedDend = false;
             downedMaser = false;
+
+            downedGale = false;
         }
         public override void OnWorldUnload()
         {
@@ -91,6 +95,8 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = false;
             downedDend = false;
             downedMaser = false;
+
+            downedGale = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -120,6 +126,8 @@ namespace CalRemix.Core.World
             tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
             tag["downedDend"] = downedDend;
             tag["downedMaser"] = downedMaser;
+
+            tag["downedGale"] = downedGale;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -151,6 +159,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
             downedDend = tag.Get<bool>("downedDend");
             downedMaser = tag.Get<bool>("downedMaser");
+            downedGale = tag.Get<bool>("downedGale");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -181,6 +190,8 @@ namespace CalRemix.Core.World
             writer.Write(downedKingMinnowsPrime);
             writer.Write(downedDend);
             writer.Write(downedMaser);
+
+            writer.Write(downedGale);
         }
         public override void NetReceive(BinaryReader reader)
         {
@@ -210,6 +221,8 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = reader.ReadBoolean();
             downedDend = reader.ReadBoolean();
             downedMaser = reader.ReadBoolean();
+
+            downedGale = reader.ReadBoolean();
         }
     }
 }

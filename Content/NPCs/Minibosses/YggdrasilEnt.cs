@@ -32,6 +32,11 @@ namespace CalRemix.Content.NPCs.Minibosses
         private Vector2 pos;
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Scale = 0.5f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<HolyFlames>()] = true;
@@ -115,7 +120,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
-		        new FlavorTextBestiaryInfoElement("A magical, living tree that contains a vast amount of divine energy. Its essence may contain the key to unlock something more sinister.")
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
@@ -134,9 +139,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             npcLoot.Add(ModContent.ItemType<ProfanedShard>(), 1, 1, 1);
             npcLoot.Add(ModContent.ItemType<UnholyEssence>(), 1, 6, 8);
-            LeadingConditionRule expert = npcLoot.DefineConditionalDropSet(() => Main.expertMode);
-            expert.Add(ItemID.Pearlwood, 1, 89, 270);
-            expert.AddFail(ItemID.Pearlwood, 1, 56, 230);
+            npcLoot.Add(ItemID.Pearlwood, 1, 89, 270);
         }
     }
 }

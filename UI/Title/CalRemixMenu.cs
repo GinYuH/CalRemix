@@ -29,7 +29,7 @@ namespace CalRemix.UI.Title
         public override Asset<Texture2D> Logo => logoTexture;
         public override int Music => CalRemixMusic.Menu;
         public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<MenuBgStyle>();
-        public override string DisplayName => "Remixed Calamity Style";
+        public override string DisplayName => CalRemixHelper.LocalText("UI.Title.1").Value;
         public class MenuItem
         {
             public int time;

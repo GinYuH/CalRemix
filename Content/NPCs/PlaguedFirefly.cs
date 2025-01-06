@@ -36,7 +36,7 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("You would not bee-lieve your eyes.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

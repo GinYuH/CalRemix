@@ -66,7 +66,7 @@ namespace CalRemix.Content.NPCs
             bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("Why would you hurt him you sicko"),
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

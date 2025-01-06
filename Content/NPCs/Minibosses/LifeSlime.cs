@@ -65,8 +65,8 @@ namespace CalRemix.Content.NPCs.Minibosses
 		{
 			bestiaryEntry.Info.AddRange(new System.Collections.Generic.List<IBestiaryInfoElement>
 			{
-				new FlavorTextBestiaryInfoElement("When a slime and a life ore love each other very much, they produce this.")
-			});
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{

@@ -7,6 +7,6 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player) => player.GetModPlayer<CalRemixPlayer>().generatingGen && player.GetModPlayer<CalRemixPlayer>().genMusic;
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
-        public override int Music => CalRemixMusic.Origen;
+        public override int Music => CalRemixMusic.Generator;
     }
 }

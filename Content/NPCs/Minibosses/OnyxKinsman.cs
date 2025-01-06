@@ -29,7 +29,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         private Vector2 initPos;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<ArmorCrunch>()] = true;
@@ -69,7 +68,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-		new FlavorTextBestiaryInfoElement("Husbando gone wild.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void OnSpawn(IEntitySource source)

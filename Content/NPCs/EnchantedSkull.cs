@@ -43,7 +43,7 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("Many have tried to breach the stronghold's walls and many have failed to leave a dent on them. However, in the afterlife, they got their wish and now patrol the fort's inner sanctums.")
+            new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

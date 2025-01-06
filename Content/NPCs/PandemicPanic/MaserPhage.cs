@@ -25,6 +25,12 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Maser Phage");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            {
+                Position = new Vector2(0, -120),
+                Velocity = 1
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 7;
         }
 
@@ -64,7 +70,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 if (Phase == 0f)
                 {
                     FireRate += 1f;
-                    if (FireRate >= 300f && Main.netMode != 1)
+                    if (FireRate >= 300f && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         FireRate = 0f;
                         Phase = Main.rand.NextBool(3) ? 2 : 1;
@@ -215,7 +221,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Equipped with powerful laser capabilities, these towering constructs relentlessly destroy large amounts of immune cells at once.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

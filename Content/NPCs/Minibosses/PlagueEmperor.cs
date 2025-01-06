@@ -133,7 +133,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-		        new FlavorTextBestiaryInfoElement("This creature claims dominion over the Plague. The emperor will eliminate anyone that comes too close to it.")
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

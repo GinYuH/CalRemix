@@ -4227,3 +4227,183 @@ CalRemix/DestructivePresenceStone: {
 		'''
 	DisplayName: Destructive Presence Stone
 }
+
+CalRemix/StratusBeverageBuffStone: {
+	Tooltip:
+		'''
+		Immunity to Stratus Beverage
+		Attacks inflict Stratus Beverage
+		'''
+	DisplayName: Stratus Beverage Stone
+}
+
+ExampleMod/AbsorbTeamDamageBuffStone: {
+	DisplayName: Absorb Team Damage Buff Stone
+	Tooltip:
+		'''
+		Immunity to Absorb Team Damage Buff
+		Attacks inflict Absorb Team Damage Buff
+		'''
+}
+
+ExampleMod/AnimatedBuffStone: {
+	DisplayName: Animated Buff Stone
+	Tooltip:
+		'''
+		Immunity to Animated Buff
+		Attacks inflict Animated Buff
+		'''
+}
+
+ExampleMod/BlockyStone: {
+	DisplayName: Blocky Stone
+	Tooltip:
+		'''
+		Immunity to Blocky
+		Attacks inflict Blocky
+		'''
+}
+
+ExampleMod/ExampleCrateBuffStone: {
+	DisplayName: Example Crate Stone
+	Tooltip:
+		'''
+		Immunity to Example Crate
+		Attacks inflict Example Crate
+		'''
+}
+
+ExampleMod/ExampleDefenseBuffStone: {
+	DisplayName: Defensive Buff Stone
+	Tooltip:
+		'''
+		Immunity to Defensive Buff
+		Attacks inflict Defensive Buff
+		'''
+}
+
+ExampleMod/ExampleDefenseDebuffStone: {
+	DisplayName: Defensive Debuff Stone
+	Tooltip:
+		'''
+		Immunity to Defensive Debuff
+		Attacks inflict Defensive Debuff
+		'''
+}
+
+ExampleMod/ExampleDodgeBuffStone: {
+	DisplayName: Example Dodge Buff Stone
+	Tooltip:
+		'''
+		Immunity to Example Dodge Buff
+		Attacks inflict Example Dodge Buff
+		'''
+}
+
+ExampleMod/ExampleGravityDebuffStone: {
+	DisplayName: Example Gravity Debuff Stone
+	Tooltip:
+		'''
+		Immunity to Example Gravity Debuff
+		Attacks inflict Example Gravity Debuff
+		'''
+}
+
+ExampleMod/ExampleJavelinDebuffStone: {
+	DisplayName: Example Javelin Debuff Stone
+	Tooltip:
+		'''
+		Immunity to Example Javelin Debuff
+		Attacks inflict Example Javelin Debuff
+		'''
+}
+
+ExampleMod/ExampleLifeRegenDebuffStone: {
+	DisplayName: Fire debuff Stone
+	Tooltip:
+		'''
+		Immunity to Fire debuff
+		Attacks inflict Fire debuff
+		'''
+}
+
+ExampleMod/ExampleMinecartBuffStone: {
+	DisplayName: Example Minecart Stone
+	Tooltip:
+		'''
+		Immunity to Example Minecart
+		Attacks inflict Example Minecart
+		'''
+}
+
+ExampleMod/ExampleMountBuffStone: {
+	DisplayName: ExampleMount Stone
+	Tooltip:
+		'''
+		Immunity to ExampleMount
+		Attacks inflict ExampleMount
+		'''
+}
+
+ExampleMod/ExampleWeaponImbueStone: {
+	DisplayName: Example Weapon Imbue Stone
+	Tooltip:
+		'''
+		Immunity to Example Weapon Imbue
+		Attacks inflict Example Weapon Imbue
+		'''
+}
+
+ExampleMod/ExampleWhipAdvancedDebuffStone: {
+	DisplayName: Example Whip Advanced Debuff Stone
+	Tooltip:
+		'''
+		Immunity to Example Whip Advanced Debuff
+		Attacks inflict Example Whip Advanced Debuff
+		'''
+}
+
+ExampleMod/ExampleWhipDebuffStone: {
+	DisplayName: Example Whip Debuff Stone
+	Tooltip:
+		'''
+		Immunity to Example Whip Debuff
+		Attacks inflict Example Whip Debuff
+		'''
+}
+
+ExampleMod/ExampleLightPetBuffStone: {
+	DisplayName: Annoying Light Stone
+	Tooltip:
+		'''
+		Immunity to Annoying Light
+		Attacks inflict Annoying Light
+		'''
+}
+
+ExampleMod/ExamplePetBuffStone: {
+	DisplayName: Paper Airplane Stone
+	Tooltip:
+		'''
+		Immunity to Paper Airplane
+		Attacks inflict Paper Airplane
+		'''
+}
+
+ExampleMod/MinionBossPetBuffStone: {
+	DisplayName: Minion Boss Pet Stone
+	Tooltip:
+		'''
+		Immunity to Minion Boss Pet
+		Attacks inflict Minion Boss Pet
+		'''
+}
+
+ExampleMod/ExampleSimpleMinionBuffStone: {
+	DisplayName: Example Minion Stone
+	Tooltip:
+		'''
+		Immunity to Example Minion
+		Attacks inflict Example Minion
+		'''
+}

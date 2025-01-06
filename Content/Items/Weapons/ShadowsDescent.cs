@@ -10,10 +10,11 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class ShadowsDescent : ModItem
+	public class ShadowsDescent: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{
@@ -50,7 +51,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-                Item.shoot = 0;
+                Item.shoot = ProjectileID.None;
                 Item.shootSpeed = 0f;
                 return player.ownedProjectileCounts[ModContent.ProjectileType<ShadowsDescentBall>()] > 0;
             }

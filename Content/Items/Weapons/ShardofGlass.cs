@@ -44,16 +44,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             durability--;
-            if (durability <= 0)
-            {
-                SoundEngine.PlaySound(SoundID.Shatter with { Volume = 2 }, player.position);
-                for (int i = 0; i < 30; i++)
-                {
-                    Gore.NewGore(player.GetSource_FromThis(), target.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
-                }
-                player.HeldItem.SetDefaults();
-            }
-            else
+            if (durability > 0)
             {
                 SoundEngine.PlaySound(SoundID.Shatter with { Volume = 0.7f, Pitch = 1 }, player.position);
 

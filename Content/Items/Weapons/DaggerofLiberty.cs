@@ -12,8 +12,8 @@ using Terraria.Audio;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class DaggerofLiberty : ModItem
-	{
+	public class DaggerofLiberty : RogueWeapon
+    {
 		public override void SetDefaults() 
 		{
             Item.width = 1;

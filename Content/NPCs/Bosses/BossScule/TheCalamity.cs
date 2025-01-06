@@ -20,6 +20,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Lore;
 using Terraria.GameContent.Bestiary;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace CalRemix.Content.NPCs.Bosses.BossScule
 {
@@ -62,10 +64,18 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             NPC.alpha = 0;
 
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.dontTakeDamage);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.dontTakeDamage = reader.ReadBoolean();
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Bestiary").Value),
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface]);
+            bestiaryEntry.Info.AddRange([new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value), 
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement()]);
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -117,8 +127,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                     else
                         Timer++;
                     if (Timer == 60)
-                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote1GFB").Value, Color.Red);
-                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote1").Value, Color.Red);
+                        Talk("1");
                     if (Timer >= 180)
                     {
                         Timer = 0;
@@ -132,19 +141,21 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                     {
                         Timer++;
                     }
-                    if (Timer == 1200) { 
-                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote2GFB").Value, Color.Red);
-                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote2").Value, Color.Red);
+                    if (Timer == 1200)
+                        Talk("2");
+                    if (Timer == 2400)
+                        Talk("3");
+                    if (Main.zenithWorld && Timer == 4500)
+                        Talk("4");
+                    if (Timer == 3600)
+                    {
+                        if (!Main.zenithWorld)
+                            Talk("4");
+                        else
+                            Talk("5");
                     }
-                    if (Timer == 2400) { 
-                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote3GFB").Value, Color.Red);
-                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote3").Value, Color.Red);
-                    }
-                    if (Timer == 3600) { 
-                        if (Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote4GFB").Value, Color.Red);
-                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote4").Value, Color.Red);
-                    }
-                    if (Main.zenithWorld && Timer == 4500) { Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote6GFB").Value, Color.Red); }
+                    if (Main.zenithWorld && Timer == 4500)
+                        Talk("6");
                     if (Timer == EndTime)
                     {
                         foreach (Projectile p in Main.projectile)
@@ -152,15 +163,20 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
                             if (p.type == ModContent.ProjectileType<CalamityLaser>() || p.type == ModContent.ProjectileType<DarkVein>() || p.type == ModContent.ProjectileType<Darkscule>())
                                 p.active = false;
                         }
-                        if (!Main.zenithWorld) Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote5").Value, Color.Red);
-                        else Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote7GFB").Value, Color.Red);
-                         NPC.dontTakeDamage = false;
+                        if (!Main.zenithWorld)
+                            Talk("5");
+                        else
+                            Talk("7");
+                        NPC.dontTakeDamage = false;
+                        NPC.netUpdate = true;
                     }
-                    if (!Main.zenithWorld && Timer == EndTime + 180)
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote6").Value, Color.Red);
-                    if (Main.zenithWorld && Timer == EndTime + 180)
-                        Talk(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.Quote8GFB").Value, Color.Red);
-
+                    if (Timer == EndTime + 180)
+                    {
+                        if (!Main.zenithWorld)
+                            Talk("6");
+                        else
+                            Talk("8");
+                    }
                     if (Timer < 2400 && Timer % Attack1 == 0 && Main.netMode != NetmodeID.Server)
                     {
                         Vector2 pos = Target.Center - Main.rand.NextVector2Unit().RotatedByRandom(MathHelper.ToRadians(360f)) * 600f;
@@ -223,7 +239,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             SpriteEffects spriteEffects = (NPC.spriteDirection < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             spriteBatch.Draw(texture, draw, sourceRectangle, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
             Texture2D eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/CalamityEye").Value;
-            spriteBatch.Draw(eye, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY) + (Target.HasItem(ModContent.ItemType<Ogscule>()) ? Vector2.UnitY * NPC.height * -0.65f : Vector2.Zero), null, new Color(255, 0, 0, NPC.alpha), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY) + (Target.HasItem(ModContent.ItemType<Ogscule>()) ? Vector2.UnitY * NPC.height * -0.65f : Vector2.Zero), null, new Color(255, 0, 0, 255), NPC.rotation, eye.Size() / 2f, NPC.scale * 0.2f, SpriteEffects.None, 0f);
             return false;
         }
         public override void DrawEffects(ref Color drawColor)
@@ -251,12 +267,10 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<CalamityRelic>());
             npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedCalamity, ModContent.ItemType<KnowledgeCalamity>(), desc: DropHelper.FirstKillText);
         }
-        private static void Talk(string text, Color color)
+        private static void Talk(string value)
         {
-            if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
-            else if (Main.netMode == NetmodeID.SinglePlayer)
-                Main.NewText(text, color);
+            string s = Main.zenithWorld ? "GFB" : string.Empty;
+            CalRemixHelper.GetNPCDialog($"TheCalamity.{s}{value}", Color.Red);
         }
         internal static int CalamitySetCounter()
         {

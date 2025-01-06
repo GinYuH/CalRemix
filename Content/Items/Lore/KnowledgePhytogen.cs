@@ -11,9 +11,6 @@ namespace CalRemix.Content.Items.Lore
             base.SetStaticDefaults();
             DisplayName.SetDefault("The Archdruid");
         }
-
-        public override string LoreText => "What an enigmatic construct. Is that truly Silva?\nHow did she escape from the bottom of the abyss? That is rather concerning.\nI wonder if I could harness that magic in the event of my own death.\nEven after my body has long expired, my soul remains in a construct of my own.\nWhat would you call it? Aurigen? Oncogen?\nDo not say Protogen.";
-
         public override void SetDefaults()
         {
             Item.width = 20;

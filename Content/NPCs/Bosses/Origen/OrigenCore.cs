@@ -131,7 +131,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
-        new FlavorTextBestiaryInfoElement("This element was once the first wielder of the Zero Point. After his untimely demise to a party of two John Wicks, Master Chief, and Rick, he was severed from the omniverse to bring upon superior clones of itself.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

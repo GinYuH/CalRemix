@@ -105,7 +105,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
-		new FlavorTextBestiaryInfoElement("Once thought extinct, they have reappeared at the edges of the world. These cruel foes will ambush targets and relentlessly attack with their searing venom.")
+		new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void FindFrame(int frameHeight)

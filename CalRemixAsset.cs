@@ -101,6 +101,7 @@ namespace CalRemix
         // Events
         public static readonly int AcidRainTier2 = Set("TropicofCancer");
         public static readonly int PandemicPanic = Set("PandemicPanic");
+        public static readonly int GaleforceDay = Set("Galeforce");
 
         // NPCs
         public static readonly int CryoSlime = Set("AntarcticReinsertion");
@@ -146,6 +147,7 @@ namespace CalRemix
         public static readonly int Menu2 = Set("CrazyLaPaint");
         public static readonly int TrueStory = Set("TrueStory");
         public static readonly int PlasticOracle = Set("OhmnOmens");
+        public static readonly int Generator = Set("Generator");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }

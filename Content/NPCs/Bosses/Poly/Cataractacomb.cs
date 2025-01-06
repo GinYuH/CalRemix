@@ -6,10 +6,11 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalamityMod;
 using CalRemix.Core.World;
 using CalamityMod.Events;
+using CalRemix.Content.Items.Placeables.Trophies;
+using Terraria.GameContent.Bestiary;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly
 {
@@ -29,7 +30,13 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             // Specify the debuffs it is immune to
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
         }
-
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
+        }
         public Dictionary<string,int> AIShare = new Dictionary<string, int>()
         {
             { "soloTimer", 0 },
@@ -369,8 +376,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             lastLivingPoly.Add(ItemID.EyeMask);
 
             //lastLivingPoly.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolypebralShield>()));
-            LeadingConditionRule box = new(new Conditions.ZenithSeedIsNotUp());
-            lastLivingPoly.OnSuccess(box.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PolyphemalusAltMusicBox>())));
+            npcLoot.Add(ModContent.ItemType<CataractacombTrophy>(), 10);
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

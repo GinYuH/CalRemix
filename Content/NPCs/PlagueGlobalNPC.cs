@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.NPCs.PlagueEnemies;
 using CalRemix.Content.NPCs.Minibosses;
+using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs
 {
@@ -16,6 +17,8 @@ namespace CalRemix.Content.NPCs
             Player player = spawnInfo.Player;
             CalRemixPlayer pPlayer = player.GetModPlayer<CalRemixPlayer>();
             var cPlayer = player.Calamity();
+            if (CalamityPlayer.areThereAnyDamnEvents)
+                return;
             if (pPlayer.ZonePlague)
             {
                 pool.Clear();

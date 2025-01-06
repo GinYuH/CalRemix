@@ -8,7 +8,6 @@ using CalamityMod.BiomeManagers;
 using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using ReLogic.Content;
 using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Bosses.Acideye
@@ -58,19 +57,16 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-                new FlavorTextBestiaryInfoElement("Babies of the acidsighter. Do not pet them as they're very messy and gross.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
             spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, drawColor, NPC.rotation, texture.Size() / 2f, NPC.scale, SpriteEffects.FlipHorizontally, 0f);
+            Texture2D texture2 = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/MutatedEye_Glow").Value;
+            spriteBatch.Draw(texture2, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, texture2.Size() / 2f, NPC.scale, SpriteEffects.FlipHorizontally, 0f);
             return false;
-        }
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Acideye/MutatedEye_Glow").Value;
-            spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 255), NPC.rotation, texture.Size() / 2f, NPC.scale, SpriteEffects.FlipHorizontally, 0f);
         }
     }
 }

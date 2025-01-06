@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +23,7 @@ namespace CalRemix.Content.Items.Materials
         {
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(1, 92);
-            Item.rare = ModContent.RarityType<HotPink>();
+            Item.rare = ModContent.RarityType<LightmixOrange>();
             Item.Remix().devItem = "Remix";
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

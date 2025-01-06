@@ -46,12 +46,14 @@ using CalamityMod.Items.Armor.DesertProwler;
 using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Armor.Silva;
 using System;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.UI.Anomaly109;
 
 namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox, AnyCritter;
         public override void Unload()
         {
             GreaterEvil = null;
@@ -61,29 +63,51 @@ namespace CalRemix
             AnyButterfly = null;
             AnyExoMechMusicBox = null;
         }
+        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(s);
         public override void AddRecipeGroups()
         {
-            GreaterEvil = new RecipeGroup(() => "Any Greater Evil Flesh", ItemType<RottenMatter>(), ItemType<BloodSample>());
+            GreaterEvil = new RecipeGroup(() => GroupName("GreaterEvil"), ItemType<RottenMatter>(), ItemType<BloodSample>());
             RecipeGroup.RegisterGroup("CalRemix:GreaterEvil", GreaterEvil);
-            EvilBar = new RecipeGroup(() => "Any Evil Bar", ItemID.DemoniteBar, ItemID.CrimtaneBar);
+            EvilBar = new RecipeGroup(() => GroupName("EvilBar"), ItemID.DemoniteBar, ItemID.CrimtaneBar);
             RecipeGroup.RegisterGroup("CalRemix:EvilBar", EvilBar);
-            T4Bar = new RecipeGroup(() => "Any Tier 4 Bar", ItemID.GoldBar, ItemID.PlatinumBar);
+            T4Bar = new RecipeGroup(() => GroupName("T4Bar"), ItemID.GoldBar, ItemID.PlatinumBar);
             RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
-            HMT1Bar = new RecipeGroup(() => "Any Tier 1 Hardmode Bar", ItemID.CobaltBar, ItemID.PalladiumBar);
+            HMT1Bar = new RecipeGroup(() => GroupName("HMT1Bar"), ItemID.CobaltBar, ItemID.PalladiumBar);
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
-            AnyButterfly = new RecipeGroup(() => "Any Normal Butterfly", ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
+            AnyButterfly = new RecipeGroup(() => GroupName("AnyButterfly"), ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
             RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", AnyButterfly);
-            AnyExoMechMusicBox = new RecipeGroup(() => "Any Remix Exo Mech Music Box", RemixMusicBox.ExoMechMusicBoxes);
+            AnyExoMechMusicBox = new RecipeGroup(() => GroupName("AnyExoMechMusicBox"), RemixMusicBox.ExoMechMusicBoxes);
             RecipeGroup.RegisterGroup("CalRemix:AnyRemixExoMusicBox", AnyExoMechMusicBox);
+            AnyCritter = new RecipeGroup(() => GroupName("AnyCritter"), ItemID.Squirrel);
+            foreach (var i in ContentSamples.ItemsByType)
+            {
+                if (i.Value == null)
+                    continue;
+                if (i.Value.type == ItemID.Squirrel)
+                    continue;
+                if (i.Value.type == ItemType<LabRoach>())
+                    continue;
+                if (i.Value.makeNPC > 0)
+                {
+                    AnyCritter.ValidItems.Add(i.Value.type);
+                }
+            }
+            RecipeGroup.RegisterGroup("CalRemix:AnyCritter", AnyCritter);
         }
         public override void AddRecipes()
         {
             Recipe.Create(ItemType<LoreAwakening>())
             .AddIngredient<Slumbering>()
+            .AddTile(TileID.Bookcases)
+            .Register();
+
+            Recipe.Create(ItemType<LoreExoMechs>())
+            .AddIngredient<HypnosTrophy>()
+            .AddTile(TileID.Bookcases)
             .Register();
 
             Recipe.Create(ItemID.PlatinumCoin, 100)
-            .AddIngredient<CosmiliteCoin>(1)
+            .AddIngredient<CosmiliteCoin>()
             .Register();
 
             Recipe.Create(ItemType<DubiousPlating>(), 4)
@@ -93,7 +117,7 @@ namespace CalRemix
             .AddTile(TileID.Furnaces)
             .Register();
 
-            Recipe.Create(ItemType<MidasPrime>(), 1)
+            Recipe.Create(ItemType<MidasPrime>())
             .AddIngredient<MinnowsPrimeItem>()
             .AddTile(TileID.CookingPots)
             .Register();
@@ -106,25 +130,25 @@ namespace CalRemix
             .AddTile<CalamityMod.Tiles.Furniture.CraftingStations.CosmicAnvil>()
             .Register();
 
-            Recipe.Create(ItemID.CookedFish, 1)
+            Recipe.Create(ItemID.CookedFish)
             .AddIngredient<CrocodileHerringItem>()
             .AddTile(TileID.CookingPots)
             .Register();
 
-            Recipe.Create(ItemType<CirrusDress>(), 1)
+            Recipe.Create(ItemType<CirrusDress>())
             .AddIngredient(ItemID.Silk, 6)
             .AddIngredient(ItemID.AshBlock, 10)
             .AddTile(TileID.Loom)
             .Register();
 
-            Recipe.Create(ItemID.WaterBucket, 1)
+            Recipe.Create(ItemID.WaterBucket)
             .AddIngredient(ItemID.EmptyBucket)
             .AddIngredient(ItemType<SoulofHydrogen>(), 2)
             .AddIngredient(ItemType<SoulofOxygen>())
             .DisableDecraft()
             .Register();
 
-            Recipe.Create(ItemID.EmpressButterfly, 1)
+            Recipe.Create(ItemID.EmpressButterfly)
             .AddRecipeGroup(RecipeGroupID.Butterflies)
             .AddIngredient(ItemID.PearlstoneBlock)
             .AddTile(TileID.MythrilAnvil)
@@ -132,21 +156,23 @@ namespace CalRemix
             .Register();
 
             #region Anomaly Toggled
+            List<Anomaly109Option> alist = Anomaly109Manager.options;
+
             Recipe.Create(ItemType<LifeAlloy>())
             .AddIngredient<LifeOre>(5)
-            .AddCondition(new Condition("While the Anomaly 109 \'life_ore\' setting is enabled", () => CalRemixWorld.alloyBars))
+            .AddCondition(new Condition(CalRemixHelper.LocalText($"UI.Anomaly.Condition").Format("life_ore"), () => CalRemixWorld.lifeoretoggle))
             .AddTile(TileID.AdamantiteForge)
             .Register();
 
             Recipe.Create(ItemType<PlagueCellCanister>(), 1)
             .AddRecipeGroup(RecipeGroupID.IronBar)
-            .AddCondition(new Condition("While the Anomaly 109 \'coyote_venom\' setting is enabled", () => CalRemixWorld.wolfvenom))
+            .AddCondition(new Condition(CalRemixHelper.LocalText($"UI.Anomaly.Condition").Format("coyote_venom"), () => CalRemixWorld.wolfvenom))
             .Register();
 
             Recipe.Create(ItemType<CosmiliteBar>(), 1)
             .AddIngredient<CosmiliteSlag>(5)
             .AddTile(TileID.LunarCraftingStation)
-            .AddCondition(new Condition("While the Anomaly 109 \'cosmilite_slag\' setting is enabled", () => CalRemixWorld.cosmislag))
+            .AddCondition(new Condition(CalRemixHelper.LocalText($"UI.Anomaly.Condition").Format("cosmilite_slag"), () => CalRemixWorld.cosmislag))
             .Register();
 
             Recipe.Create(ItemType<CryoKey>(), 1)
@@ -155,7 +181,7 @@ namespace CalRemix
             .AddIngredient(ItemID.SoulofLight, 5)
             .AddIngredient(ItemID.SoulofNight, 5)
             .AddIngredient(ItemID.SoulofFlight, 5)
-            .AddCondition(new Condition("While the Anomaly 109 \'primal_aspids\' setting is enabled", () => CalRemixWorld.aspids))
+            .AddCondition(new Condition(CalRemixHelper.LocalText($"UI.Anomaly.Condition").Format("primal_aspids"), () => CalRemixWorld.aspids))
             .Register();
             #endregion
             #region Music Boxes
@@ -163,28 +189,28 @@ namespace CalRemix
             Recipe.Create(music.Find<ModItem>("Interlude1MusicBox").Type)
             .AddIngredient(ItemID.MusicBox)
             .AddIngredient<ConquestFragment>(30)
-            .AddCondition(new Condition("After Calamitas Clone is defeated", () => DownedBossSystem.downedCalamitasClone))
+            .AddCondition(CalamityConditions.DownedCalamitasClone)
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
 
             Recipe.Create(music.Find<ModItem>("Interlude2MusicBox").Type)
             .AddIngredient(ItemID.MusicBox)
             .AddIngredient<ConquestFragment>(30)
-            .AddCondition(new Condition("After Moon Lord is defeated", () => NPC.downedMoonlord))
+            .AddCondition(Condition.DownedMoonLord)
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
 
             Recipe.Create(music.Find<ModItem>("DevourerofGodsEulogyMusicBox").Type)
             .AddIngredient(ItemID.MusicBox)
             .AddIngredient<ConquestFragment>(30)
-            .AddCondition(new Condition("After the Devourer of Gods is defeated", () => DownedBossSystem.downedDoG))
+            .AddCondition(CalamityConditions.DownedDevourerOfGods)
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
 
             Recipe.Create(music.Find<ModItem>("Interlude3MusicBox").Type)
             .AddIngredient(ItemID.MusicBox)
             .AddIngredient<ConquestFragment>(30)
-            .AddCondition(new Condition("After Yharon is defeated", () => DownedBossSystem.downedYharon))
+            .AddCondition(CalamityConditions.DownedYharon)
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
 
@@ -241,6 +267,7 @@ namespace CalRemix
             }
             #endregion
         }
+        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("RecipeGroups.Locked").Format(s);
         public override void PostAddRecipes()
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
@@ -299,6 +326,19 @@ namespace CalRemix
                         CalRemixItem.cosmicItems.Add(recipe.createItem.type);
                     }
                 }
+
+                // this iterates over every item in the game for every recipe in the game
+                // i cant help but feel like that is, to put lightly, Fucking Abysmal And Terrible And Should Be Changed Immediately
+                // but i dont notice any major load time increase rn so its fine
+                foreach (var v in ContentSamples.ItemsByType)
+                {
+                    Item item = v.Value;
+                    if (item.ammo == AmmoID.Arrow && recipe.HasResult(item.type))
+                    {
+                        recipe.AddIngredient(ItemID.Feather);
+                    }
+                }
+                
                 #region Replacement
                 if (recipe.HasResult(ItemType<DesertProwlerHat>()) || recipe.HasResult(ItemType<DesertProwlerShirt>()) || recipe.HasResult(ItemType<DesertProwlerPants>()))
                 {
@@ -468,70 +508,70 @@ namespace CalRemix
                 #region Anomaly Recipes
                 if (recipe.HasResult(ItemType<Elderberry>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Trade with the Dye Trader Post-Providence.", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("Elderberry"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<MiracleFruit>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Find in post-Golem Jungle Planetoids.", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("MiracleFruit"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<Dragonfruit>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Open an Azure Crate while a Wyvern is alive post-Yharon", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("Dragonfruit"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<BloodOrange>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Throw an Apple in water during a Blood Moon post-mechs.", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("BloodOrange"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<CometShard>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Get a Nova to collide with Astral Ore.", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("CometShard"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<EtherealCore>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Insert a Bloody Vein at the Astral Beacon.", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("EtherealCore"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<PhantomHeart>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Spawns in the Post-Polterghast Dungeon.", () => !CalRemixWorld.permanenthealth));
+                    recipe.AddCondition(new Condition(LockedRecipe("PhantomHeart"), () => !CalRemixWorld.permanenthealth));
                 }
                 if (recipe.HasResult(ItemType<DesertMedallion>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Drops from Cnidrions after defeating the Wulfrum Excavator.", () => false));
+                    recipe.AddCondition(new Condition(LockedRecipe("DesertMedallion"), () => false));
                 }
                 if (recipe.HasResult(ItemType<CryoKey>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Drops from Primal Aspids in the snow biome at night.", () => !CalRemixWorld.aspids));
+                    recipe.AddCondition(new Condition(LockedRecipe("CryoKey"), () => !CalRemixWorld.aspids));
                 }
                 if (recipe.HasResult(ItemType<EyeofDesolation>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Drops from Clamitas in the Brimstone Crags.", () => !CalRemixWorld.clamitas));
+                    recipe.AddCondition(new Condition(LockedRecipe("EyeofDesolation"), () => !CalRemixWorld.clamitas));
                 }
                 if (recipe.HasResult(ItemType<GalacticaSingularity>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Fish Side Gars from Godseeker Mode space.", () => !CalRemixWorld.sidegar));
+                    recipe.AddCondition(new Condition(LockedRecipe("GalacticaSingularity"), () => !CalRemixWorld.sidegar));
                 }
                 if (recipe.HasResult(ItemType<FearmongerGreathelm>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition(LockedRecipe("FearmongerGreathelm"), () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ItemType<FearmongerPlateMail>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition(LockedRecipe("FearmongerPlateMail"), () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ItemType<FearmongerGreaves>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Obtain by making an enemy walk on Grimesand.", () => !CalRemixWorld.fearmonger));
+                    recipe.AddCondition(new Condition(LockedRecipe("FearmongerGreaves"), () => !CalRemixWorld.fearmonger));
                     recipe.DisableDecraft();
                 }
                 if (recipe.HasResult(ItemType<Seafood>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Make the other Seafood.", () => !CalRemixWorld.seafood));
+                    recipe.AddCondition(new Condition(LockedRecipe("Seafood"), () => !CalRemixWorld.seafood));
                 }
                 if (recipe.HasResult(ItemType<ProfanedShard>()))
                 {
-                    recipe.AddCondition(new Condition("Locked recipe. Drops from Yggdrasil Ents in Hallow and Hell.", () => false));
+                    recipe.AddCondition(new Condition(LockedRecipe("ProfanedShard"), () => false));
                 }
                 #endregion 
                 #region Accessory edits
@@ -626,7 +666,6 @@ namespace CalRemix
             }
             npcShop.Register();
         }
-
         public static void MassModifyIngredient(bool condition, List<(int, int, int)> results)
         {
             if (condition)

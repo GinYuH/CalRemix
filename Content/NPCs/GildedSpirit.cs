@@ -54,8 +54,8 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
-		        new FlavorTextBestiaryInfoElement("The soul of a greedy person, or maybe the spirit of a gold coin looking for a body. Who cares, money!!!!")
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -64,11 +64,6 @@ namespace CalRemix.Content.NPCs
             npcLoot.Add(ItemID.GoldCoin, 1, 40, 50);
             npcLoot.Add(ItemID.PlatinumCoin, 1, 10, 15);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = TextureAssets.Npc[Type].Value;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, new Color(255, 255, 255, 100), NPC.rotation, texture.Size() / 2f, NPC.scale, SpriteEffects.None, 0f);
-            return false;
-        }
+        public override Color? GetAlpha(Color drawColor) => new Color(255, 255, 255, 100);
     }
 }

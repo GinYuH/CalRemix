@@ -60,8 +60,12 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.GameContent.Events;
 using static Terraria.ModLoader.ModContent;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using System.Threading.Tasks;
+using CalRemix.Content.Items.Weapons.Stormbow;
+using CalRemix.Content.Projectiles.Weapons.Stormbow;
+using Mono.Cecil;
 
 namespace CalRemix
 {
@@ -89,10 +93,13 @@ namespace CalRemix
 
         public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
 
-    // General
+        // General
+        public Task fandomCheck;
         public int commonItemHoldTimer;
         public int remixJumpCount;
         public int RecentChest = -1;
+        public int onFandom;
+        public int checkWarningDelay;
         public bool anomaly109UI;
         public bool fridge;
 
@@ -210,6 +217,7 @@ namespace CalRemix
         public bool onyxFist;
         public bool fractalCrawler;
         public bool exolotl;
+        public bool cSlime3;
 
         // Pets
         public bool nothing;
@@ -218,6 +226,7 @@ namespace CalRemix
         public bool hayFever;
         public int calamitizedCounter;
         public int calamitizedHitCooldown;
+        public bool stratusBeverage;
 
         // Tiles
         public float cosdam = 0;
@@ -398,7 +407,7 @@ namespace CalRemix
 				if (!Player.HasCooldown(InfraredSightsCooldown.ID))
                 {
 					if (Main.myPlayer == Player.whoAmI)
-						CombatText.NewText(Player.getRect(), Color.Red, Language.GetOrRegister("Mods.CalRemix.StatusText.InfaredScan").Value, true);
+						CombatText.NewText(Player.getRect(), Color.Red, CalRemixHelper.LocalText("StatusText.InfaredScan").Value, true);
                     infraredSightsScanning = true;
                     Player.AddCooldown("InfraredSights", 3600);
                 }
@@ -452,6 +461,16 @@ namespace CalRemix
                     Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ItemType<CirrusCouch>() || Main.mouseItem.type == ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
+                if (checkWarningDelay <= 0)
+                {
+                    Task.Run(() => Warning.CheckOnFandom(Player));
+                    checkWarningDelay = 30;
+                }
+                if (Player.miscCounter % 90 == 0 && onFandom > 0)
+                    SoundEngine.PlaySound(AresBody.EnragedSound with { MaxInstances = 3, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest });
+                if (onFandom > 0)
+                    onFandom--;
+                checkWarningDelay--;
             }
             if (ScreenHelpersUIState.GonerFanny != null)
 			{
@@ -547,6 +566,7 @@ namespace CalRemix
                     }
                 }
             }
+
             /*
             if (Player.HeldItem.type == ItemID.MechanicalWorm) // has to be here or else derellect spawns 5 times. blame vanilla jank for this, THEY had to work around this problem
 			{ 
@@ -569,9 +589,34 @@ namespace CalRemix
                 SoundEngine.PlaySound(glassBreakSound, Player.Center);
             return true;
         }
-
         public override void PostUpdateMiscEffects()
-        {       
+        {   if (Main.myPlayer == Player.whoAmI)
+            {
+                if (Main.mouseItem.type == ItemType<ShardofGlass>())
+                {
+                    if (((ShardofGlass)Main.mouseItem.ModItem).durability <= 0)
+                    {
+                        SoundEngine.PlaySound(SoundID.Shatter with { Volume = 2 }, Player.position);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Gore.NewGore(Player.GetSource_FromThis(), Player.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
+                        }
+                        Main.mouseItem.TurnToAir();
+                    }
+                }
+                else if (Player.HeldItem.type == ItemType<ShardofGlass>())
+                {
+                    if (((ShardofGlass)Player.HeldItem.ModItem).durability <= 0)
+                    {
+                        SoundEngine.PlaySound(SoundID.Shatter with { Volume = 2 }, Player.position);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Gore.NewGore(Player.GetSource_FromThis(), Player.Center, Main.rand.NextVector2Circular(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.Next(4, 8), Mod.Find<ModGore>("GlassShard" + Main.rand.Next(1, 5)).Type);
+                        }
+                        Player.HeldItem.TurnToAir();
+                    }
+                }
+            }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)
 			{
@@ -740,14 +785,13 @@ namespace CalRemix
                 if (Player.yoraiz0rEye == 0)
                     Player.yoraiz0rEye = 3;
             }
-			if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == WallType<StratusWallRemix>())
-			{
-                dungeon2 = true;
-			}
-			else
-			{
-				dungeon2 = false;
-			}
+            if ((int)Player.position.X / 16 >= 0 && (int)Player.position.Y / 16 >= 0 && (int)Player.position.X / 16 < Main.maxTilesX && (int)Player.position.Y / 16 < Main.maxTilesY)
+            {
+                if (Main.tile[(int)Player.position.X / 16, (int)Player.position.Y / 16].WallType == WallType<StratusWallRemix>())
+                    dungeon2 = true;
+                else
+                    dungeon2 = false;
+            }
 			if (!carcinogenSoul)
 			{
                 if (timeSmoked > 0)
@@ -855,6 +899,7 @@ namespace CalRemix
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
+            stratusBeverage = false;
 			phd = false;
 			infraredSights = false;
             exolotl = false;
@@ -904,8 +949,13 @@ namespace CalRemix
 					amongusEnchant = false;
 				}
 			}
-            Filters.Scene["CalRemix:AcidSight"].Deactivate();
-            Filters.Scene["CalRemix:LeanVision"].Deactivate();
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                if (Filters.Scene["CalRemix:AcidSight"].Active)
+                    Filters.Scene["CalRemix:AcidSight"].Deactivate();
+                if (Filters.Scene["CalRemix:LeanVision"].Active)
+                    Filters.Scene["CalRemix:LeanVision"].Deactivate();
+            }
         }
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
@@ -1072,10 +1122,13 @@ namespace CalRemix
             {
                 itemDrop = ItemType<RipperShark>();
             }
-            if (attempt.playerFishingConditions.BaitItemType == ItemType<LabRoach>() && CalRemixWorld.roachDuration <= 0)
+            if (attempt.playerFishingConditions.BaitItemType == ItemType<LabRoach>())
             {
-                CalRemixWorld.RoachCountdown = -1;
-                CalRemixWorld.UnleashRoaches();
+                if (CalRemixWorld.roachDuration <= 0)
+                {
+                    CalRemixWorld.RoachCountdown = -1;
+                    CalRemixWorld.UnleashRoaches();
+                }
                 itemDrop = ItemID.None;
             }
         }
@@ -1101,8 +1154,20 @@ namespace CalRemix
             }
         }
 
-		// excavator summon, some code adapted from thorium mimic summoning
-		public override void UpdateAutopause() { RecentChest = Player.chest; }
+        // excavator summon, some code adapted from thorium mimic summoning
+        public override void UpdateAutopause()
+        {
+            // Kick people from chests in pre hardmode
+            if (Player.chest > -1)
+            {
+                if (Player.InModBiome<FrozenStrongholdBiome>() && !Main.hardMode)
+                {
+                    Player.chest = -1;
+                }
+            }
+            RecentChest = Player.chest;
+        }
+
         public override void PreUpdateBuffs() 
         {
         }
@@ -1122,9 +1187,10 @@ namespace CalRemix
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 240;
             }
-        }
+            if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
+    }
 
-        public override void UpdateLifeRegen()
+    public override void UpdateLifeRegen()
         {
             Player.lifeRegen += (int)MathHelper.Min(dyesPink, 0);
         }
@@ -1242,7 +1308,7 @@ namespace CalRemix
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
                 {
-                    string f = Language.GetText("Mods.CalRemix.StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
+                    string f = CalRemixHelper.LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
                     {
@@ -1343,7 +1409,7 @@ namespace CalRemix
             dyeStats.Add(ItemID.RedAcidDye, new DyeStats(red: 3, orange: 2));
             dyeStats.Add(ItemID.ChlorophyteDye, new DyeStats(green: 4));
             dyeStats.Add(ItemID.GelDye, new DyeStats(blue: 3));
-            dyeStats.Add(ItemID.GlowingMushroom, new DyeStats(blue: 3, teal: 2));
+            dyeStats.Add(ItemID.MushroomDye, new DyeStats(blue: 3, teal: 2));
             dyeStats.Add(ItemID.GrimDye, new DyeStats(red: 3, brown: 4));
             dyeStats.Add(ItemID.HadesDye, new DyeStats(skyblue: 4, cyan: 3));
             dyeStats.Add(ItemID.BurningHadesDye, new DyeStats(orange: 4, yellow: 3));
@@ -1425,6 +1491,12 @@ namespace CalRemix
                 Item item = (h.type == ItemType<FiberBaby>()) ? h : m;
                 if (player.ownedProjectileCounts[ProjectileType<FiberBabyHoldout>()] < 1)
                     Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<FiberBabyHoldout>(), item.damage, 0, player.whoAmI);
+            }
+            if (Held(player, ItemType<TheSimpstring>()))
+            {
+                Item item = (h.type == ItemType<TheSimpstring>()) ? h : m;
+                if (player.ownedProjectileCounts[ProjectileType<TheSimpstringHoldout>()] < 1)
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<TheSimpstringHoldout>(), item.damage, 0, player.whoAmI);
             }
             if (!player.channel)
                 c = 0;

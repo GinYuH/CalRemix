@@ -95,7 +95,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-        new FlavorTextBestiaryInfoElement("After the fall of the Godseeker's empire, his clowns were left jobless. Filled with malice, they decided to stand up against the rest of the world and become one of the few enemies that are able to destroy tiles.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void FindFrame(int frameHeight)

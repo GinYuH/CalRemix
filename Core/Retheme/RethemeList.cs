@@ -38,6 +38,10 @@ using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.NPCs.Providence;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Items.Weapons;
+using CalamityMod.NPCs.BrimstoneElemental;
+using CalamityMod.NPCs.ExoMechs;
+using CalamityMod.NPCs.SupremeCalamitas;
+using CalamityMod.NPCs.TownNPCs;
 
 namespace CalRemix.Core.Retheme
 {
@@ -133,7 +137,6 @@ namespace CalRemix.Core.Retheme
             { ItemType<Nadir>(), "Nadir" },
             { ItemType<Violence>(), "Violence" },
             { ItemType<WulfrumMetalScrap>(), "Bars/WulfrumBar" },
-            { ItemType<ClockGatlignum>(), "Bars/ClockworkBar" },
             { ItemType<LifeAlloy>(), "Bars/LifeAlloy" },
             { ItemType<MeldConstruct>(), "Bars/MeldBar" },
             { ItemType<FetidEmesis>(), "FetidEmesis" },
@@ -334,17 +337,14 @@ namespace CalRemix.Core.Retheme
             { ProjectileType<SupernovaBomb>(), "Exo/Supernova" },
             #endregion
         };
-        internal static Dictionary<int, string> ItemNames = new()
-        {
-            { ItemType<InfestedClawmerang>(), "Shroomerang" },
-            { ItemType<PhantomicArtifact>(), "Phantomic Soul Artifact" },
-            { ItemType<MeldConstruct>(), "Meld Bar" },
-            { ItemType<UelibloomOre>(), "Tarragon Ore" },
-            { ItemType<UelibloomBar>(), "Tarragon Bar" },
-            { ItemType<SoulPiercer>(), "Stream Gouge" },
-            { ItemType<StreamGouge>(), "Soul Piercer" },
-            { ItemType<PhoenixFlameBarrage>(), "Dragon Flame Barrage" },
-            { ItemType<OldDukeScales>(), "Sulfuric Scale" },
-        };
+        internal static List<int> NPCNames =
+        [
+            NPCType<BrimstoneElemental>(),
+            NPCType<ThiccWaifu>(),
+            NPCType<AstrumAureus>(),
+            NPCType<Draedon>(),
+            NPCType<BrimstoneHeart>(),
+            NPCType<WITCH>()
+        ];
     }
 }

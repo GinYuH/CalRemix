@@ -59,7 +59,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Allergens are a common and consistent problem throughout the world. Cells like these are always ready to combat them.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

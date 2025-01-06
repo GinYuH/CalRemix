@@ -413,7 +413,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Eclipse,
-        new FlavorTextBestiaryInfoElement("For generations, many saw kaiju as nigh indestructible god-like beings, only being defeatable through long fights with other kaiju. The Crimson Kaiju's ability to quickly slaughter dozens of other kaiju proved them wrong.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

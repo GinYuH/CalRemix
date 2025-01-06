@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
+using Terraria.ID;
+
 namespace CalRemix.Content.Projectiles.Weapons
 {
     public class DraconicFireball : ModProjectile
@@ -62,7 +64,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     num466 = num465 / num466;
                     num463 *= num466;
                     num464 *= num466;
-                    int num467 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 55, 0f, 0f, 100, default, 2.5f);
+                    int num467 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Pixie, 0f, 0f, 100, default, 2.5f);
                     Dust dust = Main.dust[num467];
                     dust.noGravity = true;
                     dust.position.X = Projectile.Center.X;

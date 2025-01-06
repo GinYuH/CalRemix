@@ -10,6 +10,7 @@ using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.Items.DraedonMisc;
+using CalRemix.Core.World;
 
 namespace CalRemix.UI
 {
@@ -33,16 +34,16 @@ namespace CalRemix.UI
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.Pizza)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("CrimFood", "I’m hungry, give me that.",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => !Main.LocalPlayer.HasItem(ItemID.Pizza) && Main.LocalPlayer.inventory.Any((Item i) => ItemID.Sets.IsFood[i.type]) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(EatFood).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => !Main.LocalPlayer.HasItem(ItemID.Pizza) && Main.LocalPlayer.inventory.Any((Item i) => ItemID.Sets.IsFood[i.type]) && Main.rand.NextBool(360000), onlyPlayOnce: false).AddStartEvent(EatFood).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("CrimMedicalAid", "Give me Painkillers.",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.healLife > 0) && Main.rand.NextBool(36000), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.healLife > 0) && Main.rand.NextBool(360000), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
             
             HelperMessage.New("CrimBandage", "Change my bandages.",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.Cobweb)).AddStartEvent(GetBandage).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("StillWater", "Still water? Those who know.",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.wet && Main.rand.NextBool(36000), onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.wet && Main.rand.NextBool(360000), onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("BuildThang", "Block tuah build on that thang",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HeldItem.createTile > TileID.Dirt).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
@@ -67,6 +68,9 @@ namespace CalRemix.UI
 
             HelperMessage.New("Draecell", "Ayo u gonna share bruh? I stg gimme my fanum tax",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<DraedonPowerCell>())).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).AddEndEvent(EatCell);
+            
+            HelperMessage.New("dementia", "Can you beat Calamity Mod with Dementia?", 
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.boss && n.life <= n.lifeMax * 1 / 10) && Main.rand.NextBool(108000), 6, cantBeClickedOff: true, cooldown: 108000, onlyPlayOnce: false).AddStartEvent(Dementia).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
         }
 
         private static void EatFood()
@@ -110,5 +114,17 @@ namespace CalRemix.UI
             for (int i = 0; i < 200; i++)
                 Main.LocalPlayer.ConsumeItem(ModContent.ItemType<DraedonPowerCell>());
         }
+
+        private static void Dementia()
+        {
+            for (int q = 0; q < Terraria.Main.npc.Length - 1; q++)
+            {
+                if (Terraria.Main.npc[q].boss)
+                {
+                    Terraria.Main.npc[q].active = false;
+                }
+            }
+        }
+
     }
 }

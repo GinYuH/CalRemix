@@ -7,10 +7,11 @@ using CalamityMod.Items;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod;
 using CalamityMod.CalPlayer;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-    public class ScrapBag : ModItem
+    public class ScrapBag: RogueWeapon
     {
         public override void SetStaticDefaults()
         {

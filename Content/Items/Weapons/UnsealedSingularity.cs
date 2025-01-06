@@ -14,7 +14,7 @@ using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class UnsealedSingularity : ModItem
+	public class UnsealedSingularity: RogueWeapon
 	{
 		public override void SetStaticDefaults() 
 		{

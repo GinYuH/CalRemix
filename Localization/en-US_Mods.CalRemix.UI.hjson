@@ -1,0 +1,32 @@
+Anomaly.Condition: While the Anomaly 109 '{0}' setting is enabled
+
+Element: {
+	None: No entities tracked
+	NoInfo: No elemental info available
+	Vulnerable: Vulnerable to {0} element
+	Resistant: Resisting {0} element
+	Equilibrium: Equilibrium
+}
+
+Generator: {
+	Mode: Part selected for editing
+	Music: Toggle interface music
+	Style: Switch between part styles
+	Visibility: Change part visibility
+	Glow: Toggle areas affected by part color
+	Color: Set the part's color using HEX
+}
+
+PandemicPanic: {
+	None: Pandemic Panic - Side: None
+	Defender: Pandemic Panic - Side: Defender
+	Invader: Pandemic Panic - Side: Invader
+}
+
+Title: {
+	1: Remixed Calamity Style
+	2: Ultimate Calamity Stylepilled Menu
+}
+
+SoulSlot: Elemental Soul
+FandomWarning: DO NOT USE THE FANDOM WIKI

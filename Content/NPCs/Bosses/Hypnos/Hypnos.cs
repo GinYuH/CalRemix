@@ -17,7 +17,6 @@ using CalamityMod.Items.LoreItems;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Mounts;
 using CalamityMod.Items.TreasureBags;
-using CalRemix.Content.Items.Placeables;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using CalRemix.Content.Projectiles.Hostile;
@@ -29,7 +28,7 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Placeables.Relics;
-using Terraria.Localization;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -88,7 +87,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("A cerebral dreadnaught, and quite possibly one of Draedon’s finest creations. While the usage of gray matter is questionable, the feat of getting a brain to interface with cybernetics is impressive.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
@@ -260,7 +259,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             ExoMechsSky.CreateLightningBolt(22, true);
                             Terraria.Audio.SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.FlareSound, NPC.Center);
                             assemblagePieces.Clear();
-                            Main.NewText(Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.DisplayName").Value + " has awoken!", new Color(175, 75, 255));
+                            Main.NewText(CalRemixHelper.LocalText($"NPCs.{Name}.DisplayName").Value + " has awoken!", new Color(175, 75, 255));
                             ChangePhase(1);
                         }
                         if (assemblagePieces != null && assemblagePieces.Count > 0)
@@ -902,7 +901,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             npcLoot.Add(normalOnly);
 
             // Trophies
-            npcLoot.Add(ModContent.ItemType<HypnosTrophyInv>());
+            npcLoot.Add(ModContent.ItemType<HypnosTrophy>());
 
             // Relic
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ModContent.ItemType<HypnosRelic>()));
@@ -1000,14 +999,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
 
         public override void ModifyTypeName(ref string typeName)
         {
-            if (NPC.ai[0] == 0)
-            {
-                typeName = ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName;
-            }
-            else
-            {
-                typeName = Language.GetOrRegister($"Mods.CalRemix.NPCs.{Name}.DisplayName").Value;
-            }
+            typeName = (NPC.ai[0] == 0 && NPC.ai[1] > 0) ? ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName : CalRemixHelper.LocalText($"NPCs.{Name}.DisplayName").Value;
         }
 
         public static void SummonDraedon(Player player)

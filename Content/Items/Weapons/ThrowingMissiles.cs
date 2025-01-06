@@ -8,10 +8,11 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-    public class ThrowingMissiles : ModItem
+    public class ThrowingMissiles: RogueWeapon
     {
         public override void SetStaticDefaults()
         {

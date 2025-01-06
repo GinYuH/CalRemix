@@ -63,7 +63,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle,
-                new FlavorTextBestiaryInfoElement("Unlike her many allies during the war with Yharim, Silva was not trained by the ancient scholars, but rather by nature itself. Despite her differences, she was instrumental for the war as she had kept the armies fed by sprouting crops from seemingly thin air.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

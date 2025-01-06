@@ -36,7 +36,7 @@ namespace CalRemix.Content.Projectiles
 
                 for (int i = 0; i < 1; i++)
                 {
-                    int dustType = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 89, 0f, 0f, 100, default, 2f);
+                    int dustType = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.GemEmerald, 0f, 0f, 100, default, 2f);
                     Dust obj = Main.dust[dustType];
                     obj.velocity *= 3f;
                     if (Main.rand.NextBool(2))

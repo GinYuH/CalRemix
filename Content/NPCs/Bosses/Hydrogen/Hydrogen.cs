@@ -131,7 +131,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
             // If Hydrogen is at <= 1 health and tile destruction is enabled, do death animation
-            if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb && !BossRushEvent.BossRushActive)
+            if (NPC.life <= 1 && CalRemixWorld.hydrogenBomb && !BossRushEvent.BossRushActive && CalRemixWorld.postGenUpdate)
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2] = 0;
@@ -349,7 +349,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("This machination of Yharim's artillery proved to be a challenge to fuse both magic and science cohesively. While Ivy's soul comfortably sits outside the construct, Hydrogen's power resonates with her mana; down to its devastating explosion.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
@@ -402,7 +402,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 
         public override bool CheckDead()
         {
-            if (CalRemixWorld.hydrogenBomb && !BossRushEvent.BossRushActive)
+            if (CalRemixWorld.hydrogenBomb && !BossRushEvent.BossRushActive && CalRemixWorld.postGenUpdate)
             {
                 NPC.life = 1;
                 NPC.Calamity().newAI[0] = 1;

@@ -107,7 +107,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Eclipse,
-        new FlavorTextBestiaryInfoElement("The lost soul of a child possessing one of Draedon's old automatons. Be wary of its deadly hot pizza boomerang.")
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void FindFrame(int frameHeight)

@@ -55,14 +55,14 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.8f;
             AnimationType = NPCID.Guide;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<Core.Biomes.AsbestosBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-                new FlavorTextBestiaryInfoElement("This powerful wizard is feared across the land for his ability to manipulate the cells in the bodies of his enemies to destroy them from the inside out. Though his magics can be used for violence, they can be used for healing too which made him the leading medic against the war with Yharim.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

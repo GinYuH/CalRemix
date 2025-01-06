@@ -18,7 +18,7 @@ namespace CalRemix.UI
         public static bool IsActive => PandemicPanic.CountsAsActive;
         public static float CompletionRatio => PandemicPanic.InvadersWinning ? (PandemicPanic.DefendersKilled / PandemicPanic.MaxRequired) : PandemicPanic.DefendersWinning ? (PandemicPanic.InvadersKilled / PandemicPanic.MinToSummonPathogen) : 0;
 
-        public static string InvasionName => PandemicPanic.InvadersWinning ? "Pandemic Panic - Side: Invader" : PandemicPanic.DefendersWinning ? "Pandemic Panic - Side: Defender" : "Pandemic Panic - Side: None";
+        public static string InvasionName => PandemicPanic.InvadersWinning ? CalRemixHelper.LocalText("UI.PandemicPanic.Invader").Value : PandemicPanic.DefendersWinning ? CalRemixHelper.LocalText("UI.PandemicPanic.Defender").Value : CalRemixHelper.LocalText("UI.PandemicPanic.None").Value;
         public static Color InvasionBarColor => PandemicPanic.InvadersWinning ? Color.Red : PandemicPanic.DefendersWinning ? Color.Lime : Color.White;
         public static Texture2D IconTexture => PandemicPanic.InvadersWinning ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/PandemicPanic/RedBloodCell").Value : PandemicPanic.DefendersWinning ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/PandemicPanic/Ecolium").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/PandemicPanic/RedBloodCell").Value;
 

@@ -40,7 +40,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] 
             {
-		        new FlavorTextBestiaryInfoElement("This bee has been overtaken by the Plague to find more hosts to infect.")
+		        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void AI()

@@ -72,7 +72,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
-                new FlavorTextBestiaryInfoElement("A fabled general hailing from parts unknown. His subordinates can't quite agree about his personality.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

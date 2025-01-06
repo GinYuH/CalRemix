@@ -46,6 +46,7 @@ using Terraria.Audio;
 using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
+using CalRemix.Content.Items.Weapons.Stormbow;
 
 namespace CalRemix.Core.World
 {
@@ -56,6 +57,7 @@ namespace CalRemix.Core.World
 
         public static bool worldFullyStarted = false;
         public static int worldLoadCounter = 0;
+        public static bool postGenUpdate = false;
 
         public static bool ogslime = false;
 
@@ -89,6 +91,7 @@ namespace CalRemix.Core.World
         public static bool generatedHydrogen = false;
         public static bool canGenerateBaron = false;
         public static bool generatedGrime = false;
+        public static bool seenMBP = false;
         public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
@@ -131,6 +134,7 @@ namespace CalRemix.Core.World
         public static bool mullet = true;
         public static bool deliciousMeat = true;
         public static bool profanedDesert = true;
+        public static bool hypothetical = true;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -210,6 +214,7 @@ namespace CalRemix.Core.World
             deusDeadInSnow = false;
             ogslime = false;
             loadedRecipeInjections = false;
+            seenMBP = false;
 
             // Worldgen
             generatedCosmiliteSlag = false;
@@ -225,6 +230,7 @@ namespace CalRemix.Core.World
             oxydayTime = 0;
 
             // Fanny
+            postGenUpdate = false;
 
             // A109
             alloyBars = true;
@@ -264,6 +270,7 @@ namespace CalRemix.Core.World
             mullet = true;
             deliciousMeat = true;
             profanedDesert = true;
+            hypothetical = true;
         }
 
         public override void OnWorldLoad()
@@ -295,6 +302,7 @@ namespace CalRemix.Core.World
             tag["meld"] = meldCountdown;
             tag["trueStory"] = trueStory;
             tag["roachDuration"] = roachDuration;
+            tag["mbp"] = seenMBP;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -333,6 +341,7 @@ namespace CalRemix.Core.World
             tag["109mullet"] = mullet;
             tag["109deliciousMeat"] = deliciousMeat;
             tag["109profaned"] = profanedDesert;
+            tag["109hypothetical"] = hypothetical;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -342,6 +351,7 @@ namespace CalRemix.Core.World
 
             tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
+            tag["genUpdate"] = postGenUpdate;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -355,6 +365,7 @@ namespace CalRemix.Core.World
             GetData(ref canGenerateBaron, "canBaron", tag);
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
+            GetData(ref seenMBP, "mbp", tag);
 
             GetData(ref alloyBars, "109alloybar", tag);
             GetData(ref essenceBars, "109essencebar", tag);
@@ -393,6 +404,7 @@ namespace CalRemix.Core.World
             GetData(ref mullet, "109mullet", tag);
             GetData(ref deliciousMeat, "109deliciousmeat", tag);
             GetData(ref profanedDesert, "109profaned", tag);
+            GetData(ref hypothetical, "109hypothetical", tag);
             GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
 
             meldCountdown = tag.Get<int>("meld");
@@ -406,6 +418,7 @@ namespace CalRemix.Core.World
             oxydayTime = tag.Get<int>("oxytime");
 
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
+            postGenUpdate = tag.Get<bool>("genUpdate");
         }
 
         public static void GetData(ref bool baseVar, string path, TagCompound tag)
@@ -431,6 +444,7 @@ namespace CalRemix.Core.World
             writer.Write(trueStory);
             writer.Write(RoachCountdown);
             writer.Write(roachDuration);
+            writer.Write(seenMBP);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -469,6 +483,7 @@ namespace CalRemix.Core.World
             writer.Write(mullet);
             writer.Write(deliciousMeat);
             writer.Write(profanedDesert);
+            writer.Write(hypothetical);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -479,6 +494,7 @@ namespace CalRemix.Core.World
             writer.Write(ScreenHelperManager.screenHelpersEnabled);
             writer.Write(ScreenHelperManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
+            writer.Write(postGenUpdate);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -496,6 +512,7 @@ namespace CalRemix.Core.World
             trueStory = reader.ReadInt32();
             RoachCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
+            seenMBP = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -534,6 +551,7 @@ namespace CalRemix.Core.World
             mullet = reader.ReadBoolean();
             deliciousMeat = reader.ReadBoolean();
             profanedDesert = reader.ReadBoolean();
+            hypothetical = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
@@ -544,6 +562,7 @@ namespace CalRemix.Core.World
             ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
             ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
+            postGenUpdate = reader.ReadBoolean();
         }
 
         public override void PreUpdateWorld()
@@ -666,9 +685,19 @@ namespace CalRemix.Core.World
                         packet.Send();
                     }
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
+                    RemixDowned.downedGale = true;
+                    UpdateWorldBool();
                 }
             }
-            NPC.savedWizard = false;
+            if (wizardDisabled)
+            {
+                NPC.savedWizard = false;
+                Main.townNPCCanSpawn[NPCID.Wizard] = false;
+                if (NPC.downedPlantBoss)
+                {
+                    Main.townNPCCanSpawn[NPCID.Princess] = true;
+                }
+            }
             if (trueStory < maxStoryTime)
             {
                 if (Main.netMode != NetmodeID.Server)
@@ -1141,6 +1170,7 @@ namespace CalRemix.Core.World
                     BaronStrait.GenerateBaronStrait(null);
                 }));
             }
+            postGenUpdate = true;
         }
 
         public override void PostWorldGen()
@@ -1160,6 +1190,10 @@ namespace CalRemix.Core.World
                                 {
                                     chest.item[inventoryIndex].SetDefaults(ItemType<BundleBones>());
                                     chest.item[inventoryIndex].stack = Main.rand.Next(10, 26);
+                                }
+                                if (Main.rand.NextBool(3))
+                                {
+                                    chest.item[inventoryIndex].SetDefaults(ItemType<Watercooler>());
                                 }
                                 break;
                             }

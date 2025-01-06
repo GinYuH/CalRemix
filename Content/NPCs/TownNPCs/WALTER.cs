@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Projectiles.Magic;
+using CalRemix.Core.Biomes;
 using CalRemix.Core.World;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -57,14 +58,14 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.8f;
             AnimationType = NPCID.Guide;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PandemicPanicBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.SurfaceMushroom,
-                new FlavorTextBestiaryInfoElement("A master of the shadows, this powerful magus dominated the battlefield from behind the scenes by conjuring up plagues and diseases to weaken the onslaught of enemies. She struggled against Yharim's mechanical forces, however, so she resorted to crafting antidotes and strategizing to contribute to the battle.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

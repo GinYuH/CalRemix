@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Accessories
         {
             DisplayName.SetDefault("Soul of Pyrogen");
             Tooltip.SetDefault("Increases critical strike chance to 100%\nDisables flight, mounts, and hooks\n" + CalamityUtils.ColorMessage("Boosts Fire damage", Color.Orange));
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(7, 7));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
@@ -42,7 +42,6 @@ namespace CalRemix.Content.Items.Accessories
         {
             player.GetCritChance<GenericDamageClass>() = 100;
             player.wingTime = 0;
-            player.wingTimeMax = 0;
             player.mount.Dismount(Main.LocalPlayer);
             player.releaseHook = true;
             player.GetModPlayer<CalRemixPlayer>().pyrogenSoul = true;

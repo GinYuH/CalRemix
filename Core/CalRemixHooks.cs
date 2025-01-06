@@ -8,7 +8,6 @@ using CalRemix.Core.Subworlds;
 using CalRemix.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using ReLogic.Content;
 using ReLogic.Utilities;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -34,12 +33,11 @@ using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Perforator;
 using CalRemix.UI.Title;
 using CalRemix.Core.Scenes;
-using Terraria.Localization;
 using CalRemix.World;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MonoMod.RuntimeDetour;
 using CalRemix.Content.Items.ZAccessories;
-using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Rogue;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Core
 {
@@ -70,6 +68,7 @@ namespace CalRemix.Core
             float depth,
             byte effects);
 
+        public static FieldInfo localField = typeof(LocalizationLoader).GetField("changedMods", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Load()
         {
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
@@ -80,7 +79,7 @@ namespace CalRemix.Core
             On_Main.DrawDust += DrawStatic;
             On_Main.DrawLiquid += DrawTsarBomba;
             On_SoundPlayer.Play += LazerSoundOverride;
-            //On_UIElement.Draw += FreezeIcon;
+            On_UIElement.Draw += FreezeIcon;
             //On_Player.ItemCheck_Shoot += SoldierShots;
             On_IngameOptions.DrawLeftSide += SendToFannyDimension;
             On_UIWorldCreation.BuildPage += AddRemixOption;
@@ -134,6 +133,19 @@ namespace CalRemix.Core
             if (modLoading != null)
             {
                 modLoading.SetValue(ccr, true);
+                // Bouncy and sticky rogue weapons
+                for (int i = ItemID.Count; i < ItemLoader.ItemCount; i++)
+                {
+                    ModItem tem = ItemLoader.GetItem(i);
+                    if (tem.Item.ModItem is RogueWeapon)
+                    {
+                        StickyRogue d = new StickyRogue(i);
+                        GetInstance<CalRemix>().AddContent(d);
+
+                        BouncyRogue s = new BouncyRogue(i);
+                        GetInstance<CalRemix>().AddContent(s);
+                    }
+                }
                 for (int i = 1; i < BuffLoader.BuffCount; i++)
                 {
                     // Sorry, only vanilla buffs get kicked out
@@ -413,6 +425,12 @@ namespace CalRemix.Core
         private static void FreezeIcon(On_UIElement.orig_Draw orig, UIElement self, SpriteBatch spriteBatch)
         {
             orig(self, spriteBatch);
+
+            // Allow publishing of new updates without updating localization
+            HashSet<string> mods = (HashSet<string>)localField.GetValue(null);
+            mods.Clear();
+
+            return;
             float wid = self.GetOuterDimensions().Width;
             // Elements larger than 500 pixels aren't frozen (or else you get a giant ice block covering your screen)
             // Fannies don't show up if disabled
@@ -694,8 +712,8 @@ namespace CalRemix.Core
             if (CalRemixWorld.roachDuration > 0)
             {
                 float duration = CalRemixWorld.ROACHDURATIONSECONDS;
-                string bf = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach1").Value;
-                string mayhem = Language.GetOrRegister("Mods.CalRemix.StatusText.Roach2").Value;
+                string bf = CalRemixHelper.LocalText("StatusText.Roach1").Value;
+                string mayhem = CalRemixHelper.LocalText("StatusText.Roach2").Value;
                 float bfWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
                 float mayhemWidth = FontAssets.MouseText.Value.MeasureString(bf).X;
                 float bfY = Main.screenHeight * 0.4f;
@@ -736,6 +754,8 @@ namespace CalRemix.Core
             if (type == NPCID.DungeonGuardian)
                 return 0;
             if (type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
+                return 0;
+            if (type == NPCID.BoundWizard && CalRemixWorld.wizardDisabled)
                 return 0;
             if (!CalRemixWorld.grimesandToggle)
                 return orig(spawnSource, x, y, type, star, ai0, ai1, ai2, ai3, targ);

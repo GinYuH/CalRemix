@@ -55,7 +55,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             ModContent.NPCType<PlagueEmperor>()};
 
         public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/PhytogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/CarcinogenDeath");
+        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/PhytogenDeath");
 
         public enum PhaseType
         {
@@ -122,6 +122,8 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
         public override void AI()
         {
             int yharChance = 432000;
+            if (Main.zenithWorld) yharChance /= 6;
+
             bool anyYhars = CalamityUtils.CountProjectiles(ModContent.ProjectileType<JungleDragonYharon>()) > 0;
             /*if (Main.LocalPlayer.controlUseTile)
             {
@@ -526,7 +528,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 new BossBestiaryInfoElement(),
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle,
-        new FlavorTextBestiaryInfoElement("After Silva's banishment to the Abyss, a sizeable chunk of her spirit fractured from her rotting body to return to the jungle. This elemental's purified core manifested as a construct to combat against the plague and its carriers.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

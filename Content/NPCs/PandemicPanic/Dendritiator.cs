@@ -71,7 +71,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("The one who alerts the rest of the immune system of foreign intruders. It uses its tentacles to drag in invaders too their doom or call in more defenders.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
@@ -79,7 +79,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         {
             if (NPC.IsABestiaryIconDummy)
                 return true;
-
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Vector2 position = NPC.Center - Main.screenPosition + Vector2.UnitY * 22;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 8);
@@ -89,12 +88,12 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             for (int i = 0; i < 10; i++)
             {
                 Vector2 vector2 = (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() + (MathF.PI * 2f * (float)i / 10f).ToRotationVector2() * 2 * Math.Abs((float)Math.Sin(Main.GlobalTimeWrappedHourly));
-                Main.spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+                spriteBatch.Draw(texture, position + vector2, NPC.frame, color, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             }
-            Main.spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+            spriteBatch.Draw(texture, position, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().phd)
             {
-                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, NPC.frame, Color.Lime, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
+                spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Gray").Value, position, NPC.frame, Color.Lime, NPC.rotation + MathHelper.Pi, origin, scale, fx, 0f);
             }
             return false;
         }

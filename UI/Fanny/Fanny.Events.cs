@@ -62,8 +62,12 @@ namespace CalRemix.UI
             HelperMessage.New("Oxydazy", "With the wind blowing like crazy, your projectiles are getting carried away faster than a bad joke. But here’s a hole-in-one tip: if you hit a golf ball into space, you may be able to hit one of the ships of the legendary Archwitch, Oxy!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CalRemixWorld.oxydayTime > 1).AddItemDisplay(ItemID.GolfClubIron);
 
-            HelperMessage.New("PandemicPanic", "An invasion has begun with giant immune system cells duking it out with invading microbes! You can side with the immune cells or the microbes by taking out more of the other side. Just remember, no matter who you choose, it’s going to be a cell-ebration of epic proportions! Stay sharp and choose wisely!",
+            HelperMessage pandemic1 = HelperMessage.New("PandemicPanic", "An invasion has begun with giant immune system cells duking it out with invading microbes! You can side with the immune cells or the microbes by taking out more of the other side. Just remember, no matter who you choose, it’s going to be a cell-ebration of epic proportions! Stay sharp and choose wisely!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive);
+            HelperMessage pandemic2 = HelperMessage.New("CrimsonPandemic1", "Yo king go mog on them immune system and show them your Jamaican smile + Brazilian phonk + Balkan squat + Pinoy resilience + Vietnamese crawling technique + Still water + Noradrenaline + Those who know :skull:",
+                "CrimSonDefault", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(pandemic1, startTimerOnMessageSpoken: true, delay: 10);
+            HelperMessage pandemic3 = HelperMessage.New("CrimsonPandemic2", "Ooiii, Crim Soooon~!!! You do realize that these virulent critters are no good for our body, nya~! >m< These lil goobers protect our bodies like millions of microscopic magical girls, desu~! OwO I learned that from my club's biology studies~!",
+                "TrapperHappy", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(pandemic2, startTimerOnMessageSpoken: true, delay: 4);
 
             HelperMessage.New("MeteorStarboard", "Wow! You sure are getting lots of stars tonight! You must have said something really funny to get all those. After all, every star you get is a community contribution!", "FannyAwooga", (ScreenHelperSceneMetrics metrics) => Terraria.Star.starfallBoost >= 3);
         }

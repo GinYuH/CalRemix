@@ -23,7 +23,6 @@ namespace CalRemix.Content.NPCs
             DisplayName.SetDefault("Green Demon");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-
             if (Main.dedServ)
                 return;
             HelperMessage.New("Green Demon",
@@ -180,7 +179,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Eclipse,
-        new FlavorTextBestiaryInfoElement("Eat vegetables and fruits to become strong. LIKE ME!")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         public override void FindFrame(int frameHeight)

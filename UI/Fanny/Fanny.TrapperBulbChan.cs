@@ -77,8 +77,11 @@ namespace CalRemix.UI
             HelperMessage.New("Nuclemade", "Nuclear Lemonade-kun, you’re so refreshing and powerful, just like a summer breeze with a hint of sparkle! With you around, every moment becomes a fizzy adventure, desu yo! OwO",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "CalamityHunt", "NuclearLemonade")).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
-            HelperMessage.New("Kitten", "Nyaa~! Look at this adorable kitty-chan, desu! So fuzzy and purrfect, like a tiny bundle of nyan-tastic joy! OwO You’re such a kawaii little neko, aren’t you? Let’s be the bestest of friends and have lots of fun together, nya~! ^w^ Remember to give this sweet kitty-chan all the pets and snuggles, nyaaa~!",
-                "TrapperUwaa", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TownCat)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+            HelperMessage.New("Kitten", "Nyaa~! Look at this adorable kitty-chan, desu! So fuzzy and purrfect, like a tiny bundle of nyan-tastic joy!",
+                "TrapperUwaa", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.TownCat), cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
+            HelperMessage.New("Kitten2", "OwO You’re such a kawaii little neko, aren’t you? Let’s be the bestest of friends and have lots of fun together, nya~! ^w^ Remember to give this sweet kitty-chan all the pets and snuggles, nyaaa~!",
+                "TrapperHappy", HelperMessage.AlwaysShow, 5).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter();
 
             HelperMessage.New("Shipping", "Omo, omo! Trapper Bulb Chan here, and look at this—it's the Flying Dutchman, desu! spooky and cool, nya~! But you know what would be even cooler? If the Flying Dutchman-chan had a special someone to sail the seas with! OwO Imagine the adventures and romance, sailing through the moonlit waters together, nya~! Let's find a perfect ship for this ship, teehee~! ^w^",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.PirateShip)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);

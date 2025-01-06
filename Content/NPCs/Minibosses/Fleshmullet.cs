@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.damage = 50;
-            NPC.boss = true;
+            NPC.boss = !Main.hardMode;
             NPC.aiStyle = -1;
             Music = MusicID.Boss2;
         }
@@ -87,7 +87,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
-                new Terraria.GameContent.Bestiary.FlavorTextBestiaryInfoElement("The Underworld is full of some tremendously devilish creatures. Fleshmullets are arguably one of the most vile, consuming any and all lifeforms that draw near the searing lava."),
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value),
             });
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -97,7 +97,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.CountNPCS(Type) > 1)
                 return 0f;
 
-            return SpawnCondition.Underworld.Chance * 0.22f;
+            return SpawnCondition.Underworld.Chance * 0.0022f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -142,6 +142,7 @@ namespace CalRemix.Content.NPCs.Minibosses
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            spriteBatch.ExitShaderRegion();
             // Mostly exo twins ribbon code
             for (int direction = -2; direction <= 2; direction += 1)
             {
@@ -167,9 +168,9 @@ namespace CalRemix.Content.NPCs.Minibosses
                     currentSegmentRotation += wrappedAngularOffset;
                 }
                 if (mainRibbon)
-                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunction, RibbonTrailColorFunction), 66);
+                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunction, RibbonTrailColorFunction));
                 else
-                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunctionSmall, RibbonTrailColorFunction), 66);
+                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(RibbonTrailWidthFunctionSmall, RibbonTrailColorFunction));
             }
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + NPC.gfxOffY * Vector2.UnitY, NPC.frame, drawColor, NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Width() / 2, TextureAssets.Npc[NPC.type].Height() / 4), NPC.scale, SpriteEffects.None, 0);
             return false;

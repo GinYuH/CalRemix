@@ -1,0 +1,32 @@
+NPCs: {
+	BrimstoneElemental: Calamity Elemental
+	ThiccWaifu: Aether Valkyrie
+	AstrumAureus: Astrum Viridis
+	Draedon: Draedon, the Living Intellect of Samuel Graydron
+	BrimstoneHeart: Calamity Heart
+	SupremeCalamitas: Brimdeath Witch, Calitas Jane
+	WITCH: Calamity Witch
+	Skeletron: Dungen
+}
+
+Items: {
+	Absolute: {
+		Fabstaff: Interfacer Staff
+		Fabsol: Discordian Sigil
+		CirrusDress: Ash's Cloak
+		LoreExoMechs: The Exo Mechs
+		OldDukeScales: Sulfuric Scale
+		ReaverShark: reef Shark
+		Relic: Relic
+		Treasure: Treasure
+		Hemostone: Hemostone
+	}
+
+	Stormbow: {
+		StarShower: Star Storm
+		Starfury: Starstorm
+		DaedalusStormbow: Daedalus Bow
+		StarWrath: Starstorm 2
+		BloodRainBow: Blood Rain Stormbow
+	}
+}

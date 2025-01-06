@@ -96,7 +96,17 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             // Handicaps
             Main.LocalPlayer.AddBuff(BuffID.Blackout, 22);
             Main.LocalPlayer.wingTime = 0;
-            Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
+            Main.LocalPlayer.mount.Dismount(Main.LocalPlayer); 
+            if (Main.zenithWorld)
+            {
+                foreach (Player victim in Main.ActivePlayers) //fucking suffer
+                {
+                    if (victim.Calamity() != null)
+                    {
+                        victim.AddBuff(BuffID.Obstructed, 1);
+                    }
+                }
+            }
             // Generic setup
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
@@ -393,7 +403,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        new FlavorTextBestiaryInfoElement("After the Archwizard was dishonorably discharged from the war, he fell into a state of smoking and gambling. During a gambling night, he sealed himself inside of a chunk of asbestos to win a bet. He was never heard from again.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

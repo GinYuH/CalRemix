@@ -475,7 +475,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 new BossBestiaryInfoElement(),
-                new FlavorTextBestiaryInfoElement("This elemental's traits stick close to its creator; espionage. After an unfavorable encounter with Yharim's forces, Calamitas' remarks on Mona's tendencies soon doomed her to a fate of virality. All that remains of the archmagus is an imitation of her bread and butter.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

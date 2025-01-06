@@ -62,7 +62,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement("Nobody is really sure who they are, and nobody's dared to ask. Despite being on the team against Yharim, others seem not to take much a liking to them. It's not fully because they like to be reclusive, it's why they are reclusive. Everyone, including themselves, fear their power. With a simple wave of the hand, they can instantly combust and detonate whatever they please. Despite this power being well controlled, being so useful Yharim targeted them first, they fear what would happen if they used their power irresponsably.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 

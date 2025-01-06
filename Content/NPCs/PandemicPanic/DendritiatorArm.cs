@@ -22,6 +22,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         {
             DisplayName.SetDefault("Dendritiator");
             NPCID.Sets.MustAlwaysDraw[Type] = true;
+            this.HideFromBestiary();
         }
         public override void SetDefaults()
         {

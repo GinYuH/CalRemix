@@ -9,19 +9,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.Player;
 using CalRemix.Content.Items.ZAccessories;
+using Terraria.GameContent.Bestiary;
 
 namespace CalRemix.Content.NPCs.TownNPCs
 {
     [AutoloadHead]
     public class Ogslime : ModNPC
     {
+        public static readonly short MaxPhrases = 34;
         public static double spawnTime = double.MaxValue;
-
         public override void Load()
         {
             Terraria.On_Player.ItemCheck_ApplyHoldStyle_Inner += PetSlime;
         }
-
         public static void PetSlime(Terraria.On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player p, float mountOffset, Item sItem, Rectangle heldItemFrame)
         {
             if (p.isPettingAnimal && p.TalkNPC?.type == ModContent.NPCType<Ogslime>())
@@ -50,9 +50,6 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPCID.Sets.NPCFramingGroup[Type] = NPCID.Sets.NPCFramingGroup[NPCID.TownSlimeBlue];
             NPCID.Sets.IsTownPet[Type] = true;
             NPCID.Sets.IsTownSlime[Type] = true;
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
             if (Main.dedServ)
                 return;
             HelperMessage.New("OgslimeAwakening",
@@ -70,22 +67,30 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPC.lifeMax = 1000;
             DrawOffsetY = 5;
         }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
+        }
 
         public override string GetChat()
         {
             Main.player[Main.myPlayer].currentShoppingSettings.HappinessReport = "";
             // a list of common words and phrases
-            List<string> list = new List<string> { "is a", "brings", "an aspect of", "surrounded", "run up against",
-                "fighting", "weakened", "by", "above", "on top of", "punctuated by", "opened", "beyond", "abstracted",
-                "team up on", "join", "conglomerate", "fuses", "usurp the", "ultimately", "reward:", "versus",
-                "lives happily ever after with", ", the parent of", "stuck in", "villainizes", "victimizes", "written by",
-                "slammed", "punches", "or", "their", "scared by"};
+            List<string> list = [];
+            for (int i = 1; i < MaxPhrases; i++)
+            {
+                list.Add(CalRemixHelper.LocalText($"NPCs.{Name}.Phrase{i}").Value);
+            }
             // inflate the list with a bunch of "ands" since that allows for it to appear more often and create more comical results
             for (int i = 0; i < list.Count; i++)
             {
                 if (i % 3 == 0)
                 {
-                    list.Add("and");
+                    list.Add(CalRemixHelper.LocalText($"NPCs.{Name}.And").Value);
                 }
             }
             List<string> itemNames = new List<string>();

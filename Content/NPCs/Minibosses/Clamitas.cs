@@ -49,11 +49,6 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<WeakBrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<RancorBurn>()] = true;
-            NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new();
-            nPCBestiaryDrawModifiers.Scale = 0.4f;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = nPCBestiaryDrawModifiers;
-            value.Frame = 1;
         }
         public override bool SpecialOnKill()
         {
@@ -330,7 +325,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Adaption at its finest. This clam was tranformed by the harsh air of Azafure after escaping the destruction of its home. Its meat is said to have the spiciest taste among all seafoods.")
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
@@ -352,11 +347,11 @@ namespace CalRemix.Content.NPCs.Minibosses
             Vector2 draw = NPC.Center - new Vector2(0,25) - screenPos + new Vector2(0f, NPC.gfxOffY);
             drawColor = Color.Lerp(drawColor, new Color(255, 0, 0, drawColor.A), Utils.GetLerpValue(0f, 255f, NPC.alpha, true));
 
-            Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Fire").Value;
-            Rectangle rectFire = new Rectangle(0, (int)NPC.localAI[1] * glow.Height / 2, glow.Width, glow.Height / 2);
+            Texture2D glowFire = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Fire").Value;
+            Rectangle rectFire = new Rectangle(0, (int)NPC.localAI[1] * glowFire.Height / 2, glowFire.Width, glowFire.Height / 2);
             Vector2 origFire = rectFire.Size() / 2f;
             if (hitAmount >= 5 && attack != 0)
-                spriteBatch.Draw(glow, draw, rectFire, new Color(255, 255, 255, 255), NPC.rotation, origFire, NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(glowFire, draw, rectFire, new Color(255, 255, 255, 255), NPC.rotation, origFire, NPC.scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(texture, draw, rect, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
             
             return false;
@@ -365,10 +360,10 @@ namespace CalRemix.Content.NPCs.Minibosses
         {
             Texture2D glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_Glow").Value;
             Rectangle sourceRectangle = new Rectangle(0, 0, glow.Width, glow.Height);
-            Vector2 origin = sourceRectangle.Size() / 2f;
+            Vector2 originGlow = sourceRectangle.Size() / 2f;
             Vector2 draw = NPC.Center - new Vector2(0, 25) - screenPos + new Vector2(0f, NPC.gfxOffY);
             if (hitAmount >= 5 && attack != 0)
-                spriteBatch.Draw(glow, draw, sourceRectangle, new Color(255, 255, 255, 255), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(glow, draw, sourceRectangle, new Color(255, 255, 255, 255), NPC.rotation, originGlow, NPC.scale, SpriteEffects.None, 0f);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

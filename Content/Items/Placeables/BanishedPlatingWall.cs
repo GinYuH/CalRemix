@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetDefaults()
         {
             Item.createWall = ModContent.WallType<BanishedPlatingWallPlaced>();
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.useAnimation = 15;
             Item.useTime = 7;

@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.Events;
 using CalamityMod.Items.SummonItems;
+using CalamityMod.NPCs;
 using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Signus;
 using CalamityMod.NPCs.StormWeaver;
@@ -56,26 +57,47 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage fish = HelperMessage.New("Fishing1", "Morgen, mein friend! It is not a guten one, however, as if it were, you would be fishing!",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.fishingPole > 0) && Main.time == 10800 && Main.dayTime)
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.fishingPole > 0) && Main.time == 10800 && Main.dayTime,
+                4, cantBeClickedOff: true)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("Fishing2", "Uhhh... wouldn't all the fish be asleep right now, Miracle Boy?",
-                "FannyIdle", cantBeClickedOff: true, duration: 5).ChainAfter(delay: 3, startTimerOnMessageSpoken: true).AddEndEvent(fish.EndMessage);
+                "FannyIdle", cantBeClickedOff: true, duration: 5).ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Fishing3", "Oh my god, do you EVER shut up? This is nonstop, every time I say anything! You always feel the need to contradict me, even when I'm just cracking a joke for our dear friend here. This is why everyone DESPISES you, Fanny! I wish you were more like my creamsicle, because THAT doesn't talk back so much- you're terrible! You've literally never helped in the history of forever, you were left to rot in a gutter by your own father, and now this? Say what you will about Evil Fanny, but at least she knows damn well when she isn't wanted. Because, get this: you're not. You hear me? YOU. ARE. WORTHLESS.",
                 "MiracleBoyIdle")
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 0);
 
             HelperMessage.New("Fishing4", "... what?",
-                "FannySob").ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
+                "FannySob").ChainAfter(delay: 5, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("YharBarr", "Ugh, Yharim Bars. Look at these disgusting chunks of... whatever they are. Gross, right? They're huge, ugly, and look like something you’d find at the bottom of a trash heap. But I guess they’re useful for making endgame stuff, if you're into that kind of thing. Honestly, I wouldn’t touch them if I weren’t forced to. But hey, you do you. Just don’t expect any praise for collecting these hideous things.",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
+            HelperMessage.New("TheGreatExoFable1", "Hello once more, my friend! I've heard you're a big fan of epic stories, mmm? Well, you're in luck! Your best friend is here to tell you one of his favourite tales!",
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, cantBeClickedOff: true, duration: 4)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage.New("TheGreatExoFable2", "This one has been in the miracle family for generations, mmmm! Be prepared for the most amazing of stories! A tale to knock the tyrant's tales out of this world!",
+                "MiracleBoyRead", cantBeClickedOff: true, duration: 3).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("TheGreatExoFable3", "Before there was a world, there were gods, and before these gods, there were dragons. But before all of this, Gods, real ones, existed in perpetuity. As the elders gave shape to to the visions that plagued them, something malevolent began to take shape. Duality is an essencial constant of our world. Light and Dark. Joy and Sadness. Chaos and order. On a fundamental level, if pure good can exists, all it guarantees is the possibility of pure evil.",
+                "MiracleBoyRead", cantBeClickedOff: true, duration: 15).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("TheGreatExoFable4", "With every world created, there is a chance for new possibilties, new paths to be taken. A fundamental basis, born of ashes of betrayal. Tathered and mangled by the stolen valor of those who delude themselves to think they are worthy of holy titles. Due to this, a vessel of a true harbinger of order must descend onto these lands, and sever its decay from the roots. Through their holy hand, the one in control of this world's future shall have their will broken, and this land will return to its intended state. Nothing.",
+                "MiracleBoyRead", cantBeClickedOff: true, duration: 15).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 15, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("TheGreatExoFable5", "So! Did you enjoy that! If you did, you must love how grand of a writer I am! All of that? Made it up on the spot, mmmmm! All of these pages are blank! Happy to have been able to share this with you, I bid you farewell now!",
+                "MiracleBoyIdle").SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 15, startTimerOnMessageSpoken: true);
+
             HelperMessage.New("Hypnerd", "Hypnos, huh? Look at this brainiac—so shiny, so... fancy—but wait, what’s this? Nein nein nein! Gnnnaawww What’s with all the techy, brainy boop-bop-bop nonsense? You think you're so advanced? How cute. Watch out, Hypnos, or I'll start spouting some Gnnnwaaaa too and make your circuits fry!",
                 "MiracleBoyGnaw", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<AergiaNeuron>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage.New("Fear", "I'd sleep with one eye open if I were you.",
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.time == 27000 && Main.rand.NextBool(100)).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
 
         }
     }

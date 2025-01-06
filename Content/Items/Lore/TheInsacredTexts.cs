@@ -40,6 +40,7 @@ public class TheInsacredTexts : ModItem
     public override void AddRecipes()
     {
         CreateRecipe().
+            AddTile(TileID.Bookcases).
             Register();
     }
 }

@@ -43,7 +43,7 @@ namespace CalRemix.UI
             switch (context)
             {
                 case AccessorySlotType.FunctionalSlot:
-                    Main.hoverItemName = "Elemental Soul";
+                    Main.hoverItemName = CalRemixHelper.LocalText("UI.SoulSlot").Value;
                     break;
             }
         }

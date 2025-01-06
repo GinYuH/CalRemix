@@ -44,7 +44,7 @@ public class ExodimusPROJ : ModProjectile
         {
             float x2 = Projectile.Center.X - Projectile.velocity.X / 10f * (float)num163;
             float y2 = Projectile.Center.Y - Projectile.velocity.Y / 10f * (float)num163;
-            int num165 = Dust.NewDust(new Vector2(x2, y2), 10, 10, 43, 0f, 0f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 1f);
+            int num165 = Dust.NewDust(new Vector2(x2, y2), 10, 10, DustID.TintableDustLighted, 0f, 0f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 1f);
 
 
             Main.dust[num165].position.X = x2;
@@ -113,7 +113,7 @@ public class ExodimusPROJ : ModProjectile
         {
             float x2 = Projectile.Center.X - Projectile.velocity.X / 10f * (float)num163;
             float y2 = Projectile.Center.Y - Projectile.velocity.Y / 10f * (float)num163;
-            int num165 = Dust.NewDust(new Vector2(x2, y2), 10, 10, 43, 0f, 0f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 5f);
+            int num165 = Dust.NewDust(new Vector2(x2, y2), 10, 10, DustID.TintableDustLighted, 0f, 0f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 5f);
 
 
             Main.dust[num165].position.X = x2;
@@ -144,7 +144,7 @@ public class ExodimusPROJ : ModProjectile
         {
             float x2 = Projectile.Center.X - Projectile.velocity.X / 10f * (float)num163;
             float y2 = Projectile.Center.Y - Projectile.velocity.Y / 10f * (float)num163;
-            int num165 = Dust.NewDust(new Vector2(x2, y2), 10, 10, 43, 0f, 0f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 5f);
+            int num165 = Dust.NewDust(new Vector2(x2, y2), 10, 10, DustID.TintableDustLighted, 0f, 0f, 255, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 5f);
 
 
             Main.dust[num165].position.X = x2;

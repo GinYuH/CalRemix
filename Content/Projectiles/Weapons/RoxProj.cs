@@ -5,6 +5,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {
@@ -48,7 +49,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             for (int i = 0; i < 24; i++)
             {
                 Vector2 vector = Vector2.UnitY.RotatedBy(MathF.PI * 2f * (float)i / 24f);
-                int dust = Dust.NewDust(Projectile.Center + vector * 20f * Projectile.scale, 0, 0, 1, vector.X * 12f * Projectile.scale, vector.Y * 12f * Projectile.scale, 0, Color.Black, Projectile.scale);
+                int dust = Dust.NewDust(Projectile.Center + vector * 20f * Projectile.scale, 0, 0, DustID.Stone, vector.X * 12f * Projectile.scale, vector.Y * 12f * Projectile.scale, 0, Color.Black, Projectile.scale);
                 if (dust.WithinBounds(Main.maxDust))
                 {
                     Main.dust[dust].noGravity = true;

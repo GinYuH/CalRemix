@@ -25,6 +25,7 @@ using CalRemix.Core.World;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 {
@@ -118,6 +119,12 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wulfrum Excavator");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                Position = new Vector2(0, 34),
+                Rotation = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 6;
         }
 
@@ -135,7 +142,8 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("An aged project of an esteemed scientist. It appears to be barely functional.")
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
         
@@ -148,6 +156,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             writer.WriteVector2(TargetScreenResolution);
             writer.Write(RectangleRedirectCounter);
             writer.Write(LemniscateCircleCounter);
+            writer.Write(ChargeState);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -159,12 +168,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             TargetScreenResolution = reader.ReadVector2();
             RectangleRedirectCounter = reader.ReadInt32();
             LemniscateCircleCounter = reader.ReadInt32();
+            ChargeState = reader.ReadInt32();
         }
 
         public override void AI()
         {
             CalRemixNPC.wulfyrm = NPC.whoAmI;
-            if (Main.getGoodWorld)
+            if (Main.zenithWorld)
             {
                 this.SegmentCount *= 3;
             }
@@ -249,7 +259,10 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
                     int nextSegmentIndex;
                     if (i < SegmentCount - 1)
+                    {
                         nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmBody>(), NPC.whoAmI);
+                        Main.npc[nextSegmentIndex].localAI[1] = i % 2;
+                    }
                     else
                         nextSegmentIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WulfwyrmTail>(), NPC.whoAmI);
                     Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;
@@ -302,6 +315,15 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             if (ChargeState >= 4) // This would normally be in Malice as well, but that doesn't exist, so it's exclusive to being charged on Death. If we bring it back, this will probably need new changes.
             {
                 flySpeed += 4f;
+            }
+
+            if (Main.zenithWorld)
+            {
+                flySpeed += 2.5f;
+                laserShootSpeed *= 1.5f;
+                slowdownTime /= 4;
+                timeSpentFiringLasers /= 4;
+                laserBurstCount /= 4;
             }
 
             // Fly towards the target.
@@ -400,15 +422,16 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 spinSpeed += 1f;
             }
 
-
-
             // Don't do damage at first, to prevent cheap hits.
             if (AttackTimer < damageDelay)
                 NPC.damage = 0;
 
-            if (Main.getGoodWorld) // Radius tweaks on FTW to ensure the boss isn't unavoidable.
+            if (Main.zenithWorld) // SPEEEENN!!!
             {
                 spinRadius *= 3;
+                spinSpeed += 12f;
+                delayPerBurst /= 2;
+                circleTime /= 2;
             }
 
             // Initialize the spin offset angle.
@@ -490,6 +513,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             {
                 flySpeed += 4f;
             }
+
+            if (Main.zenithWorld)
+            {
+                flySpeed *= 1.5f;
+                laserShootSpeed *= 1.5f;
+            }
+
 
             // Disable contact damage altogether.
             NPC.damage = 0;
@@ -576,6 +606,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                 laserShootSpeed *= 1.2f;
             }
 
+            if (Main.zenithWorld)
+            {
+                laserCount *= 2;
+                laserShootSpeed *= 2;
+                cycleCount /= 4;
+            }
+
             // Ensures the boss shouldn't telefrag the player.
             if (AttackTimer < damageDelay)
             { 
@@ -637,6 +674,8 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
             if (CalamityWorld.death && NPC.life < 0.05f)
                 flySpeed += 12f;
+
+            if (Main.zenithWorld) flySpeed *= 1.5f;
 
             float speedX = flySpeed * (float)(-sinT - Math.Pow(sinT, 3D) - cosT * sin2T) / denominator;
             float speedY = flySpeed * (float)(Math.Pow(cosT, 2D) - 2D * Math.Pow(sinT, 4D) - sinT * cosT * sin2T) / denominator;
@@ -822,6 +861,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             normalRule.Add(ModContent.ItemType<EnergyCore>(), 1, 1, 2);
             normalRule.Add(ModContent.ItemType<EnergyOrb>());
             normalRule.Add(ModContent.ItemType<CalamityMod.Items.Tools.WulfrumTreasurePinger>());
+            npcLoot.Add(ModContent.ItemType<ExcavatorTrophy>(), 10);
 
             // Weapons
             int[] weapons = new int[]
