@@ -77,7 +77,7 @@ namespace CalRemix.Content.Projectiles.Weapons.Stormbow
 
             if (Projectile.ai[0] == totalLength - animationSpeed * 2)
             {
-                
+                SoundEngine.PlaySound(SoundID.AbigailCry with { Pitch = 1f, Volume = 0.6f }, Projectile.Center);
                 if (Owner == Main.LocalPlayer)
                 {
                     int projCount = Main.rand.Next(3, 7);
