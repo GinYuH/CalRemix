@@ -277,7 +277,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                         float fireSpeed = 2 * playerDistance / 300; // Speed Carcinogen moves while shooting fire
                         int firePoints = death ? 5 : 4; // How many points of fire Carcinogen shoots out
                         float fireProjSpeed = death ? 13 : rev ? 11 : 10; // Fire projectile speed, effectively range
-                        float fireRateMultiplier = 0.02f; // Makes the spacing between the points sane
+                        float fireRateMultiplier = 0.01f; // Makes the spacing between the points sane
                         int projType = ProjectileID.Flames; // Burn baby burn!
                         NPC.ai[1]++;
                         // Start firing once the player is less than 300 pixels away or 2 seconds have passed
