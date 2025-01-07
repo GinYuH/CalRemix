@@ -3418,7 +3418,7 @@ ChloriumGreaves.Tooltip:
 	'''
 
 ChloriumPaintbrush: {
-	DisplayName: ChloriumPaintbrush
+	DisplayName: Chlorium Paintbrush
 	Tooltip:'''
 		Used with paint to color blocks
 		Can also apply coatings
