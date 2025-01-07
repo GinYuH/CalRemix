@@ -1175,11 +1175,15 @@ namespace CalRemix.Core.World
 
         public override void PostWorldGen()
         {
+            WarbledOres.WarblePreHardmodeOres();
+
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null)
                 {
+                    WarbledOres.WarbleChestLoot(chest);
+
                     if (Main.tile[chest.x, chest.y].TileType == TileType<StratusChest>())
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)

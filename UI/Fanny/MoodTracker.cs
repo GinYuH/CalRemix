@@ -137,7 +137,7 @@ namespace CalRemix.UI
 
             //"Good" or "Bad" content is onscreen. Needs to be filled out
             FannyMood.New("Ecstatic!!!", null, PriorityClass.OnscreenNPCsMood, 0f, true).
-                AddRequiredNPC(ModContent.NPCType<Hypnos>(), ModContent.NPCType<Acideye>());
+                AddRequiredNPC(ModContent.NPCType<Hypnos>(), ModContent.NPCType<AcidEye>());
             FannyMood.New("Impoverished...", null, PriorityClass.OnscreenNPCsMood, 0f, true).
                 AddRequiredNPC(ModContent.NPCType<OgsculianBurrower>(), ModContent.NPCType<OldDuke>());
 
