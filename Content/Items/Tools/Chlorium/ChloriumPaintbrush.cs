@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Items.Materials;
+using System.Reflection;
 
 namespace CalRemix.Content.Items.Tools.Chlorium
 {
@@ -25,6 +26,22 @@ namespace CalRemix.Content.Items.Tools.Chlorium
                 AddIngredient<ChloriumBar>(8).
                 AddTile(TileID.MythrilAnvil).
                 Register();
+        }
+        public override bool? UseItem(Player player)
+        {
+            int xpos = Player.tileTargetX;
+            int ypos = Player.tileTargetY;
+            if (Main.tile[xpos, ypos] != null && Main.tile[xpos, ypos].HasTile)
+            {
+                player.cursorItemIconEnabled = true;
+                if (player.ItemTimeIsZero && player.itemAnimation > 0 && player.controlUseItem)
+                {
+                    //player.TryPainting(num, num2);
+                    MethodInfo trypainting = typeof(Player).GetMethod("TryPainting", BindingFlags.Instance | BindingFlags.NonPublic);
+                    trypainting.Invoke(player, [xpos, ypos, false, true]);
+                }
+            }
+            return true;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace CalRemix.Content.Items.Weapons
 		{
             Item.CloneDefaults(ItemID.AdamantiteGlaive);
             Item.rare = ItemRarityID.Lime;
+            Item.shoot = ModContent.ProjectileType<ChloriumPikeProjectile>();
         }
         public override bool CanUseItem(Player player)
         {
