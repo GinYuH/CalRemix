@@ -28,7 +28,7 @@ namespace CalRemix.UI
         public static FannyMood lingeringMood = null;
         public static float moodLingerTimer = 0f;
 
-        public override bool Active() => unlocked;
+        public override bool Active() => Main.LocalPlayer.GetModPlayer<ScreenHelperSavePlayer>().unlockedMoodTracker;
         public override string Texture => "CalRemix/UI/Fanny/HelperDisplay";
         public static int DisplayID;
 
@@ -69,7 +69,7 @@ namespace CalRemix.UI
         public static void Reset()
         {
             NPC.downedDeerclops = false;
-            unlocked = false;
+            Main.LocalPlayer.GetModPlayer<ScreenHelperSavePlayer>().unlockedMoodTracker = false;
             foreach (HelperMessage msg in ScreenHelperManager.screenHelperMessages)
                 if (msg.Identifier == "MoodDisplayUnlock")
                     msg.alreadySeen = false;
@@ -92,7 +92,7 @@ namespace CalRemix.UI
             HelperMessage.New("MoodDisplayUnlock",
                 "I feel like we've became such good pals, but I don't know if you truly understand how i feel sometimes... Fret not, for i've upgraded your interface with a new indicator that should inform you about my mood at anytime! Be sure to keep an eye out for any \"special\" moods that indicate rare loot!",
                 "FannyIdle", CanUnlockMoodTracker).
-                AddStartEvent(() => unlocked = true);
+                AddStartEvent(() => Main.LocalPlayer.GetModPlayer<ScreenHelperSavePlayer>().unlockedMoodTracker = true);
 
             firstBlockDisableMessage = HelperMessage.New("MoodDisplayBlockDisable",
                 "I'm sorry my friend, but I can't let you do that! Bonds are forged through mutual understanding, and this moodtracker is vital to taking our friendship to the next level! Always remember the three big rules of healthy communication: Wear your heart on your sleeve, communicate problems, and don't try disabling the mood tracker!",
@@ -332,7 +332,7 @@ namespace CalRemix.UI
 
         public void Activate(bool forceReplace = false)
         {
-            if (forceReplace || MoodTracker.lingeringMood.priority <= priority)
+            if (forceReplace || MoodTracker.lingeringMood == null || MoodTracker.lingeringMood.priority <= priority)
             {
                 MoodTracker.lingeringMood = this;
                 MoodTracker.moodLingerTimer = lingerTime;

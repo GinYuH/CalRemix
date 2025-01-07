@@ -782,8 +782,8 @@ namespace CalRemix.UI
     public class ScreenHelperSavePlayer : ModPlayer
     {
         public bool[] readMessages;
-
         public bool readTroughFannyDogDialogue = false;
+        public bool unlockedMoodTracker = false;
 
         public override void SaveData(TagCompound tag)
         {
@@ -801,7 +801,7 @@ namespace CalRemix.UI
             }
 
             tag["FannyReadThroughDogDialogue"] = ScreenHelperManager.ReadAllDogTips;
-            tag["fannyMoodTracker"] = MoodTracker.unlocked;
+            tag["fannyMoodTracker"] = unlockedMoodTracker;
         }
 
 
@@ -817,9 +817,9 @@ namespace CalRemix.UI
             if (tag.TryGet("FannyReadThroughDogDialogue", out bool readDog))
                 readTroughFannyDogDialogue = readDog;
 
-            MoodTracker.unlocked = false;
+            unlockedMoodTracker = false;
             if (tag.TryGet("fannyMoodTracker", out bool unlockedMoodDisplay))
-                MoodTracker.unlocked = unlockedMoodDisplay;
+                unlockedMoodTracker = unlockedMoodDisplay;
         }
 
         public override void OnEnterWorld()

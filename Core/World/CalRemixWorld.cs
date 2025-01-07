@@ -1158,6 +1158,7 @@ namespace CalRemix.Core.World
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
                 }));
+                tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
             }
             // Secret Banished Baron seed
             if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")

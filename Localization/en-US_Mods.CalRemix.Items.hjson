@@ -3340,3 +3340,63 @@ ChlorislimeStaff: {
 	DisplayName: Chlorislime Staff
 	Tooltip: Summons a chlori slime to fight for you
 }
+
+LegendPortraitHAYABUSAItem: {
+	DisplayName: Portrait of a Legend - (HAYABUSA)
+	Tooltip: Voice of the Miracle Boy
+}
+
+LegendPortraitMITCHARDItem: {
+	DisplayName: Portrait of a Legend - (MITCHARD)
+	Tooltip: Technical Director and UX Tester
+}
+
+LegendPortraitDASLNEWItem: {
+	DisplayName: Portrait of a Legend - (DASLNEW)
+	Tooltip: Lead Designer
+}
+
+LegendPortraitPEREZItem: {
+	DisplayName: Portrait of a Legend - (PEREZ)
+	Tooltip: Voice of Fanny
+}
+
+LegendPortraitACKNERItem: {
+	DisplayName: Portrait of a Legend - (ACKNER)
+	Tooltip: Voice of Evil Fanny and Trapper Bulb Chan
+}
+
+LegendPortraitCONROYItem: {
+	DisplayName: Portrait of a Legend - (CONROY)
+	Tooltip: Graphics Lead
+}
+
+LegendPortraitMARINOItem: {
+	DisplayName: Portrait of a Legend - (MARINO)
+	Tooltip: 3D Assets and Saxophone for "Generator" Music
+}
+
+LegendPortraitHOOBItem: {
+	DisplayName: Portrait of a Legend - (HOOB)
+	Tooltip: Sound Effects and Additional Graphics
+}
+
+LegendPortraitETTELItem: {
+	DisplayName: Portrait of a Legend - (ETTEL)
+	Tooltip: Lead Musician
+}
+
+LegendPortraitWINGERTItem: {
+	DisplayName: Portrait of a Legend - (WINGERT)
+	Tooltip: Voice of Wonder Flower
+}
+
+LegendPortraitDIRACItem: {
+	DisplayName: Portrait of a Legend - (DIRAC)
+	Tooltip: Test Lead and European Localization
+}
+
+LegendPortraitHUETItem: {
+	DisplayName: Portrait of a Legend - (HUET)
+	Tooltip: Voice of the Crim Son
+}
