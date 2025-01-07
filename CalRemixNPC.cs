@@ -580,7 +580,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()))
+            if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
             {
                 NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<ChlorinePaladin>());
             }

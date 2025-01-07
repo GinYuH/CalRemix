@@ -57,8 +57,8 @@ namespace CalRemix.Content.NPCs
         }
         public override void OnSpawn(IEntitySource source)
         {
-            AITimer = 0;
-            AIMode = 1;
+            AITimer = 200;
+            AIMode = 0;
         }
         public override void AI()
         {
