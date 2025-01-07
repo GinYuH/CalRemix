@@ -3400,3 +3400,19 @@ LegendPortraitHUETItem: {
 	DisplayName: Portrait of a Legend - (HUET)
 	Tooltip: Voice of the Crim Son
 }
+
+ChloriumChainmail.Tooltip:
+	'''
+	24% increased damage
+	2% increased critical strike chance
+	'''
+ChloriumConehead.Tooltip:
+	'''
+	16% increased stormbow damage and critical strike chance
+	20% increaesd stormbow shot speed
+	'''
+ChloriumGreaves.Tooltip:
+	'''
+	12% increased critical strike chance
+	22% increased movement speed
+	'''

@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using CalamityMod.Items;
+using CalRemix.Content.DamageClasses;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Armor
 {
@@ -16,32 +18,40 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Banana Clown Mask");
-            Tooltip.SetDefault("2 magic damage");
+            Tooltip.SetDefault("16% increased stormbow damage and critical strike chance\n20% increaesd stormbow shot speed");
         }
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 22;
-            Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
-            Item.rare = ItemRarityID.Blue;
-            Item.defense = 1;
+            Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
+            Item.rare = ItemRarityID.Lime;
+            Item.defense = 17;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<MagicDamageClass>().Flat += 2;
+            player.GetDamage<StormbowDamageClass>() += 0.16f;
+            player.GetCritChance<StormbowDamageClass>() += 0.16f;
+            player.GetAttackSpeed<StormbowDamageClass>() += 0.20f;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ModContent.ItemType<BananaClownSleeves>() && legs.type == ModContent.ItemType<BananaClownPants>();
+            return body.type == ModContent.ItemType<ChloriumChainmail>() && legs.type == ModContent.ItemType<ChloriumGreaves>();
         }
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Consuming fruits grants unlimited mana and increased magic damage for a short period of time\nThis effect has a 1 minute cooldown";
-            player.GetModPlayer<CalRemixPlayer>().bananaClown = true;
+            player.setBonus = "+12 flat stormbow damage";
+            player.GetDamage<StormbowDamageClass>().Flat += 12;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<ChloriumBar>(12).
+                AddTile(TileID.MythrilAnvil).
+                Register();
         }
     }
 }

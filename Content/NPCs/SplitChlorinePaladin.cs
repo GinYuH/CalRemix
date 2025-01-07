@@ -82,6 +82,7 @@ namespace CalRemix.Content.NPCs
             // jump if it is time
             if (AIMode == 0 && AITimer <= 0)
             {
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/BossChanges/SlimeGod/ChlorinePaladinJump", 2), NPC.Center);
                 NPC.velocity = new Vector2(0, -45f);
                 AITimer = 50;
                 AIMode = 1;
@@ -94,6 +95,8 @@ namespace CalRemix.Content.NPCs
             // keep jumping until offscreen and it is time
             else if (AIMode == 1 && AITimer <= 0 && Vector2.Distance(NPC.Center, player.Center) < 800)
             {
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/BossChanges/SlimeGod/ChlorinePaladinJump", 2), NPC.Center);
+                SoundEngine.PlaySound(SoundID.Item150, NPC.Center);
                 NPC.velocity = new Vector2(0, -45f);
                 AITimer = 50;
             }
@@ -124,7 +127,7 @@ namespace CalRemix.Content.NPCs
             else if (AIMode == 2 && NPC.oldPosition.Y == NPC.position.Y)
             {
                 NPC.noGravity = false;
-                SoundEngine.PlaySound(SoundID.AbigailCry, NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/BossChanges/SlimeGod/ChlorinePaladinStomp", 5), NPC.Center);
                 for (int ii = 0; ii < 22; ii++)
                 {
                     Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X - NPC.width / 2, NPC.position.Y + (NPC.height / 3) * 2), NPC.width * 2, NPC.height / 3, DustID.BlueCrystalShard);
