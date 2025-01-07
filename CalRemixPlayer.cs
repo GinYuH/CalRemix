@@ -254,6 +254,12 @@ namespace CalRemix
         public int dyesBrown = 0;
         public int dyesSilver = 0;
 
+        // Games
+        // Binding of Anahita
+        public bool boiactive = false;
+        public int boihealth = 0;
+        public int boistage = 0;
+
 		public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
 
         private static readonly List<PlayerDrawLayer> HiddenGenLayers =
