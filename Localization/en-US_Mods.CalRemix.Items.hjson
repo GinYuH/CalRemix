@@ -3419,8 +3419,14 @@ ChloriumGreaves.Tooltip:
 
 ChloriumPaintbrush: {
 	DisplayName: Chlorium Paintbrush
-	Tooltip:'''
+	Tooltip:
+		'''
 		Used with paint to color blocks
 		Can also apply coatings
 		'''
+}
+
+LegendPortraitYOUItem: {
+	DisplayName: Portrait of a Legend - (YOU)
+	Tooltip: For your continous love and support!
 }

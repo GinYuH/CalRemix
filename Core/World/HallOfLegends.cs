@@ -14,44 +14,62 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using CalamityMod.World;
 using Terraria.WorldBuilding;
+using System.IO;
+using Terraria.Modules;
+using System.Threading;
+using CalRemix.UI;
 
 namespace CalRemix.Core.World
 {
     public class HallOfLegends : ILoadable
     {
-        public static int[] portraitOrder = [8 /*Ettel*/,  5 /*Conyroy*/, 2 /*Daslnew*/, 3 /*Perez*/,    1 /*Mitchard*/, 10 /*Dirac*/,
-                                             6 /*Marino*/, 7 /*Hoob*/,    4 /*Ackner*/,  0 /*Hayabusa*/, 11 /*Huet*/,    9 /*Wingert*/];
-        public static int[] portraitTileTypes;
+        public static int[] portraitOrder = [8 /*Ettel*/,   5 /*Conyroy*/, 2 /*Daslnew*/,  3 /*Perez*/,  1 /*Mitchard*/, 10 /*Dirac*/,
+                                             9 /*Wingert*/, 11 /*Huet*/,   0 /*Hayabusa*/, 4 /*Ackner*/, 6 /*Marino*/,   7 /*Hoob*/, ];
+        public static int portraitTileType;
         public static int[] portraitItemTypes;
+        public static string[] portraitHoverTexts;
 
         private static Hook CalamityGenerateHiveHook;
         public delegate bool orig_CanPlaceGiantHive(Point origin, StructureMap structures);
         public delegate bool hook_CanPlaceGiantHive(orig_CanPlaceGiantHive orig, Point origin, StructureMap structures);
 
+        public static FannyMood gratefulMood;
+        public static FannyMood mournfulMood;
 
         public void Load(Mod mod)
         {
-            portraitTileTypes = new int[12];
-            portraitItemTypes = new int[12];
+            portraitItemTypes = new int[13];
+            portraitHoverTexts = new string[13];
+
+            AutoloadedLegendPortrait tile = new AutoloadedLegendPortrait();
+            mod.AddContent(tile);
+            portraitTileType = tile.Type;
 
             LoadPortrait(mod, "HAYABUSA", "Voice of the Miracle Boy");
-            LoadPortrait(mod, "MITCHARD", "Technical Director and UX Tester");
-            LoadPortrait(mod, "DASLNEW", "Lead Designer");
+            LoadPortrait(mod, "MITCHARD", "Technical Director, UX Designer");
+            LoadPortrait(mod, "DASLNEW", "Founder, Lead Designer");
             LoadPortrait(mod, "PEREZ", "Voice of Fanny");
             LoadPortrait(mod, "ACKNER", "Voice of Evil Fanny and Trapper Bulb Chan");
-            LoadPortrait(mod, "CONROY", "Graphics Lead");
-            LoadPortrait(mod, "MARINO", "3D Assets and Saxophone for \"Generator\" Music");
-            LoadPortrait(mod, "HOOB", "Sound Effects and Additional Graphics");
+            LoadPortrait(mod, "CONROY", "Graphics Lead, Story Lead");
+            LoadPortrait(mod, "MARINO", "3D Assets, Saxophone Backing for \"Artistic Reinforcment\"");
+            LoadPortrait(mod, "HOOB", "Sound Effects, Additional Graphics");
             LoadPortrait(mod, "ETTEL", "Lead Musician");
             LoadPortrait(mod, "WINGERT", "Voice of Wonder Flower");
-            LoadPortrait(mod, "DIRAC", "Test Lead and European Localization");
+            LoadPortrait(mod, "DIRAC", "Test Lead, European Localization");
             LoadPortrait(mod, "HUET", "Voice of the Crim Son");
+            LoadPortrait(mod, "YOU", "For your continous love and support!");
 
             CalamityGenerateHiveHook = null;
             MethodInfo giantHiveMethodInfo = typeof(GiantHive).GetMethod("CanPlaceGiantHive", BindingFlags.Public | BindingFlags.Static);
             if (giantHiveMethodInfo is not null)
             {
                 CalamityGenerateHiveHook = new Hook(giantHiveMethodInfo, (hook_CanPlaceGiantHive)InterceptGiantHivePosition);
+            }
+
+            if (!Main.dedServ)
+            {
+                gratefulMood = FannyMood.New("Grateful!", null, MoodTracker.PriorityClass.OnscreenNPCsMood, 1f, false, Color.OrangeRed, Color.Black).DisableNaturalSelection();
+                mournfulMood = FannyMood.New("Mournful...", null, MoodTracker.PriorityClass.OnscreenNPCsMood, 1f, false, Color.Gray, Color.Black).DisableNaturalSelection();
             }
         }
 
@@ -77,7 +95,7 @@ namespace CalRemix.Core.World
             int zoneXMin = Math.Max(0, origin.X - 60);
             int zoneYMin = Math.Max(0, origin.Y - 60);
             int zoneXMax = Math.Min(Main.maxTilesX -1, origin.X + 60);
-            int zoneYMax = Math.Min(Main.maxTilesY - 1, origin.Y + 60);
+            int zoneYMax = Math.Min(Main.maxTilesY - 1, origin.Y + 260);
 
             //remove all loot for good measure
             for (int i = zoneXMin; i < zoneXMax; i++)
@@ -119,6 +137,13 @@ namespace CalRemix.Core.World
             return true;
         }
 
+        public const int floorHeight = 26;
+        public const int portraitDisplayWidth = 11;
+        public const int sideroomWidth = 7;
+        public const int wallThickness = 5;
+        public const int portraitsPerFloor = 6;
+        public const int totalFloorWidth = (wallThickness + sideroomWidth) * 2 + portraitDisplayWidth * portraitsPerFloor + 1;
+
         public static void GenerateHallOfLegends()
         {
             if (hallPosition == Point.Zero) 
@@ -126,23 +151,17 @@ namespace CalRemix.Core.World
 
             int portraitIndex = 0;
             GenerateFloor(hallPosition.X, hallPosition.Y, ref portraitIndex);
-            hallPosition.Y += 24;
+            hallPosition.Y += 26;
             GenerateFloor(hallPosition.X, hallPosition.Y, ref portraitIndex);
-            hallPosition.Y += 24;
-            GenerateFloor(hallPosition.X, hallPosition.Y, ref portraitIndex, true);
+            CarveStairway(hallPosition.X, hallPosition.Y, false);
 
+            hallPosition.Y += 26;
+            GenerateFloor(hallPosition.X, hallPosition.Y, ref portraitIndex, true);
+            CarveStairway(hallPosition.X, hallPosition.Y, true);
         }
 
         public static void GenerateFloor(int floorCenterX, int floorTopY, ref int portraitIndex, bool emptyPortraits = false)
         {
-            int floorHeight = 24;
-            int portraitDisplayWidth = 11;
-            int sideroomWidth = 7;
-            int wallThickness = 5;
-
-            int portraitsPerFloor = 6;
-
-            int totalFloorWidth = (wallThickness + sideroomWidth) * 2 + portraitDisplayWidth * portraitsPerFloor + 1;
             int startX = floorCenterX - totalFloorWidth / 2;
             int endX = startX + totalFloorWidth;
             int endY = floorTopY + floorHeight;
@@ -241,12 +260,12 @@ namespace CalRemix.Core.World
             //Trim between sideroom and the last portrait
             for (int j = floorTopY + 1; j < endY - 1; j++)
             {
-                Tile t = Main.tile[endX - wallThickness - sideroomWidth, j];
+                Tile t = Main.tile[endX - wallThickness - sideroomWidth - 1, j];
                 t.WallType = WallID.Wood;
 
                 if (j == floorTopY + 19)
                 {
-                    WorldGen.Place1x1(endX - wallThickness - sideroomWidth, j, TileID.Torches, 6); //Place torch at the bottom
+                    WorldGen.Place1x1(endX - wallThickness - sideroomWidth - 1, j, TileID.Torches, 6); //Place torch at the bottom
                     t.IsTileInvisible = true;
                 }
             }
@@ -292,8 +311,7 @@ namespace CalRemix.Core.World
                 {
                     //Place portrait
                     int portrait = portraitOrder[portraitIndex]; //Find the order
-                    int portraitType = portraitTileTypes[portrait]; //Get the tile based on its index
-                    WorldGen.PlaceTile(portraitRoomX + 6, floorTopY + 11, portraitType);
+                    WorldGen.PlaceTile(portraitRoomX + 6, floorTopY + 11, portraitTileType, style: portrait);
                     portraitIndex++;
                 }
 
@@ -309,6 +327,62 @@ namespace CalRemix.Core.World
             }
         }
 
+        public static void CarveStairway(int floorCenterX, int floorTopY, bool left = true)
+        {
+            int startX = floorCenterX - totalFloorWidth / 2;
+            int endY = floorTopY + 20;
+            floorTopY -= (floorHeight - 20);
+
+
+            if (!left)
+                startX += totalFloorWidth - wallThickness - sideroomWidth + 1;
+            else
+                startX += wallThickness + 1;
+            int endX = startX + 5;
+
+
+            for (int i = startX; i < endX; i++)
+            {
+                //Carve the way
+                for (int j = floorTopY - 1; j < endY - 1; j++)
+                {
+                    Tile t = Main.tile[i, j];
+                    t.WallType = WallID.LivingWood;
+                    t.HasTile = false;
+                }
+
+                //Place a platform at the start
+                Tile t2 = Main.tile[i, floorTopY];
+                t2.HasTile = true;
+                t2.TileType = TileID.TeamBlockWhitePlatform;
+                t2.TileFrameY = 0;
+                t2.TileFrameX = (short)(i == startX ? 54 : i == endX - 1 ? 72 : 0);
+            }
+
+            int staircaseZigZagCount = 5;
+            int staircaseY = floorTopY + 1;
+            for (int s = 0; s < staircaseZigZagCount; s++)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    bool oddDir = s % 2 == 0;
+                    if (!left)
+                        oddDir = !oddDir;
+                    int x = oddDir ? startX + i : endX - 1 - i;
+                    Tile t2 = Main.tile[x, staircaseY + i];
+                    t2.HasTile = true;
+                    t2.TileType = TileID.TeamBlockWhitePlatform;
+                    t2.Slope = oddDir ? SlopeType.SlopeUpRight : SlopeType.SlopeUpLeft;
+                }
+
+                staircaseY += 5;
+            }
+
+            //Final framing
+            for (int i = startX - 1; i < endX + 1; i++)
+                for (int j = floorTopY - 1; j < endY + 1; j++)
+                    WorldGen.TileFrame(i, j);
+        }
 
         public static int portraitIndex = 0;
         public static void LoadPortrait(Mod mod, string name, string hoverTooltip)
@@ -318,15 +392,12 @@ namespace CalRemix.Core.World
             mod.AddContent(item);
 
             //Load the tile using the item's tile type
-            AutoloadedLegendPortrait tile = new AutoloadedLegendPortrait(name, hoverTooltip, item.Type, portraitIndex);
-            mod.AddContent(tile);
 
             //Set the portrait item's type to be the one of the portrait tile (so it can properly place it)
-            item.TileType = tile.Type;
+            item.TileType = portraitTileType;
 
-
-            portraitTileTypes[portraitIndex] = tile.Type;
             portraitItemTypes[portraitIndex] = item.Type;
+            portraitHoverTexts[portraitIndex] = hoverTooltip;
             portraitIndex++;
         }
     }
@@ -338,18 +409,14 @@ namespace CalRemix.Core.World
         public override string Name => InternalName != "" ? InternalName : base.Name;
 
         public string InternalName;
-        protected readonly int ItemType;
         protected readonly string TexturePath;
 
-        protected string HoverText;
-        protected int index;
+        public static Texture2D OpenPicture;
+        public static bool loadingImage;
 
-        public AutoloadedLegendPortrait(string name, string hoverText, int dropType, int index)
+        public AutoloadedLegendPortrait()
         {
-            InternalName = "LegendPortrait" + name;
-            HoverText = hoverText;
-            ItemType = dropType;
-            this.index = index;
+            InternalName = "LegendPortrait";
         }
 
         public override void SetStaticDefaults()
@@ -363,44 +430,60 @@ namespace CalRemix.Core.World
             TileObjectData.newTile.Height = 12;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
             TileObjectData.newTile.Origin = new Point16(4, 5);
+            TileObjectData.newTile.StyleWrapLimit = 6;
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-
 
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(160, 165, 160), name);
             DustType = DustID.GemDiamond;
         }
 
-        public override void PostTileFrame(int i, int j, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight)
-        {
-            Tile t = Main.tile[i, j];
-            if (t.TileType != Type)
-                return;
-
-            short originalFrameX = t.TileFrameX;
-            short originalFrameY = t.TileFrameY;
-
-            t.TileFrameX = (short)(t.TileFrameX % 144);
-            t.TileFrameY = (short)(t.TileFrameY % 216);
-
-            t.TileFrameX += (short)((index % 6) * 144);
-            if (index >= 6)
-                t.TileFrameY += 216;
-
-            if (t.TileFrameX != originalFrameX || t.TileFrameY != originalFrameY)
-            {
-                PostTileFrame(i, j - 1, 0, 0, 0, 0, 0, 0, 0, 0);
-                PostTileFrame(i, j + 1, 0, 0, 0, 0, 0, 0, 0, 0); 
-                PostTileFrame(i - 1, j, 0, 0, 0, 0, 0, 0, 0, 0); 
-                PostTileFrame(i + 1, j, 0, 0, 0, 0, 0, 0, 0, 0);
-            }
-        }
-
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
             drawData.tileLight = Color.White;
+
+            if (drawData.tileFrameX == 0 && drawData.tileFrameY == 432 && CalRemixWorld.savedAPicture)
+                Main.instance.TilesRenderer.AddSpecialLegacyPoint(new Point(i, j));
         }
 
+        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            // This is lighting-mode specific, always include this if you draw tiles manually
+            Vector2 offScreen = new Vector2(Main.offScreenRange);
+            if (Main.drawToScreen)
+            {
+                offScreen = Vector2.Zero;
+            }
+
+            Vector2 position = new Vector2(i, j) * 16 + new Vector2(7, 6) + offScreen - Main.screenPosition;
+
+
+            if (loadingImage)
+            {
+                Texture2D loadingTex = ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/LegendLoading").Value;
+                spriteBatch.Draw(loadingTex, position, null, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                return;
+            }
+
+            Texture2D tex = OpenPicture;
+            if (tex is null)
+            {
+                OpenSavedPicture();
+                return;
+            }
+
+            Vector2 frameSize = new Vector2(114, 147);
+            Vector2 scale = new Vector2(frameSize.Y / (float)tex.Height);
+
+            int ingameWidth = (int)(tex.Width * scale.X);           //How wide the image would be after resizing it to fill the space on the Y axis
+            float cropXPercent = frameSize.X / (float)ingameWidth;   //Percent taken between the total available space on the frame vs the full resized width
+
+            int frameWidth = (int)(tex.Width * cropXPercent);
+
+            Rectangle frame = new Rectangle(tex.Width / 2 - frameWidth / 2, (int)(tex.Width / frameSize.X), frameWidth, tex.Height);
+            spriteBatch.Draw(tex, position, frame, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+        }
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
@@ -415,10 +498,61 @@ namespace CalRemix.Core.World
         {
             Player player = Main.LocalPlayer;
 
-            player.cursorItemIconText = (ModContent.GetModTile(Main.tile[i, j].TileType) as AutoloadedLegendPortrait).HoverText;
+            Tile t = Main.tile[i, j];
+            int portraitIndex = t.TileFrameX / (18 * 8) + t.TileFrameY / (18 * 12) * 6;
+            player.cursorItemIconText = HallOfLegends.portraitHoverTexts[portraitIndex];
             player.cursorItemIconID = -1;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
+
+            if (!loadingImage && !CalRemixWorld.savedAPicture && portraitIndex == 12)
+                player.cursorItemIconText = "Right click to choose a picture and join the family!";
+        }
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Tile t = Main.tile[i, j];
+            int portraitIndex = t.TileFrameX / (18 * 8) + t.TileFrameY / (18 * 12) * 6;
+
+            if (closer && HallOfLegends.gratefulMood != null)
+                HallOfLegends.gratefulMood.Activate();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            if (Main.tile[i, j].TileFrameY < 432 || loadingImage)
+                return false;
+
+            loadingImage = false;
+            string savePath = $"{Main.SavePath}/RemixPictureSave";
+            string saveName = $"/YourPrettyPicture_{Main.worldID}";
+
+            if (FileOpenUtils.OpenImage(OnImageOpened, savePath, saveName))
+                loadingImage = true;
+            return true;
+        }
+
+        public static void OnImageOpened(Texture2D pic)
+        {
+            loadingImage = false;
+
+            if (pic == null)
+            {
+                OpenPicture = null;
+                CalRemixWorld.savedAPicture = false;
+            }    
+
+            OpenPicture = pic;
+            CalRemixWorld.savedAPicture = true;
+        }
+
+        public static void OpenSavedPicture()
+        {
+            string savePath = $"{Main.SavePath}/RemixPictureSave";
+            string saveName = $"/YourPrettyPicture_{Main.worldID}.png";
+
+            Main.QueueMainThreadAction(() => FileOpenUtils.LoadTexture(savePath + saveName, OnImageOpened));
+            loadingImage = true;
         }
     }
 
@@ -454,6 +588,7 @@ namespace CalRemix.Core.World
             Item.rare = ItemRarityID.Red;
             Item.master = true;
             Item.value = Item.sellPrice(0, 1);
+            Item.placeStyle = index;
         }
 
         public AutoloadedLegendPortraitItem(string name, string tooltip, int index)

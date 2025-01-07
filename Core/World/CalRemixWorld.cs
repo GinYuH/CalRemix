@@ -135,6 +135,7 @@ namespace CalRemix.Core.World
         public static bool deliciousMeat = true;
         public static bool profanedDesert = true;
         public static bool hypothetical = true;
+        public static bool savedAPicture = false;
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -271,6 +272,9 @@ namespace CalRemix.Core.World
             deliciousMeat = true;
             profanedDesert = true;
             hypothetical = true;
+
+            AutoloadedLegendPortrait.OpenPicture = null;
+            savedAPicture = false;
         }
 
         public override void OnWorldLoad()
@@ -352,6 +356,8 @@ namespace CalRemix.Core.World
             tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
             tag["genUpdate"] = postGenUpdate;
+
+            tag["savedAPicture"] = savedAPicture;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -419,6 +425,8 @@ namespace CalRemix.Core.World
 
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
             postGenUpdate = tag.Get<bool>("genUpdate");
+
+            GetData(ref savedAPicture, "savedAPicture", tag);
         }
 
         public static void GetData(ref bool baseVar, string path, TagCompound tag)
