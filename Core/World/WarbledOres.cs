@@ -21,10 +21,9 @@ namespace CalRemix.Core.World
 
         public void Load(Mod mod)
         {
+            ChlorineTileType = TileID.BubblegumBlock;
             On.CalamityMod.CalamityUtils.SpawnOre += WarbleOrespawns;
             IL_WorldGen.hardUpdateWorld += WarbleChlorophyte;
-
-            ChlorineTileType = TileID.BubblegumBlock;
         }
 
         private void WarbleChlorophyte(ILContext il)
@@ -32,7 +31,7 @@ namespace CalRemix.Core.World
             var cursor = new ILCursor(il);
 
             //two times, first for the mud spread and second for teh chloro spread
-            for (int i = 0; i < 2; i++)
+            for (int b = 0; b < 2; b++)
             {
                 if (!cursor.TryGotoNext(MoveType.After,
                     i => i.MatchLdsflda<Main>("tile"),
@@ -64,7 +63,7 @@ namespace CalRemix.Core.World
 
             //Chrlorine also spreads
             cursor.Emit(OpCodes.Ldloc, tileTypeIndex);
-            cursor.Emit(OpCodes.Ldc_I4, ChlorineTileType);
+            cursor.EmitDelegate(() => ChlorineTileType);
             cursor.Emit(OpCodes.Beq_S, chloroSpreadBranchLabel);
         }
 
