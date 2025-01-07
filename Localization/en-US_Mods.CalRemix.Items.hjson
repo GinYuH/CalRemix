@@ -3416,3 +3416,11 @@ ChloriumGreaves.Tooltip:
 	12% increased critical strike chance
 	22% increased movement speed
 	'''
+
+ChloriumPaintbrush: {
+	DisplayName: ChloriumPaintbrush
+	Tooltip:'''
+		Used with paint to color blocks
+		Can also apply coatings
+		'''
+}
