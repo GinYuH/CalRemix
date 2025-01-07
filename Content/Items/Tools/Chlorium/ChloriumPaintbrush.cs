@@ -83,7 +83,7 @@ namespace CalRemix.Content.Items.Tools.Chlorium
         {
             for (int i = 0; i < Main.InventorySlotsTotal; i++)
             {
-                if (inventory[i].PaintOrCoating)
+                if (player.inventory[i].PaintOrCoating)
                 {
                     return true;
                 }
@@ -100,7 +100,7 @@ namespace CalRemix.Content.Items.Tools.Chlorium
                 player.cursorItemIconEnabled = true;
                 if (player.ItemTimeIsZero && player.itemAnimation > 0 && player.controlUseItem)
                 {
-                    TryPaintMethod.Invoke(player, xpos, ypos, false, true);
+                    TryPaintMethod.Invoke(player, [xpos, ypos, false, true]);
                 }
             }
             return true;
