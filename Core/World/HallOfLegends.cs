@@ -404,7 +404,7 @@ namespace CalRemix.Core.World
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
-            if (Main.tile[i, j].WallType == WallID.AmberGemspark)
+            if (Main.tile[i, j].WallType == WallID.AmberGemspark || Main.tile[i, j].WallType == WallID.TitanstoneBlock)
                 return false;
             return true;
         }
