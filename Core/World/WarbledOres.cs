@@ -21,7 +21,7 @@ namespace CalRemix.Core.World
 
         public void Load(Mod mod)
         {
-            ChlorineTileType = TileID.BubblegumBlock;
+            ChlorineTileType = ModContent.TileType<ChloriumOrePlaced>();
             On.CalamityMod.CalamityUtils.SpawnOre += WarbleOrespawns;
             IL_WorldGen.hardUpdateWorld += WarbleChlorophyte;
         }
