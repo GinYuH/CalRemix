@@ -480,7 +480,7 @@ namespace CalRemix
                      }
                  }
             }
-            if (!noItem)
+            if (!fail && !effectOnly)
             {
                 if (type == TileType<Navystone>())
                 {
