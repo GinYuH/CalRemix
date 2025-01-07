@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
+using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Armor
 {
@@ -41,12 +42,6 @@ namespace CalRemix.Content.Items.Armor
         {
             player.setBonus = "Consuming fruits grants unlimited mana and increased magic damage for a short period of time\nThis effect has a 1 minute cooldown";
             player.GetModPlayer<CalRemixPlayer>().bananaClown = true;
-            player.GetModPlayer<CalamityPlayer>().cooldowns.TryGetValue(BananaClownCooldown.ID, out var cd);
-            if (player.HasCooldown(BananaClownCooldown.ID) && cd.timeLeft > 3600)
-            {
-                player.manaCost = 0;
-                player.GetDamage<MagicDamageClass>() += 0.1f;
-            }
         }
     }
 }
