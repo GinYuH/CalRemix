@@ -42,6 +42,7 @@ using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
+using Terraria.ID;
 
 namespace CalRemix.Core.Retheme
 {
@@ -62,6 +63,7 @@ namespace CalRemix.Core.Retheme
             { NPCType<HiveBlob2>(), "HiveMind/HiveBlob" },
             { NPCType<DarkHeart>(), "HiveMind/DarkHeart" },
             { NPCType<HiveMind>(), "HiveMind/HiveMind" },
+            { NPCID.SkeletronHead, "Skeletron/Dungen" },
             #region Perfs
             { NPCType<PerforatorCyst>(), "Perfs/Cyst" },
             { NPCType<PerforatorBodyLarge>(), "Perfs/LBody" },
