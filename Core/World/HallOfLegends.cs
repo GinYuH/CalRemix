@@ -323,6 +323,13 @@ namespace CalRemix.Core.World
                     WorldGen.PlaceTile(portraitRoomX + 6, floorTopY + 11, portraitTileType, style: portrait);
                     portraitIndex++;
                 }
+
+                //Hidden memorial picture
+                else if (p == 3)
+                {
+                    WorldGen.PlaceTile(portraitRoomX + 6, floorTopY + 11, ModContent.TileType<LegendMemorial>());
+                }
+
                 //merge the ceiling lamps on the last room of the final floor, and place the big portrait
                 else if (p == 5)
                 {
@@ -347,6 +354,8 @@ namespace CalRemix.Core.World
 
                     WorldGen.PlaceTile(portraitRoomX, floorTopY + 11, ModContent.TileType<LegendPromo>());
                 }
+
+
 
                 portraitRoomX += portraitDisplayWidth;
             }
@@ -441,6 +450,7 @@ namespace CalRemix.Core.World
         }
     }
 
+    #region Generic portraits
     [Autoload(false)]
     public class AutoloadedLegendPortrait : ModTile
     {
@@ -597,8 +607,6 @@ namespace CalRemix.Core.World
         }
     }
 
-
-
     [Autoload(false)]
     public class AutoloadedLegendPortraitItem : ModItem
     {
@@ -640,7 +648,9 @@ namespace CalRemix.Core.World
             Itemtooltip = tooltip;
         }
     }
+    #endregion
 
+    #region Promo poster
     public class LegendPromo : ModTile
     {
         public override string Texture => "Calremix/Assets/ExtraTextures/LegendPromo";
@@ -745,4 +755,114 @@ namespace CalRemix.Core.World
             Item.value = Item.sellPrice(0, 1);
         }
     }
+    #endregion
+
+    #region Memorial poster
+    public class LegendMemorial : ModTile
+    {
+        public override string Texture => "Calremix/Assets/ExtraTextures/LegendMemorial";
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
+            TileID.Sets.FramesOnKillWall[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+            TileObjectData.newTile.Width = 8;
+            TileObjectData.newTile.Height = 12;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
+            TileObjectData.newTile.Origin = new Point16(4, 5);
+            TileObjectData.addTile(Type);
+
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(new Color(160, 165, 160, 0), name);
+            DustType = DustID.GemDiamond;
+        }
+
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            bool informedOfYuhDeath = HallOfLegends.yuhDead.alreadySeen && !HallOfLegends.yuhDead.InDelayPeriod;
+            if (!informedOfYuhDeath)
+            {
+                //Hide
+                drawData.tileFrameX = 432;
+                drawData.tileFrameY = 0;
+                return;
+            }
+
+            drawData.tileLight = Color.White;
+        }
+
+
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            if (Main.tile[i, j].WallType == WallID.DiamondGemsparkOff || Main.tile[i, j].WallType == WallID.LivingWood)
+                return false;
+            return true;
+        }
+
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            if (++frameCounter > 8)
+            {
+                frame = ++frame % 3;
+                frameCounter = 0;
+            }
+        }
+
+        public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
+        {
+            frameXOffset = 144 * Main.tileFrame[type];
+        }
+
+        public override void MouseOver(int i, int j) => Hovering(i, j);
+        public override void MouseOverFar(int i, int j) => Hovering(i, j, true);
+        public static void Hovering(int i, int j, bool far = false)
+        {
+            bool informedOfYuhDeath = HallOfLegends.yuhDead.alreadySeen && !HallOfLegends.yuhDead.InDelayPeriod;
+            if (!informedOfYuhDeath)
+                return;
+
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconText = "Watching over us from a better place";
+            player.cursorItemIconID = -1;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+        }
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (Main.dedServ)
+                return;
+            bool informedOfYuhDeath = HallOfLegends.yuhDead.alreadySeen && !HallOfLegends.yuhDead.InDelayPeriod;
+            if (closer && HallOfLegends.mournfulMood != null && informedOfYuhDeath)
+                HallOfLegends.mournfulMood.Activate();
+        }
+    }
+
+    public class LegendMemorialItem : ModItem
+    {
+        public override string Texture => $"CalRemix/Assets/ExtraTextures/LegendMemorialItem";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Memorial Poster");
+            Tooltip.SetDefault("A beautiful soul gone too soon...");
+            Item.ResearchUnlockCount = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<LegendMemorial>());
+            Item.width = 32;
+            Item.height = 32;
+            Item.maxStack = 9999;
+            Item.rare = ItemRarityID.Red;
+            Item.master = true;
+            Item.value = Item.sellPrice(0, 1);
+        }
+    }
+
+    #endregion
 }

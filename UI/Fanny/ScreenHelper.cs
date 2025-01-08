@@ -611,6 +611,8 @@ namespace CalRemix.UI
         public static ScreenHelper TrapperBulbChan = new ScreenHelper();
         public static ScreenHelper MiracleBoy = new ScreenHelper();
 
+        public static ScreenHelper AltMetalFanny = new ScreenHelper();
+
         public override void OnInitialize()
         {
             LoadScreenHelper(FannyTheFire,"FannyIdle", true)
@@ -687,6 +689,12 @@ namespace CalRemix.UI
                     null,
                     new Vector2(149, 12)
                     ));
+
+
+            LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
+                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Thank you for the help, Fanny!")
+                .SetPositionData(false, 240, 0.17f);
         }
 
         /// <summary>
@@ -908,6 +916,7 @@ namespace CalRemix.UI
             LoadEvilFannyIntro();
             LoadMoonLordDeath();
             LoadBabil();
+            LoadMetalDiscoveryMessages();
             //LoadPityParty();
             LoadMiracleBoyMessages();
             LoadWonderFlowerMessages();
@@ -932,6 +941,25 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
             ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
             ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
+
+            ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalIron", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalLead", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalSilver", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalTungsten", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalGold", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalPlatinum", 8);
+
+            ScreenHelperPortrait.LoadPortrait("FannyMetalCobalt", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalPalladium", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalMythril", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalOrichalcum", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalAdamantite", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalTitanium", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalChlorophyte", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalChlorium", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalHallowed", 8);
 
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);
