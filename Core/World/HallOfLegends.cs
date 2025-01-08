@@ -333,7 +333,7 @@ namespace CalRemix.Core.World
                     }
 
 
-                    for (int i = portraitRoomX - portraitDisplayWidth + 2 ; i < portraitRoomX + portraitDisplayWidth - 1; i++)
+                    for (int i = portraitRoomX - portraitDisplayWidth + 3 ; i < portraitRoomX + portraitDisplayWidth - 2; i++)
                     {
                         for (int j = floorTopY + 1; j < endY - 1; j++)
                         {

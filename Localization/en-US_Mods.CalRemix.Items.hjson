@@ -3440,3 +3440,5 @@ LegendPortraitMORETTIItem: {
 	DisplayName: Portrait of a Legend - (MORETTI)
 	Tooltip: Voice of Auric Sonic!
 }
+
+LegendPromoItem.DisplayName: Promotional Poster
