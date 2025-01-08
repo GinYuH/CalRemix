@@ -3430,3 +3430,13 @@ LegendPortraitYOUItem: {
 	DisplayName: Portrait of a Legend - (YOU)
 	Tooltip: For your continous love and support!
 }
+
+LegendPortraitFALAFELItem: {
+	DisplayName: Portrait of a Legend - (FALAFEL)
+	Tooltip: A very nice cat
+}
+
+LegendPortraitMORETTIItem: {
+	DisplayName: Portrait of a Legend - (MORETTI)
+	Tooltip: Voice of Auric Sonic!
+}
