@@ -782,15 +782,6 @@ namespace CalRemix.Core.World
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            bool informedOfYuhDeath = HallOfLegends.yuhDead.alreadySeen && !HallOfLegends.yuhDead.InDelayPeriod;
-            if (!informedOfYuhDeath)
-            {
-                //Hide
-                drawData.tileFrameX = 432;
-                drawData.tileFrameY = 0;
-                return;
-            }
-
             drawData.tileLight = Color.White;
         }
 
@@ -814,6 +805,13 @@ namespace CalRemix.Core.World
         public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
         {
             frameXOffset = 144 * Main.tileFrame[type];
+
+            bool informedOfYuhDeath = HallOfLegends.yuhDead.alreadySeen && !HallOfLegends.yuhDead.InDelayPeriod;
+            if (!informedOfYuhDeath)
+            {
+                //Hide
+                frameXOffset = 432;
+            }
         }
 
         public override void MouseOver(int i, int j) => Hovering(i, j);

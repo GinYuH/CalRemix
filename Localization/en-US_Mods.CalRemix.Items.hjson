@@ -3442,3 +3442,8 @@ LegendPortraitMORETTIItem: {
 }
 
 LegendPromoItem.DisplayName: Promotional Poster
+
+LegendMemorialItem: {
+	DisplayName: Memorial Poster
+	Tooltip: A beautiful soul gone too soon...
+}
