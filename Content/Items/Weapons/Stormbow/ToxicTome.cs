@@ -64,15 +64,5 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
             return false;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe().
-                AddIngredient(ItemID.CopperBar, 30).
-                AddIngredient(ItemID.Cobweb, 15).
-                AddIngredient(ItemID.Amethyst, 1).
-                AddTile(TileID.Anvils).
-                Register();
-        }
     }
 }
