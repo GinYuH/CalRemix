@@ -878,6 +878,11 @@ namespace CalRemix.UI
         /// </summary>
         public static Dictionary<string, ScreenHelperPortrait> Portraits = new Dictionary<string, ScreenHelperPortrait>();
 
+        /// <summary>
+        /// List that contains all the messages spoken by screen helpers, in the order they're loaded
+        /// </summary>
+        public static Dictionary<string, int> messageIndexByID = new();
+
         public static bool screenHelpersEnabled = true;
         public static int fannyTimesFrozen = 0;
         public static ScreenHelperSceneMetrics sceneMetrics;
@@ -1229,6 +1234,15 @@ namespace CalRemix.UI
         internal int maxTextWidth;
         public float textSize;
 
+        public static HelperMessage ByID(string identifier)
+        {
+            if (ScreenHelperManager.messageIndexByID.TryGetValue(identifier, out int index))
+            {
+                return ScreenHelperManager.screenHelperMessages[index];
+            }
+            return null;
+        }
+
         public string Text
         {
             get => formattedText;
@@ -1338,7 +1352,7 @@ namespace CalRemix.UI
 
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
-
+            ScreenHelperManager.messageIndexByID.Add(identifier, ScreenHelperManager.screenHelperMessages.Count - 1);
             return msg;
         }
 

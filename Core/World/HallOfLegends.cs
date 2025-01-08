@@ -18,13 +18,15 @@ using System.IO;
 using Terraria.Modules;
 using System.Threading;
 using CalRemix.UI;
+using System.Linq;
 
 namespace CalRemix.Core.World
 {
     public class HallOfLegends : ILoadable
     {
-        public static int[] portraitOrder = [8 /*Ettel*/,   5 /*Conyroy*/, 2 /*Daslnew*/,  3 /*Perez*/,  1 /*Mitchard*/, 10 /*Dirac*/,
-                                             9 /*Wingert*/, 11 /*Huet*/,   0 /*Hayabusa*/, 4 /*Ackner*/, 6 /*Marino*/,   7 /*Hoob*/, ];
+        public static int[] portraitOrder = [8 /*Ettel*/,    5 /*Conyroy*/,  2 /*Daslnew*/,  3 /*Perez*/,  1 /*Mitchard*/, 10 /*Dirac*/,
+                                             9 /*Wingert*/,  11 /*Huet*/,    0 /*Hayabusa*/, 4 /*Ackner*/, 6 /*Marino*/,   7 /*Hoob*/,
+                                             14 /*Moretti*/, 13 /*Falafel*/, 12 /*YOU*/];
         public static int portraitTileType;
         public static int[] portraitItemTypes;
         public static string[] portraitHoverTexts;
@@ -35,11 +37,12 @@ namespace CalRemix.Core.World
 
         public static FannyMood gratefulMood;
         public static FannyMood mournfulMood;
+        public static HelperMessage yuhDead;
 
         public void Load(Mod mod)
         {
-            portraitItemTypes = new int[13];
-            portraitHoverTexts = new string[13];
+            portraitItemTypes = new int[15];
+            portraitHoverTexts = new string[15];
 
             AutoloadedLegendPortrait tile = new AutoloadedLegendPortrait();
             mod.AddContent(tile);
@@ -58,6 +61,8 @@ namespace CalRemix.Core.World
             LoadPortrait(mod, "DIRAC", "Test Lead, European Localization");
             LoadPortrait(mod, "HUET", "Voice of the Crim Son");
             LoadPortrait(mod, "YOU", "For your continous love and support!");
+            LoadPortrait(mod, "FALAFEL", "A very nice cat");
+            LoadPortrait(mod, "MORETTI", "Voice of the Liminal Critic");
 
             CalamityGenerateHiveHook = null;
             MethodInfo giantHiveMethodInfo = typeof(GiantHive).GetMethod("CanPlaceGiantHive", BindingFlags.Public | BindingFlags.Static);
@@ -69,7 +74,7 @@ namespace CalRemix.Core.World
             if (!Main.dedServ)
             {
                 gratefulMood = FannyMood.New("Grateful!", null, MoodTracker.PriorityClass.OnscreenNPCsMood, 1f, false, Color.OrangeRed, Color.Black).DisableNaturalSelection();
-                mournfulMood = FannyMood.New("Mournful...", null, MoodTracker.PriorityClass.OnscreenNPCsMood, 1f, false, Color.Gray, Color.Black).DisableNaturalSelection();
+                mournfulMood = FannyMood.New("Mournful...", null, 10f, 1f, false, Color.Gray, Color.Black).DisableNaturalSelection();
             }
         }
 
@@ -156,11 +161,11 @@ namespace CalRemix.Core.World
             CarveStairway(hallPosition.X, hallPosition.Y, false);
 
             hallPosition.Y += 26;
-            GenerateFloor(hallPosition.X, hallPosition.Y, ref portraitIndex, true);
+            GenerateFloor(hallPosition.X, hallPosition.Y, ref portraitIndex);
             CarveStairway(hallPosition.X, hallPosition.Y, true);
         }
 
-        public static void GenerateFloor(int floorCenterX, int floorTopY, ref int portraitIndex, bool emptyPortraits = false)
+        public static void GenerateFloor(int floorCenterX, int floorTopY, ref int portraitIndex)
         {
             int startX = floorCenterX - totalFloorWidth / 2;
             int endX = startX + totalFloorWidth;
@@ -283,36 +288,64 @@ namespace CalRemix.Core.World
                         //Trim to the left of the room
                         if (i == portraitRoomX)
                         {
-                            t.WallType = WallID.Wood;
+                            //No trim for the last floor where theres the double width section
+                            if (portraitIndex <= 14 || p < 5 )
+                                t.WallType = WallID.Wood;
+
                             if (j == floorTopY + 19)
                             {
                                 WorldGen.Place1x1(i, j, TileID.Torches, 6); //Place torch at the bottom
                                 t.IsTileInvisible = true;
                             }
                         }
-                        //Main room
-                        else if (!emptyPortraits)
+                        else 
                         {
                             if (i > portraitRoomX + 1 && i < portraitRoomX + portraitDisplayWidth - 1)
                             {
                                 if (j == floorTopY + 1)
                                     t.TileType = TileID.DiamondGemspark; //Gemspark ceiling lamps
-                                else if (j >= floorTopY + 6 && j <= floorTopY + 15)
+                                else if (j >= floorTopY + 6 && j <= floorTopY + 15 && portraitIndex <= 14)
                                     t.WallType = WallID.AmberGemspark;   //Gemspark walls behind painting
-                                else if (j >= floorTopY + 5 && j <= floorTopY + 17)
+                                else if (j >= floorTopY + 5 && j <= floorTopY + 17 && portraitIndex <= 14)
                                     t.WallType = WallID.TitanstoneBlock; //Titanstone trim around painting
 
                             }
                         }
                     }
+                
+                
                 }
 
-                if (!emptyPortraits)
+                if (portraitIndex <= 14)
                 {
                     //Place portrait
                     int portrait = portraitOrder[portraitIndex]; //Find the order
                     WorldGen.PlaceTile(portraitRoomX + 6, floorTopY + 11, portraitTileType, style: portrait);
                     portraitIndex++;
+                }
+                //merge the ceiling lamps on the last room of the final floor, and place the big portrait
+                else if (p == 5)
+                {
+                    for (int i = portraitRoomX - 1; i < portraitRoomX + 2; i++)
+                    {
+                        Tile t = Main.tile[i, floorTopY + 1];
+                        t.TileType = TileID.DiamondGemspark; //Gemspark ceiling lamps
+                    }
+
+
+                    for (int i = portraitRoomX - portraitDisplayWidth + 2 ; i < portraitRoomX + portraitDisplayWidth - 1; i++)
+                    {
+                        for (int j = floorTopY + 1; j < endY - 1; j++)
+                        {
+                            Tile t = Main.tile[i, j];
+                            if (j >= floorTopY + 6 && j <= floorTopY + 15)
+                                t.WallType = WallID.AmberGemspark;   //Gemspark walls behind painting
+                            else if (j >= floorTopY + 5 && j <= floorTopY + 17 )
+                                t.WallType = WallID.TitanstoneBlock; //Titanstone trim around painting
+                        }
+                    }
+
+                    WorldGen.PlaceTile(portraitRoomX, floorTopY + 11, ModContent.TileType<LegendPromo>());
                 }
 
                 portraitRoomX += portraitDisplayWidth;
@@ -323,6 +356,7 @@ namespace CalRemix.Core.World
                 for (int j = floorTopY; j < endY; j++)
                 {
                     WorldGen.TileFrame(i, j, true, true);
+                    WorldGen.SquareWallFrame(i, j);
                 }
             }
         }
@@ -372,7 +406,9 @@ namespace CalRemix.Core.World
                     Tile t2 = Main.tile[x, staircaseY + i];
                     t2.HasTile = true;
                     t2.TileType = TileID.TeamBlockWhitePlatform;
-                    t2.Slope = oddDir ? SlopeType.SlopeUpRight : SlopeType.SlopeUpLeft;
+                    t2.Slope = oddDir ? SlopeType.SlopeDownLeft : SlopeType.SlopeDownRight;
+                    t2.TileFrameX = (short)(oddDir ? 144 : 180);
+                    t2.TileFrameY = 0;
                 }
 
                 staircaseY += 5;
@@ -381,7 +417,10 @@ namespace CalRemix.Core.World
             //Final framing
             for (int i = startX - 1; i < endX + 1; i++)
                 for (int j = floorTopY - 1; j < endY + 1; j++)
+                {
                     WorldGen.TileFrame(i, j);
+                    WorldGen.SquareWallFrame(i, j);
+                }
         }
 
         public static int portraitIndex = 0;
@@ -513,14 +552,16 @@ namespace CalRemix.Core.World
         {
             Tile t = Main.tile[i, j];
             int portraitIndex = t.TileFrameX / (18 * 8) + t.TileFrameY / (18 * 12) * 6;
-
             if (closer && HallOfLegends.gratefulMood != null)
                 HallOfLegends.gratefulMood.Activate();
         }
 
         public override bool RightClick(int i, int j)
         {
-            if (Main.tile[i, j].TileFrameY < 432 || loadingImage)
+            Tile t = Main.tile[i, j];
+            int portraitIndex = t.TileFrameX / (18 * 8) + t.TileFrameY / (18 * 12) * 6;
+
+            if (portraitIndex != 12 || loadingImage)
                 return false;
 
             loadingImage = false;
@@ -597,6 +638,111 @@ namespace CalRemix.Core.World
             Itemname = $"Portrait of a Legend - ({name})";
             this.index = index;
             Itemtooltip = tooltip;
+        }
+    }
+
+    public class LegendPromo : ModTile
+    {
+        public override string Texture => "Calremix/Assets/ExtraTextures/LegendPromo";
+
+        public static bool hoveredOverPromo = false;
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
+            TileID.Sets.FramesOnKillWall[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+            TileObjectData.newTile.Width = 17;
+            TileObjectData.newTile.Height = 12;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
+            TileObjectData.newTile.Origin = new Point16(8, 5);
+            TileObjectData.addTile(Type);
+
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(new Color(160, 165, 160), name);
+            DustType = DustID.GemDiamond;
+
+            if (Main.dedServ)
+                return;
+            HallOfLegends.yuhDead = HelperMessage.New("YuhIsDead",
+           "Offer Update: Marvin \"GinYuh\" Dalsney died of an ailment in 2018 (aged 32) and is no longer able to visit those who beat the mod.",
+           "FannySob", null).NeedsActivation().AddDelay(3f);
+
+            hoveredOverPromo = false;
+        }
+
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            drawData.tileLight = Color.White;
+        }
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            if (Main.tile[i, j].WallType == WallID.AmberGemspark || Main.tile[i, j].WallType == WallID.TitanstoneBlock)
+                return false;
+            return true;
+        }
+
+        public override void MouseOver(int i, int j) => Hovering(i, j);
+        public override void MouseOverFar(int i, int j) => Hovering(i, j, true);
+        public static void Hovering(int i, int j, bool far = false)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconText = "Must be over 21 years old to be eligible.\n\nOffer only appliable to US residents.";
+            player.cursorItemIconID = -1;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+
+            if (!far)
+            {
+                hoveredOverPromo = true;
+            }
+        }
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (Main.dedServ)
+                return;
+
+            bool informedOfYuhDeath = HallOfLegends.yuhDead.alreadySeen;
+
+            if (closer && HallOfLegends.mournfulMood != null && informedOfYuhDeath)
+                HallOfLegends.mournfulMood.Activate();
+
+            else if (!informedOfYuhDeath && hoveredOverPromo)
+            {
+                Vector2 position = new Vector2(i, j) * 16;
+                if (Main.LocalPlayer.Center.Y < position.Y + 100 && Main.LocalPlayer.Center.Y >= position.Y)
+                {
+                    if (Math.Abs(Main.LocalPlayer.Center.X - position.X) < 300)
+                    {
+                        HallOfLegends.yuhDead.ActivateMessage();
+                    }
+                }
+            }
+        }
+    }
+
+    public class LegendPromoItem : ModItem
+    {
+        public override string Texture => $"CalRemix/Assets/ExtraTextures/LegendPromoItem";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Promotional Poster");
+            Item.ResearchUnlockCount = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<LegendPromo>());
+            Item.width = 32;
+            Item.height = 32;
+            Item.maxStack = 9999;
+            Item.rare = ItemRarityID.Red;
+            Item.master = true;
+            Item.value = Item.sellPrice(0, 1);
         }
     }
 }
