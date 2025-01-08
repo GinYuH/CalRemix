@@ -668,7 +668,7 @@ namespace CalRemix.Core.World
                 return;
             HallOfLegends.yuhDead = HelperMessage.New("YuhIsDead",
            "Offer Update: Marvin \"GinYuh\" Dalsney died of an ailment in 2018 (aged 32) and is no longer able to visit those who beat the mod.",
-           "FannySob", null).NeedsActivation().AddDelay(3f);
+           "FannySob", null).NeedsActivation().AddDelay(5f).SetHoverTextOverride("Everything happens for a reason, Fanny");
 
             hoveredOverPromo = false;
         }
