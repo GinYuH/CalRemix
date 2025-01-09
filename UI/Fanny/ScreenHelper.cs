@@ -611,6 +611,8 @@ namespace CalRemix.UI
         public static ScreenHelper TrapperBulbChan = new ScreenHelper();
         public static ScreenHelper MiracleBoy = new ScreenHelper();
 
+        public static ScreenHelper AltMetalFanny = new ScreenHelper();
+
         public override void OnInitialize()
         {
             LoadScreenHelper(FannyTheFire,"FannyIdle", true)
@@ -687,6 +689,12 @@ namespace CalRemix.UI
                     null,
                     new Vector2(149, 12)
                     ));
+
+
+            LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
+                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Thank you for the help, Fanny!")
+                .SetPositionData(false, 240, 0.17f);
         }
 
         /// <summary>
@@ -878,6 +886,11 @@ namespace CalRemix.UI
         /// </summary>
         public static Dictionary<string, ScreenHelperPortrait> Portraits = new Dictionary<string, ScreenHelperPortrait>();
 
+        /// <summary>
+        /// List that contains all the messages spoken by screen helpers, in the order they're loaded
+        /// </summary>
+        public static Dictionary<string, int> messageIndexByID = new();
+
         public static bool screenHelpersEnabled = true;
         public static int fannyTimesFrozen = 0;
         public static ScreenHelperSceneMetrics sceneMetrics;
@@ -903,6 +916,7 @@ namespace CalRemix.UI
             LoadEvilFannyIntro();
             LoadMoonLordDeath();
             LoadBabil();
+            LoadMetalDiscoveryMessages();
             //LoadPityParty();
             LoadMiracleBoyMessages();
             LoadWonderFlowerMessages();
@@ -927,6 +941,25 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
             ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
             ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
+
+            ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalIron", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalLead", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalSilver", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalTungsten", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalGold", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalPlatinum", 8);
+
+            ScreenHelperPortrait.LoadPortrait("FannyMetalCobalt", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalPalladium", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalMythril", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalOrichalcum", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalAdamantite", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalTitanium", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalChlorophyte", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalChlorium", 8);
+            ScreenHelperPortrait.LoadPortrait("FannyMetalHallowed", 8);
 
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);
@@ -1229,6 +1262,15 @@ namespace CalRemix.UI
         internal int maxTextWidth;
         public float textSize;
 
+        public static HelperMessage ByID(string identifier)
+        {
+            if (ScreenHelperManager.messageIndexByID.TryGetValue(identifier, out int index))
+            {
+                return ScreenHelperManager.screenHelperMessages[index];
+            }
+            return null;
+        }
+
         public string Text
         {
             get => formattedText;
@@ -1338,7 +1380,7 @@ namespace CalRemix.UI
 
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
-
+            ScreenHelperManager.messageIndexByID.Add(identifier, ScreenHelperManager.screenHelperMessages.Count - 1);
             return msg;
         }
 

@@ -234,6 +234,8 @@ namespace CalRemix.UI
             if (lingeringMood != null)
                 chosenMood = lingeringMood;
 
+            bool foundNewMood = false;
+
             //Moodlist waas sorted in reverse priority order so we start with the most important first
             foreach (FannyMood mood in moodList)
             {
@@ -249,6 +251,7 @@ namespace CalRemix.UI
                 if (mood.condition(ScreenHelperManager.sceneMetrics))
                 {
                     chosenMood = mood;
+                    foundNewMood = true;
                     break;
                 }
             }
@@ -256,7 +259,7 @@ namespace CalRemix.UI
             //NOTE : Plastic oracle in IonCubePlaced file sets the mood to "Trustful!"
 
             //Save the c urrent mood as a "lingering" mood
-            if (chosenMood.Lingering)
+            if (foundNewMood && chosenMood.Lingering)
             {
                 lingeringMood = chosenMood;
                 moodLingerTimer = chosenMood.lingerTime;

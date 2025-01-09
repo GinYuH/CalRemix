@@ -74,6 +74,8 @@ namespace CalRemix.Core.World
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = Main.tile[i, j];
+                    bool oreTile = true;
+
                     if (t.TileType == TileID.Copper || t.TileType == TileID.Tin)
                         t.TileType = WorldGen.genRand.NextBool() ? TileID.Copper : TileID.Tin;
                     else if (t.TileType == TileID.Iron || t.TileType == TileID.Lead)
@@ -82,6 +84,13 @@ namespace CalRemix.Core.World
                         t.TileType = WorldGen.genRand.NextBool() ? TileID.Silver : TileID.Tungsten;
                     else if (t.TileType == TileID.Gold || t.TileType == TileID.Platinum)
                         t.TileType = WorldGen.genRand.NextBool() ? TileID.Gold : TileID.Platinum;
+                    else
+                        oreTile = false;
+
+                    //Clear ores from spawn point to delay the joke
+                    if (oreTile && i > Main.spawnTileX - 200 && i < Main.spawnTileX + 200 && j < Main.spawnTileY + 200 && j > Main.spawnTileY - 100)
+                        t.TileType = TileID.Stone;
+
                 }
             }
         }

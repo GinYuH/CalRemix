@@ -3416,3 +3416,36 @@ ChloriumGreaves.Tooltip:
 	12% increased critical strike chance
 	22% increased movement speed
 	'''
+
+ChloriumPaintbrush: {
+	DisplayName: Chlorium Paintbrush
+	Tooltip:
+		'''
+		Used with paint to color blocks
+		Can also apply coatings
+		'''
+}
+
+LegendPortraitYOUItem: {
+	DisplayName: Portrait of a Legend - (YOU)
+	Tooltip: For your continous love and support!
+}
+
+LegendPortraitFALAFELItem: {
+	DisplayName: Portrait of a Legend - (FALAFEL)
+	Tooltip: A very nice cat
+}
+
+LegendPortraitMORETTIItem: {
+	DisplayName: Portrait of a Legend - (MORETTI)
+	Tooltip: Voice of Auric Sonic!
+}
+
+LegendPromoItem.DisplayName: Promotional Poster
+
+
+LegendMemorialItem: {
+	DisplayName: Memorial Poster
+	Tooltip: A beautiful soul gone too soon...
+}
+
