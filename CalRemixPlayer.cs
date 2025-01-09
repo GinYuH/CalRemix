@@ -259,6 +259,8 @@ namespace CalRemix
         public bool boiactive = false;
         public int boihealth = 0;
         public int boistage = 0;
+        // Trapper Quest
+        public bool tqactive = false;
 
 		public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
 

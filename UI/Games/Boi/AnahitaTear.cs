@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace CalRemix.UI.Games.Boi
 {
-    public class AnahitaTear : BoiEntity, IColliding, IDamageDealer, BaseClasses.IDrawable
+    public class AnahitaTear : BoiEntity, IColliding, IDamageDealer, IDrawable
     {
         //public override string Texture => "CalValEX/ExtraTextures/Pong/PongBall";
 

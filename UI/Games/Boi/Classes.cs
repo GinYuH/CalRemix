@@ -7,29 +7,9 @@ using System.Linq;
 
 namespace CalRemix.UI.Games.Boi.BaseClasses
 {
-    public class BoiEntity
+    public class BoiEntity : GameEntity
     {
-        public Vector2 OldPosition;
-        public Vector2 Position;
-        public Vector2 Velocity;
         public List<BoiItem> Inventory = new List<BoiItem>();
-        public virtual void OnSpawn() { }
-        public virtual void Update() { }
-
-        public Vector2 ScreenPosition()
-        {
-            return Position + BoiHandler.ScreenOffset;
-        }
-
-        public BoiEntity Clone()
-        {
-            BoiEntity clone = new BoiEntity();
-            clone.Position = Position;
-            clone.Velocity = Velocity;
-            clone.OldPosition = OldPosition;
-
-            return clone;
-        }
     }
 
     public class BoiRoom

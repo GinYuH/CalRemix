@@ -6,29 +6,29 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CalRemix.UI.Games.Boi.BaseClasses
+namespace CalRemix.UI.Games.TrapperQuest
 {
-    public static class RoomGenerator
+    public static class TQRoomPopulator
     {
-        public static List<BoiEntity> GetClone(this List<BoiEntity> source)
+        public static List<GameEntity> GetClone(this List<GameEntity> source)
         {
-            return source.Select(item => item.Clone() as BoiEntity)
+            return source.Select(item => item.Clone())
                         .ToList();
         }
 
-        public static void PopulateRoomEnemies(BoiRoom room)
+        public static void PopulateRoomEnemies(TQRoom room)
         {
             room.Entities.AddRange(Main.rand.NextFromCollection(Layouts).Population.GetClone());
         }
 
-        public static void Populate(this BoiRoom room)
+        public static void Populate(this TQRoom room)
         {
             PopulateRoomEnemies(room);
         }
 
         public static readonly List<RoomLayout> Layouts = new List<RoomLayout>()
         {
-            new RoomLayout(new List<BoiEntity>()
+            new RoomLayout(new List<GameEntity>()
             {
 				//Entities
 
@@ -37,7 +37,7 @@ namespace CalRemix.UI.Games.Boi.BaseClasses
 
 			}),
 
-            new RoomLayout(new List<BoiEntity>()
+            new RoomLayout(new List<GameEntity>()
             {
 				//Entities
 
@@ -46,7 +46,7 @@ namespace CalRemix.UI.Games.Boi.BaseClasses
 
 			}),
 
-            new RoomLayout(new List<BoiEntity>()
+            new RoomLayout(new List<GameEntity>()
             {
 				//Entities.. Etc. You got me
 
@@ -64,9 +64,9 @@ namespace CalRemix.UI.Games.Boi.BaseClasses
     //Very barebones.
     public struct RoomLayout
     {
-        public List<BoiEntity> Population;
+        public List<GameEntity> Population;
 
-        public RoomLayout(List<BoiEntity> population)
+        public RoomLayout(List<GameEntity> population)
         {
             Population = population;
         }

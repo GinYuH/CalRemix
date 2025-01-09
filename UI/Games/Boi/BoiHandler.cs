@@ -10,7 +10,7 @@ namespace CalRemix.UI.Games.Boi.BaseClasses
     public class BoiHandler
     {
         public const float OOBLeeway = 100;
-        public static readonly Vector2 playingField = new Vector2(789, 472);
+        public static Vector2 playingField => GameManager.playingField;
         public static List<BoiRoom> Map; //Idk how to handle that rn
         public static BoiPlayer Ana;
         public static int UnexploredDoors; //To avoid ending up with unfinished floors
@@ -23,7 +23,7 @@ namespace CalRemix.UI.Games.Boi.BaseClasses
         public static Dictionary<IInteractable, BoiEntity> InteractibleEntities = new Dictionary<IInteractable, BoiEntity>();
         public static List<List<IDrawable>> DrawLayers = new List<List<IDrawable>>();
 
-        public static Vector2 ScreenOffset => new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) - playingField / 2f;
+        public static Vector2 ScreenOffset => GameManager.ScreenOffset;
 
         public static void Initialize()
         {

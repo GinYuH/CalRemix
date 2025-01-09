@@ -6,15 +6,16 @@ using CalRemix.UI.Games.Boi.BaseClasses;
 
 namespace CalRemix.UI.Games.Boi
 {
-    public class BoiDoor : BoiEntity, IInteractable, BaseClasses.IDrawable
+    public class BoiDoor : BoiEntity, IInteractable, IDrawable
     {
         public BoiRoom RoomImIn;
         public BoiRoom RoomILeadTo;
         Vector2 Wall;
         public float CollisionCircleRadius => 10;
 
-        public bool Interact(BoiPlayer player)
+        public bool Interact(GameEntity entity)
         {
+            BoiPlayer player = entity as BoiPlayer;
             //Unload the player from the room we are in
             RoomImIn.Entities.Remove(player);
 
