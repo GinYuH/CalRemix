@@ -538,7 +538,7 @@ namespace CalRemix
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("DesertMedallion"), () => false));
                 }
-                if (recipe.HasResult(ItemType<CryoKey>()))
+                if (recipe.HasResult(ItemType<CryoKey>()) && !recipe.HasIngredient(ModContent.ItemType<CryoKeyMold>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("CryoKey"), () => !CalRemixWorld.aspids));
                 }
