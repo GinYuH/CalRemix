@@ -9,20 +9,25 @@ namespace CalRemix.UI.Games.TrapperQuest
 {
     public class TQRoom
     {
-        public int MapX;
-        public int MapY;
-
         public static readonly List<Vector2> Walls = new List<Vector2>() { Vector2.UnitX, -Vector2.UnitX, Vector2.UnitY, -Vector2.UnitY };
 
-        public List<GameEntity> Entities; //A list of entities spawned on entry of the room.
+        public List<GameEntity> Entities = new List<GameEntity>(); //A list of entities spawned on entry of the room.
 
-        public TQRoom(int X, int Y)
+        public int id;
+
+        public Vector2 spawnPos = Vector2.Zero;
+
+
+        public TQRoom(int X, int Y, int ID)
+        {
+            new TQRoom(new Vector2(X, Y), ID);
+        }
+
+        public TQRoom(Vector2 spawnPos, int ID)
         {
             Entities = new List<GameEntity>();
-
-            //Place the room on the map
-            MapX = X;
-            MapY = Y;
+            id = ID;
+            this.spawnPos = spawnPos;
         }
     }
 }

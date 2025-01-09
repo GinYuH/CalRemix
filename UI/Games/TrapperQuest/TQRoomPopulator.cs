@@ -16,14 +16,14 @@ namespace CalRemix.UI.Games.TrapperQuest
                         .ToList();
         }
 
-        public static void PopulateRoomEnemies(TQRoom room)
+        public static void PopulateRoomEnemies(TQRoom room, int ID)
         {
-            room.Entities.AddRange(Main.rand.NextFromCollection(Layouts).Population.GetClone());
+            room.Entities.AddRange(Layouts[ID].Population);
         }
 
-        public static void Populate(this TQRoom room)
+        public static void Populate(this TQRoom room, int ID)
         {
-            PopulateRoomEnemies(room);
+            PopulateRoomEnemies(room, ID);
         }
 
         public static readonly List<RoomLayout> Layouts = new List<RoomLayout>()
@@ -32,10 +32,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
 				//Entities
 
+                TQRock.NewRock(GameManager.playingField),
+                TQRock.NewRock(GameManager.playingField - new Vector2(100, 100)),
+                TQRock.NewRock(GameManager.playingField - new Vector2(100, 200)),
+                TQRock.NewRock(GameManager.playingField - new Vector2(200, 100)),
+                TQRock.NewRock(GameManager.playingField - new Vector2(200, 200)),
+                TQRock.NewRock(GameManager.playingField - new Vector2(100, 0))
 
 
-
-			}),
+            }),
 
             new RoomLayout(new List<GameEntity>()
             {

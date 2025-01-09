@@ -12,6 +12,19 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public TQRoom RoomImIn;
 
+        int curFrame;
+        int frameCounter;
+
+        public bool IsRunning => Main.keyState.IsKeyDown(Keys.LeftShift);
+
+        public bool ControlLeft => Main.keyState.IsKeyDown(Keys.A);
+
+        public bool ControlRight => Main.keyState.IsKeyDown(Keys.D);
+
+        public bool ControlUp => Main.keyState.IsKeyDown(Keys.W);
+
+        public bool ControlDown => Main.keyState.IsKeyDown(Keys.S);
+
         public TrapperPlayer(Vector2 position, float health, TQRoom room)
         {
             Position = position;
@@ -46,37 +59,55 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             int baseSpeed = 3;
             int sprintSpeed = 5;
-            int moveSpeed = state.IsKeyDown(Keys.LeftShift) ? sprintSpeed : baseSpeed;
+            int moveSpeed = IsRunning ? sprintSpeed : baseSpeed;
 
-            if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.D))
+            if (ControlLeft && ControlRight)
             {
                 Velocity.X = 0;
             }
-            else if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.D))
+            else if (ControlLeft || ControlRight)
             {
-                if (state.IsKeyDown(Keys.A))
+                if (ControlLeft)
                     Velocity.X = -moveSpeed;
-                if (state.IsKeyDown(Keys.D))
+                if (ControlRight)
                     Velocity.X = moveSpeed;
             }
             else
                 Velocity.X = 0;
 
-            if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.S))
+            if (ControlUp && ControlDown)
             {
                 Velocity.Y = 0;
             }
-            else if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.S))
+            else if (ControlUp || ControlDown)
             {
-                if (state.IsKeyDown(Keys.W))
+                if (ControlUp)
                     Velocity.Y = -moveSpeed;
-                if (state.IsKeyDown(Keys.S))
+                if (ControlDown)
                     Velocity.Y = moveSpeed;
             }
             else
                 Velocity.Y = 0;
 
             Velocity = Velocity.SafeNormalize(Vector2.Zero) * moveSpeed;
+
+            if (Velocity.Length() > 0)
+            {
+                int animSpeed = IsRunning ? 6 : 12;
+                frameCounter++;
+                if (frameCounter > animSpeed)
+                {
+                    curFrame++;
+                    frameCounter = 0;
+                }
+            }
+            else
+            {
+                frameCounter = 0;
+                curFrame = 0;
+            }
+            if (curFrame > 3)
+                curFrame = 0;
 
             #endregion
         }
@@ -89,15 +120,15 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             int frame = 0;
             if (Velocity.Y < 0)
-                frame = 2;
+                frame = 8;
             else if (Velocity.X > 0)
-                frame = 1;
+                frame = 4;
             else if (Velocity.X < 0)
-                frame = 3;
+                frame = 12;
 
             Vector2 drawPosition = Position + offset;
 
-            Main.EntitySpriteDraw(TBC, drawPosition, TBC.Frame(1, 4, 0, frame), Color.White, 0f, new Vector2(TBC.Width / 2, TBC.Height / 8), 1f, 0, 0);
+            Main.EntitySpriteDraw(TBC, drawPosition, TBC.Frame(1, 16, 0, frame + curFrame), Color.White, 0f, new Vector2(TBC.Width / 2, TBC.Height / 32), 1f, 0, 0);
 
         }
     }

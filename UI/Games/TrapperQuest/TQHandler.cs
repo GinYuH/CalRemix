@@ -6,21 +6,34 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using CalRemix.UI.Games.Boi.BaseClasses;
 using CalamityMod.Graphics.Renderers;
+using Terraria.GameContent;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
     public class TQHandler
     {
         public static TrapperPlayer player;
+        public static List<GameEntity> DeadEntities = new List<GameEntity>();
+        public static Dictionary<IColliding, GameEntity> CollidingEntities = new Dictionary<IColliding, GameEntity>();
+        public static Dictionary<ICollidable, GameEntity> CollidableEntities = new Dictionary<ICollidable, GameEntity>();
+        public static Dictionary<IInteractable, GameEntity> InteractibleEntities = new Dictionary<IInteractable, GameEntity>();
+        public static List<List<IDrawable>> DrawLayers = new List<List<IDrawable>>();
         public static void Load()
         {
-            TQRoom room = NewRoom(0, 0);
+            TQRoom room = NewRoom(0, 0, 0);
             player = new TrapperPlayer(GameManager.playingField / 2f, 5f, room);
+
+            DrawLayers = new List<List<IDrawable>>();
+            DeadEntities = new List<GameEntity>();
+            CollidingEntities = new Dictionary<IColliding, GameEntity>();
+            CollidableEntities = new Dictionary<ICollidable, GameEntity>();
+            InteractibleEntities = new Dictionary<IInteractable, GameEntity>();
         }
 
         public static void Unload()
         {
             player = null;
+            DrawLayers.Clear();
         }
 
         public static void Run()
@@ -30,21 +43,11 @@ namespace CalRemix.UI.Games.TrapperQuest
             //Process the players movement and actions
             player.ProcessControls();
 
-            player.OldPosition = player.Position;
-            player.Position += player.Velocity;
-
+            TQRoom simulatedRoom = player.RoomImIn;
 
             //For each entity
-            /*foreach (GameEntity entity in simulatedRoom.Entities)
+            foreach (GameEntity entity in simulatedRoom.Entities)
             {
-                //-Run their update function (and the UpdateEffect functions of their inventory slots
-                entity.Update();
-                if (entity.Inventory != null)
-                {
-                    foreach (BoiItem item in entity.Inventory)
-                        item.UpdateEffect();
-                }
-
                 entity.OldPosition = entity.Position;
                 entity.Position += entity.Velocity;
 
@@ -60,44 +63,93 @@ namespace CalRemix.UI.Games.TrapperQuest
                     CollidableEntities.Add(collider, entity);
                 }
 
-                //-If they are an active damageable entity, add them to the list.
-                if (entity is IDamageable damageTaker && damageTaker.Vulnerable)
-                {
-                    DamageableEntities.Add(damageTaker, entity);
-                }
-
-                //-If they are an active damage dealing entity, add them to the list.
-                if (entity is IDamageDealer damageDealer && damageDealer.ActiveHitbox)
-                {
-                    DamageDealingEntities.Add(damageDealer, entity);
-                }
-
                 //-If they are an active interactible entity and close enough to the player, add them to the list
                 if (entity is IInteractable interactable && interactable.CanBeInteractedWith)
                 {
-                    if ((entity.Position - Ana.Position).Length() - Ana.Hitbox.radius < interactable.CollisionCircleRadius)
+                    if ((entity.Position - player.Position).Length() - player.Hitbox.radius < interactable.CollisionCircleRadius)
                     {
                         InteractibleEntities.Add(interactable, entity);
                     }
                 }
-            }*/
+            }
+
+            //For each entity that is IColliding and has CanCollide set to true (as listed above)
+            foreach (IColliding colliding in CollidingEntities.Keys)
+            {
+                GameEntity collidingEntity = CollidingEntities[colliding];
+
+                //Check for all IColliders, and grab their SimulationDistance.
+                foreach (ICollidable collider in CollidableEntities.Keys)
+                {
+                    GameEntity colliderEntity = CollidableEntities[collider];
+
+                    //If the simulation distance + the CollisionCircleRadius of the IColliding is higher than the distance between the two entities, thats awesome, don't even do anything about it and go to the next one
+                    if ((colliderEntity.Position - collidingEntity.Position).Length() > collider.SimulationDistance + colliding.CollisionHitbox.radius)
+                        continue;
+
+                    //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
+                    collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
+
+                    //Call both their onCollide function. Kill the colliding entity if its onCollide returns true
+                    collider.OnCollide(collidingEntity);
+                    if (colliding.OnCollide(colliderEntity))
+                    {
+                        DeadEntities.Add(collidingEntity);
+                        break;
+                    }
+                }
+            }
+
+            foreach (IInteractable interactible in InteractibleEntities.Keys)
+            {
+                if (interactible.Interact(player))
+                    DeadEntities.Add(InteractibleEntities[interactible]);
+            }
+
+            //Out of bounds checks & entityn interaction
+            foreach (GameEntity entity in simulatedRoom.Entities)
+            {
+                if (OOBCheck(entity, entity is IColliding collider))
+                    DeadEntities.Add(entity);
+            }
+
+            //Remove all the dead entities from the list of simulated entities
+            simulatedRoom.Entities.RemoveAll(n => DeadEntities.Contains(n));
+
+            //Clear all the lists created earlier (since they were just here to store the entities that were being processed this frame.
+            DeadEntities.Clear();
+            CollidingEntities.Clear();
+            CollidableEntities.Clear();
+            InteractibleEntities.Clear();
         }
 
         public static void Draw(SpriteBatch sb)
         {
             //Draw base screen
-            Texture2D BackgroundTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/Boi/PongBG").Value;
+            Texture2D BackgroundTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/BG").Value;
             Vector2 offset = BackgroundTex.Size() / 2f - GameManager.playingField / 2f;
             sb.Draw(BackgroundTex, GameManager.ScreenOffset - offset, null, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
 
             //Draw room border
-            Texture2D BorderTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/Boi/Room").Value;
+            Texture2D BorderTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/Border").Value;
             Vector2 BorderScale = new Vector2(GameManager.playingField.X / BorderTex.Width, GameManager.playingField.Y / BorderTex.Height);
             sb.Draw(BorderTex, GameManager.ScreenOffset, null, Color.White, 0f, Vector2.Zero, BorderScale, 0, 0f);
 
-            player.Draw(sb, GameManager.ScreenOffset);
-            /*//For each entity in Entities, if its an IDrawable, store them in new lists, separated on their Layer
-            foreach (BoiEntity entity in player.RoomImIn.Entities)
+            bool debugDraw = true;
+            if (debugDraw)
+            {
+                for (int i = 0; i < 14; i++)
+                {
+                    sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset + Vector2.UnitX * ((i * 64) + 8), new Rectangle(0, 0, 2, BorderTex.Height), Color.Red, 0f, Vector2.Zero, BorderScale, 0, 0f);
+                }
+                for (int i = 0; i < 8; i++)
+                {
+                    sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset + Vector2.UnitY * ((i * 64) + 8), new Rectangle(0, 0, BorderTex.Width, 2), Color.Red, 0f, Vector2.Zero, BorderScale, 0, 0f);
+                }
+            }
+
+            //For each entity in Entities, if its an IDrawable, store them in new lists, separated on their Layer
+            foreach (GameEntity entity in player.RoomImIn.Entities)
             {
                 if (entity is IDrawable drawableEntity)
                 {
@@ -132,20 +184,65 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
                 foreach (IDrawable drawer in DrawLayers[i])
                 {
-                    drawer.Draw(spriteBatch, ScreenOffset);
+                    drawer.Draw(sb, GameManager.ScreenOffset);
                 }
             }
 
-            DrawLayers.Clear();*/
+            DrawLayers.Clear();
         }
 
-        public static TQRoom NewRoom(int x, int y)
+        /// <summary>
+        /// Do the necessary processes to make sure an entity doesnt end up out of bound, and kills it if necessary. If the entity needs to die, this function returns true
+        /// </summary>
+        /// <param name="entity">The entity to check</param>
+        /// <param name="Collision">Wether or not the entity can collide with walls. If false, the entity will be able to go out of bounds for a while before getting cleared</param>
+        /// <returns>Wether or not the entity died from the oob check</returns>
+        public static bool OOBCheck(GameEntity entity, bool Collision)
+        {
+            if (Collision)
+            {
+                IColliding collider = entity as IColliding;
+                bool isOOB = false;
+                float collisionRadius = collider.CollisionHitbox.radius;
+
+                if (entity.Position.X > GameManager.playingField.X - collisionRadius || entity.Position.X < collisionRadius)
+                {
+                    isOOB = true;
+                    entity.Position.X = MathHelper.Clamp(entity.Position.X, collisionRadius, GameManager.playingField.X - collisionRadius);
+                }
+
+                if (entity.Position.Y > GameManager.playingField.Y - collisionRadius || entity.Position.Y < collisionRadius)
+                {
+                    isOOB = true;
+                    entity.Position.Y = MathHelper.Clamp(entity.Position.Y, collisionRadius, GameManager.playingField.Y - collisionRadius);
+                }
+
+                if (isOOB)
+                {
+                    return collider.OnCollide(null);
+                }
+
+                return false;
+            }
+
+            else
+            {
+                if (entity.Position.X > GameManager.playingField.X + BoiHandler.OOBLeeway || entity.Position.X < -BoiHandler.OOBLeeway || entity.Position.Y > GameManager.playingField.Y + BoiHandler.OOBLeeway || entity.Position.Y < -BoiHandler.OOBLeeway)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static TQRoom NewRoom(int x, int y, int ID)
         {
             //Generate room sstuff
-            TQRoom room = new TQRoom(x, y);
+            TQRoom room = new TQRoom(x, y, ID);
 
             //Fill the room with entities, i assume.
-            room.Populate();
+            room.Populate(ID);
 
             return room;
         }
