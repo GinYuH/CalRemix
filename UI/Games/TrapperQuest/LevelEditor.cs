@@ -61,6 +61,8 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             {
+                player.RoomImIn.Entities.RemoveAll((GameEntity g) => g is not TrapperPlayer);
+                player.RoomImIn.Tiles.Clear();
                 string dump = File.ReadAllText(path);
                 string[] lines = dump.Split('\n');
                 for (int i = 0; i < lines.Length - 1; i++)
