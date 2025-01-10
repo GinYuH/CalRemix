@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using CalRemix.UI.Games.Boi.BaseClasses;
 using CalamityMod.Graphics.Renderers;
 using Terraria.GameContent;
+using log4net.Layout;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -18,6 +19,21 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static Dictionary<ICollidable, GameEntity> CollidableEntities = new Dictionary<ICollidable, GameEntity>();
         public static Dictionary<IInteractable, GameEntity> InteractibleEntities = new Dictionary<IInteractable, GameEntity>();
         public static List<List<IDrawable>> DrawLayers = new List<List<IDrawable>>();
+
+        public const int RoomWidth = 7;
+        public const int RoomHeight = 13;
+        public const int tileSize = 64;
+
+        public static Vector2 ConvertToTileCords(Vector2 position)
+        {
+            return (position - new Vector2(tileSize / 2)) / tileSize;
+        }
+
+        public static Vector2 ConvertToScreenCords(Vector2 tilePos)
+        {
+            return tilePos * tileSize + new Vector2(tileSize / 2);
+        }
+
         public static void Load()
         {
             TQRoom room = NewRoom(0, 0, 0);
@@ -87,6 +103,8 @@ namespace CalRemix.UI.Games.TrapperQuest
                     if ((colliderEntity.Position - collidingEntity.Position).Length() > collider.SimulationDistance + colliding.CollisionHitbox.radius)
                         continue;
 
+                    Vector2 ogPos = collidingEntity.Position;
+
                     //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
                     collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
 
@@ -138,13 +156,13 @@ namespace CalRemix.UI.Games.TrapperQuest
             bool debugDraw = true;
             if (debugDraw)
             {
-                for (int i = 0; i < 14; i++)
+                for (int i = 0; i < RoomHeight + 1; i++)
                 {
-                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitX * i * 64 + Vector2.One * 8, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
+                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitX * i * 64 + Vector2.One * 7, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
                 }
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < RoomWidth + 1; i++)
                 {
-                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitY * i * 64 + Vector2.One * 8, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
+                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitY * i * 64 + Vector2.One * 7, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
                 }
             }
 

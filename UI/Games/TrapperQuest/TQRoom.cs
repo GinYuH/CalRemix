@@ -13,6 +13,8 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public List<GameEntity> Entities = new List<GameEntity>(); //A list of entities spawned on entry of the room.
 
+        public Dictionary<(int, int), TQRock> Tiles = new Dictionary<(int, int), TQRock>();
+
         public int id;
 
         public Vector2 spawnPos = Vector2.Zero;
@@ -26,6 +28,7 @@ namespace CalRemix.UI.Games.TrapperQuest
         public TQRoom(Vector2 spawnPos, int ID)
         {
             Entities = new List<GameEntity>();
+            Tiles = new Dictionary<(int, int), TQRock>();
             id = ID;
             this.spawnPos = spawnPos;
         }

@@ -19,6 +19,13 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static void PopulateRoomEnemies(TQRoom room, int ID)
         {
             room.Entities.AddRange(Layouts[ID].Population);
+            foreach (var entity in Layouts[ID].Population)
+            {
+                if (entity is TQRock rok)
+                {
+                    room.Tiles.Add((rok.tileX, rok.tileY), rok);
+                }
+            }
         }
 
         public static void Populate(this TQRoom room, int ID)
@@ -32,14 +39,13 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
 				//Entities
 
-                TQRock.NewRock(GameManager.playingField),
-                TQRock.NewRock(GameManager.playingField - new Vector2(100, 100)),
-                TQRock.NewRock(GameManager.playingField - new Vector2(100, 200)),
-                TQRock.NewRock(GameManager.playingField - new Vector2(200, 100)),
-                TQRock.NewRock(GameManager.playingField - new Vector2(200, 200)),
-                TQRock.NewRock(GameManager.playingField - new Vector2(100, 0))
-
-
+                TQRock.NewRockTC(0, 0),
+                TQRock.NewRockTC(1, 1),
+                TQRock.NewRockTC(2, 2),
+                TQRock.NewRockTC(3, 3),
+                TQRock.NewRockTC(12, 3),
+                TQRock.NewRockTC(11, 6),
+                TQRock.NewRockTC(1, 3)
             }),
 
             new RoomLayout(new List<GameEntity>()

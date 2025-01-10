@@ -20,10 +20,20 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public float SimulationDistance => 32f;
 
-        public static TQRock NewRock(Vector2 position)
+        public int tileX = 0;
+        public int tileY = 0;
+
+        public static TQRock NewRockTC(int x, int y)
+        {
+            return NewRockTC(new Vector2(x, y));
+        }
+
+        public static TQRock NewRockTC(Vector2 position)
         {
             TQRock newRok = new TQRock();
-            newRok.Position = position;
+            newRok.Position = TQHandler.ConvertToScreenCords(position);
+            newRok.tileX = (int)position.X;
+            newRok.tileY = (int)position.Y;
             return newRok;
         }
 
