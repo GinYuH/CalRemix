@@ -8,6 +8,7 @@ using CalRemix.UI.Games.Boi.BaseClasses;
 using CalamityMod.Graphics.Renderers;
 using Terraria.GameContent;
 using log4net.Layout;
+using Microsoft.Xna.Framework.Input;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -26,13 +27,18 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static Vector2 ConvertToTileCords(Vector2 position)
         {
-            return (position - new Vector2(tileSize / 2)) / tileSize;
+            Vector2 preThing = (position - new Vector2(tileSize / 2)) / tileSize;
+            preThing.X = MathF.Floor(preThing.X);
+            preThing.Y = MathF.Floor(preThing.Y);
+            return preThing;
         }
 
         public static Vector2 ConvertToScreenCords(Vector2 tilePos)
         {
             return tilePos * tileSize + new Vector2(tileSize / 2);
         }
+
+        public static Rectangle Mouse => new Rectangle((int)Main.MouseScreen.X - (int)GameManager.ScreenOffset.X + tileSize / 2, (int)Main.MouseScreen.Y - (int)GameManager.ScreenOffset.Y + tileSize / 2, 10, 10);
 
         public static void Load()
         {
@@ -70,13 +76,13 @@ namespace CalRemix.UI.Games.TrapperQuest
                 //-If they are an active colliding entity, add them to the list.
                 if (entity is IColliding colliding && colliding.CanCollide)
                 {
-                    CollidingEntities.Add(colliding, entity);
+                    //CollidingEntities.Add(colliding, entity);
                 }
 
                 //-If they are an active collidable entity, add them to the list.
                 if (entity is ICollidable collider && collider.CanCollide)
                 {
-                    CollidableEntities.Add(collider, entity);
+                    //CollidableEntities.Add(collider, entity);
                 }
 
                 //-If they are an active interactible entity and close enough to the player, add them to the list
@@ -89,6 +95,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                 }
             }
 
+            bool found = false;
             //For each entity that is IColliding and has CanCollide set to true (as listed above)
             foreach (IColliding colliding in CollidingEntities.Keys)
             {
@@ -107,6 +114,9 @@ namespace CalRemix.UI.Games.TrapperQuest
 
                     //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
                     collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
+
+                    if (ogPos != collidingEntity.Position)
+                        found = true;
 
                     //Call both their onCollide function. Kill the colliding entity if its onCollide returns true
                     collider.OnCollide(collidingEntity);
@@ -139,6 +149,10 @@ namespace CalRemix.UI.Games.TrapperQuest
             CollidingEntities.Clear();
             CollidableEntities.Clear();
             InteractibleEntities.Clear();
+
+            bool levelEditor = true;
+            if (levelEditor)
+                LevelEditor.Run();
         }
 
         public static void Draw(SpriteBatch sb)
@@ -205,8 +219,8 @@ namespace CalRemix.UI.Games.TrapperQuest
                     drawer.Draw(sb, GameManager.ScreenOffset);
                 }
             }
-
             DrawLayers.Clear();
+            LevelEditor.DrawUI(sb);
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 {
     public class TQRock : GameEntity, ICollidable, IDrawable
     {
+        public override string Name => "Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
 
         //Those should be made into Icolliding
@@ -66,28 +67,18 @@ namespace CalRemix.UI.Games.TrapperQuest
             Vector2 pushbackNormal;
             float pushbackLength;
 
-            if (CollisionHitbox.Bottom.IsIntersecting(hitbox.trajectoryLine))
+            if (Collision.CheckAABBvAABBCollision(CollisionHitbox.position, CollisionHitbox.dimensions, hitbox.center - hitbox.radius * Vector2.One, new Vector2(2 * hitbox.radius)))
             {
-                pushbackNormal = Vector2.UnitY;
-                pushbackLength = (Position.Y + dist) - (hitbox.center.Y - hitbox.radius);
+                Vector2 newpos = Vector2.Zero;
+                Vector2 collider = hitbox.center;
+                Vector2 rock = CollisionHitbox.center;
+                float colliderSize = hitbox.radius;
+                Vector2 dir = rock.DirectionTo(collider);
+                newpos.X = rock.X - dir.X * dist - colliderSize;
+                newpos.Y = rock.Y - dir.Y * dist - colliderSize;
+                return newpos;
             }
-            else if (CollisionHitbox.Left.IsIntersecting(hitbox.trajectoryLine))
-            {
-                pushbackNormal = Vector2.UnitX;
-                pushbackLength = (Position.X - dist) - (hitbox.center.X + hitbox.radius);
-            }
-            else if (CollisionHitbox.Right.IsIntersecting(hitbox.trajectoryLine))
-            {
-                pushbackNormal = Vector2.UnitX;
-                pushbackLength = (Position.X + dist) - (hitbox.center.X - hitbox.radius);
-            }
-            else
-            {
-                pushbackNormal = Vector2.UnitY;
-                pushbackLength = (Position.Y - dist) - (hitbox.center.Y + hitbox.radius);
-            }
-
-            return pushbackNormal * pushbackLength;
+            return Vector2.Zero;
         }
 
         public int Layer => 2;

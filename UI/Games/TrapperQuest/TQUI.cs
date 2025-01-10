@@ -64,6 +64,11 @@ namespace CalRemix.UI.Games.TrapperQuest
             TrapperQuestUserInterface.SetState(TrapperQuestui);
         }
 
+        public override void AddRecipes()
+        {
+            LevelEditor.LoadTypes();
+        }
+
         public override void UpdateUI(GameTime gameTime)
         {
             TrapperQuestUserInterface?.Update(gameTime);

@@ -14,6 +14,8 @@ namespace CalRemix.UI.Games
         public Vector2 Velocity;
         public virtual void OnSpawn() { }
         public virtual void Update() { }
+        public virtual string Name => "";
+
 
         public Vector2 ScreenPosition()
         {
