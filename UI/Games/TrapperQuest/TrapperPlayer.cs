@@ -15,6 +15,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         int curFrame;
         int frameCounter;
+        public int direction = 0; // 0 = down, 1 = right, 2 = up, 3 = left
 
         public bool IsRunning => Main.keyState.IsKeyDown(Keys.LeftShift);
 
@@ -69,9 +70,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             else if (ControlLeft || ControlRight)
             {
                 if (ControlLeft)
+                {
                     Velocity.X = -moveSpeed;
+                    direction = 3;
+                }
                 if (ControlRight)
+                {
                     Velocity.X = moveSpeed;
+                    direction = 1;
+                }
             }
             else
                 Velocity.X = 0;
@@ -83,9 +90,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             else if (ControlUp || ControlDown)
             {
                 if (ControlUp)
+                {
                     Velocity.Y = -moveSpeed;
+                    direction = 2;
+                }
                 if (ControlDown)
+                {
                     Velocity.Y = moveSpeed;
+                    direction = 0;
+                }
             }
             else
                 Velocity.Y = 0;
@@ -120,11 +133,11 @@ namespace CalRemix.UI.Games.TrapperQuest
             Texture2D TBC = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/TrapperPlayer").Value;
 
             int frame = 0;
-            if (Velocity.Y < 0)
+            if (direction == 2)
                 frame = 8;
-            else if (Velocity.X > 0)
+            else if (direction == 1)
                 frame = 4;
-            else if (Velocity.X < 0)
+            else if (direction == 3)
                 frame = 12;
 
             Vector2 drawPosition = Position + offset;
