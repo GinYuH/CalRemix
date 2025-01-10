@@ -25,6 +25,8 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static GameEntity currentType;
 
         public static Dictionary<int, GameEntity> types = new Dictionary<int, GameEntity>();
+        public static string exportPath = Path.Combine(Main.SavePath + "/Data Dumps");
+        public static string path = $@"{exportPath}\CurLevel.txt";
 
         public static void LoadTypes()
         {
@@ -44,46 +46,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static void Run()
         {
-
             Vector2 moused = ConvertToTileCords(Mouse.Location.ToVector2());
-            string exportPath = Path.Combine(Main.SavePath + "/Data Dumps");
-            string path = $@"{exportPath}\CurLevel.txt";
-            if (Main.mouseLeft && Main.mouseRight && Main.mouseLeftRelease && Main.mouseRightRelease)
-            {
-                string ret = "";
-                foreach (GameEntity g in player.RoomImIn.Entities)
-                {
-                    if (g.Name != "")
-                        ret += g.ID + "," + g.Position.X + "," + g.Position.Y + "\n";
-                }
-                File.WriteAllText(path, ret, Encoding.UTF8);
-                Main.NewText("Exported!");
-            }
-            if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
-            {
-                player.RoomImIn.Entities.RemoveAll((GameEntity g) => g is not TrapperPlayer);
-                player.RoomImIn.Tiles.Clear();
-                string dump = File.ReadAllText(path);
-                string[] lines = dump.Split('\n');
-                for (int i = 0; i < lines.Length - 1; i++)
-                {
-                    string c = lines[i];
-                    string[] elems = c.Split(',');
-
-                    GameEntity spawnType = Activator.CreateInstance(types[(int)char.GetNumericValue(c[0])].GetType()) as GameEntity;
-
-                    Vector2 pos = new Vector2(int.Parse(elems[1]), int.Parse(elems[2]));
-
-                    Vector2 tileCords = ConvertToTileCords(pos);
-                    if (!player.RoomImIn.Tiles.ContainsKey(((int)tileCords.X, (int)tileCords.Y)))
-                    {
-                        spawnType.Position = pos;
-                        player.RoomImIn.Entities.Add(spawnType);
-                        player.RoomImIn.Tiles.Add(((int)tileCords.X, (int)tileCords.Y), spawnType as TQRock);
-                    }
-                }
-            }
-
             if (moused.X >= 0 && moused.X < RoomHeight && moused.Y >= 0 && moused.Y < RoomWidth)
                 if (Main.mouseLeft && currentType != null)
                 {
@@ -116,6 +79,44 @@ namespace CalRemix.UI.Games.TrapperQuest
                 }
         }
 
+        public static void ExportRoom()
+        {
+            string ret = "";
+            foreach (GameEntity g in player.RoomImIn.Entities)
+            {
+                if (g.Name != "")
+                    ret += g.ID + "," + g.Position.X + "," + g.Position.Y + "\n";
+            }
+            File.WriteAllText(path, ret, Encoding.UTF8);
+            Main.NewText("Exported!");            
+        }
+
+        public static void ImportRoom()
+        {
+            player.RoomImIn.Entities.RemoveAll((GameEntity g) => g is not TrapperPlayer);
+            player.RoomImIn.Tiles.Clear();
+            string dump = File.ReadAllText(path);
+            string[] lines = dump.Split('\n');
+            for (int i = 0; i < lines.Length - 1; i++)
+            {
+                string c = lines[i];
+                string[] elems = c.Split(',');
+
+                GameEntity spawnType = Activator.CreateInstance(types[(int)char.GetNumericValue(c[0])].GetType()) as GameEntity;
+
+                Vector2 pos = new Vector2(int.Parse(elems[1]), int.Parse(elems[2]));
+
+                Vector2 tileCords = ConvertToTileCords(pos);
+                if (!player.RoomImIn.Tiles.ContainsKey(((int)tileCords.X, (int)tileCords.Y)))
+                {
+                    spawnType.Position = pos;
+                    player.RoomImIn.Entities.Add(spawnType);
+                    player.RoomImIn.Tiles.Add(((int)tileCords.X, (int)tileCords.Y), spawnType as TQRock);
+                }
+            }
+            Main.NewText("Imported!");            
+        }
+
         public static void DrawUI(SpriteBatch sb)
         {
             int UIWidth = 300;
@@ -130,6 +131,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(UIWidth + extraX, 0), new Rectangle(0, 0, UIWidth, (int)GameManager.playingField.Y), Color.AliceBlue);
 
+            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
             for (int i = 1; i < types.Count; i++)
             {
                 if (i % 5 == 0)
@@ -138,7 +140,6 @@ namespace CalRemix.UI.Games.TrapperQuest
                 float xWidth = FontAssets.MouseText.Value.MeasureString(g.Name).X;
                 Vector2 pos = GameManager.ScreenOffset - new Vector2((UIWidth - (i % 5) * spacing + extraX) + padding - optionWidth, -curRow * ySpace);
 
-                Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
                 Color c = Color.White;
                 if (maus.Intersects(new Rectangle((int)pos.X, (int)pos.Y, 40, 40)))
                 {
@@ -155,6 +156,29 @@ namespace CalRemix.UI.Games.TrapperQuest
                     c = Color.Lime;
 
                 Utils.DrawBorderString(sb, g.Name, pos, c, optionWidth / xWidth);
+            }
+
+            int saveX = UIWidth + extraX - 20;
+            int loadX = UIWidth + extraX - 40 - UIWidth / 3;
+            float saveloadY = -GameManager.playingField.Y + 40;
+            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(saveX, saveloadY), new Rectangle(0, 0, UIWidth / 3, 20), Color.Green);
+            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(loadX, saveloadY), new Rectangle(0, 0, UIWidth / 3, 20), Color.Blue);
+
+            int saveText = saveX - UIWidth / 10;
+            int loadText = loadX - UIWidth / 10;
+            Utils.DrawBorderString(sb, "Save", GameManager.ScreenOffset - new Vector2(saveText, saveloadY), Color.White);
+            Utils.DrawBorderString(sb, "Load", GameManager.ScreenOffset - new Vector2(loadText, saveloadY), Color.White);
+
+            Rectangle saveRect = new Rectangle((int)GameManager.ScreenOffset.X - saveText, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
+            Rectangle loadRect = new Rectangle((int)GameManager.ScreenOffset.X - loadText, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
+
+            if (maus.Intersects(saveRect) && Main.mouseLeft && Main.mouseLeftRelease)
+            {
+                ExportRoom();
+            }
+            if (maus.Intersects(loadRect) && Main.mouseLeft && Main.mouseLeftRelease)
+            {
+                ImportRoom();
             }
         }
     }
