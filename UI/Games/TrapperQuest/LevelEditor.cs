@@ -15,6 +15,8 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.GameContent;
 using System.Transactions;
+using System.Text;
+using System.IO;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -22,7 +24,7 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public static GameEntity currentType;
 
-        public static List<GameEntity> types = new List<GameEntity>();
+        public static Dictionary<int, GameEntity> types = new Dictionary<int, GameEntity>();
 
         public static void LoadTypes()
         {
@@ -35,16 +37,53 @@ namespace CalRemix.UI.Games.TrapperQuest
                 GameEntity entity = Activator.CreateInstance(type) as GameEntity;
                 if (entity.Name == "")
                     continue;
-
-                types.Add(Activator.CreateInstance(type) as GameEntity);
+                
+                types.Add(entity.ID, entity);
             }
         }
 
         public static void Run()
         {
+
             Vector2 moused = ConvertToTileCords(Mouse.Location.ToVector2());
+            string exportPath = Path.Combine(Main.SavePath + "/Data Dumps");
+            string path = $@"{exportPath}\CurLevel.txt";
+            if (Main.mouseLeft && Main.mouseRight && Main.mouseLeftRelease && Main.mouseRightRelease)
+            {
+                string ret = "";
+                foreach (GameEntity g in player.RoomImIn.Entities)
+                {
+                    if (g.Name != "")
+                        ret += g.ID + "," + g.Position.X + "," + g.Position.Y + "\n";
+                }
+                File.WriteAllText(path, ret, Encoding.UTF8);
+                Main.NewText("Exported!");
+            }
+            if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+            {
+                string dump = File.ReadAllText(path);
+                string[] lines = dump.Split('\n');
+                for (int i = 0; i < lines.Length - 1; i++)
+                {
+                    string c = lines[i];
+                    string[] elems = c.Split(',');
+
+                    GameEntity spawnType = Activator.CreateInstance(types[(int)char.GetNumericValue(c[0])].GetType()) as GameEntity;
+
+                    Vector2 pos = new Vector2(int.Parse(elems[1]), int.Parse(elems[2]));
+
+                    Vector2 tileCords = ConvertToTileCords(pos);
+                    if (!player.RoomImIn.Tiles.ContainsKey(((int)tileCords.X, (int)tileCords.Y)))
+                    {
+                        spawnType.Position = pos;
+                        player.RoomImIn.Entities.Add(spawnType);
+                        player.RoomImIn.Tiles.Add(((int)tileCords.X, (int)tileCords.Y), spawnType as TQRock);
+                    }
+                }
+            }
+
             if (moused.X >= 0 && moused.X < RoomHeight && moused.Y >= 0 && moused.Y < RoomWidth)
-                if (Main.mouseLeft)
+                if (Main.mouseLeft && currentType != null)
                 {
                     if (!player.RoomImIn.Tiles.ContainsKey(((int)moused.X, (int)moused.Y)))
                     {
@@ -89,7 +128,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(UIWidth + extraX, 0), new Rectangle(0, 0, UIWidth, (int)GameManager.playingField.Y), Color.AliceBlue);
 
-            for (int i = 0; i < types.Count; i++)
+            for (int i = 1; i < types.Count; i++)
             {
                 if (i % 5 == 0)
                     curRow++;

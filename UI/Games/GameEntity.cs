@@ -16,6 +16,8 @@ namespace CalRemix.UI.Games
         public virtual void Update() { }
         public virtual string Name => "";
 
+        public virtual int ID => -1;
+
 
         public Vector2 ScreenPosition()
         {

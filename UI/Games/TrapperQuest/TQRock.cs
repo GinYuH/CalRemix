@@ -12,6 +12,8 @@ namespace CalRemix.UI.Games.TrapperQuest
     public class TQRock : GameEntity, ICollidable, IDrawable
     {
         public override string Name => "Rock";
+
+        public override int ID => 1;
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
 
         //Those should be made into Icolliding

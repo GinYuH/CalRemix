@@ -14,6 +14,8 @@ namespace CalRemix.UI.Games.TrapperQuest
         public override string Name => "Red Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
 
+        public override int ID => 2;
+
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             Texture2D Rok = ModContent.Request<Texture2D>(Texture).Value;
@@ -27,6 +29,8 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public override string Name => "Green Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
+
+        public override int ID => 3;
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
@@ -43,6 +47,8 @@ namespace CalRemix.UI.Games.TrapperQuest
         public override string Name => "Blue Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
 
+        public override int ID => 4;
+
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             Texture2D Rok = ModContent.Request<Texture2D>(Texture).Value;
@@ -57,6 +63,8 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public override string Name => "Purple Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
+
+        public override int ID => 5;
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
@@ -73,6 +81,8 @@ namespace CalRemix.UI.Games.TrapperQuest
         public override string Name => "Orange Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
 
+        public override int ID => 6;
+
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             Texture2D Rok = ModContent.Request<Texture2D>(Texture).Value;
@@ -87,6 +97,8 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public override string Name => "Yellow Rock";
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
+
+        public override int ID => 7;
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
