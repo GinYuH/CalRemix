@@ -941,6 +941,15 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
             ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
             ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
+            ScreenHelperPortrait.LoadPortrait("FannyBigGrin", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyCarbonized", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyCorporate", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyCosplay", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyHD", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyInfiniteFun", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyInfiniteFunScary", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyRadiant", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyRetro", 1);
 
             ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);
@@ -961,8 +970,24 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyMetalChlorium", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalHallowed", 8);
 
+            //Fazbear
+            ScreenHelperPortrait.LoadPortrait("FannyFazebear", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyFazebearEndo", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyFazebearWithered", 1);
+
             //Evil Fanny
             ScreenHelperPortrait.LoadPortrait("EvilFannyIdle", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyBabilplate", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyBabilWrath", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyCosplay", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyCrisped", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyDisgusted", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyHD", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyKYS", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyMiffed", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyPissed", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyPoint", 1);
+            ScreenHelperPortrait.LoadPortrait("EvilFannyWrathful", 1);
 
             //Miracle Boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIdle", 2, 6);
@@ -970,9 +995,22 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("MiracleBoyRead", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyGnaw", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoySob", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyRadiant", 2, 6);
+
+            //Dead miracle boy
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyDisemboweled", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyMortis", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyWithered", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyPhantom", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyNightmare", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyPurple", 1);
 
             //Crim Son
             ScreenHelperPortrait.LoadPortrait("CrimSonDefault", 42, 6, 6);
+            ScreenHelperPortrait.LoadPortrait("CrimSonCorrupson", 42, 6, 6);
+            ScreenHelperPortrait.LoadPortrait("CrimSonHeadless", 42, 6, 6);
+            ScreenHelperPortrait.LoadPortrait("CrimSonLostSoul", 42, 6, 6);
+            ScreenHelperPortrait.LoadPortrait("CrimSonNose", 42, 6, 6);
 
             //Trapper bulb chan
             ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
