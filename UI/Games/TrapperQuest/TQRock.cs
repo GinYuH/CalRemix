@@ -16,9 +16,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         //Those should be made into Icolliding
         //List<int> push = new List<int>() { ModContent.ProjectileType<Brimhita>(), ModContent.ProjectileType<Anahita>(), ModContent.ProjectileType<Spider>(), ModContent.ProjectileType<Terror>() };
 
-        RectangleHitbox CollisionHitbox => new RectangleHitbox(Position - Vector2.One * 45, Vector2.One * 90);
+        RectangleHitbox CollisionHitbox => new RectangleHitbox(Position - Vector2.One * 32, Vector2.One * 64);
 
-        public float SimulationDistance => 64f;
+        public float SimulationDistance => 32f;
 
         public static TQRock NewRock(Vector2 position)
         {
@@ -29,12 +29,14 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public Vector2 MovementCheck(CircleHitbox hitbox)
         {
+            int dist = 32;
+
             bool collisionOccured;
 
             float distanceBetweenCenters = (hitbox.center - Position).Length();
 
-            //45 is the closest you can be to the rocks center without being inside of it
-            if (distanceBetweenCenters < (45 + hitbox.radius))
+            //dist is the closest you can be to the rocks center without being inside of it
+            if (distanceBetweenCenters < (dist + hitbox.radius))
                 collisionOccured = true;
 
             //Do some complicated math if you're not sure of the collision
@@ -57,22 +59,22 @@ namespace CalRemix.UI.Games.TrapperQuest
             if (CollisionHitbox.Bottom.IsIntersecting(hitbox.trajectoryLine))
             {
                 pushbackNormal = Vector2.UnitY;
-                pushbackLength = (Position.Y + 45) - (hitbox.center.Y - hitbox.radius);
+                pushbackLength = (Position.Y + dist) - (hitbox.center.Y - hitbox.radius);
             }
             else if (CollisionHitbox.Left.IsIntersecting(hitbox.trajectoryLine))
             {
                 pushbackNormal = Vector2.UnitX;
-                pushbackLength = (Position.X - 45) - (hitbox.center.X + hitbox.radius);
+                pushbackLength = (Position.X - dist) - (hitbox.center.X + hitbox.radius);
             }
             else if (CollisionHitbox.Right.IsIntersecting(hitbox.trajectoryLine))
             {
                 pushbackNormal = Vector2.UnitX;
-                pushbackLength = (Position.X + 45) - (hitbox.center.X - hitbox.radius);
+                pushbackLength = (Position.X + dist) - (hitbox.center.X - hitbox.radius);
             }
             else
             {
                 pushbackNormal = Vector2.UnitY;
-                pushbackLength = (Position.Y - 45) - (hitbox.center.Y + hitbox.radius);
+                pushbackLength = (Position.Y - dist) - (hitbox.center.Y + hitbox.radius);
             }
 
             return pushbackNormal * pushbackLength;

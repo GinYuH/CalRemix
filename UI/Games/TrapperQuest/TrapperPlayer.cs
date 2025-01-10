@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework.Input;
+using Terraria.GameContent;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -39,7 +40,7 @@ namespace CalRemix.UI.Games.TrapperQuest
         public int RoomCooldown = 0;
 
         //The general hitbox of the player. Its the same for collisions and damage.
-        public CircleHitbox Hitbox => new CircleHitbox(Position, 25);
+        public CircleHitbox Hitbox => new CircleHitbox(Position, 24);
 
         //IColliding stuff
         public bool CanCollide => true;
@@ -128,7 +129,13 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             Vector2 drawPosition = Position + offset;
 
-            Main.EntitySpriteDraw(TBC, drawPosition, TBC.Frame(1, 16, 0, frame + curFrame), Color.White, 0f, new Vector2(TBC.Width / 2, TBC.Height / 32), 1f, 0, 0);
+            Main.EntitySpriteDraw(TBC, drawPosition, TBC.Frame(1, 16, 0, frame + curFrame), Color.White, 0f, new Vector2(TBC.Width / 2, TBC.Height / 24), 1f, 0, 0);
+
+            bool debug = true;
+            if (debug)
+            {
+                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, drawPosition, new Rectangle(0, 0, 48, 48), Color.Orange * 0.8f, 0f, new Vector2(24, 24), 1f, 0, 0);
+            }
 
         }
     }

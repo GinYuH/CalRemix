@@ -132,19 +132,19 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             //Draw room border
             Texture2D BorderTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/Border").Value;
-            Vector2 BorderScale = new Vector2(GameManager.playingField.X / BorderTex.Width, GameManager.playingField.Y / BorderTex.Height);
-            sb.Draw(BorderTex, GameManager.ScreenOffset, null, Color.White, 0f, Vector2.Zero, BorderScale, 0, 0f);
+            Vector2 borderPos = GameManager.ScreenOffset - offset + (BackgroundTex.Size() - BorderTex.Size()) / 2;
+            sb.Draw(BorderTex, borderPos, null, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
 
             bool debugDraw = true;
             if (debugDraw)
             {
                 for (int i = 0; i < 14; i++)
                 {
-                    sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset + Vector2.UnitX * ((i * 64) + 8), new Rectangle(0, 0, 2, BorderTex.Height), Color.Red, 0f, Vector2.Zero, BorderScale, 0, 0f);
+                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitX * i * 64 + Vector2.One * 8, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
                 }
                 for (int i = 0; i < 8; i++)
                 {
-                    sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset + Vector2.UnitY * ((i * 64) + 8), new Rectangle(0, 0, BorderTex.Width, 2), Color.Red, 0f, Vector2.Zero, BorderScale, 0, 0f);
+                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitY * i * 64 + Vector2.One * 8, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
                 }
             }
 
