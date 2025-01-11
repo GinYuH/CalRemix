@@ -2,18 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Terraria.ID;
-using System.Collections.Generic;
-using CalRemix.UI.Games.Boi.BaseClasses;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
-    public class TQRock : GameEntity, ICollidable, IDrawable
+    public class TQRock : TrapperTile, ICollidable, IDrawable, ICreative
     {
-        public override string Name => "Rock";
+        public string Name => "Rock";
 
-        public override int ID => 1;
+        public int ID => 1;
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
 
         //Those should be made into Icolliding
@@ -23,9 +19,6 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public float SimulationDistance => 32f;
 
-        public int tileX = 0;
-        public int tileY = 0;
-
         public static TQRock NewRockTC(int x, int y)
         {
             return NewRockTC(new Vector2(x, y));
@@ -34,9 +27,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static TQRock NewRockTC(Vector2 position)
         {
             TQRock newRok = new TQRock();
-            newRok.Position = TQHandler.ConvertToScreenCords(position);
             newRok.tileX = (int)position.X;
             newRok.tileY = (int)position.Y;
+            newRok.Position = TQHandler.ConvertToScreenCords(position);
             return newRok;
         }
 

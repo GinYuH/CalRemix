@@ -17,6 +17,7 @@ using Terraria.GameContent;
 using System.Transactions;
 using System.Text;
 using System.IO;
+using Terraria.GameContent.Creative;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -37,10 +38,15 @@ namespace CalRemix.UI.Games.TrapperQuest
                     continue;
 
                 GameEntity entity = Activator.CreateInstance(type) as GameEntity;
-                if (entity.Name == "")
-                    continue;
-                
-                types.Add(entity.ID, entity);
+                if (entity is ICreative create)
+                {
+                    if (create.Name == "")
+                        continue;
+                    if (create.ID == -1)
+                        continue;
+
+                    types.Add(create.ID, entity);
+                }
             }
         }
 
@@ -50,16 +56,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             if (moused.X >= 0 && moused.X < RoomHeight && moused.Y >= 0 && moused.Y < RoomWidth)
                 if (Main.mouseLeft && currentType != null)
                 {
-                    if (!player.RoomImIn.Tiles.ContainsKey(((int)moused.X, (int)moused.Y)))
-                    {
-                        GameEntity newE = Activator.CreateInstance(currentType.GetType()) as GameEntity;
-                        //if (currentType.GetType().IsSubclassOf(typeof(TQRock)))
-                        {
-                            //Main.NewText("G");
-                            newE.Position = moused;
-                            player.RoomImIn.Tiles.Add(((int)moused.X, (int)moused.Y), newE as TQRock);
-                        }
+                    GameEntity newE = Activator.CreateInstance(currentType.GetType()) as GameEntity;
 
+                    if (!player.RoomImIn.Tiles.ContainsKey(((int)moused.X, (int)moused.Y)) && newE is ITile)
+                    {
+                        newE.Position = moused;
+                        player.RoomImIn.Tiles.Add(((int)moused.X, (int)moused.Y), newE as TQRock);
+                    }
+                    if (!player.RoomImIn.Entities.Any((GameEntity g) => ConvertToTileCords(g.Position) == moused))
+                    {
                         newE.Position = ConvertToScreenCords(moused);
                         player.RoomImIn.Entities.Add(newE);
                     }
@@ -71,8 +76,15 @@ namespace CalRemix.UI.Games.TrapperQuest
                         int rock = player.RoomImIn.Entities.FindIndex(0, player.RoomImIn.Entities.Count, (GameEntity g) => ConvertToTileCords(g.Position) == moused);
                         if (rock != -1)
                         {
-                            player.RoomImIn.Entities.RemoveAt(rock);
                             player.RoomImIn.Tiles.Remove((((int)moused.X, (int)moused.Y)));
+                        }
+                    }
+                    if (player.RoomImIn.Entities.Any((GameEntity g) => ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer))
+                    {
+                        int idx = player.RoomImIn.Entities.FindIndex((GameEntity g) => ConvertToTileCords(g.Position) == moused);
+                        if (idx != -1)
+                        {
+                            player.RoomImIn.Entities.RemoveAt(idx);
                         }
                     }
 
@@ -84,8 +96,9 @@ namespace CalRemix.UI.Games.TrapperQuest
             string ret = "";
             foreach (GameEntity g in player.RoomImIn.Entities)
             {
-                if (g.Name != "")
-                    ret += g.ID + "," + g.Position.X + "," + g.Position.Y + "\n";
+                if (g is ICreative creative)
+                if (creative.Name != "")
+                    ret += creative.ID + "," + g.Position.X + "," + g.Position.Y + "\n";
             }
             File.WriteAllText(path, ret, Encoding.UTF8);
             Main.NewText("Exported!");            
@@ -107,11 +120,12 @@ namespace CalRemix.UI.Games.TrapperQuest
                 Vector2 pos = new Vector2(int.Parse(elems[1]), int.Parse(elems[2]));
 
                 Vector2 tileCords = ConvertToTileCords(pos);
-                if (!player.RoomImIn.Tiles.ContainsKey(((int)tileCords.X, (int)tileCords.Y)))
+                if (!player.RoomImIn.Entities.Any((GameEntity g) => ConvertToTileCords(g.Position) == pos))
                 {
                     spawnType.Position = pos;
                     player.RoomImIn.Entities.Add(spawnType);
-                    player.RoomImIn.Tiles.Add(((int)tileCords.X, (int)tileCords.Y), spawnType as TQRock);
+                    if (spawnType is ITile)
+                        player.RoomImIn.Tiles.Add(((int)tileCords.X, (int)tileCords.Y), spawnType as TQRock);
                 }
             }
             Main.NewText("Imported!");            
@@ -132,13 +146,14 @@ namespace CalRemix.UI.Games.TrapperQuest
             sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(UIWidth + extraX, 0), new Rectangle(0, 0, UIWidth, (int)GameManager.playingField.Y), Color.AliceBlue);
 
             Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
-            for (int i = 1; i < types.Count; i++)
+            for (int i = 1; i < types.Count + 1; i++)
             {
-                if (i % 5 == 0)
+                if ((i - 1) % 5 == 0)
                     curRow++;
                 GameEntity g = types[i];
-                float xWidth = FontAssets.MouseText.Value.MeasureString(g.Name).X;
-                Vector2 pos = GameManager.ScreenOffset - new Vector2((UIWidth - (i % 5) * spacing + extraX) + padding - optionWidth, -curRow * ySpace);
+                ICreative cr = g as ICreative;
+                float xWidth = FontAssets.MouseText.Value.MeasureString(cr.Name).X;
+                Vector2 pos = GameManager.ScreenOffset - new Vector2((UIWidth - ((i - 1) % 5) * spacing + extraX) + padding - optionWidth, -curRow * ySpace);
 
                 Color c = Color.White;
                 if (maus.Intersects(new Rectangle((int)pos.X, (int)pos.Y, 40, 40)))
@@ -155,7 +170,9 @@ namespace CalRemix.UI.Games.TrapperQuest
                 if (currentType == g)
                     c = Color.Lime;
 
-                Utils.DrawBorderString(sb, g.Name, pos, c, optionWidth / xWidth);
+                cr.DrawCreative(sb, pos);
+
+                Utils.DrawBorderString(sb, cr.Name, pos, c, optionWidth / xWidth);
             }
 
             int saveX = UIWidth + extraX - 20;
