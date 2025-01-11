@@ -97,8 +97,16 @@ namespace CalRemix.UI.Games.TrapperQuest
             foreach (GameEntity g in player.RoomImIn.Entities)
             {
                 if (g is ICreative creative)
-                if (creative.Name != "")
-                    ret += creative.ID + "," + g.Position.X + "," + g.Position.Y + "\n";
+                    if (creative.Name != "")
+                    {
+                        bool shift = Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift);
+                        if (shift)
+                            ret += "                GameEntity.SpawnFromID(";
+                        ret += creative.ID + "," + g.Position.X + "," + g.Position.Y;
+                        if (shift)
+                            ret += "),";
+                        ret += "\n";
+                    }
             }
             File.WriteAllText(path, ret, Encoding.UTF8);
             Main.NewText("Exported!");            

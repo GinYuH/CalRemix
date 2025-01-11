@@ -26,6 +26,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
                 player.RoomImIn = new TQRoom(playerTP, roomGoto);
                 player.RoomImIn.Entities.Add(player);
+                player.Position = playerTP;
                 TQRoomPopulator.PopulateRoomEnemies(player.RoomImIn, roomGoto);
             }
             return false;
