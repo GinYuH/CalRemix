@@ -11,10 +11,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public int ID => 1;
         public string Texture => "CalRemix/UI/Games/TrapperQuest/Rock";
-
-        //Those should be made into Icolliding
-        //List<int> push = new List<int>() { ModContent.ProjectileType<Brimhita>(), ModContent.ProjectileType<Anahita>(), ModContent.ProjectileType<Spider>(), ModContent.ProjectileType<Terror>() };
-
+        
         RectangleHitbox CollisionHitbox => new RectangleHitbox(Position - Vector2.One * 32, Vector2.One * 64);
 
         public float SimulationDistance => 32f;

@@ -85,12 +85,18 @@ namespace CalRemix.UI.Games.TrapperQuest
                     //CollidableEntities.Add(collider, entity);
                 }
 
+                bool enteredDoor = false;
+
                 //-If they are an active interactible entity and close enough to the player, add them to the list
                 if (entity is IInteractable interactable && interactable.CanBeInteractedWith)
                 {
+                    if (enteredDoor && entity is TQDoor)
+                        continue;
                     if ((entity.Position - player.Position).Length() - player.Hitbox.radius < interactable.CollisionCircleRadius)
                     {
                         InteractibleEntities.Add(interactable, entity);
+                        if (entity is TQDoor t)
+                            enteredDoor = true;
                     }
                 }
             }
@@ -167,19 +173,6 @@ namespace CalRemix.UI.Games.TrapperQuest
             Vector2 borderPos = GameManager.ScreenOffset - offset + (BackgroundTex.Size() - BorderTex.Size()) / 2;
             sb.Draw(BorderTex, borderPos, null, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
 
-            bool debugDraw = true;
-            if (debugDraw)
-            {
-                for (int i = 0; i < RoomHeight + 1; i++)
-                {
-                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitX * i * 64 + Vector2.One * 7, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
-                }
-                for (int i = 0; i < RoomWidth + 1; i++)
-                {
-                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitY * i * 64 + Vector2.One * 7, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Red, 0f, Vector2.Zero, 1, 0, 0f);
-                }
-            }
-
             //For each entity in Entities, if its an IDrawable, store them in new lists, separated on their Layer
             foreach (GameEntity entity in player.RoomImIn.Entities)
             {
@@ -221,6 +214,19 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             DrawLayers.Clear();
             LevelEditor.DrawUI(sb);
+
+            bool debugDraw = true;
+            if (debugDraw)
+            {
+                for (int i = 0; i < RoomHeight + 1; i++)
+                {
+                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitX * i * 64 + Vector2.One * 7, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                }
+                for (int i = 0; i < RoomWidth + 1; i++)
+                {
+                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitY * i * 64 + Vector2.One * 7, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                }
+            }
         }
 
         /// <summary>

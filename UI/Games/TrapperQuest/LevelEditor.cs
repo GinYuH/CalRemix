@@ -18,6 +18,7 @@ using System.Transactions;
 using System.Text;
 using System.IO;
 using Terraria.GameContent.Creative;
+using Microsoft.CodeAnalysis;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -58,12 +59,12 @@ namespace CalRemix.UI.Games.TrapperQuest
                 {
                     GameEntity newE = Activator.CreateInstance(currentType.GetType()) as GameEntity;
 
-                    if (!player.RoomImIn.Tiles.ContainsKey(((int)moused.X, (int)moused.Y)) && newE is ITile)
+                    if ((!player.RoomImIn.Tiles.ContainsKey(((int)moused.X, (int)moused.Y)) && newE is ITile))
                     {
                         newE.Position = moused;
                         player.RoomImIn.Tiles.Add(((int)moused.X, (int)moused.Y), newE as TQRock);
                     }
-                    if (!player.RoomImIn.Entities.Any((GameEntity g) => ConvertToTileCords(g.Position) == moused))
+                    if (!player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TQFloor) || (ConvertToTileCords(g.Position) == moused && g is TQFloor && newE is TQFloor)))
                     {
                         newE.Position = ConvertToScreenCords(moused);
                         player.RoomImIn.Entities.Add(newE);
@@ -79,7 +80,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                             player.RoomImIn.Tiles.Remove((((int)moused.X, (int)moused.Y)));
                         }
                     }
-                    if (player.RoomImIn.Entities.Any((GameEntity g) => ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer))
+                    if (player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused) && g is not TrapperPlayer))
                     {
                         int idx = player.RoomImIn.Entities.FindIndex((GameEntity g) => ConvertToTileCords(g.Position) == moused);
                         if (idx != -1)
