@@ -16,6 +16,8 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public Vector2 playerTP = Vector2.Zero;
 
+        public bool fade = false;
+
         public float CollisionCircleRadius => 32;
 
         public float SimulationDistance => 32f;
@@ -24,10 +26,12 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             if (entity is TrapperPlayer player)
             {
-                player.RoomImIn = new TQRoom(playerTP, roomGoto);
-                player.RoomImIn.Entities.Add(player);
-                player.Position = playerTP;
-                TQRoomPopulator.PopulateRoomEnemies(player.RoomImIn, roomGoto);
+                player.nextRoom = roomGoto;
+                player.nextRoomPos = playerTP;
+                if (fade)
+                    TQHandler.roomTransitionCounter = TQHandler.RoomTransitionTime;
+                else
+                    player.ChangeRoom();
             }
             return false;
         }

@@ -24,6 +24,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         public const int RoomWidth = 7;
         public const int RoomHeight = 13;
         public const int tileSize = 64;
+        public const int RoomTransitionTime = 90;
+
+        public static int roomTransitionCounter;
 
         public static Vector2 ConvertToTileCords(Vector2 position)
         {
@@ -63,92 +66,105 @@ namespace CalRemix.UI.Games.TrapperQuest
             if (Main.gameMenu || Main.gamePaused)
                 return;
             //Process the players movement and actions
-            player.ProcessControls();
-
-            TQRoom simulatedRoom = player.RoomImIn;
-
-            //For each entity
-            foreach (GameEntity entity in simulatedRoom.Entities)
+            if (roomTransitionCounter > 0)
             {
-                entity.OldPosition = entity.Position;
-                entity.Position += entity.Velocity;
-
-                //-If they are an active colliding entity, add them to the list.
-                if (entity is IColliding colliding && colliding.CanCollide)
+                roomTransitionCounter--;
+                player.Velocity = Vector2.Zero;
+                if (roomTransitionCounter == (RoomTransitionTime / 2))
                 {
-                    //CollidingEntities.Add(colliding, entity);
+                    player.ChangeRoom();
                 }
+            }
+            else
+            {
+                player.ProcessControls();
 
-                //-If they are an active collidable entity, add them to the list.
-                if (entity is ICollidable collider && collider.CanCollide)
+                TQRoom simulatedRoom = player.RoomImIn;
+
+                //For each entity
+                foreach (GameEntity entity in simulatedRoom.Entities)
                 {
-                    //CollidableEntities.Add(collider, entity);
-                }
+                    entity.OldPosition = entity.Position;
+                    entity.Position += entity.Velocity;
 
-                bool enteredDoor = false;
-
-                //-If they are an active interactible entity and close enough to the player, add them to the list
-                if (entity is IInteractable interactable && interactable.CanBeInteractedWith)
-                {
-                    if (enteredDoor && entity is TQDoor)
-                        continue;
-                    if ((entity.Position - player.Position).Length() - player.Hitbox.radius < interactable.CollisionCircleRadius)
+                    //-If they are an active colliding entity, add them to the list.
+                    if (entity is IColliding colliding && colliding.CanCollide)
                     {
-                        InteractibleEntities.Add(interactable, entity);
-                        if (entity is TQDoor t)
-                            enteredDoor = true;
+                        //CollidingEntities.Add(colliding, entity);
+                    }
+
+                    //-If they are an active collidable entity, add them to the list.
+                    if (entity is ICollidable collider && collider.CanCollide)
+                    {
+                        //CollidableEntities.Add(collider, entity);
+                    }
+
+                    bool enteredDoor = false;
+
+                    //-If they are an active interactible entity and close enough to the player, add them to the list
+                    if (entity is IInteractable interactable && interactable.CanBeInteractedWith)
+                    {
+                        if (enteredDoor && entity is TQDoor)
+                            continue;
+                        if ((entity.Position - player.Position).Length() - player.Hitbox.radius < interactable.CollisionCircleRadius)
+                        {
+                            InteractibleEntities.Add(interactable, entity);
+                            if (entity is TQDoor t)
+                                enteredDoor = true;
+                        }
                     }
                 }
-            }
 
-            bool found = false;
-            //For each entity that is IColliding and has CanCollide set to true (as listed above)
-            foreach (IColliding colliding in CollidingEntities.Keys)
-            {
-                GameEntity collidingEntity = CollidingEntities[colliding];
-
-                //Check for all IColliders, and grab their SimulationDistance.
-                foreach (ICollidable collider in CollidableEntities.Keys)
+                bool found = false;
+                //For each entity that is IColliding and has CanCollide set to true (as listed above)
+                foreach (IColliding colliding in CollidingEntities.Keys)
                 {
-                    GameEntity colliderEntity = CollidableEntities[collider];
+                    GameEntity collidingEntity = CollidingEntities[colliding];
 
-                    //If the simulation distance + the CollisionCircleRadius of the IColliding is higher than the distance between the two entities, thats awesome, don't even do anything about it and go to the next one
-                    if ((colliderEntity.Position - collidingEntity.Position).Length() > collider.SimulationDistance + colliding.CollisionHitbox.radius)
-                        continue;
-
-                    Vector2 ogPos = collidingEntity.Position;
-
-                    //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
-                    collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
-
-                    if (ogPos != collidingEntity.Position)
-                        found = true;
-
-                    //Call both their onCollide function. Kill the colliding entity if its onCollide returns true
-                    collider.OnCollide(collidingEntity);
-                    if (colliding.OnCollide(colliderEntity))
+                    //Check for all IColliders, and grab their SimulationDistance.
+                    foreach (ICollidable collider in CollidableEntities.Keys)
                     {
-                        DeadEntities.Add(collidingEntity);
-                        break;
+                        GameEntity colliderEntity = CollidableEntities[collider];
+
+                        //If the simulation distance + the CollisionCircleRadius of the IColliding is higher than the distance between the two entities, thats awesome, don't even do anything about it and go to the next one
+                        if ((colliderEntity.Position - collidingEntity.Position).Length() > collider.SimulationDistance + colliding.CollisionHitbox.radius)
+                            continue;
+
+                        Vector2 ogPos = collidingEntity.Position;
+
+                        //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
+                        collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
+
+                        if (ogPos != collidingEntity.Position)
+                            found = true;
+
+                        //Call both their onCollide function. Kill the colliding entity if its onCollide returns true
+                        collider.OnCollide(collidingEntity);
+                        if (colliding.OnCollide(colliderEntity))
+                        {
+                            DeadEntities.Add(collidingEntity);
+                            break;
+                        }
                     }
                 }
-            }
 
-            foreach (IInteractable interactible in InteractibleEntities.Keys)
-            {
-                if (interactible.Interact(player))
-                    DeadEntities.Add(InteractibleEntities[interactible]);
-            }
+                foreach (IInteractable interactible in InteractibleEntities.Keys)
+                {
+                    if (interactible.Interact(player))
+                        DeadEntities.Add(InteractibleEntities[interactible]);
+                }
 
-            //Out of bounds checks & entityn interaction
-            foreach (GameEntity entity in simulatedRoom.Entities)
-            {
-                if (OOBCheck(entity, entity is IColliding collider))
-                    DeadEntities.Add(entity);
-            }
+                //Out of bounds checks & entityn interaction
+                foreach (GameEntity entity in simulatedRoom.Entities)
+                {
+                    if (OOBCheck(entity, entity is IColliding collider))
+                        DeadEntities.Add(entity);
+                }
 
-            //Remove all the dead entities from the list of simulated entities
-            simulatedRoom.Entities.RemoveAll(n => DeadEntities.Contains(n));
+
+                //Remove all the dead entities from the list of simulated entities
+                simulatedRoom.Entities.RemoveAll(n => DeadEntities.Contains(n));
+            }
 
             //Clear all the lists created earlier (since they were just here to store the entities that were being processed this frame.
             DeadEntities.Clear();
@@ -213,6 +229,17 @@ namespace CalRemix.UI.Games.TrapperQuest
                 }
             }
             DrawLayers.Clear();
+            Color black = Color.Black;
+            if (roomTransitionCounter > RoomTransitionTime / 2)
+            {
+                black *= MathHelper.Lerp(0, 1, Utils.GetLerpValue(RoomTransitionTime, RoomTransitionTime / 2, roomTransitionCounter));
+            }
+            else
+            {
+                black *= MathHelper.Lerp(1, 0, Utils.GetLerpValue(RoomTransitionTime / 2, 0, roomTransitionCounter));
+            }
+            sb.Draw(TextureAssets.MagicPixel.Value, borderPos, new Rectangle(0, 0, BorderTex.Width, BorderTex.Height), black, 0f, Vector2.Zero, 1f, 0, 0f);
+
             LevelEditor.DrawUI(sb);
 
             bool debugDraw = true;
@@ -220,11 +247,17 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
                 for (int i = 0; i < RoomHeight + 1; i++)
                 {
-                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitX * i * 64 + Vector2.One * 7, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                    Vector2 pos = borderPos + Vector2.UnitX * i * 64 + Vector2.One * 7;
+                    sb.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                    if (i < RoomHeight)
+                        Utils.DrawBorderString(sb, i.ToString(), pos, Color.Red);
                 }
                 for (int i = 0; i < RoomWidth + 1; i++)
                 {
-                    sb.Draw(TextureAssets.MagicPixel.Value, borderPos + Vector2.UnitY * i * 64 + Vector2.One * 7, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                    Vector2 pos = borderPos + Vector2.UnitY * i * 64 + Vector2.One * 7;
+                    sb.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                    if (i < RoomWidth)
+                        Utils.DrawBorderString(sb, i.ToString(), pos, Color.Cyan);
                 }
             }
         }

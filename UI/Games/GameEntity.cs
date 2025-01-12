@@ -42,6 +42,14 @@ namespace CalRemix.UI.Games
                 Vector2 pos = (Vector2)b;
                 door.roomGoto = roomID;
                 door.playerTP = pos;
+                bool trans = false;
+                if (c != null)
+                {
+                    if ((bool)c)
+                        trans = true;
+                }
+                door.fade = trans;
+
             }
             return entiry;
         }

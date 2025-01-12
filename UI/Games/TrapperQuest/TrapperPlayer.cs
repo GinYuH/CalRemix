@@ -13,9 +13,11 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public TQRoom RoomImIn;
 
-        int curFrame;
-        int frameCounter;
+        public int curFrame;
+        public int frameCounter;
         public int direction = 0; // 0 = down, 1 = right, 2 = up, 3 = left
+        public int nextRoom = -1;
+        public Vector2 nextRoomPos = Vector2.Zero;
 
         public bool IsRunning => Main.keyState.IsKeyDown(Keys.LeftShift);
 
@@ -129,6 +131,15 @@ namespace CalRemix.UI.Games.TrapperQuest
                 curFrame = 0;
 
             #endregion
+        }
+
+        public void ChangeRoom()
+        {
+            RoomImIn = TQHandler.NewRoom((int)nextRoomPos.X, (int)nextRoomPos.Y, nextRoom);
+            RoomImIn.Entities.Add(this);
+            Position = nextRoomPos;
+            nextRoom = -1;
+            nextRoomPos = Vector2.Zero;
         }
 
         public int Layer => 3;
