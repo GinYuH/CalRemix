@@ -79,6 +79,8 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             player = null;
             DrawLayers.Clear();
+            roomTransitionCounter = 0;
+            GameManager.CameraPosition = Vector2.Zero;
         }
 
         public static void Run()
@@ -281,7 +283,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset, new Rectangle(0, 0, cut.Width * 2, cut.Height * 2), black, 0f, Vector2.Zero, 1f, 0, 0f);
 
-            bool debugDraw = true;
+            bool debugDraw = false;
             if (debugDraw)
             {
                 for (int i = 0; i < RoomWidth + 1; i++)
