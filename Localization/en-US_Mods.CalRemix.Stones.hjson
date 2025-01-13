@@ -4237,173 +4237,353 @@ CalRemix/StratusBeverageBuffStone: {
 	DisplayName: Stratus Beverage Stone
 }
 
-ExampleMod/AbsorbTeamDamageBuffStone: {
-	DisplayName: Absorb Team Damage Buff Stone
+AlchemistNPCLite/BattleCombStone: {
+	DisplayName: Battle Combination Stone
 	Tooltip:
 		'''
-		Immunity to Absorb Team Damage Buff
-		Attacks inflict Absorb Team Damage Buff
+		Immunity to Battle Combination
+		Attacks inflict Battle Combination
 		'''
 }
 
-ExampleMod/AnimatedBuffStone: {
-	DisplayName: Animated Buff Stone
+AlchemistNPCLite/BlurringStone: {
+	DisplayName: Blurring Stone
 	Tooltip:
 		'''
-		Immunity to Animated Buff
-		Attacks inflict Animated Buff
+		Immunity to Blurring
+		Attacks inflict Blurring
 		'''
 }
 
-ExampleMod/BlockyStone: {
-	DisplayName: Blocky Stone
+AlchemistNPCLite/BuilderCombStone: {
+	DisplayName: Builder Combination Stone
 	Tooltip:
 		'''
-		Immunity to Blocky
-		Attacks inflict Blocky
+		Immunity to Builder Combination
+		Attacks inflict Builder Combination
 		'''
 }
 
-ExampleMod/ExampleCrateBuffStone: {
-	DisplayName: Example Crate Stone
+AlchemistNPCLite/CalamityCombStone: {
+	DisplayName: Calamity Combination Stone
 	Tooltip:
 		'''
-		Immunity to Example Crate
-		Attacks inflict Example Crate
+		Immunity to Calamity Combination
+		Attacks inflict Calamity Combination
 		'''
 }
 
-ExampleMod/ExampleDefenseBuffStone: {
-	DisplayName: Defensive Buff Stone
+AlchemistNPCLite/CorrosionStone: {
+	DisplayName: Corrosion Stone
 	Tooltip:
 		'''
-		Immunity to Defensive Buff
-		Attacks inflict Defensive Buff
+		Immunity to Corrosion
+		Attacks inflict Corrosion
 		'''
 }
 
-ExampleMod/ExampleDefenseDebuffStone: {
-	DisplayName: Defensive Debuff Stone
+AlchemistNPCLite/DiscordBuffStone: {
+	DisplayName: Discord Stone
 	Tooltip:
 		'''
-		Immunity to Defensive Debuff
-		Attacks inflict Defensive Debuff
+		Immunity to Discord
+		Attacks inflict Discord
 		'''
 }
 
-ExampleMod/ExampleDodgeBuffStone: {
-	DisplayName: Example Dodge Buff Stone
+AlchemistNPCLite/ExcavationStone: {
+	DisplayName: Excavation Stone
 	Tooltip:
 		'''
-		Immunity to Example Dodge Buff
-		Attacks inflict Example Dodge Buff
+		Immunity to Excavation
+		Attacks inflict Excavation
 		'''
 }
 
-ExampleMod/ExampleGravityDebuffStone: {
-	DisplayName: Example Gravity Debuff Stone
+AlchemistNPCLite/ExplorerCombStone: {
+	DisplayName: Explorer Combination Stone
 	Tooltip:
 		'''
-		Immunity to Example Gravity Debuff
-		Attacks inflict Example Gravity Debuff
+		Immunity to Explorer Combination
+		Attacks inflict Explorer Combination
 		'''
 }
 
-ExampleMod/ExampleJavelinDebuffStone: {
-	DisplayName: Example Javelin Debuff Stone
+AlchemistNPCLite/FishingCombStone: {
+	DisplayName: Fishing Combination Stone
 	Tooltip:
 		'''
-		Immunity to Example Javelin Debuff
-		Attacks inflict Example Javelin Debuff
+		Immunity to Fishing Combination
+		Attacks inflict Fishing Combination
 		'''
 }
 
-ExampleMod/ExampleLifeRegenDebuffStone: {
-	DisplayName: Fire debuff Stone
+AlchemistNPCLite/FortitudeStone: {
+	DisplayName: Fortitude Stone
 	Tooltip:
 		'''
-		Immunity to Fire debuff
-		Attacks inflict Fire debuff
+		Immunity to Fortitude
+		Attacks inflict Fortitude
 		'''
 }
 
-ExampleMod/ExampleMinecartBuffStone: {
-	DisplayName: Example Minecart Stone
+AlchemistNPCLite/GreaterDangersenseStone: {
+	DisplayName: Greater Dangersense Stone
 	Tooltip:
 		'''
-		Immunity to Example Minecart
-		Attacks inflict Example Minecart
+		Immunity to Greater Dangersense
+		Attacks inflict Greater Dangersense
 		'''
 }
 
-ExampleMod/ExampleMountBuffStone: {
-	DisplayName: ExampleMount Stone
+AlchemistNPCLite/LongInvincibleStone: {
+	DisplayName: Longer Invincibility Stone
 	Tooltip:
 		'''
-		Immunity to ExampleMount
-		Attacks inflict ExampleMount
+		Immunity to Longer Invincibility
+		Attacks inflict Longer Invincibility
 		'''
 }
 
-ExampleMod/ExampleWeaponImbueStone: {
-	DisplayName: Example Weapon Imbue Stone
+AlchemistNPCLite/MageCombStone: {
+	DisplayName: Mage Combination Stone
 	Tooltip:
 		'''
-		Immunity to Example Weapon Imbue
-		Attacks inflict Example Weapon Imbue
+		Immunity to Mage Combination
+		Attacks inflict Mage Combination
 		'''
 }
 
-ExampleMod/ExampleWhipAdvancedDebuffStone: {
-	DisplayName: Example Whip Advanced Debuff Stone
+AlchemistNPCLite/NinjaSkillStone: {
+	DisplayName: Ninja Stone
 	Tooltip:
 		'''
-		Immunity to Example Whip Advanced Debuff
-		Attacks inflict Example Whip Advanced Debuff
+		Immunity to Ninja
+		Attacks inflict Ninja
 		'''
 }
 
-ExampleMod/ExampleWhipDebuffStone: {
-	DisplayName: Example Whip Debuff Stone
+AlchemistNPCLite/RangerCombStone: {
+	DisplayName: Ranger Combination Stone
 	Tooltip:
 		'''
-		Immunity to Example Whip Debuff
-		Attacks inflict Example Whip Debuff
+		Immunity to Ranger Combination
+		Attacks inflict Ranger Combination
 		'''
 }
 
-ExampleMod/ExampleLightPetBuffStone: {
-	DisplayName: Annoying Light Stone
+AlchemistNPCLite/StationUltimaBuffStone: {
+	DisplayName: Station Ultima Stone
 	Tooltip:
 		'''
-		Immunity to Annoying Light
-		Attacks inflict Annoying Light
+		Immunity to Station Ultima
+		Attacks inflict Station Ultima
 		'''
 }
 
-ExampleMod/ExamplePetBuffStone: {
-	DisplayName: Paper Airplane Stone
+AlchemistNPCLite/SummonerCombStone: {
+	DisplayName: Summoner Combination Stone
 	Tooltip:
 		'''
-		Immunity to Paper Airplane
-		Attacks inflict Paper Airplane
+		Immunity to Summoner Combination
+		Attacks inflict Summoner Combination
 		'''
 }
 
-ExampleMod/MinionBossPetBuffStone: {
-	DisplayName: Minion Boss Pet Stone
+AlchemistNPCLite/SunshineStone: {
+	DisplayName: Sunshine Stone
 	Tooltip:
 		'''
-		Immunity to Minion Boss Pet
-		Attacks inflict Minion Boss Pet
+		Immunity to Sunshine
+		Attacks inflict Sunshine
 		'''
 }
 
-ExampleMod/ExampleSimpleMinionBuffStone: {
-	DisplayName: Example Minion Stone
+AlchemistNPCLite/TankCombStone: {
+	DisplayName: Tank Combination (w/Modded) Stone
 	Tooltip:
 		'''
-		Immunity to Example Minion
-		Attacks inflict Example Minion
+		Immunity to Tank Combination (w/Modded)
+		Attacks inflict Tank Combination (w/Modded)
+		'''
+}
+
+AlchemistNPCLite/TitanSkinStone: {
+	DisplayName: Titan Skin Stone
+	Tooltip:
+		'''
+		Immunity to Titan Skin
+		Attacks inflict Titan Skin
+		'''
+}
+
+AlchemistNPCLite/TrapsBuffStone: {
+	DisplayName: Traps Buff Stone
+	Tooltip:
+		'''
+		Immunity to Traps Buff
+		Attacks inflict Traps Buff
+		'''
+}
+
+AlchemistNPCLite/TrueDiscordBuffStone: {
+	DisplayName: True Discord Stone
+	Tooltip:
+		'''
+		Immunity to True Discord
+		Attacks inflict True Discord
+		'''
+}
+
+AlchemistNPCLite/UniversalCombStone: {
+	DisplayName: Universal Combination Stone
+	Tooltip:
+		'''
+		Immunity to Universal Combination
+		Attacks inflict Universal Combination
+		'''
+}
+
+AlchemistNPCLite/VanTankCombStone: {
+	DisplayName: Tank Combination (Vanilla) Stone
+	Tooltip:
+		'''
+		Immunity to Tank Combination (Vanilla)
+		Attacks inflict Tank Combination (Vanilla)
+		'''
+}
+
+CalRemix/ChlorislimeStone: {
+	DisplayName: The chlorislime will protect you Stone
+	Tooltip:
+		'''
+		Immunity to The chlorislime will protect you
+		Attacks inflict The chlorislime will protect you
+		'''
+}
+
+CatalystMod/AstrageldonRocksSetbonusStone: {
+	DisplayName: Asteroid Barrier Stone
+	Tooltip:
+		'''
+		Immunity to Asteroid Barrier
+		Attacks inflict Asteroid Barrier
+		'''
+}
+
+CatalystMod/AstrogelJumpBoostStone: {
+	DisplayName: Astrogel Stone
+	Tooltip:
+		'''
+		Immunity to Astrogel
+		Attacks inflict Astrogel
+		'''
+}
+
+CatalystMod/AstralBlightStone: {
+	DisplayName: Astral Blight Stone
+	Tooltip:
+		'''
+		Immunity to Astral Blight
+		Attacks inflict Astral Blight
+		'''
+}
+
+CatalystMod/InterstellarCorruptionStone: {
+	DisplayName: Interstellar Corruption Stone
+	Tooltip:
+		'''
+		Immunity to Interstellar Corruption
+		Attacks inflict Interstellar Corruption
+		'''
+}
+
+CatalystMod/AstrageldonPetBuffStone: {
+	DisplayName: Slime Deity Stone
+	Tooltip:
+		'''
+		Immunity to Slime Deity
+		Attacks inflict Slime Deity
+		'''
+}
+
+CatalystMod/AstralJellyBuffStone: {
+	DisplayName: Astra Jelly Stone
+	Tooltip:
+		'''
+		Immunity to Astra Jelly
+		Attacks inflict Astra Jelly
+		'''
+}
+
+CatalystMod/BlessedBlossomsStone: {
+	DisplayName: Blessed Blossoms Stone
+	Tooltip:
+		'''
+		Immunity to Blessed Blossoms
+		Attacks inflict Blessed Blossoms
+		'''
+}
+
+CatalystMod/CatharsisBuffStone: {
+	DisplayName: Burning Blood Stone
+	Tooltip:
+		'''
+		Immunity to Burning Blood
+		Attacks inflict Burning Blood
+		'''
+}
+
+CatalystMod/CatharsisBuff2Stone: {
+	DisplayName: Sanguine Mastery Stone
+	Tooltip:
+		'''
+		Immunity to Sanguine Mastery
+		Attacks inflict Sanguine Mastery
+		'''
+}
+
+CatalystMod/AstralpodBuffStone: {
+	DisplayName: Astralpod Stone
+	Tooltip:
+		'''
+		Immunity to Astralpod
+		Attacks inflict Astralpod
+		'''
+}
+
+CatalystMod/DefaultTagStone: {
+	DisplayName: Tagged Stone
+	Tooltip:
+		'''
+		Immunity to Tagged
+		Attacks inflict Tagged
+		'''
+}
+
+CatalystMod/ReverberatingParalysisStone: {
+	DisplayName: Reverberating Paralysis Stone
+	Tooltip:
+		'''
+		Immunity to Reverberating Paralysis
+		Attacks inflict Reverberating Paralysis
+		'''
+}
+
+CatalystMod/ZeroGravityStone: {
+	DisplayName: Zero Gravity Stone
+	Tooltip:
+		'''
+		Immunity to Zero Gravity
+		Attacks inflict Zero Gravity
+		'''
+}
+
+miningcracks_take_on_luiafk/DrillMountBuffStone: {
+	DisplayName: Laser Drill Mount Stone
+	Tooltip:
+		'''
+		Immunity to Laser Drill Mount
+		Attacks inflict Laser Drill Mount
 		'''
 }
