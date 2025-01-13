@@ -19,18 +19,24 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public Vector2 spawnPos = Vector2.Zero;
 
+        public Vector2 RoomSize = TQHandler.RoomSizeDefault;
 
-        public TQRoom(int X, int Y, int ID)
+
+        public TQRoom(int X, int Y, int ID, Vector2 roomSize = default)
         {
-            new TQRoom(new Vector2(X, Y), ID);
+            new TQRoom(new Vector2(X, Y), ID, roomSize);
         }
 
-        public TQRoom(Vector2 spawnPos, int ID)
+        public TQRoom(Vector2 spawnPos, int ID, Vector2 roomSize = default)
         {
             Entities = new List<GameEntity>();
             Tiles = new Dictionary<(int, int), TQRock>();
             id = ID;
             this.spawnPos = spawnPos;
+            if (roomSize == default)
+                RoomSize = TQHandler.RoomSizeDefault;
+            else
+                RoomSize = roomSize;
         }
     }
 }

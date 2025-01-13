@@ -31,7 +31,10 @@ namespace CalRemix.UI.Games.TrapperQuest
                 if (fade)
                     TQHandler.roomTransitionCounter = TQHandler.RoomTransitionTime;
                 else
+                {
                     player.ChangeRoom();
+                    GameManager.CameraPosition = Vector2.Zero;
+                }
             }
             return false;
         }

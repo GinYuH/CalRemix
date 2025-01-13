@@ -164,7 +164,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             bool debug = false;
             if (debug)
             {
-                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, drawPosition, new Rectangle(0, 0, 48, 48), Color.Orange * 0.8f, 0f, new Vector2(24, 24), 1f, 0, 0);
+                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, drawPosition + GameManager.CameraPosition, new Rectangle(0, 0, 48, 48), Color.Orange * 0.8f, 0f, new Vector2(24, 24), 1f, 0, 0);
             }
 
         }

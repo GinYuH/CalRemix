@@ -9,6 +9,8 @@ using CalamityMod.Graphics.Renderers;
 using Terraria.GameContent;
 using log4net.Layout;
 using Microsoft.Xna.Framework.Input;
+using CalamityMod;
+using Terraria.GameInput;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -21,12 +23,20 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static Dictionary<IInteractable, GameEntity> InteractibleEntities = new Dictionary<IInteractable, GameEntity>();
         public static List<List<IDrawable>> DrawLayers = new List<List<IDrawable>>();
 
-        public const int RoomWidth = 7;
-        public const int RoomHeight = 13;
+        public static int RoomHeight => (int)player.RoomImIn.RoomSize.Y;
+        public static int RoomWidth => (int) player.RoomImIn.RoomSize.X;
         public const int tileSize = 64;
         public const int RoomTransitionTime = 90;
+        public const int RoomWidthDefault = 13;
+        public const int RoomHeighDefault = 7;
+        public static Vector2 RoomSizeDefault = new Vector2(RoomWidthDefault, RoomHeighDefault);
 
         public static int roomTransitionCounter;
+
+        public static Vector2 ConvertToTileCords(int x, int y)
+        {
+            return ConvertToTileCords(new Vector2(x, y));
+        }
 
         public static Vector2 ConvertToTileCords(Vector2 position)
         {
@@ -36,17 +46,26 @@ namespace CalRemix.UI.Games.TrapperQuest
             return preThing;
         }
 
+        public static Vector2 ConvertToScreenCords(int x, int y)
+        {
+            return ConvertToScreenCords(new Vector2(x, y));
+        }
+
         public static Vector2 ConvertToScreenCords(Vector2 tilePos)
         {
             return tilePos * tileSize + new Vector2(tileSize / 2);
         }
 
-        public static Rectangle Mouse => new Rectangle((int)Main.MouseScreen.X - (int)GameManager.ScreenOffset.X + tileSize / 2, (int)Main.MouseScreen.Y - (int)GameManager.ScreenOffset.Y + tileSize / 2, 10, 10);
+        public static Rectangle Mouse => 
+            new Rectangle((int)Main.MouseScreen.X - (int)GameManager.ScreenOffset.X + tileSize / 2, 
+                (int)Main.MouseScreen.Y - (int)GameManager.ScreenOffset.Y + tileSize / 2, 
+                10, 
+                10);
 
         public static void Load()
         {
-            TQRoom room = NewRoom(0, 0, 0);
-            player = new TrapperPlayer(GameManager.playingField / 2f, 5f, room);
+            TQRoom room = NewRoom(0, 0, 0, RoomSizeDefault);
+            player = new TrapperPlayer(ConvertToScreenCords(new Vector2(6, 3)), 5f, room);
 
             DrawLayers = new List<List<IDrawable>>();
             DeadEntities = new List<GameEntity>();
@@ -73,6 +92,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                 if (roomTransitionCounter == (RoomTransitionTime / 2))
                 {
                     player.ChangeRoom();
+                    GameManager.CameraPosition = Vector2.Zero;
                 }
             }
             else
@@ -172,6 +192,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             CollidableEntities.Clear();
             InteractibleEntities.Clear();
 
+            // Camera controls for larger rooms
+            if (player.RoomImIn.RoomSize != RoomSizeDefault)
+            {
+                GameManager.CameraPosition.X = player.Position.X;
+                GameManager.CameraPosition.Y = player.Position.Y;
+
+                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, TQHandler.ConvertToScreenCords(new Vector2(TQHandler.RoomWidth - TQHandler.RoomWidthDefault, TQHandler.RoomHeight - TQHandler.RoomHeighDefault - 1)) + new Vector2(TQHandler.tileSize) / 2);
+            }
+
             bool levelEditor = true;
             if (levelEditor)
                 LevelEditor.Run();
@@ -179,15 +208,27 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static void Draw(SpriteBatch sb)
         {
-            //Draw base screen
-            Texture2D BackgroundTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/BG").Value;
-            Vector2 offset = BackgroundTex.Size() / 2f - GameManager.playingField / 2f;
-            sb.Draw(BackgroundTex, GameManager.ScreenOffset - offset, null, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
+            Texture2D pickle = TextureAssets.MagicPixel.Value;
+            Vector2 innerScreenSize = RoomSizeDefault * tileSize;
+            int frameThickness = 6;
+            Vector2 borderSize = innerScreenSize + new Vector2(frameThickness) * 2 + Vector2.UnitX * 2;
+            int bgPadding = 36;
+            Vector2 bgSize = borderSize + new Vector2(bgPadding) * 2;
+            
+            Rectangle cut = new Rectangle((int)GameManager.ScreenOffset.X + (int)GameManager.CameraPosition.X + 52, (int)GameManager.ScreenOffset.Y + (int)GameManager.CameraPosition.Y + 26, (int)(RoomWidthDefault * tileSize + 103), (int)(RoomHeighDefault * tileSize + 52));
+
+
+            sb.Draw(pickle, GameManager.ScreenOffset + GameManager.CameraPosition - new Vector2(frameThickness + bgPadding), new Rectangle(0, 0, (int)bgSize.X, (int)bgSize.Y), new Color(21, 37, 46), 0f, Vector2.Zero, 1f, 0, 0f);
 
             //Draw room border
-            Texture2D BorderTex = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/Border").Value;
-            Vector2 borderPos = GameManager.ScreenOffset - offset + (BackgroundTex.Size() - BorderTex.Size()) / 2;
-            sb.Draw(BorderTex, borderPos, null, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
+            sb.Draw(pickle, GameManager.ScreenOffset + GameManager.CameraPosition - new Vector2(frameThickness), new Rectangle(0, 0, (int)borderSize.X, (int)borderSize.Y), new Color(0, 255, 255), 0f, Vector2.Zero, 1f, 0, 0f);
+
+            //Cut off everything outside of the screen
+            RasterizerState rasterizer = Main.Rasterizer;
+            rasterizer.ScissorTestEnable = true;
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.UIScaleMatrix);
+            sb.GraphicsDevice.ScissorRectangle = cut;
 
             //For each entity in Entities, if its an IDrawable, store them in new lists, separated on their Layer
             foreach (GameEntity entity in player.RoomImIn.Entities)
@@ -238,28 +279,31 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
                 black *= MathHelper.Lerp(1, 0, Utils.GetLerpValue(RoomTransitionTime / 2, 0, roomTransitionCounter));
             }
-            sb.Draw(TextureAssets.MagicPixel.Value, borderPos, new Rectangle(0, 0, BorderTex.Width, BorderTex.Height), black, 0f, Vector2.Zero, 1f, 0, 0f);
-
-            LevelEditor.DrawUI(sb);
+            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset, new Rectangle(0, 0, cut.Width * 2, cut.Height * 2), black, 0f, Vector2.Zero, 1f, 0, 0f);
 
             bool debugDraw = true;
             if (debugDraw)
             {
-                for (int i = 0; i < RoomHeight + 1; i++)
-                {
-                    Vector2 pos = borderPos + Vector2.UnitX * i * 64 + Vector2.One * 7;
-                    sb.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, 2, BorderTex.Height - 16), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
-                    if (i < RoomHeight)
-                        Utils.DrawBorderString(sb, i.ToString(), pos, Color.Red);
-                }
                 for (int i = 0; i < RoomWidth + 1; i++)
                 {
-                    Vector2 pos = borderPos + Vector2.UnitY * i * 64 + Vector2.One * 7;
-                    sb.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, BorderTex.Width - 16, 2), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                    Vector2 pos = GameManager.ScreenOffset + Vector2.UnitX * i * 64 + Vector2.UnitY * GameManager.CameraPosition.Y;
+                    sb.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, 2, tileSize * RoomHeight - 16), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
                     if (i < RoomWidth)
+                        Utils.DrawBorderString(sb, i.ToString(), pos, Color.Red);
+                }
+                for (int i = 0; i < RoomHeight + 1; i++)
+                {
+                    Vector2 pos = GameManager.ScreenOffset + Vector2.UnitY * i * 64 + Vector2.UnitX * GameManager.CameraPosition.X;
+                    sb.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, tileSize * RoomWidth, 2), Color.Black, 0f, Vector2.Zero, 1, 0, 0f);
+                    if (i < RoomHeight)
                         Utils.DrawBorderString(sb, i.ToString(), pos, Color.Cyan);
                 }
             }
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.UIScaleMatrix);
+            sb.ReleaseCutoffRegion(Main.UIScaleMatrix);
+
+            LevelEditor.DrawUI(sb);
         }
 
         /// <summary>
@@ -307,10 +351,11 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
         }
 
-        public static TQRoom NewRoom(int x, int y, int ID)
+        public static TQRoom NewRoom(int x, int y, int ID, Vector2 size = default)
         {
+            Vector2 roomSize = size == default ? RoomSizeDefault : size;
             //Generate room sstuff
-            TQRoom room = new TQRoom(x, y, ID);
+            TQRoom room = new TQRoom(x, y, ID, roomSize);
 
             //Fill the room with entities, i assume.
             room.Populate(ID);
