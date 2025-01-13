@@ -67,7 +67,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             #region movement
 
             int baseSpeed = 3;
-            int sprintSpeed = 5;
+            int sprintSpeed = 10;
             int moveSpeed = IsRunning ? sprintSpeed : baseSpeed;
 
             if (ControlLeft && ControlRight)

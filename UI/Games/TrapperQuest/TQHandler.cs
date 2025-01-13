@@ -11,6 +11,7 @@ using log4net.Layout;
 using Microsoft.Xna.Framework.Input;
 using CalamityMod;
 using Terraria.GameInput;
+using Newtonsoft.Json.Linq;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -217,7 +218,6 @@ namespace CalRemix.UI.Games.TrapperQuest
             
             Rectangle cut = new Rectangle((int)GameManager.ScreenOffset.X + (int)GameManager.CameraPosition.X + 52, (int)GameManager.ScreenOffset.Y + (int)GameManager.CameraPosition.Y + 26, (int)(RoomWidthDefault * tileSize + 103), (int)(RoomHeighDefault * tileSize + 52));
 
-
             sb.Draw(pickle, GameManager.ScreenOffset + GameManager.CameraPosition - new Vector2(frameThickness + bgPadding), new Rectangle(0, 0, (int)bgSize.X, (int)bgSize.Y), new Color(21, 37, 46), 0f, Vector2.Zero, 1f, 0, 0f);
 
             //Draw room border
@@ -320,16 +320,16 @@ namespace CalRemix.UI.Games.TrapperQuest
                 bool isOOB = false;
                 float collisionRadius = collider.CollisionHitbox.radius;
 
-                if (entity.Position.X > GameManager.playingField.X - collisionRadius || entity.Position.X < collisionRadius)
+                if (entity.Position.X > player.RoomImIn.RoomSize.X * tileSize - collisionRadius || entity.Position.X * tileSize < collisionRadius)
                 {
                     isOOB = true;
-                    entity.Position.X = MathHelper.Clamp(entity.Position.X, collisionRadius, GameManager.playingField.X - collisionRadius);
+                    entity.Position.X = MathHelper.Clamp(entity.Position.X, collisionRadius, player.RoomImIn.RoomSize.X * tileSize - collisionRadius);
                 }
 
-                if (entity.Position.Y > GameManager.playingField.Y - collisionRadius || entity.Position.Y < collisionRadius)
+                if (entity.Position.Y > player.RoomImIn.RoomSize.Y * tileSize - collisionRadius || entity.Position.Y * tileSize < collisionRadius)
                 {
                     isOOB = true;
-                    entity.Position.Y = MathHelper.Clamp(entity.Position.Y, collisionRadius, GameManager.playingField.Y - collisionRadius);
+                    entity.Position.Y = MathHelper.Clamp(entity.Position.Y, collisionRadius, player.RoomImIn.RoomSize.Y * tileSize - collisionRadius);
                 }
 
                 if (isOOB)
@@ -342,7 +342,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             else
             {
-                if (entity.Position.X > GameManager.playingField.X + BoiHandler.OOBLeeway || entity.Position.X < -BoiHandler.OOBLeeway || entity.Position.Y > GameManager.playingField.Y + BoiHandler.OOBLeeway || entity.Position.Y < -BoiHandler.OOBLeeway)
+                if (entity.Position.X > player.RoomImIn.RoomSize.X * tileSize + BoiHandler.OOBLeeway || entity.Position.X < -BoiHandler.OOBLeeway || entity.Position.Y > player.RoomImIn.RoomSize.Y * tileSize + BoiHandler.OOBLeeway || entity.Position.Y < -BoiHandler.OOBLeeway)
                 {
                     return true;
                 }

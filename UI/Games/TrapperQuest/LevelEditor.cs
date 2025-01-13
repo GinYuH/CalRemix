@@ -65,6 +65,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                 // place entities
                 if (Main.mouseLeft && currentType != null)
                 {
+                    ExportRoom();
                     GameEntity newE = Activator.CreateInstance(currentType.GetType()) as GameEntity;
 
                     // if the entity is a tile and no tile exists at the current coordinate, place the tile
@@ -112,6 +113,7 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static void ExportRoom()
         {
             string ret = "";
+            ret += player.RoomImIn.RoomSize.X + "," + player.RoomImIn.RoomSize.Y + "\n";
             foreach (GameEntity g in player.RoomImIn.Entities)
             {
                 if (g is ICreative creative)
@@ -140,9 +142,32 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             player.RoomImIn.Entities.RemoveAll((GameEntity g) => g is not TrapperPlayer);
             player.RoomImIn.Tiles.Clear();
+            for (int i = 0; i <  player.RoomImIn.RoomSize.X; i++)
+            {
+                for (int j = 0; j < player.RoomImIn.RoomSize.Y; j++)
+                {
+                    Vector2 tileCords = new Vector2(i, j);
+                    Vector2 pos = ConvertToScreenCords(tileCords);
+                    if (!player.RoomImIn.Entities.Any((GameEntity g) => ConvertToTileCords(g.Position) == pos))
+                    {
+                        GameEntity grass = new FloorGrass();
+                        grass.Position = pos;
+                        player.RoomImIn.Entities.Add(grass);
+                        player.RoomImIn.Tiles.Add(((int)tileCords.X, (int)tileCords.Y), grass as TQRock);
+
+                    }
+                }
+            }
+            return;
             string dump = File.ReadAllText(path);
             string[] lines = dump.Split('\n');
-            for (int i = 0; i < lines.Length - 1; i++)
+            string[] genericData = lines[0].Split(',');
+
+            // Elements 1 and 2 are room size
+            Vector2 size = new Vector2(int.Parse(genericData[0]), int.Parse(genericData[1]));
+            player.RoomImIn.RoomSize = size;
+
+            for (int i = 1; i < lines.Length - 1; i++)
             {
                 string c = lines[i];
                 string[] elems = c.Split(',');
@@ -212,20 +237,32 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             sb.Draw(TextureAssets.MagicPixel.Value, Main.MouseScreen, new Rectangle(0, 0, 22, 22), Color.Red * 0.8f, 0, Vector2.Zero, 1, 0, 0);
 
+            DrawSaveLoad(sb, UIWidth, extraX);
+            DrawTechyStuff(sb, UIWidth, extraX);
+        }
+
+        public static void DrawTechyStuff(SpriteBatch sb, int UIWidth, int extraX)
+        {
+            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
+        }
+
+        public static void DrawSaveLoad(SpriteBatch sb, int UIWidth, int extraX)
+        {
+            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
             // save and load buttons
             int saveX = UIWidth + extraX - 20;
             int loadX = UIWidth + extraX - 40 - UIWidth / 3;
             float saveloadY = -GameManager.playingField.Y + 40;
-            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(saveX, saveloadY), new Rectangle(0, 0, UIWidth / 3, 20), Color.Green);
-            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(loadX, saveloadY), new Rectangle(0, 0, UIWidth / 3, 20), Color.Blue);
+            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(saveX, saveloadY) + GameManager.CameraPosition, new Rectangle(0, 0, UIWidth / 3, 20), Color.Green);
+            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(loadX, saveloadY) + GameManager.CameraPosition, new Rectangle(0, 0, UIWidth / 3, 20), Color.Blue);
 
             int saveText = saveX - UIWidth / 10;
             int loadText = loadX - UIWidth / 10;
-            Utils.DrawBorderString(sb, "Save", GameManager.ScreenOffset - new Vector2(saveText, saveloadY), Color.White);
-            Utils.DrawBorderString(sb, "Load", GameManager.ScreenOffset - new Vector2(loadText, saveloadY), Color.White);
+            Utils.DrawBorderString(sb, "Save", GameManager.ScreenOffset - new Vector2(saveText, saveloadY) + GameManager.CameraPosition, Color.White);
+            Utils.DrawBorderString(sb, "Load", GameManager.ScreenOffset - new Vector2(loadText, saveloadY) + GameManager.CameraPosition, Color.White);
 
-            Rectangle saveRect = new Rectangle((int)GameManager.ScreenOffset.X - saveText, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
-            Rectangle loadRect = new Rectangle((int)GameManager.ScreenOffset.X - loadText, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
+            Rectangle saveRect = new Rectangle((int)GameManager.ScreenOffset.X - saveText + (int)GameManager.CameraPosition.X, (int)GameManager.ScreenOffset.Y - (int)saveloadY - 22, UIWidth / 3, 20);
+            Rectangle loadRect = new Rectangle((int)GameManager.ScreenOffset.X - loadText + (int)GameManager.CameraPosition.X, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
 
             // click to export
             if (maus.Intersects(saveRect) && Main.mouseLeft && Main.mouseLeftRelease)
