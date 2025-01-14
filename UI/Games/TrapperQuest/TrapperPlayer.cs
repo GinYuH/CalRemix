@@ -161,9 +161,8 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             Main.EntitySpriteDraw(TBC, drawPosition, TBC.Frame(1, 16, 0, frame + curFrame), Color.White, 0f, new Vector2(TBC.Width / 2, TBC.Height / 24), 1f, 0, 0);
 
-            // Hitbox
-            bool debug = false;
-            if (debug)
+            // Debug hitbox
+            if (LevelEditor.ShowHitbox)
             {
                 Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, drawPosition + GameManager.CameraPosition, new Rectangle(0, 0, 48, 48), Color.Orange * 0.8f, 0f, new Vector2(24, 24), 1f, 0, 0);
             }

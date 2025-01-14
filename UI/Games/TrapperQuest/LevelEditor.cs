@@ -33,6 +33,10 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static string path = $@"{exportPath}\CurLevel.txt";
         public static float scrollOld = 0;
         public static float scrollNew = 0;
+        public static bool ShowGrid = false;
+        public static bool ShowCursor = false;
+        public static bool ShowHitbox = false;
+        public static bool ShowDoors = false;
 
         /// <summary>
         /// Loads all game entities for use in the level editor
@@ -284,11 +288,15 @@ namespace CalRemix.UI.Games.TrapperQuest
 
                 Utils.DrawBorderString(sb, cr.Name, pos, c, optionWidth / xWidth);
             }
-            sb.Draw(TextureAssets.MagicPixel.Value, Main.MouseScreen, new Rectangle(0, 0, 22, 22), Color.Red * 0.8f, 0, Vector2.Zero, 1, 0, 0);
+            
+            // Debug cursor
+            if (ShowCursor)
+                sb.Draw(TextureAssets.MagicPixel.Value, Main.MouseScreen, new Rectangle(0, 0, 22, 22), Color.Red * 0.8f, 0, Vector2.Zero, 1, 0, 0);
 
-            DrawSaveLoad(sb, UIWidth, extraX);
-            DrawTechyStuff(sb, UIWidth, extraX);
+            // Draw the menu that contains all the options
+            DrawRightMenu(sb, UIWidth, extraX);
 
+            // Initialize scroll values
             if (scrollOld == 0 && scrollNew == 0)
             {
                 scrollOld = Microsoft.Xna.Framework.Input.Mouse.GetState().ScrollWheelValue;
@@ -302,15 +310,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
         }
 
-        public static void DrawTechyStuff(SpriteBatch sb, int UIWidth, int extraX)
+        public static void DrawRightMenu(SpriteBatch sb, int UIWidth, int extraX)
         {
             int curRow = 0;
             int spacing = 50;
             int padding = 22;
-            int ySpace = 32;
+            int ySpace = 52;
             int xSpace = 6;
 
-            float optionWidth = (UIWidth - (padding * 2)) / 5 - xSpace;
+            float optionWidth = 36;
 
             Vector2 basePos = Vector2.UnitX * 60 + Vector2.UnitX * GameManager.playingField.X + GameManager.ScreenOffset + GameManager.CameraPosition;
 
@@ -324,7 +332,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                     curRow++;
                 LevelEditorOption g = options[i];
                 float xWidth = FontAssets.MouseText.Value.MeasureString(g.Name).X;
-                Vector2 pos = basePos + new Vector2((i % 5) * spacing + extraX, curRow * ySpace);
+                Vector2 pos = basePos + new Vector2((i % 5) * spacing + extraX, curRow * ySpace) - new Vector2(30);
 
                 Color c = Color.White;
                 // click on the option to select it
@@ -347,143 +355,8 @@ namespace CalRemix.UI.Games.TrapperQuest
                     }
                 }
                 g.Draw(sb, pos, new Rectangle((int)pos.X, (int)pos.Y, 40, 40));
-                Utils.DrawBorderString(sb, g.Name, pos, c, optionWidth / xWidth);
+                Utils.DrawBorderString(sb, g.Name, pos + Vector2.UnitY * 5, c, optionWidth / xWidth);
             }
-        }
-
-        public static void DrawSaveLoad(SpriteBatch sb, int UIWidth, int extraX)
-        {
-            Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
-            // save and load buttons
-            int saveX = UIWidth + extraX - 20;
-            int loadX = UIWidth + extraX - 40 - UIWidth / 3;
-            float saveloadY = -GameManager.playingField.Y + 40;
-            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(saveX, saveloadY) + GameManager.CameraPosition, new Rectangle(0, 0, UIWidth / 3, 20), Color.Green);
-            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset - new Vector2(loadX, saveloadY) + GameManager.CameraPosition, new Rectangle(0, 0, UIWidth / 3, 20), Color.Blue);
-
-            int saveText = saveX - UIWidth / 10;
-            int loadText = loadX - UIWidth / 10;
-            Utils.DrawBorderString(sb, "Save", GameManager.ScreenOffset - new Vector2(saveText, saveloadY) + GameManager.CameraPosition, Color.White);
-            Utils.DrawBorderString(sb, "Load", GameManager.ScreenOffset - new Vector2(loadText, saveloadY) + GameManager.CameraPosition, Color.White);
-
-            Rectangle saveRect = new Rectangle((int)GameManager.ScreenOffset.X - saveText + (int)GameManager.CameraPosition.X, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
-            Rectangle loadRect = new Rectangle((int)GameManager.ScreenOffset.X - loadText + (int)GameManager.CameraPosition.X, (int)GameManager.ScreenOffset.Y - (int)saveloadY, UIWidth / 3, 20);
-
-            // click to export
-            if (maus.Intersects(saveRect) && Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                ExportRoom();
-            }
-            // click to import
-            if (maus.Intersects(loadRect) && Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                ImportRoom(false);
-            }
-        }
-    }
-
-    public abstract class LevelEditorOption
-    {
-        public virtual string Name => "";
-
-        public virtual void ClickAction() { }
-
-        public virtual void ScrollUp() { }
-
-        public virtual void ScrollDown() { }
-
-        public virtual void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
-        {
-            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Black);
-        }
-    }
-
-    public class SizeXOption : LevelEditorOption
-    {
-        public override string Name => "SizeX";
-
-        public override void ScrollDown()
-        {
-            float size = player.RoomImIn.RoomSize.X + 1;
-            if (size >= RoomWidthDefault)
-                player.RoomImIn.RoomSize.X = size;
-        }
-
-        public override void ScrollUp()
-        {
-            float size = player.RoomImIn.RoomSize.X - 1;
-            if (size >= RoomWidthDefault)
-                player.RoomImIn.RoomSize.X = size;
-        }
-
-        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
-        {
-            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Green, 0, Vector2.Zero, 1, 0, 0);
-            Utils.DrawBorderString(sb, player.RoomImIn.RoomSize.X.ToString(), position + Vector2.UnitY * 22, Color.White);
-        }
-    }
-
-    public class SizeYOption : LevelEditorOption
-    {
-        public override string Name => "SizeY";
-
-        public override void ScrollDown()
-        {
-            float size = player.RoomImIn.RoomSize.Y + 1;
-            if (size >= RoomHeightDefault)
-                player.RoomImIn.RoomSize.Y = size;
-        }
-
-        public override void ScrollUp()
-        {
-            float size = player.RoomImIn.RoomSize.Y - 1;
-            if (size >= RoomHeightDefault)
-                player.RoomImIn.RoomSize.Y = size;
-        }
-
-        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
-        {
-            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Green, 0, Vector2.Zero, 1, 0, 0);
-            Utils.DrawBorderString(sb, player.RoomImIn.RoomSize.Y.ToString(), position + Vector2.UnitY * 22, Color.White);
-        }
-    }
-
-    public class RoomIDOption : LevelEditorOption
-    {
-        public override string Name => "RoomID";
-
-        public override void ScrollDown()
-        {
-            int size = player.RoomImIn.id + 1;
-            if (size >= 0)
-                player.RoomImIn.id = size;
-        }
-
-        public override void ScrollUp()
-        {
-            int size = player.RoomImIn.id - 1;
-            if (size >= 0)
-                player.RoomImIn.id = size;
-        }
-
-        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
-        {
-            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Green, 0, Vector2.Zero, 1, 0, 0);
-            Utils.DrawBorderString(sb, player.RoomImIn.id.ToString(), position + Vector2.UnitY * 22, Color.White);
-        }
-    }
-
-    public class ClearOption : LevelEditorOption
-    {
-        public override string Name => "Clear";
-
-        public override void ClickAction()
-        {
-            player.RoomImIn.Entities.RemoveAll((GameEntity g) => g is not TrapperPlayer);
-        }
-        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
-        {
-            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Blue, 0, Vector2.Zero, 1, 0, 0);
         }
     }
 }

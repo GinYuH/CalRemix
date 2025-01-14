@@ -17,6 +17,9 @@ namespace CalRemix.UI.Games.TrapperQuest
 {
     public class TQHandler
     {
+        /// <summary>
+        /// The one and only player character you control
+        /// </summary>
         public static TrapperPlayer player;
         public static List<GameEntity> DeadEntities = new List<GameEntity>();
         public static Dictionary<IColliding, GameEntity> CollidingEntities = new Dictionary<IColliding, GameEntity>();
@@ -27,18 +30,35 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static int RoomHeight => (int)player.RoomImIn.RoomSize.Y;
         public static int RoomWidth => (int) player.RoomImIn.RoomSize.X;
         public const int tileSize = 64;
+        /// <summary>
+        /// How long a room transition takes. The first half is a fade in, the second half is a fade out.
+        /// </summary>
         public const int RoomTransitionTime = 90;
         public const int RoomWidthDefault = 13;
         public const int RoomHeightDefault = 7;
         public static Vector2 RoomSizeDefault = new Vector2(RoomWidthDefault, RoomHeightDefault);
 
+        /// <summary>
+        /// Keeps track of room transition stuff
+        /// </summary>
         public static int roomTransitionCounter;
 
+        /// <summary>
+        /// Converts screen coordinates to tile coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static Vector2 ConvertToTileCords(int x, int y)
         {
             return ConvertToTileCords(new Vector2(x, y));
         }
 
+        /// <summary>
+        /// Converts screen coordinates to tile coordinates
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public static Vector2 ConvertToTileCords(Vector2 position)
         {
             Vector2 preThing = (position - new Vector2(tileSize / 2)) / tileSize;
@@ -47,11 +67,22 @@ namespace CalRemix.UI.Games.TrapperQuest
             return preThing;
         }
 
+        /// <summary>
+        /// Converts tile coordinates to screen coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static Vector2 ConvertToScreenCords(int x, int y)
         {
             return ConvertToScreenCords(new Vector2(x, y));
         }
 
+        /// <summary>
+        /// Converts tile coordinates to screen coordinates
+        /// </summary>
+        /// <param name="tilePos"></param>
+        /// <returns></returns>
         public static Vector2 ConvertToScreenCords(Vector2 tilePos)
         {
             return tilePos * tileSize + new Vector2(tileSize / 2);
@@ -90,11 +121,13 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             if (Main.gameMenu || Main.gamePaused)
                 return;
-            //Process the players movement and actions
+            // Process the players movement and actions
+            // Do not run most of the game if changing rooms
             if (roomTransitionCounter > 0)
             {
                 roomTransitionCounter--;
                 player.Velocity = Vector2.Zero;
+                // Change the room and reset camera position halfway through the transition when the screen is fully black
                 if (roomTransitionCounter == (RoomTransitionTime / 2))
                 {
                     player.ChangeRoom();
@@ -140,7 +173,6 @@ namespace CalRemix.UI.Games.TrapperQuest
                     }
                 }
 
-                bool found = false;
                 //For each entity that is IColliding and has CanCollide set to true (as listed above)
                 foreach (IColliding colliding in CollidingEntities.Keys)
                 {
@@ -155,13 +187,8 @@ namespace CalRemix.UI.Games.TrapperQuest
                         if ((colliderEntity.Position - collidingEntity.Position).Length() > collider.SimulationDistance + colliding.CollisionHitbox.radius)
                             continue;
 
-                        Vector2 ogPos = collidingEntity.Position;
-
                         //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
                         collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
-
-                        if (ogPos != collidingEntity.Position)
-                            found = true;
 
                         //Call both their onCollide function. Kill the colliding entity if its onCollide returns true
                         collider.OnCollide(collidingEntity);
@@ -198,14 +225,17 @@ namespace CalRemix.UI.Games.TrapperQuest
             InteractibleEntities.Clear();
 
             // Camera controls for larger rooms
+            // Keep the camera locked on the player if they are far enough from border walls
+            // If they are close enough to one of the room borders, stop moving the camera as to not have the camera go out of bounds
             if (player.RoomImIn.RoomSize != RoomSizeDefault)
             {
                 GameManager.CameraPosition.X = player.Position.X;
                 GameManager.CameraPosition.Y = player.Position.Y;
 
-                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, TQHandler.ConvertToScreenCords(new Vector2(RoomWidth - RoomWidthDefault - 1, RoomHeight - RoomHeightDefault - 1)) + new Vector2(TQHandler.tileSize) / 2);
+                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, ConvertToScreenCords(new Vector2(RoomWidth - RoomWidthDefault - 1, RoomHeight - RoomHeightDefault - 1)) + new Vector2(tileSize) / 2);
             }
 
+            // Run the Level Editor if it's enabled
             bool levelEditor = true;
             if (levelEditor)
                 LevelEditor.Run();
@@ -219,9 +249,10 @@ namespace CalRemix.UI.Games.TrapperQuest
             Vector2 borderSize = innerScreenSize + new Vector2(frameThickness) * 2 + Vector2.UnitX * 2;
             int bgPadding = 36;
             Vector2 bgSize = borderSize + new Vector2(bgPadding) * 2;
-            
+            // The area which the game should be contained in, everything outside is cut off
             Rectangle cut = new Rectangle((int)GameManager.ScreenOffset.X + (int)GameManager.CameraPosition.X + 52, (int)GameManager.ScreenOffset.Y + (int)GameManager.CameraPosition.Y + 26, (int)(RoomWidthDefault * tileSize + 103), (int)(RoomHeightDefault * tileSize + 52));
 
+            // Draw the background screen
             sb.Draw(pickle, GameManager.ScreenOffset + GameManager.CameraPosition - new Vector2(frameThickness + bgPadding), new Rectangle(0, 0, (int)bgSize.X, (int)bgSize.Y), new Color(21, 37, 46), 0f, Vector2.Zero, 1f, 0, 0f);
 
             //Draw room border
@@ -274,6 +305,8 @@ namespace CalRemix.UI.Games.TrapperQuest
                 }
             }
             DrawLayers.Clear();
+
+            // Fade the screen when entering doors with transition fade enabled
             Color black = Color.Black;
             if (roomTransitionCounter > RoomTransitionTime / 2)
             {
@@ -285,8 +318,8 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset, new Rectangle(0, 0, cut.Width * 2, cut.Height * 2), black, 0f, Vector2.Zero, 1f, 0, 0f);
 
-            bool debugDraw = true;
-            if (debugDraw)
+            // Debug grid that shows tile boundaries
+            if (LevelEditor.ShowGrid)
             {
                 for (int i = 0; i < RoomWidth + 1; i++)
                 {
@@ -303,10 +336,13 @@ namespace CalRemix.UI.Games.TrapperQuest
                         Utils.DrawBorderString(sb, i.ToString(), pos, Color.Cyan);
                 }
             }
+
+            // Revert SpriteBatch changes
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.UIScaleMatrix);
             sb.ReleaseCutoffRegion(Main.UIScaleMatrix);
 
+            // Draw the level editor UI
             LevelEditor.DrawUI(sb);
         }
 

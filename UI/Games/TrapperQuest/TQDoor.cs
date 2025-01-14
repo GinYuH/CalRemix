@@ -55,16 +55,19 @@ namespace CalRemix.UI.Games.TrapperQuest
             return newdoor;
         }
 
-        public int Layer => 1;
+        public int Layer => 2;
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            Texture2D Rok = ModContent.Request<Texture2D>(Texture).Value;
+            // Debug to show doors
+            if (LevelEditor.ShowDoors)
+            {
+                Texture2D Rok = ModContent.Request<Texture2D>(Texture).Value;
 
-            Vector2 drawPosition = Position + offset;
+                Vector2 drawPosition = Position + offset;
 
-            Main.EntitySpriteDraw(Rok, drawPosition, null, Main.DiscoColor, 0f, Rok.Size() / 2f, 1f, 0, 0);
-
+                Main.EntitySpriteDraw(Rok, drawPosition, null, Main.DiscoColor, 0f, Rok.Size() / 2f, 1f, 0, 0);
+            }
         }
     }
 }
