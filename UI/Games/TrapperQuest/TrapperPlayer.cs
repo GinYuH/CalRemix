@@ -136,7 +136,7 @@ namespace CalRemix.UI.Games.TrapperQuest
         public void ChangeRoom()
         {
             RoomImIn.Entities.Remove(this);
-            RoomImIn = TQRoomPopulator.LoadedRooms[nextRoom];
+            RoomImIn = TQRoom.Clone(TQRoomPopulator.LoadedRooms[nextRoom]);
             RoomImIn.Entities.Add(this);
             Position = nextRoomPos;
             nextRoom = -1;

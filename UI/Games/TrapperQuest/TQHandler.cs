@@ -65,7 +65,9 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static void Load()
         {
-            TQRoom room = TQRoomPopulator.LoadedRooms[0];
+            TQRoom room = new TQRoom(Vector2.Zero, 0);                
+            room = TQRoom.Clone(TQRoomPopulator.LoadedRooms[0]);
+
             player = new TrapperPlayer(ConvertToScreenCords(new Vector2(6, 3)), 5f, room);
 
             DrawLayers = new List<List<IDrawable>>();
@@ -201,7 +203,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                 GameManager.CameraPosition.X = player.Position.X;
                 GameManager.CameraPosition.Y = player.Position.Y;
 
-                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, TQHandler.ConvertToScreenCords(new Vector2(TQHandler.RoomWidth - TQHandler.RoomWidthDefault, TQHandler.RoomHeight - TQHandler.RoomHeightDefault - 1)) + new Vector2(TQHandler.tileSize) / 2);
+                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, TQHandler.ConvertToScreenCords(new Vector2(RoomWidth - RoomWidthDefault - 1, RoomHeight - RoomHeightDefault - 1)) + new Vector2(TQHandler.tileSize) / 2);
             }
 
             bool levelEditor = true;

@@ -38,5 +38,16 @@ namespace CalRemix.UI.Games.TrapperQuest
             else
                 RoomSize = roomSize;
         }
+
+        public static TQRoom Clone(TQRoom og)
+        {
+            TQRoom newRoom = new TQRoom(og.spawnPos, og.id, og.RoomSize);
+            newRoom.Entities = og.Entities;
+            newRoom.RoomSize = og.RoomSize;
+            newRoom.spawnPos = og.spawnPos;
+            newRoom.id = og.id;
+            newRoom.Tiles = og.Tiles;
+            return newRoom;
+        }
     }
 }

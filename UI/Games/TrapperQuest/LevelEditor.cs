@@ -402,14 +402,14 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public override string Name => "SizeX";
 
-        public override void ScrollUp()
+        public override void ScrollDown()
         {
             float size = player.RoomImIn.RoomSize.X + 1;
             if (size >= RoomWidthDefault)
                 player.RoomImIn.RoomSize.X = size;
         }
 
-        public override void ScrollDown()
+        public override void ScrollUp()
         {
             float size = player.RoomImIn.RoomSize.X - 1;
             if (size >= RoomWidthDefault)
@@ -427,14 +427,14 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public override string Name => "SizeY";
 
-        public override void ScrollUp()
+        public override void ScrollDown()
         {
             float size = player.RoomImIn.RoomSize.Y + 1;
             if (size >= RoomHeightDefault)
                 player.RoomImIn.RoomSize.Y = size;
         }
 
-        public override void ScrollDown()
+        public override void ScrollUp()
         {
             float size = player.RoomImIn.RoomSize.Y - 1;
             if (size >= RoomHeightDefault)
@@ -445,6 +445,45 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Green, 0, Vector2.Zero, 1, 0, 0);
             Utils.DrawBorderString(sb, player.RoomImIn.RoomSize.Y.ToString(), position + Vector2.UnitY * 22, Color.White);
+        }
+    }
+
+    public class RoomIDOption : LevelEditorOption
+    {
+        public override string Name => "RoomID";
+
+        public override void ScrollDown()
+        {
+            int size = player.RoomImIn.id + 1;
+            if (size >= 0)
+                player.RoomImIn.id = size;
+        }
+
+        public override void ScrollUp()
+        {
+            int size = player.RoomImIn.id - 1;
+            if (size >= 0)
+                player.RoomImIn.id = size;
+        }
+
+        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
+        {
+            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Green, 0, Vector2.Zero, 1, 0, 0);
+            Utils.DrawBorderString(sb, player.RoomImIn.id.ToString(), position + Vector2.UnitY * 22, Color.White);
+        }
+    }
+
+    public class ClearOption : LevelEditorOption
+    {
+        public override string Name => "Clear";
+
+        public override void ClickAction()
+        {
+            player.RoomImIn.Entities.RemoveAll((GameEntity g) => g is not TrapperPlayer);
+        }
+        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
+        {
+            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color.Blue, 0, Vector2.Zero, 1, 0, 0);
         }
     }
 }

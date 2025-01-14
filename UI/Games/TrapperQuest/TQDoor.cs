@@ -63,7 +63,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             Vector2 drawPosition = Position + offset;
 
-            //Main.EntitySpriteDraw(Rok, drawPosition, null, Color.Black, 0f, Rok.Size() / 2f, 1f, 0, 0);
+            Main.EntitySpriteDraw(Rok, drawPosition, null, Main.DiscoColor, 0f, Rok.Size() / 2f, 1f, 0, 0);
 
         }
     }

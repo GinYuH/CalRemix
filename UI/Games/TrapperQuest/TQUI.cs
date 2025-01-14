@@ -71,7 +71,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             LevelEditor.LoadTypes();
             LevelEditor.LoadOptions();
 
-            int roomTypes = 2;
+            int roomTypes = 4;
             string path = "UI/Games/TrapperQuest/Rooms/Room";
             for (int i = 0; i < roomTypes; i++)
             {
