@@ -66,6 +66,7 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
@@ -580,6 +581,8 @@ namespace CalRemix
                     }
                 }
             }
+
+
             if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
             {
                 NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<ChlorinePaladin>());
@@ -1157,6 +1160,23 @@ namespace CalRemix
             {
 
             }
+            else if (npc.type == NPCID.Spazmatism)
+            {
+                /* if (CalRemixWorld.leash) { 
+                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedBar);
+                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.SoulofSight);
+                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.TwinsBossBag);
+                } */
+             }
+             else if (npc.type == NPCID.Retinazer)
+             {
+                 /* if (CalRemixWorld.leash)
+                 {
+                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedBar);
+                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.SoulofSight);
+                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.TwinsBossBag);
+                 } */
+            }
             else if (npc.type == NPCType<BrimstoneElemental>())
             {
 
@@ -1455,6 +1475,17 @@ namespace CalRemix
                     CalRemixWorld.ShrineTimer = 3000;
                 }
             }
+
+            if (npc.type == NPCID.Spazmatism || npc.type == NPCID.Retinazer)
+            {
+                //the leash will spawn in BOTH times a twin is killed; the first time it'll spawn ON the twin and burrow away to despawn, the SECOND time it'll spawn offscreen and come back up
+                /* if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.leash)
+                {
+                    if (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)) NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<TheLeashHead>());
+                    else NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y + 1200, NPCType<TheLeashHead>());
+                } */
+            }
+
             if (!CalRemixWorld.deusDeadInSnow)
             {
                 if (Main.LocalPlayer.ZoneSnow && npc.type == NPCType<AstrumDeusHead>())
