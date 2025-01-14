@@ -31,6 +31,8 @@ namespace CalRemix.UI.Games.TrapperQuest
                 Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().tqactive = false;
                 initialized = false;
                 TQHandler.Unload();
+                LevelEditor.scrollNew = 0;
+                LevelEditor.scrollOld = 0;
                 return;
             }
             Main.blockInput = true;
@@ -67,6 +69,14 @@ namespace CalRemix.UI.Games.TrapperQuest
         public override void AddRecipes()
         {
             LevelEditor.LoadTypes();
+            LevelEditor.LoadOptions();
+
+            int roomTypes = 2;
+            string path = "UI/Games/TrapperQuest/Rooms/Room";
+            for (int i = 0; i < roomTypes; i++)
+            {
+                TQRoomPopulator.LoadedRooms.Add(TQRoomPopulator.LoadRoom(path + i + ".txt"));
+            }
         }
 
         public override void UpdateUI(GameTime gameTime)

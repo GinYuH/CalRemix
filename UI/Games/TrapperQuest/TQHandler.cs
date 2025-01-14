@@ -29,8 +29,8 @@ namespace CalRemix.UI.Games.TrapperQuest
         public const int tileSize = 64;
         public const int RoomTransitionTime = 90;
         public const int RoomWidthDefault = 13;
-        public const int RoomHeighDefault = 7;
-        public static Vector2 RoomSizeDefault = new Vector2(RoomWidthDefault, RoomHeighDefault);
+        public const int RoomHeightDefault = 7;
+        public static Vector2 RoomSizeDefault = new Vector2(RoomWidthDefault, RoomHeightDefault);
 
         public static int roomTransitionCounter;
 
@@ -65,7 +65,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static void Load()
         {
-            TQRoom room = NewRoom(0, 0, 0, RoomSizeDefault);
+            TQRoom room = TQRoomPopulator.LoadedRooms[0];
             player = new TrapperPlayer(ConvertToScreenCords(new Vector2(6, 3)), 5f, room);
 
             DrawLayers = new List<List<IDrawable>>();
@@ -77,6 +77,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static void Unload()
         {
+            player.RoomImIn.Entities.Remove(player);
             player = null;
             DrawLayers.Clear();
             roomTransitionCounter = 0;
@@ -123,7 +124,6 @@ namespace CalRemix.UI.Games.TrapperQuest
                     }
 
                     bool enteredDoor = false;
-
                     //-If they are an active interactible entity and close enough to the player, add them to the list
                     if (entity is IInteractable interactable && interactable.CanBeInteractedWith)
                     {
@@ -201,7 +201,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                 GameManager.CameraPosition.X = player.Position.X;
                 GameManager.CameraPosition.Y = player.Position.Y;
 
-                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, TQHandler.ConvertToScreenCords(new Vector2(TQHandler.RoomWidth - TQHandler.RoomWidthDefault, TQHandler.RoomHeight - TQHandler.RoomHeighDefault - 1)) + new Vector2(TQHandler.tileSize) / 2);
+                GameManager.CameraPosition = Vector2.Clamp(GameManager.CameraPosition - ConvertToScreenCords(new Vector2(6, 3)), Vector2.Zero, TQHandler.ConvertToScreenCords(new Vector2(TQHandler.RoomWidth - TQHandler.RoomWidthDefault, TQHandler.RoomHeight - TQHandler.RoomHeightDefault - 1)) + new Vector2(TQHandler.tileSize) / 2);
             }
 
             bool levelEditor = true;
@@ -218,7 +218,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             int bgPadding = 36;
             Vector2 bgSize = borderSize + new Vector2(bgPadding) * 2;
             
-            Rectangle cut = new Rectangle((int)GameManager.ScreenOffset.X + (int)GameManager.CameraPosition.X + 52, (int)GameManager.ScreenOffset.Y + (int)GameManager.CameraPosition.Y + 26, (int)(RoomWidthDefault * tileSize + 103), (int)(RoomHeighDefault * tileSize + 52));
+            Rectangle cut = new Rectangle((int)GameManager.ScreenOffset.X + (int)GameManager.CameraPosition.X + 52, (int)GameManager.ScreenOffset.Y + (int)GameManager.CameraPosition.Y + 26, (int)(RoomWidthDefault * tileSize + 103), (int)(RoomHeightDefault * tileSize + 52));
 
             sb.Draw(pickle, GameManager.ScreenOffset + GameManager.CameraPosition - new Vector2(frameThickness + bgPadding), new Rectangle(0, 0, (int)bgSize.X, (int)bgSize.Y), new Color(21, 37, 46), 0f, Vector2.Zero, 1f, 0, 0f);
 
@@ -283,7 +283,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset, new Rectangle(0, 0, cut.Width * 2, cut.Height * 2), black, 0f, Vector2.Zero, 1f, 0, 0f);
 
-            bool debugDraw = false;
+            bool debugDraw = true;
             if (debugDraw)
             {
                 for (int i = 0; i < RoomWidth + 1; i++)
@@ -351,18 +351,6 @@ namespace CalRemix.UI.Games.TrapperQuest
 
                 return false;
             }
-        }
-
-        public static TQRoom NewRoom(int x, int y, int ID, Vector2 size = default)
-        {
-            Vector2 roomSize = size == default ? RoomSizeDefault : size;
-            //Generate room sstuff
-            TQRoom room = new TQRoom(x, y, ID, roomSize);
-
-            //Fill the room with entities, i assume.
-            room.Populate(ID);
-
-            return room;
         }
     }
 }

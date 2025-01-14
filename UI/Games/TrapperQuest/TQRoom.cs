@@ -19,7 +19,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public Vector2 spawnPos = Vector2.Zero;
 
-        public Vector2 RoomSize = TQHandler.RoomSizeDefault;
+        public Vector2 RoomSize = Vector2.Zero;
 
 
         public TQRoom(int X, int Y, int ID, Vector2 roomSize = default)
