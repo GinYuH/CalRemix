@@ -2580,6 +2580,11 @@ Weapons: {
 			DisplayName: Sylvan Slasher
 			Tooltip: ""
 		}
+
+		RadGlowstick: {
+			DisplayName: Rad Glowstick
+			Tooltip: ""
+		}
 	}
 }
 
