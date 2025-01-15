@@ -3452,3 +3452,5 @@ LegendMemorialItem: {
 	DisplayName: Memorial Poster
 	Tooltip: A beautiful soul gone too soon...
 }
+
+NoTomorrow.Tooltip: All friendly projectiles are twice as large
