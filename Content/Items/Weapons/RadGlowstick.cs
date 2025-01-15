@@ -9,6 +9,8 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Rogue;
+using CalRemix.Content.Items.Materials;
+using CalamityMod.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -24,6 +26,15 @@ namespace CalRemix.Content.Items.Weapons
             Item.damage = 23;
             Item.shoot = ModContent.ProjectileType<RadGlowstickProjectile>();
             Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
+            Item.rare = ItemRarityID.Green;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(100).
+                AddIngredient<SulphuricScale>(7).
+                AddIngredient(ItemID.Glowstick, 100).
+                AddTile(TileID.Anvils).
+                Register();
         }
     }
 }
