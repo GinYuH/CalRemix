@@ -18,21 +18,79 @@ namespace CalRemix.UI.Games.TrapperQuest
 {
     public class LevelEditor
     {
+        /// <summary>
+        /// The current type to add for the addition tool
+        /// </summary>
         public static GameEntity currentType;
+
+        /// <summary>
+        /// The current selected entity for the selection tool
+        /// </summary>
         public static GameEntity selectedEntity;
 
+        /// <summary>
+        /// All types available to spawn in the spawn window
+        /// </summary>
         public static Dictionary<int, GameEntity> types = new Dictionary<int, GameEntity>();
+
+        /// <summary>
+        /// All available options in the tool window
+        /// </summary>
         public static List<LevelEditorOption> options = new List<LevelEditorOption>();
+
+        /// <summary>
+        /// The path to export room data to
+        /// </summary>
         public static string exportPath = Path.Combine(Main.SavePath + "/Data Dumps");
+
+        /// <summary>
+        /// The file to export room data to
+        /// </summary>
         public static string path = $@"{exportPath}\CurLevel.txt";
+
+        /// <summary>
+        /// Old mouse scroll value
+        /// </summary>
         public static float scrollOld = 0;
+
+        /// <summary>
+        /// Current mouse scroll value
+        /// </summary>
         public static float scrollNew = 0;
+
+        /// <summary>
+        /// Should the grid be shown
+        /// </summary>
         public static bool ShowGrid = false;
+
+        /// <summary>
+        /// Should the cursor hitbox be shown
+        /// </summary>
         public static bool ShowCursor = false;
+
+        /// <summary>
+        /// Should the player hitbox be shown
+        /// </summary>
         public static bool ShowHitbox = false;
+
+        /// <summary>
+        /// Should doors be made visible
+        /// </summary>
         public static bool ShowDoors = false;
+
+        /// <summary>
+        /// Which left window is currently being looked at
+        /// All other windows will have their options locked
+        /// </summary>
         public static int CurrentMenu = 0;
-        public static int CursorMode = 0; //0 = select, 1 = add, 2 = destroy
+
+        /// <summary>
+        /// What does clicking the level do?
+        /// 0 = Select
+        /// 1 = Add
+        /// 2 = Delete
+        /// </summary>
+        public static int CursorMode = 0;
 
         /// <summary>
         /// Loads all game entities for use in the level editor

@@ -73,7 +73,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             if (BoundEntity is not TQDoor door)
                 return;
             int roomID = door.roomGoto + 1;
-            if (roomID >= -1 && roomID < TQRoomPopulator.LoadedRooms.Count)
+            if (roomID >= -1)
                 door.roomGoto = roomID;
         }
 
@@ -82,7 +82,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             if (BoundEntity is not TQDoor door)
                 return;
             int roomID = door.roomGoto - 1;
-            if (roomID >= -1 && roomID < TQRoomPopulator.LoadedRooms.Count)
+            if (roomID >= -1)
                 door.roomGoto = roomID;
         }
 
@@ -108,18 +108,20 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             if (BoundEntity is not TQDoor door)
                 return;
-            float size = door.playerTP.X + tileSize;
+            Vector2 tileCords = ConvertToTileCords(door.playerTP);
+            float size = tileCords.X + 1;
             if (size >= 0)
-                door.playerTP.X = size;
+                door.playerTP.X = ConvertToScreenCords((int)size, 0).X;
         }
 
         public override void ScrollUp()
         {
             if (BoundEntity is not TQDoor door)
                 return;
-            float size = door.playerTP.X - tileSize;
+            Vector2 tileCords = ConvertToTileCords(door.playerTP);
+            float size = tileCords.X - 1;
             if (size >= 0)
-                door.playerTP.X = size;
+                door.playerTP.X = ConvertToScreenCords((int)size, 0).X;
         }
 
         public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
@@ -144,18 +146,20 @@ namespace CalRemix.UI.Games.TrapperQuest
         {
             if (BoundEntity is not TQDoor door)
                 return;
-            float size = door.playerTP.Y + tileSize;
+            Vector2 tileCords = ConvertToTileCords(door.playerTP);
+            float size = tileCords.Y + 1;
             if (size >= 0)
-                door.playerTP.Y = size;
+                door.playerTP.Y = ConvertToScreenCords(0, (int)size).Y;
         }
 
         public override void ScrollUp()
         {
             if (BoundEntity is not TQDoor door)
                 return;
-            float size = door.playerTP.Y - tileSize;
+            Vector2 tileCords = ConvertToTileCords(door.playerTP);
+            float size = tileCords.Y - 1;
             if (size >= 0)
-                door.playerTP.Y = size;
+                door.playerTP.Y = ConvertToScreenCords(0, (int)size).Y;
         }
 
         public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)

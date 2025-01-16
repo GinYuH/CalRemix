@@ -314,7 +314,10 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public override void ClickAction()
         {
-            TQRoomPopulator.RoomData[player.RoomImIn.id] = LevelEditor.ExportText(player.RoomImIn);
+            if (TQRoomPopulator.RoomData.Count > player.RoomImIn.id)
+                TQRoomPopulator.RoomData[player.RoomImIn.id] = LevelEditor.ExportText(player.RoomImIn);
+            else
+                TQRoomPopulator.RoomData.Add(LevelEditor.ExportText(player.RoomImIn));
         }
     }
 }
