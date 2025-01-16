@@ -198,7 +198,7 @@ namespace CalRemix
         {
             if (npc.type == NPCType<CryogenShield>())
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Dendritus>());
                 }

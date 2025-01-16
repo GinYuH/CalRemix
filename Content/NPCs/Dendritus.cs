@@ -40,7 +40,7 @@ namespace CalRemix.Content.NPCs
             NPC.damage = 0;
             NPC.defense = 999999999;
             NPC.takenDamageMultiplier = 0.01f;
-            NPC.lifeMax = 8;
+            NPC.lifeMax = 10;
             NPC.knockBackResist = 0f;
             NPC.value = 0f;
             NPC.lavaImmune = true;
@@ -62,6 +62,7 @@ namespace CalRemix.Content.NPCs
             if (NPC.FindFirstNPC(ModContent.NPCType<Cryogen>()) == -1)
             {
                 NPC.active = false;
+                return;
             }
             
             NPC.TargetClosest();
