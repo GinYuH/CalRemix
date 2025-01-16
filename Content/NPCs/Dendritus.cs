@@ -37,10 +37,10 @@ namespace CalRemix.Content.NPCs
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.width = 54;
             NPC.height = 70;
-            NPC.damage = 200;
+            NPC.damage = 40;
             NPC.defense = 999999999;
             NPC.takenDamageMultiplier = 0.01f;
-            NPC.lifeMax = 25;
+            NPC.lifeMax = 8;
             NPC.knockBackResist = 0f;
             NPC.value = 0f;
             NPC.lavaImmune = true;
@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs
         }
         public override void OnSpawn(IEntitySource source)
         {
-            AITimer = Main.rand.Next(0, 125);
+            AITimer = Main.rand.Next(0, 250);
         }
         public override void AI()
         {
@@ -125,8 +125,9 @@ namespace CalRemix.Content.NPCs
         {
             ReLogic.Content.Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
             ReLogic.Content.Asset<Texture2D> eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/DendritusEye");
-            Main.EntitySpriteDraw(texture.Value, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation + AITimer * 0.25f, texture.Size() / 2, NPC.scale, 0, 0);
-            Main.EntitySpriteDraw(eye.Value, NPC.Center - Main.screenPosition + NPC.Center.DirectionTo(new Vector2(IdealPositionX, IdealPositionY)) * 5, null, drawColor, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);
+            //NPC.DrawBackglow(Color.AliceBlue, 4f, SpriteEffects.None, NPC.frame, screenPos);
+            Main.EntitySpriteDraw(texture.Value, NPC.Center - Main.screenPosition, null, Color.AliceBlue, NPC.rotation + AITimer * 0.25f, texture.Size() / 2, NPC.scale, 0, 0);
+            Main.EntitySpriteDraw(eye.Value, NPC.Center - Main.screenPosition + NPC.Center.DirectionTo(new Vector2(IdealPositionX, IdealPositionY)) * 5, null, Color.AliceBlue, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);
             return false;
         }
     }
