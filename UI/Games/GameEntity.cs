@@ -14,13 +14,11 @@ namespace CalRemix.UI.Games
         public Vector2 OldPosition;
         public Vector2 Position;
         public Vector2 Velocity;
+        public Vector2 TilePosition => TQHandler.ConvertToTileCords(Position);
         public virtual void OnSpawn() { }
         public virtual void Update() { }
 
-        public Vector2 ScreenPosition()
-        {
-            return Position + GameManager.ScreenOffset;
-        }
+        public Vector2 ScreenPosition => Position + GameManager.ScreenOffset;
 
         public GameEntity Clone()
         {

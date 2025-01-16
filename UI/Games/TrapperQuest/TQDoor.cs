@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -21,6 +22,14 @@ namespace CalRemix.UI.Games.TrapperQuest
         public float CollisionCircleRadius => 32;
 
         public float SimulationDistance => 32f;
+
+        public List<EntityOption> EditorOptions => new List<EntityOption>()
+        {
+            new DoorRoomOption(),
+            new DoorXOption(),
+            new DoorYOption(),
+            new FadeOption(),
+        };
 
         public bool Interact(GameEntity entity)
         {

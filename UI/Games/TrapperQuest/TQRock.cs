@@ -55,21 +55,14 @@ namespace CalRemix.UI.Games.TrapperQuest
             if (!collisionOccured)
                 return Vector2.Zero;
 
-            //Check from which side of the box did the hitbox get into it.
-            Vector2 pushbackNormal;
-            float pushbackLength;
-
-            if (Collision.CheckAABBvAABBCollision(CollisionHitbox.position, CollisionHitbox.dimensions, hitbox.center - hitbox.radius * Vector2.One, new Vector2(2 * hitbox.radius)))
-            {
-                Vector2 newpos = Vector2.Zero;
-                Vector2 collider = hitbox.center;
-                Vector2 rock = CollisionHitbox.center;
-                float colliderSize = hitbox.radius;
-                Vector2 dir = rock.DirectionTo(collider);
-                newpos.X = rock.X - dir.X * dist - colliderSize;
-                newpos.Y = rock.Y - dir.Y * dist - colliderSize;
-                return newpos;
-            }
+            if (hitbox.center.X < CollisionHitbox.Left.start.X)
+                return Vector2.UnitX * (-CollisionHitbox.center.X + hitbox.center.X - hitbox.radius);
+            else if (hitbox.center.X > CollisionHitbox.Right.start.X)
+                return Vector2.UnitX * (CollisionHitbox.center.X + hitbox.center.X - hitbox.radius);
+            else if (hitbox.center.Y < CollisionHitbox.Top.start.Y)
+                return Vector2.UnitY * -(CollisionHitbox.center.Y - hitbox.center.Y + hitbox.radius);
+            else if (hitbox.center.Y > CollisionHitbox.Bottom.start.Y)
+                return Vector2.UnitY * (hitbox.center.Y - CollisionHitbox.center.Y + hitbox.radius);
             return Vector2.Zero;
         }
 

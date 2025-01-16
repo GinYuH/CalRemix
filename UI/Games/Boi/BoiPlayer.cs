@@ -117,7 +117,7 @@ namespace CalRemix.UI.Games.Boi.BaseClasses
             Vector2 cursor = Main.MouseScreen;
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && ShotCooldown <= 0)
             {
-                Vector2 position = ScreenPosition() - 25 * Vector2.UnitY;
+                Vector2 position = ScreenPosition - 25 * Vector2.UnitY;
                 Vector2 targetPosition = cursor;
                 Vector2 direction = targetPosition - position;
                 direction.Normalize();

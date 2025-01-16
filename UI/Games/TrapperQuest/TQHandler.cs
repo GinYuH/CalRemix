@@ -28,7 +28,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static List<List<IDrawable>> DrawLayers = new List<List<IDrawable>>();
 
         public static int RoomHeight => (int)player.RoomImIn.RoomSize.Y;
-        public static int RoomWidth => (int) player.RoomImIn.RoomSize.X;
+        public static int RoomWidth => (int)player.RoomImIn.RoomSize.X;
+
+        public static Vector2 CameraTilePosition => TQHandler.ConvertToTileCords(GameManager.CameraPosition);
         public const int tileSize = 64;
         /// <summary>
         /// How long a room transition takes. The first half is a fade in, the second half is a fade out.
@@ -97,7 +99,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static void Load()
         {
             TQRoom room = new TQRoom(Vector2.Zero, 0);                
-            room = TQRoom.Clone(TQRoomPopulator.LoadedRooms[0]);
+            //room = TQRoom.Clone(TQRoomPopulator.LoadedRooms[0]);
+            //room = TQRoomPopulator.LoadedRooms[0];
+            room = LevelEditor.ImportRoom(true, TQRoomPopulator.RoomData[0], false);
 
             player = new TrapperPlayer(ConvertToScreenCords(new Vector2(6, 3)), 5f, room);
 
@@ -110,7 +114,8 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public static void Unload()
         {
-            player.RoomImIn.Entities.Remove(player);
+            player.RoomImIn.Entities.Clear();
+            player.RoomImIn.Tiles.Clear();
             player = null;
             DrawLayers.Clear();
             roomTransitionCounter = 0;
@@ -149,13 +154,13 @@ namespace CalRemix.UI.Games.TrapperQuest
                     //-If they are an active colliding entity, add them to the list.
                     if (entity is IColliding colliding && colliding.CanCollide)
                     {
-                        //CollidingEntities.Add(colliding, entity);
+                        CollidingEntities.Add(colliding, entity);
                     }
 
                     //-If they are an active collidable entity, add them to the list.
                     if (entity is ICollidable collider && collider.CanCollide)
                     {
-                        //CollidableEntities.Add(collider, entity);
+                        CollidableEntities.Add(collider, entity);
                     }
 
                     bool enteredDoor = false;
@@ -171,6 +176,23 @@ namespace CalRemix.UI.Games.TrapperQuest
                                 enteredDoor = true;
                         }
                     }
+
+                    Vector2 center = ConvertToTileCords(player.Hitbox.center);
+                    /*foreach (GameEntity g in simulatedRoom.Entities)
+                    {
+                        if (g is TQRock)
+                        {
+                            if (g.TilePosition.X == player.TilePosition.X + 1 && g.TilePosition.Y == player.TilePosition.Y)
+                                player.Velocity.X = Math.Min(player.Velocity.X, 0);
+                            else if (g.TilePosition.X == player.TilePosition.X - 1 && g.TilePosition.Y == player.TilePosition.Y)
+                                player.Velocity.X = Math.Max(player.Velocity.X, 0);
+                            else if (g.TilePosition.Y == player.TilePosition.Y + 1 && g.TilePosition.X == player.TilePosition.X)
+                                player.Velocity.Y = Math.Min(player.Velocity.Y, 0);
+                            else if (g.TilePosition.Y == player.TilePosition.Y - 1 && g.TilePosition.X == player.TilePosition.X)
+                                player.Velocity.Y = Math.Max(player.Velocity.Y, 0);
+
+                        }
+                    }*/
                 }
 
                 //For each entity that is IColliding and has CanCollide set to true (as listed above)
@@ -187,8 +209,9 @@ namespace CalRemix.UI.Games.TrapperQuest
                         if ((colliderEntity.Position - collidingEntity.Position).Length() > collider.SimulationDistance + colliding.CollisionHitbox.radius)
                             continue;
 
+                        //collidingEntity.Position = collidingEntity.OldPosition;
                         //If it ISNT, call the MovementCheck function and displace the colliding entity by the provided vector
-                        collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
+                        //collidingEntity.Position += collider.MovementCheck(colliding.CollisionHitbox);
 
                         //Call both their onCollide function. Kill the colliding entity if its onCollide returns true
                         collider.OnCollide(collidingEntity);
@@ -264,12 +287,23 @@ namespace CalRemix.UI.Games.TrapperQuest
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.UIScaleMatrix);
             sb.GraphicsDevice.ScissorRectangle = cut;
-
             //For each entity in Entities, if its an IDrawable, store them in new lists, separated on their Layer
             foreach (GameEntity entity in player.RoomImIn.Entities)
             {
                 if (entity is IDrawable drawableEntity)
                 {
+                    Vector2 tilePos = ConvertToTileCords(entity.Position);
+                    Vector2 cameraPos = ConvertToTileCords(GameManager.CameraPosition);
+
+                    if (tilePos.X < cameraPos.X)
+                        continue;
+                    if (tilePos.X > cameraPos.X + RoomWidthDefault + 1)
+                        continue;
+                    if (tilePos.Y < cameraPos.Y)
+                        continue;
+                    if (tilePos.Y > cameraPos.Y + RoomHeightDefault + 1)
+                        continue;
+
                     int layer = drawableEntity.Layer;
 
                     //If they are just enough layers minus the one we're looking at 
@@ -360,13 +394,13 @@ namespace CalRemix.UI.Games.TrapperQuest
                 bool isOOB = false;
                 float collisionRadius = collider.CollisionHitbox.radius;
 
-                if (entity.Position.X > player.RoomImIn.RoomSize.X * tileSize - collisionRadius || entity.Position.X * tileSize < collisionRadius)
+                if (entity.Position.X > player.RoomImIn.RoomSize.X * tileSize - collisionRadius || entity.Position.X < collisionRadius)
                 {
                     isOOB = true;
                     entity.Position.X = MathHelper.Clamp(entity.Position.X, collisionRadius, player.RoomImIn.RoomSize.X * tileSize - collisionRadius);
                 }
 
-                if (entity.Position.Y > player.RoomImIn.RoomSize.Y * tileSize - collisionRadius || entity.Position.Y * tileSize < collisionRadius)
+                if (entity.Position.Y > player.RoomImIn.RoomSize.Y * tileSize - collisionRadius || entity.Position.Y < collisionRadius)
                 {
                     isOOB = true;
                     entity.Position.Y = MathHelper.Clamp(entity.Position.Y, collisionRadius, player.RoomImIn.RoomSize.Y * tileSize - collisionRadius);

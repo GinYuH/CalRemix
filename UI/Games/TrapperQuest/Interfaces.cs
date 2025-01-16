@@ -29,6 +29,11 @@ namespace CalRemix.UI.Games.TrapperQuest
         /// The name that should appear
         /// </summary>
         public string Name => "";
+
+        /// <summary>
+        /// Options specific to this entity
+        /// </summary>
+        public List<EntityOption> EditorOptions => new List<EntityOption>();
     }
     public interface ITile
     {

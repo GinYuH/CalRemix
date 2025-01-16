@@ -14,13 +14,16 @@ namespace CalRemix.UI.Games.TrapperQuest
     {
         public static List<TQRoom> LoadedRooms = new List<TQRoom>();
 
+        public static List<string> RoomData = new List<string>();
+
         public static TQRoom LoadRoom(string filename)
         {
             using (Stream stream = CalRemix.instance.GetFileStream(filename, true))
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 string roomData = reader.ReadToEnd();
-                return LevelEditor.ImportRoom(true, roomData);
+                RoomData.Add(roomData);
+                return LevelEditor.ImportRoom(true, roomData, clear: false);
             }
         }
     }

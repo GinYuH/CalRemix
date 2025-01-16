@@ -42,7 +42,12 @@ namespace CalRemix.UI.Games.TrapperQuest
         public static TQRoom Clone(TQRoom og)
         {
             TQRoom newRoom = new TQRoom(og.spawnPos, og.id, og.RoomSize);
-            newRoom.Entities = og.Entities;
+            List<GameEntity> newEntities = new List<GameEntity>();
+            foreach (var v in og.Entities)
+            {
+                newEntities.Add(v.Clone());
+            }
+            newRoom.Entities = newEntities;
             newRoom.RoomSize = og.RoomSize;
             newRoom.spawnPos = og.spawnPos;
             newRoom.id = og.id;

@@ -20,6 +20,7 @@ using System.IO;
 using Terraria.GameContent.Creative;
 using Microsoft.CodeAnalysis;
 using System.Dynamic;
+using Terraria.DataStructures;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -129,6 +130,42 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    public class AddItemOption : LevelEditorOption
+    {
+        public override string Name => "Add";
+
+        public override Color Color => LevelEditor.CursorMode == 1 ? Color.Lime : Color.Red;
+
+        public override void ClickAction()
+        {
+            LevelEditor.CursorMode = 1;
+        }
+    }
+
+    public class SelectItemOption : LevelEditorOption
+    {
+        public override string Name => "Select";
+
+        public override Color Color => LevelEditor.CursorMode == 0 ? Color.Lime : Color.Red;
+
+        public override void ClickAction()
+        {
+            LevelEditor.CursorMode = 0;
+        }
+    }
+
+    public class DeleteItemOption : LevelEditorOption
+    {
+        public override string Name => "Delete";
+
+        public override Color Color => LevelEditor.CursorMode == 2 ? Color.Lime : Color.Red;
+
+        public override void ClickAction()
+        {
+            LevelEditor.CursorMode = 2;
+        }
+    }
+
     public class SaveOption : LevelEditorOption
     {
         public override string Name => "Save";
@@ -149,7 +186,7 @@ namespace CalRemix.UI.Games.TrapperQuest
 
         public override void ClickAction()
         {
-            LevelEditor.ImportRoom(false);
+            LevelEditor.ImportRoom(false, clear: false);
         }
     }
 
