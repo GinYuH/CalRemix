@@ -88,6 +88,7 @@ using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -193,6 +194,16 @@ namespace CalRemix
             AddModBiomeToBestiary(curNPC, npcID, GetInstance<PlagueBiome>().Type, entry);
         }
 
+        public override void OnSpawn(NPC npc, IEntitySource source)
+        {
+            if (npc.type == NPCType<CryogenShield>())
+            {
+                for (int i = 0; i < 22; i++)
+                {
+                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Dendritus>());
+                }
+            }
+        }
 
         public override bool PreAI(NPC npc)
         {
