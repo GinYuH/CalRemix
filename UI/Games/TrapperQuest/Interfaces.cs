@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 using System.Collections.Generic;
-using Terraria.GameContent;
-using CalamityMod.Systems;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {

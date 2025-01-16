@@ -1,17 +1,11 @@
-﻿using System;
+﻿using CalamityMod;
+using CalRemix.UI.Games.Boi.BaseClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
+using System;
 using System.Collections.Generic;
-using CalRemix.UI.Games.Boi.BaseClasses;
-using CalamityMod.Graphics.Renderers;
+using Terraria;
 using Terraria.GameContent;
-using log4net.Layout;
-using Microsoft.Xna.Framework.Input;
-using CalamityMod;
-using Terraria.GameInput;
-using Newtonsoft.Json.Linq;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {

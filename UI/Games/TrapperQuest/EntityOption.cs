@@ -1,52 +1,67 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
-using System.Collections.Generic;
-using System.Linq;
-using static CalRemix.UI.Games.TrapperQuest.TQHandler;
-using System;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Terraria.ModLoader.Core;
-using CalRemix.UI.Games.Boi.BaseClasses;
-using Microsoft.CodeAnalysis.CSharp.Formatting;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using Terraria.Audio;
-using Terraria.ID;
 using Terraria.GameContent;
-using System.Transactions;
-using System.Text;
-using System.IO;
-using Terraria.GameContent.Creative;
-using Microsoft.CodeAnalysis;
-using System.Dynamic;
-using Terraria.DataStructures;
+using static CalRemix.UI.Games.TrapperQuest.TQHandler;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
-
+    /// <summary>
+    /// Options for a seleceted entity in the instance editor
+    /// </summary>
     public abstract class EntityOption
     {
+        /// <summary>
+        /// The name of the option
+        /// </summary>
         public virtual string Name => "";
 
+        /// <summary>
+        /// The color of the option
+        /// </summary>
         public virtual Color Color => Color.Green;
 
+        /// <summary>
+        /// The entity being edited, set in the level editor
+        /// </summary>
         public GameEntity BoundEntity = null;
 
+        /// <summary>
+        /// Make something happen when clicking this button
+        /// </summary>
         public virtual void ClickAction() { }
 
+        /// <summary>
+        /// Make something happen when scrolling up
+        /// </summary>
         public virtual void ScrollUp() { }
 
+        /// <summary>
+        /// Make something happen when scrolling down
+        /// </summary>
         public virtual void ScrollDown() { }
 
+        /// <summary>
+        /// Set to true if the bound entity is what you want
+        /// </summary>
+        /// <returns></returns>
         public virtual bool IsValidEntity() => false;
 
+        /// <summary>
+        /// Draws a rectangle by default
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="position"></param>
+        /// <param name="rect"></param>
         public virtual void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
         {
             sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color);
         }
     }
 
+    /// <summary>
+    /// Changes what room a door will send you to
+    /// </summary>
     public class DoorRoomOption : EntityOption
     {
         public override string Name => "RoomGoto";
@@ -80,6 +95,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes what horizontal tile the door will send you to
+    /// </summary>
     public class DoorXOption : EntityOption
     {
         public override string Name => "SpawnX";
@@ -113,6 +131,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes what vertical tile the door will send you to
+    /// </summary>
     public class DoorYOption : EntityOption
     {
         public override string Name => "SpawnY";
@@ -146,13 +167,16 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Enables/disables fading when using the door. Enabled by default.
+    /// </summary>
     public class FadeOption : EntityOption
     {
         public override string Name => "Fade";
 
         public override bool IsValidEntity() => BoundEntity is TQDoor;
 
-        public override Color Color => (BoundEntity is TQDoor door) ? door.fade ? Microsoft.Xna.Framework.Color.Green : Microsoft.Xna.Framework.Color.Red : Microsoft.Xna.Framework.Color.White;
+        public override Color Color => (BoundEntity is TQDoor door) ? door.fade ? Microsoft.Xna.Framework.Color.Lime : Microsoft.Xna.Framework.Color.Red : Microsoft.Xna.Framework.Color.White;
 
         public override void ClickAction()
         {

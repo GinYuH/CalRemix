@@ -24,25 +24,53 @@ using Terraria.DataStructures;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
-
+    /// <summary>
+    /// For usage in the Level Editor's tool window
+    /// Used for various tools such as saving/loading levels and editing room data
+    /// </summary>
     public abstract class LevelEditorOption
     {
+        /// <summary>
+        /// The name of the tool
+        /// </summary>
         public virtual string Name => "";
 
+        /// <summary>
+        /// The color of the tool
+        /// </summary>
         public virtual Color Color => Color.Green;
 
+        /// <summary>
+        /// Make something happen when clicking this tool button
+        /// </summary>
         public virtual void ClickAction() { }
 
+        /// <summary>
+        /// Make something happen when scrolling upwards with your mouse
+        /// </summary>
         public virtual void ScrollUp() { }
 
+        /// <summary>
+        /// Make something happen when scrolling downwards with your mouse
+        /// </summary>
         public virtual void ScrollDown() { }
 
+        /// <summary>
+        /// Overrides how the button is drawn. Defaults to drawing au unnamed rectangle
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="position"></param>
+        /// <param name="rect"></param>
         public virtual void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
         {
             sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color);
         }
     }
 
+    /// <summary>
+    /// Changes the horizontal size of the current room
+    /// Cannot go lower than 13
+    /// </summary>
     public class SizeXOption : LevelEditorOption
     {
         public override string Name => "SizeX";
@@ -68,6 +96,10 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes the vertical size of the current room
+    /// Cannot go lower than 7
+    /// </summary>
     public class SizeYOption : LevelEditorOption
     {
         public override string Name => "SizeY";
@@ -93,6 +125,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes the ID of the current room
+    /// </summary>
     public class RoomIDOption : LevelEditorOption
     {
         public override string Name => "RoomID";
@@ -118,6 +153,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Clears the entire room
+    /// </summary>
     public class ClearOption : LevelEditorOption
     {
         public override string Name => "Clear";
@@ -130,6 +168,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes the cursor mode to add items to the level
+    /// </summary>
     public class AddItemOption : LevelEditorOption
     {
         public override string Name => "Add";
@@ -142,6 +183,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes the cursor mode to select a clicked item for editing
+    /// </summary>
     public class SelectItemOption : LevelEditorOption
     {
         public override string Name => "Select";
@@ -154,6 +198,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Changes the cursor mode to delete any items touched 
+    /// </summary>
     public class DeleteItemOption : LevelEditorOption
     {
         public override string Name => "Delete";
@@ -166,6 +213,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Saves the current room to CurLevel.txt
+    /// </summary>
     public class SaveOption : LevelEditorOption
     {
         public override string Name => "Save";
@@ -178,6 +228,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Loads a level from CurLevel.txt
+    /// </summary>
     public class LoadOption : LevelEditorOption
     {
         public override string Name => "Load";
@@ -190,6 +243,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Displays the tile grid when enabled
+    /// </summary>
     public class ShowGridOption : LevelEditorOption
     {
         public override string Name => "TileGrid";
@@ -202,6 +258,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Shows the cursor hitbox when enabled
+    /// </summary>
     public class ShowCursorOption : LevelEditorOption
     {
         public override string Name => "Cursor";
@@ -214,6 +273,9 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Shows the player's hitbox when enabled
+    /// </summary>
     public class ShowHitboxOption : LevelEditorOption
     {
         public override string Name => "Hitbox";
@@ -226,15 +288,33 @@ namespace CalRemix.UI.Games.TrapperQuest
         }
     }
 
+    /// <summary>
+    /// Shows doors when enabled
+    /// </summary>
     public class ShowDoorsOption : LevelEditorOption
     {
-        public override string Name => "ShowDoor";
+        public override string Name => "Show\nDoor";
 
         public override Color Color => LevelEditor.ShowDoors ? Color.Lime : Color.Red;
 
         public override void ClickAction()
         {
             LevelEditor.ShowDoors = !LevelEditor.ShowDoors;
+        }
+    }
+
+    /// <summary>
+    /// Overwrites the room registery's version of this room to account for any edits made
+    /// </summary>
+    public class OverwriteOption : LevelEditorOption
+    {
+        public override string Name => "Overwrite";
+
+        public override Color Color => Color.Blue;
+
+        public override void ClickAction()
+        {
+            TQRoomPopulator.RoomData[player.RoomImIn.id] = LevelEditor.ExportText(player.RoomImIn);
         }
     }
 }

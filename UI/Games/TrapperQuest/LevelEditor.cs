@@ -1,26 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using System.Collections.Generic;
-using System.Linq;
-using static CalRemix.UI.Games.TrapperQuest.TQHandler;
-using System;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Terraria.ModLoader.Core;
-using CalRemix.UI.Games.Boi.BaseClasses;
-using Microsoft.CodeAnalysis.CSharp.Formatting;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.GameContent;
-using System.Transactions;
-using System.Text;
-using System.IO;
-using Terraria.GameContent.Creative;
+﻿using CalRemix.UI.Games.Boi.BaseClasses;
 using Microsoft.CodeAnalysis;
-using System.Dynamic;
-using System.Xml;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader.Core;
+using static CalRemix.UI.Games.TrapperQuest.TQHandler;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -152,9 +144,21 @@ namespace CalRemix.UI.Games.TrapperQuest
         /// </summary>
         public static void ExportRoom()
         {
+            string ret = ExportText(player.RoomImIn);
+            File.WriteAllText(path, ret, Encoding.UTF8);
+            Main.NewText("Exported!");            
+        }
+
+        /// <summary>
+        /// Generates a string of room data
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        public static string ExportText(TQRoom room)
+        {
             string ret = "";
-            ret += player.RoomImIn.RoomSize.X + "," + player.RoomImIn.RoomSize.Y + "," + player.RoomImIn.id + "\n";
-            foreach (GameEntity g in player.RoomImIn.Entities)
+            ret += room.RoomSize.X + "," + room.RoomSize.Y + "," + room.id + "\n";
+            foreach (GameEntity g in room.Entities)
             {
                 if (g is ICreative creative)
                 {
@@ -174,8 +178,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                     }
                 }
             }
-            File.WriteAllText(path, ret, Encoding.UTF8);
-            Main.NewText("Exported!");            
+            return ret;
         }
 
         /// <summary>
@@ -303,7 +306,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             // Draw the menu that contains all the options
             else if (CurrentMenu == 1)
             {
-                DrawFunctionMenu(sb, UIWidth, extraX);
+                DrawToolMenu(sb, UIWidth, extraX);
             }
             DrawInstanceMenu(sb, UIWidth, extraX);
             
@@ -435,7 +438,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
         }
 
-        public static void DrawFunctionMenu(SpriteBatch sb, int UIWidth, int extraX)
+        public static void DrawToolMenu(SpriteBatch sb, int UIWidth, int extraX)
         {
             int curRow = 0;
             int spacing = 50;
