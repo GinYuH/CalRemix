@@ -360,10 +360,11 @@ namespace CalRemix.UI.Games.TrapperQuest
                 if (i % 5 == 0)
                     curRow++;
                 EntityOption g = editingEntity.EditorOptions[i];
-                g.BoundEntity = selectedEntity;
+                if (g.BoundEntity == null)
+                    g.BoundEntity = selectedEntity;
                 float xWidth = FontAssets.MouseText.Value.MeasureString(g.Name).X;
                 Vector2 pos = pose + new Vector2(i % 5 * spacing + extraX, curRow * ySpace + 30) - new Vector2(30);
-
+                
                 Color c = Color.White;
                 // click on the option to select it
                 if (maus.Intersects(new Rectangle((int)pos.X, (int)pos.Y, 40, 40)))
@@ -373,12 +374,12 @@ namespace CalRemix.UI.Games.TrapperQuest
                         g.ClickAction();
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
-                    if (scrollOld > scrollNew)
+                    else if (scrollOld > scrollNew)
                     {
                         g.ScrollUp();
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
-                    if (scrollOld < scrollNew)
+                    else if (scrollOld < scrollNew)
                     {
                         g.ScrollDown();
                         SoundEngine.PlaySound(SoundID.MenuTick);
@@ -465,12 +466,12 @@ namespace CalRemix.UI.Games.TrapperQuest
                         g.ClickAction();
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
-                    if (scrollOld > scrollNew)
+                    else if (scrollOld > scrollNew)
                     {
                         g.ScrollUp();
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
-                    if (scrollOld < scrollNew)
+                    else if (scrollOld < scrollNew)
                     {
                         g.ScrollDown();
                         SoundEngine.PlaySound(SoundID.MenuTick);
