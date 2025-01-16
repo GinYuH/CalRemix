@@ -142,6 +142,7 @@ namespace CalRemix
         public bool invGar;
         public int VerbotenMode = 1;
         public bool retroman = false;
+        public bool noTomorrow;
 
         public bool miragel;
         public bool elastigel;
@@ -938,6 +939,7 @@ namespace CalRemix
 			dyesBrown = 0;
 			dyesPink = 0;
             retroman = false;
+            noTomorrow = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {

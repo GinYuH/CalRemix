@@ -531,6 +531,13 @@ namespace CalRemix.Content.Projectiles
                     }
                 }
             }
+
+            Player player = Main.player[projectile.owner];
+            CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
+            if (modPlayer.noTomorrow == true && projectile.friendly == true)
+            {
+                projectile.scale *= 2;
+            }
         }
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
         {

@@ -1813,3 +1813,12 @@ CalRemix/WreathofBelialSticky: {
 		Now with extra stickiness!
 		'''
 }
+
+CalRemix/RadGlowstickSticky: {
+	DisplayName: Sticky Rad Glowstick
+	Tooltip:
+		'''
+
+		Now with extra stickiness!
+		'''
+}

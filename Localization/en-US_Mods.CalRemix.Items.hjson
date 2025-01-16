@@ -2580,6 +2580,11 @@ Weapons: {
 			DisplayName: Sylvan Slasher
 			Tooltip: ""
 		}
+
+		RadGlowstick: {
+			DisplayName: Rad Glowstick
+			Tooltip: ""
+		}
 	}
 }
 
@@ -3448,20 +3453,4 @@ LegendMemorialItem: {
 	Tooltip: A beautiful soul gone too soon...
 }
 
-BoiMachine: {
-	DisplayName: Binding of Anahita Machine
-	Tooltip:
-		'''
-		INCOMPLETE ITEM, EXTREMELY UNSTABLE
-		Roguelike game
-		'''
-}
-
-TrapperQuestMachine: {
-	DisplayName: Trapper Quest Machine
-	Tooltip:
-		'''
-		INCOMPLETE ITEM, EXTREMELY UNSTABLE
-		RPG game
-		'''
-}
+NoTomorrow.Tooltip: All friendly projectiles are twice as large

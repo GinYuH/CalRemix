@@ -413,6 +413,7 @@ namespace CalRemix.UI
                 position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
 
             float opacity = fadeIn;
+            
 
             //fades with the textbox if the textbox doesnt have a fade offset
             if (CharacterPositionData.textboxFadeOutOffset == Vector2.Zero)
@@ -610,6 +611,7 @@ namespace CalRemix.UI
         public static ScreenHelper CrimSon = new ScreenHelper();
         public static ScreenHelper TrapperBulbChan = new ScreenHelper();
         public static ScreenHelper MiracleBoy = new ScreenHelper();
+        public static ScreenHelper MovieCygn = new ScreenHelper();
 
         public static ScreenHelper AltMetalFanny = new ScreenHelper();
 
@@ -695,6 +697,24 @@ namespace CalRemix.UI
                 .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Thank you for the help, Fanny!")
                 .SetPositionData(false, 240, 0.17f);
+
+            LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
+                .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetTextboxTheme(new HelperTextboxTheme("Moviecygn_9Slice", new Vector2(38, 38), "Moviecygn_Background", new Vector2(38, 38)))
+                .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(184, 300), 184), 0, 30)
+                .SetExtraAnimations(false, false, false)
+                .SetPositionData(new HelperPositionData(
+                    new Vector2(0.0f, 0.0f), //Anchored to top left of the screen
+                    new Vector2(-20, 0f),
+                    new Vector2(20f, 0f),   //Slides from the left when spawning
+                    new Vector2(290, -435),   //Offset from b ottom of portrait to center of 
+                    Vector2.Zero,
+                    -Vector2.UnitX * 20f,
+                    Vector2.Zero,
+                    null,
+                    new Vector2(0, 0)
+                    ));
         }
 
         /// <summary>
@@ -714,8 +734,8 @@ namespace CalRemix.UI
 
             if (size != null)
             {
-                helper.Height.Set(size.Value.X, 0f);
-                helper.Width.Set(size.Value.Y, 0f);
+                helper.Height.Set(size.Value.Y, 0f);
+                helper.Width.Set(size.Value.X, 0f);
             }
 
             helper.idlesInInventory = idlesInInventory;
@@ -1025,6 +1045,9 @@ namespace CalRemix.UI
 
             //Renault 5
             ScreenHelperPortrait.LoadPortrait("Renault5", 1);
+
+            //Moviecygn
+            ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
         }
 
         public override void PostSetupContent()
@@ -1863,13 +1886,22 @@ namespace CalRemix.UI
 
         public Vector2 itemOffset;
 
-        public HelperPositionData(Vector2 percentAnchor, Vector2 pixelAnchor, Vector2 pixelOffset,
+        /// <param name="percentAnchor">Top left position as a percentage of the screen</param>
+        /// <param name="pixelAnchor">Top left position as pixel coordinates (Added ontop of the percent anchor)</param>
+        /// <param name="appearOffset">Offset applied to the position when the helper appears (to make them slide in and out)</param>
+        /// <param name="textboxOffset">Offset from the bottom middle of the helper to the top left corner of their textbox</param>
+        /// <param name="offsetByTextSize">Offset to the top left corner of the textbox, based on the size of the text. Set it to X = 1 if the helper is to the right of their textbox and you need the textbox's left corner to be pushed further to the left when the helper's textbox gets wider</param>
+        /// <param name="textboxFadeInOffset">Offset applied to the textbox before it is fully faded in</param>
+        /// <param name="textboxFadeOutOffset">Offset applied to the textbox as it fades out</param>
+        /// <param name="itemOffset"></param>
+        /// <param name="textboxTextOffset">Offset between the top left corner of the textbox and the start of the actual text</param>
+        public HelperPositionData(Vector2 percentAnchor, Vector2 pixelAnchor, Vector2 appearOffset,
             Vector2 textboxOffset, Vector2 offsetByTextSize, Vector2 textboxFadeInOffset, Vector2 textboxFadeOutOffset,
             Vector2? itemOffset = null, Vector2? textboxTextOffset = null)
         {
             this.percentAnchor = percentAnchor;
             this.pixelAnchor = pixelAnchor;
-            this.pixelOffset = pixelOffset;
+            this.pixelOffset = appearOffset;
 
             textboxOffsetFromCharacter = textboxOffset;
             textSizeOffset = offsetByTextSize;
