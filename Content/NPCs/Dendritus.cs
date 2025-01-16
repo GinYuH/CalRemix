@@ -37,7 +37,7 @@ namespace CalRemix.Content.NPCs
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.width = 54;
             NPC.height = 70;
-            NPC.damage = 40;
+            NPC.damage = 0;
             NPC.defense = 999999999;
             NPC.takenDamageMultiplier = 0.01f;
             NPC.lifeMax = 8;
