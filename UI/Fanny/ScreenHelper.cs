@@ -484,7 +484,6 @@ namespace CalRemix.UI
         {
             if (!ParentSpeaker.Speaking)
                 return;
-
             HelperTextboxPalette palette = ParentSpeaker.UsedPalette;
 
             // a shit ton of variables

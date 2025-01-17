@@ -209,7 +209,7 @@ Mods: {
 				'''
 		}
 
-		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Class
+		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage
 
 		RecipeGroups: {
 			Any: Any {0}
