@@ -4,6 +4,7 @@ using CalamityMod.CalPlayer;
 using CalamityMod.Items;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Accessories.Wings;
+using CalamityMod.Items.Ammo;
 using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.Items.Fishing.AstralCatches;
 using CalamityMod.Items.Materials;
@@ -134,6 +135,10 @@ namespace CalRemix
             else if (item.type == ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<TitanFinger>();
+            }
+            else if (item.type == ItemType<FlashRound>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<AncientFlashBullet>();
             }
             else if (item.type == ItemType<CosmiliteBar>())
             {

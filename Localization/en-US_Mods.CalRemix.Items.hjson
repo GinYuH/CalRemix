@@ -3454,3 +3454,8 @@ LegendMemorialItem: {
 }
 
 NoTomorrow.Tooltip: All friendly projectiles are twice as large
+
+AncientFlashBullet: {
+	DisplayName: Ancient Flash Round
+	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
+}
