@@ -653,8 +653,17 @@ namespace CalRemix.UI
                 .SetTextboxStyle("uh uh..?", new HelperTextboxPalette(Color.OrangeRed, Color.White, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("MiracleBoy_9Slice", new Vector2(16, 16), "MiracleBoy_Background", new Vector2(16, 16)))
                 .SetTextboxFormatting(null, 0, 16)
-                .SetPositionData(true, 120, 0.42f)
+                .SetPositionData(new HelperPositionData(
+                    new Vector2(0f, 0.42f), //Anchored to the left side at 42% of the way down the screen
+                    new Vector2(0f, -80f),
+                    new Vector2(120, 0f),   //Slides right when spawning
+                    new Vector2(100, -90),  //Offset from bottom center of portrait to the top left of the textbox
+                    Vector2.Zero,
+                    Vector2.UnitY * -30f,
+                    Vector2.UnitY * 40f
+                    ))
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked || (!CalRemixWorld.postGenUpdate && NPC.downedMoonlord));
+                
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
@@ -697,7 +706,7 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Thank you for the help, Fanny!")
                 .SetPositionData(false, 240, 0.17f);
 
-            LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
+           /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
                 .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("Moviecygn_9Slice", new Vector2(38, 38), "Moviecygn_Background", new Vector2(38, 38)))
@@ -714,6 +723,7 @@ namespace CalRemix.UI
                     null,
                     new Vector2(0, 0)
                     ));
+            */
         }
 
         /// <summary>

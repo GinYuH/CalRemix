@@ -67,7 +67,7 @@ namespace CalRemix.UI
                 .ChainAfter(ml13).AddEndEvent(Violence);
 
             HelperMessage ml15 = HelperMessage.New("ML15", "IT IS SUCH A PLEASURE TO MEET YOU, MY NEW FRIEND! My name? Ohoho, I am none other then the incredible, fantastical, miraculous Miracle Boy!",
-                "MiracleBoyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, 10, cantBeClickedOff: true)
                 .ChainAfter(ml12).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("ML16", "I have so much to teach you, especially with all the drovel that utterly unscrumptious flame was spewing...",

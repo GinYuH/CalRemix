@@ -34,7 +34,7 @@ namespace CalRemix.UI
     "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.75f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("VeryHurtMiracle", "Yikes! You almost became a miracle failure with that hit!",
-"MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.75f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+"MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("MiracleRain", "Oh, splendid! Acid Rain, but make it worse! Truly a miraculous turn of events! The sky hates you, the ground hates you, and now the monsters are stepping up their game too. What’s next, you ask? I don’t know—maybe the trees will start throwing punches. Good luck, champ!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => AcidRainEvent.AcidRainEventIsOngoing)
