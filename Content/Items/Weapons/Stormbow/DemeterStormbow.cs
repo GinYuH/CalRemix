@@ -74,7 +74,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                //AddIngredient<FourOClock>().
+                AddIngredient<FourOClock>().
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient<RisingFire>().
                 AddIngredient<GiantStormbow>().

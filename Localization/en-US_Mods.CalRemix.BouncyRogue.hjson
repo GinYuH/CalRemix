@@ -1813,3 +1813,12 @@ CalRemix/WreathofBelialBouncy: {
 		Now with extra bounciness!
 		'''
 }
+
+CalRemix/RadGlowstickBouncy: {
+	DisplayName: Bouncy Rad Glowstick
+	Tooltip:
+		'''
+
+		Now with extra bounciness!
+		'''
+}
