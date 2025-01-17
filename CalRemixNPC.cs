@@ -27,6 +27,11 @@ using CalamityMod.NPCs.Crags;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.ExoMechs;
+using CalamityMod.NPCs.ExoMechs.Apollo;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.NPCs.ExoMechs.Artemis;
+using CalamityMod.NPCs.ExoMechs.Thanatos;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Leviathan;
@@ -1774,6 +1779,14 @@ namespace CalRemix
             ConvertPlagueEnemy(npc.type, NPCType<Plagueshell>(), bestiaryEntry);
             ConvertPlagueEnemy(npc.type, NPCType<PestilentSlime>(), bestiaryEntry);
             ConvertPlagueEnemy(npc.type, NPCType<Melter>(), bestiaryEntry);
+
+            int exosphereID = GetInstance<ExosphereBiome>().Type;
+
+            AddModBiomeToBestiary(npc.type, NPCType<AresBody>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Artemis>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Apollo>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ThanatosHead>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Draedon>(), exosphereID, bestiaryEntry);
         }
 
         private static void Talk(string value, Color textColor)

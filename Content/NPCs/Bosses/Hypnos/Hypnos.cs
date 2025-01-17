@@ -29,6 +29,7 @@ using CalamityMod.NPCs.ExoMechs.Artemis;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -80,6 +81,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             NPC.damage = 1;
             NPC.defense = 90;
             NPC.alpha = 255;
+            // SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type }; This is buggy for some reason
             if (!Main.dedServ)
                 Music = CalRemixMusic.Hypnos;
         }

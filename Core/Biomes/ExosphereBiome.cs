@@ -12,9 +12,9 @@ namespace CalRemix.Core.Biomes
         public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("CalRemix/SulphurousSeaBackground");
  
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-        public override string BestiaryIcon => "CalamityMod/BiomeManagers/SulphurousSeaIcon";
-        public override string BackgroundPath => "CalamityMod/Backgrounds/MapBackgrounds/SulphurBG";
-        public override string MapBackground => "CalamityMod/Backgrounds/MapBackgrounds/SulphurBG";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/ExosphereIcon";
+        public override string BackgroundPath => "CalRemix/Core/Backgrounds/ExosphereBG";
+        public override string MapBackground => "CalRemix/Core/Backgrounds/ExosphereBG";
 
         public override bool IsBiomeActive(Player player)
         {
