@@ -12,6 +12,7 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.Graphics.Primitives;
 using Terraria.Audio;
 using Terraria.GameContent;
+using CalRemix.Core.World;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs.Minibosses
@@ -92,7 +93,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!spawnInfo.Player.ZoneUnderworldHeight || !Main.hardMode)
+            if (!spawnInfo.Player.ZoneUnderworldHeight || !Main.hardMode || !CalRemixWorld.mullet)
                 return 0f;
             if (NPC.CountNPCS(Type) > 1)
                 return 0f;
