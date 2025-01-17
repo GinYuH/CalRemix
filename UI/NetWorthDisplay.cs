@@ -142,7 +142,9 @@ namespace CalRemix.UI
 		public override string DisplayValue(ref Color displayColor, ref Color displayShadowColor)
 		{
             displayShadowColor = Color.Black;
-            return "NETWORTH";
+            var netWorthPlayer = Main.LocalPlayer.GetModPlayer<NetWorthPlayer>();
+
+            return netWorthPlayer.displayInDollars ? "Net Worth: " + netWorthPlayer.laggingNetWorth.ToString() + " $$$" : "NETWORTH";
 		}
 	}
 
@@ -151,6 +153,10 @@ namespace CalRemix.UI
         public int netWorth;
         public int netWorthCap;
         public int netWorthSpeed;
+        public int laggingNetWorth;
+        public int netWorthUpdateTimer;
+        public int networthDisplaySwapTimer;
+        public bool displayInDollars;
 
         public override void SaveData(TagCompound tag)
         {
@@ -183,6 +189,22 @@ namespace CalRemix.UI
             {
                 SneakersRetheme.platinumNetWorthMessage.ActivateMessage();
             }
+
+            if (netWorthUpdateTimer <= 0)
+            {
+                laggingNetWorth = netWorth;
+                netWorthUpdateTimer = 15;
+            }
+            else
+                netWorthUpdateTimer--;
+
+            if (networthDisplaySwapTimer <= 0)
+            {
+                displayInDollars = !displayInDollars;
+                networthDisplaySwapTimer = 20 * 60;
+            }
+            else
+                networthDisplaySwapTimer--;
         }
 
         internal static Dictionary<int, int> netWorthCapPerSneaker = new()

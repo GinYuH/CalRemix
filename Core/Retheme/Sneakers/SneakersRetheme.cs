@@ -155,7 +155,7 @@ namespace CalRemix.Core.Retheme
 
             HelperMessage.New("AquaSneakers", "Daaaaamn bro, you got them real Jordans bro! Better collect more of them, then we'll phonk it out, my fellow commie!", "CrimSonDefault",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<AquaticEmblem>()))
-                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetHoverTextOverride("Blessed creatures made with love and care in mind");
 
             HelperMessage.New("VolatileSneakers", "Oh look, another pathetic schmuck who just wants to collect those branded sneakers to increase their net worth. Just know that someone, somewhere in was paid FAR less than these shoes base worth. While your pointless net worth increases, the poor stays poor, and there is no changing that. But fine, flex those blasted sneakers to your easily impressionable \"friends\" and not care about the poor workers who were paid only 3 copper coins per shoe.", "EvilFannyDisgusted",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.VolatileGelatin))
@@ -167,7 +167,7 @@ namespace CalRemix.Core.Retheme
 
             HelperMessage.New("InsignaSneakers", "'Tower hitters'? Those who nose:", "CrimSonNose",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.EmpressFlightBooster))
-                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetSoundOverride(ScreenHelperManager.ThoseWhoNose);
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetSoundOverride(ScreenHelperManager.ThoseWhoNose).SetHoverTextOverride("I don't nose what youre talking about buddy");
 
             HelperMessage.New("SporeSneakers", "ooohhhh that sneaker stank like garbage, guh", "CrimSonDefault",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.SporeSac))
