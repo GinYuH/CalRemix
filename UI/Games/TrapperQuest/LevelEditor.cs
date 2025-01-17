@@ -144,12 +144,37 @@ namespace CalRemix.UI.Games.TrapperQuest
                 if (Main.mouseLeft)
                 {
                     // select entities
-                    if (CursorMode == 0)
+                    if (CursorMode == 0 && Main.mouseLeftRelease)
                     {
                         // place an entity if no other non-floor entity is there. if the entity is a floor allow placing unless it's another floor
-                        if (player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer && g is not TQFloor)))
+                        if (player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer)))
                         {
-                            selectedEntity = player.RoomImIn.Entities.Find((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer && g is not TQFloor));
+                            // If there is no selected entity, select the first one at the position
+                            if (selectedEntity == null)
+                                selectedEntity = player.RoomImIn.Entities.Find((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer));
+                            // If an entity is selected, attempt finding another entity at the same coordinates
+                            else
+                            {
+                                // Verify that the selected entity is still in the current room
+                                int idx = player.RoomImIn.Entities.FindIndex((GameEntity g) => g == selectedEntity);
+                                bool foundSmth = false;
+                                if (idx != -1)
+                                {
+                                    // Look for another entity at the same coordinates
+                                    int idx2 = player.RoomImIn.Entities.FindIndex(idx, (GameEntity g) => g != selectedEntity && ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer);
+                                    // If another entity was found, mark foundSmth as true and use that entity
+                                    if (idx2 != -1)
+                                    {
+                                        selectedEntity = player.RoomImIn.Entities[idx2];
+                                        foundSmth = true;
+                                    }
+                                }
+                                // If nothing was found just select the first entity
+                                if (!foundSmth)
+                                {
+                                    selectedEntity = player.RoomImIn.Entities.Find((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer));
+                                }
+                            }
                         }
                     }
                     // place entities
@@ -164,7 +189,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                             player.RoomImIn.Tiles.Add(((int)moused.X, (int)moused.Y), newE as TQRock);
                         }
                         // place an entity if no other non-floor entity is there. if the entity is a floor allow placing unless it's another floor
-                        if (!player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TQFloor) || (ConvertToTileCords(g.Position) == moused && g is TQFloor && newE is TQFloor)))
+                        if (!player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused && g is not TQFloor && g is not TrapperPlayer) || (ConvertToTileCords(g.Position) == moused && g is TQFloor && newE is TQFloor)))
                         {
                             newE.Position = ConvertToScreenCords(moused);
                             player.RoomImIn.Entities.Add(newE);
@@ -185,7 +210,7 @@ namespace CalRemix.UI.Games.TrapperQuest
                         // kill anything else at the coordinates that isn't the player
                         if (player.RoomImIn.Entities.Any((GameEntity g) => (ConvertToTileCords(g.Position) == moused) && g is not TrapperPlayer))
                         {
-                            int idx = player.RoomImIn.Entities.FindIndex((GameEntity g) => ConvertToTileCords(g.Position) == moused);
+                            int idx = player.RoomImIn.Entities.FindIndex((GameEntity g) => ConvertToTileCords(g.Position) == moused && g is not TrapperPlayer);
                             if (idx != -1)
                             {
                                 player.RoomImIn.Entities.RemoveAt(idx);
@@ -399,6 +424,8 @@ namespace CalRemix.UI.Games.TrapperQuest
 
             sb.Draw(TextureAssets.MagicPixel.Value, pose, new Rectangle(0, 0, UIWidth, (int)GameManager.playingField.Y), Color.Teal);
             string title = "No entity selected";
+            if (selectedEntity is not ICreative)
+                return;
             bool validEntity = selectedEntity is ICreative creative && creative.EditorOptions.Count > 0;
             if (selectedEntity != null)
             {
@@ -407,8 +434,6 @@ namespace CalRemix.UI.Games.TrapperQuest
             }
             Utils.DrawBorderString(sb, title, pose, Color.White);
             if (selectedEntity == null)
-                return;
-            if (selectedEntity is not ICreative)
                 return;
             if (!validEntity)
                 return;
