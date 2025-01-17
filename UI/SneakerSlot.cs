@@ -19,7 +19,7 @@ namespace CalRemix.UI
 
         public override bool CanAcceptItem(Item checkItem, AccessorySlotType context)
         {
-            return SneakersRetheme.SneakerList[checkItem.type];
+            return SneakersRetheme.IsASneaker(checkItem.type);
         }
 
         public override string FunctionalTexture => "CalRemix/UI/SneakerSlot";
@@ -42,7 +42,7 @@ namespace CalRemix.UI
 
         public override bool ModifyDefaultSwapSlot(Item item, int accSlotToSwapTo)
         {
-            return SneakersRetheme.SneakerList[item.type];
+            return SneakersRetheme.IsASneaker(item.type);
         }
         public override bool DrawVanitySlot => false;
 

@@ -355,7 +355,7 @@ namespace CalRemix.Core.Retheme
             AbsoluteChanges(item);
             StormbowChanges(item);
 
-            if (CalRemixWorld.sneakerheadMode  && SneakersRetheme.SneakerList.Length > item.type && SneakersRetheme.SneakerList[item.type])
+            if (SneakersRetheme.IsASneaker(item.type))
                 SneakersRetheme.InitializeItem(item);
         }
         public static void AbsoluteChanges(Item item)
@@ -491,13 +491,13 @@ namespace CalRemix.Core.Retheme
             if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
                 tooltips.Clear();
 
-            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.SneakerList.Length > item.type && SneakersRetheme.SneakerList[item.type])
+            if (SneakersRetheme.IsASneaker(item.type))
                 SneakersRetheme.ModifyTooltips(item, tooltips);
         }
 
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
         {
-            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.SneakerList.Length > item.type && SneakersRetheme.SneakerList[item.type])
+            if (SneakersRetheme.IsASneaker(item.type))
                 return SneakersRetheme.PreDrawTooltipLine(item, line, ref yOffset);
 
             return true;

@@ -121,11 +121,8 @@ namespace CalRemix.Core.Retheme
         private static void MountsAndPetsIntoMainPage(On_ItemSlot.orig_SelectEquipPage orig, Item item)
         {
             orig(item);
-            if (!CalRemixWorld.sneakerheadMode)
-                return;
-
             //Forces main equip page instead of pets/mounts page
-            if (SneakerList[item.type])
+            if (IsASneaker(item.type))
                 Main.EquipPage = 0;
         }
 
@@ -134,6 +131,11 @@ namespace CalRemix.Core.Retheme
             if (slot == 8 && CalRemixWorld.sneakerheadMode)
                 return false;
             return orig(self, slot);
+        }
+
+        public static bool IsASneaker(int type)
+        {
+            return CalRemixWorld.sneakerheadMode && SneakerList.Length > type && SneakerList[type];
         }
 
         public static void LoadHelperMessages()
