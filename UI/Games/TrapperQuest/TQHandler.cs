@@ -346,7 +346,7 @@ namespace CalRemix.UI.Games.TrapperQuest
             {
                 black *= MathHelper.Lerp(1, 0, Utils.GetLerpValue(RoomTransitionTime / 2, 0, roomTransitionCounter));
             }
-            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset, new Rectangle(0, 0, cut.Width * 2, cut.Height * 2), black, 0f, Vector2.Zero, 1f, 0, 0f);
+            sb.Draw(TextureAssets.MagicPixel.Value, GameManager.ScreenOffset + GameManager.CameraPosition, new Rectangle(0, 0, cut.Width * 2, cut.Height * 2), black, 0f, Vector2.Zero, 1f, 0, 0f);
 
             // Debug grid that shows tile boundaries
             if (LevelEditor.ShowGrid)

@@ -55,7 +55,11 @@ namespace CalRemix.UI.Games.TrapperQuest
         public override void Load()
         {
             messages.Add("Morning", new TQMessage("What a wonderful day in the world of Calamity", 1, "Rock"));
-            messages.Add("Rock", new TQMessage("A simple rock", 0));
+            messages.Add("Rock", new TQMessage("A simple rock", 0, "Rock2"));
+            messages.Add("Rock2", new TQMessage("Its simple rockiness fills you with determination", 0, "Rock3"));
+            messages.Add("Rock3", new TQMessage("or something like that I guess", 0, "Rock4"));
+            messages.Add("Rock4", new TQMessage("I ate some pizza today, it was good", 0, "Rock5"));
+            messages.Add("Rock5", new TQMessage(":)", 1));
         }
 
         public override void PostUpdateEverything()
