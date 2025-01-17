@@ -108,7 +108,8 @@ namespace CalRemix.Content.NPCs
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
-            projectile.active = false;
+            if (!projectile.minion)
+                projectile.active = false;
         }
         public override void OnKill()
         {
