@@ -1,26 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
-using System.Collections.Generic;
-using System.Linq;
-using static CalRemix.UI.Games.TrapperQuest.TQHandler;
-using System;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Terraria.ModLoader.Core;
-using CalRemix.UI.Games.Boi.BaseClasses;
-using Microsoft.CodeAnalysis.CSharp.Formatting;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using Terraria.Audio;
-using Terraria.ID;
 using Terraria.GameContent;
-using System.Transactions;
-using System.Text;
-using System.IO;
-using Terraria.GameContent.Creative;
-using Microsoft.CodeAnalysis;
-using System.Dynamic;
-using Terraria.DataStructures;
+using static CalRemix.UI.Games.TrapperQuest.TQHandler;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {

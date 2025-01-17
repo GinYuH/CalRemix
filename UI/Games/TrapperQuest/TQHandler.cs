@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.UI.Games.Boi.BaseClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace CalRemix.UI.Games.TrapperQuest
 {
@@ -369,6 +371,15 @@ namespace CalRemix.UI.Games.TrapperQuest
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.UIScaleMatrix);
             sb.ReleaseCutoffRegion(Main.UIScaleMatrix);
+
+            if (Main.mouseRight)
+            TQDialogueSystem.ActiveMessage = TQDialogueSystem.messages["Morning"];
+
+            Texture2D boxx = ModContent.Request<Texture2D>("CalRemix/UI/Games/TrapperQuest/DialogueBox").Value;
+            float scale = innerScreenSize.X / (float)boxx.Width;
+
+
+            TQDialogueSystem.DrawMessage(sb, GameManager.ScreenOffset + GameManager.CameraPosition + Vector2.UnitY * (GameManager.playingField.Y - boxx.Height * scale), new Rectangle(0, 0, (int)innerScreenSize.X, (int)innerScreenSize.Y));
 
             // Draw the level editor UI
             LevelEditor.DrawUI(sb);
