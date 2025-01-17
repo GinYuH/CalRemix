@@ -27,7 +27,7 @@ namespace CalRemix.UI
         public override void ApplyEquipEffects()
         {
             base.ApplyEquipEffects();
-            if (!FunctionalItem.IsAir)
+            if (!FunctionalItem.IsAir && SneakersRetheme.IsASneaker(FunctionalItem.type))
             {
                 SneakersRetheme.sneakerIntroMessage.ActivateMessage();
                 var networthPlayer = Player.GetModPlayer<NetWorthPlayer>();
