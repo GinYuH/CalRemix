@@ -16,6 +16,8 @@ namespace CalRemix.UI
 {
     public partial class ScreenHelperManager : ModSystem
     {
+        public static readonly SoundStyle ThoseWhoNose = new("CalRemix/Assets/Sounds/Helpers/ThoseWhoNose");
+
         public static void LoadCrimSon()
         {
             HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", "It is Dangerous to Go Alone. Take This.", "CrimSonDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone, 6, cantBeClickedOff: true)

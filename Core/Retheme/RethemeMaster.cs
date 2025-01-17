@@ -491,8 +491,16 @@ namespace CalRemix.Core.Retheme
             if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
                 tooltips.Clear();
 
-            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.SneakerList[item.type])
+            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.SneakerList.Length > item.type && SneakersRetheme.SneakerList[item.type])
                 SneakersRetheme.ModifyTooltips(item, tooltips);
+        }
+
+        public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.SneakerList.Length > item.type && SneakersRetheme.SneakerList[item.type])
+                return SneakersRetheme.PreDrawTooltipLine(item, line, ref yOffset);
+
+            return true;
         }
     }
     public class RethemeProjectile : GlobalProjectile

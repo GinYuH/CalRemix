@@ -27,11 +27,16 @@ namespace CalRemix.UI
         public override void ApplyEquipEffects()
         {
             base.ApplyEquipEffects();
-            if (FunctionalItem != null)
+            if (!FunctionalItem.IsAir)
             {
                 SneakersRetheme.sneakerIntroMessage.ActivateMessage();
-                Player.GetModPlayer<NetWorthPlayer>().netWorthCap += NetWorthPlayer.netWorthCapPerSneaker[FunctionalItem.type];
-                Player.GetModPlayer<NetWorthPlayer>().netWorthSpeed += (int)Math.Pow(FunctionalItem.rare, 23);
+                var networthPlayer = Player.GetModPlayer<NetWorthPlayer>();
+
+                networthPlayer.netWorthCap += NetWorthPlayer.netWorthCapPerSneaker[FunctionalItem.type];
+                networthPlayer.netWorthSpeed += (int)Math.Pow(FunctionalItem.rare, 2);
+
+                if (networthPlayer.netWorthCap > 10000)
+                    networthPlayer.netWorthSpeed += FunctionalItem.rare * 200;
             }
         }
 

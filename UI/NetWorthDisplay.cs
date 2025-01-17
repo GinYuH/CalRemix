@@ -21,12 +21,115 @@ using Terraria.GameContent;
 using CalamityMod.Buffs.Mounts;
 using CalRemix.UI;
 using CalRemix.Core.Retheme;
+using CalamityMod.Tiles.Abyss;
+using System;
+using CalRemix.Content.Tiles;
+using Terraria.DataStructures;
+using Terraria.ID;
+using System.Threading;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using ReLogic.Graphics;
+using System.Reflection;
+using Terraria.UI.Chat;
 
 namespace CalRemix.UI
 {
     public class NetWorthDisplay : InfoDisplay
 	{
-		public override bool Active() 
+        public override void Load()
+        {
+            IL_Main.DrawInfoAccs += NetworthDisplayProperly;
+        }
+
+        private void NetworthDisplayProperly(MonoMod.Cil.ILContext il)
+        {
+            var cursor = new ILCursor(il);
+
+
+            Type[] paramTypes = [typeof(SpriteBatch), typeof(DynamicSpriteFont), typeof(string), typeof(Vector2), typeof(Color), typeof(float), typeof(Vector2), typeof(Vector2), typeof(SpriteEffects), typeof(float)];
+            MethodInfo drawStringMethod = typeof(DynamicSpriteFontExtensionMethods).GetMethod("DrawString", BindingFlags.Public | BindingFlags.Static, paramTypes);
+
+            for (int b = 0; b < 2; b++)
+            {
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    i => i.MatchCall(drawStringMethod)))
+                {
+                    return;
+                }
+
+                cursor.Remove();
+                cursor.EmitDelegate(SpoofDrawString);
+            }
+        }
+
+        public static void SpoofDrawString(SpriteBatch spriteBatch, DynamicSpriteFont font, string text, Vector2 position, Color drawColor, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
+        {
+            if (text == "NETWORTH")
+            {
+                if (drawColor.R < 20)
+                    return;
+                NetWorthPlayer player = Main.LocalPlayer.GetModPlayer<NetWorthPlayer>();
+
+                int platinumCount = 0;
+                int goldCount = 0;
+                int silverCount = 0;
+                int copperCount = 0;
+
+                int monerz = player.netWorth;
+                if (monerz < 1)
+                    monerz = 1;
+
+                if (monerz >= 1000000)
+                {
+                    platinumCount = monerz / 1000000;
+                    monerz -= platinumCount * 1000000;
+                }
+
+                if (monerz >= 10000)
+                {
+                    goldCount = monerz / 10000;
+                    monerz -= goldCount * 10000;
+                }
+
+                if (monerz >= 100)
+                {
+                    silverCount = monerz / 100;
+                    monerz -= silverCount * 100;
+                }
+
+                List<string> netWorthText = new();
+
+                if (monerz >= 1)
+                    copperCount = monerz;
+
+                if (platinumCount > 0)
+                    netWorthText.Add($"[i:{ItemID.PlatinumCoin}][c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + ":" + platinumCount + "]");
+
+                if (goldCount > 0 || platinumCount > 0)
+                    netWorthText.Add($"[i:{ItemID.GoldCoin}][c/" + Colors.AlphaDarken(Colors.CoinGold).Hex3() + ":" + goldCount + "]");
+
+                if (silverCount > 0 || goldCount > 0 || platinumCount > 0)
+                    netWorthText.Add($"[i:{ItemID.SilverCoin}][c/" + Colors.AlphaDarken(Colors.CoinSilver).Hex3() + ":" + silverCount +  "]");
+
+                if (copperCount > 0 || silverCount > 0 || goldCount > 0 || platinumCount > 0)
+                    netWorthText.Add($"[i:{ItemID.CopperCoin}][c/" + Colors.AlphaDarken(Colors.CoinCopper).Hex3() + ":" + copperCount + "]");
+
+                ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, "Net Worth:", position, drawColor, rotation, origin, scale);
+                position.X += 86;
+
+                for (int i = 0; i < netWorthText.Count; i++)
+                {
+                    ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, netWorthText[i], position, drawColor, rotation, origin, scale);
+                    position.X += 40;
+                }
+            }
+            else
+                spriteBatch.DrawString(font, text, position, drawColor, rotation, origin, scale, effects, layerDepth);
+        }
+
+        public override bool Active() 
 		{
             HelperMessage msg = HelperMessage.ByID("SneakersIntroduction");
 
@@ -38,58 +141,8 @@ namespace CalRemix.UI
 
 		public override string DisplayValue(ref Color displayColor, ref Color displayShadowColor)
 		{
-            NetWorthPlayer player = Main.LocalPlayer.GetModPlayer<NetWorthPlayer>();
-
-            string netWorthValue = "";
-            int platinumCount = 0;
-            int goldCount = 0;
-            int silverCount = 0;
-            int copperCount = 0;
-
-            int monerz = player.netWorth;
-            if (monerz < 1)
-                monerz = 1;
-
-            /*
-            if (monerz >= 1000000)
-            {
-                platinumCount = monerz / 1000000;
-                monerz -= platinumCount * 1000000;
-            }
-
-            if (monerz >= 10000)
-            {
-                goldCount = monerz / 10000;
-                monerz -= goldCount * 10000;
-            }
-
-            if (monerz >= 100)
-            {
-                silverCount = monerz / 100;
-                monerz -= silverCount * 100;
-            }
-
-            if (monerz >= 1)
-                copperCount = monerz;
-
-            if (platinumCount > 0)
-                netWorthValue = netWorthValue + $"[i:{ItemID.PlatinumCoin}][c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + " " + platinumCount + "] ";
-
-            if (goldCount > 0)
-                netWorthValue = netWorthValue + $"[i:{ItemID.GoldCoin}][c/" + Colors.AlphaDarken(Colors.CoinGold).Hex3() + " " + goldCount + "] ";
-
-            if (silverCount > 0)
-                netWorthValue = netWorthValue + $"[i:{ItemID.SilverCoin}][c/" + Colors.AlphaDarken(Colors.CoinSilver).Hex3() + " " + silverCount +  "] ";
-
-            if (copperCount > 0)
-                netWorthValue = netWorthValue + $"[i:{ItemID.CopperCoin}][c/" + Colors.AlphaDarken(Colors.CoinCopper).Hex3() + " " + copperCount + "] ";
-            */
-
-            netWorthValue = monerz.ToString();
-            netWorthValue += " $$$";
-
-
-            return $"Net Worth: " + netWorthValue;
+            displayShadowColor = Color.Black;
+            return "NETWORTH";
 		}
 	}
 
@@ -116,6 +169,9 @@ namespace CalRemix.UI
 
         public override void PostUpdateEquips()
         {
+            var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
+            throneData.textureWidth = throneData.frontTexture.Width() ;
+
             if (netWorth < netWorthCap)
             {
                 netWorth += netWorthSpeed;

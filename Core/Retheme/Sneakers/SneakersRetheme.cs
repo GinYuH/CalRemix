@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using Terraria.GameContent;
 using CalamityMod.Buffs.Mounts;
 using CalRemix.UI;
+using ReLogic.Utilities;
+using Terraria.UI;
 
 namespace CalRemix.Core.Retheme
 {
@@ -27,6 +29,16 @@ namespace CalRemix.Core.Retheme
     {
         public static HelperMessage sneakerIntroMessage;
         public static HelperMessage platinumNetWorthMessage;
+
+        public static Asset<Texture2D> originalSocTexture;
+        public static Asset<Texture2D> originalHivePackTexture;
+        public static Asset<Texture2D> originalBoneHelmTexture;
+        public static Asset<Texture2D> originalWormScarfTexture;
+        public static Asset<Texture2D> originalBoneGloveFrontTexture;
+        public static Asset<Texture2D> originalBoneGloveBackTexture;
+        public static Asset<Texture2D> invisibleSprite;
+
+        public static List<Asset<Texture2D>> BrandLogos = new();
 
         public static SetFactory SneakersFactory = new SetFactory(ItemLoader.ItemCount);
         public static bool[] SneakerList = SneakersFactory.CreateBoolSet(
@@ -84,6 +96,37 @@ namespace CalRemix.Core.Retheme
         public static void Load()
         {
             On_Player.IsItemSlotUnlockedAndUsable += HideDemonHeartSlot;
+            On_ItemSlot.SelectEquipPage += MountsAndPetsIntoMainPage;
+
+            if (!Main.dedServ)
+            {
+                BrandLogos = new()
+                {
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoNike"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoAdidas"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoAsics"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoBalenciaga"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoYeezy"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoReebok"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoVans"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoPuma"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoNewBalance"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoSkechers"),
+                };
+
+                invisibleSprite = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/Invisible");
+            }
+        }
+
+        private static void MountsAndPetsIntoMainPage(On_ItemSlot.orig_SelectEquipPage orig, Item item)
+        {
+            orig(item);
+            if (!CalRemixWorld.sneakerheadMode)
+                return;
+
+            //Forces main equip page instead of pets/mounts page
+            if (SneakerList[item.type])
+                Main.EquipPage = 0;
         }
 
         private static bool HideDemonHeartSlot(On_Player.orig_IsItemSlotUnlockedAndUsable orig, Player self, int slot)
@@ -109,6 +152,47 @@ namespace CalRemix.Core.Retheme
             platinumNetWorthMessage = HelperMessage.New("NetworthRich", "Oh my GYATT!!! Your net worth is off the charts bruv??? You've gyatt to get fanum taxxed for this one unc! fr fr tho no cap thats actually fire", "CrimSonDefault")
                 .NeedsActivation().SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
+
+            HelperMessage.New("AquaSneakers", "Daaaaamn bro, you got them real Jordans bro! Better collect more of them, then we'll phonk it out, my fellow commie!", "CrimSonDefault",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<AquaticEmblem>()))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("VolatileSneakers", "Oh look, another pathetic schmuck who just wants to collect those branded sneakers to increase their net worth. Just know that someone, somewhere in was paid FAR less than these shoes base worth. While your pointless net worth increases, the poor stays poor, and there is no changing that. But fine, flex those blasted sneakers to your easily impressionable \"friends\" and not care about the poor workers who were paid only 3 copper coins per shoe.", "EvilFannyDisgusted",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.VolatileGelatin))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny);
+
+            HelperMessage.New("MinecartSneakers", "damn bruh I didn't know you were a sneaker head too! P sure that Jordan's not factory laced, tho", "CrimSonDefault",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.MinecartPowerup))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("InsignaSneakers", "'Tower hitters'? Those who nose:", "CrimSonNose",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.EmpressFlightBooster))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetSoundOverride(ScreenHelperManager.ThoseWhoNose);
+
+            HelperMessage.New("SporeSneakers", "ooohhhh that sneaker stank like garbage, guh", "CrimSonDefault",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.SporeSac))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("BrimmySneakers", "ooohh I don't like that Jordan bruh. Reminds me of that dare I made with my friends at the sleepover.", "CrimSonLostSoul",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<FlameLickedShell>()))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("ClonecalSneakers", "oh my gyatt! A calamitous Jordan! Bro got the Calamitas-approved Jordans y'all!!!!", "CrimSonDefault",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<VoidofCalamity>()))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("ClonecalSneakersFake", " ...ooh shit, I just realized, that calamitas approved Jordan? That Jordan's A MFING FAKE Js!!!!!!!!!", "CrimSonDefault",
+               (ScreenHelperSceneMetrics m) => HelperMessage.ByID("ClonecalSneakers").alreadySeen && Main.rand.NextBool(10000))
+               .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetHoverTextOverride("damn we got scammed bruv");
+
+
+            HelperMessage.New("AfflictionSneakers", " wow that Js look like something trapper bulb chan would wear on god fr fr", "CrimSonDefault",
+                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<Affliction>()))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("AfflictionSneakers2", "umm, no... -_- I don't like wearing those garish branded sneakers, nya... I just prefer wearing the ones that fits me the most, desu~! OWO", "TrapperDisgust")
+                .ChainAfter().SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+
         }
 
 
@@ -118,19 +202,101 @@ namespace CalRemix.Core.Retheme
             item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Sneakers.{name}").Value);
 
             //Turn demon heart into an equipable / Make sure they're all equippable
-            //if (item.type == ItemID.DemonHeart)
-            //{
+
+
+            //Minecart powerup gives you mech minecart so its fine for it to be consumable
+            if (item.type != ItemID.MinecartPowerup)
                 item.consumable = false;
-                item.accessory = true;
-            //}
+
+            item.accessory = true;
         }
 
         public static void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            string netWorthValue = "";
+            int platinumCount = 0;
+            int goldCount = 0;
+            int silverCount = 0;
+            int copperCount = 0;
 
+            int monerz = NetWorthPlayer.netWorthCapPerSneaker[item.type];
+            if (monerz < 1)
+                monerz = 1;
+
+            if (monerz >= 1000000)
+            {
+                platinumCount = monerz / 1000000;
+                monerz -= platinumCount * 1000000;
+            }
+
+            if (monerz >= 10000)
+            {
+                goldCount = monerz / 10000;
+                monerz -= goldCount * 10000;
+            }
+
+            if (monerz >= 100)
+            {
+                silverCount = monerz / 100;
+                monerz -= silverCount * 100;
+            }
+
+            if (monerz >= 1)
+                copperCount = monerz;
+
+            if (platinumCount > 0)
+                netWorthValue = netWorthValue + $"[i:{ItemID.PlatinumCoin}][c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + ":" + platinumCount + "]";
+
+            if (goldCount > 0)
+                netWorthValue = netWorthValue + $"[i:{ItemID.GoldCoin}][c/" + Colors.AlphaDarken(Colors.CoinGold).Hex3() + ":" + goldCount + "]";
+
+            if (silverCount > 0)
+                netWorthValue = netWorthValue + $"[i:{ItemID.SilverCoin}][c/" + Colors.AlphaDarken(Colors.CoinSilver).Hex3() + ":" + silverCount +  "]";
+
+            if (copperCount > 0)
+                netWorthValue = netWorthValue + $"[i:{ItemID.CopperCoin}][c/" + Colors.AlphaDarken(Colors.CoinCopper).Hex3() + ":" + copperCount + "]";
+
+            tooltips.Add(new TooltipLine(CalRemix.instance, "Brand", "logo"));
+            tooltips.Add(new TooltipLine(CalRemix.instance, "NetWorth", $"Total net worth:{netWorthValue}"));
         }
 
+        public static bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.Mod == "CalRemix" && line.Name == "Brand")
+            {
+                Texture2D brandLogo = BrandLogos[(int)sneakerBrands[item.type]].Value;
 
+                for (int l = 0; l < 5; l++)
+                {
+                    int drawX = line.X;
+                    int drawY = line.Y;
+
+                    switch (l)
+                    {
+                        case 0:
+                            drawX--;
+                            break;
+                        case 1:
+                            drawX++;
+                            break;
+                        case 2:
+                            drawY--;
+                            break;
+                        case 3:
+                            drawY++;
+                            break;
+                    }
+
+                    Main.spriteBatch.Draw(brandLogo, new Vector2(drawX, drawY), null, l == 4 ? line.Color : Color.Black, line.Rotation, line.Origin, (line.BaseScale.X + line.BaseScale.Y) / 2f, SpriteEffects.None, 0f);
+                }
+
+
+                return false;
+            }
+
+
+            return true;
+        }
 
         #region Texture changes
         public static void SaveDefaultSneakersTextures()
@@ -149,6 +315,13 @@ namespace CalRemix.Core.Retheme
             OriginalThroneBackTexture = throneData.backTexture;
             OriginalThroneTexture = throneData.frontTexture;
             OriginalThroneGlowTexture = throneData.frontTextureGlow;
+
+            originalSocTexture = TextureAssets.AccShield[ArmorIDs.Shield.ShieldofCthulhu];
+            originalWormScarfTexture = TextureAssets.AccNeck[ArmorIDs.Neck.WormScarf];
+            originalHivePackTexture = TextureAssets.AccBack[ArmorIDs.Back.HivePack];
+            originalBoneHelmTexture = TextureAssets.AccFace[ArmorIDs.Face.BoneHelm];
+            originalBoneGloveFrontTexture = TextureAssets.AccHandsOn[ArmorIDs.HandOn.BoneGlove];
+            originalBoneGloveBackTexture = TextureAssets.AccHandsOff[ArmorIDs.HandOff.BoneGlove];
         }
 
 
@@ -173,17 +346,30 @@ namespace CalRemix.Core.Retheme
                     TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value);
                 }
 
-                Mount.mounts[MountID.MinecartMech].frontTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMount");
+                Mount.mounts[MountID.MinecartMech].frontTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMount", AssetRequestMode.ImmediateLoad);
                 Mount.mounts[MountID.MinecartMech].frontTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMountGlow");
+                Mount.mounts[MountID.MinecartMech].textureWidth = Mount.mounts[MountID.MinecartMech].frontTexture.Width();
 
                 Mount.mounts[MountID.CuteFishron].backTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount");
                 Mount.mounts[MountID.CuteFishron].backTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount2");
+                Mount.mounts[MountID.CuteFishron].frontTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount", AssetRequestMode.ImmediateLoad);
+                Mount.mounts[MountID.CuteFishron].frontTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount2");
+                Mount.mounts[MountID.CuteFishron].textureWidth = Mount.mounts[MountID.CuteFishron].frontTexture.Width();
 
 
                 var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
-                throneData.backTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/DraedonGamerChairMount");
+                throneData.backTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/DraedonGamerChairMount", AssetRequestMode.ImmediateLoad);
                 throneData.frontTexture = throneData.backTexture;
                 throneData.frontTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/DraedonGamerChairMountGlow");
+                throneData.textureWidth = throneData.frontTexture.Width();
+
+                TextureAssets.AccShield[ArmorIDs.Shield.ShieldofCthulhu] = invisibleSprite;
+                TextureAssets.AccNeck[ArmorIDs.Neck.WormScarf] = invisibleSprite;
+                TextureAssets.AccBack[ArmorIDs.Back.HivePack] = invisibleSprite;
+                TextureAssets.AccFace[ArmorIDs.Face.BoneHelm] = invisibleSprite;
+                TextureAssets.AccHandsOn[ArmorIDs.HandOn.BoneGlove] = invisibleSprite;
+                TextureAssets.AccHandsOff[ArmorIDs.HandOff.BoneGlove] = invisibleSprite;
+
             }
            
             else
@@ -208,14 +394,26 @@ namespace CalRemix.Core.Retheme
 
                 Mount.mounts[MountID.MinecartMech].frontTexture = TextureAssets.MinecartMechMount[0];
                 Mount.mounts[MountID.MinecartMech].frontTextureGlow = TextureAssets.MinecartMechMount[1];
+                Mount.mounts[MountID.MinecartMech].textureWidth = Mount.mounts[MountID.MinecartMech].frontTexture.Width();
 
                 Mount.mounts[MountID.CuteFishron].backTexture = TextureAssets.CuteFishronMount[0];
                 Mount.mounts[MountID.CuteFishron].backTextureGlow = TextureAssets.CuteFishronMount[1];
+                Mount.mounts[MountID.CuteFishron].frontTexture = Asset<Texture2D>.Empty;
+                Mount.mounts[MountID.CuteFishron].frontTextureGlow = Asset<Texture2D>.Empty;
+                Mount.mounts[MountID.CuteFishron].textureWidth = Mount.mounts[MountID.CuteFishron].backTexture.Width();
 
                 var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
                 throneData.backTexture = OriginalThroneBackTexture;
                 throneData.frontTexture = OriginalThroneTexture;
                 throneData.frontTextureGlow = OriginalThroneGlowTexture;
+                throneData.textureWidth = throneData.frontTexture.Width();
+
+                TextureAssets.AccShield[ArmorIDs.Shield.ShieldofCthulhu] = originalSocTexture;
+                TextureAssets.AccNeck[ArmorIDs.Neck.WormScarf] = originalWormScarfTexture;
+                TextureAssets.AccBack[ArmorIDs.Back.HivePack] = originalHivePackTexture;
+                TextureAssets.AccFace[ArmorIDs.Face.BoneHelm] = originalBoneHelmTexture;
+                TextureAssets.AccHandsOn[ArmorIDs.HandOn.BoneGlove] = originalBoneGloveFrontTexture;
+                TextureAssets.AccHandsOff[ArmorIDs.HandOff.BoneGlove] = originalBoneGloveBackTexture;
             }
         }
 
@@ -277,6 +475,71 @@ namespace CalRemix.Core.Retheme
              { ItemType<YharimsGift>(), "YharimsGift" },
              { ItemType<ExoThrone>(), "ExoBox" },
              { ItemType<Calamity>(), "Calamity" }};
+
+        public enum ShoeBrand
+        {
+            Nike,
+            Adidas,
+            Asics,
+            Balenciaga,
+            Yeezy,
+            Reebok,
+            Vans,
+            Puma,
+            NewBalance,
+            Skechers
+        }
+        internal static Dictionary<int, ShoeBrand> sneakerBrands = new()
+            {
+            //Vanilla
+             { ItemID.RoyalGel, ShoeBrand.Nike },
+             { ItemID.EoCShield, ShoeBrand.Nike },
+             { ItemID.WormScarf, ShoeBrand.Nike },
+             { ItemID.BrainOfConfusion, ShoeBrand.Nike },
+             { ItemID.HiveBackpack,  ShoeBrand.Asics },
+             { ItemID.BoneHelm,  ShoeBrand.Nike },
+             { ItemID.BoneGlove,  ShoeBrand.Balenciaga },
+             { ItemID.DemonHeart,  ShoeBrand.Adidas },
+
+             { ItemID.VolatileGelatin, ShoeBrand.Nike  },
+             { ItemID.MechanicalBatteryPiece, ShoeBrand.Nike  },
+             { ItemID.MechanicalWagonPiece, ShoeBrand.Nike  },
+             { ItemID.MechanicalWheelPiece, ShoeBrand.Nike  },
+             { ItemID.MinecartMech, ShoeBrand.Nike  },
+             { ItemID.MinecartPowerup, ShoeBrand.Nike  },
+             { ItemID.SporeSac, ShoeBrand.Yeezy },
+             { ItemID.ShinyStone, ShoeBrand.Adidas },
+             { ItemID.ShrimpyTruffle, ShoeBrand.Reebok },
+             { ItemID.EmpressFlightBooster, ShoeBrand.Adidas },
+             { ItemID.SuspiciousLookingTentacle, ShoeBrand.Nike },
+
+             //Calamity
+             { ItemType<OceanCrest>(), ShoeBrand.Nike },
+             { ItemType<FungalClump>(), ShoeBrand.Yeezy },
+             { ItemType<BloodyWormTooth>(), ShoeBrand.Asics },
+             { ItemType<RottenBrain>(),  ShoeBrand.Vans },
+             { ItemType<ManaPolarizer>(), ShoeBrand.Vans },
+
+             { ItemType<AquaticEmblem>(), ShoeBrand.Nike },
+             { ItemType<FlameLickedShell>(),  ShoeBrand.Adidas },
+             { ItemType<VoidofCalamity>(), ShoeBrand.Puma },
+             { ItemType<LeviathanAmbergris>(), ShoeBrand.Vans },
+             { ItemType<GravistarSabaton>(), ShoeBrand.Nike },
+             { ItemType<ToxicHeart>(), ShoeBrand.NewBalance },
+             { ItemType<HideofAstrumDeus>(),  ShoeBrand.Adidas },
+             { ItemType<BloodflareCore>(),  ShoeBrand.Adidas },
+             { ItemType<DynamoStemCells>(),  ShoeBrand.Nike  },
+
+             { ItemType<SpectralVeil>(),  ShoeBrand.Nike  },
+             { ItemType<TheEvolution>(),  ShoeBrand.Yeezy  },
+             { ItemType<Affliction>(),  ShoeBrand.Yeezy  },
+             { ItemType<OldDukeScales>(),  ShoeBrand.NewBalance  },
+             { ItemType<BlazingCore>(),  ShoeBrand.Skechers  },
+             { ItemType<NebulousCore>(), ShoeBrand.NewBalance  },
+             { ItemType<YharimsGift>(),  ShoeBrand.Nike  },
+             { ItemType<ExoThrone>(), ShoeBrand.Nike  },
+             { ItemType<Calamity>(), ShoeBrand.NewBalance }};
+
 
         internal static Dictionary<int, string> buffSneakerPairs = new()
         {
