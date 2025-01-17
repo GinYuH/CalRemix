@@ -9,7 +9,7 @@ namespace CalRemix.UI
         {
 
             HelperMessage introLore = HelperMessage.New("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.hardMode && !Main.zenithWorld, 8, cantBeClickedOff: true).AddDelay(5);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.hardMode && !Main.zenithWorld, 8, cantBeClickedOff: true).AddDelay(5).InitiateConversation();
 
             HelperMessage introEvilLore = HelperMessage.New("IntroducingEvilFanny2", "'Sup",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
@@ -26,7 +26,7 @@ namespace CalRemix.UI
 
             HelperMessage introLore3 = HelperMessage.New("IntroducingEvilFanny5", "$0, it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
                "FannyIdle", HelperMessage.AlwaysShow, 8)
-               .AddDynamicText(HelperMessage.GetPlayerName).ChainAfter();
+               .AddDynamicText(HelperMessage.GetPlayerName).ChainAfter().EndConversation();
         }
     }
 }

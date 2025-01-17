@@ -2,6 +2,7 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
+using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -63,6 +64,16 @@ namespace CalRemix.UI
                 SpeechBubble.Recalculate();
             }
         }
+
+        /// <summary>
+        /// Wether or not the helper has a message that's not displayed yet due to being in a delay period
+        /// </summary>
+        public bool HasMessageInDelay => currentMessage != null && currentMessage.InDelayPeriod;
+
+        /// <summary>
+        /// You probably don't need to use this. This is the helper's current message wether or not it is being shown or if it is in a delay waiting period. Use <see cref="UsedMessage"/> for the messagte thats actually seen
+        /// </summary>
+        public HelperMessage StoredMessage => currentMessage ;
 
         /// <summary>
         /// Basic checks to know if the helper can even talk, irregardless of what the message is<br/>
@@ -773,6 +784,20 @@ namespace CalRemix.UI
             }
         }
 
+        public List<ScreenHelper> ScreenHelpers
+        {
+            get {
+                List<ScreenHelper> helpers = new();
+                foreach (UIElement element in Elements)
+                {
+                    if (element is ScreenHelper speaker)
+                        helpers.Add(speaker);
+                }
+
+                return helpers;
+            }
+        }
+
         public bool AnyAvailableScreenHelper()
         {
             return Elements.Any(ui => ui is ScreenHelper helper && helper.CanSpeak);
@@ -925,6 +950,9 @@ namespace CalRemix.UI
         public static ScreenHelperSceneMetrics sceneMetrics;
         public static Rectangle screenRect;
 
+        public static bool ongoingConversation = false;
+        public static int ongoingConversationTimer = 0;
+
         #region Loading
         public override void Load()
         {
@@ -952,6 +980,7 @@ namespace CalRemix.UI
             LoadRenault5();
             LoadCrimSon();
             LoadTrapperBulbChan();
+            SneakersRetheme.LoadHelperMessages();
 
             screenHelpersEnabled = true;
             fannyTimesFrozen = 0;
@@ -979,6 +1008,8 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyInfiniteFunScary", 1);
             ScreenHelperPortrait.LoadPortrait("FannyRadiant", 1);
             ScreenHelperPortrait.LoadPortrait("FannyRetro", 1);
+            ScreenHelperPortrait.LoadPortrait("FannySneakers", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyBarefoot", 1);
 
             ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);
@@ -1080,7 +1111,6 @@ namespace CalRemix.UI
             if (!screenHelpersEnabled)
                 return;
 
-
             //Don't even try looking for a new message if everyone is speaking already / On speak cooldown
             if (ScreenHelperUISystem.UIState.AnyAvailableScreenHelper())
             {
@@ -1098,9 +1128,17 @@ namespace CalRemix.UI
                     //Looks at all the messages
                     foreach (HelperMessage message in messageGroup)
                     {
-                        //If we already found a message to play, we only consider messages that have been activated because those are more important and take priority
-                        if (messageToPlay != null && (message.activationTimer == 0))
+                        //Can only play activated messages during conversations
+                        if (ongoingConversation && !message._needsActivation)
                             continue;
+
+                        //If we already found a message, we only take in messages of increased priority
+                        if (messageToPlay != null && messageToPlay.Priority >= message.Priority)
+                            continue;
+
+                        //If we already found a message to play, we only consider messages that have been activated because those are more important and take priority
+                        //if (messageToPlay != null && !message._needsActivation)
+                        //    continue;
 
                         if (message.CanPlayMessage() && message.CheckExtraConditions(sceneMetrics))
                         {
@@ -1129,6 +1167,15 @@ namespace CalRemix.UI
 
         public void UpdateMessages()
         {
+            //Tick down ongoing conversation
+            ongoingConversationTimer--;
+            if (ongoingConversationTimer <= 0)
+            {
+                ongoingConversationTimer = 0;
+                ongoingConversation = false;
+            }
+
+
             //Go through every message
             for (int i = 0; i < screenHelperMessages.Count; i++)
             {
@@ -1297,6 +1344,9 @@ namespace CalRemix.UI
                 msg.currentSpeaker = null;
                 msg.TimeLeft = 0;
             }
+
+            ongoingConversation = false;
+            ongoingConversationTimer = 0;
         }
         #endregion
     }
@@ -1332,6 +1382,7 @@ namespace CalRemix.UI
         internal int maxTextWidth;
         public float textSize;
 
+
         public static HelperMessage ByID(string identifier)
         {
             if (ScreenHelperManager.messageIndexByID.TryGetValue(identifier, out int index))
@@ -1366,6 +1417,10 @@ namespace CalRemix.UI
         internal int messageDuration; //How long the message stayts on screen
         public int MessageDuration => messageDuration;
 
+        /// <summary>
+        /// Messages with higher priority are selected with.. priority. Use this so important messages like evil fanny's introduction doesn't appear after another unimportant evil fanny message
+        /// </summary>
+        public float Priority = 0;
 
         /// <summary>
         /// The desired screen helper to play this message
@@ -1480,6 +1535,12 @@ namespace CalRemix.UI
         public HelperMessage NoCooldown()
         {
             NoCooldownAfterSpeaking = true;
+            return this;
+        }
+
+        public HelperMessage SetPriority(float priority)
+        {
+            Priority = priority;
             return this;
         }
 
@@ -1609,6 +1670,81 @@ namespace CalRemix.UI
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the <see cref="ScreenHelperManager.ongoingConversation"/> bool to true, which prevents any more helper messages from appearing when this message is spoken
+        /// This is useful for moments when the helpers are intended to speak between one another without being interrupted by the wrong textbox
+        /// </summary>
+        /// <param name="conversationDurationInSeconds">Timer used to clear the convo lock after a certain amount of time has passed. Conversations can also be manually ended, this is just a failsave</param>
+        /// <returns></returns>
+        public HelperMessage InitiateConversation(float conversationDurationInSeconds = 120, float messagePriority = 100f)
+        {
+            Priority = messagePriority;
+            AddSelectionEvent(() => InitiateConversationEvent(this, conversationDurationInSeconds));
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ScreenHelperManager.ongoingConversation"/> bool to false, letting non-activated messages from appearing
+        /// Use this at the end of conversations
+        /// </summary>
+        /// <param name="deadAirInSeconds">Timer used to delay the end of the conversation, to make it more natural (avoids another message being spoken RIGHT after te conversation</param>
+        /// <returns></returns>
+        public HelperMessage EndConversation(float deadAirInSeconds = 5)
+        {
+            AddEndEvent(() => EndConversationEvent(deadAirInSeconds));
+            return this;
+        }
+
+        private void InitiateConversationEvent(HelperMessage conversationStarter, float conversationDurationInSecond)
+        {
+            ScreenHelperManager.ongoingConversation = true;
+            ScreenHelperManager.ongoingConversationTimer = (int)(conversationDurationInSecond * 60);
+
+            var helpers = ScreenHelperUISystem.UIState.ScreenHelpers;
+            foreach (ScreenHelper helper in helpers)
+            {
+                //Ignore the message that we spoke about
+                if (helper.StoredMessage == conversationStarter)
+                    continue;
+
+                //Hide messages that were in delay
+                if (helper.HasMessageInDelay)
+                {
+                    helper.StoredMessage.alreadySeen = false;
+                    helper.StopTalking();
+                    continue;
+                }
+
+                if (helper.Speaking)
+                {
+                    HelperMessage spokenMsg = helper.UsedMessage;
+                    //If the message was on screen for only half a second, hide it and pretend it wasnt already seen
+                    if (spokenMsg.TimeLeft >= spokenMsg.messageDuration - 30)
+                        spokenMsg.alreadySeen = false;
+
+                    spokenMsg.EndMessage();
+                    helper.StopTalking();
+                }
+            }
+        }
+
+
+        private void EndConversationEvent(float deadAirInSeconds)
+        {
+            if (!ScreenHelperManager.ongoingConversation)
+                return;
+
+            //Just end the lock
+            if (deadAirInSeconds == 0)
+            {
+                ScreenHelperManager.ongoingConversation = false;
+                return;
+            }
+
+            //Set the dead air time
+            ScreenHelperManager.ongoingConversationTimer = (int)(deadAirInSeconds * 60);
+        }
         #endregion
 
         #region Message Delay
@@ -1632,9 +1768,11 @@ namespace CalRemix.UI
         #region Playing messages
         public event Action OnStart;
         public event Action OnEnd;
+        public event Action OnSelected;
+
         public bool HasAnyEndEvents => OnEnd != null;
         public bool HasAnyStartEvents => OnStart != null;
-
+        public bool HasAnySelectedEvents => OnSelected != null;
         /// <summary>
         /// Adds an action that happens when the message is being read
         /// </summary>
@@ -1653,6 +1791,14 @@ namespace CalRemix.UI
             return this;
         }
 
+        /// <summary>
+        /// Adds an action that happens when the message gets selected to be played (called immediately, even when the message isn't immediately visible due to a delay)
+        /// </summary>
+        public HelperMessage AddSelectionEvent(Action action)
+        {
+            OnSelected += action;
+            return this;
+        }
 
 
         /// <summary>
@@ -1680,6 +1826,8 @@ namespace CalRemix.UI
             speaker.UsedMessage = this;
             currentSpeaker = speaker;
             alreadySeen = true;
+
+            OnSelected?.Invoke();
 
             //if the helper has custom text, we change the formatting to match
             if (speaker.textboxFormatting != null)

@@ -59,7 +59,7 @@ namespace CalRemix.UI
             HelperMessage fish = HelperMessage.New("Fishing1", "Morgen, mein friend! It is not a guten one, however, as if it were, you would be fishing!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.fishingPole > 0) && Main.time == 10800 && Main.dayTime,
                 4, cantBeClickedOff: true)
-                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).InitiateConversation(30f, 1f);
 
             HelperMessage.New("Fishing2", "Uhhh... wouldn't all the fish be asleep right now, Miracle Boy?",
                 "FannyIdle", cantBeClickedOff: true, duration: 5).ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
@@ -69,7 +69,7 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 0);
 
             HelperMessage.New("Fishing4", "... what?",
-                "FannySob").ChainAfter(delay: 5, startTimerOnMessageSpoken: true);
+                "FannySob").ChainAfter(delay: 5, startTimerOnMessageSpoken: true).EndConversation();
 
             HelperMessage.New("YharBarr", "Ugh, Yharim Bars. Look at these disgusting chunks of... whatever they are. Gross, right? They're huge, ugly, and look like something you’d find at the bottom of a trash heap. But I guess they’re useful for making endgame stuff, if you're into that kind of thing. Honestly, I wouldn’t touch them if I weren’t forced to. But hey, you do you. Just don’t expect any praise for collecting these hideous things.",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>()))

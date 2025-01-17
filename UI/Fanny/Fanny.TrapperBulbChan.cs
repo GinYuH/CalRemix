@@ -17,7 +17,7 @@ namespace CalRemix.UI
         public static void LoadTrapperBulbChan()
         {
             HelperMessage.New("TrapperBeginning1", "Hey, have you seen my precious pink flower that I've been growing for 15 years? I left her around here. She's been my best friend for years now, and I could never fathom what I'd do if I had lost h",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss, cantBeClickedOff: true);
+               "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss, cantBeClickedOff: true).InitiateConversation();
 
             HelperMessage fan1 = HelperMessage.New("TrapperBeginning2", "Oh.",
                "FannySob", HelperMessage.AlwaysShow, cantBeClickedOff: true, duration: 2)
@@ -39,10 +39,13 @@ namespace CalRemix.UI
                 "TrapperHappy", HelperMessage.AlwaysShow, 6).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(trap2);
 
             HelperMessage ff = HelperMessage.New("TrapperBeginning8", "Oh come fucking on.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(fan3, startTimerOnMessageSpoken: true, delay: 10);
+                "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(fan3, startTimerOnMessageSpoken: true, delay: 10).EndConversation();
+
+
+
 
             HelperMessage poltrap1 = HelperMessage.New("Poltrapper1", "Trapper Bulb Chan desu! Yaho~ ^v^",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).InitiateConversation();
 
             HelperMessage polfan1 = HelperMessage.New("Poltrapper2", "Ohhh, did you come across Polterghast in the dungeon? That spooky soul cluster gives me the hibby-jibbies, desu! >m< It’s like a creepy cousin of Plantera, ne? Just remember, even the darkest dungeons can have a little light if you believe in yourself, nyan!",
                 "TrapperDefault", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(poltrap1, delay: 2, startTimerOnMessageSpoken: true);
@@ -54,7 +57,9 @@ namespace CalRemix.UI
                 "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(poltrap, delay: 2, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Poltrapper5", "You heard her, friend! Face those spooky souls with a grin and a giggle!",
-                "FannyNuhuh", HelperMessage.AlwaysShow).ChainAfter(polfantrap2, delay: 4);
+                "FannyNuhuh", HelperMessage.AlwaysShow).ChainAfter(polfantrap2, delay: 4).EndConversation();
+
+
 
             HelperMessage.New("Trapperbulbdotdotdot", "Ohhh, I see you found a... whaaa!!! It's like a distant memory of me, >m<! How strange to see myself in this form, but remember, even in stillness, there's beauty and purpose, nyan! Let's cherish every moment and bloom brightly together, even in different forms, desu! ^v^",
                 "TrapperWTF", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TrapperBulb>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
@@ -120,7 +125,7 @@ namespace CalRemix.UI
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.MotherSlime)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).AddEndEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned++);
 
             HelperMessage revelation1 = HelperMessage.New("Revelation1", "Hey Trapper-Bulb Chan.. haha.. what’s that “incident” you’ve mentioned multiple times? Even as the flame of burning knowledge, not even I know what goes on outside of here, heh!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned >= 8, 6, cantBeClickedOff: true);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().trapperFriendsLearned >= 8, 6, cantBeClickedOff: true).InitiateConversation();
 
             HelperMessage revelation2 = HelperMessage.New("Revelation2", "Ow, dun worry bout it, nya~ Just a wittle secret of mine, uwu",
                 "TrapperHappy", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(revelation1, delay: 3, startTimerOnMessageSpoken: true);
@@ -138,7 +143,7 @@ namespace CalRemix.UI
                 "FannyDisturbed", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(revelation5, delay: 3, startTimerOnMessageSpoken: true);
             
             HelperMessage revelation6 = HelperMessage.New("Revelation6", "Holy shit. Even by my standards.. Jesus christ. Wow.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(revelation5, delay: 5, startTimerOnMessageSpoken: true);
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(revelation5, delay: 5, startTimerOnMessageSpoken: true).EndConversation();
 
             HelperMessage.New("Revelation8", "The alpha leads the beta follows the sigma follows",
                 "CrimSonDefault", HelperMessage.AlwaysShow, 30, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(revelation5, delay: 8);

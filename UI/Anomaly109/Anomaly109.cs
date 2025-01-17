@@ -612,9 +612,12 @@ namespace CalRemix.UI.Anomaly109
                 options.Add(new Anomaly109Option("wallofflesh", "wof_fleshmullet", "Toggles Wall of Flesh's second phase", () => { CalRemixWorld.mullet = !CalRemixWorld.mullet; }, () => CalRemixWorld.mullet));
                 options.Add(new Anomaly109Option("banished", "baron_strait", "Toggles the initial generation of the Baron Strait", () => { CalRemixWorld.baronStrait = !CalRemixWorld.baronStrait; }, () => CalRemixWorld.baronStrait));
                 options.Add(new Anomaly109Option("rotgut", "enemy_champions", "Toggles the spawning of champion variant enemies", () => { CalRemixWorld.champions = !CalRemixWorld.champions; }, () => CalRemixWorld.champions));
+                options.Add(new Anomaly109Option("creaseless", "sneakerhead", "Toggles the sick kicks slot and the retheme of accessories into sneakers", () => { CalRemixWorld.sneakerheadMode = !CalRemixWorld.sneakerheadMode; SneakersRetheme.ApplyTextureChanges(); }, () => CalRemixWorld.sneakerheadMode));
                 options.Add(new Anomaly109Option("thesealed", "la_ruga", "...", () => { CalRemixWorld.laruga = !CalRemixWorld.laruga; }, () => CalRemixWorld.laruga));
             }
 
+
+            SneakersRetheme.ApplyTextureChanges();
         }
 
         public override void SaveWorldData(TagCompound tag)

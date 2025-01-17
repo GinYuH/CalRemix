@@ -13,8 +13,8 @@ namespace CalRemix.UI
         public static void LoadBabil()
         {
             //Fanny's lines
-            HelperMessage.New("Babil1", "Hey there, adventurer! Have you heard about the Essence of Babil? It's this amazing crafting material that drops from certain jungle creatures. Let me give you some tips on how to find it!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle).SetHoverTextOverride("Umm, Essence of Babil?");
+            var firstMessage = HelperMessage.New("Babil1", "Hey there, adventurer! Have you heard about the Essence of Babil? It's this amazing crafting material that drops from certain jungle creatures. Let me give you some tips on how to find it!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.hardMode && Main.LocalPlayer.ZoneJungle).SetHoverTextOverride("Umm, Essence of Babil?").InitiateConversation();
 
             HelperMessage.New("Babil2", "Oh you sweet summer child! The Essence of Babil is this incredible, mystical substance you can gather from jungle enemies. It's a key ingredient for crafting some seriously awesome gear. You should definitely try to collect it!",
                 "FannyNuhuh").SetHoverTextOverride("Huh, okay. So, where do I find it?").ChainAfter(delay: 2).AddItemDisplay(ModContent.ItemType<EssenceofBabil>());
@@ -30,7 +30,7 @@ namespace CalRemix.UI
 
             //Evil fanny's lines
             HelperMessage.New("Babil6", "Hey there, adventurer... Have you heard about the Essence of Babil? It's this... remarkable crafting material that drops from such unworthy jungle creatures. Let me grace you with some information, whether you appreciate it or not.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneJungle).SetHoverTextOverride("Umm, Essence of Babil? What's that?").AddDelay(3).SpokenByEvilFanny();
+                "EvilFannyIdle").SetHoverTextOverride("Umm, Essence of Babil? What's that?").SpokenByEvilFanny().ChainAfter(firstMessage, 3f, true);
 
             HelperMessage.New("Babil7", "Oh, how utterly clueless. The Essence of Babil is this incredibly mundane substance you can get from jungle enemies. You might even consider it somewhat important for crafting marginally useful gear. But, hey, who cares, right?",
                 "EvilFannyIdle").SetHoverTextOverride("Huh, okay. So, where do I find it?").ChainAfter().SpokenByEvilFanny();
@@ -45,7 +45,7 @@ namespace CalRemix.UI
                 "EvilFannyIdle").SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").ChainAfter(delay: 2).SpokenByEvilFanny();
 
             HelperMessage.New("Babil11", "You think you \"get it\"? You're beyond hopeless! There, now you're truly enlightened. Enjoy your essence... of oblivion!",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, duration: 20).ChainAfter().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny);
+                "EvilFannyIdle", HelperMessage.AlwaysShow, duration: 20).ChainAfter().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny).EndConversation();
 
         }
 
