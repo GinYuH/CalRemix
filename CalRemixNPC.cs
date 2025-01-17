@@ -27,6 +27,11 @@ using CalamityMod.NPCs.Crags;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.ExoMechs;
+using CalamityMod.NPCs.ExoMechs.Apollo;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.NPCs.ExoMechs.Artemis;
+using CalamityMod.NPCs.ExoMechs.Thanatos;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Leviathan;
@@ -88,6 +93,7 @@ using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -193,6 +199,16 @@ namespace CalRemix
             AddModBiomeToBestiary(curNPC, npcID, GetInstance<PlagueBiome>().Type, entry);
         }
 
+        public override void OnSpawn(NPC npc, IEntitySource source)
+        {
+            if (npc.type == NPCType<CryogenShield>())
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Dendritus>());
+                }
+            }
+        }
 
         public override bool PreAI(NPC npc)
         {
@@ -1763,6 +1779,14 @@ namespace CalRemix
             ConvertPlagueEnemy(npc.type, NPCType<Plagueshell>(), bestiaryEntry);
             ConvertPlagueEnemy(npc.type, NPCType<PestilentSlime>(), bestiaryEntry);
             ConvertPlagueEnemy(npc.type, NPCType<Melter>(), bestiaryEntry);
+
+            int exosphereID = GetInstance<ExosphereBiome>().Type;
+
+            AddModBiomeToBestiary(npc.type, NPCType<AresBody>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Artemis>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Apollo>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<ThanatosHead>(), exosphereID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCType<Draedon>(), exosphereID, bestiaryEntry);
         }
 
         private static void Talk(string value, Color textColor)
