@@ -944,7 +944,8 @@ namespace CalRemix
                 }
             }
 
-            ScreenHelperManager.sceneMetrics.onscreenItems.Add(item);
+            if (!Main.dedServ)
+                ScreenHelperManager.sceneMetrics.onscreenItems.Add(item);
         }
 
         public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded)
