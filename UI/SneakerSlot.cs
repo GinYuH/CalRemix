@@ -1,6 +1,8 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Mounts;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Core.Retheme;
+using CalRemix.Core.Retheme.Sneakers;
 using CalRemix.Core.World;
 using System;
 using Terraria;
@@ -27,7 +29,7 @@ namespace CalRemix.UI
         public override void ApplyEquipEffects()
         {
             base.ApplyEquipEffects();
-            if (!FunctionalItem.IsAir && SneakersRetheme.IsASneaker(FunctionalItem.type))
+            if (!FunctionalItem.IsAir)
             {
                 SneakersRetheme.sneakerIntroMessage.ActivateMessage();
                 var networthPlayer = Player.GetModPlayer<NetWorthPlayer>();
@@ -37,6 +39,15 @@ namespace CalRemix.UI
 
                 if (networthPlayer.netWorthCap > 10000)
                     networthPlayer.netWorthSpeed += FunctionalItem.rare * 200;
+
+                if (networthPlayer.netWorthCap > 1000000)
+                    networthPlayer.netWorthSpeed *= 5;
+
+                if (FunctionalItem.type == ModContent.ItemType<ExoThrone>() && SneakersRetheme.exoBoxWrongSlotMessage.alreadySeen)
+                    SneakersRetheme.exoBoxWrongSlotRefundMessage.ActivateMessage();
+
+                if (FunctionalItem.type == ModContent.ItemType<UncreasableKicks>())
+                    networthPlayer.netWorthSpeed *= 20;
             }
         }
 

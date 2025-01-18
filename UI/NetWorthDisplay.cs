@@ -33,6 +33,7 @@ using MonoMod.Cil;
 using ReLogic.Graphics;
 using System.Reflection;
 using Terraria.UI.Chat;
+using CalRemix.Core.Retheme.Sneakers;
 
 namespace CalRemix.UI
 {
@@ -78,6 +79,14 @@ namespace CalRemix.UI
                 int copperCount = 0;
 
                 int monerz = player.netWorth;
+
+                if (monerz < 0)
+                {
+                    Color color = Main.DiscoColor;
+                    ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, "Net Worth: Billion trillion gazillion ultraillion", position, color, rotation, origin, scale);
+                    return;
+                }
+
                 if (monerz < 1)
                     monerz = 1;
 
@@ -113,8 +122,7 @@ namespace CalRemix.UI
                 if (silverCount > 0 || goldCount > 0 || platinumCount > 0)
                     netWorthText.Add($"[i:{ItemID.SilverCoin}][c/" + Colors.AlphaDarken(Colors.CoinSilver).Hex3() + ":" + silverCount +  "]");
 
-                if (copperCount > 0 || silverCount > 0 || goldCount > 0 || platinumCount > 0)
-                    netWorthText.Add($"[i:{ItemID.CopperCoin}][c/" + Colors.AlphaDarken(Colors.CoinCopper).Hex3() + ":" + copperCount + "]");
+                netWorthText.Add($"[i:{ItemID.CopperCoin}][c/" + Colors.AlphaDarken(Colors.CoinCopper).Hex3() + ":" + copperCount + "]");
 
                 ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, "Net Worth:", position, drawColor, rotation, origin, scale);
                 position.X += 86;
@@ -122,6 +130,10 @@ namespace CalRemix.UI
                 for (int i = 0; i < netWorthText.Count; i++)
                 {
                     ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, netWorthText[i], position, drawColor, rotation, origin, scale);
+
+                    if (i == 0 && platinumCount > 99)
+                        position.X += 10;
+
                     position.X += 40;
                 }
             }
@@ -144,7 +156,16 @@ namespace CalRemix.UI
             displayShadowColor = Color.Black;
             var netWorthPlayer = Main.LocalPlayer.GetModPlayer<NetWorthPlayer>();
 
-            return netWorthPlayer.displayInDollars ? "Net Worth: " + netWorthPlayer.laggingNetWorth.ToString() + " $$$" : "NETWORTH";
+            if (!netWorthPlayer.displayInDollars)
+                return "NETWORTH";
+
+            if (netWorthPlayer.laggingNetWorth < 0)
+            {
+                displayColor = Main.DiscoColor;
+                return "Net Worth : INFINITY $$$$$!!!";
+            }
+
+            return "Net Worth: " + netWorthPlayer.laggingNetWorth.ToString() + " $$$";
 		}
 	}
 
@@ -157,6 +178,8 @@ namespace CalRemix.UI
         public int netWorthUpdateTimer;
         public int networthDisplaySwapTimer;
         public bool displayInDollars;
+        public bool netWorthGod;
+        public int netWorthGodHPBoost;
 
         public override void SaveData(TagCompound tag)
         {
@@ -171,6 +194,7 @@ namespace CalRemix.UI
         {
             netWorthCap = 0;
             netWorthSpeed = 0;
+            netWorthGod = false;
         }
 
         public override void PostUpdateEquips()
@@ -186,9 +210,38 @@ namespace CalRemix.UI
             }
 
             if (netWorth >= 1000000)
-            {
                 SneakersRetheme.platinumNetWorthMessage.ActivateMessage();
+
+            if (netWorth >= 999000000)
+                SneakersRetheme.ultraRichMessage.ActivateMessage();
+
+            if (!netWorthGod)
+                netWorthGodHPBoost = 0;
+            else
+            {
+                if (Math.Abs(Player.velocity.X) > 6)
+                {
+                    netWorthGodHPBoost++;
+
+                    int posX = (int)(Player.Center.X / 16);
+                    int posY = (int)(Player.Center.Y / 16);
+
+                    if (posX > 0 && posX < Main.maxTilesX && posY > 0 && posY < Main.maxTilesY)
+                    {
+                        Tile t = Main.tile[posX, posY];
+                        if (!t.HasTile)
+                        {
+                            t.HasTile = true;
+                            t.TileType = TileID.PlatinumCoinPile;
+                            WorldGen.TileFrame(posX, posY);
+
+                            if (Main.netMode == 1)
+                                NetMessage.SendTileSquare(-1, posX, posY);
+                        }
+                    }
+                }
             }
+
 
             if (netWorthUpdateTimer <= 0)
             {
@@ -205,6 +258,38 @@ namespace CalRemix.UI
             }
             else
                 networthDisplaySwapTimer--;
+
+            if (Player.mount.Active && Player.mount.Type == MountType<DraedonGamerChairMount>())
+                SneakersRetheme.exoBoxWrongSlotMessage.ActivateMessage();
+        }
+
+        public override void PostUpdateRunSpeeds()
+        {
+            //Slippery
+            if (netWorthGod)
+            {
+                Player.maxRunSpeed *= 5;
+
+                if (Math.Abs(Player.velocity.X) < 5f)
+                    Player.runAcceleration *= 3.7f;
+                else
+                    Player.runAcceleration *= 0.7f;
+            }
+        }
+
+        public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
+        {
+            base.ModifyMaxStats(out health, out mana);
+            health.Flat += netWorthGodHPBoost;
+        }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            int originalNetWorth = netWorth;
+            netWorth /= 2;
+
+            if (originalNetWorth >= 1000000 && SneakersRetheme.platinumNetWorthMessage.alreadySeen)
+                SneakersRetheme.platinumNetWorthLossMessage.ActivateMessage();
         }
 
         internal static Dictionary<int, int> netWorthCapPerSneaker = new()
@@ -253,6 +338,7 @@ namespace CalRemix.UI
              { ItemType<NebulousCore>(), Item.buyPrice(platinum: 232, gold: 69, silver: 3, copper: 77)  },
              { ItemType<YharimsGift>(), Item.buyPrice(platinum: 366, gold: 66, silver: 63, copper: 29) },
              { ItemType<ExoThrone>(), Item.buyPrice(platinum: 499) },
-             { ItemType<Calamity>(), Item.buyPrice(platinum: 499) }};
+             { ItemType<Calamity>(), Item.buyPrice(platinum: 500) }
+        };
     }
 }
