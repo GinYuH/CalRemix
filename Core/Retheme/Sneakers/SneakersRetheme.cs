@@ -22,6 +22,8 @@ using CalamityMod.Buffs.Mounts;
 using CalRemix.UI;
 using ReLogic.Utilities;
 using Terraria.UI;
+using Terraria.DataStructures;
+using CalRemix.Core.Retheme.Sneakers;
 
 namespace CalRemix.Core.Retheme
 {
@@ -29,6 +31,10 @@ namespace CalRemix.Core.Retheme
     {
         public static HelperMessage sneakerIntroMessage;
         public static HelperMessage platinumNetWorthMessage;
+        public static HelperMessage platinumNetWorthLossMessage;
+        public static HelperMessage exoBoxWrongSlotMessage;
+        public static HelperMessage exoBoxWrongSlotRefundMessage;
+        public static HelperMessage ultraRichMessage;
 
         public static Asset<Texture2D> originalSocTexture;
         public static Asset<Texture2D> originalHivePackTexture;
@@ -90,7 +96,6 @@ namespace CalRemix.Core.Retheme
               ItemType<YharimsGift>(), 
               ItemType<ExoThrone>(), 
               ItemType<Calamity>()
-            
             );
 
         public static void Load()
@@ -112,6 +117,7 @@ namespace CalRemix.Core.Retheme
                     Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoPuma"),
                     Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoNewBalance"),
                     Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoSkechers"),
+                    Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/LogoFandom"),
                 };
 
                 invisibleSprite = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/Invisible");
@@ -152,8 +158,27 @@ namespace CalRemix.Core.Retheme
                 .ChainAfter().SetHoverTextOverride("O-Oh.. Okay Fanny, you really saved me there!");
 
             platinumNetWorthMessage = HelperMessage.New("NetworthRich", "Oh my GYATT!!! Your net worth is off the charts bruv??? You've gyatt to get fanum taxxed for this one unc! fr fr tho no cap thats actually fire", "CrimSonDefault")
-                .NeedsActivation().SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                .NeedsActivation().SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon)
+                .SetHoverTextOverride("Rated triple Boom by the costco guys, check me out!");
 
+            platinumNetWorthLossMessage = HelperMessage.New("NetworthLoseMoney", "Shiiiiii dude you've gyatt to be more careful w ur jordans bruh! ur networth lowkey on the down low cuz of ur antics", "CrimSonLostSoul")
+                .NeedsActivation().SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon)
+                .SetHoverTextOverride("1 2 buckle my shoes lil bro, no one gaf");
+
+            exoBoxWrongSlotMessage = HelperMessage.New("ExoBoxWrongSlot", "Wait a second! You're not WEARING this custom pair of sneakers are you??? I know the mount may look useful, but by not equipping them in your sick kicks slot, you're missing out on its net worth benefit! If you really want to wear a pair, I'll grab you a copy of my uncreasable kicks if you reach 999 platinum net worth, kay?", "FannySneakers")
+                .NeedsActivation().SetHoverTextOverride("I'm so infinitely sorry and grateful for your boundless generosity when it comes to this");
+
+            exoBoxWrongSlotRefundMessage = HelperMessage.New("ExoBoxWrongSlotRefund", "pssst unc, Fanny doesn't know these Js are mass produced by big D uptop. Ive snatched an extra pair because of how GOATed they are, so there you go fam", "CrimSonDefault")
+                .NeedsActivation().SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).AddStartEvent(()=>Main.LocalPlayer.QuickSpawnItem(new EntitySource_Misc(""), ItemType<ExoThrone>()))
+                .SetHoverTextOverride("You're really a lifesaver my g, i owe you one");
+
+            ultraRichMessage = HelperMessage.New("FinalNetWorth", "You did it! You finally achieved maximum net worth! Through the fire and the fans, we made it here... I'm so proud of you.. here, you can have my uncreasable jordans", "FannyBarefoot")
+                .NeedsActivation().SetHoverTextOverride("I didn't want to see this").AddStartEvent(() => Main.LocalPlayer.QuickSpawnItem(new EntitySource_Misc(""), ItemType<UncreasableKicks>()));
+
+            HelperMessage.New("FinalNetWorth2", "Fanny lil bro put socks on for the love of gyatt, ur not rizzing any1 like this", "CrimSonHeadless")
+                .ChainAfter(delay : 3f, startTimerOnMessageSpoken: true).SetHoverTextOverride("youre only spitting str8 fax bruh")
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon); ;
+                
 
             HelperMessage.New("AquaSneakers", "Daaaaamn bro, you got them real Jordans bro! Better collect more of them, then we'll phonk it out, my fellow commie!", "CrimSonDefault",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<AquaticEmblem>()))
@@ -416,6 +441,16 @@ namespace CalRemix.Core.Retheme
                 TextureAssets.AccFace[ArmorIDs.Face.BoneHelm] = originalBoneHelmTexture;
                 TextureAssets.AccHandsOn[ArmorIDs.HandOn.BoneGlove] = originalBoneGloveFrontTexture;
                 TextureAssets.AccHandsOff[ArmorIDs.HandOff.BoneGlove] = originalBoneGloveBackTexture;
+
+                //Set textures back to the regular modified items
+                if (CalRemixWorld.itemChanges)
+                {
+                    foreach (KeyValuePair<int, string> p in RethemeList.Items)
+                    {
+                        if (IsASneaker(p.Key))
+                            TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                    }
+                }
             }
         }
 
@@ -489,7 +524,8 @@ namespace CalRemix.Core.Retheme
             Vans,
             Puma,
             NewBalance,
-            Skechers
+            Skechers,
+            Fandom
         }
         internal static Dictionary<int, ShoeBrand> sneakerBrands = new()
             {
@@ -540,7 +576,8 @@ namespace CalRemix.Core.Retheme
              { ItemType<NebulousCore>(), ShoeBrand.NewBalance  },
              { ItemType<YharimsGift>(),  ShoeBrand.Nike  },
              { ItemType<ExoThrone>(), ShoeBrand.Nike  },
-             { ItemType<Calamity>(), ShoeBrand.NewBalance }};
+             { ItemType<Calamity>(), ShoeBrand.NewBalance }
+        };
 
 
         internal static Dictionary<int, string> buffSneakerPairs = new()
@@ -564,7 +601,6 @@ namespace CalRemix.Core.Retheme
         private static Asset<Texture2D> OriginalThroneTexture;
         private static Asset<Texture2D> OriginalThroneBackTexture;
         private static Asset<Texture2D> OriginalThroneGlowTexture;
-
         #endregion
     }
 }

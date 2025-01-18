@@ -309,7 +309,9 @@ namespace CalRemix.Core.Retheme
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
-                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                    //onl retexture items that aren't changed by sneakerhead mode already
+                    if (!CalRemixWorld.sneakerheadMode || !SneakersRetheme.IsASneaker(p.Key))
+                        TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                 }
                 foreach (KeyValuePair<int, string> p in RethemeList.Projs)
                 {
@@ -326,7 +328,8 @@ namespace CalRemix.Core.Retheme
             {
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
                 {
-                    TextureAssets.Item[p.Key] = p.Value;
+                    if (!CalRemixWorld.sneakerheadMode || !SneakersRetheme.IsASneaker(p.Key))
+                        TextureAssets.Item[p.Key] = p.Value;
                 }
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
                 {
@@ -355,7 +358,7 @@ namespace CalRemix.Core.Retheme
             AbsoluteChanges(item);
             StormbowChanges(item);
 
-            if (SneakersRetheme.IsASneaker(item.type))
+            if (SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
                 SneakersRetheme.InitializeItem(item);
         }
         public static void AbsoluteChanges(Item item)

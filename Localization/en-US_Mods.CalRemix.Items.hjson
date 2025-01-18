@@ -3459,3 +3459,18 @@ AncientFlashBullet: {
 	DisplayName: Ancient Flash Round
 	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
 }
+
+UncreasableKicks: {
+	DisplayName: Uncreasable Kicks
+	Tooltip:
+		'''
+		The end of the journey
+		The highest of peaks
+		The most blinding light
+		Uncreasable Kicks, brought to you by Fandom
+
+		Max hp permanently increased by running
+		Constantly exhude net worth
+		Massively boosted run speed
+		'''
+}
