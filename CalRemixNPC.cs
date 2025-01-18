@@ -1520,7 +1520,7 @@ namespace CalRemix
             if (!witherDebuff)
                 wither = 0;
 
-            if (npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
+            if (!Main.dedServ && npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
             {
                 ScreenHelperManager.sceneMetrics.onscreenNPCs.Add(npc);
                 foreach (FannyMood mood in MoodTracker.npcDependentMoodList)
