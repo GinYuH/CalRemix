@@ -14,7 +14,7 @@ namespace CalRemix.UI
         public static void LoadMoonLordDeath()
         {
             HelperMessage startMessage = HelperMessage.New("ML1", "Blegh, I think I swallowed one of that thing's bones. Well, it's time for Godseeker Mode. You will face a sequence of challenges, each more difficult than the last with little to no breathing between encounters.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedMoonlord && Main.hardMode, 7).AddDelay(0.4f);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedMoonlord && Main.hardMode, 7).AddDelay(0.4f).InitiateConversation();
 
 
             HelperMessage.New("ML2", "Almost sounds like a boss rush or something.",
@@ -67,12 +67,12 @@ namespace CalRemix.UI
                 .ChainAfter(ml13).AddEndEvent(Violence);
 
             HelperMessage ml15 = HelperMessage.New("ML15", "IT IS SUCH A PLEASURE TO MEET YOU, MY NEW FRIEND! My name? Ohoho, I am none other then the incredible, fantastical, miraculous Miracle Boy!",
-                "MiracleBoyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, 10, cantBeClickedOff: true)
                 .ChainAfter(ml12).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("ML16", "I have so much to teach you, especially with all the drovel that utterly unscrumptious flame was spewing...",
                 "MiracleBoyIdle", HelperMessage.AlwaysShow)
-                .ChainAfter(ml15).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                .ChainAfter(ml15).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).EndConversation();
         }
 
         private static void Violence()

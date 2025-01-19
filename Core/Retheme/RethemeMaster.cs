@@ -50,6 +50,8 @@ namespace CalRemix.Core.Retheme
         internal static Dictionary<int, Asset<Texture2D>> NPCs = [];
         internal static Dictionary<int, Asset<Texture2D>> Items = [];
         internal static Dictionary<int, Asset<Texture2D>> Projs = [];
+        internal static Dictionary<int, Asset<Texture2D>> Buffs = [];
+
         public override void Load()
         {
             if (Main.netMode != NetmodeID.Server)
@@ -57,7 +59,10 @@ namespace CalRemix.Core.Retheme
                 EquipLoader.AddEquipTexture(Mod, "CalRemix/Core/Retheme/NoFab/AshsCloak_Body", EquipType.Body, name: "AshsCloakBody");
                 EquipLoader.AddEquipTexture(Mod, "CalRemix/Core/Retheme/NoFab/AshsCloak_Legs", EquipType.Legs, name: "AshsCloakLegs");
             }
+
+            SneakersRetheme.Load();
         }
+
         public override void PostSetupContent()
         {
             foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
@@ -72,6 +77,11 @@ namespace CalRemix.Core.Retheme
             {
                 Projs.Add(p.Key, TextureAssets.Projectile[p.Key]);
             }
+            foreach (KeyValuePair<int, string> p in RethemeList.Buffs)
+            {
+                Buffs.Add(p.Key, TextureAssets.Buff[p.Key]);
+            }
+            SneakersRetheme.SaveDefaultSneakersTextures();
             On.CalamityMod.Systems.YharonBackgroundScene.IsSceneEffectActive += NoYharonScene;
         }
         private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
@@ -299,24 +309,37 @@ namespace CalRemix.Core.Retheme
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
-                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                    //onl retexture items that aren't changed by sneakerhead mode already
+                    if (!CalRemixWorld.sneakerheadMode || !SneakersRetheme.IsASneaker(p.Key))
+                        TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                 }
                 foreach (KeyValuePair<int, string> p in RethemeList.Projs)
                 {
                     TextureAssets.Projectile[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                 }
+                foreach (KeyValuePair<int, string> p in RethemeList.Buffs)
+                {
+                    TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                }
+
                 Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
             }
             else
             {
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Items)
                 {
-                    TextureAssets.Item[p.Key] = p.Value;
+                    if (!CalRemixWorld.sneakerheadMode || !SneakersRetheme.IsASneaker(p.Key))
+                        TextureAssets.Item[p.Key] = p.Value;
                 }
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Projs)
                 {
                     TextureAssets.Projectile[p.Key] = p.Value;
                 }
+                foreach (KeyValuePair<int, Asset<Texture2D>> p in RethemeMaster.Buffs)
+                {
+                    TextureAssets.Buff[p.Key] = p.Value;
+                }
+
                 Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
             }
         }
@@ -334,6 +357,9 @@ namespace CalRemix.Core.Retheme
         {
             AbsoluteChanges(item);
             StormbowChanges(item);
+
+            if (SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
+                SneakersRetheme.InitializeItem(item);
         }
         public static void AbsoluteChanges(Item item)
         {
@@ -467,6 +493,17 @@ namespace CalRemix.Core.Retheme
         {
             if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
                 tooltips.Clear();
+
+            if (SneakersRetheme.IsASneaker(item.type))
+                SneakersRetheme.ModifyTooltips(item, tooltips);
+        }
+
+        public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            if (SneakersRetheme.IsASneaker(item.type))
+                return SneakersRetheme.PreDrawTooltipLine(item, line, ref yOffset);
+
+            return true;
         }
     }
     public class RethemeProjectile : GlobalProjectile

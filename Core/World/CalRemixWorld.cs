@@ -136,6 +136,8 @@ namespace CalRemix.Core.World
         public static bool profanedDesert = true;
         public static bool hypothetical = true;
         public static bool savedAPicture = false;
+        public static bool sneakerheadMode = true;
+
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
@@ -275,6 +277,7 @@ namespace CalRemix.Core.World
 
             AutoloadedLegendPortrait.OpenPicture = null;
             savedAPicture = false;
+            sneakerheadMode = true;
         }
 
         public override void OnWorldLoad()
@@ -358,6 +361,7 @@ namespace CalRemix.Core.World
             tag["genUpdate"] = postGenUpdate;
 
             tag["savedAPicture"] = savedAPicture;
+            tag["sneakerheadMode"] = sneakerheadMode;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -427,6 +431,7 @@ namespace CalRemix.Core.World
             postGenUpdate = tag.Get<bool>("genUpdate");
 
             GetData(ref savedAPicture, "savedAPicture", tag);
+            GetData(ref sneakerheadMode, "sneakerheadMode", tag);
         }
 
         public static void GetData(ref bool baseVar, string path, TagCompound tag)

@@ -124,6 +124,7 @@ Mods: {
 			ElementDisplay.DisplayName: Element Display
 			HelperDisplay.DisplayName: Fanny Mood Tracker
 			MoodTracker.DisplayName: Mood Tracker
+			NetWorthDisplay.DisplayName: Net Worth Display
 		}
 
 		Emotes.HypnosEmote.Command: hypnosemote
@@ -209,7 +210,7 @@ Mods: {
 				'''
 		}
 
-		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Class
+		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage
 
 		RecipeGroups: {
 			Any: Any {0}

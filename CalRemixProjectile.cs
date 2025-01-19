@@ -72,7 +72,8 @@ namespace CalRemix.Content.Projectiles
 
         public override bool PreAI(Projectile projectile)
         {
-            ScreenHelperManager.sceneMetrics.onscreenProjectiles.Add(projectile);
+            if (!Main.dedServ)
+                ScreenHelperManager.sceneMetrics.onscreenProjectiles.Add(projectile);
             return true;
         }
 

@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalRemix.UI;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -15,6 +16,13 @@ namespace CalRemix.Content.Items.Materials
 			Item.ResearchUnlockCount = 5;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+
+            if (!Main.dedServ)
+            {
+                HelperMessage.New("EssentialEssenceDisbelief", "...Did you seriously go through the pain of making your first essential essence bar? Are you really gonna repeat this pain grinding the materials needed for the items you're gonna make??? There's a damn good reason why that starter bag you opened a long while ago gave you that strange red pickaxe. Place that down, and figure the codes out on your own.", "EvilFannyMiffed",
+                    (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(Type))
+                    .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny).SetHoverTextOverride("Thanks, uh, for the \"evil\" tip, Evil Fanny...?");
+            }
         }
 		public override void SetDefaults()
         {

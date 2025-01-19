@@ -85,7 +85,7 @@ namespace CalRemix.UI.Title
             {
                 Main.dayTime = false;
                 Main.raining = false;
-                Main.UseStormEffects = false;
+                //Main.UseStormEffects = false;
                 Main.time = Main.nightLength - (1800 * 3);
             }
             for (int i = 0; i < Main.cloud.Length; i++)

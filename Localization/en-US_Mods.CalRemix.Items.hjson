@@ -3455,20 +3455,22 @@ LegendMemorialItem: {
 
 NoTomorrow.Tooltip: All friendly projectiles are twice as large
 
-BoiMachine: {
-	DisplayName: Binding of Anahita Machine
-	Tooltip:
-		'''
-		INCOMPLETE ITEM, EXTREMELY UNSTABLE
-		Roguelike game
-		'''
+AncientFlashBullet: {
+	DisplayName: Ancient Flash Round
+	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
 }
 
-TrapperQuestMachine: {
-	DisplayName: Trapper Quest Machine
+UncreasableKicks: {
+	DisplayName: Uncreasable Kicks
 	Tooltip:
 		'''
-		INCOMPLETE ITEM, EXTREMELY UNSTABLE
-		RPG game
+		The end of the journey
+		The highest of peaks
+		The most blinding light
+		Uncreasable Kicks, brought to you by Fandom
+
+		Max hp permanently increased by running
+		Constantly exhude net worth
+		Massively boosted run speed
 		'''
 }

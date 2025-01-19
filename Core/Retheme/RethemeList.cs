@@ -43,6 +43,8 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using Terraria.ID;
+using CalamityMod.Items.Mounts;
+using CalamityMod.Buffs.Mounts;
 
 namespace CalRemix.Core.Retheme
 {
@@ -271,6 +273,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<Supernova>(), "Exo/Supernova" },
             #endregion
         };
+
         internal static Dictionary<int, string> Projs = new()
         {
             { ProjectileType<NadirSpear>(), "NadirSpear" },
@@ -339,6 +342,13 @@ namespace CalRemix.Core.Retheme
             { ProjectileType<SupernovaBomb>(), "Exo/Supernova" },
             #endregion
         };
+
+
+        internal static Dictionary<int, string> Buffs = new()
+        {
+        };
+
+
         internal static List<int> NPCNames =
         [
             NPCType<BrimstoneElemental>(),
