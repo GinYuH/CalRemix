@@ -3474,3 +3474,21 @@ UncreasableKicks: {
 		Massively boosted run speed
 		'''
 }
+
+BoiMachine: {
+	DisplayName: Binding of Anahita Machine
+	Tooltip:
+		'''
+		INCOMPLETE ITEM, EXTREMELY UNSTABLE
+		Roguelike game
+		'''
+}
+
+TrapperQuestMachine: {
+	DisplayName: Trapper Quest Machine
+	Tooltip:
+		'''
+		INCOMPLETE ITEM, EXTREMELY UNSTABLE
+		RPG game
+		'''
+}

@@ -197,4 +197,40 @@ namespace CalRemix.UI.Games.TrapperQuest
             Utils.DrawBorderString(sb, door.fade.ToString(), position + Vector2.UnitY * 22, Color.White);
         }
     }
+
+    /// <summary>
+    /// Changes the frame of the tile
+    /// </summary>
+    public class FrameOption : EntityOption
+    {
+        public override string Name => "Frame";
+
+        public override bool IsValidEntity() => BoundEntity is TQFloor floor && floor.SheetType == 1;
+
+        public override void ScrollDown()
+        {
+            if (BoundEntity is not TQFloor door)
+                return;
+            int size = door.frame + 1;
+            if (size >= 0 && size <= 5)
+                door.frame = size;
+        }
+
+        public override void ScrollUp()
+        {
+            if (BoundEntity is not TQFloor door)
+                return;
+            int size = door.frame - 1;
+            if (size >= 0 && size <= 5)
+                door.frame = size;
+        }
+
+        public override void Draw(SpriteBatch sb, Vector2 position, Rectangle rect)
+        {
+            if (BoundEntity is not TQFloor door)
+                return;
+            sb.Draw(TextureAssets.MagicPixel.Value, position, rect, Color, 0, Vector2.Zero, 1, 0, 0);
+            Utils.DrawBorderString(sb, door.frame.ToString(), position + Vector2.UnitY * 22, Color.White);
+        }
+    }
 }
