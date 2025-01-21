@@ -16,10 +16,12 @@ using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Tiles;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -365,6 +367,35 @@ namespace CalRemix
                     if (type == TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
                     {
                         Main.tile[i, j].TileType = (ushort)TileID.Mud;
+                    }
+                }
+            }
+            // Exosphere portal
+            // Since the subworld isn't done right now, it just tells you you're banned then kicks you out
+            if (t.TileType == TileType<RustedPipes>())
+            {
+                if (!Main.tile[i + 1, j + 1].HasTile)
+                {
+                    bool travelPossible = true;
+                    for (int k = i; k < i + 4; k++)
+                    {
+                        for (int l = j; l < j + 5; l++)
+                        {
+                            if (k == i || k == i + 3 || l == j || l == j + 4)
+                            {
+                                if (Main.tile[k, l].TileType != TileType<RustedPipes>())
+                                    travelPossible = false;
+                            }
+                        }
+                    }
+                    if (travelPossible)
+                    {
+                        Point tCord = Main.LocalPlayer.Center.ToTileCoordinates();
+                        Rectangle portalRect = new Rectangle(i + 1, j + 1, 2, 3);
+                        if (portalRect.Contains(tCord))
+                        {
+                            SubworldSystem.Enter<ExosphereSubworld>();
+                        }
                     }
                 }
             }
