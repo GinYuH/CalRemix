@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalamityMod.Projectiles.Boss;
+using System.Collections;
 
 namespace CalRemix.Content.NPCs.Bosses.SealedOne
 {
@@ -237,12 +238,16 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 {
                     NPC.TargetClosest(faceTarget: false);
                 }
+
                 NPC.localAI[2] = 10f;
+
+                // face left or right towards player
                 int leftOrRight = Math.Sign(player.Center.X - npcCenter.X);
                 if (leftOrRight != 0)
                 {
                     NPC.direction = (NPC.spriteDirection = leftOrRight);
                 }
+
                 Timer += 1f;
                 if (Timer >= 40f)
                 {
@@ -348,6 +353,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     }
                     #endregion
 
+                    #region Ancient Doom Attack Replacement
                     // gradually increase chance of replacing an attack with ancient doom
                     int attackReplacementChance = 6;
                     if (NPC.life < NPC.lifeMax / 3)
@@ -363,15 +369,33 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     {
                         attackToUse = (int)AttackTypes.AncientDoom;
                     }
+                    #endregion
 
+                    #region Calculate Velocity
+                    // calculate location to move to
                     if (attackToUse == (int)AttackTypes.None)
                     {
-                        float num6 = (float)Math.Ceiling((player.Center + new Vector2(0f, -100f) - npcCenter).Length() / 50f);
-                        if (num6 == 0f)
+                        // lc moves in chunks. this calculates how many movements should be made
+                        float timesToMove = (float)Math.Ceiling((player.Center + new Vector2(0f, -100f) - npcCenter).Length() / 50f);
+                        if (timesToMove == 0f)
                         {
-                            num6 = 1f;
+                            timesToMove = 1f;
                         }
+
+                        NPC sealedOne = Main.npc[NPC.whoAmI];
+                        Vector2 distanceBetweenTarget = player.Center - sealedOne.Center;
+                        AttackType = (float)AttackTypes.Move;
+                        Timer = timesToMove * 2f;
+                        sealedOne.velocity = distanceBetweenTarget / timesToMove;
+                        if (NPC.whoAmI >= sealedOne.whoAmI)
+                        {
+                            sealedOne.position -= sealedOne.velocity;
+                        }
+                        sealedOne.netUpdate = true;
                     }
+                    #endregion
+
+                    // final stuff: convert attacktouse to an attack to be used
                     switch (attackToUse)
                     {
                         case (int)AttackTypes.Fireball:
@@ -537,7 +561,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 }
                 else if (Timer >= 30f && Timer < 90f)
                 {
-                    if (Timer == 30f && Main.netMode != 1 && amISealedOne)
+                    if (Timer == 30f && Main.netMode != NetmodeID.MultiplayerClient && amISealedOne)
                     {
                         // this is where the ritual attack was
                     }
