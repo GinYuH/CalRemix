@@ -22,6 +22,7 @@ namespace CalRemix.Core.World
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
         public static bool downedHypnos = false;
+        public static bool downedSealedOne = false;
 
         public static bool downedEarthElemental = false;
         public static bool downedLifeSlime = false;
@@ -52,6 +53,7 @@ namespace CalRemix.Core.World
             downedDerellect = false;
             downedPolyphemalus = false;
             downedHypnos = false;
+            downedSealedOne = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -83,6 +85,7 @@ namespace CalRemix.Core.World
             downedDerellect = false;
             downedPolyphemalus = false;
             downedHypnos = false;
+            downedSealedOne = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -114,6 +117,7 @@ namespace CalRemix.Core.World
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
             tag["downedHypnos"] = downedHypnos;
+            tag["downedSealedOne"] = downedSealedOne;
 
             tag["downedEarthElemental"] = downedEarthElemental;
             tag["downedLifeSlime"] = downedLifeSlime;
@@ -147,6 +151,7 @@ namespace CalRemix.Core.World
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
             downedHypnos = tag.Get<bool>("downedHypnos");
+            downedSealedOne = tag.Get<bool>("downedSealedOne");
 
             downedEarthElemental = tag.Get<bool>("downedEarthElemental");
             downedLifeSlime = tag.Get<bool>("downedLifeSlime");
@@ -178,6 +183,7 @@ namespace CalRemix.Core.World
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
             writer.Write(downedHypnos);
+            writer.Write(downedSealedOne);
 
             writer.Write(downedEarthElemental);
             writer.Write(downedLifeSlime);
@@ -209,6 +215,7 @@ namespace CalRemix.Core.World
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
             downedHypnos = reader.ReadBoolean();
+            downedSealedOne = reader.ReadBoolean();
 
             downedEarthElemental = reader.ReadBoolean();
             downedLifeSlime = reader.ReadBoolean();
