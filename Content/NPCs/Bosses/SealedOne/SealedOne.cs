@@ -119,7 +119,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             }
 
             bool expertMode = Main.expertMode;
-            bool isPhase2 = NPC.life <= NPC.lifeMax / 2;
+            bool isPhase2 = NPC.life <= NPC.lifeMax * 0.75;
+            bool isPhase3 = NPC.life <= NPC.lifeMax * 0.50;
+            bool isPhase4 = NPC.life <= NPC.lifeMax * 0.30;
+            bool isPhase5 = NPC.life <= NPC.lifeMax * 0.10;
 
             // low fire rate = faster fire
             int iceMistDamage = NPC.GetAttackDamage_ForProjectiles(35f, 25f);
@@ -162,6 +165,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                 phase1SpeedReductionMultiplier = 1;
                 phase1SpeedReductionFlat = 0;
+
+                movementLengthMultiplier = 1;
             }
 
             #region Target Player, Despawn
@@ -389,7 +394,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                         PreviousNPCLocation = NPC.position;
                         PreviousPlayerLocation = player.position;
-                        Timer = LengthOfMovement * movementLengthMultiplier * phase1SpeedReductionMultiplier;
+                        Timer = movementLength;
                         AttackType = (float)AttackTypes.Move;
                     }
 
@@ -409,6 +414,12 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                 NPC.position.X = MathHelper.Lerp(PreviousPlayerLocation.X, PreviousNPCLocation.X, Timer / movementLength);
                 NPC.position.Y = MathHelper.Lerp(PreviousPlayerLocation.Y, PreviousNPCLocation.Y, Timer / movementLength);
+
+                if (isPhase3 && Timer % 4 == 0)
+                {
+                    int mineDamage = 120;
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<SirenSong>(), mineDamage, 0f, Main.myPlayer);
+                }
 
                 Timer -= 1f;
                 if (Timer <= 0f)
@@ -430,12 +441,12 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     SoundEngine.PlaySound(SoundID.AchievementComplete);
                     float radians = MathHelper.TwoPi / totalProjectiles;
                     float projectileVelocity = 5;
-                    float projectileDistance = 600;
+                    float projectileDistance = 400;
                     int mineDamage = 120;
                     for (int i = 0; i < totalProjectiles; i++)
                     {
                         Vector2 spawnVector = player.Center + Vector2.Normalize(new Vector2(0f, -projectileVelocity).RotatedBy(radians * i)) * projectileDistance;
-                        Vector2 projVelocity = Vector2.Normalize(player.Center - spawnVector) * projectileVelocity;
+                        Vector2 projVelocity = Vector2.Normalize(player.Center - spawnVector) * projectileVelocity * Main.rand.NextFloat(-1, 1);
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnVector, projVelocity, ModContent.ProjectileType<SirenSong>(), mineDamage, 0f, Main.myPlayer);
                     }
                 }
