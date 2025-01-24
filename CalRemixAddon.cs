@@ -201,7 +201,7 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemID.Grenade,
             });
-            bc.Call("LogBoss", Mod, "Oxygen", 11.75f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Oxygen", 12.805f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.GolfBall,
             });
