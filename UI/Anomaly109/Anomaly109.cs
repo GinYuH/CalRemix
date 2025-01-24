@@ -580,7 +580,7 @@ namespace CalRemix.UI.Anomaly109
                 options.Add(new Anomaly109Option("hvwt4738nvwh749vw43vt", "unused", "hypothetical", () => 
                 {
                     CalRemixWorld.hypothetical = !CalRemixWorld.hypothetical;
-                    TextureAssets.Item[ModContent.ItemType<Arngren>()] = CalRemixWorld.hypothetical ? ModContent.Request<Texture2D>("CalRemix/Content/Items/Weapons/Arngen_Evil") : ModContent.Request<Texture2D>("CalRemix/Content/Items/Weapons/Arngen");
+                    TextureAssets.Item[ModContent.ItemType<Arngren>()] = CalRemixWorld.hypothetical ? ModContent.Request<Texture2D>("CalRemix/Content/Items/Weapons/Arngren_Evil") : ModContent.Request<Texture2D>("CalRemix/Content/Items/Weapons/Arngren");
                 }, () => CalRemixWorld.hypothetical));
 
                 options.Add(new Anomaly109Option("meldosaurus", "meld_gunk", "Toggles Meld Gunk initial generation and spread", () => { CalRemixWorld.meldGunk = !CalRemixWorld.meldGunk; }, () => CalRemixWorld.meldGunk));
