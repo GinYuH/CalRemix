@@ -342,6 +342,8 @@ namespace CalRemix
                     break;
                 }
             }
+            if (bossidx == -1)
+                return;
             int[] headID = [NPCType];
             if (needsDead != default)
             {
