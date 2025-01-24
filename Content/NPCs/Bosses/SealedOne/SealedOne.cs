@@ -138,8 +138,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
             int phase1SpeedReductionMultiplier = 2;
             int phase1SpeedReductionFlat = 2;
-            int movementLengthMultiplier = 3;
-            float movementLength = LengthOfMovement * movementLengthMultiplier * phase1SpeedReductionMultiplier;
+            float movementLengthMultiplier = 3;
 
             int totalProjectiles = 8;
 
@@ -166,7 +165,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 phase1SpeedReductionMultiplier = 1;
                 phase1SpeedReductionFlat = 0;
 
-                movementLengthMultiplier = 1;
+                movementLengthMultiplier = 2.75f;
             }
 
             #region Target Player, Despawn
@@ -394,7 +393,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                         PreviousNPCLocation = NPC.position;
                         PreviousPlayerLocation = player.position;
-                        Timer = movementLength;
+                        Timer = LengthOfMovement * movementLengthMultiplier * phase1SpeedReductionMultiplier;
                         AttackType = (float)AttackTypes.Move;
                     }
 
@@ -412,10 +411,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 shouldTakeDamage = true;
                 NPC.localAI[2] = 10f;
 
-                NPC.position.X = MathHelper.Lerp(PreviousPlayerLocation.X, PreviousNPCLocation.X, Timer / movementLength);
-                NPC.position.Y = MathHelper.Lerp(PreviousPlayerLocation.Y, PreviousNPCLocation.Y, Timer / movementLength);
+                NPC.position.X = MathHelper.Lerp(PreviousPlayerLocation.X, PreviousNPCLocation.X, Timer / (NPC.localAI[1] * movementLengthMultiplier * phase1SpeedReductionMultiplier));
+                NPC.position.Y = MathHelper.Lerp(PreviousPlayerLocation.Y, PreviousNPCLocation.Y, Timer / (NPC.localAI[1] * movementLengthMultiplier * phase1SpeedReductionMultiplier));
 
-                if (isPhase3 && Timer % 4 == 0)
+                if (isPhase3 && (int)Timer % 4 == 0)
                 {
                     int mineDamage = 120;
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<SirenSong>(), mineDamage, 0f, Main.myPlayer);
