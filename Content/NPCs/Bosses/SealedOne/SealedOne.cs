@@ -37,8 +37,13 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
         public ref float Timer => ref NPC.ai[1];
         public ref float Unsure => ref NPC.ai[2];
         public ref float AttackTotal => ref NPC.ai[3];
+        public ref float HasDoneSpawnAnim => ref NPC.localAI[0];
+        public ref float LengthOfMovement => ref NPC.localAI[1];
 
         public ref Player Target => ref Main.player[NPC.target];
+
+        public Vector2 PreviousNPCLocation = Vector2.Zero;
+        public Vector2 PreviousPlayerLocation = Vector2.Zero;
 
         public enum AttackTypes
         {
@@ -130,6 +135,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
             int phase1SpeedReductionMultiplier = 2;
             int phase1SpeedReductionFlat = 2;
+            int movementLengthMultiplier = 3;
+            float movementLength = LengthOfMovement * movementLengthMultiplier * phase1SpeedReductionMultiplier;
 
             int totalProjectiles = 8;
 
@@ -371,57 +378,26 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     }
                     #endregion
 
-                    #region Calculate Velocity
-                    // calculate location to move to
+                    // get locations to lerp from and to, and set timer
                     if (attackToUse == (int)AttackTypes.None)
                     {
-                        // lc moves in chunks. this calculates how many movements should be made
-                        float timesToMove = (float)Math.Ceiling((player.Center + new Vector2(0f, -100f) - npcCenter).Length() / 50f);
-                        if (timesToMove == 0f)
+                        LengthOfMovement = (float)Math.Ceiling((player.Center + new Vector2(0f, -100f) - npcCenter).Length() / 50f);
+                        if (LengthOfMovement == 0f)
                         {
-                            timesToMove = 1f;
+                            LengthOfMovement = 1f;
                         }
 
-                        NPC sealedOne = Main.npc[NPC.whoAmI];
-                        Vector2 distanceBetweenTarget = player.Center - sealedOne.Center;
+                        PreviousNPCLocation = NPC.position;
+                        PreviousPlayerLocation = player.position;
+                        Timer = LengthOfMovement * movementLengthMultiplier * phase1SpeedReductionMultiplier;
                         AttackType = (float)AttackTypes.Move;
-                        Timer = timesToMove * 2f;
-                        sealedOne.velocity = distanceBetweenTarget / timesToMove;
-                        if (NPC.whoAmI >= sealedOne.whoAmI)
-                        {
-                            sealedOne.position -= sealedOne.velocity;
-                        }
-                        sealedOne.netUpdate = true;
                     }
-                    #endregion
 
                     // final stuff: convert attacktouse to an attack to be used
-                    switch (attackToUse)
+                    if (attackToUse != (int)AttackTypes.Spawn && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move && attackToUse != (int)AttackTypes.Something)
                     {
-                        case (int)AttackTypes.Fireball:
-                            AttackType = (float)AttackTypes.Fireball;
-                            Timer = 0f;
-                            break;
-                        case (int)AttackTypes.IceMist:
-                            AttackType = (float)AttackTypes.IceMist;
-                            Timer = 0f;
-                            break;
-                        case (int)AttackTypes.LightningOrb:
-                            AttackType = (float)AttackTypes.LightningOrb;
-                            Timer = 0f;
-                            break;
-                        case (int)AttackTypes.Ritual:
-                            AttackType = (float)AttackTypes.Ritual;
-                            Timer = 0f;
-                            break;
-                        case (int)AttackTypes.StardustOrb:
-                            AttackType = (float)AttackTypes.StardustOrb;
-                            Timer = 0f;
-                            break;
-                        case (int)AttackTypes.AncientDoom:
-                            AttackType = (float)AttackTypes.AncientDoom;
-                            Timer = 0f;
-                            break;
+                        AttackType = attackToUse;
+                        Timer = 0f;
                     }
                     NPC.netUpdate = true;
                 }
@@ -430,10 +406,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             {
                 shouldTakeDamage = true;
                 NPC.localAI[2] = 10f;
-                if ((float)(int)Timer % 2f != 0f && Timer != 1f)
-                {
-                    NPC.position -= NPC.velocity;
-                }
+
+                NPC.position.X = MathHelper.Lerp(PreviousPlayerLocation.X, PreviousNPCLocation.X, Timer / movementLength);
+                NPC.position.Y = MathHelper.Lerp(PreviousPlayerLocation.Y, PreviousNPCLocation.Y, Timer / movementLength);
+
                 Timer -= 1f;
                 if (Timer <= 0f)
                 {
