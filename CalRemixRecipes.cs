@@ -496,11 +496,7 @@ namespace CalRemix
                 {
                     recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<GravityNormalizerPotion>()))
-                {
-                    recipe.DisableDecraft();
-                }
-                if (recipe.HasResult(ItemType<AstralInjection>()))
+                if (recipe.createItem.buffType > 0 && !BuffID.Sets.IsWellFed[recipe.createItem.buffType] && !Main.buffNoTimeDisplay[recipe.createItem.buffType] && !Main.vanityPet[recipe.createItem.buffType] && !Main.lightPet[recipe.createItem.buffType])
                 {
                     recipe.DisableDecraft();
                 }
