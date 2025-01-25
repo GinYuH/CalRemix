@@ -217,7 +217,7 @@ namespace CalRemix
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<DerellectPlug>());
             AddEnchantments(cal);
-            if (!ModLoader.HasMod("InfernumMode"))
+            if (!ModLoader.HasMod("InfernumMode") && !ModLoader.HasMod("FargowiltasCrossmod"))
                 LoadBossRushEntries(cal);
             RefreshBestiary();
 
