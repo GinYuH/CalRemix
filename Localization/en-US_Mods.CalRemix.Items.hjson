@@ -3474,3 +3474,10 @@ UncreasableKicks: {
 		Massively boosted run speed
 		'''
 }
+
+AuricSoul.DisplayName: Auric Soul
+
+AuricSword: {
+	DisplayName: Auric Sword
+	Tooltip: ""
+}
