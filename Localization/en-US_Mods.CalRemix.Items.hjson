@@ -3491,6 +3491,8 @@ TrapperQuestMachine: {
 		INCOMPLETE ITEM, EXTREMELY UNSTABLE
 		RPG game
 		'''
+}
+
 AuricSoul.DisplayName: Auric Soul
 
 AuricSword: {

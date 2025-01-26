@@ -145,7 +145,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             int spinningProjDuration = 120;
             int spinningProjTotalProjectiles = 3;
 
-            int ancientDoomFireRate = 6;
+            int ancientDoomFireRate = 30;
             int ancientDoomTotalProjectiles = 6;
 
             int phase1SpeedReductionMultiplier = 2;
@@ -155,9 +155,12 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             if (expertMode)
             {
                 mineRingFireRate = 4;
+
                 projVomitFireRate = 4;
                 projVomitAmount = 12;
-                ancientDoomFireRate = 12;
+
+                spinningProjTotalProjectiles = 5;
+
                 ancientDoomTotalProjectiles = 5;
             }
 
@@ -173,6 +176,11 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 phase1SpeedReductionFlat = 0;
 
                 movementLengthMultiplier = 2.75f;
+            }
+
+            if (isPhase4)
+            {
+                spinningProjTotalProjectiles += 2;
             }
 
             #region Target Player, Despawn
@@ -631,32 +639,32 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     {
                         for (int num49 = 0; num49 < 5; num49++)
                         {
-                            Point point = NPC.Center.ToTileCoordinates();
-                            Point point2 = Main.player[NPC.target].Center.ToTileCoordinates();
-                            Vector2 vector8 = Main.player[NPC.target].Center - NPC.Center;
+                            Point tileNPCCenter = NPC.Center.ToTileCoordinates();
+                            Point tileTargetCenter = Main.player[NPC.target].Center.ToTileCoordinates();
+                            Vector2 distanceBetweenPlayer = Main.player[NPC.target].Center - NPC.Center;
                             int num50 = 20;
                             int num51 = 3;
                             int num52 = 7;
                             int num53 = 2;
                             int num54 = 0;
                             bool flag6 = false;
-                            if (vector8.Length() > 2000f)
+                            if (distanceBetweenPlayer.Length() > 100000f)
                             {
                                 flag6 = true;
                             }
                             while (!flag6 && num54 < 100)
                             {
                                 num54++;
-                                int ancientDoomX = Main.rand.Next(point2.X - num50, point2.X + num50 + 1);
-                                int ancientDoomY = Main.rand.Next(point2.Y - num50, point2.Y + num50 + 1);
-                                if ((ancientDoomY < point2.Y - num52 || ancientDoomY > point2.Y + num52 || ancientDoomX < point2.X - num52 || ancientDoomX > point2.X + num52) && (ancientDoomY < point.Y - num51 || ancientDoomY > point.Y + num51 || ancientDoomX < point.X - num51 || ancientDoomX > point.X + num51) && !Main.tile[ancientDoomX, ancientDoomY].HasUnactuatedTile)
+                                int ancientDoomX = Main.rand.Next(tileTargetCenter.X - num50, tileTargetCenter.X + num50 + 1);
+                                int ancientDoomY = Main.rand.Next(tileTargetCenter.Y - num50, tileTargetCenter.Y + num50 + 1);
+                                if ((ancientDoomY < tileTargetCenter.Y - num52 || ancientDoomY > tileTargetCenter.Y + num52 || ancientDoomX < tileTargetCenter.X - num52 || ancientDoomX > tileTargetCenter.X + num52) && (ancientDoomY < tileNPCCenter.Y - num51 || ancientDoomY > tileNPCCenter.Y + num51 || ancientDoomX < tileNPCCenter.X - num51 || ancientDoomX > tileNPCCenter.X + num51) && !Main.tile[ancientDoomX, ancientDoomY].HasUnactuatedTile)
                                 {
-                                    bool flag7 = true;
-                                    if (flag7 && Collision.SolidTiles(ancientDoomX - num53, ancientDoomX + num53, ancientDoomY - num53, ancientDoomY + num53))
+                                    bool DoesNotHaveTiles = true;
+                                    if (DoesNotHaveTiles && Collision.SolidTiles(ancientDoomX - num53, ancientDoomX + num53, ancientDoomY - num53, ancientDoomY + num53))
                                     {
-                                        flag7 = false;
+                                        DoesNotHaveTiles = false;
                                     }
-                                    if (flag7)
+                                    if (DoesNotHaveTiles)
                                     {
                                         NPC.NewNPC(NPC.GetSource_FromThis(), ancientDoomX * 16 + 8, ancientDoomY * 16 + 8, NPCID.AncientLight, 0, NPC.whoAmI);
                                         flag6 = true;
