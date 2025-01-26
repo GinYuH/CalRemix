@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Armor
         }
         public override void SetDefaults()
         {
-            Item.width = 22;
+            item.width = 20;
             Item.height = 18;
             Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;

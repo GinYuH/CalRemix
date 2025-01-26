@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Ammo
         public override void SetDefaults()
         {
             Item.width = 14;
-            Item.height = 22;
+            item.height = 20;
             Item.maxStack = 9999;
         }
 

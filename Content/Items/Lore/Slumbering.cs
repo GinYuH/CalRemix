@@ -23,8 +23,8 @@ namespace CalRemix.Content.Items.Lore
         }
         public override void SetDefaults()
         {
-            Item.width = 22;
-            Item.height = 22;
+            item.width = 20;
+            item.height = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.rare = ModContent.RarityType<CalamityRed>();
         }

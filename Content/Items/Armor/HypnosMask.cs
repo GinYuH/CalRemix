@@ -17,7 +17,7 @@ namespace CalRemix.Content.Items.Armor
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            item.height = 20;
             Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Purple;
             Item.vanity = true;

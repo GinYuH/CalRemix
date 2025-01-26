@@ -24,8 +24,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.Calamity().DealsDefenseDamage = true;
-            Projectile.width = 22;
-            Projectile.height = 22;
+            projectile.width = 20;
+            projectile.height = 20;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;

@@ -16,8 +16,8 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void SetDefaults()
         {
-            Projectile.width = 22;
-            Projectile.height = 22;
+            projectile.width = 20;
+            projectile.height = 20;
             Projectile.friendly = true;
             Projectile.penetrate = 1;
             Projectile.DamageType = DamageClass.Magic;

@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            item.height = 20;
             Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Ionogen;
