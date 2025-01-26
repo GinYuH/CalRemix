@@ -145,6 +145,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             int spinningProjDuration = 120;
             int spinningProjTotalProjectiles = 3;
 
+            int ritualTotalProjectiless = 12;
+
             int ancientDoomFireRate = 30;
             int ancientDoomTotalProjectiles = 6;
 
@@ -577,9 +579,42 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             else if (AttackType == (float)AttackTypes.Ritual)
             {
                 NPC.localAI[2] = 10f;
-                
+
+                if (Timer % 24 == 0) 
+                {
+                    int projNoise = Main.rand.Next(-1, 7);
+                    int totalProjsAdjusted = ritualTotalProjectiless + projNoise;
+                    for (int i = 0; i < totalProjsAdjusted; i++)
+                    {
+                        float radians = MathHelper.TwoPi / totalProjsAdjusted;
+                        int mineDamage = 120;
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.RotatedBy(radians * i), ProjectileID.MartianTurretBolt, mineDamage, 0f, Main.myPlayer);
+                    }
+                }
+
+                if (Timer % 32 == 0)
+                {
+                    for (int i = 0; i < ritualTotalProjectiless - (int)(ritualTotalProjectiless / 2); i++)
+                    {
+                        float radians = MathHelper.TwoPi / (int)(ritualTotalProjectiless / 2);
+                        int mineDamage = 120;
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.RotatedBy(radians * i), ProjectileID.PhantasmalBolt, mineDamage, 0f, Main.myPlayer);
+                    }
+                }
+
+                if (Timer % 50 == 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        float radians = MathHelper.TwoPi / 3;
+                        int mineDamage = 120;
+                        Vector2 newSpawn = NPC.Center + Vector2.Normalize(NPC.Center.RotatedBy(radians * i).RotatedBy(radians * i)) * 80;
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), newSpawn, NPC.Center.RotatedBy(radians * i), ProjectileID.StardustJellyfishSmall, mineDamage, 0f, Main.myPlayer);
+                    }
+                }
+
                 Timer += 1f;
-                if (Timer >= 420f)
+                if (Timer >= 42000f)
                 {
                     shouldNotBeChased = true;
                     AttackType = (float)AttackTypes.None;
