@@ -50,17 +50,14 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             Spawn = -1,
             None = 0,
             Move = 1,
-            IceMist = 2,
-            Fireball = 3,
+            MineRing = 2,
+            ProjectileVomit = 3,
             LightningOrb = 4,
             Ritual = 5,
             Something = 6,
-            StardustOrb = 7,
-            AncientDoom = 8
+            SpinningRingProjectiles = 7,
+            AncientDoomEsqueMines = 8
         }
-
-        public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/CarcinogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/CarcinogenDeath");
 
         public override void SetStaticDefaults()
         {
@@ -118,43 +115,53 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 SoundEngine.PlaySound(lunaticCultistSounds[Main.rand.Next(0, lunaticCultistSounds.Count + 1)], NPC.position);
             }
 
-            bool expertMode = Main.expertMode;
+
+            bool bossRush = BossRushEvent.BossRushActive;
+            bool expertMode = Main.expertMode || bossRush;
+            bool revengeance = CalamityWorld.revenge || bossRush;
+            bool death = CalamityWorld.death || bossRush;
             bool isPhase2 = NPC.life <= NPC.lifeMax * 0.75;
             bool isPhase3 = NPC.life <= NPC.lifeMax * 0.50;
             bool isPhase4 = NPC.life <= NPC.lifeMax * 0.30;
             bool isPhase5 = NPC.life <= NPC.lifeMax * 0.10;
 
+            float intendedVelocity = 10f;
+            float intendedAcceleration = 0.2f;
+
             // low fire rate = faster fire
-            int iceMistDamage = NPC.GetAttackDamage_ForProjectiles(35f, 25f);
-            int iceMistFireRate = 6;
-            int fireballDamage = NPC.GetAttackDamage_ForProjectiles(30f, 20f);
-            int fireballFireRate = 6;
-            int fireballAmount = 5;
+            int mineRingDamage = NPC.GetAttackDamage_ForProjectiles(35f, 25f);
+            int mineRingFireRate = 6;
+            int mineRingTotalProjectiles = 8;
+
+            int projVomitDamage = NPC.GetAttackDamage_ForProjectiles(30f, 20f);
+            int projVomitFireRate = 6;
+            int projVomitAmount = 5;
+
             int lightningOrbDamage = NPC.GetAttackDamage_ForProjectiles(45f, 30f);
-            int stardustOrbFireRate = 6;
-            int stardustOrbAmount = 5;
+            int lightningOrbFireRate = 6;
+            float lightningOrbSpeed = 4;
+
+            int spinningProjDamage = NPC.GetAttackDamage_ForProjectiles(45f, 30f);
+            int spinningProjDuration = 120;
+            int spinningProjTotalProjectiles = 3;
+
             int ancientDoomFireRate = 6;
-            int ancientDoomAmount = 6;
+            int ancientDoomTotalProjectiles = 6;
 
             int phase1SpeedReductionMultiplier = 2;
             int phase1SpeedReductionFlat = 2;
             float movementLengthMultiplier = 3;
 
-            int totalProjectiles = 8;
-
             if (expertMode)
             {
-                iceMistFireRate = 4;
-                fireballFireRate = 4;
-                fireballAmount = 12;
-                stardustOrbFireRate = 12;
-                stardustOrbAmount = 4;
+                mineRingFireRate = 4;
+                projVomitFireRate = 4;
+                projVomitAmount = 12;
                 ancientDoomFireRate = 12;
-                ancientDoomAmount = 5;
+                ancientDoomTotalProjectiles = 5;
             }
 
-            bool amISealedOne = NPC.type == ModContent.NPCType<SealedOne>();
-            bool shouldTakeDamage = false;
+            bool shouldNotTakeDamage = false;
             bool shouldNotBeChased = false;
 
             if (isPhase2)
@@ -240,7 +247,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 {
                     NPC.localAI[2] = 0f;
                 }
-                shouldTakeDamage = true;
+                shouldNotTakeDamage = true;
                 shouldNotBeChased = true;
             }
             if (AttackType == (float)AttackTypes.None)
@@ -272,13 +279,13 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 1:
-                                attackToUse = (int)AttackTypes.Fireball;
+                                attackToUse = (int)AttackTypes.ProjectileVomit;
                                 break;
                             case 2:
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 3:
-                                attackToUse = (int)AttackTypes.StardustOrb;
+                                attackToUse = (int)AttackTypes.SpinningRingProjectiles;
                                 break;
                             case 4:
                                 attackToUse = (int)AttackTypes.None;
@@ -290,13 +297,13 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 7:
-                                attackToUse = (int)AttackTypes.StardustOrb;
+                                attackToUse = (int)AttackTypes.SpinningRingProjectiles;
                                 break;
                             case 8:
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 9:
-                                attackToUse = (int)AttackTypes.IceMist;
+                                attackToUse = (int)AttackTypes.MineRing;
                                 break;
                             case 10:
                                 attackToUse = (int)AttackTypes.None;
@@ -324,13 +331,13 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 1:
-                                attackToUse = (int)AttackTypes.Fireball;
+                                attackToUse = (int)AttackTypes.ProjectileVomit;
                                 break;
                             case 2:
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 3:
-                                attackToUse = (int)AttackTypes.IceMist;
+                                attackToUse = (int)AttackTypes.MineRing;
                                 break;
                             case 4:
                                 attackToUse = (int)AttackTypes.None;
@@ -342,13 +349,13 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 7:
-                                attackToUse = (int)AttackTypes.Fireball;
+                                attackToUse = (int)AttackTypes.ProjectileVomit;
                                 break;
                             case 8:
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 9:
-                                attackToUse = (int)AttackTypes.IceMist;
+                                attackToUse = (int)AttackTypes.MineRing;
                                 break;
                             case 10:
                                 attackToUse = (int)AttackTypes.None;
@@ -376,9 +383,9 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                         attackReplacementChance = 3;
                     }
                     // replace attack w ancient doom
-                    if (expertMode && isPhase2 && Main.rand.NextBool(attackReplacementChance) && attackToUse != (int)AttackTypes.None && attackToUse != (int)AttackTypes.Ritual && attackToUse != (int)AttackTypes.StardustOrb && NPC.CountNPCS(523) < 10)
+                    if (expertMode && isPhase2 && Main.rand.NextBool(attackReplacementChance) && attackToUse != (int)AttackTypes.None && attackToUse != (int)AttackTypes.Ritual && attackToUse != (int)AttackTypes.SpinningRingProjectiles && NPC.CountNPCS(523) < 10)
                     {
-                        attackToUse = (int)AttackTypes.AncientDoom;
+                        attackToUse = (int)AttackTypes.AncientDoomEsqueMines;
                     }
                     #endregion
 
@@ -393,12 +400,12 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                         PreviousNPCLocation = NPC.position;
                         PreviousPlayerLocation = player.position;
-                        Timer = LengthOfMovement * movementLengthMultiplier * phase1SpeedReductionMultiplier;
+                        Timer = 30;
                         AttackType = (float)AttackTypes.Move;
                     }
 
                     // final stuff: convert attacktouse to an attack to be used
-                    if (attackToUse != (int)AttackTypes.Spawn && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move && attackToUse != (int)AttackTypes.Something)
+                    if (attackToUse != (int)AttackTypes.Spawn && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move)
                     {
                         AttackType = attackToUse;
                         Timer = 0f;
@@ -408,12 +415,34 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             }
             else if (AttackType == (float)AttackTypes.Move)
             {
-                shouldTakeDamage = true;
+                shouldNotTakeDamage = false;
+                shouldNotBeChased = false;
                 NPC.localAI[2] = 10f;
 
-                NPC.position.X = MathHelper.Lerp(PreviousPlayerLocation.X, PreviousNPCLocation.X, Timer / (NPC.localAI[1] * movementLengthMultiplier * phase1SpeedReductionMultiplier));
-                NPC.position.Y = MathHelper.Lerp(PreviousPlayerLocation.Y, PreviousNPCLocation.Y, Timer / (NPC.localAI[1] * movementLengthMultiplier * phase1SpeedReductionMultiplier));
+                Vector2 distanceFromDestination = PreviousPlayerLocation - NPC.Center;
+                int maxDistance = 40;
 
+                // Movement
+                if (NPC.Distance(PreviousPlayerLocation) > maxDistance)
+                {
+                    CalamityUtils.SmoothMovement(Main.npc[NPC.whoAmI], 0f, distanceFromDestination, intendedVelocity, intendedAcceleration, true);
+                    
+                    // reset timer if it gets too low 
+                    if (Timer < 10)
+                    {
+                        Timer += 20;
+                    }
+                }
+                else
+                {
+                    // Slow down
+                    if (NPC.velocity.Length() > 0.5f)
+                        NPC.velocity *= 0.8f;
+                    else
+                        NPC.velocity = Vector2.Zero;
+                }
+
+                // in p3 leave a trail of mines
                 if (isPhase3 && (int)Timer % 4 == 0)
                 {
                     int mineDamage = 120;
@@ -430,7 +459,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     NPC.netUpdate = true;
                 }
             }
-            else if (AttackType == (float)AttackTypes.IceMist)
+            else if (AttackType == (float)AttackTypes.MineRing)
             {
                 NPC.localAI[2] = 11f;
 
@@ -438,11 +467,11 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 if (Timer == 3f)
                 {
                     SoundEngine.PlaySound(SoundID.AchievementComplete);
-                    float radians = MathHelper.TwoPi / totalProjectiles;
+                    float radians = MathHelper.TwoPi / mineRingTotalProjectiles;
                     float projectileVelocity = 5;
                     float projectileDistance = 400;
                     int mineDamage = 120;
-                    for (int i = 0; i < totalProjectiles; i++)
+                    for (int i = 0; i < mineRingTotalProjectiles; i++)
                     {
                         Vector2 spawnVector = player.Center + Vector2.Normalize(new Vector2(0f, -projectileVelocity).RotatedBy(radians * i)) * projectileDistance;
                         Vector2 projVelocity = Vector2.Normalize(player.Center - spawnVector) * projectileVelocity * Main.rand.NextFloat(-1, 1);
@@ -451,7 +480,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 }
 
                 Timer += 1f;
-                if (Timer >= (4 + iceMistFireRate) * phase1SpeedReductionMultiplier)
+                if (Timer >= (4 + mineRingFireRate) * phase1SpeedReductionMultiplier)
                 {
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
@@ -460,40 +489,44 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     NPC.netUpdate = true;
                 }
             }
-            else if (AttackType == (float)AttackTypes.Fireball)
+            else if (AttackType == (float)AttackTypes.ProjectileVomit)
             {
-                float endAttackTime = 4 + fireballFireRate * fireballAmount;
-
+                float endAttackTime = 4 + projVomitFireRate * projVomitAmount;
 
                 NPC.localAI[2] = 11f;
-                Vector2 vec2 = Vector2.Normalize(player.Center - npcCenter);
-                if (vec2.HasNaNs())
+                Vector2 distanceToPlayer = Vector2.Normalize(player.Center - npcCenter);
+                if (distanceToPlayer.HasNaNs())
                 {
-                    vec2 = new Vector2(NPC.direction, 0f);
+                    distanceToPlayer = new Vector2(NPC.direction, 0f);
                 }
-                if (Timer >= 4f && amISealedOne && (int)(Timer - 4f) % fireballFireRate == 0 && Timer < endAttackTime)
+
+                // fire projs 
+                if (Timer >= 4f && (int)(Timer - 4f) % projVomitFireRate == 0 && Timer < endAttackTime)
                 {
-                    int num14 = Math.Sign(player.Center.X - npcCenter.X);
-                    if (num14 != 0)
+                    // face left or right
+                    int leftOrRight = Math.Sign(player.Center.X - npcCenter.X);
+                    if (leftOrRight != 0)
                     {
-                        NPC.direction = (NPC.spriteDirection = num14);
+                        NPC.direction = (NPC.spriteDirection = leftOrRight);
                     }
+
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        vec2 = Vector2.Normalize(player.Center - npcCenter + player.velocity * 20f);
-                        if (vec2.HasNaNs())
+                        distanceToPlayer = Vector2.Normalize(player.Center - npcCenter + player.velocity * 20f);
+                        if (distanceToPlayer.HasNaNs())
                         {
-                            vec2 = new Vector2(NPC.direction, 0f);
+                            distanceToPlayer = new Vector2(NPC.direction, 0f);
                         }
                         Vector2 fireballSpawn = NPC.Center + new Vector2(NPC.direction * 30, 12f);
                         for (int num15 = 0; num15 < 1; num15++)
                         {
-                            Vector2 fireballVelocity = vec2 * (6f + (float)Main.rand.NextDouble() * 4f);
+                            Vector2 fireballVelocity = distanceToPlayer * (6f + (float)Main.rand.NextDouble() * 4f);
                             fireballVelocity = fireballVelocity.RotatedByRandom(0.52359879016876221);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), fireballSpawn.X, fireballSpawn.Y, fireballVelocity.X, fireballVelocity.Y, ProjectileID.CultistBossFireBall, fireballDamage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), fireballSpawn.X, fireballSpawn.Y, fireballVelocity.X, fireballVelocity.Y, ProjectileID.CultistBossFireBall, projVomitDamage, 0f, Main.myPlayer);
                         }
                     }
                 }
+
                 Timer += 1f;
                 if (Timer >= endAttackTime * phase1SpeedReductionMultiplier)
                 {
@@ -506,23 +539,25 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             }
             else if (AttackType == (float)AttackTypes.LightningOrb)
             {
-                if (amISealedOne)
+                NPC.localAI[2] = 12f;
+
+                // shoot the cultist lighting balls
+                if (Timer == 20f && Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    NPC.localAI[2] = 12f;
-                }
-                else
-                {
-                    NPC.localAI[2] = 11f;
-                }
-                if (Timer == 20f && amISealedOne && Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    if ((int)(Timer - 20f) % iceMistFireRate == 0)
+                    if ((int)(Timer - 20f) % lightningOrbFireRate == 0)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y - 100f, 0f, 0f, ProjectileID.CultistBossLightningOrb, lightningOrbDamage, 0f, Main.myPlayer);
+                        
+                        int lightningOrbHigh = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y - 100f, 0, 0, ProjectileID.CultistBossLightningOrb, lightningOrbDamage, 0f, Main.myPlayer);
+                        Main.projectile[lightningOrbHigh].velocity = Main.projectile[lightningOrbHigh].DirectionTo(player.Center) * lightningOrbSpeed;
+                        if (isPhase2)
+                        {
+                            int lightningOrbLow = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y + 100f, NPC.DirectionTo(player.Center).X * lightningOrbSpeed, NPC.DirectionTo(player.Center).Y * lightningOrbSpeed, ProjectileID.CultistBossLightningOrb, lightningOrbDamage, 0f, Main.myPlayer);
+                            Main.projectile[lightningOrbLow].velocity = Main.projectile[lightningOrbLow].DirectionTo(player.Center) * lightningOrbSpeed;
+                        }
                     }
                 }
                 Timer += 1f;
-                if (Timer >= (20 + iceMistFireRate))
+                if (Timer >= (20 + lightningOrbFireRate))
                 {
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
@@ -534,147 +569,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             else if (AttackType == (float)AttackTypes.Ritual)
             {
                 NPC.localAI[2] = 10f;
-                if (Vector2.Normalize(player.Center - npcCenter).HasNaNs())
-                {
-                    new Vector2(NPC.direction, 0f);
-                }
-                if (Timer >= 0f && Timer < 30f)
-                {
-                    shouldTakeDamage = true;
-                    shouldNotBeChased = true;
-                    float num19 = (Timer - 0f) / 30f;
-                    NPC.alpha = (int)(num19 * 255f);
-                }
-                else if (Timer >= 30f && Timer < 90f)
-                {
-                    if (Timer == 30f && Main.netMode != NetmodeID.MultiplayerClient && amISealedOne)
-                    {
-                        // this is where the ritual attack was
-                    }
-                    shouldTakeDamage = true;
-                    shouldNotBeChased = true;
-                    NPC.alpha = 255;
-                    if (amISealedOne)
-                    {
-                        Vector2 vector2 = Main.projectile[(int)NPC.ai[2]].Center;
-                        vector2 -= NPC.Center;
-                        if (vector2 == Vector2.Zero)
-                        {
-                            vector2 = -Vector2.UnitY;
-                        }
-                        vector2.Normalize();
-                        if (Math.Abs(vector2.Y) < 0.77f)
-                        {
-                            NPC.localAI[2] = 11f;
-                        }
-                        else if (vector2.Y < 0f)
-                        {
-                            NPC.localAI[2] = 12f;
-                        }
-                        else
-                        {
-                            NPC.localAI[2] = 10f;
-                        }
-                        int num31 = Math.Sign(vector2.X);
-                        if (num31 != 0)
-                        {
-                            NPC.direction = (NPC.spriteDirection = num31);
-                        }
-                    }
-                    else
-                    {
-                        Vector2 vector3 = Main.projectile[(int)Main.npc[(int)AttackTotal].ai[2]].Center;
-                        vector3 -= NPC.Center;
-                        if (vector3 == Vector2.Zero)
-                        {
-                            vector3 = -Vector2.UnitY;
-                        }
-                        vector3.Normalize();
-                        if (Math.Abs(vector3.Y) < 0.77f)
-                        {
-                            NPC.localAI[2] = 11f;
-                        }
-                        else if (vector3.Y < 0f)
-                        {
-                            NPC.localAI[2] = 12f;
-                        }
-                        else
-                        {
-                            NPC.localAI[2] = 10f;
-                        }
-                        int num32 = Math.Sign(vector3.X);
-                        if (num32 != 0)
-                        {
-                            NPC.direction = (NPC.spriteDirection = num32);
-                        }
-                    }
-                }
-                else if (Timer >= 90f && Timer < 120f)
-                {
-                    shouldTakeDamage = true;
-                    shouldNotBeChased = true;
-                    float num33 = (Timer - 90f) / 30f;
-                    NPC.alpha = 255 - (int)(num33 * 255f);
-                }
-                else if (Timer >= 120f && Timer < 420f)
-                {
-                    shouldNotBeChased = true;
-                    NPC.alpha = 0;
-                    if (amISealedOne)
-                    {
-                        Vector2 vector4 = Main.projectile[(int)NPC.ai[2]].Center;
-                        vector4 -= NPC.Center;
-                        if (vector4 == Vector2.Zero)
-                        {
-                            vector4 = -Vector2.UnitY;
-                        }
-                        vector4.Normalize();
-                        if (Math.Abs(vector4.Y) < 0.77f)
-                        {
-                            NPC.localAI[2] = 11f;
-                        }
-                        else if (vector4.Y < 0f)
-                        {
-                            NPC.localAI[2] = 12f;
-                        }
-                        else
-                        {
-                            NPC.localAI[2] = 10f;
-                        }
-                        int num35 = Math.Sign(vector4.X);
-                        if (num35 != 0)
-                        {
-                            NPC.direction = (NPC.spriteDirection = num35);
-                        }
-                    }
-                    else
-                    {
-                        Vector2 vector5 = Main.projectile[(int)Main.npc[(int)AttackTotal].ai[2]].Center;
-                        vector5 -= NPC.Center;
-                        if (vector5 == Vector2.Zero)
-                        {
-                            vector5 = -Vector2.UnitY;
-                        }
-                        vector5.Normalize();
-                        if (Math.Abs(vector5.Y) < 0.77f)
-                        {
-                            NPC.localAI[2] = 11f;
-                        }
-                        else if (vector5.Y < 0f)
-                        {
-                            NPC.localAI[2] = 12f;
-                        }
-                        else
-                        {
-                            NPC.localAI[2] = 10f;
-                        }
-                        int num36 = Math.Sign(vector5.X);
-                        if (num36 != 0)
-                        {
-                            NPC.direction = (NPC.spriteDirection = num36);
-                        }
-                    }
-                }
+                
                 Timer += 1f;
                 if (Timer >= 420f)
                 {
@@ -699,44 +594,21 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     NPC.netUpdate = true;
                 }
             }
-            else if (AttackType == (float)AttackTypes.StardustOrb)
+            else if (AttackType == (float)AttackTypes.SpinningRingProjectiles)
             {
                 NPC.localAI[2] = 11f;
-                Vector2 vec3 = Vector2.Normalize(player.Center - npcCenter);
-                if (vec3.HasNaNs())
+
+                if (Timer == 6)
                 {
-                    vec3 = new Vector2(NPC.direction, 0f);
-                }
-                if (Timer >= 4f && amISealedOne && (int)(Timer - 4f) % stardustOrbFireRate == 0)
-                {
-                    int num40 = Math.Sign(player.Center.X - npcCenter.X);
-                    if (num40 != 0)
+                    SoundEngine.PlaySound(SoundID.DD2_WitherBeastAuraPulse);
+                    for (int i = 0; i < spinningProjTotalProjectiles; i++)
                     {
-                        NPC.direction = (NPC.spriteDirection = num40);
-                    }
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        vec3 = Vector2.Normalize(player.Center - npcCenter + player.velocity * 20f);
-                        if (vec3.HasNaNs())
-                        {
-                            vec3 = new Vector2(NPC.direction, 0f);
-                        }
-                        Vector2 ancientLightSpawn = NPC.Center + new Vector2(NPC.direction * 30, 12f);
-                        float num41 = 8f;
-                        float num42 = (float)Math.PI * 2f / 25f;
-                        for (int num43 = 0; (float)num43 < 5f; num43++)
-                        {
-                            Vector2 ancientLightVelocity = vec3 * num41;
-                            ancientLightVelocity = ancientLightVelocity.RotatedBy(num42 * (float)num43 - ((float)Math.PI * 2f / 5f - num42) / 2f);
-                            float ai = (Main.rand.NextFloat() - 0.5f) * 0.3f * ((float)Math.PI * 2f) / 60f;
-                            int ancientLight = NPC.NewNPC(NPC.GetSource_FromThis(), (int)ancientLightSpawn.X, (int)ancientLightSpawn.Y + 7, NPCID.AncientLight, 0, 0f, ai, ancientLightVelocity.X, ancientLightVelocity.Y);
-                            Main.npc[ancientLight].velocity = ancientLightVelocity;
-                            Main.npc[ancientLight].netUpdate = true;
-                        }
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OrbitingOrb>(), spinningProjDamage, 0f, Main.myPlayer);
                     }
                 }
+
                 Timer += 1f;
-                if (Timer >= (float)(4 + stardustOrbFireRate * stardustOrbAmount))
+                if (Timer >= (float)spinningProjDuration)
                 {
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
@@ -745,10 +617,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     NPC.netUpdate = true;
                 }
             }
-            else if (AttackType == (float)AttackTypes.AncientDoom)
+            else if (AttackType == (float)AttackTypes.AncientDoomEsqueMines)
             {
                 NPC.localAI[2] = 13f;
-                if (Timer >= 4f && amISealedOne && (int)(Timer - 4f) % ancientDoomFireRate == 0)
+                if (Timer >= 4f && (int)(Timer - 4f) % ancientDoomFireRate == 0)
                 {
                     int num48 = Math.Sign(player.Center.X - npcCenter.X);
                     if (num48 != 0)
@@ -796,7 +668,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     }
                 }
                 Timer += 1f;
-                if (Timer >= (float)(4 + ancientDoomFireRate * ancientDoomAmount))
+                if (Timer >= (float)(4 + ancientDoomFireRate * ancientDoomTotalProjectiles))
                 {
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
@@ -807,7 +679,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             }
             #endregion
 
-            NPC.dontTakeDamage = shouldTakeDamage;
+            NPC.dontTakeDamage = shouldNotTakeDamage;
             NPC.chaseable = !shouldNotBeChased;
         }
 
