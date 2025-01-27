@@ -92,7 +92,12 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void OnSpawn(IEntitySource source)
         {
-            
+            SoundEngine.PlaySound(SoundID.Zombie89, NPC.position);
+            NPC.rotation = 0f;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                NPC.netUpdate = true;
+            }
         }
 
         public override void AI()
@@ -112,10 +117,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
             if (AttackType != (float)AttackTypes.Spawn && Main.rand.NextBool(1000))
             {
-                SoundEngine.PlaySound(lunaticCultistSounds[Main.rand.Next(0, lunaticCultistSounds.Count + 1)], NPC.position);
+                SoundEngine.PlaySound(lunaticCultistSounds[Main.rand.Next(0, lunaticCultistSounds.Count)], NPC.position);
             }
 
-
+            #region Values
             bool bossRush = BossRushEvent.BossRushActive;
             bool expertMode = Main.expertMode || bossRush;
             bool revengeance = CalamityWorld.revenge || bossRush;
@@ -125,7 +130,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             bool isPhase4 = NPC.life <= NPC.lifeMax * 0.30;
             bool isPhase5 = NPC.life <= NPC.lifeMax * 0.10;
 
-            float intendedVelocity = 10f;
+            float intendedVelocity = 5f;
             float intendedAcceleration = 0.2f;
 
             // low fire rate = faster fire
@@ -154,6 +159,11 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             int phase1SpeedReductionFlat = 2;
             float movementLengthMultiplier = 3;
 
+            bool shouldNotTakeDamage = false;
+            bool shouldNotBeChased = false;
+            #endregion
+
+            #region Difficulty Changes
             if (expertMode)
             {
                 mineRingFireRate = 4;
@@ -165,11 +175,22 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                 ancientDoomTotalProjectiles = 5;
             }
+            #endregion
 
-            bool shouldNotTakeDamage = false;
-            bool shouldNotBeChased = false;
+            #region Phase Changes
+            if (isPhase5)
+            {
 
-            if (isPhase2)
+            }
+            else if (isPhase4)
+            {
+                spinningProjTotalProjectiles += 2;
+            }
+            else if (isPhase3)
+            {
+
+            }
+            else if (isPhase2)
             {
                 // this is gonna be kept. dont remove this
                 NPC.defense = (int)((float)NPC.defDefense * 0.65f);
@@ -178,12 +199,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 phase1SpeedReductionFlat = 0;
 
                 movementLengthMultiplier = 2.75f;
+                intendedVelocity = 20;
+                intendedAcceleration = 0.35f;
             }
-
-            if (isPhase4)
-            {
-                spinningProjTotalProjectiles += 2;
-            }
+            #endregion
 
             #region Target Player, Despawn
             Vector2 npcCenter = NPC.Center;
@@ -195,6 +214,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 player = Main.player[NPC.target];
                 NPC.netUpdate = true;
             }
+
             if (player.dead || !player.active || Vector2.Distance(player.Center, npcCenter) > distanceToDespawn)
             {
                 NPC.life = 0;
@@ -204,59 +224,77 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 {
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, -1f);
                 }
+                return;
             }
             #endregion
 
-            if (NPC.localAI[0] == 0f)
+            #region Music
+            if (!Main.dedServ)
             {
-                SoundEngine.PlaySound(SoundID.Zombie89, NPC.position);
-                NPC.localAI[0] = 1f;
-                NPC.alpha = 255;
-                NPC.rotation = 0f;
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (!isPhase2)
                 {
-                    AttackType = (float)AttackTypes.Spawn;
-                    NPC.netUpdate = true;
+                    Music = CalRemixMusic.SealedOnePhase1;
+                }
+                else
+                {
+                    // note: handling the music instantly starting is done in the phase transition
+                    Music = CalRemixMusic.SealedOnePhase2;
                 }
             }
+            #endregion
+
+            #region Phase Transition Handling
+            if (NPC.localAI[0] == 0 && isPhase2)
+            {
+                NPC.localAI[0] = 1f;
+
+                AttackType = (float)AttackTypes.Spawn;
+                Timer = 0f;
+                NPC.velocity = Vector2.Zero;
+                NPC.netUpdate = true;
+
+            }
+            #endregion
 
             #region Attacks
             if (AttackType == (float)AttackTypes.Spawn)
             {
-                NPC.alpha -= 5;
-                if (NPC.alpha < 0)
+                if (Timer > 100 && Timer < 102)
                 {
-                    NPC.alpha = 0;
-                }
-                Timer += 1f;
-                if (Timer >= 420f)
-                {
+                    SoundEngine.PlaySound(SoundID.Zombie92, NPC.position);
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
                     NPC.netUpdate = true;
                 }
-                else if (Timer > 360f)
+                else if (Timer > 1f)
                 {
-                    NPC.velocity *= 0.95f;
-                    if (NPC.localAI[2] != 13f)
+                    for (int i = 0; i < 5; i++)
                     {
-                        SoundEngine.PlaySound(SoundID.Zombie105, NPC.position);
+                        Dust.NewDust(new Vector2(NPC.Center.X, NPC.Center.Y - (NPC.height / 2)), 0, 0, DustID.Blood, Main.rand.NextFloat(-0.2f, 0.2f), -10f, 0, default, 1f);
                     }
-                    NPC.localAI[2] = 13f;
-                }
-                else if (Timer > 300f)
-                {
-                    NPC.velocity = -Vector2.UnitY;
-                    NPC.localAI[2] = 10f;
-                }
-                else if (Timer > 120f)
-                {
-                    NPC.localAI[2] = 1f;
                 }
                 else
                 {
-                    NPC.localAI[2] = 0f;
+                    for (int i = 0; i < 40; i++)
+                    {
+                        Dust.NewDust(new Vector2(NPC.Center.X, NPC.Center.Y - (NPC.height / 2)), 0, 0, DustID.Blood, Main.rand.NextFloat(-2f, 2f), -10f, 0, default, 2f);
+                    }
+                    SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.position);
+
+                    Music = CalRemixMusic.SealedOnePhase2;
+                    Main.newMusic = CalRemixMusic.SealedOnePhase2;
+                    try
+                    {
+                        Main.musicFade[Main.curMusic] = 0f;
+                        Main.musicFade[Main.newMusic] = 1f;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+
+                    }
                 }
+                Timer += 1f;
+
                 shouldNotTakeDamage = true;
                 shouldNotBeChased = true;
             }
@@ -583,12 +621,13 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 if (Timer % 24 == 0) 
                 {
                     int projNoise = Main.rand.Next(-1, 7);
+                    float rotationNose = Main.rand.NextFloat(0, 1);
                     int totalProjsAdjusted = ritualTotalProjectiless + projNoise;
                     for (int i = 0; i < totalProjsAdjusted; i++)
                     {
                         float radians = MathHelper.TwoPi / totalProjsAdjusted;
                         int mineDamage = 120;
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.RotatedBy(radians * i), ProjectileID.MartianTurretBolt, mineDamage, 0f, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.RotatedBy((radians * i) + rotationNose), ProjectileID.MartianTurretBolt, mineDamage, 0f, Main.myPlayer);
                     }
                 }
 
@@ -614,7 +653,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 }
 
                 Timer += 1f;
-                if (Timer >= 42000f)
+                if (Timer >= 420f)
                 {
                     shouldNotBeChased = true;
                     AttackType = (float)AttackTypes.None;
