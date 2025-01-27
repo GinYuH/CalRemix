@@ -28,6 +28,7 @@ using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Armor.Umbraphile;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
