@@ -37,7 +37,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
         public ref float Timer => ref NPC.ai[1];
         public ref float Unsure => ref NPC.ai[2];
         public ref float AttackTotal => ref NPC.ai[3];
-        public ref float HasDoneSpawnAnim => ref NPC.localAI[0];
+        public ref float HasDonePhaseTransition => ref NPC.localAI[0];
         public ref float LengthOfMovement => ref NPC.localAI[1];
 
         public ref Player Target => ref Main.player[NPC.target];
@@ -47,7 +47,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public enum AttackTypes
         {
-            Spawn = -1,
+            PhaseTransition = -1,
             None = 0,
             Move = 1,
             MineRing = 2,
@@ -108,14 +108,14 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             Main.NewText("AI 1 - " + Timer);
             Main.NewText("AI 2 - " + NPC.ai[2]);
             Main.NewText("AI 3 - " + AttackTotal);
-            Main.NewText("Local AI 0 - " + NPC.localAI[0]);
+            Main.NewText("Local AI 0 - " + HasDonePhaseTransition);
             Main.NewText("Local AI 1 - " + NPC.localAI[1]);
             Main.NewText("Local AI 2 - " + NPC.localAI[2]);
             Main.NewText("Local AI 3 - " + NPC.localAI[3]);
 
             List<SoundStyle> lunaticCultistSounds = [SoundID.Zombie88, SoundID.Zombie89, SoundID.Zombie90, SoundID.Zombie91];
 
-            if (AttackType != (float)AttackTypes.Spawn && Main.rand.NextBool(1000))
+            if (AttackType != (float)AttackTypes.PhaseTransition && Main.rand.NextBool(1000))
             {
                 SoundEngine.PlaySound(lunaticCultistSounds[Main.rand.Next(0, lunaticCultistSounds.Count)], NPC.position);
             }
@@ -244,11 +244,11 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             #endregion
 
             #region Phase Transition Handling
-            if (NPC.localAI[0] == 0 && isPhase2)
+            if (HasDonePhaseTransition == 0 && isPhase2)
             {
-                NPC.localAI[0] = 1f;
+                HasDonePhaseTransition = 1f;
 
-                AttackType = (float)AttackTypes.Spawn;
+                AttackType = (float)AttackTypes.PhaseTransition;
                 Timer = 0f;
                 NPC.velocity = Vector2.Zero;
                 NPC.netUpdate = true;
@@ -257,7 +257,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             #endregion
 
             #region Attacks
-            if (AttackType == (float)AttackTypes.Spawn)
+            if (AttackType == (float)AttackTypes.PhaseTransition)
             {
                 if (Timer > 100 && Timer < 102)
                 {
@@ -453,7 +453,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     }
 
                     // final stuff: convert attacktouse to an attack to be used
-                    if (attackToUse != (int)AttackTypes.Spawn && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move)
+                    if (attackToUse != (int)AttackTypes.PhaseTransition && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move)
                     {
                         AttackType = attackToUse;
                         Timer = 0f;
