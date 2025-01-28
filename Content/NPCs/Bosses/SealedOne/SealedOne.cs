@@ -94,7 +94,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
         {
             SoundEngine.PlaySound(SoundID.Zombie89, NPC.position);
             NPC.rotation = 0f;
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (!Main.dedServ)
             {
                 NPC.netUpdate = true;
             }
@@ -237,7 +237,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 }
                 else
                 {
-                    // note: handling the music instantly starting is done in the phase transition
+                    // note: handling the music instantly starting is done in the phase transition attack
                     Music = CalRemixMusic.SealedOnePhase2;
                 }
             }
@@ -251,7 +251,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 AttackType = (float)AttackTypes.PhaseTransition;
                 Timer = 0f;
                 NPC.velocity = Vector2.Zero;
-                NPC.netUpdate = true;
+                if (!Main.dedServ)
+                {
+                    NPC.netUpdate = true;
+                }
 
             }
             #endregion
