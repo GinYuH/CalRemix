@@ -102,8 +102,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void AI()
         {
-            Main.NewText("Position - " + NPC.position);
-            Main.NewText("Velocity - " + NPC.velocity);
+            Main.NewText("Player prev pos " + PreviousPlayerLocation);
+            Main.NewText("NPC prev pos - " + PreviousNPCLocation);
             Main.NewText("AI 0 - " + AttackType);
             Main.NewText("AI 1 - " + Timer);
             Main.NewText("AI 2 - " + NPC.ai[2]);
@@ -140,7 +140,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
             int projVomitDamage = NPC.GetAttackDamage_ForProjectiles(30f, 20f);
             int projVomitFireRate = 6;
-            int projVomitAmount = 5;
+            int projVomitAmount = 8;
 
             int lightningOrbDamage = NPC.GetAttackDamage_ForProjectiles(45f, 30f);
             int lightningOrbFireRate = 6;
@@ -156,8 +156,6 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             int ancientDoomTotalProjectiles = 6;
 
             int phase1SpeedReductionMultiplier = 2;
-            int phase1SpeedReductionFlat = 2;
-            float movementLengthMultiplier = 3;
 
             bool shouldNotTakeDamage = false;
             bool shouldNotBeChased = false;
@@ -166,41 +164,45 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             #region Difficulty Changes
             if (expertMode)
             {
-                mineRingFireRate = 4;
+                mineRingFireRate -= 2;
 
-                projVomitFireRate = 4;
-                projVomitAmount = 12;
+                projVomitFireRate -= 2;
+                projVomitAmount += 4;
 
-                spinningProjTotalProjectiles = 5;
+                spinningProjTotalProjectiles += 2;
+            }
+            if (revengeance)
+            {
 
-                ancientDoomTotalProjectiles = 5;
+            }
+            if (death)
+            {
+
             }
             #endregion
 
             #region Phase Changes
-            if (isPhase5)
-            {
-
-            }
-            else if (isPhase4)
-            {
-                spinningProjTotalProjectiles += 2;
-            }
-            else if (isPhase3)
-            {
-
-            }
-            else if (isPhase2)
+            if (isPhase2)
             {
                 // this is gonna be kept. dont remove this
                 NPC.defense = (int)((float)NPC.defDefense * 0.65f);
 
                 phase1SpeedReductionMultiplier = 1;
-                phase1SpeedReductionFlat = 0;
 
-                movementLengthMultiplier = 2.75f;
-                intendedVelocity = 20;
-                intendedAcceleration = 0.35f;
+                intendedVelocity += 15;
+                intendedAcceleration += 0.15f;
+            }
+            if (isPhase3)
+            {
+
+            }
+            if (isPhase4)
+            {
+                spinningProjTotalProjectiles += 2;
+            }
+            if (isPhase5)
+            {
+
             }
             #endregion
 
@@ -544,6 +546,11 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             {
                 float endAttackTime = 4 + projVomitFireRate * projVomitAmount;
 
+                if (Timer == 0f)
+                {
+                    PreviousPlayerLocation = player.Center;
+                }
+
                 NPC.localAI[2] = 11f;
                 Vector2 distanceToPlayer = Vector2.Normalize(player.Center - npcCenter);
                 if (distanceToPlayer.HasNaNs())
@@ -551,7 +558,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     distanceToPlayer = new Vector2(NPC.direction, 0f);
                 }
 
-                // fire projs 
+                // fire projs at the location of starting attack
                 if (Timer >= 4f && (int)(Timer - 4f) % projVomitFireRate == 0 && Timer < endAttackTime)
                 {
                     // face left or right
@@ -563,7 +570,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        distanceToPlayer = Vector2.Normalize(player.Center - npcCenter + player.velocity * 20f);
+                        distanceToPlayer = Vector2.Normalize(PreviousPlayerLocation - npcCenter + player.velocity * 20f);
                         if (distanceToPlayer.HasNaNs())
                         {
                             distanceToPlayer = new Vector2(NPC.direction, 0f);

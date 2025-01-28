@@ -1010,6 +1010,7 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyRetro", 1);
             ScreenHelperPortrait.LoadPortrait("FannySneakers", 1);
             ScreenHelperPortrait.LoadPortrait("FannyBarefoot", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyIdleFrame", 1);
 
             ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);

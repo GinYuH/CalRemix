@@ -652,7 +652,7 @@ namespace CalRemix
             else if (item.type == ItemType<CalamitasCloneBag>())
             {
                 itemLoot.Add(ItemType<RisingFire>(), 1 / 3);
-                itemLoot.Add(ItemType<CalamityRing>(), 100);
+                itemLoot.Add(ItemType<CalamityRing>());
             }
             else if (item.type == ItemID.PlanteraBossBag)
             {
