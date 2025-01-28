@@ -143,6 +143,7 @@ namespace CalRemix
         public int VerbotenMode = 1;
         public bool retroman = false;
         public bool noTomorrow;
+        public bool calamityRing;
 
         public bool miragel;
         public bool elastigel;
@@ -932,6 +933,7 @@ namespace CalRemix
 			dyesPink = 0;
             retroman = false;
             noTomorrow = false;
+            calamityRing = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
@@ -1056,6 +1058,10 @@ namespace CalRemix
 				Vector2 spawnvector = new Vector2(playercenter.X - 4, playercenter.Y - 4);
 				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
 			}
+            if (calamityRing)
+            {
+                npc.damage *= 2;
+            }
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
 		{
@@ -1066,6 +1072,10 @@ namespace CalRemix
 					proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
 					calplayer.projectileDamageReduction += 1;
 			}
+            if (calamityRing)
+            {
+                proj.damage *= 2;
+            }
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
