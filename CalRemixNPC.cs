@@ -1204,6 +1204,7 @@ namespace CalRemix
             else if (npc.type == NPCType<CalamitasClone>())
             {
                 npcLoot.AddNormalOnly(ItemType<RisingFire>(), 25);
+                npcLoot.AddNormalOnly(ItemType<CalamityRing>(), 100);
             }
             else if (npc.type == NPCID.Plantera)
             {
