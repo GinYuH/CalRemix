@@ -8,8 +8,8 @@ namespace CalRemix.Content.Items.Lore
     {
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            Item.width = 20;
+            Item.height = 20;
             Item.rare = ItemRarityID.White;
         }
         public override void AddRecipes()

@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Tools.Chlorium
             Item.damage = 35;
             Item.DamageType = DamageClass.MeleeNoSpeed; // ignores melee speed bonuses. There's no need for drill animations to play faster, nor drills to dig faster with melee speed.
             Item.width = 50;
-            item.height = 20;
+            Item.height = 20;
             // IsDrill/IsChainsaw effects must be applied manually, so 60% or 0.6 times the time of the corresponding pickaxe. In this case, 60% of 7 is 4 and 60% of 25 is 15.
             // If you decide to copy values from vanilla drills or chainsaws, you should multiply each one by 0.6 to get the expected behavior.
             Item.useTime = 7;

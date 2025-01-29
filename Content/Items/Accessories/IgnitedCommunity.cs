@@ -34,8 +34,8 @@ namespace CalRemix.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            Item.width = 20;
+            Item.height = 20;
             Item.rare = ModContent.RarityType<LightmixOrange>();
             Item.Remix().devItem = "Remix";
             Item.accessory = true;

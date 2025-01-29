@@ -208,17 +208,4 @@ FractalCrawlerBuff: {
 	Description: The fractal crawler will protect you
 }
 
-DestructivePresence: {
-	DisplayName: Destructive Presence
-	Description: Something dangerous lingers nearby
-}
-
-StratusBeverageBuff: {
-	Description: Seeing stars
-	DisplayName: Stratus Beverage
-}
-
-Chlorislime: {
-	Description: Chlorislime
-	DisplayName: The chlorislime will protect you
-}
+DestructivePresence.DisplayName: Destructive Presence

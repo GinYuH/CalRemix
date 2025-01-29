@@ -19,8 +19,8 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 20;
+            Projectile.width = 20;
+            Projectile.height = 20;
             Projectile.timeLeft = 480;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;

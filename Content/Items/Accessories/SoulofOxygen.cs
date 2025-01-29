@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            item.height = 20;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityLightPurpleBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Oxygen;

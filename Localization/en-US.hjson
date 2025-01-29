@@ -13,8 +13,6 @@ Mods: {
 	}
 
 	CalRemix: {
-		NotAvailable: N/A
-
 		Currencies: {
 			CosmiliteCoinCurrency: cosmilite coins
 			KlepticoinCurrency: klepticoins
@@ -101,45 +99,36 @@ Mods: {
 			DisplayName: Calamity Community Remix Config
 
 			CalRemixConfig: {
-				DisplayName: Menu Config
+				Headers.CalRemixHeader: Calamity Community Remix
+
+				FannyToggle: {
+					Header: Fanny
+					Label: Toggle Fanny
+					Tooltip: Enables/disables Fanny.
+				}
+
+				DisplayName: Cal Remix Config
 
 				randomMenu: {
-					Label: Randomize Menu
-					Tooltip: Selects any variant of the menu
+					Label: random Menu
+					Tooltip: ""
 				}
 
 				forcedMenu: {
-					Label: Forced Override
-					Tooltip: Only allows Remix menus to display on start
+					Label: forced Menu
+					Tooltip: ""
 				}
 
 				useSecondMenu: {
-					Label: Only Use Second Menu
-					Tooltip: The second menu will always show up instead
+					Label: use Second Menu
+					Tooltip: ""
 				}
 			}
 		}
 
-		InfoDisplays: {
-			ElementDisplay.DisplayName: Element Display
-			HelperDisplay.DisplayName: Fanny Mood Tracker
-			MoodTracker.DisplayName: Mood Tracker
-			NetWorthDisplay.DisplayName: Net Worth Display
-		}
-
+		InfoDisplays.ElementDisplay.DisplayName: Element Display
 		Emotes.HypnosEmote.Command: hypnosemote
-
-		BossChecklistIntegration: {
-			PandemicPanic: {
-				EntryName: Pandemic Panic
-				SpawnInfo: Use a [i:CalamityMod/BloodyVein] on a sink.
-			}
-
-			GaleforceDay: {
-				EntryName: Galeforce Day
-				SpawnInfo: Randomly occurs at the start of each day OR leading a Fushigi out of the Abyss and out of the top of the world.
-			}
-		}
+		BossChecklistIntegration.PandemicPanic.EntryName: Pandemic Panic
 
 		InfernumIntegration: {
 			Origen:
@@ -208,39 +197,6 @@ Mods: {
 				Raggedy Helminth
 				Wulfrum Excavator
 				'''
-		}
-
-		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage
-
-		RecipeGroups: {
-			Any: Any {0}
-			GreaterEvil: Greater Evil Flesh
-			EvilBar: Evil Bar
-			T4Bar: Tier 4 Bar
-			HMT1Bar: Tier 1 Hardmode Bar
-			AnyButterfly: Normal Butterfly
-			AnyExoMechMusicBox: Remix Exo Mech Music Box
-			AnyCritter: Critter
-		}
-
-		Condition: {
-			Locked: Locked Recipe. {0}
-			Elderberry: Trade with the Dye Trader Post-Providence.
-			MiracleFruit: Find in post-Golem Jungle Planetoids.
-			Dragonfruit: Open an Azure Crate while a Wyvern is alive post-Yharon
-			BloodOrange: Throw an Apple in water during a Blood Moon post-mechs.
-			CometShard: Get a Nova to collide with Astral Ore.
-			EtherealCore: Insert a Bloody Vein at the Astral Beacon.
-			PhantomHeart: Spawns in the Post-Polterghast Dungeon.
-			DesertMedallion: Drops from Cnidrions after defeating the Wulfrum Excavator.
-			CryoKey: Drops from Primal Aspids in the snow biome at night.
-			EyeofDesolation: Drops from Clamitas in the Brimstone Crags.
-			GalacticaSingularity: Fish Side Gars from Godseeker Mode space.
-			FearmongerGreathelm: Obtain by making an enemy walk on Grimesand.
-			FearmongerPlateMail: Obtain by making an enemy walk on Grimesand.
-			FearmongerGreaves: Obtain by making an enemy walk on Grimesand.
-			Seafood: Make the other Seafood.
-			ProfanedShard: Drops from Yggdrasil Ents in Hallow and Hell.
 		}
 	}
 }

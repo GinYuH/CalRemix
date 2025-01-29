@@ -19,8 +19,8 @@ namespace CalRemix.Content.Projectiles.Hostile
 		public override void SetDefaults()
 		{
 			Projectile.Calamity().DealsDefenseDamage = true;
-			projectile.width = 20;
-			projectile.height = 20;
+			Projectile.width = 20;
+			Projectile.height = 20;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 480;
 			Projectile.tileCollide = false;
