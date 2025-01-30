@@ -17,8 +17,8 @@ namespace CalRemix.Content.Items.Materials
             Item.rare = ItemRarityID.Yellow;
             Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.maxStack = 9999;
-            item.width = 20;
-            item.height = 20;
+            Item.width = 20;
+            Item.height = 20;
         }
     }
 }

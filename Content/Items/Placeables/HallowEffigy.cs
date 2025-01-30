@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Placeables
 
         public override void SetDefaults()
         {
-            item.width = 20;
+            Item.width = 20;
             Item.height = 32;
             Item.maxStack = 99;
             Item.useTurn = true;

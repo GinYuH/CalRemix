@@ -132,6 +132,30 @@ namespace CalRemix
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofZot>();
             }
+            else if (item.type == ItemType<EssenceofRend>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofSurt>();
+            }
+            else if (item.type == ItemType<EssenceofLaw>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofHavoc>();
+            }
+            else if (item.type == ItemType<EssenceofCrystal>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofEleum>();
+            }
+            else if (item.type == ItemType<EssenceofMyst>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofSunlight>();
+            }
+            else if (item.type == ItemType<EssenceofZot>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofBabil>();
+            }
+            else if (item.type == ItemType<EssenceofSurt>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofRend>();
+            }
             else if (item.type == ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<TitanFinger>();

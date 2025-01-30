@@ -4219,246 +4219,1587 @@ ThoriumMod/ZombieRepellentBuffStone: {
 		'''
 }
 
-CalRemix/DestructivePresenceStone: {
+BlueMoon/BountifulHarvestBuffStone: {
+	DisplayName: Bountiful Harvest Stone
 	Tooltip:
 		'''
-		Immunity to Destructive Presence
-		Attacks inflict Destructive Presence
-		'''
-	DisplayName: Destructive Presence Stone
-}
-
-CalRemix/StratusBeverageBuffStone: {
-	Tooltip:
-		'''
-		Immunity to Stratus Beverage
-		Attacks inflict Stratus Beverage
-		'''
-	DisplayName: Stratus Beverage Stone
-}
-
-AlchemistNPCLite/BattleCombStone: {
-	DisplayName: Battle Combination Stone
-	Tooltip:
-		'''
-		Immunity to Battle Combination
-		Attacks inflict Battle Combination
+		Immunity to Bountiful Harvest
+		Attacks inflict Bountiful Harvest
 		'''
 }
 
-AlchemistNPCLite/BlurringStone: {
-	DisplayName: Blurring Stone
+BlueMoon/FloralBlessingBuffStone: {
+	DisplayName: Floral Blessing Stone
 	Tooltip:
 		'''
-		Immunity to Blurring
-		Attacks inflict Blurring
+		Immunity to Floral Blessing
+		Attacks inflict Floral Blessing
 		'''
 }
 
-AlchemistNPCLite/BuilderCombStone: {
-	DisplayName: Builder Combination Stone
+BlueMoon/LunarEmpowermentBuffStone: {
+	DisplayName: Lunar Empowerment Stone
 	Tooltip:
 		'''
-		Immunity to Builder Combination
-		Attacks inflict Builder Combination
+		Immunity to Lunar Empowerment
+		Attacks inflict Lunar Empowerment
 		'''
 }
 
-AlchemistNPCLite/CalamityCombStone: {
-	DisplayName: Calamity Combination Stone
+BlueMoon/MintyFreshnessBuffStone: {
+	DisplayName: Minty Freshness Stone
 	Tooltip:
 		'''
-		Immunity to Calamity Combination
-		Attacks inflict Calamity Combination
+		Immunity to Minty Freshness
+		Attacks inflict Minty Freshness
 		'''
 }
 
-AlchemistNPCLite/CorrosionStone: {
-	DisplayName: Corrosion Stone
+BlueMoon/MoonsRingBuffStone: {
+	DisplayName: Moonlight Harmony Stone
 	Tooltip:
 		'''
-		Immunity to Corrosion
-		Attacks inflict Corrosion
+		Immunity to Moonlight Harmony
+		Attacks inflict Moonlight Harmony
 		'''
 }
 
-AlchemistNPCLite/DiscordBuffStone: {
-	DisplayName: Discord Stone
+CalamityDemutation/DraedonGamerChairBuffStone: {
+	DisplayName: Exo Chair Stone
 	Tooltip:
 		'''
-		Immunity to Discord
-		Attacks inflict Discord
+		Immunity to Exo Chair
+		Attacks inflict Exo Chair
 		'''
 }
 
-AlchemistNPCLite/ExcavationStone: {
-	DisplayName: Excavation Stone
+CalamityDemutation/ElysianGuardRebirthStone: {
+	DisplayName: Elysian Guard Stone
 	Tooltip:
 		'''
-		Immunity to Excavation
-		Attacks inflict Excavation
+		Immunity to Elysian Guard
+		Attacks inflict Elysian Guard
 		'''
 }
 
-AlchemistNPCLite/ExplorerCombStone: {
-	DisplayName: Explorer Combination Stone
+CalamityDemutation/ExoFreezeStone: {
+	DisplayName: Exo Freeze Stone
 	Tooltip:
 		'''
-		Immunity to Explorer Combination
-		Attacks inflict Explorer Combination
+		Immunity to Exo Freeze
+		Attacks inflict Exo Freeze
 		'''
 }
 
-AlchemistNPCLite/FishingCombStone: {
-	DisplayName: Fishing Combination Stone
+CalamityDemutation/GladiatorSwordsStone: {
+	DisplayName: Gladiator Swords Stone
 	Tooltip:
 		'''
-		Immunity to Fishing Combination
-		Attacks inflict Fishing Combination
+		Immunity to Gladiator Swords
+		Attacks inflict Gladiator Swords
 		'''
 }
 
-AlchemistNPCLite/FortitudeStone: {
-	DisplayName: Fortitude Stone
+CalamityDemutation/LoreItemEffectStone: {
+	DisplayName: Lore Item Effect Stone
 	Tooltip:
 		'''
-		Immunity to Fortitude
-		Attacks inflict Fortitude
+		Immunity to Lore Item Effect
+		Attacks inflict Lore Item Effect
 		'''
 }
 
-AlchemistNPCLite/GreaterDangersenseStone: {
-	DisplayName: Greater Dangersense Stone
+CalamityDemutation/MagicHatBuffStone: {
+	DisplayName: Magic Hat Stone
 	Tooltip:
 		'''
-		Immunity to Greater Dangersense
-		Attacks inflict Greater Dangersense
+		Immunity to Magic Hat
+		Attacks inflict Magic Hat
 		'''
 }
 
-AlchemistNPCLite/LongInvincibleStone: {
-	DisplayName: Longer Invincibility Stone
+CalamityDemutation/ArmorShatteringStone: {
+	DisplayName: Armor Shattering Stone
 	Tooltip:
 		'''
-		Immunity to Longer Invincibility
-		Attacks inflict Longer Invincibility
+		Immunity to Armor Shattering
+		Attacks inflict Armor Shattering
 		'''
 }
 
-AlchemistNPCLite/MageCombStone: {
-	DisplayName: Mage Combination Stone
+CalamityDemutation/CadenceStone: {
+	DisplayName: Cadence Stone
 	Tooltip:
 		'''
-		Immunity to Mage Combination
-		Attacks inflict Mage Combination
+		Immunity to Cadence
+		Attacks inflict Cadence
 		'''
 }
 
-AlchemistNPCLite/NinjaSkillStone: {
-	DisplayName: Ninja Stone
+CalamityDemutation/DraconicSurgeBuffStone: {
+	DisplayName: Draconic Surge Buff Stone
 	Tooltip:
 		'''
-		Immunity to Ninja
-		Attacks inflict Ninja
+		Immunity to Draconic Surge Buff
+		Attacks inflict Draconic Surge Buff
 		'''
 }
 
-AlchemistNPCLite/RangerCombStone: {
-	DisplayName: Ranger Combination Stone
+CalamityDemutation/InvincibleStone: {
+	DisplayName: Invincible Stone
 	Tooltip:
 		'''
-		Immunity to Ranger Combination
-		Attacks inflict Ranger Combination
+		Immunity to Invincible
+		Attacks inflict Invincible
 		'''
 }
 
-AlchemistNPCLite/StationUltimaBuffStone: {
-	DisplayName: Station Ultima Stone
+CalamityDemutation/PenumbraBuffStone: {
+	DisplayName: Penumbra Buff Stone
 	Tooltip:
 		'''
-		Immunity to Station Ultima
-		Attacks inflict Station Ultima
+		Immunity to Penumbra Buff
+		Attacks inflict Penumbra Buff
 		'''
 }
 
-AlchemistNPCLite/SummonerCombStone: {
-	DisplayName: Summoner Combination Stone
+CalamityDemutation/ProfanedRageBuffStone: {
+	DisplayName: Profaned Rage Buff Stone
 	Tooltip:
 		'''
-		Immunity to Summoner Combination
-		Attacks inflict Summoner Combination
+		Immunity to Profaned Rage Buff
+		Attacks inflict Profaned Rage Buff
 		'''
 }
 
-AlchemistNPCLite/SunshineStone: {
-	DisplayName: Sunshine Stone
+CalamityDemutation/RevivifyStone: {
+	DisplayName: Revivify Stone
 	Tooltip:
 		'''
-		Immunity to Sunshine
-		Attacks inflict Sunshine
+		Immunity to Revivify
+		Attacks inflict Revivify
 		'''
 }
 
-AlchemistNPCLite/TankCombStone: {
-	DisplayName: Tank Combination (w/Modded) Stone
+CalamityDemutation/TitanScaleStone: {
+	DisplayName: Titan Scale Stone
 	Tooltip:
 		'''
-		Immunity to Tank Combination (w/Modded)
-		Attacks inflict Tank Combination (w/Modded)
+		Immunity to Titan Scale
+		Attacks inflict Titan Scale
 		'''
 }
 
-AlchemistNPCLite/TitanSkinStone: {
-	DisplayName: Titan Skin Stone
+CalamityDemutation/TriumphBuffStone: {
+	DisplayName: Triumph Buff Stone
 	Tooltip:
 		'''
-		Immunity to Titan Skin
-		Attacks inflict Titan Skin
+		Immunity to Triumph Buff
+		Attacks inflict Triumph Buff
 		'''
 }
 
-AlchemistNPCLite/TrapsBuffStone: {
-	DisplayName: Traps Buff Stone
+CalamityDemutation/YharimPowerStone: {
+	DisplayName: Yharim Power Stone
 	Tooltip:
 		'''
-		Immunity to Traps Buff
-		Attacks inflict Traps Buff
+		Immunity to Yharim Power
+		Attacks inflict Yharim Power
 		'''
 }
 
-AlchemistNPCLite/TrueDiscordBuffStone: {
-	DisplayName: True Discord Stone
+CalamityHunt/AbsorptionStone: {
+	DisplayName: Gobbed Stone
 	Tooltip:
 		'''
-		Immunity to True Discord
-		Attacks inflict True Discord
+		Immunity to Gobbed
+		Attacks inflict Gobbed
 		'''
 }
 
-AlchemistNPCLite/UniversalCombStone: {
-	DisplayName: Universal Combination Stone
+CalamityHunt/FusionBurnStone: {
+	DisplayName: Fusion Burn Stone
 	Tooltip:
 		'''
-		Immunity to Universal Combination
-		Attacks inflict Universal Combination
+		Immunity to Fusion Burn
+		Attacks inflict Fusion Burn
 		'''
 }
 
-AlchemistNPCLite/VanTankCombStone: {
-	DisplayName: Tank Combination (Vanilla) Stone
+CalamityHunt/GobbedStone: {
+	DisplayName: Gobbed Stone
 	Tooltip:
 		'''
-		Immunity to Tank Combination (Vanilla)
-		Attacks inflict Tank Combination (Vanilla)
+		Immunity to Gobbed
+		Attacks inflict Gobbed
 		'''
 }
 
-CalRemix/ChlorislimeStone: {
-	DisplayName: The chlorislime will protect you Stone
+CalamityHunt/PaladinPalanquinBuffStone: {
+	DisplayName: Paladin Palanquin Stone
 	Tooltip:
 		'''
-		Immunity to The chlorislime will protect you
-		Attacks inflict The chlorislime will protect you
+		Immunity to Paladin Palanquin
+		Attacks inflict Paladin Palanquin
+		'''
+}
+
+CalamityHunt/SlimeCaneBuffStone: {
+	DisplayName: Slime Soirée Stone
+	Tooltip:
+		'''
+		Immunity to Slime Soirée
+		Attacks inflict Slime Soirée
+		'''
+}
+
+CalamityHunt/SplendorJamBuffStone: {
+	DisplayName: Malice Mode Stone
+	Tooltip:
+		'''
+		Immunity to Malice Mode
+		Attacks inflict Malice Mode
+		'''
+}
+
+CalamityHunt/SwampedStone: {
+	DisplayName: Swamped Stone
+	Tooltip:
+		'''
+		Immunity to Swamped
+		Attacks inflict Swamped
+		'''
+}
+
+CalamityHunt/BloatBabyBuffStone: {
+	DisplayName: Bloat Baby Stone
+	Tooltip:
+		'''
+		Immunity to Bloat Baby
+		Attacks inflict Bloat Baby
+		'''
+}
+
+CalValEX/AmogusBuffStone: {
+	DisplayName: Stratus Astronaut Stone
+	Tooltip:
+		'''
+		Immunity to Stratus Astronaut
+		Attacks inflict Stratus Astronaut
+		'''
+}
+
+CalValEX/DarksunSpiritBuffStone: {
+	DisplayName: Darksun Spirits Stone
+	Tooltip:
+		'''
+		Immunity to Darksun Spirits
+		Attacks inflict Darksun Spirits
+		'''
+}
+
+CalValEX/DiggerBuffStone: {
+	DisplayName: Rebuilt Digger Stone
+	Tooltip:
+		'''
+		Immunity to Rebuilt Digger
+		Attacks inflict Rebuilt Digger
+		'''
+}
+
+CalValEX/EnredBuffStone: {
+	DisplayName: Cosmic Assistant Stone
+	Tooltip:
+		'''
+		Immunity to Cosmic Assistant
+		Attacks inflict Cosmic Assistant
+		'''
+}
+
+CalValEX/GodrgeBuffStone: {
+	DisplayName: Godrge Stone
+	Tooltip:
+		'''
+		Immunity to Godrge
+		Attacks inflict Godrge
+		'''
+}
+
+CalValEX/HeatBuffStone: {
+	DisplayName: Chaos Skulls Stone
+	Tooltip:
+		'''
+		Immunity to Chaos Skulls
+		Attacks inflict Chaos Skulls
+		'''
+}
+
+CalValEX/ImpBuffStone: {
+	DisplayName: Minimpious Stone
+	Tooltip:
+		'''
+		Immunity to Minimpious
+		Attacks inflict Minimpious
+		'''
+}
+
+CalValEX/PhantomBuffStone: {
+	DisplayName: Freed Phantom Spirit Stone
+	Tooltip:
+		'''
+		Immunity to Freed Phantom Spirit
+		Attacks inflict Freed Phantom Spirit
+		'''
+}
+
+CalValEX/ProBuffStone: {
+	DisplayName: The Profaned Armada Stone
+	Tooltip:
+		'''
+		Immunity to The Profaned Armada
+		Attacks inflict The Profaned Armada
+		'''
+}
+
+CalValEX/PylonBuffStone: {
+	DisplayName: Proto-Amplifier Stone
+	Tooltip:
+		'''
+		Immunity to Proto-Amplifier
+		Attacks inflict Proto-Amplifier
+		'''
+}
+
+CalValEX/SeerBuffStone: {
+	DisplayName: Sightseeing Tour Stone
+	Tooltip:
+		'''
+		Immunity to Sightseeing Tour
+		Attacks inflict Sightseeing Tour
+		'''
+}
+
+CalValEX/SolarBunBuffStone: {
+	DisplayName: Sun Bun Stone
+	Tooltip:
+		'''
+		Immunity to Sun Bun
+		Attacks inflict Sun Bun
+		'''
+}
+
+CalValEX/SupJewelBuffStone: {
+	DisplayName: Superstitious Jewel Stone
+	Tooltip:
+		'''
+		Immunity to Superstitious Jewel
+		Attacks inflict Superstitious Jewel
+		'''
+}
+
+CalValEX/VanityCoreBuffStone: {
+	DisplayName: Core of Vanity Stone
+	Tooltip:
+		'''
+		Immunity to Core of Vanity
+		Attacks inflict Core of Vanity
+		'''
+}
+
+CalValEX/YeetBuffStone: {
+	DisplayName: Litfish Stone
+	Tooltip:
+		'''
+		Immunity to Litfish
+		Attacks inflict Litfish
+		'''
+}
+
+CalValEX/AnthozoanBuffStone: {
+	DisplayName: Cambrian Crustacean Stone
+	Tooltip:
+		'''
+		Immunity to Cambrian Crustacean
+		Attacks inflict Cambrian Crustacean
+		'''
+}
+
+CalValEX/AuricTeslaBuffStone: {
+	DisplayName: Auric Tesla Stone
+	Tooltip:
+		'''
+		Immunity to Auric Tesla
+		Attacks inflict Auric Tesla
+		'''
+}
+
+CalValEX/BikeBuffStone: {
+	DisplayName: Profaned Cycle Stone
+	Tooltip:
+		'''
+		Immunity to Profaned Cycle
+		Attacks inflict Profaned Cycle
+		'''
+}
+
+CalValEX/BloodstoneCarriageBuffStone: {
+	DisplayName: Bloodstone Carriage Stone
+	Tooltip:
+		'''
+		Immunity to Bloodstone Carriage
+		Attacks inflict Bloodstone Carriage
+		'''
+}
+
+CalValEX/DraedonCartBuffStone: {
+	DisplayName: Draedon Cart Stone
+	Tooltip:
+		'''
+		Immunity to Draedon Cart
+		Attacks inflict Draedon Cart
+		'''
+}
+
+CalValEX/FloatyBuffStone: {
+	DisplayName: Floaty Rug Stone
+	Tooltip:
+		'''
+		Immunity to Floaty Rug
+		Attacks inflict Floaty Rug
+		'''
+}
+
+CalValEX/GodRiderBuffStone: {
+	DisplayName: God Rider Stone
+	Tooltip:
+		'''
+		Immunity to God Rider
+		Attacks inflict God Rider
+		'''
+}
+
+CalValEX/HadarianBuffStone: {
+	DisplayName: Hadarian Fledgling Stone
+	Tooltip:
+		'''
+		Immunity to Hadarian Fledgling
+		Attacks inflict Hadarian Fledgling
+		'''
+}
+
+CalValEX/HiveVuffStone: {
+	DisplayName: Conglomeration Mind Stone
+	Tooltip:
+		'''
+		Immunity to Conglomeration Mind
+		Attacks inflict Conglomeration Mind
+		'''
+}
+
+CalValEX/LeviathanMountBuffStone: {
+	DisplayName: Leviathan Guppy Stone
+	Tooltip:
+		'''
+		Immunity to Leviathan Guppy
+		Attacks inflict Leviathan Guppy
+		'''
+}
+
+CalValEX/NuclearHorrorBuffStone: {
+	DisplayName: Nuclear Horror Stone
+	Tooltip:
+		'''
+		Immunity to Nuclear Horror
+		Attacks inflict Nuclear Horror
+		'''
+}
+
+CalValEX/PBGMountBuffStone: {
+	DisplayName: Plague Rider Stone
+	Tooltip:
+		'''
+		Immunity to Plague Rider
+		Attacks inflict Plague Rider
+		'''
+}
+
+CalValEX/SilvaJeepBuffStone: {
+	DisplayName: Silvian Jeep Stone
+	Tooltip:
+		'''
+		Immunity to Silvian Jeep
+		Attacks inflict Silvian Jeep
+		'''
+}
+
+CalValEX/TractorMountStone: {
+	DisplayName: Wulfrum Tank Stone
+	Tooltip:
+		'''
+		Immunity to Wulfrum Tank
+		Attacks inflict Wulfrum Tank
+		'''
+}
+
+CalValEX/YharonMountBuffStone: {
+	DisplayName: Yharite Stone
+	Tooltip:
+		'''
+		Immunity to Yharite
+		Attacks inflict Yharite
+		'''
+}
+
+CalValEX/YhogoStickBuffStone: {
+	DisplayName: Godseeker Pogo Stone
+	Tooltip:
+		'''
+		Immunity to Godseeker Pogo
+		Attacks inflict Godseeker Pogo
+		'''
+}
+
+CalValEX/AlarmClockBuffStone: {
+	DisplayName: Alarm Clock Stone
+	Tooltip:
+		'''
+		Immunity to Alarm Clock
+		Attacks inflict Alarm Clock
+		'''
+}
+
+CalValEX/AltarBellBuffStone: {
+	DisplayName: Altar Bell Stone
+	Tooltip:
+		'''
+		Immunity to Altar Bell
+		Attacks inflict Altar Bell
+		'''
+}
+
+CalValEX/BestInstrumentBuffStone: {
+	DisplayName: Best Instrument Stone
+	Tooltip:
+		'''
+		Immunity to Best Instrument
+		Attacks inflict Best Instrument
+		'''
+}
+
+CalValEX/DustChimeBuffStone: {
+	DisplayName: Dust Chime Stone
+	Tooltip:
+		'''
+		Immunity to Dust Chime
+		Attacks inflict Dust Chime
+		'''
+}
+
+CalValEX/HarbingerOfWorkBuffStone: {
+	DisplayName: Harbinger Of Work Stone
+	Tooltip:
+		'''
+		Immunity to Harbinger Of Work
+		Attacks inflict Harbinger Of Work
+		'''
+}
+
+CalValEX/MaladyBellsBuffStone: {
+	DisplayName: Malady Bells Stone
+	Tooltip:
+		'''
+		Immunity to Malady Bells
+		Attacks inflict Malady Bells
+		'''
+}
+
+CalValEX/NurseryBellBuffStone: {
+	DisplayName: Nursery Bell Stone
+	Tooltip:
+		'''
+		Immunity to Nursery Bell
+		Attacks inflict Nursery Bell
+		'''
+}
+
+CalValEX/PandoraBuffStone: {
+	DisplayName: Pandemonium Box Stone
+	Tooltip:
+		'''
+		Immunity to Pandemonium Box
+		Attacks inflict Pandemonium Box
+		'''
+}
+
+CalValEX/ScratchedGongBuffStone: {
+	DisplayName: Scratched Gong Stone
+	Tooltip:
+		'''
+		Immunity to Scratched Gong
+		Attacks inflict Scratched Gong
+		'''
+}
+
+CalValEX/SpiritDinerBuffStone: {
+	DisplayName: Spirit Diner Bell Stone
+	Tooltip:
+		'''
+		Immunity to Spirit Diner Bell
+		Attacks inflict Spirit Diner Bell
+		'''
+}
+
+CalValEX/TubRuneBuffStone: {
+	DisplayName: T.U.B. Rune Stone
+	Tooltip:
+		'''
+		Immunity to T.U.B. Rune
+		Attacks inflict T.U.B. Rune
+		'''
+}
+
+CalValEX/VaselineBuffStone: {
+	DisplayName: Vaseline Bell Stone
+	Tooltip:
+		'''
+		Immunity to Vaseline Bell
+		Attacks inflict Vaseline Bell
+		'''
+}
+
+CalValEX/WormBellBuffStone: {
+	DisplayName: Slither Charm Stone
+	Tooltip:
+		'''
+		Immunity to Slither Charm
+		Attacks inflict Slither Charm
+		'''
+}
+
+CalValEX/AeroBuffStone: {
+	DisplayName: Aero Slimes Stone
+	Tooltip:
+		'''
+		Immunity to Aero Slimes
+		Attacks inflict Aero Slimes
+		'''
+}
+
+CalValEX/AndroombaBuffStone: {
+	DisplayName: Androomba Stone
+	Tooltip:
+		'''
+		Immunity to Androomba
+		Attacks inflict Androomba
+		'''
+}
+
+CalValEX/AquaBuffStone: {
+	DisplayName: Aquatic Pest Stone
+	Tooltip:
+		'''
+		Immunity to Aquatic Pest
+		Attacks inflict Aquatic Pest
+		'''
+}
+
+CalValEX/AvalonBuffStone: {
+	DisplayName: Ascended Profaned Guardian Stone
+	Tooltip:
+		'''
+		Immunity to Ascended Profaned Guardian
+		Attacks inflict Ascended Profaned Guardian
+		'''
+}
+
+CalValEX/BabySquidBuffStone: {
+	DisplayName: Lil' Squiddo Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Squiddo
+		Attacks inflict Lil' Squiddo
+		'''
+}
+
+CalValEX/BeeBuffStone: {
+	DisplayName: Reprogrammed Plaguebringer Stone
+	Tooltip:
+		'''
+		Immunity to Reprogrammed Plaguebringer
+		Attacks inflict Reprogrammed Plaguebringer
+		'''
+}
+
+CalValEX/BlockarozBuffStone: {
+	DisplayName: A Cube Stone
+	Tooltip:
+		'''
+		Immunity to A Cube
+		Attacks inflict A Cube
+		'''
+}
+
+CalValEX/BrimberryBuffStone: {
+	DisplayName: Brimstone Berry Stone
+	Tooltip:
+		'''
+		Immunity to Brimstone Berry
+		Attacks inflict Brimstone Berry
+		'''
+}
+
+CalValEX/BuppyBuffStone: {
+	DisplayName: Buppy Stone
+	Tooltip:
+		'''
+		Immunity to Buppy
+		Attacks inflict Buppy
+		'''
+}
+
+CalValEX/CalamityBABYBuffStone: {
+	DisplayName: God's Presence Stone
+	Tooltip:
+		'''
+		Immunity to God's Presence
+		Attacks inflict God's Presence
+		'''
+}
+
+CalValEX/CatfishBuffStone: {
+	DisplayName: Fishcat Stone
+	Tooltip:
+		'''
+		Immunity to Fishcat
+		Attacks inflict Fishcat
+		'''
+}
+
+CalValEX/ChilledOutStone: {
+	DisplayName: Cool Dude Stone
+	Tooltip:
+		'''
+		Immunity to Cool Dude
+		Attacks inflict Cool Dude
+		'''
+}
+
+CalValEX/ckidbuffStone: {
+	DisplayName: Chilled Out 2 Stone
+	Tooltip:
+		'''
+		Immunity to Chilled Out 2
+		Attacks inflict Chilled Out 2
+		'''
+}
+
+CalValEX/ClamHermitBuffStone: {
+	DisplayName: Clam Hermit Stone
+	Tooltip:
+		'''
+		Immunity to Clam Hermit
+		Attacks inflict Clam Hermit
+		'''
+}
+
+CalValEX/CnidBuffStone: {
+	DisplayName: Little Cnidrion Stone
+	Tooltip:
+		'''
+		Immunity to Little Cnidrion
+		Attacks inflict Little Cnidrion
+		'''
+}
+
+CalValEX/CoolBlueBuffStone: {
+	DisplayName: Cool Blue Dudes Stone
+	Tooltip:
+		'''
+		Immunity to Cool Blue Dudes
+		Attacks inflict Cool Blue Dudes
+		'''
+}
+
+CalValEX/CrabBuffStone: {
+	DisplayName: Fungal Crab Stone
+	Tooltip:
+		'''
+		Immunity to Fungal Crab
+		Attacks inflict Fungal Crab
+		'''
+}
+
+CalValEX/DebrisPetStone: {
+	DisplayName: Phantom Buggo Stone
+	Tooltip:
+		'''
+		Immunity to Phantom Buggo
+		Attacks inflict Phantom Buggo
+		'''
+}
+
+CalValEX/DEBuffStone: {
+	DisplayName: Dark Aura Stone
+	Tooltip:
+		'''
+		Immunity to Dark Aura
+		Attacks inflict Dark Aura
+		'''
+}
+
+CalValEX/DesertBuffStone: {
+	DisplayName: Desert Pest Stone
+	Tooltip:
+		'''
+		Immunity to Desert Pest
+		Attacks inflict Desert Pest
+		'''
+}
+
+CalValEX/DeusBuffStone: {
+	DisplayName: Astrum Demus Stone
+	Tooltip:
+		'''
+		Immunity to Astrum Demus
+		Attacks inflict Astrum Demus
+		'''
+}
+
+CalValEX/DogBuffStone: {
+	DisplayName: The Devourer of Gods Stone
+	Tooltip:
+		'''
+		Immunity to The Devourer of Gods
+		Attacks inflict The Devourer of Gods
+		'''
+}
+
+CalValEX/DoggobuffStone: {
+	DisplayName: Upset Pupper Stone
+	Tooltip:
+		'''
+		Immunity to Upset Pupper
+		Attacks inflict Upset Pupper
+		'''
+}
+
+CalValEX/EggBuffStone: {
+	DisplayName: Orphaned Egg Stone
+	Tooltip:
+		'''
+		Immunity to Orphaned Egg
+		Attacks inflict Orphaned Egg
+		'''
+}
+
+CalValEX/cloudbuffStone: {
+	DisplayName: Smol Cloud Stone
+	Tooltip:
+		'''
+		Immunity to Smol Cloud
+		Attacks inflict Smol Cloud
+		'''
+}
+
+CalValEX/minihotebuffStone: {
+	DisplayName: Childish Heart Stone
+	Tooltip:
+		'''
+		Immunity to Childish Heart
+		Attacks inflict Childish Heart
+		'''
+}
+
+CalValEX/MoistBuffStone: {
+	DisplayName: Vibrant Siren Child Stone
+	Tooltip:
+		'''
+		Immunity to Vibrant Siren Child
+		Attacks inflict Vibrant Siren Child
+		'''
+}
+
+CalValEX/rarebrimlingbuffStone: {
+	DisplayName: Rare Brimling Stone
+	Tooltip:
+		'''
+		Immunity to Rare Brimling
+		Attacks inflict Rare Brimling
+		'''
+}
+
+CalValEX/RareSsandBuffStone: {
+	DisplayName: Small Sand Elemental Stone
+	Tooltip:
+		'''
+		Immunity to Small Sand Elemental
+		Attacks inflict Small Sand Elemental
+		'''
+}
+
+CalValEX/SsandBuffStone: {
+	DisplayName: Tiny Sand Elemental Stone
+	Tooltip:
+		'''
+		Immunity to Tiny Sand Elemental
+		Attacks inflict Tiny Sand Elemental
+		'''
+}
+
+CalValEX/EurosBuffStone: {
+	DisplayName: Chibii Euros Stone
+	Tooltip:
+		'''
+		Immunity to Chibii Euros
+		Attacks inflict Chibii Euros
+		'''
+}
+
+CalValEX/ExcalibuffStone: {
+	DisplayName: Claidheamh Soluis Stone
+	Tooltip:
+		'''
+		Immunity to Claidheamh Soluis
+		Attacks inflict Claidheamh Soluis
+		'''
+}
+
+CalValEX/AresBuffStone: {
+	DisplayName: Toy XF-Ares Stone
+	Tooltip:
+		'''
+		Immunity to Toy XF-Ares
+		Attacks inflict Toy XF-Ares
+		'''
+}
+
+CalValEX/ExoMayhemBuffStone: {
+	DisplayName: Toy Exo Mechs Stone
+	Tooltip:
+		'''
+		Immunity to Toy Exo Mechs
+		Attacks inflict Toy Exo Mechs
+		'''
+}
+
+CalValEX/ThanatosBuffStone: {
+	DisplayName: Toy XM-Thanatos Stone
+	Tooltip:
+		'''
+		Immunity to Toy XM-Thanatos
+		Attacks inflict Toy XM-Thanatos
+		'''
+}
+
+CalValEX/TwinsBuffStone: {
+	DisplayName: Toy XS-Apollo and Artemis Stone
+	Tooltip:
+		'''
+		Immunity to Toy XS-Apollo and Artemis
+		Attacks inflict Toy XS-Apollo and Artemis
+		'''
+}
+
+CalValEX/FathomEelBuffStone: {
+	DisplayName: Fathom Eel Stone
+	Tooltip:
+		'''
+		Immunity to Fathom Eel
+		Attacks inflict Fathom Eel
+		'''
+}
+
+CalValEX/FistuloidBuffStone: {
+	DisplayName: Fleshtuloid Stone
+	Tooltip:
+		'''
+		Immunity to Fleshtuloid
+		Attacks inflict Fleshtuloid
+		'''
+}
+
+CalValEX/FogBuffStone: {
+	DisplayName: Fogbound Stone
+	Tooltip:
+		'''
+		Immunity to Fogbound
+		Attacks inflict Fogbound
+		'''
+}
+
+CalValEX/FollyBuffStone: {
+	DisplayName: Dracoswarmer Stone
+	Tooltip:
+		'''
+		Immunity to Dracoswarmer
+		Attacks inflict Dracoswarmer
+		'''
+}
+
+CalValEX/GeorgeBuffStone: {
+	DisplayName: George Stone
+	Tooltip:
+		'''
+		Immunity to George
+		Attacks inflict George
+		'''
+}
+
+CalValEX/GoozmaBuffStone: {
+	DisplayName: Goozma Stone
+	Tooltip:
+		'''
+		Immunity to Goozma
+		Attacks inflict Goozma
+		'''
+}
+
+CalValEX/GrandBuffStone: {
+	DisplayName: Great Grandson Shark Stone
+	Tooltip:
+		'''
+		Immunity to Great Grandson Shark
+		Attacks inflict Great Grandson Shark
+		'''
+}
+
+CalValEX/HivelingBuffStone: {
+	DisplayName: Cluster Mind Stone
+	Tooltip:
+		'''
+		Immunity to Cluster Mind
+		Attacks inflict Cluster Mind
+		'''
+}
+
+CalValEX/HoodiedolistBuffStone: {
+	DisplayName: Hoodiedolist Stone
+	Tooltip:
+		'''
+		Immunity to Hoodiedolist
+		Attacks inflict Hoodiedolist
+		'''
+}
+
+CalValEX/JaredBuffStone: {
+	DisplayName: Eidolon Wyrm Stone
+	Tooltip:
+		'''
+		Immunity to Eidolon Wyrm
+		Attacks inflict Eidolon Wyrm
+		'''
+}
+
+CalValEX/JellyBuffStone: {
+	DisplayName: Astral Gelatin Stone
+	Tooltip:
+		'''
+		Immunity to Astral Gelatin
+		Attacks inflict Astral Gelatin
+		'''
+}
+
+CalValEX/JunkoBuffStone: {
+	DisplayName: Junsi Stone
+	Tooltip:
+		'''
+		Immunity to Junsi
+		Attacks inflict Junsi
+		'''
+}
+
+CalValEX/LumpyBuffStone: {
+	DisplayName: Lumpy Stone
+	Tooltip:
+		'''
+		Immunity to Lumpy
+		Attacks inflict Lumpy
+		'''
+}
+
+CalValEX/MechaGeorgeBuffStone: {
+	DisplayName: G30RG3 Stone
+	Tooltip:
+		'''
+		Immunity to G30RG3
+		Attacks inflict G30RG3
+		'''
+}
+
+CalValEX/MiniBumbleBuffStone: {
+	DisplayName: Mini Birb Stone
+	Tooltip:
+		'''
+		Immunity to Mini Birb
+		Attacks inflict Mini Birb
+		'''
+}
+
+CalValEX/MiniDogeBuffStone: {
+	DisplayName: Murderswarm Stone
+	Tooltip:
+		'''
+		Immunity to Murderswarm
+		Attacks inflict Murderswarm
+		'''
+}
+
+CalValEX/MoistScourgeBuffStone: {
+	DisplayName: Dune Pest Stone
+	Tooltip:
+		'''
+		Immunity to Dune Pest
+		Attacks inflict Dune Pest
+		'''
+}
+
+CalValEX/NuclearFuryshronBuffStone: {
+	DisplayName: Dukapitated Stone
+	Tooltip:
+		'''
+		Immunity to Dukapitated
+		Attacks inflict Dukapitated
+		'''
+}
+
+CalValEX/NuggetBuffStone: {
+	DisplayName: The Jungle Nugget Stone
+	Tooltip:
+		'''
+		Immunity to The Jungle Nugget
+		Attacks inflict The Jungle Nugget
+		'''
+}
+
+CalValEX/OmegaSquidBuffStone: {
+	DisplayName: Omega Cultists Stone
+	Tooltip:
+		'''
+		Immunity to Omega Cultists
+		Attacks inflict Omega Cultists
+		'''
+}
+
+CalValEX/OrbBuffStone: {
+	DisplayName: The Dragonball Stone
+	Tooltip:
+		'''
+		Immunity to The Dragonball
+		Attacks inflict The Dragonball
+		'''
+}
+
+CalValEX/PhageBuffStone: {
+	DisplayName: Space Sick Stone
+	Tooltip:
+		'''
+		Immunity to Space Sick
+		Attacks inflict Space Sick
+		'''
+}
+
+CalValEX/PillagerBuffStone: {
+	DisplayName: Province Pilferer Stone
+	Tooltip:
+		'''
+		Immunity to Province Pilferer
+		Attacks inflict Province Pilferer
+		'''
+}
+
+CalValEX/PolterBuffStone: {
+	DisplayName: Polter-Chan Stone
+	Tooltip:
+		'''
+		Immunity to Polter-Chan
+		Attacks inflict Polter-Chan
+		'''
+}
+
+CalValEX/PuppoBuffStone: {
+	DisplayName: Chihuahua Puppo Stone
+	Tooltip:
+		'''
+		Immunity to Chihuahua Puppo
+		Attacks inflict Chihuahua Puppo
+		'''
+}
+
+CalValEX/ReaperBuffStone: {
+	DisplayName: Buff Man Stone
+	Tooltip:
+		'''
+		Immunity to Buff Man
+		Attacks inflict Buff Man
+		'''
+}
+
+CalValEX/RedPandaBuffStone: {
+	DisplayName: Tara Stone
+	Tooltip:
+		'''
+		Immunity to Tara
+		Attacks inflict Tara
+		'''
+}
+
+CalValEX/RembuffStone: {
+	DisplayName: Giant Decapitated Floating Siren Head Stone
+	Tooltip:
+		'''
+		Immunity to Giant Decapitated Floating Siren Head
+		Attacks inflict Giant Decapitated Floating Siren Head
+		'''
+}
+
+CalValEX/RepurposedMonitorBuffStone: {
+	DisplayName: Charletron Stone
+	Tooltip:
+		'''
+		Immunity to Charletron
+		Attacks inflict Charletron
+		'''
+}
+
+CalValEX/RoverSpindleBuffStone: {
+	DisplayName: Wulfrum Rover Stone
+	Tooltip:
+		'''
+		Immunity to Wulfrum Rover
+		Attacks inflict Wulfrum Rover
+		'''
+}
+
+CalValEX/RustyBuffStone: {
+	DisplayName: Rusty Mimic Stone
+	Tooltip:
+		'''
+		Immunity to Rusty Mimic
+		Attacks inflict Rusty Mimic
+		'''
+}
+
+CalValEX/SadStoneBuffStone: {
+	DisplayName: Sad Rock Stone
+	Tooltip:
+		'''
+		Immunity to Sad Rock
+		Attacks inflict Sad Rock
+		'''
+}
+
+CalValEX/ScorchingFuryshronBuffStone: {
+	DisplayName: Scorching Dukapitated Stone
+	Tooltip:
+		'''
+		Immunity to Scorching Dukapitated
+		Attacks inflict Scorching Dukapitated
+		'''
+}
+
+CalValEX/ScourgeBuffStone: {
+	DisplayName: Twin Pests Stone
+	Tooltip:
+		'''
+		Immunity to Twin Pests
+		Attacks inflict Twin Pests
+		'''
+}
+
+CalValEX/AmberBuffStone: {
+	DisplayName: Amber Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Amber Scuttler
+		Attacks inflict Amber Scuttler
+		'''
+}
+
+CalValEX/AmethystBuffStone: {
+	DisplayName: Amethyst Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Amethyst Scuttler
+		Attacks inflict Amethyst Scuttler
+		'''
+}
+
+CalValEX/BejeweledBuffStone: {
+	DisplayName: Bejeweled Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Bejeweled Scuttler
+		Attacks inflict Bejeweled Scuttler
+		'''
+}
+
+CalValEX/CrystalBuffStone: {
+	DisplayName: Crystal Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Crystal Scuttler
+		Attacks inflict Crystal Scuttler
+		'''
+}
+
+CalValEX/DiamondBuffStone: {
+	DisplayName: Diamond Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Diamond Scuttler
+		Attacks inflict Diamond Scuttler
+		'''
+}
+
+CalValEX/EmeraldBuffStone: {
+	DisplayName: Emerald Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Emerald Scuttler
+		Attacks inflict Emerald Scuttler
+		'''
+}
+
+CalValEX/RubyBuffStone: {
+	DisplayName: Ruby Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Ruby Scuttler
+		Attacks inflict Ruby Scuttler
+		'''
+}
+
+CalValEX/SapphireBuffStone: {
+	DisplayName: Sapphire Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Sapphire Scuttler
+		Attacks inflict Sapphire Scuttler
+		'''
+}
+
+CalValEX/TopazBuffStone: {
+	DisplayName: Topaz Scuttler Stone
+	Tooltip:
+		'''
+		Immunity to Topaz Scuttler
+		Attacks inflict Topaz Scuttler
+		'''
+}
+
+CalValEX/SentiPetStone: {
+	DisplayName: The Sentinels Stone
+	Tooltip:
+		'''
+		Immunity to The Sentinels
+		Attacks inflict The Sentinels
+		'''
+}
+
+CalValEX/SepulcherBuffStone: {
+	DisplayName: Fallen Sepulchling Stone
+	Tooltip:
+		'''
+		Immunity to Fallen Sepulchling
+		Attacks inflict Fallen Sepulchling
+		'''
+}
+
+CalValEX/SepulcherBuffNeoStone: {
+	DisplayName: Sepulchling Stone
+	Tooltip:
+		'''
+		Immunity to Sepulchling
+		Attacks inflict Sepulchling
+		'''
+}
+
+CalValEX/ShartBuffStone: {
+	DisplayName: The Sharks Stone
+	Tooltip:
+		'''
+		Immunity to The Sharks
+		Attacks inflict The Sharks
+		'''
+}
+
+CalValEX/SigBuffStone: {
+	DisplayName: Cloak and Dagger Stone
+	Tooltip:
+		'''
+		Immunity to Cloak and Dagger
+		Attacks inflict Cloak and Dagger
+		'''
+}
+
+CalValEX/SkaterBuffStone: {
+	DisplayName: Sulphurous Skater Nymph Stone
+	Tooltip:
+		'''
+		Immunity to Sulphurous Skater Nymph
+		Attacks inflict Sulphurous Skater Nymph
+		'''
+}
+
+CalValEX/SlimeBuffStone: {
+	DisplayName: Slime Demigods Stone
+	Tooltip:
+		'''
+		Immunity to Slime Demigods
+		Attacks inflict Slime Demigods
+		'''
+}
+
+CalValEX/SmaulerBuffStone: {
+	DisplayName: Smauler Stone
+	Tooltip:
+		'''
+		Immunity to Smauler
+		Attacks inflict Smauler
+		'''
+}
+
+CalValEX/StasisArmoredBuffStone: {
+	DisplayName: Armored Stasis Drone Stone
+	Tooltip:
+		'''
+		Immunity to Armored Stasis Drone
+		Attacks inflict Armored Stasis Drone
+		'''
+}
+
+CalValEX/StasisNakedBuffStone: {
+	DisplayName: Naked Stasis Drone Stone
+	Tooltip:
+		'''
+		Immunity to Naked Stasis Drone
+		Attacks inflict Naked Stasis Drone
+		'''
+}
+
+CalValEX/SWPetBuffStone: {
+	DisplayName: Lil' Weaver Stone
+	Tooltip:
+		'''
+		Immunity to Lil' Weaver
+		Attacks inflict Lil' Weaver
+		'''
+}
+
+CalValEX/TerminalRockBuffStone: {
+	DisplayName: Xeroc's Pet Rock Stone
+	Tooltip:
+		'''
+		Immunity to Xeroc's Pet Rock
+		Attacks inflict Xeroc's Pet Rock
+		'''
+}
+
+CalValEX/TUBBUFFStone: {
+	DisplayName: T.U.B Stone
+	Tooltip:
+		'''
+		Immunity to T.U.B
+		Attacks inflict T.U.B
+		'''
+}
+
+CalValEX/UngodlyBuffStone: {
+	DisplayName: Ungodly Dude Stone
+	Tooltip:
+		'''
+		Immunity to Ungodly Dude
+		Attacks inflict Ungodly Dude
+		'''
+}
+
+CalValEX/WulfrumArmyStone: {
+	DisplayName: Wulfrum Army Stone
+	Tooltip:
+		'''
+		Immunity to Wulfrum Army
+		Attacks inflict Wulfrum Army
+		'''
+}
+
+CalValEX/WyrmBuffStone: {
+	DisplayName: Eidolon Inchwyrm Stone
+	Tooltip:
+		'''
+		Immunity to Eidolon Inchwyrm
+		Attacks inflict Eidolon Inchwyrm
+		'''
+}
+
+CalValEX/YharimSquidBuffStone: {
+	DisplayName: Auric Squiddo Stone
+	Tooltip:
+		'''
+		Immunity to Auric Squiddo
+		Attacks inflict Auric Squiddo
+		'''
+}
+
+CalValEX/ZygoteBuffStone: {
+	DisplayName: Ghastly Zygote Stone
+	Tooltip:
+		'''
+		Immunity to Ghastly Zygote
+		Attacks inflict Ghastly Zygote
+		'''
+}
+
+CalValEX/ClassicBrimmyBuffStone: {
+	DisplayName: Brimstone Elemental Transformation Stone
+	Tooltip:
+		'''
+		Immunity to Brimstone Elemental Transformation
+		Attacks inflict Brimstone Elemental Transformation
+		'''
+}
+
+CalValEX/CloudTransformationBuffStone: {
+	DisplayName: Cloud Elemental Transformation Stone
+	Tooltip:
+		'''
+		Immunity to Cloud Elemental Transformation
+		Attacks inflict Cloud Elemental Transformation
+		'''
+}
+
+CalValEX/ProtoRingBuffStone: {
+	DisplayName: Proto-Andromeda Stone
+	Tooltip:
+		'''
+		Immunity to Proto-Andromeda
+		Attacks inflict Proto-Andromeda
+		'''
+}
+
+CalValEX/SandTransformationBuffStone: {
+	DisplayName: Sand Elemental Transformation Stone
+	Tooltip:
+		'''
+		Immunity to Sand Elemental Transformation
+		Attacks inflict Sand Elemental Transformation
+		'''
+}
+
+CalValEX/SignutTransformationBuffStone: {
+	DisplayName: Ethereal Assassin Stone
+	Tooltip:
+		'''
+		Immunity to Ethereal Assassin
+		Attacks inflict Ethereal Assassin
+		'''
+}
+
+CalValEX/MorshuBuffStone: {
+	DisplayName: Morshu Stone
+	Tooltip:
+		'''
+		Immunity to Morshu
+		Attacks inflict Morshu
 		'''
 }
 
@@ -4579,11 +5920,191 @@ CatalystMod/ZeroGravityStone: {
 		'''
 }
 
-miningcracks_take_on_luiafk/DrillMountBuffStone: {
-	DisplayName: Laser Drill Mount Stone
+Clamity/SupremeLuckyStone: {
+	DisplayName: Supreme Lucky Stone
 	Tooltip:
 		'''
-		Immunity to Laser Drill Mount
-		Attacks inflict Laser Drill Mount
+		Immunity to Supreme Lucky
+		Attacks inflict Supreme Lucky
 		'''
+}
+
+Clamity/HellstoneShellfishStaffBuffStone: {
+	DisplayName: Hellstone Shellfish Stone
+	Tooltip:
+		'''
+		Immunity to Hellstone Shellfish
+		Attacks inflict Hellstone Shellfish
+		'''
+}
+
+Clamity/HellsBellsBuffStone: {
+	DisplayName: Obsidian bell Stone
+	Tooltip:
+		'''
+		Immunity to Obsidian bell
+		Attacks inflict Obsidian bell
+		'''
+}
+
+Clamity/HeavyMetalTrashCanBuffStone: {
+	DisplayName: Mini Bocchi Stone
+	Tooltip:
+		'''
+		Immunity to Mini Bocchi
+		Attacks inflict Mini Bocchi
+		'''
+}
+
+Clamity/CopperShortstrikeStone: {
+	DisplayName: Copper Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Copper Shortstrike
+		Attacks inflict Copper Shortstrike
+		'''
+}
+
+Clamity/GladiusShortstrikeStone: {
+	DisplayName: Gladius Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Gladius Shortstrike
+		Attacks inflict Gladius Shortstrike
+		'''
+}
+
+Clamity/GoldShortstrikeStone: {
+	DisplayName: Gold Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Gold Shortstrike
+		Attacks inflict Gold Shortstrike
+		'''
+}
+
+Clamity/IronShortstrikeStone: {
+	DisplayName: Iron Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Iron Shortstrike
+		Attacks inflict Iron Shortstrike
+		'''
+}
+
+Clamity/LeadShortstrikeStone: {
+	DisplayName: Lead Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Lead Shortstrike
+		Attacks inflict Lead Shortstrike
+		'''
+}
+
+Clamity/PlatinumShortstrikeStone: {
+	DisplayName: Platinum Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Platinum Shortstrike
+		Attacks inflict Platinum Shortstrike
+		'''
+}
+
+Clamity/SilverShortstrikeStone: {
+	DisplayName: Silver Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Silver Shortstrike
+		Attacks inflict Silver Shortstrike
+		'''
+}
+
+Clamity/TinShortstrikeStone: {
+	DisplayName: Tin Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Tin Shortstrike
+		Attacks inflict Tin Shortstrike
+		'''
+}
+
+Clamity/TungstenShortstrikeStone: {
+	DisplayName: Tungsten Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Tungsten Shortstrike
+		Attacks inflict Tungsten Shortstrike
+		'''
+}
+
+Clamity/WulfrumShortstrikeStone: {
+	DisplayName: Wulfrum Shortstrike Stone
+	Tooltip:
+		'''
+		Immunity to Wulfrum Shortstrike
+		Attacks inflict Wulfrum Shortstrike
+		'''
+}
+
+Clamity/BrimChairBuffStone: {
+	DisplayName: Brimthrone Stone
+	Tooltip:
+		'''
+		Immunity to Brimthrone
+		Attacks inflict Brimthrone
+		'''
+}
+
+Clamity/PlagueChairBuffStone: {
+	DisplayName: Plague Chair Stone
+	Tooltip:
+		'''
+		Immunity to Plague Chair
+		Attacks inflict Plague Chair
+		'''
+}
+
+Clamity/TitanScalePotionBuffStone: {
+	DisplayName: Titan Scale Stone
+	Tooltip:
+		'''
+		Immunity to Titan Scale
+		Attacks inflict Titan Scale
+		'''
+}
+
+Clamity/ExoBaguetteBuffStone: {
+	DisplayName: Exo Baguette Stone
+	Tooltip:
+		'''
+		Immunity to Exo Baguette
+		Attacks inflict Exo Baguette
+		'''
+}
+
+Clamity/PlanterrorStaffBuffStone: {
+	DisplayName: Guntera Stone
+	Tooltip:
+		'''
+		Immunity to Guntera
+		Attacks inflict Guntera
+		'''
+}
+
+VanillaQoL/NurseHealStone: {
+	DisplayName: Nurse Healing Stone
+	Tooltip:
+		'''
+		Immunity to Nurse Healing
+		Attacks inflict Nurse Healing
+		'''
+}
+
+CalRemix/DestructivePresenceStone: {
+	Tooltip:
+		'''
+		Immunity to Destructive Presence
+		Attacks inflict Destructive Presence
+		'''
+	DisplayName: Destructive Presence Stone
 }
