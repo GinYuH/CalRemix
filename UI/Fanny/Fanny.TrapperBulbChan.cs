@@ -1,4 +1,5 @@
-﻿using CalamityMod.Items.Materials;
+﻿using CalamityMod;
+using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.Polterghast;
@@ -68,7 +69,7 @@ namespace CalRemix.UI
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LucyTheAxe)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Meowmere", "Oh, you’ve found the legendary Meowmere? Nyan-tastic! That space sword shooting bouncing nyan cats is like a dream come true, nya~",
-                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Meowmere)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+                "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Meowmere) && Main.LocalPlayer.Remix().miracleUnlocked).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Meowthrower", "Look at that purrfect weapon, desu! It's like a rainbow of nyan-tastic power! OwO So cute and fierce at the same time, nya~! Let’s set the battlefield ablaze with kitty cuteness and colorful chaos, teehee~! ^w^ Unleash the meowgic and watch your enemies flee in adorable terror, nya~!",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Meowthrower>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);

@@ -168,6 +168,15 @@ namespace CalRemix
         };
         public override void SetStaticDefaults()
         {
+            if (CalRemixAddon.Catalyst != null)
+            {
+                BossSlimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("Astrageldon").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("AscendedAstralSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlimeRocks").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlimer").Type);
+            }
             if (!Main.dedServ)
             {
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
