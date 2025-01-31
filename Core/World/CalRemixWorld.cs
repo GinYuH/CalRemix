@@ -497,6 +497,8 @@ namespace CalRemix.Core.World
             writer.Write(deliciousMeat);
             writer.Write(profanedDesert);
             writer.Write(hypothetical);
+            writer.Write(savedAPicture);
+            writer.Write(sneakerheadMode);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -565,6 +567,8 @@ namespace CalRemix.Core.World
             deliciousMeat = reader.ReadBoolean();
             profanedDesert = reader.ReadBoolean();
             hypothetical = reader.ReadBoolean();
+            savedAPicture = reader.ReadBoolean();
+            sneakerheadMode = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
