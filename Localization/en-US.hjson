@@ -126,9 +126,18 @@ Mods: {
 			}
 		}
 
-		InfoDisplays.ElementDisplay.DisplayName: Element Display
+		InfoDisplays: {
+			ElementDisplay.DisplayName: Element Display
+			MoodTracker.DisplayName: Mood Tracker
+			NetWorthDisplay.DisplayName: Net Worth Display
+		}
+
 		Emotes.HypnosEmote.Command: hypnosemote
-		BossChecklistIntegration.PandemicPanic.EntryName: Pandemic Panic
+
+		BossChecklistIntegration: {
+			PandemicPanic.EntryName: Pandemic Panic
+			GaleforceDay.EntryName: Galeforce Day
+		}
 
 		InfernumIntegration: {
 			Origen:
@@ -198,5 +207,8 @@ Mods: {
 				Wulfrum Excavator
 				'''
 		}
+
+		NotAvailable: Mods.CalRemix.NotAvailable
+		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage Class
 	}
 }

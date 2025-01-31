@@ -176,6 +176,7 @@ namespace CalRemix
                 Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlimeRocks").Type);
                 Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlime").Type);
                 Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlimer").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("WulfrumSlime").Type);
             }
             if (!Main.dedServ)
             {

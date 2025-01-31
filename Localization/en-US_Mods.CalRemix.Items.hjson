@@ -2492,6 +2492,138 @@ Weapons: {
 				'''
 			DisplayName: Magmasher
 		}
+
+		BucketofCoal: {
+			DisplayName: Bucket of Coal
+			Tooltip: ""
+		}
+
+		BundleBones: {
+			DisplayName: Bundle o' Bones
+			Tooltip: ""
+		}
+
+		CursedSpear: {
+			DisplayName: Cursed Spear
+			Tooltip: ""
+		}
+
+		DemonCore: {
+			DisplayName: Demon Core
+			Tooltip: ""
+		}
+
+		EcologicalCollapse: {
+			DisplayName: Ecological Collapse
+			Tooltip:
+				'''
+				And there was no more ground to be seen...
+				Throws out up to 10 lumenous mines with lightning auras
+				Stealth strikes ignore the 10 mine cap, but dissipate quicker
+				'''
+		}
+
+		GearworkShield: {
+			DisplayName: Gearwork Shield
+			Tooltip: ""
+		}
+
+		IchorDagger: {
+			DisplayName: Ichor Dagger
+			Tooltip: ""
+		}
+
+		ProfanedNucleus: {
+			DisplayName: Profaned Nucleus
+			Tooltip:
+				'''
+				Throws out a molten chunk of profaned rock that explodes and splits into crystals
+				Stealth strikes leave behind lingering patches of magma
+				'''
+		}
+
+		RazorTeeth: {
+			DisplayName: Razor Teeth
+			Tooltip: ""
+		}
+
+		ScrapBag: {
+			DisplayName: Scrap Claw
+			Tooltip:
+				'''
+				Tosses out scraps
+				Stealth strikes throw a large amount of charged scraps that linger longer
+				'''
+		}
+
+		ShadowsDescent: {
+			DisplayName: Shadow's Descent
+			Tooltip:
+				'''
+				Shoots a shadow ball that ignores gravity and slows down after a short time.While stationary, it shoots spirits and covers an area in a large shadow
+				Stealth strikes also emit dark pulses while stationary
+				Right click to delete all existing shadow balls
+				'They didn't understand its nature, so it was sealed away...'
+				'''
+		}
+
+		ThrowingMissiles: {
+			DisplayName: Throwing Missiles
+			Tooltip:
+				'''
+				Flings erratically moving missiles which home on enemies
+				Stealth strikes unleash a swarm of missiles
+				'''
+		}
+
+		UnsealedSingularity: {
+			DisplayName: Unsealed Singularity
+			Tooltip:
+				'''
+				Cold and alone in the void...Throws a volley of five void flasks which shatter on impact
+				Shattered flasks summon blackholes which pull in enemies and purple void matter
+				Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter
+				'''
+		}
+
+		Warglaive: {
+			DisplayName: Warglaive
+			Tooltip: Stealth strikes stick to tiles
+		}
+
+		WreathofBelial: {
+			DisplayName: Wreath of Belial
+			Tooltip:
+				'''
+				Throws a festive wreath that grows in size until exploding into icicle shards
+				Stealth strikes cause the wreath to suck in nearby enemies
+				'''
+		}
+
+		BlobfishPlushie: {
+			DisplayName: Blobfish Plushie
+			Tooltip: ""
+		}
+
+		DaggerofLiberty: {
+			DisplayName: Daggerof Liberty
+			Tooltip: ""
+		}
+
+		FracturingFist: {
+			DisplayName: Fracturing Fist
+			Tooltip: ""
+		}
+
+		RadGlowstick: {
+			DisplayName: Rad Glowstick
+			Tooltip: ""
+		}
+
+		SylvanSlasher: {
+			DisplayName: Sylvan Slasher
+			Tooltip: ""
+		}
 	}
 }
 
@@ -2910,3 +3042,145 @@ GiftoftheRed: {
 		'''
 	DisplayName: Gift of the Red
 }
+
+NoTomorrow.Tooltip: All friendly projectiles are twice as large
+
+AncientFlashBullet: {
+	DisplayName: Ancient Flash Round
+	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
+}
+
+ChloriumChainmail.Tooltip:
+	'''
+	24% increased damage
+	2% increased critical strike chance
+	'''
+ChloriumConehead.Tooltip:
+	'''
+	16% increased stormbow damage and critical strike chance
+	20% increaesd stormbow shot speed
+	'''
+ChloriumGreaves.Tooltip:
+	'''
+	12% increased critical strike chance
+	22% increased movement speed
+	'''
+AuricSoul.DisplayName: Auric Soul
+
+StratusBeverage: {
+	DisplayName: Stratus Beverage
+	Tooltip:
+		'''
+		May make you feel spacey
+		Causes all projectile shooting weapons to fire two extra homing stars
+		Decreases weapon damage by 33%
+		'''
+}
+
+CannibalNectar: {
+	DisplayName: Cannibal Nectar
+	Tooltip:
+		'''
+		Stops the Pandemic Panic
+		'Smells like strawberry'
+		'''
+}
+
+AuricSword.DisplayName: Auric Sword
+
+UncreasableKicks: {
+	DisplayName: Uncreasable Kicks
+	Tooltip:
+		'''
+		The end of the journey
+		The highest of peaks
+		The most blinding light
+		Uncreasable Kicks, brought to you by Fandom
+
+		Max hp permanently increased by running
+		Constantly exhude net worth
+		Massively boosted run speed
+		'''
+}
+
+LegendPortraitHAYABUSAItem: {
+	DisplayName: Portrait of a Legend - (HAYABUSA)
+	Tooltip: Voice of the Miracle Boy
+}
+
+LegendPortraitMITCHARDItem: {
+	DisplayName: Portrait of a Legend - (MITCHARD)
+	Tooltip: Technical Director, UX Designer
+}
+
+LegendPortraitDASLNEWItem: {
+	DisplayName: Portrait of a Legend - (DASLNEW)
+	Tooltip: Founder, Lead Designer
+}
+
+LegendPortraitPEREZItem: {
+	DisplayName: Portrait of a Legend - (PEREZ)
+	Tooltip: Voice of Fanny
+}
+
+LegendPortraitACKNERItem: {
+	DisplayName: Portrait of a Legend - (ACKNER)
+	Tooltip: Voice of Evil Fanny and Trapper Bulb Chan
+}
+
+LegendPortraitCONROYItem: {
+	DisplayName: Portrait of a Legend - (CONROY)
+	Tooltip: Graphics Lead, Story Lead
+}
+
+LegendPortraitMARINOItem: {
+	DisplayName: Portrait of a Legend - (MARINO)
+	Tooltip: 3D Assets, Saxophone Backing for "Artistic Reinforcment"
+}
+
+LegendPortraitHOOBItem: {
+	DisplayName: Portrait of a Legend - (HOOB)
+	Tooltip: Sound Effects, Additional Graphics
+}
+
+LegendPortraitETTELItem: {
+	DisplayName: Portrait of a Legend - (ETTEL)
+	Tooltip: Lead Musician
+}
+
+LegendPortraitWINGERTItem: {
+	DisplayName: Portrait of a Legend - (WINGERT)
+	Tooltip: Voice of Wonder Flower
+}
+
+LegendPortraitDIRACItem: {
+	DisplayName: Portrait of a Legend - (DIRAC)
+	Tooltip: Test Lead, European Localization
+}
+
+LegendPortraitHUETItem: {
+	DisplayName: Portrait of a Legend - (HUET)
+	Tooltip: Voice of the Crim Son
+}
+
+LegendPortraitYOUItem: {
+	DisplayName: Portrait of a Legend - (YOU)
+	Tooltip: For your continous love and support!
+}
+
+LegendPortraitFALAFELItem: {
+	DisplayName: Portrait of a Legend - (FALAFEL)
+	Tooltip: A very nice cat
+}
+
+LegendPortraitMORETTIItem: {
+	DisplayName: Portrait of a Legend - (MORETTI)
+	Tooltip: Voice of the Liminal Critic
+}
+
+LegendMemorialItem: {
+	DisplayName: Memorial Poster
+	Tooltip: A beautiful soul gone too soon...
+}
+
+LegendPromoItem.DisplayName: Promotional Poster

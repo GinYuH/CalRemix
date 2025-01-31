@@ -209,3 +209,8 @@ FractalCrawlerBuff: {
 }
 
 DestructivePresence.DisplayName: Destructive Presence
+
+StratusBeverageBuff: {
+	DisplayName: Stratus Beverage
+	Description: Seeing stars
+}

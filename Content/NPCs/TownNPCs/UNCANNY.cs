@@ -179,7 +179,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             Vector2 npcOffset = NPC.Center - screenPos + Vector2.UnitY * 12 - new Vector2(0, NPC.gfxOffY);
             Texture2D balloons = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/Cigar").Value;
             SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            spriteBatch.Draw(balloons, npcOffset - Vector2.UnitY * 26 - Vector2.UnitX * NPC.spriteDirection * -10, null, NPC.GetAlpha(drawColor), 0f, balloons.Size() / 2, 1f, fx, 0);
+            spriteBatch.Draw(balloons, npcOffset - Vector2.UnitY * (26 + NPC.gfxOffY) - Vector2.UnitX * NPC.spriteDirection * -10, null, NPC.GetAlpha(drawColor), 0f, balloons.Size() / 2, 1f, fx, 0);
             return true;
         }
     }

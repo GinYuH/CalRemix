@@ -163,7 +163,7 @@ ZER0: {
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
-	Census.SpawnCondition: Conditions unknown
+	Census.SpawnCondition: Defeat the Moon Lord
 }
 
 Tenryu.DisplayName: King of Constellations, Tenryu
@@ -523,3 +523,8 @@ FrozenMummy.DisplayName: Frozen Mummy
 Fleshmullet.DisplayName: Fleshmullet
 LabRoach.DisplayName: Lab Roach
 FleshmulletEye.DisplayName: Fleshmullet Eye
+Dragon.DisplayName: Dragon
+MBP.DisplayName: Some Hive Mind Thing
+Xeroc.DisplayName: Avatar of Xeroc
+TreeMimic.DisplayName: Tree
+AcidEye.DisplayName: Acid Eye

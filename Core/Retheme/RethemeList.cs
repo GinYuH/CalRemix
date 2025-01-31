@@ -99,7 +99,6 @@ namespace CalRemix.Core.Retheme
             { NPCType<Leviathan>(), "Levi/Levi" },
             { NPCType<AquaticAberration>(), "Levi/AquaticAberration" },
             { NPCType<AstrumAureus>(), "Plague/AstrumAureus" },
-            { NPCType<AureusSpawn>(), "Plague/AureusSpawn" },
             { NPCType<AstrumDeusHead>(), "AD/Head" },
             { NPCType<AstrumDeusBody>(), "AD/Body" },
             { NPCType<AstrumDeusTail>(), "AD/Tail" },
@@ -217,16 +216,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<LeviathanAmbergris>(), "Levi/LeviathanAmbergris" },
             #endregion
             #region Plague Aureus
-            { ItemType<AstrumAureusBag>(), "Plague/Bag" },
-            { ItemType<AstralChunk>(), "Plague/AstralChunk" },
-            { ItemType<AureusCell>(), "Plague/AureusCell" },
-            { ItemType<GravistarSabaton>(), "Plague/GravistarSabaton" },
-            { ItemType<Nebulash>(), "Plague/Nebulash" },
             { ItemType<AuroraBlazer>(), "Plague/AuroraBlazer" },
-            { ItemType<AlulaAustralis>(), "Plague/AlulaAustralis" },
-            { ItemType<BorealisBomber>(), "Plague/BorealisBomber" },
-            { ItemType<LeonidProgenitor>(), "Plague/LeonidProgenitor" },
-            { ItemType<AuroradicalThrow>(), "Plague/AuroradicalThrow" },
             #endregion
             #region Astrum Deus
             { ItemType<AstrumDeusBag>(), "AD/Bag" },
@@ -316,12 +306,6 @@ namespace CalRemix.Core.Retheme
             #endregion
             #region Levi
             { ProjectileType<WaterElementalMinion>(), "Levi/Anahita" },
-            #endregion
-            #region Aureus
-            { ProjectileType<NebulashFlail>(), "Plague/NebulashFlail" },
-            { ProjectileType<AureusBomber>(), "Plague/AureusBomber" },
-            { ProjectileType<AuroradicalSplitter>(), "Plague/AuroradicalStar" },
-            { ProjectileType<AuroradicalStar>(), "Plague/AuroradicalStar" },
             #endregion
             #region Deus
             { ProjectileType<MicrowaveYoyo>(), "AD/MicrowaveYoyo" },

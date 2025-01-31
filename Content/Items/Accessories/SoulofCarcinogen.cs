@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using CalRemix.UI;
+using Terraria.ModLoader.Default;
+using System.Linq;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -88,7 +90,12 @@ namespace CalRemix.Content.Items.Accessories
 
         public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
-            return slot == ModContent.GetInstance<SoulSlot>().Type;
+            int soulSlot = ModContent.GetInstance<SoulSlot>().Type;
+            if (!modded)
+                return false;
+            if (slot == (player.GetModPlayer<ModAccessorySlotPlayer>().SlotCount + soulSlot) || slot == soulSlot)
+                return true;
+            return false;
         }
     }
     public class CigarDrawLayer : PlayerDrawLayer
