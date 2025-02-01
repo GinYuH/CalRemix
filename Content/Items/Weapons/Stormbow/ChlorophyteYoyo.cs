@@ -38,7 +38,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.noUseGraphic = true; // Makes the item invisible while using it (the projectile is the visible part).
             Item.channel = true; // Set to true for items that require the attack button to be held out (e.g. yoyos and magic missile weapons)
 
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 46;
             Item.damage = 74;
             Item.crit = 12;

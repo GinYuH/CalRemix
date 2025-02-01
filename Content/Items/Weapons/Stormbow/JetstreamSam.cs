@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.autoReuse = true;
             Item.shootSpeed = 12f;
 
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 342;
             Item.damage = 6;
             Item.crit = 20;

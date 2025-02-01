@@ -27,7 +27,7 @@ namespace CalRemix.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 20;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.rare = ModContent.RarityType<Violet>();

@@ -132,6 +132,30 @@ namespace CalRemix
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofZot>();
             }
+            else if (item.type == ItemType<EssenceofRend>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofSurt>();
+            }
+            else if (item.type == ItemType<EssenceofLaw>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofHavoc>();
+            }
+            else if (item.type == ItemType<EssenceofCrystal>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofEleum>();
+            }
+            else if (item.type == ItemType<EssenceofMyst>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofSunlight>();
+            }
+            else if (item.type == ItemType<EssenceofZot>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofBabil>();
+            }
+            else if (item.type == ItemType<EssenceofSurt>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofRend>();
+            }
             else if (item.type == ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<TitanFinger>();
@@ -728,15 +752,15 @@ namespace CalRemix
             else if (item.type == ItemType<DevourerofGodsBag>())
             {
                 itemLoot.Add(ItemType<Lean>(), 1, 6, 8);
-                itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 1, 3);
+                itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 10, 30);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<CosmiliteBar>());
                 itemLoot.AddIf(() => !CalRemixWorld.cosmislag, ItemType<CosmiliteBar>(), 1, 55, 65);
             }
             else if (item.type == ItemType<YharonBag>())
             {
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
-                yhar.Add(ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
-                yhar.AddFail(ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
+                yhar.Add(ItemType<YharimBar>(), 1, 10, 30, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ItemType<YharimBar>(), 1, 60, 80, hideLootReport: CalamityWorld.revenge);
                 itemLoot.Add(yhar);
                 itemLoot.Add(ItemType<MovieSign>(), 100);
             }
@@ -750,8 +774,8 @@ namespace CalRemix
             else if (item.type == ItemType<CalamitasCoffer>() || item.type == ItemType<DraedonBag>())
             {
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
-                yhar.Add(ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
-                yhar.AddFail(ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+                yhar.Add(ItemType<YharimBar>(), 1, 90, 110, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ItemType<YharimBar>(), 1, 70, 90, hideLootReport: CalamityWorld.revenge);
                 itemLoot.Add(yhar);
             }
         }
@@ -850,11 +874,11 @@ namespace CalRemix
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<Radiance>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<Affliction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<LeviathanAmbergris>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
                 GetModItem(ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
                 player.sporeSac = true;
                 GetModItem(ItemType<Abaddon>()).UpdateAccessory(player, hideVisual);
@@ -862,17 +886,6 @@ namespace CalRemix
                 GetModItem(ItemType<DynamoStemCells>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<BlazingCore>()).UpdateAccessory(player, hideVisual);
             }
-            // Doing it here means any accessories equipped in higher slots won't be affected by the boost
-            // This is intentional
-            //
-            // I hate this so much
-            /*if (modplayer.origenSoul)
-            {
-                if (genSouls.Contains(item.type))
-                {
-                    player.statDefense += NPC.downedMoonlord ? 40 : Main.hardMode ? 8 : 4;
-                }
-            }*/
         }
 
         public override void OnConsumeItem(Item item, Player player)

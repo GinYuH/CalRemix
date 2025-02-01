@@ -92,6 +92,7 @@ namespace CalRemix.Core.World
         public static bool canGenerateBaron = false;
         public static bool generatedGrime = false;
         public static bool seenMBP = false;
+        public static bool seenRoaches = false;
         public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
@@ -218,6 +219,7 @@ namespace CalRemix.Core.World
             ogslime = false;
             loadedRecipeInjections = false;
             seenMBP = false;
+            seenRoaches = false;
 
             // Worldgen
             generatedCosmiliteSlag = false;
@@ -309,6 +311,7 @@ namespace CalRemix.Core.World
             tag["meld"] = meldCountdown;
             tag["trueStory"] = trueStory;
             tag["roachDuration"] = roachDuration;
+            tag["seenRoach"] = seenRoaches;
             tag["mbp"] = seenMBP;
 
             tag["109alloybar"] = alloyBars;
@@ -376,6 +379,7 @@ namespace CalRemix.Core.World
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
             GetData(ref seenMBP, "mbp", tag);
+            GetData(ref seenRoaches, "seenRoach", tag);
 
             GetData(ref alloyBars, "109alloybar", tag);
             GetData(ref essenceBars, "109essencebar", tag);
@@ -458,6 +462,7 @@ namespace CalRemix.Core.World
             writer.Write(RoachCountdown);
             writer.Write(roachDuration);
             writer.Write(seenMBP);
+            writer.Write(seenRoaches);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -497,6 +502,8 @@ namespace CalRemix.Core.World
             writer.Write(deliciousMeat);
             writer.Write(profanedDesert);
             writer.Write(hypothetical);
+            writer.Write(savedAPicture);
+            writer.Write(sneakerheadMode);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -526,6 +533,7 @@ namespace CalRemix.Core.World
             RoachCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
             seenMBP = reader.ReadBoolean();
+            seenRoaches = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -565,6 +573,8 @@ namespace CalRemix.Core.World
             deliciousMeat = reader.ReadBoolean();
             profanedDesert = reader.ReadBoolean();
             hypothetical = reader.ReadBoolean();
+            savedAPicture = reader.ReadBoolean();
+            sneakerheadMode = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
@@ -918,7 +928,7 @@ namespace CalRemix.Core.World
             }
             // Roach Mayhem!!!
             // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
-            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && roachDuration > -2)
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && !seenRoaches)
             {
                 RoachCountdown++;
             }
@@ -941,7 +951,7 @@ namespace CalRemix.Core.World
             }
             // Regularly play alarms while decrementing the event duration
             // Do not decrement if the countdown hasn't finished (marked by it being -1)
-            if (roachDuration > -2 && RoachCountdown <= 0)
+            if (!seenRoaches && RoachCountdown <= 0)
             {
                 if (roachDuration > 0 && Main.LocalPlayer.miscCounter % 90 == 0)
                 {
@@ -956,6 +966,7 @@ namespace CalRemix.Core.World
                 {
                     RoachScene.explosions.Clear();
                 }
+                seenRoaches = true;
                 UpdateWorldBool();
             }
         }

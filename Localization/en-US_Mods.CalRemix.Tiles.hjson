@@ -31,20 +31,7 @@ LabRoachBannerPlaced.MapEntry: Lab Roach Banner
 AncientConsole.MapEntry: Ancient Console
 TorrefiedTephraPlaced.MapEntry: Torrefied Tephra Placed
 OldIonogenTrophyPlaced.MapEntry: Ancient Ionogen Trophy
-LegendPortraitHAYABUSA.MapEntry: Legend Portrait HAYABUSA
-LegendPortraitMITCHARD.MapEntry: Legend Portrait MITCHARD
-LegendPortraitDASLNEW.MapEntry: Legend Portrait DASLNEW
-LegendPortraitPEREZ.MapEntry: Legend Portrait PEREZ
-LegendPortraitACKNER.MapEntry: Legend Portrait ACKNER
-LegendPortraitCONROY.MapEntry: Legend Portrait CONROY
-LegendPortraitMARINO.MapEntry: Legend Portrait MARINO
-LegendPortraitHOOB.MapEntry: Legend Portrait HOOB
-LegendPortraitETTEL.MapEntry: Legend Portrait ETTEL
-LegendPortraitWINGERT.MapEntry: Legend Portrait WINGERT
-LegendPortraitDIRAC.MapEntry: Legend Portrait DIRAC
-LegendPortraitHUET.MapEntry: Legend Portrait HUET
-ChloriumOrePlaced.MapEntry: Chlorium
-LegendPortraitYOU.MapEntry: Legend Portrait YOU
+ChloriumOrePlaced.MapEntry: Chlorium Ore Placed
 LegendPortrait.MapEntry: Legend Portrait
-LegendPromo.MapEntry: Legend Promo
 LegendMemorial.MapEntry: Legend Memorial
+LegendPromo.MapEntry: Legend Promo

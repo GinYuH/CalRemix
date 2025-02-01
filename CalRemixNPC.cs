@@ -168,6 +168,16 @@ namespace CalRemix
         };
         public override void SetStaticDefaults()
         {
+            if (CalRemixAddon.Catalyst != null)
+            {
+                BossSlimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("Astrageldon").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("AscendedAstralSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlimeRocks").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlimer").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("WulfrumSlime").Type);
+            }
             if (!Main.dedServ)
             {
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
@@ -1027,6 +1037,16 @@ namespace CalRemix
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterAdrenalinePotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterEnragePotion>(), 1, 5, 10);
             }
+            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            {
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
+                npcLoot.Add(hm);
+            }
+            if (npc.type == NPCID.Paladin)
+            {
+                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
+            }
             #endregion
         }
         private static void MiniBossLoot(NPC npc, NPCLoot npcLoot)
@@ -1306,7 +1326,7 @@ namespace CalRemix
             //}
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
-                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 6, 8);
+                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 60, 80);
             }
             else if (npc.type == NPCType<PrimordialWyrmHead>())
             {

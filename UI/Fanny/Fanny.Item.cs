@@ -13,8 +13,10 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.TownNPCs;
+using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.UI.Logs;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -106,7 +108,7 @@ namespace CalRemix.UI
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DarksunFragment>())).AddItemDisplay(ModContent.ItemType<DarksunFragment>());
 
             HelperMessage.New("Onion", "I'd be weary about eating that strange plant. You can only get one, so it might be useful to hang on to it for later.",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>())).AddItemDisplay(ModContent.ItemType<CelestialOnion>());
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>()) && Main.LocalPlayer.Remix().miracleUnlocked).AddItemDisplay(ModContent.ItemType<CelestialOnion>());
 
             HelperMessage sama = HelperMessage.New("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny();
@@ -133,7 +135,10 @@ namespace CalRemix.UI
             HelperMessage.New("Dyes", "I've always thought dyes were a bit worthless. I mean come on! True beauty comes from the inside! No need to pretty yourself up on the outside! So my solution to this was making it so that all dyes now make you stronger! Have fun coming up with dye combos! Or just equipping the same dye in every slot, that works too.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any((Item i) => i.dye > 0)).AddItemDisplay(ModContent.ItemType<ElementalDye>());
 
-            
+            HelperMessage.New("Terminuts", "Oh! You found that moonstone tablet I scribbled on a while ago! I think one of the worms down here got a little furious when I did that, so I gave a replica of before I wrote on it to an old pal of mine to get em off my tail. You should be able to find him down here somewhere if you look for long enough...",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<FannyLogAbyss>()) && Main.LocalPlayer.Calamity().ZoneAbyssLayer4).AddItemDisplay(ModContent.ItemType<Terminus>());
+
+
             #endregion
 
             #region CrossMod

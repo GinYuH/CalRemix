@@ -415,16 +415,16 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-
+                
                 TextureAssets.MinecartMechMount = OriginalMechCartTexture;
                 TextureAssets.CuteFishronMount = OriginalCuteFishronTexture;
 
-                Mount.mounts[MountID.MinecartMech].frontTexture = TextureAssets.MinecartMechMount[0];
-                Mount.mounts[MountID.MinecartMech].frontTextureGlow = TextureAssets.MinecartMechMount[1];
+                Mount.mounts[MountID.MinecartMech].frontTexture = Main.Assets.Request<Texture2D>("Images/Mount_MinecartMech");
+                Mount.mounts[MountID.MinecartMech].frontTextureGlow = Main.Assets.Request<Texture2D>("Images/Mount_MinecartMechGlow");
                 Mount.mounts[MountID.MinecartMech].textureWidth = Mount.mounts[MountID.MinecartMech].frontTexture.Width();
 
-                Mount.mounts[MountID.CuteFishron].backTexture = TextureAssets.CuteFishronMount[0];
-                Mount.mounts[MountID.CuteFishron].backTextureGlow = TextureAssets.CuteFishronMount[1];
+                Mount.mounts[MountID.CuteFishron].backTexture = Main.Assets.Request<Texture2D>("Images/Mount_CuteFishron1");
+                Mount.mounts[MountID.CuteFishron].backTextureGlow = Main.Assets.Request<Texture2D>("Images/Mount_CuteFishron2");
                 Mount.mounts[MountID.CuteFishron].frontTexture = Asset<Texture2D>.Empty;
                 Mount.mounts[MountID.CuteFishron].frontTextureGlow = Asset<Texture2D>.Empty;
                 Mount.mounts[MountID.CuteFishron].textureWidth = Mount.mounts[MountID.CuteFishron].backTexture.Width();

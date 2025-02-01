@@ -816,7 +816,7 @@ namespace CalRemix.Core
         {
             SetOldDukeDead();
         }
-        private static void SetOldDukeDead()
+        public static void SetOldDukeDead()
         {
             CalamityMod.NPCs.CalamityGlobalNPC.SetNewShopVariable(new int[] { NPCType<SEAHOE>() }, DownedBossSystem.downedBoomerDuke);
 
