@@ -1325,7 +1325,7 @@ namespace CalRemix
             //}
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
-                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 6, 8);
+                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 60, 80);
             }
             else if (npc.type == NPCType<PrimordialWyrmHead>())
             {

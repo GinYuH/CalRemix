@@ -1,6 +1,8 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.Events;
+using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Rogue;
@@ -14,6 +16,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using CalRemix.Content.Walls;
+using CalRemix.Core;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
@@ -166,6 +169,12 @@ namespace CalRemix.Content.Projectiles
                         packet.Send();
                     }
                 }
+            }
+            if (projectile.type == ProjectileType<OverlyDramaticDukeSummoner>())
+            {
+                AcidRainEvent.AcidRainEventIsOngoing = false;
+                projectile.active = false;
+                CalRemixHooks.SetOldDukeDead();
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;

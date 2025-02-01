@@ -3184,3 +3184,66 @@ LegendMemorialItem: {
 }
 
 LegendPromoItem.DisplayName: Promotional Poster
+
+Tooltips: {
+	ElementTip: Hold "Left Shift" for element details
+	Lightmix: Lightmix Dedicated Item
+	Stormbow: Stormbow
+	CryoKeyRemix: Drops from Primal Aspids
+	EyeofDesolationRemix: Drops from Clamitas
+	AbombinationOld: the Jungle
+	AbombinationNew: the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]
+	TorchRemix: Can be used as ammo for the Driftorcher
+	PhantomicSoulArtifact: Judgement
+	GrandGelatinRemix:
+		'''
+		Reduces stealth costs by 3%
+		Increases wing flight time by 10%
+		Activating Rage will deal 50% of your health as damage
+		Activating Adrenaline will defile your soul
+		'''
+	AbsorberRemix: Your health is capped at 50% while the accessory is visable
+	SpongeRemix:
+		'''
+		Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi
+		Your health is capped at 50% while the accessory is visable
+		'''
+	AmbrosiaRemix: Effects of Honew Dew, and increased mining speed and defense while underground
+	DivingGearRemix: Pacifies all normal ocean enemies
+	DivingSuitRemix:
+		'''
+		Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem
+		Reveals treasure while the accessory is visible
+		'''
+	AmalgamRemix:
+		'''
+		Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution
+		You passively rain down brimstone flames and leave behind a trail of gas and bees
+		Mana Overloader effect while the accessory is visible
+		'''
+	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
+	HadalStewRemix: Grants a handful of combat buffs
+	SoulofCryogenRemix: Boosts Cold damage
+	MetalMonstrosityRemix: \'Just looking at it makes you feel ill...\'
+}
+
+DyeStats: {
+	Increment: increased
+	Decrement: decreased
+	NoChange: not changed
+	Red: Damage {0} by {1}%
+	Orange: Weapon speed {0} by {1}%
+	Yellow: Movement speed {0} by {1}%
+	Lime: Luck {0} by {1}
+	Green: Jump speed {0} by {1}%
+	Cyan: Critical strike chance {0} by {1}%
+	Teal: Damage reduction {0} by {1}%
+	SkyBlue: Flight time {0} by {1}
+	Blue: Defense {0} by {1}
+	Purple: Weapon knockback {0} by {1}%
+	Violet: Enemy aggro {0} by {1}
+	Pink: Life regeneration {0} by {1}
+	Brown: Building range {0} by {1}
+	Silver: Charisma {0} by {1}
+	Black: Evil {0} by {1}
+}

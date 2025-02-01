@@ -928,7 +928,7 @@ namespace CalRemix.Core.World
             }
             // Roach Mayhem!!!
             // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
-            if (((DateTime.Now.Month == 11 && DateTime.Now.Day == 29) || Main.worldName.Contains("spooky", StringComparison.CurrentCultureIgnoreCase)) && RoachCountdown >= 0 && !seenRoaches)
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && !seenRoaches)
             {
                 RoachCountdown++;
             }

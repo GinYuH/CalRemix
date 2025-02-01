@@ -644,7 +644,6 @@ namespace CalRemix
                     recipe.AddIngredient<TheCamper>();
                     recipe.AddIngredient<AlchemicalFlask>();
                     recipe.AddIngredient<ToxicHeart>();
-                    recipe.AddIngredient<Radiance>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
                     recipe.AddIngredient<TheEvolution>();

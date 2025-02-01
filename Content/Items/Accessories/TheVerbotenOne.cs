@@ -73,6 +73,7 @@ namespace CalRemix.Content.Items.Accessories
             GetModItem(ItemType<TheCommunity>()).UpdateAccessory(player, hideVisual);
             GetModItem(ItemType<AmbrosialAmpoule>()).UpdateAccessory(player, hideVisual);
             GetModItem(ItemType<CalamitousSoulArtifact>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<Radiance>()).UpdateAccessory(player, hideVisual);
             ModContent.GetModItem(ModContent.ItemType<CalamityMod.Items.Accessories.Nanotech>()).UpdateAccessory(player, hideVisual);
 
             var source = player.GetSource_Accessory(Item);
