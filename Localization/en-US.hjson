@@ -210,5 +210,1907 @@ Mods: {
 
 		NotAvailable: Mods.CalRemix.NotAvailable
 		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage Class
+
+		Items: {
+			Assortegelatin: {
+				DisplayName: Assortegelatin
+				Tooltip:
+					'''
+					Summons slimes to fight for you based on your current biome
+					All wild slimes will fight for you
+					Pacifies all slimes, even bosses
+					'''
+			}
+
+			AstralPearl.DisplayName: Astral Pearl
+
+			Baroclaw: {
+				DisplayName: Baroclaw
+				Tooltip:
+					'''
+					The crab secret revealed!
+					Press x to chain a nearby enemy with crab claws
+					'''
+			}
+
+			BlazingPowder.DisplayName: Blazing Powder
+
+			CalamitousSoulArtifact: {
+				DisplayName: Calamitous Soul Artifact
+				Tooltip:
+					'''
+					Pain
+					Killed enemies summon stationary Brimstone Hearts that explode after 10 seconds
+					The hearts can also block projectiles and can be collected for health
+					Grants a minion slot for every minion summoned that takes up multiple slots
+					Boosts melee speed by 20%, ranged velocity by 35%, rogue damage by 45%, max minions by 8, and reduces mana cost by 75%
+					Increases damage based on proximity to enemy
+					'''
+			}
+
+			CalamityRing: {
+				DisplayName: Calamity Ring
+				Tooltip:
+					'''
+					A powerful artifact made from the Auric Soul of the Dragon of Calamity
+					The strength of the auric soul contained within transforms anyone unfortunate enough to wear it into an unsightly eye
+					It was formerly worn by the Queen of Witches Calamitas to subdue her while she reigned under her handler, King Yharim
+					Doubles the damage received
+
+					'''
+			}
+
+			CosmicStone: {
+				DisplayName: Cosmic Stone
+				Tooltip: Summons a cosmic elemental to fight for you
+			}
+
+			DeterioratingLens.DisplayName: Deteriorating Lens
+
+			ElasticJelly: {
+				DisplayName: Elastic Jelly
+				Tooltip: Increases wing flight time by 10%
+			}
+
+			GlitterEye.DisplayName: Glittering Astral Eye
+
+			HolyMantle: {
+				DisplayName: Holy Mantle
+				Tooltip:
+					'''
+					Delirious thoughts...
+					Horizontal speed: 14
+					Acceleration multiplier: 3.2
+					Flight time: ∞
+					'''
+			}
+
+			InvigoratingJelly: {
+				DisplayName: Invigorating Jelly
+				Tooltip: Activating Adrenaline will defile your soul
+			}
+
+			IrateJelly: {
+				DisplayName: Irate Jelly
+				Tooltip: Activating Rage will deal 50% of your health as damage
+			}
+
+			MagnaCore: {
+				DisplayName: Magna Core
+				Tooltip:
+					'''
+					30% increased magic damage, 25% increased magic critical strike chance, and 100% decreased mana usage
+					+ 250 max mana
+					Increases pickup range for mana stars
+					Using a Mana Potion causes a burst of granite energy to assault enemies
+					'''
+			}
+
+			Microxodonta: {
+				DisplayName: Microxodonta
+				Tooltip:
+					'''
+					92% increased movement speed
+					Flying leaves behind batches of damaging microbial clusters
+					'''
+			}
+
+			MirageJellyItem: {
+				DisplayName: Mirage Jelly
+				Tooltip: Lowers the cost of stealth strikes by 5%
+			}
+
+			NoTomorrow.Tooltip: All friendly projectiles are twice as large
+
+			NucleateGello: {
+				DisplayName: Nucleate Gello
+				Tooltip:
+					'''
+					Summons a nucleate to fight for you
+					Pacifies all boss servant slimes
+					'''
+			}
+
+			PolypebralShield: {
+				DisplayName: Polypebral Shield
+				Tooltip: ""
+			}
+
+			QuiverofMadness: {
+				DisplayName: Quiver of Madness
+				Tooltip:
+					'''
+					'Most drink the wine to lose focus, while others transcend...
+					30% increased ranged damage, 25% increased ranged critical strike chance, and 100% reduced ammo usage
+					15 increased defense, 2 increased life regen, and 35% increased pick speed
+					You are surrounded by 4 demonic portals that buff ranged projectiles that intersect them
+					Skull targets occasionally appear on enemies which increase damage taken when hit
+					'''
+			}
+
+			RetromansPowerStar: {
+				DisplayName: Retroman's Power Star
+				Tooltip:
+					'''
+					Transforms you into the Retro Man 
+					 Item dedicated to QuestNinja
+					'''
+			}
+
+			RockStone: {
+				DisplayName: Metamorphic Stone
+				Tooltip: Summons an earth elemental to fight for you
+			}
+
+			RoguesLootbox: {
+				DisplayName: Rogue's Lootbox
+				Tooltip:
+					'''
+					+30 maximum stealth
+					12 % increased rogue damage, and 12 % increased rogue crit chance
+					Vastly reduces enemy aggression, even in the abyss
+					Stealth generates 50 % faster when standing still
+					Mobile stealth generation exponentially accelerates while not attacking
+					Stealth strikes have a 100 % critical hit chance
+					Stealth strikes only expend 50 % of your max stealth
+					A copy of your weapon falls downward from the sky each use which deals 30 % of the weapon's damage
+					A burst of homing souls, bouncing jewels, and fireballs are released once the copy projectile dies
+					Sun Tornadoes are summoned on stealth strike hits with a cap of 2 at once
+					Grants the ability to evade attacks in a blast of darksun light, which inflicts extreme damage in a wide area
+					Evading an attack grants full stealth but has a 20 second cooldown
+					This cooldown is shared with all other dodges and reflects
+					Hit the spectral veil key to summon an eclipse aura that nullifies damage for 5 seconds with a 20 second cooldown
+					'''
+			}
+
+			ShadowGar: {
+				DisplayName: Inverted Gar
+				Tooltip:
+					'''
+					Taking damage will temporarily prevent mana from being consumed.
+					Thanks for nothing
+					'''
+			}
+
+			Slimelgamation: {
+				DisplayName: Slimelgamation
+				Tooltip:
+					'''
+					Extends the duration of potion buffs by 200% and potion buffs remain active even after you die
+					15% increased damage
+					Summons an evolved slime core to fight for you
+					All wild slimes will fight for you
+					Shade and brimstone flames rain down when you are hit
+					Nearby enemies receive a variety of debuffs when you are hit
+					Life drains over time in exchange for a significant damage boost as health decreases
+					You leave behind a trail of spores, toxic clouds, plague bees, and brine
+					Standing still generates an aura that slows enemies, and increases defense and life regen
+					All weapons have a chance to fire out mini birbs and miniature suns
+					50% of the items stats are granted to team members
+					'''
+			}
+
+			SoulofCarcinogen: {
+				DisplayName: Soul of Carcinogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Puts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs
+					Damage of the smoke increases based on how long the player has been wearing the accessory
+					It all stops after 10 minutes...
+					[c/778899:Boosts Dark damage]
+					'''
+			}
+
+			SoulofHydrogen: {
+				DisplayName: Soul of Hydrogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Throwable explosives deal extremely increased damage and split once upon detonation
+					[c/87ceeb:Boosts Water damage]
+					'''
+			}
+
+			SoulofIonogen: {
+				DisplayName: Soul of Ionogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Tap ] to strike yourself with lightning
+					This lightning deals 1 point of damage, activating onhit effects
+					This effect has a 5 second cooldown
+					[c/d3d3d3:Boosts Machine damage]
+					'''
+			}
+
+			SoulofOrigen: {
+				DisplayName: Soul of Origen
+				Tooltip:
+					'''
+					7% increase to all damage
+					[c/34aeb0:Inverts Elemental damage]
+					'''
+			}
+
+			SoulofOxygen: {
+				DisplayName: Soul of Oxygen
+				Tooltip:
+					'''
+					14% increase to all damage
+					Increases the pitch of all sounds
+					[c/ffffff:Boosts Wind damage]
+					'''
+			}
+
+			SoulofPathogen: {
+				DisplayName: Soul of Pathogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Enables the ability to lifesteal from any enemy
+					'Note: lifesteal sold separately'
+					[c/ff0000:Boosts Unholy damage]
+					'''
+			}
+
+			SoulofPhytogen: {
+				DisplayName: Soul of Phytogen
+				Tooltip:
+					'''
+					7% increase to all damage
+					Eating fruits heals a third of your max life
+					[c/008000:Boosts Poison damage]
+					'''
+			}
+
+			SoulofPyrogen: {
+				DisplayName: Soul of Pyrogen
+				Tooltip:
+					'''
+					Increases critical strike chance to 100%
+					Disables flight, mounts, and hooks
+					[c/ffa500:Boosts Fire damage]
+					'''
+			}
+
+			TheGodfather: {
+				DisplayName: The Godfather
+				Tooltip:
+					'''
+					All effects of ingredients
+					Additionally:
+					Extends the duration of potion buffs by 200% and potion buffs remain active even after you die
+					Summons an evolved slime core to fight for you
+					All wild slimes will fight for you
+					Hit the Plague Pack key to launch yourself towards your cursor while ignoring damage with a 20 second cooldown
+					All weapons including true melee have a chance to fire out mini birbs, shrooms, sigils, and miniature suns
+					Removes all of the Abyss' hindering effects
+					Provides a 20% chance to revive upon dying with a cooldown of 50 seconds
+					Immunity to electric-based attacks
+					'''
+			}
+
+			TheVerbotenOne: {
+				DisplayName: The Verboten One
+				Tooltip:
+					'''
+					Ultimatum
+					Provides all effects of its ingredients
+					'''
+			}
+
+			ThrowersGauntlet: {
+				DisplayName: Thrower's Gauntlet
+				Tooltip:
+					'''
+					Melee attacks and projectiles inflict a variety of debuffs
+					30 % increased melee speed, damage, and 25 % increased melee critical strike chance
+					100 % increased true melee damage
+					Temporary immunity to lava
+					Increased melee knockback
+					Yoyo bag effects
+					'''
+			}
+
+			UniversalStone: {
+				DisplayName: Universal Stone
+				Tooltip:
+					'''
+					The true potential of a lesser elemental
+					Summons an cosmic conflict construct to fight for you
+					Summons a cosmic shield around you that inflicts God Slayer Inferno
+					Collecting Cosmichid plants boosts damage by 1 % up to 30 %
+					While the item's visibility is on, Mana Sickness is replaced with Mana Burn
+					50 % increased flight time
+					'''
+			}
+
+			WarloksMoonFist: {
+				DisplayName: Warlok's Moon Fist
+				Tooltip:
+					'''
+					Melee attacks and projectiles inflict nightwither and have a 10% chance to instantly kill normal enemies
+					Grants the user 60% increased true melee damage on true melee hits
+					25% increased melee speed, damage, and 5% increased melee critical strike chance
+					50% increased true melee damage
+					Temporary immunity to lava
+					Increased melee knockback
+					'''
+			}
+
+			WormMeal: {
+				DisplayName: Worm Meal
+				Tooltip: "'Surely my summons will eat this.. right?'"
+			}
+
+			YharimsCurse: {
+				DisplayName: Yharim's Curse
+				Tooltip:
+					'''
+					This unholy abomination feels like it's deteriorating
+					90% more damage taken
+					50% more damage dealt
+					Why would anyone use this
+					'''
+			}
+
+			ZenithArcanum: {
+				DisplayName: Zenith Arcanum
+				Tooltip:
+					'''
+					'Top of the food chain'
+					Summons various spirits of the world to protect you
+					20 % increase to summon damage and defense
+					+ 4 life regeneration, 15 % increased pick speed, and + 8 max minions
+					Increased minion knockback
+					Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits
+					'''
+			}
+
+			AncientFlashBullet: {
+				DisplayName: Ancient Flash Round
+				Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
+			}
+
+			BlueGreySolution: {
+				DisplayName: Blue Grey Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads the Dungeon
+					'''
+			}
+
+			CosmiliteCoin.DisplayName: Cosmilite Coin
+
+			GreenGreySolution: {
+				DisplayName: Green Grey Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads the Dungeon
+					'''
+			}
+
+			HornetRound: {
+				DisplayName: 22 Hornet Round
+				Tooltip:
+					'''
+					Pierces the hearts of gods...
+					Ricochets up to 21 times off of hit enemies
+					'''
+			}
+
+			Klepticoin: {
+				DisplayName: Klepticoin
+				Tooltip: The change of the gods
+			}
+
+			PinkGreySolution: {
+				DisplayName: Pink Grey Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads the Dungeon
+					'''
+			}
+
+			PlaguedSolution: {
+				DisplayName: Plagued Solution
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads the Plague
+					'''
+			}
+
+			WarArrow: {
+				DisplayName: War Arrow
+				Tooltip: Inflicts Armor Crunch
+			}
+
+			BananaClownHat: {
+				DisplayName: Banana Clown Mask
+				Tooltip: 2 magic damage
+			}
+
+			BananaClownPants.Tooltip: 2 magic damage and 14% increased movement speed
+			BananaClownSleeves.Tooltip: 2 magic damage
+			ChloriumChainmail.Tooltip:
+				'''
+				24% increased damage
+				2% increased critical strike chance
+				'''
+			ChloriumConehead.Tooltip:
+				'''
+				16% increased stormbow damage and critical strike chance
+				20% increaesd stormbow shot speed
+				'''
+			ChloriumGreaves.Tooltip:
+				'''
+				12% increased critical strike chance
+				22% increased movement speed
+				'''
+			DerellectMaskStatic.DisplayName: Derellect Mask (Static)
+			TwistedNetheriteHelmet.DisplayName: Twisted Netherite Helmet
+
+			Babilfish: {
+				DisplayName: Babilfish
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			FrontGar: {
+				DisplayName: Front Gar
+				Tooltip: Right click to extract reaper teeth
+			}
+
+			RearGar: {
+				DisplayName: Rear Gar
+				Tooltip: Right click to extract tarragon
+			}
+
+			SideGar: {
+				DisplayName: Side Gar
+				Tooltip: Right click to extract galactica singularities
+			}
+
+			TarGar: {
+				DisplayName: Tar Gar
+				Tooltip: Right click to extract slime rain
+			}
+
+			CrocodileHerringItem.DisplayName: Crocodile Herring
+			GulletWorm.DisplayName: Gullet Worm
+			LabRoach.DisplayName: Lab Roach
+			MinnowsPrimeItem.DisplayName: Minnows Prime
+			PlaguedFirefly.DisplayName: Plagued Firefly
+			Sandrat.DisplayName: Minor Sandrat
+			Wolfmole.DisplayName: Legendary Wolfmole
+
+			FannyLogAbyss: {
+				DisplayName: Depths of the Abyss (Entry ???)
+				Tooltip: It has scribbles all over it, making it unusable
+			}
+
+			FannyLogHell.DisplayName: Fiery Finds in the Underworld Lab (Entry 4)
+			FannyLogIce.DisplayName: Frosty Finds in the Ice Cavern Lab (Entry 5)
+			FannyLogJungle.DisplayName: Plague and Perils in the Jungle Lab (Entry 3)
+			FannyLogSpace.DisplayName: Trouble on Planetoid X-42 (Entry 2)
+			FannyLogSunkenSea.DisplayName: The Ramblings of a Flamboyant Flame: A Digital Diary (Entry 1)
+			KnowledgeCarcinogen.DisplayName: The Archwizard
+			KnowledgeClone.DisplayName: The Archseer
+			KnowledgeHydrogen.DisplayName: The Archdiviner
+			KnowledgeIonogen.DisplayName: The Archmagian
+			KnowledgeOrigen.DisplayName: The Originator
+			KnowledgeOxygen.DisplayName: The Archwitch
+			KnowledgePathogen.DisplayName: The Archmagus
+			KnowledgePhytogen.DisplayName: The Archdruid
+			KnowledgePyrogen.DisplayName: Pyrogen
+
+			Slumbering: {
+				DisplayName: Slumbering
+				Tooltip:
+					'''
+					[c/FF0000:This world is not what it seems. Every crevice among the graves only whisper lies.]
+					[c/FF0000:Do not tread the path carved out for you, instead seek truth in the unknown.]
+					[c/FF0000:The world will reveal itself to you, but first I shall do so as well.]
+					[c/FF0000:Use this and attempt my trial.]
+					[c/FF0000:In the future, I may offer another trial. Keep in this in case that happen.]
+					'''
+			}
+
+			AlloyBar.DisplayName: Alloy Bar
+			AntlionBar.DisplayName: Antlion Bar
+			AntlionOre.DisplayName: Antlion Ore
+			AuricSoul.DisplayName: Auric Soul
+			ConquestFragment.DisplayName: Conquest Fragment
+			CoreofBabil.DisplayName: Core of Babil
+			CoreofRend.DisplayName: Core of Rend
+
+			CoyoteVenom: {
+				DisplayName: Coyote Venom
+				Tooltip: Try not to drink it
+			}
+
+			CrocodileScale.DisplayName: Crocodile Scale
+
+			CryoKeyMold: {
+				DisplayName: Cryo Key Mold
+				Tooltip: Used for crafting a Cryo Key
+			}
+
+			DesertFeather.DisplayName: Desert Feather
+			ElementalBar.DisplayName: Elemental Bar
+
+			EnergyOrb: {
+				DisplayName: Energy Orb
+				Tooltip: This is literally useless for now
+			}
+
+			EntropicBar.DisplayName: Entropic Bar
+
+			EssenceofBabil: {
+				DisplayName: Essence of Babil
+				Tooltip: The essence of lively creatures
+			}
+
+			EssenceofCrystal: {
+				DisplayName: Essence of Crystal
+				Tooltip: The essence of the rich earth
+			}
+
+			EssenceofLaw: {
+				DisplayName: Essence of Law
+				Tooltip: The essence of conformity
+			}
+
+			EssenceofMyst: {
+				DisplayName: Essence of Myst
+				Tooltip: The essence of a distant island
+			}
+
+			EssenceofRend: {
+				DisplayName: Essence of Rend
+				Tooltip: The essence of endless struggle.
+			}
+
+			EssenceofSurt: {
+				DisplayName: Essence of Surt
+				Tooltip: The essence of tranquility.
+			}
+
+			EssenceofZot: {
+				DisplayName: Essence of Zot
+				Tooltip: The essence of destruction
+			}
+
+			EssentialEssenceBar: {
+				DisplayName: Essential Essence Bar
+				Tooltip: Flowing with pure energy
+			}
+
+			GrandioseGland: {
+				DisplayName: Grandiose Gland
+				Tooltip: It's disgusting
+			}
+
+			GreenDemonHead: {
+				DisplayName: Green Demon Head
+				Tooltip: "\n\n\n\n\n\n\n\n"
+			}
+
+			HauntedBar.DisplayName: Haunted Bar
+			OrnateCloth.DisplayName: Ornate Cloth
+
+			ParchedScale: {
+				DisplayName: Parched Scale
+				Tooltip: Large scale of an apex predator
+			}
+
+			SoulFlux: {
+				DisplayName: Soul Flux
+				Tooltip: Feels powerful and magical
+			}
+
+			SoulofPlight: {
+				DisplayName: Soul of Plight
+				Tooltip: The artificial essence of powerful machines
+			}
+
+			SubnauticalPlate: {
+				DisplayName: Subnautical Plate
+				Tooltip: A bioluminescent remnant, existing long before the Golden Age of Dragons
+			}
+
+			Theswordisinsidethecore: {
+				DisplayName: The sword is inside the core
+				Tooltip: Needless to say, it truly is inside the core
+			}
+
+			UnholyBloodCells: {
+				DisplayName: Unholy Blood Cells
+				Tooltip: Just seeing it makes you want to puke...
+			}
+
+			YharimBar: {
+				DisplayName: Yharim Bar
+				Tooltip: You can feel the power of the Tyrant in this metal
+			}
+
+			FocusedConvergence.DisplayName: " "
+
+			IOU: {
+				DisplayName: IOU an Originator
+				Tooltip:
+					'''
+					Gone Fishin'! I'll get you the Originator once I have Fishstick's head on a pike!
+					- Kushim
+					'''
+			}
+
+			DisgustingSeawater: {
+				DisplayName: Disgusting Seawater
+				Tooltip: Summons a Microbial Cluster to light your way
+			}
+
+			AltaroftheAblessed.DisplayName: Altar of the Ablessed
+			AncientConsole.DisplayName: Ancient Console
+
+			Anomaly109: {
+				DisplayName: Anomaly 109
+				Tooltip:
+					'''
+					Insert unique codes in order to disable certain aspects of your game.
+					[c/cd5c5c:Must be configured in Singleplayer. Changes carry over to Multiplayer]
+					'''
+			}
+
+			ArsenicOre.DisplayName: Arsenic Ore
+			Asbestos.DisplayName: Asbestos Block
+
+			AstralEffigy: {
+				DisplayName: Astral Effigy
+				Tooltip: When placed down nearby players gain immunity to space's low gravity
+			}
+
+			BanishedPlating.DisplayName: Baronautical Plating
+			BaronBrine.DisplayName: Baron Brine
+			Baronsand.DisplayName: Baronsand
+			BeetleHead.DisplayName: Beetle Juice-Chan Head
+			Brinerack.DisplayName: Brinerack
+			Cosmichid.DisplayName: Cosmichid
+			CosmiliteSlag.DisplayName: Cosmilite Slag
+			Grimesand.DisplayName: Grimesand
+			GulletWormCage.DisplayName: Gullet Worm Cage
+
+			HallowEffigy: {
+				DisplayName: Hallow Effigy
+				Tooltip:
+					'''
+					When placed down nearby players have their damage, crit, and movement speed increased by 25%,
+					their defense by 20, their DR by 8%, and their health by 20%
+					Nearby players also suffer a permanent chaos state
+					'''
+			}
+
+			IonCube: {
+				DisplayName: Ion Cube
+				Tooltip: Only one may be placed
+			}
+
+			LifeOre.DisplayName: Life Ore
+
+			MeldGunk: {
+				DisplayName: Meld Gunk
+				Tooltip:
+					'''
+					Friendship is strong, Meld Gunk is stronger.
+					No seriously, this block is completely unbreakable! Place with caution!
+					'''
+			}
+
+			MovieSign: {
+				DisplayName: Movie Sign
+				Tooltip: It's just a normal Movie Sign
+			}
+
+			OrigenDoor.DisplayName: Door of Origen
+			PlaguedMudWall.DisplayName: Plagued Mud Wall
+			PlaguedPipeWall.DisplayName: Plagued Pipe Wall
+			PlaguedStoneWall.DisplayName: Plagued Stone Wall
+			PlaguedVineWall.DisplayName: Plagued Vine Wall
+			IonogenRelic.Tooltip: The battery acid melted it...
+			Stonecutter.DisplayName: Stonecutter
+			TanzaniteGlass.DisplayName: Tanzanite Glass
+			TorrefiedTephra.DisplayName: Torrefied Tephra
+
+			ClamChowder: {
+				DisplayName: Clam Chowder
+				Tooltip:
+					'''
+					New Ilmeris style
+					Medium improvements to all stats
+					Increases life regeneration
+					'''
+			}
+
+			Coke: {
+				DisplayName: Ashes of the Sunken Sea
+				Tooltip: These fine crystals feel very powerful
+			}
+
+			CrabLeaves.DisplayName: Leaves of Crabulon
+			Crimtato.DisplayName: Crimtato
+
+			Ecstacy: {
+				DisplayName: Ecstacy
+				Tooltip: Significantly boosts elemental strength
+			}
+
+			EntropicFrond.DisplayName: Entropic Frond
+
+			Fentanyl: {
+				DisplayName: Lumtanyl
+				Tooltip: You feel light-headed
+			}
+
+			Heroin: {
+				DisplayName: Magical Slag Ashes
+				Tooltip: You can feel the power of a fallen hero in these ashes
+			}
+
+			Lean: {
+				DisplayName: The Devourer of Substances
+				Tooltip: A SYRUP DOES NOT FEAR CONSUMPTION
+			}
+
+			LSD: {
+				DisplayName: Sulphuric Acid
+				Tooltip: You have a strong urge to eat this paper
+			}
+
+			MeldChipIceCream: {
+				DisplayName: Meld Chip Ice Cream
+				Tooltip:
+					'''
+					Better eat it before it melds
+					Major improvements to all stats
+					Increases life regeneration
+					'''
+			}
+
+			Meth: {
+				DisplayName: Ashes of the Sunken Sea
+				Tooltip: These fine crystals feel very powerful
+			}
+
+			NotFabsolVodka: {
+				DisplayName: Fluorescent Vodka
+				Tooltip:
+					'''
+					Boosts all damage stats by 8% but lowers defense by 10%
+					Increases immune time after being struck
+					'''
+			}
+
+			PCP: {
+				DisplayName: Pixies' Capricious Power
+				Tooltip: This dust feels too erratic
+			}
+
+			SeafoodFood: {
+				DisplayName: Seafood
+				Tooltip: Minor improvements to all stats
+			}
+
+			StratusBeverage: {
+				DisplayName: Stratus Beverage
+				Tooltip:
+					'''
+					May make you feel spacey
+					Causes all projectile shooting weapons to fire two extra homing stars
+					Decreases weapon damage by 33%
+					'''
+			}
+
+			TitanFinger: {
+				DisplayName: Titan Finger
+				Tooltip:
+					'''
+					Contact with the nefarious anglerfish
+					Major improvements to all stats
+					Increases life regeneration
+					'''
+			}
+
+			ZumboSauce.DisplayName: Zumbo Sauce
+
+			FusedEye: {
+				DisplayName: Fused Eye
+				Tooltip:
+					'''
+					Summons Polyphemalus
+					Enrages during the day
+					'''
+			}
+
+			MoltenMatter: {
+				DisplayName: Molten Matter
+				Tooltip: Summons Pyrogen when used in the Underworld
+			}
+
+			PoisonedSclera: {
+				DisplayName: Poisoned Sclera
+				Tooltip: Summons the Acidsighter when used in the sulphurous sea at night
+			}
+
+			CannibalNectar: {
+				DisplayName: Cannibal Nectar
+				Tooltip:
+					'''
+					Stops the Pandemic Panic
+					'Smells like strawberry'
+					'''
+			}
+
+			GrarbleObliterator.DisplayName: Grarble Obliterator
+			HeavenPiercer.DisplayName: Heaven Piercer
+
+			PHD: {
+				DisplayName: PHD
+				Tooltip:
+					'''
+					Makes Pandemic Panic enemies easier to recognize
+					"Would my patient mind if I took their organs out and sold them?"
+					'''
+			}
+
+			ProfanedVocalizer: {
+				DisplayName: Profaned Vocalizer
+				Tooltip:
+					'''
+					Converts Primordial Albatrossan into an understandable language while in your inventory
+					Using this makes Primordial Albatross sounds
+					'''
+			}
+
+			AcesLow: {
+				DisplayName: Ace's Low
+				Tooltip: Fires a string of piercing spade cards when musket balls are used as ammo
+			}
+
+			AcidBow.DisplayName: Acid Bow
+
+			AergianTechnistaff: {
+				DisplayName: Aergian Technistaff
+				Tooltip:
+					'''
+					Summons an orbital Aergia Neuron
+					Holding right click causes the orbit to accelerate
+					Once fully charged, the ring can be thrown to chase enemies
+					'''
+			}
+
+			AeroBolt: {
+				DisplayName: Aero Bolt
+				Tooltip: Casts a slow-moving mini hurricanes
+			}
+
+			Aerospray: {
+				DisplayName: Aerospray
+				Tooltip: Releases pressurized mist that increases in size but decreases in damage as it travels
+			}
+
+			AngelsThesis.DisplayName: Angel's Thesis
+
+			AOTE: {
+				DisplayName: Aspect of the End
+				Tooltip: hi pixel
+			}
+
+			Arngren: {
+				DisplayName: Arngren
+				Tooltip: 80% chance to not consume ammo
+			}
+
+			AspidBlaster: {
+				DisplayName: Aspid Blaster
+				Tooltip: Fires an irritating spread of infected orbs
+			}
+
+			AtlasMunitionsBeacon: {
+				DisplayName: Atlas Munitions Beacon
+				Tooltip:
+					'''
+					Summons an Atlas Soldier to fight for you
+					Takes up 3 minion slots and only one can exist
+					'''
+			}
+
+			AuricSword.DisplayName: Auric Sword
+
+			Axisdriver: {
+				DisplayName: Axisdriver
+				Tooltip:
+					'''
+					Shoots a burst of 3 exo bullets that tear through enemies
+					Critical hits rain elemental bolts from above
+					Right click to fire an explosive homing exo bullet
+					50% chance to not consume bullets
+					'''
+			}
+
+			BallisticMissword: {
+				DisplayName: Ballistic Missword
+				Tooltip: Has a chance to explode when swung, damaging the wielder
+			}
+
+			Baow.DisplayName: Baow
+
+			Weapons: {
+				Rogue: {
+					BucketofCoal: {
+						DisplayName: Bucket of Coal
+						Tooltip: ""
+					}
+
+					BundleBones: {
+						DisplayName: Bundle o' Bones
+						Tooltip: ""
+					}
+
+					CursedSpear: {
+						DisplayName: Cursed Spear
+						Tooltip: ""
+					}
+
+					DemonCore: {
+						DisplayName: Demon Core
+						Tooltip: ""
+					}
+
+					EcologicalCollapse: {
+						DisplayName: Ecological Collapse
+						Tooltip:
+							'''
+							And there was no more ground to be seen...
+							Throws out up to 10 lumenous mines with lightning auras
+							Stealth strikes ignore the 10 mine cap, but dissipate quicker
+							'''
+					}
+
+					GearworkShield: {
+						DisplayName: Gearwork Shield
+						Tooltip: ""
+					}
+
+					IchorDagger: {
+						DisplayName: Ichor Dagger
+						Tooltip: ""
+					}
+
+					Magmasher: {
+						Tooltip:
+							'''
+							Throws out hammers that explode on enemy hits
+							Stealth strikes cause consecutive explosions to increase in size and damage
+							'''
+						DisplayName: Magmasher
+					}
+
+					ProfanedNucleus: {
+						DisplayName: Profaned Nucleus
+						Tooltip:
+							'''
+							Throws out a molten chunk of profaned rock that explodes and splits into crystals
+							Stealth strikes leave behind lingering patches of magma
+							'''
+					}
+
+					RazorTeeth: {
+						DisplayName: Razor Teeth
+						Tooltip: ""
+					}
+
+					ScrapBag: {
+						DisplayName: Scrap Claw
+						Tooltip:
+							'''
+							Tosses out scraps
+							Stealth strikes throw a large amount of charged scraps that linger longer
+							'''
+					}
+
+					ShadowsDescent: {
+						DisplayName: Shadow's Descent
+						Tooltip:
+							'''
+							Shoots a shadow ball that ignores gravity and slows down after a short time.While stationary, it shoots spirits and covers an area in a large shadow
+							Stealth strikes also emit dark pulses while stationary
+							Right click to delete all existing shadow balls
+							'They didn't understand its nature, so it was sealed away...'
+							'''
+					}
+
+					ThrowingMissiles: {
+						DisplayName: Throwing Missiles
+						Tooltip:
+							'''
+							Flings erratically moving missiles which home on enemies
+							Stealth strikes unleash a swarm of missiles
+							'''
+					}
+
+					UnsealedSingularity: {
+						DisplayName: Unsealed Singularity
+						Tooltip:
+							'''
+							Cold and alone in the void...Throws a volley of five void flasks which shatter on impact
+							Shattered flasks summon blackholes which pull in enemies and purple void matter
+							Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter
+							'''
+					}
+
+					Warglaive: {
+						DisplayName: Warglaive
+						Tooltip: Stealth strikes stick to tiles
+					}
+
+					WreathofBelial: {
+						DisplayName: Wreath of Belial
+						Tooltip:
+							'''
+							Throws a festive wreath that grows in size until exploding into icicle shards
+							Stealth strikes cause the wreath to suck in nearby enemies
+							'''
+					}
+
+					BlobfishPlushie: {
+						DisplayName: Blobfish Plushie
+						Tooltip: ""
+					}
+
+					DaggerofLiberty: {
+						DisplayName: Daggerof Liberty
+						Tooltip: ""
+					}
+
+					FracturingFist: {
+						DisplayName: Fracturing Fist
+						Tooltip: ""
+					}
+
+					RadGlowstick: {
+						DisplayName: Rad Glowstick
+						Tooltip: ""
+					}
+
+					SylvanSlasher: {
+						DisplayName: Sylvan Slasher
+						Tooltip: ""
+					}
+				}
+			}
+
+			ButterflyStaff: {
+				DisplayName: Wooden Butterfly Staff
+				Tooltip:
+					'''
+					Summons a butterfly to attack enemies
+					Does not consume minion slots
+					Only 3 can be summoned at a time
+					'The oldest in butterfly technology'
+					'''
+			}
+
+			CalamitySword: {
+				DisplayName: Calamity Sword
+				Tooltip:
+					'''
+					Fires Calamity Beams
+					'Contains the Ashes of Calamity'
+					'''
+			}
+
+			CausticClaw.DisplayName: Caustic Claw
+
+			ChainSaw: {
+				DisplayName: Chain-Saw
+				Tooltip:
+					'''
+					Hitting enemies stores charge, which progressively blinds you, but increases your crit chance.
+					Right-Click with charge to fire a projectile and consume it all
+					Does not benefit from Critical Strike Chance boosts.
+					'Chain-saw! Get it?'
+					'''
+			}
+
+			Chainsmoker: {
+				DisplayName: Chainsmoker
+				Tooltip:
+					'''
+					Sprays enemies with smoke
+					Releasing the weapon after a short period causes it to shoot a fireball
+					The fireball creates explosions when touching smoked enemies
+					'''
+			}
+
+			ChainSpear.DisplayName: Chain Spear
+
+			ChristmasCarol: {
+				DisplayName: Christmas Carol
+				Tooltip:
+					'''
+					Summons a carol bell to support you
+					Hitting the bell with a whip causes it to unleash a damaging sound pulse
+					'''
+			}
+
+			Confection.DisplayName: Confection
+			CorrosiveEyeStaff.DisplayName: Corrosive Eye Staff
+			Deicide.DisplayName: Deicide
+
+			DisenchantedSword: {
+				DisplayName: Disenchanted Sword
+				Tooltip: Can be enchanted by defeating an advanced evil foe...
+			}
+
+			Driftorcher.DisplayName: Driftorcher
+			DualCane.DisplayName: Dual Cane
+
+			Exodimus: {
+				DisplayName: Exodimus
+				Tooltip:
+					'''
+					Throws out a dagger aggressively dart towards an enemy The dagger will then explode into a cross of laser beams. 
+					Stealth strikes double the amount of beams on dissipation into an 8 pointed star
+					'''
+			}
+
+			Exosphear: {
+				DisplayName: Gravitonomy Pike
+				Tooltip:
+					'''
+					Fires homing exo pike beams that split into more beams. 
+					Ignores immunity frames
+					'''
+			}
+
+			ExtensionCable: {
+				DisplayName: Extension Cable
+				Tooltip:
+					'''
+					Stacks up to 20
+					Grows in length but decays in damage depending on the item's stack
+					Tagged enemies are struck by lightning when hit by minions
+					'''
+			}
+
+			FiberBaby: {
+				DisplayName: Fiber Baby
+				Tooltip:
+					'''
+					Summons a baby in your hands that coughs up bursts of asbestos
+					Grows in size and power based on unused minion slots
+					'The one to defeat the hydrogen bomb'
+					'''
+			}
+
+			FlamingIceBow.DisplayName: Flaming Ice Bow
+			FlounderMortar.DisplayName: Flounder Mortar
+
+			GrandReef: {
+				DisplayName: Grand Reef
+				Tooltip:
+					'''
+					Hallucinations of the deep
+					Enemy hits create a large burst of lingering coral shards
+					If the flail falls, significantly more shards are created
+					'''
+			}
+
+			GrarbleBayonet: {
+				DisplayName: Grarble Bayonet
+				Tooltip: The gun damages enemies that touch it
+			}
+
+			GrarbleSpear.DisplayName: Grarble Spear
+
+			HadopelagicEcho: {
+				DisplayName: Hadopelagic Echo
+				Tooltip:
+					'''
+					Fires a string of bouncing sound waves that become stronger as they travel
+					Sound waves echo additional sound waves on enemy hits
+					'''
+			}
+
+			HalbardoftheHolidays: {
+				DisplayName: Halberd of the Holidays
+				Tooltip:
+					'''
+					idk I'm still miserable with names
+					- The General
+					Fires exploding red and green bouncing gift bags that emit clouds as they travel
+					'''
+			}
+
+			Heterochromia: {
+				DisplayName: Heterochromia
+				Tooltip:
+					'''
+					90% chance to not consume ammo
+					'I am looking respectfully.'
+					'''
+			}
+
+			Homochromia: {
+				DisplayName: Homochromia
+				Tooltip:
+					'''
+					No homo.
+					90% chance to not consume ammo
+					100% chance to turn you gay immediately
+					'''
+			}
+
+			Hyperion: {
+				DisplayName: Hyperion
+				Tooltip: skie blok
+			}
+
+			Juicer: {
+				DisplayName: Juicer
+				Tooltip:
+					'''
+					Sprays enemies with an assortment of liquids
+					40% chance to not consume ammo
+					'''
+			}
+
+			MackerelStaff.DisplayName: Holy Mackerel Staff
+
+			Megaskeet: {
+				DisplayName: Megaskeet
+				Tooltip:
+					'''
+					50% chance to not consume ammo
+					Fires streams of hard sunlight every other shot
+					Fires a homing sunskater every 17 shots, which explodes into cinder shards on death
+					'''
+			}
+
+			Mutagen: {
+				DisplayName: Mutagen
+				Tooltip:
+					'''
+					Releases swarms of viruses while shooting spreads of blood cells
+					'A glimpse into a [c/4f1e49:Dark] and [c/d1ed98:Twisted] alternate reality...'
+					'''
+			}
+
+			Neuraze: {
+				DisplayName: Neuraze
+				Tooltip:
+					'''
+					Rapidly fires spreads of five bullets
+					Pulls from the first five bullet types in your inventory
+					80% chance to not consume ammo
+					'''
+			}
+
+			Nystagmus: {
+				DisplayName: Nystagmus
+				Tooltip:
+					'''
+					Conjures a spiral of homing eyes
+					'I am in spain without the A'
+					'''
+			}
+
+			Ogscule.DisplayName: Ogscule
+			OnyxGunblade.DisplayName: Onyx Gunblade
+
+			OnyxGunsaw: {
+				DisplayName: Onyx Overlord's Gunsaw
+				Tooltip:
+					'''
+					Projects a directed stream of onyx sawblasts while firing bullets rapidly
+					This weapon and its projectiles function as a chainsaw
+					'''
+			}
+
+			OnyxStaff: {
+				DisplayName: Onyx Staff
+				Tooltip: Casts volatile onyx fragments that explode on contact with tiles
+			}
+
+			OrigenPoint: {
+				DisplayName: Origen Point
+				Tooltip: Creates large, slow moving pixels
+			}
+
+			PaletteUncleanser: {
+				DisplayName: Palette Uncleanser
+				Tooltip: Causes hit enemies to become vulnerable to all debuff elements
+			}
+
+			PhreaticChanneler: {
+				DisplayName: Phreatic Channeler
+				Tooltip: Summons molten tools which swiftly slice apart enemies
+			}
+
+			PinesPenetrator.DisplayName: Pine's Penetrator
+			PlasmaflashBolt.DisplayName: Plasmaflash Bolt
+			PlumeflameBow.Tooltip:
+				'''
+				Coats wooden arrows in magma
+				Magmatic arrows are trailed by extremely hot volcanic mist
+				'''
+
+			Prismachromancy: {
+				DisplayName: Prismachromancy
+				Tooltip: Dazzle them!
+			}
+
+			PyroclasticFlow.Tooltip: Creates enormous explosions on enemy hits
+			Quadnoculars.DisplayName: Quadnoculars
+			RGBMurasama.DisplayName: RGB Murasama
+			SaltBooklet.DisplayName: Salt Booklet
+			SaltWaterBolt.DisplayName: Salt Water Bolt
+
+			SDOMG: {
+				DisplayName: SDOMG
+				Tooltip:
+					'''
+					75% chance to not consume ammo
+					Rapidly fires a spread of bullets that close in over time
+					Right clicking while standing still consumes a Plasma Grenade to fire a large deathray
+					While the deathray is active, you are afflicted with slow, on fire, and oiled
+					'''
+			}
+
+			ShardofGlass: {
+				DisplayName: Shard of Glass
+				Tooltip: Durability
+			}
+
+			SickStick: {
+				DisplayName: Sick Stick
+				Tooltip:
+					'''
+					Summons sickened cells
+					The original cell glues itself to enemies while secondary ones fire short ranged blood shots
+					Secondary cells lock position relative to the original when spawned
+					The greater the distance from the original cell, the more damage
+					'''
+			}
+
+			Snowgrave: {
+				DisplayName: Snowgrave
+				Tooltip:
+					'''
+					Memories of a snowy grave...
+					Summons a large deadly fountain of ice and snow below your cursor that instantly kills normal enemies
+					After usage, the player won't be able to use the weapon again for 1 minute
+					'''
+			}
+
+			TendonTides: {
+				DisplayName: Tendon Tides
+				Tooltip:
+					'''
+					Inundatio ex Sanguis
+					Throws tendon slicing disks that shred hit enemies
+					If an enemy is critically hit, the shred effect stacks and deals more damage over time
+					'''
+			}
+
+			TenebrisTides: {
+				DisplayName: Tenebris Tides
+				Tooltip:
+					'''
+					Inundatio ex Gladii
+					Spins a speared baton that summons spears from below the cursor
+					Enemies hit with the baton are barraged with moldy blades and spears to assault the struck foe
+					'''
+			}
+
+			Tetrachromancy: {
+				DisplayName: Tetrachromancy
+				Tooltip:
+					'''
+					Casts a controllable Polyphe-mini
+					Once the mouse is released, or on contact with a block, it will split into four homing eyes.
+					'Now in HD color!'
+					'You feel a discreet, distant disproval towards the extra letter in this weapon's name'
+					'''
+			}
+
+			TheDreamingGhost: {
+				DisplayName: The Dreaming Ghost
+				Tooltip:
+					'''
+					Beneath the tree's roots lies the pain of a thousand souls
+					Summons a pair of crystalline butterflies to fight for you
+					Each active purple butterfly increases your damage by 10%
+					Each active pink butterfly increases your life regeneration by 2
+					'''
+			}
+
+			TheFirestorm.Tooltip: Rapidly fires molten globs which follow your cursor
+
+			ThunderBolt: {
+				DisplayName: Thunder Bolt
+				Tooltip: Casts a slow-moving ball of lightning
+			}
+
+			TitanTides: {
+				DisplayName: Titan Tides
+				Tooltip:
+					'''
+					Inundatio ex Deos
+					Channels a spinning cosmic aura that grows in size and spin speed over time
+					Enemies hit by the aura are barraged with dozens of god slayer blades which shred enemies
+					'''
+			}
+
+			TotalityTides: {
+				DisplayName: Totality Tides
+				Tooltip:
+					'''
+					Inundatio ex Terminus
+					Summons a ball of exo energy on your cursor that sprays out a large amount of projectiles relative to your position
+					'''
+			}
+
+			TyrantShield.DisplayName: Tyrant Shield
+
+			WaraxeReloaded: {
+				DisplayName: Waraxe: Reloaded
+				Tooltip:
+					'''
+					Swings an axe several times while performing combos
+					Breaks in Hardmode
+					'''
+			}
+
+			Warbell: {
+				DisplayName: Warbell
+				Tooltip: Boosts minion damage by 10% on enemy hits
+			}
+
+			Warbow: {
+				DisplayName: Warbow
+				Tooltip: Converts wooden arrows into war arrows which crumble enemy defenses
+			}
+
+			Warstaff: {
+				DisplayName: War Staff
+				Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
+			}
+
+			WinterBreeze: {
+				DisplayName: Winter Breeze
+				Tooltip: Fires several additional icicle arrows that shatter on impact
+			}
+
+			WrathoftheCosmos.Tooltip: Summons a galactic pulse at the cursor that periodically summon two rings of homing god slayer fireballs and occasionally two cosmic guardians
+
+			WrathoftheDragons: {
+				DisplayName: Wrath of the Dragons
+				Tooltip: Summons a draconic pulse at the cursor that periodically summon two rings of homing flare dust and occasionally two flare tornadoes that turn into lingering flarenadoes upon contact with an enemy
+			}
+
+			WrathoftheEldritch.Tooltip: Summons an eldritch pulse at the cursor that periodically summon two rings of homing spirits and occasionally a deathray
+
+			WrathoftheGods: {
+				DisplayName: Wrath of the Gods
+				Tooltip:
+					'''
+					Summons a godly pulse at the cursor that periodically summon a ring of godly fireballs and occasionally explodes into a massive star of projectile and fires a deathray to annihilate your foes
+					[c/FF3333:The End..?]
+					'''
+			}
+
+			UncreasableKicks: {
+				DisplayName: Uncreasable Kicks
+				Tooltip:
+					'''
+					The end of the journey
+					The highest of peaks
+					The most blinding light
+					Uncreasable Kicks, brought to you by Fandom
+
+					Max hp permanently increased by running
+					Constantly exhude net worth
+					Massively boosted run speed
+					'''
+			}
+
+			LegendPortraitHAYABUSAItem: {
+				DisplayName: Portrait of a Legend - (HAYABUSA)
+				Tooltip: Voice of the Miracle Boy
+			}
+
+			LegendPortraitMITCHARDItem: {
+				DisplayName: Portrait of a Legend - (MITCHARD)
+				Tooltip: Technical Director, UX Designer
+			}
+
+			LegendPortraitDASLNEWItem: {
+				DisplayName: Portrait of a Legend - (DASLNEW)
+				Tooltip: Founder, Lead Designer
+			}
+
+			LegendPortraitPEREZItem: {
+				DisplayName: Portrait of a Legend - (PEREZ)
+				Tooltip: Voice of Fanny
+			}
+
+			LegendPortraitACKNERItem: {
+				DisplayName: Portrait of a Legend - (ACKNER)
+				Tooltip: Voice of Evil Fanny and Trapper Bulb Chan
+			}
+
+			LegendPortraitCONROYItem: {
+				DisplayName: Portrait of a Legend - (CONROY)
+				Tooltip: Graphics Lead, Story Lead
+			}
+
+			LegendPortraitMARINOItem: {
+				DisplayName: Portrait of a Legend - (MARINO)
+				Tooltip: 3D Assets, Saxophone Backing for "Artistic Reinforcment"
+			}
+
+			LegendPortraitHOOBItem: {
+				DisplayName: Portrait of a Legend - (HOOB)
+				Tooltip: Sound Effects, Additional Graphics
+			}
+
+			LegendPortraitETTELItem: {
+				DisplayName: Portrait of a Legend - (ETTEL)
+				Tooltip: Lead Musician
+			}
+
+			LegendPortraitWINGERTItem: {
+				DisplayName: Portrait of a Legend - (WINGERT)
+				Tooltip: Voice of Wonder Flower
+			}
+
+			LegendPortraitDIRACItem: {
+				DisplayName: Portrait of a Legend - (DIRAC)
+				Tooltip: Test Lead, European Localization
+			}
+
+			LegendPortraitHUETItem: {
+				DisplayName: Portrait of a Legend - (HUET)
+				Tooltip: Voice of the Crim Son
+			}
+
+			LegendPortraitYOUItem: {
+				DisplayName: Portrait of a Legend - (YOU)
+				Tooltip: For your continous love and support!
+			}
+
+			LegendPortraitFALAFELItem: {
+				DisplayName: Portrait of a Legend - (FALAFEL)
+				Tooltip: A very nice cat
+			}
+
+			LegendPortraitMORETTIItem: {
+				DisplayName: Portrait of a Legend - (MORETTI)
+				Tooltip: Voice of the Liminal Critic
+			}
+
+			LegendMemorialItem: {
+				DisplayName: Memorial Poster
+				Tooltip: A beautiful soul gone too soon...
+			}
+
+			LegendPromoItem.DisplayName: Promotional Poster
+		}
+
+		NPCs: {
+			AuricSlime.DisplayName: Auric Slime
+			BananaClown.DisplayName: Banana Clown
+			Carcinogen.DisplayName: Carcinogen
+			CarcinogenShield.DisplayName: Carcinogen's Shield
+			Hydrogen.DisplayName: Hydrogen
+			HydrogenShield.DisplayName: Hydrogen's Shield
+			AergiaNeuron.DisplayName: XP-00 Hypnos Aergia Neuron
+			Hypnos.DisplayName: XP-00 Hypnos
+			HypnosPlug.DisplayName: XP-00 Hypnos Plug
+			Ionogen.DisplayName: Ionogen
+			IonogenShield.DisplayName: Ionogen's Shield
+			Origen.DisplayName: Origen
+			OrigenCore.DisplayName: Origen
+			Oxygen.DisplayName: Oxygen
+			OxygenShield.DisplayName: Oxygen's Shield
+			Pathogen.DisplayName: Pathogen
+			PathogenShield.DisplayName: Pathogen's Shield
+			Phytogen.DisplayName: Phytogen
+			PhytogenShield.DisplayName: Phytogen's Shield
+			PineappleFrond.DisplayName: Frond
+
+			Astigmageddon: {
+				DisplayName: Astigmageddon
+				BossChecklistIntegration.EntryName: Polyphemalus
+			}
+
+			Cataractacomb.DisplayName: Cataractacomb
+			Conjunctivirus.DisplayName: Conjunctivirus
+			Exotrexia.DisplayName: Exotrexia
+			Polyphemalus.DisplayName: Polyphemalus
+			Pyrogen.DisplayName: Pyrogen
+			PyrogenShield.DisplayName: Pyrogen's Shield
+			SealedOne.DisplayName: Sealed One
+			WulfwyrmBody.DisplayName: Wulfrum Excavator
+			WulfwyrmHead.DisplayName: Wulfrum Excavator
+			WulfwyrmTail.DisplayName: Wulfrum Excavator
+			CosmicSlime.DisplayName: Cosmilite Slime
+			Dragon.DisplayName: Dragon
+			EnchantedSkull.DisplayName: Enchanted Skull
+			EnchantedTome.DisplayName: Enchanted Tome
+			FrozenMummy.DisplayName: Frozen Mummy
+			Fushigi.DisplayName: Fushigi
+			GreenDemon.DisplayName: Green Demon
+			HypnosDraedon.DisplayName: Draedon
+			LabRoach.DisplayName: Lab Roach
+			MBP.DisplayName: Some Hive Mind Thing
+			Miasmius.DisplayName: Miasmius
+			Fleshmullet.DisplayName: Fleshmullet
+			LaRuga.DisplayName: La Ruga
+			LifeSlime.DisplayName: Life Slime
+			Xeroc.DisplayName: Avatar of Xeroc
+			MoldMan.DisplayName: Mold Man
+			MushroomElemental.DisplayName: Mushroom Elemental
+			OgsculianBurrower.DisplayName: Ogsculian Burrower
+			Basilius.DisplayName: Basilius
+			BasiliusBody.DisplayName: Basilius
+			Dendritiator.DisplayName: Dendritiator
+			DendtritiatorArm.DisplayName: Dendritiator
+			Ecolium.DisplayName: Ecolium
+			Eosinine.DisplayName: Eosinine
+			Malignant.DisplayName: Malignant
+			MaserPhage.DisplayName: Maser Phage
+			Platelet.DisplayName: Platlet
+			RedBloodCell.DisplayName: Red Blood Cell
+			Tobasaia.DisplayName: Tobasaia
+			WhiteBloodCell.DisplayName: White Blood Cell
+			PlaguedFirefly.DisplayName: Plagued Firefly
+			PlaguedSpidrone.DisplayName: Plagued Spidrone
+			PrimalAspid.DisplayName: Primal Aspid
+			Sandrat.DisplayName: Minor Sandrat
+			BALLER.DisplayName: Archwitch
+			EDGY.DisplayName: Archseer
+			IRON.DisplayName: Archmagian
+			KABLOOEY.DisplayName: Archdiviner
+			SIIVA.DisplayName: Archdruid
+			UNCANNY.DisplayName: Archwizard
+			WALTER.DisplayName: Archmagus
+			TreeMimic.DisplayName: Tree
+			Wolfmole.DisplayName: Legendary Wolfmole
+			TheCalamity.DisplayName: The Calamity
+			AcidEye.DisplayName: Acid Eye
+			Clamitas.DisplayName: Clamitas
+			CyberDraedon.DisplayName: Cyber Draedon
+			KingMinnowsPrime.DisplayName: King Minnows Prime
+			OnyxKinsman.DisplayName: Onyx Kinsman
+			PlagueEmperor.DisplayName: Plague Emperor
+			YggdrasilEnt.DisplayName: Yggdrasil Ent
+		}
+
+		Projectiles: {
+			OrbitingOrb.DisplayName: Orbiting Orb
+			ArmofAgony.DisplayName: Arm of agony
+			AssortMinion.DisplayName: Nucleate Gello
+			AstralFireball.DisplayName: Astral Fireball
+			BrimstoneGenerator.DisplayName: Brimstone Portal
+			CalHeart.DisplayName: Calamitous Heart
+			CigarSmoke.DisplayName: Cigar Smoke
+			Cigar.DisplayName: Cigar
+			Claw.DisplayName: Giant Claw
+			CosmicConflict.DisplayName: Cosmic Crystal Conflict
+			CosmicElementalMinion.DisplayName: Cosmic Elemental
+			CriticalSlimeCore.DisplayName: Critical Slime Core
+			DarksunTornado.DisplayName: Tornado
+			EarthElementalMinion.DisplayName: Earth Elemental
+			HomingAstralFireball.DisplayName: Homing Astral Fireball
+			MarniteOrb.DisplayName: The Orb
+			MicrobeParticle.DisplayName: Microbial Cluster
+			NucleateGelloMinion.DisplayName: Nucleate Gello
+			SlimeCore.DisplayName: Slime Core
+
+			Summon: {
+				SlimeRay.DisplayName: Slime Ray
+				EldritchRay.DisplayName: Eldritch Ray
+				RockRay.DisplayName: Rock Ray
+			}
+
+			AgentPoon.DisplayName: Agent's Harpoon
+			FallingPhantomHeart.DisplayName: Phantom Heart
+			Fridge.DisplayName: Fridge
+			GrarbleObliteratorProj.DisplayName: Obliterator
+			HeavenPiercerLaser.DisplayName: Helix Laser
+			HeavenPiercerProj.DisplayName: Heaven Piercer
+			HornetShot.DisplayName: 22 Hornet Round
+			AcidShot.DisplayName: Acid Shot
+			AcidTooth.DisplayName: Acid Shot
+			AsbestosDrop.DisplayName: Asbestos Drop
+			AspidShot.DisplayName: Infection Glob
+			BananaBomb.DisplayName: Banana Bomb
+			BlueExoPulseLaser.DisplayName: Blue Exo Pulse Laser
+			CigarCinder.DisplayName: Cigar Cinder
+			Creep.DisplayName: Creep
+			EosinineProj.DisplayName: Eosinine
+			EvilPlagueSeeker.DisplayName: Plague Seeker
+			ExcavatorLaser.DisplayName: Wulfrum Beam
+			ExcavatorShot.DisplayName: Wulfrum Laser
+			ExothermalSickle.DisplayName: Exothermal Sickle
+			FriendlyCell1.DisplayName: Friendly Blood Cell
+			HydrogenMine.DisplayName: Mine
+			HydrogenShell.DisplayName: Missile
+			HydrogenWarhead.DisplayName: Warhead
+			JungleDragonYharon.DisplayName: Yharon
+			LargeTeslaSphere.DisplayName: Large Tesla Sphere
+			LifeIcicle.DisplayName: Cryonic Icicle
+			LifeMeteor.DisplayName: Hydrothermic Meteor
+			MaserDeathray.DisplayName: Maser Beam
+			OgsculeBeamHostile.DisplayName: Ogscule Beam
+			OgsculeBeam.DisplayName: Ogscule Beam
+			Oxshard.DisplayName: Oxygen Shard
+			OxygenBubble.DisplayName: Bubble
+			OxygenCloud.DisplayName: Cloud
+			OxygenDebris.DisplayName: Debris
+			PathogenBloodDrop.DisplayName: Blood
+			PathogenBloodThorn.DisplayName: Blood Thorn
+			PathogenCaltrop.DisplayName: White Blood Cell
+			PathogenCell1.DisplayName: Hostile Blood Cell
+			PineappleFrondProj.DisplayName: Frond
+			PizzaWheelHostile.DisplayName: Pizza
+			PlagueSpit.DisplayName: Plague Spit
+			Potpourri.DisplayName: Potpourri
+			PyrogenFlare.DisplayName: Pyro Flare
+			PyrogenFlareStatic.DisplayName: Pyro Flare
+			PyrogenFlareStatic2.DisplayName: Pyro Flare
+			PyrogenOrbitalFlare.DisplayName: Pyro Flare
+			PyrogenTool.DisplayName: Pyro Blade
+			PyrogenWaveFlare.DisplayName: Pyro Flare
+			PyrogenZigZagFlare.DisplayName: Pyro Flare
+			RedExoPulseLaser.DisplayName: Blue Exo Pulse Laser
+			RedstoneFireball.DisplayName: Redstone Fireball
+			RedstonePillar.DisplayName: Redstone Pillar
+			TobaccoSeed.DisplayName: Seed
+			XerocBloodShot.DisplayName: Blood Shot
+			MicrobialClusterPet.DisplayName: Microbial Cluster
+			PlaguedFallingSand.DisplayName: Plagued Sand Ball
+			WarBolt.DisplayName: Warbolt
+			WarglaiveProjectile.DisplayName: Warglaive
+			WarrowProjectile.DisplayName: Warrow
+			AcesLowCard.DisplayName: Spades
+			AergiaNeuronCore.DisplayName: Aergia Neuron Core
+			AergiaNeuronSummon.DisplayName: Aergia Neuron Core
+			AeroBoltBolt.DisplayName: Air Ball
+			AerosprayMist.DisplayName: Mist
+			AncientFlash.DisplayName: Flash
+			AncientFlashBulletProj.DisplayName: Bullet
+			AnimatedStatue.DisplayName: Animated Statue
+			Arbiter.DisplayName: Arbiter of Judgement
+			AsbestosDropFriendly.DisplayName: Asbestos Drop
+			AspidShotFriendly.DisplayName: Infection Glob
+			AtlasSoldier.DisplayName: Atlas Soldier
+			AxisExoBullet.DisplayName: Exo Bullet
+			BlueExoPulseLaserFriendly.DisplayName: Blue Exo Pulse Laser
+			Bone.DisplayName: Bone
+			BoneBundle.DisplayName: Bucket o' Bones
+			ButterflyMinion.DisplayName: Butterfly
+			Cake.DisplayName: Cake
+			CaneOrb.DisplayName: CaneOrb
+			CausticTendril.DisplayName: Caustic Tendril
+			Chainfire.DisplayName: Flame
+			ChainSawProjectile.DisplayName: Chain-Saw
+			Chainsmog.DisplayName: Smog
+			ChainSpearProj.DisplayName: Chain Spear
+
+			Melee: {
+				ChainSpearStab.DisplayName: Chain Spear
+				GrarbleSpearProjectile.DisplayName: Spear
+			}
+
+			Coal.DisplayName: Coal
+			CoalBucket.DisplayName: Bucket of Coal
+			CoralShard.DisplayName: Dead Coral Shard
+			CorrosiveEye.DisplayName: Corrosive Eye
+			CrescentSlash.DisplayName: Crescent Slash
+			CursedSpearProj.DisplayName: Cursed Spear
+			DarkEnergySentry.DisplayName: Dark Energy
+			DeadYharim.DisplayName: Tyrant Shield
+			DeicideFist.DisplayName: Sacrilegious Fist
+			DemonCoreProj.DisplayName: Demon Core
+			dimusBEAM.DisplayName: Exodimus Beam
+			DriftSpark.DisplayName: Spark
+			ExodimusPROJ.DisplayName: Exodiumus dagger
+			ExoPike.DisplayName: Gravitonomy Beam
+			ExoPikePhantom.DisplayName: Gravitonomy Beam
+			FiberBabyHoldout.DisplayName: Fiber Baby
+			FlameFrostArrow.DisplayName: Flaming Ice Arrow
+			Frosting.DisplayName: Frosting
+			GearShield.DisplayName: Gearwork Shield
+			GreenBall.DisplayName: Green Bag
+			GreenDust.DisplayName: Dust
+			HadoSoundwave.DisplayName: Hadopelagic Soundwave
+			HolyMackerel.DisplayName: Holy Mackerel
+			HydrogenShellFriendly.DisplayName: Missile
+			IchorDaggerProj.DisplayName: Ichor Dagger
+			IchorSpark.DisplayName: Ichor Spark
+			LumChunk.DisplayName: Lumenyl Shard
+			LumenousMine.DisplayName: Lumenous Mine
+			MagmaticArrow.DisplayName: Magmatic Arrow
+			MutantSeeker.DisplayName: Seeker
+			OnyxBlast.DisplayName: Onyx Blast
+			OnyxFragment.DisplayName: Onyx Fragment
+			OnyxGunsawProjectile.DisplayName: Somewhat cost-efficient chainsaw
+			OrigenPointProjectile.DisplayName: Point
+			PikeSpear.DisplayName: Exo shiv
+			PineappleSentry.DisplayName: Animated Statue
+			PinkCrystallineButterfly.DisplayName: Pink Crystalline Butterfly
+			PinkSquare.DisplayName: Square
+			PlasmaflashBolt.DisplayName: Plasmaflash Bolt
+			ProfaneNucleus.DisplayName: Profaned Nucleus
+			PungentShot.DisplayName: Acid Shot
+			PurpleCrystallineButterfly.DisplayName: Pink Crystalline Butterfly
+			RazorTooth.DisplayName: Razor Tooth
+			RedBall.DisplayName: Red Bag
+			RedDust.DisplayName: Dust
+			Reef.DisplayName: Grand Reef
+			SaltCube.DisplayName: Salt Cube
+			SaltWater.DisplayName: Salt Water
+			Scrap.DisplayName: Scrap
+			ShadowCloud.DisplayName: Demon Core
+			ShadowPulse.DisplayName: Shadow Pulse
+			ShadowsDescentBall.DisplayName: Shadow Ball
+			SkeeterBullet.DisplayName: Sunskater
+			SnowgraveSigil.DisplayName: Snowgrave
+			NanomachinesSon.DisplayName: Nanomachine's Son
+			TwinkleStar.DisplayName: Twinkle Star
+			StratusStar.DisplayName: Stratus Star
+			SulphurArrow.DisplayName: Sulphur Arrow
+			TendonTidesDisc.DisplayName: Tendon Tides
+			TenebrisTidesDisc.DisplayName: Tenebris Tides
+			ThunderBoltBolt.DisplayName: Lightning Ball
+			TitanTidesDisc.DisplayName: Titan Tides
+			TotalityEnergy.DisplayName: Exo Rammer
+			TotalityScythe.DisplayName: Exo Scythe
+			TotalityTidesDisc.DisplayName: Totality Tides
+			Twepoon.DisplayName: Twepoon
+			Twetwepoon.DisplayName: Twetwepoon
+			TwistedNetheriteSoulExplosion.DisplayName: Twisted Netherite Soul Explosion
+			UnsealedBlackhole.DisplayName: Unsealed Singularity
+			UnsealedBomb.DisplayName: Unsealed Singularity
+			WaraxeReloadedHoldout.DisplayName: Waraxe Reloaded
+			WreathProjectile.DisplayName: Wreath
+		}
 	}
 }
