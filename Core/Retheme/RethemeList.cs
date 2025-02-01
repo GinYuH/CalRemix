@@ -94,6 +94,7 @@ namespace CalRemix.Core.Retheme
             #region Hardmode
             { NPCType<Cryogen>(), "Cryogen/CryogenPhase1" },
             { NPCType<CryogenShield>(), "Cryogen/CryogenShield" },
+            { NPCType<BrimstoneElemental>(), "Brim/BrimstoneElemental" },
             { NPCType<CalamitasClone>(), "Cal/Calamitas" },
             { NPCType<Anahita>(), "Levi/Anahita" },
             { NPCType<Leviathan>(), "Levi/Levi" },
