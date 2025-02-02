@@ -228,6 +228,45 @@ namespace CalRemix
         public int calamitizedCounter;
         public int calamitizedHitCooldown;
         public bool stratusBeverage;
+        // Tainted
+        public bool taintedAmmo;
+        public bool taintedArchery;
+        public bool taintedBattle;
+        public bool taintedBuilder;
+        public bool taintedCalm;
+        public bool taintedCrate;
+        public bool taintedDanger;
+        public bool taintedEndurance;
+        public bool taintedFeather;
+        public bool taintedFish;
+        public bool taintedGills;
+        public bool taintedGravity;
+        public bool taintedHeart;
+        public bool taintedHunt;
+        public bool taintedInferno;
+        public bool taintedInvis;
+        public bool taintedIron;
+        public bool taintedLife;
+        public bool taintedLove;
+        public bool taintedLuck;
+        public bool taintedMagic;
+        public bool taintedMana;
+        public bool taintedMining;
+        public bool taintedOwl;
+        public bool taintedObsidian;
+        public bool taintedRage;
+        public bool taintedRegen;
+        public bool taintedShine;
+        public bool taintedSonar;
+        public bool taintedSpelunker;
+        public bool taintedStink;
+        public bool taintedSummoning;
+        public bool taintedSwift;
+        public bool taintedThorns;
+        public bool taintedTitan;
+        public bool taintedWarmth;
+        public bool taintedWater;
+        public bool taintedWrath;
 
         // Tiles
         public float cosdam = 0;
@@ -433,7 +472,10 @@ namespace CalRemix
 			{ 
 				modifiers.SourceDamage *= 1.9f;
 			}
-			
+            if (taintedGills && Player.IsUnderwater() && Player.breath > 0)
+            {
+                modifiers.SourceDamage *= 0f;
+            }			
         }
 
 
@@ -518,6 +560,75 @@ namespace CalRemix
                 }
                 chainSawHitCooldown = 0;
             }
+
+            if (taintedBuilder)
+            {
+                Player.blockRange = 0;
+                Player.tileSpeed = 0;
+                Player.wallSpeed = 0;
+            }
+
+            if (taintedDanger)
+            {
+                Point playerPos = Player.position.ToTileCoordinates();
+                int range = Main.rand.Next(8, 64);
+                Wiring.TripWire(playerPos.X - range, playerPos.Y - range, range * 2, range * 2);
+            }
+
+            if (taintedFish)
+            {
+                Player.fishingSkill -= 22;
+            }
+
+            if (taintedGills)
+            {
+                if (Player.IsUnderwater())
+                {
+                    Player.breath -= (int)(Player.breathMax * 0.02f);
+                }
+            }
+
+            if (taintedGravity)
+            {
+                Player.velocity += new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 31));
+            }
+
+            if (taintedHunt)
+            {
+                Player.aggro += 800;
+            }
+
+            if (taintedMana)
+            {
+                Player.manaCost *= 2;
+            }
+
+            if (taintedMining)
+            {
+                Player.pickSpeed *= 0.2f;
+            }
+
+            if (taintedRage)
+            {
+                Player.GetCritChance(DamageClass.Generic) *= 0;
+                Player.GetDamage<GenericDamageClass>() *= 1.3f;
+            }
+
+            if (taintedSummoning)
+            {
+                Player.maxMinions = 222222;
+            }
+
+            if (taintedTitan)
+            {
+                Player.GetKnockback(DamageClass.Generic) *= 0;
+            }
+
+            if (taintedIron)
+            {
+                Player.statDefense -= (int)(Player.statDefense * 0.22f);
+            }
+
 			if (Player.ZoneRockLayerHeight)
 			{
 				if (!NPC.AnyNPCs(NPCType<Phytogen>()))
@@ -538,13 +649,13 @@ namespace CalRemix
 					}
 				}
 			}
-			if (CalRemixWorld.hydrogenLocation != Vector2.Zero && !BossRushEvent.BossRushActive)
-			{
-				if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
-				{
-					if (!NPC.AnyNPCs(NPCType<Hydrogen>()))
-						NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
-				}
+            if (CalRemixWorld.hydrogenLocation != Vector2.Zero && !BossRushEvent.BossRushActive)
+            {
+                if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
+                {
+                    if (!NPC.AnyNPCs(NPCType<Hydrogen>()))
+                        NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
+                }
             }
         }
 
@@ -855,6 +966,18 @@ namespace CalRemix
                     Player.wingTime = 0;
                 }
             }
+
+            if (taintedLife)
+            {
+                Player.statLifeMax2 -= 100;
+                if (Player.statLife > Player.statLifeMax2)
+                    Player.statLife = Player.statLifeMax2;
+                Player.statManaMax2 += 100;
+            }
+
+            if (taintedObsidian)
+                if (Player.lavaWet)
+                    Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " thought that was orange juice"), Player.statLifeMax, 0);
         }
         public override void ResetEffects()
 		{
@@ -901,7 +1024,45 @@ namespace CalRemix
 			invGar = false;
 			hayFever = false;
             stratusBeverage = false;
-			phd = false;
+            taintedAmmo= false;
+            taintedArchery= false;
+            taintedBattle= false;
+            taintedBuilder= false;
+            taintedCalm= false;
+            taintedCrate= false;
+            taintedDanger= false;
+            taintedEndurance= false;
+            taintedFeather= false;
+            taintedFish = false;
+            taintedGills= false;
+            taintedGravity= false;
+            taintedHeart= false;
+            taintedHunt= false;
+            taintedInferno= false;
+            taintedInvis= false;
+            taintedIron= false;
+            taintedLife= false;
+            taintedLove= false;
+            taintedLuck= false;
+            taintedMagic= false;
+            taintedMana= false;
+            taintedMining= false;
+            taintedOwl= false;
+            taintedObsidian= false;
+            taintedRage= false;
+            taintedRegen= false;
+            taintedShine= false;
+            taintedSonar= false;
+            taintedSpelunker= false;
+            taintedStink= false;
+            taintedSummoning= false;
+            taintedSwift= false;
+            taintedThorns= false;
+            taintedTitan= false;
+            taintedWarmth= false;
+            taintedWater= false;
+            taintedWrath= false;
+            phd = false;
 			infraredSights = false;
             exolotl = false;
             fractalCrawler = false;
@@ -976,6 +1137,21 @@ namespace CalRemix
             {
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
 				helmet.souls++;
+            }
+            if (npc.life > 0)
+            {
+                if (taintedMana && Main.rand.NextBool(22) && hit.DamageType == DamageClass.Magic)
+                {
+                    Item.NewItem(npc.GetSource_OnHit(npc), npc.getRect(), ItemID.Star);
+                }
+                if (taintedRegen && Main.rand.NextBool(50))
+                {
+                    Item.NewItem(npc.GetSource_OnHit(npc), npc.getRect(), ItemID.Heart);
+                }
+                if (taintedOwl)
+                {
+                    npc.AddBuff(BuffID.Confused, 220);
+                }
             }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
@@ -1065,11 +1241,30 @@ namespace CalRemix
 				if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ProjectileType<DestroyerElectricLaser>() ||
 					proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
 					calplayer.projectileDamageReduction += 1;
-			}
-		}
+            }
+
+            if (taintedWarmth)
+            {
+                if (proj.Name.Contains("fire", StringComparison.CurrentCultureIgnoreCase) || proj.Name.Contains("hell", StringComparison.CurrentCultureIgnoreCase) || proj.Name.Contains("infer", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    modifiers.SourceDamage *= 0.5f;
+                }
+            }
+        }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
+
+            if (taintedFish)
+            {
+                if (attempt.rolledItemDrop > 0)
+                {
+                    itemDrop = 0;
+                    npcSpawn = Main.rand.NextBool(50) ? NPCType<Xeroc>() : Main.rand.NextBool(22) ? NPCID.BloodNautilus : Main.rand.NextBool(10) ? NPCID.BloodEelHead : Main.rand.NextBool(5) ? NPCID.GoblinShark : Main.rand.NextBool() ? NPCID.ZombieMerman : NPCID.EyeballFlyingFish;
+                    return;
+                }
+            }
+
             int roll = Main.rand.Next(100);
             if (attempt.bobberType == ProjectileType<TyrantBobber>() && Player.ActiveItem().type == ItemType<TheCodseeker>() && Main.rand.NextBool(100))
             {
@@ -1100,9 +1295,9 @@ namespace CalRemix
             {
                 itemDrop = ItemType<GrandioseGland>();
             }
-			if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10) && CalRemixWorld.sidegar)
-			{
-				itemDrop = ItemType<SideGar>();
+            if (inWater && Player.ZoneSkyHeight && NPC.downedMoonlord && Main.rand.NextBool(10) && CalRemixWorld.sidegar)
+            {
+                itemDrop = ItemType<SideGar>();
             }
             if (inWater && Player.ZoneJungle && DownedBossSystem.downedProvidence && Main.rand.NextBool(10) && CalRemixWorld.reargar)
             {
@@ -1132,6 +1327,26 @@ namespace CalRemix
                     CalRemixWorld.UnleashRoaches();
                 }
                 itemDrop = ItemID.None;
+            }
+            // Tainted Crate is double or nothing for crates
+            if (taintedCrate)
+            {
+                if (attempt.crate)
+                {
+                    if (Main.rand.NextBool())
+                    {
+                        attempt.crate = false;
+                    }
+                    else
+                    {
+                        Item.NewItem(Player.GetSource_FromThis(), Player.getRect(), attempt.rolledItemDrop);
+                    }
+                }
+            }
+
+            if (taintedSonar)
+            {
+                itemDrop = Main.rand.Next(0, ContentSamples.ItemsByType.Count - 1);
             }
         }
         public void SpawnPhantomHeart()
@@ -1188,6 +1403,18 @@ namespace CalRemix
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 240;
+            }
+            if (taintedInferno)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 22;
+            }
+            if (taintedRegen)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
     }
@@ -1253,6 +1480,10 @@ namespace CalRemix
                 SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
 				Player.AddBuff(BuffType<GarBoost>(), 60);
 			}
+            if (taintedIron && npc.Calamity().canBreakPlayerDefense)
+            {
+                Player.Calamity().defenseDamageRatio *= 0.5f;
+            }
         }
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)

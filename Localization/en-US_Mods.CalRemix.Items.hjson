@@ -3247,3 +3247,267 @@ DyeStats: {
 	Silver: Charisma {0} by {1}
 	Black: Evil {0} by {1}
 }
+
+TaintedAmmoReservationPotion: {
+	DisplayName: Tainted Ammo Reservation Potion
+	Tooltip:
+		'''
+		Gives a 20% chance for weapons to use twice as much ammo, doubling the amount of projectiles shot
+		Effect does not activate while carrying the Endless Quiver of Musket Pouch
+		'''
+}
+
+TaintedArcheryPotion: {
+	DisplayName: Tainted Ammo Reservation Potion
+	Tooltip:
+		'''
+		Arrow damage decreased by 10% and velocity decreased by 20%
+		Bow fire rate increased by 30%
+		'''
+}
+
+TaintedBattlePotion: {
+	DisplayName: Tainted Battle Potion
+	Tooltip:
+		'''
+		Decreases enemy spawn rates
+		Naturally spawned enemies are stronger but drop twice as much money
+		'''
+}
+
+TaintedBuilderPotion: {
+	DisplayName: Tainted Builder Potion
+	Tooltip:
+		'''
+		Disables building speed and range boosts
+		Non-ore white rarity blocks now have a 20% chance of not being consumed when placed
+		'''
+}
+
+TaintedCalmingPotion: {
+	DisplayName: Tainted Calming Potion
+	Tooltip:
+		'''
+		Increases enemy spawn rates
+		Naturally spawned enemies are much weaker
+		'''
+}
+
+TaintedCratePotion: {
+	DisplayName: Tainted Crate Potion
+	Tooltip:
+		'''
+		Halves the chance of catching crates
+		When a crate is caught an additional crate is caught
+		'''
+}
+
+TaintedDangersensePotion: {
+	DisplayName: Tainted Dangersense Potion
+	Tooltip: Constantly activates all nearby wiring
+}
+
+TaintedEndurancePotion: {
+	DisplayName: Tainted Endurance Potion
+	Tooltip: Enemy damage reduction decreased by 10%
+}
+
+TaintedFeatherfallPotion: {
+	DisplayName: Tainted Featherfall Potion
+	Tooltip: Causes some enemies to take fall damage
+}
+
+TaintedFishingPotion: {
+	DisplayName: Tainted Fishing Potion
+	Tooltip:
+		'''
+		Decreases fishing power
+		All caught fish are now Blood Moon monsters
+		'''
+}
+
+TaintedGillsPotion: {
+	DisplayName: Tainted Gills Potion
+	Tooltip:
+		'''
+		Rapidly decreases your breath while underwater
+		While drowning and breath is above zero, you are completely invincible
+		'''
+}
+
+TaintedGravitationPotion: {
+	DisplayName: Tainted Gravitation Potion
+	Tooltip: Completely distorts your movement
+}
+
+TaintedHeartreachPotion: {
+	DisplayName: Tainted Heartreach Potion
+	Tooltip: Heart pickups now fight for you
+}
+
+TaintedHunterPotion: {
+	DisplayName: Tainted Hunter Potion
+	Tooltip: Increased enemy aggro
+}
+
+TaintedInfernoPotion: {
+	DisplayName: Tainted Inferno Potion
+	Tooltip: Lights the wearer and all enemies on fire
+}
+
+TaintedInvisibilityPotion: {
+	DisplayName: Tainted Invisibility Potion
+	Tooltip: Naturally spawned enemies are invisible and passive until hit
+}
+
+TaintedIronskinPotion: {
+	DisplayName: Tainted Ironskin Potion
+	Tooltip: Decreases defense, but also decreases defense damage
+}
+
+TaintedLifeforcePotion: {
+	DisplayName: Tainted Lifeforce Potion
+	Tooltip: Increases your maximum mana but decreases your maximum health
+}
+
+TaintedLovePotion: {
+	DisplayName: Tainted Love Potion
+	Tooltip: Causes enemies to deal contact damage to each other
+}
+
+TaintedLuckPotion: {
+	DisplayName: Tainted Luck Potion
+	Tooltip: Causes enemies to drop Astral Pearls
+}
+
+TaintedMagicPowerPotion: {
+	DisplayName: Tainted Magic Power Potion
+	Tooltip: Decreases magic damage, but increases magic knockback
+}
+
+TaintedManaRegenerationPotion: {
+	DisplayName: Tainted Mana Regeneration Potion
+	Tooltip: Disables mana regeneration, but hitting enemies now spawns stars
+}
+
+TaintedMiningPotion: {
+	DisplayName: Tainted Mining Potion
+	Tooltip:
+		'''
+		Heavily decreases pick speed
+		Pickaxes now have increased power
+		'''
+}
+
+TaintedNightOwlPotion: {
+	DisplayName: Tainted Night Owl Potion
+	Tooltip:
+		'''
+		Darkens the player's vision
+		Hit enemies are inflicted with Confused
+		'''
+}
+
+TaintedObsidianSkinPotion: {
+	DisplayName: Tainted Obsidian Skin Potion
+	Tooltip:
+		'''
+		Lava now instantly kills the player
+		Lava now deals percentage based damage to enemies vulnerable to it
+		'''
+}
+
+TaintedRegenerationPotion: {
+	DisplayName: Tainted Regeneration Potion
+	Tooltip:
+		'''
+		Disables positive life regeneration
+		Hitting enemies spawns hearts
+		'''
+}
+
+TaintedShinePotion: {
+	DisplayName: Tainted Shine Potion
+	Tooltip:
+		'''
+		Completely blackens the player's vision
+		All friendly projectiles now home
+		'''
+}
+
+TaintedSonarPotion: {
+	DisplayName: Tainted Sonar Potion
+	Tooltip: Rapidly randomizes fishing catches when hooked
+}
+
+TaintedSpelunkerPotion: {
+	DisplayName: Tainted Spelunker Potion
+	Tooltip:
+		'''
+		Replaces all nearby ores with common blocks
+		Breaking blocks has a chance to spawn ore
+		'''
+}
+
+TaintedStinkPotion: {
+	DisplayName: Tainted Stink Potion
+	Tooltip: Causes enemies to run away from you
+}
+
+TaintedSummoningPotion: {
+	DisplayName: Tainted Summoning Potion
+	Tooltip:
+		'''
+		Grants near unlimited minion slots
+		Minions instantly despawn after a few seconds
+		'''
+}
+
+TaintedSwiftnessPotion: {
+	DisplayName: Tainted Swiftness Potion
+	Tooltip: Reduced speed and inertia
+}
+
+TaintedThornsPotion: {
+	DisplayName: Tainted Thorns Potion
+	Tooltip: Friendly projectiles bounce off the first enemy they hit, but deal 10x damage to other enemies
+}
+
+TaintedTitanPotion: {
+	DisplayName: Tainted Titan Potion
+	Tooltip: Disables weapon knockback
+}
+
+TaintedWarmthPotion: {
+	DisplayName: Tainted Warmth Potion
+	Tooltip: Reduces damage from firey projectiles
+}
+
+TaintedWaterWalkingPotion: {
+	DisplayName: Tainted Water Walking Potion
+	Tooltip:
+		'''
+		You can now walk on air
+		Walking on land deals damage to you
+		'''
+}
+
+TaintedWrathPotion: {
+	DisplayName: Tainted Wrath Potion
+	Tooltip:
+		'''
+		Sets your damage to 0
+		Enemies lose health over time
+		'''
+}
+
+DisgustingMeat: {
+	DisplayName: Disgusting Meat
+	Tooltip:
+		'''
+		Mmm... a delicacy, to be sure!
+		Best served cold
+		'''
+}
+
+TaintedRagePotion.DisplayName: Tainted Rage Potion

@@ -214,3 +214,193 @@ StratusBeverageBuff: {
 	DisplayName: Stratus Beverage
 	Description: Seeing stars
 }
+
+TaintedAmmoBuff: {
+	DisplayName: Ammo Unleashed
+	Description: You are leaking ammo!
+}
+
+TaintedArcheryBuff: {
+	DisplayName: Reckless Archer
+	Description: Arrows everywhere!
+}
+
+TaintedBattleBuff: {
+	DisplayName: Apocalypse Scenario
+	Description: Those who remain are the richest
+}
+
+TaintedBuilderBuff: {
+	DisplayName: Resourceful
+	Description: How does this physically work???
+}
+
+TaintedCalmingBuff: {
+	DisplayName: Weak Hordes
+	Description: More seek to challenge you, but fall in fear
+}
+
+TaintedCrateBuff: {
+	DisplayName: Gacha Sim
+	Description: Double or nothing
+}
+
+TaintedDangersenseBuff: {
+	DisplayName: Danger
+	Description: Everything is out to kill you!
+}
+
+TaintedEnduranceBuff: {
+	DisplayName: Shattered Enemies
+	Description: Your foes grow weaker
+}
+
+TaintedFeatherfallBuff: {
+	DisplayName: Friendly Gravity
+	Description: Why couldn't they take fall damage before?
+}
+
+TaintedFishingBuff: {
+	DisplayName: Fishing Curse
+	Description: No food, only fights
+}
+
+TaintedGillsBuff: {
+	DisplayName: Hydrophobia
+	Description: Drowning makes you panic
+}
+
+TaintedGravityBuff: {
+	DisplayName: Very Distorted
+	Description: Losing control!
+}
+
+TaintedHeartBuff: {
+	DisplayName: Heart Attack
+	Description: Hearts now attack
+}
+
+TaintedHunterBuff: {
+	DisplayName: Infamy
+	Description: Everyone wants to be your enemy
+}
+
+TaintedInfernoBuff: {
+	DisplayName: Ablaze
+	Description: Everybody burns
+}
+
+TaintedInvisibilityBuff: {
+	DisplayName: Abandoned
+	Description: Where did everyone go?
+}
+
+TaintedIronskinBuff: {
+	DisplayName: Battered
+	Description: Beaten up, but still determined
+}
+
+TaintedLifeBuff: {
+	DisplayName: Mana Blood
+	Description: Your health is being converted into mana
+}
+
+TaintedLoveBuff: {
+	DisplayName: Idol
+	Description: Everyone is tearing each other apart to get to you
+}
+
+TaintedLuckBuff: {
+	DisplayName: Speedrunner Luck
+	Description: Pearl drop rates increased
+}
+
+TaintedMagicPowerBuff: {
+	DisplayName: Telekinesis
+	Description: Toss enemies around with magic
+}
+
+TaintedManaBuff: {
+	DisplayName: Mana Acceleration
+	Description: Beat the stars out of them!
+}
+
+TaintedMiningBuff: {
+	DisplayName: Mining Strength
+	Description: Your pickaxe feels heavier...
+}
+
+TaintedNightOwlBuff: {
+	DisplayName: Hazy
+	Description: Darkness falls
+}
+
+TaintedObsidianSkinBuff: {
+	DisplayName: Lethal Lava
+	Description: Better not touch it!
+}
+
+TaintedRageBuff: {
+	DisplayName: Focused Power
+	Description: No more luck, only violence
+}
+
+TaintedRegenerationBuff: {
+	DisplayName: Vampiric
+	Description: Drain them
+}
+
+TaintedShineBuff: {
+	DisplayName: Pitch Black
+	Description: True homing
+}
+
+TaintedSonarBuff: {
+	DisplayName: Restless Fish
+	Description: Your fishing lines shake rapidly
+}
+
+TaintedSpelunkerBuff: {
+	DisplayName: Treasure Magnet
+	Description: Metal leaks out of the walls
+}
+
+TaintedStinkBuff: {
+	DisplayName: Disgusting
+	Description: Even noseless enemies think you smell awful
+}
+
+TaintedSummoningBuff: {
+	DisplayName: Mayfly Minions
+	Description: They grow up so fast...
+}
+
+TaintedSwiftnessBuff: {
+	DisplayName: Sneaking
+	Description: Be careful
+}
+
+TaintedThornsBuff: {
+	DisplayName: Shielded Enemies
+	Description: Maybe one will hit!
+}
+
+TaintedTitanBuff: {
+	DisplayName: Forceless
+	Description: Your weapons have no impact
+}
+
+TaintedWarmthBuff: {
+	DisplayName: Cooling
+	Description: Reduced damage from warm sources
+}
+
+TaintedWaterWalkingBuff: {
+	DisplayName: Air Walking
+	Description: Magic glass
+}
+
+TaintedWrathBuff: {
+	DisplayName: Pacifist
+	Description: As harmless as a fly
+}
