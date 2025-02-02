@@ -265,6 +265,17 @@ namespace CalRemix
 
         public override bool PreAI(NPC npc)
         {
+            if (npc.type == NPCType<OldDuke>())
+            {
+                npc.active = false;
+            }
+            if (CalRemixWorld.wizardDisabled)
+            {
+                if (npc.type == NPCID.Wizard || npc.type == NPCID.BoundWizard)
+                {
+                    npc.active = false;
+                }
+            }
             if (CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
             {
                 clawed = 0;
