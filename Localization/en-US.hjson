@@ -35,7 +35,7 @@ Mods: {
 			}
 
 			ExosphereBiome: {
-				DisplayName: Exosphere Biome
+				DisplayName: The Exosphere
 				TownNPCDialogueName: the Exosphere Biome
 			}
 
@@ -51,22 +51,22 @@ Mods: {
 
 			GaleforceDayBiome: {
 				DisplayName: Galeforce Day
-				TownNPCDialogueName: the Galeforce Day Biome
+				TownNPCDialogueName: the Galeforce Day
 			}
 
 			PandemicPanicBiome: {
 				DisplayName: Pandemic Panic
-				TownNPCDialogueName: the Pandemic Panic Biome
+				TownNPCDialogueName: the Pandemic Panic
 			}
 
 			BaronStraitBiome: {
 				DisplayName: Baron Strait
-				TownNPCDialogueName: the Baron Strait Biome
+				TownNPCDialogueName: the Baron Strait
 			}
 
 			FrozenStrongholdBiome: {
 				DisplayName: Frozen Stronghold
-				TownNPCDialogueName: the Frozen Stronghold Biome
+				TownNPCDialogueName: the Frozen Stronghold
 			}
 
 			ProfanedDesertBiome: {

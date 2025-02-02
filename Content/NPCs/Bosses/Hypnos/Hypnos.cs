@@ -81,6 +81,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             NPC.damage = 1;
             NPC.defense = 90;
             NPC.alpha = 255;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type };
             // SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type }; This is buggy for some reason
             if (!Main.dedServ)
                 Music = CalRemixMusic.Hypnos;
@@ -794,6 +795,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             Texture2D glowmask = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/Hypnos_Glow").Value;
             if (NPC.IsABestiaryIconDummy)
             {
+                NPC.scale = 0.75f;
                 SpriteEffects spriteEffects = SpriteEffects.None;
                 if (NPC.spriteDirection == 1)
                     spriteEffects = SpriteEffects.FlipHorizontally;
