@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Materials;
 using CalamityMod.Items;
 using CalamityMod;
 using CalamityMod.Tiles.Furniture.CraftingStations;
