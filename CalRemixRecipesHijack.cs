@@ -193,6 +193,11 @@ namespace CalRemix
             shimmerEssenceCrafts.Add((ItemType<PlagueReaperStriders>(), ItemType<EssenceofMyst>(), 17));
             shimmerEssenceCrafts.Add((ItemType<PlagueReaperVest>(), ItemType<EssenceofMyst>(), 19));
             shimmerEssenceCrafts.Add((ItemType<XenonCutlass>(), ItemType<EssenceofMyst>(), 10));
+            shimmerEssenceCrafts.Add((ItemType<EssenceOfMerge>(), ItemType<EssenceofMyst>(), 10));
+            shimmerEssenceCrafts.Add((ItemType<EssenceOfMerge>(), ItemType<EssenceofCrystal>(), 10));
+            shimmerEssenceCrafts.Add((ItemType<EssenceOfMerge>(), ItemType<EssenceofLaw>(), 10));
+            shimmerEssenceCrafts.Add((ItemType<EssenceOfMerge>(), ItemType<EssenceofZot>(), 10));
+            shimmerEssenceCrafts.Add((ItemType<EssenceOfMerge>(), ItemType<EssenceofSurt>(), 10));
             #endregion
 
             #region Delicious Meat
