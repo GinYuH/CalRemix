@@ -54,11 +54,11 @@ namespace CalRemix.Content.Items.Accessories
             CreateRecipe().
                 AddIngredient(ItemID.Ectoplasm, 20).
                 AddIngredient(ItemID.SoulofFlight, 20).
-                AddIngredient<EssenceOfSunlight>(10).
-                AddIngredient<EssenceOfHavoc>(10).
-                AddIngredient<EssenceOfEleum>(10).
-                AddIngredient<EssenceOfBabil>(10).
-                AddIngredient<EssenceOfRend>(10).
+                AddIngredient<EssenceofSunlight>(10).
+                AddIngredient<EssenceofHavoc>(10).
+                AddIngredient<EssenceofEleum>(10).
+                AddIngredient<EssenceofBabil>(10).
+                AddIngredient<EssenceofRend>(10).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }
