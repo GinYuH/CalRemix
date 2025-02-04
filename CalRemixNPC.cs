@@ -1128,8 +1128,8 @@ namespace CalRemix
             if (npc.type == NPCID.Clinger)
             {
                 LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
-                postPolter.Add(ItemType<CursedSpear>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
-                postPolter.AddFail(ItemType<CursedSpear>(), 25, hideLootReport: Main.expertMode);
+                postPolter.Add(ItemType<Content.Items.Weapons.CursedSpear>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ItemType<Content.Items.Weapons.CursedSpear>(), 25, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
             }
             if (npc.type == NPCID.IchorSticker)
