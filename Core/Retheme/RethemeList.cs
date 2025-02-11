@@ -20,7 +20,6 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.Projectiles.Melee.Shortswords;
 using CalamityMod.Projectiles.Melee.Spears;
@@ -34,7 +33,6 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee.Yoyos;
-using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.NPCs.Providence;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Items.Weapons;
@@ -43,8 +41,6 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using Terraria.ID;
-using CalamityMod.Items.Mounts;
-using CalamityMod.Buffs.Mounts;
 
 namespace CalRemix.Core.Retheme
 {
@@ -52,6 +48,7 @@ namespace CalRemix.Core.Retheme
     {
         internal static Dictionary<int, string> NPCs = new()
         {
+            { NPCType<Cnidrion>(), "Cnidrion" },
             { NPCType<ColossalSquid>(), "ColossalSquid" },
             { NPCType<Eidolist>(), "Eidolist" },
             { NPCType<ReaperShark>(), "ReaperShark" },
@@ -271,6 +268,7 @@ namespace CalRemix.Core.Retheme
             { ProjectileType<VoidEssence>(), "VoidEssence" },
             { ProjectileType<MutatedTruffleMinion>(), "GassyDuke" },
             { ProjectileType<MetalChunk>(), "MetalMonstrosity" },
+            { ProjectileType<BrimstoneElementalMinion>(), "Brim/BrimstoneElementalMinion" },
             #region Desert Sockourge
             { ProjectileType<SaharaSlicersBlade>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBladeAlt>(), "DS/SaharaSlicer" },
@@ -341,7 +339,9 @@ namespace CalRemix.Core.Retheme
             NPCType<AstrumAureus>(),
             NPCType<Draedon>(),
             NPCType<BrimstoneHeart>(),
-            NPCType<WITCH>()
+            NPCType<WITCH>(),
+            NPCType<Cnidrion>(),
+            NPCType<Anahita>()
         ];
     }
 }

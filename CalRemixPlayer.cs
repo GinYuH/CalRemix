@@ -827,7 +827,7 @@ namespace CalRemix
 			}
 			if (astEffigy)
 			{
-				if (Player.InSpace())
+				if (Player.ZoneSkyHeight)
 				{
 					Player.gravity = Player.defaultGravity;
 					if (Player.wet)
