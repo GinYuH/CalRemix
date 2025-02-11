@@ -141,7 +141,9 @@ namespace CalRemix
             NPCType<SplitCrimulanPaladin>(),
             NPCType<SlimeGodCore>(),
             NPCType<LifeSlime>(),
-            NPCType<CragmawMire>()
+            NPCType<CragmawMire>(),
+            NPCType<ChlorinePaladin>(),
+            NPCType<SplitChlorinePaladin>()
         };
 
         public List<int> Slimes = new List<int>

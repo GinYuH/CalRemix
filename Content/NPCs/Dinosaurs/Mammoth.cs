@@ -17,8 +17,7 @@ namespace CalRemix.Content.NPCs.Dinosaurs
 {
     public class Mammoth : ModNPC
     {
-        public ref float AttackType => ref NPC.ai[0];
-        public ref float Timer => ref NPC.ai[1];
+        public ref float Timer => ref NPC.ai[2];
         public ref float StretchXMult => ref NPC.localAI[0];
         public ref float StretchYMult => ref NPC.localAI[1];
 
@@ -34,7 +33,7 @@ namespace CalRemix.Content.NPCs.Dinosaurs
         };
         public static readonly SoundStyle MammothDie = new("CalRemix/Assets/Sounds/Mammoth")
         {
-            Pitch = 1.3f,
+            Pitch = -1.3f,
             MaxInstances = 0
         };
         public override void SetStaticDefaults()
@@ -82,21 +81,24 @@ namespace CalRemix.Content.NPCs.Dinosaurs
 
         public override bool PreAI()
         {
+            // no invisible mammoths
             if (StretchXMult == 0 || StretchYMult == 0)
             {
                 StretchXMult = 1;
                 StretchYMult = 1;
             }
             
+            // do the roar
             if (Main.rand.NextBool(500))
             {
                 SoundEngine.PlaySound(MammothRoar, NPC.position);
             }
 
-            if (NPC.velocity.X > 0 || NPC.velocity.X < 0)
+            // animate if moving
+            if (NPC.velocity.X != 0)
             {
                 Timer++;
-                if (Timer % 4 == 0)
+                if ((int)Timer % 2 == 0)
                 {
                     StretchXMult = Main.rand.NextFloat(1.2f, 0.5f);
                     StretchYMult = Main.rand.NextFloat(1.2f, 0.5f);
@@ -105,8 +107,7 @@ namespace CalRemix.Content.NPCs.Dinosaurs
 
             // face where moving
             int leftOrRight = Math.Sign(NPC.velocity.X);
-            Main.NewText(Math.Sign(NPC.velocity.X));
-            if (leftOrRight != 0)
+            if (leftOrRight != 0f)
             {
                 NPC.direction = NPC.spriteDirection = leftOrRight;
             }
@@ -117,7 +118,8 @@ namespace CalRemix.Content.NPCs.Dinosaurs
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             ReLogic.Content.Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
-            Main.EntitySpriteDraw(texture.Value, NPC.Bottom - Main.screenPosition, null, drawColor, NPC.rotation, texture.Size() * new Vector2(0.5f, 1f), NPC.scale * new Vector2(StretchXMult, StretchYMult), 0, 0);
+            SpriteEffects flip = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Main.EntitySpriteDraw(texture.Value, NPC.Bottom - Main.screenPosition, null, drawColor, NPC.rotation, texture.Size() * new Vector2(0.5f, 1f), NPC.scale * new Vector2(StretchXMult, StretchYMult), flip, 0);
             return false;
         }
 
