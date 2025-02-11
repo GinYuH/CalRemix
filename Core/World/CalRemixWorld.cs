@@ -951,7 +951,7 @@ namespace CalRemix.Core.World
             }
             // Regularly play alarms while decrementing the event duration
             // Do not decrement if the countdown hasn't finished (marked by it being -1)
-            if (!seenRoaches && RoachCountdown <= 0)
+            if (roachDuration > -2)
             {
                 if (roachDuration > 0 && Main.LocalPlayer.miscCounter % 90 == 0)
                 {

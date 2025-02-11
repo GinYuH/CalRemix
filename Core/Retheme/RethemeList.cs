@@ -247,7 +247,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<YharonsKindleStaff>(), "Yharon/YharonsKindleStaff" },
             { ItemType<TheBurningSky>(), "Yharon/TheBurningSky" },
             { ItemType<TheFinalDawn>(), "Yharon/FinalDawn" },
-            { ItemType<Wrathwing>(), "Yharon/Wrathwing" },
+            { ItemType<CalamityMod.Items.Weapons.Rogue.Wrathwing>(), "Yharon/Wrathwing" },
             #endregion
             #region Exos
             { ItemType<MiracleMatter>(), "Exo/Matter" },

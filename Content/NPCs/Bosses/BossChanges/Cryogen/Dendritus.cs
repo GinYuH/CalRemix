@@ -20,7 +20,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Content.NPCs
+namespace CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen
 {
     public class Dendritus : ModNPC
     {
@@ -59,7 +59,7 @@ namespace CalRemix.Content.NPCs
         public override void AI()
         {
             // failsafe 
-            if (NPC.FindFirstNPC(ModContent.NPCType<Cryogen>()) == -1)
+            if (NPC.FindFirstNPC(ModContent.NPCType<CalamityMod.NPCs.Cryogen.Cryogen>()) == -1)
             {
                 NPC.active = false;
                 return;
@@ -67,8 +67,8 @@ namespace CalRemix.Content.NPCs
             
             NPC.TargetClosest();
 
-            IdealPositionX = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Cryogen>())].Center.X - (int)(Math.Cos(AITimer * 0.025f) * 220);
-            IdealPositionY = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Cryogen>())].Center.Y - (int)(Math.Sin(AITimer * 0.025f) * 220);
+            IdealPositionX = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<CalamityMod.NPCs.Cryogen.Cryogen>())].Center.X - (int)(Math.Cos(AITimer * 0.025f) * 220);
+            IdealPositionY = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<CalamityMod.NPCs.Cryogen.Cryogen>())].Center.Y - (int)(Math.Sin(AITimer * 0.025f) * 220);
 
             NPC.velocity += NPC.Center.DirectionTo(new Vector2(IdealPositionX, IdealPositionY));
 
@@ -126,7 +126,7 @@ namespace CalRemix.Content.NPCs
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             ReLogic.Content.Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
-            ReLogic.Content.Asset<Texture2D> eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/DendritusEye");
+            ReLogic.Content.Asset<Texture2D> eye = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/Cryogen/DendritusEye");
             //NPC.DrawBackglow(Color.AliceBlue, 4f, SpriteEffects.None, NPC.frame, screenPos);
             Main.EntitySpriteDraw(texture.Value, NPC.Center - Main.screenPosition, null, Color.AliceBlue, NPC.rotation + AITimer * 0.25f, texture.Size() / 2, NPC.scale, 0, 0);
             Main.EntitySpriteDraw(eye.Value, NPC.Center - Main.screenPosition + NPC.Center.DirectionTo(new Vector2(IdealPositionX, IdealPositionY)) * 5, null, Color.AliceBlue, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);

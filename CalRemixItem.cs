@@ -241,6 +241,104 @@ namespace CalRemix
             {
                 item.DamageType = DamageClass.SummonMeleeSpeed;
             }
+            if (CalRemixWorld.itemChanges)
+            {
+                if (item.type == ItemType<ScourgeoftheDesert>())
+                {
+                    item.shoot = ProjectileType<ScourgeDesert>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Turbulance>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Turbulance>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.IchorSpear>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.IchorSpear>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PalladiumJavelin>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.PalJav>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.CrystalPiercer>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.CrystalPiercer>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.DraedonsArsenal.FrequencyManipulator>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.FreqManip>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScourgeoftheSeas>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ScourgeSea>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofPaleolith>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Paleolith>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.WaveSkipper>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.WaveSkipper>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofDestiny>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.SpearDestiny>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PhantasmalRuin>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.PhantasmalRuin>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ShardofAntumbra>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Antumbra>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ProfanedPartisan>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ProfanedPartisan>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.RealityRupture>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.RealityRapture>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.NightsGaze>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.NightsGaze>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.EclipsesFall>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.EclipseFall>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.TheAtomSplitter>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.AtomSplitter>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                /*if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Wrathwing>()) he does not cooperate
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Wrathwing>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }*/
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScarletDevil>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ScarletDevil>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+            }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
@@ -255,6 +353,34 @@ namespace CalRemix
                 }
             }
         }
+
+        public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (player.Remix().taintedArchery && item.useAmmo == AmmoID.Arrow)
+            {
+                damage = (int)(damage * 0.9f);
+                velocity *= 0.8f;
+            }
+            if (player.Remix().taintedMagic && item.DamageType == DamageClass.Magic)
+            {
+                damage = (int)(damage * 0.7f);
+                knockback *= 7;
+            }
+            if (player.Remix().taintedTitan)
+            {
+                knockback = 0;
+            }
+        }
+
+        public override float UseTimeMultiplier(Item item, Player player)
+        {
+            if (player.Remix().taintedArchery && item.useAmmo == AmmoID.Arrow)
+            {
+                return 0.7f;
+            }
+            return 1f;
+        }
+
         public override void HoldItem(Item item, Player player)
         {
             if (player.HasBuff<BrimstoneMadness>() && item != null && !item.IsAir && item.damage > 0)
@@ -402,6 +528,13 @@ namespace CalRemix
                     player.GetModPlayer<CalRemixPlayer>().gottenCellPhone = true;
                 }
             }
+            if (item.pick > 0)
+            {
+                if (player.Remix().taintedMining)
+                    item.pick = ContentSamples.ItemsByType[item.type].pick + 22;
+                else
+                    item.pick = ContentSamples.ItemsByType[item.type].pick;
+            }
         }
         public static List<int> cosmicItems = new List<int>();
         public static void TransformItem(ref Item item, int transformType)
@@ -444,6 +577,16 @@ namespace CalRemix
                     Vector2 starvelocity = -Vector2.UnitY.RotatedByRandom(0.6152018) * Main.rand.NextFloat(2.5f, 4f);
                     Projectile.NewProjectile(source, position, starvelocity, ProjectileType<StratusStar>(), (int)(damage * 0.33f), player.whoAmI);
                 }
+            }
+            if (modPlayer.taintedAmmo && item.useAmmo > 0 && Main.rand.NextBool(5))
+            {
+                player.PickAmmo(item, out int _, out float _, out int _, out float _, out int _);
+
+                bool infMusk = item.useAmmo == AmmoID.Bullet && player.HasItem(ItemID.EndlessMusketPouch);
+                bool infAr = item.useAmmo == AmmoID.Arrow && player.HasItem(ItemID.EndlessQuiver);
+                    
+                if (!infMusk && !infAr)
+                    Projectile.NewProjectile(source, position, velocity.RotatedBy(-Main.rand.NextFloat(-0.022f, 0.022f)), type, damage, knockback, player.whoAmI);
             }
             return true;
         }
@@ -726,7 +869,7 @@ namespace CalRemix
             // pml
             else if (item.type == ItemType<DragonfollyBag>())
             {
-
+                itemLoot.Add(ItemType<DisgustingMeat>(), new Fraction(55, 100), 236, 650);
             }
             else if (item.type == ItemType<ProvidenceBag>())
             {
@@ -934,6 +1077,23 @@ namespace CalRemix
                 player.AddBuff(BuffID.Regeneration, CalamityUtils.SecondsToFrames(60));
                 player.AddBuff(BuffID.Titan, CalamityUtils.SecondsToFrames(60));
             }
+        }
+
+        public override bool ConsumeItem(Item item, Player player)
+        {
+            // Infinite white blocks that arent ores
+            if (player.Remix().taintedBuilder)
+            {
+                if (item.rare == ItemRarityID.White)
+                {
+                    if (item.createTile > -1 || item.createWall > 0)
+                    {
+                        if (!(item.createTile > -1 && TileID.Sets.Ore[item.createTile]) && Main.rand.NextBool(5))
+                            return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public bool IsFruit(Item item)

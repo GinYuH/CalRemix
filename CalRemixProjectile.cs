@@ -29,6 +29,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.Projectiles
@@ -44,6 +45,8 @@ namespace CalRemix.Content.Projectiles
         public int bladetimer = 0;
         public bool splitExplosive = false;
         public bool whipGonged = false;
+        public int taintSummon = 0;
+        public int deflectedEnemy = -1;
         NPC exc;
         public override bool InstancePerEntity => true;
         public int[] baronStraitTiles =
@@ -75,6 +78,14 @@ namespace CalRemix.Content.Projectiles
 
         public override bool PreAI(Projectile projectile)
         {
+            if (taintSummon > 0)
+            {
+                taintSummon--;
+                if (taintSummon <= 0)
+                {
+                    projectile.Kill();
+                }
+            }
             if (!Main.dedServ)
                 ScreenHelperManager.sceneMetrics.onscreenProjectiles.Add(projectile);
             return true;
@@ -178,7 +189,7 @@ namespace CalRemix.Content.Projectiles
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;
-            if (modPlayer.pearl)
+            if (modPlayer.pearl || modPlayer.taintedShine)
                 CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 10);
             eye++;
             if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
@@ -472,6 +483,30 @@ namespace CalRemix.Content.Projectiles
                     modifiers.FinalDamage *= 50;
                 }
             }
+            if (p.taintedThorns)
+            {
+                if (deflectedEnemy <= -1)
+                {
+                    modifiers.SourceDamage *= 0;
+                    projectile.penetrate++;
+                    projectile.velocity *= -1;
+                    projectile.damage *= 10;
+                    deflectedEnemy = target.whoAmI;
+                }
+            }
+        }
+
+        public override bool? CanHitNPC(Projectile projectile, NPC target)
+        {
+            CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
+            if (p.taintedThorns)
+            {
+                if (deflectedEnemy == target.whoAmI)
+                {
+                    return false;
+                }
+            }
+            return null;
         }
 
         public override void OnKill(Projectile projectile, int timeLeft)
@@ -547,6 +582,11 @@ namespace CalRemix.Content.Projectiles
             if (modPlayer.noTomorrow == true && projectile.friendly == true)
             {
                 projectile.scale *= 2;
+            }
+
+            if (modPlayer.taintedSummoning && projectile.minionSlots > 0)
+            {
+                taintSummon = 122;
             }
         }
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)

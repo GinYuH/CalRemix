@@ -747,6 +747,17 @@ namespace CalRemix.Core
                         Main.spriteBatch.Draw(explosion, v.position, explosion.Frame(6, 3, v.frameX, v.frameY), Color.White, 0f, new Vector2(0, explosion.Height * 0.2f), 12f, SpriteEffects.None, 0);
                 }
             }
+            if (Main.LocalPlayer.Remix != null)
+            {
+                if (Main.LocalPlayer.Remix().taintedOwl)
+                {
+                    Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Black * 0.22f, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+                }
+                if (Main.LocalPlayer.Remix().taintedShine)
+                {
+                    Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Black, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+                }
+            }
         }
 
         private static int KillHiveMind(On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
