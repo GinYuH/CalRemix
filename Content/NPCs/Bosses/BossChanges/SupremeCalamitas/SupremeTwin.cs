@@ -10,7 +10,7 @@ using System;
 using CalamityMod.Projectiles.Boss;
 using System.Diagnostics;
 
-namespace CalRemix.Content.NPCs
+namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
     public class SupremeTwin : ModNPC
     {
@@ -35,8 +35,8 @@ namespace CalRemix.Content.NPCs
             NPC.noGravity = true;
             NPC.boss = true;
             NPC.noTileCollide = false;
-            NPC.HitSound = SupremeCalamitas.BrotherHit;
-            NPC.DeathSound = SupremeCalamitas.BrotherDeath;
+            NPC.HitSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherHit;
+            NPC.DeathSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherDeath;
             for (int k = 0; k < NPC.buffImmune.Length; k++)
             {
                 NPC.buffImmune[k] = true;
@@ -63,7 +63,7 @@ namespace CalRemix.Content.NPCs
             NPC.TargetClosest(true);
             Player player = Main.player[NPC.target];
 
-            if (NPC.FindFirstNPC(ModContent.NPCType<SupremeCalamitas>()) == -1)
+            if (NPC.FindFirstNPC(ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>()) == -1)
             {
                 NPC.defense = 0;
                 NPC.takenDamageMultiplier = 1f;
@@ -167,7 +167,7 @@ namespace CalRemix.Content.NPCs
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            Texture2D glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/SupremeTwinGlow").Value;
+            Texture2D glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/SupremeCalamitas/SupremeTwinGlow").Value;
             int whichTwin = Twin == (int)TwinType.Retinazer ? 0 : 1;
             spriteBatch.Draw(texture, NPC.Center - screenPos, texture.Frame(2, 1, whichTwin, 0), drawColor, NPC.rotation, new Vector2(texture.Width / 4, texture.Height / 2), NPC.scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(glowmask, NPC.Center - screenPos, glowmask.Frame(2, 1, whichTwin, 0), Color.White, NPC.rotation, new Vector2(glowmask.Width / 4, glowmask.Height / 2), NPC.scale, SpriteEffects.None, 0f);

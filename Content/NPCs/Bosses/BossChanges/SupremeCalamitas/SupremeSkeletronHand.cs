@@ -12,7 +12,7 @@ using Terraria;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
 
-namespace CalRemix.Content.NPCs
+namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
     public class SupremeSkeletronHand : ModNPC
     {
@@ -42,8 +42,8 @@ namespace CalRemix.Content.NPCs
             NPC.noGravity = true;
             NPC.boss = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = SupremeCalamitas.BrotherHit;
-            NPC.DeathSound = SupremeCalamitas.BrotherDeath;
+            NPC.HitSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherHit;
+            NPC.DeathSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherDeath;
             NPC.dontTakeDamage = true;
             NPC.chaseable = false;
             for (int k = 0; k < NPC.buffImmune.Length; k++)
@@ -111,7 +111,7 @@ namespace CalRemix.Content.NPCs
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            Texture2D limbs = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/SupremeSkeletronLimbs").Value;
+            Texture2D limbs = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/SupremeCalamitas/SupremeSkeletronLimbs").Value;
 
             #region Arms
             // tl;dr each segment is calculated, but only like 2 are rendered

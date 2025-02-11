@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Placeables.Furniture;
 
-namespace CalRemix.Content.NPCs
+namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
     public class SupremeSkeletron : ModNPC
     {
@@ -50,8 +50,8 @@ namespace CalRemix.Content.NPCs
             NPC.noGravity = true;
             NPC.boss = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = SupremeCalamitas.BrotherHit;
-            NPC.DeathSound = SupremeCalamitas.BrotherDeath;
+            NPC.HitSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherHit;
+            NPC.DeathSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherDeath;
             for (int k = 0; k < NPC.buffImmune.Length; k++)
             {
                 NPC.buffImmune[k] = true;
@@ -173,9 +173,7 @@ namespace CalRemix.Content.NPCs
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            Texture2D glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/SupremeSkeletronGlow").Value;
-            Texture2D limbs = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/SupremeSkeletronLimbs").Value;
-            Texture2D hand = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/SupremeSkeletronHand").Value;
+            Texture2D glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/SupremeCalamitas/SupremeSkeletronGlow").Value;
 
             int mouthOpen = isMouthOpen ? 1 : 0;
             float eyeOpacity = Math.Clamp((float)Math.Sin(TimerVisual * 0.01f) + 0.5f, 0, 1);
