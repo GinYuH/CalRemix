@@ -16,4 +16,8 @@
       <HintPath>lib\SubworldLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\NPCs\Bosses\BossChanges\Cryogen\" />
+    <Folder Include="Content\NPCs\Bosses\BossChanges\SlimeGod\" />
+  </ItemGroup>
 </Project>

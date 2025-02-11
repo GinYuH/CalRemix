@@ -73,6 +73,8 @@ using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
+using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
