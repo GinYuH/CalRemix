@@ -211,7 +211,7 @@ namespace CalRemix.Content.NPCs
             if (!Main.eclipse || !DownedBossSystem.downedLeviathan || !CalRemixWorld.greenDemon)
                 return 0f;
 
-            return SpawnCondition.SolarEclipse.Chance * 0.4f;
+            return SpawnCondition.SolarEclipse.Chance * 0.04f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

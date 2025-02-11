@@ -98,7 +98,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.CountNPCS(Type) > 1)
                 return 0f;
 
-            return SpawnCondition.Underworld.Chance * 0.0022f;
+            return SpawnCondition.Underworld.Chance * 0.0035f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

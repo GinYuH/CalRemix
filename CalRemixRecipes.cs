@@ -99,7 +99,7 @@ namespace CalRemix
         {
             Recipe.Create(ItemType<LoreAwakening>())
             .AddIngredient<Slumbering>()
-            .AddTile(TileID.Bookcases)
+            .AddTile(TileID.Loom)
             .Register();
 
             Recipe.Create(ItemType<LoreExoMechs>())
