@@ -762,8 +762,6 @@ namespace CalRemix.Core
 
         private static int KillHiveMind(On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
-            if (type == NPCID.DungeonGuardian)
-                return 0;
             if (type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
                 return 0;
             if (type == NPCID.BoundWizard && CalRemixWorld.wizardDisabled)
