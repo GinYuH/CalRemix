@@ -14,6 +14,7 @@ using CalamityMod.DataStructures;
 using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Content.Projectiles.Accessories;
 using CalamityMod.NPCs.SunkenSea;
+using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
@@ -103,6 +104,9 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
                     if (Timer > 50 && Main.rand.NextBool(12))
                     {
+                        //TODO: DUST WHEN SPAWNING PROJS
+                        //TODO: GIVE PROJS GLOWMASKS N SHIT
+                        
                         int sickle1 = Projectile.NewProjectile(NPC.GetSource_FromThis(), LeftArm.Center, LeftArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, LeftArm.Center.DirectionTo(Target.Center).X, LeftArm.Center.DirectionTo(Target.Center).Y);
                         int sickle2 = Projectile.NewProjectile(NPC.GetSource_FromThis(), RightArm.Center, RightArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, RightArm.Center.DirectionTo(Target.Center).X, RightArm.Center.DirectionTo(Target.Center).Y);
                     }
@@ -139,8 +143,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                     {
                         manualMouthOpen = true;
                         NPC.velocity += NPC.DirectionTo(Target.Center);
-
-                        //TODO: CAP VELOCITY
+                        NPC.velocity = NPC.velocity.ClampMagnitude(-22, 22);
+                        Main.NewText(NPC.velocity);
 
                         // shortened laugh time. redundant but who cares 
                         if (Timer % 10 == 0)
