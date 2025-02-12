@@ -69,6 +69,7 @@ Items: {
 	}
 
 	Mounts.Fabsol.Tooltip: Summons a chaotic flying horse mount.
+	Weapons.Melee.ArkoftheCosmos.Tooltip: Swings around a large scissor blade which spawns homing stars in a circular pattern
 }
 
 Buffs: {

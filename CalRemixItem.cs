@@ -56,6 +56,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -241,7 +242,7 @@ namespace CalRemix
             {
                 item.DamageType = DamageClass.SummonMeleeSpeed;
             }
-            if (CalRemixWorld.itemChanges)
+            if (CalRemixWorld.weaponReworks)
             {
                 if (item.type == ItemType<ScourgeoftheDesert>())
                 {
@@ -337,6 +338,10 @@ namespace CalRemix
                 {
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ScarletDevil>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Melee.ArkoftheCosmos>())
+                {
+                    item.shoot = ProjectileType<Ark>();
                 }
             }
         }
@@ -447,7 +452,7 @@ namespace CalRemix
                     TransformItem(ref item, ItemType<SeafoodFood>());
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -499,7 +504,7 @@ namespace CalRemix
                     TransformItem(ref item, ItemType<SeafoodFood>());
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -588,6 +593,12 @@ namespace CalRemix
                 if (!infMusk && !infAr)
                     Projectile.NewProjectile(source, position, velocity.RotatedBy(-Main.rand.NextFloat(-0.022f, 0.022f)), type, damage, knockback, player.whoAmI);
             }
+            if (item.type == ItemType<ArkoftheCosmos>() && CalRemixWorld.weaponReworks)
+            {
+                if (player.ownedProjectileCounts[ProjectileType<Ark>()] <= 0)
+                Projectile.NewProjectile(source, position, velocity, ProjectileType<Ark>(), damage, knockback, player.whoAmI);
+                return false;
+            }
             return true;
         }
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
@@ -644,7 +655,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
