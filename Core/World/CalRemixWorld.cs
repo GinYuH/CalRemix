@@ -138,6 +138,7 @@ namespace CalRemix.Core.World
         public static bool hypothetical = true;
         public static bool savedAPicture = false;
         public static bool sneakerheadMode = true;
+        public static bool weaponReworks = true;
 
 
         public static int ionQuestLevel = -1;
@@ -276,6 +277,7 @@ namespace CalRemix.Core.World
             deliciousMeat = true;
             profanedDesert = true;
             hypothetical = true;
+            weaponReworks = true;
 
             AutoloadedLegendPortrait.OpenPicture = null;
             savedAPicture = false;
@@ -352,6 +354,7 @@ namespace CalRemix.Core.World
             tag["109deliciousMeat"] = deliciousMeat;
             tag["109profaned"] = profanedDesert;
             tag["109hypothetical"] = hypothetical;
+            tag["109weaponReworks"] = weaponReworks;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -419,6 +422,7 @@ namespace CalRemix.Core.World
             GetData(ref deliciousMeat, "109deliciousmeat", tag);
             GetData(ref profanedDesert, "109profaned", tag);
             GetData(ref hypothetical, "109hypothetical", tag);
+            GetData(ref weaponReworks, "109weaponReworks", tag);
             GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
 
             meldCountdown = tag.Get<int>("meld");
@@ -504,6 +508,7 @@ namespace CalRemix.Core.World
             writer.Write(hypothetical);
             writer.Write(savedAPicture);
             writer.Write(sneakerheadMode);
+            writer.Write(weaponReworks);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -575,6 +580,7 @@ namespace CalRemix.Core.World
             hypothetical = reader.ReadBoolean();
             savedAPicture = reader.ReadBoolean();
             sneakerheadMode = reader.ReadBoolean();
+            weaponReworks = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
