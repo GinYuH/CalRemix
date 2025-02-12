@@ -86,7 +86,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             Segments[0].oldPosition = Segments[0].position;
 
             int distanceX = LeftOrRight == 1 ? 30 : -30;
-            float accountForPosNotBeingCenter = Segments[0].position.X ;
             Segments[0].position = new Vector2(skele.Center.X + distanceX, skele.Center.Y + 50);
             //Dust.NewDustPerfect(new Vector2(skele.Center.X + distanceX, skele.Center.Y + 50), DustID.CrimsonSpray, Vector2.Zero);
 

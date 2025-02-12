@@ -12,6 +12,8 @@ using Terraria;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Placeables.Furniture;
+using CalRemix.Content.Projectiles.Accessories;
+using CalamityMod.NPCs.SunkenSea;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
@@ -26,13 +28,14 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
         private bool isMouthOpen = false;
         private bool spinHead = false;
+        private bool manualMouthOpen = false;
 
         public enum AttackTypes
         {
             MoveTowardsCursor = -1,
             None = 0,
             SpinAroundPlayer = 1,
-            //HoverOverPlayerAndBeEvil = 2
+            HoverOverPlayerAndBeEvil = 2
         }
         public override void SetStaticDefaults()
         {
@@ -44,7 +47,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             NPC.width = 68;
             NPC.height = 96;
             NPC.lifeMax = 500000;
-            NPC.damage = 50;
+            NPC.damage = 0;
             NPC.defense = 16;
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
@@ -95,9 +98,14 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                     float IdealPositionX = Target.Center.X - (int)(Math.Cos(Timer * 0.2f) * 350);
                     float IdealPositionY = Target.Center.Y - (int)(Math.Sin(Timer * 0.2f) * 350);
                     Vector2 idealPosition = new Vector2(IdealPositionX, IdealPositionY);
-
                     NPC.Center = Vector2.Lerp(NPC.Center, idealPosition, 0.1f);
                     //Dust.NewDustPerfect(idealPosition, DustID.CrimsonSpray, Vector2.Zero);
+
+                    if (Timer > 50 && Main.rand.NextBool(12))
+                    {
+                        int sickle1 = Projectile.NewProjectile(NPC.GetSource_FromThis(), LeftArm.Center, LeftArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, LeftArm.Center.DirectionTo(Target.Center).X, LeftArm.Center.DirectionTo(Target.Center).Y);
+                        int sickle2 = Projectile.NewProjectile(NPC.GetSource_FromThis(), RightArm.Center, RightArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, RightArm.Center.DirectionTo(Target.Center).X, RightArm.Center.DirectionTo(Target.Center).Y);
+                    }
 
                     if (Timer >= 500)
                     {
@@ -107,20 +115,56 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                         Mode = 2;
                     }
                     break;
-                case 2:
-                    NPC.Center = Vector2.Lerp(NPC.Center, new Vector2(Target.Center.X, Target.Center.Y - 250), 0.1f);
-
-                    if (Timer == 250)
+                case (int)AttackTypes.HoverOverPlayerAndBeEvil:
+                    //TODO: SPLIT INTO TWO ATTACKS
+                    int startChasing = 200;
+                    
+                    if (Timer >= startChasing && Timer % 15 == 0)
                     {
-                        LeftArm.ai[0] = LeftArm.Center.X + 500;
-                        LeftArm.ai[1] = LeftArm.Center.Y + 500;
-                        RightArm.ai[0] = LeftArm.Center.X - 500;
-                        RightArm.ai[1] = LeftArm.Center.Y + 500;
-                    } 
+                        LeftArm.ai[0] = LeftArm.Center.X + Main.rand.Next(-400, 400);
+                        LeftArm.ai[1] = LeftArm.Center.Y + Main.rand.Next(-400, 400);
+                        RightArm.ai[0] = LeftArm.Center.X + Main.rand.Next(-400, 400);
+                        RightArm.ai[1] = LeftArm.Center.Y + Main.rand.Next(-400, 400);
 
-                    if (Timer >= 400)
+                        NPC.rotation += Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
+                    }
+
+                    if (Timer == startChasing)
                     {
+                        //roat
+                    }
+
+                    // chase player, else give time for arms to swing around
+                    if (Timer >= startChasing)
+                    {
+                        manualMouthOpen = true;
+                        NPC.velocity += NPC.DirectionTo(Target.Center);
+
+                        //TODO: CAP VELOCITY
+
+                        // shortened laugh time. redundant but who cares 
+                        if (Timer % 10 == 0)
+                        {
+                            if (isMouthOpen)
+                            {
+                                isMouthOpen = false;
+                            }
+                            else
+                            {
+                                isMouthOpen = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        NPC.Center = Vector2.Lerp(NPC.Center, new Vector2(Target.Center.X, Target.Center.Y - 250), 0.1f);
+                    }
+
+                    if (Timer >= 4000)
+                    {
+                        NPC.velocity = Vector2.Zero;
                         Timer = 0;
+                        manualMouthOpen = false;
                         Mode = (int)AttackTypes.SpinAroundPlayer;
                     }
                         
@@ -128,7 +172,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             }
 
             #region Dumb Stupid Mouth Stuff Fuck You
-            if (Timer % 30 == 0)
+            // sorry i just felt like being mean
+            if (manualMouthOpen == false && Timer % 30 == 0)
             {
                 if (isMouthOpen)
                 {
@@ -153,12 +198,21 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             }
             else
             {
-                // if left-leaning, reset towards left. if right leaning, reset towards right
-                if (NPC.rotation > MathHelper.Pi)
+                // if left-leaning, reset rot towards right. if right leaning, reset rot towards left
+                if (NPC.rotation >= MathHelper.Pi)
                 {
                     NPC.rotation = MathHelper.Lerp(NPC.rotation, MathHelper.TwoPi, 0.1f);
                 }
-                else if (NPC.rotation > 0)
+                else if (NPC.rotation >= 0)
+                {
+                    NPC.rotation = MathHelper.Lerp(NPC.rotation, 0, 0.1f);
+                }
+                // and for negatives
+                else if (NPC.rotation <= -MathHelper.Pi)
+                {
+                    NPC.rotation = MathHelper.Lerp(NPC.rotation, MathHelper.TwoPi, 0.1f);
+                }
+                else if (NPC.rotation <= 0)
                 {
                     NPC.rotation = MathHelper.Lerp(NPC.rotation, 0, 0.1f);
                 }
