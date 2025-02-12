@@ -209,6 +209,6 @@ Mods: {
 		}
 
 		NotAvailable: Mods.CalRemix.NotAvailable
-		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage Class
+		DamageClasses.StormbowDamageClass.DisplayName: stormbow damage
 	}
 }
