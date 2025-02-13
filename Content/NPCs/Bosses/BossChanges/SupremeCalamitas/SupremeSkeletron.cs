@@ -15,6 +15,7 @@ using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Content.Projectiles.Accessories;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod;
+using Terraria.Audio;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
@@ -27,16 +28,21 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         public ref NPC RightArm => ref Main.npc[(int)NPC.ai[3]];
         public ref float TimerVisual => ref NPC.localAI[0];
 
+        private static int origMouthOpenRate = 30;
+        
         private bool isMouthOpen = false;
         private bool spinHead = false;
-        private bool manualMouthOpen = false;
+        private float mouthOpenRate = origMouthOpenRate;
 
         public enum AttackTypes
         {
-            MoveTowardsCursor = -1,
-            None = 0,
+            AttachToCursor = -3,
+            LerpTowardsCursor = -2,
+            None = -1,
+            Spawn = 0,
             SpinAroundPlayer = 1,
-            HoverOverPlayerAndBeEvil = 2
+            HoverOverPlayerAndBeEvil = 2,
+            ChasePlayer = 3
         }
         public override void SetStaticDefaults()
         {
@@ -81,11 +87,16 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
             switch (Mode)
             {
-                case (int)AttackTypes.MoveTowardsCursor:
+                case (int)AttackTypes.AttachToCursor:
+                    NPC.Center = Main.MouseWorld;
+                    break;
+                case (int)AttackTypes.LerpTowardsCursor:
                     NPC.Center = Vector2.Lerp(NPC.Center, Main.MouseWorld, 0.1f);
-
                     break;
                 case (int)AttackTypes.None:
+
+                    break;
+                case (int)AttackTypes.Spawn:
                     
                     if (Timer >= 300)
                     {
@@ -102,11 +113,14 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                     NPC.Center = Vector2.Lerp(NPC.Center, idealPosition, 0.1f);
                     //Dust.NewDustPerfect(idealPosition, DustID.CrimsonSpray, Vector2.Zero);
 
+                    //TODO: disable contact damage, if timer > 50 reenable contact damage
+
                     if (Timer > 50 && Main.rand.NextBool(12))
                     {
                         //TODO: DUST WHEN SPAWNING PROJS
                         //TODO: GIVE PROJS GLOWMASKS N SHIT
-                        
+
+                        SoundEngine.PlaySound(SoundID.Item8 with { MaxInstances = -1, Volume = 2f }, NPC.position);
                         int sickle1 = Projectile.NewProjectile(NPC.GetSource_FromThis(), LeftArm.Center, LeftArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, LeftArm.Center.DirectionTo(Target.Center).X, LeftArm.Center.DirectionTo(Target.Center).Y);
                         int sickle2 = Projectile.NewProjectile(NPC.GetSource_FromThis(), RightArm.Center, RightArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, RightArm.Center.DirectionTo(Target.Center).X, RightArm.Center.DirectionTo(Target.Center).Y);
                     }
@@ -120,64 +134,75 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                     }
                     break;
                 case (int)AttackTypes.HoverOverPlayerAndBeEvil:
-                    //TODO: SPLIT INTO TWO ATTACKS
-                    int startChasing = 200;
-                    
+                    if (Timer < 200)
+                    {
+                        NPC.Center = Vector2.Lerp(NPC.Center, new Vector2(Target.Center.X, Target.Center.Y - 250), 0.1f);
+                    }
+
+                    if (Timer >= 200)
+                    {
+                        NPC.velocity = Vector2.Zero;
+                        Timer = 0;
+                        Mode = (int)AttackTypes.ChasePlayer;
+                    }  
+                    break;
+                case (int)AttackTypes.ChasePlayer:
+                    int startChasing = 75;
+
+                    // little telegraph to tell the player IM GONAN GO EVIL...
+                    if (Timer == 1)
+                    {
+                        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -0.5f}, NPC.position);
+                        mouthOpenRate = 1000000;
+                        isMouthOpen = true;
+                    }
+                    else if (Timer == 60)
+                        isMouthOpen = false;
+
+                    // crick neck, flail hands around, and spawn some bones every interval
                     if (Timer >= startChasing && Timer % 15 == 0)
                     {
+                        SoundEngine.PlaySound(SoundID.NPCHit2, NPC.Center);
+                        //NPC.rotation += Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
+                        if (Main.rand.NextBool())
+                            NPC.rotation += Main.rand.NextFloat(-MathHelper.Pi, -0.5f);
+                        else
+                            NPC.rotation += Main.rand.NextFloat(0.5f, MathHelper.Pi);
+
                         LeftArm.ai[0] = LeftArm.Center.X + Main.rand.Next(-400, 400);
                         LeftArm.ai[1] = LeftArm.Center.Y + Main.rand.Next(-400, 400);
                         RightArm.ai[0] = LeftArm.Center.X + Main.rand.Next(-400, 400);
                         RightArm.ai[1] = LeftArm.Center.Y + Main.rand.Next(-400, 400);
 
-                        NPC.rotation += Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
-                    }
-
-                    if (Timer == startChasing)
-                    {
-                        //roat
-                    }
-
-                    // chase player, else give time for arms to swing around
-                    if (Timer >= startChasing)
-                    {
-                        manualMouthOpen = true;
-                        NPC.velocity += NPC.DirectionTo(Target.Center);
-                        NPC.velocity = NPC.velocity.ClampMagnitude(-22, 22);
-                        Main.NewText(NPC.velocity);
-
-                        // shortened laugh time. redundant but who cares 
-                        if (Timer % 10 == 0)
+                        for (int i = 0; i < 3; i++)
                         {
-                            if (isMouthOpen)
-                            {
-                                isMouthOpen = false;
-                            }
-                            else
-                            {
-                                isMouthOpen = true;
-                            }
+                            Vector2 vel = new Vector2(0, -Main.rand.NextFloat(7, 10));
+                            vel = vel.RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4));
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<SupremeBone>(), 200, 0, -1, NPC.target);
                         }
                     }
-                    else
+
+                    // chase player
+                    if (Timer >= startChasing)
                     {
-                        NPC.Center = Vector2.Lerp(NPC.Center, new Vector2(Target.Center.X, Target.Center.Y - 250), 0.1f);
+                        mouthOpenRate = 10;
+                        NPC.velocity += NPC.DirectionTo(Target.Center);
+                        NPC.velocity = NPC.velocity.ClampMagnitude(-22, 22);
                     }
 
-                    if (Timer >= 4000)
+                    if (Timer >= 700)
                     {
                         NPC.velocity = Vector2.Zero;
                         Timer = 0;
-                        manualMouthOpen = false;
+                        mouthOpenRate = origMouthOpenRate;
                         Mode = (int)AttackTypes.SpinAroundPlayer;
                     }
-                        
                     break;
             }
 
             #region Dumb Stupid Mouth Stuff Fuck You
             // sorry i just felt like being mean
-            if (manualMouthOpen == false && Timer % 30 == 0)
+            if (Timer % mouthOpenRate == 0)
             {
                 if (isMouthOpen)
                 {
@@ -227,6 +252,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             Timer++;
             TimerVisual++;
         }
+
+        //public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        //{
+            //return base.CanHitPlayer(target, ref cooldownSlot);
+        //}
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
