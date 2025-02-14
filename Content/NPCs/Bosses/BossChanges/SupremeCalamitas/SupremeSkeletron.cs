@@ -32,7 +32,9 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         
         private bool isMouthOpen = false;
         private bool spinHead = false;
+        private bool headContact = true;
         private float mouthOpenRate = origMouthOpenRate;
+        private Vector2 idealPosForWandering = Vector2.Zero;
 
         public enum AttackTypes
         {
@@ -42,7 +44,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             Spawn = 0,
             SpinAroundPlayer = 1,
             HoverOverPlayerAndBeEvil = 2,
-            ChasePlayer = 3
+            ChasePlayer = 3,
+            WanderAbovePlayer = 4
         }
         public override void SetStaticDefaults()
         {
@@ -106,31 +109,34 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                     break;
                 case (int)AttackTypes.SpinAroundPlayer:
                     spinHead = true;
+                    headContact = false;
 
                     float IdealPositionX = Target.Center.X - (int)(Math.Cos(Timer * 0.2f) * 350);
                     float IdealPositionY = Target.Center.Y - (int)(Math.Sin(Timer * 0.2f) * 350);
                     Vector2 idealPosition = new Vector2(IdealPositionX, IdealPositionY);
+                    // lerping like this means he never actually reaches his spot, which is kinda gross imo but w/e it works
                     NPC.Center = Vector2.Lerp(NPC.Center, idealPosition, 0.1f);
                     //Dust.NewDustPerfect(idealPosition, DustID.CrimsonSpray, Vector2.Zero);
 
-                    //TODO: disable contact damage, if timer > 50 reenable contact damage
-
-                    if (Timer > 50 && Main.rand.NextBool(12))
+                    if (Timer >= 50 && Main.rand.NextBool(12))
                     {
                         //TODO: DUST WHEN SPAWNING PROJS
-                        //TODO: GIVE PROJS GLOWMASKS N SHIT
+                        //TODO: GIVE PROJS PROPER DESPAWN AT HIGH DISTANCES + DUST ON DESPAWN
 
                         SoundEngine.PlaySound(SoundID.Item8 with { MaxInstances = -1, Volume = 2f }, NPC.position);
                         int sickle1 = Projectile.NewProjectile(NPC.GetSource_FromThis(), LeftArm.Center, LeftArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, LeftArm.Center.DirectionTo(Target.Center).X, LeftArm.Center.DirectionTo(Target.Center).Y);
                         int sickle2 = Projectile.NewProjectile(NPC.GetSource_FromThis(), RightArm.Center, RightArm.Center.DirectionTo(Target.Center) * -15, ModContent.ProjectileType<SupremeSickle>(), 200, 0, -1, RightArm.Center.DirectionTo(Target.Center).X, RightArm.Center.DirectionTo(Target.Center).Y);
+
+                        headContact = true;
                     }
 
                     if (Timer >= 500)
                     {
                         spinHead = false;
+                        headContact = true;
 
                         Timer = 0;
-                        Mode = 2;
+                        Mode = (int)AttackTypes.HoverOverPlayerAndBeEvil;
                     }
                     break;
                 case (int)AttackTypes.HoverOverPlayerAndBeEvil:
@@ -153,7 +159,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                     if (Timer == 1)
                     {
                         SoundEngine.PlaySound(SoundID.Roar with { Pitch = -0.5f}, NPC.position);
-                        mouthOpenRate = 1000000;
+                        mouthOpenRate = -1;
                         isMouthOpen = true;
                     }
                     else if (Timer == 60)
@@ -195,14 +201,98 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                         NPC.velocity = Vector2.Zero;
                         Timer = 0;
                         mouthOpenRate = origMouthOpenRate;
+                        Mode = (int)AttackTypes.WanderAbovePlayer;
+                    }
+                    break;
+                case (int)AttackTypes.WanderAbovePlayer:
+                    headContact = false;
+                    mouthOpenRate = -1;
+                    if (Timer == 0 || Timer == 1)
+                    {
+                        isMouthOpen = false;
+                    }
+                    
+                    // if starting or close to target, make up a new target
+                    // having the failsafe be triggered by vector2.zero means he cant go to the top left of the world
+                    // zzzzzzzzzzz
+                    int boundingBoxVerticalOffset = 125;
+                    int boundingBoxHeight = 400;
+                    int boundingBoxWidth = 400;
+                    int boundingBoxHalfWidth = boundingBoxWidth / 2;
+                    float leftRightMovement = (float)Math.Sin(Timer / 50) * 250;
+                    if (idealPosForWandering == Vector2.Zero || Timer % 25 == 0 || NPC.Distance(idealPosForWandering) < 100)
+                    {
+                        // making a "bounding box" of areas he can choose to go to
+                        float lowerBound = Target.Center.Y - boundingBoxVerticalOffset;
+                        float upperBound = Target.Center.Y - boundingBoxHeight - boundingBoxVerticalOffset;
+                        float leftBound = Target.Center.X - boundingBoxHalfWidth + leftRightMovement;
+                        float rightBound = Target.Center.X + boundingBoxHalfWidth + leftRightMovement;
+                        Vector2 earthBound = new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound));
+                        idealPosForWandering = earthBound;
+                    }
+                    /*
+                    // show bounding box in oppa dust style
+                    float lowerBound2 = Target.Center.Y - boundingBoxVerticalOffset;
+                    float upperBound2 = Target.Center.Y - boundingBoxHeight - boundingBoxVerticalOffset;
+                    float leftBound2 = Target.Center.X - boundingBoxHalfWidth + leftRightMovement;
+                    float rightBound2 = Target.Center.X + boundingBoxHalfWidth + leftRightMovement;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound2, rightBound2), Main.rand.NextFloat(lowerBound2, upperBound2)), DustID.BlueFairy, Vector2.Zero);
+                        Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound2, rightBound2), lowerBound2), DustID.BlueFairy, Vector2.Zero);
+                        Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound2, rightBound2), upperBound2), DustID.BlueFairy, Vector2.Zero);
+                        Dust.NewDustPerfect(new Vector2(leftBound2, Main.rand.NextFloat(lowerBound2, upperBound2)), DustID.BlueFairy, Vector2.Zero);
+                        Dust.NewDustPerfect(new Vector2(rightBound2, Main.rand.NextFloat(lowerBound2, upperBound2)), DustID.BlueFairy, Vector2.Zero);
+                    }
+                    Dust.NewDustPerfect(idealPosForWandering, DustID.CrimsonSpray, Vector2.Zero);
+                    */
+
+                    NPC.velocity += NPC.DirectionTo(idealPosForWandering) * 1.25f;
+                    NPC.velocity = NPC.velocity.ClampMagnitude(-15, 15);
+
+                    // manually open mouth to align w firing of projectile
+                    // this is important cuz we wanna switch to real timer, not clientside vanity timer
+                    int skullFireRate = 12;
+                    if (Timer > skullFireRate && Timer % skullFireRate == 0)
+                    {
+                        if (isMouthOpen)
+                        {
+                            isMouthOpen = false;
+                        }
+                        else
+                        {
+                            isMouthOpen = true;
+                            SoundEngine.PlaySound(SoundID.Item73 with { MaxInstances = -1, Volume = 2f }, NPC.position);
+                            Vector2 mouthPos = new Vector2(NPC.Center.X, NPC.Center.Y + 20);
+
+                            // dust explosion upon firing skull
+                            for (int i = 0; i < 24; i++)
+                            {
+                                //Vector2 dustVelocity = 
+                                Vector2 dustVelocity = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
+                                Dust.NewDustPerfect(mouthPos, ModContent.DustType<BrimstoneFireDustMatte>(), dustVelocity);
+                            }
+                            Vector2 velocity = NPC.DirectionTo(Target.Center) * 8;
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), mouthPos, velocity, ModContent.ProjectileType<SupremeSkull>(), 200, 0, Main.myPlayer);
+                        }
+                    }
+
+                    if (Timer >= 700)
+                    {
+                        headContact = true;
+                        mouthOpenRate = origMouthOpenRate;
+                        NPC.velocity = Vector2.Zero;
+                        idealPosForWandering = Vector2.Zero;
+                        
+                        Timer = 0;
                         Mode = (int)AttackTypes.SpinAroundPlayer;
                     }
                     break;
             }
 
-            #region Dumb Stupid Mouth Stuff Fuck You
-            // sorry i just felt like being mean
-            if (Timer % mouthOpenRate == 0)
+            #region Mouth Open And Close
+            // if u set mouthOpenRate to -1... he never opens and/or closes his mouth!
+            if (mouthOpenRate != -1 && TimerVisual % mouthOpenRate == 0)
             {
                 if (isMouthOpen)
                 {
@@ -252,12 +342,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             Timer++;
             TimerVisual++;
         }
-
-        //public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        //{
-            //return base.CanHitPlayer(target, ref cooldownSlot);
-        //}
-
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => headContact;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;

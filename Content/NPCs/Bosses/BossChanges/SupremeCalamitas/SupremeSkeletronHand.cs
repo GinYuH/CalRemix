@@ -106,7 +106,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
             Timer++;
         }
-
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;

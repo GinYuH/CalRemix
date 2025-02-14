@@ -18,6 +18,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.aiStyle = -1;
+            Projectile.timeLeft = 300;
         }
         public override void AI()
         {
@@ -33,11 +34,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         }
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 10; i++)
+            /*for (int i = 0; i < 10; i++)
             {
                 Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f);
                 d.velocity = new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
-            }
+            }*/
         }
         public override bool PreDraw(ref Color lightColor)
         {
