@@ -36,13 +36,13 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             drawColor.A = 60;
 
             int horizFrame = 0;
-            if (dust.scale <= 0.9f + frameChangeNoise)
-            {
-                horizFrame = 1;
-            }
-            else if (dust.scale <= 0.8f + frameChangeNoise)
+            if (dust.scale <= 0.4f + frameChangeNoise)
             {
                 horizFrame = 2;
+            }
+            else if (dust.scale <= 0.9f + frameChangeNoise)
+            {
+                horizFrame = 1;
             }
 
             int vertFrame = 0;

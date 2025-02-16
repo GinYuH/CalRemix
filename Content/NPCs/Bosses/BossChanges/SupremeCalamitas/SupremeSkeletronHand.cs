@@ -25,7 +25,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
         private bool isMouthOpen = false;
         public List<VerletSimulatedSegment> Segments;
-        int segmentCount = 26;
+        int segmentCount = 27;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eucharist Paratope");
@@ -94,7 +94,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
             // edit the x coord a bit to compensate for the hand sprite being a bit left-heavy
             // it looks a bit jank in some scenarios, most notably when falling downwards, but so does everything else
-            NPC.Center = new Vector2(Segments[Segments.Count - 1].position.X + (distanceX / 10), Segments[Segments.Count - 1].position.Y);
+            NPC.Center = new Vector2(Segments[Segments.Count - 1].position.X, Segments[Segments.Count - 1].position.Y);
 
             // update old pos if its been changed, and clear afterwards
             if (oldPosFromHeadX != 0 || OldPosFromHeadY != 0)
@@ -111,6 +111,9 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
             Texture2D limbs = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/SupremeCalamitas/SupremeSkeletronLimbs").Value;
+            SpriteEffects flip = LeftOrRight == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            int handOriginAdjustment = LeftOrRight == 1 ? -8 : 8;
+            float rot = 0f;
 
             #region Arms
             // tl;dr each segment is calculated, but only like 2 are rendered
@@ -130,7 +133,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             for (int i = 0; i < Segments.Count; i++)
             {
                 VerletSimulatedSegment seg = Segments[i];
-                float rot = 0f;
+                rot = 0f;
                 if (i > 0)
                     rot = seg.position.DirectionTo(Segments[i - 1].position).ToRotation() + MathHelper.PiOver2;
                 else
@@ -147,21 +150,16 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                 else
                     draw = false;
 
-                SpriteEffects flip = LeftOrRight == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
                 if (draw)
                 {
                     Main.EntitySpriteDraw(limbs, seg.position - Main.screenPosition, limbs.Frame(2, 1, whichLimb, 0), NPC.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, TextureAssets.Npc[Type].Value.Size() / 3, 1f, flip, 0);
                 }
-
-                // this sucks and should be changed
-                NPC.rotation = rot;
-                if (LeftOrRight == 1)
-                    NPC.spriteDirection = 1;
             }
             #endregion
 
-            return true;
+            spriteBatch.Draw(texture, NPC.Center - screenPos, null, drawColor, rot, new Vector2((texture.Width / 2) + handOriginAdjustment, texture.Height / 2), NPC.scale, flip, 0f);
+
+            return false;
         }
     }
 }

@@ -268,7 +268,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                             // dust explosion upon firing skull
                             for (int i = 0; i < 24; i++)
                             {
-                                //Vector2 dustVelocity = 
                                 Vector2 dustVelocity = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
                                 Dust.NewDustPerfect(mouthPos, ModContent.DustType<BrimstoneFireDustMatte>(), dustVelocity);
                             }
