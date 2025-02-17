@@ -66,6 +66,8 @@ using System.Threading.Tasks;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.Projectiles.Weapons.Stormbow;
 using Mono.Cecil;
+using CalamityMod.Items.VanillaArmorChanges;
+using CalamityMod.Buffs.StatBuffs;
 
 namespace CalRemix
 {
@@ -144,6 +146,8 @@ namespace CalRemix
         public bool retroman = false;
         public bool noTomorrow;
         public bool calamityRing;
+        public bool fungiStone;
+        public bool fungiStone2;
 
         public bool miragel;
         public bool elastigel;
@@ -1095,6 +1099,8 @@ namespace CalRemix
             retroman = false;
             noTomorrow = false;
             calamityRing = false;
+            fungiStone = false;
+            fungiStone2 = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
@@ -1155,6 +1161,21 @@ namespace CalRemix
                     npc.AddBuff(BuffID.Confused, 220);
                 }
             }
+            if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().amalgam);
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 360, false);
+                }
+                else if (Main.rand.NextBool(2))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 240, false);
+                }
+                else
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 120, false);
+                }
+            }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
@@ -1190,6 +1211,21 @@ namespace CalRemix
 				target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
                 if (target.life <= 0 && target.value > 0 && item.type == ItemType<TwistedNetheriteSword>())
                     helmet.souls += 2;
+            }
+            if (fungiStone || fungiStone2)
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 360, false);
+                }
+                else if (Main.rand.NextBool(2))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 240, false);
+                }
+                else
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 120, false);
+                }
             }
         }
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */

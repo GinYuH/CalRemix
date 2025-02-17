@@ -18,6 +18,9 @@ using CalRemix.Core.World;
 using Terraria.Audio;
 using System.Security.Cryptography.X509Certificates;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
+using Terraria.WorldBuilding;
+using CalamityMod.Items.Materials;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs
 {
@@ -70,6 +73,7 @@ namespace CalRemix.Content.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
@@ -270,30 +274,39 @@ namespace CalRemix.Content.NPCs
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.Calamity().ZoneCalamity)
-                return 0.2f;
-            else if (spawnInfo.PlayerSafe || !spawnInfo.Player.InModBiome<AstralInfectionBiome>() || spawnInfo.Player.Calamity().ZoneAbyss ||
+            if (spawnInfo.PlayerSafe || spawnInfo.Player.InModBiome<AstralInfectionBiome>() || spawnInfo.Player.Calamity().ZoneAbyss ||
                 spawnInfo.Player.Calamity().ZoneSunkenSea)
                 return 0f;
-            return SpawnCondition.Underworld.Chance * 0.2f;
+            if (spawnInfo.Player.Calamity().ZoneCalamity)
+                return 0.2f;
+            else if (spawnInfo.Player.position.Y / 16 > GenVars.lavaLine)
+                return SpawnCondition.Cavern.Chance * 0.1f;
+            else
+                return SpawnCondition.Underworld.Chance * 0.1f;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Crimslime, hit.HitDirection, -1f, 0, default, 1f);
             }
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 20; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Crimslime, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<AuricSoul>(), 1, 1, 2);
+            npcLoot.Add(ModContent.ItemType<AncientBoneDust>(), 2);
+            npcLoot.Add(ModContent.ItemType<DemonicBoneAsh>(), 2);
+
+            LeadingConditionRule hardmode = npcLoot.DefineConditionalDropSet(DropHelper.Hardmode());
+            LeadingConditionRule postProv = npcLoot.DefineConditionalDropSet(DropHelper.PostProv());
+            hardmode.Add(ModContent.ItemType<EssenceofHavoc>(), 2);
+            postProv.Add(ModContent.ItemType<Bloodstone>(), 4);
         }
         private struct BoneSpur
         {
@@ -354,10 +367,13 @@ namespace CalRemix.Content.NPCs
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            // sometimes when hes teleporting or starting digup you can see him for a split second
-            // this fixes that by not having him render during those times
-            if (Mode == (int)AttackTypes.Spawn || Mode == (int)AttackTypes.AttemptTeleport || Mode == (int)AttackTypes.TelegraphDig || Mode == (int)AttackTypes.DigUp && Timer == 1)
-                return false;
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                // sometimes when hes teleporting or starting digup you can see him for a split second
+                // this fixes that by not having him render during those times
+                if (Mode == (int)AttackTypes.Spawn || Mode == (int)AttackTypes.AttemptTeleport || Mode == (int)AttackTypes.TelegraphDig || Mode == (int)AttackTypes.DigUp && Timer == 1)
+                    return false;
+            }
             
             Texture2D texture = TextureAssets.Npc[Type].Value;
             Texture2D extras = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/GiantSkeletonExtras").Value;
@@ -370,16 +386,21 @@ namespace CalRemix.Content.NPCs
             BoneSpur spur2 = new BoneSpur(18, 12, spur3, 0, 6);
             BoneSpur spur1 = new BoneSpur(12, 10, spur2, 0, 6);
             BoneSpur[] spurList = { spur5, spur4, spur2, spur3, spur1 };
+            Color trueDrawColor = NPC.IsABestiaryIconDummy ? Color.White : drawColor;
 
-            // this rectangle contains the entirety of bro. it also contains everything above the og tp location
-            int cullingHeight = (int)(TeleLocationY - screenPos.Y);
-            Rectangle entireSkeleton = new Rectangle(0, 0, Main.screenWidth, cullingHeight);
-            // and we use that to do cull everything underneath our awesome arbitrary position
             RasterizerState rasterizer = Main.Rasterizer;
-            rasterizer.ScissorTestEnable = true;
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.Transform);
-            spriteBatch.GraphicsDevice.ScissorRectangle = entireSkeleton;
+            // execute NONE of this in the bestiary 
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                // this rectangle contains the entirety of bro. it also contains everything above the og tp location
+                int cullingHeight = (int)(TeleLocationY - screenPos.Y);
+                Rectangle entireSkeleton = new Rectangle(0, 0, Main.screenWidth, cullingHeight);
+                // and we use that to do cull everything underneath our awesome arbitrary position
+                rasterizer.ScissorTestEnable = true;
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.Transform);
+                spriteBatch.GraphicsDevice.ScissorRectangle = entireSkeleton;
+            }
 
             // a bunch of spine calculation stuff 
             // we won't render until near the end so that everything else can be rendered underneath it,
@@ -396,10 +417,10 @@ namespace CalRemix.Content.NPCs
             }
 
             // drawing the pelvis
-            spriteBatch.Draw(extras, new Vector2(NPC.Center.X + horizOffsets[amountOfSpineSegments - 1], NPC.Center.Y + ((spine.Height / amountOfSegmentFrames) - 2) * amountOfSpineSegments) - screenPos, new Rectangle(0, 80, (int)pelvis.X, (int)pelvis.Y), drawColor, NPC.rotation, new Vector2(pelvis.X / 2, pelvis.Y / 2), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(extras, new Vector2(NPC.Center.X + horizOffsets[amountOfSpineSegments - 1], NPC.Center.Y + ((spine.Height / amountOfSegmentFrames) - 2) * amountOfSpineSegments) - screenPos, new Rectangle(0, 80, (int)pelvis.X, (int)pelvis.Y), trueDrawColor, NPC.rotation, new Vector2(pelvis.X / 2, pelvis.Y / 2), NPC.scale, SpriteEffects.None, 0f);
 
             // drawing the background ribs
-            spriteBatch.Draw(extras, new Vector2(NPC.Center.X + horizOffsets[3], NPC.Center.Y + 60) - screenPos, new Rectangle(54, 20 + (int)ribs.Y + 2, (int)ribs.X, (int)ribs.Y), drawColor, NPC.rotation, new Vector2(ribs.X / 2, ribs.Y / 2), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(extras, new Vector2(NPC.Center.X + horizOffsets[3], NPC.Center.Y + 60) - screenPos, new Rectangle(54, 20 + (int)ribs.Y + 2, (int)ribs.X, (int)ribs.Y), trueDrawColor, NPC.rotation, new Vector2(ribs.X / 2, ribs.Y / 2), NPC.scale, SpriteEffects.None, 0f);
 
             // drawing the side bone spurs
             for (int i = 0; i <= spurList.Length - 1; i++)
@@ -409,27 +430,30 @@ namespace CalRemix.Content.NPCs
                 float rotateInverted = rotate * -1;
                 float posOffsetY = 18 * i;
 
-                spriteBatch.Draw(extras, new Vector2(NPC.Center.X + 0 + horizOffsets[i + 3], NPC.Center.Y + 95 + posOffsetY) - screenPos, spurList[i].GetLeftRectangle(), drawColor, NPC.rotation + rotate, spurList[i].GetLeftOrigin(), NPC.scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(extras, new Vector2(NPC.Center.X - 0 + horizOffsets[i + 3], NPC.Center.Y + 95 + posOffsetY) - screenPos, spurList[i].GetRightRectangle(), drawColor, NPC.rotation + rotateInverted, spurList[i].GetRightOrigin(), NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(extras, new Vector2(NPC.Center.X + 0 + horizOffsets[i + 3], NPC.Center.Y + 95 + posOffsetY) - screenPos, spurList[i].GetLeftRectangle(), trueDrawColor, NPC.rotation + rotate, spurList[i].GetLeftOrigin(), NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(extras, new Vector2(NPC.Center.X - 0 + horizOffsets[i + 3], NPC.Center.Y + 95 + posOffsetY) - screenPos, spurList[i].GetRightRectangle(), trueDrawColor, NPC.rotation + rotateInverted, spurList[i].GetRightOrigin(), NPC.scale, SpriteEffects.None, 0f);
             }
 
             // drawing the spine
             for (int i = 0; i < amountOfSpineSegments; i++)
             {
                 int extraOffset = ((spine.Height / amountOfSegmentFrames) - 2) * i;
-                spriteBatch.Draw(spine, new Vector2(NPC.Center.X + horizOffsets[i], NPC.Center.Y + initialOffset + extraOffset) - screenPos, spine.Frame(1, 3, 0, (int)segmentFrame[i]), drawColor, NPC.rotation, new Vector2(spine.Width / 2, spine.Height / 6), NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spine, new Vector2(NPC.Center.X + horizOffsets[i], NPC.Center.Y + initialOffset + extraOffset) - screenPos, spine.Frame(1, 3, 0, (int)segmentFrame[i]), trueDrawColor, NPC.rotation, new Vector2(spine.Width / 2, spine.Height / 6), NPC.scale, SpriteEffects.None, 0f);
             }
 
             // drawing the ribs
-            spriteBatch.Draw(extras, new Vector2(NPC.Center.X + horizOffsets[3], NPC.Center.Y + 60) - screenPos, new Rectangle(54, 20, (int)ribs.X, (int)ribs.Y), drawColor, NPC.rotation, new Vector2(ribs.X / 2, ribs.Y / 2), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(extras, new Vector2(NPC.Center.X + horizOffsets[3], NPC.Center.Y + 60) - screenPos, new Rectangle(54, 20, (int)ribs.X, (int)ribs.Y), trueDrawColor, NPC.rotation, new Vector2(ribs.X / 2, ribs.Y / 2), NPC.scale, SpriteEffects.None, 0f);
 
             // and finally, drawing the skull
-            spriteBatch.Draw(texture, new Vector2(NPC.Center.X + horizOffsets[0], NPC.Center.Y) - screenPos, null, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 2), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, new Vector2(NPC.Center.X + horizOffsets[0], NPC.Center.Y) - screenPos, null, trueDrawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 2), NPC.scale, SpriteEffects.None, 0f);
 
-            // end that spritebatch fuckery we started earlier. feel free not to end it for epic fail
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.Transform);
-            spriteBatch.ReleaseCutoffRegion(Main.Transform);
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                // end that spritebatch fuckery we started earlier. feel free not to end it for epic fail
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, rasterizer, null, Main.Transform);
+                spriteBatch.ReleaseCutoffRegion(Main.Transform);
+            }
 
             VisualTimer++;
             return false;

@@ -649,6 +649,7 @@ namespace CalRemix
                     recipe.AddIngredient<TheEvolution>();
                     recipe.AddIngredient<Affliction>();
                     recipe.AddIngredient<OldDukeScales>();
+                    recipe.AddIngredient<FungiStone>();
                 }
                 if (recipe.HasResult(ItemType<PhantomicArtifact>()))
                 {

@@ -1127,6 +1127,10 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<BoringStormbow>(), 5);
             }
+            if (npc.type == NPCID.GiantFungiBulb)
+            {
+                npcLoot.Add(ItemType<FungiStone>(), new Fraction(1, 50));
+            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
