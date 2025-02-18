@@ -194,34 +194,6 @@ namespace CalRemix
             {
                 item.rare = ItemRarityID.Purple;
             }
-            else
-            {
-                // undo the curve flattening
-                // done with content samples so that reforges are ignored
-                if (ContentSamples.ItemsByType.ContainsKey(item.type))
-                {
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Turquoise>())
-                    {
-                        item.damage = (int)(item.damage * 1.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<PureGreen>())
-                    {
-                        item.damage = (int)(item.damage * 1.67f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<DarkBlue>())
-                    {
-                        item.damage = (int)(item.damage * 2.5f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Violet>())
-                    {
-                        item.damage = (int)(item.damage * 3.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<HotPink>())
-                    {
-                        item.damage = (int)(item.damage * 5f);
-                    }
-                }
-            }
             if (item.type == ItemType<Navystone>())
             {
                 item.createTile = TileType<NavystoneSafe>();
