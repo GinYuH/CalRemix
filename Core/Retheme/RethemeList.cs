@@ -62,7 +62,6 @@ namespace CalRemix.Core.Retheme
             { NPCType<HiveBlob2>(), "HiveMind/HiveBlob" },
             { NPCType<DarkHeart>(), "HiveMind/DarkHeart" },
             { NPCType<HiveMind>(), "HiveMind/HiveMind" },
-            { NPCID.SkeletronHead, "Skeletron/Dungen" },
             #region Perfs
             { NPCType<PerforatorCyst>(), "Perfs/Cyst" },
             { NPCType<PerforatorBodyLarge>(), "Perfs/LBody" },
