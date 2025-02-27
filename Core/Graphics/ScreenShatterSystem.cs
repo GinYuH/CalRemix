@@ -184,7 +184,7 @@ namespace CalRemix.Core.Graphics
 
         public static void CreateShatterEffect(Vector2 shatterScreenPosition)
         {
-            if (!CalRemixConfig.instance.ScreenShatterEffects)
+            if (/*!CalRemixConfig.instance.ScreenShatterEffects*/ false)
             {
                 Main.LocalPlayer.Calamity().GeneralScreenShakePower += 11f;
                 return;
