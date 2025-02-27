@@ -4,6 +4,7 @@ using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Minibosses;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,6 +20,7 @@ namespace CalRemix.Content.Items.Tools
             NPCID.DD2LanePortal,
             NPCID.DD2EterniaCrystal,
             NPCID.TargetDummy,
+            ModContent.NPCType<LaRuga>(),
             ModContent.NPCType<NoxusEgg>(),
             ModContent.NPCType<NoxusEggCutscene>(),
             ModContent.NPCType<EntropicGod>(),
