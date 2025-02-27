@@ -27,6 +27,9 @@ using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
+using CalamityMod.DataStructures;
+using Terraria.GameContent.Animations;
+using Terraria.Graphics;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus
 {
@@ -293,6 +296,10 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
         public Vector2 HeadOffset => -Vector2.UnitY.RotatedBy(NPC.rotation) * TeleportVisualsAdjustedScale * 60f;
 
+        public static List<VerletSimulatedSegment> rArm = new List<VerletSimulatedSegment>();
+
+        public static List<VerletSimulatedSegment> lArm = new List<VerletSimulatedSegment>();
+
         public static NPC Myself
         {
             get
@@ -355,6 +362,8 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
         public const float Phase3LifeRatio = 0.25f;
 
         public const float DefaultDR = 0.23f;
+
+        public const int segmentCount = 22;
         #endregion Fields and Properties
 
         #region Attack Cycles
@@ -600,6 +609,33 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             // Make the laser telegraph opacity dissipate. This is useful for cases where Noxus changes phases in the middle of the telegraph being prepared.
             LaserTelegraphOpacity = Clamp(LaserTelegraphOpacity - 0.01f, 0f, 1f);
 
+            // Initialize arm verlet
+
+            if (rArm == null || rArm.Count < segmentCount)
+            {
+                rArm = new List<VerletSimulatedSegment>(segmentCount);
+                for (int i = 0; i < segmentCount; i++)
+                {
+                    VerletSimulatedSegment segment = new VerletSimulatedSegment(NPC.Center);
+                    rArm.Add(segment);
+                }
+
+                rArm[0].locked = true;
+                rArm[^1].locked = true;
+            }
+            if (lArm == null || lArm.Count < segmentCount)
+            {
+                lArm = new List<VerletSimulatedSegment>(segmentCount);
+                for (int i = 0; i < segmentCount; i++)
+                {
+                    VerletSimulatedSegment segment = new VerletSimulatedSegment(NPC.Center);
+                    lArm.Add(segment);
+                }
+
+                lArm[0].locked = true;
+                lArm[^1].locked = true;
+            }
+
             switch (CurrentAttack)
             {
                 case EntropicGodAttackType.DarkExplosionCharges:
@@ -697,6 +733,26 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
             AttackTimer++;
             FightLength++;
+
+            float armDistX = 80 * NPC.scale;
+            float armDistY = 50 * NPC.scale;
+
+            rArm[0].oldPosition = rArm[0].position;
+            rArm[0].position = NPC.Center + new Vector2(-armDistX, armDistY);
+
+            rArm[rArm.Count - 1].oldPosition = rArm[^1].position;
+            rArm[rArm.Count - 1].position = (Hands[0].Center + (Hands[0].RotationOverride == null ? (new Vector2(0, -30 * NPC.scale)) : ((float)Hands[0].RotationOverride * Vector2.One * 22 * NPC.scale)));
+
+            rArm = VerletSimulatedSegment.SimpleSimulation(rArm, 2 * NPC.scale, loops: segmentCount, gravity: 22f);
+
+
+            lArm[0].oldPosition = rArm[0].position;
+            lArm[0].position = NPC.Center + new Vector2(armDistX , armDistY);
+
+            lArm[lArm.Count - 1].oldPosition = lArm[^1].position;
+            lArm[lArm.Count - 1].position = (Hands[1].Center + (Hands[1].RotationOverride == null ? (new Vector2(0, -30 * NPC.scale)) : ((float)Hands[1].RotationOverride * Vector2.One * 22 * NPC.scale)));
+
+            lArm = VerletSimulatedSegment.SimpleSimulation(lArm, 2 * NPC.scale, loops: segmentCount, gravity: 22f);
         }
 
         public void DoBehavior_DarkExplosionCharges()
