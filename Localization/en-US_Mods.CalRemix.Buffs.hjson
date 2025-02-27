@@ -406,3 +406,13 @@ TaintedWrathBuff: {
 }
 
 Chlorislime.DisplayName: Chlorislime
+
+NoxusFumes: {
+	DisplayName: Noxus Fumes
+	Description: Cosmic hallucinations surround you...
+}
+
+BabyNoxusBuff: {
+	DisplayName: Noxus
+	Description: He's a smol lad now
+}
