@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -42,7 +43,7 @@ namespace CalRemix.Content.Items.SummonItems
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                int noxusID = player.altFunctionUse == 2 || !WorldSaveSystem.HasDefeatedEgg ? ModContent.NPCType<NoxusEgg>() : ModContent.NPCType<EntropicGod>();
+                int noxusID = player.altFunctionUse == 2 || !RemixDowned.downedNoxegg ? ModContent.NPCType<NoxusEgg>() : ModContent.NPCType<EntropicGod>();
 
                 // If the player is not in multiplayer, spawn Noxus.
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -56,12 +57,12 @@ namespace CalRemix.Content.Items.SummonItems
             return true;
         }
 
-        public override bool AltFunctionUse(Player player) => WorldSaveSystem.HasDefeatedEgg;
+        public override bool AltFunctionUse(Player player) => RemixDowned.downedNoxegg;
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             var toolip = tooltips.Find(l => l.Text.Contains("Summons"));
-            if (WorldSaveSystem.HasDefeatedEgg)
+            if (RemixDowned.downedNoxegg)
                 toolip.Text = Language.GetTextValue($"Mods.{Mod.Name}.Items.{Name}.AlternateTooltip");
         }
 

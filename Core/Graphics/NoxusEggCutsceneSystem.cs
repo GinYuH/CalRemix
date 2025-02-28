@@ -13,18 +13,13 @@ using static System.MathF;
 using static Terraria.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
 using static CalRemix.CalRemixHelper;
+using CalRemix.Core.World;
 
 namespace CalRemix.Core.Graphics
 {
     public class NoxusEggCutsceneSystem : ModSystem
     {
         public static bool WillTryToSummonNoxusTonight
-        {
-            get;
-            set;
-        }
-
-        public static bool HasSummonedNoxus
         {
             get;
             set;
@@ -38,7 +33,7 @@ namespace CalRemix.Core.Graphics
 
         public static string PostMLNightText => "A dark presence approaches...";
 
-        public static string FinalMainBossDefeatText => $"{(HasSummonedNoxus ? "The" : "A")} dark presence is stirring...";
+        public static string FinalMainBossDefeatText => $"{(CalRemixWorld.metNoxus ? "The" : "A")} dark presence is stirring...";
 
         public static List<Player> PlayersOnSurface
         {
@@ -61,19 +56,19 @@ namespace CalRemix.Core.Graphics
         public override void PreUpdateWorld()
         {
             // Randomly make Noxus appear.
-            if ((int)Math.Round(Main.time) == 10 && !HasSummonedNoxus && NoxusCanCommitSkydivingFromSpace && Main.rand.NextBool(3) && PlayersOnSurface.Any() && !Main.dayTime)
+            if ((int)Math.Round(Main.time) == 10 && !CalRemixWorld.metNoxus && NoxusCanCommitSkydivingFromSpace && Main.rand.NextBool(3) && PlayersOnSurface.Any() && !Main.dayTime)
             {
                 BroadcastText(PostMLNightText, new(50, 255, 130));
                 WillTryToSummonNoxusTonight = true;
             }
 
             // Randomly spawn Noxus.
-            if (WillTryToSummonNoxusTonight && Main.rand.NextBool(7200) && PlayersOnSurface.Any() && !HasSummonedNoxus)
+            if (WillTryToSummonNoxusTonight && Main.rand.NextBool(7200) && PlayersOnSurface.Any() && !CalRemixWorld.metNoxus)
             {
                 Player playerToSpawnNear = Main.rand.Next(PlayersOnSurface);
                 NPC.NewNPC(new EntitySource_WorldEvent(), (int)playerToSpawnNear.Center.X, (int)playerToSpawnNear.Center.Y - 1200, ModContent.NPCType<NoxusEggCutscene>(), 1);
 
-                HasSummonedNoxus = true;
+                CalRemixWorld.metNoxus = true;
             }
 
             // Try again later if Noxus couldn't spawn at night.

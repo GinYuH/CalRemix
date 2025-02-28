@@ -85,6 +85,7 @@ using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Biomes;
+using CalRemix.Core.Graphics;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
@@ -1589,6 +1590,23 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<Piggy>())
             {
                 NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.DukeFishron);
+            }
+
+            Color NoxusTextColor = new(91, 69, 143);
+
+            // Create some indicator text when the WoF is killed about how Noxus has begun orbiting the planet.
+            if (npc.type == NPCID.WallofFlesh && !NoxusEggCutsceneSystem.NoxusBeganOrbitingPlanet)
+                CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.PostWoFDefeatText, NoxusTextColor);
+
+            // Create some indicator text when SCal or Draedon (whichever is defeated last) is defeated as a hint to fight Noxus.
+            bool draedonDefeatedLast = (npc.type == ModContent.NPCType<ThanatosHead>() || npc.type == ModContent.NPCType<AresBody>() || npc.type == ModContent.NPCType<Apollo>()) && DownedBossSystem.downedCalamitas && !DownedBossSystem.downedExoMechs;
+            bool calDefeatedLast = npc.type == ModContent.NPCType<SupremeCalamitas>() && DownedBossSystem.downedExoMechs && !DownedBossSystem.downedCalamitas;
+            if (calDefeatedLast || draedonDefeatedLast)
+            {
+                // Apply a secondary check to ensure that when an Exo Mech is killed it is the last exo mech.
+                bool noExtraExoMechs = NPC.CountNPCS(ModContent.NPCType<ThanatosHead>()) + NPC.CountNPCS(ModContent.NPCType<AresBody>()) + NPC.CountNPCS(ModContent.NPCType<Apollo>()) <= 1;
+                if (calDefeatedLast || noExtraExoMechs)
+                    CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.FinalMainBossDefeatText, NoxusTextColor);
             }
         }
         public override bool CheckDead(NPC npc)

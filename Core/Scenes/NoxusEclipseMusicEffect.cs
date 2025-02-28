@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace CalRemix.Core
+namespace CalRemix.Core.Scenes
 {
     public class NoxusEclipseMusicEffect : ModSceneEffect
     {

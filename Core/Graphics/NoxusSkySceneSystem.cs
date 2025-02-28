@@ -8,6 +8,7 @@ using static System.MathF;
 using static Terraria.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
 using static CalRemix.CalRemixHelper;
+using CalRemix.Core.World;
 
 namespace CalRemix.Core.Graphics
 {
@@ -56,7 +57,7 @@ namespace CalRemix.Core.Graphics
             EclipseDarknessInterpolant = Clamp(EclipseDarknessInterpolant - 0.04f, 0f, 1f);
 
             // Don't draw Noxus if he's fucking dead, has fallen from space already, or hasn't started orbiting the planet yet.
-            if (WorldSaveSystem.HasDefeatedEgg || NoxusEggCutsceneSystem.HasSummonedNoxus || !NoxusEggCutsceneSystem.NoxusBeganOrbitingPlanet)
+            if (RemixDowned.downedNoxegg || CalRemixWorld.metNoxus || !NoxusEggCutsceneSystem.NoxusBeganOrbitingPlanet)
                 return;
 
             // Don't draw Noxus if he's behind the view position or if on the title screen.
