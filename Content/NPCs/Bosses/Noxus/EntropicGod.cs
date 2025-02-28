@@ -743,7 +743,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             rArm[rArm.Count - 1].oldPosition = rArm[^1].position;
             rArm[rArm.Count - 1].position = (Hands[0].Center + (Hands[0].RotationOverride == null ? (new Vector2(0, -30 * NPC.scale)) : ((float)Hands[0].RotationOverride * Vector2.One * 22 * NPC.scale)));
 
-            rArm = VerletSimulatedSegment.SimpleSimulation(rArm, 2 * NPC.scale, loops: segmentCount, gravity: 22f);
+            rArm = VerletSimulatedSegment.SimpleSimulation(rArm, 2 * NPC.scale, loops: segmentCount, gravity: 22f * (CurrentAttack == EntropicGodAttackType.HoveringHandGasBursts ? -1 : 1));
 
 
             lArm[0].oldPosition = rArm[0].position;
@@ -752,7 +752,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             lArm[lArm.Count - 1].oldPosition = lArm[^1].position;
             lArm[lArm.Count - 1].position = (Hands[1].Center + (Hands[1].RotationOverride == null ? (new Vector2(0, -30 * NPC.scale)) : ((float)Hands[1].RotationOverride * Vector2.One * 22 * NPC.scale)));
 
-            lArm = VerletSimulatedSegment.SimpleSimulation(lArm, 2 * NPC.scale, loops: segmentCount, gravity: 22f);
+            lArm = VerletSimulatedSegment.SimpleSimulation(lArm, 2 * NPC.scale, loops: segmentCount, gravity: 22f * (CurrentAttack == EntropicGodAttackType.HoveringHandGasBursts ? -1 : 1));
         }
 
         public void DoBehavior_DarkExplosionCharges()
