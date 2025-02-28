@@ -44,8 +44,9 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus.Purity
     //
     // And amusingly, with that paradigm shift, the object of the abandoned desire will be realized.
     [AutoloadBossHead]
-    public class EntropicGod : ModNPC
+    public class PurityofNoxus : ModNPC
     {
+        public override string Texture => "CalRemix/Content/NPCs/Bosses/Noxus/EntropicGod";
         #region Custom Types and Enumerations
         public enum EntropicGodAttackType
         {

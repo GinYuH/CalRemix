@@ -86,7 +86,7 @@ namespace CalRemix.Core.Graphics
                     return;
 
                 // While teleporting don't draw the arms
-                if (noxNPC.Opacity < 0.9f)
+                if (noxNPC.Opacity < 0.8f)
                     return;
 
                 // Draw arm connectors
@@ -96,17 +96,41 @@ namespace CalRemix.Core.Graphics
 
                     List<Vector2> positions = new List<Vector2>();
                     List<float> rotations = new List<float>();
-                    for (int i = 0; i < toDraw.Count; i++)
+                    if (noxus.CurrentAttack != EntropicGod.EntropicGodAttackType.MigraineAttack && noxus.CurrentAttack != EntropicGod.EntropicGodAttackType.Phase2Transition)
                     {
-                        VerletSimulatedSegment seg = toDraw[i];
-                        positions.Add(seg.position - Main.screenPosition);
-                        if (i > 0)
+                        for (int i = 0; i < toDraw.Count; i++)
                         {
-                            rotations.Add(seg.position.DirectionTo(toDraw[i - 1].position).ToRotation());
+                            VerletSimulatedSegment seg = toDraw[i];
+                            positions.Add(seg.position - Main.screenPosition);
+                            if (i > 0)
+                            {
+                                rotations.Add(seg.position.DirectionTo(toDraw[i - 1].position).ToRotation());
+                            }
+                            else
+                                rotations.Add(0);
                         }
-                        else
-                            rotations.Add(0);
+                    }
+                    else
+                    {
+                        float halfHeight = (toDraw[^1].position.Y - toDraw[0].position.Y) * 0.5f;
 
+                        BezierCurve curve = new BezierCurve(toDraw[0].position, new Vector2(toDraw[0].position.X + 200 * (j == 0 ? -1 : 1), toDraw[0].position.Y - halfHeight), toDraw[^1].position);
+                        List<Vector2> points = curve.GetPoints(22);
+
+                        foreach (Vector2 point in points)
+                        {
+                            positions.Add(point - Main.screenPosition);
+                        }
+
+                        rotations = new List<float>();
+                        for (int i = 0; i < positions.Count; i++)
+                        {
+                            Vector2 pos = positions[i];
+                            if (i > 0)
+                                rotations.Add(positions[i].DirectionTo(positions[i - 1]).ToRotation());
+                            else
+                                rotations.Add(0);
+                        }
                     }
 
                     // Organ donor

@@ -2940,6 +2940,33 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             // Draw the tendril parts.
             Main.EntitySpriteDraw(texture, drawPosition - Vector2.UnitY.RotatedBy(rotation) * NPC.scale * 48f, NPC.frame, color, rotation, NPC.frame.Size() * 0.5f, TeleportVisualsAdjustedScale, 0, 0);
 
+            // Draw shoulders
+            Texture2D shoulderTexture = ModContent.Request<Texture2D>($"CalRemix/Content/NPCs/Bosses/Noxus/EntropicGodShoulder").Value;
+            for (int i = 0; i < 2; i++)
+            {
+                Vector2 drawOffset = new Vector2(84, 48).RotatedBy(rotation) * NPC.scale;
+                if (i == 0)
+                    drawOffset.X *= -1;
+
+                // Rotate shoulders towards the hands
+                float shoulderRotation = (drawPosition + Main.screenPosition + drawOffset).DirectionTo(Hands[i].Center).ToRotation();
+                if (i == 0)
+                    shoulderRotation += Pi;
+                shoulderRotation += i == 0 ? PiOver4 : -PiOver4;
+
+                // During the portal attack his hands don't exist, so have no rotation
+                bool portalAttack = CurrentAttack == EntropicGodAttackType.PortalChainCharges || CurrentAttack == EntropicGodAttackType.PortalChainCharges2;
+                if (portalAttack)
+                    shoulderRotation = 0;
+
+                // Noxus' arms use bezier curves instead of verlet while he's having a migraine
+                else if (CurrentAttack == EntropicGodAttackType.MigraineAttack || CurrentAttack == EntropicGodAttackType.Phase2Transition)
+                    shoulderRotation = i == 0 ? PiOver4 * 0.5f : -PiOver4 * 0.5f;
+
+                Main.EntitySpriteDraw(shoulderTexture, drawPosition + drawOffset, null, color, shoulderRotation, shoulderTexture.Size() * 0.5f, TeleportVisualsAdjustedScale, (i == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            }
+
+
             // Draw ribs.
             for (int i = 3; i >= 1; i--)
             {
