@@ -6108,3 +6108,444 @@ CalRemix/DestructivePresenceStone: {
 		'''
 	DisplayName: Destructive Presence Stone
 }
+
+CalRemix/ChlorislimeStone: {
+	DisplayName: Chlorislime Stone
+	Tooltip:
+		'''
+		Immunity to Chlorislime
+		Attacks inflict Chlorislime
+		'''
+}
+
+CalRemix/StratusBeverageBuffStone: {
+	DisplayName: Stratus Beverage Stone
+	Tooltip:
+		'''
+		Immunity to Stratus Beverage
+		Attacks inflict Stratus Beverage
+		'''
+}
+
+CalRemix/TaintedAmmoBuffStone: {
+	DisplayName: Ammo Unleashed Stone
+	Tooltip:
+		'''
+		Immunity to Ammo Unleashed
+		Attacks inflict Ammo Unleashed
+		'''
+}
+
+CalRemix/TaintedArcheryBuffStone: {
+	DisplayName: Reckless Archer Stone
+	Tooltip:
+		'''
+		Immunity to Reckless Archer
+		Attacks inflict Reckless Archer
+		'''
+}
+
+CalRemix/TaintedBattleBuffStone: {
+	DisplayName: Apocalypse Scenario Stone
+	Tooltip:
+		'''
+		Immunity to Apocalypse Scenario
+		Attacks inflict Apocalypse Scenario
+		'''
+}
+
+CalRemix/TaintedBuilderBuffStone: {
+	DisplayName: Resourceful Stone
+	Tooltip:
+		'''
+		Immunity to Resourceful
+		Attacks inflict Resourceful
+		'''
+}
+
+CalRemix/TaintedCalmingBuffStone: {
+	DisplayName: Weak Hordes Stone
+	Tooltip:
+		'''
+		Immunity to Weak Hordes
+		Attacks inflict Weak Hordes
+		'''
+}
+
+CalRemix/TaintedCrateBuffStone: {
+	DisplayName: Gacha Sim Stone
+	Tooltip:
+		'''
+		Immunity to Gacha Sim
+		Attacks inflict Gacha Sim
+		'''
+}
+
+CalRemix/TaintedDangersenseBuffStone: {
+	DisplayName: Danger Stone
+	Tooltip:
+		'''
+		Immunity to Danger
+		Attacks inflict Danger
+		'''
+}
+
+CalRemix/TaintedEnduranceBuffStone: {
+	DisplayName: Shattered Enemies Stone
+	Tooltip:
+		'''
+		Immunity to Shattered Enemies
+		Attacks inflict Shattered Enemies
+		'''
+}
+
+CalRemix/TaintedFeatherfallBuffStone: {
+	DisplayName: Friendly Gravity Stone
+	Tooltip:
+		'''
+		Immunity to Friendly Gravity
+		Attacks inflict Friendly Gravity
+		'''
+}
+
+CalRemix/TaintedFishingBuffStone: {
+	DisplayName: Fishing Curse Stone
+	Tooltip:
+		'''
+		Immunity to Fishing Curse
+		Attacks inflict Fishing Curse
+		'''
+}
+
+CalRemix/TaintedGillsBuffStone: {
+	DisplayName: Hydrophobia Stone
+	Tooltip:
+		'''
+		Immunity to Hydrophobia
+		Attacks inflict Hydrophobia
+		'''
+}
+
+CalRemix/TaintedGravityBuffStone: {
+	DisplayName: Very Distorted Stone
+	Tooltip:
+		'''
+		Immunity to Very Distorted
+		Attacks inflict Very Distorted
+		'''
+}
+
+CalRemix/TaintedHeartBuffStone: {
+	DisplayName: Heart Attack Stone
+	Tooltip:
+		'''
+		Immunity to Heart Attack
+		Attacks inflict Heart Attack
+		'''
+}
+
+CalRemix/TaintedHunterBuffStone: {
+	DisplayName: Infamy Stone
+	Tooltip:
+		'''
+		Immunity to Infamy
+		Attacks inflict Infamy
+		'''
+}
+
+CalRemix/TaintedInfernoBuffStone: {
+	DisplayName: Ablaze Stone
+	Tooltip:
+		'''
+		Immunity to Ablaze
+		Attacks inflict Ablaze
+		'''
+}
+
+CalRemix/TaintedInvisibilityBuffStone: {
+	DisplayName: Abandoned Stone
+	Tooltip:
+		'''
+		Immunity to Abandoned
+		Attacks inflict Abandoned
+		'''
+}
+
+CalRemix/TaintedIronskinBuffStone: {
+	DisplayName: Battered Stone
+	Tooltip:
+		'''
+		Immunity to Battered
+		Attacks inflict Battered
+		'''
+}
+
+CalRemix/TaintedLifeBuffStone: {
+	DisplayName: Mana Blood Stone
+	Tooltip:
+		'''
+		Immunity to Mana Blood
+		Attacks inflict Mana Blood
+		'''
+}
+
+CalRemix/TaintedLoveBuffStone: {
+	DisplayName: Idol Stone
+	Tooltip:
+		'''
+		Immunity to Idol
+		Attacks inflict Idol
+		'''
+}
+
+CalRemix/TaintedLuckBuffStone: {
+	DisplayName: Speedrunner Luck Stone
+	Tooltip:
+		'''
+		Immunity to Speedrunner Luck
+		Attacks inflict Speedrunner Luck
+		'''
+}
+
+CalRemix/TaintedMagicPowerBuffStone: {
+	DisplayName: Telekinesis Stone
+	Tooltip:
+		'''
+		Immunity to Telekinesis
+		Attacks inflict Telekinesis
+		'''
+}
+
+CalRemix/TaintedManaBuffStone: {
+	DisplayName: Mana Acceleration Stone
+	Tooltip:
+		'''
+		Immunity to Mana Acceleration
+		Attacks inflict Mana Acceleration
+		'''
+}
+
+CalRemix/TaintedMiningBuffStone: {
+	DisplayName: Mining Strength Stone
+	Tooltip:
+		'''
+		Immunity to Mining Strength
+		Attacks inflict Mining Strength
+		'''
+}
+
+CalRemix/TaintedNightOwlBuffStone: {
+	DisplayName: Hazy Stone
+	Tooltip:
+		'''
+		Immunity to Hazy
+		Attacks inflict Hazy
+		'''
+}
+
+CalRemix/TaintedObsidianSkinBuffStone: {
+	DisplayName: Lethal Lava Stone
+	Tooltip:
+		'''
+		Immunity to Lethal Lava
+		Attacks inflict Lethal Lava
+		'''
+}
+
+CalRemix/TaintedRageBuffStone: {
+	DisplayName: Focused Power Stone
+	Tooltip:
+		'''
+		Immunity to Focused Power
+		Attacks inflict Focused Power
+		'''
+}
+
+CalRemix/TaintedRegenerationBuffStone: {
+	DisplayName: Vampiric Stone
+	Tooltip:
+		'''
+		Immunity to Vampiric
+		Attacks inflict Vampiric
+		'''
+}
+
+CalRemix/TaintedShineBuffStone: {
+	DisplayName: Pitch Black Stone
+	Tooltip:
+		'''
+		Immunity to Pitch Black
+		Attacks inflict Pitch Black
+		'''
+}
+
+CalRemix/TaintedSonarBuffStone: {
+	DisplayName: Restless Fish Stone
+	Tooltip:
+		'''
+		Immunity to Restless Fish
+		Attacks inflict Restless Fish
+		'''
+}
+
+CalRemix/TaintedSpelunkerBuffStone: {
+	DisplayName: Treasure Magnet Stone
+	Tooltip:
+		'''
+		Immunity to Treasure Magnet
+		Attacks inflict Treasure Magnet
+		'''
+}
+
+CalRemix/TaintedStinkBuffStone: {
+	DisplayName: Disgusting Stone
+	Tooltip:
+		'''
+		Immunity to Disgusting
+		Attacks inflict Disgusting
+		'''
+}
+
+CalRemix/TaintedSummoningBuffStone: {
+	DisplayName: Mayfly Minions Stone
+	Tooltip:
+		'''
+		Immunity to Mayfly Minions
+		Attacks inflict Mayfly Minions
+		'''
+}
+
+CalRemix/TaintedSwiftnessBuffStone: {
+	DisplayName: Sneaking Stone
+	Tooltip:
+		'''
+		Immunity to Sneaking
+		Attacks inflict Sneaking
+		'''
+}
+
+CalRemix/TaintedThornsBuffStone: {
+	DisplayName: Shielded Enemies Stone
+	Tooltip:
+		'''
+		Immunity to Shielded Enemies
+		Attacks inflict Shielded Enemies
+		'''
+}
+
+CalRemix/TaintedTitanBuffStone: {
+	DisplayName: Forceless Stone
+	Tooltip:
+		'''
+		Immunity to Forceless
+		Attacks inflict Forceless
+		'''
+}
+
+CalRemix/TaintedWarmthBuffStone: {
+	DisplayName: Cooling Stone
+	Tooltip:
+		'''
+		Immunity to Cooling
+		Attacks inflict Cooling
+		'''
+}
+
+CalRemix/TaintedWaterWalkingBuffStone: {
+	DisplayName: Air Walking Stone
+	Tooltip:
+		'''
+		Immunity to Air Walking
+		Attacks inflict Air Walking
+		'''
+}
+
+CalRemix/TaintedWrathBuffStone: {
+	DisplayName: Pacifist Stone
+	Tooltip:
+		'''
+		Immunity to Pacifist
+		Attacks inflict Pacifist
+		'''
+}
+
+NoxusBoss/AntimatterAnnihilationStone: {
+	DisplayName: Antimatter Annihilation Stone
+	Tooltip:
+		'''
+		Immunity to Antimatter Annihilation
+		Attacks inflict Antimatter Annihilation
+		'''
+}
+
+NoxusBoss/GlaciatedStone: {
+	DisplayName: Glaciated Stone
+	Tooltip:
+		'''
+		Immunity to Glaciated
+		Attacks inflict Glaciated
+		'''
+}
+
+NoxusBoss/InvincibilityBuffStone: {
+	DisplayName: Flower Power Stone
+	Tooltip:
+		'''
+		Immunity to Flower Power
+		Attacks inflict Flower Power
+		'''
+}
+
+NoxusBoss/NilkDebuffStone: {
+	DisplayName: Nilk Stone
+	Tooltip:
+		'''
+		Immunity to Nilk
+		Attacks inflict Nilk
+		'''
+}
+
+NoxusBoss/StarstrikinglySatiatedStone: {
+	DisplayName: Starstrikingly Satiated Stone
+	Tooltip:
+		'''
+		Immunity to Starstrikingly Satiated
+		Attacks inflict Starstrikingly Satiated
+		'''
+}
+
+NoxusBoss/BlackHolePetBuffStone: {
+	DisplayName: Black Hole Stone
+	Tooltip:
+		'''
+		Immunity to Black Hole
+		Attacks inflict Black Hole
+		'''
+}
+
+NoxusBoss/BabyNamelessBuffStone: {
+	DisplayName: Nameless Deity Stone
+	Tooltip:
+		'''
+		Immunity to Nameless Deity
+		Attacks inflict Nameless Deity
+		'''
+}
+
+NoxusBoss/CuriousHandBuffStone: {
+	DisplayName: Curious Hand Stone
+	Tooltip:
+		'''
+		Immunity to Curious Hand
+		Attacks inflict Curious Hand
+		'''
+}
+
+NoxusBoss/StarPetBuffStone: {
+	DisplayName: Star Stone
+	Tooltip:
+		'''
+		Immunity to Star
+		Attacks inflict Star
+		'''
+}

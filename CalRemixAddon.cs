@@ -269,7 +269,7 @@ namespace CalRemix
         {
             if (Census is null)
                 return;
-            Census.Call("TownNPCCondition", NPCType<ZER0>(), "Have [i:CalRemix/Ogscule] in your inventory during Godseeker mode");
+            Census.Call("TownNPCCondition", NPCType<ZER0>(), "Moves in during Godseeker mode");
             Census.Call("TownNPCCondition", NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
 
             Census.Call("TownNPCCondition", NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");

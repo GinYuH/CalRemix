@@ -18,7 +18,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Particles;
 
-namespace CalRemix.Content.NPCs
+namespace CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod
 {
     [AutoloadBossHead]
     public class SplitChlorinePaladin : ModNPC

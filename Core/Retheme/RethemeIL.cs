@@ -58,6 +58,8 @@ namespace CalRemix.Core.Retheme
 
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
+            IL.CalamityMod.Projectiles.Enemy.HorsWaterBlast.AI += HorsWaterBlastAI;
+            IL.CalamityMod.Projectiles.Enemy.HorsWaterBlast.OnKill += HorsWaterBlastOnKill;
             #endregion
         }
         #region NPCs
@@ -450,6 +452,38 @@ namespace CalRemix.Core.Retheme
                 c.Index++;
                 c.Emit(OpCodes.Pop);
                 c.EmitDelegate(() => CalRemixWorld.npcChanges ? "CalamityMod/Projectiles/Boss/HolyBlast" : "CalamityMod/Projectiles/Boss/HolyBlastNight");
+            }
+        }
+        private static void HorsWaterBlastAI(ILContext il)
+        {
+            var c = new ILCursor(il);
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+        }
+        private static void HorsWaterBlastOnKill(ILContext il)
+        {
+            var c = new ILCursor(il);
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
             }
         }
         #endregion

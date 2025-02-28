@@ -56,6 +56,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -193,34 +194,6 @@ namespace CalRemix
             {
                 item.rare = ItemRarityID.Purple;
             }
-            else
-            {
-                // undo the curve flattening
-                // done with content samples so that reforges are ignored
-                if (ContentSamples.ItemsByType.ContainsKey(item.type))
-                {
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Turquoise>())
-                    {
-                        item.damage = (int)(item.damage * 1.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<PureGreen>())
-                    {
-                        item.damage = (int)(item.damage * 1.67f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<DarkBlue>())
-                    {
-                        item.damage = (int)(item.damage * 2.5f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Violet>())
-                    {
-                        item.damage = (int)(item.damage * 3.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<HotPink>())
-                    {
-                        item.damage = (int)(item.damage * 5f);
-                    }
-                }
-            }
             if (item.type == ItemType<Navystone>())
             {
                 item.createTile = TileType<NavystoneSafe>();
@@ -241,7 +214,7 @@ namespace CalRemix
             {
                 item.DamageType = DamageClass.SummonMeleeSpeed;
             }
-            if (CalRemixWorld.itemChanges)
+            if (CalRemixWorld.weaponReworks)
             {
                 if (item.type == ItemType<ScourgeoftheDesert>())
                 {
@@ -337,6 +310,10 @@ namespace CalRemix
                 {
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ScarletDevil>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Melee.ArkoftheCosmos>())
+                {
+                    item.shoot = ProjectileType<Ark>();
                 }
             }
         }
@@ -447,7 +424,7 @@ namespace CalRemix
                     TransformItem(ref item, ItemType<SeafoodFood>());
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -499,7 +476,7 @@ namespace CalRemix
                     TransformItem(ref item, ItemType<SeafoodFood>());
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -588,6 +565,12 @@ namespace CalRemix
                 if (!infMusk && !infAr)
                     Projectile.NewProjectile(source, position, velocity.RotatedBy(-Main.rand.NextFloat(-0.022f, 0.022f)), type, damage, knockback, player.whoAmI);
             }
+            if (item.type == ItemType<ArkoftheCosmos>() && CalRemixWorld.weaponReworks)
+            {
+                if (player.ownedProjectileCounts[ProjectileType<Ark>()] <= 0)
+                Projectile.NewProjectile(source, position, velocity, ProjectileType<Ark>(), damage, knockback, player.whoAmI);
+                return false;
+            }
             return true;
         }
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
@@ -644,7 +627,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }

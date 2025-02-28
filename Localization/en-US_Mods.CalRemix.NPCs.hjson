@@ -352,7 +352,16 @@ Pathogen: {
 
 PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
-Hypnos.DisplayName: Hypnos
+
+Hypnos: {
+	DisplayName: Hypnos
+
+	BossChecklistIntegration: {
+		EntryName: XP-00 Hypnos
+		SpawnInfo: Right click the Codebreaker with [i:CalRemix/Ogscule]
+	}
+}
+
 HypnosPlug.DisplayName: Hypnos Plug
 RemixDraedon.DisplayName: Remix Draedon
 Losbaf.DisplayName: Losbaf
@@ -512,6 +521,11 @@ EDGY: {
 	Census.SpawnCondition: Free it from a construct... twice
 }
 
+AcidEye: {
+	DisplayName: Acidsighter
+	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
+}
+
 HypnosDraedon.DisplayName: Draedon
 Sandrat.DisplayName: Minor Sandrat
 MushroomElemental.DisplayName: Mushroom Elemental
@@ -527,6 +541,5 @@ Dragon.DisplayName: Dragon
 MBP.DisplayName: Some Hive Mind Thing
 Xeroc.DisplayName: Avatar of Xeroc
 TreeMimic.DisplayName: Tree
-AcidEye.DisplayName: Acid Eye
 BoarCat.DisplayName: Boar Cat
 FrostHog.DisplayName: Frost Hog

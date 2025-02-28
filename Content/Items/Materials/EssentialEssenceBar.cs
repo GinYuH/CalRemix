@@ -49,8 +49,8 @@ namespace CalRemix.Content.Items.Materials
                 AddIngredient(ItemID.ShroomiteBar).
                 AddIngredient(ItemID.SpectreBar).
                 AddIngredient<ScoriaBar>().
+                AddIngredient<PerennialBar>().
                 AddIngredient<CryonicBar>().
-                AddIngredient<AstralBar>().
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }
