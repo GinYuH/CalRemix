@@ -37,7 +37,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.BossBar = Main.BigBossProgressBar.NeverValid;
-            NPC.damage = 200;
+            NPC.damage = 100;
             NPC.width = 150;
             NPC.height = 92;
             NPC.scale = 0.8f;
