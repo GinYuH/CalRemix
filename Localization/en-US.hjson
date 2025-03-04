@@ -216,6 +216,11 @@ Mods: {
 				Raggedy Helminth
 				Wulfrum Excavator
 				'''
+			Noxus:
+				'''
+				Avatar of Emptiness
+				The Entropic God, Noxus
+				'''
 		}
 
 		NotAvailable: Mods.CalRemix.NotAvailable

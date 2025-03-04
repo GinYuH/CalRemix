@@ -30,6 +30,9 @@ using CalRemix.Content.Items.Accessories;
 using CalamityMod.DataStructures;
 using Terraria.GameContent.Animations;
 using Terraria.Graphics;
+using CalRemix.Content.Items.Potions;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus
 {
@@ -330,7 +333,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
         public static int IdealFightDuration => CalamityUtils.SecondsToFrames(180f);
 
-        public static float MaxTimedDRDamageReduction => 0.45f;
+        public static float MaxTimedDRDamageReduction => 1f;
 
         public static readonly Vector2 DefaultHandOffset = new(226f, 108f);
 
@@ -569,6 +572,13 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             // Hey bozo the player's gone. Leave.
             if (Target.dead || !Target.active)
                 NPC.active = false;
+
+
+            if ((!DownedBossSystem.downedCalamitas || !DownedBossSystem.downedExoMechs) && !Target.HasItem(ModContent.ItemType<Anomaly109>()))
+            {
+                NPC.active = false;
+                return;
+            }
 
             // Grant the target infinite flight.
             Target.wingTime = Target.wingTimeMax;
@@ -3095,6 +3105,8 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             // General drops.
             npcLoot.Add(ModContent.ItemType<NoxiousEvocator>());
             npcLoot.Add(ModContent.ItemType<NoxusSprayer>());
+            DropHelper.NormalVsExpertQuantity(ModContent.ItemType<EntropicFrond>(), 1, 25, 35, 35, 45);
+            DropHelper.NormalVsExpertQuantity(ModContent.ItemType<EntropicBar>(), 1, 15, 30, 25, 40);
 
             // Vanity and decorations.
             npcLoot.Add(ModContent.ItemType<NoxusMask>(), 7);

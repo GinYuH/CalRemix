@@ -299,7 +299,7 @@ Oxygen: {
 
 	BossChecklistIntegration: {
 		EntryName: Oxygen
-		SpawnInfo: Hit a golf ball into space. The boss must be led to the bottom of the Abyss to defeat it.
+		SpawnInfo: Hit a golf ball into space during a Galeforce Day. The boss must be led to the bottom of the Abyss to defeat it.
 		DespawnMessage: "[c/9cf5ff:The glass ball rises back to space.]"
 	}
 }
@@ -543,6 +543,16 @@ Xeroc.DisplayName: Avatar of Xeroc
 TreeMimic.DisplayName: Tree
 BoarCat.DisplayName: Boar Cat
 FrostHog.DisplayName: Frost Hog
-EntropicGod.DisplayName: The Entropic God, Noxus
+
+EntropicGod: {
+	DisplayName: The Entropic God, Noxus
+
+	BossChecklistIntegration: {
+		EntryName: The Entropic God, Noxus
+		SpawnInfo: Use the [i:CalRemix/Genesis].
+		DespawnMessage: "[c/61375d:The avatar returns to the emptiness]"
+	}
+}
+
 NoxusEgg.DisplayName: Godless Spawn, Noxus
 NoxusEggCutscene.DisplayName: ???
