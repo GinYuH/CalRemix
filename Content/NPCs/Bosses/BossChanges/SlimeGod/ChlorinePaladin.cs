@@ -33,7 +33,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod
         public override void SetDefaults()
         {
             NPC.Calamity().canBreakPlayerDefense = true;
-            NPC.damage = 200;
+            NPC.damage = 100;
             NPC.width = 150;
             NPC.height = 92;
             NPC.scale = 1.1f;

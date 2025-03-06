@@ -543,3 +543,16 @@ Xeroc.DisplayName: Avatar of Xeroc
 TreeMimic.DisplayName: Tree
 BoarCat.DisplayName: Boar Cat
 FrostHog.DisplayName: Frost Hog
+
+EntropicGod: {
+	DisplayName: The Entropic God, Noxus
+
+	BossChecklistIntegration: {
+		EntryName: The Entropic God, Noxus
+		SpawnInfo: Use the [i:CalamityMod/Genesis].
+		DespawnMessage: "[c/61375d:The avatar returns to the emptiness]"
+	}
+}
+
+NoxusEgg.DisplayName: Godless Spawn, Noxus
+NoxusEggCutscene.DisplayName: ???

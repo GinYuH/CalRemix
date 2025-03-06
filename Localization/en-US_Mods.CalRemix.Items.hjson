@@ -3511,3 +3511,48 @@ DisgustingMeat: {
 }
 
 TaintedRagePotion.DisplayName: Tainted Rage Potion
+
+Genesis: {
+	DisplayName: Genesis
+	Tooltip: Summons The Godless Spawn, Noxus
+	AlternateTooltip: Left click to summon the The Entropic God, right click to summon the Godless Spawn
+}
+
+NoxiousEvocator: {
+	DisplayName: Noxious Evocator
+	Tooltip: Makes cosmic hallucinations materialize around you
+}
+
+NoxusEclipseCalculator: {
+	DisplayName: Noxus Eclipse Calculator [DEBUG]
+	Tooltip: Provides information on upcoming Noxus Eclipses within the next 100 days
+}
+
+NoxusMask: {
+	DisplayName: Noxus Mask
+	Tooltip: ""
+}
+
+NoxusRelic: {
+	DisplayName: Noxus Relic
+	Tooltip: ""
+}
+
+NoxusSprayer: {
+	DisplayName: Noxus Sprayer
+	Tooltip:
+		'''
+		Shoots a stream of chaos mist that vaporizes everything it touches
+		Kills 99.99% of lesser beings guaranteed!
+		'''
+}
+
+NoxusTrophy: {
+	DisplayName: Noxus Trophy
+	Tooltip: ""
+}
+
+OblivionRattle: {
+	DisplayName: Oblivion Rattle
+	Tooltip: ""
+}

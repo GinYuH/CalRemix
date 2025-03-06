@@ -123,6 +123,16 @@ Mods: {
 					Label: use Second Menu
 					Tooltip: ""
 				}
+
+				ScreenShatterEffects: {
+					Label: Screen Shatter Effects
+					Tooltip: Enables screen shatter effects. Disable if they're too straining on the eyes.
+				}
+
+				VisualOverlayIntensity: {
+					Label: Visual Overlay Intensity
+					Tooltip: Changes the intensity of visual overlays such as blur and chromatic aberration.
+				}
 			}
 		}
 
@@ -205,6 +215,11 @@ Mods: {
 				'''
 				Raggedy Helminth
 				Wulfrum Excavator
+				'''
+			Noxus:
+				'''
+				Avatar of Emptiness
+				The Entropic God, Noxus
 				'''
 		}
 

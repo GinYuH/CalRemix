@@ -142,6 +142,9 @@ namespace CalRemix
         public static readonly int ExoTwinsAres = Set("Exos/ApingasLarry");
         public static readonly int ThanatosAres = Set("Exos/ThanosLarry");
 
+        public static readonly int RenoxPhase2 = Set("Stelliferous");
+        public static readonly int RenoxPhase3 = Set("Degenerate");
+
         // Misc
         public static readonly int Menu = Set("Menu");
         public static readonly int Menu2 = Set("CrazyLaPaint");
