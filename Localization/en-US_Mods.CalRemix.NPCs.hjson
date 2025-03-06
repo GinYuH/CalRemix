@@ -299,7 +299,7 @@ Oxygen: {
 
 	BossChecklistIntegration: {
 		EntryName: Oxygen
-		SpawnInfo: Hit a golf ball into space during a Galeforce Day. The boss must be led to the bottom of the Abyss to defeat it.
+		SpawnInfo: Hit a golf ball into space. The boss must be led to the bottom of the Abyss to defeat it.
 		DespawnMessage: "[c/9cf5ff:The glass ball rises back to space.]"
 	}
 }
@@ -549,7 +549,7 @@ EntropicGod: {
 
 	BossChecklistIntegration: {
 		EntryName: The Entropic God, Noxus
-		SpawnInfo: Use the [i:CalRemix/Genesis].
+		SpawnInfo: Use the [i:CalamityMod/Genesis].
 		DespawnMessage: "[c/61375d:The avatar returns to the emptiness]"
 	}
 }
