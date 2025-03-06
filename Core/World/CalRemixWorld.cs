@@ -93,6 +93,7 @@ namespace CalRemix.Core.World
         public static bool generatedGrime = false;
         public static bool seenMBP = false;
         public static bool seenRoaches = false;
+        public static bool metNoxus = false;
         public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
@@ -221,6 +222,7 @@ namespace CalRemix.Core.World
             loadedRecipeInjections = false;
             seenMBP = false;
             seenRoaches = false;
+            metNoxus = false;
 
             // Worldgen
             generatedCosmiliteSlag = false;
@@ -315,6 +317,7 @@ namespace CalRemix.Core.World
             tag["roachDuration"] = roachDuration;
             tag["seenRoach"] = seenRoaches;
             tag["mbp"] = seenMBP;
+            tag["metNoxus"] = metNoxus;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -381,8 +384,9 @@ namespace CalRemix.Core.World
             GetData(ref canGenerateBaron, "canBaron", tag);
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
-            GetData(ref seenMBP, "mbp", tag);
             GetData(ref seenRoaches, "seenRoach", tag);
+            GetData(ref seenMBP, "mbp", tag);
+            GetData(ref metNoxus, "metNoxus", tag);
 
             GetData(ref alloyBars, "109alloybar", tag);
             GetData(ref essenceBars, "109essencebar", tag);
@@ -467,6 +471,7 @@ namespace CalRemix.Core.World
             writer.Write(roachDuration);
             writer.Write(seenMBP);
             writer.Write(seenRoaches);
+            writer.Write(metNoxus);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -539,6 +544,7 @@ namespace CalRemix.Core.World
             roachDuration = reader.ReadInt32();
             seenMBP = reader.ReadBoolean();
             seenRoaches = reader.ReadBoolean();
+            metNoxus = reader.ReadBoolean();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();

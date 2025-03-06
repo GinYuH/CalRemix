@@ -34,6 +34,7 @@ using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.DamageClasses;
+using CalRemix.Content.NPCs.Bosses.Noxus;
 
 namespace CalRemix
 {
@@ -221,10 +222,16 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>()
             });
-            /*
-                $"Jam a [i:{ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
-                "An imperfection after allÅE what a shame.",
-             */
+            Action<SpriteBatch, Rectangle, Color> noxPort = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Noxus/NoxusBossChecklist").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2 / 2), rect.Center.Y - (texture.Height / 2 / 2));
+                sb.Draw(texture, centered, null, Color.White, 0, Vector2.Zero, 0.5f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "EntropicGodNoxus", 25f, () => RemixDowned.downedNoxus, NPCType<EntropicGod>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<Genesis>(),
+                ["customPortrait"] = noxPort
+            });
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_BC").Value;
@@ -298,6 +305,7 @@ namespace CalRemix
             MakeCard(NPCType<AcidEye>(), (horz, anim) => Color.Lerp(Color.LimeGreen, Color.Lime, anim), "Acidsighter", SoundID.Roar, SoundID.NPCDeath1);
             MakeCard(NPCType<TheCalamity>(), (horz, anim) => Color.Red, "Calamity", BetterSoundID.ItemThisStupidFuckingLaser, BetterSoundID.ItemThisStupidFuckingLaser, 360);
             MakeCard(NPCType<Hypnos>(), (horz, anim) => Main.DiscoColor, "Hypnos", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
+            MakeCard(NPCType<NoxusEgg>(), (horz, anim) => Color.Lerp(Color.Black, Color.Violet, anim), "Noxus", NoxusEgg.HitSound, NoxusEgg.GlitchSound);
         }
         internal void MakeCard(int type, Func<float, float, Color> color, string title, SoundStyle tickSound, SoundStyle endSound, int time = 300, float size = 1f)
         {
