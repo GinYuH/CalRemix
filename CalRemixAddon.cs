@@ -137,11 +137,6 @@ namespace CalRemix
             ColoredDamageTypesSupport();
         }
 
-        public void comp()
-        {
-
-        }
-
         internal void AddBossChecklistEntries()
         {
             if (BossChecklist is null)
@@ -319,7 +314,7 @@ namespace CalRemix
             Infernum.Call("IntroScreenSetupLetterDisplayCompletionRatio", instance, new Func<int, float>(animationTimer => MathHelper.Clamp(animationTimer / (float)time * 1.36f, 0f, 1f)));
 
             // dnc but needed or else it errors
-            Action onCompletionDelegate = comp;
+            Action onCompletionDelegate = () => { };
             Infernum.Call("IntroScreenSetupCompletionEffects", instance, onCompletionDelegate);
 
             // Letter addition sound.

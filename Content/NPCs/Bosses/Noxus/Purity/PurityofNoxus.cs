@@ -46,6 +46,10 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus.Purity
     [AutoloadBossHead]
     public class PurityofNoxus : ModNPC
     {
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Noxus/EntropicGod";
         #region Custom Types and Enumerations
         public enum EntropicGodAttackType
