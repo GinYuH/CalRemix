@@ -105,6 +105,7 @@ namespace CalRemix
 
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;
+        public bool solynUnlocked = false;
         public int trapperFriendsLearned = 0;
         public int ionDialogue = -1;
         public int ionQuestLevel = -1;

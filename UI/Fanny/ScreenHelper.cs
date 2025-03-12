@@ -622,6 +622,7 @@ namespace CalRemix.UI
         public static ScreenHelper TrapperBulbChan = new ScreenHelper();
         public static ScreenHelper MiracleBoy = new ScreenHelper();
         public static ScreenHelper MovieCygn = new ScreenHelper();
+        public static ScreenHelper Solyn = new ScreenHelper();
 
         public static ScreenHelper AltMetalFanny = new ScreenHelper();
 
@@ -717,24 +718,30 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Thank you for the help, Fanny!")
                 .SetPositionData(false, 240, 0.17f);
 
-           /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
-                .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
-                .SetTextboxTheme(new HelperTextboxTheme("Moviecygn_9Slice", new Vector2(38, 38), "Moviecygn_Background", new Vector2(38, 38)))
-                .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(184, 300), 184), 0, 30)
-                .SetExtraAnimations(false, false, false)
-                .SetPositionData(new HelperPositionData(
-                    new Vector2(0.0f, 0.0f), //Anchored to top left of the screen
-                    new Vector2(-20, 0f),
-                    new Vector2(20f, 0f),   //Slides from the left when spawning
-                    new Vector2(290, -435),   //Offset from b ottom of portrait to center of 
-                    Vector2.Zero,
-                    -Vector2.UnitX * 20f,
-                    Vector2.Zero,
-                    null,
-                    new Vector2(0, 0)
-                    ));
-            */
+            LoadScreenHelper(Solyn, "Solyn")
+                .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
+                .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
+                .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
+                .SetPositionData(false, 240);
+
+            /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
+                 .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                 .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
+                 .SetTextboxTheme(new HelperTextboxTheme("Moviecygn_9Slice", new Vector2(38, 38), "Moviecygn_Background", new Vector2(38, 38)))
+                 .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(184, 300), 184), 0, 30)
+                 .SetExtraAnimations(false, false, false)
+                 .SetPositionData(new HelperPositionData(
+                     new Vector2(0.0f, 0.0f), //Anchored to top left of the screen
+                     new Vector2(-20, 0f),
+                     new Vector2(20f, 0f),   //Slides from the left when spawning
+                     new Vector2(290, -435),   //Offset from b ottom of portrait to center of 
+                     Vector2.Zero,
+                     -Vector2.UnitX * 20f,
+                     Vector2.Zero,
+                     null,
+                     new Vector2(0, 0)
+                     ));
+             */
         }
 
         /// <summary>
@@ -980,6 +987,7 @@ namespace CalRemix.UI
             LoadRenault5();
             LoadCrimSon();
             LoadTrapperBulbChan();
+            LoadSolynMessages();
             SneakersRetheme.LoadHelperMessages();
 
             screenHelpersEnabled = true;
@@ -1085,6 +1093,9 @@ namespace CalRemix.UI
 
             //Renault 5
             ScreenHelperPortrait.LoadPortrait("Renault5", 1);
+
+            //Solyn
+            ScreenHelperPortrait.LoadPortrait("Solyn", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
