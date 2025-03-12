@@ -981,6 +981,14 @@ namespace CalRemix.Core.World
                 seenRoaches = true;
                 UpdateWorldBool();
             }
+            // Unlock Solyn's helper form
+            if (CalRemixAddon.Wrath != null)
+            {
+                if ((bool)CalRemixAddon.Wrath.Call("GetBossDefeated", "Noxus"))
+                {
+                    Main.LocalPlayer.Remix().solynUnlocked = true;
+                }
+            }
         }
 
         public static void UnleashRoaches()

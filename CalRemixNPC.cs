@@ -92,6 +92,7 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1861,6 +1862,11 @@ namespace CalRemix
             if (taintedInvis)
             {
                 return false;
+            }
+            if (CalRemixAddon.Wrath != null)
+            {
+                if (npc.type == CalRemixAddon.Wrath.Find<ModNPC>("Solyn").Type && SubworldSystem.AnyActive() && ScreenHelperManager.screenHelpersEnabled)
+                    return false;
             }
             return true;
         }
