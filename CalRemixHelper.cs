@@ -34,6 +34,17 @@ namespace CalRemix
             }
             return false;
         }
+        /// Checks if the player has a light pet active.
+        /// </summary>
+        public static bool HasLightPet(this Player player)
+        {
+            for (int i = 0; i < player.buffType.Length; i++)
+            {
+                if (Main.lightPet[player.buffType[i]])
+                    return true;
+            }
+            return false;
+        }
         /// <summary>
         /// Consumes an item stack from the player.
         /// </summary>
@@ -62,6 +73,15 @@ namespace CalRemix
         /// <summary>
         /// Checks if the player has an item from a mod.
         /// </summary>
+        public static bool HasCrossModItem(Player player, Mod Mod, string ItemName)
+        {
+            if (Mod != null)
+            {
+                if (player.HasItem(Mod.Find<ModItem>(ItemName).Type))
+                    return true;
+            }
+            return false;
+        }
         public static bool HasCrossModItem(Player player, string ModName, string ItemName)
         {
             if (ModLoader.HasMod(ModName))

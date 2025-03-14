@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Items.Materials;
+﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.Polterghast;
@@ -17,34 +16,6 @@ namespace CalRemix.UI
     {
         public static void LoadTrapperBulbChan()
         {
-            HelperMessage.New("TrapperBeginning1", "Hey, have you seen my precious pink flower that I've been growing for 15 years? I left her around here. She's been my best friend for years now, and I could never fathom what I'd do if I had lost h",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss, cantBeClickedOff: true).InitiateConversation();
-
-            HelperMessage fan1 = HelperMessage.New("TrapperBeginning2", "Oh.",
-               "FannySob", HelperMessage.AlwaysShow, cantBeClickedOff: true, duration: 2)
-                .ChainAfter();
-
-            HelperMessage trap1 = HelperMessage.New("TrapperBeginning3", "Trapper Bulb Chan here! HAIIII!!! ^v^",
-                "TrapperHappy", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(fan1, delay: 3);
-
-            HelperMessage fan2 = HelperMessage.New("TrapperBeginning4", "Woah there! Where did you come from?",
-                "FannyAwooga", HelperMessage.AlwaysShow, 7, cantBeClickedOff: true).ChainAfter(fan1, delay: 5);
-
-            HelperMessage trap2 = HelperMessage.New("TrapperBeginning5", "UwU I'm just a friendly flower wandering around, desu!",
-                "TrapperDefault", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(trap1);
-
-            HelperMessage fan3 = HelperMessage.New("TrapperBeginning6", "Well, it’s nice to meet you! Any tips for our friend here?",
-                "FannyNuhuh", HelperMessage.AlwaysShow, 7).ChainAfter(fan2);
-
-            HelperMessage trap3 = HelperMessage.New("TrapperBeginning7", "Teehee, just keep blooming and shining, and remember to water your dreams, nyan!",
-                "TrapperHappy", HelperMessage.AlwaysShow, 6).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(trap2);
-
-            HelperMessage ff = HelperMessage.New("TrapperBeginning8", "Oh come fucking on.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(fan3, startTimerOnMessageSpoken: true, delay: 10).EndConversation();
-
-
-
-
             HelperMessage poltrap1 = HelperMessage.New("Poltrapper1", "Trapper Bulb Chan desu! Yaho~ ^v^",
                 "TrapperDefault", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Polterghast>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).InitiateConversation();
 
@@ -144,7 +115,7 @@ namespace CalRemix.UI
                 "FannyDisturbed", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(revelation5, delay: 3, startTimerOnMessageSpoken: true);
             
             HelperMessage revelation6 = HelperMessage.New("Revelation6", "Holy shit. Even by my standards.. Jesus christ. Wow.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(revelation5, delay: 5, startTimerOnMessageSpoken: true).EndConversation();
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(revelation5, delay: 5, startTimerOnMessageSpoken: true).EndConversation();
 
             HelperMessage.New("Revelation8", "The alpha leads the beta follows the sigma follows",
                 "CrimSonDefault", HelperMessage.AlwaysShow, 30, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(revelation5, delay: 8);

@@ -514,13 +514,13 @@ namespace CalRemix
                     SoundEngine.PlaySound(AresBody.EnragedSound with { MaxInstances = 3, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest });
                 if (onFandom > 0)
                     onFandom--;
-                checkWarningDelay--;
+                checkWarningDelay--; 
+                if (ScreenHelpersUIState.BizarroFanny != null)
+                {
+                    if (ScreenHelpersUIState.BizarroFanny.Speaking && ScreenHelpersUIState.BizarroFanny.UsedMessage.Portrait == ScreenHelperManager.Portraits["BizarroFannyGoner"])
+                        Main.musicVolume = 0;
+                }
             }
-            if (ScreenHelpersUIState.GonerFanny != null)
-			{
-				if (ScreenHelpersUIState.GonerFanny.Speaking && Main.myPlayer == Player.whoAmI)
-					Main.musicVolume = 0;
-			}
             if (CalRemixWorld.permanenthealth)
 				SpawnPhantomHeart();
 

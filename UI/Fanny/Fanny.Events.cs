@@ -23,8 +23,14 @@ namespace CalRemix.UI
             HelperMessage.New("Winding", "Ah the weather is so nice out today! You should go fly a kite! That's something a lot of people were interested in right?",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main._shouldUseWindyDayMusic);
             
-            HelperMessage.New("EvilSnowLegion", "You know... This reminds me back when I had a boyfriend. He was real sweet, if I'll be honest. I even had my first kiss with him. Though he was a snowman, and I was a flame... You kinda get where this is going.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.invasionType == InvasionID.SnowLegion).SpokenByEvilFanny();
+            HelperMessage.New("SnowLegion", "You know... This reminds me back when I had a boyfriend. He was real sweet, if I'll be honest. I even had my first kiss with him. Though he was a snowman, and I was a flame... You kinda get where this is going.",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.invasionType == InvasionID.SnowLegion).SpokenByEvilFanny().InitiateConversation();
+
+            HelperMessage.New("SnowLegion2", "Where'd all these gooners come from?",
+                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(delay: 6, startTimerOnMessageSpoken: true);
+
+            HelperMessage.New("SnowLegion3", "They're called goons!",
+                "FannyNuhuh", HelperMessage.AlwaysShow).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).EndConversation();
 
             HelperMessage.New("OOA", "Just so we're clear, none of this is canon, got it?",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.invasionType == InvasionID.CachedOldOnesArmy).SetHoverTextOverride("Gotcha Fanny!");
@@ -45,7 +51,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.snowMoon && !DownedBossSystem.downedDoG).SetHoverTextOverride("Awe, thanks Fanny, you're great to have around too!");
 
             HelperMessage.New("BREvilkys", "Kill yourself NOW!",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife >= Main.LocalPlayer.statLifeMax2 * 0.75f && BossRushEvent.BossRushActive && BossRushEvent.CurrentTier >= 5).SetHoverTextOverride("I'm busy right now, Evil Fanny!").SpokenByEvilFanny();
+                "EvilFannyKYS", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife >= Main.LocalPlayer.statLifeMax2 * 0.75f && BossRushEvent.BossRushActive && BossRushEvent.CurrentTier >= 5).SetHoverTextOverride("I'm busy right now, Evil Fanny!").SpokenByEvilFanny();
 
             HelperMessage.New("Nite", "Nighttime is when the real party starts! But watch out for those nocturnal nasties, they're like uninvited guests who never leave. Keep a torch handy, it's like bringing a flashlight to a ghost story.",
               "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.dayTime);
@@ -63,11 +69,11 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CalRemixWorld.oxydayTime > 1).AddItemDisplay(ItemID.GolfClubIron);
 
             HelperMessage pandemic1 = HelperMessage.New("PandemicPanic", "An invasion has begun with giant immune system cells duking it out with invading microbes! You can side with the immune cells or the microbes by taking out more of the other side. Just remember, no matter who you choose, it’s going to be a cell-ebration of epic proportions! Stay sharp and choose wisely!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive);
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).InitiateConversation();
             HelperMessage pandemic2 = HelperMessage.New("CrimsonPandemic1", "Yo king go mog on them immune system and show them your Jamaican smile + Brazilian phonk + Balkan squat + Pinoy resilience + Vietnamese crawling technique + Still water + Noradrenaline + Those who know :skull:",
                 "CrimSonDefault", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(pandemic1, startTimerOnMessageSpoken: true, delay: 10);
             HelperMessage pandemic3 = HelperMessage.New("CrimsonPandemic2", "Ooiii, Crim Soooon~!!! You do realize that these virulent critters are no good for our body, nya~! >m< These lil goobers protect our bodies like millions of microscopic magical girls, desu~! OwO I learned that from my club's biology studies~!",
-                "TrapperHappy", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(pandemic2, startTimerOnMessageSpoken: true, delay: 4);
+                "TrapperHappy", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(pandemic2, startTimerOnMessageSpoken: true, delay: 4).EndConversation();
 
             HelperMessage.New("MeteorStarboard", "Wow! You sure are getting lots of stars tonight! You must have said something really funny to get all those. After all, every star you get is a community contribution!", "FannyAwooga", (ScreenHelperSceneMetrics metrics) => Terraria.Star.starfallBoost >= 3);
         }

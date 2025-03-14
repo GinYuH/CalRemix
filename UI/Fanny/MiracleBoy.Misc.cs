@@ -98,6 +98,9 @@ namespace CalRemix.UI
             HelperMessage.New("Fear", "I'd sleep with one eye open if I were you.",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.time == 27000 && Main.rand.NextBool(100)).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
+            HelperMessage.New("TerribleMachine", "You've activated the great and terrible machine!!",
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.mouseRight && Main.mouseRightRelease && Main.rand.NextBool(100)).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).SetHoverTextOverride("May God save us all");
+
 
         }
     }

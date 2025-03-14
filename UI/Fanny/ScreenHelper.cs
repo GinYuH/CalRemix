@@ -616,7 +616,7 @@ namespace CalRemix.UI
         public static ScreenHelper FannyTheFire = new ScreenHelper();
         public static ScreenHelper EvilFanny = new ScreenHelper();
         public static ScreenHelper WonderFlower = new ScreenHelper();
-        public static ScreenHelper GonerFanny = new ScreenHelper();
+        public static ScreenHelper BizarroFanny = new ScreenHelper();
         public static ScreenHelper Renault5 = new ScreenHelper();
         public static ScreenHelper CrimSon = new ScreenHelper();
         public static ScreenHelper TrapperBulbChan = new ScreenHelper();
@@ -634,22 +634,23 @@ namespace CalRemix.UI
                 .SetPositionData(false, 240);
             
             LoadScreenHelper(EvilFanny, "EvilFannyIdle")
-                .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.DD2_GoblinScream)
+                .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.NPCHit40)
                 .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
                 .SetAvailabilityCondition(() => Main.hardMode)
                 .SetPositionData(true, 120);
 
             LoadScreenHelper(WonderFlower,  "TalkingFlower")
-                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
+                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.Grass)
                 .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
                 .SetPositionData(false, 240, 0.37f)
                 .SetAvailabilityCondition(() => Main.hardMode);
 
-            LoadScreenHelper(GonerFanny, "FannyGoner")
-                .SetVoiceStyle(ScreenHelperManager.NothingSound with { MaxInstances = 0 })
-                .SetTextboxStyle("     ", new HelperTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black))
+            LoadScreenHelper(BizarroFanny, "BizarroFannyIdle")
+                .SetVoiceStyle(ScreenHelperManager.BizarroFannyTalk with { MaxInstances = 0 })
+                .SetTextboxStyle("???", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetExtraAnimations(false, false, false)
-                .SetPositionData(false, 840, 0.35f);
+                .SetPositionData(false, 840, 0.65f)
+                .SetAvailabilityCondition(() => DownedBossSystem.downedCeaselessVoid);
 
             LoadScreenHelper(Renault5, "Renault5")
                 .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
@@ -964,10 +965,13 @@ namespace CalRemix.UI
         public override void Load()
         {
             LoadFannyPortraits();
+            LoadIntroMessages();
+            LoadMoonLordDeath();
+
             LoadGeneralFannyMessages();
+            LoadBabil();
             LoadDogSpamMessages();
             LoadLoreComments();
-            LoadIntroMessages();
             LoadPassiveMessages();
             LoadEventMessages();
             LoadItemMessages();
@@ -976,18 +980,16 @@ namespace CalRemix.UI
             LoadNPCMessages();
             LoadBossMessages();
             LoadBossDeathMessages();
-            LoadEvilGFBMessages();
-            LoadEvilFannyIntro();
-            LoadMoonLordDeath();
-            LoadBabil();
-            LoadMetalDiscoveryMessages();
+
             //LoadPityParty();
-            LoadMiracleBoyMessages();
+            LoadEvilGFBMessages();
+            LoadMetalDiscoveryMessages();
             LoadWonderFlowerMessages();
-            LoadRenault5();
             LoadCrimSon();
+            LoadRenault5();
             LoadTrapperBulbChan();
             LoadSolynMessages();
+            LoadMiracleBoyMessages();
             SneakersRetheme.LoadHelperMessages();
 
             screenHelpersEnabled = true;
@@ -1004,21 +1006,24 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannySob", 4);
             ScreenHelperPortrait.LoadPortrait("FannyNuhuh", 19);
             ScreenHelperPortrait.LoadPortrait("FannyStare", 1);
-            ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
             ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
-            ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
             ScreenHelperPortrait.LoadPortrait("FannyBigGrin", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyAwe", 2);
+            ScreenHelperPortrait.LoadPortrait("FannyEepy", 2);
+
             ScreenHelperPortrait.LoadPortrait("FannyCarbonized", 1);
             ScreenHelperPortrait.LoadPortrait("FannyCorporate", 1);
             ScreenHelperPortrait.LoadPortrait("FannyCosplay", 1);
             ScreenHelperPortrait.LoadPortrait("FannyHD", 1);
             ScreenHelperPortrait.LoadPortrait("FannyInfiniteFun", 1);
             ScreenHelperPortrait.LoadPortrait("FannyInfiniteFunScary", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
             ScreenHelperPortrait.LoadPortrait("FannyRadiant", 1);
             ScreenHelperPortrait.LoadPortrait("FannyRetro", 1);
             ScreenHelperPortrait.LoadPortrait("FannySneakers", 1);
             ScreenHelperPortrait.LoadPortrait("FannyBarefoot", 1);
 
+            //Metal Fanny
             ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalIron", 8);
@@ -1056,6 +1061,10 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("EvilFannyPissed", 1);
             ScreenHelperPortrait.LoadPortrait("EvilFannyPoint", 1);
             ScreenHelperPortrait.LoadPortrait("EvilFannyWrathful", 1);
+
+            //Bizarro Fanny
+            ScreenHelperPortrait.LoadPortrait("BizarroFannyIdle", 4);
+            ScreenHelperPortrait.LoadPortrait("BizarroFannyGoner", 1);
 
             //Miracle Boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIdle", 2, 6);
@@ -1298,11 +1307,6 @@ namespace CalRemix.UI
             return Main.LocalPlayer.HasItems(materials);
         }
 
-        public static bool NearDungeonEntrance(ScreenHelperSceneMetrics scene)
-        {
-            return Main.LocalPlayer.WithinRange(new Vector2(Main.dungeonX * 16, Main.dungeonY * 16), 700);
-        }
-
         public static bool HasDesertMedallionMaterials(ScreenHelperSceneMetrics scene)
         {
             List<int> materials = new List<int>();
@@ -1328,7 +1332,8 @@ namespace CalRemix.UI
 
             return Main.LocalPlayer.HasItems(materials) && !Main.hardMode;
         }
-
+        public static bool NearPosition(int positionX, int positionY, int distance) => Main.LocalPlayer.WithinRange(new Vector2(positionX * 16, positionY * 16), distance);
+        public static bool NearPosition(Vector2 position, int distance) => Main.LocalPlayer.WithinRange(position, distance);
         public static bool CrossModNPC(ScreenHelperSceneMetrics scene, string ModName, string NPCName)
         {
             if (ModLoader.HasMod(ModName))

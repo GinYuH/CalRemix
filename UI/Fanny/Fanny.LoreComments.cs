@@ -95,7 +95,7 @@ namespace CalRemix.UI
 
 
             HelperMessage.New("LoreEvilQueenSlime", "Ugh, really? The Slime God is playing dress-up now? What's next, a slime goddess? This whole scenario is as ridiculous as my patience for it.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
             #endregion
@@ -119,7 +119,7 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == cryogenLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
             HelperMessage.New("LoreEvilCryo", "This whole excerpt is like a bad breakup, with the added bonus of endless rambling about their frosty feud. Get a life, people.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
 
@@ -155,7 +155,7 @@ namespace CalRemix.UI
 
 
             HelperMessage.New("LoreEvilCalc", "Kys kys kys kys kys kys kys.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                "EvilFannyCrisped", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
             #endregion
 
@@ -165,7 +165,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == plantLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
             HelperMessage.New("LoreEvilPlant", "Souls souls souls souls souls, good grief I hate that word now.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                "EvilFannyMiffed", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
             #endregion
@@ -224,7 +224,7 @@ namespace CalRemix.UI
 
 
             HelperMessage.New("LoreEvilBirb", "I'm going to puke if I hear the word \"dragon\" one more time.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
             #endregion
 
@@ -302,7 +302,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == cynosureLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
            HelperMessage.New("LoreEvilEnd", "Is there even a \"Dragon's Aerie\"? You know, after listening to all of these scraps, it seems like whoever is writing these is compensating for actual adventure and substance with chicken scratch they wrote up in a minute tops. Go on, I dare you to go to this supposed aerie.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                "EvilFannyMiffed", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
             #endregion
