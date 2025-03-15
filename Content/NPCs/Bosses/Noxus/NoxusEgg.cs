@@ -122,7 +122,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             NPC.hide = true;
             NPC.Calamity().ShouldCloseHPBar = true;
 
-            Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/GodIsOnHisKnees");
+            Music = CalRemixMusic.RenoxPhase2;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

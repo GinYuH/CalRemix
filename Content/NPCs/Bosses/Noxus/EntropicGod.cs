@@ -480,7 +480,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             NPC.Calamity().ShouldCloseHPBar = true;
             InitializeHandsIfNecessary();
 
-            Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/GodIsDead");
+            Music = CalRemixMusic.RenoxPhase3;
         }
 
         public void InitializeHandsIfNecessary()
