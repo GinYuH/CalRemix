@@ -40,12 +40,7 @@ namespace CalRemix.Content.Items.Armor
         {
             if (player.GetModPlayer<CalRemixPlayer>().twistedNetheriteBoots)
             {
-                player.setBonus = "Collect souls from fallen enemies and stores them into the helmet\n" +
-                                  "Knockback immunity\n" +
-                                  "All attacks inflict wither\n" +
-                                  "Using the armor bonus key consumes all souls to unleash a massive explosion\n" +
-                                  "Soul explosion and wither get stronger with each soul collected\n" +
-                                  $"[c/99ffff:{souls} souls stored]";
+                player.setBonus = CalRemixHelper.LocalText("Items.TwistedNetheriteHelmet.SetBonus").Format(souls);
                 player.GetModPlayer<CalRemixPlayer>().twistedNetherite = true;
                 player.noKnockback = true;
             }

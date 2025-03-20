@@ -144,6 +144,9 @@ namespace CalRemix.Core.Retheme
             { ItemType<CadaverousCarrion>(), "CadaverousCarrion" },
             { ItemType<MutatedTruffle>(), "MutatedTruffle" },
             { ItemType<MetalMonstrosity>(), "MetalMonstrosity" },
+            { ItemType<MajesticGuard>(), "MajesticGar" },
+            { ItemType<GrandGuardian>(), "GrandGar" },
+            { ItemType<Earth>(), "Garth" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },
@@ -329,8 +332,17 @@ namespace CalRemix.Core.Retheme
         internal static Dictionary<int, string> Buffs = new()
         {
         };
-
-
+        internal static List<int> ItemNames =
+        [
+            ItemType<WulfrumMetalScrap>(),
+            ItemType<LifeAlloy>(),
+            ItemType<MeldConstruct>(),
+            ItemType<MajesticGuard>(),
+            ItemType<GrandGuardian>(),
+            ItemType<Earth>(),
+            ItemType<StreamGouge>(),
+            ItemType<SoulPiercer>()
+        ];
         internal static List<int> NPCNames =
         [
             NPCType<BrimstoneElemental>(),

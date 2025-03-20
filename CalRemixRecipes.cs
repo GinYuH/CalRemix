@@ -64,7 +64,7 @@ namespace CalRemix
             AnyButterfly = null;
             AnyExoMechMusicBox = null;
         }
-        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(s);
+        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(CalRemixHelper.LocalText($"RecipeGroups.{s}"));
         public override void AddRecipeGroups()
         {
             GreaterEvil = new RecipeGroup(() => GroupName("GreaterEvil"), ItemType<RottenMatter>(), ItemType<BloodSample>());
@@ -268,7 +268,7 @@ namespace CalRemix
             }
             #endregion
         }
-        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("RecipeGroups.Locked").Format(s);
+        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("Condition.Locked").Format(CalRemixHelper.LocalText($"Condition.{s}"));
         public override void PostAddRecipes()
         {
             for (int i = 0; i < Recipe.numRecipes; i++)

@@ -31,6 +31,17 @@ Items: {
 		StarWrath: Starstorm 2
 		BloodRainBow: Blood Rain Stormbow
 	}
+
+	Normal: {
+		LifeAlloy: Life Bar
+		MeldConstruct: Meld Bar
+		WulfrumMetalScrap: Wulfrum Bar
+		Earth: Garth
+		GrandGuardian: Grand Gar
+		MajesticGuard: Majestic Gar
+		StreamGouge: Soul Piercer
+		SoulPiercer: Stream Gouge
+	}
 }
 
 Sneakers: {

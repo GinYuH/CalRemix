@@ -29,6 +29,7 @@ using CalamityMod.Rarities;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
+using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Armor;
@@ -1117,16 +1118,20 @@ namespace CalRemix
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             string key = "Items.Tooltips.";
-            if (item.Name.Contains(CalRemixHelper.LocalText($"{key}Stormbow").Value))
+            if (item.DamageType == GetInstance<StormbowDamageClass>() && item.damage < 30 && item.rare <= ItemRarityID.Blue)
             {
                 if (tooltips.Exists((TooltipLine t) => t.Name.Equals("Tooltip0")))
                 {
-                    TooltipLine tip0 = tooltips.Find((TooltipLine t) => t.Name.Equals("Tooltip0"));
-                    tip0.Text = CalRemixHelper.LocalText("Items.CopperStormbow.Tooltip").Value;
+                    TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("Tooltip0"));
+                    if (string.IsNullOrWhiteSpace(line.Text))
+                    {
+                        TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText($"{key}StormbowTip").Value);
+                        tooltips.Add(tip);
+                    }
                 }
                 else
                 {
-                    TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText("Items.CopperStormbow.Tooltip").Value);
+                    TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText($"{key}StormbowTip").Value);
                     tooltips.Add(tip);
                 }
             }
