@@ -55,6 +55,7 @@ namespace CalRemix
     public partial class Recipes : ModSystem
     {
         public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox, AnyCritter;
+        public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
             GreaterEvil = null;
@@ -715,8 +716,7 @@ namespace CalRemix
                     recipe.acceptedGroups.Remove(group);
                 }
             }
-            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
-            info.Invoke(null, null); // FUCK YOU
+            CreateRecipeLookups.Invoke(null, null); // FUCK YOU
             Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
         public static void MassRemoveIngredient(List<(int, int, int)> results)

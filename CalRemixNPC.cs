@@ -124,19 +124,20 @@ namespace CalRemix
         public int taintedInferno = 0;
         public bool taintedInvis = false;
         public int clawed = 0;
-        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
+        public int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
         public static int pyrogen = -1;
         public static int hypnos = -1;
         public static int aspidCount = 0;
-        private bool guardRage, guardOver, yharRage = false;
+        public bool guardRage, guardOver, yharRage = false;
+        public static readonly FieldInfo yharonInvincibleCounter = typeof(Yharon).GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance);
+        public static HelperMessage CystMessage;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        public static HelperMessage CystMessage;
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
@@ -634,7 +635,7 @@ namespace CalRemix
                 bool p6 = hp <= (flag3 ? 0.358f : (flag2 ? 0.275f : (flag ? 0.22f : 0.138f)));
 
                 Yharon yhar = npc.ModNPC as Yharon;
-                int y = (int)yhar.GetType().GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(yhar);
+                int y = (int)yharonInvincibleCounter.GetValue(yhar);
                 if (yharSay == 0)
                 {
                     Talk($"{npcName}.1", Color.OrangeRed);

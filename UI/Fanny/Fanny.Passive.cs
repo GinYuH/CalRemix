@@ -3,6 +3,7 @@ using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Steamworks;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -58,7 +59,7 @@ namespace CalRemix.UI
                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(1000) && Main.LocalPlayer.mount.Type != MountID.None);
 
             HelperMessage.New("LookingForPlating", "Are you trying to find some Dubious Plating? I'm afraid that the stocks for them have plummeted and all existing plating was turned into scrap metal to be dumped in the Dungeon, so try looking there!",
-               "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.chest != -1 && (Main.tile[Main.chest[Main.LocalPlayer.chest].x, Main.chest[Main.LocalPlayer.chest].y].TileType == ModContent.TileType<SecurityChestTile>() || Main.tile[Main.chest[Main.LocalPlayer.chest].x, Main.chest[Main.LocalPlayer.chest].y].TileType == ModContent.TileType<AgedSecurityChestTile>()));
+               "FannyNuhuh", PlatingCheck);
 
             HelperMessage.New("Creepy", Main.rand.Next(1000000) + " remaining...",
                 "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(100000000), duration: 60, cantBeClickedOff: true);
@@ -220,6 +221,37 @@ namespace CalRemix.UI
                 SoundEngine.PlaySound(SoundID.Tink, Main.LocalPlayer.Center + Vector2.UnitX * (Main.rand.NextBool() ? 100 : -100));
             }
             Thread.Sleep(10000);
+        }
+        public static bool PlatingCheck(ScreenHelperSceneMetrics scene)
+        {
+            try
+            {
+                if (Main.LocalPlayer == null)
+                    return false;
+                if (Main.LocalPlayer.chest <= -1 || Main.LocalPlayer.chest >= Main.chest.Length)
+                    return false;
+                int c = Main.LocalPlayer.chest;
+                if (Main.chest == null || Main.chest.Length <= 0)
+                    return false;
+                if (Main.chest[c] == null)
+                    return false;
+                if (Main.chest[c].x < 0 && Main.chest[c].x >= Main.maxTilesX && Main.chest[c].y < 0 && Main.chest[c].y >= Main.maxTilesY)
+                    return false;
+                if (Main.tile[Main.chest[c].x, Main.chest[c].y].TileType == ModContent.TileType<SecurityChestTile>() || Main.tile[Main.chest[c].x, Main.chest[c].y].TileType == ModContent.TileType<AgedSecurityChestTile>())
+                    return true;
+                return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine(e.Source);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.Data);
+                Console.WriteLine(e.TargetSite);
+                Console.WriteLine(e.InnerException);
+            }
+            return false;
         }
     }
 }

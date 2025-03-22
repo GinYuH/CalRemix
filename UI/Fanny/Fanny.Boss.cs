@@ -12,9 +12,7 @@ using CalamityMod.NPCs.Yharon;
 using CalamityMod.World;
 using CalamityMod.Tiles.Ores;
 using CalRemix.Core.World;
-using System;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -153,24 +151,8 @@ namespace CalRemix.UI
         private static bool NoArmor() => Main.LocalPlayer.armor[0].type == ItemID.None && Main.LocalPlayer.armor[1].type == ItemID.None && Main.LocalPlayer.armor[2].type == ItemID.None;
         private static bool EnragedMutant()
         {
-            if (ModLoader.TryGetMod("FargowiltasSouls", out Mod f))
-            {
-                Type worldSystem = null;
-                Assembly fargoAssembly = f.GetType().Assembly;
-                bool enraged = false;
-                foreach (Type t in fargoAssembly.GetTypes())
-                {
-                    if (t.Name == "WorldSavingSystem")
-                        worldSystem = t;
-                }
-                if (worldSystem != null)
-                {
-                    PropertyInfo angryProperty = worldSystem.GetProperty("AngryMutant", BindingFlags.Public | BindingFlags.Static);
-                    enraged = (bool)angryProperty.GetValue(null);
-                }
-                if (enraged)
-                    return true;
-            }
+            if (CalRemixAddon.FargoSoulsAngryMutant != null)
+                return (bool)CalRemixAddon.FargoSoulsAngryMutant.GetValue(null);
             return false;
         }
         private static void ProviSkip()

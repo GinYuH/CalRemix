@@ -1,7 +1,4 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -86,30 +83,8 @@ namespace CalRemix.UI
         }
         private static bool InAvatarUniverse(ScreenHelperSceneMetrics scene)
         {
-            if (CalRemixAddon.Wrath != null)
-            {
-                Task<bool> task = Task.Run(() => InAvatarUniverseAction(scene));
-                return task.Result;
-            }
-            return false;
-        }
-        private static bool InAvatarUniverseAction(ScreenHelperSceneMetrics scene)
-        {
-            Type worldSystem = null;
-            Assembly wrathAssembly = CalRemixAddon.Wrath.GetType().Assembly;
-            bool inRift = false;
-            foreach (Type t in wrathAssembly.GetTypes())
-            {
-                if (t.Name == "AvatarUniverseExplorationSystem")
-                    worldSystem = t;
-            }
-            if (worldSystem != null)
-            {
-                PropertyInfo angryProperty = worldSystem.GetProperty("InAvatarUniverse", BindingFlags.Public | BindingFlags.Static);
-                inRift = (bool)angryProperty.GetValue(null);
-            }
-            if (inRift)
-                return true;
+            if (CalRemixAddon.WrathInAvatarWorld != null)
+                return (bool)CalRemixAddon.WrathInAvatarWorld.GetValue(null);
             return false;
         }
     }

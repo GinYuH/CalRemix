@@ -94,7 +94,6 @@ namespace CalRemix
         public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
 
         // General
-        public Task fandomCheck;
         public int commonItemHoldTimer;
         public int remixJumpCount;
         public int RecentChest = -1;

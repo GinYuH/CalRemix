@@ -12,6 +12,7 @@ using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -1123,9 +1124,9 @@ namespace CalRemix.UI
             if (Main.dedServ)
                 return;
 
-            UpdateLoreCommentTracking();
-            UpdateMessages();
-            UpdateFannyMood();
+            Task.Run(UpdateLoreCommentTracking);
+            Task.Run(UpdateMessages);
+            Task.Run(UpdateFannyMood);
 
             //Dont try speaking messages if fanny is not enabled
             if (!screenHelpersEnabled)
