@@ -6549,3 +6549,21 @@ NoxusBoss/StarPetBuffStone: {
 		Attacks inflict Star
 		'''
 }
+
+CalRemix/BabyNoxusBuffStone: {
+	DisplayName: Noxus Stone
+	Tooltip:
+		'''
+		Immunity to Noxus
+		Attacks inflict Noxus
+		'''
+}
+
+CalRemix/NoxusFumesStone: {
+	DisplayName: Noxus Fumes Stone
+	Tooltip:
+		'''
+		Immunity to Noxus Fumes
+		Attacks inflict Noxus Fumes
+		'''
+}

@@ -37,7 +37,7 @@ namespace CalRemix.Content.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Consuming fruits grants unlimited mana and increased magic damage for a short period of time\nThis effect has a 1 minute cooldown";
+            player.setBonus = CalRemixHelper.LocalText("Items.BananaClownHat.SetBonus").Value;
             player.GetModPlayer<CalRemixPlayer>().bananaClown = true;
             player.GetModPlayer<CalamityPlayer>().cooldowns.TryGetValue(BananaClownCooldown.ID, out var cd);
             if (player.HasCooldown(BananaClownCooldown.ID) && cd.timeLeft > 3600)

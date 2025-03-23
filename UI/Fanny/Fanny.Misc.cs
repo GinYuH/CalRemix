@@ -27,7 +27,7 @@ namespace CalRemix.UI
                 "FannySob", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.invis || Main.LocalPlayer.shroomiteStealth || Main.LocalPlayer.vortexStealthActive || (Main.LocalPlayer.Calamity().rogueStealth >= Main.LocalPlayer.Calamity().rogueStealthMax && Main.LocalPlayer.Calamity().rogueStealthMax > 0)).SetHoverTextOverride("I'm still here Fanny!");
             
             HelperMessage.New("DarkArea", "Fun fact. The human head can still be conscious after decapitation for the average of 20 seconds.",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DarkArea() && CalRemixWorld.worldFullyStarted);
+                "FannyNuhuh", DarkArea);
             
             HelperMessage.New("ConstantDeath", "Is that someone behind you...?",
                 "FannySob", (ScreenHelperSceneMetrics scene) => DontStarveDarknessDamageDealer.darknessTimer >= 300 && !Main.LocalPlayer.DeadOrGhost);
@@ -49,12 +49,6 @@ namespace CalRemix.UI
 
             HelperMessage.New("MeldHeartNoxus", "Look at all that gunk! I'm pretty sure it's impossible to break it, well, maybe if you got some powerful spray bottle, but that might take a while, so the best solution I can give is to assure it doesn't spread further by digging around it.",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CalRemixWorld.MeldTiles > 22 && ModLoader.HasMod("NoxusBoss"));
-
-            HelperMessage.New("EvilMinions", "Oh, joy, another player reveling in their summoned minions like they've won the pixelated lottery. Just remember, those minions are as loyal as your Wi-Fi signal during a storm—here one minute, gone the next. Enjoy your fleeting companionship, I guess.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
-
-            HelperMessage.New("EvilTerraBlade", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. It's just a sword, after all. Now, go on, swing it around like the hero you think you are.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) =>Main.LocalPlayer.HasItem(ItemID.TerraBlade)).SpokenByEvilFanny();
 
             HelperMessage.New("IonGuy", "Hey there, beachcomber! Looks like you've found a talking panel in that trash pile! It's wired up and ready to chat, but beware—it’s probably going to ask you for items. Remember, not all that glitters is gold, and not all talking panels are trustworthy. You might end up giving away your favorite pair of socks!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ionDialogue > 0);
@@ -84,7 +78,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.netMode != NetmodeID.SinglePlayer);
 
             HelperMessage.New("Adrenaboy1", "My-my! You sure are bolting like chili bean potatoes, my friend!",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().adrenalineModeActive, 8, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().adrenalineModeActive, 8, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).InitiateConversation();
 
             HelperMessage.New("Adrenaboy2", "Ha-ha! Good one, Miracle Boy!",
                 "FannyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
@@ -96,13 +90,13 @@ namespace CalRemix.UI
                 "FannyDisturbed", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Adrenaboy5", "That wasn't the intention of my joke, flame.",
-                "MiracleBoyIdle", HelperMessage.AlwaysShow).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, duration: 10).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).EndConversation();
 
             HelperMessage.New("Norcheese", "Something, something, you dirty cheater.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().NorfleetCounter >= 4).SpokenByEvilFanny();
 
             HelperMessage anniv1 = HelperMessage.New("Annivenriersary1", "HAPPY 20TH ANNIVERSARY, $0! We've had a lot of fun adventures over these last two decades, and here's to two more!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DownedBossSystem.downedProvidence && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && NPC.downedPlantBoss && Main.rand.NextBool(10000), 8, cantBeClickedOff: true).AddDynamicText(HelperMessage.GetPlayerName);
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => DownedBossSystem.downedProvidence && Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && NPC.downedPlantBoss && Main.rand.NextBool(10000), 8, cantBeClickedOff: true).AddDynamicText(HelperMessage.GetPlayerName).InitiateConversation();
 
             HelperMessage anniv2 = HelperMessage.New("Annivenriersary2", "... Fanny? What the fuck are you talking about? It's barely been one year, let alone twenty of them. Did you eat another lotus, or something?",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(anniv1, delay: 3, startTimerOnMessageSpoken: true);
@@ -126,12 +120,13 @@ namespace CalRemix.UI
                 "FannySob", HelperMessage.AlwaysShow).ChainAfter(anniv7);
 
             HelperMessage.New("Annivenriersary9", "BRO you can't Just change Your Dam Mind When I Agree. Cringe! Cringe! Uninstalling this shi rn Fr Fr",
-                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(anniv7, delay: 4);
+                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(anniv7, delay: 4).EndConversation();
         }
-        private static bool DarkArea()
+        private static bool DarkArea(ScreenHelperSceneMetrics scene)
         {
             Color light = Lighting.GetColor((int)Main.LocalPlayer.Center.X / 16, (int)Main.LocalPlayer.Center.Y / 16);
-            return light.R <= 5 || light.G <= 5 || light.B <= 5;
+            return light.R <= 5 && light.G <= 5 && light.B <= 5 && CalRemixWorld.worldFullyStarted;
         }
+        public static bool NearDungeonEntrance(ScreenHelperSceneMetrics scene) => NearPosition(Main.dungeonX, Main.dungeonY, 700);
     }
 }

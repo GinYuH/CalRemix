@@ -33,28 +33,35 @@ using CalamityMod.NPCs.Perforator;
 using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs;
-using CalRemix.Content.DamageClasses;
 using CalRemix.Content.NPCs.Bosses.Noxus;
+using System.Reflection;
 
 namespace CalRemix
 {
     public class CalRemixAddon : ModSystem
     {
-        public static Mod CalVal;
-        public static Mod Catalyst;
-        public static Mod Infernum;
-        public static Mod Wrath;
+        internal static Mod CalVal;
+        internal static Mod Catalyst;
+        internal static Mod Infernum;
+        internal static Mod Wrath;
 
-        public static Mod BossChecklist;
-        public static Mod MusicDisplay;
-        public static Mod Wikithis;
-        public static Mod Census;
+        internal static Mod BossChecklist;
+        internal static Mod MusicDisplay;
+        internal static Mod Wikithis;
+        internal static Mod Census;
 
-        public static Type calvalFanny = null;
-        public static Type calvalFannyBox = null;
+        internal static Mod Remnants;
+        internal static Mod Spirit;
 
-        public static Mod Remnants;
-        public static Mod Spirit;
+        internal static Type calvalFanny = null;
+        internal static Type calvalFannyBox = null;
+        internal static Type WrathAvatarWorldSystem = null;
+        internal static Type WrathAvatarOfEmptiness = null;
+        internal static Type WrathNamelessDeity = null;
+        internal static Type FargoSoulsWorldSaveSystem = null;
+
+        internal static PropertyInfo WrathInAvatarWorld = null;
+        internal static PropertyInfo FargoSoulsAngryMutant = null;
 
         public static readonly List<string> Names = new List<string>()
         {
@@ -88,26 +95,6 @@ namespace CalRemix
 
             ModLoader.TryGetMod("Remnants", out Remnants);
             ModLoader.TryGetMod("SpiritMod", out Spirit);
-
-            if (CalVal != null)
-            {
-                Type[] r = CalVal.Code.GetTypes();
-                foreach (Type mn in r)
-                {
-                    if (mn.Name == "Fanny")
-                    {
-                        calvalFanny = mn;
-                    }
-                    if (mn.Name == "FannyTextbox")
-                    {
-                        calvalFannyBox = mn;
-                    }
-                    if (calvalFannyBox != null && calvalFanny != null)
-                    {
-                        break;
-                    }
-                }
-            }
         }
         public override void Unload()
         {
@@ -135,6 +122,7 @@ namespace CalRemix
             }
             AddInfernumCards();
             ColoredDamageTypesSupport();
+            LoadModTypes();
         }
 
         internal void AddBossChecklistEntries()
@@ -397,6 +385,70 @@ namespace CalRemix
             //    return;
 
             //coloredDamageTypes.Call("AddDamageType", StormbowDamageClass.Instance, RogueTooltipColor, RogueDamageColor, RogueCritColor);
+        }
+        public static void LoadModTypes()
+        {
+            if (CalVal != null)
+            {
+                Type[] r = CalVal.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "Fanny")
+                    {
+                        calvalFanny = mn;
+                    }
+                    if (mn.Name == "FannyTextbox")
+                    {
+                        calvalFannyBox = mn;
+                    }
+                    if (calvalFannyBox != null && calvalFanny != null)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (Wrath != null)
+            {
+                Type[] r = Wrath.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "AvatarUniverseExplorationSystem")
+                    {
+                        WrathAvatarWorldSystem = mn;
+                    }
+                    if (mn.Name == "AvatarOfEmptiness")
+                    {
+                        WrathAvatarOfEmptiness = mn;
+                    }
+                    if (mn.Name == "NamelessDeityBoss")
+                    {
+                        WrathNamelessDeity = mn;
+                    }
+                    if (WrathAvatarWorldSystem != null && WrathAvatarOfEmptiness != null && WrathNamelessDeity != null)
+                    {
+                        break;
+                    }
+                }
+                if (WrathAvatarWorldSystem != null && WrathInAvatarWorld == null)
+                    WrathInAvatarWorld = WrathAvatarWorldSystem.GetProperty("InAvatarUniverse", BindingFlags.Public | BindingFlags.Static);
+            }
+            if (ModLoader.TryGetMod("FargowiltasSouls", out Mod f))
+            {
+                Type[] r = f.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "WorldSavingSystem")
+                    {
+                        FargoSoulsWorldSaveSystem = mn;
+                    }
+                    if (FargoSoulsWorldSaveSystem != null)
+                    {
+                        break;
+                    }
+                }
+                if (FargoSoulsWorldSaveSystem != null && FargoSoulsAngryMutant == null)
+                    FargoSoulsAngryMutant = FargoSoulsWorldSaveSystem.GetProperty("AngryMutant", BindingFlags.Public | BindingFlags.Static);
+            }
         }
     }
 }

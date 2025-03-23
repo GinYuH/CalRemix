@@ -735,6 +735,8 @@ namespace CalRemix.Core.World
             }
             if (trueStory < maxStoryTime)
             {
+                ScreenHelperManager.ongoingConversationTimer = trueStory;
+                ScreenHelperManager.ongoingConversation = true;
                 if (Main.netMode != NetmodeID.Server)
                 {
                     trueStory++;
@@ -749,6 +751,7 @@ namespace CalRemix.Core.World
                 }
                 if (trueStory >= maxStoryTime)
                 {
+                    ScreenHelperManager.ongoingConversationTimer = 0;
                     UpdateWorldBool();
                 }
             }

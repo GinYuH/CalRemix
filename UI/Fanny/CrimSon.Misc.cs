@@ -10,7 +10,7 @@ using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.Items.DraedonMisc;
-using CalRemix.Core.World;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace CalRemix.UI
 {
@@ -20,23 +20,17 @@ namespace CalRemix.UI
 
         public static void LoadCrimSon()
         {
-            HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", "It is Dangerous to Go Alone. Take This.", "CrimSonDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone, 6, cantBeClickedOff: true)
-                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation(40).AddEndEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.CellPhone));
+            HelperMessage.New("CrimCutMeOut", "You didnt have to cut me off     Nekalakininahappenenawiwanatin...",
+                "CrimSonDefault", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
-            HelperMessage.New("CrimSonIntro2", "Woah! Hey there buddy! How are you d-",
-                "FannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(crimtro1, delay: 3, startTimerOnMessageSpoken: true);
-
-            HelperMessage crimtro3 = HelperMessage.New("CrimSonIntro3", "Hnnk, you shut lil flame boy ueehhe.",
-                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(crimtro1);
-
-            HelperMessage.New("CrimSonIntro4", "Well that's not nice.",
-                "FannySob", HelperMessage.AlwaysShow).ChainAfter(crimtro3, delay: 3, startTimerOnMessageSpoken: true).SetHoverTextOverride("Indeed it isn't Fanny!").EndConversation();
+            HelperMessage.New("CrimMango", "MANGO MANGO MANGO",
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.Mango)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("CrimPizza", "I like my cheese drippy bruh.",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.Pizza)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
-            HelperMessage.New("CrimFood", "I’m hungry, give me that.",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => !Main.LocalPlayer.HasItem(ItemID.Pizza) && Main.LocalPlayer.inventory.Any((Item i) => ItemID.Sets.IsFood[i.type]) && Main.rand.NextBool(360000), onlyPlayOnce: false).AddStartEvent(EatFood).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+            HelperMessage.New("CrimFood", "Im hungry, give me that.",
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => !Main.LocalPlayer.HasItem(ItemID.Pizza) && !Main.LocalPlayer.HasItem(ItemID.Mango) && Main.LocalPlayer.inventory.Any((Item i) => ItemID.Sets.IsFood[i.type]) && Main.rand.NextBool(360000), onlyPlayOnce: false).AddStartEvent(EatFood).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             HelperMessage.New("CrimMedicalAid", "Give me Painkillers.",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.healLife > 0) && Main.rand.NextBool(360000), onlyPlayOnce: false).AddStartEvent(GetMedicalHelp).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
@@ -50,14 +44,20 @@ namespace CalRemix.UI
             HelperMessage.New("BuildThang", "Block tuah build on that thang",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HeldItem.createTile > TileID.Dirt).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
+            HelperMessage.New("BlackHawkTuah", "More like black hawk tuah bruh",
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<BlackHawkRemote>())).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation();
+
+            HelperMessage.New("BlackHawkTuah2", "I think this guy needs to be euthanized.",
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(delay: 2, startTimerOnMessageSpoken: true).EndConversation();
+
             HelperMessage goon1 = HelperMessage.New("Calgyatt1", "erm, what the sigma? mirror mirror on the wall, who has the biggest GYATT of them all?? calamitas spotted, gooning mode: ACTIVATED",
-                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<CalamitasClone>()) && Main.rand.NextBool(600), 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<CalamitasClone>()) && Main.rand.NextBool(600), 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation();
 
             HelperMessage.New("Calgyatt2", "Go die in a ditch.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(goon1, delay: 4, startTimerOnMessageSpoken: true);
+                "EvilFannyMiffed", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(goon1, delay: 4, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Calgyatt3", "Phonk music and galaxy gas lil chuddy",
-                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(goon1);
+                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(goon1).EndConversation();
 
             HelperMessage.New("Mutantsacep", "This video is sponsored by MutantScaped",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => ModLoader.TryGetMod("FargowiltasSouls", out Mod farto) && n.ModNPC != null && n.ModNPC.Mod == farto && n.boss)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
@@ -70,7 +70,13 @@ namespace CalRemix.UI
 
             HelperMessage.New("Draecell", "Ayo u gonna share bruh? I stg gimme my fanum tax",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<DraedonPowerCell>())).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).AddEndEvent(EatCell);
-            
+
+            HelperMessage.New("BrickedUp", "Bricked up rn",
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any(i => i.Name.Contains("Brick"))).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
+            HelperMessage.New("HomoTwins", "Bro has homophobia",
+                "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.Retinazer || n.type == NPCID.Spazmatism)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
+
             HelperMessage.New("dementia", "Can you beat Calamity Mod with Dementia?", 
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.boss && n.life <= n.lifeMax * 1 / 10) && Main.rand.NextBool(108000), 6, cantBeClickedOff: true, cooldown: 108000, onlyPlayOnce: false).AddStartEvent(Dementia).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
         }

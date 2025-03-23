@@ -6,6 +6,11 @@ using Mono.Cecil.Cil;
 using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
 using CalamityMod.NPCs.Providence;
+using Terraria;
+using CalamityMod.Systems;
+using static Terraria.ModLoader.ModContent;
+using CalamityMod.NPCs.Yharon;
+using CalamityMod;
 
 namespace CalRemix.Core.Retheme
 {
@@ -61,6 +66,10 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.Projectiles.Enemy.HorsWaterBlast.AI += HorsWaterBlastAI;
             IL.CalamityMod.Projectiles.Enemy.HorsWaterBlast.OnKill += HorsWaterBlastOnKill;
             #endregion
+        }
+        public override void PostSetupContent()
+        {
+            On.CalamityMod.Systems.YharonBackgroundScene.IsSceneEffectActive += NoYharonScene;
         }
         #region NPCs
         private static void Crabulon(ILContext il)
@@ -487,5 +496,11 @@ namespace CalRemix.Core.Retheme
             }
         }
         #endregion
+        private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
+        {
+            if (CalRemixWorld.npcChanges)
+                return !NPC.AnyNPCs(NPCType<Yharon>()) && Main.LocalPlayer.Calamity().monolithYharonShader > 0;
+            return orig(self, player);
+        }
     }
 }

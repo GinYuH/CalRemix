@@ -223,7 +223,38 @@ Mods: {
 				'''
 		}
 
-		NotAvailable: Mods.CalRemix.NotAvailable
+		NotAvailable: Nothing
 		DamageClasses.StormbowDamageClass.DisplayName: stormbow damage
+
+		RecipeGroups: {
+			Any: Any {0}
+			GreaterEvil: Greater Evil Flesh
+			EvilBar: Evil Bar
+			T4Bar: Tier 4 Bar
+			HMT1Bar: Tier 1 Hardmode Bar
+			AnyButterfly: Normal Butterfly
+			AnyExoMechMusicBox: Remix Exo Mech Music Box
+			AnyCritter: Critter
+		}
+
+		Condition: {
+			Locked: Locked Recipe. {0}
+			Elderberry: Trade with the Dye Trader Post-Providence.
+			MiracleFruit: Find in post-Golem Jungle Planetoids.
+			Dragonfruit: Open an Azure Crate while a Wyvern is alive post-Yharon
+			BloodOrange: Throw an Apple in water during a Blood Moon post-mechs.
+			CometShard: Get a Nova to collide with Astral Ore.
+			EtherealCore: Insert a Bloody Vein at the Astral Beacon.
+			PhantomHeart: Spawns in the Post-Polterghast Dungeon.
+			DesertMedallion: Drops from Cnidrions after defeating the Wulfrum Excavator.
+			CryoKey: Drops from Primal Aspids in the snow biome at night.
+			EyeofDesolation: Drops from Clamitas in the Brimstone Crags.
+			GalacticaSingularity: Fish Side Gars from Godseeker Mode space.
+			FearmongerGreathelm: Obtain by making an enemy walk on Grimesand.
+			FearmongerPlateMail: Obtain by making an enemy walk on Grimesand.
+			FearmongerGreaves: Obtain by making an enemy walk on Grimesand.
+			Seafood: Make the other Seafood.
+			ProfanedShard: Drops from Yggdrasil Ents in Hallow and Hell.
+		}
 	}
 }

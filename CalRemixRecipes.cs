@@ -55,6 +55,7 @@ namespace CalRemix
     public partial class Recipes : ModSystem
     {
         public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox, AnyCritter;
+        public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
             GreaterEvil = null;
@@ -64,7 +65,7 @@ namespace CalRemix
             AnyButterfly = null;
             AnyExoMechMusicBox = null;
         }
-        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(s);
+        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(CalRemixHelper.LocalText($"RecipeGroups.{s}"));
         public override void AddRecipeGroups()
         {
             GreaterEvil = new RecipeGroup(() => GroupName("GreaterEvil"), ItemType<RottenMatter>(), ItemType<BloodSample>());
@@ -268,7 +269,7 @@ namespace CalRemix
             }
             #endregion
         }
-        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("RecipeGroups.Locked").Format(s);
+        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("Condition.Locked").Format(CalRemixHelper.LocalText($"Condition.{s}"));
         public override void PostAddRecipes()
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
@@ -715,8 +716,7 @@ namespace CalRemix
                     recipe.acceptedGroups.Remove(group);
                 }
             }
-            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
-            info.Invoke(null, null); // FUCK YOU
+            CreateRecipeLookups.Invoke(null, null); // FUCK YOU
             Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
         public static void MassRemoveIngredient(List<(int, int, int)> results)

@@ -324,7 +324,7 @@ DerellectMusicBox: {
 	Tooltip: Plays 'Signal Interruption' by Sploopo
 }
 
-DerellectTrophyInv: {
+DerellectTrophy: {
 	DisplayName: Derellect Trophy
 	Tooltip: ""
 }
@@ -1103,6 +1103,11 @@ Bellwings: {
 BananaClownHat: {
 	DisplayName: Banana Clown Mask
 	Tooltip: 2 magic damage
+	SetBonus:
+		'''
+		Consuming fruits grants unlimited mana and increased magic damage for a short period of time
+		This effect has a 1 minute cooldown
+		'''
 }
 
 BananaClownPants: {
@@ -1735,21 +1740,25 @@ IonCube: {
 StealthPotion: {
 	DisplayName: Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 15% stealth
 }
 
 LesserStealthPotion: {
 	DisplayName: Lesser Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 10% stealth
 }
 
 GreaterStealthPotion: {
 	DisplayName: Greater Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 20% stealth
 }
 
 SuperStealthPotion: {
 	DisplayName: Super Stealth Potion
 	Tooltip: Can only Quick Stealth if below 50% stealth
+	RestorePotion: Restores 25% stealth
 }
 
 CryoKeyMold: {
@@ -2070,6 +2079,15 @@ BeetleHead: {
 TwistedNetheriteHelmet: {
 	DisplayName: Twisted Netherite Helmet
 	Tooltip: ""
+	SetBonus:
+		'''
+		Collect souls from fallen enemies and stores them into the helmet
+		Knockback immunity
+		All attacks inflict wither
+		Using the armor bonus key consumes all souls to unleash a massive explosion
+		Soul explosion and wither get stronger with each soul collected
+		[c/99ffff:{0} souls stored]
+		'''
 }
 
 TwistedNetheriteBoots: {
@@ -2267,6 +2285,31 @@ VernalPassMusicBox: {
 	Tooltip: Plays 'Vajrabhairava's Rest' by Jteoh
 }
 
+StrongholdMusicBox: {
+	DisplayName: Music Box (Frozen Stronghold)
+	Tooltip: Plays 'Locked Away' by HeartPlusUp
+}
+
+ProfanedDesertMusicBox: {
+	DisplayName: Music Box (Profaned Desert)
+	Tooltip: Plays 'Empire of Ash' by Jteoh
+}
+
+PlasticOracleMusicBox: {
+	DisplayName: Music Box (Plastic Oracle)
+	Tooltip: Plays 'Ohmn Omens' by Jteoh
+}
+
+GaleforceMusicBox: {
+	DisplayName: Music Box (Galeforce Day)
+	Tooltip: Plays 'Galeforce' by Jteoh
+}
+
+GeneratorMusicBox: {
+	DisplayName: Music Box (The Generator)
+	Tooltip: Plays 'Artistic Reinforcement' by Jteoh
+}
+
 CarcinogenTrophy: {
 	DisplayName: Carcinogen Trophy
 	Tooltip: ""
@@ -2310,61 +2353,73 @@ PhytogenTrophy: {
 AdrenalinePotion: {
 	DisplayName: Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 6% Adrenaline
 }
 
 EnragePotion: {
 	DisplayName: Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 10% rage
 }
 
 FlightPotion: {
 	DisplayName: Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 14% flight
 }
 
 GreaterAdrenalinePotion: {
 	DisplayName: Greater Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 9% Adrenaline
 }
 
 GreaterEnragePotion: {
 	DisplayName: Greater Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 15% rage
 }
 
 GreaterFlightPotion: {
 	DisplayName: Greater Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 21% flight
 }
 
 LesserAdrenalinePotion: {
 	DisplayName: Lesser Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 3% Adrenaline
 }
 
 LesserEnragePotion: {
 	DisplayName: Lesser Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 5% rage
 }
 
 LesserFlightPotion: {
 	DisplayName: Lesser Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 7% flight
 }
 
 SuperAdrenalinePotion: {
 	DisplayName: Super Adrenaline Potion
 	Tooltip: ""
+	RestorePotion: Restores 12% Adrenaline
 }
 
 SuperEnragePotion: {
 	DisplayName: Super Enrage Potion
 	Tooltip: ""
+	RestorePotion: Restores 20% rage
 }
 
 SuperFlightPotion: {
 	DisplayName: Super Flight Potion
 	Tooltip: ""
+	RestorePotion: Restores 28% flight
 }
 
 TwistedNetheriteAxe: {
@@ -2816,6 +2871,371 @@ PyrogenTrophy: {
 	Tooltip: ""
 }
 
+HypnosTrophy: {
+	DisplayName: XP-00 Hypnos Trophy
+	Tooltip: ""
+}
+
+AcidsighterTrophy: {
+	DisplayName: Acidsighter Trophy
+	Tooltip: ""
+}
+
+ExcavatorTrophy: {
+	DisplayName: Wulfrum Excavator Trophy
+	Tooltip: ""
+}
+
+AstigmageddonTrophy: {
+	DisplayName: Astigmageddon Trophy
+	Tooltip: ""
+}
+
+CataractacombTrophy: {
+	DisplayName: Cataractacomb Trophy
+	Tooltip: ""
+}
+
+ConjunctivirusTrophy: {
+	DisplayName: Conjunctivirus Trophy
+	Tooltip: ""
+}
+
+ExotrexiaTrophy: {
+	DisplayName: Exotrexia Trophy
+	Tooltip: ""
+}
+
+AdamantiteStormbow: {
+	DisplayName: Adamantite Stormbow
+	Tooltip: ""
+}
+
+AshWoodStormbow: {
+	DisplayName: Ash Wood Stormbow
+	Tooltip: Shoots flaming arrows from the sky
+}
+
+BlightSky: {
+	DisplayName: Blight Sky
+	Tooltip: ""
+}
+
+BorealWoodStormbow: {
+	DisplayName: Boreal Wood Stormbow
+	Tooltip: ""
+}
+
+CobaltStormbow: {
+	DisplayName: Cobalt Stormbow
+	Tooltip: ""
+}
+
+CopperStormbow: {
+	DisplayName: Copper Stormbow
+	Tooltip: ""
+}
+
+EbonwoodStormbow: {
+	DisplayName: Ebonwood Stormbow
+	Tooltip: ""
+}
+
+ExcaliburStormbow: {
+	DisplayName: Excalibur Stormbow
+	Tooltip: ""
+}
+
+FourOClock: {
+	DisplayName: Four O'Clock
+	Tooltip: ""
+}
+
+FrostedFractals: {
+	DisplayName: Frosted Fractals
+	Tooltip: ""
+}
+
+GiantStormbow: {
+	DisplayName: Giant Stormbow
+	Tooltip: ""
+}
+
+GoldStormbow: {
+	DisplayName: Gold Stormbow
+	Tooltip: ""
+}
+
+IronStormbow: {
+	DisplayName: Iron Stormbow
+	Tooltip: ""
+}
+
+LeadStormbow: {
+	DisplayName: Lead Stormbow
+	Tooltip: ""
+}
+
+MythrilStormbow: {
+	DisplayName: Mythril Stormbow
+	Tooltip: ""
+}
+
+OfVericourse: {
+	DisplayName: Of Vericourse
+	Tooltip: ""
+}
+
+OrichalcumStormbow: {
+	DisplayName: Orichalcum Stormbow
+	Tooltip: ""
+}
+
+PalladiumStormbow: {
+	DisplayName: Palladium Stormbow
+	Tooltip: ""
+}
+
+PalmWoodStormbow: {
+	DisplayName: Palm Wood Stormbow
+	Tooltip: ""
+}
+
+PearlwoodStormbow: {
+	DisplayName: Pearlwood Stormbow
+	Tooltip: ""
+}
+
+PlatinumStormbow: {
+	DisplayName: Platinum Stormbow
+	Tooltip: ""
+}
+
+RichMahoganyStormbow: {
+	DisplayName: Rich Mahogany Stormbow
+	Tooltip: ""
+}
+
+ShadewoodStormbow: {
+	DisplayName: Shadewood Stormbow
+	Tooltip: ""
+}
+
+SilverStormbow: {
+	DisplayName: Silver Stormbow
+	Tooltip: ""
+}
+
+Sludgemonger: {
+	DisplayName: Sludgemonger
+	Tooltip: ""
+}
+
+SpacePinball: {
+	DisplayName: Space Pinball
+	Tooltip: ""
+}
+
+StarryBlight: {
+	DisplayName: Starry Blight
+	Tooltip: ""
+}
+
+Stormbow: {
+	DisplayName: Stormbow
+	Tooltip: ""
+}
+
+TheSimpstring: {
+	DisplayName: The Simpstring
+	Tooltip: ""
+}
+
+TheSkyfall: {
+	DisplayName: The Skyfall
+	Tooltip: ""
+}
+
+TinStormbow: {
+	DisplayName: Tin Stormbow
+	Tooltip: ""
+}
+
+TitaniumStormbow: {
+	DisplayName: Titanium Stormbow
+	Tooltip: ""
+}
+
+TrueExcaliburStormbow: {
+	DisplayName: True Excalibur Stormbow
+	Tooltip: ""
+}
+
+TungstenStormbow: {
+	DisplayName: Tungsten Stormbow
+	Tooltip: ""
+}
+
+WoodenStormbow: {
+	DisplayName: Wooden Stormbow
+	Tooltip: ""
+}
+
+WorldFeeder: {
+	DisplayName: World Feeder
+	Tooltip: ""
+}
+
+ElectricEel: {
+	DisplayName: Electric Eel
+	Tooltip: Shoots bullets from the sky
+}
+
+DeerdalusStormclops: {
+	DisplayName: Deerdalus Stormclops
+	Tooltip: Clopses icicles from the sky
+}
+
+DoubleHelix: {
+	DisplayName: Double Helix
+	Tooltip: Shoots two streams of feathers from the sky
+}
+
+ElementalStormsurge: {
+	DisplayName: Elemental Stormsurge
+	Tooltip: Shoots dust projectiles from the sky
+}
+
+ImpetusTech: {
+	DisplayName: Impetus Tech
+	Tooltip: Mutually assures fourty seven nukes from the sky
+}
+
+Fruminous: {
+	DisplayName: Fruminous
+	Tooltip: Shoots flaming bats from the sides
+}
+
+DaedalusEmblem: {
+	DisplayName: Daedalus Emblem
+	Tooltip: 15% increased stormbow damage
+}
+
+Vinewrath: {
+	DisplayName: Vinewrath
+	Tooltip: Shoots beehives from the sky
+}
+
+Watercooler: {
+	DisplayName: Watercooler
+	Tooltip: Shoots a waterfall from the sky
+}
+
+SoulOfFlightstorm: {
+	DisplayName: Soul Of Flightstorm
+	Tooltip: Shoots flight from the sky
+}
+
+BigEater: {
+	DisplayName: The Big Eater
+	Tooltip: Shoots arrows from the sky and the ground
+}
+
+BoringStormbow: {
+	DisplayName: Boring Stormbow
+	Tooltip: Shoots slime from above you
+}
+
+ThreeOClock: {
+	DisplayName: Three O'Clock
+	Tooltip: Shoots arrows from the cardinal directions
+}
+
+DemeterStormbow: {
+	DisplayName: Demeter Stormbow
+	Tooltip:
+		'''
+		Shoot a Terra Hawk to annihilate your foes from the sky
+		'This goes to twelve'
+		'''
+}
+
+SB90: {
+	DisplayName: SB90
+	Tooltip:
+		'''
+		Unleashes a stream of arrows at an incredible rate from the sky
+		'It's an arrow hose'
+		'''
+}
+
+RiskOfRain: {
+	DisplayName: Risk Of Rain
+	Tooltip:
+		'''
+		Target an area to shoot electric arrows from the sky
+		'Captain! I think- we've got an arrow storm!'
+		'''
+}
+
+JetstreamSam: {
+	DisplayName: Jetstream Sam
+	Tooltip:
+		'''
+		A high-frequency bow that can cleanly shoot arrows from the sky through even the mightiest foe
+		[c/F41A31:'Shed!']
+		'''
+}
+
+TwinkleTwinkle: {
+	DisplayName: Twinkle Twinkle
+	Tooltip: Shoots a little star from the sky
+}
+
+Alchemists3rdTrumpet: {
+	DisplayName: Alchemist's 3rd Trumpet
+	Tooltip:
+		'''
+		Shoots arrows from the sky
+		Arrows can inflict any debuff
+		'''
+}
+
+Duststorm: {
+	DisplayName: Duststorm
+	Tooltip: Shoots sand from the sky
+}
+
+Rainstorm: {
+	DisplayName: Sandstorm
+	Tooltip: Shoots sulphurous sand from the sky
+}
+
+TheFrog: {
+	DisplayName: The Frog
+	Tooltip: Shoots frogs from the sky
+}
+
+PerennialMillenial: {
+	DisplayName: Perennial Millenial
+	Tooltip: Picks flowers from the sky
+}
+
+SeaPrismStormbow: {
+	DisplayName: Sea Prism Stormbow
+	Tooltip: Shoots sea prisms from the sky
+}
+
+RisingFire: {
+	DisplayName: Rising Fire
+	Tooltip:
+		'''
+		Shoots a projectile internally referred to as "BrimstoneHomer" from the sky
+		'D'oh!'
+		(This is a reference to: The Simpsons)
+		'''
+}
+
 TheCodseeker: {
 	DisplayName: The Codseeker
 	Tooltip: Has a small chance for a fish to take the corpse
@@ -3043,29 +3463,160 @@ GiftoftheRed: {
 	DisplayName: Gift of the Red
 }
 
-NoTomorrow.Tooltip: All friendly projectiles are twice as large
+NoTomorrow: {
+	DisplayName: No Tomorrow
+	Tooltip: All friendly projectiles are twice as large
+}
 
 AncientFlashBullet: {
 	DisplayName: Ancient Flash Round
 	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
 }
 
-ChloriumChainmail.Tooltip:
-	'''
-	24% increased damage
-	2% increased critical strike chance
-	'''
-ChloriumConehead.Tooltip:
-	'''
-	16% increased stormbow damage and critical strike chance
-	20% increaesd stormbow shot speed
-	'''
-ChloriumGreaves.Tooltip:
-	'''
-	12% increased critical strike chance
-	22% increased movement speed
-	'''
-AuricSoul.DisplayName: Auric Soul
+ChlorophyteStormbowTheFirst.Tooltip: ""
+ChlorophyteStormbowTheSecond.Tooltip: ""
+ChlorophyteStormbowTheThird.Tooltip: ""
+ChlorophyteStormbowTheFourth.Tooltip: ""
+ChlorophyteStormbowTheFifth.Tooltip: ""
+ChlorophyteStormbowTheSixth.Tooltip: ""
+ChlorophyteStormbowTheSeventh.Tooltip: ""
+ChlorophyteStormbowTheEighth.Tooltip: ""
+ChlorophyteStormbowTheNineth.Tooltip: ""
+ChlorophyteStormbowTheTenth.Tooltip: ""
+ChlorophyteStormbowTheEleventh.Tooltip: ""
+ChlorophyteStormbowTheTwelvth.Tooltip: ""
+ChlorophyteStormbowTheThirteenth.Tooltip: ""
+
+ChloriumOre: {
+	DisplayName: Chlorium Ore
+	Tooltip: "'Reacts to the storm'"
+}
+
+ChloriumBar: {
+	DisplayName: Chlorium Bar
+	Tooltip: Reacts to the storm
+}
+
+ChloriumChainmail: {
+	DisplayName: Chlorium Chainmail
+	Tooltip:
+		'''
+		24% increased damage
+		2% increased critical strike chance
+		'''
+}
+
+ChloriumConehead: {
+	DisplayName: Chlorium Conehead
+	Tooltip:
+		'''
+		16% increased stormbow damage and critical strike chance
+		20% increaesd stormbow shot speed
+		'''
+}
+
+ChloriumGreaves: {
+	DisplayName: Chlorium Greaves
+	Tooltip:
+		'''
+		12% increased critical strike chance
+		22% increased movement speed
+		'''
+}
+
+ChloriumPaintbrush: {
+	DisplayName: Chlorium Paintbrush
+	Tooltip:
+		'''
+		Used with paint to color blocks
+		Can also apply coatings
+		'''
+}
+
+ChloriumChainsaw: {
+	DisplayName: Chlorium Chainsaw
+	Tooltip: ""
+}
+
+ChloriumWaraxe: {
+	DisplayName: Chlorium Waraxe
+	Tooltip: ""
+}
+
+ChloriumPike: {
+	DisplayName: Chlorium Pike
+	Tooltip: ""
+}
+
+ChloriumRepeater: {
+	DisplayName: Chlorium Repeater
+	Tooltip: ""
+}
+
+ChloriumPickaxe: {
+	DisplayName: Chlorium Pickaxe
+	Tooltip: ""
+}
+
+ChloriumDrill: {
+	DisplayName: Chlorium Drill
+	Tooltip: ""
+}
+
+ChlorislimeStaff: {
+	DisplayName: Chlorislime Staff
+	Tooltip: Summons a chlori slime to fight for you
+}
+
+ToxicTome: {
+	DisplayName: Toxic Tome
+	Tooltip: Casts slimes to stomp onto your cursor
+}
+
+Those: {
+	DisplayName: those
+	Tooltip: ""
+}
+
+Who: {
+	DisplayName: who
+	Tooltip: ""
+}
+
+Know: {
+	DisplayName: know
+	Tooltip: ""
+}
+
+TheButterflyEffect: {
+	DisplayName: The Butterfly Effect
+	Tooltip:
+		'''
+		Summons a wandering butterfly to absorb the lifeforce of all that exists
+		You too
+		'''
+}
+
+AuricSoul: {
+	DisplayName: Auric Soul
+	Tooltip:
+		'''
+		'One of the many last remaining forgotten fragments of her vast and engrained soul, still longingly brimming with misunderstood malice'
+		The very powerful and infamous Auric Soul fully and multi-dimnesionally embodies the forever adapting and everflowing essence of vibrant life itself.
+		A remarkable long time ago, the grand Pre-Mordial Dragon God Son of Light Zeratros existed ferociously as the intimidating and knowledgable leader of the Shining Children of Pre-Mordial Light.
+		Providence is also one of them.
+		Lost to the Golden Age of Dragons was the eldest sister tragically, magically, and mysteriously erased from time and space itself.
+		The purest form of perfected holy morality emerged like a cosmic dance of sunrays among the Shining Children of Pre-Mordial Light.
+		Her righteous spirit, maleficent hatred, and equalizing power are not entirely extinguished.
+		An apparently beautiful and concrete depiction of her remorseless, unstoppable force of destruction.
+		She is a highly enigmatic entity of light whose complicated intentions are extremely difficult to discern. 
+		Although fully aware of everything that occurs around her magnificent presence, she often allows planetary events to unfold without excessive interference, even when those events directly affect her own state. 
+		She has innocently tolerated being enslaved and abused by the Reign of Yharim for countless centuries without vengerful and intentional resistance. 
+		When suddenly the greatest threat Noxus attacked her, she refrained from directly defending herself, opting instead to annihilate her home by transforming into a Black Hole once again. 
+		This drastic and terrible measure was taken without thoughtful regard for the unfortunate people living nearby andd she has shown immense regret ever since.
+		oh wait it says here it's from fanfiction.net
+		'''
+}
 
 StratusBeverage: {
 	DisplayName: Stratus Beverage
@@ -3086,7 +3637,10 @@ CannibalNectar: {
 		'''
 }
 
-AuricSword.DisplayName: Auric Sword
+AuricSword: {
+	DisplayName: Auric Sword
+	Tooltip: ""
+}
 
 UncreasableKicks: {
 	DisplayName: Uncreasable Kicks
@@ -3189,6 +3743,7 @@ Tooltips: {
 	ElementTip: Hold "Left Shift" for element details
 	Lightmix: Lightmix Dedicated Item
 	Stormbow: Stormbow
+	StormbowTip: Shoots arrows from the sky
 	CryoKeyRemix: Drops from Primal Aspids
 	EyeofDesolationRemix: Drops from Clamitas
 	AbombinationOld: the Jungle
