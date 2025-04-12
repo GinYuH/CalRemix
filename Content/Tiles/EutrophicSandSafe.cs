@@ -12,6 +12,7 @@ namespace CalRemix.Content.Tiles
     public class EutrophicSandSafe : ModTile
     {
         public override string Texture => "CalamityMod/Tiles/SunkenSea/EutrophicSand";
+        public static readonly MethodInfo BrimstoneTileFraming = typeof(TileFraming).GetMethod("BrimstoneFraming", BindingFlags.NonPublic | BindingFlags.Static);
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
@@ -61,8 +62,7 @@ namespace CalRemix.Content.Tiles
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-            MethodInfo info = typeof(TileFraming).GetMethod("BrimstoneFraming", BindingFlags.NonPublic | BindingFlags.Static);
-            return (bool)info.Invoke(null, new object[] { i, j, resetFrame });
+            return (bool)BrimstoneTileFraming.Invoke(null, new object[] { i, j, resetFrame });
         }
     }
 }

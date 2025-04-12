@@ -29,6 +29,7 @@ using CalamityMod.Rarities;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
+using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Armor;
@@ -193,34 +194,6 @@ namespace CalRemix
             if (cosmicItems.Contains(item.type))
             {
                 item.rare = ItemRarityID.Purple;
-            }
-            else
-            {
-                // undo the curve flattening
-                // done with content samples so that reforges are ignored
-                if (ContentSamples.ItemsByType.ContainsKey(item.type))
-                {
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Turquoise>())
-                    {
-                        item.damage = (int)(item.damage * 1.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<PureGreen>())
-                    {
-                        item.damage = (int)(item.damage * 1.67f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<DarkBlue>())
-                    {
-                        item.damage = (int)(item.damage * 2.5f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Violet>())
-                    {
-                        item.damage = (int)(item.damage * 3.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<HotPink>())
-                    {
-                        item.damage = (int)(item.damage * 5f);
-                    }
-                }
             }
             if (item.type == ItemType<Navystone>())
             {
@@ -1146,16 +1119,20 @@ namespace CalRemix
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             string key = "Items.Tooltips.";
-            if (item.Name.Contains(CalRemixHelper.LocalText($"{key}Stormbow").Value))
+            if (item.DamageType == GetInstance<StormbowDamageClass>() && item.damage < 30 && item.rare <= ItemRarityID.Blue)
             {
                 if (tooltips.Exists((TooltipLine t) => t.Name.Equals("Tooltip0")))
                 {
-                    TooltipLine tip0 = tooltips.Find((TooltipLine t) => t.Name.Equals("Tooltip0"));
-                    tip0.Text = CalRemixHelper.LocalText("Items.CopperStormbow.Tooltip").Value;
+                    TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("Tooltip0"));
+                    if (string.IsNullOrWhiteSpace(line.Text))
+                    {
+                        TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText($"{key}StormbowTip").Value);
+                        tooltips.Add(tip);
+                    }
                 }
                 else
                 {
-                    TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText("Items.CopperStormbow.Tooltip").Value);
+                    TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText($"{key}StormbowTip").Value);
                     tooltips.Add(tip);
                 }
             }

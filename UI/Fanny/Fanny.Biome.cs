@@ -13,6 +13,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.World;
+using System.Reflection;
+using System;
 
 namespace CalRemix.UI
 {
@@ -43,16 +45,16 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneGemCave).AddItemDisplay(ItemID.Emerald);
 
             HelperMessage.New("SunkySea", "Did you know that the oldest animal ever identified was a clam? Unfortunately, the people who caught it accidentally froze it to death. Maybe you can find an older clam here in this Sunken Sea!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSunkenSea);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSunkenSea);
 
-            HelperMessage.New("Hell", "Welcome to hell! This place is flaming hot just like me, so you better get some gear to protect you aganist the heat!", "FannyNuhuh",
-                (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight && !Main.hardMode);
+            HelperMessage.New("Hell", "Welcome to hell! This place is flaming hot just like me, so you better get some gear to protect you aganist the heat!", 
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight && !ModLoader.HasMod("TheDepths"));
 
             HelperMessage.New("ShimmerNothing", "You should consider throwing that item you're holding in Shimmer! You may get something powerful!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.HeldItem.CanShimmer(), onlyPlayOnce: false, cooldown: 600);
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.ActiveItem().CanShimmer(), onlyPlayOnce: false, cooldown: 600);
 
             HelperMessage.New("Meteore", "A Fallen Star!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneMeteor).AddItemDisplay(ItemID.FallenStar);
+                "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneMeteor && !ModLoader.HasMod("CatalystMod")).AddItemDisplay(ItemID.FallenStar);
 
             HelperMessage.New("DeepAbyss", "Tired of this pesky abyss drowning you? I have an idea! If you go into the underworld and poke a hole at the bottom, all the water will drain out! No more pesky pressure!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3);
@@ -67,7 +69,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyss && (Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>()))).AddItemDisplay(ItemID.RodofDiscord);
 
             HelperMessage.New("PlaguedJungle", "Man, this place reminds me of when I volunteered to help run a jungle-themed summer fair at a local elementary school! Long story short, everyone fainted due to dehydration. Not the plague. At least, that’s what I think.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague && !Main.LocalPlayer.ZoneRockLayerHeight);
 
             HelperMessage.New("PlaguedJunglePhyto", "Did you know if you gather a bunch of those pesky plague enemies, you'll summon a giant pineapple? He's a pretty chill fruit until you decide to pick a fight! So, make sure you're ready for a fruit salad battle before you start swinging!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague && Main.LocalPlayer.ZoneRockLayerHeight);
@@ -127,7 +129,7 @@ namespace CalRemix.UI
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.InModBiome<AsbestosBiome>()).AddItemDisplay(ItemID.CopperHammer);
 
             HelperMessage apoc = HelperMessage.New("Apocalypse1", "Oh no.. oh no! Look what you've done! Ohhh we're really in the thick of it now...",
-               "FannyApocalypse", (ScreenHelperSceneMetrics scene) => ProfanedDesert.scorchedWorld && !Main.LocalPlayer.dead, 9, cantBeClickedOff: true);
+               "FannyApocalypse", (ScreenHelperSceneMetrics scene) => ProfanedDesert.scorchedWorld && !Main.LocalPlayer.dead, 9, cantBeClickedOff: true).InitiateConversation();
 
             HelperMessage.New("Apocalypse2", "everybody knows",
                "CrimSonDefault").SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
@@ -136,8 +138,7 @@ namespace CalRemix.UI
                "EvilFannyIdle").SpokenByEvilFanny().ChainAfter(apoc, delay: 7, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Apocalypse4", "Aww jeez, okay...",
-               "FannySob").ChainAfter(delay: 2, startTimerOnMessageSpoken: true);
-
+               "FannySob").ChainAfter(delay: 2, startTimerOnMessageSpoken: true).EndConversation();
         }
 
         public static void LoadShrineMessages()

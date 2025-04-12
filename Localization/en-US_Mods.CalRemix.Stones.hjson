@@ -6468,3 +6468,102 @@ CalRemix/TaintedWrathBuffStone: {
 		Attacks inflict Pacifist
 		'''
 }
+
+NoxusBoss/AntimatterAnnihilationStone: {
+	DisplayName: Antimatter Annihilation Stone
+	Tooltip:
+		'''
+		Immunity to Antimatter Annihilation
+		Attacks inflict Antimatter Annihilation
+		'''
+}
+
+NoxusBoss/GlaciatedStone: {
+	DisplayName: Glaciated Stone
+	Tooltip:
+		'''
+		Immunity to Glaciated
+		Attacks inflict Glaciated
+		'''
+}
+
+NoxusBoss/InvincibilityBuffStone: {
+	DisplayName: Flower Power Stone
+	Tooltip:
+		'''
+		Immunity to Flower Power
+		Attacks inflict Flower Power
+		'''
+}
+
+NoxusBoss/NilkDebuffStone: {
+	DisplayName: Nilk Stone
+	Tooltip:
+		'''
+		Immunity to Nilk
+		Attacks inflict Nilk
+		'''
+}
+
+NoxusBoss/StarstrikinglySatiatedStone: {
+	DisplayName: Starstrikingly Satiated Stone
+	Tooltip:
+		'''
+		Immunity to Starstrikingly Satiated
+		Attacks inflict Starstrikingly Satiated
+		'''
+}
+
+NoxusBoss/BlackHolePetBuffStone: {
+	DisplayName: Black Hole Stone
+	Tooltip:
+		'''
+		Immunity to Black Hole
+		Attacks inflict Black Hole
+		'''
+}
+
+NoxusBoss/BabyNamelessBuffStone: {
+	DisplayName: Nameless Deity Stone
+	Tooltip:
+		'''
+		Immunity to Nameless Deity
+		Attacks inflict Nameless Deity
+		'''
+}
+
+NoxusBoss/CuriousHandBuffStone: {
+	DisplayName: Curious Hand Stone
+	Tooltip:
+		'''
+		Immunity to Curious Hand
+		Attacks inflict Curious Hand
+		'''
+}
+
+NoxusBoss/StarPetBuffStone: {
+	DisplayName: Star Stone
+	Tooltip:
+		'''
+		Immunity to Star
+		Attacks inflict Star
+		'''
+}
+
+CalRemix/BabyNoxusBuffStone: {
+	DisplayName: Noxus Stone
+	Tooltip:
+		'''
+		Immunity to Noxus
+		Attacks inflict Noxus
+		'''
+}
+
+CalRemix/NoxusFumesStone: {
+	DisplayName: Noxus Fumes Stone
+	Tooltip:
+		'''
+		Immunity to Noxus Fumes
+		Attacks inflict Noxus Fumes
+		'''
+}

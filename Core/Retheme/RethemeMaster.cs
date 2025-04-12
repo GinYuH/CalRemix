@@ -42,6 +42,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Ranged;
 using Terraria.Localization;
+using System.Linq;
 
 namespace CalRemix.Core.Retheme
 {
@@ -82,13 +83,6 @@ namespace CalRemix.Core.Retheme
                 Buffs.Add(p.Key, TextureAssets.Buff[p.Key]);
             }
             SneakersRetheme.SaveDefaultSneakersTextures();
-            On.CalamityMod.Systems.YharonBackgroundScene.IsSceneEffectActive += NoYharonScene;
-        }
-        private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
-        {
-            if (CalRemixWorld.npcChanges) 
-                return !NPC.AnyNPCs(NPCType<Yharon>()) && Main.LocalPlayer.Calamity().monolithYharonShader > 0;
-            return orig(self, player);
         }
     }
     public class RethemeNPC : GlobalNPC
@@ -302,6 +296,31 @@ namespace CalRemix.Core.Retheme
         public static void UpdateChanges()
         {
             ChangeTextures();
+            ResetNames();
+        }
+        public static void ResetNames()
+        {
+            if (Main.LocalPlayer != null)
+            {
+                for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
+                {
+                    Item item = Main.LocalPlayer.inventory[i];
+                    if (RethemeList.ItemNames.Contains(item.type))
+                    {
+                        if (!CalRemixWorld.itemChanges)
+                            NormalChanges(item);
+                        else
+                            item.ClearNameOverride();
+                    }
+                    if (SneakersRetheme.itemSneakerPairs.ContainsKey(item.type) && SneakersRetheme.IsASneaker(item.type))
+                    {
+                        if (!CalRemixWorld.sneakerheadMode)
+                            SneakersRetheme.InitializeItem(item);
+                        else
+                            item.ClearNameOverride();
+                    }
+                }
+            }
         }
         public static void ChangeTextures()
         {
@@ -346,8 +365,8 @@ namespace CalRemix.Core.Retheme
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(ItemType<Fabstaff>(), new DrawAnimationVertical(6, 6));
-            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
-            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
+            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Core/Retheme/Nothing");
+            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Core/Retheme/Nothing");
             TextureAssets.Item[ItemType<Fabstaff>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/InterfacerStaff");
             TextureAssets.Item[ItemType<Fabsol>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/DiscordianSigil");
             TextureAssets.Item[ItemType<CirrusDress>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/AshsCloak");
@@ -357,9 +376,15 @@ namespace CalRemix.Core.Retheme
         {
             AbsoluteChanges(item);
             StormbowChanges(item);
-
-            if (SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
+            if (CalRemixWorld.itemChanges)
+                NormalChanges(item);
+            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
                 SneakersRetheme.InitializeItem(item);
+        }
+        public static void NormalChanges(Item item)
+        {
+            if (RethemeList.ItemNames.Contains(item.type))
+                item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Normal.{item.ModItem.Name}").Value);
         }
         public static void AbsoluteChanges(Item item)
         {
@@ -406,6 +431,10 @@ namespace CalRemix.Core.Retheme
                 item.SetNameOverride(item.Name.Replace(CalRemixHelper.LocalText(relic).Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Treasure").Value));
             }
             else if (item.Name.Contains(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value))
+            {
+                item.SetNameOverride(item.Name.Replace(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Hemostone").Value));
+            }
+            else if (item.Name.Contains("Skeletron"))
             {
                 item.SetNameOverride(item.Name.Replace(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Hemostone").Value));
             }

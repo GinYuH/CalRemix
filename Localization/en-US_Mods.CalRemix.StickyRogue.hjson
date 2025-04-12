@@ -1822,3 +1822,38 @@ CalRemix/RadGlowstickSticky: {
 		Now with extra stickiness!
 		'''
 }
+
+InfernumMode/DreamtasticSticky: {
+	DisplayName: Sticky Dreamtastic
+	Tooltip:
+		'''
+		Summons two dorks that fire energy bolts at enemies
+		The book also releases energy bolts of its own
+		Contains a finite number of pages, documenting the stories of the two Dreamtastic Stars and their bountiful adventures
+		You are a dork
+		Now with extra stickiness!
+		'''
+}
+
+InfernumMode/StormMaidensRetributionSticky: {
+	DisplayName: Sticky Storm Maiden's Retribution
+	Tooltip:
+		'''
+		Fires a spear that releases torrents of red lightning once fired
+		Stealth strikes release three spears upon firing that home in on enemies and release lightning from above when colliding with something
+		A divine spear wielded by a storm goddess, tempered by her vast abilities
+		The weapon itself seems to echo with perpetual misery, regret, and mourning
+		Now with extra stickiness!
+		'''
+}
+
+InfernumMode/WanderersShellSticky: {
+	DisplayName: Sticky Wanderer's Shell
+	Tooltip:
+		'''
+		Throws a spread of sea shells that home in on enemies before bouncing off of them and lingering on the ground
+		Stealth strikes cause all lingering shells to explode into water geysers that target nearby enemies
+		The open edge is too sharp to put near your ear
+		Now with extra stickiness!
+		'''
+}

@@ -86,12 +86,14 @@ using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Biomes;
+using CalRemix.Core.Graphics;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -123,19 +125,20 @@ namespace CalRemix
         public int taintedInferno = 0;
         public bool taintedInvis = false;
         public int clawed = 0;
-        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
+        public int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
         public static int pyrogen = -1;
         public static int hypnos = -1;
         public static int aspidCount = 0;
-        private bool guardRage, guardOver, yharRage = false;
+        public bool guardRage, guardOver, yharRage = false;
+        public static readonly FieldInfo yharonInvincibleCounter = typeof(Yharon).GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance);
+        public static HelperMessage CystMessage;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        public static HelperMessage CystMessage;
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
@@ -635,7 +638,7 @@ namespace CalRemix
                 bool p6 = hp <= (flag3 ? 0.358f : (flag2 ? 0.275f : (flag ? 0.22f : 0.138f)));
 
                 Yharon yhar = npc.ModNPC as Yharon;
-                int y = (int)yhar.GetType().GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(yhar);
+                int y = (int)yharonInvincibleCounter.GetValue(yhar);
                 if (yharSay == 0)
                 {
                     Talk($"{npcName}.1", Color.OrangeRed);
@@ -1598,6 +1601,23 @@ namespace CalRemix
             {
                 NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.DukeFishron);
             }
+
+            Color NoxusTextColor = new(91, 69, 143);
+
+            // Create some indicator text when the WoF is killed about how Noxus has begun orbiting the planet.
+            if (npc.type == NPCID.WallofFlesh && !NoxusEggCutsceneSystem.NoxusBeganOrbitingPlanet)
+                CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.PostWoFDefeatText, NoxusTextColor);
+
+            // Create some indicator text when SCal or Draedon (whichever is defeated last) is defeated as a hint to fight Noxus.
+            bool draedonDefeatedLast = (npc.type == ModContent.NPCType<ThanatosHead>() || npc.type == ModContent.NPCType<AresBody>() || npc.type == ModContent.NPCType<Apollo>()) && DownedBossSystem.downedCalamitas && !DownedBossSystem.downedExoMechs;
+            bool calDefeatedLast = npc.type == ModContent.NPCType<SupremeCalamitas>() && DownedBossSystem.downedExoMechs && !DownedBossSystem.downedCalamitas;
+            if (calDefeatedLast || draedonDefeatedLast)
+            {
+                // Apply a secondary check to ensure that when an Exo Mech is killed it is the last exo mech.
+                bool noExtraExoMechs = NPC.CountNPCS(ModContent.NPCType<ThanatosHead>()) + NPC.CountNPCS(ModContent.NPCType<AresBody>()) + NPC.CountNPCS(ModContent.NPCType<Apollo>()) <= 1;
+                if (calDefeatedLast || noExtraExoMechs)
+                    CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.FinalMainBossDefeatText, NoxusTextColor);
+            }
             if (npc.type == NPCType<SupremeCataclysm>() || npc.type == NPCType<SupremeCatastrophe>())
             {
                 NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeTwin>());
@@ -1859,6 +1879,11 @@ namespace CalRemix
             if (taintedInvis)
             {
                 return false;
+            }
+            if (CalRemixAddon.Wrath != null)
+            {
+                if (npc.type == CalRemixAddon.Wrath.Find<ModNPC>("Solyn").Type && SubworldSystem.AnyActive() && ScreenHelperManager.screenHelpersEnabled)
+                    return false;
             }
             return true;
         }

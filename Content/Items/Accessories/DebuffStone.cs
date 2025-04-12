@@ -20,6 +20,7 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         public override string LocalizationCategory => "Stones";
 
         public int debuffType;
+        public Color? debuffColor;
         protected override bool CloneNewInstances => true;
 
         public override string Name => debuffType < BuffID.Count ? debuffType + "Stone" : BuffLoader.GetBuff(debuffType).Mod.Name + "/" + BuffLoader.GetBuff(debuffType).Name + "Stone";
@@ -29,7 +30,6 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         {
             debuffType = type;
         }
-
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -72,9 +72,9 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if (TextureAssets.Buff[debuffType] != null)
+            Texture2D debuff = TextureAssets.Buff[debuffType].Value;
+            if (debuffColor == null)
             {
-                Texture2D debuff = TextureAssets.Buff[debuffType].Value;
                 Color[,] color = debuff.GetColorsFromTexture();
                 Color mid = color[16, 16];
                 int atts = 5;
@@ -90,12 +90,9 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
                         break;
                     }
                 }
-                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, mid, 0, origin, scale, SpriteEffects.None, 0f);
+                debuffColor = mid;
             }
-            else
-            {
-                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, Color.White, 0, origin, scale, SpriteEffects.None, 0f);
-            }
+            spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, (debuffColor == null) ? Color.White : debuffColor.Value, 0, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
 
