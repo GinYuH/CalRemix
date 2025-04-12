@@ -9,7 +9,7 @@ using static CalRemix.Content.DifficultyModes.DifficultyModeWorld;
 
 namespace CalRemix.Content.DifficultyModes
 {
-    public class MiscWorldStateSystem : ModSystem
+    public class DifficultyModeWorldStateSystem : ModSystem
     {
         public override void ClearWorld()
         {

@@ -75,6 +75,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
+using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
@@ -1596,6 +1597,14 @@ namespace CalRemix
             if (npc.type == ModContent.NPCType<Piggy>())
             {
                 NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.DukeFishron);
+            }
+            if (npc.type == NPCType<SupremeCataclysm>() || npc.type == NPCType<SupremeCatastrophe>())
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeTwin>());
+            }
+            if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>()) > 0)
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeSkeletron>());
             }
         }
         public override bool CheckDead(NPC npc)

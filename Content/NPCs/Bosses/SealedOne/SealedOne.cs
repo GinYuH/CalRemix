@@ -33,6 +33,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
     [AutoloadBossHead]
     public class SealedOne : ModNPC
     {
+        public override bool IsLoadingEnabled(Mod mod) => false;
+
         public ref float AttackType => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
         public ref float Unsure => ref NPC.ai[2];

@@ -53,8 +53,8 @@ namespace CalRemix.Content.NPCs.Dinosaurs
         public override void SetDefaults()
         {
             NPC.CloneDefaults(NPCID.Bunny);
-            NPC.width = 150;
-            NPC.height = 110;
+            NPC.width = 50;
+            NPC.height = 50;
             NPC.lavaImmune = false;
             AIType = NPCID.Bunny;
             NPC.HitSound = MammothInjured;
@@ -74,7 +74,7 @@ namespace CalRemix.Content.NPCs.Dinosaurs
         {
             bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
@@ -117,6 +117,12 @@ namespace CalRemix.Content.NPCs.Dinosaurs
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                StretchXMult = 1;
+                StretchYMult = 1;
+            }
+            
             ReLogic.Content.Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
             SpriteEffects flip = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.EntitySpriteDraw(texture.Value, NPC.Bottom - Main.screenPosition, null, drawColor, NPC.rotation, texture.Size() * new Vector2(0.5f, 1f), NPC.scale * new Vector2(StretchXMult, StretchYMult), flip, 0);

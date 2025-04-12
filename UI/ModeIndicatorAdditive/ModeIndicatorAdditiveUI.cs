@@ -330,6 +330,7 @@ namespace CalRemix.UI.ModeIndicatorAdditive
                     Vector2 hexIconSize = hexIcon.Size();
 
                     // Get position.
+                    Vector2 positionInCircle = new Vector2();
                     Vector2 iconPosition = basePosition + positionOffset * i;
                     if (modesAtTier > 1)
                         iconPosition += Vector2.UnitX * MathHelper.Lerp(width * -1f, width, j / (float)(modesAtTier - 1)) * BarWidthExpansionProgress;

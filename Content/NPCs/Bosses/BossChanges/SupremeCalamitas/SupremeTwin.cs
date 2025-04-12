@@ -52,6 +52,10 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                 {
                     Twin = (int)TwinType.Spaztismazm;
                 }
+                else if (Main.npc[NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>())].ai[1] == (int)TwinType.Spaztismazm)
+                {
+                    Twin = (int)TwinType.Retinazer;
+                }
             }
 
             // awesome random timer start
