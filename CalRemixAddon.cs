@@ -44,6 +44,7 @@ namespace CalRemix
         internal static Mod Catalyst;
         internal static Mod Infernum;
         internal static Mod Wrath;
+        internal static Mod Fables;
 
         internal static Mod BossChecklist;
         internal static Mod MusicDisplay;
@@ -78,7 +79,8 @@ namespace CalRemix
             "CatalystMod",
             "InfernumMode",
             "NoxusBoss",
-            "UnCalamityModMusic"
+            "UnCalamityModMusic",
+            "CalamityFables"
         };
         public static List<ModItem> Items = new List<ModItem>();
         public override void Load()
@@ -87,6 +89,7 @@ namespace CalRemix
             ModLoader.TryGetMod("CatalystMod", out Catalyst);
             ModLoader.TryGetMod("InfernumMode", out Infernum);
             ModLoader.TryGetMod("NoxusBoss", out Wrath);
+            ModLoader.TryGetMod("CalamityFables", out Fables);
 
             ModLoader.TryGetMod("BossChecklist", out BossChecklist);
             ModLoader.TryGetMod("Census", out Census);
@@ -102,6 +105,7 @@ namespace CalRemix
             Catalyst = null;
             Infernum = null;
             Wrath = null;
+            Fables = null;
 
             BossChecklist = null;
             Census = null;

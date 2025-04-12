@@ -41,6 +41,7 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using Terraria.ID;
+using CalamityMod.Items.Ammo;
 
 namespace CalRemix.Core.Retheme
 {
@@ -147,6 +148,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<MajesticGuard>(), "MajesticGar" },
             { ItemType<GrandGuardian>(), "GrandGar" },
             { ItemType<Earth>(), "Garth" },
+            { ItemType<IcicleArrow>(), "IcicleArrow" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },
