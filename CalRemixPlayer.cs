@@ -64,7 +64,6 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using System.Threading.Tasks;
 using CalRemix.Content.Items.Weapons.Stormbow;
-using CalRemix.Content.Projectiles.Weapons.Stormbow;
 using Mono.Cecil;
 using CalamityMod.Items.VanillaArmorChanges;
 using CalamityMod.Buffs.StatBuffs;
