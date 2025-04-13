@@ -132,6 +132,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             Item.useStyle = ItemUseStyleID.Swing;
             Item.autoReuse = true;
+            //base.SetDefaults();
         }
     }
 
