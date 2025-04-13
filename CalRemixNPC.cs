@@ -75,6 +75,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
+using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
@@ -152,7 +153,9 @@ namespace CalRemix
             NPCType<SplitCrimulanPaladin>(),
             NPCType<SlimeGodCore>(),
             NPCType<LifeSlime>(),
-            NPCType<CragmawMire>()
+            NPCType<CragmawMire>(),
+            NPCType<ChlorinePaladin>(),
+            NPCType<SplitChlorinePaladin>()
         };
 
         public List<int> Slimes = new List<int>
@@ -1128,6 +1131,10 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<BoringStormbow>(), 5);
             }
+            if (npc.type == NPCID.GiantFungiBulb)
+            {
+                npcLoot.Add(ItemType<FungiStone>(), new Fraction(1, 50));
+            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
@@ -1377,6 +1384,7 @@ namespace CalRemix
             else if (npc.type == NPCType<CalamitasClone>())
             {
                 npcLoot.AddNormalOnly(ItemType<RisingFire>(), 25);
+                npcLoot.AddNormalOnly(ItemType<CalamityRing>());
             }
             else if (npc.type == NPCID.Plantera)
             {
@@ -1609,6 +1617,14 @@ namespace CalRemix
                 bool noExtraExoMechs = NPC.CountNPCS(ModContent.NPCType<ThanatosHead>()) + NPC.CountNPCS(ModContent.NPCType<AresBody>()) + NPC.CountNPCS(ModContent.NPCType<Apollo>()) <= 1;
                 if (calDefeatedLast || noExtraExoMechs)
                     CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.FinalMainBossDefeatText, NoxusTextColor);
+            }
+            if (npc.type == NPCType<SupremeCataclysm>() || npc.type == NPCType<SupremeCatastrophe>())
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeTwin>());
+            }
+            if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>()) > 0)
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeSkeletron>());
             }
         }
         public override bool CheckDead(NPC npc)

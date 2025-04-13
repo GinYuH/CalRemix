@@ -126,6 +126,8 @@ namespace CalRemix
         public static readonly int Ionogen = Set("IonicReinforcement");
         public static readonly int Pathogen = Set("MicrobicReinforcement");
         public static readonly int EmpressofLightDay = Set("Gegenschein");
+        public static readonly int SealedOnePhase1 = Set("SealedOne1");
+        public static readonly int SealedOnePhase2 = Set("SealedOne2");
 
         public static readonly int Pyrogen = Set("VolcanicReinforcement");
         public static readonly int Cryogen = Set("NotVolcanicReinforcement");

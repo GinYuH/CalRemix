@@ -21,6 +21,18 @@ Mods: {
 		UI: {
 			Cooldowns.BananaClown: Clown Consumption Cooldown
 			ExampleResource: Mods.CalRemix.UI.ExampleResource
+
+			DifficultyModes: {
+				NoDifficulty: {
+					Name: Mods.CalRemix.UI.DifficultyModes.NoDifficulty.Name
+					Info: Mods.CalRemix.UI.DifficultyModes.NoDifficulty.Info
+				}
+
+				TitanicDifficulty: {
+					Name: Mods.CalRemix.UI.DifficultyModes.TitanicDifficulty.Name
+					Info: Mods.CalRemix.UI.DifficultyModes.TitanicDifficulty.Info
+				}
+			}
 		}
 
 		Biomes: {
@@ -256,5 +268,7 @@ Mods: {
 			Seafood: Make the other Seafood.
 			ProfanedShard: Drops from Yggdrasil Ents in Hallow and Hell.
 		}
+
+		WorldGen.BlessedWithGoldOrPlatinumMessage: Your world has been blessed with Gold and/or Platinum!
 	}
 }

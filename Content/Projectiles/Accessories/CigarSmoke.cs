@@ -42,18 +42,23 @@ namespace CalRemix.Content.Projectiles.Accessories
             {
                 Projectile.scale += 0.05f;
             }
-            if (Projectile.timeLeft < 60)
+
+            if (Projectile.timeLeft < 120)
             {
-                Projectile.alpha += 22;
+                Projectile.alpha += 2;
             }
             else if (Projectile.alpha > 0)
             {
                 Projectile.alpha -= 22;
             }
+
             if (Projectile.alpha < 0)
             {
                 Projectile.alpha = 0;
             }
+
+            Projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
+            MathHelper.Clamp(Projectile.velocity.X, -222f, 222f);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

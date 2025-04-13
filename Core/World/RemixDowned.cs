@@ -22,6 +22,7 @@ namespace CalRemix.Core.World
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
         public static bool downedHypnos = false;
+        public static bool downedSealedOne = false;
         public static bool downedNoxegg = false;
         public static bool downedNoxus = false;
 
@@ -54,6 +55,7 @@ namespace CalRemix.Core.World
             downedDerellect = false;
             downedPolyphemalus = false;
             downedHypnos = false;
+            downedSealedOne = false;
             downedNoxegg = false;
             downedNoxus = false;
 
@@ -87,6 +89,7 @@ namespace CalRemix.Core.World
             downedDerellect = false;
             downedPolyphemalus = false;
             downedHypnos = false;
+            downedSealedOne = false;
             downedNoxegg = false;
             downedNoxus = false;
 
@@ -120,6 +123,7 @@ namespace CalRemix.Core.World
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
             tag["downedHypnos"] = downedHypnos;
+            tag["downedSealedOne"] = downedSealedOne;
             tag["downedNoxegg"] = downedNoxegg;
             tag["downedNoxus"] = downedNoxus;
 
@@ -155,6 +159,7 @@ namespace CalRemix.Core.World
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
             downedHypnos = tag.Get<bool>("downedHypnos");
+            downedSealedOne = tag.Get<bool>("downedSealedOne");
             downedNoxegg = tag.Get<bool>("downedNoxegg");
             downedNoxus = tag.Get<bool>("downedNoxus");
 
@@ -188,6 +193,7 @@ namespace CalRemix.Core.World
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
             writer.Write(downedHypnos);
+            writer.Write(downedSealedOne);
             writer.Write(downedNoxegg);
             writer.Write(downedNoxus);
 
@@ -221,6 +227,7 @@ namespace CalRemix.Core.World
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
             downedHypnos = reader.ReadBoolean();
+            downedSealedOne = reader.ReadBoolean();
             downedNoxegg = reader.ReadBoolean();
             downedNoxus = reader.ReadBoolean();
 

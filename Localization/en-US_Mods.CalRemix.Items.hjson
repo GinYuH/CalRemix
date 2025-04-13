@@ -3774,6 +3774,7 @@ Tooltips: {
 		'''
 		Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution
 		You passively rain down brimstone flames and leave behind a trail of gas and bees
+		Attacks inflict Mushy
 		Mana Overloader effect while the accessory is visible
 		'''
 	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
@@ -4066,6 +4067,23 @@ DisgustingMeat: {
 }
 
 TaintedRagePotion.DisplayName: Tainted Rage Potion
+
+CalamityRing: {
+	DisplayName: Calamity Ring
+	Tooltip:
+		'''
+		A powerful artifact made from the Auric Soul of the Dragon of Calamity
+		The strength of the auric soul contained within transforms anyone unfortunate enough to wear it into an unsightly eye
+		It was formerly worn by the Queen of Witches Calamitas to subdue her while she reigned under her handler, King Yharim
+		Doubles the damage received
+
+		'''
+}
+
+FungiStone: {
+	DisplayName: Fungi Stone
+	Tooltip: Melee attacks inflict Mushy
+}
 
 Genesis: {
 	DisplayName: Genesis

@@ -66,6 +66,8 @@ using System.Threading.Tasks;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.Projectiles.Weapons.Stormbow;
 using Mono.Cecil;
+using CalamityMod.Items.VanillaArmorChanges;
+using CalamityMod.Buffs.StatBuffs;
 
 namespace CalRemix
 {
@@ -143,6 +145,9 @@ namespace CalRemix
         public int VerbotenMode = 1;
         public bool retroman = false;
         public bool noTomorrow;
+        public bool calamityRing;
+        public bool fungiStone;
+        public bool fungiStone2;
 
         public bool miragel;
         public bool elastigel;
@@ -1093,6 +1098,9 @@ namespace CalRemix
 			dyesPink = 0;
             retroman = false;
             noTomorrow = false;
+            calamityRing = false;
+            fungiStone = false;
+            fungiStone2 = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
@@ -1153,6 +1161,21 @@ namespace CalRemix
                     npc.AddBuff(BuffID.Confused, 220);
                 }
             }
+            if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().amalgam);
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 360, false);
+                }
+                else if (Main.rand.NextBool(2))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 240, false);
+                }
+                else
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 120, false);
+                }
+            }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
@@ -1188,6 +1211,21 @@ namespace CalRemix
 				target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
                 if (target.life <= 0 && target.value > 0 && item.type == ItemType<TwistedNetheriteSword>())
                     helmet.souls += 2;
+            }
+            if (fungiStone || fungiStone2)
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 360, false);
+                }
+                else if (Main.rand.NextBool(2))
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 240, false);
+                }
+                else
+                {
+                    Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 120, false);
+                }
             }
         }
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
@@ -1232,6 +1270,10 @@ namespace CalRemix
 				Vector2 spawnvector = new Vector2(playercenter.X - 4, playercenter.Y - 4);
 				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
 			}
+            if (calamityRing)
+            {
+                npc.damage *= 2;
+            }
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
 		{
@@ -1241,8 +1283,11 @@ namespace CalRemix
 				if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ProjectileType<DestroyerElectricLaser>() ||
 					proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
 					calplayer.projectileDamageReduction += 1;
+			}
+            if (calamityRing)
+            {
+                proj.damage *= 2;
             }
-
             if (taintedWarmth)
             {
                 if (proj.Name.Contains("fire", StringComparison.CurrentCultureIgnoreCase) || proj.Name.Contains("hell", StringComparison.CurrentCultureIgnoreCase) || proj.Name.Contains("infer", StringComparison.CurrentCultureIgnoreCase))

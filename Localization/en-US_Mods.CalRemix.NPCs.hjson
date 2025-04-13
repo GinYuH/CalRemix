@@ -543,6 +543,11 @@ Xeroc.DisplayName: Avatar of Xeroc
 TreeMimic.DisplayName: Tree
 BoarCat.DisplayName: Boar Cat
 FrostHog.DisplayName: Frost Hog
+SealedOne.DisplayName: Sealed One
+SupremeSkeletron.DisplayName: Eucharist Damsel
+SupremeSkeletronHand.DisplayName: Eucharist Paratope
+GiantSkeleton.DisplayName: Giant Skeleton
+Mammoth.DisplayName: Wooly Mammoth
 
 EntropicGod: {
 	DisplayName: The Entropic God, Noxus
@@ -556,3 +561,4 @@ EntropicGod: {
 
 NoxusEgg.DisplayName: Godless Spawn, Noxus
 NoxusEggCutscene.DisplayName: ???
+SludgeWalker.DisplayName: Sludge Walker
