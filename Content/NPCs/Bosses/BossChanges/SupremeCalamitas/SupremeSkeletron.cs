@@ -4,18 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using CalamityMod.NPCs.SupremeCalamitas;
 using System;
-using CalamityMod.Projectiles.Boss;
-using System.Diagnostics;
+using System.Linq;
 using Terraria;
-using System.Collections.Generic;
-using CalamityMod.DataStructures;
-using CalamityMod.Items.Placeables.Furniture;
-using CalRemix.Content.Projectiles.Accessories;
-using CalamityMod.NPCs.SunkenSea;
 using CalamityMod;
+using CalamityMod.Events;
+using CalamityMod.NPCs;
+using CalamityMod.NPCs.SupremeCalamitas;
+using MonoMod.Cil;
 using Terraria.Audio;
+
+using SCal = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {
@@ -47,6 +46,80 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             ChasePlayer = 3,
             WanderAbovePlayer = 4
         }
+
+        public override void Load()
+        {
+            base.Load();
+
+            // this is where we are epic and make supreme calamitas care about
+            // our awesome and better version of sepulcher
+            IL.CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.DoHeartsSpawningCastAnimation += il =>
+            {
+                var c = new ILCursor(il);
+
+                c.GotoNext(x => x.MatchCall<NPC>(nameof(NPC.CountNPCS)));
+                c.Remove();
+                c.EmitDelegate(
+                    (int type) => NPC.CountNPCS(type) + NPC.CountNPCS(ModContent.NPCType<SupremeSkeletron>())
+                );
+
+                c.GotoNext(x => x.MatchCall<NPC>(nameof(NPC.NewNPC)));
+                c.Remove();
+                c.EmitLdarg0();
+                c.EmitDelegate(
+                    (
+                        IEntitySource source,
+                        int           x,
+                        int           y,
+                        int           type,
+                        int           start,
+                        float         ai0,
+                        float         ai1,
+                        float         ai2,
+                        float         ai3,
+                        int           target,
+                        SCal          self
+                    ) =>
+                    {
+                        if (self.hasSummonedSepulcher2 && type == ModContent.NPCType<SepulcherHead>())
+                        {
+                            type = ModContent.NPCType<SupremeSkeletron>();
+                        }
+                        
+                        return NPC.NewNPC(
+                            source,
+                            x,
+                            y,
+                            type,
+                            0,
+                            ai0,
+                            ai1,
+                            ai2,
+                            ai3,
+                            target
+                        );
+                    }
+                );
+            };
+
+            // TODO: Doesn't work for some reason.  Unimportant.
+            /*IL.CalamityMod.Projectiles.Summon.ProfanedCrystalMageFireballSplit.CanHitNPC += il =>
+            {
+                var c = new ILCursor(il);
+
+                c.GotoNext(MoveType.AfterLabel, x => x.MatchStloc(out _));
+
+                c.EmitLdarg(1); // NPC target
+                c.EmitDelegate(
+                    (bool value, NPC target) => value || target.type == ModContent.NPCType<SupremeSkeletron>() || target.type == ModContent.NPCType<SupremeSkeletronHand>()
+                );
+            };*/
+
+            var boss = BossRushEvent.Bosses.First(x => x.EntityID == ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>());
+            boss.HostileNPCsToNotDelete.Add(ModContent.NPCType<SupremeSkeletron>());
+            boss.HostileNPCsToNotDelete.Add(ModContent.NPCType<SupremeSkeletronHand>());
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eucharist Damsel");
@@ -82,6 +155,10 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         }
         public override void AI()
         {
+            // This is dangerous because Calamity only expects SepulcherHead to
+            // set this.  Should be fine for now!
+            CalamityGlobalNPC.SCalWorm = NPC.whoAmI;
+            
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Vector2.Distance(Target.Center, NPC.Center) > 8000)
             {
                 NPC.TargetClosest(faceTarget: false);
