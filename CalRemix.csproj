@@ -16,6 +16,7 @@
     <Content Remove="TomatsSecretAwesomeStuff\**"/>
     <Compile Remove="TomatsSecretAwesomeStuff\**"/>
     <EmbeddedResource Remove="TomatsSecretAwesomeStuff\**"/>
+    <AdditionalFiles Remove="TomatsSecretAwesomeStuff\**"/>
   </ItemGroup>
   
   <ItemGroup>
