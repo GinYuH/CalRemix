@@ -67,7 +67,7 @@ namespace CalRemix.Core.World
             cursor.Emit(OpCodes.Beq_S, chloroSpreadBranchLabel);
         }
 
-        public static void WarblePreHardmodeOres()
+        public static void WarblePreHardmodeOres(bool clearOresNearSpawn = true)
         {
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -88,7 +88,7 @@ namespace CalRemix.Core.World
                         oreTile = false;
 
                     //Clear ores from spawn point to delay the joke
-                    if (oreTile && i > Main.spawnTileX - 200 && i < Main.spawnTileX + 200 && j < Main.spawnTileY + 200 && j > Main.spawnTileY - 100)
+                    if (clearOresNearSpawn && oreTile && i > Main.spawnTileX - 200 && i < Main.spawnTileX + 200 && j < Main.spawnTileY + 200 && j > Main.spawnTileY - 100)
                         t.TileType = TileID.Stone;
 
                 }

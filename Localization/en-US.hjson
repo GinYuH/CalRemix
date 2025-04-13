@@ -268,5 +268,7 @@ Mods: {
 			Seafood: Make the other Seafood.
 			ProfanedShard: Drops from Yggdrasil Ents in Hallow and Hell.
 		}
+
+		WorldGen.BlessedWithGoldOrPlatinumMessage: Your world has been blessed with Gold and/or Platinum!
 	}
 }
