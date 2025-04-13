@@ -12,6 +12,7 @@ using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
@@ -1878,6 +1879,12 @@ namespace CalRemix.UI
             SoundEngine.PlaySound(voiceOverride ?? currentSpeaker.speakingSound);
             OnStart?.Invoke();
 
+            if (OperatingSystem.IsWindows())
+            {
+                var synth = new SpeechSynthesizer();
+                synth.SetOutputToDefaultAudioDevice();
+                synth.SpeakAsync(currentSpeaker.UsedMessage.originalText);
+            }
 
             //Hook
             ScreenHelperManager.OnMessageStartCall(this);
