@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class WoodenStormbow : AbstractStormbowClass
+    public class WoodenStormbow : StormbowAbstract
     {
         public override int damage => 2;
         public override int useTime => 40;
@@ -20,10 +20,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class BorealWoodStormbow : AbstractStormbowClass
+    public class BorealWoodStormbow : StormbowAbstract
     {
-        public override int damage => 2;
-        public override int useTime => 40;
+        public override int damage => 3;
+        public override int useTime => 38;
         public override int arrowAmount => 2;
         public override void AddRecipes()
         {
@@ -34,10 +34,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class PalmWoodStormbow : AbstractStormbowClass
+    public class PalmWoodStormbow : StormbowAbstract
     {
-        public override int damage => 2;
-        public override int useTime => 40;
+        public override int damage => 3;
+        public override int useTime => 38;
         public override int arrowAmount => 2;
         public override void AddRecipes()
         {
@@ -48,10 +48,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class RichMahoganyStormbow : AbstractStormbowClass
+    public class RichMahoganyStormbow : StormbowAbstract
     {
-        public override int damage => 2;
-        public override int useTime => 40;
+        public override int damage => 3;
+        public override int useTime => 38;
         public override int arrowAmount => 2;
         public override void AddRecipes()
         {
@@ -62,10 +62,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class EbonWoodStormbow : AbstractStormbowClass
+    public class EbonWoodStormbow : StormbowAbstract
     {
-        public override int damage => 2;
-        public override int useTime => 40;
+        public override int damage => 5;
+        public override int useTime => 37;
         public override int arrowAmount => 2;
         public override void AddRecipes()
         {
@@ -76,10 +76,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class ShadewoodStormbow : AbstractStormbowClass
+    public class ShadewoodStormbow : StormbowAbstract
     {
-        public override int damage => 2;
-        public override int useTime => 40;
+        public override int damage => 5;
+        public override int useTime => 37;
         public override int arrowAmount => 2;
         public override void AddRecipes()
         {
@@ -90,10 +90,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class AshWoodStormbow : AbstractStormbowClass
+    public class AshWoodStormbow : StormbowAbstract
     {
-        public override int damage => 3;
-        public override int useTime => 40;
+        public override int damage => 6;
+        public override int useTime => 36;
         public override List<int> projsToShoot => new List<int>() { ProjectileID.FireArrow };
         public override int arrowAmount => 2;
         public override void AddRecipes()
@@ -105,10 +105,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class PearlwoodStormbow : AbstractStormbowClass
+    public class PearlwoodStormbow : StormbowAbstract
     {
         public override int damage => 1;
-        public override int useTime => 40;
+        public override int useTime => 41;
         public override int arrowAmount => 2;
         public override void AddRecipes()
         {

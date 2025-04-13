@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
     #region Pre-HM
-    public class CopperStormbow : AbstractStormbowClass
+    public class CopperStormbow : StormbowAbstract
     {
         public override int damage => 6;
         public override void AddRecipes()
@@ -20,7 +20,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class TinStormbow : AbstractStormbowClass
+    public class TinStormbow : StormbowAbstract
     {
         public override int damage => 7;
         public override void AddRecipes()
@@ -33,7 +33,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class IronStormbow : AbstractStormbowClass
+    public class IronStormbow : StormbowAbstract
     {
         public override int damage => 5;
         public override int crit => 20;
@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class LeadStormbow : AbstractStormbowClass
+    public class LeadStormbow : StormbowAbstract
     {
         public override int damage => 6;
         public override int crit => 22;
@@ -59,7 +59,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class SilverStormbow : AbstractStormbowClass
+    public class SilverStormbow : StormbowAbstract
     {
         public override int damage => 8;
         public override void AddRecipes()
@@ -72,7 +72,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class TungstenStormbow : AbstractStormbowClass
+    public class TungstenStormbow : StormbowAbstract
     {
         public override int damage => 9;
         public override void AddRecipes()
@@ -85,7 +85,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class GoldStormbow : AbstractStormbowClass
+    public class GoldStormbow : StormbowAbstract
     {
         public override int damage => 10;
         public override void AddRecipes()
@@ -98,7 +98,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class PlatinumStormbow : AbstractStormbowClass
+    public class PlatinumStormbow : StormbowAbstract
     {
         public override int damage => 11;
         public override void AddRecipes()
@@ -112,7 +112,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         }
     }
 
-    public class SpacePinball : AbstractStormbowClass
+    public class SpacePinball : StormbowAbstract
     {
         public override int damage => 34;
         public override int useTime => 12;
@@ -130,7 +130,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class WorldFeeder : AbstractStormbowClass
+    public class WorldFeeder : StormbowAbstract
     {
         public override int damage => 32;
         public override int useTime => 12;
@@ -146,7 +146,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class OfVericourse : AbstractStormbowClass
+    public class OfVericourse : StormbowAbstract
     {
         public override int damage => 46;
         public override int useTime => 22;
@@ -157,7 +157,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     // the hellstone bow, Fruminous, uses its own logic
     #endregion
     #region HM
-    public class CobaltStormbow : AbstractStormbowClass
+    public class CobaltStormbow : StormbowAbstract
     {
         public override int damage =>54;
         public override int crit => 12;
@@ -174,7 +174,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class PalladiumStormbow : AbstractStormbowClass
+    public class PalladiumStormbow : StormbowAbstract
     {
         public override int damage => 54;
         public override int crit => 12;
@@ -191,7 +191,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class MythrilStormbow : AbstractStormbowClass
+    public class MythrilStormbow : StormbowAbstract
     {
         public override int damage => 54;
         public override int crit => 12;
@@ -208,7 +208,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class OrichalcumStormbow : AbstractStormbowClass
+    public class OrichalcumStormbow : StormbowAbstract
     {
         public override int damage => 54;
         public override int crit => 12;
@@ -225,7 +225,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class AdamantiteStormbow : AbstractStormbowClass
+    public class AdamantiteStormbow : StormbowAbstract
     {
         public override int damage => 54;
         public override int crit => 12;
@@ -242,7 +242,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
-    public class TitaniumStormbow : AbstractStormbowClass
+    public class TitaniumStormbow : StormbowAbstract
     {
         public override int damage => 54;
         public override int crit => 12;
@@ -260,7 +260,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         }
     }
 
-    public class ExcaliburStormbow : AbstractStormbowClass
+    public class ExcaliburStormbow : StormbowAbstract
     {
         public override int damage => 100;
         public override int useTime => 62;
@@ -268,6 +268,59 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override int arrowAmount => 12;
         public override OverallRarity overallRarity => OverallRarity.Pink;
     }
-    // chlorophyte? not sure what you're talking about...
+    #region Chlorophyte
+    public abstract class ChlorophyteStormbow : StormbowAbstract
+    {
+        public override int damage => 74;
+        public override int crit => 12;
+        public override int useTime => 14;
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.ChlorophyteArrow, ProjectileID.ChlorophyteBullet, ProjectileID.ChlorophyteOrb, ProjectileID.SporeCloud };
+        public override int arrowAmount => 5;
+        public override OverallRarity overallRarity => OverallRarity.Lime;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.ChlorophyteBar, 30).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
+    }
+    public abstract class ChlorophyteStormbowSword : ChlorophyteStormbow
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.useStyle = ItemUseStyleID.Swing;
+        }
+    }
+
+    // sprited by split
+    public class ChlorophyteStormbowTheFirst : ChlorophyteStormbow { }
+    // sprited by split
+    public class ChlorophyteStormbowTheSecond : ChlorophyteStormbowSword { }
+    // sprited by mochi
+    public class ChlorophyteStormbowTheThird : ChlorophyteStormbow { }
+    // sprited by moonbee
+    public class ChlorophyteStormbowTheFourth : ChlorophyteStormbow { }
+    // sprited by me!!!! caligulasaquarium. so its the best. yep
+    public class ChlorophyteStormbowTheFifth : ChlorophyteStormbow { }
+    // sprited by the pooper
+    public class ChlorophyteStormbowTheSixth : ChlorophyteStormbow { }
+    // sprited by yuh
+    public class ChlorophyteStormbowTheSeventh : ChlorophyteStormbow { }
+    // sprited by spoop
+    public class ChlorophyteStormbowTheEighth : ChlorophyteStormbow { }
+    // sprited by babybluesheep
+    public class ChlorophyteStormbowTheNineth : ChlorophyteStormbow { }
+    // sprited by willowmaine
+    public class ChlorophyteStormbowTheTenth : ChlorophyteStormbow { }
+    // sprited by ibanplay
+    public class ChlorophyteStormbowTheEleventh : ChlorophyteStormbowSword { }
+    // sprited by delly
+    public class ChlorophyteStormbowTheTwelvth : ChlorophyteStormbowSword { }
+    // sprited by crimsoncb
+    public class ChlorophyteStormbowTheThirteenth : ChlorophyteStormbow { }
+    #endregion
     #endregion
 }
