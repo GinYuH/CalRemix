@@ -75,6 +75,8 @@ namespace CalRemix.Core
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
+            
+            IL_UIWorldCreation.AddWorldSizeOptions += ReplaceWorldSelectionSizeDescriptions;
 
             On_Main.DrawDust += DrawStatic;
             On_Main.DrawLiquid += DrawTsarBomba;
@@ -839,5 +841,18 @@ namespace CalRemix.Core
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
         private static bool DoGMusicDeath(On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase1MusicScene self) => false;
         private static bool DoGMusicDeath2(On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase2MusicScene self) => false;
+        
+        private static void ReplaceWorldSelectionSizeDescriptions(ILContext il)
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeMedium"));
+            c.EmitPop();
+            c.EmitLdstr("Mods.CalRemix.UI.MediumWorldWarning");
+            
+            c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeLarge"));
+            c.EmitPop();
+            c.EmitLdstr("Mods.CalRemix.UI.LargeWorldGreening");
+        }
     }
 }
