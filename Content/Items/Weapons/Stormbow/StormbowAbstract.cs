@@ -20,7 +20,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public abstract class AbstractStormbowClass : ModItem, ILocalizedModType
+    public abstract class StormbowAbstract : ModItem, ILocalizedModType
     {
         public virtual int damage => 1;
         public virtual int crit => 4;
@@ -61,10 +61,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.knockBack = 3.5f;
-            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.shoot = projsToShoot[0];
             // i dont wanna deal with item sizes man
-            Item.width = 20;
-            Item.height = 20;
+            Item.width = 22;
+            Item.height = 22;
 
             Item.shootSpeed = shootSpeed;
             Item.damage = damage;

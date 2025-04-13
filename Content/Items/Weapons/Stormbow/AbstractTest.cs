@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
-    public class AbstractTest : AbstractStormbowClass
+    public class AbstractTest : StormbowAbstract
     {
         public override int damage => 6;
         public override int crit => 4;
