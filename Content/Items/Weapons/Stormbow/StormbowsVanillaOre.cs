@@ -1,6 +1,9 @@
 ﻿using CalamityMod.Projectiles.Rogue;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -154,7 +157,50 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override int arrowAmount => 4;
         public override OverallRarity overallRarity => OverallRarity.Blue;
     }
-    // the hellstone bow, Fruminous, uses its own logic
+    public class Fruminous : StormbowAbstract
+    {
+        public override int damage => 57;
+        public override int crit => 16;
+        public override int useTime => 28;
+        public override SoundStyle useSound => SoundID.Item5;
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.Hellwing };
+        public override int arrowAmount => 5;
+        public override OverallRarity overallRarity => OverallRarity.Orange;
+        // these dont use my awesome system bcuz hellwing bats are fucking weird and i hate them
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            for (int i = 0; i < arrowAmount; i++)
+            {
+                Vector2 cursorPos = player.Center; // lol
+                float speedX = Main.rand.Next(-60, 91) * 0.02f;
+                float speedY = Main.rand.Next(-60, 91) * 0.02f;
+
+                // arrow position noise pass
+                cursorPos.X += Main.rand.Next(-60, 61);
+                cursorPos.Y += Main.rand.Next(-60, 61);
+
+                int ai1 = -10;
+
+                // if to right of player, right direct all projectiles. else, left
+                if (Main.MouseWorld.X - player.Center.X > 0)
+                {
+                    cursorPos.X -= 1500;
+                    speedX += 50;
+                    ai1 = 10;
+                }
+                else
+                {
+                    cursorPos.X += 1500;
+                    speedX -= 50;
+                }
+
+                int batOffset = Main.rand.Next(-3, 3);
+
+                int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, ai1, batOffset);
+            }
+            return false;
+        }
+    }
     #endregion
     #region HM
     public class CobaltStormbow : StormbowAbstract
