@@ -19,8 +19,4 @@
     <AdditionalFiles Remove="TomatsSecretAwesomeStuff\**"/>
   </ItemGroup>
   
-  <ItemGroup>
-    <ProjectReference Include="TomatsSecretAwesomeStuff\TomatsSecretAwesomeStuff.csproj" />
-  </ItemGroup>
-  
 </Project>
