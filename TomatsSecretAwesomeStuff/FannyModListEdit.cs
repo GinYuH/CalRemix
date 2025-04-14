@@ -36,6 +36,14 @@ public static class FannyModListEdit
         float  SpeedMultiplier
     );
 
+    private enum FannyState
+    {
+        Idle,
+        Sob,
+        Stare,
+        Awe,
+    }
+
     private static readonly FannyTexture fanny_idle = new(
         Texture: "UI/Fanny/ModList_FannyIdle",
         FrameCount: 8,
@@ -59,6 +67,8 @@ public static class FannyModListEdit
         FrameCount: 2,
         SpeedMultiplier: 5f
     );
+
+    private static FannyState fannyState = FannyState.Idle;
 
     private static Mod?  theMod;
     private static bool  isCurrentlyHandlingOurMod;
@@ -118,15 +128,52 @@ public static class FannyModListEdit
 
         if (!attached)
         {
+            // pre-request assets
+            theMod.Assets.Request<Texture2D>(fanny_idle.Texture);
+            theMod.Assets.Request<Texture2D>(fanny_cry.Texture);
+            theMod.Assets.Request<Texture2D>(fanny_stare.Texture);
+            theMod.Assets.Request<Texture2D>(fanny_awe.Texture);
+            
             self._uiModStateText.OnMouseOver += (e, _) =>
             {
                 enabledWhenHoveredOver = self._uiModStateText._enabled;
                 hoveringEnabledButton  = true;
+
+                if (self._uiModStateText._enabled)
+                {
+                    fannyState = FannyState.Sob;
+                }
+                else
+                {
+                    fannyState = FannyState.Awe;
+                }
             };
 
             self._uiModStateText.OnMouseOut += (e, _) =>
             {
                 hoveringEnabledButton = false;
+
+                fannyState = self._uiModStateText._enabled ? FannyState.Idle : FannyState.Stare;
+            };
+            
+            self._uiModStateText.OnLeftClick += (e, _) =>
+            {
+                var nowEnabled = self._uiModStateText._enabled;
+
+                if (!nowEnabled && enabledWhenHoveredOver)
+                {
+                    fannyState = FannyState.Stare;
+                }
+                else if (nowEnabled && !enabledWhenHoveredOver)
+                {
+                    fannyState = FannyState.Idle;
+                }
+                /*else
+                {
+                    fannyState = FannyState.Sob;
+                }*/
+                
+                enabledWhenHoveredOver = nowEnabled;
             };
 
             attached = true;
@@ -151,9 +198,9 @@ public static class FannyModListEdit
             return;
         }
 
-        var fannyTexture = GetFannyTexture(uiModItem, out var stay);
+        var fannyTexture = GetFannyTexture(uiModItem);
 
-        hoverProgress += (self.IsMouseHovering || stay ? 1f : -1f) / 45f;
+        hoverProgress += (self.IsMouseHovering || fannyState == FannyState.Stare ? 1f : -1f) / 45f;
         hoverProgress =  Math.Clamp(hoverProgress, 0f, 1f);
 
         orig(self, spriteBatch);
@@ -199,41 +246,16 @@ public static class FannyModListEdit
 
         return;
 
-        static FannyTexture GetFannyTexture(UIModItem ui, out bool stay)
+        static FannyTexture GetFannyTexture(UIModItem ui)
         {
-            stay = false;
-
-            var enabledHovered = ui._uiModStateText.IsMouseHovering;
-            var enabled        = ui._uiModStateText._enabled;
-
-            if (hoveringEnabledButton)
+            return fannyState switch
             {
-                if (enabledWhenHoveredOver && !enabled)
-                {
-                    stay = true;
-                    return fanny_stare;
-                }
-
-                if (!enabledWhenHoveredOver && enabled)
-                {
-                    return fanny_idle;
-                }
-            }
-
-            if (!enabled && enabledHovered)
-            {
-                // pls enable
-                return fanny_awe;
-            }
-
-            if (!enabled)
-            {
-                // I fucking ahte you
-                stay = true;
-                return fanny_stare;
-            }
-
-            return fanny_idle;
+                FannyState.Idle => fanny_idle,
+                FannyState.Sob  => fanny_cry,
+                FannyState.Stare => fanny_stare,
+                FannyState.Awe   => fanny_awe,
+                _               => fanny_idle,
+            };
         }
     }
 
