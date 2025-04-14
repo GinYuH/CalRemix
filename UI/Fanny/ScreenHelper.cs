@@ -27,8 +27,10 @@ namespace CalRemix.UI
     /// <summary>
     /// Represents the character / UI eleemnt of the character itself
     /// </summary>
-    public class ScreenHelper : UIElement
+    public class ScreenHelper(string name) : UIElement
     {
+        public string Name { get; } = name;
+
         public Vector2 BasePosition => GetDimensions().ToRectangle().Bottom();
         public ScreenHelperTextbox SpeechBubble;
 
@@ -614,18 +616,18 @@ namespace CalRemix.UI
 
     public class ScreenHelpersUIState : UIState
     {
-        public static ScreenHelper FannyTheFire = new ScreenHelper();
-        public static ScreenHelper EvilFanny = new ScreenHelper();
-        public static ScreenHelper WonderFlower = new ScreenHelper();
-        public static ScreenHelper BizarroFanny = new ScreenHelper();
-        public static ScreenHelper Renault5 = new ScreenHelper();
-        public static ScreenHelper CrimSon = new ScreenHelper();
-        public static ScreenHelper TrapperBulbChan = new ScreenHelper();
-        public static ScreenHelper MiracleBoy = new ScreenHelper();
-        public static ScreenHelper MovieCygn = new ScreenHelper();
-        public static ScreenHelper Solyn = new ScreenHelper();
+        public static ScreenHelper FannyTheFire = new("Fanny");
+        public static ScreenHelper EvilFanny = new("EvilFanny");
+        public static ScreenHelper WonderFlower = new("WonderFlower");
+        public static ScreenHelper BizarroFanny = new("BizarroFanny");
+        public static ScreenHelper Renault5 = new("Renault5");
+        public static ScreenHelper CrimSon = new("CrimSon");
+        public static ScreenHelper TrapperBulbChan = new("TrapperBulbChan");
+        public static ScreenHelper MiracleBoy = new("MiracleBoy");
+        public static ScreenHelper MovieCygn = new("MovieCygn");
+        public static ScreenHelper Solyn = new("Solyn");
 
-        public static ScreenHelper AltMetalFanny = new ScreenHelper();
+        public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
 
         public override void OnInitialize()
         {
@@ -1840,6 +1842,13 @@ namespace CalRemix.UI
         /// </summary>
         public void PlayMessage(ScreenHelper speaker)
         {
+            // Once the character has been seen, take note.  Make sure the
+            // character is available and isn't just being forced to speak.
+            if (speaker.CharacterAvailableCondition)
+            {
+                PersistentData.UnlockHelper(speaker.Name);
+            }
+            
             TimeLeft = messageDuration + delayTime;
             speaker.UsedMessage = this;
             currentSpeaker = speaker;

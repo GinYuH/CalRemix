@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 using Microsoft.Xna.Framework;
@@ -30,13 +31,72 @@ public static class FannyModListEdit
         Rectangle?    ClipRectangle
     );
 
-    private readonly record struct FannyTexture(
+    private readonly record struct HelperTexture(
         string Texture,
         int    FrameCount,
         float  SpeedMultiplier
     );
 
-    private enum FannyState
+    private readonly record struct Helper(
+        HelperTexture Idle,
+        HelperTexture Sob,
+        HelperTexture Stare,
+        HelperTexture Awe
+    );
+
+    private static readonly Dictionary<string, Helper> helpers = new()
+    {
+        {
+            "Fanny", new Helper(
+                Idle: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Idle",
+                    FrameCount: 13,
+                    SpeedMultiplier: 7f
+                ),
+                Sob: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Cry",
+                    FrameCount: 2,
+                    SpeedMultiplier: 3.5f
+                ),
+                Stare: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Stare",
+                    FrameCount: 1,
+                    SpeedMultiplier: 0f
+                ),
+                Awe: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Awe",
+                    FrameCount: 4,
+                    SpeedMultiplier: 5f
+                )
+            )
+        },
+        {
+            "EvilFanny", new Helper(
+                Idle: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Idle",
+                    FrameCount: 13,
+                    SpeedMultiplier: 7f
+                ),
+                Sob: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Cry",
+                    FrameCount: 2,
+                    SpeedMultiplier: 3.5f
+                ),
+                Stare: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Stare",
+                    FrameCount: 1,
+                    SpeedMultiplier: 0f
+                ),
+                Awe: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_Fanny_Awe",
+                    FrameCount: 4,
+                    SpeedMultiplier: 5f
+                )
+            )
+        },
+    };
+
+    private enum HelperState
     {
         Idle,
         Sob,
@@ -44,31 +104,22 @@ public static class FannyModListEdit
         Awe,
     }
 
-    private static readonly FannyTexture fanny_idle = new(
-        Texture: "UI/Fanny/ModList_FannyIdle",
-        FrameCount: 13,
-        SpeedMultiplier: 7f
-    );
+    private static string? currentHelper;
 
-    private static readonly FannyTexture fanny_cry = new(
-        Texture: "UI/Fanny/ModList_FannyCry",
-        FrameCount: 2,
-        SpeedMultiplier: 3.5f
-    );
+    private static Helper? CurrentHelper
+    {
+        get
+        {
+            if (currentHelper is null)
+            {
+                return null;
+            }
 
-    private static readonly FannyTexture fanny_stare = new(
-        Texture: "UI/Fanny/ModList_FannyStare",
-        FrameCount: 1,
-        SpeedMultiplier: 0f
-    );
+            return helpers.TryGetValue(currentHelper, out var helper) ? helper : null;
+        }
+    }
 
-    private static readonly FannyTexture fanny_awe = new(
-        Texture: "UI/Fanny/ModList_FannyAwe",
-        FrameCount: 4,
-        SpeedMultiplier: 5f
-    );
-
-    private static FannyState fannyState = FannyState.Idle;
+    private static HelperState helperState = HelperState.Idle;
 
     private static Mod?  theMod;
     private static bool  isCurrentlyHandlingOurMod;
@@ -78,9 +129,13 @@ public static class FannyModListEdit
 
     private static readonly List<DrawCall> pending_calls = [];
 
-    public static void Load(Mod mod)
+    private static Func<List<string>>? theHelpersProvider;
+
+    public static void Load(Mod mod, Func<List<string>> helpersProvider)
     {
         theMod = mod;
+
+        theHelpersProvider = helpersProvider;
 
         MonoModHooks.Add(
             GetMethod(nameof(UIModItem.Draw)),
@@ -105,6 +160,14 @@ public static class FannyModListEdit
             c.Remove();
             c.EmitDelegate(UserInterfaceDraw);
         };
+
+        foreach (var (_, helper) in helpers)
+        {
+            theMod.Assets.Request<Texture2D>(helper.Awe.Texture);
+            theMod.Assets.Request<Texture2D>(helper.Idle.Texture);
+            theMod.Assets.Request<Texture2D>(helper.Stare.Texture);
+            theMod.Assets.Request<Texture2D>(helper.Sob.Texture);
+        }
 
         return;
 
@@ -148,29 +211,25 @@ public static class FannyModListEdit
 
         orig(self);
 
-        // pre-request assets
-        theMod.Assets.Request<Texture2D>(fanny_idle.Texture);
-        theMod.Assets.Request<Texture2D>(fanny_cry.Texture);
-        theMod.Assets.Request<Texture2D>(fanny_stare.Texture);
-        theMod.Assets.Request<Texture2D>(fanny_awe.Texture);
+        var verifiedHelpers = (theHelpersProvider?.Invoke() ?? [])
+                             .Where(x => helpers.ContainsKey(x))
+                             .ToArray();
+
+        if (verifiedHelpers.Length > 0)
+        {
+            currentHelper = verifiedHelpers[Main.rand.Next(verifiedHelpers.Length)];
+        }
 
         self._uiModStateText.OnMouseOver += (e, _) =>
         {
             enabledWhenHoveredOver = self._uiModStateText._enabled;
 
-            if (self._uiModStateText._enabled)
-            {
-                fannyState = FannyState.Sob;
-            }
-            else
-            {
-                fannyState = FannyState.Awe;
-            }
+            helperState = self._uiModStateText._enabled ? HelperState.Sob : HelperState.Awe;
         };
 
         self._uiModStateText.OnMouseOut += (e, _) =>
         {
-            fannyState = self._uiModStateText._enabled ? FannyState.Idle : FannyState.Stare;
+            helperState = self._uiModStateText._enabled ? HelperState.Idle : HelperState.Stare;
         };
 
         self._uiModStateText.OnLeftClick += (e, _) =>
@@ -179,16 +238,12 @@ public static class FannyModListEdit
 
             if (!nowEnabled && enabledWhenHoveredOver)
             {
-                fannyState = FannyState.Stare;
+                helperState = HelperState.Stare;
             }
             else if (nowEnabled && !enabledWhenHoveredOver)
             {
-                fannyState = FannyState.Idle;
+                helperState = HelperState.Idle;
             }
-            /*else
-            {
-                fannyState = FannyState.Sob;
-            }*/
 
             enabledWhenHoveredOver = nowEnabled;
         };
@@ -208,12 +263,17 @@ public static class FannyModListEdit
             return;
         }
 
-        var fannyTexture = GetFannyTexture(uiModItem);
-
-        hoverProgress += (self.IsMouseHovering || fannyState == FannyState.Stare ? 1f : -1f) / 45f;
-        hoverProgress =  Math.Clamp(hoverProgress, 0f, 1f);
-
         orig(self, spriteBatch);
+
+        if (!CurrentHelper.HasValue)
+        {
+            return;
+        }
+
+        var fannyTexture = GetFannyTexture(CurrentHelper.Value);
+
+        hoverProgress += (self.IsMouseHovering || helperState == HelperState.Stare ? 1f : -1f) / 45f;
+        hoverProgress =  Math.Clamp(hoverProgress, 0f, 1f);
 
         var modIconDims = uiModItem._modIcon.GetDimensions();
 
@@ -234,13 +294,6 @@ public static class FannyModListEdit
         var fannyOrigin = fannyFrame.Size() / 2f;
         fannyOrigin.Y += fannyFrame.Height / 2f;
 
-        var clipRectangle = new Rectangle(
-            0,
-            0,
-            Main.screenWidth,
-            (int)modIconDims.Y
-        );
-
         pending_calls.Add(
             new DrawCall(
                 fannyImage.Value,
@@ -258,15 +311,15 @@ public static class FannyModListEdit
 
         return;
 
-        static FannyTexture GetFannyTexture(UIModItem ui)
+        static HelperTexture GetFannyTexture(Helper helper)
         {
-            return fannyState switch
+            return helperState switch
             {
-                FannyState.Idle  => fanny_idle,
-                FannyState.Sob   => fanny_cry,
-                FannyState.Stare => fanny_stare,
-                FannyState.Awe   => fanny_awe,
-                _                => fanny_idle,
+                HelperState.Idle  => helper.Idle,
+                HelperState.Sob   => helper.Sob,
+                HelperState.Stare => helper.Stare,
+                HelperState.Awe   => helper.Awe,
+                _                 => helper.Idle,
             };
         }
     }
