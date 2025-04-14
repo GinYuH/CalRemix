@@ -46,7 +46,7 @@ public static class FannyModListEdit
 
     private static readonly FannyTexture fanny_idle = new(
         Texture: "UI/Fanny/ModList_FannyIdle",
-        FrameCount: 7,
+        FrameCount: 13,
         SpeedMultiplier: 7f
     );
 
