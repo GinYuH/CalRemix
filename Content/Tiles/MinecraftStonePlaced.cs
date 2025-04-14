@@ -1,0 +1,50 @@
+using Microsoft.Xna.Framework;
+
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace CalRemix.Content.Tiles;
+
+public abstract class MinecraftStonePlaced : ModTile
+{
+    protected abstract Color MapColor { get; }
+
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+
+        Main.tileSolid[Type]      = true;
+        Main.tileMergeDirt[Type]  = true;
+        Main.tileBlockLight[Type] = true;
+        
+        AddMapEntry(MapColor, CreateMapEntryName());
+    }
+}
+
+public sealed class AndesitePlaced : MinecraftStonePlaced
+{
+    protected override Color MapColor => new(138, 138, 142);
+}
+
+public sealed class DioritePlaced : MinecraftStonePlaced
+{
+    protected override Color MapColor => new(190, 191, 193);
+}
+
+public sealed class GranitePlaced : MinecraftStonePlaced
+{
+    protected override Color MapColor => new(161, 107, 87);
+}
+
+public sealed class DeepslatePlaced : MinecraftStonePlaced
+{
+    protected override Color MapColor => new(61, 61, 67);
+
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        
+        RegisterItemDrop(TileID.Stone);
+    }
+}
