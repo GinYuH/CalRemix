@@ -48,6 +48,8 @@ using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
 using CalRemix.Content.Items.Weapons.Stormbow;
 
+using Terraria.Localization;
+
 namespace CalRemix.Core.World
 {
     public class CalRemixWorld : ModSystem
@@ -1109,6 +1111,45 @@ namespace CalRemix.Core.World
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
+            var shiniesIndex = tasks.FindIndex(x => x.Name.Equals("Shinies"));
+            tasks.Insert(
+                shiniesIndex + 1,
+                new PassLegacy(
+                    "Dullies",
+                    (progress, _) =>
+                    {
+                        progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.Dullies");
+
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 6E-05); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh), WorldGen.genRand.Next(3, 6), WorldGen.genRand.Next(2, 6), GetRandomStoneType());
+                        }
+
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 8E-05); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh), WorldGen.genRand.Next(3, 7), WorldGen.genRand.Next(3, 7), GetRandomStoneType());
+                        }
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 0.0002); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayerLow, Main.maxTilesY), WorldGen.genRand.Next(4, 9), WorldGen.genRand.Next(4, 8), GetRandomStoneType());
+                        }
+
+                        return;
+
+                        static int GetRandomStoneType()
+                        {
+                            return WorldGen.genRand.Next(0, 3) switch
+                            {
+                                0 => TileType<AndesitePlaced>(),
+                                1 => TileType<DioritePlaced>(),
+                                2 => TileType<GranitePlaced>(),
+                                _ => TileType<AndesitePlaced>(),
+                            };
+                        }
+                    }
+                )
+            );
+            
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
             int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
             tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
