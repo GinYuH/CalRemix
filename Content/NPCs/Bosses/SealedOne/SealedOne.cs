@@ -33,7 +33,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
     [AutoloadBossHead]
     public class SealedOne : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod) => false;
+        //public override bool IsLoadingEnabled(Mod mod) => false;
 
         public ref float AttackType => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
@@ -74,8 +74,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void SetDefaults()
         {
-            NPC.width = 121;
-            NPC.height = 177;
+            NPC.width = 128;
+            NPC.height = 164;
             NPC.aiStyle = -1;
             NPC.damage = 50;
             NPC.defense = 42;
