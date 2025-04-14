@@ -73,22 +73,22 @@ public static class FannyModListEdit
         {
             "EvilFanny", new Helper(
                 Idle: new HelperTexture(
-                    Texture: "UI/Fanny/ModList_Fanny_Idle",
+                    Texture: "UI/Fanny/ModList_EvilFanny_Idle",
                     FrameCount: 13,
                     SpeedMultiplier: 7f
                 ),
                 Sob: new HelperTexture(
-                    Texture: "UI/Fanny/ModList_Fanny_Cry",
+                    Texture: "UI/Fanny/ModList_EvilFanny_Cry",
                     FrameCount: 2,
                     SpeedMultiplier: 3.5f
                 ),
                 Stare: new HelperTexture(
-                    Texture: "UI/Fanny/ModList_Fanny_Stare",
+                    Texture: "UI/Fanny/ModList_EvilFanny_Stare",
                     FrameCount: 1,
                     SpeedMultiplier: 0f
                 ),
                 Awe: new HelperTexture(
-                    Texture: "UI/Fanny/ModList_Fanny_Awe",
+                    Texture: "UI/Fanny/ModList_EvilFanny_Awe",
                     FrameCount: 4,
                     SpeedMultiplier: 5f
                 )

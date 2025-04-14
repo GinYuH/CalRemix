@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+
+using Newtonsoft.Json.Linq;
 
 using Terraria;
 using Terraria.IO;
@@ -17,7 +20,7 @@ public sealed class PersistentData : ILoadable
     {
         data.Load();
 
-        helpers = data.Get<List<string>>(nameof(helpers), []);
+        helpers = data.Get<JArray>(nameof(helpers), []).Select(x => x.ToString()).ToList();
     }
 
     void ILoadable.Unload()
