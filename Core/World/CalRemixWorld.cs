@@ -1250,6 +1250,28 @@ namespace CalRemix.Core.World
                 {
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
 
+                    // wrap any amethyst in layers of calcite
+                    for (var i = 0; i < Main.maxTilesX; i++)
+                    for (var j = 0; j < Main.maxTilesY; j++)
+                    {
+                        var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                        if (tile is { HasTile: true, TileType: TileID.Amethyst })
+                        {
+                            for (var x = -1; x <= 1; x++)
+                            for (var y = -1; y <= 1; y++)
+                            {
+                                var surroundingTile = CalamityUtils.ParanoidTileRetrieval(i + x, j + y);
+
+                                if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
+                                {
+                                    surroundingTile.TileType = (ushort)TileType<CalcitePlaced>();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
                     var seed = WorldGen.genRand.Next(0, int.MaxValue);
 
                     for (var i = 0; i < Main.maxTilesX; i++)

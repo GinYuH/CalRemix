@@ -65,3 +65,15 @@ public sealed class DeepslatePlaced : MinecraftStonePlaced
         RegisterItemDrop(ItemID.StoneBlock);
     }
 }
+
+public sealed class CalcitePlaced : MinecraftStonePlaced
+{
+    protected override Color MapColor => new(240, 245, 244);
+
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+
+        RegisterItemDrop(ItemID.StoneBlock);
+    }
+}
