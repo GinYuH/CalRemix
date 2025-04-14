@@ -1246,6 +1246,27 @@ namespace CalRemix.Core.World
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
                 }));
+                tasks.Insert(FinalIndex, new PassLegacy("ItGetsDeeper", (progress, config) =>
+                {
+                    progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
+                    
+                    // for all tiles below the lava layer, turn stone to deepslate
+                    // add artificial variation
+
+                    for (var i = 0; i < Main.maxTilesX; i++)
+                    {
+                        var randYOffset = WorldGen.genRand.Next(-5, 5);
+                        for (var j = GenVars.lavaLine + randYOffset; j < Main.maxTilesY; j++)
+                        {
+                            var t = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                            if (t is { HasTile: true, TileType: TileID.Stone })
+                            {
+                                t.TileType = (ushort)TileType<DeepslatePlaced>();
+                            }
+                        }
+                    }
+                }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
             }
             // Secret Banished Baron seed

@@ -24,8 +24,7 @@ public abstract class MinecraftStone : ModItem
 
         Item.CloneDefaults(ItemID.StoneBlock);
 
-        Item.width = Item.height = 24;
-
+        Item.width      = Item.height = 24;
         Item.createTile = CreateTile;
     }
 }

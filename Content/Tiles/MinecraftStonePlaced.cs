@@ -17,7 +17,14 @@ public abstract class MinecraftStonePlaced : ModTile
         Main.tileSolid[Type]      = true;
         Main.tileMergeDirt[Type]  = true;
         Main.tileBlockLight[Type] = true;
+
+        Main.tileMerge[Type][TileID.Stone] = true;
+        Main.tileMerge[TileID.Stone][Type] = true;
+
+        DustType = DustID.Stone;
         
+        HitSound = SoundID.Tink;
+
         AddMapEntry(MapColor, CreateMapEntryName());
     }
 }
@@ -44,7 +51,7 @@ public sealed class DeepslatePlaced : MinecraftStonePlaced
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        
-        RegisterItemDrop(TileID.Stone);
+
+        RegisterItemDrop(ItemID.StoneBlock);
     }
 }
