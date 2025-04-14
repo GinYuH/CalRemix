@@ -74,10 +74,7 @@ public static class FannyModListEdit
     private static bool  isCurrentlyHandlingOurMod;
     private static float hoverProgress;
 
-    private static bool attached;
-
     private static bool enabledWhenHoveredOver;
-    private static bool hoveringEnabledButton;
 
     private static readonly List<DrawCall> pending_calls = [];
 
@@ -88,6 +85,11 @@ public static class FannyModListEdit
         MonoModHooks.Add(
             GetMethod(nameof(UIModItem.Draw)),
             Draw
+        );
+
+        MonoModHooks.Add(
+            GetMethod(nameof(UIModItem.OnInitialize)),
+            OnInitialize
         );
 
         MonoModHooks.Add(
@@ -126,62 +128,70 @@ public static class FannyModListEdit
             return;
         }
 
-        if (!attached)
-        {
-            // pre-request assets
-            theMod.Assets.Request<Texture2D>(fanny_idle.Texture);
-            theMod.Assets.Request<Texture2D>(fanny_cry.Texture);
-            theMod.Assets.Request<Texture2D>(fanny_stare.Texture);
-            theMod.Assets.Request<Texture2D>(fanny_awe.Texture);
-            
-            self._uiModStateText.OnMouseOver += (e, _) =>
-            {
-                enabledWhenHoveredOver = self._uiModStateText._enabled;
-                hoveringEnabledButton  = true;
-
-                if (self._uiModStateText._enabled)
-                {
-                    fannyState = FannyState.Sob;
-                }
-                else
-                {
-                    fannyState = FannyState.Awe;
-                }
-            };
-
-            self._uiModStateText.OnMouseOut += (e, _) =>
-            {
-                hoveringEnabledButton = false;
-
-                fannyState = self._uiModStateText._enabled ? FannyState.Idle : FannyState.Stare;
-            };
-            
-            self._uiModStateText.OnLeftClick += (e, _) =>
-            {
-                var nowEnabled = self._uiModStateText._enabled;
-
-                if (!nowEnabled && enabledWhenHoveredOver)
-                {
-                    fannyState = FannyState.Stare;
-                }
-                else if (nowEnabled && !enabledWhenHoveredOver)
-                {
-                    fannyState = FannyState.Idle;
-                }
-                /*else
-                {
-                    fannyState = FannyState.Sob;
-                }*/
-                
-                enabledWhenHoveredOver = nowEnabled;
-            };
-
-            attached = true;
-        }
-
         isCurrentlyHandlingOurMod = true;
         orig(self, spriteBatch);
         isCurrentlyHandlingOurMod = false;
+    }
+
+    private static void OnInitialize(
+        Action<UIModItem> orig,
+        UIModItem         self
+    )
+    {
+        Debug.Assert(theMod is not null);
+
+        if (self._mod.Name != theMod.Name)
+        {
+            orig(self);
+            return;
+        }
+
+        orig(self);
+
+        // pre-request assets
+        theMod.Assets.Request<Texture2D>(fanny_idle.Texture);
+        theMod.Assets.Request<Texture2D>(fanny_cry.Texture);
+        theMod.Assets.Request<Texture2D>(fanny_stare.Texture);
+        theMod.Assets.Request<Texture2D>(fanny_awe.Texture);
+
+        self._uiModStateText.OnMouseOver += (e, _) =>
+        {
+            enabledWhenHoveredOver = self._uiModStateText._enabled;
+
+            if (self._uiModStateText._enabled)
+            {
+                fannyState = FannyState.Sob;
+            }
+            else
+            {
+                fannyState = FannyState.Awe;
+            }
+        };
+
+        self._uiModStateText.OnMouseOut += (e, _) =>
+        {
+            fannyState = self._uiModStateText._enabled ? FannyState.Idle : FannyState.Stare;
+        };
+
+        self._uiModStateText.OnLeftClick += (e, _) =>
+        {
+            var nowEnabled = self._uiModStateText._enabled;
+
+            if (!nowEnabled && enabledWhenHoveredOver)
+            {
+                fannyState = FannyState.Stare;
+            }
+            else if (nowEnabled && !enabledWhenHoveredOver)
+            {
+                fannyState = FannyState.Idle;
+            }
+            /*else
+            {
+                fannyState = FannyState.Sob;
+            }*/
+
+            enabledWhenHoveredOver = nowEnabled;
+        };
     }
 
     private static void OverrideRegularPanelDrawing(
@@ -215,7 +225,7 @@ public static class FannyModListEdit
         );
 
         var fannyPosition = modIconDims.Position();
-        fannyPosition.X += modIconDims.Width  / 2f;
+        fannyPosition.X += modIconDims.Width / 2f;
         fannyPosition.Y += 2f;
         // fannyPosition.Y += modIconDims.Height / 3f;
 
@@ -252,11 +262,11 @@ public static class FannyModListEdit
         {
             return fannyState switch
             {
-                FannyState.Idle => fanny_idle,
-                FannyState.Sob  => fanny_cry,
+                FannyState.Idle  => fanny_idle,
+                FannyState.Sob   => fanny_cry,
                 FannyState.Stare => fanny_stare,
                 FannyState.Awe   => fanny_awe,
-                _               => fanny_idle,
+                _                => fanny_idle,
             };
         }
     }
