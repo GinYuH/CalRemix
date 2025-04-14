@@ -1246,9 +1246,26 @@ namespace CalRemix.Core.World
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
                 }));
-                tasks.Insert(FinalIndex, new PassLegacy("ItGetsDeeper", (progress, config) =>
+                tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Planetoids")) + 1, new PassLegacy("ItGetsDeeper", (progress, config) =>
                 {
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
+                    
+                    // lol replace ores in planetoids
+                    for (var x = 0; x < Main.maxTilesX; x++)
+                    for (var y = 0; y < 200; y++)
+                    {
+                        // replace iron with granite and lead marble
+                        var tile = CalamityUtils.ParanoidTileRetrieval(x, y);
+                        if (!tile.HasTile)
+                        {
+                            continue;
+                        }
+
+                        if (tile.TileType is TileID.Iron or TileID.Lead)
+                        {
+                            tile.TileType = WorldGen.genRand.NextBool() ? (ushort)TileType<GranitePlaced>() : TileID.Marble;
+                        }
+                    }
 
                     // wrap any amethyst in layers of calcite
                     for (var i = 0; i < Main.maxTilesX; i++)
