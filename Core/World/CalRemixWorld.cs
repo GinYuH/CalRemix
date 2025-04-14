@@ -1250,21 +1250,34 @@ namespace CalRemix.Core.World
                 {
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
                     
-                    // for all tiles below the lava layer, turn stone to deepslate
-                    // add artificial variation
+                    // we use le epic noise
+                    const float noise_scale = 0.05f;
 
                     for (var i = 0; i < Main.maxTilesX; i++)
                     {
-                        var randYOffset = WorldGen.genRand.Next(-5, 5);
-                        for (var j = GenVars.lavaLine + randYOffset; j < Main.maxTilesY; j++)
+                        // var randYOffset = WorldGen.genRand.Next(-5, 5);
+                        for (var j = GenVars.lavaLine; j < Main.maxTilesY; j++)
                         {
-                            var t = CalamityUtils.ParanoidTileRetrieval(i, j);
-
-                            if (t is { HasTile: true, TileType: TileID.Stone })
+                            var noiseValue = StupidNoise(i * noise_scale, j * noise_scale);
+                            if (noiseValue < 0.5f)
                             {
-                                t.TileType = (ushort)TileType<DeepslatePlaced>();
+                                continue;
+                            }
+                            
+                            var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                            if (tile is { HasTile: true, TileType: TileID.Stone })
+                            {
+                                tile.TileType = (ushort)TileType<DeepslatePlaced>();
                             }
                         }
+                    }
+
+                    return;
+
+                    static float StupidNoise(float x, float y)
+                    {
+                        return (MathF.Sin(x) * MathF.Cos(y) + 1) / 2;
                     }
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
