@@ -23,7 +23,10 @@ namespace CalRemix.Core.Graphics
                 if (!t.IsSubclassOf(typeof(Metaball)) || t.IsAbstract)
                     continue;
 
-                metaballs.Add((Metaball)Activator.CreateInstance(t));
+                lock (metaballs)
+                {
+                    metaballs.Add((Metaball)Activator.CreateInstance(t));
+                }
             }
 
             Terraria.On_Main.DrawProjectiles += DrawMetaballsAfterProjectiles;
@@ -46,24 +49,27 @@ namespace CalRemix.Core.Graphics
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, Main.Rasterizer, null, Matrix.Identity);
 
             var gd = Main.instance.GraphicsDevice;
-            foreach (Metaball metaball in metaballs)
+            lock (metaballs)
             {
-                // Update the metaball.
-                if (!Main.gamePaused)
-                    metaball.Update();
-
-                // Prepare the sprite batch in accordance to the needs of the metaball instance. By default this does nothing, 
-                metaball.PrepareSpriteBatch(Main.spriteBatch);
-
-                // Draw the raw contents of the metaball to each of its render targets.
-                foreach (ManagedRenderTarget target in metaball.LayerTargets)
+                foreach (Metaball metaball in metaballs)
                 {
-                    gd.SetRenderTarget(target.Target);
-                    gd.Clear(Color.Transparent);
-                    metaball.DrawInstances();
+                    // Update the metaball.
+                    if (!Main.gamePaused)
+                        metaball.Update();
+
+                    // Prepare the sprite batch in accordance to the needs of the metaball instance. By default this does nothing, 
+                    metaball.PrepareSpriteBatch(Main.spriteBatch);
+
+                    // Draw the raw contents of the metaball to each of its render targets.
+                    foreach (ManagedRenderTarget target in metaball.LayerTargets)
+                    {
+                        gd.SetRenderTarget(target.Target);
+                        gd.Clear(Color.Transparent);
+                        metaball.DrawInstances();
+                    }
+                    Main.spriteBatch.End();
+                    Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, Main.Rasterizer, null, Matrix.Identity);
                 }
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, Main.Rasterizer, null, Matrix.Identity);
             }
 
             // Return the backbuffer and end the sprite batch.
