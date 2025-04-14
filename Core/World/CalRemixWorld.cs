@@ -1266,7 +1266,6 @@ namespace CalRemix.Core.World
                                 if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
                                 {
                                     surroundingTile.TileType = (ushort)TileType<CalcitePlaced>();
-                                    break;
                                 }
                             }
                         }
