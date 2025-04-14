@@ -31,6 +31,10 @@ namespace CalRemix.Content.NPCs
         {
             MaxInstances = 0
         };
+        public static readonly SoundStyle EvilEyeCharge = new("CalRemix/Assets/Sounds/EvilEyeCharge")
+        {
+            MaxInstances = 0
+        };
         private int maxTime = 600;
         public override void SetStaticDefaults()
         {
@@ -63,7 +67,8 @@ namespace CalRemix.Content.NPCs
 
             if (Timer == 180)
             {
-                SoundEngine.PlaySound(EvilEyeVoice with { Volume = 1 }, NPC.position);
+                SoundEngine.PlaySound(EvilEyeVoice, NPC.position);
+                SoundEngine.PlaySound(EvilEyeCharge, NPC.position);
             }
             if (Timer > 180 && Timer < maxTime)
             {
