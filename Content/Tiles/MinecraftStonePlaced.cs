@@ -14,12 +14,22 @@ public abstract class MinecraftStonePlaced : ModTile
     {
         base.SetStaticDefaults();
 
+        TileID.Sets.CanBeClearedDuringOreRunner[Type]  = true;
+        TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+
         Main.tileSolid[Type]      = true;
         Main.tileMergeDirt[Type]  = true;
         Main.tileBlockLight[Type] = true;
 
         Main.tileMerge[Type][TileID.Stone] = true;
         Main.tileMerge[TileID.Stone][Type] = true;
+
+        var deepslate = ModContent.TileType<DeepslatePlaced>();
+        if (Type != deepslate)
+        {
+            Main.tileMerge[Type][deepslate] = true;
+            Main.tileMerge[deepslate][Type] = true; 
+        }
 
         DustType = DustID.Stone;
         

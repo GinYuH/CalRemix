@@ -1249,21 +1249,17 @@ namespace CalRemix.Core.World
                 tasks.Insert(FinalIndex, new PassLegacy("ItGetsDeeper", (progress, config) =>
                 {
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
-                    
-                    // we use le epic noise
-                    const float noise_scale = 0.05f;
+
+                    var seed = WorldGen.genRand.Next(0, int.MaxValue);
 
                     for (var i = 0; i < Main.maxTilesX; i++)
                     {
-                        // var randYOffset = WorldGen.genRand.Next(-5, 5);
-                        for (var j = GenVars.lavaLine; j < Main.maxTilesY; j++)
+                        var height = CalamityUtils.PerlinNoise2D(i / 380f, 0, 3, seed);
+
+                        var fluctuatingHeight = GenVars.lavaLine + (int)(height * 10);
+
+                        for (var j = fluctuatingHeight; j < Main.maxTilesY; j++)
                         {
-                            var noiseValue = StupidNoise(i * noise_scale, j * noise_scale);
-                            if (noiseValue < 0.5f)
-                            {
-                                continue;
-                            }
-                            
                             var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
 
                             if (tile is { HasTile: true, TileType: TileID.Stone })
