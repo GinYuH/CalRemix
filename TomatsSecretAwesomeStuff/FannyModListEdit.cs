@@ -30,17 +30,50 @@ public static class FannyModListEdit
         Rectangle?    ClipRectangle
     );
 
+    private readonly record struct FannyTexture(
+        string Texture,
+        int    FrameCount,
+        float  SpeedMultiplier
+    );
+
+    private static readonly FannyTexture fanny_idle = new(
+        Texture: "UI/Fanny/ModList_FannyIdle",
+        FrameCount: 8,
+        SpeedMultiplier: 7f
+    );
+
+    private static readonly FannyTexture fanny_cry = new(
+        Texture: "UI/Fanny/ModList_FannyCry",
+        FrameCount: 4,
+        SpeedMultiplier: 3.5f
+    );
+
+    private static readonly FannyTexture fanny_stare = new(
+        Texture: "UI/Fanny/ModList_FannyStare",
+        FrameCount: 1,
+        SpeedMultiplier: 0f
+    );
+
+    private static readonly FannyTexture fanny_awe = new(
+        Texture: "UI/Fanny/ModList_FannyAwe",
+        FrameCount: 2,
+        SpeedMultiplier: 5f
+    );
+
     private static Mod?  theMod;
     private static bool  isCurrentlyHandlingOurMod;
     private static float hoverProgress;
+
+    private static bool attached;
+
+    private static bool enabledWhenHoveredOver;
+    private static bool hoveringEnabledButton;
 
     private static readonly List<DrawCall> pending_calls = [];
 
     public static void Load(Mod mod)
     {
         theMod = mod;
-
-        var uiModItem = typeof(UIModItem);
 
         MonoModHooks.Add(
             GetMethod(nameof(UIModItem.Draw)),
@@ -83,6 +116,22 @@ public static class FannyModListEdit
             return;
         }
 
+        if (!attached)
+        {
+            self._uiModStateText.OnMouseOver += (e, _) =>
+            {
+                enabledWhenHoveredOver = self._uiModStateText._enabled;
+                hoveringEnabledButton  = true;
+            };
+
+            self._uiModStateText.OnMouseOut += (e, _) =>
+            {
+                hoveringEnabledButton = false;
+            };
+
+            attached = true;
+        }
+
         isCurrentlyHandlingOurMod = true;
         orig(self, spriteBatch);
         isCurrentlyHandlingOurMod = false;
@@ -102,20 +151,20 @@ public static class FannyModListEdit
             return;
         }
 
-        hoverProgress += (self.IsMouseHovering ? 1f : -1f) / 45f;
+        var fannyTexture = GetFannyTexture(uiModItem, out var stay);
+
+        hoverProgress += (self.IsMouseHovering || stay ? 1f : -1f) / 45f;
         hoverProgress =  Math.Clamp(hoverProgress, 0f, 1f);
 
         orig(self, spriteBatch);
 
         var modIconDims = uiModItem._modIcon.GetDimensions();
 
-        const int fanny_frames = 8;
-
-        var fannyImage = theMod.Assets.Request<Texture2D>("UI/Fanny/HelperFannyIdleAdjustedForModList");
+        var fannyImage = theMod.Assets.Request<Texture2D>(fannyTexture.Texture);
         var fannyFrame = fannyImage.Frame(
             1,
-            fanny_frames,
-            frameY: (int)(Main.GlobalTimeWrappedHourly * 7f % fanny_frames)
+            fannyTexture.FrameCount,
+            frameY: (int)(Main.GlobalTimeWrappedHourly * fannyTexture.SpeedMultiplier % fannyTexture.FrameCount)
         );
 
         var fannyPosition = modIconDims.Position();
@@ -147,6 +196,45 @@ public static class FannyModListEdit
                 clipRectangle
             )
         );
+
+        return;
+
+        static FannyTexture GetFannyTexture(UIModItem ui, out bool stay)
+        {
+            stay = false;
+
+            var enabledHovered = ui._uiModStateText.IsMouseHovering;
+            var enabled        = ui._uiModStateText._enabled;
+
+            if (hoveringEnabledButton)
+            {
+                if (enabledWhenHoveredOver && !enabled)
+                {
+                    stay = true;
+                    return fanny_stare;
+                }
+
+                if (!enabledWhenHoveredOver && enabled)
+                {
+                    return fanny_idle;
+                }
+            }
+
+            if (!enabled && enabledHovered)
+            {
+                // pls enable
+                return fanny_awe;
+            }
+
+            if (!enabled)
+            {
+                // I fucking ahte you
+                stay = true;
+                return fanny_stare;
+            }
+
+            return fanny_idle;
+        }
     }
 
     private static void UserInterfaceDraw(
