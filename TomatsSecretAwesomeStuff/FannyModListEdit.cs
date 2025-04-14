@@ -46,13 +46,13 @@ public static class FannyModListEdit
 
     private static readonly FannyTexture fanny_idle = new(
         Texture: "UI/Fanny/ModList_FannyIdle",
-        FrameCount: 8,
+        FrameCount: 7,
         SpeedMultiplier: 7f
     );
 
     private static readonly FannyTexture fanny_cry = new(
         Texture: "UI/Fanny/ModList_FannyCry",
-        FrameCount: 4,
+        FrameCount: 2,
         SpeedMultiplier: 3.5f
     );
 
@@ -64,7 +64,7 @@ public static class FannyModListEdit
 
     private static readonly FannyTexture fanny_awe = new(
         Texture: "UI/Fanny/ModList_FannyAwe",
-        FrameCount: 2,
+        FrameCount: 4,
         SpeedMultiplier: 5f
     );
 
@@ -216,7 +216,8 @@ public static class FannyModListEdit
 
         var fannyPosition = modIconDims.Position();
         fannyPosition.X += modIconDims.Width  / 2f;
-        fannyPosition.Y += modIconDims.Height / 3f;
+        fannyPosition.Y += 2f;
+        // fannyPosition.Y += modIconDims.Height / 3f;
 
         var fannyScale = Ease(hoverProgress);
 
@@ -240,7 +241,8 @@ public static class FannyModListEdit
                 fannyOrigin,
                 new Vector2(fannyScale),
                 SpriteEffects.None,
-                clipRectangle
+                // clipRectangle
+                null
             )
         );
 
