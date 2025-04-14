@@ -293,6 +293,7 @@ public static class FannyModListEdit
                 );
 
                 spriteBatch.End();
+                spriteBatch.GraphicsDevice.ScissorRectangle = Rectangle.Empty;
                 spriteBatch.Begin(in snapshot);
             }
             else
