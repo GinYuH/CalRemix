@@ -482,8 +482,24 @@ namespace CalRemix
             }			
         }
 
+        private int stoolBoost;
 
-
+        public override void PostUpdateEquips()
+        {
+	        base.PostUpdateEquips();
+	        
+	        if (!Player.portableStoolInfo.IsInUse)
+	        {
+		        stoolBoost = 0;
+	        }
+	        else
+	        {
+		        stoolBoost++;
+	            
+		        var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+		        Player.portableStoolInfo.SetStats(boost, boost, boost);
+	        }
+        }
 
         public override void UpdateEquips()
         {
