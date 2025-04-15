@@ -759,7 +759,7 @@ namespace CalRemix
             }
             else if (item.type == ItemID.SkeletronBossBag)
             {
-
+                itemLoot.Add(ItemType<SkullStormbow>(), 20);
             }
             else if (item.type == ItemType<SlimeGodBag>())
             {
