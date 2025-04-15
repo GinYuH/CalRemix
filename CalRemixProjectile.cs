@@ -9,6 +9,7 @@ using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.DamageClasses;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.Projectiles.Accessories;
@@ -471,6 +472,11 @@ namespace CalRemix.Content.Projectiles
             if (projectile.type == ProjectileType<BurningMeteor>())
             {
                 player.MinionAttackTargetNPC = target.whoAmI;
+            }
+            // should use a flag set on shot proj instead of this, but i am lazy and nobody will notice
+            if (player.HeldItem.type == ItemType<TheEnforcerGun>())
+            {
+                target.AddBuff(BuffID.Bleeding, 480);
             }
         }
 
