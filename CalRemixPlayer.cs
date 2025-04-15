@@ -1175,6 +1175,11 @@ namespace CalRemix
                     Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 120, false);
                 }
             }
+
+            if (Player.portableStoolInfo.IsInUse)
+            {
+	            npc.AddBuff(BuffID.Dazed, 5 * 60);
+            }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
