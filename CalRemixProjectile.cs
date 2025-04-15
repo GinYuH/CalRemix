@@ -476,7 +476,7 @@ namespace CalRemix.Content.Projectiles
             // should use a flag set on shot proj instead of this, but i am lazy and nobody will notice
             if (player.HeldItem.type == ItemType<TheEnforcerGun>())
             {
-                target.AddBuff(BuffID.Bleeding, 480);
+                target.AddBuff(ModContent.BuffType<BurningBlood>(), 480);
             }
         }
 
