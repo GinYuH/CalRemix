@@ -218,6 +218,19 @@ internal sealed class CoinSystem : ModSystem
             IsACoin
         );
 
+        On_Recipe.UpdateWhichItemsAreMaterials += orig =>
+        {
+            orig();
+
+            for (var i = ItemID.Count; i < ItemLoader.ItemCount; i++)
+            {
+                if (ItemLoader.GetItem(i) is Coin)
+                {
+                    ItemID.Sets.IsAMaterial[i] = false;
+                }
+            }
+        };
+
         // trigger re-jits below for applying our IsAnyCoin edit
         IL_Item.UpdateItem += _ => { };
         // IL_Main.DrawItem += _ => { }; // Just dust we can recreate.
@@ -234,6 +247,19 @@ internal sealed class CoinSystem : ModSystem
         IL_Player.ItemCheck_Inner += _ => { };
         IL_Player.ItemCheck_Shoot += _ => { };
     }
+
+    /*public override void PostSetupContent()
+    {
+        base.PostSetupContent();
+
+        for (var i = ItemID.Count; i < ItemLoader.ItemCount; i++)
+        {
+            if (ItemLoader.GetItem(i) is Coin)
+            {
+                ItemID.Sets.IsAMaterial[i] = false;
+            }
+        }
+    }*/
 
     private static bool IsACoin(Item item)
     {
