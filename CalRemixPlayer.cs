@@ -68,6 +68,8 @@ using Mono.Cecil;
 using CalamityMod.Items.VanillaArmorChanges;
 using CalamityMod.Buffs.StatBuffs;
 
+using Terraria.GameContent;
+
 namespace CalRemix
 {
     public struct DyeStats(int red = 0, int orange = 0, int yellow = 0, int lime = 0, int green = 0, int cyan = 0, int teal = 0, int skyblue = 0, int blue = 0, int purple = 0, int violet = 0, int pink = 0, int brown = 0, int black = 0, int silver = 0)
@@ -343,6 +345,38 @@ namespace CalRemix
         public override void Load()
         {
             LoadDyeStats();
+            
+            On_PlayerDrawLayers.DrawPlayer_03_PortableStool += StretchStool;
+        }
+
+        private static void StretchStool(On_PlayerDrawLayers.orig_DrawPlayer_03_PortableStool orig, ref PlayerDrawSet drawinfo)
+        {
+	        if (!drawinfo.drawPlayer.portableStoolInfo.IsInUse)
+	        {
+		        return;
+	        }
+
+	        var value = TextureAssets.Extra[102].Value;
+	        var position = new Vector2(
+		        (int)(drawinfo.Position.X - Main.screenPosition.X + drawinfo.drawPlayer.width / 2f),
+		        (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height + drawinfo.drawPlayer.portableStoolInfo.HeightBoost)
+	        );
+	        var rectangle = value.Frame();
+	        var origin    = rectangle.Size() * new Vector2(0.5f, 1f);
+
+	        var destinationRect = new Rectangle(
+		        (int)position.X,
+		        (int)position.Y,
+		        rectangle.Width,
+		        drawinfo.drawPlayer.portableStoolInfo.HeightBoost
+	        );
+			
+	        var drawData = new DrawData(value, destinationRect, rectangle, drawinfo.colorArmorLegs, drawinfo.drawPlayer.bodyRotation, origin, drawinfo.playerEffect)
+	        {
+		        shader = drawinfo.cPortableStool,
+	        };
+
+	        drawinfo.DrawDataCache.Add(drawData);
         }
 
         public override void SaveData(TagCompound tag)
