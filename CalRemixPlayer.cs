@@ -532,6 +532,10 @@ namespace CalRemix
 	            
 		        var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
 		        Player.portableStoolInfo.SetStats(boost, boost, boost);
+		        
+		        // increase crit by 1% every 5 tiles
+		        var crit = boost / 80f; // 16 * 5
+		        Player.GetCritChance(DamageClass.Generic) += crit;
 	        }
 	        
 	        // add +5% damage for every item being picked up with treasure magnet
