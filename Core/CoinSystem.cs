@@ -214,7 +214,7 @@ internal sealed class CoinSystem : ModSystem
         // TODO: Item.TryCombiningIntoNearbyItems
 
         MonoModHooks.Add(
-            typeof(Item).GetMethod("get_IsAnyCoin", BindingFlags.Public | BindingFlags.Instance),
+            typeof(Item).GetMethod("get_IsACoin", BindingFlags.Public | BindingFlags.Instance),
             IsACoin
         );
 
