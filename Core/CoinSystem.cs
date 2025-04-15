@@ -206,6 +206,12 @@ internal sealed class CoinSystem : ModSystem
         // TODO: ItemSorting.SortCoins
         
         // TODO: Utils.CoinsCount
+        
+        // TODO: Main.DrawItem_GetBasics (- 71)
+        
+        // TODO: Item.TryCombiningIntoNearbyItems
+        
+        // TODO: Item.IsACoin
     }
 
     private static bool IsACoin(Item item)
