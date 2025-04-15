@@ -499,6 +499,14 @@ namespace CalRemix
 		        var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
 		        Player.portableStoolInfo.SetStats(boost, boost, boost);
 	        }
+	        
+	        // add +5% damage for every item being picked up with treasure magnet
+	        if (Player.treasureMagnet)
+	        {
+		        var grabCount = ItemGrabListener.BEING_GRABBED_BY.Count(x => x == Player.whoAmI);
+
+		        Player.GetDamage(DamageClass.Generic) *= 1f * 0.05f * grabCount;
+	        }
         }
 
         public override void UpdateEquips()
