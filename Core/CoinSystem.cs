@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using CalRemix.Content.Items.Ammo;
 
 using MonoMod.Cil;
@@ -14,7 +16,7 @@ namespace CalRemix.Core;
 /// </summary>
 internal sealed class CoinSystem : ModSystem
 {
-    private const long cosmilite_value  = 100000000;
+    private const long cosmilite_value = 100000000;
     private const long klepticoin_value = 10000000000;
 
     public override void Load()
@@ -63,7 +65,7 @@ internal sealed class CoinSystem : ModSystem
         On_ContentSamples.CreativeHelper.GetItemGroup += (On_ContentSamples.CreativeHelper.orig_GetItemGroup orig, Item item, out int orderInGroup) =>
         {
             orderInGroup = 0;
-            
+
             if (IsACoin(item))
             {
                 if (item.type == ItemID.CopperCoin)
@@ -93,10 +95,10 @@ internal sealed class CoinSystem : ModSystem
 
                 return ContentSamples.CreativeHelper.ItemGroup.Coin;
             }
-            
+
             return orig(item, out orderInGroup);
         };
-        
+
         // TODO: DyeInitializer.LoadLegacyHairdyes I cannot be bothered.
 
         On_CustomCurrencyManager.IsCustomCurrency += (orig, item) => item.ModItem is Coin || orig(item);
@@ -112,7 +114,7 @@ internal sealed class CoinSystem : ModSystem
 
             ILLabel label = null;
             c.GotoPrev(x => x.MatchBneUn(out label));
-            
+
             c.GotoLabel(label);
 
             c.EmitLdarg0(); // this
@@ -124,7 +126,7 @@ internal sealed class CoinSystem : ModSystem
                     {
                         return cosmilite_value;
                     }
-                    
+
                     if (item.type == ModContent.ItemType<Klepticoin>())
                     {
                         return klepticoin_value;
@@ -141,7 +143,7 @@ internal sealed class CoinSystem : ModSystem
             var c = new ILCursor(il);
 
             c.GotoNext(x => x.MatchLdcI4(ItemID.CoinGun));
-            
+
             c.GotoNext(MoveType.After, x => x.MatchCallvirt<DamageClass>(nameof(DamageClass.ShowStatTooltipLine)));
 
             c.EmitLdarg0();
@@ -149,7 +151,7 @@ internal sealed class CoinSystem : ModSystem
                 (bool showStatTooltipLine, Item item) => showStatTooltipLine && ((item.type != ModContent.ItemType<CosmiliteCoin>() && item.type != ModContent.ItemType<Klepticoin>()) || Main.LocalPlayer.HasItem(ItemID.CoinGun))
             );
         };
-        
+
         // TODO: Give coins from tax collector.
 
         On_NPC.SpawnAllowed_Merchant += orig =>
@@ -176,42 +178,61 @@ internal sealed class CoinSystem : ModSystem
 
             return orig();
         };
-        
+
         // TODO: NPCLoot_DropMoney
-        
+
         // TODO: Player.SellItem
-        
+
         // TODO: Player.TryPurchasing
-        
+
         // TODO: We can add to ExtractinatorUse maybe?
-        
+
         // TODO: Player.DropCoins
-        
+
         // TODO: PopupText.NewText
-        
+
         // TODO: ChestUI.QuickStack
-        
+
         // TODO: ChestUI.Restock
-        
+
         // TODO: ChestUI.MoveCoins
-        
+
         // TODO: ItemSlot.SellOrTrashItem
-        
+
         // TODO: ItemSlot.GetOverrideInstructions
-        
+
         // TODO: ItemSlot.PickItemMovementAction
-        
+
         // TODO: ItemSlot.DrawMoney
-        
+
         // TODO: ItemSorting.SortCoins
-        
+
         // TODO: Utils.CoinsCount
-        
+
         // TODO: Main.DrawItem_GetBasics (- 71)
-        
+
         // TODO: Item.TryCombiningIntoNearbyItems
-        
-        // TODO: Item.IsACoin
+
+        MonoModHooks.Add(
+            typeof(Item).GetMethod("get_IsAnyCoin", BindingFlags.Public | BindingFlags.Instance),
+            IsACoin
+        );
+
+        // trigger re-jits below for applying our IsAnyCoin edit
+        IL_Item.UpdateItem += _ => { };
+        // IL_Main.DrawItem += _ => { }; // Just dust we can recreate.
+        IL_Player.QuickStackAllChests += _ => { };
+        IL_Player.GrabItems += _ => { };
+        IL_Player.GetItemGrabRange += _ => { };
+        IL_Player.PayCurrency += _ => { }; // TODO: do we need to edit this
+        IL_Player.ItemSpace += _ => { };
+        IL_Player.GetItem += _ => { };
+        IL_Player.GetItem_FillIntoOccupiedSlot_VoidBag += _ => { };
+        IL_Player.GetItem_FillIntoOccupiedSlot += _ => { };
+        IL_Player.GetItem_FillEmptyInventorySlot_VoidBag += _ => { };
+        IL_Player.GetItem_FillEmptyInventorySlot += _ => { };
+        IL_Player.ItemCheck_Inner += _ => { };
+        IL_Player.ItemCheck_Shoot += _ => { };
     }
 
     private static bool IsACoin(Item item)
