@@ -394,6 +394,7 @@ namespace CalRemix.Content.Projectiles
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[projectile.owner];
+            
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             var source = projectile.GetSource_FromThis();
             if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
@@ -475,6 +476,12 @@ namespace CalRemix.Content.Projectiles
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
+            var player = Main.player[projectile.owner];
+            if (player.autoPaint && projectile.type == ProjectileID.PainterPaintball)
+            {
+                modifiers.FinalDamage *= 1.5f;
+            }
+            
             CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (p.hydrogenSoul)
             {
