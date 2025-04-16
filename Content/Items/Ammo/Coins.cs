@@ -107,9 +107,9 @@ public class CosmiliteCoin : Coin
         Item.maxStack = 100;
         Item.value = Item.sellPrice(platinum: 100);
         Item.damage = 400;
-        Item.shoot = 0; // todo
+        Item.shoot = ProjectileID.PlatinumCoin; // todo
         Item.shootSpeed = 5f;
-        Item.createTile = -1; // todo
+        Item.createTile = TileID.PlatinumCoinPile; // todo
     }
 
     public override void AddRecipes()
@@ -146,9 +146,9 @@ public class Klepticoin : Coin
         // Item.value = Item.sellPrice(platinum: 10000); // too much!!!
         Item.value = int.MaxValue;
         Item.damage = 800;
-        Item.shoot = 0; // todo
+        Item.shoot = ProjectileID.PlatinumCoin; // todo
         Item.shootSpeed = 6f;
-        Item.createTile = -1; // todo
+        Item.createTile = TileID.PlatinumCoinPile; // todo
     }
 
     public override void AddRecipes()
