@@ -391,7 +391,47 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: We can add to ExtractinatorUse maybe?
 
-        // TODO: Player.DropCoins
+        IL_Player.DropCoins += il =>
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+
+            ILLabel label = null;
+            c.GotoNext(x => x.MatchBneUn(out label));
+
+            var indexLoc = -1;
+            c.GotoPrev(x => x.MatchLdloc(out indexLoc));
+
+            var valueLoc = -1;
+            c.GotoNext(x => x.MatchStloc(out valueLoc));
+
+            var stackLoc = -1;
+            c.GotoPrev(x => x.MatchLdloc(out stackLoc));
+
+            c.GotoLabel(label);
+
+            c.EmitLdarg0(); // this
+            c.EmitLdloc(valueLoc);
+            c.EmitLdloc(indexLoc);
+            c.EmitLdloc(stackLoc);
+            c.EmitDelegate(
+                (Player player, long value, int index, int amount) =>
+                {
+                    if (player.inventory[index].type == ModContent.ItemType<CosmiliteCoin>())
+                    {
+                        value += amount * cosmilite_value;
+                    }
+                    else if (player.inventory[index].type == ModContent.ItemType<Klepticoin>())
+                    {
+                        value += amount * klepticoin_value;
+                    }
+
+                    return value;
+                }
+            );
+            c.EmitStloc(valueLoc);
+        };
 
         // TODO: PopupText.NewText
 
@@ -540,13 +580,13 @@ internal sealed class CoinSystem : ModSystem
             var copper = 0L;
 
             // TODO: This vanilla code sucks.
-            if (remaining >= klepticoin_value)
+            while (remaining >= klepticoin_value)
             {
                 remaining -= klepticoin_value;
                 klepticoin++;
             }
 
-            if (remaining >= cosmilite_value)
+            while (remaining >= cosmilite_value)
             {
                 remaining -= cosmilite_value;
                 cosmilite++;
