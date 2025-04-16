@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using ReLogic.Content;
+
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,6 +12,39 @@ namespace CalRemix.Content.Items.Ammo;
 
 public abstract class Coin : ModItem
 {
+    private class HiMom : ILoadable
+    {
+        public void Load(Mod mod)
+        {
+            On_Main.DrawItem_GetBasics += (On_Main.orig_DrawItem_GetBasics orig, Main self, Item item, int slot, out Texture2D texture, out Rectangle frame, out Rectangle glowmaskFrame) =>
+            {
+                if (item.ModItem is Coin coinItem)
+                {
+                    texture = ModContent.Request<Texture2D>(coinItem.Texture + "_Dropped", AssetRequestMode.ImmediateLoad).Value;
+                    AnimateSlot(slot, coinItem.Animation.TicksPerFrame, coinItem.Animation.FrameCount);
+                    frame = glowmaskFrame = coinItem.Animation.GetFrame(texture, Main.itemFrameCounter[slot]);
+                    return;
+                }
+
+                orig(self, item, slot, out texture, out frame, out glowmaskFrame);
+
+                return;
+
+                static void AnimateSlot(int slot, int gameFramesPerSpriteFrame, int spriteFramesAmount)
+                {
+                    if (++Main.itemFrameCounter[slot] >= gameFramesPerSpriteFrame * spriteFramesAmount)
+                    {
+                        Main.itemFrameCounter[slot] = 0;
+                    }
+                }
+            };
+        }
+
+        public void Unload() { }
+    }
+
+    public virtual DrawAnimation Animation { get; } = new DrawAnimationVertical(6, 8);
+
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -45,9 +80,8 @@ public class CosmiliteCoin : Coin
 
         Item.ResearchUnlockCount = 1;
         DisplayName.SetDefault("Cosmilite Coin");
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 8));
         ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-        
+
         ItemID.Sets.CoinLuckValue[Type] = 100000000;
     }
 
@@ -70,16 +104,12 @@ public class CosmiliteCoin : Coin
         CreateRecipe().AddIngredient(ItemID.PlatinumCoin, 100).Register();
         CreateRecipe(100).AddIngredient<Klepticoin>(1).Register();
     }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 8));
-        return true;
-    }
 }
 
 public class Klepticoin : Coin
 {
+    public override DrawAnimation Animation { get; } = new DrawAnimationVertical(6, 12);
+
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -87,7 +117,6 @@ public class Klepticoin : Coin
         Item.ResearchUnlockCount = 1;
         DisplayName.SetDefault("Klepticoin");
         Tooltip.SetDefault("The change of the gods");
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(12, 12));
         ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
         ItemID.Sets.CoinLuckValue[Type] = int.MaxValue; //10000000000;
@@ -111,11 +140,5 @@ public class Klepticoin : Coin
     public override void AddRecipes()
     {
         CreateRecipe().AddIngredient<CosmiliteCoin>(100).Register();
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(12, 12));
-        return true;
     }
 }

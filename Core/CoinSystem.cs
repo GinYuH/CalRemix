@@ -1,13 +1,20 @@
+using System.Linq;
 using System.Reflection;
 
 using CalRemix.Content.Items.Ammo;
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 using MonoMod.Cil;
 
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace CalRemix.Core;
 
@@ -203,15 +210,88 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: ItemSlot.PickItemMovementAction
 
-        // TODO: ItemSlot.DrawMoney
+        On_Utils.CoinsSplit += (_, count) =>
+        {
+            var array = new int[6];
+            var num = 0L;
+            var num2 = 10000000000L;
+            for (var num3 = 3; num3 >= 0; num3--)
+            {
+                array[num3] = (int)((count - num) / num2);
+                num += array[num3] * num2;
+                num2 /= 100;
+            }
+            return array;
+        };
+
+        On_ItemSlot.DrawMoney += (_, sb, text, shopx, shopy, coinsArray, horizontal) =>
+        {
+            int[] coinIds = [ModContent.ItemType<Klepticoin>(), ModContent.ItemType<CosmiliteCoin>(), ItemID.PlatinumCoin, ItemID.GoldCoin, ItemID.SilverCoin, ItemID.CopperCoin];
+            
+            Utils.DrawBorderStringFourWay(sb, FontAssets.MouseText.Value, text, shopx, shopy + 40f, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
+            if (horizontal)
+            {
+                for (var i = 0; i < 6; i++)
+                {
+                    Main.instance.LoadItem(coinIds[i]);
+                    /*if (i == 0)
+                    {
+                        _ = coinsArray[3 - i];
+                    }*/
+                    var position = new Vector2(shopx + ChatManager.GetStringSize(FontAssets.MouseText.Value, text, Vector2.One).X + 24 * i + 45f, shopy + 50f);
+                    sb.Draw(TextureAssets.Item[coinIds[i]].Value, position, null, Color.White, 0f, TextureAssets.Item[coinIds[i]].Value.Size() / 2f, 1f, SpriteEffects.None, 0f);
+                    Utils.DrawBorderStringFourWay(sb, FontAssets.ItemStack.Value, coinsArray[5 - i].ToString(), position.X - 11f, position.Y, Color.White, Color.Black, new Vector2(0.3f), 0.75f);
+                }
+            }
+            else
+            {
+                for (var j = 0; j < 6; j++)
+                {
+                    Main.instance.LoadItem(coinIds[j]);
+                    var num = j == 0 && coinsArray[5 - j] > 99 ? -6 : 0;
+                    sb.Draw(TextureAssets.Item[coinIds[j]].Value, new Vector2(shopx + 11f + 24 * j, shopy + 75f), null, Color.White, 0f, TextureAssets.Item[coinIds[j]].Value.Size() / 2f, 1f, SpriteEffects.None, 0f);
+                    Utils.DrawBorderStringFourWay(sb, FontAssets.ItemStack.Value, coinsArray[5 - j].ToString(), shopx + 24 * j + num, shopy + 75f, Color.White, Color.Black, new Vector2(0.3f), 0.75f);
+                }
+            }
+        };
 
         // TODO: ItemSorting.SortCoins
 
-        // TODO: Utils.CoinsCount
+        On_Utils.CoinsCount += (On_Utils.orig_CoinsCount orig, out bool flowing, Item[] inv, int[] ignoreSlots) =>
+        {
+            var coins = orig(out flowing, inv, ignoreSlots);
+
+            for (var i = 0; i < inv.Length; i++)
+            {
+                if (ignoreSlots.Contains(i))
+                {
+                    continue;
+                }
+                if (inv[i].type == ModContent.ItemType<CosmiliteCoin>())
+                {
+                    coins += inv[i].stack * cosmilite_value;
+                }
+                else if (inv[i].type == ModContent.ItemType<Klepticoin>())
+                {
+                    coins += inv[i].stack * klepticoin_value;
+                }
+            }
+
+            return coins;
+        };
 
         // TODO: Main.DrawItem_GetBasics (- 71)
 
-        // TODO: Item.TryCombiningIntoNearbyItems
+        IL_Item.TryCombiningIntoNearbyItems += il =>
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(MoveType.Before, x => x.MatchStloc(out _));
+
+            c.EmitPop();
+            c.EmitLdarg0();
+            c.EmitDelegate((Item item) => !IsACoin(item));
+        };
 
         MonoModHooks.Add(
             typeof(Item).GetMethod("get_IsACoin", BindingFlags.Public | BindingFlags.Instance),
