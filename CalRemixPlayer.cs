@@ -64,10 +64,11 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using System.Threading.Tasks;
 using CalRemix.Content.Items.Weapons.Stormbow;
-using CalRemix.Content.Projectiles.Weapons.Stormbow;
 using Mono.Cecil;
 using CalamityMod.Items.VanillaArmorChanges;
 using CalamityMod.Buffs.StatBuffs;
+
+using Terraria.GameContent;
 
 namespace CalRemix
 {
@@ -344,6 +345,38 @@ namespace CalRemix
         public override void Load()
         {
             LoadDyeStats();
+            
+            On_PlayerDrawLayers.DrawPlayer_03_PortableStool += StretchStool;
+        }
+
+        private static void StretchStool(On_PlayerDrawLayers.orig_DrawPlayer_03_PortableStool orig, ref PlayerDrawSet drawinfo)
+        {
+	        if (!drawinfo.drawPlayer.portableStoolInfo.IsInUse)
+	        {
+		        return;
+	        }
+
+	        var value = TextureAssets.Extra[102].Value;
+	        var position = new Vector2(
+		        (int)(drawinfo.Position.X - Main.screenPosition.X + drawinfo.drawPlayer.width / 2f),
+		        (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height + drawinfo.drawPlayer.portableStoolInfo.HeightBoost)
+	        );
+	        var rectangle = value.Frame();
+	        var origin    = rectangle.Size() * new Vector2(0.5f, 1f);
+
+	        var destinationRect = new Rectangle(
+		        (int)position.X,
+		        (int)position.Y,
+		        rectangle.Width,
+		        drawinfo.drawPlayer.portableStoolInfo.HeightBoost
+	        );
+			
+	        var drawData = new DrawData(value, destinationRect, rectangle, drawinfo.colorArmorLegs, drawinfo.drawPlayer.bodyRotation, origin, drawinfo.playerEffect)
+	        {
+		        shader = drawinfo.cPortableStool,
+	        };
+
+	        drawinfo.DrawDataCache.Add(drawData);
         }
 
         public override void SaveData(TagCompound tag)
@@ -483,8 +516,36 @@ namespace CalRemix
             }			
         }
 
+        private int stoolBoost;
 
+        public override void PostUpdateEquips()
+        {
+	        base.PostUpdateEquips();
+	        
+	        if (!Player.portableStoolInfo.IsInUse)
+	        {
+		        stoolBoost = 0;
+	        }
+	        else
+	        {
+		        stoolBoost++;
+	            
+		        var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+		        Player.portableStoolInfo.SetStats(boost, boost, boost);
+		        
+		        // increase crit by 1% every 5 tiles
+		        var crit = boost / 80f; // 16 * 5
+		        Player.GetCritChance(DamageClass.Generic) += crit;
+	        }
+	        
+	        // add +5% damage for every item being picked up with treasure magnet
+	        if (Player.treasureMagnet)
+	        {
+		        var grabCount = ItemGrabListener.BEING_GRABBED_BY.Count(x => x == Player.whoAmI);
 
+		        Player.GetDamage(DamageClass.Generic) *= 1f * 0.05f * grabCount;
+	        }
+        }
 
         public override void UpdateEquips()
         {
@@ -1175,6 +1236,11 @@ namespace CalRemix
                 {
                     Main.LocalPlayer.AddBuff(BuffType<Mushy>(), 120, false);
                 }
+            }
+
+            if (Player.portableStoolInfo.IsInUse)
+            {
+	            npc.AddBuff(BuffID.Dazed, 5 * 60);
             }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */

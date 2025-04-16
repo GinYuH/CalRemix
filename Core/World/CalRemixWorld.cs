@@ -48,6 +48,8 @@ using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
 using CalRemix.Content.Items.Weapons.Stormbow;
 
+using Terraria.Localization;
+
 namespace CalRemix.Core.World
 {
     public class CalRemixWorld : ModSystem
@@ -1109,6 +1111,45 @@ namespace CalRemix.Core.World
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
+            var shiniesIndex = tasks.FindIndex(x => x.Name.Equals("Shinies"));
+            tasks.Insert(
+                shiniesIndex + 1,
+                new PassLegacy(
+                    "Dullies",
+                    (progress, _) =>
+                    {
+                        progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.Dullies");
+
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 6E-05); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh), WorldGen.genRand.Next(3, 6), WorldGen.genRand.Next(2, 6), GetRandomStoneType());
+                        }
+
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 8E-05); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh), WorldGen.genRand.Next(3, 7), WorldGen.genRand.Next(3, 7), GetRandomStoneType());
+                        }
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 0.0002); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayerLow, Main.maxTilesY), WorldGen.genRand.Next(4, 9), WorldGen.genRand.Next(4, 8), GetRandomStoneType());
+                        }
+
+                        return;
+
+                        static int GetRandomStoneType()
+                        {
+                            return WorldGen.genRand.Next(0, 3) switch
+                            {
+                                0 => TileType<AndesitePlaced>(),
+                                1 => TileType<DioritePlaced>(),
+                                2 => TileType<GranitePlaced>(),
+                                _ => TileType<AndesitePlaced>(),
+                            };
+                        }
+                    }
+                )
+            );
+            
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
             int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
             tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
@@ -1204,6 +1245,74 @@ namespace CalRemix.Core.World
                     }
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
+                }));
+                tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Planetoids")) + 1, new PassLegacy("ItGetsDeeper", (progress, config) =>
+                {
+                    progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
+                    
+                    // lol replace ores in planetoids
+                    for (var x = 0; x < Main.maxTilesX; x++)
+                    for (var y = 0; y < 200; y++)
+                    {
+                        // replace iron with granite and lead marble
+                        var tile = CalamityUtils.ParanoidTileRetrieval(x, y);
+                        if (!tile.HasTile)
+                        {
+                            continue;
+                        }
+
+                        if (tile.TileType is TileID.Iron or TileID.Lead)
+                        {
+                            tile.TileType = WorldGen.genRand.NextBool() ? (ushort)TileType<GranitePlaced>() : TileID.Marble;
+                        }
+                    }
+
+                    // wrap any amethyst in layers of calcite
+                    for (var i = 0; i < Main.maxTilesX; i++)
+                    for (var j = 0; j < Main.maxTilesY; j++)
+                    {
+                        var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                        if (tile is { HasTile: true, TileType: TileID.Amethyst })
+                        {
+                            for (var x = -1; x <= 1; x++)
+                            for (var y = -1; y <= 1; y++)
+                            {
+                                var surroundingTile = CalamityUtils.ParanoidTileRetrieval(i + x, j + y);
+
+                                if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
+                                {
+                                    surroundingTile.TileType = (ushort)TileType<CalcitePlaced>();
+                                }
+                            }
+                        }
+                    }
+                    
+                    var seed = WorldGen.genRand.Next(0, int.MaxValue);
+
+                    for (var i = 0; i < Main.maxTilesX; i++)
+                    {
+                        var height = CalamityUtils.PerlinNoise2D(i / 380f, 0, 3, seed);
+
+                        var fluctuatingHeight = GenVars.lavaLine + (int)(height * 10);
+
+                        for (var j = fluctuatingHeight; j < Main.maxTilesY; j++)
+                        {
+                            var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                            if (tile is { HasTile: true, TileType: TileID.Stone })
+                            {
+                                tile.TileType = (ushort)TileType<DeepslatePlaced>();
+                            }
+                        }
+                    }
+
+                    return;
+
+                    static float StupidNoise(float x, float y)
+                    {
+                        return (MathF.Sin(x) * MathF.Cos(y) + 1) / 2;
+                    }
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
             }

@@ -9,6 +9,7 @@ using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.DamageClasses;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.Projectiles.Accessories;
@@ -394,6 +395,7 @@ namespace CalRemix.Content.Projectiles
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[projectile.owner];
+            
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             var source = projectile.GetSource_FromThis();
             if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
@@ -471,10 +473,21 @@ namespace CalRemix.Content.Projectiles
             {
                 player.MinionAttackTargetNPC = target.whoAmI;
             }
+            // should use a flag set on shot proj instead of this, but i am lazy and nobody will notice
+            if (player.HeldItem.type == ItemType<TheEnforcerGun>())
+            {
+                target.AddBuff(ModContent.BuffType<BurningBlood>(), 480);
+            }
         }
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
+            var player = Main.player[projectile.owner];
+            if (player.autoPaint && projectile.type == ProjectileID.PainterPaintball)
+            {
+                modifiers.FinalDamage *= 1.5f;
+            }
+            
             CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (p.hydrogenSoul)
             {

@@ -1,10 +1,10 @@
 ﻿using CalamityMod.Items;
 using CalamityMod.Items.Materials;
+using CalamityMod.Items.Placeables;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Projectiles.Weapons.Stormbow;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
+    #region Pre-HM
     #region Alice Bows
     public class Stormbow : StormbowAbstract
     {
@@ -54,7 +55,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override int arrowAmount => 3;
         public override OverallRarity overallRarity => OverallRarity.Green;
     }
-
+    #endregion
+    #region HM
     public class SoulOfFlightstorm : StormbowAbstract
     {
         public override int damage => 56;
@@ -73,4 +75,54 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
+    public class SB90 : StormbowAbstract
+    {
+        public override int damage => 5;
+        public override int useTime => 1;
+        public override SoundStyle useSound => SoundID.Item11;
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.BoneArrow };
+        public override int arrowAmount => 1;
+        public override OverallRarity overallRarity => OverallRarity.LightRed;
+    }
+    public class StarryBlight : StormbowAbstract
+    {
+        public override int damage => 47;
+        public override int useTime => 22;
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.StarCloakStar };
+        public override OverallRarity overallRarity => OverallRarity.LightRed;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<StarblightSoot>(25).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddIngredient(ItemID.FallenStar, 40).
+                AddIngredient<AstralClay>(7).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
+    public class TheSkyfall : StormbowAbstract
+    {
+        public override int damage => 10;
+        public override SoundStyle useSound => SoundID.Item5;
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.PoisonDart };
+        public override OverallRarity overallRarity => OverallRarity.Lime;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.useStyle = ItemUseStyleID.MowTheLawn;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.LunarTabletFragment, 2).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
+    }
+    #endregion
+    #region Post-ML
+
+    #endregion
 }

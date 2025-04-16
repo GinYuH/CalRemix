@@ -68,9 +68,6 @@ namespace CalRemix
         internal static Mod CalMusic = ModLoader.GetMod("CalamityModMusic");
         public static CalRemix instance;
 
-        public static int CosmiliteCoinCurrencyId;
-        public static int KlepticoinCurrencyId;
-
         public static List<int> oreList = new List<int>
         {
             TileID.Copper,
@@ -189,9 +186,6 @@ namespace CalRemix
         {
             instance = this;
             PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
-
-            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new CosmiliteCoinCurrency(ItemType<CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
-            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new KlepticoinCurrency(ItemType<Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
         }
 
         public override void Unload()
@@ -256,6 +250,9 @@ namespace CalRemix
                     Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
                 }
             }
+
+            // all for the eight seconds its all worth it
+            cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
         }
         private void MenuStuff(ModMenu menu)
         {
@@ -371,15 +368,6 @@ namespace CalRemix
             {
                 Main.BestiaryUI = new Terraria.GameContent.UI.States.UIBestiaryTest(Main.BestiaryDB);
             }
-        }
-        internal static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
-        {
-            if (!condition || shop is null) return;
-            shop.item[nextSlot].SetDefaults(type);
-            shop.item[nextSlot].shopCustomPrice = price > 0 ? price : shop.item[nextSlot].value;
-            if (specialMoney == 1) shop.item[nextSlot].shopSpecialCurrency = CosmiliteCoinCurrencyId;
-            else if (specialMoney == 2) shop.item[nextSlot].shopSpecialCurrency = KlepticoinCurrencyId;
-            nextSlot++;
         }
     }
 }

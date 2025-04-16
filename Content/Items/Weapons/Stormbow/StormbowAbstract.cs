@@ -10,6 +10,7 @@ using CalRemix.Content.DamageClasses;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
+using Mono.Cecil;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -168,8 +169,29 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 arrowAmountNoisy++;
             }
 
+            ShootArrowsLikeStormbow(player, source, arrowAmountNoisy, projsToShoot);
+
+            return false;
+        }
+
+        public void ShootArrowsFromPoint(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 idealLocation, Vector2 extraSpeed)
+        {
+            for (int i = 0; i < arrowAmount; i++)
+            {
+                Vector2 speed = new(Main.rand.Next(-60, 91) * 0.02f, Main.rand.Next(-60, 91) * 0.02f);
+                speed += extraSpeed;
+
+                // arrow position noise pass
+                idealLocation.X += Main.rand.Next(-60, 61);
+                idealLocation.Y += Main.rand.Next(-60, 61);
+
+                int projectile = Projectile.NewProjectile(source, idealLocation.X, idealLocation.Y, speed.X, speed.Y, Item.shoot, Item.damage, Item.knockBack, player.whoAmI);
+            }
+        }
+        public void ShootArrowsLikeStormbow(Player player, EntitySource_ItemUse_WithAmmo source, int arrowAmount, List<int> projToShoot)
+        {
             // TODO: clean up
-            for (int i = 0; i < arrowAmountNoisy; i++)
+            for (int i = 0; i < arrowAmount; i++)
             {
                 Vector2 pointPoisition = new Vector2(player.position.X + player.width * 0.5f + (Main.rand.Next(201) * -player.direction) + (Main.mouseX + Main.screenPosition.X - player.position.X), player.MountedCenter.Y - 600f);
                 pointPoisition.X = (pointPoisition.X * 10f + player.Center.X) / 11f + Main.rand.Next(-100, 101);
@@ -193,11 +215,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 speedX *= Main.rand.Next(75, 150) * 0.01f;
                 pointPoisition.X += Main.rand.Next(-50, 51);
 
-                int projType = projsToShoot[Main.rand.Next(0, projsToShoot.Count)];
-                int shotProj = Projectile.NewProjectile(source, pointPoisition.X, pointPoisition.Y, speedX, speedY, projType, damage, knockback, player.whoAmI);
+                int projType = projToShoot[Main.rand.Next(0, projsToShoot.Count)];
+                int shotProj = Projectile.NewProjectile(source, pointPoisition.X, pointPoisition.Y, speedX, speedY, projType, damage, 3.5f, player.whoAmI);
                 Main.projectile[shotProj].noDropItem = true;
             }
-            return false;
         }
     }
 }

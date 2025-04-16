@@ -54,6 +54,23 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             return false;
         }
     }
+    // skeletron
+    public class SkullStormbow : StormbowAbstract
+    {
+        public override int damage => 22;
+
+        public override int crit => 12;
+
+        public override int useTime => 44;
+
+        public override SoundStyle useSound => SoundID.Item8;
+
+        public override List<int> projsToShoot => [837, 270, ProjectileID.Bone, ProjectileID.BoneArrow, ProjectileID.BoneDagger, ProjectileID.BoneGloveProj];
+
+        public override int arrowAmount => 20;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+    }
     // wall of flesh
     #endregion
     #region HM

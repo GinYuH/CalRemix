@@ -70,6 +70,8 @@ namespace CalRemix
         internal string devItem = string.Empty;
         public bool Scoriad = false;
         public int NonScoria = -1;
+        public int BuffedFrameTimer = 64;
+        public int BuffedFrameCounter = -1;
         internal static List<int> Torch = new()
         {
             ItemID.RainbowTorch,
@@ -451,6 +453,17 @@ namespace CalRemix
                     Main.EntitySpriteDraw(TextureAssets.Item[item.type].Value, position - new Vector2(TextureAssets.Item[item.type].Value.Width * 0.02f, TextureAssets.Item[item.type].Value.Height * 0.1f / frameCount) + rand, frame, col, 0, origin, scale * 1.4f, SpriteEffects.None);
                 }
             }
+            if (item.type == ItemType<TheEnforcerGun>() && BuffedFrameTimer > 0)
+            {
+                if (BuffedFrameTimer % 8 == 0)
+                {
+                    BuffedFrameCounter++;
+                }
+                Texture2D buffed = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Buffed").Value;
+                spriteBatch.Draw(buffed, position, buffed.Frame(1, 8, 0, BuffedFrameCounter), Color.White, 0, new Vector2(buffed.Size().X / 2, buffed.Size().Y / 16), 1, 0, 0);
+                BuffedFrameTimer--;
+                return false;
+            }
             return true;
         }
         public override void UpdateInventory(Item item, Player player)
@@ -512,6 +525,11 @@ namespace CalRemix
                     item.pick = ContentSamples.ItemsByType[item.type].pick + 22;
                 else
                     item.pick = ContentSamples.ItemsByType[item.type].pick;
+            }
+            if (item.type == ItemType<CrackshotColt>())
+            {
+                TransformItem(ref item, ItemType<TheEnforcerGun>());
+                SoundEngine.PlaySound(SoundID.ResearchComplete, player.Center);
             }
         }
         public static List<int> cosmicItems = new List<int>();
@@ -759,7 +777,7 @@ namespace CalRemix
             }
             else if (item.type == ItemID.SkeletronBossBag)
             {
-
+                itemLoot.Add(ItemType<SkullStormbow>(), 20);
             }
             else if (item.type == ItemType<SlimeGodBag>())
             {

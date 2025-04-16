@@ -30,3 +30,10 @@ SoulSlot: Elemental Soul
 SoulVanitySlot: Vanity Soul
 SneakerSlot: Sick Kicks
 FandomWarning: DO NOT USE THE FANDOM WIKI
+MediumWorldWarning: "[c/ffff00:MEDIUM WORLDS ARE SOMEWHAT SUPPORTED BY CALAMITY]"
+LargeWorldGreening: "[c/00F000:LARGE WORLDS ARE SUPPORTED BY CALAMITY]"
+
+WorldGen: {
+	Dullies: Generating dullies
+	ItGetsDeeper: But wait, it gets deeper
+}

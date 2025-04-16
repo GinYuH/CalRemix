@@ -4131,3 +4131,8 @@ OblivionRattle: {
 }
 
 GaggleStatue.DisplayName: Gaggle Statue
+
+TheEnforcerGun: {
+	DisplayName: The Enforcer
+	Tooltip: Has a chance to cause Bleeding
+}

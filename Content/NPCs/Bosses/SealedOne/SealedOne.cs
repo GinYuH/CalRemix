@@ -27,13 +27,15 @@ using System;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalamityMod.Projectiles.Boss;
 using System.Collections;
+using Microsoft.Xna.Framework.Graphics;
+using XPT.Core.Audio.MP3Sharp.Decoding;
 
 namespace CalRemix.Content.NPCs.Bosses.SealedOne
 {
     [AutoloadBossHead]
     public class SealedOne : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod) => false;
+        //public override bool IsLoadingEnabled(Mod mod) => false;
 
         public ref float AttackType => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
@@ -46,6 +48,9 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public Vector2 PreviousNPCLocation = Vector2.Zero;
         public Vector2 PreviousPlayerLocation = Vector2.Zero;
+
+        public int FrameX = 0;
+        public int FrameY = 0;
 
         public enum AttackTypes
         {
@@ -74,8 +79,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void SetDefaults()
         {
-            NPC.width = 121;
-            NPC.height = 177;
+            NPC.width = 128;
+            NPC.height = 164;
             NPC.aiStyle = -1;
             NPC.damage = 50;
             NPC.defense = 42;
@@ -318,7 +323,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 int leftOrRight = Math.Sign(player.Center.X - npcCenter.X);
                 if (leftOrRight != 0)
                 {
-                    NPC.direction = (NPC.spriteDirection = leftOrRight);
+                    NPC.direction = NPC.spriteDirection = leftOrRight;
                 }
 
                 Timer += 1f;
@@ -773,8 +778,55 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             }
             #endregion
 
+            #region Frame Stuff
+            // vertical stuff
+            NPC.frameCounter++;
+            if (NPC.frameCounter >= 6)
+            {
+                FrameY++;
+                NPC.frameCounter = 0;
+                if (FrameY >= 4)
+                {
+                    FrameY = 0;
+                }
+            }
+
+            // horizontal stuff
+            if (isPhase2)
+            {
+                if (AttackType == (float)AttackTypes.Move || AttackType == (float)AttackTypes.None || AttackType == (float)AttackTypes.PhaseTransition)
+                {
+                    FrameX = 2;
+                }
+                else
+                {
+                    FrameX = 3;
+                }
+            }
+            else
+            {
+                if (AttackType == (float)AttackTypes.Move || AttackType == (float)AttackTypes.None)
+                {
+                    FrameX = 0;
+                }
+                else
+                {
+                    FrameX = 1;
+                }
+            }
+
+            #endregion
+
             NPC.dontTakeDamage = shouldNotTakeDamage;
             NPC.chaseable = !shouldNotBeChased;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D spritesheet = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/SealedOne/SealedOne").Value;
+            Main.EntitySpriteDraw(spritesheet, NPC.Center - Main.screenPosition, spritesheet.Frame(4, 4, FrameX, FrameY), drawColor, 0, new Vector2(spritesheet.Size().X / 8, spritesheet.Size().Y / 8), 1, NPC.direction != -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+
+            return false;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -782,11 +834,6 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
-        }
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            
         }
 
         public override void BossLoot(ref string name, ref int potionType)
