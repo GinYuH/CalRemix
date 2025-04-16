@@ -13,6 +13,7 @@ using MonoMod.Cil;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
@@ -223,21 +224,21 @@ internal sealed class CoinSystem : ModSystem
             slotEmptyBank4
         ) =>
         {
-            long num = price;
-            Dictionary<Point, Item> dictionary = new Dictionary<Point, Item>();
-            bool result = false;
+            var num = price;
+            var dictionary = new Dictionary<Point, Item>();
+            var result = false;
             while (num > 0)
             {
-                long num2 = 100000000L;
-                for (int i = 0; i < 6; i++)
+                var num2 = 100000000L;
+                for (var i = 0; i < 6; i++)
                 {
                     if (num >= num2)
                     {
-                        foreach (Point slotCoin in slotCoins)
+                        foreach (var slotCoin in slotCoins)
                         {
                             if (inv[slotCoin.X][slotCoin.Y].type == GetRealCoinType(76 - i))
                             {
-                                long num3 = num / num2;
+                                var num3 = num / num2;
                                 dictionary[slotCoin] = inv[slotCoin.X][slotCoin.Y].Clone();
                                 if (num3 < inv[slotCoin.X][slotCoin.Y].stack)
                                 {
@@ -263,19 +264,19 @@ internal sealed class CoinSystem : ModSystem
                 if (slotsEmpty.Count > 0)
                 {
                     slotsEmpty.Sort(DelegateMethods.CompareYReverse);
-                    Point item = new Point(-1, -1);
-                    for (int j = 0; j < inv.Count; j++)
+                    var item = new Point(-1, -1);
+                    for (var j = 0; j < inv.Count; j++)
                     {
                         num2 = 1000000L;
-                        for (int k = 0; k < 5; k++)
+                        for (var k = 0; k < 5; k++)
                         {
                             if (num >= num2)
                             {
-                                foreach (Point slotCoin2 in slotCoins)
+                                foreach (var slotCoin2 in slotCoins)
                                 {
                                     if (slotCoin2.X == j && inv[slotCoin2.X][slotCoin2.Y].type == GetRealCoinType(76 - k) && inv[slotCoin2.X][slotCoin2.Y].stack >= 1)
                                     {
-                                        List<Point> list = slotsEmpty;
+                                        var list = slotsEmpty;
                                         if (j == 1 && slotEmptyBank.Count > 0)
                                             list = slotEmptyBank;
 
@@ -310,16 +311,16 @@ internal sealed class CoinSystem : ModSystem
                             num2 /= 100;
                         }
 
-                        for (int l = 0; l < 6; l++)
+                        for (var l = 0; l < 6; l++)
                         {
                             if (item.X != -1 || item.Y != -1)
                                 continue;
 
-                            foreach (Point slotCoin3 in slotCoins)
+                            foreach (var slotCoin3 in slotCoins)
                             {
                                 if (slotCoin3.X == j && inv[slotCoin3.X][slotCoin3.Y].type == GetRealCoinType(71 + l) && inv[slotCoin3.X][slotCoin3.Y].stack >= 1)
                                 {
-                                    List<Point> list2 = slotsEmpty;
+                                    var list2 = slotsEmpty;
                                     if (j == 1 && slotEmptyBank.Count > 0)
                                         list2 = slotEmptyBank;
 
@@ -363,7 +364,7 @@ internal sealed class CoinSystem : ModSystem
                     continue;
                 }
 
-                foreach (KeyValuePair<Point, Item> item2 in dictionary)
+                foreach (var item2 in dictionary)
                 {
                     inv[item2.Key.X][item2.Key.Y] = item2.Value.Clone();
                 }
@@ -435,22 +436,77 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: PopupText.NewText
 
-        // TODO: ChestUI.QuickStack
+        IL_ChestUI.QuickStack += il =>
+        {
+            var c = new ILCursor(il);
 
-        // TODO: ChestUI.Restock
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+
+            // cool new thing I thought of: instead of modifying the conditions,
+            // just check if the type is our coin and return 74 lol
+
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+
+            c.Index += 2;
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+        };
+
+        IL_ChestUI.Restock += il =>
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+        };
 
         // TODO: ChestUI.MoveCoins
 
-        // TODO: ItemSlot.SellOrTrashItem
-
-        // TODO: ItemSlot.GetOverrideInstructions
-
-        // TODO: ItemSlot.PickItemMovementAction
-
-        On_Utils.CoinsCombineStacks += (On_Utils.orig_CoinsCombineStacks orig, out bool overFlowing, long[] coinCounts) =>
+        IL_ItemSlot.SellOrTrash += il =>
         {
-            long num = 0L;
-            foreach (long num2 in coinCounts)
+            var c = new ILCursor(il);
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+        };
+
+        IL_ItemSlot.GetOverrideInstructions += il =>
+        {
+            var c = new ILCursor(il);
+
+            // unlucky
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+        };
+
+        IL_ItemSlot.PickItemMovementAction += il =>
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+
+            c.Index += 2;
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+        };
+
+        On_Utils.CoinsCombineStacks += (On_Utils.orig_CoinsCombineStacks _, out bool overFlowing, long[] coinCounts) =>
+        {
+            var num = 0L;
+            foreach (var num2 in coinCounts)
             {
                 num += num2;
                 /*if (num >= 999999999)
@@ -580,10 +636,58 @@ internal sealed class CoinSystem : ModSystem
             }
         };
 
-        // TODO: ItemDropRules.CoinsRule.ToCoins
+        On_CoinsRule.ToCoins += (_, money) =>
+        {
+            return ToCoins(money);
+
+            static IEnumerable<(int itemId, int count)> ToCoins(long money)
+            {
+                var copper = (int)(money % 100);
+                money /= 100;
+
+                var silver = (int)(money % 100);
+                money /= 100;
+
+                var gold = (int)(money % 100);
+                money /= 100;
+
+                var plat = (int)(money % 100);
+                money /= 100;
+
+                var cosmilite = (int)(money % 100);
+                money /= 100;
+
+                var klepticoin = (int)money;
+
+                if (copper > 0)
+                {
+                    yield return (itemId: 71, count: copper);
+                }
+                if (silver > 0)
+                {
+                    yield return (itemId: 72, count: silver);
+                }
+                if (gold > 0)
+                {
+                    yield return (itemId: 73, count: gold);
+                }
+                if (plat > 0)
+                {
+                    yield return (itemId: 74, count: plat);
+                }
+                if (cosmilite > 0)
+                {
+                    yield return (itemId: ModContent.ItemType<CosmiliteCoin>(), count: cosmilite);
+                }
+                if (klepticoin > 0)
+                {
+                    yield return (itemId: ModContent.ItemType<Klepticoin>(), count: klepticoin);
+                }
+            }
+        };
 
         // Maybe not necessary, it's just for the reforge menu.
-        // TODO: Main.DrawInventory
+        // Main.DrawInventory
 
         On_Main.ValueToCoins += (_, value) =>
         {
@@ -596,7 +700,6 @@ internal sealed class CoinSystem : ModSystem
             var silver = 0L;
             var copper = 0L;
 
-            // TODO: This vanilla code sucks.
             while (remaining >= klepticoin_value)
             {
                 remaining -= klepticoin_value;
@@ -764,5 +867,15 @@ internal sealed class CoinSystem : ModSystem
     private static bool IsACoin(Item item)
     {
         return item.type is ItemID.CopperCoin or ItemID.SilverCoin or ItemID.GoldCoin or ItemID.PlatinumCoin || item.type == ModContent.ItemType<CosmiliteCoin>() || item.type == ModContent.ItemType<Klepticoin>();
+    }
+
+    private static int FakeCoinType(int itemId)
+    {
+        if (itemId == ModContent.ItemType<CosmiliteCoin>() || itemId == ModContent.ItemType<Klepticoin>())
+        {
+            return ItemID.PlatinumCoin;
+        }
+
+        return itemId;
     }
 }
