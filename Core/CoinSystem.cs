@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -28,6 +29,16 @@ internal sealed class CoinSystem : ModSystem
 {
     private const long cosmilite_value = 100000000;
     private const long klepticoin_value = 10000000000;
+
+    private static readonly (int itemId, long value)[] coin_types =
+    [
+        (ModContent.ItemType<Klepticoin>(), klepticoin_value),
+        (ModContent.ItemType<CosmiliteCoin>(), cosmilite_value),
+        (ItemID.PlatinumCoin, 1000000),
+        (ItemID.GoldCoin, 10000),
+        (ItemID.SilverCoin, 100),
+        (ItemID.CopperCoin, 1),
+    ];
 
     public override void Load()
     {
@@ -200,7 +211,183 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: Player.SellItem
 
-        // TODO: Player.TryPurchasing
+        On_Player.TryPurchasing += (
+            _,
+            price,
+            inv,
+            slotCoins,
+            slotsEmpty,
+            slotEmptyBank,
+            slotEmptyBank2,
+            slotEmptyBank3,
+            slotEmptyBank4
+        ) =>
+        {
+            long num = price;
+            Dictionary<Point, Item> dictionary = new Dictionary<Point, Item>();
+            bool result = false;
+            while (num > 0)
+            {
+                long num2 = 100000000L;
+                for (int i = 0; i < 6; i++)
+                {
+                    if (num >= num2)
+                    {
+                        foreach (Point slotCoin in slotCoins)
+                        {
+                            if (inv[slotCoin.X][slotCoin.Y].type == GetRealCoinType(76 - i))
+                            {
+                                long num3 = num / num2;
+                                dictionary[slotCoin] = inv[slotCoin.X][slotCoin.Y].Clone();
+                                if (num3 < inv[slotCoin.X][slotCoin.Y].stack)
+                                {
+                                    inv[slotCoin.X][slotCoin.Y].stack -= (int)num3;
+                                }
+                                else
+                                {
+                                    inv[slotCoin.X][slotCoin.Y].SetDefaults();
+                                    slotsEmpty.Add(slotCoin);
+                                }
+
+                                num -= num2 * (dictionary[slotCoin].stack - inv[slotCoin.X][slotCoin.Y].stack);
+                            }
+                        }
+                    }
+
+                    num2 /= 100;
+                }
+
+                if (num <= 0)
+                    continue;
+
+                if (slotsEmpty.Count > 0)
+                {
+                    slotsEmpty.Sort(DelegateMethods.CompareYReverse);
+                    Point item = new Point(-1, -1);
+                    for (int j = 0; j < inv.Count; j++)
+                    {
+                        num2 = 1000000L;
+                        for (int k = 0; k < 5; k++)
+                        {
+                            if (num >= num2)
+                            {
+                                foreach (Point slotCoin2 in slotCoins)
+                                {
+                                    if (slotCoin2.X == j && inv[slotCoin2.X][slotCoin2.Y].type == GetRealCoinType(76 - k) && inv[slotCoin2.X][slotCoin2.Y].stack >= 1)
+                                    {
+                                        List<Point> list = slotsEmpty;
+                                        if (j == 1 && slotEmptyBank.Count > 0)
+                                            list = slotEmptyBank;
+
+                                        if (j == 2 && slotEmptyBank2.Count > 0)
+                                            list = slotEmptyBank2;
+
+                                        if (j == 3 && slotEmptyBank3.Count > 0)
+                                            list = slotEmptyBank3;
+
+                                        if (j == 4 && slotEmptyBank4.Count > 0)
+                                            list = slotEmptyBank4;
+
+                                        if (--inv[slotCoin2.X][slotCoin2.Y].stack <= 0)
+                                        {
+                                            inv[slotCoin2.X][slotCoin2.Y].SetDefaults();
+                                            list.Add(slotCoin2);
+                                        }
+
+                                        dictionary[list[0]] = inv[list[0].X][list[0].Y].Clone();
+                                        inv[list[0].X][list[0].Y].SetDefaults(GetRealCoinType(75 - k));
+                                        inv[list[0].X][list[0].Y].stack = 100;
+                                        item = list[0];
+                                        list.RemoveAt(0);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (item.X != -1 || item.Y != -1)
+                                break;
+
+                            num2 /= 100;
+                        }
+
+                        for (int l = 0; l < 6; l++)
+                        {
+                            if (item.X != -1 || item.Y != -1)
+                                continue;
+
+                            foreach (Point slotCoin3 in slotCoins)
+                            {
+                                if (slotCoin3.X == j && inv[slotCoin3.X][slotCoin3.Y].type == GetRealCoinType(71 + l) && inv[slotCoin3.X][slotCoin3.Y].stack >= 1)
+                                {
+                                    List<Point> list2 = slotsEmpty;
+                                    if (j == 1 && slotEmptyBank.Count > 0)
+                                        list2 = slotEmptyBank;
+
+                                    if (j == 2 && slotEmptyBank2.Count > 0)
+                                        list2 = slotEmptyBank2;
+
+                                    if (j == 3 && slotEmptyBank3.Count > 0)
+                                        list2 = slotEmptyBank3;
+
+                                    if (j == 4 && slotEmptyBank4.Count > 0)
+                                        list2 = slotEmptyBank4;
+
+                                    if (--inv[slotCoin3.X][slotCoin3.Y].stack <= 0)
+                                    {
+                                        inv[slotCoin3.X][slotCoin3.Y].SetDefaults();
+                                        list2.Add(slotCoin3);
+                                    }
+
+                                    dictionary[list2[0]] = inv[list2[0].X][list2[0].Y].Clone();
+                                    inv[list2[0].X][list2[0].Y].SetDefaults(GetRealCoinType(70 + l));
+                                    inv[list2[0].X][list2[0].Y].stack = 100;
+                                    item = list2[0];
+                                    list2.RemoveAt(0);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (item.X != -1 && item.Y != -1)
+                        {
+                            slotCoins.Add(item);
+                            break;
+                        }
+                    }
+
+                    slotsEmpty.Sort(DelegateMethods.CompareYReverse);
+                    slotEmptyBank.Sort(DelegateMethods.CompareYReverse);
+                    slotEmptyBank2.Sort(DelegateMethods.CompareYReverse);
+                    slotEmptyBank3.Sort(DelegateMethods.CompareYReverse);
+                    slotEmptyBank4.Sort(DelegateMethods.CompareYReverse);
+                    continue;
+                }
+
+                foreach (KeyValuePair<Point, Item> item2 in dictionary)
+                {
+                    inv[item2.Key.X][item2.Key.Y] = item2.Value.Clone();
+                }
+
+                result = true;
+                break;
+            }
+
+            return result;
+
+            static int GetRealCoinType(int itemId)
+            {
+                return itemId switch
+                {
+                    ItemID.CopperCoin => ItemID.CopperCoin,
+                    ItemID.SilverCoin => ItemID.SilverCoin,
+                    ItemID.GoldCoin => ItemID.GoldCoin,
+                    ItemID.PlatinumCoin => ItemID.PlatinumCoin,
+                    ItemID.PlatinumCoin + 1 => ModContent.ItemType<CosmiliteCoin>(),
+                    ItemID.PlatinumCoin + 2 => ModContent.ItemType<Klepticoin>(),
+                    _ => throw new ArgumentOutOfRangeException(nameof(itemId), itemId, "Invalid item ID"),
+                };
+            }
+        };
 
         // TODO: We can add to ExtractinatorUse maybe?
 
@@ -516,19 +703,6 @@ internal sealed class CoinSystem : ModSystem
         IL_Player.ItemCheck_Inner += _ => { };
         IL_Player.ItemCheck_Shoot += _ => { };
     }
-
-    /*public override void PostSetupContent()
-    {
-        base.PostSetupContent();
-
-        for (var i = ItemID.Count; i < ItemLoader.ItemCount; i++)
-        {
-            if (ItemLoader.GetItem(i) is Coin)
-            {
-                ItemID.Sets.IsAMaterial[i] = false;
-            }
-        }
-    }*/
 
     private static bool IsACoin(Item item)
     {
