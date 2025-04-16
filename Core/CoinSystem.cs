@@ -11,8 +11,10 @@ using MonoMod.Cil;
 
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
@@ -288,8 +290,6 @@ internal sealed class CoinSystem : ModSystem
             return coins;
         };
 
-        // TODO: Main.DrawItem_GetBasics (- 71)
-
         IL_Item.TryCombiningIntoNearbyItems += il =>
         {
             var c = new ILCursor(il);
@@ -301,13 +301,128 @@ internal sealed class CoinSystem : ModSystem
             c.EmitDelegate((Item item) => !IsACoin(item));
         };
 
-        // TODO: Chest.VisualizeChestTransfer_CoinsBatch
+        On_Chest.VisualizeChestTransfer_CoinsBatch += (_, position, chestPosition, coinsMoved) =>
+        {
+            var array = Utils.CoinsSplit(coinsMoved);
+            for (var i = 0; i < array.Length; i++)
+            {
+                if (array[i] >= 1)
+                {
+                    ParticleOrchestrator.BroadcastOrRequestParticleSpawn(
+                        ParticleOrchestraType.ItemTransfer,
+                        new ParticleOrchestraSettings
+                        {
+                            PositionInWorld = position,
+                            MovementVector = chestPosition - position,
+                            UniqueInfoPiece = GetCoinType(i),
+                        }
+                    );
+                }
+            }
+
+            return;
+
+            static int GetCoinType(int index)
+            {
+                return index switch
+                {
+                    0 => ItemID.CopperCoin,
+                    1 => ItemID.SilverCoin,
+                    2 => ItemID.GoldCoin,
+                    3 => ItemID.PlatinumCoin,
+                    4 => ModContent.ItemType<CosmiliteCoin>(),
+                    5 => ModContent.ItemType<Klepticoin>(),
+                    _ => throw new ArgumentOutOfRangeException(nameof(index), index, "Invalid coin index"),
+                };
+            }
+        };
 
         // TODO: ItemDropRules.CoinsRule.ToCoins
 
         // TODO: Main.DrawInventory
 
-        // TODO: Main.ValueToCoins
+        On_Main.ValueToCoins += (_, value) =>
+        {
+            var remaining = value;
+
+            var klepticoin = 0L;
+            var cosmilite = 0L;
+            var platinum = 0L;
+            var gold = 0L;
+            var silver = 0L;
+            var copper = 0L;
+
+            // TODO: This vanilla code sucks.
+            if (remaining >= klepticoin_value)
+            {
+                remaining -= klepticoin_value;
+                klepticoin++;
+            }
+
+            if (remaining >= cosmilite_value)
+            {
+                remaining -= cosmilite_value;
+                cosmilite++;
+            }
+
+            while (remaining >= 1000000)
+            {
+                remaining -= 1000000;
+                platinum++;
+            }
+
+            while (remaining >= 10000)
+            {
+                remaining -= 10000;
+                gold++;
+            }
+
+            while (remaining >= 100)
+            {
+                remaining -= 100;
+                silver++;
+            }
+
+            copper = remaining;
+            var text = "";
+
+            if (klepticoin > 0)
+            {
+                text += $"{klepticoin} {Language.GetTextValue("Mods.CalRemix.Currency.Klepticoin").ToLower()} ";
+            }
+
+            if (cosmilite > 0)
+            {
+                text += $"{cosmilite} {Language.GetTextValue("Mods.CalRemix.Currency.Cosmilite").ToLower()} ";
+            }
+
+            if (platinum > 0)
+            {
+                text += $"{platinum} {Language.GetTextValue("Currency.Platinum").ToLower()} ";
+            }
+
+            if (gold > 0)
+            {
+                text += $"{gold} {Language.GetTextValue("Currency.Gold").ToLower()} ";
+            }
+
+            if (silver > 0)
+            {
+                text += $"{silver} {Language.GetTextValue("Currency.Silver").ToLower()} ";
+            }
+
+            if (copper > 0)
+            {
+                text += $"{copper} {Language.GetTextValue("Currency.Copper").ToLower()} ";
+            }
+
+            if (text.Length > 0)
+            {
+                text = text[..^1];
+            }
+
+            return text;
+        };
 
         // TODO: NPCShopDatabase.RegisterStylist
 
