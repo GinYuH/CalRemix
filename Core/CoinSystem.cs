@@ -292,6 +292,18 @@ internal sealed class CoinSystem : ModSystem
             c.EmitLdarg0();
             c.EmitDelegate((Item item) => !IsACoin(item));
         };
+        
+        // TODO: Chest.VisualizeChestTransfer_CoinsBatch
+        
+        // TODO: ItemDropRules.CoinsRule.ToCoins
+        
+        // TODO: Main.DrawInventory
+        
+        // TODO: Main.ValueToCoins
+        
+        // TODO: NPCShopDatabase.RegisterStylist
+        
+        // TODO: Player.DoCoins
 
         MonoModHooks.Add(
             typeof(Item).GetMethod("get_IsACoin", BindingFlags.Public | BindingFlags.Instance),
