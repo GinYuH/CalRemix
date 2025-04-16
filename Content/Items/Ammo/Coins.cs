@@ -43,6 +43,19 @@ public abstract class Coin : ModItem
         public void Unload() { }
     }
 
+    private sealed class HiDad : GlobalItem
+    {
+        public override void SetDefaults(Item entity)
+        {
+            base.SetDefaults(entity);
+
+            if (entity.type == ItemID.PlatinumCoin)
+            {
+                entity.maxStack = 100;
+            }
+        }
+    }
+
     public virtual DrawAnimation Animation { get; } = new DrawAnimationVertical(6, 8);
 
     public override void SetStaticDefaults()
@@ -58,7 +71,6 @@ public abstract class Coin : ModItem
     {
         base.SetDefaults();
 
-        Item.maxStack = Item.CommonMaxStack;
         Item.ammo = AmmoID.Coin;
         Item.notAmmo = true;
         Item.DamageType = DamageClass.Ranged;
@@ -92,6 +104,7 @@ public class CosmiliteCoin : Coin
         Item.width = 14;
         Item.height = 20;
 
+        Item.maxStack = 100;
         Item.value = Item.sellPrice(platinum: 100);
         Item.damage = 400;
         Item.shoot = 0; // todo
@@ -129,6 +142,7 @@ public class Klepticoin : Coin
         Item.width = 28;
         Item.height = 34;
 
+        Item.maxStack = Item.CommonMaxStack;
         // Item.value = Item.sellPrice(platinum: 10000); // too much!!!
         Item.value = int.MaxValue;
         Item.damage = 800;

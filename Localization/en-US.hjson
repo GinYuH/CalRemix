@@ -13,9 +13,9 @@ Mods: {
 	}
 
 	CalRemix: {
-		Currencies: {
-			CosmiliteCoinCurrency: cosmilite coins
-			KlepticoinCurrency: klepticoins
+		Currency: {
+			Cosmilite: Cosmilite
+			Klepticoin: Klepticoin
 		}
 
 		UI: {

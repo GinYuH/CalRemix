@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -73,37 +74,44 @@ internal sealed class CoinSystem : ModSystem
         {
             orderInGroup = 0;
 
-            if (IsACoin(item))
+            if (!IsACoin(item))
             {
-                if (item.type == ItemID.CopperCoin)
-                {
-                    orderInGroup = 6;
-                }
-                else if (item.type == ItemID.SilverCoin)
-                {
-                    orderInGroup = 5;
-                }
-                else if (item.type == ItemID.GoldCoin)
-                {
-                    orderInGroup = 4;
-                }
-                else if (item.type == ItemID.PlatinumCoin)
-                {
-                    orderInGroup = 3;
-                }
-                else if (item.type == ModContent.ItemType<CosmiliteCoin>())
-                {
-                    orderInGroup = 2;
-                }
-                else if (item.type == ModContent.ItemType<Klepticoin>())
-                {
-                    orderInGroup = 1;
-                }
-
-                return ContentSamples.CreativeHelper.ItemGroup.Coin;
+                return orig(item, out orderInGroup);
             }
 
-            return orig(item, out orderInGroup);
+            switch (item.type)
+            {
+                case ItemID.CopperCoin:
+                    orderInGroup = 6;
+                    break;
+
+                case ItemID.SilverCoin:
+                    orderInGroup = 5;
+                    break;
+
+                case ItemID.GoldCoin:
+                    orderInGroup = 4;
+                    break;
+
+                case ItemID.PlatinumCoin:
+                    orderInGroup = 3;
+                    break;
+
+                default:
+                {
+                    if (item.type == ModContent.ItemType<CosmiliteCoin>())
+                    {
+                        orderInGroup = 2;
+                    }
+                    else if (item.type == ModContent.ItemType<Klepticoin>())
+                    {
+                        orderInGroup = 1;
+                    }
+                    break;
+                }
+            }
+
+            return ContentSamples.CreativeHelper.ItemGroup.Coin;
         };
 
         // TODO: DyeInitializer.LoadLegacyHairdyes I cannot be bothered.
@@ -227,7 +235,7 @@ internal sealed class CoinSystem : ModSystem
         On_ItemSlot.DrawMoney += (_, sb, text, shopx, shopy, coinsArray, horizontal) =>
         {
             int[] coinIds = [ModContent.ItemType<Klepticoin>(), ModContent.ItemType<CosmiliteCoin>(), ItemID.PlatinumCoin, ItemID.GoldCoin, ItemID.SilverCoin, ItemID.CopperCoin];
-            
+
             Utils.DrawBorderStringFourWay(sb, FontAssets.MouseText.Value, text, shopx, shopy + 40f, Color.White * (Main.mouseTextColor / 255f), Color.Black, Vector2.Zero);
             if (horizontal)
             {
@@ -292,18 +300,72 @@ internal sealed class CoinSystem : ModSystem
             c.EmitLdarg0();
             c.EmitDelegate((Item item) => !IsACoin(item));
         };
-        
+
         // TODO: Chest.VisualizeChestTransfer_CoinsBatch
-        
+
         // TODO: ItemDropRules.CoinsRule.ToCoins
-        
+
         // TODO: Main.DrawInventory
-        
+
         // TODO: Main.ValueToCoins
-        
+
         // TODO: NPCShopDatabase.RegisterStylist
-        
-        // TODO: Player.DoCoins
+
+        On_Player.DoCoins += (_, self, i) =>
+        {
+            if (self.inventory[i].stack != 100 || !IsUpgradeableCoin(self.inventory[i].type))
+            {
+                return;
+            }
+
+            self.inventory[i].SetDefaults(GetCoinUpgrade(self.inventory[i].type));
+
+            for (var j = 0; j < 54; j++)
+            {
+                if (self.inventory[j].type != self.inventory[i].type || j == i || self.inventory[j].type != self.inventory[i].type || self.inventory[j].stack >= self.inventory[j].maxStack)
+                {
+                    continue;
+                }
+
+                self.inventory[j].stack++;
+                self.inventory[i].SetDefaults();
+                self.inventory[i].active = false;
+                self.inventory[i].TurnToAir();
+                self.DoCoins(j);
+            }
+
+            return;
+
+            static bool IsUpgradeableCoin(int type)
+            {
+                return type is ItemID.CopperCoin or ItemID.SilverCoin or ItemID.GoldCoin or ItemID.PlatinumCoin || type == ModContent.ItemType<CosmiliteCoin>() /*|| type == ModContent.ItemType<Klepticoin>()*/;
+            }
+
+            static int GetCoinUpgrade(int type)
+            {
+                switch (type)
+                {
+                    case ItemID.CopperCoin:
+                        return ItemID.SilverCoin;
+
+                    case ItemID.SilverCoin:
+                        return ItemID.GoldCoin;
+
+                    case ItemID.GoldCoin:
+                        return ItemID.PlatinumCoin;
+
+                    case ItemID.PlatinumCoin:
+                        return ModContent.ItemType<CosmiliteCoin>();
+                }
+
+                if (type == ModContent.ItemType<CosmiliteCoin>())
+                {
+                    return ModContent.ItemType<Klepticoin>();
+                }
+
+                throw new ArgumentOutOfRangeException(nameof(type), type, "Invalid coin type");
+            }
+        };
 
         MonoModHooks.Add(
             typeof(Item).GetMethod("get_IsACoin", BindingFlags.Public | BindingFlags.Instance),
