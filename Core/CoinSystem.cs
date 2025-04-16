@@ -447,12 +447,28 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: ItemSlot.PickItemMovementAction
 
+        On_Utils.CoinsCombineStacks += (On_Utils.orig_CoinsCombineStacks orig, out bool overFlowing, long[] coinCounts) =>
+        {
+            long num = 0L;
+            foreach (long num2 in coinCounts)
+            {
+                num += num2;
+                /*if (num >= 999999999)
+                {
+                    overFlowing = true;
+                    return 999999999L;
+                }*/
+            }
+            overFlowing = false;
+            return num;
+        };
+
         On_Utils.CoinsSplit += (_, count) =>
         {
             var array = new int[6];
             var num = 0L;
             var num2 = 10000000000L;
-            for (var num3 = 3; num3 >= 0; num3--)
+            for (var num3 = 5; num3 >= 0; num3--)
             {
                 array[num3] = (int)((count - num) / num2);
                 num += array[num3] * num2;
@@ -566,6 +582,7 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: ItemDropRules.CoinsRule.ToCoins
 
+        // Maybe not necessary, it's just for the reforge menu.
         // TODO: Main.DrawInventory
 
         On_Main.ValueToCoins += (_, value) =>
@@ -733,7 +750,7 @@ internal sealed class CoinSystem : ModSystem
         IL_Player.QuickStackAllChests += _ => { };
         IL_Player.GrabItems += _ => { };
         IL_Player.GetItemGrabRange += _ => { };
-        IL_Player.PayCurrency += _ => { }; // TODO: do we need to edit this
+        IL_Player.PayCurrency += _ => { };
         IL_Player.ItemSpace += _ => { };
         IL_Player.GetItem += _ => { };
         IL_Player.GetItem_FillIntoOccupiedSlot_VoidBag += _ => { };
