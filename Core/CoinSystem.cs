@@ -436,6 +436,15 @@ internal sealed class CoinSystem : ModSystem
 
         // TODO: PopupText.NewText
 
+        IL_Main.MouseText_DrawItemTooltip += il =>
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.GotoPrev(MoveType.After, x => x.MatchLdfld<Item>(nameof(Item.type)));
+            c.EmitDelegate(FakeCoinType);
+        };
+
         IL_ChestUI.QuickStack += il =>
         {
             var c = new ILCursor(il);
