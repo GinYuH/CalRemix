@@ -530,7 +530,11 @@ namespace CalRemix
 	        {
 		        stoolBoost++;
 	            
-		        var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+		        // Don't reuse the height boost normally granted because our
+		        // changes make it look jank but in a boring way.  It's funnier
+		        // to see it grow from 0 pixels instead.
+		        // var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+		        var boost = stoolBoost;
 		        Player.portableStoolInfo.SetStats(boost, boost, boost);
 		        
 		        // increase crit by 1% every 5 tiles
