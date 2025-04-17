@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         {
             NPC skele = Main.npc[(int)NPC.ai[3]];
 
-            if (skele.type != ModContent.NPCType<SupremeSkeletron>())
+            if (skele.type != ModContent.NPCType<SupremeSkeletron>() || !skele.active)
             {
                 NPC.active = false;
             }
