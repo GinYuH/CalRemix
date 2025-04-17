@@ -441,4 +441,32 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+    public class NoxeggMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.NoxeggMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.NoxeggMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+    public class NoxusMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.NoxusMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.NoxusMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
 }
