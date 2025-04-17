@@ -20,12 +20,17 @@ public class EveryCopyOfPitchIsPersonalized : ModSystem
         {
             foreach (var track in self.AudioTracks)
             {
-                if (track is not ASoundEffectBasedAudioTrack)
+                if (track is ASoundEffectBasedAudioTrack)
                 {
-                    continue;
+                    track.SetVariable("Pitch", hilariousPitchMultiplier);
                 }
 
-                track.SetVariable("Pitch", hilariousPitchMultiplier);
+                // MonoStereo support!!!  This mod reimplements Cue support for
+                // vanilla tracks and lets us modify the pitch as well.
+                if (track?.GetType().FullName?.Equals("MonoStereoMod.MonoStereoAudioTrack") ?? false)
+                {
+                    track.SetVariable("Pitch", hilariousPitchMultiplier);
+                }
             }
 
             orig(self);
@@ -36,10 +41,7 @@ public class EveryCopyOfPitchIsPersonalized : ModSystem
             : GetConsistentHash(Environment.UserName);
 
         // vary by 10% (90% to 110%)
-        hilariousPitchMultiplier = 1f + 0.1f * (essentiallyUniqueId % 100 / 100f);
-
-        // for testing
-        hilariousPitchMultiplier = -1f;
+        hilariousPitchMultiplier = 0.1f * (essentiallyUniqueId % 100 / 100f);
 
         return;
 
@@ -59,35 +61,4 @@ public class EveryCopyOfPitchIsPersonalized : ModSystem
             return hash;
         }
     }
-
-    /*public override void PostSetupContent()
-    {
-        base.PostSetupContent();
-
-        if (Main.audioSystem is not LegacyAudioSystem audioSystem)
-        {
-            return;
-        }
-
-        foreach (var track in audioSystem.AudioTracks)
-        {
-            if (track is not null)
-            {
-                track.SetVariable("Pitch", hilariousPitchMultiplier);
-            }
-        }
-    }*/
-
-    /*private static void UseModifiedPitch(ILContext il)
-    {
-        var c = new ILCursor(il);
-
-        c.GotoNext(MoveType.After, x => x.MatchLdfld<SoundEffectInstance>("INTERNAL_pitch"));
-        c.EmitLdsfld(
-            typeof(EveryCopyOfPitchIsPersonalized).GetField("hilariousPitchMultiplier", BindingFlags.Static | BindingFlags.NonPublic)!
-        );
-        c.EmitAdd();
-    }*/
-
-    public void Unload() { }
 }
