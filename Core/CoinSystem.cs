@@ -297,7 +297,8 @@ internal sealed class CoinSystem : ModSystem
             return ContentSamples.CreativeHelper.ItemGroup.Coin;
         };
 
-        // TODO: DyeInitializer.LoadLegacyHairdyes I cannot be bothered.
+        // Too niche.
+        // DyeInitializer.LoadLegacyHairdyes
 
         On_CustomCurrencyManager.IsCustomCurrency += (orig, item) => item.ModItem is Coin || orig(item);
 
@@ -350,7 +351,8 @@ internal sealed class CoinSystem : ModSystem
             );
         };
 
-        // TODO: Give coins from tax collector.
+        // Good luck getting to that amount.
+        // Give coins from tax collector.
 
         On_NPC.SpawnAllowed_Merchant += orig =>
         {
@@ -553,7 +555,8 @@ internal sealed class CoinSystem : ModSystem
             }
         };
 
-        // TODO: Player.SellItem
+        // Probably not needed.
+        // Player.SellItem
 
         On_Player.TryPurchasing += (
             _,
@@ -733,7 +736,8 @@ internal sealed class CoinSystem : ModSystem
             }
         };
 
-        // TODO: We can add to ExtractinatorUse maybe?
+        // Too niche.
+        // We can add to ExtractinatorUse maybe?
 
         IL_Player.DropCoins += il =>
         {
@@ -1123,7 +1127,8 @@ internal sealed class CoinSystem : ModSystem
             return text;
         };
 
-        // TODO: NPCShopDatabase.RegisterStylist
+        // Too niche.
+        // NPCShopDatabase.RegisterStylist
 
         On_Player.DoCoins += (_, self, i) =>
         {
