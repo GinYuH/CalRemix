@@ -16,6 +16,8 @@ Mods: {
 		Currency: {
 			Cosmilite: Cosmilite
 			Klepticoin: Klepticoin
+			CosmiliteInterface: cosmilite
+			KlepticoinInterface: klepticoin
 		}
 
 		UI: {

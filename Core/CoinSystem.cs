@@ -117,12 +117,12 @@ internal sealed class CoinSystem : ModSystem
 
             if (klepticoin > 0)
             {
-                text = text + klepticoin + " " + Language.GetTextValue("Mods.CalRemix.Currency.Klepticoin") + " ";
+                text = text + klepticoin + " " + Language.GetTextValue("Mods.CalRemix.Currency.KlepticoinInterface") + " ";
             }
             
             if (cosmilite > 0)
             {
-                text = text + cosmilite + " " + Language.GetTextValue("Mods.CalRemix.Currency.Cosmilite") + " ";
+                text = text + cosmilite + " " + Language.GetTextValue("Mods.CalRemix.Currency.CosmiliteInterface") + " ";
             }
 
             if (plat > 0)
