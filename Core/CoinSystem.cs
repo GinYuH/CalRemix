@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
@@ -388,7 +389,7 @@ internal sealed class CoinSystem : ModSystem
             {
                 num2 = 2;
             }
-            
+
             for (var i = 0; i < num2; i++)
             {
                 var num3 = self.value;
@@ -720,20 +721,6 @@ internal sealed class CoinSystem : ModSystem
             }
 
             return result;
-
-            static int GetRealCoinType(int itemId)
-            {
-                return itemId switch
-                {
-                    ItemID.CopperCoin => ItemID.CopperCoin,
-                    ItemID.SilverCoin => ItemID.SilverCoin,
-                    ItemID.GoldCoin => ItemID.GoldCoin,
-                    ItemID.PlatinumCoin => ItemID.PlatinumCoin,
-                    ItemID.PlatinumCoin + 1 => ModContent.ItemType<CosmiliteCoin>(),
-                    ItemID.PlatinumCoin + 2 => ModContent.ItemType<Klepticoin>(),
-                    _ => throw new ArgumentOutOfRangeException(nameof(itemId), itemId, "Invalid item ID"),
-                };
-            }
         };
 
         // Too niche.
@@ -820,7 +807,229 @@ internal sealed class CoinSystem : ModSystem
             c.EmitDelegate(FakeCoinType);
         };
 
-        // TODO: ChestUI.MoveCoins
+        On_ChestUI.MoveCoins += (_, pInv, cInv, _) =>
+        {
+            var flag = false;
+            var array = new int[6];
+            var list = new List<int>();
+            var list2 = new List<int>();
+            var flag2 = false;
+            var array2 = new int[40];
+            var num = Utils.CoinsCount(out var overflowing, pInv);
+            for (var i = 0; i < cInv.Length; i++)
+            {
+                array2[i] = -1;
+                if (cInv[i].stack < 1 || cInv[i].type < 1)
+                {
+                    list2.Add(i);
+                    cInv[i] = new Item();
+                }
+                if (cInv[i] != null && cInv[i].stack > 0)
+                {
+                    var num2 = 0;
+                    if (cInv[i].type == 71)
+                    {
+                        num2 = 1;
+                    }
+                    if (cInv[i].type == 72)
+                    {
+                        num2 = 2;
+                    }
+                    if (cInv[i].type == 73)
+                    {
+                        num2 = 3;
+                    }
+                    if (cInv[i].type == 74)
+                    {
+                        num2 = 4;
+                    }
+                    if (cInv[i].type == ModContent.ItemType<CosmiliteCoin>())
+                    {
+                        num2 = 5;
+                    }
+                    if (cInv[i].type == ModContent.ItemType<Klepticoin>())
+                    {
+                        num2 = 5;
+                    }
+                    array2[i] = num2 - 1;
+                    if (num2 > 0)
+                    {
+                        array[num2 - 1] += cInv[i].stack;
+                        list2.Add(i);
+                        cInv[i] = new Item();
+                        flag2 = true;
+                    }
+                }
+            }
+            if (!flag2)
+            {
+                return 0L;
+            }
+            for (var j = 0; j < pInv.Length; j++)
+            {
+                if (j != 58 && pInv[j] != null && pInv[j].stack > 0 && !pInv[j].favorited)
+                {
+                    var num3 = 0;
+                    if (pInv[j].type == 71)
+                    {
+                        num3 = 1;
+                    }
+                    if (pInv[j].type == 72)
+                    {
+                        num3 = 2;
+                    }
+                    if (pInv[j].type == 73)
+                    {
+                        num3 = 3;
+                    }
+                    if (pInv[j].type == 74)
+                    {
+                        num3 = 4;
+                    }
+                    if (pInv[j].type == ModContent.ItemType<CosmiliteCoin>())
+                    {
+                        num3 = 5;
+                    }
+                    if (pInv[j].type == ModContent.ItemType<Klepticoin>())
+                    {
+                        num3 = 5;
+                    }
+                    if (num3 > 0)
+                    {
+                        flag = true;
+                        array[num3 - 1] += pInv[j].stack;
+                        list.Add(j);
+                        pInv[j] = new Item();
+                    }
+                }
+            }
+            for (var k = 0; k < 5; k++)
+            {
+                while (array[k] >= 100)
+                {
+                    array[k] -= 100;
+                    array[k + 1]++;
+                }
+            }
+            for (var l = 0; l < 40; l++)
+            {
+                if (array2[l] < 0 || cInv[l].type != 0)
+                {
+                    continue;
+                }
+                var num4 = l;
+                var num5 = array2[l];
+                if (array[num5] > 0)
+                {
+                    cInv[num4].SetDefaults(GetRealCoinType(71 + num5));
+                    cInv[num4].stack = array[num5];
+                    if (cInv[num4].stack > cInv[num4].maxStack)
+                    {
+                        cInv[num4].stack = cInv[num4].maxStack;
+                    }
+                    array[num5] -= cInv[num4].stack;
+                    array2[l] = -1;
+                }
+                if (Main.netMode == 1 && Main.player[Main.myPlayer].chest > -1)
+                {
+                    NetMessage.SendData(32, -1, -1, null, Main.player[Main.myPlayer].chest, num4);
+                }
+                list2.Remove(num4);
+            }
+            for (var m = 0; m < 40; m++)
+            {
+                if (array2[m] < 0 || cInv[m].type != 0)
+                {
+                    continue;
+                }
+                var num6 = m;
+                var num7 = 5;
+                while (num7 >= 0)
+                {
+                    if (array[num7] > 0)
+                    {
+                        cInv[num6].SetDefaults(GetRealCoinType(71 + num7));
+                        cInv[num6].stack = array[num7];
+                        if (cInv[num6].stack > cInv[num6].maxStack)
+                        {
+                            cInv[num6].stack = cInv[num6].maxStack;
+                        }
+                        array[num7] -= cInv[num6].stack;
+                        array2[m] = -1;
+                        break;
+                    }
+                    if (array[num7] == 0)
+                    {
+                        num7--;
+                    }
+                }
+                if (Main.netMode == 1 && Main.player[Main.myPlayer].chest > -1)
+                {
+                    NetMessage.SendData(32, -1, -1, null, Main.player[Main.myPlayer].chest, num6);
+                }
+                list2.Remove(num6);
+            }
+            while (list2.Count > 0)
+            {
+                var num8 = list2[0];
+                var num9 = 5;
+                while (num9 >= 0)
+                {
+                    if (array[num9] > 0)
+                    {
+                        cInv[num8].SetDefaults(GetRealCoinType(71 + num9));
+                        cInv[num8].stack = array[num9];
+                        if (cInv[num8].stack > cInv[num8].maxStack)
+                        {
+                            cInv[num8].stack = cInv[num8].maxStack;
+                        }
+                        array[num9] -= cInv[num8].stack;
+                        break;
+                    }
+                    if (array[num9] == 0)
+                    {
+                        num9--;
+                    }
+                }
+                if (Main.netMode == 1 && Main.player[Main.myPlayer].chest > -1)
+                {
+                    NetMessage.SendData(32, -1, -1, null, Main.player[Main.myPlayer].chest, list2[0]);
+                }
+                list2.RemoveAt(0);
+            }
+            var num10 = 5;
+            while (num10 >= 0 && list.Count > 0)
+            {
+                var num11 = list[0];
+                if (array[num10] > 0)
+                {
+                    pInv[num11].SetDefaults(GetRealCoinType(71 + num10));
+                    pInv[num11].stack = array[num10];
+                    if (pInv[num11].stack > pInv[num11].maxStack)
+                    {
+                        pInv[num11].stack = pInv[num11].maxStack;
+                    }
+                    array[num10] -= pInv[num11].stack;
+                    flag = false;
+                    list.RemoveAt(0);
+                }
+                if (array[num10] == 0)
+                {
+                    num10--;
+                }
+            }
+            if (flag)
+            {
+                SoundEngine.PlaySound(SoundID.Grab);
+            }
+            bool overFlowing2;
+            var num12 = Utils.CoinsCount(out overFlowing2, pInv);
+            if (overflowing || overFlowing2)
+            {
+                return 0L;
+            }
+            return num - num12;
+        };
 
         IL_ItemSlot.SellOrTrash += il =>
         {
@@ -920,7 +1129,117 @@ internal sealed class CoinSystem : ModSystem
             }
         };
 
-        // TODO: ItemSorting.SortCoins
+        On_ItemSorting.SortCoins += _ =>
+        {
+            var inventory = Main.LocalPlayer.inventory;
+            var count = Utils.CoinsCount(out var overflowing, inventory, 58);
+
+            if (overflowing)
+            {
+                return;
+            }
+
+            var coins = Utils.CoinsSplit(count);
+            var num = 0;
+            for (var i = 0; i < 5; i++)
+            {
+                var num2 = coins[i];
+                while (num2 > 0)
+                {
+                    num2 -= 99;
+                    num++;
+                }
+            }
+            var num3 = coins[5];
+            while (num3 > Item.CommonMaxStack)
+            {
+                num3 -= Item.CommonMaxStack;
+                num++;
+            }
+            var num4 = 0;
+            for (var j = 0; j < 58; j++)
+            {
+                if (((inventory[j].type >= 71 && inventory[j].type <= 74) || ItemLoader.GetItem(inventory[j].type) is Coin) && inventory[j].stack > 0)
+                {
+                    num4++;
+                }
+            }
+            if (num4 < num)
+            {
+                return;
+            }
+            for (var k = 0; k < 58; k++)
+            {
+                if (((inventory[k].type >= 71 && inventory[k].type <= 74) || ItemLoader.GetItem(inventory[k].type) is Coin) && inventory[k].stack > 0)
+                {
+                    inventory[k].TurnToAir();
+                }
+            }
+            var num5 = 100;
+            while (true)
+            {
+                var num6 = -1;
+                for (var num7 = 5; num7 >= 0; num7--)
+                {
+                    if (coins[num7] > 0)
+                    {
+                        num6 = num7;
+                        break;
+                    }
+                }
+                if (num6 == -1)
+                {
+                    break;
+                }
+                var num8 = coins[num6];
+                if (num6 == 5 && num8 > Item.CommonMaxStack)
+                {
+                    num8 = Item.CommonMaxStack;
+                }
+                var flag = false;
+                if (!flag)
+                {
+                    for (var l = 50; l < 54; l++)
+                    {
+                        if (inventory[l].IsAir)
+                        {
+                            inventory[l].SetDefaults(GetRealCoinType(71 + num6));
+                            inventory[l].stack = num8;
+                            coins[num6] -= num8;
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                if (!flag)
+                {
+                    for (var m = 0; m < 50; m++)
+                    {
+                        if (inventory[m].IsAir)
+                        {
+                            inventory[m].SetDefaults(GetRealCoinType(71 + num6));
+                            inventory[m].stack = num8;
+                            coins[num6] -= num8;
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                num5--;
+                if (num5 > 0)
+                {
+                    continue;
+                }
+                for (var num9 = 5; num9 >= 0; num9--)
+                {
+                    if (coins[num9] > 0)
+                    {
+                        Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_Misc("SortingWithNoSpace"), GetRealCoinType(71 + num9), coins[num9]);
+                    }
+                }
+                break;
+            }
+        };
 
         On_Utils.CoinsCount += (On_Utils.orig_CoinsCount orig, out bool flowing, Item[] inv, int[] ignoreSlots) =>
         {
@@ -1234,5 +1553,19 @@ internal sealed class CoinSystem : ModSystem
         }
 
         return itemId;
+    }
+
+    private static int GetRealCoinType(int itemId)
+    {
+        return itemId switch
+        {
+            ItemID.CopperCoin => ItemID.CopperCoin,
+            ItemID.SilverCoin => ItemID.SilverCoin,
+            ItemID.GoldCoin => ItemID.GoldCoin,
+            ItemID.PlatinumCoin => ItemID.PlatinumCoin,
+            ItemID.PlatinumCoin + 1 => ModContent.ItemType<CosmiliteCoin>(),
+            ItemID.PlatinumCoin + 2 => ModContent.ItemType<Klepticoin>(),
+            _ => itemId,
+        };
     }
 }
