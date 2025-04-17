@@ -574,11 +574,11 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 NPC.active = false;
 
 
-            if ((!DownedBossSystem.downedCalamitas || !DownedBossSystem.downedExoMechs) && !Target.HasItem(ModContent.ItemType<Anomaly109>()))
+            /*if ((!DownedBossSystem.downedCalamitas || !DownedBossSystem.downedExoMechs) && !Target.HasItem(ModContent.ItemType<Anomaly109>()))
             {
                 NPC.active = false;
                 return;
-            }
+            }*/
 
             // Grant the target infinite flight.
             Target.wingTime = Target.wingTimeMax;
