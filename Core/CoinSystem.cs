@@ -186,17 +186,17 @@ internal sealed class CoinSystem : ModSystem
     private const long cosmilite_value = 100000000;
     private const long klepticoin_value = 10000000000;
 
-    private static readonly Color color_cosmilite_start = new Color(39, 151, 171, 255);
-    private static readonly Color color_cosmilite_end = new Color(252, 109, 202, 255);
+    private static readonly Color color_cosmilite_start = new(173, 217, 202, 255);
+    private static readonly Color color_cosmilite_end = new(255, 186, 206, 255);
 
-    private static readonly Color color_klepticoin_start = new Color(144, 75, 21, 255);
-    private static readonly Color color_klepticoin_end = new Color(82, 30, 34, 255);
+    private static readonly Color color_klepticoin_start = new(251, 246, 138, 255);
+    private static readonly Color color_klepticoin_end = new(144, 75, 21, 255);
 
     public static Color CosmiliteColor =>
-        Color.Lerp(color_cosmilite_start, color_cosmilite_end, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f) * 0.5f + 0.5f);
+        Color.Lerp(color_cosmilite_start, color_cosmilite_end, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 4f) * 0.5f + 0.5f);
 
     public static Color KlepticoinColor =>
-        Color.Lerp(color_klepticoin_start, color_klepticoin_end, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f) * 0.5f + 0.5f);
+        Color.Lerp(color_klepticoin_start, color_klepticoin_end, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 4f) * 0.5f + 0.5f);
 
     private static readonly (int itemId, long value)[] coin_types =
     [
