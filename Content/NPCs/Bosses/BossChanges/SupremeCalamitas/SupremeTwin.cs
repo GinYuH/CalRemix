@@ -46,16 +46,13 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         public override void OnSpawn(IEntitySource source)
         {
             // spawn the other guy if one guy is already alive
-            if (NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>()) != -1)
+            if (NPC.CountNPCS(ModContent.NPCType<SupremeTwin>()) > 1)
             {
-                if (Main.npc[NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>())].ai[1] == (int)TwinType.Retinazer)
-                {
-                    Twin = (int)TwinType.Spaztismazm;
-                }
-                else if (Main.npc[NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>())].ai[1] == (int)TwinType.Spaztismazm)
-                {
-                    Twin = (int)TwinType.Retinazer;
-                }
+                Twin = (int)TwinType.Spaztismazm;
+            }
+            else
+            {
+                Twin = (int)TwinType.Retinazer;
             }
 
             // awesome random timer start
