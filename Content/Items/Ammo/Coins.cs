@@ -1,3 +1,6 @@
+using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Tiles;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -84,7 +87,7 @@ public abstract class Coin : ModItem
     }
 }
 
-public class CosmiliteCoin : Coin
+internal sealed class CosmiliteCoin : Coin
 {
     public override void SetStaticDefaults()
     {
@@ -107,9 +110,9 @@ public class CosmiliteCoin : Coin
         Item.maxStack = 100;
         Item.value = Item.sellPrice(platinum: 100);
         Item.damage = 400;
-        Item.shoot = ProjectileID.PlatinumCoin; // todo
+        Item.shoot = ModContent.ProjectileType<CosmiliteCoinProjectile>();
         Item.shootSpeed = 5f;
-        Item.createTile = TileID.PlatinumCoinPile; // todo
+        Item.createTile = ModContent.TileType<CosmiliteCoinPlaced>();
     }
 
     public override void AddRecipes()
@@ -119,7 +122,7 @@ public class CosmiliteCoin : Coin
     }
 }
 
-public class Klepticoin : Coin
+internal sealed class Klepticoin : Coin
 {
     public override DrawAnimation Animation { get; } = new DrawAnimationVertical(6, 12);
 
@@ -146,9 +149,9 @@ public class Klepticoin : Coin
         // Item.value = Item.sellPrice(platinum: 10000); // too much!!!
         Item.value = int.MaxValue;
         Item.damage = 800;
-        Item.shoot = ProjectileID.PlatinumCoin; // todo
+        Item.shoot = ModContent.ProjectileType<KlepticoinProjectile>();
         Item.shootSpeed = 6f;
-        Item.createTile = TileID.PlatinumCoinPile; // todo
+        Item.createTile = ModContent.TileType<KlepticoinPlaced>();
     }
 
     public override void AddRecipes()
