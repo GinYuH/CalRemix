@@ -67,6 +67,9 @@ namespace CalRemix.UI
             HelperMessage.New("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "Fargowiltas", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!");
 
+            HelperMessage.New("SirNautilus", "Sir Nautilus!?!? This guy is clearly a grouper not a nautilus! Kick him in the shin! We don't want someone spreading misinformation about marine biology around here!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "CalamityFables", "SirNautilusPassive"));
+
 
             int num = Main.rand.Next(0, int.MaxValue);
             int dateTypes = Main.rand.Next(10);
