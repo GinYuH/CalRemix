@@ -119,7 +119,7 @@ internal sealed class CoinSystem : ModSystem
             {
                 text = text + klepticoin + " " + Language.GetTextValue("Mods.CalRemix.Currency.KlepticoinInterface") + " ";
             }
-            
+
             if (cosmilite > 0)
             {
                 text = text + cosmilite + " " + Language.GetTextValue("Mods.CalRemix.Currency.CosmiliteInterface") + " ";
@@ -156,13 +156,15 @@ internal sealed class CoinSystem : ModSystem
 
             if (klepticoin > 0)
             {
-                var color = KlepticoinColor;
-                priceLine.OverrideColor = new Color((byte)(color.R * num4), (byte)(color.G * num4), (byte)(color.B * num4), a);
+                // var color = KlepticoinColor;
+                // priceLine.OverrideColor = new Color((byte)(color.R * num4), (byte)(color.G * num4), (byte)(color.B * num4), a);
+                priceLine.OverrideColor = KlepticoinColor;
             }
             else if (cosmilite > 0)
             {
-                var color = CosmiliteColor;
-                priceLine.OverrideColor = new Color((byte)(color.R * num4), (byte)(color.G * num4), (byte)(color.B * num4), a);
+                // var color = CosmiliteColor;
+                // priceLine.OverrideColor = new Color((byte)(color.R * num4), (byte)(color.G * num4), (byte)(color.B * num4), a);
+                priceLine.OverrideColor = CosmiliteColor;
             }
             else if (plat > 0)
             {
@@ -375,7 +377,181 @@ internal sealed class CoinSystem : ModSystem
             return orig();
         };
 
-        // TODO: NPCLoot_DropMoney
+        On_NPC.NPCLoot_DropMoney += (_, self, player) =>
+        {
+            var num = 0f;
+            var luck = player.luck;
+            var num2 = 1L;
+            if (Main.rand.NextFloat() < Math.Abs(luck))
+            {
+                num2 = 2;
+            }
+            
+            for (var i = 0; i < num2; i++)
+            {
+                var num3 = self.value;
+                if (self.midas)
+                {
+                    num3 *= 1f + Main.rand.Next(10, 51) * 0.01f;
+                }
+                num3 *= 1f + Main.rand.Next(-20, 76) * 0.01f;
+                if (Main.rand.NextBool(2))
+                {
+                    num3 *= 1f + Main.rand.Next(5, 11) * 0.01f;
+                }
+                if (Main.rand != null && Main.rand.NextBool(4))
+                {
+                    num3 *= 1f + Main.rand.Next(10, 21) * 0.01f;
+                }
+                if (Main.rand.NextBool(8))
+                {
+                    num3 *= 1f + Main.rand.Next(15, 31) * 0.01f;
+                }
+                if (Main.rand.NextBool(16))
+                {
+                    num3 *= 1f + Main.rand.Next(20, 41) * 0.01f;
+                }
+                if (Main.rand.NextBool(32))
+                {
+                    num3 *= 1f + Main.rand.Next(25, 51) * 0.01f;
+                }
+                if (Main.rand.NextBool(64))
+                {
+                    num3 *= 1f + Main.rand.Next(50, 101) * 0.01f;
+                }
+                if (Main.bloodMoon)
+                {
+                    num3 *= 1f + Main.rand.Next(101) * 0.01f;
+                }
+                if (i == 0)
+                {
+                    num = num3;
+                }
+                else if (luck < 0f)
+                {
+                    if (num3 < num)
+                    {
+                        num = num3;
+                    }
+                }
+                else if (num3 > num)
+                {
+                    num = num3;
+                }
+            }
+            num += (float)self.extraValue;
+            while ((int)num > 0)
+            {
+                if (num > klepticoin_value)
+                {
+                    var num4 = (int)(num / klepticoin_value);
+                    if (num4 > 50 && Main.rand.NextBool(5))
+                    {
+                        num4 /= Main.rand.Next(3) + 1;
+                    }
+                    if (Main.rand.NextBool(5))
+                    {
+                        num4 /= Main.rand.Next(3) + 1;
+                    }
+                    var num5 = num4;
+                    while (num5 > 9999)
+                    {
+                        num5 -= 9999;
+                        Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, ModContent.ItemType<Klepticoin>(), 9999);
+                    }
+                    num -= klepticoin_value * num4;
+                    Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, ModContent.ItemType<Klepticoin>(), num5);
+                }
+                else if (num > cosmilite_value)
+                {
+                    var num4 = (int)(num / cosmilite_value);
+                    if (num4 > 50 && Main.rand.NextBool(5))
+                    {
+                        num4 /= Main.rand.Next(3) + 1;
+                    }
+                    if (Main.rand.NextBool(5))
+                    {
+                        num4 /= Main.rand.Next(3) + 1;
+                    }
+                    /*var num5 = num4;
+                    while (num5 > 999)
+                    {
+                        num5 -= 999;
+                        Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, 74, 999);
+                    }*/
+                    var num5 = num4;
+                    num -= cosmilite_value * num4;
+                    Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, ModContent.ItemType<CosmiliteCoin>(), num5);
+                }
+                else if (num > 1000000f)
+                {
+                    var num4 = (int)(num / 1000000f);
+                    if (num4 > 50 && Main.rand.NextBool(5))
+                    {
+                        num4 /= Main.rand.Next(3) + 1;
+                    }
+                    if (Main.rand.NextBool(5))
+                    {
+                        num4 /= Main.rand.Next(3) + 1;
+                    }
+                    /*var num5 = num4;
+                    while (num5 > 999)
+                    {
+                        num5 -= 999;
+                        Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, 74, 999);
+                    }*/
+                    var num5 = num4;
+                    num -= 1000000 * num4;
+                    Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, 74, num5);
+                }
+                else if (num > 10000f)
+                {
+                    var num6 = (int)(num / 10000f);
+                    if (num6 > 50 && Main.rand.NextBool(5))
+                    {
+                        num6 /= Main.rand.Next(3) + 1;
+                    }
+                    if (Main.rand.NextBool(5))
+                    {
+                        num6 /= Main.rand.Next(3) + 1;
+                    }
+                    num -= 10000 * num6;
+                    Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, 73, num6);
+                }
+                else if (num > 100f)
+                {
+                    var num7 = (int)(num / 100f);
+                    if (num7 > 50 && Main.rand.NextBool(5))
+                    {
+                        num7 /= Main.rand.Next(3) + 1;
+                    }
+                    if (Main.rand.NextBool(5))
+                    {
+                        num7 /= Main.rand.Next(3) + 1;
+                    }
+                    num -= 100 * num7;
+                    Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, 72, num7);
+                }
+                else
+                {
+                    var num8 = (int)num;
+                    if (num8 > 50 && Main.rand.NextBool(5))
+                    {
+                        num8 /= Main.rand.Next(3) + 1;
+                    }
+                    if (Main.rand.NextBool(5))
+                    {
+                        num8 /= Main.rand.Next(4) + 1;
+                    }
+                    if (num8 < 1)
+                    {
+                        num8 = 1;
+                    }
+                    num -= num8;
+                    Item.NewItem(self.GetSource_Loot(), (int)self.position.X, (int)self.position.Y, self.width, self.height, 71, num8);
+                }
+            }
+        };
 
         // TODO: Player.SellItem
 
