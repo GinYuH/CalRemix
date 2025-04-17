@@ -229,7 +229,7 @@ internal sealed class CoinSystem : ModSystem
             var result = false;
             while (num > 0)
             {
-                var num2 = 100000000L;
+                var num2 = 10000000000L;
                 for (var i = 0; i < 6; i++)
                 {
                     if (num >= num2)
@@ -267,7 +267,7 @@ internal sealed class CoinSystem : ModSystem
                     var item = new Point(-1, -1);
                     for (var j = 0; j < inv.Count; j++)
                     {
-                        num2 = 1000000L;
+                        num2 = 100000000L;
                         for (var k = 0; k < 5; k++)
                         {
                             if (num >= num2)
