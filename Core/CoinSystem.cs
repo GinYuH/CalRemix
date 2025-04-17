@@ -768,7 +768,151 @@ internal sealed class CoinSystem : ModSystem
             c.EmitStloc(valueLoc);
         };
 
-        // TODO: PopupText.NewText
+        /*IL_PopupText.NewText_PopupTextContext_Item_int_bool_bool += il =>
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(MoveType.Before, x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.EmitDelegate(FakeCoinType);
+
+            c.GotoNext(MoveType.Before, x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.Index += 2;
+
+            c.GotoNext(MoveType.Before, x => x.MatchLdcI4(ItemID.PlatinumCoin));
+
+            ILLabel label1 = null;
+            c.GotoNext(x => x.MatchBneUn(out label1));
+
+            var valueLoc1 = -1;
+            c.GotoNext(x => x.MatchLdloc(out valueLoc1));
+
+            // var stackArg = -1;
+            // c.GotoNext(x => x.MatchLdarg(out stackArg));
+
+            c.GotoLabel(label1);
+
+            c.EmitLdarg1();
+            c.EmitLdarg2();
+            c.EmitLdloc(valueLoc1);
+            c.EmitDelegate(
+                (Item item, int stack, long value) =>
+                {
+                    if (item.type == ModContent.ItemType<CosmiliteCoin>())
+                    {
+                        value += stack * cosmilite_value;
+                    }
+                    else if (item.type == ModContent.ItemType<Klepticoin>())
+                    {
+                        value += stack * klepticoin_value;
+                    }
+                }
+            );
+            c.EmitStloc(valueLoc1);
+
+            c.GotoNext(MoveType.Before, x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.EmitDelegate(FakeCoinType);
+
+            c.GotoNext(MoveType.Before, x => x.MatchLdcI4(ItemID.PlatinumCoin));
+            c.Index += 2;
+
+            c.GotoNext(MoveType.Before, x => x.MatchLdcI4(ItemID.PlatinumCoin));
+
+            ILLabel label2 = null;
+            c.GotoNext(x => x.MatchBneUn(out label2));
+
+            var valueLoc2 = -1;
+            c.GotoNext(x => x.MatchLdloc(out valueLoc2));
+
+            var popupLoc = -1;
+            c.GotoNext(x => x.MatchLdloc(out popupLoc));
+
+            c.GotoLabel(label2);
+
+            c.EmitLdarg1();
+            c.EmitLdloc(valueLoc2);
+            c.EmitLdloc(popupLoc);
+            c.EmitDelegate(
+                (Item item, long value, PopupText popup) =>
+                {
+                    if (item.type == ModContent.ItemType<CosmiliteCoin>())
+                    {
+                        value += popup.stack * cosmilite_value;
+                    }
+                    else if (item.type == ModContent.ItemType<Klepticoin>())
+                    {
+                        value += popup.stack * klepticoin_value;
+                    }
+
+                    return value;
+                }
+            );
+            c.EmitStloc(valueLoc2);
+        };*/
+
+        PopupTextEdit.CoinValueGetter = type =>
+        {
+            if (type is >= ItemID.CopperCoin and <= ItemID.PlatinumCoin)
+            {
+                return type switch
+                {
+                    ItemID.CopperCoin => 1,
+                    ItemID.SilverCoin => 100,
+                    ItemID.GoldCoin => 10000,
+                    ItemID.PlatinumCoin => 1000000,
+                    _ => 0,
+                };
+            }
+
+            if (type == ModContent.ItemType<CosmiliteCoin>())
+            {
+                return cosmilite_value;
+            }
+
+            if (type == ModContent.ItemType<Klepticoin>())
+            {
+                return klepticoin_value;
+            }
+
+            return null;
+        };
+
+        On_PopupText.NewText_PopupTextContext_Item_int_bool_bool += PopupTextEdit.NewText;
+
+        On_PopupText.ValueToName_long += (_, value) => ValueToNameCommon(value);
+
+        On_PopupText.ValueToName += (_, self) =>
+        {
+            self.name = ValueToNameCommon(self.coinValue);
+        };
+
+        On_PopupText.AddToCoinValue += (_, self, value) =>
+        {
+            self.coinValue += value;
+        };
+
+        On_PopupText.Update += (orig, self, i) =>
+        {
+            orig(self, i);
+
+            if (!self.active)
+            {
+                return;
+            }
+
+            if (!self.coinText)
+            {
+                return;
+            }
+
+            if (self.coinValue >= klepticoin_value)
+            {
+                self.color = KlepticoinColor;
+            }
+            else if (self.coinValue >= cosmilite_value)
+            {
+                self.color = CosmiliteColor;
+            }
+        };
 
         IL_Main.MouseText_DrawItemTooltip += il =>
         {
@@ -1567,5 +1711,79 @@ internal sealed class CoinSystem : ModSystem
             ItemID.PlatinumCoin + 2 => ModContent.ItemType<Klepticoin>(),
             _ => itemId,
         };
+    }
+
+    private static string ValueToNameCommon(long coinValue)
+    {
+        var klepticoin = 0;
+        var cosmilite = 0;
+        var platinum = 0;
+        var gold = 0;
+        var silver = 0;
+        var copper = 0;
+        var remaining = coinValue;
+        while (remaining > 0)
+        {
+            if (remaining >= klepticoin_value)
+            {
+                remaining -= klepticoin_value;
+                klepticoin++;
+            }
+            else if (remaining >= cosmilite_value)
+            {
+                remaining -= cosmilite_value;
+                cosmilite++;
+            }
+            else if (remaining >= 1000000)
+            {
+                remaining -= 1000000;
+                platinum++;
+            }
+            else if (remaining >= 10000)
+            {
+                remaining -= 10000;
+                gold++;
+            }
+            else if (remaining >= 100)
+            {
+                remaining -= 100;
+                silver++;
+            }
+            else if (remaining >= 1)
+            {
+                remaining--;
+                copper++;
+            }
+        }
+        var text = "";
+        if (klepticoin > 0)
+        {
+            text = text + klepticoin + $" {Language.GetTextValue("Mods.CalRemix.Currency.Klepticoin")} ";
+        }
+        if (cosmilite > 0)
+        {
+            text = text + cosmilite + $" {Language.GetTextValue("Mods.CalRemix.Currency.Cosmilite")} ";
+        }
+        if (platinum > 0)
+        {
+            text = text + platinum + $" {Language.GetTextValue("Currency.Platinum")} ";
+        }
+        if (gold > 0)
+        {
+            text = text + gold + $" {Language.GetTextValue("Currency.Gold")} ";
+        }
+        if (silver > 0)
+        {
+            text = text + silver + $" {Language.GetTextValue("Currency.Silver")} ";
+        }
+        if (copper > 0)
+        {
+            text = text + copper + $" {Language.GetTextValue("Currency.Copper")} ";
+        }
+        if (text.Length > 1)
+        {
+            text = text[..^1];
+        }
+        return text;
     }
 }
