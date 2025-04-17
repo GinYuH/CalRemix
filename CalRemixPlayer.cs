@@ -1226,7 +1226,7 @@ namespace CalRemix
                     npc.AddBuff(BuffID.Confused, 220);
                 }
             }
-            if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().amalgam);
+            if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().amalgam)
             {
                 if (Main.rand.NextBool(4))
                 {
