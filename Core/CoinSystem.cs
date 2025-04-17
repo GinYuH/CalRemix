@@ -993,7 +993,7 @@ internal sealed class CoinSystem : ModSystem
                     }
                     if (cInv[i].type == ModContent.ItemType<Klepticoin>())
                     {
-                        num2 = 5;
+                        num2 = 6;
                     }
                     array2[i] = num2 - 1;
                     if (num2 > 0)
@@ -1036,7 +1036,7 @@ internal sealed class CoinSystem : ModSystem
                     }
                     if (pInv[j].type == ModContent.ItemType<Klepticoin>())
                     {
-                        num3 = 5;
+                        num3 = 6;
                     }
                     if (num3 > 0)
                     {
