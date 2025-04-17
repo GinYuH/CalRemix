@@ -28,8 +28,175 @@ namespace CalRemix.Core;
 /// </summary>
 internal sealed class CoinSystem : ModSystem
 {
+    private sealed class OverridePriceText : GlobalItem
+    {
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(item, tooltips);
+
+            if (item.shopSpecialCurrency != -1)
+            {
+                return;
+            }
+
+            if (tooltips.FirstOrDefault(x => x.Name == "Price") is not { } priceLine)
+            {
+                return;
+            }
+
+            var num4 = Main.mouseTextColor / 255f;
+            var a = Main.mouseTextColor;
+
+            Main.LocalPlayer.GetItemExpectedPrice(item, out var calcForSelling, out var calcForBuying);
+            var num5 = item.isAShopItem || item.buyOnce ? calcForBuying : calcForSelling;
+
+            var text = "";
+            var klepticoin = 0L;
+            var cosmilite = 0L;
+            var plat = 0L;
+            var gold = 0L;
+            var silver = 0L;
+            var copper = 0L;
+            var remaining = num5 * item.stack;
+
+            if (!item.buy)
+            {
+                remaining = num5 / 5;
+                if (remaining < 1)
+                {
+                    remaining = 1L;
+                }
+                var num11 = remaining;
+                remaining *= item.stack;
+                var amount = Main.shopSellbackHelper.GetAmount(item);
+                if (amount > 0)
+                {
+                    remaining += (-num11 + calcForBuying) * Math.Min(amount, item.stack);
+                }
+            }
+
+            if (remaining < 1)
+            {
+                remaining = 1L;
+            }
+
+            if (remaining >= klepticoin_value)
+            {
+                klepticoin = remaining / klepticoin_value;
+                remaining -= klepticoin * klepticoin_value;
+            }
+
+            if (remaining >= cosmilite_value)
+            {
+                cosmilite = remaining / cosmilite_value;
+                remaining -= cosmilite * cosmilite_value;
+            }
+
+            if (remaining >= 1000000)
+            {
+                plat = remaining / 1000000;
+                remaining -= plat * 1000000;
+            }
+
+            if (remaining >= 10000)
+            {
+                gold = remaining / 10000;
+                remaining -= gold * 10000;
+            }
+
+            if (remaining >= 100)
+            {
+                silver = remaining / 100;
+                remaining -= silver * 100;
+            }
+
+            if (remaining >= 1)
+            {
+                copper = remaining;
+            }
+
+            if (klepticoin > 0)
+            {
+                text = text + klepticoin + " " + Language.GetTextValue("Mods.CalRemix.Currency.Klepticoin") + " ";
+            }
+            
+            if (cosmilite > 0)
+            {
+                text = text + cosmilite + " " + Language.GetTextValue("Mods.CalRemix.Currency.Cosmilite") + " ";
+            }
+
+            if (plat > 0)
+            {
+                text = text + plat + " " + Lang.inter[15].Value + " ";
+            }
+
+            if (gold > 0)
+            {
+                text = text + gold + " " + Lang.inter[16].Value + " ";
+            }
+
+            if (silver > 0)
+            {
+                text = text + silver + " " + Lang.inter[17].Value + " ";
+            }
+
+            if (copper > 0)
+            {
+                text = text + copper + " " + Lang.inter[18].Value + " ";
+            }
+
+            if (!item.buy)
+            {
+                priceLine.Text = Lang.tip[49].Value + " " + text;
+            }
+            else
+            {
+                priceLine.Text = Lang.tip[50].Value + " " + text;
+            }
+
+            if (klepticoin > 0)
+            {
+                var color = KlepticoinColor;
+                priceLine.OverrideColor = new Color((byte)(color.R * num4), (byte)(color.G * num4), (byte)(color.B * num4), a);
+            }
+            else if (cosmilite > 0)
+            {
+                var color = CosmiliteColor;
+                priceLine.OverrideColor = new Color((byte)(color.R * num4), (byte)(color.G * num4), (byte)(color.B * num4), a);
+            }
+            else if (plat > 0)
+            {
+                priceLine.OverrideColor = new Color((byte)(220f * num4), (byte)(220f * num4), (byte)(198f * num4), a);
+            }
+            else if (gold > 0)
+            {
+                priceLine.OverrideColor = new Color((byte)(224f * num4), (byte)(201f * num4), (byte)(92f * num4), a);
+            }
+            else if (silver > 0)
+            {
+                priceLine.OverrideColor = new Color((byte)(181f * num4), (byte)(192f * num4), (byte)(193f * num4), a);
+            }
+            else if (copper > 0)
+            {
+                priceLine.OverrideColor = new Color((byte)(246f * num4), (byte)(138f * num4), (byte)(96f * num4), a);
+            }
+        }
+    }
+
     private const long cosmilite_value = 100000000;
     private const long klepticoin_value = 10000000000;
+
+    private static readonly Color color_cosmilite_start = new Color(39, 151, 171, 255);
+    private static readonly Color color_cosmilite_end = new Color(252, 109, 202, 255);
+
+    private static readonly Color color_klepticoin_start = new Color(144, 75, 21, 255);
+    private static readonly Color color_klepticoin_end = new Color(82, 30, 34, 255);
+
+    public static Color CosmiliteColor =>
+        Color.Lerp(color_cosmilite_start, color_cosmilite_end, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f) * 0.5f + 0.5f);
+
+    public static Color KlepticoinColor =>
+        Color.Lerp(color_klepticoin_start, color_klepticoin_end, (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f) * 0.5f + 0.5f);
 
     private static readonly (int itemId, long value)[] coin_types =
     [

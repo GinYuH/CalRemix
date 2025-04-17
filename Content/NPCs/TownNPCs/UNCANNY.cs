@@ -127,7 +127,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPCShop npcShop = new NPCShop(Type, "Carcinoma");
             for (int i = 0; i < 32; i++)
             {
-                int cointype = Main.rand.Next(4);
+                int cointype = Main.rand.Next(5);
                 int maxPrice = 2;
                 switch (cointype)
                 {
@@ -141,7 +141,10 @@ namespace CalRemix.Content.NPCs.TownNPCs
                         maxPrice = Item.buyPrice(gold: 99);
                         break;
                     case 3:
-                        maxPrice = Item.buyPrice(platinum: 20);
+                        maxPrice = Item.buyPrice(platinum: 99);
+                        break;
+                    case 4:
+                        maxPrice = Item.buyPrice(platinum: 4 * 100);
                         break;
                 }
                 npcShop.AddWithCustomValue(ModContent.ItemType<Asbestos>(), Main.rand.Next(1, maxPrice));
