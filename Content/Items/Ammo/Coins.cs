@@ -74,7 +74,7 @@ public abstract class Coin : ModItem
     {
         base.SetDefaults();
 
-        Item.ammo = AmmoID.Coin;
+        /*Item.ammo = AmmoID.Coin;
         Item.notAmmo = true;
         Item.DamageType = DamageClass.Ranged;
         Item.useStyle = ItemUseStyleID.Swing;
@@ -83,7 +83,9 @@ public abstract class Coin : ModItem
         Item.useTime = 10;
         Item.autoReuse = true;
         Item.consumable = true;
-        Item.noMelee = true;
+        Item.noMelee = true;*/
+        
+        Item.CloneDefaults(ItemID.PlatinumCoin);
     }
 }
 

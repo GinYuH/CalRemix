@@ -4,7 +4,10 @@ using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using MonoMod.Cil;
+
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,6 +47,54 @@ public abstract class CoinPile : ModTile
                 {
                     top += 2;
                 }
+            };
+
+            IL_WorldGen.PlaceTile += il =>
+            {
+                var c = new ILCursor(il);
+
+                while (c.TryGotoNext(x => x.MatchCall(typeof(SoundEngine), nameof(SoundEngine.PlaySound)))) { }
+
+                c.GotoPrev(MoveType.After, x => x.MatchLdcI4(0));
+
+                var pos = c.Index;
+
+                var typeLoc = -1;
+                c.GotoPrev(x => x.MatchLdloc(out typeLoc));
+
+                c.Index = pos;
+                c.EmitLdloc(typeLoc);
+                c.EmitDelegate(
+                    (int origId, int type) => TileLoader.GetTile(type) is CoinPile ? 18 : origId
+                );
+            };
+
+            IL_WorldGen.KillTile_PlaySounds += il =>
+            {
+                /*var c = new ILCursor(il);
+
+                c.GotoNext(MoveType.Before, x => x.MatchLdcI4(330));
+
+                c.EmitDelegate(
+                    (int type) => TileLoader.GetTile(type) is CoinPile ? TileID.PlatinumCoinPile : type
+                );*/
+                
+                var c = new ILCursor(il);
+
+                while (c.TryGotoNext(x => x.MatchCall(typeof(SoundEngine), nameof(SoundEngine.PlaySound)))) { }
+
+                c.GotoPrev(MoveType.After, x => x.MatchLdcI4(0));
+
+                var pos = c.Index;
+
+                var typeLoc = -1;
+                c.GotoPrev(x => x.MatchLdloc(out typeLoc));
+
+                c.Index = pos;
+                c.EmitLdloc(typeLoc);
+                c.EmitDelegate(
+                    (int origId, int type) => TileLoader.GetTile(type) is CoinPile ? 18 : origId
+                );
             };
         }
 
