@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Battered");
-            Description.SetDefault("Beaten up, but still determined");
+            // DisplayName.SetDefault("Battered");
+            // Description.SetDefault("Beaten up, but still determined");
         }
         public override void Update(Player player, ref int buffIndex)
         {

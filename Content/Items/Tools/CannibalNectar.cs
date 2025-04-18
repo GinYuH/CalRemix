@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Tools
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cannibal Nectar");
-            Tooltip.SetDefault("Stops the Pandemic Panic\n'Smells like strawberry'");
+            // DisplayName.SetDefault("Cannibal Nectar");
+            // Tooltip.SetDefault("Stops the Pandemic Panic\n'Smells like strawberry'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()

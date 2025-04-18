@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
 		public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Sunskater");
+			// DisplayName.SetDefault("Sunskater");
             Main.projFrames[Projectile.type] = 4;
         }
 		public override void SetDefaults() 

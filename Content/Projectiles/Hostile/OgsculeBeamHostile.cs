@@ -34,7 +34,7 @@ public class OgsculeBeamHostile : BaseLaserbeamProjectile
     public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Lasers/UltimaRayEnd").Value;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Ogscule Beam");
+        // DisplayName.SetDefault("Ogscule Beam");
         ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
     }
     public override void SetDefaults()

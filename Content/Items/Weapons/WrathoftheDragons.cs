@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-DisplayName.SetDefault("Wrath of the Dragons");
-            Tooltip.SetDefault("Summons a draconic pulse at the cursor that periodically summon two rings of homing flare dust and occasionally two flare tornadoes that turn into lingering flarenadoes upon contact with an enemy");
+// DisplayName.SetDefault("Wrath of the Dragons");
+            // Tooltip.SetDefault("Summons a draconic pulse at the cursor that periodically summon two rings of homing flare dust and occasionally two flare tornadoes that turn into lingering flarenadoes upon contact with an enemy");
         }
         public override void SetDefaults()
         {

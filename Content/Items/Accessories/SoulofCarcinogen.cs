@@ -19,8 +19,8 @@ namespace CalRemix.Content.Items.Accessories
         public const int MaxSmokeTime = 600;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Carcinogen");
-            Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...\n" + CalamityUtils.ColorMessage("Boosts Dark damage", Color.LightSlateGray));
+            // DisplayName.SetDefault("Soul of Carcinogen");
+            // Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...\n" + CalamityUtils.ColorMessage("Boosts Dark damage", Color.LightSlateGray));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;

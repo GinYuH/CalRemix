@@ -26,7 +26,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Orbiting Orb");
+            // DisplayName.SetDefault("Orbiting Orb");
         }
 
         public override void SetDefaults()

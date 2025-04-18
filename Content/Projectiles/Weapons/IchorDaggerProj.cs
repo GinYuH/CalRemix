@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/IchorDagger";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ichor Dagger");
+            // DisplayName.SetDefault("Ichor Dagger");
         }
         public override void SetDefaults()
         {

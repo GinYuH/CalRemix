@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Conquest Fragment");
+			// DisplayName.SetDefault("Conquest Fragment");
 			Item.ResearchUnlockCount = 100;
     	}
 		public override void SetDefaults()

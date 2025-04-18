@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fridge");
+            // DisplayName.SetDefault("Fridge");
             Main.projFrames[Type] = 2;
         }
         public override void SetDefaults()

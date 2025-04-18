@@ -56,7 +56,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         public ThanatosSmokeParticleSet SmokeDrawer = new ThanatosSmokeParticleSet(-1, 3, 0f, 16f, 1.5f);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("XP-00 Hypnos");
+            // DisplayName.SetDefault("XP-00 Hypnos");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;

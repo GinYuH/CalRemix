@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eosinine");
+            // DisplayName.SetDefault("Eosinine");
         }
 
         public override void SetDefaults()

@@ -21,7 +21,7 @@ namespace CalRemix.Core.Biomes
         // Use SetStaticDefaults to assign the display name
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baron Strait");
+            // DisplayName.SetDefault("Baron Strait");
         }
 
         // Calculate when the biome is active.

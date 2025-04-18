@@ -12,7 +12,7 @@ public class MackerelStaff : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Holy Mackerel Staff");
+        // DisplayName.SetDefault("Holy Mackerel Staff");
         Item.ResearchUnlockCount = 1;
         ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
         ItemID.Sets.LockOnIgnoresCollision[Type] = true;

@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public Vector2 ogDirection = Vector2.Zero;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Flare");
+            // DisplayName.SetDefault("Pyro Flare");
             Main.projFrames[Projectile.type] = 5;
         }
 

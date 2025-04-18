@@ -96,7 +96,7 @@ internal sealed class CosmiliteCoin : Coin
         base.SetStaticDefaults();
 
         Item.ResearchUnlockCount = 1;
-        DisplayName.SetDefault("Cosmilite Coin");
+        // DisplayName.SetDefault("Cosmilite Coin");
         ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
         ItemID.Sets.CoinLuckValue[Type] = 100000000;
@@ -133,8 +133,8 @@ internal sealed class Klepticoin : Coin
         base.SetStaticDefaults();
 
         Item.ResearchUnlockCount = 1;
-        DisplayName.SetDefault("Klepticoin");
-        Tooltip.SetDefault("The change of the gods");
+        // DisplayName.SetDefault("Klepticoin");
+        // Tooltip.SetDefault("The change of the gods");
         ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
         ItemID.Sets.CoinLuckValue[Type] = int.MaxValue; //10000000000;

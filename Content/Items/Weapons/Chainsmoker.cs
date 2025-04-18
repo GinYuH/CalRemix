@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chainsmoker");
-            Tooltip.SetDefault("Sprays enemies with smoke\nReleasing the weapon after a short period causes it to shoot a fireball\nThe fireball creates explosions when touching smoked enemies");
+            // DisplayName.SetDefault("Chainsmoker");
+            // Tooltip.SetDefault("Sprays enemies with smoke\nReleasing the weapon after a short period causes it to shoot a fireball\nThe fireball creates explosions when touching smoked enemies");
         }
         public override void SetDefaults()
         {

@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Legendary Wolfmole");
+            // DisplayName.SetDefault("Legendary Wolfmole");
         }
 
         public override void SetDefaults()

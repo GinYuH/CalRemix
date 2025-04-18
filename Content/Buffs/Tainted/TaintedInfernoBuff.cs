@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ablaze");
-            Description.SetDefault("Everybody burns");
+            // DisplayName.SetDefault("Ablaze");
+            // Description.SetDefault("Everybody burns");
         }
         public override void Update(Player player, ref int buffIndex)
         {

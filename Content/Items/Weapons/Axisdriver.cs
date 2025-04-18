@@ -18,12 +18,12 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Axisdriver");
+            // DisplayName.SetDefault("Axisdriver");
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
-            Tooltip.SetDefault("Shoots a burst of 3 exo bullets that tear through enemies\n" +
+            /* Tooltip.SetDefault("Shoots a burst of 3 exo bullets that tear through enemies\n" +
                 "Critical hits rain elemental bolts from above\n" +
                 "Right click to fire an explosive homing exo bullet\n" +
-                "50% chance to not consume bullets"); 
+                "50% chance to not consume bullets"); */ 
 		}
 
 		public override void SetDefaults() 

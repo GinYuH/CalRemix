@@ -17,8 +17,8 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Profaned Nucleus");
-            Tooltip.SetDefault("Throws out a molten chunk of profaned rock that explodes and splits into crystals\n"+"Stealth strikes leave behind lingering patches of magma"); 
+            // DisplayName.SetDefault("Profaned Nucleus");
+            // Tooltip.SetDefault("Throws out a molten chunk of profaned rock that explodes and splits into crystals\n"+"Stealth strikes leave behind lingering patches of magma"); 
 		}
 		public override void SetDefaults() 
 		{

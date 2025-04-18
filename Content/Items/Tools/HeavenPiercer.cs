@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Tools
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heaven Piercer");
+            // DisplayName.SetDefault("Heaven Piercer");
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
         }
         public override void SetDefaults()

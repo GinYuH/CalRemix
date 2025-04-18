@@ -31,7 +31,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Origen");
+            // DisplayName.SetDefault("Origen");
         }
 
         public override void SetDefaults()

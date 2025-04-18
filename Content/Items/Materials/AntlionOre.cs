@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Antlion Ore");
+			// DisplayName.SetDefault("Antlion Ore");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

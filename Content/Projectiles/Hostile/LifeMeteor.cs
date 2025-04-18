@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/Magic/AsteroidMolten";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Hydrothermic Meteor");
+			// DisplayName.SetDefault("Hydrothermic Meteor");
 		}
 		public override void SetDefaults() 
         {

@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Halberd of the Holidays");
-            Tooltip.SetDefault("idk I'm still miserable with names\n- The General\nFires exploding red and green bouncing gift bags that emit clouds as they travel");
+            // DisplayName.SetDefault("Halberd of the Holidays");
+            // Tooltip.SetDefault("idk I'm still miserable with names\n- The General\nFires exploding red and green bouncing gift bags that emit clouds as they travel");
         }
 
         public override void SetDefaults()

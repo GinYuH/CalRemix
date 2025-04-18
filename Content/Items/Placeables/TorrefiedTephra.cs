@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-            DisplayName.SetDefault("Torrefied Tephra");
+            // DisplayName.SetDefault("Torrefied Tephra");
         }
         public override void SetDefaults()
         {

@@ -7,8 +7,6 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Conflict Construct");
-            // Description.SetDefault("The cosmic conflict construct will protect you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
         }

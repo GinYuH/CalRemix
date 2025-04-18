@@ -146,7 +146,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyrogen");
+            // DisplayName.SetDefault("Pyrogen");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Position = new Vector2(0, 44)

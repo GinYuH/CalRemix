@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Dual Cane");
+            // DisplayName.SetDefault("Dual Cane");
             Item.staff[Type] = true;
 		}
 

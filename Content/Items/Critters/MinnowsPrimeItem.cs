@@ -7,7 +7,7 @@ namespace CalRemix.Content.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Minnows Prime");
+            // DisplayName.SetDefault("Minnows Prime");
         }
 
         public override void SetDefaults()

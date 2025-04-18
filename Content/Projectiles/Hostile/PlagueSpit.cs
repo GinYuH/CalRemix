@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Plague Spit");
+			// DisplayName.SetDefault("Plague Spit");
             Main.projFrames[Projectile.type] = 4;
         }
 		public override void SetDefaults()

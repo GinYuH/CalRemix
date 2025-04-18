@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pacifist");
-            Description.SetDefault("As harmless as a fly");
+            // DisplayName.SetDefault("Pacifist");
+            // Description.SetDefault("As harmless as a fly");
         }
         public override void Update(Player player, ref int buffIndex)
         {

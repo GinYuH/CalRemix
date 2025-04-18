@@ -33,8 +33,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Retroman's Power Star");
-            Tooltip.SetDefault("Transforms you into the Retro Man \n Item dedicated to QuestNinja");
+            // DisplayName.SetDefault("Retroman's Power Star");
+            // Tooltip.SetDefault("Transforms you into the Retro Man \n Item dedicated to QuestNinja");
 
             if (Main.netMode == NetmodeID.Server)
                 return;

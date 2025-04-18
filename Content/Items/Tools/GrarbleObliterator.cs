@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Tools
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grarble Obliterator");
+            // DisplayName.SetDefault("Grarble Obliterator");
         }
 
         public override void SetDefaults()

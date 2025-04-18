@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eldritch Ray");
+            // DisplayName.SetDefault("Eldritch Ray");
         }
         public override bool PreAI()
         {

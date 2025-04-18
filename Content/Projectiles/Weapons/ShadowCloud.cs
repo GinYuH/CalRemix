@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Demon Core");
+			// DisplayName.SetDefault("Demon Core");
 		}
         public override void SetDefaults()
         {

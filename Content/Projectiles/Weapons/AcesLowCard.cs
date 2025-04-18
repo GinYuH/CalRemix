@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spades");
+            // DisplayName.SetDefault("Spades");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

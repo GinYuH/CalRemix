@@ -13,8 +13,8 @@ public class OnyxStaff : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Onyx Staff");
-        Tooltip.SetDefault("Casts volatile onyx fragments that explode on contact with tiles");
+        // DisplayName.SetDefault("Onyx Staff");
+        // Tooltip.SetDefault("Casts volatile onyx fragments that explode on contact with tiles");
         Item.staff[Type] = true;
     }
 

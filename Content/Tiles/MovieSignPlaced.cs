@@ -22,7 +22,7 @@ namespace CalRemix.Content.Tiles
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 }; //
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
-            name.SetDefault("Moviesign");
+            // name.SetDefault("Moviesign");
             AddMapEntry(new Color(255, 255, 255), name);
         }
     }

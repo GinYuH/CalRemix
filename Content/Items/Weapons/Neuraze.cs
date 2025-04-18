@@ -14,8 +14,8 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Neuraze");
-            Tooltip.SetDefault("Rapidly fires spreads of five bullets\nPulls from the first five bullet types in your inventory\n80% chance to not consume ammo");
+            // DisplayName.SetDefault("Neuraze");
+            // Tooltip.SetDefault("Rapidly fires spreads of five bullets\nPulls from the first five bullet types in your inventory\n80% chance to not consume ammo");
         }
 
         public override void SetDefaults()

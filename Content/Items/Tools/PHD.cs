@@ -8,8 +8,8 @@ namespace CalRemix.Content.Items.Tools
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("PHD");
-            Tooltip.SetDefault("Makes Pandemic Panic enemies easier to recognize\n\"Would my patient mind if I took their organs out and sold them?\"");
+            // DisplayName.SetDefault("PHD");
+            // Tooltip.SetDefault("Makes Pandemic Panic enemies easier to recognize\n\"Would my patient mind if I took their organs out and sold them?\"");
         }
 
 

@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redstone Fireball");
+            // DisplayName.SetDefault("Redstone Fireball");
             Main.projFrames[Projectile.type] = 32;
         }
         public override void SetDefaults()

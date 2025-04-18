@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 		public override string Texture => "CalamityMod/Projectiles/Boss/ArtemisLaser";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blue Exo Pulse Laser");
+			// DisplayName.SetDefault("Blue Exo Pulse Laser");
 			Main.projFrames[Projectile.type] = 4;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-            DisplayName.SetDefault("Arsenic Ore");
+            // DisplayName.SetDefault("Arsenic Ore");
         }
         public override void SetDefaults()
         {

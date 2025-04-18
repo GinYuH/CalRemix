@@ -21,7 +21,7 @@ namespace CalRemix.Content.NPCs.Eclipse
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tall Man");
+            // DisplayName.SetDefault("Tall Man");
             Main.npcFrameCount[NPC.type] = 6;
         }
         public override void SetDefaults()

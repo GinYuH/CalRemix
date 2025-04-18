@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Corruption");
+            // DisplayName.SetDefault("Corruption");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.TrailCacheLength[NPC.type] = 24;

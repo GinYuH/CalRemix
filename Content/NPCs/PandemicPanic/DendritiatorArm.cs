@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         int segmentCount = 30;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dendritiator");
+            // DisplayName.SetDefault("Dendritiator");
             NPCID.Sets.MustAlwaysDraw[Type] = true;
             this.HideFromBestiary();
         }

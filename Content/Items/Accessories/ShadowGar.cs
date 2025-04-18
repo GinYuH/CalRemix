@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Inverted Gar");
-            Tooltip.SetDefault("Taking damage will temporarily prevent mana from being consumed.\nThanks for nothing");
+            // DisplayName.SetDefault("Inverted Gar");
+            // Tooltip.SetDefault("Taking damage will temporarily prevent mana from being consumed.\nThanks for nothing");
         }
 
         public override void SetDefaults()

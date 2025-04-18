@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Magnet");
-            Description.SetDefault("Metal leaks out of the walls");
+            // DisplayName.SetDefault("Treasure Magnet");
+            // Description.SetDefault("Metal leaks out of the walls");
         }
         public override void Update(Player player, ref int buffIndex)
         {

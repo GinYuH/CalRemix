@@ -8,8 +8,8 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Molten Tools");
-            Description.SetDefault("Charge!!!");
+            // DisplayName.SetDefault("Molten Tools");
+            // Description.SetDefault("Charge!!!");
 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

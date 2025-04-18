@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infamy");
-            Description.SetDefault("Everyone wants to be your enemy");
+            // DisplayName.SetDefault("Infamy");
+            // Description.SetDefault("Everyone wants to be your enemy");
         }
         public override void Update(Player player, ref int buffIndex)
         {

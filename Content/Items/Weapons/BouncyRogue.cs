@@ -29,8 +29,8 @@ namespace CalRemix.Content.Items.Weapons
             Item.ResearchUnlockCount = ItemLoader.GetItem(itemType).Item.ResearchUnlockCount;
             try
             {
-                DisplayName.SetDefault("Bouncy " + ItemLoader.GetItem(itemType).DisplayName.Value);
-                Tooltip.SetDefault(ItemLoader.GetItem(itemType).Tooltip.Value + "\nNow with extra bounciness!");
+                // DisplayName.SetDefault("Bouncy " + ItemLoader.GetItem(itemType).DisplayName.Value);
+                // Tooltip.SetDefault(ItemLoader.GetItem(itemType).Tooltip.Value + "\nNow with extra bounciness!");
             }
             catch
             {

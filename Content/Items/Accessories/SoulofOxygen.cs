@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Oxygen");
-            Tooltip.SetDefault("14% increase to all damage\nIncreases the pitch of all sounds\n" + CalamityUtils.ColorMessage("Boosts Wind damage", Color.White));
+            // DisplayName.SetDefault("Soul of Oxygen");
+            // Tooltip.SetDefault("14% increase to all damage\nIncreases the pitch of all sounds\n" + CalamityUtils.ColorMessage("Boosts Wind damage", Color.White));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 6));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;

@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Minor Sandrat");
+            // DisplayName.SetDefault("Minor Sandrat");
             Main.npcFrameCount[NPC.type] = 12;
             Main.npcCatchable[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;

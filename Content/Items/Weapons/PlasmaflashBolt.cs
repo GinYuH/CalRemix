@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Weapons
 	{
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("Plasmaflash Bolt");
+            // DisplayName.SetDefault("Plasmaflash Bolt");
             Item.ResearchUnlockCount = 1;
         }
 		public override void SetDefaults() 

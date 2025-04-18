@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-            DisplayName.SetDefault("Baronautical Plating");
+            // DisplayName.SetDefault("Baronautical Plating");
         }
         public override void SetDefaults()
         {

@@ -98,7 +98,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nanomachine's Son");
+            // DisplayName.SetDefault("Nanomachine's Son");
             Main.projFrames[Type] = 5;
         }
         public override void SetDefaults()

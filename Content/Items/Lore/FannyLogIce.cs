@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frosty Finds in the Ice Cavern Lab (Entry 5)");
+            // DisplayName.SetDefault("Frosty Finds in the Ice Cavern Lab (Entry 5)");
         }
         public override void SetDefaults()
         {

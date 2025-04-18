@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Weapons
         public static SoundStyle AshesofCalamity = new SoundStyle("CalRemix/Assets/Sounds/AshesofCalamity");
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calamity Sword");
-            Tooltip.SetDefault("Fires Calamity Beams\n'Contains the Ashes of Calamity'");
+            // DisplayName.SetDefault("Calamity Sword");
+            // Tooltip.SetDefault("Fires Calamity Beams\n'Contains the Ashes of Calamity'");
         }
         public override void SetDefaults()
         {

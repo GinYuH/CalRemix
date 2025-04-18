@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/Magic/IcicleStaffProj";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Cryonic Icicle");
+			// DisplayName.SetDefault("Cryonic Icicle");
 		}
 		public override void SetDefaults() 
         {

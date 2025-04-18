@@ -23,7 +23,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public Vector2 npcOffset;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Archwitch");
+            // DisplayName.SetDefault("Archwitch");
             Main.npcFrameCount[NPC.type] = 25;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 4;

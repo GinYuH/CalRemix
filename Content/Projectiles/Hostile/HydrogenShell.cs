@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Missile");
+            // DisplayName.SetDefault("Missile");
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 11;
         }

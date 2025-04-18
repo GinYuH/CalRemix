@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Grandiose Gland");
-      		Tooltip.SetDefault("It's disgusting");
+			// DisplayName.SetDefault("Grandiose Gland");
+      		// Tooltip.SetDefault("It's disgusting");
 			Item.ResearchUnlockCount = 5;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;

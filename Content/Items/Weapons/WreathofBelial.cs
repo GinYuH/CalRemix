@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Wreath of Belial");
-            Tooltip.SetDefault("Throws a festive wreath that grows in size until exploding into icicle shards\nStealth strikes cause the wreath to suck in nearby enemies");
+            // DisplayName.SetDefault("Wreath of Belial");
+            // Tooltip.SetDefault("Throws a festive wreath that grows in size until exploding into icicle shards\nStealth strikes cause the wreath to suck in nearby enemies");
         }
         public override void SetDefaults()
         {

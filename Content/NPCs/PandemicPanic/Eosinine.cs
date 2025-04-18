@@ -15,7 +15,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eosinine");
+            // DisplayName.SetDefault("Eosinine");
         }
 
         public override void SetDefaults()

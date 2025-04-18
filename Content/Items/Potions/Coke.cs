@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ashes of the Sunken Sea");
-            Tooltip.SetDefault("These fine crystals feel very powerful");
+            // DisplayName.SetDefault("Ashes of the Sunken Sea");
+            // Tooltip.SetDefault("These fine crystals feel very powerful");
         }
 
 

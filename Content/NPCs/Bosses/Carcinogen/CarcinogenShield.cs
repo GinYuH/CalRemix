@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Carcinogen's Shield");
+            // DisplayName.SetDefault("Carcinogen's Shield");
             this.HideFromBestiary();
         }
 

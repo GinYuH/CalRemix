@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart Attack");
-            Description.SetDefault("Hearts now attack");
+            // DisplayName.SetDefault("Heart Attack");
+            // Description.SetDefault("Hearts now attack");
         }
         public override void Update(Player player, ref int buffIndex)
         {

@@ -29,7 +29,7 @@ namespace CalRemix.Content.NPCs
         public override string Texture => "CalRemix/Assets/ExtraTextures/SludgeCannon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sludge Walker");
+            // DisplayName.SetDefault("Sludge Walker");
         }
 
         public override void SetDefaults()

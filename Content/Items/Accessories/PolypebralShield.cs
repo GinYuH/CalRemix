@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Polypebral Shield");
-            Tooltip.SetDefault("");
+            // DisplayName.SetDefault("Polypebral Shield");
+            // Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

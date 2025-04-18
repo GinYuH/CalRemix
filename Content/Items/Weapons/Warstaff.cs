@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("War Staff");
-            Tooltip.SetDefault("Casts a ball of gray energy that breaks enemy defense on hit");
+            // DisplayName.SetDefault("War Staff");
+            // Tooltip.SetDefault("Casts a ball of gray energy that breaks enemy defense on hit");
             Item.staff[Type] = true;
             Item.ResearchUnlockCount = 1;
         }

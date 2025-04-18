@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Projectiles/Hostile/AspidShot";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infection Glob");
+            // DisplayName.SetDefault("Infection Glob");
         }
         public override void SetDefaults()
         {

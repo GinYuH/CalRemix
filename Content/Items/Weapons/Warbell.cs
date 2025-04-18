@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warbell");
-            Tooltip.SetDefault("Boosts minion damage by 10% on enemy hits");
+            // DisplayName.SetDefault("Warbell");
+            // Tooltip.SetDefault("Boosts minion damage by 10% on enemy hits");
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()

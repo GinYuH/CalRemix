@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fushigi");
+            // DisplayName.SetDefault("Fushigi");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Fushigi",

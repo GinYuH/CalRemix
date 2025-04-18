@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a galactic pulse at the cursor that periodically summon two rings of homing god slayer fireballs and occasionally two cosmic guardians");
+            // Tooltip.SetDefault("Summons a galactic pulse at the cursor that periodically summon two rings of homing god slayer fireballs and occasionally two cosmic guardians");
         }
         public override void SetDefaults()
         {

@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crimtato");
+            // DisplayName.SetDefault("Crimtato");
         }
         public override void SetDefaults()
         {

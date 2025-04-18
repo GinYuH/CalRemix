@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Forceless");
-            Description.SetDefault("Your weapons have no impact");
+            // DisplayName.SetDefault("Forceless");
+            // Description.SetDefault("Your weapons have no impact");
         }
         public override void Update(Player player, ref int buffIndex)
         {

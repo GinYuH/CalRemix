@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Auric Soul");
+            // DisplayName.SetDefault("Auric Soul");
             Item.ResearchUnlockCount = 25;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }

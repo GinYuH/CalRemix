@@ -31,8 +31,8 @@ namespace CalRemix.Content.Items.Weapons
             Item.ResearchUnlockCount = ItemLoader.GetItem(itemType).Item.ResearchUnlockCount;
             try
             {
-                DisplayName.SetDefault("Sticky " + ItemLoader.GetItem(itemType).DisplayName.Value);
-                Tooltip.SetDefault(ItemLoader.GetItem(itemType).Tooltip.Value + "\nNow with extra stickiness!");
+                // DisplayName.SetDefault("Sticky " + ItemLoader.GetItem(itemType).DisplayName.Value);
+                // Tooltip.SetDefault(ItemLoader.GetItem(itemType).Tooltip.Value + "\nNow with extra stickiness!");
             }
             catch
             {

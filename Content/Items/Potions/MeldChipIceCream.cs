@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Meld Chip Ice Cream");
-            Tooltip.SetDefault("Better eat it before it melds\nMajor improvements to all stats\nIncreases life regeneration");
+            // DisplayName.SetDefault("Meld Chip Ice Cream");
+            // Tooltip.SetDefault("Better eat it before it melds\nMajor improvements to all stats\nIncreases life regeneration");
             Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()

@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public int buff = BuffID.OnFire;
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Spark");
+			// DisplayName.SetDefault("Spark");
         }
         public override void SetDefaults()
         {

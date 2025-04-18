@@ -8,8 +8,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Clam Chowder");
-            Tooltip.SetDefault("New Ilmeris style\nMedium improvements to all stats\nIncreases life regeneration");
+            // DisplayName.SetDefault("Clam Chowder");
+            // Tooltip.SetDefault("New Ilmeris style\nMedium improvements to all stats\nIncreases life regeneration");
             Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()

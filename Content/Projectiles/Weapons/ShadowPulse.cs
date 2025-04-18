@@ -26,7 +26,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadow Pulse");
+            // DisplayName.SetDefault("Shadow Pulse");
         }
 
         public override void SetDefaults()

@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Essence of Surt");
-      	Tooltip.SetDefault("The essence of tranquility.");
+			// DisplayName.SetDefault("Essence of Surt");
+      	// Tooltip.SetDefault("The essence of tranquility.");
 			Item.ResearchUnlockCount = 25;
 			ItemID.Sets.SortingPriorityMaterials[Type] = 71; // Soul of Light
             ItemID.Sets.ItemNoGravity[Item.type] = true;

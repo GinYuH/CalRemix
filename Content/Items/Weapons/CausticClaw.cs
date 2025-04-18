@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Weapons
 	{
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("Caustic Claw");
+            // DisplayName.SetDefault("Caustic Claw");
             Item.ResearchUnlockCount = 1;
         }
 		public override void SetDefaults() 

@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flame");
+            // DisplayName.SetDefault("Flame");
         }
         public override void SetDefaults()
         {

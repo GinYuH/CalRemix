@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Placeables
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cosmichid");
+			// DisplayName.SetDefault("Cosmichid");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

@@ -18,7 +18,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dendritiator");
+            // DisplayName.SetDefault("Dendritiator");
         }
 
         public override void SetDefaults()

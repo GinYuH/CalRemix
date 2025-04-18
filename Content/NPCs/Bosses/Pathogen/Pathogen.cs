@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
         public override void SetStaticDefaults()
         {
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            DisplayName.SetDefault("Pathogen");
+            // DisplayName.SetDefault("Pathogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Pathogen",

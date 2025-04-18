@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cigar");
+            // DisplayName.SetDefault("Cigar");
         }
         public override void SetDefaults()
         {

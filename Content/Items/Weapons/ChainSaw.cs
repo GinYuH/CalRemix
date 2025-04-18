@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chain-Saw");
-			Tooltip.SetDefault("Hitting enemies stores charge, which progressively blinds you, but increases your crit chance.\nRight-Click with charge to fire a projectile and consume it all\nDoes not benefit from Critical Strike Chance boosts.\n'Chain-saw! Get it?'");
+			// DisplayName.SetDefault("Chain-Saw");
+			// Tooltip.SetDefault("Hitting enemies stores charge, which progressively blinds you, but increases your crit chance.\nRight-Click with charge to fire a projectile and consume it all\nDoes not benefit from Critical Strike Chance boosts.\n'Chain-saw! Get it?'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 

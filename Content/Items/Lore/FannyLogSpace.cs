@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trouble on Planetoid X-42 (Entry 2)");
+            // DisplayName.SetDefault("Trouble on Planetoid X-42 (Entry 2)");
         }
         public override void SetDefaults()
         {

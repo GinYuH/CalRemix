@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crocodile Scale");
+			// DisplayName.SetDefault("Crocodile Scale");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

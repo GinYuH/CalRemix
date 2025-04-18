@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Bags
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rear Gar");
-            Tooltip.SetDefault("Right click to extract tarragon");
+            // DisplayName.SetDefault("Rear Gar");
+            // Tooltip.SetDefault("Right click to extract tarragon");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 

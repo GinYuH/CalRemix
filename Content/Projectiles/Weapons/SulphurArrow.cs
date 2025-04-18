@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 		public override string Texture => "CalamityMod/Projectiles/Ranged/ToxicArrow";
 		public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Sulphur Arrow");
+			// DisplayName.SetDefault("Sulphur Arrow");
 		}
 		public override void SetDefaults() 
         {

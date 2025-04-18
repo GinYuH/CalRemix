@@ -47,7 +47,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Carcinogen");
+            // DisplayName.SetDefault("Carcinogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Carcinogen",

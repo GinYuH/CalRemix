@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Demon Core");
+            // DisplayName.SetDefault("Demon Core");
 		}
 		public override void SetDefaults() 
 		{

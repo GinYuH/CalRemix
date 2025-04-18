@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Animated Statue");
+            // DisplayName.SetDefault("Animated Statue");
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

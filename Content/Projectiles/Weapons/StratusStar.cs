@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         private const float MaxVelocity = 32f;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stratus Star");
+            // DisplayName.SetDefault("Stratus Star");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
         }

@@ -21,7 +21,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Glitch");
+            // DisplayName.SetDefault("Glitch");
         }
         public override void SetDefaults()
         {

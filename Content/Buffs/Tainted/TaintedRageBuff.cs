@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Focused Power");
-            Description.SetDefault("No more luck, only violence");
+            // DisplayName.SetDefault("Focused Power");
+            // Description.SetDefault("No more luck, only violence");
         }
         public override void Update(Player player, ref int buffIndex)
         {

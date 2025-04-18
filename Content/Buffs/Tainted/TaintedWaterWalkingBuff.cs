@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Air Walking");
-            Description.SetDefault("Magic glass");
+            // DisplayName.SetDefault("Air Walking");
+            // Description.SetDefault("Magic glass");
         }
         public override void Update(Player player, ref int buffIndex)
         {

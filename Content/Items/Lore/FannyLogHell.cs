@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fiery Finds in the Underworld Lab (Entry 4)");
+            // DisplayName.SetDefault("Fiery Finds in the Underworld Lab (Entry 4)");
         }
         public override void SetDefaults()
         {

@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Projectiles/Weapons/Scrap1";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scrap");
+            // DisplayName.SetDefault("Scrap");
         }
         public override void SetDefaults()
         {

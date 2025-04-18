@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mushroom Elemental");
+            // DisplayName.SetDefault("Mushroom Elemental");
         }
 
         public override void SetDefaults()

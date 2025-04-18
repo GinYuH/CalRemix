@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Green Bag");
+            // DisplayName.SetDefault("Green Bag");
         }
 
         public override void SetDefaults()

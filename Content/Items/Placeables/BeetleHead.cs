@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Placeables
         public override string Texture => "CalRemix/Content/Tiles/BeetleHead";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Beetle Juice-Chan Head");
+            // DisplayName.SetDefault("Beetle Juice-Chan Head");
         }
         public override void SetDefaults()
         {

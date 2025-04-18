@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Shot");
+            // DisplayName.SetDefault("Blood Shot");
         }
         public override void SetDefaults()
         {

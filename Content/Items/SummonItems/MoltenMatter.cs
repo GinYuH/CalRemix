@@ -18,8 +18,8 @@ namespace CalRemix.Content.Items.SummonItems
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Molten Matter");
-            Tooltip.SetDefault("Summons Pyrogen when used in the Underworld");
+            // DisplayName.SetDefault("Molten Matter");
+            // Tooltip.SetDefault("Summons Pyrogen when used in the Underworld");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }

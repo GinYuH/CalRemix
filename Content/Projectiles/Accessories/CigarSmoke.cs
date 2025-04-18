@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Accessories
         public override string Texture => "CalamityMod/Particles/MediumSmoke";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cigar Smoke");
+            // DisplayName.SetDefault("Cigar Smoke");
             Main.projFrames[Type] = 3;
         }
 

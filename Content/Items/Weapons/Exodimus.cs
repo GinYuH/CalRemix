@@ -12,8 +12,8 @@ public class Exodimus : ModItem
     public override void SetStaticDefaults()
     {
 
-        DisplayName.SetDefault("Exodimus");
-        Tooltip.SetDefault("Throws out a dagger aggressively dart towards an enemy The dagger will then explode into a cross of laser beams. \n" + "Stealth strikes double the amount of beams on dissipation into an 8 pointed star");
+        // DisplayName.SetDefault("Exodimus");
+        // Tooltip.SetDefault("Throws out a dagger aggressively dart towards an enemy The dagger will then explode into a cross of laser beams. \n" + "Stealth strikes double the amount of beams on dissipation into an 8 pointed star");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

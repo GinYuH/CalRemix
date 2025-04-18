@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("White Blood Cell");
+            // DisplayName.SetDefault("White Blood Cell");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

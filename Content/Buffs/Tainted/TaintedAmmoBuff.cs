@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ammo Unleashed");
-            Description.SetDefault("You are leaking ammo!");
+            // DisplayName.SetDefault("Ammo Unleashed");
+            // Description.SetDefault("You are leaking ammo!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

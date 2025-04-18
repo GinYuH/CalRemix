@@ -19,7 +19,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Atlas Soldier");
+            // DisplayName.SetDefault("Atlas Soldier");
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

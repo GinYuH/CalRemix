@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hydrophobia");
-            Description.SetDefault("Drowning makes you panic");
+            // DisplayName.SetDefault("Hydrophobia");
+            // Description.SetDefault("Drowning makes you panic");
         }
         public override void Update(Player player, ref int buffIndex)
         {

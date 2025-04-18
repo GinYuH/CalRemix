@@ -19,9 +19,9 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Hadopelagic Echo");
-            Tooltip.SetDefault("Fires a string of bouncing sound waves that become stronger as they travel\n" +
-                                "Sound waves echo additional sound waves on enemy hits"); 
+            // DisplayName.SetDefault("Hadopelagic Echo");
+            /* Tooltip.SetDefault("Fires a string of bouncing sound waves that become stronger as they travel\n" +
+                                "Sound waves echo additional sound waves on enemy hits"); */ 
 
         }
 		public override void SetDefaults() 

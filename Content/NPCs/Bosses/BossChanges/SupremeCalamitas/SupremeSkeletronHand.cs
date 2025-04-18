@@ -28,7 +28,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         int segmentCount = 27;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eucharist Paratope");
+            // DisplayName.SetDefault("Eucharist Paratope");
         }
         public override void SetDefaults()
         {

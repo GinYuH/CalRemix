@@ -17,7 +17,7 @@ public class TyrantShield : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Tyrant Shield");
+        // DisplayName.SetDefault("Tyrant Shield");
         Item.ResearchUnlockCount = 1;
     }
     public override void SetDefaults()

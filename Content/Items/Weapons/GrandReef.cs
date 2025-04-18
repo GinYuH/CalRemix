@@ -17,8 +17,8 @@ public class GrandReef : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Grand Reef");
-        Tooltip.SetDefault("Hallucinations of the deep\n" + "Enemy hits create a large burst of lingering coral shards\n" + "If the flail falls, significantly more shards are created");
+        // DisplayName.SetDefault("Grand Reef");
+        // Tooltip.SetDefault("Hallucinations of the deep\n" + "Enemy hits create a large burst of lingering coral shards\n" + "If the flail falls, significantly more shards are created");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

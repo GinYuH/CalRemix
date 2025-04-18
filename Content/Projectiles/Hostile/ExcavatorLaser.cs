@@ -28,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wulfrum Beam");
+            // DisplayName.SetDefault("Wulfrum Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
         }
 

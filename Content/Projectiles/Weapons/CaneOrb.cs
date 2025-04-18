@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalamityMod/Projectiles/Rogue/NychthemeronOrb";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("CaneOrb");
+			// DisplayName.SetDefault("CaneOrb");
 		}
         public override void SetDefaults()
         {

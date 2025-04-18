@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/CursedSpear";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Spear");
+            // DisplayName.SetDefault("Cursed Spear");
         }
         public override void SetDefaults()
         {

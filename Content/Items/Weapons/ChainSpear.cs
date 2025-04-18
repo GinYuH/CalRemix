@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Weapons
 		{
             Item.ResearchUnlockCount = 1;
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
-            DisplayName.SetDefault("Chain Spear");
+            // DisplayName.SetDefault("Chain Spear");
 		}
 
 		public override void SetDefaults() 

@@ -19,7 +19,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Banana Clown");
+            // DisplayName.SetDefault("Banana Clown");
             Main.npcFrameCount[NPC.type] = 12;
 
             if (Main.dedServ)

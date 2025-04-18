@@ -9,7 +9,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pathogen's Shield");
+            // DisplayName.SetDefault("Pathogen's Shield");
             this.HideFromBestiary();
         }
 

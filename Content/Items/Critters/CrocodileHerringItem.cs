@@ -7,7 +7,7 @@ namespace CalRemix.Content.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crocodile Herring");
+            // DisplayName.SetDefault("Crocodile Herring");
         }
 
         public override void SetDefaults()

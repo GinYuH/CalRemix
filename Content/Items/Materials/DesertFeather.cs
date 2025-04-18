@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Desert Feather");
+			// DisplayName.SetDefault("Desert Feather");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

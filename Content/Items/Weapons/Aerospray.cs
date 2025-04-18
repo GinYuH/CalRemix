@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Aerospray");
-            Tooltip.SetDefault("Releases pressurized mist that increases in size but decreases in damage as it travels");
+            // DisplayName.SetDefault("Aerospray");
+            // Tooltip.SetDefault("Releases pressurized mist that increases in size but decreases in damage as it travels");
         }
         public override void SetDefaults()
         {

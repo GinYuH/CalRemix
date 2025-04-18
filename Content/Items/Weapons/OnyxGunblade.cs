@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Onyx Gunblade");
+            // DisplayName.SetDefault("Onyx Gunblade");
             Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() 

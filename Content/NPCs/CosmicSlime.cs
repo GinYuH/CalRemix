@@ -14,7 +14,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmilite Slime");
+            // DisplayName.SetDefault("Cosmilite Slime");
             Main.npcFrameCount[NPC.type] = 2;
         }
 

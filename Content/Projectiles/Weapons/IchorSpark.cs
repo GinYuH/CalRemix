@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ichor Spark");
+            // DisplayName.SetDefault("Ichor Spark");
         }
         public override void SetDefaults()
         {

@@ -26,9 +26,9 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("The Verboten One");
-            Tooltip.SetDefault("Ultimatum\n"+
-            "Provides all effects of its ingredients"); 
+            // DisplayName.SetDefault("The Verboten One");
+            /* Tooltip.SetDefault("Ultimatum\n"+
+            "Provides all effects of its ingredients"); */ 
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(500, 14f, 3.2f);
         }
 

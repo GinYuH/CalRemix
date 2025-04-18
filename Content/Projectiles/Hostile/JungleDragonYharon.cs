@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/NPCs/Yharon/Yharon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Yharon");
+            // DisplayName.SetDefault("Yharon");
             Main.projFrames[Projectile.type] = 7;
         }
         public override void SetDefaults()

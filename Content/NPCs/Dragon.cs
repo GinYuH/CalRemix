@@ -15,7 +15,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon");
+            // DisplayName.SetDefault("Dragon");
             Main.npcFrameCount[NPC.type] = 4;
         }
 

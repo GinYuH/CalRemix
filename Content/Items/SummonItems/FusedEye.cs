@@ -12,9 +12,9 @@ namespace CalRemix.Content.Items.SummonItems
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fused Eye");
-            Tooltip.SetDefault("Summons Polyphemalus\n" +
-                "Enrages during the day");
+            // DisplayName.SetDefault("Fused Eye");
+            /* Tooltip.SetDefault("Summons Polyphemalus\n" +
+                "Enrages during the day"); */
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12; // This helps sort inventory know that this is a boss summoning Item.

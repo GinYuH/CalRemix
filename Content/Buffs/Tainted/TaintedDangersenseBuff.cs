@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Danger");
-            Description.SetDefault("Everything is out to kill you!");
+            // DisplayName.SetDefault("Danger");
+            // Description.SetDefault("Everything is out to kill you!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

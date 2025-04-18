@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Enchanted Tome");
+            // DisplayName.SetDefault("Enchanted Tome");
             Main.npcFrameCount[NPC.type] = 5;
         }
 

@@ -69,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sealed One");
+            // DisplayName.SetDefault("Sealed One");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Sealed One",

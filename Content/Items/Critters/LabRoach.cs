@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Roach");
+            // DisplayName.SetDefault("Lab Roach");
         }
         public override void SetDefaults()
         {

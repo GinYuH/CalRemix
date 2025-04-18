@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Ancient Console");
+            // DisplayName.SetDefault("Ancient Console");
         }
 
         public override void SetDefaults()

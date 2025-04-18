@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Banana Clown Mask");
-            Tooltip.SetDefault("2 magic damage");
+            // DisplayName.SetDefault("Banana Clown Mask");
+            // Tooltip.SetDefault("2 magic damage");
         }
         public override void SetDefaults()
         {

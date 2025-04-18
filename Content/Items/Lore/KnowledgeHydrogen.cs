@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("The Archdiviner");
+            // DisplayName.SetDefault("The Archdiviner");
         }
         public override void SetDefaults()
         {

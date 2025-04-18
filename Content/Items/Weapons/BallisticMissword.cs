@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ballistic Missword");
-            Tooltip.SetDefault("Has a chance to explode when swung, damaging the wielder");
+            // DisplayName.SetDefault("Ballistic Missword");
+            // Tooltip.SetDefault("Has a chance to explode when swung, damaging the wielder");
         }
 
         public override void SetDefaults()

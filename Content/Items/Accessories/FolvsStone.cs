@@ -18,8 +18,8 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Folv's Stone");
-            Tooltip.SetDefault("Immunity to Folv's\nAttacks inflict Folv's");
+            // DisplayName.SetDefault("Folv's Stone");
+            // Tooltip.SetDefault("Immunity to Folv's\nAttacks inflict Folv's");
         }
 
         public override void SetDefaults()

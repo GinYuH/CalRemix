@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/BundleBones";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Bucket o' Bones");
+			// DisplayName.SetDefault("Bucket o' Bones");
 		}
         public override void SetDefaults()
         {

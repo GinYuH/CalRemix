@@ -17,7 +17,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rodent.tmod");
+            // DisplayName.SetDefault("Rodent.tmod");
             Main.npcFrameCount[NPC.type] = 6;
         }
         public override void SetDefaults()

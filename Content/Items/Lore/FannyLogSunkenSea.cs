@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Ramblings of a Flamboyant Flame: A Digital Diary (Entry 1)");
+            // DisplayName.SetDefault("The Ramblings of a Flamboyant Flame: A Digital Diary (Entry 1)");
         }
         public override void SetDefaults()
         {

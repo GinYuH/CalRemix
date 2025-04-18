@@ -29,7 +29,7 @@ namespace CalRemix.Content.NPCs.Minibosses
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Avatar of Xeroc");
+            // DisplayName.SetDefault("Avatar of Xeroc");
         }
 
         public override void SetDefaults()

@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ornate Cloth");
+			// DisplayName.SetDefault("Ornate Cloth");
 			Item.ResearchUnlockCount = 5;
         }
 		public override void SetDefaults()

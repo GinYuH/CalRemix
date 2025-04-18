@@ -17,7 +17,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Basilius");
+            // DisplayName.SetDefault("Basilius");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Position = new Vector2(0, -45)

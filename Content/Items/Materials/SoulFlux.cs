@@ -8,8 +8,8 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Soul Flux");
-      		Tooltip.SetDefault("Feels powerful and magical");
+			// DisplayName.SetDefault("Soul Flux");
+      		// Tooltip.SetDefault("Feels powerful and magical");
 			Item.ResearchUnlockCount = 5;
     	}
 		public override void SetDefaults()

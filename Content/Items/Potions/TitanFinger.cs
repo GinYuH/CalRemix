@@ -8,8 +8,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Titan Finger");
-            Tooltip.SetDefault("Contact with the nefarious anglerfish\nMajor improvements to all stats\nIncreases life regeneration");
+            // DisplayName.SetDefault("Titan Finger");
+            // Tooltip.SetDefault("Contact with the nefarious anglerfish\nMajor improvements to all stats\nIncreases life regeneration");
             Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()

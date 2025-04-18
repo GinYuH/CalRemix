@@ -29,7 +29,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Origen");
+            // DisplayName.SetDefault("Origen");
             this.HideFromBestiary();
             if (Main.dedServ)
                 return;

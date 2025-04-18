@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cryo Key Mold");
-            Tooltip.SetDefault("Used for crafting a Cryo Key");
+            // DisplayName.SetDefault("Cryo Key Mold");
+            // Tooltip.SetDefault("Used for crafting a Cryo Key");
         }
         public override void SetDefaults()
         {

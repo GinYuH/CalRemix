@@ -8,7 +8,6 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calamitized");
             Main.debuff[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

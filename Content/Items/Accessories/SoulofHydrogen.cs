@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Hydrogen");
-            Tooltip.SetDefault("7% increase to all damage\nThrowable explosives deal extremely increased damage and split once upon detonation\n" + CalamityUtils.ColorMessage("Boosts Water damage", Color.SkyBlue));
+            // DisplayName.SetDefault("Soul of Hydrogen");
+            // Tooltip.SetDefault("7% increase to all damage\nThrowable explosives deal extremely increased damage and split once upon detonation\n" + CalamityUtils.ColorMessage("Boosts Water damage", Color.SkyBlue));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;

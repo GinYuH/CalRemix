@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shielded Enemies");
-            Description.SetDefault("Maybe one will hit!");
+            // DisplayName.SetDefault("Shielded Enemies");
+            // Description.SetDefault("Maybe one will hit!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

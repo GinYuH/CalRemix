@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-            DisplayName.SetDefault("Tanzanite Glass");
+            // DisplayName.SetDefault("Tanzanite Glass");
         }
         public override void SetDefaults()
         {

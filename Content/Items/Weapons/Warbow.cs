@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warbow");
-            Tooltip.SetDefault("Converts wooden arrows into war arrows which crumble enemy defenses");
+            // DisplayName.SetDefault("Warbow");
+            // Tooltip.SetDefault("Converts wooden arrows into war arrows which crumble enemy defenses");
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()

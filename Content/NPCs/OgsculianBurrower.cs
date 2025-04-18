@@ -17,7 +17,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ogsculian Burrower");
+            // DisplayName.SetDefault("Ogsculian Burrower");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;

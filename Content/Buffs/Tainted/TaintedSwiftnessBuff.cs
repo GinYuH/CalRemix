@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sneaking");
-            Description.SetDefault("Be careful");
+            // DisplayName.SetDefault("Sneaking");
+            // Description.SetDefault("Be careful");
         }
         public override void Update(Player player, ref int buffIndex)
         {

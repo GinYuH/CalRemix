@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Tyrant Shield");
+			// DisplayName.SetDefault("Tyrant Shield");
 		}
         public override void SetDefaults()
         {

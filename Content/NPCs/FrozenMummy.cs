@@ -15,7 +15,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frozen Mummy");
+            // DisplayName.SetDefault("Frozen Mummy");
             Main.npcFrameCount[NPC.type] = 13;
         }
 

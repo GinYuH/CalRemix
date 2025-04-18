@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Corrosive Eye");
+            // DisplayName.SetDefault("Corrosive Eye");
             ProjectileID.Sets.MinionTargettingFeature[Type] = true;
             ProjectileID.Sets.MinionSacrificable[Type] = true;
         }

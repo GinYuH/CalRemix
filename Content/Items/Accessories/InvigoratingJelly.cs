@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Invigorating Jelly");
-            Tooltip.SetDefault("Activating Adrenaline will defile your soul");
+            // DisplayName.SetDefault("Invigorating Jelly");
+            // Tooltip.SetDefault("Activating Adrenaline will defile your soul");
         }
 
         public override void SetDefaults()

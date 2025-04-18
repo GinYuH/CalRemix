@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mold Man");
+            // DisplayName.SetDefault("Mold Man");
             Main.npcFrameCount[NPC.type] = 2;
         }
 

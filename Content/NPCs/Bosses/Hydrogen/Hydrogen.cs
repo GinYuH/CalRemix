@@ -59,7 +59,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hydrogen");
+            // DisplayName.SetDefault("Hydrogen");
 
             // A bunch of fucking fish
             sunkenSeaFish.Add(ModContent.ItemType<PrismaticGuppy>());

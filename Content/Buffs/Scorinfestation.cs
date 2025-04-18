@@ -23,8 +23,8 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scorinfestation");
-            Description.SetDefault("Consumed by magma");
+            // DisplayName.SetDefault("Scorinfestation");
+            // Description.SetDefault("Consumed by magma");
         }
 
         public override void Update(Player player, ref int buffIndex)

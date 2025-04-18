@@ -429,8 +429,8 @@ namespace CalRemix.Core
             orig(self, spriteBatch);
 
             // Allow publishing of new updates without updating localization
-            HashSet<string> mods = (HashSet<string>)localField.GetValue(null);
-            mods.Clear();
+            // HashSet<string> mods = (HashSet<string>)localField.GetValue(null);
+            // mods.Clear();
 
             return;
             float wid = self.GetOuterDimensions().Width;

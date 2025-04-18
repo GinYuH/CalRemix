@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telekinesis");
-            Description.SetDefault("Toss enemies around with magic");
+            // DisplayName.SetDefault("Telekinesis");
+            // Description.SetDefault("Toss enemies around with magic");
         }
         public override void Update(Player player, ref int buffIndex)
         {

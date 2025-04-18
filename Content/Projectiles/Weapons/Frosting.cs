@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         private static SoundStyle Splootch = SoundID.NPCDeath21 with { MaxInstances = 1 };
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frosting");
+            // DisplayName.SetDefault("Frosting");
             Main.projFrames[Type] = 6;
         }
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cigar Cinder");
+            // DisplayName.SetDefault("Cigar Cinder");
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 11;
         }

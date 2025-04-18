@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Thorn");
+            // DisplayName.SetDefault("Blood Thorn");
         }
         public override void SetDefaults()
         {
