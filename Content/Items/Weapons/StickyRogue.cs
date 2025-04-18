@@ -21,6 +21,10 @@ namespace CalRemix.Content.Items.Weapons
         public override string Name => ItemLoader.GetItem(itemType).Mod.Name + "/" + ItemLoader.GetItem(itemType).Name + "Sticky";
         public override string Texture => ItemLoader.GetItem(itemType).Texture;
 
+        public override LocalizedText DisplayName => Language.GetText("Mods.CalRemix.StickyRogue.DisplayName").WithFormatArgs(ItemLoader.GetItem(itemType).DisplayName);
+
+        public override LocalizedText Tooltip => Language.GetText("Mods.CalRemix.StickyRogue.Tooltip").WithFormatArgs(ItemLoader.GetItem(itemType).Tooltip);
+
         public StickyRogue(int type)
         {
             itemType = type;
@@ -31,7 +35,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.ResearchUnlockCount = ItemLoader.GetItem(itemType).Item.ResearchUnlockCount;
             try
             {
-                // DisplayName.SetDefault("Sticky " + ItemLoader.GetItem(itemType).DisplayName.Value);
+                // DisplayName.SetDefault("Sticky " + .Value);
                 // Tooltip.SetDefault(ItemLoader.GetItem(itemType).Tooltip.Value + "\nNow with extra stickiness!");
             }
             catch

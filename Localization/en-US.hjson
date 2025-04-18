@@ -22,6 +22,24 @@ Mods: {
 				'''
 		}
 
+		BouncyRogue: {
+			DisplayName: Bouncy {0}
+			Tooltip:
+				'''
+				{0}
+				Now with extra Bounciness!
+				'''
+		}
+
+		StickyRogue: {
+			DisplayName: Sticky {0}
+			Tooltip:
+				'''
+				{0}
+				Now with extra stickiness!
+				'''
+		}
+
 		Currency: {
 			Cosmilite: Cosmilite
 			Klepticoin: Klepticoin

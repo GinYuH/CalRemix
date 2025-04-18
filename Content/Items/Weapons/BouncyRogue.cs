@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons
@@ -19,6 +20,10 @@ namespace CalRemix.Content.Items.Weapons
         public override string Name => ItemLoader.GetItem(itemType).Mod.Name + "/" + ItemLoader.GetItem(itemType).Name + "Bouncy";
         public override string Texture => ItemLoader.GetItem(itemType).Texture;
 
+        public override LocalizedText DisplayName => Language.GetText("Mods.CalRemix.BouncyRogue.DisplayName").WithFormatArgs(ItemLoader.GetItem(itemType).DisplayName);
+
+        public override LocalizedText Tooltip => Language.GetText("Mods.CalRemix.BouncyRogue.Tooltip").WithFormatArgs(ItemLoader.GetItem(itemType).Tooltip);
+
         public BouncyRogue(int type)
         {
             itemType = type;
@@ -27,15 +32,6 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = ItemLoader.GetItem(itemType).Item.ResearchUnlockCount;
-            try
-            {
-                // DisplayName.SetDefault("Bouncy " + ItemLoader.GetItem(itemType).DisplayName.Value);
-                // Tooltip.SetDefault(ItemLoader.GetItem(itemType).Tooltip.Value + "\nNow with extra bounciness!");
-            }
-            catch
-            {
-
-            }
         }
 
         public override void SetDefaults()
