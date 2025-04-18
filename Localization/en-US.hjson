@@ -13,6 +13,15 @@ Mods: {
 	}
 
 	CalRemix: {
+		DebuffStone: {
+			DisplayName: "{0} Stone"
+			Tooltip:
+				'''
+				Immunity to {0}
+				Attacks inflict {0}
+				'''
+		}
+
 		Currency: {
 			Cosmilite: Cosmilite
 			Klepticoin: Klepticoin
@@ -35,6 +44,8 @@ Mods: {
 					Info: Mods.CalRemix.UI.DifficultyModes.TitanicDifficulty.Info
 				}
 			}
+
+			Anomaly.Condition: Mods.CalRemix.UI.Anomaly.Condition
 		}
 
 		Biomes: {
@@ -272,5 +283,12 @@ Mods: {
 		}
 
 		WorldGen.BlessedWithGoldOrPlatinumMessage: Your world has been blessed with Gold and/or Platinum!
+
+		Stones: {
+			FolvsStone: {
+				DisplayName: Folvs Stone
+				Tooltip: ""
+			}
+		}
 	}
 }

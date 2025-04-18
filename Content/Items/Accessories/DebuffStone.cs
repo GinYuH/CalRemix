@@ -26,25 +26,19 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         public override string Name => debuffType < BuffID.Count ? debuffType + "Stone" : BuffLoader.GetBuff(debuffType).Mod.Name + "/" + BuffLoader.GetBuff(debuffType).Name + "Stone";
         public override string Texture => "CalRemix/Content/Items/Accessories/DebuffStone";
 
+        private string DebuffName => debuffType < BuffID.Count ? Lang.GetBuffName(debuffType) : BuffLoader.GetBuff(debuffType).DisplayName.Value;
+
+        public override LocalizedText DisplayName => Language.GetText("Mods.CalRemix.DebuffStone.DisplayName").WithFormatArgs(DebuffName);
+
+        public override LocalizedText Tooltip => Language.GetText("Mods.CalRemix.DebuffStone.Tooltip").WithFormatArgs(DebuffName);
+
         public DebuffStone(int type)
         {
             debuffType = type;
         }
+
         public override void SetStaticDefaults()
         {
-            Item.ResearchUnlockCount = 1;
-#if !DEBUG
-            try
-            {
-                string debuffName = debuffType < BuffID.Count ? Lang.GetBuffName(debuffType) : BuffLoader.GetBuff(debuffType).DisplayName.Value;
-                DisplayName.SetDefault(debuffName + " Stone");
-                Tooltip.SetDefault("Immunity to " + debuffName + "\nAttacks inflict " + debuffName);
-            }
-            catch
-            {
-
-            }
-#endif
         }
 
         public override void SetDefaults()

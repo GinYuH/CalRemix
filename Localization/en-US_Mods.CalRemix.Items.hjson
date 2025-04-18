@@ -3441,7 +3441,10 @@ DiviningRod: {
 	DisplayName: Divining Rod
 }
 
-CoreofRend.DisplayName: Core of Rend
+CoreofRend: {
+	DisplayName: Core of Rend
+	Tooltip: ""
+}
 
 EssenceofRend: {
 	DisplayName: Essence of Rend
@@ -3473,19 +3476,70 @@ AncientFlashBullet: {
 	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
 }
 
-ChlorophyteStormbowTheFirst.Tooltip: ""
-ChlorophyteStormbowTheSecond.Tooltip: ""
-ChlorophyteStormbowTheThird.Tooltip: ""
-ChlorophyteStormbowTheFourth.Tooltip: ""
-ChlorophyteStormbowTheFifth.Tooltip: ""
-ChlorophyteStormbowTheSixth.Tooltip: ""
-ChlorophyteStormbowTheSeventh.Tooltip: ""
-ChlorophyteStormbowTheEighth.Tooltip: ""
-ChlorophyteStormbowTheNineth.Tooltip: ""
-ChlorophyteStormbowTheTenth.Tooltip: ""
-ChlorophyteStormbowTheEleventh.Tooltip: ""
-ChlorophyteStormbowTheTwelvth.Tooltip: ""
-ChlorophyteStormbowTheThirteenth.Tooltip: ""
+ChlorophyteStormbowTheFirst: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The First
+}
+
+ChlorophyteStormbowTheSecond: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Second
+}
+
+ChlorophyteStormbowTheThird: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Third
+}
+
+ChlorophyteStormbowTheFourth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Fourth
+}
+
+ChlorophyteStormbowTheFifth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Fifth
+}
+
+ChlorophyteStormbowTheSixth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Sixth
+}
+
+ChlorophyteStormbowTheSeventh: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Seventh
+}
+
+ChlorophyteStormbowTheEighth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Eighth
+}
+
+ChlorophyteStormbowTheNineth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Nineth
+}
+
+ChlorophyteStormbowTheTenth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Tenth
+}
+
+ChlorophyteStormbowTheEleventh: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Eleventh
+}
+
+ChlorophyteStormbowTheTwelvth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Twelvth
+}
+
+ChlorophyteStormbowTheThirteenth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Thirteenth
+}
 
 ChloriumOre: {
 	DisplayName: Chlorium Ore
@@ -3737,7 +3791,10 @@ LegendMemorialItem: {
 	Tooltip: A beautiful soul gone too soon...
 }
 
-LegendPromoItem.DisplayName: Promotional Poster
+LegendPromoItem: {
+	DisplayName: Promotional Poster
+	Tooltip: ""
+}
 
 Tooltips: {
 	ElementTip: Hold "Left Shift" for element details
@@ -4066,7 +4123,10 @@ DisgustingMeat: {
 		'''
 }
 
-TaintedRagePotion.DisplayName: Tainted Rage Potion
+TaintedRagePotion: {
+	DisplayName: Tainted Rage Potion
+	Tooltip: ""
+}
 
 CalamityRing: {
 	DisplayName: Calamity Ring
@@ -4130,9 +4190,62 @@ OblivionRattle: {
 	Tooltip: ""
 }
 
-GaggleStatue.DisplayName: Gaggle Statue
+GaggleStatue: {
+	DisplayName: Gaggle Statue
+	Tooltip: ""
+}
 
 TheEnforcerGun: {
 	DisplayName: The Enforcer
 	Tooltip: Has a chance to cause Bleeding
+}
+
+Andesite: {
+	DisplayName: Andesite
+	Tooltip: ""
+}
+
+Diorite: {
+	DisplayName: Diorite
+	Tooltip: ""
+}
+
+Granite: {
+	DisplayName: Granite
+	Tooltip: ""
+}
+
+NoxeggMusicBox: {
+	DisplayName: Noxegg Music Box
+	Tooltip: ""
+}
+
+NoxusMusicBox: {
+	DisplayName: Noxus Music Box
+	Tooltip: ""
+}
+
+ReaverSharkWaitNVM: {
+	DisplayName: Reaver Shark Wait N V M
+	Tooltip: ""
+}
+
+AbstractTest: {
+	DisplayName: Abstract Test
+	Tooltip: ""
+}
+
+ChlorophyteYoyo: {
+	DisplayName: Chlorophyte Yoyo
+	Tooltip: ""
+}
+
+EbonWoodStormbow: {
+	DisplayName: Ebon Wood Stormbow
+	Tooltip: ""
+}
+
+SkullStormbow: {
+	DisplayName: Skull Stormbow
+	Tooltip: ""
 }
