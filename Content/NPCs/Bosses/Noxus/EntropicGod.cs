@@ -476,7 +476,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             NPC.noTileCollide = true;
             NPC.HitSound = null;
             NPC.DeathSound = null;
-            NPC.value = Item.buyPrice(50, 0, 0, 0) / 5;
+            NPC.value = Item.buyPrice(100, 0, 0, 0);
             NPC.netAlways = true;
             NPC.hide = true;
             NPC.Calamity().ShouldCloseHPBar = true;
