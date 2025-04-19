@@ -107,7 +107,7 @@ namespace CalRemix
         public static readonly int CryoSlime = Set("CryoSlime");
 
         // Minibosses
-        public static readonly int LaRuga = Set("Minibosses/LaRuga");
+        public static readonly int LaRuga = Set("Bosses/Minibosses/LaRuga");
         public static readonly int DemonChase = Set("DemonChase");
 
         // Bosses
