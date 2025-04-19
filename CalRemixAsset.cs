@@ -135,8 +135,8 @@ namespace CalRemix
         public static readonly int DevourerofGodsFinalForm = Set("Bosses/DevourerOfGodsFinalForm");
         public static readonly int Hypnos = Set("Bosses/Hypnos");
 
-        public static readonly int ExoMechs = Set("Exos/XO");
-        public static readonly int ExoTwins = Set("Exos/Apingas");
+        public static readonly int ExoMechs = Set("Bosses/Exos/XO");
+        public static readonly int ExoTwins = Set("Bosses/Exos/Apingas");
         public static readonly int Ares = Set("Bosses/Exos/Larry");
         public static readonly int Thanatos = Set("Bosses/Exos/Thanos");
         public static readonly int ExoTwinsThanatos = Set("Bosses/Exos/ApingasThanos");
