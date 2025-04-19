@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Minor Sandrat");
+            // DisplayName.SetDefault("Minor Sandrat");
         }
 
         public override void SetDefaults()

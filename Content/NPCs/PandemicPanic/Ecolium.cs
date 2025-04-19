@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         int segmentCount = 30;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ecolium");
+            // DisplayName.SetDefault("Ecolium");
         }
 
         public override void SetDefaults()

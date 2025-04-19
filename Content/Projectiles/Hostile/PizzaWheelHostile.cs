@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalRemix/Content/Items/Weapons/PizzaWheel";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pizza");
+            // DisplayName.SetDefault("Pizza");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

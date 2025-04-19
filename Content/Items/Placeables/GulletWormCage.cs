@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Gullet Worm Cage");
+            // DisplayName.SetDefault("Gullet Worm Cage");
         }
 
         public override void SetDefaults()

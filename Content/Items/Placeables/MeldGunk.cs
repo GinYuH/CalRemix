@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-            DisplayName.SetDefault("Meld Gunk");
-            Tooltip.SetDefault("Friendship is strong, Meld Gunk is stronger.\nNo seriously, this block is completely unbreakable! Place with caution!");
+            // DisplayName.SetDefault("Meld Gunk");
+            // Tooltip.SetDefault("Friendship is strong, Meld Gunk is stronger.\nNo seriously, this block is completely unbreakable! Place with caution!");
         }
         public override void SetDefaults()
         {

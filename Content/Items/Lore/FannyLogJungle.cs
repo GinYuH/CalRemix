@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plague and Perils in the Jungle Lab (Entry 3)");
+            // DisplayName.SetDefault("Plague and Perils in the Jungle Lab (Entry 3)");
         }
         public override void SetDefaults()
         {

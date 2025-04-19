@@ -10,8 +10,8 @@ public class AOTE : ModItem
     private static readonly SoundStyle UseSound = new SoundStyle("CalRemix/Assets/Sounds/AOTETeleport") with { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Aspect of the End");
-        Tooltip.SetDefault("hi pixel");
+        // DisplayName.SetDefault("Aspect of the End");
+        // Tooltip.SetDefault("hi pixel");
         Item.staff[Type] = true;
     }
     public override void SetDefaults()

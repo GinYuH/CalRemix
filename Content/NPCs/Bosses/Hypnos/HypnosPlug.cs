@@ -14,7 +14,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         NPC hypnos;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("XP-00 Hypnos Plug");
+            // DisplayName.SetDefault("XP-00 Hypnos Plug");
             Main.npcFrameCount[NPC.type] = 1;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;

@@ -13,11 +13,11 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Yharim's Curse");
-            Tooltip.SetDefault("This unholy abomination feels like it's deteriorating\n"+
+            // DisplayName.SetDefault("Yharim's Curse");
+            /* Tooltip.SetDefault("This unholy abomination feels like it's deteriorating\n"+
             "90% more damage taken\n" +
             "50% more damage dealt\n" + // yes i buffed it FUCK you
-            "Why would anyone use this");
+            "Why would anyone use this"); */
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<YharimsGift>();
         }
 

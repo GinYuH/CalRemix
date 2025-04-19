@@ -8,7 +8,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
 		public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Flaming Ice Arrow");
+			// DisplayName.SetDefault("Flaming Ice Arrow");
 		}
 		public override void SetDefaults() 
         {

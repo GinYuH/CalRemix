@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         private Vector2 InitVelocity;
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Onyx Fragment");
+			// DisplayName.SetDefault("Onyx Fragment");
 		}
 		public override void SetDefaults() 
         {

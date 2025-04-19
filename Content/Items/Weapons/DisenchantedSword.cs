@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Disenchanted Sword");
-            Tooltip.SetDefault("Can be enchanted by defeating an advanced evil foe...");
+            // DisplayName.SetDefault("Disenchanted Sword");
+            // Tooltip.SetDefault("Can be enchanted by defeating an advanced evil foe...");
         }
         public override void SetDefaults()
         {

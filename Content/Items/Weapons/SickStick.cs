@@ -13,8 +13,8 @@ public class SickStick : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Sick Stick");
-        Tooltip.SetDefault("Summons sickened cells\nThe original cell glues itself to enemies while secondary ones fire short ranged blood shots\nSecondary cells lock position relative to the original when spawned\nThe greater the distance from the original cell, the more damage");
+        // DisplayName.SetDefault("Sick Stick");
+        // Tooltip.SetDefault("Summons sickened cells\nThe original cell glues itself to enemies while secondary ones fire short ranged blood shots\nSecondary cells lock position relative to the original when spawned\nThe greater the distance from the original cell, the more damage");
         ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
         Item.staff[Type] = true;
     }

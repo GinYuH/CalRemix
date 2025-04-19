@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Bucket of Coal");
+            // DisplayName.SetDefault("Bucket of Coal");
 		}
 		public override void SetDefaults() 
 		{

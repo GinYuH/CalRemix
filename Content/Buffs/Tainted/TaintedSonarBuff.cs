@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Restless Fish");
-            Description.SetDefault("Your fishing lines shake rapidly");
+            // DisplayName.SetDefault("Restless Fish");
+            // Description.SetDefault("Your fishing lines shake rapidly");
         }
         public override void Update(Player player, ref int buffIndex)
         {

@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Baroclaw");
-            Tooltip.SetDefault("The crab secret revealed!\n"+"Press x to chain a nearby enemy with crab claws");
+            // DisplayName.SetDefault("Baroclaw");
+            // Tooltip.SetDefault("The crab secret revealed!\n"+"Press x to chain a nearby enemy with crab claws");
         }
 
         public override void SetDefaults()

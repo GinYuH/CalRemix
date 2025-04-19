@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Resourceful");
-            Description.SetDefault("How does this physically work???");
+            // DisplayName.SetDefault("Resourceful");
+            // Description.SetDefault("How does this physically work???");
         }
         public override void Update(Player player, ref int buffIndex)
         {

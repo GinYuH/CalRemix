@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("2 magic damage and 14% increased movement speed");
+            // Tooltip.SetDefault("2 magic damage and 14% increased movement speed");
         }
         public override void SetDefaults()
         {

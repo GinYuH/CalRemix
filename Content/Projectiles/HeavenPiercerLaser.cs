@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles
         public ref float Time => ref Projectile.ai[0];
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("Helix Laser");
+            // DisplayName.SetDefault("Helix Laser");
 		}
 		public override void SetDefaults() 
 		{

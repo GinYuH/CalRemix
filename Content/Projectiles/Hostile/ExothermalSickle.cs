@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Exothermal Sickle");
+            // DisplayName.SetDefault("Exothermal Sickle");
             Main.projFrames[Type] = 4;
         }
 

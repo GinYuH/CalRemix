@@ -12,9 +12,9 @@ namespace CalRemix.Content.Items.Tools
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Profaned Vocalizer");
-            Tooltip.SetDefault("Converts Primordial Albatrossan into an understandable language while in your inventory" +
-                                "\nUsing this makes Primordial Albatross sounds");
+            // DisplayName.SetDefault("Profaned Vocalizer");
+            /* Tooltip.SetDefault("Converts Primordial Albatrossan into an understandable language while in your inventory" +
+                                "\nUsing this makes Primordial Albatross sounds"); */
         }
         public override void SetDefaults()
         {

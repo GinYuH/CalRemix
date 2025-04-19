@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Creates enormous explosions on enemy hits");
+            // Tooltip.SetDefault("Creates enormous explosions on enemy hits");
         }
         public override void SetDefaults()
         {

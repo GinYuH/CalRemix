@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Accessories
         int idealpos = 1;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Crystal Conflict");
+            // DisplayName.SetDefault("Cosmic Crystal Conflict");
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

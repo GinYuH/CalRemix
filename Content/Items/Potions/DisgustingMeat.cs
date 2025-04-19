@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Disgusting Meat");
-            Tooltip.SetDefault("Mmm... a delicacy, to be sure!\nBest served cold");
+            // DisplayName.SetDefault("Disgusting Meat");
+            // Tooltip.SetDefault("Mmm... a delicacy, to be sure!\nBest served cold");
             Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()

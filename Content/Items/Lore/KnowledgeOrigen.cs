@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("The Originator");
+            // DisplayName.SetDefault("The Originator");
         }
         public override void SetDefaults()
         {

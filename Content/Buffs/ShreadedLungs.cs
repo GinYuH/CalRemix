@@ -7,8 +7,8 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shreaded Lungs");
-            Description.SetDefault("No that isn't a typo!");
+            // DisplayName.SetDefault("Shreaded Lungs");
+            // Description.SetDefault("No that isn't a typo!");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

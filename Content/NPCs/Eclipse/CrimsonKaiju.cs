@@ -43,7 +43,7 @@ namespace CalRemix.Content.NPCs.Eclipse
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crimson Kaiju");
+            // DisplayName.SetDefault("Crimson Kaiju");
             Main.npcFrameCount[NPC.type] = 6;
             // wings - 6
             // legs - 7

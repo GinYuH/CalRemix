@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shattered Enemies");
-            Description.SetDefault("Your foes grow weaker");
+            // DisplayName.SetDefault("Shattered Enemies");
+            // Description.SetDefault("Your foes grow weaker");
         }
         public override void Update(Player player, ref int buffIndex)
         {

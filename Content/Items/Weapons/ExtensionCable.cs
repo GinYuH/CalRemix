@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault(Main.rand.NextBool() ? "Extension Cable" : "Extension Cord"); // Legally speaking, Cable is the canon name
-            Tooltip.SetDefault("Stacks up to 20\nGrows in length but decays in damage depending on the item's stack\nTagged enemies are struck by lightning when hit by minions");
+            // DisplayName.SetDefault(Main.rand.NextBool() ? "Extension Cable" : "Extension Cord"); // Legally speaking, Cable is the canon name
+            // Tooltip.SetDefault("Stacks up to 20\nGrows in length but decays in damage depending on the item's stack\nTagged enemies are struck by lightning when hit by minions");
         }
 
         public override void SetDefaults()

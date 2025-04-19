@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/UI/ElementalSystem/Cold";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Snowgrave");
+            // DisplayName.SetDefault("Snowgrave");
         }
         public override void SetDefaults()
         {

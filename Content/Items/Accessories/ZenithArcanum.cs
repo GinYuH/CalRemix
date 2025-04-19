@@ -19,13 +19,13 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Zenith Arcanum");
-            Tooltip.SetDefault("'Top of the food chain'\n"+
+            // DisplayName.SetDefault("Zenith Arcanum");
+            /* Tooltip.SetDefault("'Top of the food chain'\n"+
             "Summons various spirits of the world to protect you\n" +
             "20 % increase to summon damage and defense\n" +
             "+ 4 life regeneration, 15 % increased pick speed, and + 8 max minions\n" +
             "Increased minion knockback\n" +
-            "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits");
+            "Minions inflict a variety of debuffs and spawn skeletal limbs on enemy hits"); */
         }
 
         public override void SetDefaults()

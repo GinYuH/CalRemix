@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tornado");
+            // DisplayName.SetDefault("Tornado");
         }
 
         public override void SetDefaults()

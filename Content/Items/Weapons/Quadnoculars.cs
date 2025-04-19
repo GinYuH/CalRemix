@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Quadnoculars");
+            // DisplayName.SetDefault("Quadnoculars");
             Item.staff[Type] = true;
         }
         public override void SetDefaults()

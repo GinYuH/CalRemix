@@ -96,7 +96,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Mud Wall");
+			// DisplayName.SetDefault("Plagued Mud Wall");
 		}
 
 		public override void SetDefaults()
@@ -117,7 +117,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Stone Wall");
+			// DisplayName.SetDefault("Plagued Stone Wall");
 		}
 
 		public override void SetDefaults()
@@ -138,7 +138,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Vine Wall");
+			// DisplayName.SetDefault("Plagued Vine Wall");
 		}
 
 		public override void SetDefaults()
@@ -151,7 +151,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Pipe Wall");
+			// DisplayName.SetDefault("Plagued Pipe Wall");
 		}
 
 		public override void SetDefaults()

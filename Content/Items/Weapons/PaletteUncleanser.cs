@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Palette Uncleanser");
-            Tooltip.SetDefault("Causes hit enemies to become vulnerable to all debuff elements");
+            // DisplayName.SetDefault("Palette Uncleanser");
+            // Tooltip.SetDefault("Causes hit enemies to become vulnerable to all debuff elements");
         }
         public override void SetDefaults()
         {

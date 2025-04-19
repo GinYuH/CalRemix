@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Armor
         public int souls;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Twisted Netherite Helmet");
+            // DisplayName.SetDefault("Twisted Netherite Helmet");
         }
         public override void SaveData(TagCompound tag)
         {

@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Unholy Blood Cells");
-      		Tooltip.SetDefault("Just seeing it makes you want to puke...");
+			// DisplayName.SetDefault("Unholy Blood Cells");
+      		// Tooltip.SetDefault("Just seeing it makes you want to puke...");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

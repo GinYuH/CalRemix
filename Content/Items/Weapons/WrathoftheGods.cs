@@ -17,8 +17,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wrath of the Gods");
-            Tooltip.SetDefault("Summons a godly pulse at the cursor that periodically summon a ring of godly fireballs and occasionally explodes into a massive star of projectile and fires a deathray to annihilate your foes\n"+"[c/FF3333:The End..?]");
+            // DisplayName.SetDefault("Wrath of the Gods");
+            // Tooltip.SetDefault("Summons a godly pulse at the cursor that periodically summon a ring of godly fireballs and occasionally explodes into a massive star of projectile and fires a deathray to annihilate your foes\n"+"[c/FF3333:The End..?]");
         }
         public override void SetDefaults()
         {

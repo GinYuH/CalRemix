@@ -6,7 +6,7 @@ namespace CalRemix.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliterator");
+            // DisplayName.SetDefault("Obliterator");
         }
 
         public override void SetDefaults()

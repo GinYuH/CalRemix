@@ -28,7 +28,7 @@ namespace CalRemix.Core.Biomes
 		// Use SetStaticDefaults to assign the display name
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Jungle"); //Name subject to change
+			// DisplayName.SetDefault("Plagued Jungle"); //Name subject to change
 		}
 
 		// Calculate when the biome is active.

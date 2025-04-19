@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Salt Cube");
+			// DisplayName.SetDefault("Salt Cube");
         }
 		public override void SetDefaults() 
         {

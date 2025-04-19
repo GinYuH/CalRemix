@@ -29,13 +29,14 @@ using CalamityMod.Projectiles.Boss;
 using System.Collections;
 using Microsoft.Xna.Framework.Graphics;
 using XPT.Core.Audio.MP3Sharp.Decoding;
+using Terraria.GameContent;
 
 namespace CalRemix.Content.NPCs.Bosses.SealedOne
 {
     [AutoloadBossHead]
     public class SealedOne : ModNPC
     {
-        //public override bool IsLoadingEnabled(Mod mod) => false;
+        public override bool IsLoadingEnabled(Mod mod) => false;
 
         public ref float AttackType => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
@@ -68,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sealed One");
+            // DisplayName.SetDefault("Sealed One");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Sealed One",
@@ -779,6 +780,8 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             #endregion
 
             #region Frame Stuff
+            NPC.frame = new Rectangle(0, 0, TextureAssets.Npc[NPC.type].Value.Width / 4, TextureAssets.Npc[NPC.type].Value.Height / 4);
+
             // vertical stuff
             NPC.frameCounter++;
             if (NPC.frameCounter >= 6)
@@ -825,7 +828,6 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
         {
             Texture2D spritesheet = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/SealedOne/SealedOne").Value;
             Main.EntitySpriteDraw(spritesheet, NPC.Center - Main.screenPosition, spritesheet.Frame(4, 4, FrameX, FrameY), drawColor, 0, new Vector2(spritesheet.Size().X / 8, spritesheet.Size().Y / 8), 1, NPC.direction != -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
-
             return false;
         }
 

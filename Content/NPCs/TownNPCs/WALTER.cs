@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public static int total = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Archmagus");
+            // DisplayName.SetDefault("Archmagus");
             Main.npcFrameCount[NPC.type] = 25;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 4;

@@ -3,6 +3,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using CalamityMod.Items.Weapons.Rogue;
 
+using Terraria.Graphics.Effects;
+
 namespace CalRemix.Content.Items.Accessories
 {
     [AutoloadEquip(EquipType.Head)]
@@ -31,8 +33,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Retroman's Power Star");
-            Tooltip.SetDefault("Transforms you into the Retro Man \n Item dedicated to QuestNinja");
+            // DisplayName.SetDefault("Retroman's Power Star");
+            // Tooltip.SetDefault("Transforms you into the Retro Man \n Item dedicated to QuestNinja");
 
             if (Main.netMode == NetmodeID.Server)
                 return;
@@ -59,8 +61,13 @@ namespace CalRemix.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!hideVisual)
-                player.GetModPlayer<CalRemixPlayer>().retroman = true;
+            if (hideVisual)
+            {
+                return;
+            }
+  
+            player.GetModPlayer<CalRemixPlayer>().retroman = true;
+            player.GetModPlayer<CalRemixPlayer>().soRetro = true;
         }
 
         public override void UpdateVanity(Player player)

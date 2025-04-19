@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cooling");
-            Description.SetDefault("Reduced damage from warm sources");
+            // DisplayName.SetDefault("Cooling");
+            // Description.SetDefault("Reduced damage from warm sources");
         }
         public override void Update(Player player, ref int buffIndex)
         {

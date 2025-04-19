@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Bags
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tar Gar");
-            Tooltip.SetDefault("Right click to extract slime rain");
+            // DisplayName.SetDefault("Tar Gar");
+            // Tooltip.SetDefault("Right click to extract slime rain");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 

@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         private Vector2 Offset;
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Razor Tooth");
+			// DisplayName.SetDefault("Razor Tooth");
 		}
 		public override void SetDefaults() 
         {

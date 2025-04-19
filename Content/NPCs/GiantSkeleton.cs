@@ -21,6 +21,7 @@ using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using Terraria.WorldBuilding;
 using CalamityMod.Items.Materials;
 using Terraria.GameContent.ItemDropRules;
+using System.Collections.Generic;
 
 namespace CalRemix.Content.NPCs
 {
@@ -307,7 +308,14 @@ namespace CalRemix.Content.NPCs
             LeadingConditionRule postProv = npcLoot.DefineConditionalDropSet(DropHelper.PostProv());
             hardmode.Add(ModContent.ItemType<EssenceofHavoc>(), 2);
             postProv.Add(ModContent.ItemType<Bloodstone>(), 4);
+            // Copy over all loot from Dungeon Guardians since theyre dead
+            List<IItemDropRule> gardRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.DungeonGuardian, false);
+            foreach (var v in gardRules)
+            {
+                npcLoot.Add(v);
+            }
         }
+
         private struct BoneSpur
         {
             public int width;

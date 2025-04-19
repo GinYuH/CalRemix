@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/BucketofCoal";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Bucket of Coal");
+			// DisplayName.SetDefault("Bucket of Coal");
 		}
         public override void SetDefaults()
         {

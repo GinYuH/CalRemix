@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hazy");
-            Description.SetDefault("Darkness falls");
+            // DisplayName.SetDefault("Hazy");
+            // Description.SetDefault("Darkness falls");
         }
         public override void Update(Player player, ref int buffIndex)
         {

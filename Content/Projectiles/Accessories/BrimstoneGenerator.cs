@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Brimstone Portal");
+            // DisplayName.SetDefault("Brimstone Portal");
         }
 
         public override void SetDefaults()

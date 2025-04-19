@@ -358,6 +358,8 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
         public static readonly SoundStyle TwinkleSound = new SoundStyle("CalRemix/Assets/Sounds/Noxus/NoxusTwinkle") with { MaxInstances = 5, PitchVariance = 0.16f };
 
+        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/Noxus/NoxusDeath");
+
         public const int DefaultTeleportDelay = 22;
 
         public const float Phase2LifeRatio = 0.65f;
@@ -474,7 +476,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             NPC.noTileCollide = true;
             NPC.HitSound = null;
             NPC.DeathSound = null;
-            NPC.value = Item.buyPrice(50, 0, 0, 0) / 5;
+            NPC.value = Item.buyPrice(100, 0, 0, 0);
             NPC.netAlways = true;
             NPC.hide = true;
             NPC.Calamity().ShouldCloseHPBar = true;
@@ -574,11 +576,11 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 NPC.active = false;
 
 
-            if ((!DownedBossSystem.downedCalamitas || !DownedBossSystem.downedExoMechs) && !Target.HasItem(ModContent.ItemType<Anomaly109>()))
+            /*if ((!DownedBossSystem.downedCalamitas || !DownedBossSystem.downedExoMechs) && !Target.HasItem(ModContent.ItemType<Anomaly109>()))
             {
                 NPC.active = false;
                 return;
-            }
+            }*/
 
             // Grant the target infinite flight.
             Target.wingTime = Target.wingTimeMax;
@@ -2541,7 +2543,8 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
         public void DoBehavior_DeathAnimation()
         {
-            int portalSummonDelay = 90;
+            int playSojund = 30;
+            int portalSummonDelay = 330;
             int portalExistTime = 96;
             float portalVerticalOffset = 600f;
             float portalScale = 1.8f;
@@ -2566,6 +2569,12 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             // Move hands.
             DefaultHandDrift(Hands[0], leftHandDestination, 1.1f);
             DefaultHandDrift(Hands[1], rightHandDestination, 1.1f);
+
+            // Play sound
+            if (AttackTimer == playSojund)
+            {
+                SoundEngine.PlaySound(DeathSound);
+            }
 
             // Create the portal.
             if (AttackTimer == portalSummonDelay)

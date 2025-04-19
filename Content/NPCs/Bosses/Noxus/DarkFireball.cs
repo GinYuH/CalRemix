@@ -85,7 +85,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 Projectile.Kill();
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             // Explode on death.
             if (Main.netMode != NetmodeID.MultiplayerClient)

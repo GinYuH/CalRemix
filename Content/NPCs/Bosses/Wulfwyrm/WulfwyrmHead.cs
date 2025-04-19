@@ -118,7 +118,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wulfrum Excavator");
+            // DisplayName.SetDefault("Wulfrum Excavator");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Position = new Vector2(0, 34),

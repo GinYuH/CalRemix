@@ -7,7 +7,6 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Entropically Fed");
             Main.debuff[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

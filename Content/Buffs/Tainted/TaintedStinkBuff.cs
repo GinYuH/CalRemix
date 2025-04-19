@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Disgusting");
-            Description.SetDefault("Even noseless enemies think you smell awful");
+            // DisplayName.SetDefault("Disgusting");
+            // Description.SetDefault("Even noseless enemies think you smell awful");
         }
         public override void Update(Player player, ref int buffIndex)
         {

@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chain Spear");
+            // DisplayName.SetDefault("Chain Spear");
         }
 
         public override void SetDefaults()

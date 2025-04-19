@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mana Acceleration");
-            Description.SetDefault("Beat the stars out of them!");
+            // DisplayName.SetDefault("Mana Acceleration");
+            // Description.SetDefault("Beat the stars out of them!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Evil Animatronic");
+            // DisplayName.SetDefault("Evil Animatronic");
             Main.npcFrameCount[NPC.type] = 8;
         }
 

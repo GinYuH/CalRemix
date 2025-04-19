@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Aspid Blaster");
-            Tooltip.SetDefault("Fires an irritating spread of infected orbs");
+            // DisplayName.SetDefault("Aspid Blaster");
+            // Tooltip.SetDefault("Fires an irritating spread of infected orbs");
         }
 
         public override void SetDefaults()

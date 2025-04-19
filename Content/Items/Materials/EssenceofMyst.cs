@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Essence of Myst");
-      	Tooltip.SetDefault("The essence of a distant island");
+			// DisplayName.SetDefault("Essence of Myst");
+      	// Tooltip.SetDefault("The essence of a distant island");
 			Item.ResearchUnlockCount = 25;
 			ItemID.Sets.SortingPriorityMaterials[Type] = 71; // Soul of Light
             ItemID.Sets.ItemNoGravity[Item.type] = true;

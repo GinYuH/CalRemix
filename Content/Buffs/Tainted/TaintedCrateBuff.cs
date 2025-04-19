@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gacha Sim");
-            Description.SetDefault("Double or nothing");
+            // DisplayName.SetDefault("Gacha Sim");
+            // Description.SetDefault("Double or nothing");
         }
         public override void Update(Player player, ref int buffIndex)
         {

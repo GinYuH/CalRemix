@@ -22,7 +22,7 @@ namespace CalRemix.Core.Biomes
         // Use SetStaticDefaults to assign the display name
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Profaned Desert");
+            // DisplayName.SetDefault("Profaned Desert");
         }
 
         // Calculate when the biome is active.

@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Cursed Spear");
+            // DisplayName.SetDefault("Cursed Spear");
 		}
 		public override void SetDefaults() 
 		{

@@ -8,7 +8,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dust");
+            // DisplayName.SetDefault("Dust");
         }
 
         public override void SetDefaults()

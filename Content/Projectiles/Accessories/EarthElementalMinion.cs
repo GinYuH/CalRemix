@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Earth Elemental");
+            // DisplayName.SetDefault("Earth Elemental");
             Main.projFrames[Projectile.type] = 6;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

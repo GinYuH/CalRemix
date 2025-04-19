@@ -60,8 +60,8 @@ namespace CalRemix.Content.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Origen Point");
-            Tooltip.SetDefault("Creates large, slow moving pixels");
+            // DisplayName.SetDefault("Origen Point");
+            // Tooltip.SetDefault("Creates large, slow moving pixels");
         }
         public override void SetDefaults()
         {

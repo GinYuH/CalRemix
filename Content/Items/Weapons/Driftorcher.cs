@@ -20,7 +20,7 @@ public class Driftorcher : ModItem
     private int torch = -1;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Driftorcher");
+        // DisplayName.SetDefault("Driftorcher");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

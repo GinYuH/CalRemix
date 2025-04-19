@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/ProfanedNucleus";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Profaned Nucleus");
+			// DisplayName.SetDefault("Profaned Nucleus");
 		}
         public override void SetDefaults()
         {

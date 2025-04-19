@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override Color GetCurrentExplosionColor(float pulseCompletionRatio) => Color.Cyan;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Twisted Netherite Soul Explosion");
+            // DisplayName.SetDefault("Twisted Netherite Soul Explosion");
         }
         public override void SetDefaults()
         {

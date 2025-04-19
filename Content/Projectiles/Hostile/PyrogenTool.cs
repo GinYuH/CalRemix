@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Blade");
+            // DisplayName.SetDefault("Pyro Blade");
             Main.projFrames[Projectile.type] = 6;
         }
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Pyrogen/PyrogenShield";

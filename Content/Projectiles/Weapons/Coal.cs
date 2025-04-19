@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "Terraria/Images/Item_1922";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Coal");
+            // DisplayName.SetDefault("Coal");
         }
         public override void SetDefaults()
         {

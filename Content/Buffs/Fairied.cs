@@ -7,7 +7,6 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fairy Float");
         }
         public override void Update(Player player, ref int buffIndex)
         {

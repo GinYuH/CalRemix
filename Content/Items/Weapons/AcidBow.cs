@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Acid Bow");
+            // DisplayName.SetDefault("Acid Bow");
             Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() 

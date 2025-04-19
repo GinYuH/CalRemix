@@ -14,10 +14,10 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Homochromia");
-            Tooltip.SetDefault("No homo.\n" +
+            // DisplayName.SetDefault("Homochromia");
+            /* Tooltip.SetDefault("No homo.\n" +
                 "90% chance to not consume ammo\n" +
-                "100% chance to turn you gay immediately");
+                "100% chance to turn you gay immediately"); */
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 

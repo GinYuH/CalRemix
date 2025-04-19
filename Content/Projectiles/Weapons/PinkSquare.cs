@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Square");
+			// DisplayName.SetDefault("Square");
 		}
         public override void SetDefaults()
         {

@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.SummonItems
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poisoned Sclera");
-            Tooltip.SetDefault("Summons the Acidsighter when used in the sulphurous sea at night");
+            // DisplayName.SetDefault("Poisoned Sclera");
+            // Tooltip.SetDefault("Summons the Acidsighter when used in the sulphurous sea at night");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }

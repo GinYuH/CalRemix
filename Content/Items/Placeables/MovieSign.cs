@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Movie Sign");
-            Tooltip.SetDefault("It's just a normal Movie Sign");
+            // DisplayName.SetDefault("Movie Sign");
+            // Tooltip.SetDefault("It's just a normal Movie Sign");
         }
 
         public override void SetDefaults()

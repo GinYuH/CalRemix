@@ -14,8 +14,8 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Ion Cube");
-            Tooltip.SetDefault("Only one may be placed");
+            // DisplayName.SetDefault("Ion Cube");
+            // Tooltip.SetDefault("Only one may be placed");
         }
 
         public override void SetDefaults()

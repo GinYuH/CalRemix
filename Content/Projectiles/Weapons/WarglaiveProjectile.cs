@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles
         public override string Texture => "CalRemix/Content/Items/Weapons/Warglaive";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warglaive");
+            // DisplayName.SetDefault("Warglaive");
         }
         public override void SetDefaults()
         {

@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public ref float Timer => ref Projectile.ai[0];
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Salt Water");
+			// DisplayName.SetDefault("Salt Water");
         }
 		public override void SetDefaults() 
         {

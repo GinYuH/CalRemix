@@ -11,7 +11,7 @@ public class CorrosiveEyeStaff : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Corrosive Eye Staff");
+        // DisplayName.SetDefault("Corrosive Eye Staff");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

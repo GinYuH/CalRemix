@@ -1350,6 +1350,18 @@ namespace CalRemix.UI
             }
             return false;
         }
+        public static bool CrossModBiome(string ModName, string BiomeName)
+        {
+            if (ModLoader.HasMod(ModName))
+            {
+                if (Main.LocalPlayer.InModBiome(ModLoader.GetMod(ModName).Find<ModBiome>(BiomeName)))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
         #endregion
 
         #region Saving and Loading data

@@ -33,7 +33,7 @@ public class MaserDeathray : BaseLaserbeamProjectile
     public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>(Texture).Value;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Maser Beam");
+        // DisplayName.SetDefault("Maser Beam");
         ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
     }
     public override void SetDefaults()

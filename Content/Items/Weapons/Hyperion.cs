@@ -16,8 +16,8 @@ public class Hyperion : ModItem
     private static readonly SoundStyle UseSound = new SoundStyle("CalRemix/Assets/Sounds/AOTETeleport") with { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Hyperion");
-        Tooltip.SetDefault("skie blok");
+        // DisplayName.SetDefault("Hyperion");
+        // Tooltip.SetDefault("skie blok");
         Main.RegisterItemAnimation(base.Item.type, new DrawAnimationVertical(6, 15));
         Item.staff[Type] = true;
     }

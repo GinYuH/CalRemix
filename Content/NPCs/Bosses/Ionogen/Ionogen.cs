@@ -51,7 +51,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ionogen");
+            // DisplayName.SetDefault("Ionogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Ionogen",

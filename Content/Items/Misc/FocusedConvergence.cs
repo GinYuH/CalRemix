@@ -7,7 +7,7 @@ namespace CalRemix.Content.Items.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault(" ");
+            // DisplayName.SetDefault(" ");
         }
         public override void UpdateInventory(Player player)
         {

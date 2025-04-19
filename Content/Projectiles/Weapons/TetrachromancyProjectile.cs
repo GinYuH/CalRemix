@@ -46,7 +46,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.velocity = (Projectile.velocity * (inertia - 1) + moveTo) / inertia;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(in SoundID.Zombie103, Projectile.Center);
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(0, 5), ModContent.ProjectileType<NystagmusProjectileBlue>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1);

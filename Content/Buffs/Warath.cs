@@ -7,8 +7,8 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warath");
-            Description.SetDefault("Your minions are angry");
+            // DisplayName.SetDefault("Warath");
+            // Description.SetDefault("Your minions are angry");
         }
         public override void Update(Player player, ref int buffIndex)
         {

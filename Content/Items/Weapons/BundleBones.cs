@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 25;
-            DisplayName.SetDefault("Bundle o' Bones");
+            // DisplayName.SetDefault("Bundle o' Bones");
 		}
 		public override void SetDefaults() 
 		{

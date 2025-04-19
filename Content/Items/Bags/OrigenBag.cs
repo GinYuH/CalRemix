@@ -16,6 +16,7 @@ namespace CalRemix.Content.Items.Bags
         {
             Item.ResearchUnlockCount = 3;
             ItemID.Sets.BossBag[Type] = true;
+            ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -93,6 +93,22 @@ namespace CalRemix
 
     public class CalRemixPlayer : ModPlayer
 	{
+		private sealed class SoRetroSceneEffect : ModSceneEffect
+		{
+			public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh + 10;
+
+			public override bool IsSceneEffectActive(Player player)
+			{
+				return player.GetModPlayer<CalRemixPlayer>().soRetro;
+			}
+
+			public override void SpecialVisuals(Player player, bool isActive)
+			{
+				base.SpecialVisuals(player, isActive);
+                
+				player.ManageSpecialBiomeVisuals("CalRemix:SoRetro", isActive, player.position);
+			}
+		}
 
         public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
 
@@ -145,6 +161,7 @@ namespace CalRemix
         public bool invGar;
         public int VerbotenMode = 1;
         public bool retroman = false;
+        public bool soRetro;
         public bool noTomorrow;
         public bool calamityRing;
         public bool fungiStone;
@@ -530,7 +547,11 @@ namespace CalRemix
 	        {
 		        stoolBoost++;
 	            
-		        var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+		        // Don't reuse the height boost normally granted because our
+		        // changes make it look jank but in a boring way.  It's funnier
+		        // to see it grow from 0 pixels instead.
+		        // var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+		        var boost = stoolBoost;
 		        Player.portableStoolInfo.SetStats(boost, boost, boost);
 		        
 		        // increase crit by 1% every 5 tiles
@@ -1158,6 +1179,7 @@ namespace CalRemix
 			dyesBrown = 0;
 			dyesPink = 0;
             retroman = false;
+            soRetro = false;
             noTomorrow = false;
             calamityRing = false;
             fungiStone = false;
@@ -1222,7 +1244,7 @@ namespace CalRemix
                     npc.AddBuff(BuffID.Confused, 220);
                 }
             }
-            if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().amalgam);
+            if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().amalgam)
             {
                 if (Main.rand.NextBool(4))
                 {

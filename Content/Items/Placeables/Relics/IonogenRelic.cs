@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Placeables.Relics
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("The battery acid melted it...");
+            // Tooltip.SetDefault("The battery acid melted it...");
         }
         public override void SetDefaults()
         {

@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Sand Ball");
+			// DisplayName.SetDefault("Plagued Sand Ball");
 			ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
 		}
 

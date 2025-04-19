@@ -7,8 +7,8 @@ namespace CalRemix.Content.Items.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("IOU an Originator");
-            Tooltip.SetDefault("Gone Fishin'! I'll get you the Originator once I have Fishstick's head on a pike!\n- Kushim");
+            // DisplayName.SetDefault("IOU an Originator");
+            // Tooltip.SetDefault("Gone Fishin'! I'll get you the Originator once I have Fishstick's head on a pike!\n- Kushim");
         }
         public override void SetDefaults()
         {

@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Accessories
         public override string Texture => "CalRemix/Content/Projectiles/Accessories/ClawTop";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Giant Claw");
+            // DisplayName.SetDefault("Giant Claw");
         }
 
         public override void SetDefaults()

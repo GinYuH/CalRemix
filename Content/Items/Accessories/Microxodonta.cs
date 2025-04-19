@@ -12,9 +12,9 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Microxodonta");
-            Tooltip.SetDefault("92% increased movement speed\n"+
-            "Flying leaves behind batches of damaging microbial clusters"); 
+            // DisplayName.SetDefault("Microxodonta");
+            /* Tooltip.SetDefault("92% increased movement speed\n"+
+            "Flying leaves behind batches of damaging microbial clusters"); */ 
         }
 
         public override void SetDefaults()

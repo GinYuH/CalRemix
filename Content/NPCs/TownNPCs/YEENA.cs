@@ -313,7 +313,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
                 .AddWithCustomValue<Snowgrave>(Item.buyPrice(gold: 80))
                 .AddWithCustomValue<ChristmasCarol>(Item.buyPrice(gold: 80))
                 .AddWithCustomValue<WreathofBelial>(Item.buyPrice(gold: 80))
-                .AddWithCustomValue<HalbardoftheHolidays>(Item.buyPrice(platinum: 50), new Condition("After The Devourer of Gods has been defeated", ()=> DownedBossSystem.downedDoG))
+                .AddWithCustomValue<HalbardoftheHolidays>(Item.buyPrice(platinum: 100), new Condition("After The Devourer of Gods has been defeated", ()=> DownedBossSystem.downedDoG))
                 .Add(new NPCShop.Entry(ModContent.ItemType<ProfanedDesertMusicBox>(), CalamityConditions.DownedProvidence));
             npcShop.Register();
         }

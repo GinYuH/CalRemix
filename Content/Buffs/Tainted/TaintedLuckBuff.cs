@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Speedrunner Luck");
-            Description.SetDefault("Pearl drop rates increased");
+            // DisplayName.SetDefault("Speedrunner Luck");
+            // Description.SetDefault("Pearl drop rates increased");
         }
         public override void Update(Player player, ref int buffIndex)
         {

@@ -18,8 +18,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Onyx Overlord's Gunsaw");
-            Tooltip.SetDefault("Projects a directed stream of onyx sawblasts while firing bullets rapidly\nThis weapon and its projectiles function as a chainsaw");
+            // DisplayName.SetDefault("Onyx Overlord's Gunsaw");
+            // Tooltip.SetDefault("Projects a directed stream of onyx sawblasts while firing bullets rapidly\nThis weapon and its projectiles function as a chainsaw");
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
         }
 

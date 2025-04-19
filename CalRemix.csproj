@@ -23,4 +23,8 @@
     <Folder Include="Assets\Textures\" />
   </ItemGroup>
   
+  <ItemGroup>
+    <ClCompile Include="Assets\Effects\SoRetroShader.hlsl" />
+  </ItemGroup>
+  
 </Project>

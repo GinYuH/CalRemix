@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public Vector2 pivot = new Vector2(0, 0);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Debris");
+            // DisplayName.SetDefault("Debris");
         }
         public override void SetDefaults()
         {

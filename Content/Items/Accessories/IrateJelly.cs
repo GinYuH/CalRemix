@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Irate Jelly");
-            Tooltip.SetDefault("Activating Rage will deal 50% of your health as damage");
+            // DisplayName.SetDefault("Irate Jelly");
+            // Tooltip.SetDefault("Activating Rage will deal 50% of your health as damage");
         }
 
         public override void SetDefaults()

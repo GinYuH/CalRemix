@@ -12,11 +12,11 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Calamity Ring");
-            Tooltip.SetDefault("A powerful artifact made from the Auric Soul of the Dragon of Calamity\n" +
+            // DisplayName.SetDefault("Calamity Ring");
+            /* Tooltip.SetDefault("A powerful artifact made from the Auric Soul of the Dragon of Calamity\n" +
             "The strength of the auric soul contained within transforms anyone unfortunate enough to wear it into an unsightly eye\n" +
             "It was formerly worn by the Queen of Witches Calamitas to subdue her while she reigned under her handler, King Yharim\n" +
-            "Doubles the damage received\n");
+            "Doubles the damage received\n"); */
             if (Main.dedServ)
                 return;
 

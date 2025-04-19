@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Microbial Cluster");
+            // DisplayName.SetDefault("Microbial Cluster");
             Main.projFrames[Projectile.type] = 1;
             Main.projPet[Projectile.type] = true;
         }

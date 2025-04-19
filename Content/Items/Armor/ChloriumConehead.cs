@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("16% increased stormbow damage and critical strike chance\n20% increaesd stormbow shot speed");
+            // Tooltip.SetDefault("16% increased stormbow damage and critical strike chance\n20% increaesd stormbow shot speed");
         }
         public override void SetDefaults()
         {

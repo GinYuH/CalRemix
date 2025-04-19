@@ -25,7 +25,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         private int state = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Life Slime");
+			// DisplayName.SetDefault("Life Slime");
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.BlueSlime];
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;

@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Flare");
+            // DisplayName.SetDefault("Pyro Flare");
             Main.projFrames[Projectile.type] = 5;
         }
 

@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mana Blood");
-            Description.SetDefault("Your health is being converted into mana");
+            // DisplayName.SetDefault("Mana Blood");
+            // Description.SetDefault("Your health is being converted into mana");
         }
         public override void Update(Player player, ref int buffIndex)
         {

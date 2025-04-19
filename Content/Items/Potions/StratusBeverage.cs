@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stratus Beverage");
-            Tooltip.SetDefault("May make you feel spacey\nCauses all projectile shooting weapons to fire two extra homing stars\nDecreases weapon damage by 33%");
+            // DisplayName.SetDefault("Stratus Beverage");
+            // Tooltip.SetDefault("May make you feel spacey\nCauses all projectile shooting weapons to fire two extra homing stars\nDecreases weapon damage by 33%");
         }
 
 

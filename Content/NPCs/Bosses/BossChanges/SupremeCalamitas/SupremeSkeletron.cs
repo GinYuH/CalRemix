@@ -122,7 +122,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eucharist Damsel");
+            // DisplayName.SetDefault("Eucharist Damsel");
         }
         public override void SetDefaults()
         {

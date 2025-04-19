@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/OrigenPoint";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Point");
+            // DisplayName.SetDefault("Point");
         }
         public override void SetDefaults()
         {

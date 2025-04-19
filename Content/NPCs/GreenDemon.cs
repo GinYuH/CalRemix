@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Green Demon");
+            // DisplayName.SetDefault("Green Demon");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
             if (Main.dedServ)

@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
 		public override void SetStaticDefaults() 
 		{
 			Item.ResearchUnlockCount = 100;
-			DisplayName.SetDefault("Cosmilite Slag");
+			// DisplayName.SetDefault("Cosmilite Slag");
 		}
 		public override void SetDefaults() 
 		{

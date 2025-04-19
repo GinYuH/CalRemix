@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mayfly Minions");
-            Description.SetDefault("They grow up so fast...");
+            // DisplayName.SetDefault("Mayfly Minions");
+            // Description.SetDefault("They grow up so fast...");
         }
         public override void Update(Player player, ref int buffIndex)
         {

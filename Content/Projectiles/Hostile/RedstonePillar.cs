@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redstone Pillar");
+            // DisplayName.SetDefault("Redstone Pillar");
             Main.projFrames[Projectile.type] = 32;
         }
         public override void SetDefaults()

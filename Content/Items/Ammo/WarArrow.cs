@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Ammo
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("War Arrow");
-            Tooltip.SetDefault("Inflicts Armor Crunch");
+            // DisplayName.SetDefault("War Arrow");
+            // Tooltip.SetDefault("Inflicts Armor Crunch");
             Item.ResearchUnlockCount = 99;
         }
 

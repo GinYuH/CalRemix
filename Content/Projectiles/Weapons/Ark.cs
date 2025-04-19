@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ark");
+            // DisplayName.SetDefault("Ark");
             Main.projFrames[Projectile.type] = 5;
         }
         public override void SetDefaults()

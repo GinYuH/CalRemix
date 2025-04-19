@@ -27,7 +27,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyrogen's Shield");
+            // DisplayName.SetDefault("Pyrogen's Shield");
             Main.npcFrameCount[Type] = 6;
             if (!Main.dedServ)
             {

@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Deteriorating Lens");
+            // DisplayName.SetDefault("Deteriorating Lens");
         }
 
         public override void SetDefaults()

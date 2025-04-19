@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-            DisplayName.SetDefault("Baron Brine");
+            // DisplayName.SetDefault("Baron Brine");
         }
         public override void SetDefaults()
         {

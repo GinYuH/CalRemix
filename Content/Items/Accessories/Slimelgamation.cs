@@ -24,8 +24,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-             DisplayName.SetDefault("Slimelgamation");
-             Tooltip.SetDefault("Extends the duration of potion buffs by 200% and potion buffs remain active even after you die\n"+
+             // DisplayName.SetDefault("Slimelgamation");
+             /* Tooltip.SetDefault("Extends the duration of potion buffs by 200% and potion buffs remain active even after you die\n"+
             "15% increased damage\n"+
             "Summons an evolved slime core to fight for you\n"+
             "All wild slimes will fight for you\n"+
@@ -35,7 +35,7 @@ namespace CalRemix.Content.Items.Accessories
             "You leave behind a trail of spores, toxic clouds, plague bees, and brine\n"+
             "Standing still generates an aura that slows enemies, and increases defense and life regen\n"+
             "All weapons have a chance to fire out mini birbs and miniature suns\n"+
-            "50% of the items stats are granted to team members");
+            "50% of the items stats are granted to team members"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 10));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
         }

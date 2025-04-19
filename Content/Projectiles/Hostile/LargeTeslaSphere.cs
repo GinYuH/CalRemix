@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Large Tesla Sphere");
+			// DisplayName.SetDefault("Large Tesla Sphere");
 			Main.projFrames[Projectile.type] = 6;
 			if (!Main.dedServ)
 			{

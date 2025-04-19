@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Apocalypse Scenario");
-            Description.SetDefault("Those who remain are the richest");
+            // DisplayName.SetDefault("Apocalypse Scenario");
+            // Description.SetDefault("Those who remain are the richest");
         }
         public override void Update(Player player, ref int buffIndex)
         {

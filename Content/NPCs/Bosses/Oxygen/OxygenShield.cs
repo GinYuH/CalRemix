@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Oxygen's Shield");
+            // DisplayName.SetDefault("Oxygen's Shield");
             this.HideFromBestiary();
         }
 

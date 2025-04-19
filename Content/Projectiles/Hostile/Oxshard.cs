@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalRemix/Assets/Gores/Oxygen1";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Oxygen Shard");
+            // DisplayName.SetDefault("Oxygen Shard");
         }
 
         public override void SetDefaults()

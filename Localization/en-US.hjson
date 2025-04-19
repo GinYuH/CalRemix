@@ -13,9 +13,38 @@ Mods: {
 	}
 
 	CalRemix: {
-		Currencies: {
-			CosmiliteCoinCurrency: cosmilite coins
-			KlepticoinCurrency: klepticoins
+		DebuffStone: {
+			DisplayName: "{0} Stone"
+			Tooltip:
+				'''
+				Immunity to {0}
+				Attacks inflict {0}
+				'''
+		}
+
+		BouncyRogue: {
+			DisplayName: Bouncy {0}
+			Tooltip:
+				'''
+				{0}
+				Now with extra Bounciness!
+				'''
+		}
+
+		StickyRogue: {
+			DisplayName: Sticky {0}
+			Tooltip:
+				'''
+				{0}
+				Now with extra stickiness!
+				'''
+		}
+
+		Currency: {
+			Cosmilite: Cosmilite
+			Klepticoin: Klepticoin
+			CosmiliteInterface: cosmilite
+			KlepticoinInterface: klepticoin
 		}
 
 		UI: {
@@ -33,6 +62,8 @@ Mods: {
 					Info: Mods.CalRemix.UI.DifficultyModes.TitanicDifficulty.Info
 				}
 			}
+
+			Anomaly.Condition: Mods.CalRemix.UI.Anomaly.Condition
 		}
 
 		Biomes: {
@@ -270,5 +301,12 @@ Mods: {
 		}
 
 		WorldGen.BlessedWithGoldOrPlatinumMessage: Your world has been blessed with Gold and/or Platinum!
+
+		Stones: {
+			FolvsStone: {
+				DisplayName: Folvs Stone
+				Tooltip: ""
+			}
+		}
 	}
 }

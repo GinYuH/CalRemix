@@ -177,7 +177,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             if (LifeRatio < TerminationLifeRatio && NPC.ai[2] == 0f)
                 TriggerDeathAnimation();
 
-            Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/GodIsOnHisKnees");
+            Music = CalRemixMusic.RenoxPhase2;
             switch (CurrentAttack)
             {
                 case NoxusEggAttackType.Awaken:

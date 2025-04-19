@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Very Distorted");
-            Description.SetDefault("Losing control!");
+            // DisplayName.SetDefault("Very Distorted");
+            // Description.SetDefault("Losing control!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

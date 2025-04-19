@@ -9,8 +9,8 @@ public class FiberBaby : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Fiber Baby");
-        Tooltip.SetDefault("Summons a baby in your hands that coughs up bursts of asbestos\nGrows in size and power based on unused minion slots\n'The one to defeat the hydrogen bomb'");
+        // DisplayName.SetDefault("Fiber Baby");
+        // Tooltip.SetDefault("Summons a baby in your hands that coughs up bursts of asbestos\nGrows in size and power based on unused minion slots\n'The one to defeat the hydrogen bomb'");
         Item.ResearchUnlockCount = 1;
     }
     public override void SetDefaults()

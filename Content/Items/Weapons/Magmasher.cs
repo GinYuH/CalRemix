@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Throws out hammers that explode on enemy hits\nStealth strikes cause consecutive explosions to increase in size and damage");
+            // Tooltip.SetDefault("Throws out hammers that explode on enemy hits\nStealth strikes cause consecutive explosions to increase in size and damage");
         }
         public override void SetDefaults()
         {

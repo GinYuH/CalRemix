@@ -15,8 +15,8 @@ public class AergianTechnistaff : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Aergian Technistaff");
-        Tooltip.SetDefault("Summons an orbital Aergia Neuron\nHolding right click causes the orbit to accelerate\nOnce fully charged, the ring can be thrown to chase enemies");
+        // DisplayName.SetDefault("Aergian Technistaff");
+        // Tooltip.SetDefault("Summons an orbital Aergia Neuron\nHolding right click causes the orbit to accelerate\nOnce fully charged, the ring can be thrown to chase enemies");
         ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
         Item.staff[Type] = true;
     }

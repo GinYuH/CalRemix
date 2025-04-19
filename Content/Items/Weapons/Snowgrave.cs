@@ -14,8 +14,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Snowgrave");
-            Tooltip.SetDefault("Memories of a snowy grave...\nSummons a large deadly fountain of ice and snow below your cursor that instantly kills normal enemies\nAfter usage, the player won't be able to use the weapon again for 1 minute");
+            // DisplayName.SetDefault("Snowgrave");
+            // Tooltip.SetDefault("Memories of a snowy grave...\nSummons a large deadly fountain of ice and snow below your cursor that instantly kills normal enemies\nAfter usage, the player won't be able to use the weapon again for 1 minute");
         }
         public override void SetDefaults()
         {

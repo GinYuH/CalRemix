@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Gaggle Statue");
+            // DisplayName.SetDefault("Gaggle Statue");
         }
 
         public override void SetDefaults()

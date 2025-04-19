@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Elastic Jelly");
-            Tooltip.SetDefault("Increases wing flight time by 10%");
+            // DisplayName.SetDefault("Elastic Jelly");
+            // Tooltip.SetDefault("Increases wing flight time by 10%");
         }
 
         public override void SetDefaults()

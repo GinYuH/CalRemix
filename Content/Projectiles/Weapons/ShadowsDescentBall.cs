@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Shadow Ball");
+			// DisplayName.SetDefault("Shadow Ball");
 		}
         public override void SetDefaults()
         {

@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mining Strength");
-            Description.SetDefault("Your pickaxe feels heavier...");
+            // DisplayName.SetDefault("Mining Strength");
+            // Description.SetDefault("Your pickaxe feels heavier...");
         }
         public override void Update(Player player, ref int buffIndex)
         {

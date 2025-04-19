@@ -11,8 +11,8 @@ public class TheEnforcerGun : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("The Enforcer");
-        Tooltip.SetDefault("Has a chance to cause Bleeding");
+        // DisplayName.SetDefault("The Enforcer");
+        // Tooltip.SetDefault("Has a chance to cause Bleeding");
     }
 
     public override void SetDefaults()

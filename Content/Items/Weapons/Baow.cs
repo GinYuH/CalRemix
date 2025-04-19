@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Baow");
+            // DisplayName.SetDefault("Baow");
 		}
 		public override void SetDefaults() 
 		{

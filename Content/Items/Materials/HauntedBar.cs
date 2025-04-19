@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Haunted Bar");
+			// DisplayName.SetDefault("Haunted Bar");
 			Item.ResearchUnlockCount = 25;
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(3, 18));
         }

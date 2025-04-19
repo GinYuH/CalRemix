@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 	{
 		public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Acid Shot");
+			// DisplayName.SetDefault("Acid Shot");
 		}
 		public override void SetDefaults() 
         {

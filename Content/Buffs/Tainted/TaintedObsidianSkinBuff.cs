@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lethal Lava");
-            Description.SetDefault("Better not touch it!");
+            // DisplayName.SetDefault("Lethal Lava");
+            // Description.SetDefault("Better not touch it!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

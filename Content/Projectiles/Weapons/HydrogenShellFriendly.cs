@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Missile");
+            // DisplayName.SetDefault("Missile");
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 11;
             Main.projFrames[Type] = 4;

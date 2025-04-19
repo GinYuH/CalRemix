@@ -17,7 +17,7 @@ public class ExodimusPROJ : ModProjectile
     public bool stick;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Exodiumus dagger");
+        // DisplayName.SetDefault("Exodiumus dagger");
     }
 
     public override void SetDefaults()

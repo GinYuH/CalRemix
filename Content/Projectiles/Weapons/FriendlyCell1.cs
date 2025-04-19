@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalRemix/Content/Projectiles/Hostile/PathogenCell1";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Friendly Blood Cell");
+            // DisplayName.SetDefault("Friendly Blood Cell");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

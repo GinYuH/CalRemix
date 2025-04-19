@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scrap Claw");
-            Tooltip.SetDefault("Tosses out scraps\nStealth strikes throw a large amount of charged scraps that linger longer");
+            // DisplayName.SetDefault("Scrap Claw");
+            // Tooltip.SetDefault("Tosses out scraps\nStealth strikes throw a large amount of charged scraps that linger longer");
             Item.staff[Type] = true;
         }
         public override void SetDefaults()

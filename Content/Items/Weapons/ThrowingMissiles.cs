@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Throwing Missiles");
-            Tooltip.SetDefault("Flings erratically moving missiles which home on enemies\nStealth strikes unleash a swarm of missiles");
+            // DisplayName.SetDefault("Throwing Missiles");
+            // Tooltip.SetDefault("Flings erratically moving missiles which home on enemies\nStealth strikes unleash a swarm of missiles");
         }
         public override void SetDefaults()
         {

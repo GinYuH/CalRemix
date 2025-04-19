@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abandoned");
-            Description.SetDefault("Where did everyone go?");
+            // DisplayName.SetDefault("Abandoned");
+            // Description.SetDefault("Where did everyone go?");
         }
         public override void Update(Player player, ref int buffIndex)
         {

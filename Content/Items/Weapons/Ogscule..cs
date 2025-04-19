@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
 
-            DisplayName.SetDefault("Ogscule");
+            // DisplayName.SetDefault("Ogscule");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

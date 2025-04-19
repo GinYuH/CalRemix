@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Reckless Archer");
-            Description.SetDefault("Arrows everywhere!");
+            // DisplayName.SetDefault("Reckless Archer");
+            // Description.SetDefault("Arrows everywhere!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

@@ -129,7 +129,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Twinkle Star");
+            // DisplayName.SetDefault("Twinkle Star");
         }
 
         public override void SetDefaults()

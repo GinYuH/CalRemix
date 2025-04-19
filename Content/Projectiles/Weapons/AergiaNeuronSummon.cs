@@ -25,7 +25,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Aergia Neuron Core");
+            // DisplayName.SetDefault("Aergia Neuron Core");
             Main.projFrames[Projectile.type] = 1;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;

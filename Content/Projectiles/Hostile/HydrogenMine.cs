@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/Summon/Dreadmine";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mine");
+            // DisplayName.SetDefault("Mine");
         }
         public override void SetDefaults()
         {

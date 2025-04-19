@@ -59,7 +59,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Oxygen");
+            // DisplayName.SetDefault("Oxygen");
             Main.npcFrameCount[Type] = 4;
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;

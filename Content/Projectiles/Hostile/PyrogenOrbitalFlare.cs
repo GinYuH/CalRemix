@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public Vector2 pivot = new Vector2(0, 0);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Flare");
+            // DisplayName.SetDefault("Pyro Flare");
             Main.projFrames[Projectile.type] = 5;
         }
         public override void SetDefaults()

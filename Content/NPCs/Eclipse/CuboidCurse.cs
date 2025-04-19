@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cuboid Curse");
+            // DisplayName.SetDefault("Cuboid Curse");
         }
         public override void SetDefaults()
         {

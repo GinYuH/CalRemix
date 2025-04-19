@@ -8,8 +8,8 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stratus Beverage");
-            Description.SetDefault("Seeing stars");
+            // DisplayName.SetDefault("Stratus Beverage");
+            // Description.SetDefault("Seeing stars");
             Main.debuff[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

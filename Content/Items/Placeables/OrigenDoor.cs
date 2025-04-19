@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Door of Origen");
+            // DisplayName.SetDefault("Door of Origen");
         }
 
         public override void SetDefaults()

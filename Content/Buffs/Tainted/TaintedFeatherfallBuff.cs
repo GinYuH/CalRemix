@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Friendly Gravity");
-            Description.SetDefault("Why couldn't they take fall damage before?");
+            // DisplayName.SetDefault("Friendly Gravity");
+            // Description.SetDefault("Why couldn't they take fall damage before?");
         }
         public override void Update(Player player, ref int buffIndex)
         {

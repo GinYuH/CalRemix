@@ -32,6 +32,11 @@ namespace CalRemix
 
             Filters.Scene["CalRemix:NoxusSky"] = new Filter(new NoxusScreenShaderData("FilterMiniTower").UseColor(Color.Transparent).UseOpacity(0f), EffectPriority.VeryHigh);
             SkyManager.Instance["CalRemix:NoxusSky"] = new NoxusSky();
+            
+            var soRetro = Mod.Assets.Request<Effect>("Assets/Effects/SoRetroShader", AssetRequestMode.ImmediateLoad);
+            var soRetroData = new ScreenShaderData(soRetro, "SoRetro");
+            soRetroData.UseImage(Mod.Assets.Request<Texture2D>("Assets/ExtraTextures/SoRetro", AssetRequestMode.ImmediateLoad));
+            Filters.Scene["CalRemix:SoRetro"] = new Filter(soRetroData, EffectPriority.VeryHigh);
         }
     }
 }

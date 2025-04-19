@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public ref float TurnAngle => ref Projectile.ai[0];
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Caustic Tendril");
+			// DisplayName.SetDefault("Caustic Tendril");
 		}
 		public override void SetDefaults() 
         {

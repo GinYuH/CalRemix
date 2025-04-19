@@ -38,7 +38,7 @@ namespace CalRemix.Content.NPCs
         private int maxTime = 600;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Evil Eye");
+            // DisplayName.SetDefault("Evil Eye");
             Main.npcFrameCount[NPC.type] = 2;
         }
 

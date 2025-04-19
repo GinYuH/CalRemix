@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs
         public override string Texture => "CalamityMod/Projectiles/Summon/Umbrella/TreeForest";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tree");
+            // DisplayName.SetDefault("Tree");
         }
 
         public override void SetDefaults()

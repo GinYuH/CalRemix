@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Weak Hordes");
-            Description.SetDefault("More seek to challenge you, but fall in fear");
+            // DisplayName.SetDefault("Weak Hordes");
+            // Description.SetDefault("More seek to challenge you, but fall in fear");
         }
         public override void Update(Player player, ref int buffIndex)
         {

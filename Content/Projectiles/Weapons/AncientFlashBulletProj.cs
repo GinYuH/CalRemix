@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bullet");
+            // DisplayName.SetDefault("Bullet");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -54,7 +54,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             return true;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item93 with { Volume = 2 }, Projectile.Center);
             if (Projectile.owner == Main.myPlayer)

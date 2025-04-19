@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vampiric");
-            Description.SetDefault("Drain them");
+            // DisplayName.SetDefault("Vampiric");
+            // Description.SetDefault("Drain them");
         }
         public override void Update(Player player, ref int buffIndex)
         {

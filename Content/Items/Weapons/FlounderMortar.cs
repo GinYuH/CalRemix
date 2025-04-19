@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Flounder Mortar");
+            // DisplayName.SetDefault("Flounder Mortar");
 		}
 		public override void SetDefaults() 
 		{

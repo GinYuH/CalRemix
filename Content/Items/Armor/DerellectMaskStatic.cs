@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Armor
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Derellect Mask (Static)");
+            // DisplayName.SetDefault("Derellect Mask (Static)");
             Item.ResearchUnlockCount = 1;
         }
 

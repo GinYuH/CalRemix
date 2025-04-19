@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Depths of the Abyss (Entry ???)");
-            Tooltip.SetDefault("It has scribbles all over it, making it unusable");
+            // DisplayName.SetDefault("Depths of the Abyss (Entry ???)");
+            // Tooltip.SetDefault("It has scribbles all over it, making it unusable");
         }
         public override void SetDefaults()
         {

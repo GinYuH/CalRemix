@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Devourer of Substances");
-            Tooltip.SetDefault("A SYRUP DOES NOT FEAR CONSUMPTION");
+            // DisplayName.SetDefault("The Devourer of Substances");
+            // Tooltip.SetDefault("A SYRUP DOES NOT FEAR CONSUMPTION");
         }
 
 

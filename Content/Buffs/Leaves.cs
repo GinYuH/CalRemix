@@ -5,11 +5,6 @@ namespace CalRemix.Content.Buffs
 {
     public class Leaves : ModBuff
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Leaves Power");
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetDamage<GenericDamageClass>() += 0.06f;

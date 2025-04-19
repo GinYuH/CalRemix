@@ -8,8 +8,8 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sick Cell");
-            Description.SetDefault("Sick 'em, boys!");
+            // DisplayName.SetDefault("Sick Cell");
+            // Description.SetDefault("Sick 'em, boys!");
 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

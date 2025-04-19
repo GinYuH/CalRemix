@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Altar of the Ablessed");
+            // DisplayName.SetDefault("Altar of the Ablessed");
         }
 
         public override void SetDefaults()

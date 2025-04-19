@@ -88,71 +88,70 @@ namespace CalRemix
         private static readonly string Path = "Assets/Music/";
 
         // Subworlds
-        public static readonly int Exosphere = Set("CanAnybodyHearMe");
+        public static readonly int Exosphere = Set("Biomes/Subworlds/Exosphere");
 
         // Biomes
-        public static readonly int AsbestosCaves = Set("FibrousWhisper");
-        public static readonly int PlaguedJungle = Set("PlaguedJungle");
-        public static readonly int BaronStrait = Set("TheEndZone");
-        public static readonly int VernalPass = Set("VajrabhairavasRest");
-        public static readonly int FrozenStronghold = Set("LockedAway");
-        public static readonly int ProfanedDesert = Set("EmpireofAsh");
+        public static readonly int AsbestosCaves = Set("Biomes/AsbestosCaves");
+        public static readonly int PlaguedJungle = Set("Biomes/PlaguedJungle");
+        public static readonly int BaronStrait = Set("Biomes/BaronStrait");
+        public static readonly int VernalPass = Set("Biomes/VernalPass");
+        public static readonly int FrozenStronghold = Set("Biomes/FrozenStronghold");
+        public static readonly int ProfanedDesert = Set("Biomes/ProfanedDesert");
 
         // Events
-        public static readonly int AcidRainTier2 = Set("TropicofCancer");
-        public static readonly int PandemicPanic = Set("PandemicPanic");
-        public static readonly int GaleforceDay = Set("Galeforce");
+        public static readonly int AcidRainTier2 = Set("Events/AcidRainTier2");
+        public static readonly int PandemicPanic = Set("Events/PandemicPanic");
+        public static readonly int GaleforceDay = Set("Events/GaleforceDay");
 
         // NPCs
-        public static readonly int CryoSlime = Set("AntarcticReinsertion");
+        public static readonly int CryoSlime = Set("CryoSlime");
 
         // Minibosses
-        public static readonly int LaRuga = Set("LaRuga");
+        public static readonly int LaRuga = Set("Minibosses/LaRuga");
         public static readonly int DemonChase = Set("DemonChase");
 
         // Bosses
-        public static readonly int TheCalamity = Set("StainedSmearedCalamity");
-        public static readonly int WulfrumExcavator = Set("ScourgeoftheScrapyard");
-        public static readonly int Origen = Set("AntarcticReinforcementStructuredMix");
-        public static readonly int Acidsighter = Set("Opticatalysis");
-        public static readonly int Carcinogen = Set("OncologicReinforcement");
+        public static readonly int TheCalamity = Set("Bosses/TheCalamity");
+        public static readonly int WulfrumExcavator = Set("Bosses/WulfrumExcavator");
+        public static readonly int Origen = Set("Bosses/Origen");
+        public static readonly int Acidsighter = Set("Bosses/Acidsighter");
+        public static readonly int Carcinogen = Set("Bosses/Carcinogen");
 
-        public static readonly int Derellect = Set("SignalInterruption");
-        public static readonly int Polyphemalus = Set("EyesofFlame");
-        public static readonly int PolyphemalusAlt = Set("TheEyesareAnger");
-        public static readonly int Phytogen = Set("BotanicReinforcement");
-        public static readonly int Hydrogen = Set("AtomicReinforcement");
-        public static readonly int Oxygen = Set("AerobicReinforcement");
-        public static readonly int Ionogen = Set("IonicReinforcement");
-        public static readonly int Pathogen = Set("MicrobicReinforcement");
-        public static readonly int EmpressofLightDay = Set("Gegenschein");
-        public static readonly int SealedOnePhase1 = Set("SealedOne1");
-        public static readonly int SealedOnePhase2 = Set("SealedOne2");
+        public static readonly int Derellect = Set("Bosses/Derellect");
+        public static readonly int Polyphemalus = Set("Bosses/Polyphemalus");
+        public static readonly int PolyphemalusAlt = Set("Bosses/PolyphemalusAlt");
+        public static readonly int Phytogen = Set("Bosses/Phytogen");
+        public static readonly int Hydrogen = Set("Bosses/Hydrogen");
+        public static readonly int Oxygen = Set("Bosses/Oxygen");
+        public static readonly int Ionogen = Set("Bosses/Ionogen");
+        public static readonly int Pathogen = Set("Bosses/Pathogen");
+        public static readonly int EmpressofLightDay = Set("Bosses/EmpressOfLightDay");
+        public static readonly int SealedOnePhase1 = Set("Bosses/SealedOnePhase1");
+        public static readonly int SealedOnePhase2 = Set("Bosses/SealedOnePhase2");
 
-        public static readonly int Pyrogen = Set("VolcanicReinforcement");
-        public static readonly int Cryogen = Set("NotVolcanicReinforcement");
-
-        public static readonly int DevourerofGods = Set("DoGRemix");
-        public static readonly int DevourerofGodsFinalForm = Set("DoGRemix2");
-        public static readonly int Hypnos = Set("CerebralAugmentations");
+        public static readonly int Pyrogen = Set("Bosses/Pyrogen");
+        public static readonly int Cryogen = Set("Bosses/PyrogenFTB");
+        public static readonly int DevourerofGods = Set("Bosses/DevourerOfGods");
+        public static readonly int DevourerofGodsFinalForm = Set("Bosses/DevourerOfGodsFinalForm");
+        public static readonly int Hypnos = Set("Bosses/Hypnos");
 
         public static readonly int ExoMechs = Set("Exos/XO");
         public static readonly int ExoTwins = Set("Exos/Apingas");
-        public static readonly int Ares = Set("Exos/Larry");
-        public static readonly int Thanatos = Set("Exos/Thanos");
-        public static readonly int ExoTwinsThanatos = Set("Exos/ApingasThanos");
-        public static readonly int ExoTwinsAres = Set("Exos/ApingasLarry");
-        public static readonly int ThanatosAres = Set("Exos/ThanosLarry");
+        public static readonly int Ares = Set("Bosses/Exos/Larry");
+        public static readonly int Thanatos = Set("Bosses/Exos/Thanos");
+        public static readonly int ExoTwinsThanatos = Set("Bosses/Exos/ApingasThanos");
+        public static readonly int ExoTwinsAres = Set("Bosses/Exos/ApingasLarry");
+        public static readonly int ThanatosAres = Set("Bosses/Exos/ThanosLarry");
 
         public static readonly int RenoxPhase2 = Set("Stelliferous");
         public static readonly int RenoxPhase3 = Set("Degenerate");
 
         // Misc
-        public static readonly int Menu = Set("Menu");
-        public static readonly int Menu2 = Set("CrazyLaPaint");
-        public static readonly int TrueStory = Set("TrueStory");
-        public static readonly int PlasticOracle = Set("OhmnOmens");
-        public static readonly int Generator = Set("Generator");
+        public static readonly int Menu = Set("Misc/Menu");
+        public static readonly int Menu2 = Set("Misc/Menu2");
+        public static readonly int TrueStory = Set("Misc/TrueStory");
+        public static readonly int PlasticOracle = Set("Misc/PlasticOracle");
+        public static readonly int Generator = Set("Misc/Generator");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }

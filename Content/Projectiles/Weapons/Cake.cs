@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "Terraria/Images/Item_3750";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cake");
+            // DisplayName.SetDefault("Cake");
         }
         public override void SetDefaults()
         {

@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pitch Black");
-            Description.SetDefault("True homing");
+            // DisplayName.SetDefault("Pitch Black");
+            // Description.SetDefault("True homing");
         }
         public override void Update(Player player, ref int buffIndex)
         {

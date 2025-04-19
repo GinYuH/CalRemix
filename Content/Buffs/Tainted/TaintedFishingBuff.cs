@@ -12,8 +12,8 @@ namespace CalRemix.Content.Buffs.Tainted
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fishing Curse");
-            Description.SetDefault("No food, only fights");
+            // DisplayName.SetDefault("Fishing Curse");
+            // Description.SetDefault("No food, only fights");
         }
         public override void Update(Player player, ref int buffIndex)
         {

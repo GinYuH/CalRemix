@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lumtanyl");
-            Tooltip.SetDefault("You feel light-headed");
+            // DisplayName.SetDefault("Lumtanyl");
+            // Tooltip.SetDefault("You feel light-headed");
         }
 
 

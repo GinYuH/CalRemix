@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Auric Sword");
+            // DisplayName.SetDefault("Auric Sword");
         }
 
         public override void SetDefaults()

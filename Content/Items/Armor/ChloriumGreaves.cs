@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("12% increased critical strike chance\n22% increased movement speed");
+            // Tooltip.SetDefault("12% increased critical strike chance\n22% increased movement speed");
         }
         public override void SetDefaults()
         {

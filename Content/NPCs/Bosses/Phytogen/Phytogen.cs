@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
         public override void SetStaticDefaults()
         {
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            DisplayName.SetDefault("Phytogen");
+            // DisplayName.SetDefault("Phytogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Pythogen",

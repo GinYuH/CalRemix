@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Astral Pearl");
+            // DisplayName.SetDefault("Astral Pearl");
         }
 
         public override void SetDefaults()

@@ -17,7 +17,7 @@ namespace CalRemix.Content.Items.Potions
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tainted " + PotionName + " Potion");
+            // DisplayName.SetDefault("Tainted " + PotionName + " Potion");
         }
         public override void SetDefaults()
         {

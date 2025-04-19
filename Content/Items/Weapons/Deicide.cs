@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Deicide");
+            // DisplayName.SetDefault("Deicide");
 		}
 		public override void SetDefaults() 
 		{

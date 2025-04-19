@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Elemental");
+            // DisplayName.SetDefault("Cosmic Elemental");
             Main.projFrames[Projectile.type] = 11;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

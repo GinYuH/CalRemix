@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Plasmaflash Bolt");
+			// DisplayName.SetDefault("Plasmaflash Bolt");
         }
 		public override void SetDefaults() 
         {

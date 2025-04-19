@@ -14,8 +14,8 @@ public class Nystagmus : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Nystagmus");
-        Tooltip.SetDefault("Conjures a spiral of homing eyes\n"+"'I am in spain without the A'");
+        // DisplayName.SetDefault("Nystagmus");
+        // Tooltip.SetDefault("Conjures a spiral of homing eyes\n"+"'I am in spain without the A'");
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 

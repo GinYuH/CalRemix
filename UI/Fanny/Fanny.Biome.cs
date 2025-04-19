@@ -113,6 +113,9 @@ namespace CalRemix.UI
             HelperMessage.New("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>());
 
+            HelperMessage.New("Home", "Oh hey, this garden seems familiar to me! I don't know why, though... Just, uh, give me a moment, ok?",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => CrossModBiome("NoxusBoss", "EternalGardenBiome")).SetHoverTextOverride("Ok, take your time, Fanny!");
+
             HelperMessage.New("Exospheree", "THE EXOSPHERE!!!!",
                 "FannyAwooga").OnlyPlayInSubworld(ModContent.GetInstance<ExosphereSubworld>());
 

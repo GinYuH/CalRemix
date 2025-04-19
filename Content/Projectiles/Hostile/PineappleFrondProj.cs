@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         int segmentCount = 10;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frond");
+            // DisplayName.SetDefault("Frond");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 22222;
         }
         public override void SetDefaults()

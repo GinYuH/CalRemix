@@ -31,7 +31,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("La Ruga");
+            // DisplayName.SetDefault("La Ruga");
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
         }

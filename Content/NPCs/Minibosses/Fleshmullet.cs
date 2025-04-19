@@ -21,7 +21,7 @@ namespace CalRemix.Content.NPCs.Minibosses
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fleshmullet");
+            // DisplayName.SetDefault("Fleshmullet");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 15;
