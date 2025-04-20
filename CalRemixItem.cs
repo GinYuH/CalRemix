@@ -21,6 +21,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Other;
@@ -38,6 +39,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Farming;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
@@ -698,28 +700,15 @@ namespace CalRemix
                                 if (c.RuleToChain is CommonDrop fuck)
                                 {
                                     if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
-                                    {
-                                        lead.ChainedRules.RemoveAt(j);
-                                    }
+                                        fuck.itemId = ItemType<SaltBooklet>();
                                 }
-                            }
-                            else if (lead.ChainedRules[j] is Chains.TryIfFailedRandomRoll c2)
-                            {
-                                if (c2.RuleToChain is CommonDrop fuck)
-                                {
-                                    if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
-                                    {
-                                        lead.ChainedRules.RemoveAt(j);
-                                    }
-                                }
-
                             }
                         }
                     }
                 }
-                itemLoot.Add(ItemType<SaltBooklet>(), 1);
+                itemLoot.Add(ItemType<WoodenRake>());
                 itemLoot.Add(ItemType<Anomaly109>());
-                itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ItemType<TheInsacredTexts>());
+                itemLoot.Add(ItemType<TheInsacredTexts>());
             }
             if (CalRemixAddon.CalVal != null)
             {
@@ -1137,23 +1126,6 @@ namespace CalRemix
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             string key = "Items.Tooltips.";
-            if (item.DamageType == GetInstance<StormbowDamageClass>() && item.damage < 30 && item.rare <= ItemRarityID.Blue)
-            {
-                if (tooltips.Exists((TooltipLine t) => t.Name.Equals("Tooltip0")))
-                {
-                    TooltipLine line = tooltips.Find((TooltipLine t) => t.Name.Equals("Tooltip0"));
-                    if (string.IsNullOrWhiteSpace(line.Text))
-                    {
-                        TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText($"{key}StormbowTip").Value);
-                        tooltips.Add(tip);
-                    }
-                }
-                else
-                {
-                    TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText($"{key}StormbowTip").Value);
-                    tooltips.Add(tip);
-                }
-            }
             if (devItem != string.Empty)
             {
                 string text = CalamityUtils.ColorMessage($"- {CalRemixHelper.LocalText($"{key}Lightmix")} ", Color.Crimson);

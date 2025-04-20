@@ -183,6 +183,7 @@ Mods: {
 			ElementDisplay.DisplayName: Element Display
 			MoodTracker.DisplayName: Mood Tracker
 			NetWorthDisplay.DisplayName: Net Worth Display
+			DeliciousMeatDisplay.DisplayName: Delicious Meat Display
 		}
 
 		Emotes.HypnosEmote.Command: hypnosemote
@@ -267,7 +268,11 @@ Mods: {
 		}
 
 		NotAvailable: Nothing
-		DamageClasses.StormbowDamageClass.DisplayName: stormbow damage
+
+		DamageClasses: {
+			StormbowDamageClass.DisplayName: stormbow damage
+			FarmingDamageClass.DisplayName: farming yield
+		}
 
 		RecipeGroups: {
 			Any: Any {0}

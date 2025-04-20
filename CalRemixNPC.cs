@@ -61,6 +61,7 @@ using CalamityMod.Tiles.Ores;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Buffs.Tainted;
+using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Materials;
@@ -120,6 +121,7 @@ namespace CalRemix
         public bool vBurn = false;
         public bool grappled = false;
         public bool witherDebuff = false;
+        public bool farmNPC = false;
         public int wither = 0;
         public int shreadedLungs = 0;
         public int taintedInferno = 0;
@@ -197,11 +199,18 @@ namespace CalRemix
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
             }
         }
-
-        public override void SetDefaults(NPC entity)
+        public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
         {
+            if (farmNPC && item.DamageType != GetInstance<FarmingDamageClass>() || !farmNPC && item.DamageType == GetInstance<FarmingDamageClass>())
+                return false;
+            return null;
         }
-
+        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
+        {
+            if (farmNPC && projectile.DamageType != GetInstance<FarmingDamageClass>() || !farmNPC && projectile.DamageType == GetInstance<FarmingDamageClass>())
+                return false;
+            return null;
+        }
         public static void AddModBiomeToBestiary(int curNPC, int npcID, ModBiome biome, BestiaryEntry entry)
         {
             if (curNPC == npcID)

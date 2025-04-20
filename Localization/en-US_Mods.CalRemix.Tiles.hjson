@@ -41,3 +41,8 @@ DeepslatePlaced.MapEntry: Deepslate
 DioritePlaced.MapEntry: Diorite
 GranitePlaced.MapEntry: Granite
 CalcitePlaced.MapEntry: Calcite
+FarmixerPlaced.MapEntry: Farmixer
+BarPlanterTile.MapEntry: Bar Planter
+AlloyBarPlant.MapEntry: Alloy Bar Plant
+EssentialEssenceBarPlant.MapEntry: Essential Essence Bar Plant
+YharimBarPlant.MapEntry: Yharim Bar Plant

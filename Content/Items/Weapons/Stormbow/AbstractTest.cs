@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
     public class AbstractTest : StormbowAbstract
     {
+        public override bool IsLoadingEnabled(Mod mod) => false;
         public override int damage => 6;
         public override int crit => 4;
         public override float shootSpeed => 12;

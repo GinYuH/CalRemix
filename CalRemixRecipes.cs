@@ -49,12 +49,13 @@ using CalamityMod.Items.Armor.Silva;
 using System;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.UI.Anomaly109;
+using CalamityMod.Items.Tools;
 
 namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox, AnyCritter;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter;
         public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
@@ -62,7 +63,6 @@ namespace CalRemix
             EvilBar = null;
             T4Bar = null;
             HMT1Bar = null;
-            AnyButterfly = null;
             AnyExoMechMusicBox = null;
         }
         public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(CalRemixHelper.LocalText($"RecipeGroups.{s}"));
@@ -76,8 +76,6 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
             HMT1Bar = new RecipeGroup(() => GroupName("HMT1Bar"), ItemID.CobaltBar, ItemID.PalladiumBar);
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
-            AnyButterfly = new RecipeGroup(() => GroupName("AnyButterfly"), ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
-            RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", AnyButterfly);
             AnyExoMechMusicBox = new RecipeGroup(() => GroupName("AnyExoMechMusicBox"), RemixMusicBox.ExoMechMusicBoxes);
             RecipeGroup.RegisterGroup("CalRemix:AnyRemixExoMusicBox", AnyExoMechMusicBox);
             AnyCritter = new RecipeGroup(() => GroupName("AnyCritter"), ItemID.Squirrel);

@@ -4,8 +4,9 @@ using Terraria.ModLoader;
 using CalamityMod.Items;
 using CalamityMod.Rarities;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.DamageClasses;
 
-namespace CalRemix.Content.Items.Tools
+namespace CalRemix.Content.Items.Weapons.Farming
 {
     public class TwistedNetheriteScythe : ModItem
     {
@@ -13,12 +14,12 @@ namespace CalRemix.Content.Items.Tools
         {
             Item.width = 60;
             Item.height = 60;
-            Item.damage = 60;
-            Item.knockBack = 10f;
+            Item.damage = 260;
+            Item.knockBack = 5f;
             Item.useTime = 12;
             Item.useAnimation = 12;
 
-            Item.DamageType = DamageClass.Melee;
+            Item.DamageType = ModContent.GetInstance<FarmingDamageClass>();
             Item.useStyle = ItemUseStyleID.Swing;
             Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
             Item.rare = ModContent.RarityType<PureGreen>();

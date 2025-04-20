@@ -33,16 +33,11 @@ using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.Yharon;
-using CalamityMod.Systems;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.LoreItems;
 using System;
-using CalRemix.Content.DamageClasses;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Weapons.Ranged;
 using Terraria.Localization;
-using System.Linq;
 
 namespace CalRemix.Core.Retheme
 {
@@ -375,7 +370,6 @@ namespace CalRemix.Core.Retheme
         public override void SetDefaults(Item item)
         {
             AbsoluteChanges(item);
-            StormbowChanges(item);
             if (CalRemixWorld.itemChanges)
                 NormalChanges(item);
             if (CalRemixWorld.sneakerheadMode && SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
@@ -437,58 +431,6 @@ namespace CalRemix.Core.Retheme
             else if (item.Name.Contains("Skeletron"))
             {
                 item.SetNameOverride(item.Name.Replace(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Hemostone").Value));
-            }
-        }
-        public static void StormbowChanges(Item item)
-        {
-            if (item.type == ItemID.DaedalusStormbow)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.DaedalusStormbow").Value);
-            }
-            else if (item.type == ItemID.Starfury)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.Starfury").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 5;
-            }
-            else if (item.type == ItemID.StarWrath)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.StarWrath").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 27;
-            }
-            else if (item.type == ItemID.BloodRainBow)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.BloodRainBow").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-            else if (item.type == ItemID.MeteorStaff)
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 0;
-            }
-            else if (item.type == ItemID.BlizzardStaff)
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 0;
-            }
-            else if (item.type == ItemID.LunarFlareBook)
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 0;
-            }
-            else if (item.type == ItemType<TheBurningSky>())
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-            else if (item.type == ItemType<StarShower>())
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.StarShower").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-            else if (item.type == ItemType<ArterialAssault>())
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
             }
         }
         public override void UpdateInventory(Item item, Player player)
