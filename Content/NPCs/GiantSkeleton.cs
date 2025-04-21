@@ -220,7 +220,7 @@ namespace CalRemix.Content.NPCs
                             Dust.NewDustPerfect(NPC.Center, ModContent.DustType<BrimstoneFireDustMatte>(), dustVelocity);
                         }
                         Vector2 velocity = NPC.DirectionTo(Target.Center) * 4;
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ModContent.ProjectileType<BrimstoneBall>(), 50, 0, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ModContent.ProjectileType<BrimstoneBall>(), 25, 0, Main.myPlayer);
                     }
 
                     
@@ -279,11 +279,11 @@ namespace CalRemix.Content.NPCs
                 spawnInfo.Player.Calamity().ZoneSunkenSea)
                 return 0f;
             if (spawnInfo.Player.Calamity().ZoneCalamity)
-                return 0.2f;
+                return 0.05f;
             else if (spawnInfo.Player.position.Y / 16 > GenVars.lavaLine)
-                return SpawnCondition.Cavern.Chance * 0.1f;
+                return SpawnCondition.Cavern.Chance * 0.025f;
             else
-                return SpawnCondition.Underworld.Chance * 0.1f;
+                return SpawnCondition.Underworld.Chance * 0.025f;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
