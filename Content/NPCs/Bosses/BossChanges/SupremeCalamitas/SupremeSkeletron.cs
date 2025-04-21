@@ -177,7 +177,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 
                     break;
                 case (int)AttackTypes.Spawn:
-                    NPC.velocity += NPC.DirectionTo(new Vector2(Target.Center.X, Target.Center.Y - 50));
+                    NPC.velocity += NPC.DirectionTo(new Vector2(Target.Center.X, Target.Center.Y - 100));
                     NPC.velocity = NPC.velocity.ClampMagnitude(-22, 22);
 
                     if (Timer >= 50)
