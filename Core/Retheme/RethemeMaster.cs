@@ -346,7 +346,7 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-                GetInstance<WulfrumMetalScrap>().SetStaticDefaults();
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
             }
         }
         public override void SetStaticDefaults()
@@ -464,7 +464,7 @@ namespace CalRemix.Core.Retheme
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
         {
             if (SneakersRetheme.IsASneaker(item.type))
-                return SneakersRetheme.PreDrawTooltipLine(item, line, ref yOffset);
+                return SneakersRetheme.PreDrawTooltipLine(item, line);
 
             return true;
         }

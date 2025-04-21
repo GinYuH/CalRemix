@@ -273,7 +273,7 @@ namespace CalRemix.Core.Retheme
             tooltips.Add(new TooltipLine(CalRemix.instance, "NetWorth", $"Total net worth:{netWorthValue}"));
         }
 
-        public static bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
+        public static bool PreDrawTooltipLine(Item item, DrawableTooltipLine line)
         {
             if (line.Mod == "CalRemix" && line.Name == "Brand")
             {

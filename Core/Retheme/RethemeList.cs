@@ -42,6 +42,7 @@ using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using Terraria.ID;
 using CalamityMod.Items.Ammo;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Core.Retheme
 {
@@ -149,6 +150,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<GrandGuardian>(), "GrandGar" },
             { ItemType<Earth>(), "Garth" },
             { ItemType<IcicleArrow>(), "IcicleArrow" },
+            { ItemType<AnechoicCoating>(), "AnechoicCoating" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },
