@@ -233,8 +233,6 @@ namespace CalRemix
                 try
                 {
                     CalRemixConfig config = GetInstance<CalRemixConfig>();
-                    if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                        return;
                     if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
                         return;
                     ModMenu menu = ((Main.rand.NextBool(4) && config.randomMenu) || config.useSecondMenu) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
@@ -254,11 +252,10 @@ namespace CalRemix
             // all for the eight seconds its all worth it
             cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
         }
-        private void MenuStuff(ModMenu menu)
+        private static void MenuStuff(ModMenu menu)
         {
             if (menu.FullName is null)
                 return;
-            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, [Main.rand.Next(-2, 3)]);
             typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, menu.FullName);
 
             if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || menu is null)

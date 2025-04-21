@@ -85,7 +85,7 @@ namespace CalRemix.Core.Retheme
         public override bool InstancePerEntity => true;
         public static void ChangeTextures()
         {
-            if (!CalRemixWorld.npcChanges)
+            if (CalRemixWorld.npcChanges)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
                 {
@@ -307,19 +307,12 @@ namespace CalRemix.Core.Retheme
                         else
                             item.ClearNameOverride();
                     }
-                    if (SneakersRetheme.itemSneakerPairs.ContainsKey(item.type) && SneakersRetheme.IsASneaker(item.type))
-                    {
-                        if (!CalRemixWorld.sneakerheadMode)
-                            SneakersRetheme.InitializeItem(item);
-                        else
-                            item.ClearNameOverride();
-                    }
                 }
             }
         }
         public static void ChangeTextures()
         {
-            if (!CalRemixWorld.itemChanges)
+            if (CalRemixWorld.itemChanges)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
@@ -353,8 +346,7 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+                GetInstance<WulfrumMetalScrap>().SetStaticDefaults();
             }
         }
         public override void SetStaticDefaults()

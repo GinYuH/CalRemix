@@ -2216,7 +2216,7 @@ CarcinogenMusicBox: {
 }
 
 EmpressofLightDayMusicBox: {
-	DisplayName: Music Box (Daytime Empress of Light)
+	DisplayName: Music Box (Empress of Light)
 	Tooltip: Plays 'Gegenschein' by Jteoh
 }
 

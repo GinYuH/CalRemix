@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework.Audio;
 
 using Terraria;
@@ -18,18 +18,19 @@ public class EveryCopyOfPitchIsPersonalized : ModSystem
     {
         On_LegacyAudioSystem.Update += (orig, self) =>
         {
+            float value = (CalRemixWorld.musicPitch || Main.gameMenu) ? hilariousPitchMultiplier : 0;
             foreach (var track in self.AudioTracks)
             {
                 if (track is ASoundEffectBasedAudioTrack)
                 {
-                    track.SetVariable("Pitch", hilariousPitchMultiplier);
+                    track.SetVariable("Pitch", value);
                 }
 
                 // MonoStereo support!!!  This mod reimplements Cue support for
                 // vanilla tracks and lets us modify the pitch as well.
                 if (track?.GetType().FullName?.Equals("MonoStereoMod.MonoStereoAudioTrack") ?? false)
                 {
-                    track.SetVariable("Pitch", hilariousPitchMultiplier);
+                    track.SetVariable("Pitch", value);
                 }
             }
 
