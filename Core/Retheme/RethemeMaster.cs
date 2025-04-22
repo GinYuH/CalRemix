@@ -59,6 +59,13 @@ namespace CalRemix.Core.Retheme
             SneakersRetheme.Load();
         }
 
+        public override void Unload()
+        {
+            base.Unload();
+            
+            SneakersRetheme.ApplyTextureChanges(unloading: true);
+        }
+
         public override void PostSetupContent()
         {
             foreach (KeyValuePair<int, string> p in RethemeList.NPCs)

@@ -355,9 +355,9 @@ namespace CalRemix.Core.Retheme
                 }
             }
         }
-        public static void ApplyTextureChanges()
+        public static void ApplyTextureChanges(bool unloading = false)
         {
-            bool enabled = CalRemixWorld.sneakerheadMode;
+            bool enabled = CalRemixWorld.sneakerheadMode && !unloading;
 
             if (enabled)
             { 
@@ -369,11 +369,11 @@ namespace CalRemix.Core.Retheme
 
                 foreach (KeyValuePair<int, string> p in itemSneakerPairs)
                 {
-                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value);
+                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
                 }
                 foreach (KeyValuePair<int, string> p in buffSneakerPairs)
                 {
-                    TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value);
+                    TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
                 }
 
                 Asset<Texture2D>[] MinecartMechTexture = [Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMount", AssetRequestMode.ImmediateLoad), Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMountGlow")];
@@ -408,11 +408,14 @@ namespace CalRemix.Core.Retheme
            
             else
             {
-                //Reanimate animated items
-                GetInstance<BlazingCore>().SetStaticDefaults();
-                GetInstance<DynamoStemCells>().SetStaticDefaults();
-                GetInstance<TheEvolution>().SetStaticDefaults();
-                GetInstance<Calamity>().SetStaticDefaults();
+                if (!unloading)
+                {
+                    //Reanimate animated items
+                    GetInstance<BlazingCore>().SetStaticDefaults();
+                    GetInstance<DynamoStemCells>().SetStaticDefaults();
+                    GetInstance<TheEvolution>().SetStaticDefaults();
+                    GetInstance<Calamity>().SetStaticDefaults();   
+                }
 
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalItemTextures)
                 {
