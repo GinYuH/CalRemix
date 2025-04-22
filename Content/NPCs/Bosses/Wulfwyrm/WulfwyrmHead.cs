@@ -32,7 +32,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
     [AutoloadBossHead]
     public class WulfwyrmHead : ModNPC
     {
-
+        public static List<int> SummonItems = [];
 
         public enum WulfrumExcavatorAIState
         {
@@ -126,6 +126,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 6;
+            
+            SummonItems.Add(ModContent.ItemType<EnergyCore>());
+
+            if (CalRemixAddon.Fables?.TryFind<ModItem>("EnergyCore", out var fablesCore) ?? false)
+            {
+                SummonItems.Add(fablesCore.Type);
+            }
         }
 
         public override void SetDefaults()

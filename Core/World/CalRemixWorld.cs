@@ -783,7 +783,7 @@ namespace CalRemix.Core.World
                         {
                             for (int slot = 0; slot < Chest.maxItems; slot++)
                             {
-                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && WulfwyrmHead.SummonItems.Contains(cheste.item[slot].type) && cheste.item[slot].stack == 1)
                                 {
                                     // is the rest of the chest empty
                                     int ok = 0;
