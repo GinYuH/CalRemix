@@ -142,6 +142,7 @@ namespace CalRemix.Core.World
         public static bool savedAPicture = false;
         public static bool sneakerheadMode = true;
         public static bool weaponReworks = true;
+        public static bool musicPitch = true;
 
 
         public static int ionQuestLevel = -1;
@@ -282,6 +283,7 @@ namespace CalRemix.Core.World
             profanedDesert = true;
             hypothetical = true;
             weaponReworks = true;
+            musicPitch = true;
 
             AutoloadedLegendPortrait.OpenPicture = null;
             savedAPicture = false;
@@ -360,6 +362,7 @@ namespace CalRemix.Core.World
             tag["109profaned"] = profanedDesert;
             tag["109hypothetical"] = hypothetical;
             tag["109weaponReworks"] = weaponReworks;
+            tag["109musicPitch"] = musicPitch;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -429,6 +432,7 @@ namespace CalRemix.Core.World
             GetData(ref profanedDesert, "109profaned", tag);
             GetData(ref hypothetical, "109hypothetical", tag);
             GetData(ref weaponReworks, "109weaponReworks", tag);
+            GetData(ref musicPitch, "109musicPitch", tag);
             GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
 
             meldCountdown = tag.Get<int>("meld");
@@ -516,6 +520,7 @@ namespace CalRemix.Core.World
             writer.Write(savedAPicture);
             writer.Write(sneakerheadMode);
             writer.Write(weaponReworks);
+            writer.Write(musicPitch);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -589,6 +594,7 @@ namespace CalRemix.Core.World
             savedAPicture = reader.ReadBoolean();
             sneakerheadMode = reader.ReadBoolean();
             weaponReworks = reader.ReadBoolean();
+            musicPitch = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
@@ -777,7 +783,7 @@ namespace CalRemix.Core.World
                         {
                             for (int slot = 0; slot < Chest.maxItems; slot++)
                             {
-                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && WulfwyrmHead.SummonItems.Contains(cheste.item[slot].type) && cheste.item[slot].stack == 1)
                                 {
                                     // is the rest of the chest empty
                                     int ok = 0;

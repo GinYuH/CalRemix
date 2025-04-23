@@ -69,6 +69,7 @@ using CalamityMod.Items.VanillaArmorChanges;
 using CalamityMod.Buffs.StatBuffs;
 
 using Terraria.GameContent;
+using CalRemix.Content.Tiles;
 
 namespace CalRemix
 {
@@ -132,6 +133,10 @@ namespace CalRemix
         public bool generatingGen = false;
         public bool genActive = false;
         public bool genMusic = true;
+
+        public int deliciousMeatRedeemed = 0;
+        public int deliciousMeatPrestige = 0;
+        public bool deliciousMeatNoLife = false;
 
         // Biome
         public bool dungeon2;
@@ -403,6 +408,10 @@ namespace CalRemix
             tag["CellPhone"] = gottenCellPhone;
             tag["TrappFriends"] = trapperFriendsLearned;
             tag["MiracleUnlocked"] = miracleUnlocked;
+
+            tag["DeliciousMeatRedeemed"] = deliciousMeatRedeemed;
+            tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
+            tag["DeliciousMeatNoLife"] = deliciousMeatNoLife;
         }
         public override void LoadData(TagCompound tag)
         {
@@ -411,6 +420,10 @@ namespace CalRemix
             gottenCellPhone = tag.GetBool("CellPhone");
             trapperFriendsLearned = tag.GetInt("TrappFriends");
             miracleUnlocked = tag.GetBool("MiracleUnlocked");
+
+            deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
+            deliciousMeatPrestige = tag.GetInt("DeliciousMeatPrestige");
+            deliciousMeatNoLife = tag.GetBool("DeliciousMeatNoLife");
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
 		{
@@ -1550,9 +1563,9 @@ namespace CalRemix
                     Player.lifeRegen = 0;
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
-    }
+        }
 
-    public override void UpdateLifeRegen()
+        public override void UpdateLifeRegen()
         {
             Player.lifeRegen += (int)MathHelper.Min(dyesPink, 0);
         }

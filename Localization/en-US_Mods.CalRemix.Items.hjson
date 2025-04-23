@@ -2216,7 +2216,7 @@ CarcinogenMusicBox: {
 }
 
 EmpressofLightDayMusicBox: {
-	DisplayName: Music Box (Daytime Empress of Light)
+	DisplayName: Music Box (Empress of Light)
 	Tooltip: Plays 'Gegenschein' by Jteoh
 }
 
@@ -3797,6 +3797,12 @@ LegendPromoItem: {
 }
 
 Tooltips: {
+	Crit: critical strike
+	Speed: speed
+	Knockback: knockback
+	Harvest: harvest
+	Efficiency: efficiency
+	Cultivation: cultivation
 	ElementTip: Hold "Left Shift" for element details
 	Lightmix: Lightmix Dedicated Item
 	Stormbow: Stormbow
@@ -4248,4 +4254,28 @@ EbonWoodStormbow: {
 SkullStormbow: {
 	DisplayName: Skull Stormbow
 	Tooltip: ""
+}
+
+WoodenRake: {
+	Tooltip: ""
+	DisplayName: Wooden Rake
+}
+
+DeliciousMeatTracker: {
+	DisplayName: Delicious Meat Tracker
+	Tooltip:
+		'''
+		Use to redeem Delicious Meat
+		Right click to redeem all Delicious Meat in your inventory
+		'''
+}
+
+BarPlanter: {
+	DisplayName: Bar Planter
+	Tooltip: Grows hard-to-get bars for your convenience!
+}
+
+Farmixer: {
+	DisplayName: Farmixer
+	Tooltip: Used for specialized crafting
 }

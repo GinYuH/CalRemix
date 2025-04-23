@@ -20,7 +20,7 @@ public class ButterflyStaff : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 12;
+        Item.damage = 2;
         Item.DamageType = DamageClass.Summon;
         Item.width = 10;
         Item.height = 10;
@@ -49,8 +49,8 @@ public class ButterflyStaff : ModItem
     public override void AddRecipes()
     {
         CreateRecipe().
-            AddRecipeGroup("Wood", 10).
-            AddRecipeGroup("CalRemix:AnyButterfly", 3).
+            AddRecipeGroup(RecipeGroupID.Wood, 10).
+            AddRecipeGroup(RecipeGroupID.Butterflies, 3).
             AddTile(TileID.Anvils).
             Register();
     }

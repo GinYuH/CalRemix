@@ -142,7 +142,11 @@ Mods: {
 			DisplayName: Calamity Community Remix Config
 
 			CalRemixConfig: {
-				Headers.CalRemixHeader: Calamity Community Remix
+				Headers: {
+					CalRemixHeader: Calamity Community Remix
+					VisualEffectsHeader: Visual Effects
+					MainMenuHeader: Main Menu
+				}
 
 				FannyToggle: {
 					Header: Fanny
@@ -153,17 +157,17 @@ Mods: {
 				DisplayName: Cal Remix Config
 
 				randomMenu: {
-					Label: random Menu
+					Label: Randomize Variant
 					Tooltip: ""
 				}
 
 				forcedMenu: {
-					Label: forced Menu
+					Label: Force Menu to Load
 					Tooltip: ""
 				}
 
 				useSecondMenu: {
-					Label: use Second Menu
+					Label: Use Second Theme
 					Tooltip: ""
 				}
 
@@ -183,6 +187,7 @@ Mods: {
 			ElementDisplay.DisplayName: Element Display
 			MoodTracker.DisplayName: Mood Tracker
 			NetWorthDisplay.DisplayName: Net Worth Display
+			DeliciousMeatDisplay.DisplayName: Delicious Meat Display
 		}
 
 		Emotes.HypnosEmote.Command: hypnosemote
@@ -267,7 +272,11 @@ Mods: {
 		}
 
 		NotAvailable: Nothing
-		DamageClasses.StormbowDamageClass.DisplayName: stormbow damage
+
+		DamageClasses: {
+			StormbowDamageClass.DisplayName: stormbow damage
+			FarmingDamageClass.DisplayName: farming yield
+		}
 
 		RecipeGroups: {
 			Any: Any {0}

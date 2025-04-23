@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Tiles;
 using CalRemix.UI;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,9 +14,9 @@ namespace CalRemix.Content.Items.Materials
 		{
 			// DisplayName.SetDefault("Essential Essence Bar");
       		// Tooltip.SetDefault("Flowing with pure energy");
-			Item.ResearchUnlockCount = 5;
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			Item.ResearchUnlockCount = 25;
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 4));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
 
             if (!Main.dedServ)
             {
@@ -26,9 +27,9 @@ namespace CalRemix.Content.Items.Materials
         }
 		public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<EssentialEssenceBarPlant>());
             Item.rare = ItemRarityID.LightPurple;
             Item.sellPrice(silver: 80);
-            Item.maxStack = 9999;
         }
         public override void AddRecipes()
         {

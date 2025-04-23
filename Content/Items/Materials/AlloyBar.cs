@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,14 +10,13 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Alloy Bar");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()
-		{
-			Item.rare = ItemRarityID.Orange;
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<AlloyBarPlant>());
+            Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(0, 50);
-			Item.maxStack = 9999;
         }
         public override void AddRecipes()
         {

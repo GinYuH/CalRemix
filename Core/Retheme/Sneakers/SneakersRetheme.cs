@@ -1,26 +1,17 @@
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using System.Reflection;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
-using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
-using CalamityMod.NPCs.Providence;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.ID;
-using System;
 using Terraria;
-using Steamworks;
 using CalamityMod.Items.Accessories;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Items.Mounts;
 using System.Collections.Generic;
 using Terraria.GameContent;
 using CalamityMod.Buffs.Mounts;
 using CalRemix.UI;
-using ReLogic.Utilities;
 using Terraria.UI;
 using Terraria.DataStructures;
 using CalRemix.Core.Retheme.Sneakers;
@@ -225,12 +216,7 @@ namespace CalRemix.Core.Retheme
 
         public static void InitializeItem(Item item)
         {
-            string name = itemSneakerPairs[item.type];
-            item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Sneakers.{name}").Value);
-
             //Turn demon heart into an equipable / Make sure they're all equippable
-
-
             //Minecart powerup gives you mech minecart so its fine for it to be consumable
             if (item.type != ItemID.MinecartPowerup)
                 item.consumable = false;
@@ -287,7 +273,7 @@ namespace CalRemix.Core.Retheme
             tooltips.Add(new TooltipLine(CalRemix.instance, "NetWorth", $"Total net worth:{netWorthValue}"));
         }
 
-        public static bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
+        public static bool PreDrawTooltipLine(Item item, DrawableTooltipLine line)
         {
             if (line.Mod == "CalRemix" && line.Name == "Brand")
             {
@@ -337,6 +323,8 @@ namespace CalRemix.Core.Retheme
             {
                 OriginalBuffTextures.Add(p.Key, TextureAssets.Buff[p.Key]);
             }
+            OriginalMechCartTexture = TextureAssets.MinecartMechMount;
+            OriginalCuteFishronTexture = TextureAssets.CuteFishronMount;
 
             var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
             OriginalThroneBackTexture = throneData.backTexture;
@@ -350,11 +338,26 @@ namespace CalRemix.Core.Retheme
             originalBoneGloveFrontTexture = TextureAssets.AccHandsOn[ArmorIDs.HandOn.BoneGlove];
             originalBoneGloveBackTexture = TextureAssets.AccHandsOff[ArmorIDs.HandOff.BoneGlove];
         }
-
-
-        public static void ApplyTextureChanges()
+        public static void UpdateNames()
         {
-            bool enabled = CalRemixWorld.sneakerheadMode;
+            if (Main.LocalPlayer != null)
+            {
+                for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
+                {
+                    Item item = Main.LocalPlayer.inventory[i];
+                    if (itemSneakerPairs.TryGetValue(item.type, out string name))
+                    {
+                        if (CalRemixWorld.sneakerheadMode)
+                            item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Sneakers.{name}").Value);
+                        else
+                            item.ClearNameOverride();
+                    }
+                }
+            }
+        }
+        public static void ApplyTextureChanges(bool unloading = false)
+        {
+            bool enabled = CalRemixWorld.sneakerheadMode && !unloading;
 
             if (enabled)
             { 
@@ -366,23 +369,27 @@ namespace CalRemix.Core.Retheme
 
                 foreach (KeyValuePair<int, string> p in itemSneakerPairs)
                 {
-                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value);
+                    TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
                 }
                 foreach (KeyValuePair<int, string> p in buffSneakerPairs)
                 {
-                    TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value);
+                    TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
                 }
 
-                Mount.mounts[MountID.MinecartMech].frontTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMount", AssetRequestMode.ImmediateLoad);
-                Mount.mounts[MountID.MinecartMech].frontTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMountGlow");
-                Mount.mounts[MountID.MinecartMech].textureWidth = Mount.mounts[MountID.MinecartMech].frontTexture.Width();
+                Asset<Texture2D>[] MinecartMechTexture = [Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMount", AssetRequestMode.ImmediateLoad), Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/MechanicalMinecartMountGlow")];
+                Asset<Texture2D>[] CuteFishronTexture = [Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount", AssetRequestMode.ImmediateLoad), Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount2")];
 
-                Mount.mounts[MountID.CuteFishron].backTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount");
-                Mount.mounts[MountID.CuteFishron].backTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount2");
-                Mount.mounts[MountID.CuteFishron].frontTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount", AssetRequestMode.ImmediateLoad);
-                Mount.mounts[MountID.CuteFishron].frontTextureGlow = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/CuteFishronMount2");
-                Mount.mounts[MountID.CuteFishron].textureWidth = Mount.mounts[MountID.CuteFishron].frontTexture.Width();
+                Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
+                minecartMech.frontTexture = MinecartMechTexture[0];
+                minecartMech.frontTextureGlow = MinecartMechTexture[1];
+                minecartMech.textureWidth = MinecartMechTexture[0].Width();
 
+                Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
+                cuteFishron.backTexture = CuteFishronTexture[0];
+                cuteFishron.backTextureGlow = CuteFishronTexture[1];
+                cuteFishron.frontTexture = CuteFishronTexture[0];
+                cuteFishron.frontTextureGlow = CuteFishronTexture[1];
+                cuteFishron.textureWidth = CuteFishronTexture[0].Width();
 
                 var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
                 throneData.backTexture = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/DraedonGamerChairMount", AssetRequestMode.ImmediateLoad);
@@ -401,11 +408,14 @@ namespace CalRemix.Core.Retheme
            
             else
             {
-                //Reanimate animated items
-                GetInstance<BlazingCore>().SetStaticDefaults();
-                GetInstance<DynamoStemCells>().SetStaticDefaults();
-                GetInstance<TheEvolution>().SetStaticDefaults();
-                GetInstance<Calamity>().SetStaticDefaults();
+                if (!unloading)
+                {
+                    //Reanimate animated items
+                    GetInstance<BlazingCore>().SetStaticDefaults();
+                    GetInstance<DynamoStemCells>().SetStaticDefaults();
+                    GetInstance<TheEvolution>().SetStaticDefaults();
+                    GetInstance<Calamity>().SetStaticDefaults();   
+                }
 
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalItemTextures)
                 {
@@ -415,19 +425,21 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-                
-                TextureAssets.MinecartMechMount = OriginalMechCartTexture;
-                TextureAssets.CuteFishronMount = OriginalCuteFishronTexture;
 
-                Mount.mounts[MountID.MinecartMech].frontTexture = Main.Assets.Request<Texture2D>("Images/Mount_MinecartMech");
-                Mount.mounts[MountID.MinecartMech].frontTextureGlow = Main.Assets.Request<Texture2D>("Images/Mount_MinecartMechGlow");
-                Mount.mounts[MountID.MinecartMech].textureWidth = Mount.mounts[MountID.MinecartMech].frontTexture.Width();
+                Asset<Texture2D>[] MinecartMechTexture = OriginalMechCartTexture;
+                Asset<Texture2D>[] CuteFishronTexture = OriginalCuteFishronTexture;
 
-                Mount.mounts[MountID.CuteFishron].backTexture = Main.Assets.Request<Texture2D>("Images/Mount_CuteFishron1");
-                Mount.mounts[MountID.CuteFishron].backTextureGlow = Main.Assets.Request<Texture2D>("Images/Mount_CuteFishron2");
-                Mount.mounts[MountID.CuteFishron].frontTexture = Asset<Texture2D>.Empty;
-                Mount.mounts[MountID.CuteFishron].frontTextureGlow = Asset<Texture2D>.Empty;
-                Mount.mounts[MountID.CuteFishron].textureWidth = Mount.mounts[MountID.CuteFishron].backTexture.Width();
+                Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
+                minecartMech.frontTexture = MinecartMechTexture[0];
+                minecartMech.frontTextureGlow = MinecartMechTexture[1];
+                minecartMech.textureWidth = MinecartMechTexture[0].Width();
+
+                Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
+                cuteFishron.backTexture = CuteFishronTexture[0];
+                cuteFishron.backTextureGlow = CuteFishronTexture[1];
+                cuteFishron.frontTexture = Asset<Texture2D>.Empty;
+                cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
+                cuteFishron.textureWidth = CuteFishronTexture[0].Width();
 
                 var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
                 throneData.backTexture = OriginalThroneBackTexture;
@@ -585,7 +597,7 @@ namespace CalRemix.Core.Retheme
             #region Sneakers
             { BuffID.MinecartLeftMech, "MechanicalMinecartBuff" },
             { BuffID.MinecartRightMech, "MechanicalMinecartBuff" },
-            { BuffID.CuteFishronMount, "ExoBoxBuff" },
+            { BuffID.CuteFishronMount, "ShrimpyTruffleBuff" },
             { BuffType<DraedonGamerChairBuff>(), "ExoBoxBuff" },
             #endregion
         };
@@ -595,7 +607,6 @@ namespace CalRemix.Core.Retheme
         private static Dictionary<int, Asset<Texture2D>> OriginalBuffTextures = [];
 
         private static Asset<Texture2D>[] OriginalMechCartTexture;
-
         private static Asset<Texture2D>[] OriginalCuteFishronTexture;
 
         private static Asset<Texture2D> OriginalThroneTexture;

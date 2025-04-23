@@ -33,7 +33,7 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
             Item.rare = ItemRarityID.LightRed;
             Item.accessory = true;
         }
-        public override bool? PrefixChance(int pre, UnifiedRandom rand) => (this != null);
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => false;
     }
     public class AcidsighterMusicBox : RemixMusicBox
     {

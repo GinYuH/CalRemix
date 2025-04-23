@@ -9,7 +9,7 @@ namespace CalRemix.Content.Tiles;
 public abstract class MinecraftStonePlaced : ModTile
 {
     protected abstract Color MapColor { get; }
-
+    protected virtual bool HasEntryName => true; 
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -35,7 +35,7 @@ public abstract class MinecraftStonePlaced : ModTile
         
         HitSound = SoundID.Tink;
 
-        AddMapEntry(MapColor, CreateMapEntryName());
+        AddMapEntry(MapColor, HasEntryName ? CreateMapEntryName() : null);
     }
 }
 
@@ -57,7 +57,7 @@ public sealed class GranitePlaced : MinecraftStonePlaced
 public sealed class DeepslatePlaced : MinecraftStonePlaced
 {
     protected override Color MapColor => new(61, 61, 67);
-
+    protected override bool HasEntryName => false;
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -69,7 +69,7 @@ public sealed class DeepslatePlaced : MinecraftStonePlaced
 public sealed class CalcitePlaced : MinecraftStonePlaced
 {
     protected override Color MapColor => new(240, 245, 244);
-
+    protected override bool HasEntryName => false;
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();

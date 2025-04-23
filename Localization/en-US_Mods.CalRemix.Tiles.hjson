@@ -24,20 +24,23 @@ OrigenTrophyPlaced.MapEntry: Origen Trophy
 OxygenTrophyPlaced.MapEntry: Oxygen Trophy
 PathogenTrophyPlaced.MapEntry: Pathogen Trophy
 PhytogenTrophyPlaced.MapEntry: Phytogen Trophy
-AltaroftheAblessedPlaced.MapEntry: Altar ofthe Ablessed
+AltaroftheAblessedPlaced.MapEntry: Altar of the Ablessed
 PyrogenTrophyPlaced.MapEntry: Pyrogen Trophy
 StonecutterPlaced.MapEntry: Stonecutter
 LabRoachBannerPlaced.MapEntry: Lab Roach Banner
 AncientConsole.MapEntry: Ancient Console
-TorrefiedTephraPlaced.MapEntry: Torrefied Tephra Placed
+TorrefiedTephraPlaced.MapEntry: Torrefied Tephra
 OldIonogenTrophyPlaced.MapEntry: Ancient Ionogen Trophy
-ChloriumOrePlaced.MapEntry: Chlorium Ore Placed
+ChloriumOrePlaced.MapEntry: Chlorium Ore
 LegendPortrait.MapEntry: Legend Portrait
 LegendMemorial.MapEntry: Legend Memorial
 LegendPromo.MapEntry: Legend Promo
-GaggleStatuePlaced.MapEntry: Gaggle Statue Placed
+GaggleStatuePlaced.MapEntry: Gaggle Statue
 AndesitePlaced.MapEntry: Andesite
-DeepslatePlaced.MapEntry: Deepslate
 DioritePlaced.MapEntry: Diorite
 GranitePlaced.MapEntry: Granite
-CalcitePlaced.MapEntry: Calcite
+FarmixerPlaced.MapEntry: Farmixer
+BarPlanterTile.MapEntry: Bar Planter
+AlloyBarPlant.MapEntry: Alloy Bar Plant
+EssentialEssenceBarPlant.MapEntry: Essential Essence Bar Plant
+YharimBarPlant.MapEntry: Yharim Bar Plant
