@@ -1,5 +1,5 @@
 displayName = Calamity: Community Remix
-author = YuH, Gardlunik, Sploopo, The Purified, and the Cult of Hypnos
+author = Fanny the Flame
 version = 1.3.1.1
 dllReferences = MMHOOK_CalamityMod, TomatsSecretAwesomeStuff
 modReferences = CalamityMod, SubworldLibrary
