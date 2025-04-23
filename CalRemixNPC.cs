@@ -199,6 +199,16 @@ namespace CalRemix
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
             }
         }
+
+        public override void SetDefaults(NPC entity)
+        {
+            if (entity.type == NPCType<Cryogen>())
+            {
+                entity.lifeMax = (int)(entity.lifeMax * 0.5f);
+                entity.Calamity().DR = entity.Calamity().DR * 0.25f;
+            }
+        }
+
         public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
         {
             if (farmNPC && item.DamageType != GetInstance<FarmingDamageClass>() || !farmNPC && item.DamageType == GetInstance<FarmingDamageClass>())
