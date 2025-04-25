@@ -20,21 +20,53 @@ namespace CalRemix;
 public static class FannyModListEdit
 {
     private readonly record struct DrawCall(
-        Texture2D     Texture,
-        Rectangle     SourceRectangle,
-        Vector2       Position,
-        Color         Color,
-        float         Rotation,
-        Vector2       Origin,
-        Vector2       Scale,
+        Texture2D Texture,
+        Rectangle SourceRectangle,
+        Vector2 Position,
+        Color Color,
+        float Rotation,
+        Vector2 Origin,
+        Vector2 Scale,
         SpriteEffects Effects,
-        Rectangle?    ClipRectangle
+        Rectangle? ClipRectangle
     );
+
+    private readonly record struct FrameTime(
+        int Fps,
+        int[] Frames
+    )
+    {
+        private readonly int totalFrames = Frames.Sum();
+
+        public int GetFrame()
+        {
+            var totalTimeInSeconds = Main.GlobalTimeWrappedHourly;
+            var totalTimeInFrames = (int)(totalTimeInSeconds * Fps);
+            var currentFrame = totalTimeInFrames % totalFrames;
+
+            var frame = 0;
+            var frameTime = 0;
+
+            for (var i = 0; i < Frames.Length; i++)
+            {
+                frameTime += Frames[i];
+
+                if (currentFrame >= frameTime)
+                {
+                    continue;
+                }
+
+                frame = i;
+                break;
+            }
+
+            return frame;
+        }
+    }
 
     private readonly record struct HelperTexture(
         string Texture,
-        int    FrameCount,
-        float  SpeedMultiplier
+        FrameTime Timing
     );
 
     private readonly record struct Helper(
@@ -50,23 +82,19 @@ public static class FannyModListEdit
             "Fanny", new Helper(
                 Idle: new HelperTexture(
                     Texture: "UI/Fanny/ModList_Fanny_Idle",
-                    FrameCount: 13,
-                    SpeedMultiplier: 7f
+                    Timing: new FrameTime(Fps: 6, [10, 1, 1, 1])
                 ),
                 Sob: new HelperTexture(
                     Texture: "UI/Fanny/ModList_Fanny_Cry",
-                    FrameCount: 2,
-                    SpeedMultiplier: 3.5f
+                    Timing: new FrameTime(Fps: 6, [1, 1])
                 ),
                 Stare: new HelperTexture(
                     Texture: "UI/Fanny/ModList_Fanny_Stare",
-                    FrameCount: 1,
-                    SpeedMultiplier: 0f
+                    Timing: new FrameTime(Fps: 6, [1])
                 ),
                 Awe: new HelperTexture(
                     Texture: "UI/Fanny/ModList_Fanny_Awe",
-                    FrameCount: 4,
-                    SpeedMultiplier: 5f
+                    Timing: new FrameTime(Fps: 6, [10, 1, 1, 1])
                 )
             )
         },
@@ -74,23 +102,39 @@ public static class FannyModListEdit
             "EvilFanny", new Helper(
                 Idle: new HelperTexture(
                     Texture: "UI/Fanny/ModList_EvilFanny_Idle",
-                    FrameCount: 13,
-                    SpeedMultiplier: 7f
+                    Timing: new FrameTime(Fps: 6, [10, 1, 1, 1])
                 ),
                 Sob: new HelperTexture(
                     Texture: "UI/Fanny/ModList_EvilFanny_Cry",
-                    FrameCount: 2,
-                    SpeedMultiplier: 3.5f
+                    Timing: new FrameTime(Fps: 6, [1, 1])
                 ),
                 Stare: new HelperTexture(
                     Texture: "UI/Fanny/ModList_EvilFanny_Stare",
-                    FrameCount: 1,
-                    SpeedMultiplier: 0f
+                    Timing: new FrameTime(Fps: 6, [1])
                 ),
                 Awe: new HelperTexture(
                     Texture: "UI/Fanny/ModList_EvilFanny_Awe",
-                    FrameCount: 4,
-                    SpeedMultiplier: 5f
+                    Timing: new FrameTime(Fps: 6, [10, 1, 1, 1])
+                )
+            )
+        },
+        {
+            "TrapperBulbChan", new Helper(
+                Idle: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_TrapperBulbChan_Idle",
+                    Timing: new FrameTime(Fps: 6, [10, 1])
+                ),
+                Sob: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_TrapperBulbChan_Cry",
+                    Timing: new FrameTime(Fps: 6, [1, 1])
+                ),
+                Stare: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_TrapperBulbChan_Stare",
+                    Timing: new FrameTime(Fps: 6, [1])
+                ),
+                Awe: new HelperTexture(
+                    Texture: "UI/Fanny/ModList_TrapperBulbChan_Awe",
+                    Timing: new FrameTime(Fps: 6, [10, 1])
                 )
             )
         },
@@ -121,8 +165,8 @@ public static class FannyModListEdit
 
     private static HelperState helperState = HelperState.Idle;
 
-    private static Mod?  theMod;
-    private static bool  isCurrentlyHandlingOurMod;
+    private static Mod? theMod;
+    private static bool isCurrentlyHandlingOurMod;
     private static float hoverProgress;
 
     private static bool enabledWhenHoveredOver;
@@ -179,8 +223,8 @@ public static class FannyModListEdit
 
     private static void Draw(
         Action<UIModItem, SpriteBatch> orig,
-        UIModItem                      self,
-        SpriteBatch                    spriteBatch
+        UIModItem self,
+        SpriteBatch spriteBatch
     )
     {
         Debug.Assert(theMod is not null);
@@ -198,7 +242,7 @@ public static class FannyModListEdit
 
     private static void OnInitialize(
         Action<UIModItem> orig,
-        UIModItem         self
+        UIModItem self
     )
     {
         Debug.Assert(theMod is not null);
@@ -220,19 +264,19 @@ public static class FannyModListEdit
             currentHelper = verifiedHelpers[Main.rand.Next(verifiedHelpers.Length)];
         }
 
-        self._uiModStateText.OnMouseOver += (e, _) =>
+        self._uiModStateText.OnMouseOver += (_, _) =>
         {
             enabledWhenHoveredOver = self._uiModStateText._enabled;
 
             helperState = self._uiModStateText._enabled ? HelperState.Sob : HelperState.Awe;
         };
 
-        self._uiModStateText.OnMouseOut += (e, _) =>
+        self._uiModStateText.OnMouseOut += (_, _) =>
         {
             helperState = self._uiModStateText._enabled ? HelperState.Idle : HelperState.Stare;
         };
 
-        self._uiModStateText.OnLeftClick += (e, _) =>
+        self._uiModStateText.OnLeftClick += (_, _) =>
         {
             var nowEnabled = self._uiModStateText._enabled;
 
@@ -251,8 +295,8 @@ public static class FannyModListEdit
 
     private static void OverrideRegularPanelDrawing(
         Action<UIPanel, SpriteBatch> orig,
-        UIPanel                      self,
-        SpriteBatch                  spriteBatch
+        UIPanel self,
+        SpriteBatch spriteBatch
     )
     {
         Debug.Assert(theMod is not null);
@@ -270,39 +314,39 @@ public static class FannyModListEdit
             return;
         }
 
-        var fannyTexture = GetFannyTexture(CurrentHelper.Value);
+        var helperTexture = GetHelperTexture(CurrentHelper.Value);
 
         hoverProgress += (self.IsMouseHovering || helperState == HelperState.Stare ? 1f : -1f) / 45f;
-        hoverProgress =  Math.Clamp(hoverProgress, 0f, 1f);
+        hoverProgress = Math.Clamp(hoverProgress, 0f, 1f);
 
         var modIconDims = uiModItem._modIcon.GetDimensions();
 
-        var fannyImage = theMod.Assets.Request<Texture2D>(fannyTexture.Texture);
-        var fannyFrame = fannyImage.Frame(
+        var helperImage = theMod.Assets.Request<Texture2D>(helperTexture.Texture);
+        var helperFrame = helperImage.Frame(
             1,
-            fannyTexture.FrameCount,
-            frameY: (int)(Main.GlobalTimeWrappedHourly * fannyTexture.SpeedMultiplier % fannyTexture.FrameCount)
+            helperTexture.Timing.Frames.Length,
+            frameY: helperTexture.Timing.GetFrame()
         );
 
-        var fannyPosition = modIconDims.Position();
-        fannyPosition.X += modIconDims.Width / 2f;
-        fannyPosition.Y += 2f;
-        // fannyPosition.Y += modIconDims.Height / 3f;
+        var helperPosition = modIconDims.Position();
+        helperPosition.X += modIconDims.Width / 2f;
+        helperPosition.Y += 2f;
+        // helperPosition.Y += modIconDims.Height / 3f;
 
-        var fannyScale = Ease(hoverProgress);
+        var helperScale = Ease(hoverProgress);
 
-        var fannyOrigin = fannyFrame.Size() / 2f;
-        fannyOrigin.Y += fannyFrame.Height / 2f;
+        var helperOrigin = helperFrame.Size() / 2f;
+        helperOrigin.Y += helperFrame.Height / 2f;
 
         pending_calls.Add(
             new DrawCall(
-                fannyImage.Value,
-                fannyFrame,
-                fannyPosition,
+                helperImage.Value,
+                helperFrame,
+                helperPosition,
                 Color.White,
                 0f,
-                fannyOrigin,
-                new Vector2(fannyScale),
+                helperOrigin,
+                new Vector2(helperScale),
                 SpriteEffects.None,
                 // clipRectangle
                 null
@@ -311,23 +355,23 @@ public static class FannyModListEdit
 
         return;
 
-        static HelperTexture GetFannyTexture(Helper helper)
+        static HelperTexture GetHelperTexture(Helper helper)
         {
             return helperState switch
             {
-                HelperState.Idle  => helper.Idle,
-                HelperState.Sob   => helper.Sob,
+                HelperState.Idle => helper.Idle,
+                HelperState.Sob => helper.Sob,
                 HelperState.Stare => helper.Stare,
-                HelperState.Awe   => helper.Awe,
-                _                 => helper.Idle,
+                HelperState.Awe => helper.Awe,
+                _ => helper.Idle,
             };
         }
     }
 
     private static void UserInterfaceDraw(
         UserInterface ui,
-        SpriteBatch   spriteBatch,
-        GameTime      gameTime
+        SpriteBatch spriteBatch,
+        GameTime gameTime
     )
     {
         ui.Draw(spriteBatch, gameTime);
