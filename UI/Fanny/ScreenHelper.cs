@@ -36,6 +36,7 @@ namespace CalRemix.UI
 
         public float fadeIn;
         public bool idlesInInventory;
+        public bool renderOverBackground;
 
         private int helperFrame;
         private int helperFrameCounter;
@@ -611,6 +612,12 @@ namespace CalRemix.UI
 
             // finally draw the text
             Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+
+            // not final actually draw the guy over the box if desired
+            if (ParentSpeaker.renderOverBackground)
+            {
+                ParentSpeaker.Draw(Main.spriteBatch);
+            }
         }
     }
 
@@ -626,6 +633,7 @@ namespace CalRemix.UI
         public static ScreenHelper MiracleBoy = new("MiracleBoy");
         public static ScreenHelper MovieCygn = new("MovieCygn");
         public static ScreenHelper Solyn = new("Solyn");
+        public static ScreenHelper Flux = new("Flux");
 
         public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
 
@@ -728,6 +736,25 @@ namespace CalRemix.UI
                 .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
                 .SetPositionData(false, 240);
 
+            LoadScreenHelper(Flux, "FluxDefault", false, new Vector2(150, 160), true)
+                .SetVoiceStyle(SoundID.Item6 with { MaxInstances = 0 })
+                .SetTextboxStyle("I mean, alright Flux", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Flux_Background", Vector2.Zero))
+                .SetExtraAnimations(false, false, false) //shes locked in her textbox
+                .SetAvailabilityCondition(() => Main.hardMode)
+                .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(670, 172), 462), 0, 0)
+                .SetPositionData(new HelperPositionData(
+                    new Vector2(0.1f, 0.6f), // anchored to bottom middle, a little shifted to the left
+                    new Vector2(0, 0f),   //Offset so we're centered
+                    new Vector2(100f, 0f),   // slide from left
+                    new Vector2(-94, -154),   //Offset from b ottom of portrait to center of 
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    null,
+                    new Vector2(189, 25)
+                    ));
+
             /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
                  .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
                  .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
@@ -758,7 +785,7 @@ namespace CalRemix.UI
         /// <param name="verticalOffset">How high up on the screen this fanny is</param>
         /// <param name="distanceFromEdge">How far away from the edge of the screen this fanny is</param>
         /// <returns></returns>
-        public ScreenHelper LoadScreenHelper(ScreenHelper helper, string emptyMessagePortrait, bool idlesInInventory = false, Vector2? size = null)
+        public ScreenHelper LoadScreenHelper(ScreenHelper helper, string emptyMessagePortrait, bool idlesInInventory = false, Vector2? size = null, bool renderOverBackground = false)
         {
             helper.Height.Set(80, 0f);
             helper.Width.Set(80, 0f);
@@ -770,6 +797,7 @@ namespace CalRemix.UI
             }
 
             helper.idlesInInventory = idlesInInventory;
+            helper.renderOverBackground = renderOverBackground;
             helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
 
             Append(helper);
@@ -992,6 +1020,7 @@ namespace CalRemix.UI
             LoadRenault5();
             LoadTrapperBulbChan();
             LoadSolynMessages();
+            LoadFluxMessages();
             LoadMiracleBoyMessages();
             SneakersRetheme.LoadHelperMessages();
 
@@ -1109,6 +1138,9 @@ namespace CalRemix.UI
 
             //Solyn
             ScreenHelperPortrait.LoadPortrait("Solyn", 1);
+
+            //Flux
+            ScreenHelperPortrait.LoadPortrait("FluxDefault", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
