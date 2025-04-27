@@ -224,7 +224,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
         public override bool PreKill()
         {
             // This hurts, but it makes it more accurate to old Cryogen
-            NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OrigenCore>());
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<OrigenCore>());
             return false;
         }
     }

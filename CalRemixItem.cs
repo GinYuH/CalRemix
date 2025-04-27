@@ -62,6 +62,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -620,28 +621,20 @@ namespace CalRemix
                     {
                         if (item.type == ItemID.ShadowScale)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                            NPC blug = SpawnNewNPC(item.GetSource_FromThis(), spawnAt, NPCType<HiveMind>());
+                            for (int i = 0; i < 30; i++)
                             {
-                                Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
-                                int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<HiveMind>());
-                                NPC blug = Main.npc[n];
-                                for (int i = 0; i < 30; i++)
-                                {
-                                    Dust.NewDust(blug.position, blug.width, blug.height, DustID.Corruption);
-                                }
+                                Dust.NewDust(blug.position, blug.width, blug.height, DustID.Corruption);
                             }
                         }
                         else if (item.type == ItemID.TissueSample)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                            NPC blug = SpawnNewNPC(item.GetSource_FromThis(), spawnAt, NPCType<PerforatorHive>());
+                            for (int i = 0; i < 30; i++)
                             {
-                                Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
-                                int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<PerforatorHive>());
-                                NPC blug = Main.npc[n];
-                                for (int i = 0; i < 30; i++)
-                                {
-                                    Dust.NewDust(blug.position, blug.width, blug.height, DustID.Blood);
-                                }
+                                Dust.NewDust(blug.position, blug.width, blug.height, DustID.Blood);
                             }
                         }
                         item.active = false;
@@ -656,16 +649,14 @@ namespace CalRemix
             {
                 if (!NPC.AnyNPCs(NPCType<Pyrogen>()))
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
+                    NPC blug = SpawnNewNPC(item.GetSource_FromThis(), spawnAt, NPCType<Pyrogen>(), npcTasks: (NPC bl) =>
                     {
-                        Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
-                        int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
-                        NPC blug = Main.npc[n];
-                        blug.ModNPC<Pyrogen>().enrageCounter = 2222222;
-                        blug.ModNPC<Pyrogen>().ultraEnraged = true;
-                        SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
-                        SoundEngine.PlaySound(sound, blug.Center);
-                    }
+                        bl.ModNPC<Pyrogen>().enrageCounter = 2222222;
+                        bl.ModNPC<Pyrogen>().ultraEnraged = true;
+                    });
+                    SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
+                    SoundEngine.PlaySound(sound, blug.Center);
                     item.active = false;
                 }
             }
@@ -1098,12 +1089,11 @@ namespace CalRemix
 
         public override void PostUpdate(Item item)
         {
-            int value = NPCType<Lizard>();
             foreach (NPC npc in Main.npc)
             {
-                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out value))
+                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out int value))
                 {
-                    NPC.NewNPCDirect(NPC.GetSource_None(), npc.Center, value);
+                    SpawnNewNPC(item.GetSource_FromThis(), npc.Center, value);
                     npc.life = 0;
                     item.active = false;
                 }

@@ -91,7 +91,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
 
         public override void OnSpawn(IEntitySource source)
         {
-            NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<IonogenShield>(), ai0: NPC.whoAmI);
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, ModContent.NPCType<IonogenShield>(), ai0: NPC.whoAmI);
         }
 
         public override void AI()
@@ -376,7 +376,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<IRON>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<IRON>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<IRON>());
             }
             RemixDowned.downedIonogen = true;
             CalRemixWorld.UpdateWorldBool();

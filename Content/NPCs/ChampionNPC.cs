@@ -13,6 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
+using static CalRemix.CalRemixHelper;
 
 namespace CalRemix
 {
@@ -154,8 +155,10 @@ namespace CalRemix
                         // Spawn an orbital
                         if (npc.type != ModContent.NPCType<EternalChampEye>())
                         {
-                            int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
-                            Main.npc[n].damage = npc.damage / 5;
+                            SpawnNewNPC(npc.GetSource_FromThis(), npc.position, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type, npcTasks: (NPC n) => 
+                            {
+                                n.damage = npc.damage / 5;
+                            });
                         }
                         break;
                     case (int)ChampionID.Transluscent:
@@ -169,8 +172,10 @@ namespace CalRemix
                         if (npc.type != ModContent.NPCType<EternalChampEye>())
                             for (int i = 0; i < Main.rand.Next(2, 4); i++)
                             {
-                                int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type);
-                                Main.npc[n].damage = npc.damage / 5;
+                                SpawnNewNPC(npc.GetSource_FromThis(), npc.position, ModContent.NPCType<EternalChampEye>(), 0, npc.whoAmI, Main.rand.Next(0, 255), npc.type, npcTasks: (NPC n) =>
+                                {
+                                    n.damage = npc.damage / 5;
+                                });
                             }
                         break;
                 }
@@ -479,7 +484,7 @@ namespace CalRemix
             if (championType == (int)ChampionID.PulsingGreen)
             {
                 for (int i = 0; i < 2; i++)
-                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, npc.type);
+                    SpawnNewNPC(npc.GetSource_Death(), npc.position, npc.type);
             }
             // Skull champions hurt all non-boss enemies on death
             if (championType == (int)ChampionID.Skull)
@@ -511,8 +516,10 @@ namespace CalRemix
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    int buddy = NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, npc.type);
-                    Main.npc[buddy].GetGlobalNPC<ChampionNPC>().championType = (int)ChampionID.PulsingGreen;
+                    SpawnNewNPC(npc.GetSource_Death(), npc.position, npc.type, npcTasks: (NPC buddy) =>
+                    {
+                        buddy.GetGlobalNPC<ChampionNPC>().championType = (int)ChampionID.PulsingGreen;
+                    });
                 }
             }
         }
@@ -536,10 +543,11 @@ namespace CalRemix
             {
                 if (NPC.CountNPCS(ModContent.NPCType<ChampEye>()) < 5 && npc.type != ModContent.NPCType<ChampEye>())
                 {
-                    int n = NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<ChampEye>());
-                    NPC eye = Main.npc[n];
-                    eye.lifeMax = eye.life = (int)MathHelper.Max(5, (int)(npc.lifeMax / 20));
-                    eye.damage = (int)MathHelper.Max(5, (int)(npc.damage * 0.25f));
+                    SpawnNewNPC(npc.GetSource_FromThis(), npc.position, ModContent.NPCType<ChampEye>(), npcTasks: (NPC eye) =>
+                    {
+                        eye.lifeMax = eye.life = (int)MathHelper.Max(5, (int)(npc.lifeMax / 20f));
+                        eye.damage = (int)MathHelper.Max(5, (int)(npc.damage * 0.25f));
+                    });
                 }
             }
         }

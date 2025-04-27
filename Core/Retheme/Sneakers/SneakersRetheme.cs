@@ -338,6 +338,11 @@ namespace CalRemix.Core.Retheme
             originalBoneGloveFrontTexture = TextureAssets.AccHandsOn[ArmorIDs.HandOn.BoneGlove];
             originalBoneGloveBackTexture = TextureAssets.AccHandsOff[ArmorIDs.HandOff.BoneGlove];
         }
+        public static void UpdateChanges()
+        {
+            UpdateNames();
+            ApplyAnimationsChanges();
+        }
         public static void UpdateNames()
         {
             if (Main.LocalPlayer != null)
@@ -355,18 +360,34 @@ namespace CalRemix.Core.Retheme
                 }
             }
         }
+        public static void ApplyAnimationsChanges(bool unloading = false)
+        {
+            if (CalRemixWorld.sneakerheadMode && !unloading)
+            {
+                //Unanimate animated items
+                UnanimateItem(ItemType<BlazingCore>());
+                UnanimateItem(ItemType<DynamoStemCells>());
+                UnanimateItem(ItemType<TheEvolution>());
+                UnanimateItem(ItemType<Calamity>());
+            }
+            else
+            {
+                if (!unloading)
+                {
+                    //Reanimate animated items
+                    GetInstance<BlazingCore>().SetStaticDefaults();
+                    GetInstance<DynamoStemCells>().SetStaticDefaults();
+                    GetInstance<TheEvolution>().SetStaticDefaults();
+                    GetInstance<Calamity>().SetStaticDefaults();
+                }
+            }
+        }
         public static void ApplyTextureChanges(bool unloading = false)
         {
             bool enabled = CalRemixWorld.sneakerheadMode && !unloading;
 
             if (enabled)
             { 
-                //Unanimate animated items
-                UnanimateItem(ItemType<BlazingCore>());
-                UnanimateItem(ItemType<DynamoStemCells>());
-                UnanimateItem(ItemType<TheEvolution>());
-                UnanimateItem(ItemType<Calamity>());
-
                 foreach (KeyValuePair<int, string> p in itemSneakerPairs)
                 {
                     TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
@@ -408,15 +429,6 @@ namespace CalRemix.Core.Retheme
            
             else
             {
-                if (!unloading)
-                {
-                    //Reanimate animated items
-                    GetInstance<BlazingCore>().SetStaticDefaults();
-                    GetInstance<DynamoStemCells>().SetStaticDefaults();
-                    GetInstance<TheEvolution>().SetStaticDefaults();
-                    GetInstance<Calamity>().SetStaticDefaults();   
-                }
-
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalItemTextures)
                 {
                     TextureAssets.Item[p.Key] = p.Value;

@@ -116,8 +116,10 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
                                 {
                                     if (Step < 4)
                                     {
-                                        NPC eye = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<MutatedEye>());
-                                        eye.velocity = NPC.DirectionTo(Target.Center) * 6f;
+                                        CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), NPC.Center, ModContent.NPCType<MutatedEye>(), npcTasks: (NPC npc) =>
+                                        {
+                                            npc.velocity = NPC.DirectionTo(Target.Center) * 6f;
+                                        });
                                         Step++;
                                     }
                                     else
@@ -272,8 +274,10 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
                                 {
                                     if (Step < 3)
                                     {
-                                        NPC eye = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<MutatedEye>());
-                                        eye.velocity = NPC.DirectionTo(Target.Center) * 6f;
+                                        CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), NPC.Center, ModContent.NPCType<MutatedEye>(), npcTasks: (NPC npc) =>
+                                        {
+                                            npc.velocity = NPC.DirectionTo(Target.Center) * 6f;
+                                        });
                                         Step++;
                                     }
                                     else
@@ -407,8 +411,10 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
                                 {
                                     if (Step < 3)
                                     {
-                                        NPC eye = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<MutatedEye>());
-                                        eye.velocity = NPC.DirectionTo(Target.Center) * 6f;
+                                        CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), NPC.Center, ModContent.NPCType<MutatedEye>(), npcTasks: (NPC npc) =>
+                                        {
+                                            npc.velocity = NPC.DirectionTo(Target.Center) * 6f;
+                                        });
                                         Step++;
                                     }
                                     else

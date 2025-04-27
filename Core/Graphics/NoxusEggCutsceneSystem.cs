@@ -58,7 +58,7 @@ namespace CalRemix.Core.Graphics
             // Randomly make Noxus appear.
             if ((int)Math.Round(Main.time) == 10 && !CalRemixWorld.metNoxus && NoxusCanCommitSkydivingFromSpace && Main.rand.NextBool(3) && PlayersOnSurface.Any() && !Main.dayTime)
             {
-                BroadcastText(PostMLNightText, new(50, 255, 130));
+                ChatMessage(PostMLNightText, new(50, 255, 130));
                 WillTryToSummonNoxusTonight = true;
             }
 
@@ -66,7 +66,7 @@ namespace CalRemix.Core.Graphics
             if (WillTryToSummonNoxusTonight && Main.rand.NextBool(7200) && PlayersOnSurface.Any() && !CalRemixWorld.metNoxus)
             {
                 Player playerToSpawnNear = Main.rand.Next(PlayersOnSurface);
-                NPC.NewNPC(new EntitySource_WorldEvent(), (int)playerToSpawnNear.Center.X, (int)playerToSpawnNear.Center.Y - 1200, ModContent.NPCType<NoxusEggCutscene>(), 1);
+                SpawnNewNPC(new EntitySource_WorldEvent(), (int)playerToSpawnNear.Center.X, (int)playerToSpawnNear.Center.Y - 1200, ModContent.NPCType<NoxusEggCutscene>(), 1);
 
                 CalRemixWorld.metNoxus = true;
             }

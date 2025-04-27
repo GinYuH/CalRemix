@@ -26,20 +26,7 @@ namespace CalRemix
                     {
                         if (!NPC.AnyNPCs(NPCType<Carcinogen>()))
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Carcinogen>());
-                            }
-                            else
-                            {
-                                ModPacket packet = CalRemix.CalMod.GetPacket();
-                                packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
-                                packet.Write(Main.LocalPlayer.position.X);
-                                packet.Write(Main.LocalPlayer.position.Y);
-                                packet.Write(NPCType<Carcinogen>());
-                                packet.Write(Main.myPlayer);
-                                packet.Send();
-                            }
+                            CalRemixHelper.SpawnNPCOnPlayer(Main.myPlayer, NPCType<Carcinogen>());
                         }
                     }
                 }

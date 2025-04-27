@@ -39,11 +39,7 @@ namespace CalRemix.Content.Items.SummonItems
             if (player.whoAmI == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position);
-                int type = ModContent.NPCType<AcidEye>();
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
+                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<AcidEye>());
             }
             return true;
         }

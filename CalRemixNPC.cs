@@ -110,7 +110,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -248,11 +248,11 @@ namespace CalRemix
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if (npc.type == NPCType<CryogenShield>())
+            if (npc.type == NPCType<CryogenShield>() && CalRemixWorld.bossAdditions)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Dendritus>());
+                    SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<Dendritus>());
                 }
             }
             if (!CalamityPlayer.areThereAnyDamnBosses)
@@ -571,7 +571,7 @@ namespace CalRemix
                     if (DateTime.Today.ToString("dd/MM").Equals("01/04") && Main.rand.NextBool(100))
                         Talk($"{npcName}.AprilFools", Color.LightSkyBlue);
                     else
-                        Talk($"{npcName}.Death", Color.LightSkyBlue);
+                        Talk($"{npcName}.1", Color.LightSkyBlue);
                     crabSay = 1;
                 }
                 else if (crabSay == 2 && npc.life < (npc.lifeMax * 3 / 4))
@@ -604,7 +604,10 @@ namespace CalRemix
                 }
                 else if (slimeSay == 2 && none)
                 {
-                    Talk($"{npcName}.3", Color.Olive);
+                    if (CalRemixAddon.Infernum == null)
+                        Talk($"{npcName}.3", Color.Olive);
+                    else
+                        Talk($"{npcName}.Infernum", Color.Olive);
                     slimeSay = 3;
                 }
             }
@@ -766,23 +769,20 @@ namespace CalRemix
                     }
                 }
             }
-            if (npc.type == NPCID.WallofFlesh)
+            if (CalRemixWorld.bossAdditions)
             {
-                if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.mullet)
+                if (npc.type == NPCID.WallofFlesh)
                 {
-                    npc.active = false;
-
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.mullet)
                     {
-                        NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Fleshmullet>());
+                        npc.active = false; 
+                        SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<Fleshmullet>());
                     }
                 }
-            }
-
-
-            if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
-            {
-                NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<ChlorinePaladin>());
+                if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
+                {
+                    SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<ChlorinePaladin>());
+                }
             }
             return true;
         }
@@ -1552,8 +1552,7 @@ namespace CalRemix
                     {
                         if (NPC.CountNPCS(NPCType<Ogslime>()) <= 0)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            NPC.NewNPC(npc.GetSource_OnHit(npc), (int)npc.position.X, (int)npc.position.Y, NPCType<Ogslime>());
+                            SpawnNewNPC(npc.GetSource_OnHit(npc), npc.position, NPCType<Ogslime>());
                             if (!CalRemixWorld.ogslime)
                             {
                                 CalRemixWorld.ogslime = true;
@@ -1602,48 +1601,51 @@ namespace CalRemix
                     }
                 }
             }
-            if (npc.type == ModContent.NPCType<CalamitasClone>())
+            if (npc.type == NPCType<CalamitasClone>())
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
+                if (!NPC.AnyNPCs(NPCType<EDGY>()))
                 {
-                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<EDGY>());
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<EDGY>());
                 }
             }
             if (npc.type == NPCID.SkeletronHead)
             {
                 if (!NPC.AnyNPCs(NPCID.Clothier))
                 {
-                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.Clothier);
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCID.Clothier);
                 }
             }
-            if (npc.type == ModContent.NPCType<Piggy>())
+            if (npc.type == NPCType<Piggy>())
             {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.DukeFishron);
+                SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCID.DukeFishron);
             }
 
             Color NoxusTextColor = new(91, 69, 143);
 
             // Create some indicator text when the WoF is killed about how Noxus has begun orbiting the planet.
             if (npc.type == NPCID.WallofFlesh && !NoxusEggCutsceneSystem.NoxusBeganOrbitingPlanet)
-                CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.PostWoFDefeatText, NoxusTextColor);
+                CalRemixHelper.ChatMessage(NoxusEggCutsceneSystem.PostWoFDefeatText, NoxusTextColor);
 
             // Create some indicator text when SCal or Draedon (whichever is defeated last) is defeated as a hint to fight Noxus.
-            bool draedonDefeatedLast = (npc.type == ModContent.NPCType<ThanatosHead>() || npc.type == ModContent.NPCType<AresBody>() || npc.type == ModContent.NPCType<Apollo>()) && DownedBossSystem.downedCalamitas && !DownedBossSystem.downedExoMechs;
-            bool calDefeatedLast = npc.type == ModContent.NPCType<SupremeCalamitas>() && DownedBossSystem.downedExoMechs && !DownedBossSystem.downedCalamitas;
+            bool draedonDefeatedLast = (npc.type == NPCType<ThanatosHead>() || npc.type == NPCType<AresBody>() || npc.type == NPCType<Apollo>()) && DownedBossSystem.downedCalamitas && !DownedBossSystem.downedExoMechs;
+            bool calDefeatedLast = npc.type == NPCType<SupremeCalamitas>() && DownedBossSystem.downedExoMechs && !DownedBossSystem.downedCalamitas;
             if (calDefeatedLast || draedonDefeatedLast)
             {
                 // Apply a secondary check to ensure that when an Exo Mech is killed it is the last exo mech.
-                bool noExtraExoMechs = NPC.CountNPCS(ModContent.NPCType<ThanatosHead>()) + NPC.CountNPCS(ModContent.NPCType<AresBody>()) + NPC.CountNPCS(ModContent.NPCType<Apollo>()) <= 1;
+                bool noExtraExoMechs = NPC.CountNPCS(NPCType<ThanatosHead>()) + NPC.CountNPCS(NPCType<AresBody>()) + NPC.CountNPCS(NPCType<Apollo>()) <= 1;
                 if (calDefeatedLast || noExtraExoMechs)
-                    CalRemixHelper.BroadcastText(NoxusEggCutsceneSystem.FinalMainBossDefeatText, NoxusTextColor);
+                    ChatMessage(NoxusEggCutsceneSystem.FinalMainBossDefeatText, NoxusTextColor);
             }
-            if (npc.type == NPCType<SupremeCataclysm>() || npc.type == NPCType<SupremeCatastrophe>())
+            if (CalRemixWorld.bossAdditions)
             {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeTwin>());
-            }
-            if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(ModContent.NPCType<SupremeTwin>()) > 0)
-            {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<SupremeSkeletron>());
+                if ((npc.type == NPCType<SupremeCataclysm>() || npc.type == NPCType<SupremeCatastrophe>()) && NPC.CountNPCS(NPCType<SupremeTwin>()) < 2)
+                {
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<SupremeTwin>());
+                }
+                if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(NPCType<SupremeTwin>()) > 0)
+                {
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<SupremeSkeletron>());
+                }
             }
         }
         public override bool CheckDead(NPC npc)
@@ -1651,17 +1653,9 @@ namespace CalRemix
             if (npc.lifeMax > 1000 && npc.value > 0f && npc.HasPlayerTarget && NPC.downedMoonlord && Main.player[npc.target].ZoneDungeon && npc.type != NPCType<GildedSpirit>() && npc.type != NPCType<GlisteningSpirit>())
             {
                 if (Main.rand.NextBool(10))
-                {
-                    int index = NPC.NewNPC(NPC.GetSource_None(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<GlisteningSpirit>());
-                    if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                        NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
+                    SpawnNewNPC(Entity.GetSource_None(), npc.Center, NPCType<GlisteningSpirit>());
                 else
-                {
-                    int index = NPC.NewNPC(NPC.GetSource_None(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<GildedSpirit>());
-                    if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                        NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
+                    SpawnNewNPC(Entity.GetSource_None(), npc.Center, NPCType<GildedSpirit>());
             }
 
             return true;
@@ -1745,8 +1739,8 @@ namespace CalRemix
                 //the leash will spawn in BOTH times a twin is killed; the first time it'll spawn ON the twin and burrow away to despawn, the SECOND time it'll spawn offscreen and come back up
                 /* if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.leash)
                 {
-                    if (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)) NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<TheLeashHead>());
-                    else NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y + 1200, NPCType<TheLeashHead>());
+                    if (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)) NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<TheLeashHead>());
+                    else NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y + 1200, NPCType<TheLeashHead>());
                 } */
             }
 

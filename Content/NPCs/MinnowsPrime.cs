@@ -212,8 +212,7 @@ namespace CalRemix.Content.NPCs
         {
             if (Main.rand.NextBool(10))
             {
-                int spawned = NPC.NewNPC(source: null, (int)NPC.Center.X, (int)NPC.Center.Y, (int)ModContent.NPCType<KingMinnowsPrime>());
-                NPC spawnedNPC = Main.npc[spawned];
+                CalRemixHelper.SpawnNewNPC(Entity.GetSource_Death(), NPC.Center, ModContent.NPCType<KingMinnowsPrime>());
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

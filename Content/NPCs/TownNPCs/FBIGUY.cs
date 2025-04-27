@@ -56,16 +56,13 @@ namespace CalRemix.Content.NPCs.TownNPCs
                 if (point == new Point(-1, -1))
                     return;
                 Vector2 pos = point.ToWorldCoordinates();
-                int newAgentIndex = NPC.NewNPC(Terraria.Entity.GetSource_TownSpawn(), (int)pos.X, (int)pos.Y, ModContent.NPCType<FBIGUY>(), 1);
-                NPC agent = Main.npc[newAgentIndex];
-                agent.homeless = true;
-                agent.direction = (int)point.X >= WorldGen.bestX ? -1 : 1;
-                agent.netUpdate = true;
+                NPC newAgent = CalRemixHelper.SpawnNewNPC(Terraria.Entity.GetSource_TownSpawn(), (int)pos.X, (int)pos.Y, ModContent.NPCType<FBIGUY>(), 1, npcTasks: (NPC agent) =>
+                {
+                    agent.homeless = true;
+                    agent.direction = point.X >= WorldGen.bestX ? -1 : 1;
+                });
                 spawnTime = double.MaxValue;
-                if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue("Announcement.HasArrived", agent.FullName), 50, 125, 255);
-                else
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasArrived", agent.GetFullNetName()), new Color(50, 125, 255));
+                CalRemixHelper.ChatMessage(Language.GetTextValue("Announcement.HasArrived", newAgent.FullName), new Color(50, 125, 255), NetworkText.FromKey("Announcement.HasArrived", newAgent.GetFullNetName()));
             }
         }
         private static bool CanSpawnNow()

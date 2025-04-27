@@ -58,14 +58,8 @@ namespace CalRemix.Core.Retheme
 
             SneakersRetheme.Load();
         }
-
-        public override void Unload()
-        {
-            base.Unload();
-            
-            SneakersRetheme.ApplyTextureChanges(unloading: true);
-        }
-
+        public override void OnWorldUnload() => UnloadAll();
+        public override void Unload() => UnloadAll();
         public override void PostSetupContent()
         {
             foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
@@ -85,6 +79,13 @@ namespace CalRemix.Core.Retheme
                 Buffs.Add(p.Key, TextureAssets.Buff[p.Key]);
             }
             SneakersRetheme.SaveDefaultSneakersTextures();
+        }
+        private static void UnloadAll()
+        {
+            RethemeItem.ResetAnimations(true);
+            RethemeItem.ChangeTextures(true);
+            SneakersRetheme.ApplyAnimationsChanges(true);
+            SneakersRetheme.ApplyTextureChanges(true);
         }
     }
     public class RethemeNPC : GlobalNPC
@@ -326,7 +327,7 @@ namespace CalRemix.Core.Retheme
     {
         public static void UpdateChanges()
         {
-            ChangeTextures();
+            ResetAnimations();
             ResetNames();
         }
         public static void ResetNames()
@@ -346,9 +347,23 @@ namespace CalRemix.Core.Retheme
                 }
             }
         }
-        public static void ChangeTextures()
+        public static void ResetAnimations(bool unloading = false)
         {
-            if (CalRemixWorld.itemChanges)
+            if (CalRemixWorld.itemChanges && !unloading)
+            {
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+            }
+            else
+            {
+                if (!unloading)
+                {
+                    Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+                }
+            }
+        }
+        public static void ChangeTextures(bool unloading = false)
+        {
+            if (CalRemixWorld.itemChanges && !unloading)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
@@ -364,8 +379,6 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                 }
-
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
             }
             else
             {
@@ -382,7 +395,6 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
             }
         }
         public override void SetStaticDefaults()

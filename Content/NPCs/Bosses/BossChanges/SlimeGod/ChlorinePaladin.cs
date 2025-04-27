@@ -84,13 +84,16 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod
 
                 SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.Center);
                 Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
-                NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X - 30, (int)spawnAt.Y, ModContent.NPCType<SplitChlorinePaladin>());
-                NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X + 30, (int)spawnAt.Y, ModContent.NPCType<SplitChlorinePaladin>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X - 30, (int)spawnAt.Y, ModContent.NPCType<SplitChlorinePaladin>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X + 30, (int)spawnAt.Y, ModContent.NPCType<SplitChlorinePaladin>());
 
-                NPC.life = 0;
-                NPC.HitEffect();
-                NPC.active = false;
-                NPC.netUpdate = true;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.life = 0;
+                    NPC.HitEffect();
+                    NPC.active = false;
+                    NPC.netUpdate = true;
+                }
                 return;
 
             }

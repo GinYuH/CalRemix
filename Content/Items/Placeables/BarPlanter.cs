@@ -16,8 +16,10 @@ namespace CalRemix.Content.Items.Placeables
         public override void AddRecipes()
         {
             CreateRecipe().
+                AddIngredient(ItemID.ClayPot).
+                AddIngredient(ItemID.Fertilizer, 15).
+                AddIngredient(ItemID.StoneBlock, 15).
                 AddRecipeGroup(RecipeGroupID.IronBar, 5).
-                AddIngredient(ItemID.StoneBlock, 5).
                 AddTile(TileID.WorkBenches).
                 Register();
         }

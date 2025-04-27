@@ -472,16 +472,16 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
         public override void OnKill()
         {
 			NPC.boss = false;
-			NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Astigmageddon>());
-            NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Conjunctivirus>());
-            NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Exotrexia>());
-            NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Cataractacomb>());
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<Astigmageddon>());
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<Conjunctivirus>());
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<Exotrexia>());
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<Cataractacomb>());
 			if (Main.zenithWorld)
 			{
-                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.EyeofCthulhu);
-                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AcidEye>());
-                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.Spazmatism);
-                NPC.NewNPC(base.NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.Retinazer);
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, NPCID.EyeofCthulhu);
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<AcidEye>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, NPCID.Spazmatism);
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, NPCID.Retinazer);
             }
         }
         private void TurnTowards(Vector2 goal, float offset = 0, float maxSpeed = 1)

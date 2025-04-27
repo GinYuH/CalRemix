@@ -47,8 +47,9 @@ using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
 using CalRemix.Content.Items.Weapons.Stormbow;
-
+using static CalRemix.CalRemixHelper;
 using Terraria.Localization;
+using System.Linq;
 
 namespace CalRemix.Core.World
 {
@@ -96,7 +97,6 @@ namespace CalRemix.Core.World
         public static bool seenMBP = false;
         public static bool seenRoaches = false;
         public static bool metNoxus = false;
-        public static int trueStory = 0;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
         public static int meldCountdown = 72000;
@@ -143,6 +143,7 @@ namespace CalRemix.Core.World
         public static bool sneakerheadMode = true;
         public static bool weaponReworks = true;
         public static bool musicPitch = true;
+        public static bool bossAdditions = true;
 
 
         public static int ionQuestLevel = -1;
@@ -154,6 +155,8 @@ namespace CalRemix.Core.World
 
         public static bool stratusDungeonDisabled = false;
         public static NPC butterflyEffect = null;
+
+        internal static HashSet<string> playerSawTrueStory = [];
 
         public static List<int> DungeonWalls = new List<int>
         {
@@ -214,7 +217,6 @@ namespace CalRemix.Core.World
         {
             // Misc ints
             meldCountdown = 72000;
-            trueStory = 0;
             RoachCountdown = 0;
             roachDuration = 0;
 
@@ -284,6 +286,7 @@ namespace CalRemix.Core.World
             hypothetical = true;
             weaponReworks = true;
             musicPitch = true;
+            bossAdditions = true;
 
             AutoloadedLegendPortrait.OpenPicture = null;
             savedAPicture = false;
@@ -317,7 +320,6 @@ namespace CalRemix.Core.World
             tag["genHydrogen"] = generatedHydrogen;
             tag["grime"] = generatedGrime;
             tag["meld"] = meldCountdown;
-            tag["trueStory"] = trueStory;
             tag["roachDuration"] = roachDuration;
             tag["seenRoach"] = seenRoaches;
             tag["mbp"] = seenMBP;
@@ -363,6 +365,7 @@ namespace CalRemix.Core.World
             tag["109hypothetical"] = hypothetical;
             tag["109weaponReworks"] = weaponReworks;
             tag["109musicPitch"] = musicPitch;
+            tag["109bossAdditions"] = bossAdditions;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -376,6 +379,8 @@ namespace CalRemix.Core.World
 
             tag["savedAPicture"] = savedAPicture;
             tag["sneakerheadMode"] = sneakerheadMode;
+
+            tag["playersJoined"] = playerSawTrueStory.ToList();
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -433,10 +438,9 @@ namespace CalRemix.Core.World
             GetData(ref hypothetical, "109hypothetical", tag);
             GetData(ref weaponReworks, "109weaponReworks", tag);
             GetData(ref musicPitch, "109musicPitch", tag);
-            GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
+            GetData(ref bossAdditions, "109bossAdditions", tag);
 
             meldCountdown = tag.Get<int>("meld");
-            trueStory = tag.Get<int>("trueStory");
             roachDuration = tag.Get<int>("roachDuration");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
@@ -445,11 +449,14 @@ namespace CalRemix.Core.World
             hydrogenLocation.Y = tag.Get<float>("hydrolocationY");
             oxydayTime = tag.Get<int>("oxytime");
 
+            GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
             postGenUpdate = tag.Get<bool>("genUpdate");
 
             GetData(ref savedAPicture, "savedAPicture", tag);
             GetData(ref sneakerheadMode, "sneakerheadMode", tag);
+
+            playerSawTrueStory = [.. tag.GetList<string>("playersJoined")];
         }
 
         public static void GetData(ref bool baseVar, string path, TagCompound tag)
@@ -472,7 +479,6 @@ namespace CalRemix.Core.World
             writer.Write(generatedHydrogen);
             writer.Write(generatedGrime);
             writer.Write(meldCountdown);
-            writer.Write(trueStory);
             writer.Write(RoachCountdown);
             writer.Write(roachDuration);
             writer.Write(seenMBP);
@@ -521,17 +527,22 @@ namespace CalRemix.Core.World
             writer.Write(sneakerheadMode);
             writer.Write(weaponReworks);
             writer.Write(musicPitch);
+            writer.Write(bossAdditions);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
             writer.Write(hydrogenLocation.X);
             writer.Write(hydrogenLocation.Y);
             writer.Write(oxydayTime);
+            writer.Write(postGenUpdate);
 
             writer.Write(ScreenHelperManager.screenHelpersEnabled);
             writer.Write(ScreenHelperManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
-            writer.Write(postGenUpdate);
+            for (int i = 0; i < Anomaly109Manager.options.Count; i++)
+            {
+                writer.Write(Anomaly109Manager.options[i].unlocked);
+            }
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -546,7 +557,6 @@ namespace CalRemix.Core.World
             generatedHydrogen = reader.ReadBoolean();
             generatedGrime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
-            trueStory = reader.ReadInt32();
             RoachCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
             seenMBP = reader.ReadBoolean();
@@ -595,17 +605,22 @@ namespace CalRemix.Core.World
             sneakerheadMode = reader.ReadBoolean();
             weaponReworks = reader.ReadBoolean();
             musicPitch = reader.ReadBoolean();
+            bossAdditions = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
             hydrogenLocation.X = reader.ReadSingle();
             hydrogenLocation.Y = reader.ReadSingle();
             oxydayTime = reader.ReadInt32();
+            postGenUpdate = reader.ReadBoolean();
 
             ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
             ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
-            postGenUpdate = reader.ReadBoolean();
+            for (int i = 0; i < Anomaly109Manager.options.Count; i++)
+            {
+                Anomaly109Manager.options[i].unlocked = reader.ReadBoolean();
+            }
         }
 
         public override void PreUpdateWorld()
@@ -711,7 +726,7 @@ namespace CalRemix.Core.World
                     {
                         float posX = Main.LocalPlayer.position.X + Main.rand.Next(1000, 2000) * Main.LocalPlayer.direction;
                         float posY = Main.LocalPlayer.position.Y - Main.rand.Next(-200, 600);
-                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)posX, (int)posY, NPCType<FloatingBiomass>());
+                        SpawnNewNPC(new EntitySource_WorldEvent(), (int)posX, (int)posY, NPCType<FloatingBiomass>());
                     }
                 }
                 if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
@@ -739,28 +754,6 @@ namespace CalRemix.Core.World
                 if (NPC.downedPlantBoss)
                 {
                     Main.townNPCCanSpawn[NPCID.Princess] = true;
-                }
-            }
-            if (trueStory < maxStoryTime)
-            {
-                ScreenHelperManager.ongoingConversationTimer = trueStory;
-                ScreenHelperManager.ongoingConversation = true;
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    trueStory++;
-                }
-                else
-                {
-                    int td = trueStory + 1;
-                    ModPacket packet = CalRemix.instance.GetPacket();
-                    packet.Write((byte)RemixMessageType.TrueStory);
-                    packet.Write(td);
-                    packet.Send();
-                }
-                if (trueStory >= maxStoryTime)
-                {
-                    ScreenHelperManager.ongoingConversationTimer = 0;
-                    UpdateWorldBool();
                 }
             }
             ExcavatorSummon();
@@ -796,16 +789,11 @@ namespace CalRemix.Core.World
                                             NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, chestenum, slot, cheste.item[slot].stack, cheste.item[slot].prefix, cheste.item[slot].type);
 
                                         SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
-
-                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        SpawnNewNPC(p.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>(), npcTasks: (NPC npc) =>
                                         {
-                                            int npc = NPC.NewNPC(p.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>());
-                                            Main.npc[npc].timeLeft *= 20;
-                                            CalamityUtils.BossAwakenMessage(npc);
-                                            Main.npc[npc].velocity.Y = -20;
-                                            if (Main.netMode == NetmodeID.Server)
-                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc);
-                                        }
+                                            npc.timeLeft *= 20;
+                                            npc.velocity.Y = -20;
+                                        }, awakenMessage: true);
                                         break;
                                     }
                                 }
@@ -827,10 +815,7 @@ namespace CalRemix.Core.World
             {
                 if (CalRemixNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
-                    }
+                    SpawnNPCOnPlayer(Main.myPlayer, NPCType<Cryogen>());
                     CalRemixNPC.aspidCount = 0;
                 }
             }
@@ -932,10 +917,7 @@ namespace CalRemix.Core.World
                             }
                         }
                     }
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<AquaticScourgeHead>());
-                    }
+                    SpawnNPCOnPlayer(Main.myPlayer, NPCType<AquaticScourgeHead>());
                 }
             }
             if (CalRemixAddon.CalVal != null && (DateTime.Now.Day == 1 && DateTime.Now.Month == 4 || DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld))
