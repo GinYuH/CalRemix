@@ -267,6 +267,35 @@ namespace CalRemix.Core.Retheme
 
                 return false;
             }
+            else if (npc.type == NPCType<DesertScourgeHead>() || npc.type == NPCType<DesertScourgeBody>())
+            {
+                Texture2D head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body", AssetRequestMode.AsyncLoad).Value;
+
+                if (npc.type == NPCType<DesertScourgeHead>())
+                    head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Head", AssetRequestMode.AsyncLoad).Value;
+                else
+                {
+                    if (npc.ai[3] == 1)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body2", AssetRequestMode.AsyncLoad).Value;
+                    }
+                    else if (npc.ai[3] == 2)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body3", AssetRequestMode.AsyncLoad).Value;
+                    }
+                    else if (npc.ai[3] == 3)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body4", AssetRequestMode.AsyncLoad).Value;
+                    }
+                }
+
+                Vector2 drawCenter = npc.Center - screenPos;
+                float drawRotation = npc.rotation;
+
+                spriteBatch.Draw(head, drawCenter, null, drawColor, drawRotation, head.Size() / 2f, npc.scale, SpriteEffects.None, 0f);
+
+                return false;
+            }
 
             return true;
         }
