@@ -125,7 +125,7 @@ namespace CalRemix.UI
 
             // TODO: boss spawn, kill
             HelperMessage.New("FluxBossEffects", "It looks like a powerful enemy is approahcing. You might want to be careful.",
-    "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BossEffects>(), cooldown: 4800, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BossEffects>(), cooldown: 4800, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
         }
     }
 }

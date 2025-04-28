@@ -123,6 +123,7 @@ namespace CalRemix
         public int trapperFriendsLearned = 0;
         public int ionDialogue = -1;
         public int ionQuestLevel = -1;
+        public int fifteenMinutesSinceHardmode = 54000;
 
         public int deliciousMeatRedeemed = 0;
         public int deliciousMeatPrestige = 0;
@@ -755,6 +756,11 @@ namespace CalRemix
                     if (!NPC.AnyNPCs(NPCType<Hydrogen>()))
                         SpawnNewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
                 }
+            }
+
+            if (Main.hardMode && fifteenMinutesSinceHardmode > 0)
+            {
+                fifteenMinutesSinceHardmode--;
             }
         }
 

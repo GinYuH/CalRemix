@@ -741,7 +741,7 @@ namespace CalRemix.UI
                 .SetTextboxStyle("I mean, alright Flux", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Flux_Background", Vector2.Zero))
                 .SetExtraAnimations(false, false, false) //shes locked in her textbox
-                .SetAvailabilityCondition(() => Main.hardMode)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.Remix().fifteenMinutesSinceHardmode == 0)
                 .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(670, 172), 462), 0, 0)
                 .SetPositionData(new HelperPositionData(
                     new Vector2(0.1f, 0.6f), // anchored to bottom middle, a little shifted to the left
