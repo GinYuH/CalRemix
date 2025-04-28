@@ -18,7 +18,7 @@ namespace CalRemix.UI
     {
         public static void LoadMiracleBoyMessages()
         {
-            HelperMessage.New("MiracleSnow", "Wow, it's absolutely freezing out here! You're shivering, but really, it's no problem. Since you're so cold, what do you say I warm you up? Mmm?!", 
+            HelperMessage.New("MiracleSnow", "Wow, it's absolutely freezing out here! You're shivering, but really, it's no problem. Since you're so cold, what do you say I warm you up? Mmm?!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.ZoneSnow)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
@@ -31,32 +31,48 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("HurtMiracle", "Oh no, you've scratched your delicate little self! Shall I fetch you a band-aid? Or maybe you want me to kiss it better? No? Well, do try to stay upright, would you? It’s embarrassing for both of us.",
-    "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.75f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.75f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("VeryHurtMiracle", "Yikes! You almost became a miracle failure with that hit!",
-"MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
-            HelperMessage.New("MiracleRain", "Oh, splendid! Acid Rain, but make it worse! Truly a miraculous turn of events! The sky hates you, the ground hates you, and now the monsters are stepping up their game too. What’s next, you ask? I don’t know—maybe the trees will start throwing punches. Good luck, champ!",
+            HelperMessage.New("MiracleRain", "Quick, my miraculous stooge, we must get to the sulphurous sea! Now that the Moon Lord is dead, the acid rain has been empowered once again. Here is your daily Miracle tip! Want to know which enemies drop the best loot? It's simple! Aim at anything that's green! Green body? Green eyes? It doesn't matter! The green is where money is, that's why coins are the color they are!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => AcidRainEvent.AcidRainEventIsOngoing)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
-            HelperMessage.New("RuinousSoul", "Ah, the Ruinous Soul! A delightful little trinket fresh from our dearly departed friend, Polterghast. Quite the prize, wouldn’t you say? These souls are brimming with anguish, despair, and, oh, just a sprinkle of malice. Perfect for crafting all manner of dreadful, powerful contraptions! Use them wisely... or recklessly—I’m not your boss, after all.",
+            HelperMessage.New("RuinousSoul", "Do you really need me to say something? Do you need me to tell you you can make stratus gear out of this? You have recipe browser and google. Get a grip, man.",
                 "MiracleBoyRead", (ScreenHelperSceneMetrics metrics) => DownedBossSystem.downedPolterghast)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
-            HelperMessage.New("MiracleL4", "Well, well, look at you, reaching the bottom of the ocean's despair-ridden belly! The lowest layer of the Abyss—how delightfully dreadful! Here, the water crushes, the darkness suffocates, and the creatures? Oh, they’ve probably been sharpening their teeth just for you. But hey, at least it’s quiet, right? Aside from the screams. Yours, I mean.",
+            HelperMessage.New("MiracleL4", "Hey! Hey! Watch this!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.Calamity().ZoneAbyssLayer4)
+                .AddEndEvent(GivePlayerChaosState)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
-            HelperMessage.New("YharonEgg", "Oh, would you look at that! A Blessed Phoenix Egg—a literal ticking time bomb of fiery destruction! This little beauty is your invitation to face Yharon, the Jungle Dragon, Yharim's personal barbecue buddy. I mean, sure, it’s a big deal, but don’t get cocky. That dragon’s got more firepower than an entire volcano, and he’s not exactly fond of uninvited guests. Ready to get roasted, my daring friend?",
+            HelperMessage.New("YharonEgg", "Wow, my friend! Isn't that just the most luxurious egg you've ever seen? You know, I've heard that if you kill the little creature inside of it, you'll gain powers beyond your wildest dreams! Who would pass on such a proposition? No, really? Like, even if you don't want to kill it, it's the dragon of REBIRTH. Its thing is that it comes back to life. You'd have to be an actual MORON not to do something like that. Hahah.",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharonEgg>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
-            HelperMessage.New("Sentinels", "Oh, look at you, summoning a cosmic lackey from the Distortion! Don’t worry, it’s more bark than bite—unless you’re hopeless. Prove me wrong, champ!",
+            HelperMessage sentinels1 = HelperMessage.New("Sentinels1", "Watch out, my darest chap! It's one of the devourer's DASTARDLY sentinels! If you want to have any hope of defeating them, you'll need to use 100%-no, 110% of your miraculous skills! Remember, no amount of preparation is too much! Even if you've consumed all the potions you were able to find, there are many other options for boosts! Remember, alcohol is your best friend! I sure know it's mine!",
                 "MiracleBoyRead", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<StormWeaverHead>() || n.type == ModContent.NPCType<Signus>() || n.type == ModContent.NPCType<CeaselessVoid>()))
-                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).InitiateConversation(15);
+            HelperMessage sentinels2 = HelperMessage.New("Sentinels2", "Sorry to barge in, but the correct name for them is the \"Rune of Kos bosses\". They also aren't related to the Devourer anymore.",
+                "FannyDisturbed", HelperMessage.AlwaysShow, 5)
+                .ChainAfter(sentinels1, delay: 3f);
+            HelperMessage sentinels3 = HelperMessage.New("Sentinels3", "Not a single person has ever called them that. You should learn when to shut up, Fanny.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 3)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny)
+                .ChainAfter(sentinels2, delay: 3f);
+            HelperMessage sentinels4 = HelperMessage.New("Sentinels4", "FINALLY! SOMEBODY WHO UNDERSTANDS THE MIRACLE PLIGHT OF THE MIRACLE BOY! Oh, Evil Fanny, maybe you and I aren't so diferent...",
+                "MiracleBoyIdle", HelperMessage.AlwaysShow, 5)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy)
+                .ChainAfter(sentinels3, delay: 3f);
+            HelperMessage sentinels5 = HelperMessage.New("Sentinels5", "Nevermind. You're completely correct, Fanny.",
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny).EndConversation()
+                .ChainAfter(sentinels4, delay: 3f);
 
-            HelperMessage fish = HelperMessage.New("Fishing1", "Morgen, mein friend! It is not a guten one, however, as if it were, you would be fishing!",
+            HelperMessage fish = HelperMessage.New("Fishing1", "Morning, my friend! It is not a good one, however, as if it were, you would be fishing!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.inventory.Any((Item i) => i.fishingPole > 0) && Main.time == 10800 && Main.dayTime,
                 4, cantBeClickedOff: true)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).InitiateConversation(30f, 1f);
@@ -71,9 +87,6 @@ namespace CalRemix.UI
             HelperMessage.New("Fishing4", "... what?",
                 "FannySob").ChainAfter(delay: 5, startTimerOnMessageSpoken: true).EndConversation();
 
-            HelperMessage.New("YharBarr", "Ugh, Yharim Bars. Look at these disgusting chunks of... whatever they are. Gross, right? They're huge, ugly, and look like something you’d find at the bottom of a trash heap. But I guess they’re useful for making endgame stuff, if you're into that kind of thing. Honestly, I wouldn’t touch them if I weren’t forced to. But hey, you do you. Just don’t expect any praise for collecting these hideous things.",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<YharimBar>()))
-                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("TheGreatExoFable1", "Hello once more, my friend! I've heard you're a big fan of epic stories, mmm? Well, you're in luck! Your best friend is here to tell you one of his favourite tales!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && CalamityGlobalNPC.draedonExoMechPrime != -1 && CalamityGlobalNPC.draedonExoMechTwinGreen != -1 && CalamityGlobalNPC.draedonExoMechWorm != -1, cantBeClickedOff: true, duration: 4)
@@ -91,8 +104,8 @@ namespace CalRemix.UI
             HelperMessage.New("TheGreatExoFable5", "So! Did you enjoy that! If you did, you must love how grand of a writer I am! All of that? Made it up on the spot, mmmmm! All of these pages are blank! Happy to have been able to share this with you, I bid you farewell now!",
                 "MiracleBoyIdle").SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 15, startTimerOnMessageSpoken: true);
 
-            HelperMessage.New("Hypnerd", "Hypnos, huh? Look at this brainiac—so shiny, so... fancy—but wait, what’s this? Nein nein nein! Gnnnaawww What’s with all the techy, brainy boop-bop-bop nonsense? You think you're so advanced? How cute. Watch out, Hypnos, or I'll start spouting some Gnnnwaaaa too and make your circuits fry!",
-                "MiracleBoyGnaw", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<AergiaNeuron>()))
+            HelperMessage.New("Hypnerd", "Why is there another one of these things? Why is the brain exposed?? That's like the one part you don't want to expose??? What genuine fucking idiot designed this thing!!! What the fuck man!!! What the FUCK!!!!!!!! FUCKK!!!!!! I'M SO MAD!!!!! AHHH!!!!!!!!!",
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<AergiaNeuron>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("Fear", "I'd sleep with one eye open if I were you.",
@@ -104,7 +117,14 @@ namespace CalRemix.UI
             HelperMessage.New("Loser", "Loser",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.PotionSickness), cooldown: 55, onlyPlayOnce: false, cantBeClickedOff: true, duration: 55).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
+            HelperMessage.New("CosmicWorm", "he has a name though",
+                "MiracleBoySad", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<CosmicWorm>()))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+        }
 
+        private static void GivePlayerChaosState()
+        {
+            Main.LocalPlayer.AddBuff(BuffID.ChaosState, 5);
         }
     }
 }
