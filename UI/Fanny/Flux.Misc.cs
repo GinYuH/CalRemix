@@ -167,9 +167,23 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
 
-            HelperMessage.New("FluxCrit1", "Crit",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.MoonLeech), cooldown: 1, onlyPlayOnce: false)
+            #region crit
+            HelperMessage.New("FluxCrit1", "You hit their weakspot!",
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("FluxCrit2", "You got the critical hit!",
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("FluxCrit3", "I hope you can beat them with that hit...",
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("FluxCrit4", "Keep trying to hit their weak spot!",
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("FluxCrit5", "Yeah! Keep hitting there, they took more damage!",
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            #endregion
         }
     }
 
