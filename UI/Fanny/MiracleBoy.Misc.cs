@@ -105,7 +105,7 @@ namespace CalRemix.UI
                 "MiracleBoyIdle").SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(delay: 15, startTimerOnMessageSpoken: true);
 
             HelperMessage.New("Hypnerd", "Why is there another one of these things? Why is the brain exposed?? That's like the one part you don't want to expose??? What genuine fucking idiot designed this thing!!! What the fuck man!!! What the FUCK!!!!!!!! FUCKK!!!!!! I'M SO MAD!!!!! AHHH!!!!!!!!!",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<AergiaNeuron>()))
+                "MiracleBoySweat", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<AergiaNeuron>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("Fear", "I'd sleep with one eye open if I were you.",

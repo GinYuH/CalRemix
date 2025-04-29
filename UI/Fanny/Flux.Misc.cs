@@ -7,6 +7,7 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.Polterghast;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Weapons.Stormbow;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
 using System.Linq;
 using System.Threading;
 using Terraria;
@@ -168,6 +169,8 @@ namespace CalRemix.UI
             #endregion
 
             #region crit
+            // technically, more than one of these could play per crit
+            // i dont care
             HelperMessage.New("FluxCrit1", "You hit their weakspot!",
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
@@ -184,6 +187,47 @@ namespace CalRemix.UI
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(75), cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
+
+            #region boss spawn/death
+            HelperMessage.New("BossSpawn1", "Oh jeez, that's one big foe... I wish I could help you...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("BossSpawn2", "You're gonna wanna be careful. It looks like something big is coming...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("BossSpawn3", "Oh no... Soemthing big's approaching, and fast. Are you gonna be alright?",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("BossSpawn4", "Some sort of boss monster is coming... Watch out...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+
+            HelperMessage.New("BossDie1", "Thank goodness, you're still alive! Good job...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("BossDie2", "Is that thing down? I wish i could have helped you... Atleast you made it out alive.",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("BossDie3", "Glad to see that thing taken care of. Take some time to heal your wounds, please...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage.New("BossDie4", "With that thing down, the world is just an inch safer. Let's hope it doesn't come back...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4, cooldown: 3, onlyPlayOnce: false)
+                .AddStartEvent(SwitchBossActivity)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            #endregion
+        }
+
+        public static void SwitchBossActivity()
+        {
+            Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent = null;
         }
     }
 
@@ -201,10 +245,35 @@ namespace CalRemix.UI
     public class FluxPlayer : ModPlayer
     {
         public bool hasCrit;
+
+        public bool? bossIsPresent;
+        public int bossSpawnEndMessageVariant;
         
         public override void PreUpdate()
         {
             hasCrit = false;
+        }
+    }
+
+    public class FluxNPC : GlobalNPC
+    {
+        private int chanceToFail = 5;
+        public override void OnSpawn(NPC npc, IEntitySource source)
+        {
+            if (npc.boss)
+            {
+                Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent = true;
+                Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant = Main.rand.Next(4 + chanceToFail + 1) - chanceToFail;
+            }
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            if (npc.boss)
+            {
+                Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent = false;
+                Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant = Main.rand.Next(4 + chanceToFail + 1) - chanceToFail;
+            }
         }
     }
 }

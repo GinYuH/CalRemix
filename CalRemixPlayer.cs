@@ -411,6 +411,7 @@ namespace CalRemix
             tag["CellPhone"] = gottenCellPhone;
             tag["TrappFriends"] = trapperFriendsLearned;
             tag["MiracleUnlocked"] = miracleUnlocked;
+            tag["FifteenMinutesSinceHardmode"] = fifteenMinutesSinceHardmode;
 
             tag["DeliciousMeatRedeemed"] = deliciousMeatRedeemed;
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
@@ -423,6 +424,7 @@ namespace CalRemix
             gottenCellPhone = tag.GetBool("CellPhone");
             trapperFriendsLearned = tag.GetInt("TrappFriends");
             miracleUnlocked = tag.GetBool("MiracleUnlocked");
+            fifteenMinutesSinceHardmode = tag.GetInt("FifteenMinutesSinceHardmode");
 
             deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
             deliciousMeatPrestige = tag.GetInt("DeliciousMeatPrestige");

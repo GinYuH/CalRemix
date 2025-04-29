@@ -1106,6 +1106,11 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("MiracleBoyGnaw", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoySob", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyRadiant", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyItWasMeee", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyCry", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyGrinchBaby", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyUpset", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoySweat", 1);
 
             //Dead miracle boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyDisemboweled", 1);
