@@ -223,6 +223,14 @@ namespace CalRemix.UI
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
+
+            HelperMessage.New("WhiteRabbit", "Yikes! That thing looks really dangerous! Be careful!",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.Bunny))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+
+            HelperMessage.New("BlackRabbit", "Eek! I told you it was dangerous!",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.CorruptBunny || n.type == NPCID.CrimsonBunny))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
         }
 
         public static void SwitchBossActivity()

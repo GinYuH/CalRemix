@@ -36,9 +36,13 @@ namespace CalRemix.UI
             HelperMessage.New("VeryHurtMiracle", "Yikes! You almost became a miracle failure with that hit!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.25f, cooldown: 1200, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
-            HelperMessage.New("MiracleRain", "Quick, my miraculous stooge, we must get to the sulphurous sea! Now that the Moon Lord is dead, the acid rain has been empowered once again. Here is your daily Miracle tip! Want to know which enemies drop the best loot? It's simple! Aim at anything that's green! Green body? Green eyes? It doesn't matter! The green is where money is, that's why coins are the color they are!",
+            HelperMessage miracleRain1 = HelperMessage.New("MiracleRain1", "Quick, my miraculous stooge, we must get to the sulphurous sea! Now that the Moon Lord is dead, the acid rain has been empowered once again. Here is your daily Miracle tip! Want to know which enemies drop the best loot? It's simple! Aim at anything that's green! Green body? Green eyes? It doesn't matter! The green is where money is, that's why coins are the color they are!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => AcidRainEvent.AcidRainEventIsOngoing)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+            HelperMessage miracleRain2 = HelperMessage.New("MiracleRain2", "Please don't do that...",
+                "FluxDefault", HelperMessage.AlwaysShow)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux)
+                .ChainAfter(miracleRain1, delay: 1f);
 
             HelperMessage.New("RuinousSoul", "Do you really need me to say something? Do you need me to tell you you can make stratus gear out of this? You have recipe browser and google. Get a grip, man.",
                 "MiracleBoyRead", (ScreenHelperSceneMetrics metrics) => DownedBossSystem.downedPolterghast)
