@@ -197,7 +197,7 @@ namespace CalRemix.UI
                 "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
-            HelperMessage.New("BossSpawn3", "Oh no... Soemthing big's approaching, and fast. Are you gonna be alright?",
+            HelperMessage.New("BossSpawn3", "Oh no... Something big's approaching, and fast. Are you gonna be alright?",
                 "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
@@ -257,7 +257,7 @@ namespace CalRemix.UI
 
     public class FluxNPC : GlobalNPC
     {
-        private static int chanceToFail = 5;
+        private static int chanceToFail = 8;
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
             if (npc.boss)

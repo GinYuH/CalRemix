@@ -737,7 +737,7 @@ namespace CalRemix.UI
                 .SetPositionData(false, 240);
 
             LoadScreenHelper(Flux, "FluxDefault", false, new Vector2(150, 160), true)
-                .SetVoiceStyle(SoundID.Item6 with { MaxInstances = 0 })
+                .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
                 .SetTextboxStyle("I mean, alright Flux", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Flux_Background", Vector2.Zero))
                 .SetExtraAnimations(false, false, false) //shes locked in her textbox
