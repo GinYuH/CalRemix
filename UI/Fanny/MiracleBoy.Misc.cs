@@ -118,7 +118,7 @@ namespace CalRemix.UI
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.PotionSickness), cooldown: 55, onlyPlayOnce: false, cantBeClickedOff: true, duration: 55).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("CosmicWorm", "he has a name though",
-                "MiracleBoySad", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<CosmicWorm>()))
+                "MiracleBoySob", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<CosmicWorm>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
         }
 

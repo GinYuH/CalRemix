@@ -167,7 +167,30 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
 
-            
+            HelperMessage.New("FluxCrit1", "Crit",
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.MoonLeech), cooldown: 1, onlyPlayOnce: false)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+        }
+    }
+
+    public class FluxProjectile : GlobalProjectile
+    {
+        public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (hit.Crit && projectile.owner == Main.myPlayer)
+            {
+                Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit = true;
+            }
+        }
+    }
+
+    public class FluxPlayer : ModPlayer
+    {
+        public bool hasCrit;
+        
+        public override void PreUpdate()
+        {
+            hasCrit = false;
         }
     }
 }
