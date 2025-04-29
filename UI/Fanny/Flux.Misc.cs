@@ -231,6 +231,14 @@ namespace CalRemix.UI
             HelperMessage.New("BlackRabbit", "Eek! I told you it was dangerous!",
                 "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.CorruptBunny || n.type == NPCID.CrimsonBunny))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+
+            HelperMessage ankhShield1 = HelperMessage.New("AnkhShield1", "Is that an Ankh item? With one of those, you won't get as many debuffs anymore...",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.AnkhShield))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            HelperMessage ankhShield2 = HelperMessage.New("AnkhShield2", "I'm sorry!! I'm so sorry!!! I'll find other things to call out, I promise!",
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ItemID.AnkhShield))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux)
+                .ChainAfter(ankhShield1);
         }
 
         public static void SwitchBossActivity()
