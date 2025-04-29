@@ -132,9 +132,9 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // nothing for withered debuffs
             // nothing for horrified
-            HelperMessage.New("FluxTheTongue", "Freaky",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.TheTongue), cooldown: 1200, onlyPlayOnce: false)
-                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            //HelperMessage.New("FluxTheTongue", "Freaky",
+            //    "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.TheTongue), cooldown: 1200, onlyPlayOnce: false)
+            //    .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxCursedInferno", "Foul demon fire... You should try to extinguish yourself.",
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.CursedInferno), cooldown: 1200, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
