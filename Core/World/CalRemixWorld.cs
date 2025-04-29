@@ -50,6 +50,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using static CalRemix.CalRemixHelper;
 using Terraria.Localization;
 using System.Linq;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Core.World
 {
@@ -1329,6 +1330,7 @@ namespace CalRemix.Core.World
                 {
                     WarbledOres.WarbleChestLoot(chest);
 
+                    // dungeon chests
                     if (Main.tile[chest.x, chest.y].TileType == TileType<StratusChest>())
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
@@ -1348,6 +1350,7 @@ namespace CalRemix.Core.World
                             }
                         }
                     }
+                    // abyss shrine chest
                     if (Main.tile[chest.x, chest.y].TileType == TileType<VoidChest>())
                     {
                         if (chest.item[0].type == ItemType<Terminus>())
@@ -1355,6 +1358,7 @@ namespace CalRemix.Core.World
                             chest.item[0].SetDefaults(ItemType<FannyLogAbyss>());
                         }
                     }
+                    // draedon lab chests
                     if (Main.tile[chest.x, chest.y].TileType == TileType<SecurityChestTile>() || Main.tile[chest.x, chest.y].TileType == TileType<AgedSecurityChestTile>())
                     {
                         bool getShifty = false;
@@ -1410,6 +1414,18 @@ namespace CalRemix.Core.World
                                 chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogSpace>());
                                 break;
                             }
+                        }
+                    }
+                    // every chest ever
+                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                    {
+                        if (chest.item[inventoryIndex].type == ItemID.None)
+                        {
+                            if (Main.rand.NextBool(3))
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<TheBeacon>());
+                            }
+                            break;
                         }
                     }
                 }
