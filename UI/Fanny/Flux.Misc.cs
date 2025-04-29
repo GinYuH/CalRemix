@@ -75,7 +75,7 @@ namespace CalRemix.UI
             HelperMessage.New("FluxNightwither", "Are you alright? You look so sickly... Is there anything I can do to help?",
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Nightwither>(), cooldown: 1200, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
-            HelperMessage.New("FluxNOU", "Oh No! It looks like you're naked! That's terrible! Can you stay like that",
+            HelperMessage.New("FluxNOU", "Oh No! It looks like you're naked! That's terrible! Can you stay like that Haha",
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<NOU>(), duration: 2)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxPlague", "Are you ill? Oh no... That isn't good... I'm sorry...",
