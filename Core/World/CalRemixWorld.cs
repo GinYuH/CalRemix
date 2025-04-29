@@ -1421,7 +1421,7 @@ namespace CalRemix.Core.World
                     {
                         if (chest.item[inventoryIndex].type == ItemID.None)
                         {
-                            if (Main.rand.NextBool(3))
+                            if (Main.rand.NextBool())
                             {
                                 chest.item[inventoryIndex].SetDefaults(ItemType<TheBeacon>());
                             }
