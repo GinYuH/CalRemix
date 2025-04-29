@@ -257,7 +257,7 @@ namespace CalRemix.UI
 
     public class FluxNPC : GlobalNPC
     {
-        private int chanceToFail = 5;
+        private static int chanceToFail = 5;
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
             if (npc.boss)

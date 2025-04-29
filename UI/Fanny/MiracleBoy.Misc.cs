@@ -60,7 +60,7 @@ namespace CalRemix.UI
                 "FannyDisturbed", HelperMessage.AlwaysShow, 5)
                 .ChainAfter(sentinels1, delay: 3f);
             HelperMessage sentinels3 = HelperMessage.New("Sentinels3", "Not a single person has ever called them that. You should learn when to shut up, Fanny.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 3)
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 3)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny)
                 .ChainAfter(sentinels2, delay: 3f);
             HelperMessage sentinels4 = HelperMessage.New("Sentinels4", "FINALLY! SOMEBODY WHO UNDERSTANDS THE MIRACLE PLIGHT OF THE MIRACLE BOY! Oh, Evil Fanny, maybe you and I aren't so diferent...",
@@ -68,7 +68,7 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy)
                 .ChainAfter(sentinels3, delay: 3f);
             HelperMessage sentinels5 = HelperMessage.New("Sentinels5", "Nevermind. You're completely correct, Fanny.",
-                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5)
+                "EvilFannyPissed", HelperMessage.AlwaysShow, 5)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny).EndConversation()
                 .ChainAfter(sentinels4, delay: 3f);
 
