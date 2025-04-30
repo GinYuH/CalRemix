@@ -1154,6 +1154,26 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<FungiStone>(), new Fraction(1, 50));
             }
+            if (npc.type ==  NPCID.ChaosElemental)
+            {
+                //checks for rod, could be improved
+                npcLoot.RemoveWhere(
+                    rule => rule is LeadingConditionRule leadingRule
+                        && (leadingRule.condition is Conditions.TenthAnniversaryIsNotUp)
+                );
+                npcLoot.RemoveWhere(
+                    rule => rule is LeadingConditionRule leadingRule
+                        && (leadingRule.condition is Conditions.TenthAnniversaryIsNotUp)
+                );
+                npcLoot.Add(ItemID.RodofDiscord);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 2));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(2, 3));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 4), 1, 3);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 8));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 16), 10, 10);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 32));
+                npcLoot.Add(ItemID.RodOfHarmony, new Fraction(1, 64), 1, 200);
+            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
