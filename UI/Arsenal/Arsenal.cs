@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace CalRemix.UI.Arsenal;
 
@@ -362,17 +364,17 @@ public static class ArsenalUtils
             BackgroundColor = Color.Transparent
         };
         postArea.Width.Pixels = 470f;
-        postArea.Height.Pixels = 260f;
+        postArea.Height.Pixels = 60f;
 
         UIPanel postTextbox = new()
         {
             BackgroundColor = Color.CadetBlue,
             BorderColor = Color.Black,
             HAlign = 1f,
-            VAlign = 1f
+            VAlign = 0f
         };
         postTextbox.Width.Pixels = 400f;
-        postTextbox.Height.Pixels = 200f;
+        postTextbox.Top.Pixels += 36;
 
         UIText bodyText = new(post.Body.Formatted(post.Poster, MemberType.PostBody))
         {
@@ -380,11 +382,36 @@ public static class ArsenalUtils
             TextColor = Color.White,
             IsWrapped = true,
         };
+        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 400f);
         bodyText.Width.Pixels = 400f;
-        bodyText.Height.Pixels = 200f;
+        bodyText.Height.Pixels = textSize.Y;
+        postTextbox.Height.Pixels = textSize.Y + 16;
+        postArea.Height.Pixels += textSize.Y + 16;
         postTextbox.Append(bodyText);
 
         postArea.Append(postTextbox);
+
+        if(post.Image != null)
+        {
+            UIImage image = new(ModContent.Request<Texture2D>($"CalRemix/Assets/Textures/Arsenal/Images/{post.Image}"))
+            {
+                HAlign = 0.5f,
+                VAlign = 1f,
+                AllowResizingDimensions = true
+            };
+            float scale = image.Width.Pixels <= 350f ? 1f: 350f / image.Width.Pixels;
+            image.Width.Pixels = 350f;
+            image.Height.Pixels *= scale;
+            image.ImageScale = scale;
+            image.Left.Pixels -= image.Width.Pixels * scale;
+            image.Top.Pixels -= image.Height.Pixels * scale;
+
+
+            postTextbox.Height.Pixels += image.Height.Pixels + 16;
+            postArea.Height.Pixels += image.Height.Pixels + 16;
+
+            postTextbox.Append(image);
+        }
 
         UIImage pfp = new(ArsenalSystem.ProfileData[post.Poster].PFP ?? ArsenalSystem.ProfileData["Default"].PFP)
         {
@@ -429,7 +456,7 @@ public static class ArsenalUtils
             IsWrapped = false
         };
 
-        accountName.Left.Pixels = pfp.Width.Pixels + FontAssets.MouseText.Value.MeasureString(displayName.Text).X + 16;
+        accountName.Left.Pixels = pfp.Width.Pixels + ChatManager.GetStringSize(FontAssets.MouseText.Value, displayName.Text, Vector2.One).X + 16;
         accountName.Top.Pixels = pfp.Height.Pixels / 4;
         postArea.Append(accountName);
 
@@ -477,7 +504,7 @@ public static class ArsenalUtils
                     return str.FormatWith(Main.LocalPlayer.name);
                 return str;
             case "PlayerHater":
-                return str.FormatWith(Main.LocalPlayer.name);
+                return str.FormatWith(type == MemberType.AccountName ? Main.LocalPlayer.name.Replace(' ', '-') : Main.LocalPlayer.name);
             default: 
                 return str;
         }
@@ -541,8 +568,11 @@ public class ArsenalSystem : ModSystem
         //Add all posts to Posts
         Posts.Add("Fanny/GoodMorning", (() => true, false));
         Posts.Add("XboxGamer/StupidHelper", (() => true, false));
+        Posts.Add("Renault/Advert1", (() => true, false));
         Posts.Add("PlayerHater/BadMorning", (() => true, false));
         Posts.Add("MiracleBoy/Dog", (() => true, false));
+        Posts.Add("Fanny/BabilHunting", (() => true, false));
+        Posts.Add("MiracleBoy/Cartwheel", (() => true, false));
 
         if (!Main.dedServ)
         {

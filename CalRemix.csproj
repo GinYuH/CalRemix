@@ -21,10 +21,10 @@
   
   <ItemGroup>
     <Folder Include="Assets\Textures\Arsenal\Banners\" />
-    <Folder Include="Assets\Textures\Arsenal\Images\" />
     <Folder Include="Assets\Textures\Arsenal\Thumbnails\" />
     <Folder Include="UI\Arsenal\en-US\Attachments\" />
     <Folder Include="UI\Arsenal\en-US\Posts\Fanny\" />
+    <Folder Include="UI\Arsenal\en-US\Posts\Renault\" />
     <Folder Include="UI\Arsenal\en-US\Posts\PlayerHater\" />
     <Folder Include="UI\Arsenal\en-US\Replies\" />
   </ItemGroup>
