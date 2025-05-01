@@ -4279,3 +4279,8 @@ Farmixer: {
 	DisplayName: Farmixer
 	Tooltip: Used for specialized crafting
 }
+
+DraePhone15: {
+	DisplayName: Drae Phone15
+	Tooltip: ""
+}
