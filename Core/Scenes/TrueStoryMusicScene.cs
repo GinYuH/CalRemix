@@ -9,7 +9,7 @@ public class TrueStoryMusicScene : ModSceneEffect
     public override bool IsSceneEffectActive(Player player)
     {
         if (player.whoAmI == Main.myPlayer)
-            return player.GetModPlayer<CalRemixPlayer>().trueStory < TrueStory.MaxStoryTime && !CalRemixWorld.playerSawTrueStory.Contains(Main.clientUUID);
+            return player.GetModPlayer<CalRemixPlayer>().trueStory < TrueStory.MaxStoryTime && !CalRemixWorld.playerSawTrueStory.Contains(player.name);
         return false;
     }
     public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;

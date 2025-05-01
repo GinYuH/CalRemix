@@ -607,7 +607,7 @@ namespace CalRemix
             if (Main.myPlayer == Player.whoAmI)
             {
                 Anomaly109ClientUpdates();
-                if (!CalRemixWorld.playerSawTrueStory.Contains(Main.clientUUID))
+                if (!CalRemixWorld.playerSawTrueStory.Contains(Player.name))
                     TrueStoryLogic();
                 else
                     FandomWikiLogic();

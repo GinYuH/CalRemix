@@ -35,10 +35,8 @@ namespace CalRemix.Core.Retheme
         public static Asset<Texture2D> originalBoneGloveBackTexture;
         public static Asset<Texture2D> invisibleSprite;
 
-        public static List<Asset<Texture2D>> BrandLogos = new();
-
-        public static SetFactory SneakersFactory = new SetFactory(ItemLoader.ItemCount);
-        public static bool[] SneakerList = SneakersFactory.CreateBoolSet(
+        public static List<Asset<Texture2D>> BrandLogos = [];
+        public static bool[] SneakerList = ItemID.Sets.Factory.CreateBoolSet(
             //Vanilla
               ItemID.RoyalGel,
               ItemID.EoCShield, 

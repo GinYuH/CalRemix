@@ -58,7 +58,6 @@ namespace CalRemix.Core.Retheme
 
             SneakersRetheme.Load();
         }
-        public override void OnWorldUnload() => UnloadAll();
         public override void Unload() => UnloadAll();
         public override void PostSetupContent()
         {
