@@ -58,14 +58,7 @@ namespace CalRemix.Core.Retheme
 
             SneakersRetheme.Load();
         }
-
-        public override void Unload()
-        {
-            base.Unload();
-            
-            SneakersRetheme.ApplyTextureChanges(unloading: true);
-        }
-
+        public override void Unload() => UnloadAll();
         public override void PostSetupContent()
         {
             foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
@@ -85,6 +78,13 @@ namespace CalRemix.Core.Retheme
                 Buffs.Add(p.Key, TextureAssets.Buff[p.Key]);
             }
             SneakersRetheme.SaveDefaultSneakersTextures();
+        }
+        private static void UnloadAll()
+        {
+            RethemeItem.ResetAnimations(true);
+            RethemeItem.ChangeTextures(true);
+            SneakersRetheme.ApplyAnimationsChanges(true);
+            SneakersRetheme.ApplyTextureChanges(true);
         }
     }
     public class RethemeNPC : GlobalNPC
@@ -267,6 +267,35 @@ namespace CalRemix.Core.Retheme
 
                 return false;
             }
+            else if (npc.type == NPCType<DesertScourgeHead>() || npc.type == NPCType<DesertScourgeBody>())
+            {
+                Texture2D head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body", AssetRequestMode.AsyncLoad).Value;
+
+                if (npc.type == NPCType<DesertScourgeHead>())
+                    head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Head", AssetRequestMode.AsyncLoad).Value;
+                else
+                {
+                    if (npc.ai[3] == 1)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body2", AssetRequestMode.AsyncLoad).Value;
+                    }
+                    else if (npc.ai[3] == 2)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body3", AssetRequestMode.AsyncLoad).Value;
+                    }
+                    else if (npc.ai[3] == 3)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body4", AssetRequestMode.AsyncLoad).Value;
+                    }
+                }
+
+                Vector2 drawCenter = npc.Center - screenPos;
+                float drawRotation = npc.rotation;
+
+                spriteBatch.Draw(head, drawCenter, null, drawColor, drawRotation, head.Size() / 2f, npc.scale, SpriteEffects.None, 0f);
+
+                return false;
+            }
 
             return true;
         }
@@ -297,7 +326,7 @@ namespace CalRemix.Core.Retheme
     {
         public static void UpdateChanges()
         {
-            ChangeTextures();
+            ResetAnimations();
             ResetNames();
         }
         public static void ResetNames()
@@ -317,9 +346,23 @@ namespace CalRemix.Core.Retheme
                 }
             }
         }
-        public static void ChangeTextures()
+        public static void ResetAnimations(bool unloading = false)
         {
-            if (CalRemixWorld.itemChanges)
+            if (CalRemixWorld.itemChanges && !unloading)
+            {
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+            }
+            else
+            {
+                if (!unloading)
+                {
+                    Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+                }
+            }
+        }
+        public static void ChangeTextures(bool unloading = false)
+        {
+            if (CalRemixWorld.itemChanges && !unloading)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
@@ -335,8 +378,6 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                 }
-
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
             }
             else
             {
@@ -353,7 +394,6 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
             }
         }
         public override void SetStaticDefaults()

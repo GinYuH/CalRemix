@@ -252,7 +252,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             for (int i = 0; i < 4; i++)
                             {
                                 //if (Main.netMode != NetmodeID.MultiplayerClient)
-                                NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<HypnosPlug>(), 0, NPC.whoAmI, i);
+                                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<HypnosPlug>(), 0, NPC.whoAmI, i);
                             }
                             /*for (int l = 0; l < 48; l++)
                             {
@@ -1005,12 +1005,6 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         {
             typeName = (NPC.ai[0] == 0 && NPC.ai[1] > 0) ? ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName : CalRemixHelper.LocalText($"NPCs.{Name}.DisplayName").Value;
         }
-
-        public static void SummonDraedon(Player player)
-        { 
-            // don't call it on multiplayer client
-			NPC.NewNPC(new Terraria.DataStructures.EntitySource_BossSpawn(player), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>(), 0, 0, 0, 0, player.whoAmI, player.whoAmI);
-		}
 
         public HypnosAssemblagePiece CreatePiece(Vector2 position, string texture, float opacity, bool leftSide, Vector2 destination, float power, float pitch)
         {

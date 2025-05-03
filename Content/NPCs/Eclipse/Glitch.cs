@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                     {
                         SoundEngine.PlaySound(new SoundStyle("Terraria/Sounds/Item_" + Main.rand.Next(1, 179)) with { PitchRange = (-1, 1) }, NPC.Center);
                     }
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Corruption>(), ai0: Main.rand.Next(0, 4));
+                    CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<Corruption>(), ai0: Main.rand.Next(0, 4));
                 }
             }
         }

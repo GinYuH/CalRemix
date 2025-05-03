@@ -88,7 +88,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 
         public override void OnSpawn(IEntitySource source)
         {
-            NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<CarcinogenShield>(), ai0: NPC.whoAmI);
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, ModContent.NPCType<CarcinogenShield>(), ai0: NPC.whoAmI);
         }
 
         public override void AI()
@@ -451,7 +451,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             CalRemixWorld.UpdateWorldBool();
             if (!NPC.AnyNPCs(ModContent.NPCType<UNCANNY>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<UNCANNY>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<UNCANNY>());
             }
         }
 

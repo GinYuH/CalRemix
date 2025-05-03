@@ -30,7 +30,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.Projectiles
@@ -162,24 +162,7 @@ namespace CalRemix.Content.Projectiles
                 {
                     SoundEngine.PlaySound(SoundID.Shatter with { Volume = 1 });
                     projectile.Kill();
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int num = NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
-                        if (Main.npc.IndexInRange(num))
-                        {
-                            CalamityUtils.BossAwakenMessage(num);
-                        }
-                    }
-                    else
-                    {
-                        ModPacket packet = CalRemix.CalMod.GetPacket();
-                        packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
-                        packet.Write(projectile.position.X);
-                        packet.Write(656);
-                        packet.Write(NPCType<Oxygen>());
-                        packet.Write(Main.myPlayer);
-                        packet.Send();
-                    }
+                    SpawnNewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>(), awakenMessage: true);
                 }
             }
             if (projectile.type == ProjectileType<OverlyDramaticDukeSummoner>())

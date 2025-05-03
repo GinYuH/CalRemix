@@ -47,7 +47,6 @@ namespace CalRemix
                 Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
                 SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
-                SkyManager.Instance["CalRemix:TrueStory"] = new StorySky();
             }
 
             AssetRepository remixAsset = Mod.Assets;

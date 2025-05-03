@@ -35,8 +35,8 @@ namespace CalRemix.Core.Graphics
         {
             var gd = Main.instance.GraphicsDevice;
 
-            gd.SetRenderTarget(OverlayableTarget.Target);
-            gd.Clear(Color.Transparent);
+            gd?.SetRenderTarget(OverlayableTarget.Target);
+            gd?.Clear(Color.Transparent);
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
             // Draw all projectiles that have the relevant interface.

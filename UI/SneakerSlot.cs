@@ -32,7 +32,7 @@ namespace CalRemix.UI
             if (!FunctionalItem.IsAir)
             {
                 SneakersRetheme.sneakerIntroMessage.ActivateMessage();
-                var networthPlayer = Player.GetModPlayer<NetWorthPlayer>();
+                var networthPlayer = Player?.GetModPlayer<NetWorthPlayer>();
 
                 networthPlayer.netWorthCap += NetWorthPlayer.netWorthCapPerSneaker[FunctionalItem.type];
                 networthPlayer.netWorthSpeed += (int)Math.Pow(FunctionalItem.rare, 2);

@@ -46,13 +46,16 @@ using static Terraria.ModLoader.ModContent;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.UI;
 
 namespace CalRemix
 {
     enum RemixMessageType
     {
+        Anomaly109Help,
         Anomaly109Sync,
-        HypnosSummoned,
+        Anomaly109Unlock,
+        ToggleHelpers,
         SyncIonmaster,
         IonQuestLevel,
         OxydayTime,
@@ -86,19 +89,30 @@ namespace CalRemix
             RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
             switch (msgType)
             {
-                case RemixMessageType.Anomaly109Sync:
+                case RemixMessageType.Anomaly109Help:
                     {
-                        int optionIndex = reader.ReadInt32();
-                        Anomaly109Option option = Anomaly109Manager.options[optionIndex];
-                        option.toggle();
+                        Anomaly109Manager.helpUnlocked = true;
                         CalRemixWorld.UpdateWorldBool();
                         break;
                     }
-                case RemixMessageType.HypnosSummoned:
+                case RemixMessageType.Anomaly109Sync:
                     {
-                        int player = reader.ReadByte();
-
-                        Hypnos.SummonDraedon(Main.player[player]);
+                        int optionIndex = reader.ReadInt32();
+                        Anomaly109Manager.options[optionIndex].toggle();
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
+                case RemixMessageType.Anomaly109Unlock:
+                    {
+                        int optionIndex = reader.ReadInt32(); 
+                        Anomaly109Manager.options[optionIndex].unlocked = true;
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
+                case RemixMessageType.ToggleHelpers:
+                    {
+                        ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.SyncIonmaster:
@@ -148,8 +162,8 @@ namespace CalRemix
                     }
                 case RemixMessageType.TrueStory:
                     {
-                        int storyCounter = reader.ReadByte();
-                        CalRemixWorld.trueStory = storyCounter;
+                        string uuid = reader.ReadString();
+                        CalRemixWorld.playerSawTrueStory.Add(uuid);
                         break;
                     }
                 case RemixMessageType.StartPandemicPanic:
@@ -345,7 +359,7 @@ namespace CalRemix
             }
             Action<int> pr2 = delegate (int npc)
             {
-                NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, NPCType);
+                CalRemixHelper.SpawnNPCOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, NPCType);
             };
             if (customAction != default)
             {

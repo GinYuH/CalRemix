@@ -19,7 +19,7 @@ namespace CalRemix.UI
             orig(self, gameTime);
             SpriteBatch spriteBatch = Main.spriteBatch;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
-            if (!Main.gameMenu || Main.LocalPlayer != null)
+            if (!Main.gameMenu && Main.LocalPlayer != null)
             {
                 if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer p) && p.onFandom > 0)
                 {

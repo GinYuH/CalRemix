@@ -758,7 +758,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                     }
                                     if (DoesNotHaveTiles)
                                     {
-                                        NPC.NewNPC(NPC.GetSource_FromThis(), ancientDoomX * 16 + 8, ancientDoomY * 16 + 8, NPCID.AncientLight, 0, NPC.whoAmI);
+                                        CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), ancientDoomX * 16 + 8, ancientDoomY * 16 + 8, NPCID.AncientLight, 0, NPC.whoAmI);
                                         flag6 = true;
                                         break;
                                     }

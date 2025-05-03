@@ -67,27 +67,8 @@ namespace CalRemix.Content.Tiles
                     }
                     else
                     {
-                        if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                int num = NPC.NewNPC(new EntitySource_WorldEvent(), i * 16, j * 16, ModContent.NPCType<Ionogen>());
-                                if (Main.npc.IndexInRange(num))
-                                {
-                                    CalamityUtils.BossAwakenMessage(num);
-                                }
-                            }
-                            else
-                            {
-                                ModPacket packet = CalRemix.CalMod.GetPacket();
-                                packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
-                                packet.Write(i * 16);
-                                packet.Write(j * 16);
-                                packet.Write(ModContent.NPCType<Ionogen>());
-                                packet.Write(Main.myPlayer);
-                                packet.Send();
-                            }
-                        }
+                        if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1)) 
+                            CalRemixHelper.SpawnNewNPC(new EntitySource_WorldEvent(), i * 16, j * 16, ModContent.NPCType<Ionogen>(), awakenMessage: true);
                         player.ionDialogue = -1;
                         cube.textLifeTime = 0;
                     }
@@ -284,27 +265,7 @@ namespace CalRemix.Content.Tiles
                         {
                             shouldUpdate = true;
                             if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
-                            {
-
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                {
-                                    int num = NPC.NewNPC(new EntitySource_WorldEvent(), guy.Position.X * 16, guy.Position.Y * 16, ModContent.NPCType<Ionogen>());
-                                    if (Main.npc.IndexInRange(num))
-                                    {
-                                        CalamityUtils.BossAwakenMessage(num);
-                                    }
-                                }
-                                else
-                                {
-                                    ModPacket packet = CalRemix.CalMod.GetPacket();
-                                    packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
-                                    packet.Write(guy.Position.X * 16);
-                                    packet.Write(guy.Position.Y * 16);
-                                    packet.Write(ModContent.NPCType<Ionogen>());
-                                    packet.Write(Main.myPlayer);
-                                    packet.Send();
-                                }
-                            }
+                                CalRemixHelper.SpawnNewNPC(new EntitySource_WorldEvent(), guy.Position.X * 16, guy.Position.Y * 16, ModContent.NPCType<Ionogen>(), awakenMessage: true);
                             player.ionDialogue = -1;
                         }
                     }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -211,13 +212,75 @@ namespace CalRemix
             flushColor ??= Color.Transparent;
             graphicsDevice.Clear(flushColor.Value);
         }
-
-        public static void BroadcastText(string text, Color color)
+        public static void ChatMessage(string text, Color color, NetworkText netText = null)
         {
             if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(text, color);
             else if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
+                ChatHelper.BroadcastChatMessage(netText ?? NetworkText.FromLiteral(text), color);
+        }
+        public static void SpawnNPCOnPlayer(int playerWhoAmI, int type)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.SpawnOnPlayer(playerWhoAmI, type);
+            else
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: playerWhoAmI, number2: type);
+        }
+        /// <summary>
+        /// Spawns a new npc with multiplayer and action invocation support.
+        /// </summary>
+        /// <param name="source">The source of the npc.</param>
+        /// <param name="x">The x spawn position of the npc.</param>
+        /// <param name="y">The y spawn position of the npc.</param>
+        /// <param name="type">The id of the npc type that should be spawned.</param>
+        /// <param name="minSlot">The lowest slot in <see cref="Main.npc"/> the npc can use.</param>
+        /// <param name="ai0">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai1">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="ai2">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai3">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="target">The player index to use for the <see cref="NPC.target"/> value.</param>
+        /// <param name="npcTasks">The actions the <see cref="NPC"/> executes.</param>
+        /// <param name="awakenMessage">Sends a boss awaken message in chat</param>
+        public static NPC SpawnNewNPC(IEntitySource source, int x, int y, int type, int minSlot = 0, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f, int target = 255, Action<NPC> npcTasks = null, bool awakenMessage = false)
+        {
+            NPC npc = Main.npc[0];
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                npc = NPC.NewNPCDirect(source, x, y, type, minSlot, ai0, ai1, ai2, ai3, target);
+                if (Main.npc.IndexInRange(npc.whoAmI))
+                {
+                    npcTasks?.Invoke(npc);
+                    if (Main.dedServ)
+                        npc.netUpdate = true;
+                }
+            }
+            if (awakenMessage)
+                ChatMessage(Language.GetTextValue("Announcement.HasAwoken", npc.TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", npc.GetTypeNetName()));
+            return npc;
+        }
+        /// <summary>
+        /// Spawns a new npc with multiplayer and action invocation support.
+        /// </summary>
+        /// <param name="source">The source of the npc.</param>
+        /// <param name="position">The spawn position of the npc.</param>
+        /// <param name="type">The id of the npc type that should be spawned.</param>
+        /// <param name="minSlot">The lowest slot in <see cref="Main.npc"/> the npc can use.</param>
+        /// <param name="ai0">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai1">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="ai2">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai3">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="target">The player index to use for the <see cref="NPC.target"/> value.</param>
+        /// <param name="npcTasks">The actions the <see cref="NPC"/> executes.</param>
+        /// <param name="awakenMessage">Sends a boss awaken message in chat</param>
+        public static NPC SpawnNewNPC(IEntitySource source, Vector2 position, int type, int minSlot = 0, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f, int target = 255, Action<NPC> npcTasks = null, bool awakenMessage = false)
+        {
+            return SpawnNewNPC(source, (int)position.X, (int)position.Y, type, minSlot, ai0, ai1, ai2, ai3, target, npcTasks, awakenMessage);
+        }
+        public static void DestroyTile(int i, int j, bool fail = false, bool effectOnly = false, bool noItem = false)
+        {
+            WorldGen.KillTile(i, j, fail, effectOnly, noItem);
+            if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
+                NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
         }
         /// <summary>
         /// Summons a projectile of a specific type while also adjusting damage for vanilla spaghetti regarding hostile projectiles.

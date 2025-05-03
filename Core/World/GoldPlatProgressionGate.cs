@@ -34,7 +34,7 @@ internal sealed class GoldPlatProgressionGate : ModSystem
 
             hasSpawnedOre = true;
 
-            CalRemixHelper.BroadcastText(
+            CalRemixHelper.ChatMessage(
                 Language.GetTextValue("Mods.CalRemix.WorldGen.BlessedWithGoldOrPlatinumMessage"),
                 new Color(50, 255, 130)
             );

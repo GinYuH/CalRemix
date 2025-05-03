@@ -4279,3 +4279,8 @@ Farmixer: {
 	DisplayName: Farmixer
 	Tooltip: Used for specialized crafting
 }
+
+TheBeacon: {
+	DisplayName: The Beacon
+	Tooltip: ""
+}

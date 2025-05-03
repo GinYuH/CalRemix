@@ -28,18 +28,12 @@ namespace CalRemix.Content.Items.Lore
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.rare = ModContent.RarityType<CalamityRed>();
         }
+        public override bool CanUseItem(Player player) => !NPC.AnyNPCs(ModContent.NPCType<TheCalamity>());
         public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer && !NPC.AnyNPCs(ModContent.NPCType<TheCalamity>()))
-            {
-                int type = ModContent.NPCType<TheCalamity>();
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-                return true;
-            }
-            return false;
+            if (player.whoAmI == Main.myPlayer)
+                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<TheCalamity>());
+            return true;
         }
         public override void AddRecipes()
         {

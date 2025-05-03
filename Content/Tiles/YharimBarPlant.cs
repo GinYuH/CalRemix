@@ -35,6 +35,8 @@ namespace CalRemix.Content.Tiles
         }
         public override void RandomUpdate(int i, int j)
         {
+            if (!Main.rand.NextBool(20))
+                return;
             Tile tile = Framing.GetTileSafely(i, j);
             tile.TileFrameY = (short)((tile.TileFrameY < 120) ? 120 : 240);
             if (Main.netMode != NetmodeID.SinglePlayer)

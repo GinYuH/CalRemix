@@ -61,11 +61,8 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.Calamity().newAI[0] == 0)
             {
                 NPC.Calamity().newAI[0] = 1;
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 200, NPCType<FleshmulletEye>());
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y + 200, NPCType<FleshmulletEye>());
-                }
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 200, NPCType<FleshmulletEye>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y + 200, NPCType<FleshmulletEye>());
             }
             foreach (Projectile p in Main.ActiveProjectiles)
             {
@@ -113,11 +110,10 @@ namespace CalRemix.Content.NPCs.Minibosses
                 if (!Main.hardMode)
                 {
                     NPC.boss = false;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, NPCID.WallofFlesh, npcTasks: (NPC w) =>
                     {
-                        int w = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, NPCID.WallofFlesh);
-                        Main.npc[w].StrikeInstantKill();
-                    }
+                        w.StrikeInstantKill();
+                    });
                 }
                 if (Main.netMode != NetmodeID.Server)
                 {

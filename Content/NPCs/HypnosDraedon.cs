@@ -106,10 +106,7 @@ namespace CalRemix.Content.NPCs
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                             }
                             Vector2 cords = new Vector2((int)player.Center.X, (int)(player.Center.Y - 200));
-                            int hypy = NPC.NewNPC(NPC.GetSource_FromAI(), (int)cords.X, (int)cords.Y, ModContent.NPCType<Hypnos>());
-                                hypnosWhoAmI = hypy;
-								hypnos = Main.npc[hypnosWhoAmI];
-                                hypnos.netUpdate = true;
+                            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), cords, ModContent.NPCType<Hypnos>());
 							NPC.ai[1] = 0;
                             NPC.ai[0] = 1;
                             NewText(CalRemixHelper.LocalText("StatusText.UncertainAwoken").Format(ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName), new Color(175, 75, 255));

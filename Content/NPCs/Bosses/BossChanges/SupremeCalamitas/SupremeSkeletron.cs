@@ -148,8 +148,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         {
             // my arms.. i need my arms...
             // first is left, second is right
-            NPC.ai[2] = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SupremeSkeletronHand>(), 0, 0, 0, 0, NPC.whoAmI, Target.whoAmI);
-            NPC.ai[3] = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SupremeSkeletronHand>(), 0, 0, 0, 1, NPC.whoAmI, Target.whoAmI);
+            NPC.ai[2] = CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<SupremeSkeletronHand>(), 0, 0, 0, 0, NPC.whoAmI, Target.whoAmI).whoAmI;
+            NPC.ai[3] = CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<SupremeSkeletronHand>(), 0, 0, 0, 1, NPC.whoAmI, Target.whoAmI).whoAmI;
 
 
         }

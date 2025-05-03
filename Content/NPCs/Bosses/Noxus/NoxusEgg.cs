@@ -640,9 +640,9 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             if (AttackTimer >= animationTime)
             {
                 SoundEngine.PlaySound(ExplosionTeleportSound with { Volume = 3f });
+                SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<EntropicGod>(), 1);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EntropicGod>(), 1);
                     NewProjectileBetter(NPC.Center, Vector2.Zero, ModContent.ProjectileType<DarkWave>(), 0, 0f);
                 }
 

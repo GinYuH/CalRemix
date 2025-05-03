@@ -44,7 +44,7 @@ namespace CalRemix.Content.Tiles
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<Origen>()))
             {
-                NPC.NewNPC(new EntitySource_WorldEvent(), i * 16, j * 16 - 12, ModContent.NPCType<Origen>());
+                CalRemixHelper.SpawnNewNPC(new EntitySource_WorldEvent(), i * 16, j * 16 - 12, ModContent.NPCType<Origen>());
             }
             SoundEngine.PlaySound(SoundID.DoorOpen);
             int x = i - Main.tile[i, j].TileFrameX / 18 % 2;

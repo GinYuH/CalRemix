@@ -116,7 +116,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 UpdateLists();
                 if (TotalKills >= 300 && (!SummonedPathogen || (!InvadersWinning && !NPC.AnyNPCs(ModContent.NPCType<Pathogen>()))))
                 {
-                    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Pathogen>());
+                    CalRemixHelper.SpawnNPCOnPlayer(Main.LocalPlayer.whoAmI, ModContent.NPCType<Pathogen>());
                     SummonedPathogen = true;
                 }
                 if (Main.rand.NextBool((int)MathHelper.Lerp(1200, 300, DefendersKilled / MaxRequired)) && coughTimer <= 0)
@@ -395,11 +395,13 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     hitCooldown = 20;
                     if (npc.life <= 0 && n.type == ModContent.NPCType<Malignant>()/* && NPC.CountNPCS(ModContent.NPCType<Malignant>()) < 22*/)
                     {
-                        int np = NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Malignant>());
-                        Main.npc[np].npcSlots = 0;
-                        Main.npc[np].lifeMax = Main.npc[np].life = (int)MathHelper.Max(1, n.lifeMax / 2);
-                        Main.npc[np].damage = (int)MathHelper.Max(1, n.damage * 0.75f);
-                        Main.npc[np].scale = MathHelper.Max(0.2f, n.scale * 0.8f);
+                        CalRemixHelper.SpawnNewNPC(npc.GetSource_Death(), npc.Center, ModContent.NPCType<Malignant>(), npcTasks: (NPC np) =>
+                        {
+                            np.npcSlots = 0;
+                            np.lifeMax = np.life = (int)MathHelper.Max(1, n.lifeMax / 2);
+                            np.damage = (int)MathHelper.Max(1, n.damage * 0.75f);
+                            np.scale = MathHelper.Max(0.2f, n.scale * 0.8f);
+                        });
                     }
                     break;
                 }

@@ -44,16 +44,8 @@ namespace CalRemix.Content.Items.SummonItems
             if (player.whoAmI == Main.myPlayer)
             {
                 int noxusID = player.altFunctionUse == 2 || !RemixDowned.downedNoxegg ? ModContent.NPCType<NoxusEgg>() : ModContent.NPCType<EntropicGod>();
-
-                // If the player is not in multiplayer, spawn Noxus.
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, noxusID);
-
-                // If the player is in multiplayer, request a boss spawn.
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: noxusID);
+                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, noxusID);
             }
-
             return true;
         }
 

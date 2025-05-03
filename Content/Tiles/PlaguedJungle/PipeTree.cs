@@ -112,7 +112,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
                 int type = ModContent.NPCType<PlaguedFirefly>();
                 if (Main.raining)
                     type = NPCID.EnchantedNightcrawler;
-                NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type);
+                CalRemixHelper.SpawnNewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type);
             }
             else if (Main.rand.NextBool(15))
             {

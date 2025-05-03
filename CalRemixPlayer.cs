@@ -64,12 +64,10 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using System.Threading.Tasks;
 using CalRemix.Content.Items.Weapons.Stormbow;
-using Mono.Cecil;
-using CalamityMod.Items.VanillaArmorChanges;
 using CalamityMod.Buffs.StatBuffs;
-
 using Terraria.GameContent;
-using CalRemix.Content.Tiles;
+using static CalRemix.CalRemixHelper;
+using CalRemix.Core.Retheme;
 
 namespace CalRemix
 {
@@ -117,9 +115,6 @@ namespace CalRemix
         public int commonItemHoldTimer;
         public int remixJumpCount;
         public int RecentChest = -1;
-        public int onFandom;
-        public int checkWarningDelay;
-        public bool anomaly109UI;
         public bool fridge;
 
         public bool gottenCellPhone = false;
@@ -128,15 +123,23 @@ namespace CalRemix
         public int trapperFriendsLearned = 0;
         public int ionDialogue = -1;
         public int ionQuestLevel = -1;
-
-        public CustomGen customGen = new(1, Color.White, false, true, 3, Color.White, false, true);
-        public bool generatingGen = false;
-        public bool genActive = false;
-        public bool genMusic = true;
+        public int fifteenMinutesSinceHardmode = 54000;
 
         public int deliciousMeatRedeemed = 0;
         public int deliciousMeatPrestige = 0;
         public bool deliciousMeatNoLife = false;
+
+        // UI Events
+        public bool anomaly109UI;
+        public int trueStory;
+        public int onFandom;
+        public int checkWarningDelay;
+
+        // Vanity
+        public CustomGen customGen = new(1, Color.White, false, true, 3, Color.White, false, true);
+        public bool generatingGen = false;
+        public bool genActive = false;
+        public bool genMusic = true;
 
         // Biome
         public bool dungeon2;
@@ -408,6 +411,7 @@ namespace CalRemix
             tag["CellPhone"] = gottenCellPhone;
             tag["TrappFriends"] = trapperFriendsLearned;
             tag["MiracleUnlocked"] = miracleUnlocked;
+            tag["FifteenMinutesSinceHardmode"] = fifteenMinutesSinceHardmode;
 
             tag["DeliciousMeatRedeemed"] = deliciousMeatRedeemed;
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
@@ -420,6 +424,7 @@ namespace CalRemix
             gottenCellPhone = tag.GetBool("CellPhone");
             trapperFriendsLearned = tag.GetInt("TrappFriends");
             miracleUnlocked = tag.GetBool("MiracleUnlocked");
+            fifteenMinutesSinceHardmode = tag.GetInt("FifteenMinutesSinceHardmode");
 
             deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
             deliciousMeatPrestige = tag.GetInt("DeliciousMeatPrestige");
@@ -571,14 +576,15 @@ namespace CalRemix
 		        var crit = boost / 80f; // 16 * 5
 		        Player.GetCritChance(DamageClass.Generic) += crit;
 	        }
-	        
-	        // add +5% damage for every item being picked up with treasure magnet
-	        if (Player.treasureMagnet)
-	        {
-		        var grabCount = ItemGrabListener.BEING_GRABBED_BY.Count(x => x == Player.whoAmI);
-
-		        Player.GetDamage(DamageClass.Generic) *= 1f * 0.05f * grabCount;
-	        }
+        }
+        public override void PostUpdate()
+        {
+            // add +5% damage for every item being picked up with treasure magnet
+            if (Player.treasureMagnet)
+            {
+                var grabCount = ItemGrabListener.BEING_GRABBED_BY.Count(x => x == Player.whoAmI);
+                Player.GetDamage(DamageClass.Generic) *= 1f + 0.05f * grabCount;
+            }
         }
 
         public override void UpdateEquips()
@@ -600,25 +606,21 @@ namespace CalRemix
         {
             if (Main.myPlayer == Player.whoAmI)
             {
+                Anomaly109ClientUpdates();
+                if (!CalRemixWorld.playerSawTrueStory.Contains(Player.name))
+                    TrueStoryLogic();
+                else
+                    FandomWikiLogic();
                 if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(NPCType<Hypnos>()))
                     Player.Calamity().monolithExoShader = 30;
                 if (Main.mouseItem.type == ItemType<CirrusCouch>() || Main.mouseItem.type == ItemType<CrystalHeartVodka>())
                     Main.mouseItem.stack = 0;
-                if (checkWarningDelay <= 0)
-                {
-                    Task.Run(() => Warning.CheckOnFandom(Player));
-                    checkWarningDelay = 30;
-                }
-                if (Player.miscCounter % 90 == 0 && onFandom > 0)
-                    SoundEngine.PlaySound(AresBody.EnragedSound with { MaxInstances = 3, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest });
-                if (onFandom > 0)
-                    onFandom--;
-                checkWarningDelay--; 
                 if (ScreenHelpersUIState.BizarroFanny != null)
                 {
                     if (ScreenHelpersUIState.BizarroFanny.Speaking && ScreenHelpersUIState.BizarroFanny.UsedMessage.Portrait == ScreenHelperManager.Portraits["BizarroFannyGoner"])
                         Main.musicVolume = 0;
                 }
+
             }
             if (CalRemixWorld.permanenthealth)
 				SpawnPhantomHeart();
@@ -742,7 +744,7 @@ namespace CalRemix
 							plagueEnemies++;
 							if (plagueEnemies >= plagueToSpawnPhytogen)
 							{
-								NPC.SpawnOnPlayer(Player.whoAmI, NPCType<Phytogen>());
+                                SpawnNPCOnPlayer(Player.whoAmI, NPCType<Phytogen>());
 								break;
 							}
 						}
@@ -754,8 +756,13 @@ namespace CalRemix
                 if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
                 {
                     if (!NPC.AnyNPCs(NPCType<Hydrogen>()))
-                        NPC.NewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
+                        SpawnNewNPC(Player.GetSource_FromThis(), (int)CalRemixWorld.hydrogenLocation.X + 10, (int)CalRemixWorld.hydrogenLocation.Y + 40, NPCType<Hydrogen>());
                 }
+            }
+
+            if (Main.hardMode && fifteenMinutesSinceHardmode > 0)
+            {
+                fifteenMinutesSinceHardmode--;
             }
         }
 
@@ -1506,7 +1513,44 @@ namespace CalRemix
                 Projectile.NewProjectile(Player.GetSource_FromThis(), new Vector2(Main.rand.Next((int)Player.Center.X - Main.screenWidth, (int)Player.Center.X + Main.screenWidth), Player.Center.Y + Main.screenHeight), new Vector2((float)Main.rand.Next(-400, 401) * 0.01f, (float)Main.rand.Next(-1000, -701) * 0.01f), ProjectileType<FallingPhantomHeart>(), 0, 0, Player.whoAmI);
             }
         }
-
+        public void FandomWikiLogic()
+        {
+            if (checkWarningDelay <= 0)
+            {
+                if (!Main.dedServ)
+                    Task.Run(() => Warning.CheckOnFandom(Player));
+                checkWarningDelay = 30;
+            }
+            if (Player.miscCounter % 90 == 0 && onFandom > 0)
+                SoundEngine.PlaySound(AresBody.EnragedSound with { MaxInstances = 3, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest });
+            if (onFandom > 0)
+                onFandom--;
+            checkWarningDelay--;
+        }
+        public void TrueStoryLogic()
+        {
+            ScreenHelperManager.ongoingConversationTimer = trueStory;
+            ScreenHelperManager.ongoingConversation = true;
+            trueStory++;
+            if (trueStory > TrueStory.MaxStoryTime)
+            {
+                ScreenHelperManager.ongoingConversationTimer = 0;
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.TrueStory);
+                    packet.Write(Player.name);
+                    packet.Send();
+                }
+                else
+                    CalRemixWorld.playerSawTrueStory.Add(Player.name);
+            }
+        }
+        public static void Anomaly109ClientUpdates()
+        {
+            RethemeItem.ChangeTextures();
+            SneakersRetheme.ApplyTextureChanges();
+        }
         public void StealthCut(float amt)
         {
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
