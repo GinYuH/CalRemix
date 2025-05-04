@@ -24,30 +24,28 @@ namespace CalRemix.UI
     {
         public static void LoadFluxMessages()
         {
-            FluxPlayer player = Main.LocalPlayer.GetModPlayer<FluxPlayer>();
-
             #region debuff dialogue
             HelperMessage.New("FluxArmorCrunch", "It looks like your armor's broken. You might want to get that checked out.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<ArmorCrunch>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<ArmorCrunch>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxAstralInfection", "You might want to be careful around that Astral stuff.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<AstralInfectionDebuff>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<AstralInfectionDebuff>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxBrainRot", "Are you alright? It looks like your head hurts... I can get you a Tylenol™ if you need.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BrainRot>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BrainRot>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxBrimstoneFlames", "You might want to be careful... It looks like you're on fire...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BrimstoneFlames>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BrimstoneFlames>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxBurningBlood", "You look uncomfortable, are you alright?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BurningBlood>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<BurningBlood>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxClamity", "The clams look rather rambunctious today. Watch out.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Clamity>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Clamity>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
 
             HelperMessage fluxCrushDepth1 = HelperMessage.New("FluxCrushDepth1", "'Warning: maximum depth reached! Hull damage imminent!' Haha, that's a line from Subnautica...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<CrushDepth>() && player.isFluxAwake)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<CrushDepth>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux).InitiateConversation(6);
             HelperMessage fluxCrushDepth2 = HelperMessage.New("FluxCrushDepth2", "I'm sorry. I won't say that again.",
                 "FluxDefault", HelperMessage.AlwaysShow, 5)
@@ -55,121 +53,121 @@ namespace CalRemix.UI
                 .ChainAfter(fluxCrushDepth1, delay: 3f);
 
             HelperMessage.New("FluxDragonfire", "You might want to be careful... It looks like you're on fire...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Dragonfire>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Dragonfire>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // not doing extreme gravity so the focus during dog is on fanny
             HelperMessage.New("FluxFishAlert", "Watch out! It looks like the sealife of the Abyss caught on to your tricks.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<FishAlert>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<FishAlert>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxGlacialState", "Are you good in there? You look like a frozen caveman...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<GlacialState>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<GlacialState>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // also not doing godslayer inferno, ditto
             HelperMessage.New("FluxHolyFlames", "You might want to be careful... It looks like you're on fire...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<HolyFlames>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<HolyFlames>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxHolyInferno", "You should stick closer to the burning sun, it looks like staying away from it burns you.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<HolyInferno>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<HolyInferno>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // nothing for icarus folly since thats persistent itd be weird
             HelperMessage.New("FluxIrradiated", "You might wanna get some cancer treatment after this...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Irradiated>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Irradiated>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxMiracleBlight", "What's going on? Are you okay? It looks like you're all green! Like me! That isn't good!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<MiracleBlight>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<MiracleBlight>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxNightwither", "Are you alright? You look so sickly... Is there anything I can do to help?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Nightwither>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Nightwither>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxNOU", "Oh No! It looks like you're naked! That's terrible! Can you stay like that Haha",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<NOU>() && player.isFluxAwake, duration: 2)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<NOU>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, duration: 2)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxPlague", "Are you ill? Oh no... That isn't good... I'm sorry...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Plague>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Plague>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // nothing for riptide bcuz im lazy
             HelperMessage.New("FluxSulphuricPoisoning", "Don't drink the sulphur water. I don't think it's... Nevermind. You probably already knew that...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<SulphuricPoisoning>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<SulphuricPoisoning>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxVulnerabilityHex", "You're vulnerable... I'm sorry, I can't help...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<VulnerabilityHex>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<VulnerabilityHex>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // nothing for warped, see extreme gravity
             // nothing for weak petrification, ditto
             HelperMessage.New("FluxWhisperingDeath", "Oh no... Oh no...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<WhisperingDeath>() && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<WhisperingDeath>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
 
             // vanilla
 
             HelperMessage.New("FluxBleeding", "Are you bleeding!? Oh no... Try and look for first aid?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Bleeding) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Bleeding) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxPoison", "Oh jeez. You might need medical attention.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Poisoned) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Poisoned) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxOnFire", "You might want to be careful... It looks like you're on fire...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.OnFire) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.OnFire) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxAcidVenom", "Did a spider bite you? Seek medical attention as fast as you can!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Venom) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Venom) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxDarkness", "It's so dark... What happened?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Darkness) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Darkness) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxBlackout", "What...?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Blackout) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Blackout) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxSilenced", " ",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Silenced) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Silenced) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             //HelperMessage.New("FluxCursed", "What happened? Why aren't you attacking?",
-            //    "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Cursed) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
+            //    "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Cursed) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false).SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // nothing for confused cuz i felt like it
             HelperMessage.New("FluxSlow", "You're as slow as a snail. That... Isn't good.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Slow) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Slow) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxOozed", "Eew... Yucky. You're all sticky and stuff... Yuckers.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.OgreSpit) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.OgreSpit) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxWeak", "Your muscles look atrophied... Are you good? Do you need a break?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Weak) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Weak) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // nothing for withered debuffs
             // nothing for horrified
             //HelperMessage.New("FluxTheTongue", "Freaky",
-            //    "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.TheTongue) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+            //    "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.TheTongue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
             //    .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxCursedInferno", "Foul demon fire... You should try to extinguish yourself.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.CursedInferno) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.CursedInferno) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxIchor", "Gross...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Ichor) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Ichor) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxFrostburn", "It's pretty cold... You might want to invest in a sweater.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Frostburn) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Frostburn) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxChilled", "Is it getting cold here, or is it just me...?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Chilled) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Chilled) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxWebbed", "Yuck- you've been rendered immobile by webs.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Webbed) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Webbed) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxStoned", "Are... Are you okay? Are you good? Do you need any help?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Stoned) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Stoned) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxDistorted", "What- what are you doing? Ughh, I feel like I'm gonna be sick...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.VortexDebuff) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.VortexDebuff) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // idk what to do for obstructed
             HelperMessage.New("FluxElectrified", "Quite shocking! Hahah... I'm sorry, that wasn't funny. You're clearly in pain... I'm sorry.",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Electrified) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Electrified) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxFeralBite", "You've gotten your rabies shot recently, right?... Right?",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Rabies) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.Rabies) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxMoonBite", "What's he doing to you!? Get him to stop that! That can't be good for you...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.MoonLeech) && player.isFluxAwake, cooldown: 30, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.MoonLeech) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
 
@@ -179,19 +177,19 @@ namespace CalRemix.UI
             // technically, more than one of these could play per crit
             // i dont care
             HelperMessage.New("FluxCrit1", "You hit their weakspot!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxCrit2", "You got the critical hit!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxCrit3", "I hope you can beat them with that hit...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxCrit4", "Keep trying to hit their weak spot!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxCrit5", "Yeah! Keep hitting there, they took more damage!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasCrit && Main.rand.NextBool(chanceForCritDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
 
@@ -201,64 +199,64 @@ namespace CalRemix.UI
             // technically, more than one of these could play per crit
             // i dont care
             HelperMessage.New("FluxHit1", "Are you alright??",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxHit2", "Watch out for enemy attacks!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxHit3", "I hope you'll be fine after that...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxHit4", "You should heal up, stat!",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("FluxHit5", "Please be alright, please be alright...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && player.isFluxAwake, cooldown: 5, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().hasBeenHit && Main.rand.NextBool(chanceForHitDialogue) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 5, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
 
             #region boss spawn/death
             HelperMessage.New("BossSpawn1", "Oh jeez, that's one big foe... I wish I could help you...",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossSpawn2", "You're gonna wanna be careful. It looks like something big is coming...",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossSpawn3", "Oh no... Something big's approaching, and fast. Are you gonna be alright?",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossSpawn4", "Some sort of boss monster is coming... Watch out...",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
 
             HelperMessage.New("BossDie1", "Thank goodness, you're still alive! Good job...",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossDie2", "Is that thing down? I wish i could have helped you... Atleast you made it out alive.",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossDie3", "Glad to see that thing taken care of. Take some time to heal your wounds, please...",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossDie4", "With that thing down, the world is just an inch safer. Let's hope it doesn't come back...",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4 && player.isFluxAwake, cooldown: 3, onlyPlayOnce: false)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion
 
             HelperMessage.New("WhiteRabbit", "Yikes! That thing looks really dangerous! Be careful!",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.Bunny) && player.isFluxAwake)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.Bunny) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
 
             HelperMessage.New("BlackRabbit", "Eek! I told you it was dangerous!",
-                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.CorruptBunny || n.type == NPCID.CrimsonBunny) && player.isFluxAwake)
+                "FluxDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == NPCID.CorruptBunny || n.type == NPCID.CrimsonBunny) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
 
             HelperMessage ankhShield1 = HelperMessage.New("AnkhShield1", "Is that an Ankh item? With one of those, you won't get as many debuffs anymore...",
