@@ -348,7 +348,7 @@ namespace CalRemix.UI
             hasCrit = false;
             hasBeenHit = false;
 
-            if (timeUntilNextFluxAction <= 0)
+            if (timeUntilNextFluxAction <= 0 && Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode <= 0)
             {
                 switch (currentFluxMode)
                 {
@@ -370,6 +370,12 @@ namespace CalRemix.UI
                 }
             }
             timeUntilNextFluxAction--;
+
+            // in case flux is a naughty girl and somehow gets activated before hardmode, put her back to bed
+            if ((currentFluxMode == (int)FluxState.Awake || currentFluxMode == (int)FluxState.WakingUp) && Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode > 0)
+            {
+                currentFluxMode = (int)FluxState.Asleep;
+            }
         }
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
