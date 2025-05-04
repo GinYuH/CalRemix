@@ -41,6 +41,7 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
             HelperMessage miracleRain2 = HelperMessage.New("MiracleRain2", "Please don't do that...",
                 "FluxDefault", HelperMessage.AlwaysShow)
+                .AddSelectionEvent(ForceWakeUpFlux)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux)
                 .ChainAfter(miracleRain1, delay: 1f);
 
@@ -111,7 +112,7 @@ namespace CalRemix.UI
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.mouseRight && Main.mouseRightRelease && Main.rand.NextBool(100)).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).SetHoverTextOverride("May God save us all");
 
             HelperMessage.New("Loser", "Loser",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.PotionSickness), cooldown: 55, onlyPlayOnce: false, cantBeClickedOff: true, duration: 55).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.PotionSickness), cooldown: 45, onlyPlayOnce: false, cantBeClickedOff: true, duration: 55).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("CosmicWorm", "he has a name though",
                 "MiracleBoySob", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<CosmicWorm>()))
