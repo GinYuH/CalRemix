@@ -79,16 +79,12 @@ namespace CalRemix.UI
 
             HelperMessage.New("Adrenaboy1", "My-my! You sure are bolting like chili bean potatoes, my friend!",
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().adrenalineModeActive, 8, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).InitiateConversation();
-
             HelperMessage.New("Adrenaboy2", "Ha-ha! Good one, Miracle Boy!",
                 "FannyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Adrenaboy3", "Explain it then.",
                 "MiracleBoyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
-
             HelperMessage.New("Adrenaboy4", "Well.. uh.. chili is spicy.. and adrenaline is what you get as a flight or fight response..",
                 "FannyDisturbed", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Adrenaboy5", "That wasn't the intention of my joke, flame.",
                 "MiracleBoyIdle", HelperMessage.AlwaysShow, duration: 10).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).EndConversation();
 
