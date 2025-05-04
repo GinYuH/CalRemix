@@ -44,28 +44,22 @@ namespace CalRemix.UI
 
             HelperMessage.New("Pumpking1", "Wh- Ahh! AAAAAAAAAAAAH!!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.Pumpking), 3, cantBeClickedOff: true).SetHoverTextOverride("What's wrong, Fanny?").InitiateConversation();
-
             HelperMessage.New("Pumpking2", "I told Fanny as a joke that jack-o-lanterns get their lights by eating flames. Don't tell him, though. It's funnier this way.",
                 "EvilFannyPoint").ChainAfter(delay: 2).SetHoverTextOverride("Sure? I might tell Fanny later...").SpokenByEvilFanny().EndConversation();
 
             HelperMessage.New("EoL1", "So, there's a second boss for the Hallow... Then where's the second boss for the other biomes? Did they just like this one more than the others?",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss), 8, cantBeClickedOff: true).SpokenByEvilFanny().InitiateConversation();
-
             HelperMessage.New("EoL2", "... then again, the other boss is a recolor. Maybe for the best.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter();
-
             HelperMessage.New("EoL3", "Just like you!",
                 "FannyNuhuh", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(delay: 5, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("EoL4", "...",
                 "EvilFannyMiffed", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("EoL5", "Bitch.",
                 "EvilFannyMiffed", HelperMessage.AlwaysShow, 5, onlyPlayOnce: false).SpokenByEvilFanny().ChainAfter(delay: 0, startTimerOnMessageSpoken: true).EndConversation();
 
             HelperMessage.New("Abomination1", "Chat, one of the CEO of Remix decided to commit a delulu and shame me for flicker-gooning to 56 Giant Illumina Woman gyatt image tab, how tf do I doxx the CEO of this mod bruh... I wanna make him mic up against my giga-sigma phonk master rap skill, bruh.",
                 "CrimSonDefault", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == NPCID.HallowBoss && n.life <= n.lifeMax * 1 / 10)).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation();
-
             HelperMessage.New("Abomination2", "I want nothing more than to punt you off of a cliff.",
                 "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(delay: 5, startTimerOnMessageSpoken: true).EndConversation();
 

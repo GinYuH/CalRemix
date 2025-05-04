@@ -31,13 +31,13 @@ namespace CalRemix.UI
         {
             #region Item
             //Fanny
-            HelperMessage.New("Forge", "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
+            HelperMessage.New("Forge", "Nuh uh uh! Without Delicious Meat, the Draedon's Forge simply will not work. Get to it, friend!",
                 "FannyNuhuh", HasDraedonForgeMaterialsButNoMeat, onlyPlayOnce: false, cooldown: 120).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
 
             HelperMessage.New("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", 
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
 
-            HelperMessage.New("Relocator", "Wow! You crafted a Normality Relocator! with a press of a button, unyielding discord is at your fingertips!", 
+            HelperMessage.New("Relocator", "Wow! You crafted a Normality Relocator! This is an invaluable tool in abyss exploration, since it means you can go further in at a quicker pace!", 
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>());
 
             HelperMessage.New("BunnyMurder", "...",
@@ -57,10 +57,11 @@ namespace CalRemix.UI
             //Add a condition to this one YUH, to pass the test of knowledge...
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
-            HelperMessage.New("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!",
+            //where is yuh? im going to iban,code,code,code
+            HelperMessage.New("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific, isn't it? Guess that's just how the cookie crumbles!",
                 "FannyNuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>());
 
-            HelperMessage.New("VoodooDoll", "Cool doll you have! I think that it will be even cooler when in lava!",
+            HelperMessage.New("VoodooDoll", "Rather nice doll! Though, they are rather plentiful. If they keep flooding your inventory, maybe you should throw some out in lava...?",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.GuideVoodooDoll));
 
             HelperMessage.New("TwentyTwo", "I love 22. My banner now.",
@@ -72,8 +73,8 @@ namespace CalRemix.UI
             HelperMessage.New("Wood", "Wood? Yummy!",
               "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood));
 
-            HelperMessage.New("HallowedBar", "What you hold now is a bar of extraordinary power infused with the essence of Heaven itself! That's a biome right?",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is Fanny, it sure is.");
+            HelperMessage.New("HallowedBar", "Quite the powerful bar you've got there! Keep those safe, as they're a vital part to achiving Auric Bars for powerful lategame gear.",
+               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is, Fanny. It sure is.");
 
             HelperMessage.New("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LifeCrystal));
@@ -81,16 +82,16 @@ namespace CalRemix.UI
             HelperMessage.New("Jump", "Did you know? You can press the \"space\" button to jump!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!");
 
-            HelperMessage.New("TitanHeart", "You got a heart from a titan! Place it on the tower for a wacky light show!",
+            HelperMessage.New("TitanHeart", "You got a heart from a Titan! Place it on the tower for a wacky light show!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TitanHeart>())).AddItemDisplay(ModContent.ItemType<TitanHeart>());
 
             HelperMessage.New("BloodyVein", "The Bloody Vein is an item of utmost importance which can be inserted into various altars and machinery for wacky results. How about inserting one into one of those lab hologram box things?",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<BloodyVein>())).AddItemDisplay(ModContent.ItemType<BloodyVein>());
 
-            HelperMessage.New("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein from the Crimson's Perforators is way better!",
+            HelperMessage.New("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein, which is much more important, can be obtained from a special event in the Corruption biome.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<RottingEyeball>()) && !WorldGen.crimson).AddItemDisplay(ModContent.ItemType<RottingEyeball>()).SetHoverTextOverride("Thanks Fanny! I'll be sure to make a Crimson world next time.");
 
-            HelperMessage.New("AlloyBar", "Congratulations, you have obtained the final bar for this stage of your adventure. You should attempt making some Alloy Bars, a versatile material made of every available bar which can be used for powerful items.",
+            HelperMessage.New("AlloyBar", "Congratulations, my friend! With the power of this Alloy Bar, you're sure to complete this stage of your adventure with your eyes closed! Enjoy the fruits of your labour, you deserve it!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<AlloyBar>())).AddItemDisplay(ModContent.ItemType<AlloyBar>());
 
             HelperMessage.New("Sponge", "Oh, is that a Sponge? Maybe avoid using it. I've heard something about the wielder dying, or something...",
