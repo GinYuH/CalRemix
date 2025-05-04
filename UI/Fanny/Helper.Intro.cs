@@ -38,18 +38,16 @@ namespace CalRemix.UI
 
             HelperMessage introLore = HelperMessage.New("IntroducingEvilFanny", "My friend, we've made it to Hardmode! Plenty of new opportunities have popped up and plenty of dangerous new foes now lurk about.",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.hardMode && !Main.zenithWorld, 8, cantBeClickedOff: true).AddDelay(5).InitiateConversation();
-
             HelperMessage introEvilLore = HelperMessage.New("IntroducingEvilFanny2", "'Sup",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(delay: 4f, startTimerOnMessageSpoken: true);
-
             HelperMessage introLore2 = HelperMessage.New("IntroducingEvilFanny3", "E-evil Fanny!? I thought you moved away to the Yukon!",
                 "FannySob", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).ChainAfter(introLore);
-
             HelperMessage introEvilLore2 = HelperMessage.New("IntroducingEvilFanny4", "Yeah. Got cold.",
                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(introEvilLore);
-
             HelperMessage introLore3 = HelperMessage.New("IntroducingEvilFanny5", "$0, it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
                "FannyIdle", HelperMessage.AlwaysShow, 8).AddDynamicText(HelperMessage.GetPlayerName).ChainAfter().EndConversation();
+            HelperMessage introEvilLore3 = HelperMessage.New("IntroducingEvilFanny5", "\"Evil counterpart\" is a crazy way of saying you can't take the slightest bit of cricicism, just saying, bro.",
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(introEvilLore2);
 
             //Trapper Bulb Chan
             HelperMessage.New("TrapperBeginning1", "Hey, have you seen my precious pink flower that I've been growing for 15 years? I left her around here. She's been my best friend for years now, and I could never fathom what I'd do if I had lost h",

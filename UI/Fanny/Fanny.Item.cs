@@ -136,19 +136,17 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow).ChainAfter().AddStartEvent(FannyHeal);
 
             //Evil Fanny
-            HelperMessage.New("EvilMinions", "Oh, joy, another player reveling in their summoned minions like they've won the pixelated lottery. Just remember, those minions are as loyal as your Wi-Fi signal during a storm—here one minute, gone the next. Enjoy your fleeting companionship, I guess.",
+            HelperMessage.New("EvilMinions", "Oh, summoner, how nice. I want to ask this in the most genuine way I can, do you play videogames for fun? Did you open up a terraria world and genuinely go \"Oh boy! Let's play summoner! I'm going to have so much fun!\"? No!!! You didn't!!! Half of your minions have braindead AI because you're playing Calamity!!! Just play any other class, man. You make me sad.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
 
             HelperMessage.New("EvilTerraBlade", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. It's just a sword, after all. Now, go on, swing it around like the hero you think you are.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.TerraBlade)).SpokenByEvilFanny().AddItemDisplay(ItemID.TerraBlade);
 
-            HelperMessage sama = HelperMessage.New("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
+            HelperMessage sama = HelperMessage.New("MurasamaBig", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. You're gonna be doing this \"big sword crafting tree\" thing a lot from here on out. Hope piggy here likes their slop!",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.ActiveItem().type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny().InitiateConversation();
-
             HelperMessage mgra = HelperMessage.New("Muracrimsona1", "Lmao this item is \"perfectly balanced\" am i right?? Standig here i realize like mgr",
                 "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(sama, 5, true);
-
-            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU WHY WERE YOU EVEN HIRED!?",
+            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU!!!",
                 "EvilFannyCrisped", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(mgra, 3, true).EndConversation();
 
             #endregion

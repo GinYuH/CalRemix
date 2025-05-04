@@ -25,10 +25,8 @@ namespace CalRemix.UI
             
             HelperMessage.New("SnowLegion", "You know... This reminds me back when I had a boyfriend. He was real sweet, if I'll be honest. I even had my first kiss with him. Though he was a snowman, and I was a flame... You kinda get where this is going.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.invasionType == InvasionID.SnowLegion).SpokenByEvilFanny().InitiateConversation();
-
             HelperMessage.New("SnowLegion2", "Where'd all these gooners come from?",
                 "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(delay: 6, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("SnowLegion3", "They're called goons!",
                 "FannyNuhuh", HelperMessage.AlwaysShow).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).EndConversation();
 

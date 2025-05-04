@@ -133,13 +133,10 @@ namespace CalRemix.UI
 
             HelperMessage apoc = HelperMessage.New("Apocalypse1", "Oh no.. oh no! Look what you've done! Ohhh we're really in the thick of it now...",
                "FannyApocalypse", (ScreenHelperSceneMetrics scene) => ProfanedDesert.scorchedWorld && !Main.LocalPlayer.dead, 9, cantBeClickedOff: true).InitiateConversation();
-
             HelperMessage.New("Apocalypse2", "everybody knows",
                "CrimSonDefault").SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Apocalypse3", "Fanny you dim-wick, take that stupid thing off.",
                "EvilFannyIdle").SpokenByEvilFanny().ChainAfter(apoc, delay: 7, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Apocalypse4", "Aww jeez, okay...",
                "FannySob").ChainAfter(delay: 2, startTimerOnMessageSpoken: true).EndConversation();
         }

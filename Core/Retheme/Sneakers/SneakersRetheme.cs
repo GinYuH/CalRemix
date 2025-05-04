@@ -173,7 +173,7 @@ namespace CalRemix.Core.Retheme
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<AquaticEmblem>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetHoverTextOverride("Blessed creatures made with love and care in mind");
 
-            HelperMessage.New("VolatileSneakers", "Oh look, another pathetic schmuck who just wants to collect those branded sneakers to increase their net worth. Just know that someone, somewhere in was paid FAR less than these shoes base worth. While your pointless net worth increases, the poor stays poor, and there is no changing that. But fine, flex those blasted sneakers to your easily impressionable \"friends\" and not care about the poor workers who were paid only 3 copper coins per shoe.", "EvilFannyDisgusted",
+            HelperMessage.New("VolatileSneakers", "Oh look, another schmuck getting into sneaker collecting. You know these are being pumped out of some sweatshop, right? These aren't actually worth anything, all their value comes from impressionable losers like you and fanny throwing your disposable income away for brand loyalty. You're out here increasing your \"Net worth\", while the kid that made these got payed 3 copper coins to lose his fingers to a sewing machine so you could wear those garrish things, I hope you remember that anytime you get your hands on another pair.", "EvilFannyDisgusted",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.VolatileGelatin))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny);
 

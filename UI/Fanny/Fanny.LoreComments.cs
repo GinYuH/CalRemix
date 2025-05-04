@@ -81,7 +81,7 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == bloodLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage.New("LoreEvilBlood", "Actually, Blood Moons are caused by limited amounts of sunlight passing through the atmosphere and onto the moon you dummy.",
+            HelperMessage.New("LoreEvilBlood", "Actually, Blood Moons are caused by limited amounts of sunlight passing through the atmosphere and onto the moon, you dummy.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
@@ -94,7 +94,7 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == queenSlimeLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage.New("LoreEvilQueenSlime", "Ugh, really? The Slime God is playing dress-up now? What's next, a slime goddess? This whole scenario is as ridiculous as my patience for it.",
+            HelperMessage.New("LoreEvilQueenSlime", "So the slime god escapes to the hallow and turns into this thing. Couldn't have it have waited to have a rematch a little later? You JUST killed it. Why did this thing think it would win 20 minutes after being defeated the first time. What is the thought process?",
                 "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
@@ -106,7 +106,7 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == mechLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage.New("LoreEvilMechs", "Ah, some of Draedon's many, MANY blunders. It's a wonder the guy didn't get fired two seconds into his job!",
+            HelperMessage.New("LoreEvilMechs", "For such a \"brilliant engineer\", this guy's portfolio is kind of sad to look at. He makes robot copies of random bosses, then after those go haywire, he just makes them again. This along with the plaguebringer situation makes me think all this guy knows how to do is take stuff that's already there. \"Inventor\" my ass. ",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
                 .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
@@ -117,12 +117,6 @@ namespace CalRemix.UI
             int cryogenLoreItemType = ModContent.ItemType<LoreArchmage>();
             HelperMessage.New("LoreCryo", "It seems that our Archmage Permafrost is back from his icy vacation! Calamitas must have locked him in her magical freezer. Maybe now he can chill out and catch up on some reading about not-so-evil overlords.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == cryogenLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
-
-            HelperMessage.New("LoreEvilCryo", "This whole excerpt is like a bad breakup, with the added bonus of endless rambling about their frosty feud. Get a life, people.",
-                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
-                .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
-
-
             #endregion
 
             #region Aqua
@@ -131,9 +125,9 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => ReadLoreItem && previousHoveredItem == aquaLoreItemType, 5, persistsThroughSaves: false).AddDelay(0.4f);
 
 
-            HelperMessage.New("LoreEvilAq", "Microorganisms evolving rapidly? Yeah, well, I evolved rapidly too, and it didn't make me any happier about this pretentious monster's good fortune.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
-                .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
+            HelperMessage.New("LoreCrimsonAq", "The last bastion of tranquility has fallen. Billions must die",
+                "CrimSonDefault", HelperMessage.AlwaysShow, 5, persistsThroughSaves: false)
+                .ChainAfter(delay: 1.5f, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon);
 
             #endregion
 
