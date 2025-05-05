@@ -20,7 +20,7 @@ namespace CalRemix.Content.Tiles
 {
     public abstract class SubworldDoorPlaced : ModTile
     {
-        public static Asset<Texture2D> PreviewTex;
+        public Asset<Texture2D> PreviewTex;
 
         public virtual string PreviewTexName => null;
         public virtual Subworld BoundSubworld => null;
@@ -124,6 +124,14 @@ namespace CalRemix.Content.Tiles
     {
         public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/ExospherePreview";
         public override Subworld BoundSubworld => ModContent.GetInstance<ExosphereSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+    }
+
+    public class BaronDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/BaronPreview";
+        public override Subworld BoundSubworld => ModContent.GetInstance<BaronSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
     }

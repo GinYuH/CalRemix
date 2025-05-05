@@ -37,4 +37,5 @@ LargeWorldGreening: "[c/00F000:LARGE WORLDS ARE SUPPORTED BY CALAMITY]"
 WorldGen: {
 	Dullies: Generating dullies
 	ItGetsDeeper: But wait, it gets deeper
+	RandomDoors: Creating infinite possibilities
 }

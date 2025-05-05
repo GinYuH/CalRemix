@@ -628,7 +628,7 @@ namespace CalRemix.Core.World
         {
             /*if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
             {
-                IonAltar.GenerateIonAltar();
+                RandomSubworldDoors.GenerateRandomSubworldDoors();
             }*/
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
@@ -1234,6 +1234,11 @@ namespace CalRemix.Core.World
                     }
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
+                }));
+                tasks.Insert(FinalIndex, new PassLegacy("Subworld Doors", (progress, config) => {
+
+                    progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.RandomDoors");
+                    RandomSubworldDoors.GenerateRandomSubworldDoors();
                 }));
                 tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Planetoids")) + 1, new PassLegacy("ItGetsDeeper", (progress, config) =>
                 {
