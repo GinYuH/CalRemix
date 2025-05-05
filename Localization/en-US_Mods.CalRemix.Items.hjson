@@ -4293,3 +4293,8 @@ RedWulfrumFrogCannon: {
 		Uses normal Frogs as ammo
 		'''
 }
+
+EssenceOfMerge: {
+	DisplayName: Essence Of Merge
+	Tooltip: ""
+}

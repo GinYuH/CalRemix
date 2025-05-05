@@ -18,11 +18,11 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Essence Of Merge");
-            Tooltip.SetDefault("The essence of... quite a lot, actually.\n"+
-            "Horizontal speed: 8\n"+
-            "Acceleration multiplier: 1.2\n"+
-                "Flight time: 120"); 
+            // DisplayName.SetDefault("Essence Of Merge");
+            // Tooltip.SetDefault("The essence of... quite a lot, actually.\n"+
+            // "Horizontal speed: 8\n"+
+            // "Acceleration multiplier: 1.2\n"+
+            //     "Flight time: 120"); 
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(120, 8f, 1.2f);
         }
 
