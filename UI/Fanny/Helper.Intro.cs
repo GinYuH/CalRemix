@@ -46,7 +46,7 @@ namespace CalRemix.UI
                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(introEvilLore);
             HelperMessage introLore3 = HelperMessage.New("IntroducingEvilFanny5", "$0, it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
                "FannyIdle", HelperMessage.AlwaysShow, 8).AddDynamicText(HelperMessage.GetPlayerName).ChainAfter().EndConversation();
-            HelperMessage introEvilLore3 = HelperMessage.New("IntroducingEvilFanny5", "\"Evil counterpart\" is a crazy way of saying you can't take the slightest bit of cricicism, just saying, bro.",
+            HelperMessage introEvilLore3 = HelperMessage.New("IntroducingEvilFanny6", "\"Evil counterpart\" is a crazy way of saying you can't take the slightest bit of cricicism, just saying, bro.",
                 "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(introEvilLore2);
 
             //Trapper Bulb Chan

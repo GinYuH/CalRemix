@@ -322,6 +322,10 @@ namespace CalRemix
                     item.shoot = ProjectileType<Ark>();
                 }
             }
+            if (item.type == ItemID.Frog)
+            {
+                item.ammo = ItemID.Frog;
+            }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {

@@ -4284,3 +4284,12 @@ TheBeacon: {
 	DisplayName: The Beacon
 	Tooltip: ""
 }
+
+RedWulfrumFrogCannon: {
+	DisplayName: Red Wulfrum Frog Cannon
+	Tooltip:
+		'''
+		Fires Wulfrum Frogs
+		Uses normal Frogs as ammo
+		'''
+}
