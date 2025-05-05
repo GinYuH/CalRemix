@@ -22,7 +22,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<ExosphereDoor>();
+            Item.createTile = ModContent.TileType<NormalDoor>();
         }
     }
 }

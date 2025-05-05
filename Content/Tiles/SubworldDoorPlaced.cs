@@ -135,4 +135,12 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
     }
+
+    public class NormalDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/Items/Accessories/Baroclaw";
+        public override Subworld BoundSubworld => ModContent.GetInstance<NormalSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+    }
 }
