@@ -14,7 +14,7 @@ namespace CalRemix.UI
         public static void LoadEventMessages()
         {
 
-            HelperMessage.New("InvasionDeath", "These guys are really giving us what for. It might be a good idea to step away for a bit in order to come up with a new strategy...",
+            HelperMessage.New("InvasionDeath", "These guys are really doing us in. It might be a good idea to step away for a bit in order to come up with a new strategy...",
                 "FannySob", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.dead && Main.invasionType != InvasionID.None, cooldown: 1200);
 
             HelperMessage.New("Raining", "It's raining! It's pouring! The man on the moon is snoring! Wait, who is the man on the moon!?",
@@ -30,7 +30,7 @@ namespace CalRemix.UI
             HelperMessage.New("SnowLegion3", "They're called goons!",
                 "FannyNuhuh", HelperMessage.AlwaysShow).ChainAfter(delay: 4, startTimerOnMessageSpoken: true).EndConversation();
 
-            HelperMessage.New("OOA", "Just so we're clear, none of this is canon, got it?",
+            HelperMessage.New("OOA", "Just so we're clear, all of this is canon, got it?",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.invasionType == InvasionID.CachedOldOnesArmy).SetHoverTextOverride("Gotcha Fanny!");
 
             HelperMessage.New("BloodMoon", "During a blood moon, strange critters can be found hiding under rocks. They can be used for blood moon fishing, but be careful, those teeth can really hurt.",
@@ -51,10 +51,10 @@ namespace CalRemix.UI
             HelperMessage.New("BREvilkys", "Kill yourself NOW!",
                 "EvilFannyKYS", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife >= Main.LocalPlayer.statLifeMax2 * 0.75f && BossRushEvent.BossRushActive && BossRushEvent.CurrentTier >= 5).SetHoverTextOverride("I'm busy right now, Evil Fanny!").SpokenByEvilFanny();
 
-            HelperMessage.New("Nite", "Nighttime is when the real party starts! But watch out for those nocturnal nasties, they're like uninvited guests who never leave. Keep a torch handy, it's like bringing a flashlight to a ghost story.",
+            HelperMessage.New("Nite", "The sun has set! If you want to have any hope of surviving, I'd recommend stocking up on torches. All these dangerous critters are repelled by the light! This is why your good friend Fanny here has never struggled with dusk!",
               "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.dayTime);
 
-            HelperMessage.New("Slimerain", "Ooh, a slime rain! It's like a colorful meteor shower, except instead of making wishes, you're dodging slimy projectiles! Better grab an umbrella, or at least a slicker. Don't want to end up looking like a walking slime ball! wink wink",
+            HelperMessage.New("Slimerain", "Ooh, a slime rain! Slimes are not the most dangerous of monsters, but i'd recommend caution nonetheless! Imagine one of these things falls on your head. You'd drown! Maybe bring an umbrella with you if you plan on adventuring on the surface, okay?",
                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.slimeRain);
 
             HelperMessage.New("Towers", "Ah, the lunar events! It's like hosting a cosmic tea party, except instead of sipping tea, you're dodging death rays from space! Just remember to RSVP with your best battle gear and a side of moon cheese.",

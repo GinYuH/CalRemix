@@ -72,14 +72,14 @@ namespace CalRemix.UI
             HelperMessage.New("DeusSplitMod", "This is getting out of hand! Now there are two of them!",
                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && NPC.CountNPCS(ModContent.NPCType<AstrumDeusHead>()) > 1);
 
-            HelperMessage.New("PGuardians", "It seems like these mischievous scoundrels are up to no good, and plan to burn all the delicious meat! We gotta go put an end to their plan of calamity!",
+            HelperMessage.New("PGuardians", "Watch out! The profaned guardians! They'll stop at nothing to burn everything in sight! This is not a problem for me, of course, but the only thing I care more about than your access to knowledge is your well being! Be careful!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<ProfanedGuardianCommander>()));
 
             HelperMessage.New("ProviRefight", "Hang on, didn't we already do this? You should probably move onto a new boss instead of refighting this one.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && NPC.downedEmpressOfLight && scene.onscreenNPCs.Any (n=> n.type == ModContent.NPCType<Providence>() && n.life <= n.lifeMax * 4 / 5), 8).AddStartEvent(ProviSkip).SetHoverTextOverride("That's a good point, actually...").SpokenByEvilFanny();
 
             HelperMessage.New("NoArmorDog", "Woah there, $0! Seems like you forgot to put on your favorite set of armor before fighting this boss! We don't want you to pull a Cheeseboy, do we?",
-                "FannySob", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<DevourerofGodsHead>()) && NoArmor()).AddDynamicText(HelperMessage.GetPlayerName);
+                "FannySob", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<DevourerofGodsHead>()) && NoArmor()).AddDynamicText(HelperMessage.GetPlayerName).SetHoverTextOverride("okay so like. im reading through all the dialogue rn. and im cleaning it up and shit and removing all the entries that suck. what does htis one mean??? like genuinely waht is the joke?????? who the fuck is cheeseboy???????????? not gonna remove this. this is the hover text override now");
 
             HelperMessage.New("NewYork", "Oh, I saw that sky somewhere in my dreams! the place was called uhhh... New Yuck... Nu Yok.... New Yok.... yea something like that!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && !CalRemixWorld.npcChanges && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Yharon>())).SetHoverTextOverride("It's called New York, Fanny! I'll take you there one day.");
@@ -93,7 +93,7 @@ namespace CalRemix.UI
             HelperMessage.New("YharvelQuip", "Is it just me, or is it getting hot in here?",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Yharon>() && n.ai[0] == 17f) && !ModLoader.HasMod("YharonRebirth"));
 
-            HelperMessage.New("DraedonEnter", "Gee willikers! It's the real Draedon! He will soon present you with a difficult choice between three of your previous foes but with new attacks and increased difficulty. This appears to be somewhat of a common theme with this world dontcha think?",
+            HelperMessage.New("DraedonEnter", "Gee willikers! It's Draedon! Those mechanical bosses we fought earlier were nothing! What we're about to deal with? Completely different league! These are superior fabrications, the zenith of their kind. Playing with this type of firepower? I'm not sure, friend...",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Draedon>()));
 
             HelperMessage.New("AresGlue", "You ever noticed XF-09 Ares and myself are the only two characters that are glued onto on area of your screen beside yourself? That must make us glue-buddies!",
