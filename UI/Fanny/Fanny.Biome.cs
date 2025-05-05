@@ -122,7 +122,7 @@ namespace CalRemix.UI
             HelperMessage.New("Desert", "Look at you, venturing into the desert. Keep this little tip in mind; the largest desert is infested with antlions! Keep an eye out for an entrance into its lower layers, the biggest desert ALWAYS has one!",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneDesert);
 
-            HelperMessage.New("Corpution", "Ah, the Corruption, where the grass is as dark as a dark soul! Just watch out for those pesky corruption monsters, they'll nibble you right up!",
+            HelperMessage.New("Corpution", "Ah, the Corruption, where the grass is as dark as my soul after what I did to that sleeping homeless person on Feburary 2nd at 2:35 AM. Just watch out for those pesky corruption monsters, they'll nibble you right up!",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCorrupt);
 
             HelperMessage.New("PlantDungeon", "Prepare yourself, my friend! Now that Plantera is gone, these skeletons are more than bone and cloth! They're armed to the teeth with powerful weapons, and their ravenous spirits will try to tear you apart once you kill them. This is a great opportunity to gear up, but be careful, ok?",
