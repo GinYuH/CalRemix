@@ -46,16 +46,13 @@ namespace CalRemix.UI
 
             HelperMessage.New("BlackHawkTuah", "More like black hawk tuah bruh",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<BlackHawkRemote>())).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation();
-
             HelperMessage.New("BlackHawkTuah2", "I think this guy needs to be euthanized.",
                 "EvilFannyDisgusted", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(delay: 2, startTimerOnMessageSpoken: true).EndConversation();
 
             HelperMessage goon1 = HelperMessage.New("Calgyatt1", "erm, what the sigma? mirror mirror on the wall, who has the biggest GYATT of them all?? calamitas spotted, gooning mode: ACTIVATED",
                 "CrimSonDefault", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<CalamitasClone>()) && Main.rand.NextBool(600), 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation();
-
             HelperMessage.New("Calgyatt2", "Go die in a ditch.",
                 "EvilFannyMiffed", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(goon1, delay: 4, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Calgyatt3", "Phonk music and galaxy gas lil chuddy",
                 "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(goon1).EndConversation();
 

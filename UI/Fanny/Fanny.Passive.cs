@@ -88,22 +88,17 @@ namespace CalRemix.UI
             HelperMessage.New("Frozen6", "Oh wait wait wait, this time I found a small crumb inside the ice. It was disgusting!",
                "FannyDisturbed", (ScreenHelperSceneMetrics scene) => fannyTimesFrozen == 6);
 
-            HelperMessage.New("WrathRiftMention", "Strange that none of the others notice that rift in the sky. Fanny? That disgusting thing? They're either useless dumbasses or blind.",
+            HelperMessage.New("WrathRiftMention", "Is nobody else going to comment on that big rift in the sky? Fanny? The metal guy? Christ, I'll even take the car at this point. Am I going insane? That thing is blocking out the sun, somebody else has to think that's not normal, right??.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(370000) && DownedBossSystem.downedPolterghast && CalRemixAddon.Wrath != null, 8, cantBeClickedOff: true).SpokenByEvilFanny().InitiateConversation();
-
-            HelperMessage.New("WrathRiftMention2", "Mhhmmm, what did you call me my red striped flame? I'm a miraculous and beautiful angel sent by god to bless our little adventure mmmmm!",
+            HelperMessage.New("WrathRiftMention2", "Worry not, my flaming friend! That is but the entry point for something great into this world, something far beyond all of us! Something our friend will be sure to enjoy! There's nothing we can do to stop it, so just try to relax, okay?",
                 "MiracleBoyIdle", duration: 8, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter();
-
-            HelperMessage.New("WrathRiftMention3", "Kill yourself.",
+            HelperMessage.New("WrathRiftMention3", "That doesn't answer anything. You're just yammering absolute drivel into my ears and acting like you're saying anything of worth. Please stop talking, man.",
                 "EvilFannyMiffed", duration: 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter();
-
             HelperMessage.New("WrathRiftMention4", "Paradise... reclaiming. Star girl... in my way. $0... mine. I must take it all.",
                 "FannyStare", duration: 8, cantBeClickedOff: true).ChainAfter(delay: 2).AddDynamicText(HelperMessage.GetPlayerName);
-
             HelperMessage.New("WrathRiftMention5", "Wait what was I saying?",
                 "FannyIdle", duration: 5, cantBeClickedOff: true).ChainAfter(delay: 3, startTimerOnMessageSpoken: true);
-
-            HelperMessage.New("WrathRiftMention6", "On second thought this isn't gonna end well for any of us.",
+            HelperMessage.New("WrathRiftMention6", "You know what? Maybe you're right. Maybe I should stop worrying. Too out of my pay grade.",
                 "EvilFannyIdle").SpokenByEvilFanny().ChainAfter(delay: 2).EndConversation();
 
             HelperMessage.New("CalamityChecker", "My-my! It looks like you have the Calamity Mod enabled. You're in for a special treat, my friend!",

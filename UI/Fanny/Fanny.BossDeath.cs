@@ -28,14 +28,14 @@ namespace CalRemix.UI
             HelperMessage.New("DraedonExit", "Good golly! You did it! Though I'd HATE to imagine the financial losses caused by the destruction of those machines.",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedExoMechs);
 
-            HelperMessage.New("SCalDie", "That was exhilarating! Though that means the end of our adventure is upon us. What a Calamity as one may say!",
+            HelperMessage.New("SCalDie", "That was exhilarating! Though that means the end of our adventure is upon us. What a Calamity, as one may say!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.zenithWorld && DownedBossSystem.downedCalamitas);
 
-            HelperMessage.New("Mechs", "Congrats on taking down those clanky contraptions! It's like defeating a bunch of oversized kitchen appliances. Just remember, don't get too cocky or they might just hit you with their spatulas of doom!",
+            HelperMessage.New("Mechs", "Congratulations, that was all of the mechanical bosses! If I were you, I'd head to the jungle. You're able to mine chlorium now, a powerful resource that should help you defeat Plantera with ease!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3);
 
-            HelperMessage.New("Golem", "Good job defeating that pile o' bricks! You sure.. cough cough wow, the air sure is du- cough cough",
-               "FannyNuhuh", (ScreenHelperSceneMetrics scene) => NPC.downedGolemBoss);
+            HelperMessage.New("Golem", "Why is everything green?",
+               "FannySob", (ScreenHelperSceneMetrics scene) => NPC.downedGolemBoss);
         }
     }
 }
