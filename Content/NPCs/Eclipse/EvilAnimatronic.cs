@@ -23,7 +23,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.damage = 100;
+            NPC.damage = 60;
             NPC.width = 34;
             NPC.height = 52;
             NPC.defense = 40;
@@ -59,10 +59,10 @@ namespace CalRemix.Content.NPCs.Eclipse
                         {
                             Vector2 dist = Main.player[NPC.target].position - NPC.position;
                             dist.Normalize();
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 14, ModContent.ProjectileType<PizzaWheelHostile>(), NPC.damage, 0, Main.myPlayer, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 14, ModContent.ProjectileType<PizzaWheelHostile>(), (int)(NPC.damage * 0.5f), 0, Main.myPlayer, NPC.whoAmI);
                             SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, NPC.Center);
                         }
-                        if (NPC.Remix().GreenAI[0] % 120 == 0)
+                        if (NPC.Remix().GreenAI[0] % 240 == 0)
                         {
                             bool left = Main.rand.NextBool();
                             float variance = Main.rand.NextFloat(-20, 20);
@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             {
                                 for (int i = -10; i < 10; i++)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + 1200 * (left ? 1 : -1), Main.player[NPC.target].Center.Y + i * 120 + variance), new Vector2(-16 * (left ? 1 : -1), 0), ModContent.ProjectileType<PizzaWheelHostile>(), NPC.damage, 0, Main.myPlayer, NPC.whoAmI, 2);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + 1200 * (left ? 1 : -1), Main.player[NPC.target].Center.Y + i * 120 + variance), new Vector2(-16 * (left ? 1 : -1), 0), ModContent.ProjectileType<PizzaWheelHostile>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, NPC.whoAmI, 2);
                                     Main.projectile[p].timeLeft = 180;
                                 }
                             }
@@ -78,7 +78,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             {
                                 for (int i = -10; i < 10; i++)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + i * 120 + variance, Main.player[NPC.target].Center.Y + 800 * (left ? 1 : -1)), new Vector2(0, -8 * (left ? 1 : -1)), ModContent.ProjectileType<PizzaWheelHostile>(), NPC.damage, 0, Main.myPlayer, NPC.whoAmI, 2);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + i * 120 + variance, Main.player[NPC.target].Center.Y + 800 * (left ? 1 : -1)), new Vector2(0, -8 * (left ? 1 : -1)), ModContent.ProjectileType<PizzaWheelHostile>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, NPC.whoAmI, 2);
                                     Main.projectile[p].timeLeft = 270;
                                 }
                             }
@@ -90,7 +90,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                         if (NPC.Remix().GreenAI[2] >= 240 + Main.rand.Next(0, 31))
                         {
                             Main.player[NPC.target].AddBuff(BuffID.Blackout, 600);
-                            SoundEngine.PlaySound(SoundID.ScaryScream with { Pitch = SoundID.ScaryScream.Pitch + 1}, Main.player[NPC.target].Center);
+                            SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronic") with { MaxInstances = 0 }, Main.player[NPC.target].Center);
                             NPC.Remix().GreenAI[2] = 0;
                         }
                     }

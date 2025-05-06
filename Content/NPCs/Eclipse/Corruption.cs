@@ -27,7 +27,7 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.width = 128;
             NPC.height = 128;
             NPC.lifeMax = 5;
-            NPC.damage = 50;
+            NPC.damage = 70;
             NPC.defense = 30;
             NPC.knockBackResist = 0f;
             NPC.HitSound = null;

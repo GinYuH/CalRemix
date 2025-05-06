@@ -879,6 +879,11 @@ namespace CalRemix
             }
             if (jumpscareType != "")
             {
+                if (Main.rand.NextBool(30))
+                {
+                    // 50% Parasite. 25% Generic. 25% Exo
+                    jumpscareType = Main.rand.NextBool() ? "Parasite" : Main.rand.NextBool() ? "Generic" : "Exo";
+                }
                 jumpscare = EclipseJumpscares.jumpscareTypes[jumpscareType];
                 jumpscareTimer = jumpscare.duration + 60;
                 SoundEngine.PlaySound(jumpscare.sound, Player.Center);

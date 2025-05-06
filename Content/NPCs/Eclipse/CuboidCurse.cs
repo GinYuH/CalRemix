@@ -86,7 +86,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             if (i == 0)
                                 continue;
                             float spacing = 16 * 6;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top + Vector2.UnitX * i * spacing, Vector2.Zero, ModContent.ProjectileType<RedstonePillar>(), NPC.damage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top + Vector2.UnitX * i * spacing, Vector2.Zero, ModContent.ProjectileType<RedstonePillar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -121,7 +121,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                     SoundEngine.PlaySound(SupremeCalamitas.HellblastSound, NPC.position);                        
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int firebol = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center) * 10, ModContent.ProjectileType<RedstoneFireball>(), NPC.damage / 2, 0f, Main.myPlayer);
+                        int firebol = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center) * 10, ModContent.ProjectileType<RedstoneFireball>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                         Main.projectile[firebol].timeLeft = 300;
                         NPC.localAI[0] = 0f;
                     }                    
