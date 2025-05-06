@@ -85,7 +85,7 @@ namespace CalRemix.Core.Retheme
               ItemType<YharimsGift>(), 
               ItemType<ExoThrone>(), 
               ItemType<Calamity>()
-            );
+        );
 
         public static void Load()
         {
@@ -388,6 +388,7 @@ namespace CalRemix.Core.Retheme
             { 
                 foreach (KeyValuePair<int, string> p in itemSneakerPairs)
                 {
+                    SneakerList[p.Key] = true;
                     TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
                 }
                 foreach (KeyValuePair<int, string> p in buffSneakerPairs)
@@ -429,6 +430,7 @@ namespace CalRemix.Core.Retheme
             {
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalItemTextures)
                 {
+                    SneakerList[p.Key] = false;
                     TextureAssets.Item[p.Key] = p.Value;
                 }
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalBuffTextures)
@@ -439,23 +441,32 @@ namespace CalRemix.Core.Retheme
                 Asset<Texture2D>[] MinecartMechTexture = OriginalMechCartTexture;
                 Asset<Texture2D>[] CuteFishronTexture = OriginalCuteFishronTexture;
 
-                Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
-                minecartMech.frontTexture = MinecartMechTexture[0];
-                minecartMech.frontTextureGlow = MinecartMechTexture[1];
-                minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                if (Mount.mounts[MountID.MinecartMech] != null)
+                {
+                    Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
+                    minecartMech.frontTexture = MinecartMechTexture[0];
+                    minecartMech.frontTextureGlow = MinecartMechTexture[1];
+                    minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                }
 
-                Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
-                cuteFishron.backTexture = CuteFishronTexture[0];
-                cuteFishron.backTextureGlow = CuteFishronTexture[1];
-                cuteFishron.frontTexture = Asset<Texture2D>.Empty;
-                cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
-                cuteFishron.textureWidth = CuteFishronTexture[0].Width();
+                if (Mount.mounts[MountID.CuteFishron] != null)
+                {
+                    Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
+                    cuteFishron.backTexture = CuteFishronTexture[0];
+                    cuteFishron.backTextureGlow = CuteFishronTexture[1];
+                    cuteFishron.frontTexture = Asset<Texture2D>.Empty;
+                    cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
+                    cuteFishron.textureWidth = CuteFishronTexture[0].Width();
+                }
 
-                var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
-                throneData.backTexture = OriginalThroneBackTexture;
-                throneData.frontTexture = OriginalThroneTexture;
-                throneData.frontTextureGlow = OriginalThroneGlowTexture;
-                throneData.textureWidth = throneData.frontTexture.Width();
+                if (MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData != null)
+                {
+                    var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>())?.MountData;
+                    throneData.backTexture = OriginalThroneBackTexture;
+                    throneData.frontTexture = OriginalThroneTexture;
+                    throneData.frontTextureGlow = OriginalThroneGlowTexture;
+                    throneData.textureWidth = throneData.frontTexture.Width();
+                }
 
                 TextureAssets.AccShield[ArmorIDs.Shield.ShieldofCthulhu] = originalSocTexture;
                 TextureAssets.AccNeck[ArmorIDs.Neck.WormScarf] = originalWormScarfTexture;
@@ -470,7 +481,10 @@ namespace CalRemix.Core.Retheme
                     foreach (KeyValuePair<int, string> p in RethemeList.Items)
                     {
                         if (IsASneaker(p.Key))
+                        {
+                            SneakerList[p.Key] = false;
                             TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                        }
                     }
                 }
             }

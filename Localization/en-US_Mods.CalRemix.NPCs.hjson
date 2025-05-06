@@ -354,7 +354,7 @@ PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
 
 Hypnos: {
-	DisplayName: Hypnos
+	DisplayName: XP-00 Hypnos
 
 	BossChecklistIntegration: {
 		EntryName: XP-00 Hypnos
