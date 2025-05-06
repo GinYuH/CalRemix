@@ -80,6 +80,7 @@ using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.NPCs.TownNPCs;
@@ -1984,6 +1985,10 @@ namespace CalRemix
                 {
                     pool.Remove(NPCID.BoundWizard);
                 }
+            }
+            if (NPC.AnyNPCs(NPCType<CrimsonKaiju>()))
+            {
+                pool.Clear();
             }
             if (CalamityPlayer.areThereAnyDamnEvents)
                 return;

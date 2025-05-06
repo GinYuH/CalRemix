@@ -14,6 +14,7 @@ using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Hostile;
 using Terraria.ModLoader.Core;
 using Terraria.Audio;
+using CalamityMod.Tiles.Astral;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -43,6 +44,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Crimson Kaiju");
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
             Main.npcFrameCount[NPC.type] = 6;
             // wings - 6
             // legs - 7
@@ -60,6 +62,7 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.HitSound = SoundID.NPCHit8;
             NPC.DeathSound = SoundID.NPCDeath27;
             NPC.alpha = 255;
+            NPC.dontTakeDamage = true;
         }
 
         public override void AI()
@@ -85,8 +88,10 @@ namespace CalRemix.Content.NPCs.Eclipse
                         Timer++;
                         if (Timer > 210)
                         {
+                            SoundEngine.PlaySound(AstralBeacon.UseSound);
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
+                            NPC.dontTakeDamage = false;
                         }
                     }
                     break;
@@ -508,7 +513,7 @@ namespace CalRemix.Content.NPCs.Eclipse
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!DownedBossSystem.downedDoG)
+            if (!DownedBossSystem.downedDoG || NPC.AnyNPCs(ModContent.NPCType<CrimsonKaiju>()))
                 return 0f;
 
             return SpawnCondition.SolarEclipse.Chance * 0.01f;
@@ -520,7 +525,8 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (Phase == (int)Attacks.SpawnAnimation)
+            bool spawnAnimation = Phase == (int)Attacks.SpawnAnimation;
+            if (Phase != (int)Attacks.Despawning)
             {
                 float textScale = 4f;
                 int spacing = 16;
@@ -528,12 +534,13 @@ namespace CalRemix.Content.NPCs.Eclipse
                 Asset<Texture2D> U = ModContent.Request<Texture2D>(Texture + "Text_U");
                 Asset<Texture2D> N = ModContent.Request<Texture2D>(Texture + "Text_N");
                 float uHalfWidth = U.Width() / 2 * textScale;
-                spriteBatch.Draw(R.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth - spacing - R.Width() * textScale, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
-                if (Timer > 60)
-                    spriteBatch.Draw(U.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
-                if (Timer > 120)
-                    spriteBatch.Draw(N.Value, new Vector2(Main.screenWidth / 2 + uHalfWidth + spacing, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
-                return false;
+                Color letterColor = spawnAnimation ? Color.White : Color.Red;
+                spriteBatch.Draw(R.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth - spacing - R.Width() * textScale, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, letterColor, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
+                if ((Timer > 60 && spawnAnimation) || !spawnAnimation)
+                    spriteBatch.Draw(U.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, letterColor, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
+                if ((Timer > 120 && spawnAnimation) || !spawnAnimation)
+                    spriteBatch.Draw(N.Value, new Vector2(Main.screenWidth / 2 + uHalfWidth + spacing, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, letterColor, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
+                //return false;
             }
             Asset<Texture2D> sprite = TextureAssets.Npc[Type];
             Asset<Texture2D> wings = ModContent.Request<Texture2D>(Texture + "Wings");
