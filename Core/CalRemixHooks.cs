@@ -643,6 +643,7 @@ namespace CalRemix.Core
             }
             orig(self, i, sItem, weaponDamage);
         }
+
         private static void DrawStatic(On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
@@ -688,14 +689,6 @@ namespace CalRemix.Core
                 shader.Parameters["sizeDivisor"].SetValue(0.25f);
                 Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
                 Main.spriteBatch.ExitShaderRegion();
-
-                Texture2D parasite = Request<Texture2D>("CalRemix/Content/NPCs/Eclipse/SlenderJumpscare" + slender.localAI[0]).Value;
-                Color color = Color.White * (slender.ai[2] > 0 ? 1f : 0f);
-                Vector2 scale = new Vector2(Main.screenWidth * 1.1f / parasite.Width, Main.screenHeight * 1.1f / parasite.Height);
-                int shakeamt = 33;
-                Vector2 screenArea = new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f) + new Vector2(Main.rand.Next(-shakeamt, shakeamt), Main.rand.Next(-shakeamt, shakeamt));
-                Vector2 origin = parasite.Size() * 0.5f;
-                Main.spriteBatch.Draw(parasite, screenArea, null, color, 0f, origin, scale, SpriteEffects.None, 0f);
                 Main.spriteBatch.End();
             }
         }

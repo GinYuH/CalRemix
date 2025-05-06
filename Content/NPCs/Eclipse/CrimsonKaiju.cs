@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Terraria.DataStructures;
+using CalRemix.Content.Projectiles.Hostile;
+using Terraria.ModLoader.Core;
+using Terraria.Audio;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -35,10 +38,6 @@ namespace CalRemix.Content.NPCs.Eclipse
             Sniper = 5,
             Teleport = 6,
             Despawning = 7
-        }
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
         }
 
         public override void SetStaticDefaults()
@@ -78,9 +77,13 @@ namespace CalRemix.Content.NPCs.Eclipse
             {
                 case (int)Attacks.SpawnAnimation:
                     {
-                        Timer++;
                         NPC.damage = 0;
-                        if (Timer > 22)
+                        if (Timer < 121 && Timer % 60 == 0)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemMinecartCling with { Pitch = -1f, Volume = 2 });
+                        }
+                        Timer++;
+                        if (Timer > 210)
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
@@ -148,7 +151,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                         Main.player[NPC.target].position = Vector2.Lerp(Main.player[NPC.target].position, handPos, 0.2f);
                         if (NPC.frame.Y > 680)
                         {
-                            Main.player[NPC.target].KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " is seeing Red."), 11031954, NPC.direction);
+                            Main.player[NPC.target].KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), 999999, 1);
                             Timer = 0;
                             AIMisc = 0;
                             Phase = (int)Attacks.Despawning;
@@ -301,12 +304,20 @@ namespace CalRemix.Content.NPCs.Eclipse
                     {
                         Timer++;
                         NPC.velocity.X *= 0.9f;
-                        if (Main.player[NPC.target].Distance(NPC.Center) < 360)
+                        float distMultiplier = 1f; // how far the hook shoots out relative to the player
+                        float hookDist = Main.player[NPC.target].Distance(NPC.Center) * distMultiplier; // the final distance the hook shoots
+                        if (Main.player[NPC.target].Distance(NPC.Center) < 360 && AIMisc == 0)
                         {
-
+                            AIMisc = 1;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center), ModContent.ProjectileType<CrimsonKaijuHand>(), 0, 0, Main.player[NPC.target].whoAmI, NPC.whoAmI, Main.player[NPC.target].whoAmI);
+                                Projectile proj = Main.projectile[p];
+                                proj.localAI[2] = hookDist;
+                            }
                         }
                         TileClipping();
-                        if (Timer > 180)
+                        if (Timer > 180 && !CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
@@ -325,10 +336,21 @@ namespace CalRemix.Content.NPCs.Eclipse
                         NPC.velocity.X *= 0.9f;
                         if (Main.player[NPC.target].Distance(NPC.Center) < 360)
                         {
-
+                            float distMultiplier = 1f; // how far the hook shoots out relative to the player
+                            float hookDist = Main.player[NPC.target].Distance(NPC.Center) * distMultiplier; // the final distance the hook shoots
+                            if (Main.player[NPC.target].Distance(NPC.Center) < 360 && AIMisc == 0)
+                            {
+                                AIMisc = 1;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center), ModContent.ProjectileType<CrimsonKaijuHand>(), 0, 0, Main.player[NPC.target].whoAmI, NPC.whoAmI, Main.player[NPC.target].whoAmI);
+                                    Projectile proj = Main.projectile[p];
+                                    proj.localAI[2] = hookDist;
+                                }
+                            }
                         }
                         TileClipping();
-                        if (Timer > 180)
+                        if (Timer > 180 && !CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
@@ -444,6 +466,11 @@ namespace CalRemix.Content.NPCs.Eclipse
                 }
             }
 
+            if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
+            {
+                NPC.frame.Y = frameHeight * 5;
+            }    
+
             if (Phase == (int)Attacks.Fly)
             {
                 wingsFrameCounter += 1;
@@ -493,6 +520,21 @@ namespace CalRemix.Content.NPCs.Eclipse
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (Phase == (int)Attacks.SpawnAnimation)
+            {
+                float textScale = 4f;
+                int spacing = 16;
+                Asset<Texture2D> R = ModContent.Request<Texture2D>(Texture + "Text_R");
+                Asset<Texture2D> U = ModContent.Request<Texture2D>(Texture + "Text_U");
+                Asset<Texture2D> N = ModContent.Request<Texture2D>(Texture + "Text_N");
+                float uHalfWidth = U.Width() / 2 * textScale;
+                spriteBatch.Draw(R.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth - spacing - R.Width() * textScale, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
+                if (Timer > 60)
+                    spriteBatch.Draw(U.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
+                if (Timer > 120)
+                    spriteBatch.Draw(N.Value, new Vector2(Main.screenWidth / 2 + uHalfWidth + spacing, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
+                return false;
+            }
             Asset<Texture2D> sprite = TextureAssets.Npc[Type];
             Asset<Texture2D> wings = ModContent.Request<Texture2D>(Texture + "Wings");
             Asset<Texture2D> legs = ModContent.Request<Texture2D>(Texture + "Legs");

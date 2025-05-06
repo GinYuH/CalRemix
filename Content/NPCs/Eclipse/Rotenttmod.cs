@@ -11,10 +11,6 @@ namespace CalRemix.Content.NPCs.Eclipse
 {
     public class Rodenttmod : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Rodent.tmod");

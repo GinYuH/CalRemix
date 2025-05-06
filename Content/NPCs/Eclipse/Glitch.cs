@@ -15,10 +15,6 @@ namespace CalRemix.Content.NPCs.Eclipse
 {
     public class Glitch : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Glitch");
