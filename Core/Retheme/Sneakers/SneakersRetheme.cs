@@ -444,19 +444,25 @@ namespace CalRemix.Core.Retheme
                 if (Mount.mounts[MountID.MinecartMech] != null)
                 {
                     Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
-                    minecartMech.frontTexture = MinecartMechTexture[0];
-                    minecartMech.frontTextureGlow = MinecartMechTexture[1];
-                    minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                    if(minecartMech != null)
+                    {
+                        minecartMech.frontTexture = MinecartMechTexture[0];
+                        minecartMech.frontTextureGlow = MinecartMechTexture[1];
+                        minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                    }
                 }
 
                 if (Mount.mounts[MountID.CuteFishron] != null)
                 {
                     Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
-                    cuteFishron.backTexture = CuteFishronTexture[0];
-                    cuteFishron.backTextureGlow = CuteFishronTexture[1];
-                    cuteFishron.frontTexture = Asset<Texture2D>.Empty;
-                    cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
-                    cuteFishron.textureWidth = CuteFishronTexture[0].Width();
+                    if(cuteFishron != null)
+                    {
+                        cuteFishron.backTexture = CuteFishronTexture[0];
+                        cuteFishron.backTextureGlow = CuteFishronTexture[1];
+                        cuteFishron.frontTexture = Asset<Texture2D>.Empty;
+                        cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
+                        cuteFishron.textureWidth = CuteFishronTexture[0].Width();
+                    }
                 }
 
                 if (MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData != null)
