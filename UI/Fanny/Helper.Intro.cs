@@ -19,8 +19,9 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.zenithWorld);
 
             //Crim son
-            HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", "It is Dangerous to Go Alone. Take This.", "CrimSonDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone, 6, cantBeClickedOff: true)
-                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation(40).AddEndEvent(() => Main.LocalPlayer.ConsumeItem(ItemID.CellPhone));
+            HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone ? "It is Dangerous to Go Alone. Take This." : "Those Who Gol:"), "CrimSonDefault", (ScreenHelperSceneMetrics scene) => 
+                Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss, 6, cantBeClickedOff: true)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation(40).AddEndEvent(() => { if(Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone) Main.LocalPlayer.ConsumeItem(ItemID.CellPhone); });
 
             HelperMessage.New("CrimSonIntro2", "Woah! Hey there buddy! How are you d-",
                 "FannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(crimtro1, delay: 3, startTimerOnMessageSpoken: true);
