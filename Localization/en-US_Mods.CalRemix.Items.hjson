@@ -4303,3 +4303,38 @@ ScaryMicrophone: {
 	DisplayName: Scary Microphone
 	Tooltip: Plays a random jumpscare when used
 }
+
+CuboidCurseBanner: {
+	DisplayName: Cuboid Curse Banner
+	Tooltip: ""
+}
+
+CuboidCurseBannerAlt: {
+	DisplayName: Cuboid Curse Banner Alt
+	Tooltip: ""
+}
+
+EvilAnimatronicBanner: {
+	DisplayName: Evil Animatronic Banner
+	Tooltip: ""
+}
+
+GlitchBanner: {
+	DisplayName: Glitch Banner
+	Tooltip: ""
+}
+
+RodenttmodBanner: {
+	DisplayName: Rodenttmod Banner
+	Tooltip: ""
+}
+
+TallManBanner: {
+	DisplayName: Tall Man Banner
+	Tooltip: ""
+}
+
+WaterloggedEffigyBanner: {
+	DisplayName: Waterlogged Effigy Banner
+	Tooltip: ""
+}

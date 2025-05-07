@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -32,6 +33,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.DeathSound = SoundID.NPCDeath39;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<TallManBanner>();
         }
 
         public override void OnSpawn(IEntitySource source)

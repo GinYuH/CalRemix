@@ -913,7 +913,14 @@ namespace CalRemix
                 if (Main.rand.NextBool(30))
                 {
                     // 50% Parasite. 25% Generic. 25% Exo
-                    jumpscareType = Main.rand.NextBool() ? "Parasite" : Main.rand.NextBool() ? "Generic" : "Exo";
+                    List<string> keys = new List<string>()
+                    {
+                        "Parasite",
+                        "Generic",
+                        "Exo",
+                        "Maze"
+                    };
+                    jumpscareType = Utils.SelectRandom<string>(Main.rand, [.. keys]);
                 }
                 jumpscare = EclipseJumpscares.jumpscareTypes[jumpscareType];
                 jumpscareTimer = jumpscare.duration + 60;

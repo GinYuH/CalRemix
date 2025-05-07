@@ -11,6 +11,7 @@ using Terraria.Audio;
 using CalamityMod.Dusts;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.NPCs.SupremeCalamitas;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -32,6 +33,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.value = Item.buyPrice(gold: 15);
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CuboidCurseBanner>();
         }
 
         public override void AI()

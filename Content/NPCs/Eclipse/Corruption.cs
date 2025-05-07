@@ -9,6 +9,7 @@ using System;
 using Terraria.ID;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -35,6 +36,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
+            Banner = ModContent.NPCType<Glitch>();
+            BannerItem = ModContent.ItemType<GlitchBanner>();
         }
 
         public override void AI()

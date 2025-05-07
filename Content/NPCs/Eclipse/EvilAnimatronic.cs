@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -36,6 +37,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = false;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<EvilAnimatronicBanner>();
         }
 
         public override void OnSpawn(IEntitySource source)

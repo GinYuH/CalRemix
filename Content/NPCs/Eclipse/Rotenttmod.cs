@@ -6,6 +6,7 @@ using CalamityMod;
 using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -30,6 +31,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.HitSound = SoundID.NPCHit7;
             NPC.DeathSound = SoundID.NPCDeath39;
             NPC.noTileCollide = true;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<RodenttmodBanner>();
         }
         public override void AI()
         {
