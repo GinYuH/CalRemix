@@ -102,7 +102,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                 case (int)Attacks.Normal:
                     {
                         Timer++;
-                        float speed = 8f;
+                        float speed = Math.Max(10, Main.player[NPC.target].velocity.X * 0.9f);
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
                         bool closeToPlayer = false;
