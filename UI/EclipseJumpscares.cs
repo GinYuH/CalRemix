@@ -57,7 +57,7 @@ public class EclipseJumpscares : ModSystem
         jumpscareTypes.Add("Ben2", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/BenAbyssJumpscarey"), "Ben2"));
         jumpscareTypes.Add("Exo", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/NightmareAmbulance"), "Exo"));
         jumpscareTypes.Add("Freddy", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronic"), "Freddy"));
-        jumpscareTypes.Add("Freddy2", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronic") with { Pitch = -1 }, "Freddy2"));
+        jumpscareTypes.Add("Freddy2", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/Bear5"), "Freddy2"));
         jumpscareTypes.Add("GoldenFreddy", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/GoldenFreddy"), "GoldenFreddy"));
         jumpscareTypes.Add("Generic", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/GenericJumpscare"), "Generic"));
         jumpscareTypes.Add("Herobrine", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/CaveSound"), "Herobrine"));
