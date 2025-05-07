@@ -69,6 +69,7 @@ using Terraria.GameContent;
 using static CalRemix.CalRemixHelper;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.NPCs.Eclipse;
+using System.Reflection;
 
 namespace CalRemix
 {
@@ -641,6 +642,28 @@ namespace CalRemix
             if (jumpscareTimer > 0)
                 jumpscareTimer--;
 
+            // Golden Freddy "crashes" the game
+            // These specific bits are from wotg
+            if (jumpscare.name == "GoldenFreddy" && jumpscareTimer == 22)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    // Bring the player to the main menu, and enable the marker that ensures they will receive loot upon re-entry.
+                    Main.menuMode = 0;
+                    Main.gameMenu = true;
+
+                    // Save the player's file data
+                    Player.SavePlayer(Main.ActivePlayerFileData);
+
+                    // Kick clients out of the server.
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        Netplay.Disconnect = true;
+                        Main.netMode = NetmodeID.SinglePlayer;
+                    }
+                }
+            }
+
             if (infraredSightsScanning)
                 InfraredLogic();
 
@@ -844,6 +867,10 @@ namespace CalRemix
                 {
                     jumpscareType = Main.rand.NextBool(5) ? "Herobrine" : "Herobrine2";
                 }
+                else if (n.type == NPCType<GoldenAnimatronic>())
+                {
+                    jumpscareType = "GoldenFreddy";
+                }
                 else if (n.type == NPCType<EvilAnimatronic>())
                 {
                     jumpscareType = Main.rand.NextBool(5) ? "Freddy2" : "Freddy";
@@ -871,6 +898,10 @@ namespace CalRemix
                 if (p.type == ProjectileType<PizzaWheelHostile>())
                 {
                     jumpscareType = Main.rand.NextBool(5) ? "Freddy2" : "Freddy";
+                    if (p.ai[2] == 1)
+                    {
+                        jumpscareType = "GoldenFreddy";
+                    }
                 }
                 else if (p.type == ProjectileType<RedstoneFireball>() || p.type == ProjectileType<RedstonePillar>())
                 {
