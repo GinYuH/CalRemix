@@ -58,7 +58,7 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.aiStyle = -1;
             NPC.width = 180;
             NPC.height = 200;
-            NPC.lifeMax = 73000;
+            NPC.lifeMax = 120000;
             NPC.damage = 90;
             NPC.defense = 35;
             NPC.knockBackResist = 0f;
@@ -149,6 +149,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                     break;
                 case (int)Attacks.Grab:
                     {
+                        NPC.dontTakeDamage = true;
                         Timer++;
                         Vector2 handPos = NPC.Center + new Vector2(30 * NPC.direction, 0);
                         TileClipping();
@@ -311,11 +312,12 @@ namespace CalRemix.Content.NPCs.Eclipse
                     break;
                 case (int)Attacks.Sniper:
                     {
+                        NPC.dontTakeDamage = true;
                         Timer++;
                         NPC.velocity.X *= 0.9f;
                         float distMultiplier = 1f; // how far the hook shoots out relative to the player
                         float hookDist = Main.player[NPC.target].Distance(NPC.Center) * distMultiplier; // the final distance the hook shoots
-                        if (Main.player[NPC.target].Distance(NPC.Center) < 360 && AIMisc == 0)
+                        if (Main.player[NPC.target].Distance(NPC.Center) < 560 && AIMisc == 0)
                         {
                             AIMisc = 1;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -330,11 +332,13 @@ namespace CalRemix.Content.NPCs.Eclipse
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
+                            NPC.dontTakeDamage = false;
                         }
                     }
                     break;
                 case (int)Attacks.Teleport:
                     {
+                        NPC.dontTakeDamage = true;
                         if (Timer == 0)
                         {
                             float dist = NPC.Center.X - Main.player[NPC.target].Center.X;
@@ -343,11 +347,11 @@ namespace CalRemix.Content.NPCs.Eclipse
                         }
                         Timer++;
                         NPC.velocity.X *= 0.9f;
-                        if (Main.player[NPC.target].Distance(NPC.Center) < 360)
+                        if (Main.player[NPC.target].Distance(NPC.Center) < 560)
                         {
                             float distMultiplier = 1f; // how far the hook shoots out relative to the player
                             float hookDist = Main.player[NPC.target].Distance(NPC.Center) * distMultiplier; // the final distance the hook shoots
-                            if (Main.player[NPC.target].Distance(NPC.Center) < 360 && AIMisc == 0)
+                            if (Main.player[NPC.target].Distance(NPC.Center) < 560 && AIMisc == 0)
                             {
                                 AIMisc = 1;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -363,6 +367,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
+                            NPC.dontTakeDamage = false;
                         }
 
                     }

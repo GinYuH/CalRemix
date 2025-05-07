@@ -924,7 +924,7 @@ namespace CalRemix
                 }
                 jumpscare = EclipseJumpscares.jumpscareTypes[jumpscareType];
                 jumpscareTimer = jumpscare.duration + 60;
-                SoundEngine.PlaySound(jumpscare.sound, Player.Center);
+                SoundEngine.PlaySound(jumpscare.sound);
             }
         }
 
