@@ -67,5 +67,6 @@ public class EclipseJumpscares : ModSystem
         jumpscareTypes.Add("Slenderman", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/SlenderJumpscare"), "Slenderman"));
         jumpscareTypes.Add("Slenderman2", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/SlenderJumpscare"), "Slenderman2"));
         jumpscareTypes.Add("Sonic", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/Rodenttmod"), "Sonic"));
+        jumpscareTypes.Add("Maze", new Jumpscare(120, new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/Maze"), "Maze"));
     }
 }

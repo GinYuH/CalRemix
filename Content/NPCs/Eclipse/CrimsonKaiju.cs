@@ -29,6 +29,10 @@ namespace CalRemix.Content.NPCs.Eclipse
         public ref float Timer => ref NPC.ai[1];
         public ref float AIMisc => ref NPC.ai[2];
 
+        public static SoundStyle RedHit = new SoundStyle("CalRemix/Assets/Sounds/RedHit");
+        public static SoundStyle RedDead = new SoundStyle("CalRemix/Assets/Sounds/RedDead");
+        public static SoundStyle RedSpawn = new SoundStyle("CalRemix/Assets/Sounds/RedSpawn");
+
         public enum Attacks
         {
             SpawnAnimation = 0,
@@ -59,8 +63,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.defense = 35;
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(gold: 30, silver: 50);
-            NPC.HitSound = SoundID.NPCHit8;
-            NPC.DeathSound = SoundID.NPCDeath27;
+            NPC.HitSound = null;
+            NPC.DeathSound = RedDead;
             NPC.alpha = 255;
             NPC.dontTakeDamage = true;
         }
@@ -88,7 +92,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                         Timer++;
                         if (Timer > 210)
                         {
-                            SoundEngine.PlaySound(AstralBeacon.UseSound);
+                            SoundEngine.PlaySound(RedSpawn);
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
                             NPC.dontTakeDamage = false;
@@ -508,6 +512,16 @@ namespace CalRemix.Content.NPCs.Eclipse
                 {
                     legsFrame = 0;
                 }
+            }
+            NPC.soundDelay--;
+        }
+
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.soundDelay <= 0)
+            {
+                SoundEngine.PlaySound(RedHit, NPC.Center);
+                NPC.soundDelay = 10;
             }
         }
 

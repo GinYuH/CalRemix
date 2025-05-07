@@ -358,7 +358,7 @@ Hypnos: {
 
 	BossChecklistIntegration: {
 		EntryName: XP-00 Hypnos
-		SpawnInfo: Right click the Codebreaker with [i:CalRemix/Ogscule]
+		SpawnInfo: Right click the Codebreaker with [i:CalamityMod/BloodyVein]
 	}
 }
 

@@ -4301,5 +4301,5 @@ EssenceOfMerge: {
 
 ScaryMicrophone: {
 	DisplayName: Scary Microphone
-	Tooltip: "Plays a random jumpscare when used"
+	Tooltip: Plays a random jumpscare when used
 }
