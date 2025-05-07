@@ -172,12 +172,19 @@ namespace CalRemix.Content.Projectiles.Hostile
                 {
                     VerletSimulatedSegment seg = Segments[i];
                     float rot;
+                    float dist;
                     if (i > 0)
+                    {
                         rot = seg.position.DirectionTo(Segments[i - 1].position).ToRotation() + MathHelper.PiOver2;
+                        dist = seg.position.Distance(Segments[i - 1].position);
+                    }
                     else
+                    {
                         rot = Projectile.rotation;
+                        dist = seg.position.Distance(Segments[i + 1].position);
+                    }
                     if (i > 0)
-                        Main.EntitySpriteDraw(tex, seg.position - Main.screenPosition, new Rectangle(0, 22, 26, 24), Projectile.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, new Vector2(13, 12), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                        Main.EntitySpriteDraw(tex, seg.position - Main.screenPosition, new Rectangle(0, 22, 26, 24), Projectile.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, new Vector2(13, 12), new Vector2(1, dist / 24), Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
                     else
                         Main.EntitySpriteDraw(tex, seg.position - Main.screenPosition, new Rectangle(0, 0, 26, 20), color, rot, new Vector2(13, 10), Projectile.scale, SpriteEffects.None, 0);
                 }
