@@ -554,7 +554,6 @@ namespace CalRemix.Content.NPCs.Eclipse
                     spriteBatch.Draw(U.Value, new Vector2(Main.screenWidth / 2 - uHalfWidth, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, letterColor, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
                 if ((Timer > 120 && spawnAnimation) || !spawnAnimation)
                     spriteBatch.Draw(N.Value, new Vector2(Main.screenWidth / 2 + uHalfWidth + spacing, Main.screenHeight / 10) + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), null, letterColor, 0f, Vector2.Zero, textScale, SpriteEffects.None, 1f);
-                //return false;
             }
             Asset<Texture2D> sprite = TextureAssets.Npc[Type];
             Asset<Texture2D> wings = ModContent.Request<Texture2D>(Texture + "Wings");

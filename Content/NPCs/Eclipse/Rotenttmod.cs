@@ -7,6 +7,7 @@ using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -148,6 +149,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), new Fraction(3, 4), 1, 2);
+            npcLoot.Add(ModContent.ItemType<AcceloRing>(), 30);
         }
     }
 }

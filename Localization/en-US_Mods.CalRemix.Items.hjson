@@ -4338,3 +4338,8 @@ WaterloggedEffigyBanner: {
 	DisplayName: Waterlogged Effigy Banner
 	Tooltip: ""
 }
+
+AcceloRing: {
+	DisplayName: Accelo Ring
+	Tooltip: Summons dimensional rings around the cursor which protrude large wooden spikes inwards
+}
