@@ -38,6 +38,8 @@ public class EclipseJumpscares : ModSystem
                         Vector2 scale = new Vector2((float)((float)Main.screenWidth * 1.1f / (float)tex.Width), (float)((float)Main.screenHeight * 1.1f / (float)tex.Height));
                         int shakeamt = 33;
                         Vector2 screenArea = new Vector2(Main.rand.Next(-shakeamt, shakeamt), Main.rand.Next(-shakeamt, shakeamt));
+                        if (currentJumpscare.name == "GoldenFreddy")
+                            screenArea = Vector2.Zero;
                         Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black * Utils.GetLerpValue(0, 30, player.jumpscareTimer, true), 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
                         Main.spriteBatch.Draw(tex, Main.ScreenSize.ToVector2() / 2f + screenArea, null, color * Utils.GetLerpValue(30, 90, player.jumpscareTimer, true), 0f, tex.Size() / 2f, scale, SpriteEffects.None, 0f);
                         Main.spriteBatch.End();

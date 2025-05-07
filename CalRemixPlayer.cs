@@ -644,7 +644,7 @@ namespace CalRemix
 
             // Golden Freddy "crashes" the game
             // These specific bits are from wotg
-            if (jumpscare.name == "GoldenFreddy" && jumpscareTimer == 22)
+            if (jumpscare.name == "GoldenFreddy" && jumpscareTimer == 90 && Main.eclipse)
             {
                 if (Main.netMode != NetmodeID.Server)
                 {

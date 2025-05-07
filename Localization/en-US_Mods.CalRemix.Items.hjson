@@ -4232,7 +4232,7 @@ NoxusMusicBox: {
 }
 
 ReaverSharkWaitNVM: {
-	DisplayName: Reaver Shark Wait N V M
+	DisplayName: Reaver Shark Wait NVM
 	Tooltip: ""
 }
 
@@ -4297,4 +4297,9 @@ RedWulfrumFrogCannon: {
 EssenceOfMerge: {
 	DisplayName: Essence Of Merge
 	Tooltip: ""
+}
+
+ScaryMicrophone: {
+	DisplayName: Scary Microphone
+	Tooltip: "Plays a random jumpscare when used"
 }
