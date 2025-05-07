@@ -417,3 +417,8 @@ BabyNoxusBuff: {
 	DisplayName: Noxus
 	Description: He's a smol lad now
 }
+
+WeirdBirdBuff: {
+	DisplayName: Weird Bird Buff
+	Description: Some weird bird has identified you as its mother
+}

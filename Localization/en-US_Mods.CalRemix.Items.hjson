@@ -4343,3 +4343,8 @@ AcceloRing: {
 	DisplayName: Accelo Ring
 	Tooltip: Summons dimensional rings around the cursor which protrude large wooden spikes inwards
 }
+
+Everflute: {
+	DisplayName: Everflute
+	Tooltip: "Summons a powerful bird type monster"
+}
