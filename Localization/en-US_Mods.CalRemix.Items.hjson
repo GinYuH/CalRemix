@@ -2679,6 +2679,15 @@ Weapons: {
 			DisplayName: Sylvan Slasher
 			Tooltip: ""
 		}
+
+		PizzaWheel: {
+			DisplayName: Pizza Wheel
+			Tooltip:
+				'''
+				Throws a pizza boomerang that summons rolling pizzas on enemy hits
+				Stealth strikes throw a larger pizza that summons even more rolling pizzas
+				'''
+		}
 	}
 }
 
@@ -4346,5 +4355,5 @@ AcceloRing: {
 
 Everflute: {
 	DisplayName: Everflute
-	Tooltip: "Summons a powerful bird type monster"
+	Tooltip: Summons a powerful bird type monster
 }

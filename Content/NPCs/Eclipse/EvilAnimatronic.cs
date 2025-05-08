@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -141,6 +142,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), new Fraction(3, 4), 1, 2);
+            npcLoot.Add(ModContent.ItemType<PizzaWheel>(), 20);
         }
     }
 }

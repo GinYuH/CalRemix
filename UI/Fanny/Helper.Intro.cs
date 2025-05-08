@@ -19,8 +19,8 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.zenithWorld);
 
             //Crim son
-            HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone ? "It is Dangerous to Go Alone. Take This." : "Those Who Gol:"), "CrimSonDefault", (ScreenHelperSceneMetrics scene) => 
-                Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss, 6, cantBeClickedOff: true)
+            HelperMessage crimtro1 = HelperMessage.New("CrimSonIntro1", "It is Dangerous to Go Alone. Take This.", "CrimSonDefault", (ScreenHelperSceneMetrics scene) => 
+                Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && !NPC.downedGolemBoss, 6, cantBeClickedOff: true)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation(40).AddEndEvent(() => { if(Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone) Main.LocalPlayer.ConsumeItem(ItemID.CellPhone); });
 
             HelperMessage.New("CrimSonIntro2", "Woah! Hey there buddy! How are you d-",
@@ -33,6 +33,24 @@ namespace CalRemix.UI
                 "FannySob", HelperMessage.AlwaysShow).ChainAfter(crimtro3, delay: 3, startTimerOnMessageSpoken: true).SetHoverTextOverride("Indeed it isn't Fanny!");
 
             HelperMessage.New("CrimSonIntro5", "Lil flame boy 0 crim son 1 oh yea yea goochie gang",
+                "CrimSonDefault", HelperMessage.AlwaysShow).ChainAfter(delay: 1, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).EndConversation();
+
+            //Crim son force unlock
+
+            HelperMessage crimtro1alt = HelperMessage.New("CrimSonIntro1Alt", "Those Who Gol:", "CrimSonDefault", (ScreenHelperSceneMetrics scene) =>
+                !Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone && NPC.downedGolemBoss, 6, cantBeClickedOff: true)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).InitiateConversation(40).AddEndEvent(() => { if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone) Main.LocalPlayer.ConsumeItem(ItemID.CellPhone); });
+
+            HelperMessage.New("CrimSonIntro2Alt", "Woah! Hey there buddy! How are you d-",
+    "FannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).ChainAfter(crimtro1alt, delay: 3, startTimerOnMessageSpoken: true);
+
+            HelperMessage crimtro3alt = HelperMessage.New("CrimSonIntro3Alt", "Hnnk, you shut lil flame boy ueehhe.",
+                "CrimSonDefault", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(crimtro1alt);
+
+            HelperMessage.New("CrimSonIntro4Alt", "Well that's not nice.",
+                "FannySob", HelperMessage.AlwaysShow).ChainAfter(crimtro3alt, delay: 3, startTimerOnMessageSpoken: true).SetHoverTextOverride("Indeed it isn't Fanny!");
+
+            HelperMessage.New("CrimSonIntro5Alt", "Lil flame boy 0 crim son 1 oh yea yea goochie gang",
                 "CrimSonDefault", HelperMessage.AlwaysShow).ChainAfter(delay: 1, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).EndConversation();
 
             //Evil Fanny
@@ -48,7 +66,7 @@ namespace CalRemix.UI
             HelperMessage introLore3 = HelperMessage.New("IntroducingEvilFanny5", "$0, it seems my evil counterpart, Evil Fanny, has returned! Don't trust a thing they say, and hopefully they'll leave..",
                "FannyIdle", HelperMessage.AlwaysShow, 8).AddDynamicText(HelperMessage.GetPlayerName).ChainAfter().EndConversation();
             HelperMessage introEvilLore3 = HelperMessage.New("IntroducingEvilFanny6", "\"Evil counterpart\" is a crazy way of saying you can't take the slightest bit of cricicism, just saying, bro.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 5, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(introEvilLore2);
+                "EvilFannyIdle", HelperMessage.AlwaysShow, 8, cantBeClickedOff: true).SpokenByEvilFanny().ChainAfter(introEvilLore2);
 
             //Trapper Bulb Chan
             HelperMessage.New("TrapperBeginning1", "Hey, have you seen my precious pink flower that I've been growing for 15 years? I left her around here. She's been my best friend for years now, and I could never fathom what I'd do if I had lost h",
