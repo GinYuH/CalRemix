@@ -105,6 +105,7 @@ Melee: {
 	Turbulance.DisplayName: Turbulance
 	WaveSkipper.DisplayName: Wave Skipper
 	Wrathwing.DisplayName: Wrathwing
+	GuardiansWrathStab.DisplayName: Guardians Wrath Stab
 }
 
 GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
@@ -331,3 +332,4 @@ AcceloRingSpike.DisplayName: Accelo Ring Spike
 WeirdBird.DisplayName: Weird Bird
 PizzaWheelProj.DisplayName: Pizza Wheel
 PizzaWheelStealth.DisplayName: Pizza Wheel II
+GuardiansWrathProj.DisplayName: Guardian's Wrath

@@ -4360,7 +4360,7 @@ Everflute: {
 
 RedWings: {
 	DisplayName: Red Wings
-	Tooltip: 
+	Tooltip:
 		'''
 		Horizontal speed: 15
 		Acceleration multiplier: 3
@@ -4372,5 +4372,16 @@ RedWings: {
 
 BlankStare: {
 	DisplayName: Blank Stare
-	Tooltip: "Scrubs the features off of one's face"
+	Tooltip: Scrubs the features off of one's face
+}
+
+GuardiansWrath: {
+	DisplayName: Guardians Wrath
+	Tooltip:
+		'''
+		<left> to thrust like a normal spear
+		<right> to throw the spear, sticking into hit tiles or enemies
+		<right> again while a spear is stuck to strike it with lightning and return it to you
+		The spear cannot be used while it is stuck, however other weapons may be used
+		'''
 }
