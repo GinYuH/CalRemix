@@ -4388,7 +4388,7 @@ GuardiansWrath: {
 
 SalvageLegs: {
 	DisplayName: Salvage Legs
-	Tooltip: 
+	Tooltip:
 		'''
 		9% increased rogue velocity
 		5% increased movement speed
@@ -4397,7 +4397,7 @@ SalvageLegs: {
 
 SalvageMask: {
 	DisplayName: Salvage Mask
-	Tooltip: "22% increased rogue critical strike chance"
+	Tooltip: 22% increased rogue critical strike chance
 	SetBonus:
 		'''
 		87% increased rogue damage
@@ -4411,5 +4411,5 @@ SalvageMask: {
 
 SalvageSuit: {
 	DisplayName: Salvage Suit
-	Tooltip: "23% increased rogue damage"
+	Tooltip: 23% increased rogue damage
 }
