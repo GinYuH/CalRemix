@@ -15,6 +15,10 @@ using Terraria.DataStructures;
 using CalRemix.Content.Items.Placeables.Banners;
 using System.Collections.Generic;
 using Terraria.GameContent;
+using CalRemix.Content.Items.Pets;
+using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Ammo;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -235,6 +239,13 @@ namespace CalRemix.Content.NPCs.Eclipse
                 return 0f;
 
             return SpawnCondition.SolarEclipse.Chance * 0.1f;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 4, 6);
+            npcLoot.Add(ModContent.ItemType<Glockarina>(), 20);
+            npcLoot.Add(ModContent.ItemType<CursedCartridge>(), 20);
         }
 
         public override void HitEffect(NPC.HitInfo hit)

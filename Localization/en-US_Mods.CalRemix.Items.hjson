@@ -4413,3 +4413,13 @@ SalvageSuit: {
 	DisplayName: Salvage Suit
 	Tooltip: 23% increased rogue damage
 }
+
+CursedCartridge: {
+	DisplayName: Cursed Cartridge
+	Tooltip: "Fires homing bolts which distort enemy stats"
+}
+
+Glockarina: {
+	DisplayName: Glockarina
+	Tooltip: "Contains an infinite amount of Cursed Bullets with greatly increased damage"
+}
