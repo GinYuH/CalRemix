@@ -58,7 +58,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 {
                     case 0f:
                         Projectile.ai[1] += 1f;
-                        if (Projectile.ai[1] >= 40f)
+                        if (Projectile.ai[1] >= 60f)
                         {
                             Projectile.ai[0] = 1f;
                             Projectile.ai[1] = 0f;
