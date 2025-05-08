@@ -354,11 +354,11 @@ PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
 
 Hypnos: {
-	DisplayName: Hypnos
+	DisplayName: XP-00 Hypnos
 
 	BossChecklistIntegration: {
 		EntryName: XP-00 Hypnos
-		SpawnInfo: Right click the Codebreaker with [i:CalRemix/Ogscule]
+		SpawnInfo: Right click the Codebreaker with [i:CalamityMod/BloodyVein]
 	}
 }
 
@@ -570,3 +570,5 @@ SplitChlorinePaladin.DisplayName: Split Chlorine Paladin
 SupremeTwin.DisplayName: Supreme Twin
 FunnyButterfly.DisplayName: Funny Butterfly
 WulfrumFrog.DisplayName: Wulfrum Frog
+GoldenAnimatronic.DisplayName: Golden Animatronic
+WaterloggedEffigy.DisplayName: Waterlogged Effigy
