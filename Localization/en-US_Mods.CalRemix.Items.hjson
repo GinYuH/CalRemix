@@ -4357,3 +4357,12 @@ Everflute: {
 	DisplayName: Everflute
 	Tooltip: Summons a powerful bird type monster
 }
+
+TraderTablet: {
+	DisplayName: Trader's Tablet
+	Tooltip:
+		'''
+		Used to keep track of stock prices
+		Cannot be used to directly trade stocks
+		'''
+}
