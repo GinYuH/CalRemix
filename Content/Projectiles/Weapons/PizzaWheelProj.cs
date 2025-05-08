@@ -45,7 +45,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                     Projectile.localAI[2] = 1;
                 }
 
-                Lighting.AddLight(Projectile.Center, Main.DiscoR * 0.5f / 255f, Main.DiscoG * 0.5f / 255f, Main.DiscoB * 0.5f / 255f);
                 Projectile.rotation += 1f;
 
                 if (Projectile.soundDelay == 0)
