@@ -4385,3 +4385,31 @@ GuardiansWrath: {
 		The spear cannot be used while it is stuck, however other weapons may be used
 		'''
 }
+
+SalvageLegs: {
+	DisplayName: Salvage Legs
+	Tooltip: 
+		'''
+		9% increased rogue velocity
+		5% increased movement speed
+		'''
+}
+
+SalvageMask: {
+	DisplayName: Salvage Mask
+	Tooltip: "22% increased rogue critical strike chance"
+	SetBonus:
+		'''
+		87% increased rogue damage
+		28% increased rogue critical strike chance
+		Using a stealth strike near enemies emits a scream that stuns them
+		Smaller enemies take 5 times as much damage
+		Taking over 100 damage from a hit, entering liquid, or being out in the rain inflicts the wearer with Springlocked
+		Springlocked rapidly damages the wearer until they hit 1 health
+		'''
+}
+
+SalvageSuit: {
+	DisplayName: Salvage Suit
+	Tooltip: "23% increased rogue damage"
+}

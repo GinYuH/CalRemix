@@ -36,7 +36,7 @@ namespace CalRemix.Content.Items.Armor
     {
         public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
         {
-            return true;
+            return Main.LocalPlayer.armor[0].type == ModContent.ItemType<BlankStare>() || Main.LocalPlayer.armor[10].type == ModContent.ItemType<BlankStare>();
         }
         public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
         protected override void Draw(ref PlayerDrawSet drawinfo)
