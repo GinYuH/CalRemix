@@ -4357,3 +4357,20 @@ Everflute: {
 	DisplayName: Everflute
 	Tooltip: Summons a powerful bird type monster
 }
+
+RedWings: {
+	DisplayName: Red Wings
+	Tooltip: 
+		'''
+		Horizontal speed: 15
+		Acceleration multiplier: 3
+		Great vertical speed
+		Flight time: 190
+		20% increased movement speed
+		'''
+}
+
+BlankStare: {
+	DisplayName: Blank Stare
+	Tooltip: "Scrubs the features off of one's face"
+}

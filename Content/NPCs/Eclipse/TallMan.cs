@@ -9,6 +9,7 @@ using CalamityMod.Items.Materials;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Armor;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -118,6 +119,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 7, 7);
+            npcLoot.Add(ModContent.ItemType<BlankStare>(), 10);
         }
     }
 }

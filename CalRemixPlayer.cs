@@ -356,6 +356,7 @@ namespace CalRemix
             PlayerDrawLayers.ArmOverItem,
             PlayerDrawLayers.HandOnAcc
         ];
+
         public int[] MinionList =
 		{
 			ProjectileType<PlantationStaffSummon>(),
