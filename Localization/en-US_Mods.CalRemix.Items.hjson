@@ -4416,10 +4416,15 @@ SalvageSuit: {
 
 CursedCartridge: {
 	DisplayName: Cursed Cartridge
-	Tooltip:  Contains an infinite amount of bullets which move in a grid-like pattern
+	Tooltip: Contains an infinite amount of bullets which move in a grid-like pattern
 }
 
 Glockarina: {
 	DisplayName: Glockarina
 	Tooltip: Fires homing bolts which distort enemy stats
+}
+
+GodKillerEX: {
+	DisplayName: God Killer EX
+	Tooltip: Fires a devastating blue heat ray which irradiates enemies
 }
