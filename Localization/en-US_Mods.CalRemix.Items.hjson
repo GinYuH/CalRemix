@@ -4416,10 +4416,10 @@ SalvageSuit: {
 
 CursedCartridge: {
 	DisplayName: Cursed Cartridge
-	Tooltip: "Fires homing bolts which distort enemy stats"
+	Tooltip:  Contains an infinite amount of bullets which move in a grid-like pattern
 }
 
 Glockarina: {
 	DisplayName: Glockarina
-	Tooltip: "Contains an infinite amount of Cursed Bullets with greatly increased damage"
+	Tooltip: Fires homing bolts which distort enemy stats
 }

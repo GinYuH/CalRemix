@@ -28,7 +28,7 @@ namespace CalRemix.Content.Items.Ammo
             Item.knockBack = 8f;
             Item.rare = ModContent.RarityType<DarkBlue>();
             Item.value = Item.buyPrice(silver: 1);
-            Item.shoot = ProjectileID.CursedBullet;
+            Item.shoot = ModContent.ProjectileType<CursedBullet>();
             Item.shootSpeed = 21f;
             Item.ammo = AmmoID.Bullet;
         }
