@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -61,8 +62,17 @@ namespace CalRemix.Content.NPCs.Eclipse
                 NPC.damage = 0;
                 NPC.velocity *= 0.9f;
                 NPC.alpha += 5;
-                if (NPC.alpha >= 255)
+                if (NPC.alpha >= 255 && NPC.active)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Item.NewItem(NPC.GetSource_FromThis(), NPC.getRect(), ModContent.ItemType<BadEgg>());
+                        }
+                    }
                     NPC.active = false;
+                }
             }
             for (int k = 0; k < Main.maxNPCs; k++)
             {

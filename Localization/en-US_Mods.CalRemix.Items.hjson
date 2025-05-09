@@ -4428,3 +4428,13 @@ GodKillerEX: {
 	DisplayName: God Killer EX
 	Tooltip: Fires a devastating blue heat ray which irradiates enemies
 }
+
+SignoftheOperator: {
+	DisplayName: Sign of the Operator
+	Tooltip: Holds out a tome which rapidly unleashes several short ranged whips
+}
+
+BadEgg: {
+	DisplayName: Bad Egg
+	Tooltip: "'Hey this egg is actually quite bad'"
+}

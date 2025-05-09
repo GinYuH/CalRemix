@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using CalRemix.Content.Items.Placeables.Banners;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -120,6 +121,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 7, 7);
             npcLoot.Add(ModContent.ItemType<BlankStare>(), 10);
+            npcLoot.Add(ModContent.ItemType<SignoftheOperator>(), 10);
         }
     }
 }
