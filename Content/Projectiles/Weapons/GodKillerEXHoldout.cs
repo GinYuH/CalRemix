@@ -19,7 +19,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override int AssociatedItemID => ModContent.ItemType<GodKillerEX>();
         public override Vector2 GunTipPosition => base.GunTipPosition - Vector2.UnitX.RotatedBy(Projectile.rotation) - (Vector2.UnitY.RotatedBy(Projectile.rotation) * 7f * Projectile.spriteDirection * Owner.gravDir);
-        public override float MaxOffsetLengthFromArm => 20f;
+        public override float MaxOffsetLengthFromArm => 0;
         public override float OffsetXUpwards => 0;
         public override float BaseOffsetY => 0;
         public override float OffsetYDownwards => 0;
@@ -87,7 +87,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D value = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/GodKillerEXHoldout").Value;
-            Main.EntitySpriteDraw(value, Projectile.Center - Main.screenPosition, value.Frame(1, 8, 0, Projectile.frame), rotation: Projectile.rotation + ((Projectile.spriteDirection == -1) ? MathF.PI : 0f), origin: new Vector2(value.Width / 2, value.Height / 16), effects: ((float)Projectile.spriteDirection * Owner.gravDir == -1f) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, color: Projectile.GetAlpha(lightColor), scale: Projectile.scale * Owner.gravDir);
+            Main.EntitySpriteDraw(value, Projectile.Center - Main.screenPosition + Projectile.rotation.ToRotationVector2() * 20, value.Frame(1, 8, 0, Projectile.frame), rotation: Projectile.rotation + ((Projectile.spriteDirection == -1) ? MathF.PI : 0f), origin: new Vector2(value.Width / 2, value.Height / 16), effects: ((float)Projectile.spriteDirection * Owner.gravDir == -1f) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, color: Projectile.GetAlpha(lightColor), scale: Projectile.scale * Owner.gravDir);
             return false;
         }
     }
