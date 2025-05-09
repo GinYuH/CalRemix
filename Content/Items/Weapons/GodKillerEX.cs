@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             Item.width = 114;
             Item.height = 58;
-            Item.damage = 489;
+            Item.damage = 1954;
             Item.DamageType = DamageClass.Ranged;
             Item.useTime = FireRate;
             Item.useAnimation = FireRate;

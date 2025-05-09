@@ -74,13 +74,13 @@ namespace CalRemix.Content.Projectiles.Weapons
                     dustpos = dustpos.RotatedBy(Projectile.rotation, ogPos);
                     Vector2 spawnPos = Projectile.Center - dustpos;
 
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + Projectile.DirectionTo(Main.MouseWorld) * 10, DustID.Electric, spawnPos.DirectionTo(Projectile.Center - ogPos) * Main.rand.NextFloat(3f, 7f));
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Projectile.rotation.ToRotationVector2() * 10, DustID.Electric, spawnPos.DirectionTo(Projectile.Center - ogPos) * Main.rand.NextFloat(3f, 7f));
                     d.noGravity = true;
 
                     /*Particle p = new HeavySmokeParticle(Projectile.Center + Projectile.DirectionTo(Main.MouseWorld) * 10, spawnPos.DirectionTo(Projectile.Center - ogPos) * Main.rand.NextFloat(3f, 7f), Color.Cyan, 20, Main.rand.NextFloat(0.1f, 0.3f), 180f, 0.2f, true);
                     GeneralParticleHandler.SpawnParticle(p);*/
                 }
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(Main.MouseWorld) * 4, ModContent.ProjectileType<GodKillerBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.rotation.ToRotationVector2() * 4, ModContent.ProjectileType<GodKillerBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }
 

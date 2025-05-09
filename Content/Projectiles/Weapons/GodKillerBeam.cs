@@ -26,6 +26,11 @@ namespace CalRemix.Content.Projectiles.Weapons
         public ref float Timer => ref Projectile.ai[1];
         public Player Owner => Main.player[Projectile.owner];
 
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 10000;
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = 10;
@@ -37,7 +42,6 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 10000;
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
 
             // Prepare the flame trail shader with its map texture.
@@ -102,7 +106,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             if (Projectile.ai[2] == 1)
             {
-                ret = MathHelper.Lerp(ret, 0, Utils.GetLerpValue(10, 0, Projectile.timeLeft, true));
+                ret = MathHelper.Lerp(ret, 0, CalamityUtils.ExpInEasing(Utils.GetLerpValue(10, 0, Projectile.timeLeft, true), 1));
             }
             return ret;
         }
@@ -147,6 +151,8 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override void AI()
         {
             if (Owner is null) return;
+            if (Owner.ownedProjectileCounts[ModContent.ProjectileType<GodKillerEXHoldout>()] <= 0)
+                Projectile.Kill();
             Timer++;
 
             Projectile.localAI[2]++;
@@ -158,8 +164,8 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             if (Projectile.ai[2] == 0)
             {
+                Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.position = Owner.Center + Projectile.rotation.ToRotationVector2() * (Projectile.DirectionTo(Main.MouseWorld).X > 0 ? 8 : 22);
-                Projectile.rotation = Projectile.DirectionTo(Main.MouseWorld).ToRotation();
             }
            // else
                // Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.UnitY) * 80;
