@@ -15,21 +15,24 @@ namespace CalRemix.Content.Items.Misc
 
         public override void UpdateInventory(Player player)
         {
-            int eggCount = 0;
-            foreach (var v in player.inventory)
+            if (Main.eclipse)
             {
-                if (v.type == ModContent.ItemType<BadEgg>())
+                int eggCount = 0;
+                foreach (var v in player.inventory)
                 {
-                    eggCount++;
-                }
-            }
-            foreach (var v in player.inventory)
-            {
-                if (Main.rand.NextBool(600 * eggCount))
-                {
-                    if (v.type == ItemID.None)
+                    if (v.type == ModContent.ItemType<BadEgg>())
                     {
-                        v.SetDefaults(Item.type);
+                        eggCount++;
+                    }
+                }
+                foreach (var v in player.inventory)
+                {
+                    if (Main.rand.NextBool(600 * eggCount))
+                    {
+                        if (v.type == ItemID.None)
+                        {
+                            v.SetDefaults(Item.type);
+                        }
                     }
                 }
             }
