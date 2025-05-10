@@ -65,6 +65,35 @@ namespace CalRemix.Content.NPCs
         public override void AI()
         {
             NPC.TargetClosest();
+            if (CalRemixWorld.vigorDialogueLevel >= 0)
+            {
+                foreach (Projectile pr in Main.ActiveProjectiles)
+                {
+                    if (pr.type == ProjectileID.PureSpray || pr.type == ProjectileID.PurificationPowder)
+                    {
+                        if (pr.getRect().Intersects(NPC.getRect()))
+                        {
+                            CalRemixWorld.vigorDialogueLevel = -1;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (Projectile pr in Main.ActiveProjectiles)
+                {
+                    if (pr.type == ProjectileID.ViciousPowder || pr.type == ProjectileID.CrimsonSpray)
+                    {
+                        if (pr.getRect().Intersects(NPC.getRect()))
+                        {
+                            CalRemixWorld.vigorDialogueLevel = 0;
+                            break;
+                        }
+                    }
+                }
+                return;
+            }
             Player p = Main.player[NPC.target];
             if (p.active && p.Distance(NPC.Center) < 500 && Math.Abs(NPC.Center.Y - p.Center.Y) < 300 && Collision.CanHitLine(NPC.Center - Vector2.UnitY * 40, 1, 1, p.Center, 1, 1) && CalRemixWorld.vigorDialogueLevel == 0)
             {
@@ -124,17 +153,23 @@ namespace CalRemix.Content.NPCs
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D head = ModContent.Request<Texture2D>(Texture + "Head").Value;
             Texture2D jaw = ModContent.Request<Texture2D>(Texture + "Jaw").Value;
+            if (CalRemixWorld.vigorDialogueLevel <= -1)
+            {
+                tex = ModContent.Request<Texture2D>(Texture + "_Purified").Value;
+                head = ModContent.Request<Texture2D>(Texture + "Head_Purified").Value;
+                jaw = ModContent.Request<Texture2D>(Texture + "Jaw_Purified").Value;
+            }
             Vector2 jawOrig = new Vector2(18, 4);
             Vector2 headOrig = new Vector2(22, 46);
             float jawRot = 0;
-            if (currentDialogue != default)
+            if (currentDialogue != default && CalRemixWorld.vigorDialogueLevel >= 0)
             {
                 jawRot = MathF.Sin(Main.GlobalTimeWrappedHourly * 12) * 0.25f;
             }
             spriteBatch.Draw(tex, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, tex.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             spriteBatch.Draw(head, NPC.Center - new Vector2(20, 60) - screenPos, null, NPC.GetAlpha(drawColor), 0, headOrig, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             spriteBatch.Draw(jaw, NPC.Center - new Vector2(18, 70) - screenPos, null, NPC.GetAlpha(drawColor), jawRot, jawOrig, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            if (currentDialogue != default)
+            if (currentDialogue != default && CalRemixWorld.vigorDialogueLevel >= 0)
             {
                 (string, int) currentLine = currentDialogue.text[(int)NPC.ai[3]];
                 Vector2 textSize = FontAssets.MouseText.Value.MeasureString(currentLine.Item1);
