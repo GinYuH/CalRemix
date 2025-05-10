@@ -4438,3 +4438,8 @@ BadEgg: {
 	DisplayName: Bad Egg
 	Tooltip: "'Hey this egg is actually quite bad'"
 }
+
+VigorBlock: {
+	DisplayName: Vigor Block
+	Tooltip: ""
+}
