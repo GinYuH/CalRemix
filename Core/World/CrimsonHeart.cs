@@ -23,7 +23,7 @@ namespace CalRemix.Core.World
             int heightdiv2 = 22;
             bool gennedMeld = false;
             Vector2 meldCoords = Vector2.Zero;
-            int ymin = Main.remixWorld ? (int)(Main.maxTilesY * 0.4f) : (int)(Main.maxTilesY * 0.6f);
+            int ymin = Main.remixWorld ? (int)(Main.maxTilesY * 0.2f) : (int)(Main.maxTilesY * 0.4f);
             int ymax = Main.remixWorld ? (int)(Main.maxTilesY * 0.6f) : Main.UnderworldLayer - 100;
             for (int loop = 0; loop < 200; loop++)
             {

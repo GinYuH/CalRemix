@@ -85,6 +85,7 @@ namespace CalRemix.Core.World
         public static int ShrineTimer = -20; 
         public static int RoachCountdown = 0;
         public static int roachDuration = 0;
+        public static int vigorDialogueLevel = 0;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -220,6 +221,7 @@ namespace CalRemix.Core.World
             meldCountdown = 72000;
             RoachCountdown = 0;
             roachDuration = 0;
+            vigorDialogueLevel = 0;
 
             // Misc bools
             guideHasExisted = false;
@@ -325,6 +327,7 @@ namespace CalRemix.Core.World
             tag["seenRoach"] = seenRoaches;
             tag["mbp"] = seenMBP;
             tag["metNoxus"] = metNoxus;
+            tag["vigor"] = vigorDialogueLevel;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -443,6 +446,7 @@ namespace CalRemix.Core.World
 
             meldCountdown = tag.Get<int>("meld");
             roachDuration = tag.Get<int>("roachDuration");
+            vigorDialogueLevel = tag.Get<int>("vigor");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -485,6 +489,7 @@ namespace CalRemix.Core.World
             writer.Write(seenMBP);
             writer.Write(seenRoaches);
             writer.Write(metNoxus);
+            writer.Write(vigorDialogueLevel);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -563,6 +568,7 @@ namespace CalRemix.Core.World
             seenMBP = reader.ReadBoolean();
             seenRoaches = reader.ReadBoolean();
             metNoxus = reader.ReadBoolean();
+            vigorDialogueLevel = reader.ReadInt32();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();

@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
 using System.Collections.Generic;
+using Terraria.Audio;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs
 {
@@ -64,7 +66,7 @@ namespace CalRemix.Content.NPCs
         {
             NPC.TargetClosest();
             Player p = Main.player[NPC.target];
-            if (p.active && p.Distance(NPC.Center) < 500 && Math.Abs(NPC.Center.Y - p.Center.Y) < 200 && Collision.CanHitLine(NPC.Center - Vector2.UnitY * 40, 1, 1, p.Center, 1, 1))
+            if (p.active && p.Distance(NPC.Center) < 500 && Math.Abs(NPC.Center.Y - p.Center.Y) < 300 && Collision.CanHitLine(NPC.Center - Vector2.UnitY * 40, 1, 1, p.Center, 1, 1) && CalRemixWorld.vigorDialogueLevel == 0)
             {
                 currentDialogue = dialogues["Intro"];
             }
@@ -79,12 +81,23 @@ namespace CalRemix.Content.NPCs
                 LocalTimer++;
                 if (Timer > (currentDialogue.TextDuration() - 5))
                 {
+                    for (int i = 0; i < 50; i++)
+                        Main.BestiaryTracker.Kills.RegisterKill(NPC);
                     ResetEverything();
+                    CalRemixWorld.vigorDialogueLevel = 1;
+                    CalRemixWorld.UpdateWorldBool();
                 }
                 else if (LocalTimer >= currentDialogue.text[(int)NPC.ai[3]].Item2 * 60)
                 {
                     LocalTimer = 0;
                     NPC.ai[3]++;
+                }
+                if (currentDialogue != default)
+                {
+                    if (Timer % 15 == 0 && LocalTimer < currentDialogue.text[(int)NPC.ai[3]].Item2 * 60 - 90)
+                    {
+                        SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = Main.rand.NextFloat(-0.4f, 0.4f) }, NPC.Center);
+                    }
                 }
             }
         }
@@ -101,6 +114,7 @@ namespace CalRemix.Content.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
@@ -117,9 +131,9 @@ namespace CalRemix.Content.NPCs
             {
                 jawRot = MathF.Sin(Main.GlobalTimeWrappedHourly * 12) * 0.25f;
             }
-            spriteBatch.Draw(tex, NPC.Center - Main.screenPosition, null, NPC.GetAlpha(drawColor), NPC.rotation, tex.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            spriteBatch.Draw(head, NPC.Center - new Vector2(20, 60) - Main.screenPosition, null, NPC.GetAlpha(drawColor), 0, headOrig, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            spriteBatch.Draw(jaw, NPC.Center - new Vector2(18, 70) - Main.screenPosition, null, NPC.GetAlpha(drawColor), jawRot, jawOrig, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            spriteBatch.Draw(tex, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, tex.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            spriteBatch.Draw(head, NPC.Center - new Vector2(20, 60) - screenPos, null, NPC.GetAlpha(drawColor), 0, headOrig, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            spriteBatch.Draw(jaw, NPC.Center - new Vector2(18, 70) - screenPos, null, NPC.GetAlpha(drawColor), jawRot, jawOrig, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             if (currentDialogue != default)
             {
                 (string, int) currentLine = currentDialogue.text[(int)NPC.ai[3]];
