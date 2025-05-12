@@ -33,6 +33,7 @@ using Terraria.Graphics;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus
 {
@@ -2603,6 +2604,8 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 NPC.NPCLoot();
                 NPC.checkDead();
                 NPC.active = false;
+                RemixDowned.downedNoxus = true;
+                CalRemixWorld.UpdateWorldBool();
             }
         }
 
