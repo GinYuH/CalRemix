@@ -446,6 +446,26 @@ namespace CalRemix
                 if (player.ItemAnimationJustStarted && player.Calamity().dischargingItemEnchant && item.Calamity().AppliedEnchantment.Value.Name != CalamityUtils.GetText("UI.Ephemeral.DisplayName"))
                     item.Calamity().DischargeEnchantExhaustion--;
             }
+            if (!item.channel && player.Remix().salvageSuit && player.Calamity().StealthStrikeAvailable() && item.DamageType == GetInstance<RogueDamageClass>())
+            {
+                bool playSound = false;
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (!n.buffImmune[BuffID.Confused] || !n.buffImmune[BuffID.Webbed])
+                    {
+                        if (n.Distance(player.Center) < 2000)
+                        {
+                            playSound = true;
+                            n.AddBuff(BuffID.Confused, 120);
+                            n.AddBuff(BuffID.Webbed, 120);
+                        }
+                    }
+                }
+                if (playSound)
+                {
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronicShort") with { Volume = 0.4f }, player.Center);
+                }
+            }
             return null;
         }
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

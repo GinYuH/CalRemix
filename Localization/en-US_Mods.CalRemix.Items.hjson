@@ -4366,3 +4366,89 @@ TraderTablet: {
 		Cannot be used to directly trade stocks
 		'''
 }
+
+RedWings: {
+	DisplayName: Red Wings
+	Tooltip:
+		'''
+		Horizontal speed: 15
+		Acceleration multiplier: 3
+		Great vertical speed
+		Flight time: 190
+		20% increased movement speed
+		'''
+}
+
+BlankStare: {
+	DisplayName: Blank Stare
+	Tooltip: Scrubs the features off of one's face
+}
+
+GuardiansWrath: {
+	DisplayName: Guardians Wrath
+	Tooltip:
+		'''
+		<left> to thrust like a normal spear
+		<right> to throw the spear, sticking into hit tiles or enemies
+		<right> again while a spear is stuck to strike it with lightning and return it to you
+		The spear cannot be used while it is stuck, however other weapons may be used
+		'''
+}
+
+SalvageLegs: {
+	DisplayName: Salvage Legs
+	Tooltip:
+		'''
+		9% increased rogue velocity
+		5% increased movement speed
+		'''
+}
+
+SalvageMask: {
+	DisplayName: Salvage Mask
+	Tooltip: 22% increased rogue critical strike chance
+	SetBonus:
+		'''
+		87% increased rogue damage
+		28% increased rogue critical strike chance
+		Using a stealth strike near enemies emits a scream that stuns them
+		Smaller enemies take 5 times as much damage
+		Taking over 100 damage from a hit, entering liquid, or being out in the rain inflicts the wearer with Springlocked
+		Springlocked rapidly damages the wearer until they hit 1 health
+		'''
+}
+
+SalvageSuit: {
+	DisplayName: Salvage Suit
+	Tooltip: 23% increased rogue damage
+}
+
+CursedCartridge: {
+	DisplayName: Cursed Cartridge
+	Tooltip: Contains an infinite amount of bullets which move in a grid-like pattern
+}
+
+Glockarina: {
+	DisplayName: Glockarina
+	Tooltip: Fires homing bolts which distort enemy stats
+}
+
+GodKillerEX: {
+	DisplayName: God Killer EX
+	Tooltip: Fires a devastating blue heat ray which irradiates enemies
+}
+
+SignoftheOperator: {
+	DisplayName: Sign of the Operator
+	Tooltip: Holds out a tome which rapidly unleashes several short ranged whips
+}
+
+BadEgg: {
+	DisplayName: Bad Egg
+	Tooltip: "'Hey this egg is actually quite bad'"
+}
+
+VigorBlock: {
+	DisplayName: Vigor Block
+	Tooltip: ""
+}

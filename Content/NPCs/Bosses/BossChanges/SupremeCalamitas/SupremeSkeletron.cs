@@ -155,6 +155,17 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         }
         public override void AI()
         {
+            int cala = NPC.FindFirstNPC(ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>());
+            if (cala > -1)
+            {
+                NPC calamitas = Main.npc[cala];
+                float lifeRatio = (float)calamitas.life / (float)calamitas.lifeMax;
+                if (lifeRatio <= 0.01f)
+                {
+                    NPC.HitEffect();
+                    NPC.active = false;
+                }
+            }
             // This is dangerous because Calamity only expects SepulcherHead to
             // set this.  Should be fine for now!
             CalamityGlobalNPC.SCalWorm = NPC.whoAmI;

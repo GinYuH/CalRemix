@@ -15,6 +15,8 @@ using CalRemix.Content.Projectiles.Hostile;
 using Terraria.ModLoader.Core;
 using Terraria.Audio;
 using CalamityMod.Tiles.Astral;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -541,6 +543,9 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 35, 45);
+            npcLoot.AddIf(() => Phase != (int)Attacks.Fly, ModContent.ItemType<RedWings>(), 20);
+            npcLoot.AddIf(() => Phase == (int)Attacks.Fly, ModContent.ItemType<RedWings>());
+            npcLoot.Add(ModContent.ItemType<GodKillerEX>());
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

@@ -12,6 +12,7 @@ using CalamityMod.Dusts;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -147,12 +148,13 @@ namespace CalRemix.Content.NPCs.Eclipse
             if (!DownedBossSystem.downedDoG)
                 return 0f;
 
-            return SpawnCondition.SolarEclipse.Chance * 0.4f;
+            return SpawnCondition.SolarEclipse.Chance * 0.2f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 1, 3);
+            npcLoot.Add(ModContent.ItemType<GuardiansWrath>(), 10);
         }
     }
 }

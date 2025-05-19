@@ -422,3 +422,8 @@ WeirdBirdBuff: {
 	DisplayName: Weird Bird Buff
 	Description: Some weird bird has identified you as its mother
 }
+
+Springlocked: {
+	DisplayName: Springlocked
+	Description: The springlocks rapidly crunch your bones
+}

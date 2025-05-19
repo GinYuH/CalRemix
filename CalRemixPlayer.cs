@@ -247,6 +247,8 @@ namespace CalRemix
         public bool bananaClown;
         public bool twistedNetherite;
         public bool twistedNetheriteBoots;
+        public bool salvageSuit;
+        public bool springlocked;
 
         // Minions
         public bool soldier;
@@ -356,6 +358,7 @@ namespace CalRemix
             PlayerDrawLayers.ArmOverItem,
             PlayerDrawLayers.HandOnAcc
         ];
+
         public int[] MinionList =
 		{
 			ProjectileType<PlantationStaffSummon>(),
@@ -1205,6 +1208,35 @@ namespace CalRemix
             if (taintedObsidian)
                 if (Player.lavaWet)
                     Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " thought that was orange juice"), Player.statLifeMax, 0);
+
+            if (salvageSuit)
+            {
+                if (Player.wet || Main.raining)
+                {
+                    Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+                }
+            }
+
+            if (springlocked)
+            {
+                if (Player.miscCounter % 20 == 0)
+                {
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/PizzaHit") with { MaxInstances = 0 }, Player.Center);
+                    int newHP = Player.statLife - Main.rand.Next(20, 40);
+                    if (newHP <= 0)
+                        newHP = 1;
+                    Player.statLife = newHP;
+                    if (ChildSafety.Disabled)
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            GeneralParticleHandler.SpawnParticle(new SquareParticle(Player.Center, Main.rand.NextVector2Circular(10, 10), false, 10, Main.rand.NextFloat(1f, 2f), Color.Red));
+                        }
+                    }
+                }
+                if (Player.statLife <= 1)
+                    Player.ClearBuff(BuffType<Springlocked>());
+            }
         }
         public override void ResetEffects()
 		{
@@ -1247,6 +1279,8 @@ namespace CalRemix
 			bananaClown = false;
 			twistedNetherite = false;
 			twistedNetheriteBoots = false;
+            salvageSuit = false;
+            springlocked = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
@@ -1484,7 +1518,15 @@ namespace CalRemix
             }
         }
 
-		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            if (salvageSuit && info.Damage >= 100)
+            {
+                Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+            }
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)
@@ -1524,6 +1566,26 @@ namespace CalRemix
                 }
             }
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (salvageSuit)
+            {
+                if (target.width * target.height < 4900 && modifiers.DamageType.CountsAsClass<RogueDamageClass>())
+                {
+                    modifiers.SourceDamage *= 5;
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/PizzaHit") with { MaxInstances = 0 }, Player.Center);
+                    if (ChildSafety.Disabled)
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            GeneralParticleHandler.SpawnParticle(new SquareParticle(target.Center, Main.rand.NextVector2Circular(10, 10), false, 10, Main.rand.NextFloat(1f, 2f), Color.Red));
+                        }
+                    }
+                }
+            }
+        }
+
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
