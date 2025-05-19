@@ -9,6 +9,8 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
+using CalRemix.Core;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.Items.Misc
 {
@@ -26,6 +28,12 @@ namespace CalRemix.Content.Items.Misc
             Item.height = 30;
             Item.value = 0;
             Item.rare = ItemRarityID.LightRed;
+        }
+        public override bool CanUseItem(Player player) { return true; }
+        public override bool? UseItem(Player player)
+        {
+            Main.NewText("balls lmao");
+            return true;
         }
     }
 }
