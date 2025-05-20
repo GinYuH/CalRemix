@@ -21,6 +21,7 @@ using CalamityMod.World;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Mounts;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -534,6 +535,11 @@ namespace CalRemix.Content.NPCs.Eclipse
                 SoundEngine.PlaySound(RedHit, NPC.Center);
                 NPC.soundDelay = 10;
             }
+        }
+
+        public override void OnKill()
+        {
+            RemixDowned.downedRed = true;
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
