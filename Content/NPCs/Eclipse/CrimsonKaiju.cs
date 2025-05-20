@@ -20,6 +20,7 @@ using CalRemix.Content.Items.Weapons;
 using CalamityMod.World;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Mounts;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -550,7 +551,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             npcLoot.AddIf(() => Phase == (int)Attacks.Fly, ModContent.ItemType<RedWings>());
             npcLoot.Add(ModContent.ItemType<GodKillerEX>());
             npcLoot.Add(ModContent.ItemType<RedTrophy>(), 10);
-            npcLoot.AddIf(DropHelper.RevAndMaster, ModContent.ItemType<RedRelic>());
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<RedRelic>());
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<SeedyCD>(), 4);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

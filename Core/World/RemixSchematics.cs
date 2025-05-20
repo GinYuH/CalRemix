@@ -12,7 +12,7 @@ namespace CalRemix.Core.World
         internal const string IonAltarName = "Core/World/ionaltar.csch";
         internal const string OrigenWorkshopName = "Core/World/origenworkshop.csch";
         internal const string HallowShrineName = "Core/World/hallowshrine.csch";
-        internal const string FrozenStrongholdName = "Core/World/FrozenStronghold.csch";
+        internal const string FrozenStrongholdName = "Core/World/FrozenStrongholdLocked.csch";
         internal const string CrimsonHeartName = "Core/World/CrimsonHeart.csch";
 
         internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>

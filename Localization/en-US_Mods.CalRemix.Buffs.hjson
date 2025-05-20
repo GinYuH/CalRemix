@@ -427,3 +427,8 @@ Springlocked: {
 	DisplayName: Springlocked
 	Description: The springlocks rapidly crunch your bones
 }
+
+WarlockBuff: {
+	DisplayName: Warlock Buff
+	Description: It's kinda comfy in here
+}
