@@ -225,8 +225,17 @@ Rodenttmod.DisplayName: Rodent.tmod
 TallMan.DisplayName: Tall Man
 Corruption.DisplayName: Corruption
 Glitch.DisplayName: Glitch
-CuboidCurse.DisplayName: CuboidCurse
-CrimsonKaiju.DisplayName: Crimson Kaiju
+CuboidCurse.DisplayName: Cuboid Curse
+
+CrimsonKaiju: {
+	DisplayName: Crimson Kaiju
+
+	BossChecklistIntegration: {
+		EntryName: Crimson Kaiju
+		SpawnInfo: Spawns during the Post-Devourer of Gods Solar Eclipse.
+		DespawnMessage: "[c/ff0000:Crimson Kaiju vanishes to stalk its next victim.]"
+	}
+}
 
 Carcinogen: {
 	DisplayName: Carcinogen
