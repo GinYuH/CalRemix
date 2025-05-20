@@ -44,3 +44,8 @@ BarPlanterTile.MapEntry: Bar Planter
 AlloyBarPlant.MapEntry: Alloy Bar Plant
 EssentialEssenceBarPlant.MapEntry: Essential Essence Bar Plant
 YharimBarPlant.MapEntry: Yharim Bar Plant
+
+FrigidChestPlaced: {
+	MapEntry0: Frigid Chest
+	MapEntry1: Locked Frigid Chest
+}

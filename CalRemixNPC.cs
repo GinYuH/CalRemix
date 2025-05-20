@@ -383,7 +383,7 @@ namespace CalRemix
 
             if (player.taintedWrath)
             {
-                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly)
+                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly && npc.Distance(Main.LocalPlayer.Center) < Main.screenWidth)
                 {
                     npc.life -= Math.Max((int)(npc.lifeMax / (float)CalamityUtils.SecondsToFrames(300)), 1);
                     if (npc.life <= 0)

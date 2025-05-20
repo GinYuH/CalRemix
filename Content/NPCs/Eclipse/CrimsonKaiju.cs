@@ -17,6 +17,9 @@ using Terraria.Audio;
 using CalamityMod.Tiles.Astral;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Weapons;
+using CalamityMod.World;
+using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Trophies;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -546,6 +549,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             npcLoot.AddIf(() => Phase != (int)Attacks.Fly, ModContent.ItemType<RedWings>(), 20);
             npcLoot.AddIf(() => Phase == (int)Attacks.Fly, ModContent.ItemType<RedWings>());
             npcLoot.Add(ModContent.ItemType<GodKillerEX>());
+            npcLoot.Add(ModContent.ItemType<RedTrophy>(), 10);
+            npcLoot.AddIf(DropHelper.RevAndMaster, ModContent.ItemType<RedRelic>());
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

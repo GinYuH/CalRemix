@@ -4443,3 +4443,43 @@ VigorBlock: {
 	DisplayName: Vigor Block
 	Tooltip: ""
 }
+
+AccidatedReactiveEssence: {
+	DisplayName: Accidated Reactive Essence
+	Tooltip: ""
+}
+
+BloodredReactiveEssence: {
+	DisplayName: Bloodred Reactive Essence
+	Tooltip: ""
+}
+
+NocticReactiveEssence: {
+	DisplayName: Noctic Reactive Essence
+	Tooltip: ""
+}
+
+WaterfreezeReactiveEssence: {
+	DisplayName: Waterfreeze Reactive Essence
+	Tooltip: ""
+}
+
+FrigidChest: {
+	DisplayName: Frigid Chest
+	Tooltip: ""
+}
+
+RedRelic: {
+	DisplayName: Crimson Kaiju Relic
+	Tooltip: ""
+}
+
+RedTrophy: {
+	DisplayName: Crimson Kaiju Trophy
+	Tooltip: ""
+}
+
+ActivatedHealingPotion: {
+	DisplayName: Activated Healing Potion
+	Tooltip: ""
+}

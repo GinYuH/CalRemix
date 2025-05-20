@@ -168,3 +168,11 @@ public class PyrogenTrophy : RemixTrophy
         Item.createTile = TileType<PyrogenTrophyPlaced>();
     }
 }
+public class RedTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<RedTrophyPlaced>();
+    }
+}
