@@ -21,6 +21,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using static Terraria.Graphics.Effects.Filters;
 
 namespace CalRemix.UI
 {
@@ -442,6 +443,36 @@ namespace CalRemix.UI
             spriteBatch.Draw(fannySprite, position, frame, Color.White * opacity, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
             if (Speaking && UsedMessage.ItemType != -22)
                 DrawItem();
+
+
+            // test
+            Texture2D testSprite = UsedMessage.Portrait.Texture.Value;
+            Rectangle testFrame = testSprite.Frame(1, UsedMessage.Portrait.frameCount, 0, helperFrame);
+            Vector2 origin = Vector2.Zero;
+            Effect effect = Scene["CalRemix:NormalDraw"].GetShader().Shader;
+            Vector3 topLeft = new Vector3(Main.screenPosition.X - origin.X + testSprite.Width, Main.screenPosition.Y - origin.Y + testSprite.Height, 0);
+            Vector3 botLeft = topLeft + Vector3.UnitY * testFrame.Height;
+
+            float leftUv = 0;
+            float rightUv = 1;
+
+            short[] indices = [0, 1, 2, 1, 3, 2];
+            VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
+            vertices[0] = new(topLeft, Color.White, new Vector2(leftUv, 0));
+            vertices[1] = new(topLeft + Vector3.UnitX * testFrame.Width, Color.White, new Vector2(rightUv, 0));
+            vertices[2] = new(botLeft, Color.White, new Vector2(leftUv, 1));
+            vertices[3] = new(botLeft + Vector3.UnitX * testFrame.Width, Color.White, new Vector2(rightUv, 1));
+
+
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            {
+                effect.Parameters["textureResolution"].SetValue(testSprite.Size());
+                effect.Parameters["sampleTexture"].SetValue(testSprite);
+                effect.Parameters["frame"].SetValue(new Vector4(testFrame.X, testFrame.Y, testFrame.Width, testFrame.Height));
+                pass.Apply();
+
+                Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, 4, indices, 0, 2);
+            }
         }
 
         public void AnimateFanny()
