@@ -9,15 +9,13 @@ using System;
 using Terraria.ID;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
     public class Corruption : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Corruption");
@@ -31,7 +29,7 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.width = 128;
             NPC.height = 128;
             NPC.lifeMax = 5;
-            NPC.damage = 50;
+            NPC.damage = 70;
             NPC.defense = 30;
             NPC.knockBackResist = 0f;
             NPC.HitSound = null;
@@ -39,6 +37,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
+            Banner = ModContent.NPCType<Glitch>();
+            BannerItem = ModContent.ItemType<GlitchBanner>();
         }
 
         public override void AI()
@@ -62,8 +62,17 @@ namespace CalRemix.Content.NPCs.Eclipse
                 NPC.damage = 0;
                 NPC.velocity *= 0.9f;
                 NPC.alpha += 5;
-                if (NPC.alpha >= 255)
+                if (NPC.alpha >= 255 && NPC.active)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Item.NewItem(NPC.GetSource_FromThis(), NPC.getRect(), ModContent.ItemType<BadEgg>());
+                        }
+                    }
                     NPC.active = false;
+                }
             }
             for (int k = 0; k < Main.maxNPCs; k++)
             {

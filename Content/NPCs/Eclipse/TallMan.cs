@@ -8,17 +8,14 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
     public class TallMan : ModNPC
     {
-        public static SoundStyle SlenderJumpscare = new SoundStyle("CalRemix/Assets/Sounds/SlenderJumpscare");
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Tall Man");
@@ -38,6 +35,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.DeathSound = SoundID.NPCDeath39;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<TallManBanner>();
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -69,17 +68,13 @@ namespace CalRemix.Content.NPCs.Eclipse
                 NPC.ai[0] -= Main.screenWidth * 0.666f / 600;
                 if (NPC.ai[0] < -60)
                 {
-                    if (NPC.ai[2] == 0)
-                    {
-                        SoundEngine.PlaySound(SlenderJumpscare, Main.LocalPlayer.Center);
-                    }
                     if (NPC.ai[2] < 2f)
                     {
                         NPC.ai[2] += 0.025f;
                     }
                     else
                     {
-                        Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name+"                                ."), 666666, 1);
+                        Main.LocalPlayer.KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), 999999, 1);
                         NPC.active = false;
                     }
                 }
@@ -125,6 +120,8 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 7, 7);
+            npcLoot.Add(ModContent.ItemType<BlankStare>(), 10);
+            npcLoot.Add(ModContent.ItemType<SignoftheOperator>(), 10);
         }
     }
 }

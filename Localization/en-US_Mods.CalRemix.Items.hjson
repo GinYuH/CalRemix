@@ -2679,6 +2679,15 @@ Weapons: {
 			DisplayName: Sylvan Slasher
 			Tooltip: ""
 		}
+
+		PizzaWheel: {
+			DisplayName: Pizza Wheel
+			Tooltip:
+				'''
+				Throws a pizza boomerang that summons rolling pizzas on enemy hits
+				Stealth strikes throw a larger pizza that summons even more rolling pizzas
+				'''
+		}
 	}
 }
 
@@ -4232,7 +4241,7 @@ NoxusMusicBox: {
 }
 
 ReaverSharkWaitNVM: {
-	DisplayName: Reaver Shark Wait N V M
+	DisplayName: Reaver Shark Wait NVM
 	Tooltip: ""
 }
 
@@ -4294,7 +4303,188 @@ RedWulfrumFrogCannon: {
 		'''
 }
 
-SubworldDoor: {
-	DisplayName: Subworld Door
+EssenceOfMerge: {
+	DisplayName: Essence Of Merge
 	Tooltip: ""
+}
+
+ScaryMicrophone: {
+	DisplayName: Scary Microphone
+	Tooltip: Plays a random jumpscare when used
+}
+
+CuboidCurseBanner: {
+	DisplayName: Cuboid Curse Banner
+	Tooltip: ""
+}
+
+CuboidCurseBannerAlt: {
+	DisplayName: Cuboid Curse Banner Alt
+	Tooltip: ""
+}
+
+EvilAnimatronicBanner: {
+	DisplayName: Evil Animatronic Banner
+	Tooltip: ""
+}
+
+GlitchBanner: {
+	DisplayName: Glitch Banner
+	Tooltip: ""
+}
+
+RodenttmodBanner: {
+	DisplayName: Rodenttmod Banner
+	Tooltip: ""
+}
+
+TallManBanner: {
+	DisplayName: Tall Man Banner
+	Tooltip: ""
+}
+
+WaterloggedEffigyBanner: {
+	DisplayName: Waterlogged Effigy Banner
+	Tooltip: ""
+}
+
+AcceloRing: {
+	DisplayName: Accelo Ring
+	Tooltip: Summons dimensional rings around the cursor which protrude large wooden spikes inwards
+}
+
+Everflute: {
+	DisplayName: Everflute
+	Tooltip: Summons a powerful bird type monster
+}
+
+RedWings: {
+	DisplayName: Red Wings
+	Tooltip:
+		'''
+		Horizontal speed: 15
+		Acceleration multiplier: 3
+		Great vertical speed
+		Flight time: 190
+		20% increased movement speed
+		'''
+}
+
+BlankStare: {
+	DisplayName: Blank Stare
+	Tooltip: Scrubs the features off of one's face
+}
+
+GuardiansWrath: {
+	DisplayName: Guardians Wrath
+	Tooltip:
+		'''
+		<left> to thrust like a normal spear
+		<right> to throw the spear, sticking into hit tiles or enemies
+		<right> again while a spear is stuck to strike it with lightning and return it to you
+		The spear cannot be used while it is stuck, however other weapons may be used
+		'''
+}
+
+SalvageLegs: {
+	DisplayName: Salvage Legs
+	Tooltip:
+		'''
+		9% increased rogue velocity
+		5% increased movement speed
+		'''
+}
+
+SalvageMask: {
+	DisplayName: Salvage Mask
+	Tooltip: 22% increased rogue critical strike chance
+	SetBonus:
+		'''
+		87% increased rogue damage
+		28% increased rogue critical strike chance
+		Using a stealth strike near enemies emits a scream that stuns them
+		Smaller enemies take 5 times as much damage
+		Taking over 100 damage from a hit, entering liquid, or being out in the rain inflicts the wearer with Springlocked
+		Springlocked rapidly damages the wearer until they hit 1 health
+		'''
+}
+
+SalvageSuit: {
+	DisplayName: Salvage Suit
+	Tooltip: 23% increased rogue damage
+}
+
+CursedCartridge: {
+	DisplayName: Cursed Cartridge
+	Tooltip: Contains an infinite amount of bullets which move in a grid-like pattern
+}
+
+Glockarina: {
+	DisplayName: Glockarina
+	Tooltip: Fires homing bolts which distort enemy stats
+}
+
+GodKillerEX: {
+	DisplayName: God Killer EX
+	Tooltip: Fires a devastating blue heat ray which irradiates enemies
+}
+
+SignoftheOperator: {
+	DisplayName: Sign of the Operator
+	Tooltip: Holds out a tome which rapidly unleashes several short ranged whips
+}
+
+BadEgg: {
+	DisplayName: Bad Egg
+	Tooltip: "'Hey this egg is actually quite bad'"
+}
+
+VigorBlock: {
+	DisplayName: Vigor Block
+	Tooltip: ""
+}
+
+AccidatedReactiveEssence: {
+	DisplayName: Accidated Reactive Essence
+	Tooltip: ""
+}
+
+BloodredReactiveEssence: {
+	DisplayName: Bloodred Reactive Essence
+	Tooltip: ""
+}
+
+NocticReactiveEssence: {
+	DisplayName: Noctic Reactive Essence
+	Tooltip: ""
+}
+
+WaterfreezeReactiveEssence: {
+	DisplayName: Waterfreeze Reactive Essence
+	Tooltip: ""
+}
+
+FrigidChest: {
+	DisplayName: Frigid Chest
+	Tooltip: ""
+}
+
+RedRelic: {
+	DisplayName: Crimson Kaiju Relic
+	Tooltip: ""
+}
+
+RedTrophy: {
+	DisplayName: Crimson Kaiju Trophy
+	Tooltip: ""
+}
+
+ActivatedHealingPotion: {
+	DisplayName: Activated Healing Potion
+	Tooltip: ""
+}
+
+SeedyCD: {
+	DisplayName: Seedy CD
+	Tooltip: Summons an ugly grey creature to carry you around
 }

@@ -171,6 +171,11 @@ Mods: {
 					Tooltip: ""
 				}
 
+				photosensitivty: {
+					Label: Photosensitivte Features
+					Tooltip: Enables photosensitive features. Disable if they're too straining on the eyes.
+				}
+
 				ScreenShatterEffects: {
 					Label: Screen Shatter Effects
 					Tooltip: Enables screen shatter effects. Disable if they're too straining on the eyes.
@@ -179,6 +184,11 @@ Mods: {
 				VisualOverlayIntensity: {
 					Label: Visual Overlay Intensity
 					Tooltip: Changes the intensity of visual overlays such as blur and chromatic aberration.
+				}
+
+				photosensitivity: {
+					Label: photosensitivity
+					Tooltip: ""
 				}
 			}
 		}

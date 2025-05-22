@@ -68,6 +68,8 @@ using CalamityMod.Buffs.StatBuffs;
 using Terraria.GameContent;
 using static CalRemix.CalRemixHelper;
 using CalRemix.Core.Retheme;
+using CalRemix.Content.NPCs.Eclipse;
+using System.Reflection;
 
 namespace CalRemix
 {
@@ -89,6 +91,13 @@ namespace CalRemix
         public int silver = silver;
         public int black = black;
 	}
+
+    public struct Jumpscare(int duration, SoundStyle sound, string name)
+    {
+        public int duration = duration;
+        public SoundStyle sound = sound;
+        public string name = name;
+    }
 
     public class CalRemixPlayer : ModPlayer
 	{
@@ -116,6 +125,8 @@ namespace CalRemix
         public int remixJumpCount;
         public int RecentChest = -1;
         public bool fridge;
+        public Jumpscare jumpscare;
+        public int jumpscareTimer = 0;
 
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;
@@ -236,6 +247,8 @@ namespace CalRemix
         public bool bananaClown;
         public bool twistedNetherite;
         public bool twistedNetheriteBoots;
+        public bool salvageSuit;
+        public bool springlocked;
 
         // Minions
         public bool soldier;
@@ -345,6 +358,7 @@ namespace CalRemix
             PlayerDrawLayers.ArmOverItem,
             PlayerDrawLayers.HandOnAcc
         ];
+
         public int[] MinionList =
 		{
 			ProjectileType<PlantationStaffSummon>(),
@@ -628,6 +642,31 @@ namespace CalRemix
             if (calamitizedHitCooldown > 0)
                 calamitizedHitCooldown--;
 
+            if (jumpscareTimer > 0)
+                jumpscareTimer--;
+
+            // Golden Freddy "crashes" the game
+            // These specific bits are from wotg
+            if (jumpscare.name == "GoldenFreddy" && jumpscareTimer == 90 && Main.eclipse)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    // Bring the player to the main menu, and enable the marker that ensures they will receive loot upon re-entry.
+                    Main.menuMode = 0;
+                    Main.gameMenu = true;
+
+                    // Save the player's file data
+                    Player.SavePlayer(Main.ActivePlayerFileData);
+
+                    // Kick clients out of the server.
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        Netplay.Disconnect = true;
+                        Main.netMode = NetmodeID.SinglePlayer;
+                    }
+                }
+            }
+
             if (infraredSightsScanning)
                 InfraredLogic();
 
@@ -808,6 +847,91 @@ namespace CalRemix
                 SoundEngine.PlaySound(glassBreakSound, Player.Center);
             return true;
         }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            string jumpscareType = "";
+            if (damageSource.SourceNPCIndex > -1)
+            {
+                NPC n = Main.npc[damageSource.SourceNPCIndex];
+                if (n.type == NPCType<Glitch>() || n.type == NPCType<Corruption>())
+                {
+                    jumpscareType = Main.rand.NextBool() ? "Missingno" : "Missingno2";
+                }
+                else if (n.type == NPCType<TallMan>())
+                {
+                    jumpscareType = Main.rand.NextBool(5) ? "Slenderman2" : "Slenderman";
+                }
+                else if (n.type == NPCType<Rodenttmod>())
+                {
+                    jumpscareType = "Sonic";
+                }
+                else if (n.type == NPCType<CuboidCurse>())
+                {
+                    jumpscareType = Main.rand.NextBool(5) ? "Herobrine" : "Herobrine2";
+                }
+                else if (n.type == NPCType<GoldenAnimatronic>())
+                {
+                    jumpscareType = "GoldenFreddy";
+                }
+                else if (n.type == NPCType<EvilAnimatronic>())
+                {
+                    jumpscareType = Main.rand.NextBool(5) ? "Freddy2" : "Freddy";
+                }
+                else if (n.type == NPCType<Glitch>())
+                {
+                    jumpscareType = Main.rand.NextBool() ? "Missingno" : "Missingno2";
+                }
+                else if (n.type == NPCType<CrimsonKaiju>())
+                {
+                    jumpscareType = "Red";
+                }
+                /*else if (n.type == ModContent.NPCType<Ben>())
+                {
+                    JumpscareType = Main.rand.NextBool() ? "Ben" : "Ben2";
+                }*/
+                else
+                {
+                    jumpscareType = "";
+                }
+            }
+            if (damageSource.SourceProjectileLocalIndex > -1)
+            {
+                Projectile p = Main.projectile[damageSource.SourceProjectileLocalIndex];
+                if (p.type == ProjectileType<PizzaWheelHostile>())
+                {
+                    jumpscareType = Main.rand.NextBool(5) ? "Freddy2" : "Freddy";
+                    if (p.ai[2] == 1)
+                    {
+                        jumpscareType = "GoldenFreddy";
+                    }
+                }
+                else if (p.type == ProjectileType<RedstoneFireball>() || p.type == ProjectileType<RedstonePillar>())
+                {
+                    jumpscareType = Main.rand.NextBool(5) ? "Herobrine2" : "Herobrine";
+                }
+            }
+            CalRemixConfig config = GetInstance<CalRemixConfig>();
+            if (jumpscareType != "" && CalRemixConfig.Instance.photosensitivity)
+            {
+                if (Main.rand.NextBool(30))
+                {
+                    // Rare jumpscares
+                    List<string> keys = new List<string>()
+                    {
+                        "Parasite",
+                        "Generic",
+                        "Exo",
+                        "Maze"
+                    };
+                    jumpscareType = Utils.SelectRandom<string>(Main.rand, [.. keys]);
+                }
+                jumpscare = EclipseJumpscares.jumpscareTypes[jumpscareType];
+                jumpscareTimer = jumpscare.duration + 60;
+                SoundEngine.PlaySound(jumpscare.sound);
+            }
+        }
+
         public override void PostUpdateMiscEffects()
         {   if (Main.myPlayer == Player.whoAmI)
             {
@@ -1085,6 +1209,35 @@ namespace CalRemix
             if (taintedObsidian)
                 if (Player.lavaWet)
                     Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " thought that was orange juice"), Player.statLifeMax, 0);
+
+            if (salvageSuit)
+            {
+                if (Player.wet || Main.raining)
+                {
+                    Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+                }
+            }
+
+            if (springlocked)
+            {
+                if (Player.miscCounter % 20 == 0)
+                {
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/PizzaHit") with { MaxInstances = 0 }, Player.Center);
+                    int newHP = Player.statLife - Main.rand.Next(20, 40);
+                    if (newHP <= 0)
+                        newHP = 1;
+                    Player.statLife = newHP;
+                    if (ChildSafety.Disabled)
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            GeneralParticleHandler.SpawnParticle(new SquareParticle(Player.Center, Main.rand.NextVector2Circular(10, 10), false, 10, Main.rand.NextFloat(1f, 2f), Color.Red));
+                        }
+                    }
+                }
+                if (Player.statLife <= 1)
+                    Player.ClearBuff(BuffType<Springlocked>());
+            }
         }
         public override void ResetEffects()
 		{
@@ -1127,6 +1280,8 @@ namespace CalRemix
 			bananaClown = false;
 			twistedNetherite = false;
 			twistedNetheriteBoots = false;
+            salvageSuit = false;
+            springlocked = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
@@ -1364,7 +1519,15 @@ namespace CalRemix
             }
         }
 
-		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            if (salvageSuit && info.Damage >= 100)
+            {
+                Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+            }
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (godfather)
@@ -1404,6 +1567,26 @@ namespace CalRemix
                 }
             }
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (salvageSuit)
+            {
+                if (target.width * target.height < 4900 && modifiers.DamageType.CountsAsClass<RogueDamageClass>())
+                {
+                    modifiers.SourceDamage *= 5;
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/PizzaHit") with { MaxInstances = 0 }, Player.Center);
+                    if (ChildSafety.Disabled)
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            GeneralParticleHandler.SpawnParticle(new SquareParticle(target.Center, Main.rand.NextVector2Circular(10, 10), false, 10, Main.rand.NextFloat(1f, 2f), Color.Red));
+                        }
+                    }
+                }
+            }
+        }
+
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
@@ -1907,6 +2090,7 @@ namespace CalRemix
             // Remix
             dyeStats.Add(ItemType<LucreciaDye>(), new DyeStats(purple: 10, pink: 10));
         }
+
         private static void ManageItemsInUse(Player player, Item h, Item m, ref int c)
         {
             if (Held(player, ItemType<FiberBaby>()))

@@ -6,15 +6,13 @@ using CalamityMod;
 using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
     public class Rodenttmod : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Rodent.tmod");
@@ -34,6 +32,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.HitSound = SoundID.NPCHit7;
             NPC.DeathSound = SoundID.NPCDeath39;
             NPC.noTileCollide = true;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<RodenttmodBanner>();
         }
         public override void AI()
         {
@@ -149,6 +149,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), new Fraction(3, 4), 1, 2);
+            npcLoot.Add(ModContent.ItemType<AcceloRing>(), 30);
         }
     }
 }
