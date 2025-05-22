@@ -35,6 +35,7 @@ using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using System.Reflection;
+using CalRemix.Content.NPCs.Eclipse;
 
 namespace CalRemix
 {
@@ -53,6 +54,7 @@ namespace CalRemix
 
         internal static Mod Remnants;
         internal static Mod Spirit;
+        internal static Mod Thorium;
 
         internal static Type calvalFanny = null;
         internal static Type calvalFannyBox = null;
@@ -98,6 +100,7 @@ namespace CalRemix
 
             ModLoader.TryGetMod("Remnants", out Remnants);
             ModLoader.TryGetMod("SpiritMod", out Spirit);
+            ModLoader.TryGetMod("ThoriumMod", out Thorium);
         }
         public override void Unload()
         {
@@ -114,6 +117,7 @@ namespace CalRemix
 
             Remnants = null;
             Spirit = null;
+            Thorium = null;
         }
         public override void PostSetupContent()
         {
@@ -256,6 +260,8 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "CrimsonKaiju", 20.5f, () => RemixDowned.downedRed, NPCType<CrimsonKaiju>(), new Dictionary<string, object>());
+            // Events
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "GaleforceDay", 11.749f, () => RemixDowned.downedGale, new List<int> { NPCID.Dandelion, NPCType<FloatingBiomass>() }, new Dictionary<string, object>());
         }

@@ -12,7 +12,8 @@ namespace CalRemix
 {
     public class CalRemixConfig : ModConfig
     {
-        internal static CalRemixConfig instance;
+        public static CalRemixConfig Instance;
+
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Header("MainMenuHeader")]
@@ -27,6 +28,10 @@ namespace CalRemix
         public bool useSecondMenu;
 
         [Header("VisualEffectsHeader")]
+
+        [DefaultValue(true)]
+        public bool photosensitivity;
+
         //[Label("Screen Shatter Effects")]
         //[BackgroundColor(224, 127, 180, 192)]
         [DefaultValue(true)]

@@ -691,7 +691,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
-                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
+                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
