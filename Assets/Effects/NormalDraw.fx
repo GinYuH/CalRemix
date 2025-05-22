@@ -1,3 +1,5 @@
+matrix uWorldViewProjection;
+
 float4 frame;
 float2 textureResolution;
 float4 screenBlendColor;
@@ -31,7 +33,8 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    output.Position = input.Position;
+    float4 pos = mul(input.Position, uWorldViewProjection);
+    output.Position = pos;
     
     output.Color = input.Color;
     output.TextureCoordinates = input.TextureCoordinates;
@@ -39,18 +42,10 @@ VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
     return output;
 }
 
-float3 screen(float3 base, float3 scrn)
-{
-    return float3(1, 1, 1) - (float3(1, 1, 1) - base) * (float3(1, 1, 1) - scrn);
-}
-
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float2 frameUV = (input.TextureCoordinates * frame.zw + frame.xy) / textureResolution;
     float4 color = tex2D(samplerTex, frameUV);
-
-    float3 screenedRgb = screen(color.rgb, screenBlendColor.rgb);
-    color.rgb = lerp(color.rgb, screenedRgb, screenBlendColor.a);
 
     return color * input.Color * color.a;
 }

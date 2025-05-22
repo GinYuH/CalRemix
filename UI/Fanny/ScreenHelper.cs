@@ -446,31 +446,68 @@ namespace CalRemix.UI
 
 
             // test
-            Texture2D testSprite = UsedMessage.Portrait.Texture.Value;
-            Rectangle testFrame = testSprite.Frame(1, UsedMessage.Portrait.frameCount, 0, helperFrame);
-            Vector2 origin = Vector2.Zero;
+            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/TheCalamity_BC").Value;
+            if ((Main.GlobalTimeWrappedHourly + MathHelper.PiOver2) % MathHelper.TwoPi > Math.PI)
+                testSprite = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/TheCalamity").Value;
+            Rectangle testFrame = testSprite.Frame(1, 1, 0, 0);
+
+            
+            Matrix rotation = Matrix.CreateRotationY(Main.GlobalTimeWrappedHourly) * Matrix.CreateRotationZ((float)Math.Sin(Main.GlobalTimeWrappedHourly * 0.5f) * 0.1f);
+
+            Matrix translation = Matrix.CreateTranslation(new Vector3(Main.screenWidth / 2, Main.screenHeight / 2, 0));
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -220, 220);
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
+            Matrix renderMatrix = rotation * translation * view * projection;
             Effect effect = Scene["CalRemix:NormalDraw"].GetShader().Shader;
-            Vector3 topLeft = new Vector3(Main.screenPosition.X - origin.X + testSprite.Width, Main.screenPosition.Y - origin.Y + testSprite.Height, 0);
+
+            Vector3 topLeft = new Vector3(0, 0, 0);
             Vector3 botLeft = topLeft + Vector3.UnitY * testFrame.Height;
+            Vector3 topRight = topLeft + Vector3.UnitX * testFrame.Width;
+            Vector3 botRight = botLeft + Vector3.UnitX * testFrame.Width;
 
             float leftUv = 0;
             float rightUv = 1;
 
             short[] indices = [0, 1, 2, 1, 3, 2];
+
+            Vector3 center = new Vector3(0, 0, 0);
+
+            float perimeter = (float)(Math.PI * 2) * (center.X);
+
+            topLeft = new Vector3(center.X - (testFrame.Width / 2), center.Y - (testFrame.Height / 2), 0);
+            topRight = new Vector3(center.X + (testFrame.Width / 2), center.Y - (testFrame.Height / 2), 0);
+            botLeft = new Vector3(center.X - (testFrame.Width / 2), center.Y + (testFrame.Height / 2), 0);
+            botRight = new Vector3(center.X + (testFrame.Width / 2), center.Y + (testFrame.Height / 2), 0);
+
+            //topRight.X += sine;
+            //topRight.Y += cosine;
+            //topLeft.X += sineFlip;
+            //topRight.Y += cosineFlip;
+            //botRight.X += sine;
+            //botRight.Y += cosine;
+            //botLeft.X += sineFlip;
+            //botRight.Y += cosineFlip;
+
             VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
             vertices[0] = new(topLeft, Color.White, new Vector2(leftUv, 0));
-            vertices[1] = new(topLeft + Vector3.UnitX * testFrame.Width, Color.White, new Vector2(rightUv, 0));
-            vertices[2] = new(botLeft, Color.White, new Vector2(leftUv, 1));
-            vertices[3] = new(botLeft + Vector3.UnitX * testFrame.Width, Color.White, new Vector2(rightUv, 1));
+            vertices[1] = new(topRight, Color.White, new Vector2(rightUv, 0)); 
+            vertices[2] = new(botLeft, Color.White, new Vector2(leftUv, 1)); 
+            vertices[3] = new(botRight, Color.White, new Vector2(rightUv, 1));
 
+            vertices[0].Position += new Vector3(0, 0, 0);
+            vertices[1].Position += new Vector3(0, 0, 0);
+            vertices[2].Position += new Vector3(0, 0, 0);
+            vertices[3].Position += new Vector3(0, 0, 0);
 
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 effect.Parameters["textureResolution"].SetValue(testSprite.Size());
                 effect.Parameters["sampleTexture"].SetValue(testSprite);
                 effect.Parameters["frame"].SetValue(new Vector4(testFrame.X, testFrame.Y, testFrame.Width, testFrame.Height));
+                effect.Parameters["uWorldViewProjection"].SetValue(renderMatrix);
                 pass.Apply();
 
+                Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, 4, indices, 0, 2);
             }
         }
