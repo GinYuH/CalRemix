@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -33,7 +34,7 @@ namespace CalRemix.UI
 
         public const float QoC_timeNextLightIdleBaseline = 0.5f;
         public const float QoC_timeNextLightIdleNoiseMin = 0;
-        public const float QoC_timeNextLightIdleNoiseMax = 4;
+        public const float QoC_timeNextLightIdleNoiseMax = 1;
 
         public static void LoadQoCMessages()
         {
@@ -52,7 +53,7 @@ namespace CalRemix.UI
         public static void ForceWakeUpQoC()
         {
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().timeUntilNextQoCAction_Heavy = HelperHelpers.GetTimeUntilNextStage(QoC_timeAwakeToAsleep);
-            Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentQoCMode = (int)QoCPlayer.QoCState.Awake_Idle;
+            Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentQoCState = (int)QoCPlayer.QoCState.Awake_Idle;
         }
     }
 
@@ -76,25 +77,27 @@ namespace CalRemix.UI
         /// <summary>
         /// The current action the Queen of Clubs is performing
         /// </summary>
-        public int currentQoCMode = (int)QoCState.Asleep;
+        public int currentQoCState = (int)QoCState.Asleep;
         /// <summary>
         /// Opacity at which the Queen of Clubs should render.
         /// </summary>
         public float fadeInOutSmoothing = 0;
 
-        public bool isQoCAwake => currentQoCMode >= (int)QoCState.Awake_Idle;
-        //TODO: finalize unlock method
-        public bool isQoCUnlocked => Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode <= 0;
-
         #region Spinning values
         public float currentSpinRadians;
-        public float rateOfSpin;
         public int spinReverse = 1;
+        public float rateOfSpin;
+        public float rateOfSpinIntended;
+        public float rateOfSpinExtra;
 
-        public float rateOfSpin_Fast = 0.025f;
-        public float rateOfSpin_Normal = 0.015f;
-        public float rateOfSpin_Slow = 0.0075f;
+        public const float rateOfSpin_Fast = 0.025f;
+        public const float rateOfSpin_Normal = 0.015f;
+        public const float rateOfSpin_Slow = 0.0075f;
         #endregion
+
+        public bool isQoCAwake => currentQoCState >= (int)QoCState.Awake_Idle;
+        //TODO: finalize unlock method
+        public bool isQoCUnlocked => Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode <= 0;
 
         public override void PreUpdate()
         {
@@ -109,25 +112,37 @@ namespace CalRemix.UI
                 #endregion
 
                 #region Minor Action Timer
-                if (isQoCAwake && currentQoCMode >= (int)QoCState.Awake_Idle && timeUntilNextQoCAction_Light <= 0)
+                if (isQoCAwake && currentQoCState >= (int)QoCState.Awake_Idle && timeUntilNextQoCAction_Light <= 0)
                 {
                     timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextLightIdleBaseline, ScreenHelperManager.QoC_timeNextLightIdleNoiseMin, ScreenHelperManager.QoC_timeNextLightIdleNoiseMax);
-                    timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(0.2f, 0, 0);
-                    currentQoCMode = Main.rand.Next(2, 3 + 1);
+                    currentQoCState = Main.rand.Next(1, 3 + 1);
                 }
                 timeUntilNextQoCAction_Light--;
                 #endregion
 
                 #region Update Behavior
-                spinReverse = 1;
-
-                if (currentQoCMode == (int)QoCState.Awake_Idle && (currentSpinRadians >= -0.05 && currentSpinRadians <= 0.05))
-                    rateOfSpin = 0;
-                else if (currentQoCMode == (int)QoCState.Awake_TurnLoop)
-                    rateOfSpin = rateOfSpin_Normal;
-                else if (currentQoCMode == (int)QoCState.Awake_TurnLoopReverse)
+                // update anything to correspond with current behavior
+                if (currentQoCState == (int)QoCState.Awake_Idle)
                 {
-                    rateOfSpin = rateOfSpin_Normal;
+                    if (currentSpinRadians >= -0.05 && currentSpinRadians <= 0.05)
+                    {
+                        rateOfSpin = 0;
+                    }
+                    else
+                    {
+                        rateOfSpinIntended = rateOfSpin_Normal * spinReverse;
+                        rateOfSpin = rateOfSpinIntended;
+                    }
+                }
+
+                else if (currentQoCState == (int)QoCState.Awake_TurnLoop)
+                {
+                    rateOfSpinIntended = rateOfSpin_Normal;
+                    spinReverse = 1;
+                }
+                else if (currentQoCState == (int)QoCState.Awake_TurnLoopReverse)
+                {
+                    rateOfSpinIntended = rateOfSpin_Normal;
                     spinReverse = -1;
                 }
                 #endregion
@@ -135,27 +150,43 @@ namespace CalRemix.UI
                 #region Awake/Asleep Timer
                 if (timeUntilNextQoCAction_Heavy <= 0)
                 {
-                    if (currentQoCMode >= (int)QoCState.Awake_Idle)
+                    if (currentQoCState >= (int)QoCState.Awake_Idle)
                     {
                         // if awake, go to sleep
                         timeUntilNextQoCAction_Heavy = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeAwakeToAsleep);
-                        currentQoCMode = (int)QoCState.Asleep;
+                        currentQoCState = (int)QoCState.Asleep;
                     }
                     else
                     {
                         // if asleep, start waking up
                         timeUntilNextQoCAction_Heavy = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeAsleepToWaking);
-                        currentQoCMode = (int)QoCState.Awake_Idle;
+                        currentQoCState = (int)QoCState.Awake_Idle;
+
+                        // randomize starting mode
+                        currentSpinRadians = 0;
+                        timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextLightIdleBaseline, ScreenHelperManager.QoC_timeNextLightIdleNoiseMin, ScreenHelperManager.QoC_timeNextLightIdleNoiseMax);
+                        currentQoCState = Main.rand.Next(1, 3 + 1);
+
+                        // add a big spin on wake-up
+                        rateOfSpinExtra = 0.25f * spinReverse;
                     }
                 }
                 #endregion
             }
             #region Spinning
-            currentSpinRadians += (rateOfSpin * spinReverse);
+            // adjust the rateOfSpin value to smoothly transition between current and new spin rate
+            if (currentQoCState != (int)QoCState.Awake_Idle)
+                rateOfSpin = MathHelper.Lerp(rateOfSpin, rateOfSpinIntended * spinReverse, 0.01f);
+
+            // add the rate of spinning to the radians value, and wrap everything properly
+            currentSpinRadians += rateOfSpin + rateOfSpinExtra;
             if (currentSpinRadians > MathHelper.PiOver2 * 4)
                 currentSpinRadians -= MathHelper.PiOver2 * 4;
             else if (currentSpinRadians < 0)
                 currentSpinRadians += MathHelper.PiOver2 * 4;
+
+            // reduce the extra spin over time
+            rateOfSpinExtra *= 0.98f;
             #endregion
 
             timeUntilNextQoCAction_Heavy--;
@@ -166,20 +197,27 @@ namespace CalRemix.UI
         {
             tag["TimeUntilNextQoCAction_Heavy"] = timeUntilNextQoCAction_Heavy;
             tag["TimeUntilNextQoCAction_Light"] = timeUntilNextQoCAction_Light;
-            tag["CurrentQoCMode"] = currentQoCMode;
+            tag["currentQoCState"] = currentQoCState;
         }
 
         public override void LoadData(TagCompound tag)
         {
             timeUntilNextQoCAction_Heavy = tag.GetInt("TimeUntilNextQoCAction_Heavy");
             timeUntilNextQoCAction_Light = tag.GetInt("TimeUntilNextQoCAction_Light");
-            currentQoCMode = tag.GetInt("CurrentQoCMode");
+            currentQoCState = tag.GetInt("currentQoCState");
         }
         #endregion
     }
 
     public class QueenOfClubsCard : UIElement
     {
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle").Value;
@@ -228,11 +266,27 @@ namespace CalRemix.UI
     public class QueenOfClubsUIState : UIState
     {
         public QueenOfClubsCard QueenOfClubs;
+        public UIPanel panel;
 
         public override void OnInitialize()
         {
+            //TODO: make this and card share values instad of using separate dupes
+            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle").Value;
             QueenOfClubs = new QueenOfClubsCard();
+            QueenOfClubs.Width.Set(testSprite.Width, 0);
+            QueenOfClubs.Height.Set(testSprite.Height, 0);
+            QueenOfClubs.Top.Set(100, 0);
+            QueenOfClubs.Left.Set(Main.screenWidth - 175, 0);
             Append(QueenOfClubs);
+
+            panel = new UIPanel();
+            panel.Width.Set(testSprite.Width, 0);
+            panel.Height.Set(testSprite.Height, 0);
+            //panel.Top.Set(100, 0);
+            //panel.Left.Set(Main.screenWidth - 175, 0);
+            panel.Top.Set(100 + testSprite.Width, 0);
+            panel.Left.Set(0, 0.5f);
+            Append(panel);
         }
     }
 
