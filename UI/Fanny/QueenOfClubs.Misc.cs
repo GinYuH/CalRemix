@@ -10,6 +10,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,15 @@ namespace CalRemix.UI
         /// </summary>
         public float fadeInOutSmoothing = 0;
 
+        /// <summary>
+        /// Set to 1 (or higher i guess) to make the Queen of Clubs bounce!
+        /// </summary>
+        public float bounce = 0;
+        /// <summary>
+        /// A vertical offset used to determine where the Queen of Clubs should be mid-bounce.
+        /// </summary>
+        public float bouncePositionOffset;
+
         #region Spinning values
         public float currentSpinRadians;
         public int spinReverse = 1;
@@ -124,9 +134,10 @@ namespace CalRemix.UI
                 // update anything to correspond with current behavior
                 if (currentQoCState == (int)QoCState.Awake_Idle)
                 {
-                    if (currentSpinRadians >= -0.05 && currentSpinRadians <= 0.05)
+                    if (currentSpinRadians >= -0.05 && currentSpinRadians <= 0.05 && rateOfSpinExtra < 0.01f && rateOfSpinExtra > -0.01f)
                     {
                         rateOfSpin = 0;
+                        rateOfSpinExtra = 0;
                     }
                     else
                     {
@@ -134,7 +145,6 @@ namespace CalRemix.UI
                         rateOfSpin = rateOfSpinIntended;
                     }
                 }
-
                 else if (currentQoCState == (int)QoCState.Awake_TurnLoop)
                 {
                     rateOfSpinIntended = rateOfSpin_Normal;
@@ -144,6 +154,21 @@ namespace CalRemix.UI
                 {
                     rateOfSpinIntended = rateOfSpin_Normal;
                     spinReverse = -1;
+                }
+                #endregion
+
+                #region Bounce
+                if (bounce > 0)
+                {
+                    if (bounce > 0)
+                        bounce -= 1 / (60f * 0.4f);
+
+                    bouncePositionOffset = -MathF.Pow(Math.Abs(MathF.Sin(bounce * MathHelper.Pi)), 0.6f) * 22f;
+                }
+                else
+                {
+                    bounce = 0;
+                    bouncePositionOffset = 0;
                 }
                 #endregion
 
@@ -216,17 +241,26 @@ namespace CalRemix.UI
             base.LeftClick(evt);
 
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
+            Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            CalculatedStyle dimensions = GetDimensions();
+            Rectangle dimensionsRect = dimensions.ToRectangle();
+            //Utils.DrawInvBG(spriteBatch, dimensionsRect);
+
             Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle").Value;
             if ((Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentSpinRadians + MathHelper.PiOver2) % MathHelper.TwoPi >= Math.PI)
                 testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsBack").Value;
             Rectangle testFrame = testSprite.Frame(1, 1, 0, 0);
 
             Matrix rotation = Matrix.CreateRotationY(Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentSpinRadians) * Matrix.CreateRotationZ((float)Math.Sin(Main.GlobalTimeWrappedHourly * 0.5f) * 0.1f);
-            Matrix translation = Matrix.CreateTranslation(new Vector3(Main.screenWidth - 175, 100, 0));
+            Matrix translation = Matrix.CreateTranslation(new Vector3(Main.screenWidth - 175, 100 + Main.LocalPlayer.GetModPlayer<QoCPlayer>().bouncePositionOffset, 0));
             //translation = Matrix.CreateTranslation(new Vector3(Main.screenWidth / 2, Main.screenHeight / 2, 0));
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -220, 220);
@@ -266,27 +300,18 @@ namespace CalRemix.UI
     public class QueenOfClubsUIState : UIState
     {
         public QueenOfClubsCard QueenOfClubs;
-        public UIPanel panel;
 
         public override void OnInitialize()
         {
-            //TODO: make this and card share values instad of using separate dupes
-            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle").Value;
+            //TODO: rn this and the translation matrix use duped values. centralize them
+            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle", AssetRequestMode.ImmediateLoad).Value;
             QueenOfClubs = new QueenOfClubsCard();
-            QueenOfClubs.Width.Set(testSprite.Width, 0);
-            QueenOfClubs.Height.Set(testSprite.Height, 0);
-            QueenOfClubs.Top.Set(100, 0);
-            QueenOfClubs.Left.Set(Main.screenWidth - 175, 0);
+            QueenOfClubs.Width.Pixels = testSprite.Width;
+            QueenOfClubs.Height.Pixels = testSprite.Height;
+            QueenOfClubs.Top.Pixels = 100 - (testSprite.Height / 2);
+            QueenOfClubs.Left.Pixels = -175 - (testSprite.Width / 2);
+            QueenOfClubs.Left.Percent = 1;
             Append(QueenOfClubs);
-
-            panel = new UIPanel();
-            panel.Width.Set(testSprite.Width, 0);
-            panel.Height.Set(testSprite.Height, 0);
-            //panel.Top.Set(100, 0);
-            //panel.Left.Set(Main.screenWidth - 175, 0);
-            panel.Top.Set(100 + testSprite.Width, 0);
-            panel.Left.Set(0, 0.5f);
-            Append(panel);
         }
     }
 
