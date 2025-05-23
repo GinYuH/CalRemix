@@ -40,7 +40,7 @@ namespace CalRemix.UI
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => AcidRainEvent.AcidRainEventIsOngoing)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
             HelperMessage miracleRain2 = HelperMessage.New("MiracleRain2", "Please don't do that...",
-                "FluxDefault", HelperMessage.AlwaysShow)
+                "FluxIdle", HelperMessage.AlwaysShow)
                 .AddSelectionEvent(ForceWakeUpFlux)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux)
                 .ChainAfter(miracleRain1, delay: 1f);

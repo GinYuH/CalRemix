@@ -443,73 +443,6 @@ namespace CalRemix.UI
             spriteBatch.Draw(fannySprite, position, frame, Color.White * opacity, 0, new Vector2(frame.Width / 2f, frame.Height), 1f, 0, 0);
             if (Speaking && UsedMessage.ItemType != -22)
                 DrawItem();
-
-
-            // test
-            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/TheCalamity_BC").Value;
-            if ((Main.GlobalTimeWrappedHourly + MathHelper.PiOver2) % MathHelper.TwoPi > Math.PI)
-                testSprite = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossScule/TheCalamity").Value;
-            Rectangle testFrame = testSprite.Frame(1, 1, 0, 0);
-
-            
-            Matrix rotation = Matrix.CreateRotationY(Main.GlobalTimeWrappedHourly) * Matrix.CreateRotationZ((float)Math.Sin(Main.GlobalTimeWrappedHourly * 0.5f) * 0.1f);
-
-            Matrix translation = Matrix.CreateTranslation(new Vector3(Main.screenWidth / 2, Main.screenHeight / 2, 0));
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -220, 220);
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix renderMatrix = rotation * translation * view * projection;
-            Effect effect = Scene["CalRemix:NormalDraw"].GetShader().Shader;
-
-            Vector3 topLeft = new Vector3(0, 0, 0);
-            Vector3 botLeft = topLeft + Vector3.UnitY * testFrame.Height;
-            Vector3 topRight = topLeft + Vector3.UnitX * testFrame.Width;
-            Vector3 botRight = botLeft + Vector3.UnitX * testFrame.Width;
-
-            float leftUv = 0;
-            float rightUv = 1;
-
-            short[] indices = [0, 1, 2, 1, 3, 2];
-
-            Vector3 center = new Vector3(0, 0, 0);
-
-            float perimeter = (float)(Math.PI * 2) * (center.X);
-
-            topLeft = new Vector3(center.X - (testFrame.Width / 2), center.Y - (testFrame.Height / 2), 0);
-            topRight = new Vector3(center.X + (testFrame.Width / 2), center.Y - (testFrame.Height / 2), 0);
-            botLeft = new Vector3(center.X - (testFrame.Width / 2), center.Y + (testFrame.Height / 2), 0);
-            botRight = new Vector3(center.X + (testFrame.Width / 2), center.Y + (testFrame.Height / 2), 0);
-
-            //topRight.X += sine;
-            //topRight.Y += cosine;
-            //topLeft.X += sineFlip;
-            //topRight.Y += cosineFlip;
-            //botRight.X += sine;
-            //botRight.Y += cosine;
-            //botLeft.X += sineFlip;
-            //botRight.Y += cosineFlip;
-
-            VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
-            vertices[0] = new(topLeft, Color.White, new Vector2(leftUv, 0));
-            vertices[1] = new(topRight, Color.White, new Vector2(rightUv, 0)); 
-            vertices[2] = new(botLeft, Color.White, new Vector2(leftUv, 1)); 
-            vertices[3] = new(botRight, Color.White, new Vector2(rightUv, 1));
-
-            vertices[0].Position += new Vector3(0, 0, 0);
-            vertices[1].Position += new Vector3(0, 0, 0);
-            vertices[2].Position += new Vector3(0, 0, 0);
-            vertices[3].Position += new Vector3(0, 0, 0);
-
-            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-            {
-                effect.Parameters["textureResolution"].SetValue(testSprite.Size());
-                effect.Parameters["sampleTexture"].SetValue(testSprite);
-                effect.Parameters["frame"].SetValue(new Vector4(testFrame.X, testFrame.Y, testFrame.Width, testFrame.Height));
-                effect.Parameters["uWorldViewProjection"].SetValue(renderMatrix);
-                pass.Apply();
-
-                Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, 4, indices, 0, 2);
-            }
         }
 
         public void AnimateFanny()
@@ -702,6 +635,7 @@ namespace CalRemix.UI
         public static ScreenHelper MovieCygn = new("MovieCygn");
         public static ScreenHelper Solyn = new("Solyn");
         public static ScreenHelper Flux = new("Flux");
+        public static ScreenHelper QueenOfClubs = new("QueenOfClubs");
 
         public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
 
@@ -756,7 +690,6 @@ namespace CalRemix.UI
                     ))
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked || (!CalRemixWorld.postGenUpdate && NPC.downedMoonlord));
                 
-
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
                 .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
@@ -773,7 +706,7 @@ namespace CalRemix.UI
                     Vector2.UnitY * 40f
                     ));
 
-            LoadScreenHelper(TrapperBulbChan, "TrapperDefault", false, new Vector2(96, 96))
+            LoadScreenHelper(TrapperBulbChan, "TrapperIdle", false, new Vector2(96, 96))
                 .SetVoiceStyle(SoundID.LucyTheAxeTalk with { MaxInstances = 0 })
                 .SetTextboxStyle("Sugoi!!! Arigato Gozaimas!", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Trapper_Background", Vector2.Zero)).
@@ -793,23 +726,12 @@ namespace CalRemix.UI
                     ));
 
 
-            LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
-                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Thank you for the help, Fanny!")
-                .SetPositionData(false, 240, 0.17f);
-
-            LoadScreenHelper(Solyn, "Solyn")
-                .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
-                .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
-                .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
-                .SetPositionData(false, 240);
-
-            LoadScreenHelper(Flux, "FluxDefault", false, new Vector2(150, 160), true)
+            LoadScreenHelper(Flux, "FluxIdle", false, new Vector2(150, 160), true)
                 .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
                 .SetTextboxStyle("I mean, alright Flux", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Flux_Background", Vector2.Zero))
                 .SetExtraAnimations(false, false, false) //shes locked in her textbox
-                .SetAvailabilityCondition(() => Main.LocalPlayer.Remix().fifteenMinutesSinceHardmode <= 0)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.Remix().fifteenMinutesSinceHardmode <= 0 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake)
                 .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(670, 172), 462), 0, 0)
                 .SetPositionData(new HelperPositionData(
                     new Vector2(0.1f, 0.6f), // anchored to bottom middle, a little shifted to the left
@@ -821,6 +743,21 @@ namespace CalRemix.UI
                     Vector2.Zero,
                     null,
                     new Vector2(189, 25)
+                    ));
+
+            LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(130, 166), true)
+                .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
+                .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.AliceBlue))
+                .SetExtraAnimations(false, false, false)
+                .SetAvailabilityCondition(() => true)
+                .SetPositionData(new HelperPositionData(
+                    new Vector2(1, 0), // anchored to bottom middle, a little shifted to the left
+                    new Vector2(-175 - 65, 100 - 83),   //top right. arbitrary values - half of width/height
+                    new Vector2(0f, 0f),   // just fade in
+                    new Vector2(-480, -100),   //left 
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    Vector2.Zero
                     ));
 
             /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
@@ -841,6 +778,18 @@ namespace CalRemix.UI
                      new Vector2(0, 0)
                      ));
              */
+
+
+            LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
+                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Thank you for the help, Fanny!")
+                .SetPositionData(false, 240, 0.17f);
+
+            LoadScreenHelper(Solyn, "Solyn")
+                .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
+                .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
+                .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
+                .SetPositionData(false, 240);
         }
 
         /// <summary>
@@ -1089,6 +1038,7 @@ namespace CalRemix.UI
             LoadTrapperBulbChan();
             LoadSolynMessages();
             LoadFluxMessages();
+            LoadQoCMessages();
             LoadMiracleBoyMessages();
             SneakersRetheme.LoadHelperMessages();
 
@@ -1196,12 +1146,19 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("CrimSonNose", 42, 6, 6);
 
             //Trapper bulb chan
-            ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperIdle", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperUwaa", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperHappy", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperWTF", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperHuh", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperDisgust", 1);
+
+            //Flux
+            ScreenHelperPortrait.LoadPortrait("FluxIdle", 1);
+
+            //Queen of Clubs
+            ScreenHelperPortrait.LoadPortrait("QueenOfClubsIdle", 1);
+            ScreenHelperPortrait.LoadPortrait("QueenOfClubsEmpty", 1);
 
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);
@@ -1212,8 +1169,6 @@ namespace CalRemix.UI
             //Solyn
             ScreenHelperPortrait.LoadPortrait("Solyn", 1);
 
-            //Flux
-            ScreenHelperPortrait.LoadPortrait("FluxDefault", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);

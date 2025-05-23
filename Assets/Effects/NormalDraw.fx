@@ -2,7 +2,7 @@ matrix uWorldViewProjection;
 
 float4 frame;
 float2 textureResolution;
-float4 screenBlendColor;
+float opacity;
 
 texture sampleTexture;
 sampler2D samplerTex = sampler_state
@@ -36,7 +36,7 @@ VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
     float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
-    output.Color = input.Color;
+    output.Color = input.Color * opacity;
     output.TextureCoordinates = input.TextureCoordinates;
 
     return output;

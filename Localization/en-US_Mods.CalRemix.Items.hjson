@@ -4488,3 +4488,8 @@ SeedyCD: {
 	DisplayName: Seedy CD
 	Tooltip: Summons an ugly grey creature to carry you around
 }
+
+SubworldDoor: {
+	DisplayName: Subworld Door
+	Tooltip: ""
+}
