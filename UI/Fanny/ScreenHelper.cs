@@ -2315,5 +2315,33 @@ namespace CalRemix.UI
         }
     }
 
+    /// <summary>
+    /// Helper methods for assorted Helpers.
+    /// </summary>
+    public class HelperHelpers
+    {
+        //TODO: make flux use this
+        /// <summary>
+        /// Returns the the time in frames with a level of noise applied. For use with "Mediumweight" Helpers, like Flux or the Queen of Clubs.
+        /// </summary>
+        /// <param name="timeInpute"> The baseline value of time, in minutes. </param>
+        /// <param name="noiseSubtract"> The maximum amount of time which could be subtracted from the end result. Defaults to 3 minutes. </param>
+        /// <param name="noiseAdd"> The maximum amount of time which could be added to the end result. Defaults to 3 minutes. </param>
+        public static int GetTimeUntilNextStage(float timeInput, float noiseSubtract = 3, float noiseAdd = 3)
+        {
+            float timeToReturn = timeInput;
+
+            // turn int into minutes
+            timeToReturn *= (float)Math.Pow(60, 2);
+            // add layer of noise
+            int noiseSubtractFrames = (int)(-noiseSubtract * Math.Pow(60, 2));
+            int noiseAddFrames = (int)(noiseAdd * Math.Pow(60, 2) + 1);
+            timeToReturn += Main.rand.Next(noiseSubtractFrames, noiseAddFrames);
+
+            //timeToReturn = 120;
+            return (int)timeToReturn;
+        }
+    }
+
     #endregion
 }
