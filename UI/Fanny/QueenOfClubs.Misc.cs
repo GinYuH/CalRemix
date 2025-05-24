@@ -18,6 +18,7 @@ using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -269,6 +270,9 @@ namespace CalRemix.UI
 
                         // add a big spin on wake-up
                         rateOfSpinExtra = 0.25f * spinReverse;
+
+                        // make some noise 
+                        SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { MaxInstances = 1 }, Main.LocalPlayer.position);
                     }
                 }
                 #endregion
@@ -321,6 +325,7 @@ namespace CalRemix.UI
 
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
+            SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1 }, Main.LocalPlayer.position);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
