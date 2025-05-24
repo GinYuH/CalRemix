@@ -16,6 +16,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using Terraria.Utilities;
 
 namespace CalRemix.UI.Arsenal;
 
@@ -205,12 +206,16 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
         banner.Height.Pixels = 150f;
 
         profileHeader.Append(banner);
+        
         string name = ProfileName;
-        UIImage pfp = new(ArsenalSystem.ProfileData[name].PFP ?? ArsenalSystem.ProfileData["Default"].PFP)
+        int sumOfASCIIValues = 0;
+        foreach (char c in name)
+            sumOfASCIIValues += c - '0';
+
+        UIImage pfp = new(ArsenalSystem.ProfileData[name].PFP ?? ArsenalSystem.ProfileData["Default" + ((sumOfASCIIValues % 5) + 1)].PFP)
         {
             IgnoresMouseInteraction = true,
         };
-
         
         pfp.Left.Pixels -= pfp.Width.Pixels / 2f;
         pfp.Top.Pixels -= pfp.Height.Pixels / 2f;
@@ -387,7 +392,7 @@ public class ArsenalPostUI(string postName) : ArsenalUIState
 
         Post post;
 
-        List<GenericReplies> replyPool = [];
+        WeightedRandom<GenericReplies> replyPool = new();
 
         string activeExtension = LanguageManager.Instance.ActiveCulture.Name;
         string postPath = "UI/Arsenal/" + activeExtension + "/Posts/" + PostName + ".json";
@@ -437,23 +442,28 @@ public class ArsenalPostUI(string postName) : ArsenalUIState
                 }
 
                 if(post.Tags.Any(s => gr.Tags.Contains(s)))
-                    replyPool.Add(gr);
+                    replyPool.Add(gr, gr.Weight);
             }
         }
 
-
         //Create a final list of Comments to put into the array
         List<(string poster, string text)> Comments = [];
-        if (replyPool.Count > 0)
+        if (replyPool.elements.Count > 0)
         {
-            while (Comments.Count < 12)
+            //fail safe in-case we are unable to generate new unique comments.
+            int fails = 0;
+            while (Comments.Count < 32 && fails < 10)
             {
-                int poolIndex = Main.rand.Next(0, replyPool.Count);
-                int posterIndex = Main.rand.Next(0, replyPool[poolIndex].Posters.Length);
-                int textIndex = Main.rand.Next(0, replyPool[poolIndex].Comments.Length);
+                GenericReplies gr = replyPool.Get();
+                int posterIndex = Main.rand.Next(0, gr.Posters.Length);
+                int textIndex = Main.rand.Next(0, gr.Comments.Length);
 
-                if (!Comments.Any(c => c.poster == replyPool[poolIndex].Posters[posterIndex] || c.text == replyPool[poolIndex].Comments[textIndex]))
-                    Comments.Add((replyPool[poolIndex].Posters[posterIndex], replyPool[poolIndex].Comments[textIndex]));
+                if (!Comments.Any(c => c.poster == gr.Posters[posterIndex] || c.text == gr.Comments[textIndex]))
+                {
+                    Comments.Add((gr.Posters[posterIndex], gr.Comments[textIndex]));
+                    fails = 0;
+                }
+                else fails++;
             }
         }
 
@@ -504,7 +514,7 @@ public static class ArsenalUtils
             TextColor = Color.White,
             IsWrapped = true,
         };
-        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 400f);
+        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 380f);
         bodyText.Width.Pixels = 400f;
         bodyText.Height.Pixels = textSize.Y;
         postTextbox.Height.Pixels = textSize.Y + 16;
@@ -541,7 +551,11 @@ public static class ArsenalUtils
             postTextbox.Append(image);
         }
 
-        UIImage pfp = new(ArsenalSystem.ProfileData[post.Poster].PFP ?? ArsenalSystem.ProfileData["Default"].PFP)
+        int sumOfASCIIValues = 0;
+        foreach (char c in post.Poster)
+            sumOfASCIIValues += c - '0';
+
+        UIImage pfp = new(ArsenalSystem.ProfileData[post.Poster].PFP ?? ArsenalSystem.ProfileData["Default" + ((sumOfASCIIValues % 5) + 1)].PFP)
         {
             IgnoresMouseInteraction = true
         };
@@ -626,7 +640,11 @@ public static class ArsenalUtils
 
         commentArea.Append(commentTextbox);
 
-        UIImage pfp = new(ArsenalSystem.ProfileData[poster].PFP ?? ArsenalSystem.ProfileData["Default"].PFP)
+        int sumOfASCIIValues = 0;
+        foreach (char c in poster)
+            sumOfASCIIValues += c - '0';
+
+        UIImage pfp = new(ArsenalSystem.ProfileData[poster].PFP ?? ArsenalSystem.ProfileData["Default" + ((sumOfASCIIValues % 5) + 1)].PFP)
         {
             IgnoresMouseInteraction = true
         };
@@ -805,7 +823,7 @@ public class ArsenalSystem : ModSystem
         userInterface?.SetState(null);
     }
 
-    public void ReloadDictionaries()
+    public static void ReloadDictionaries()
     {
         ProfileData.Clear();
         Posts.Clear();
@@ -813,7 +831,12 @@ public class ArsenalSystem : ModSystem
 
         string activeExtension = LanguageManager.Instance.ActiveCulture.Name;
 
-        ProfileData.Add("Default", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default", AssetRequestMode.AsyncLoad)));
+        ProfileData.Add("Default1", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default1", AssetRequestMode.AsyncLoad)));
+        ProfileData.Add("Default2", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default2", AssetRequestMode.AsyncLoad)));
+        ProfileData.Add("Default3", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default3", AssetRequestMode.AsyncLoad)));
+        ProfileData.Add("Default4", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default4", AssetRequestMode.AsyncLoad)));
+        ProfileData.Add("Default5", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default5", AssetRequestMode.AsyncLoad)));
+
 
         //Initalizes the data of all three of the static Dictionaries
         foreach (string path in CalRemix.instance.GetFileNames().Where(s => s.EndsWith(".json") && s.StartsWith($"UI/Arsenal/{activeExtension}/")))
@@ -939,6 +962,7 @@ public class GenericReplies
     public string Name { get; set; }
     /// <summary> The tags that allow these comments to appear under a post. </summary>
     public string[] Tags { get; set; }
+    public double Weight { get; set; }
     public string[] Posters { get; set; }
     public string[] Comments { get; set; }
 }
