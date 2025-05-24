@@ -458,7 +458,7 @@ public class ArsenalPostUI(string postName) : ArsenalUIState
                 int posterIndex = Main.rand.Next(0, gr.Posters.Length);
                 int textIndex = Main.rand.Next(0, gr.Comments.Length);
 
-                if (!Comments.Any(c => c.poster == gr.Posters[posterIndex] || c.text == gr.Comments[textIndex]))
+                if (!Comments.Any(c => c.poster == gr.Posters[posterIndex] || c.text == gr.Comments[textIndex]) && gr.Posters[posterIndex] != post.Poster)
                 {
                     Comments.Add((gr.Posters[posterIndex], gr.Comments[textIndex]));
                     fails = 0;
