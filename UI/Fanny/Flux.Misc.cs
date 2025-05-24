@@ -22,6 +22,10 @@ namespace CalRemix.UI
 {
     public partial class ScreenHelperManager : ModSystem
     {
+        public const float Flux_timeAsleepToWaking = 28;
+        public const float Flux_timeWakingToAwake = 2;
+        public const float Flux_timeAwakeToAsleep = 20;
+
         public static void LoadFluxMessages()
         {
             #region debuff dialogue
@@ -276,41 +280,8 @@ namespace CalRemix.UI
 
         public static void ForceWakeUpFlux()
         {
-            Main.LocalPlayer.GetModPlayer<FluxPlayer>().timeUntilNextFluxAction = GetTimeUntilNextFluxStage();
+            Main.LocalPlayer.GetModPlayer<FluxPlayer>().timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(Flux_timeAwakeToAsleep);
             Main.LocalPlayer.GetModPlayer<FluxPlayer>().currentFluxMode = (int)FluxPlayer.FluxState.Awake;
-        }
-
-        public static int GetTimeUntilNextFluxStage()
-        {
-            float timeAsleepToWaking = 28;
-            float timeWakingToAwake = 2;
-            float timeAwakeToAsleep = 20;
-
-            float timeToReturn = 0;
-            
-            switch (Main.LocalPlayer.GetModPlayer<FluxPlayer>().currentFluxMode)
-            {
-                case (int)FluxPlayer.FluxState.Asleep:
-                    timeToReturn = timeAsleepToWaking;
-                    break;
-                case (int)FluxPlayer.FluxState.WakingUp:
-                    timeToReturn = timeWakingToAwake;
-                    break;
-                case (int)FluxPlayer.FluxState.Awake:
-                    timeToReturn = timeAwakeToAsleep;
-                    break;
-            }
-
-            // turn int into minutes
-            timeToReturn *= (float)Math.Pow(60, 2);
-            // add layer of noise
-            if (Main.LocalPlayer.GetModPlayer<FluxPlayer>().currentFluxMode != (int)FluxPlayer.FluxState.WakingUp)
-            {
-                // between -3 and 3 minutes
-                timeToReturn += Main.rand.Next(-10800, 10801);
-            }
-
-            return (int)timeToReturn;
         }
     }
 
@@ -354,17 +325,17 @@ namespace CalRemix.UI
                 {
                     case (int)FluxState.Asleep:
                         // if asleep, start waking up
-                        timeUntilNextFluxAction = ScreenHelperManager.GetTimeUntilNextFluxStage();
+                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeAsleepToWaking);
                         currentFluxMode = (int)FluxState.WakingUp;
                         break;
                     case (int)FluxState.WakingUp:
                         // if waking up, then fully wake up
-                        timeUntilNextFluxAction = ScreenHelperManager.GetTimeUntilNextFluxStage();
+                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeWakingToAwake);
                         currentFluxMode = (int)FluxState.Awake;
                         break;
                     case (int)FluxState.Awake:
                         // if awake, go to sleep
-                        timeUntilNextFluxAction = ScreenHelperManager.GetTimeUntilNextFluxStage();
+                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeAwakeToAsleep);
                         currentFluxMode = (int)FluxState.Asleep;
                         break;
                 }

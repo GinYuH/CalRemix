@@ -990,7 +990,7 @@ namespace CalRemix.UI
         /// <summary>
         /// Contains the screen helpers messages grouped by speaker. Created after all messages have been loaded
         /// </summary>
-        public static IEnumerable<IGrouping<ScreenHelper, HelperMessage>> screenHelperMessageGroups; 
+        public static IEnumerable<IGrouping<ScreenHelper, HelperMessage>> screenHelperMessageGroups;
         /// <summary>
         /// Dictionnary of screen helper portraits
         /// </summary>
@@ -1157,7 +1157,6 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FluxIdle", 1);
 
             //Queen of Clubs
-            ScreenHelperPortrait.LoadPortrait("QueenOfClubsIdle", 1);
             ScreenHelperPortrait.LoadPortrait("QueenOfClubsEmpty", 1);
 
             //Talking Flower
@@ -2320,7 +2319,6 @@ namespace CalRemix.UI
     /// </summary>
     public class HelperHelpers
     {
-        //TODO: make flux use this
         /// <summary>
         /// Returns the the time in frames with a level of noise applied. For use with "Mediumweight" Helpers, like Flux or the Queen of Clubs.
         /// </summary>

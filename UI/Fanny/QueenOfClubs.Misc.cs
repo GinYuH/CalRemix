@@ -37,13 +37,17 @@ namespace CalRemix.UI
         public const float QoC_timeNextLightIdleNoiseMin = 0;
         public const float QoC_timeNextLightIdleNoiseMax = 1;
 
+        public const float QoC_timeNextFaceIdleBaseline = 0.5f;
+        public const float QoC_timeNextFaceIdleNoiseMin = 0.25f;
+        public const float QoC_timeNextFaceIdleNoiseMax = 1.5f;
+
         public static void LoadQoCMessages()
         {
             HelperMessage.New("QoCTest", "It looks like your armor's broken. You might want to get that checked out.It looks like your armor's broken. You might want to get that checked out.It looks like your armor's broken. You might want to get that checked out.It looks like your armor's broken. You might want to get that checked out.It looks like your armor's broken. You might want to get that checked out.It looks like your armor's broken. You might want to get that checked out.",
-                "QueenOfClubsIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<ArmorCrunch>(), cooldown: 3, onlyPlayOnce: false)
+                "QueenOfClubsEmpty", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<ArmorCrunch>(), cooldown: 3, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.QueenOfClubs);
             HelperMessage.New("QoCTest2", "It",
-                "QueenOfClubsIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Crumbling>(), cooldown: 3, onlyPlayOnce: false)
+                "QueenOfClubsEmpty", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<Crumbling>(), cooldown: 3, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.QueenOfClubs);
         }
 
@@ -60,13 +64,28 @@ namespace CalRemix.UI
 
     public class QoCPlayer : ModPlayer
     {
+        #region Data
         public enum QoCState
         {
             Asleep = 0,
             Awake_Idle = 1,
             Awake_TurnLoop = 2,
-            Awake_TurnLoopReverse = 3
+            Awake_TurnLoopReverse = 3,
+            Awake_TurnOnce = 4
         }
+        public enum QoCFace
+        {
+            Idle = 0,
+            Test1 = 1,
+            Test2 = 2
+        }
+        public Dictionary<QoCFace, string> QoCFaceDict = new Dictionary<QoCFace, string>
+        {
+            [QoCFace.Idle] = "Idle",
+            [QoCFace.Test1] = "Test1",
+            [QoCFace.Test2] = "Test2"
+        };
+
         /// <summary>
         /// The length between the Queen of Clubs' next major action. This is used as a timer between being awake or asleep. 
         /// </summary>
@@ -76,14 +95,26 @@ namespace CalRemix.UI
         /// </summary>
         public int timeUntilNextQoCAction_Light;
         /// <summary>
-        /// The current action the Queen of Clubs is performing
+        /// The length between the Queen of Clubs' next face action. This is used as a timer between being changing face.
+        /// </summary>
+        public int timeUntilNextQoCAction_Face;
+        /// <summary>
+        /// The current action the Queen of Clubs is performing.
         /// </summary>
         public int currentQoCState = (int)QoCState.Asleep;
+        /// <summary>
+        /// The current face the Queen of Clubs is making.
+        /// </summary>
+        public QoCFace currentFace = 0;
+        /// <summary>
+        /// A buffer for the next face in line. When possible, the Queen of Clubs will switch to it.
+        /// </summary>
+        public QoCFace currentFaceBuffer = 0;
+
         /// <summary>
         /// Opacity at which the Queen of Clubs should render.
         /// </summary>
         public float fadeInOutSmoothing = 0;
-
         /// <summary>
         /// Set to 1 (or higher i guess) to make the Queen of Clubs bounce!
         /// </summary>
@@ -105,9 +136,24 @@ namespace CalRemix.UI
         public const float rateOfSpin_Slow = 0.0075f;
         #endregion
 
+        /// <summary>
+        /// Whether or not the Queen of Clubs is currently awake.
+        /// </summary>
         public bool isQoCAwake => currentQoCState >= (int)QoCState.Awake_Idle;
         //TODO: finalize unlock method
+        /// <summary>
+        /// Whether or not the Queen of Clubs is unlocked.
+        /// </summary>
         public bool isQoCUnlocked => Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode <= 0;
+        /// <summary>
+        /// Whether or not the back of the card is facing the camera.
+        /// </summary>
+        public bool cardFacingBack => (currentSpinRadians + MathHelper.PiOver2) % MathHelper.TwoPi >= Math.PI;
+        /// <summary>
+        /// Whether or not the front of the card is facing the camera.
+        /// </summary>
+        public bool cardFacingFront => !cardFacingBack;
+        #endregion
 
         public override void PreUpdate()
         {
@@ -131,7 +177,6 @@ namespace CalRemix.UI
                 #endregion
 
                 #region Update Behavior
-                // update anything to correspond with current behavior
                 if (currentQoCState == (int)QoCState.Awake_Idle)
                 {
                     if (currentSpinRadians >= -0.05 && currentSpinRadians <= 0.05 && rateOfSpinExtra < 0.01f && rateOfSpinExtra > -0.01f)
@@ -155,6 +200,15 @@ namespace CalRemix.UI
                     rateOfSpinIntended = rateOfSpin_Normal;
                     spinReverse = -1;
                 }
+                else if (currentQoCState == (int)QoCState.Awake_TurnOnce)
+                {
+                    rateOfSpinIntended = rateOfSpin_Fast;
+
+                    if (cardFacingBack)
+                    {
+                        currentQoCState = (int)QoCState.Awake_Idle;
+                    }
+                }
                 #endregion
 
                 #region Bounce
@@ -170,6 +224,27 @@ namespace CalRemix.UI
                     bounce = 0;
                     bouncePositionOffset = 0;
                 }
+                #endregion
+
+                #region Face Swap Timer + Buffer
+                if (isQoCAwake && timeUntilNextQoCAction_Face <= 0)
+                {
+                    timeUntilNextQoCAction_Face = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextFaceIdleBaseline, ScreenHelperManager.QoC_timeNextFaceIdleNoiseMin, ScreenHelperManager.QoC_timeNextFaceIdleNoiseMax);
+
+                    // if not idle, return to idle. if idle, new face
+                    if (currentFace != 0)
+                        currentFaceBuffer = 0;
+                    else
+                        currentFaceBuffer = (QoCFace)Main.rand.Next(1, QoCFaceDict.Count);
+
+                    // flip to update face if needed
+                    if (currentQoCState == (int)QoCState.Awake_Idle)
+                        currentQoCState = (int)QoCState.Awake_TurnOnce;
+                }
+                timeUntilNextQoCAction_Face--;
+
+                if (cardFacingBack)
+                    currentFace = currentFaceBuffer;
                 #endregion
 
                 #region Awake/Asleep Timer
@@ -198,6 +273,7 @@ namespace CalRemix.UI
                 }
                 #endregion
             }
+
             #region Spinning
             // adjust the rateOfSpin value to smoothly transition between current and new spin rate
             if (currentQoCState != (int)QoCState.Awake_Idle)
@@ -214,6 +290,7 @@ namespace CalRemix.UI
             rateOfSpinExtra *= 0.98f;
             #endregion
 
+            // kept outside of the awake/asleep timer region so when shes unlocked she immediately appears
             timeUntilNextQoCAction_Heavy--;
         }
 
@@ -222,6 +299,7 @@ namespace CalRemix.UI
         {
             tag["TimeUntilNextQoCAction_Heavy"] = timeUntilNextQoCAction_Heavy;
             tag["TimeUntilNextQoCAction_Light"] = timeUntilNextQoCAction_Light;
+            tag["TimeUntilNextQoCAction_Face"] = timeUntilNextQoCAction_Face;
             tag["currentQoCState"] = currentQoCState;
         }
 
@@ -229,6 +307,7 @@ namespace CalRemix.UI
         {
             timeUntilNextQoCAction_Heavy = tag.GetInt("TimeUntilNextQoCAction_Heavy");
             timeUntilNextQoCAction_Light = tag.GetInt("TimeUntilNextQoCAction_Light");
+            timeUntilNextQoCAction_Face = tag.GetInt("TimeUntilNextQoCAction_Face");
             currentQoCState = tag.GetInt("currentQoCState");
         }
         #endregion
@@ -244,18 +323,14 @@ namespace CalRemix.UI
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-        }
-
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             CalculatedStyle dimensions = GetDimensions();
             Rectangle dimensionsRect = dimensions.ToRectangle();
             //Utils.DrawInvBG(spriteBatch, dimensionsRect);
 
-            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle").Value;
-            if ((Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentSpinRadians + MathHelper.PiOver2) % MathHelper.TwoPi >= Math.PI)
+            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubs" + Main.LocalPlayer.GetModPlayer<QoCPlayer>().QoCFaceDict[Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentFace]).Value;
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().cardFacingBack)
                 testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsBack").Value;
             Rectangle testFrame = testSprite.Frame(1, 1, 0, 0);
 
