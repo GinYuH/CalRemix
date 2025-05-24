@@ -1,10 +1,8 @@
-﻿using CalRemix.Content.Items.Potions;
-using Humanizer;
+﻿using Humanizer;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,8 +34,10 @@ public class ArsenalUIState : UIState
         background.HAlign = 0.5f;
         background.VAlign = 0.5f;
 
-        logo = new UIImage(ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ArsenalLogo"));
-        logo.IgnoresMouseInteraction = false;
+        logo = new UIImage(ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ArsenalLogo"))
+        {
+            IgnoresMouseInteraction = false
+        };
         logo.OnLeftClick += ArsenalUtils.OpenTimeline;
 
         logo.Width.Pixels = 156;
@@ -70,8 +70,6 @@ public class ArsenalUIState : UIState
 
 public class ArsenalTimelineUI : ArsenalUIState
 {
-    internal readonly List<Post> posts = [];
-
     internal UIScrollbar scrollBar;
 
     internal UIList timeline;
@@ -100,9 +98,8 @@ public class ArsenalTimelineUI : ArsenalUIState
 
     public override void OnActivate()
     {
+        List<Post> posts = [];
         scrollBar.ViewPosition = 0f;
-
-        posts.Clear();
 
         foreach (var v in ArsenalSystem.Posts)
         {
@@ -213,15 +210,18 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
         {
             IgnoresMouseInteraction = true,
         };
-        pfp.Top.Pixels = banner.Top.Pixels + banner.Height.Pixels - pfp.Height.Pixels / 2;
-        if (pfp.Width.Pixels > 88)
-            pfp.Left.Pixels -= (pfp.Width.Pixels - 88) / 2;
-        pfp.Left.Pixels += 12;
-        if (pfp.Height.Pixels > 88)
-            pfp.Top.Pixels -= (pfp.Height.Pixels - 88) / 2;
+
+        
+        pfp.Left.Pixels -= pfp.Width.Pixels / 2f;
+        pfp.Top.Pixels -= pfp.Height.Pixels / 2f;
+        
         pfp.ImageScale = 88f / pfp.Width.Pixels;
         pfp.Width.Pixels = 88f;
         pfp.Height.Pixels = 88f;
+
+        pfp.Left.Pixels += 40;
+        pfp.Top.Pixels += banner.Height.Pixels - 4;
+
         profileHeader.Append(pfp);
 
         UIText displayName = new(ArsenalSystem.ProfileData[name].Profile.DisplayName.Formatted(name, ArsenalUtils.MemberType.DisplayName))
@@ -231,7 +231,7 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
             IsWrapped = false,
         };
 
-        float yPos = pfp.Top.Pixels + pfp.Height.Pixels;
+        float yPos = banner.Top.Pixels + banner.Height.Pixels + 48;
 
         displayName.Top.Pixels = yPos;
         profileHeader.Append(displayName);
@@ -254,10 +254,12 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
             IsWrapped = true,
         };
         bio.Width.Pixels = 500f;
-        bio.Height.Pixels = 50f;
 
         yPos += FontAssets.MouseText.Value.MeasureString(displayName.Text).Y * 1.5f;
+
         bio.Top.Pixels = yPos;
+        bio.Height.Pixels = FontAssets.MouseText.Value.MeasureString(FontAssets.MouseText.Value.CreateWrappedText(bio.Text, bio.Width.Pixels)).Y;
+
         profileHeader.Append(bio);
 
         UIText location = new("Location: " + ArsenalSystem.ProfileData[name].Profile.Location.Formatted(name, ArsenalUtils.MemberType.Location))
@@ -267,7 +269,7 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
             IsWrapped = false,
         };
 
-        yPos += FontAssets.MouseText.Value.MeasureString(displayName.Text).Y * 1.5f;
+        yPos += bio.Height.Pixels + FontAssets.MouseText.Value.MeasureString(displayName.Text).Y * 0.5f;
         location.Top.Pixels = yPos;
         profileHeader.Append(location);
 
@@ -300,7 +302,7 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
         };
 
         followerCount.Top.Pixels = profileHeader.Height.Pixels - 48;
-        followerCount.Left.Pixels += FontAssets.MouseText.Value.MeasureString(displayName.Text).X + 16;
+        followerCount.Left.Pixels += FontAssets.MouseText.Value.MeasureString(followingCount.Text).X + 16;
         profileHeader.Append(followerCount);
         #endregion
 
@@ -349,9 +351,115 @@ public class ArsenalProfileUI(string name) : ArsenalUIState
     }
 }
 
-public class ArsenalPostUI : ArsenalUIState
+public class ArsenalPostUI(string postName) : ArsenalUIState
 {
+    internal string PostName = postName;
 
+    internal UIScrollbar scrollBar;
+
+    internal UIList PostAndComments;
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        scrollBar = new UIScrollbar
+        {
+            HAlign = 1f,
+            VAlign = 0.5f
+        };
+        scrollBar.Height.Pixels = 400;
+
+        PostAndComments = [];
+        PostAndComments.SetScrollbar(scrollBar);
+        PostAndComments.HAlign = 0.5f;
+        PostAndComments.VAlign = 1f;
+        PostAndComments.Width.Pixels = 500;
+        PostAndComments.Height.Pixels = 600;
+
+        background.Append(PostAndComments);
+        background.Append(scrollBar);
+    }
+
+    public override void OnActivate()
+    {
+        scrollBar.ViewPosition = 0f;
+
+        Post post;
+
+        List<GenericReplies> replyPool = [];
+
+        string activeExtension = LanguageManager.Instance.ActiveCulture.Name;
+        string postPath = "UI/Arsenal/" + activeExtension + "/Posts/" + PostName + ".json";
+
+        // Fall back to english if not found
+        if (!CalRemix.instance.FileExists(postPath))
+            postPath = "UI/Arsenal/en-US/Posts/" + PostName + ".json";
+
+        // Throw if we cant find english either
+        if (!CalRemix.instance.FileExists(postPath))
+            throw new FileNotFoundException($"Could not find Post json file {postPath}.");
+
+        Stream stream = CalRemix.instance.GetFileStream(postPath);
+
+        post = JsonSerializer.Deserialize<Post>(stream);
+
+        stream.Close();
+
+        PostAndComments.Clear();
+        PostAndComments.Add(ArsenalUtils.SetupPostUIElement(post));
+
+        foreach (var v in ArsenalSystem.GenericReplyData)
+        {
+            if (v.Value.Requirement.Invoke())
+            {
+                string replyPath = "UI/Arsenal/" + activeExtension + "/Replies/GenericReplies/" + v.Key + ".json";
+
+                // Fall back to english if not found
+                if (!CalRemix.instance.FileExists(replyPath))
+                    replyPath = "UI/Arsenal/en-US/Replies/GenericReplies/" + v.Key + ".json";
+
+                // Throw if we cant find english either
+                if (!CalRemix.instance.FileExists(replyPath))
+                    throw new FileNotFoundException($"Could not find GenericReplies json file {replyPath}.");
+
+                stream = CalRemix.instance.GetFileStream(replyPath);
+
+                GenericReplies gr = JsonSerializer.Deserialize<GenericReplies>(stream);
+
+                stream.Close();
+
+                if(v.Key.Contains("ExoBots"))
+                {
+                    gr.Posters = new string[22];
+                    for (int i = 1; i <= 22; i++)
+                        gr.Posters[i - 1] = "ExoBots/ExoBot" + i.ToString();
+                }
+
+                if(post.Tags.Any(s => gr.Tags.Contains(s)))
+                    replyPool.Add(gr);
+            }
+        }
+
+
+        //Create a final list of Comments to put into the array
+        List<(string poster, string text)> Comments = [];
+        if (replyPool.Count > 0)
+        {
+            while (Comments.Count < 12)
+            {
+                int poolIndex = Main.rand.Next(0, replyPool.Count);
+                int posterIndex = Main.rand.Next(0, replyPool[poolIndex].Posters.Length);
+                int textIndex = Main.rand.Next(0, replyPool[poolIndex].Comments.Length);
+
+                if (!Comments.Any(c => c.poster == replyPool[poolIndex].Posters[posterIndex] || c.text == replyPool[poolIndex].Comments[textIndex]))
+                    Comments.Add((replyPool[poolIndex].Posters[posterIndex], replyPool[poolIndex].Comments[textIndex]));
+            }
+        }
+
+        foreach ((string poster, string body) in Comments)
+            PostAndComments.Add(ArsenalUtils.SetUpGenericCommentUIElement(poster, body));
+    }
 }
 
 public static class ArsenalUtils
@@ -365,6 +473,20 @@ public static class ArsenalUtils
         };
         postArea.Width.Pixels = 470f;
         postArea.Height.Pixels = 60f;
+
+        UIButton<string> postButton = new(post.Name)
+        {
+            BackgroundColor = Color.Transparent,
+            BorderColor = Color.Transparent,
+            HoverPanelColor = Color.Transparent,
+            HoverBorderColor = Color.Transparent,
+            OverflowHidden = true,
+            TextColor = Color.Transparent,            
+            HAlign = 1f,
+            VAlign = 0f
+        };
+        postButton.Width.Pixels = 400f;
+        postButton.Top.Pixels += 36;
 
         UIPanel postTextbox = new()
         {
@@ -389,9 +511,15 @@ public static class ArsenalUtils
         postArea.Height.Pixels += textSize.Y + 16;
         postTextbox.Append(bodyText);
 
-        postArea.Append(postTextbox);
+        postButton.Height.Pixels = textSize.Y + 16;
 
-        if(post.Image != null)
+        postButton.OnLeftClick += OpenPost;
+
+        postArea.Append(postTextbox);
+        postArea.Append(postButton);
+
+
+        if (post.Image != null)
         {
             UIImage image = new(ModContent.Request<Texture2D>($"CalRemix/Assets/Textures/Arsenal/Images/{post.Image}"))
             {
@@ -463,6 +591,91 @@ public static class ArsenalUtils
         return postArea;
     }
 
+    internal static UIPanel SetUpGenericCommentUIElement(string poster, string body)
+    {
+        UIPanel commentArea = new()
+        {
+            BorderColor = Color.Transparent,
+            BackgroundColor = Color.Transparent
+        };
+        commentArea.Width.Pixels = 470f;
+        commentArea.Height.Pixels = 60f;
+
+        UIPanel commentTextbox = new()
+        {
+            BackgroundColor = Color.CadetBlue,
+            BorderColor = Color.Black,
+            HAlign = 1f,
+            VAlign = 0f
+        };
+        commentTextbox.Width.Pixels = 400f;
+        commentTextbox.Top.Pixels += 36;
+
+        UIText bodyText = new(body.Formatted(poster, MemberType.CommentBody))
+        {
+            ShadowColor = Color.Black,
+            TextColor = Color.White,
+            IsWrapped = true,
+        };
+        Vector2 textSize = FontAssets.MouseText.Value.MeasureString(FontAssets.MouseText.Value.CreateWrappedText(bodyText.Text, 360));
+        bodyText.Width.Pixels = 400f;
+        bodyText.Height.Pixels = textSize.Y;
+        commentTextbox.Height.Pixels = textSize.Y + 16;
+        commentArea.Height.Pixels += textSize.Y + 16;
+        commentTextbox.Append(bodyText);
+
+        commentArea.Append(commentTextbox);
+
+        UIImage pfp = new(ArsenalSystem.ProfileData[poster].PFP ?? ArsenalSystem.ProfileData["Default"].PFP)
+        {
+            IgnoresMouseInteraction = true
+        };
+        if (pfp.Width.Pixels > 44)
+            pfp.Left.Pixels -= (pfp.Width.Pixels - 44) / 2;
+        if (pfp.Height.Pixels > 44)
+            pfp.Top.Pixels -= (pfp.Height.Pixels - 44) / 2;
+        pfp.ImageScale = 44f / pfp.Width.Pixels;
+        pfp.Width.Pixels = 44f;
+        pfp.Height.Pixels = 44f;
+
+        UIButton<string> uIButton = new(poster)
+        {
+            BackgroundColor = Color.Transparent,
+            BorderColor = Color.Transparent,
+            HoverPanelColor = Color.Transparent,
+            HoverBorderColor = Color.Transparent,
+            OverflowHidden = true
+        };
+        uIButton.OnLeftClick += OpenProfile;
+        uIButton.Width.Pixels = uIButton.Height.Pixels = 44;
+        commentArea.Append(uIButton);
+        commentArea.Append(pfp);
+
+        UIText displayName = new(ArsenalSystem.ProfileData[poster].Profile.DisplayName.Formatted(poster, MemberType.DisplayName))
+        {
+            ShadowColor = Color.Black,
+            TextColor = Color.White,
+            IsWrapped = false
+        };
+
+        displayName.Left.Pixels = pfp.Width.Pixels + 8;
+        displayName.Top.Pixels = pfp.Height.Pixels / 4;
+        commentArea.Append(displayName);
+
+        UIText accountName = new("@" + ArsenalSystem.ProfileData[poster].Profile.AccountName.Formatted(poster, MemberType.AccountName))
+        {
+            ShadowColor = Color.Black,
+            TextColor = Color.DarkGray,
+            IsWrapped = false
+        };
+
+        accountName.Left.Pixels = pfp.Width.Pixels + ChatManager.GetStringSize(FontAssets.MouseText.Value, displayName.Text, Vector2.One).X + 16;
+        accountName.Top.Pixels = pfp.Height.Pixels / 4;
+        commentArea.Append(accountName);
+
+        return commentArea;
+    }
+
     internal static void OpenProfile(UIMouseEvent evt, UIElement listeningElement)
     {
         ArsenalSystem system = ModContent.GetInstance<ArsenalSystem>();
@@ -476,6 +689,13 @@ public static class ArsenalUtils
 
         if (system.userInterface.CurrentState is not ArsenalTimelineUI)
             system.userInterface?.SetState(system.timelineUI);
+    }
+
+    internal static void OpenPost(UIMouseEvent evt, UIElement listeningElement)
+    {
+        ArsenalSystem system = ModContent.GetInstance<ArsenalSystem>();
+        system.postUI.PostName = ((UIButton<string>)listeningElement).Text;
+        system.userInterface?.SetState(system.postUI);
     }
 
     internal static void CloseArsenal(UIMouseEvent evt, UIElement listeningElement)
@@ -492,7 +712,8 @@ public static class ArsenalUtils
         AccountName,
         Bio,
         PostBody,
-        JoinDate
+        JoinDate,
+        CommentBody
     }
 
     internal static string Formatted(this string str, string name, MemberType type)
@@ -515,11 +736,12 @@ public class ArsenalSystem : ModSystem
 {
     internal static readonly Dictionary<string, (Func<bool> Requirement, bool Notification)> Posts = [];
     internal static readonly Dictionary<string, (Profile Profile, Asset<Texture2D> PFP)> ProfileData = [];
+    internal static readonly Dictionary<string, (Func<bool> Requirement, string[] tags)> GenericReplyData = [];
+
 
     internal enum CommentPriorityTier
     {
-        ExoBot = -1,
-        None,
+        ExoBot,
         Low,
         Medium,
         High
@@ -545,6 +767,8 @@ public class ArsenalSystem : ModSystem
 
     internal ArsenalTimelineUI timelineUI;
     internal ArsenalProfileUI profileUI;
+    internal ArsenalPostUI postUI;
+
     internal UserInterface userInterface;
     public bool uiOpen = false;
 
@@ -552,33 +776,15 @@ public class ArsenalSystem : ModSystem
     {
         string activeExtension = LanguageManager.Instance.ActiveCulture.Name;
 
-        ProfileData.Add("Default", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default", AssetRequestMode.AsyncLoad)));
+        ReloadDictionaries();
 
-        foreach (string path in CalRemix.instance.GetFileNames().Where(s => s.EndsWith(".json") && s.StartsWith($"UI/Arsenal/{activeExtension}/Profiles")))
-        {
-            Stream stream = CalRemix.instance.GetFileStream(path);
-
-            Profile p = JsonSerializer.Deserialize<Profile>(stream);
-
-            bool hasPfP = ModContent.RequestIfExists($"CalRemix/Assets/Textures/Arsenal/ProfilePictures/{p.Name}", out Asset<Texture2D> pfp, AssetRequestMode.AsyncLoad);
-            ProfileData.Add(p.Name, (p, hasPfP ? pfp : null));
-
-            stream.Close();
-        }
-        //Add all posts to Posts
-        Posts.Add("Fanny/GoodMorning", (() => true, false));
-        Posts.Add("XboxGamer/StupidHelper", (() => true, false));
-        Posts.Add("Renault/Advert1", (() => true, false));
-        Posts.Add("PlayerHater/BadMorning", (() => true, false));
-        Posts.Add("MiracleBoy/Dog", (() => true, false));
-        Posts.Add("Fanny/BabilHunting", (() => true, false));
-        Posts.Add("MiracleBoy/Cartwheel", (() => true, false));
-
+        //Initalizes the Arsenal UI
         if (!Main.dedServ)
         {
-            userInterface = new UserInterface();
-            timelineUI = new ArsenalTimelineUI();
-            profileUI = new ArsenalProfileUI("Fanny");
+            userInterface = new();
+            timelineUI = new();
+            profileUI = new("Fanny");
+            postUI = new("Fanny/GoodMorning");
             timelineUI.Activate();
             profileUI.Activate();
         }
@@ -586,6 +792,9 @@ public class ArsenalSystem : ModSystem
 
     public void OpenArsenalUI()
     {
+        //foreach (var data in ProfileData)
+        //    Main.NewText(data.Key);
+
         uiOpen = true;
         userInterface?.SetState(timelineUI);
     }
@@ -594,6 +803,66 @@ public class ArsenalSystem : ModSystem
     {
         uiOpen = false;
         userInterface?.SetState(null);
+    }
+
+    public void ReloadDictionaries()
+    {
+        ProfileData.Clear();
+        Posts.Clear();
+        GenericReplyData.Clear();
+
+        string activeExtension = LanguageManager.Instance.ActiveCulture.Name;
+
+        ProfileData.Add("Default", (null, ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Arsenal/ProfilePictures/Default", AssetRequestMode.AsyncLoad)));
+
+        //Initalizes the data of all three of the static Dictionaries
+        foreach (string path in CalRemix.instance.GetFileNames().Where(s => s.EndsWith(".json") && s.StartsWith($"UI/Arsenal/{activeExtension}/")))
+        {
+            if (!path.Contains("Profiles") && !path.Contains("Replies") && !path.Contains("Posts"))
+                continue;
+
+            string section = "";
+            for (int i = $"UI/Arsenal/{activeExtension}/".Length; i < path.Length; i++)
+            {
+                if (path[i] == '/')
+                    break;
+                section += path[i];
+            }
+
+            Stream stream = CalRemix.instance.GetFileStream(path);
+
+            switch (section)
+            {
+                case "Profiles":
+                    Profile pr = JsonSerializer.Deserialize<Profile>(stream);
+
+                    bool hasPfP = ModContent.RequestIfExists($"CalRemix/Assets/Textures/Arsenal/ProfilePictures/{pr.Name}", out Asset<Texture2D> pfp, AssetRequestMode.AsyncLoad);
+                    ProfileData.Add(pr.Name, (pr, hasPfP ? pfp : null));
+
+                    break;
+
+                case "Replies":
+                    if (path.Contains("GenericReplies"))
+                    {
+                        GenericReplies gr = JsonSerializer.Deserialize<GenericReplies>(stream);
+
+                        GenericReplyData.Add(gr.Name, (() => true, gr.Tags));
+                    }
+                    break;
+
+                case "Posts":
+                    Post po = JsonSerializer.Deserialize<Post>(stream);
+
+                    Posts.Add(po.Name, (() => true, false));
+
+                    break;
+            }
+
+            stream.Close();
+        }
+
+        //Modify the Requirement or Notification value of Posts as needed
+        Posts["Fanny/BabilHunting"] = (() => Main.hardMode, true);
     }
     
     public override void UpdateUI(GameTime gameTime)
@@ -651,8 +920,6 @@ public class Post: IComparable
             return 1;
         }
 
-        // NOTE: Cannot use return (_value - value) as this causes a wrap
-        // around in cases where _value - value > MaxValue.
         if (obj is Post p)
         {
             if (Priority > p.Priority) return -1;
@@ -664,14 +931,44 @@ public class Post: IComparable
     }
 }
 
-public class Reply
+/// <summary>
+/// Holds a group of similar comments that can appear under <see cref="Post"/>s that have any of the tags associated with this group.
+/// </summary>
+public class GenericReplies
 {
     public string Name { get; set; }
+    /// <summary> The tags that allow these comments to appear under a post. </summary>
+    public string[] Tags { get; set; }
+    public string[] Posters { get; set; }
+    public string[] Comments { get; set; }
+}
+
+/// <summary>
+/// Similar to proper <see cref="Post"/>s, UniqueReplies are more specialized comments that can appear under specific posts.
+/// </summary>
+
+public class UniqueReply
+{
+    /// <summary> The name of the <see cref="Post"/> this comment will appear under. </summary>
+    public string PostName { get; set; }
+
+    /// <summary> The name of the <see cref="Profile"/> this comment is posted by. </summary>
     public string Poster { get; set; }
+
+    /// <summary> The text of the comment. </summary>
     public string Body { get; set; }
-    public string[] Tags { get; set; } = [];
-    public float Priority { get; set; } = 0;
+
+    /// <summary> 
+    /// A value which determines where in the comment section this comment will appear. 
+    ///  <br/> A value of 0 will randomly place this comment amongst <see cref="GenericReplies"/> which appear under this post.
+    ///  <br/> A negative value will place this comment below all <see cref="GenericReplies"/>.
+    /// </summary>
+    public float Priority { get; set; } = 1;
+
+    /// <summary> The file path of an image that will be attached to this comment. </summary>
     public string Image { get; set; } = null;
+
+    /// <summary> The name of an <see cref="Attachment"/> that will be attached to this comment. </summary>
     public string Attachment { get; set; } = null;
 }
 

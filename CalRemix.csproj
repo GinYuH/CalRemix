@@ -26,7 +26,7 @@
     <Folder Include="UI\Arsenal\en-US\Posts\Fanny\" />
     <Folder Include="UI\Arsenal\en-US\Posts\Renault\" />
     <Folder Include="UI\Arsenal\en-US\Posts\PlayerHater\" />
-    <Folder Include="UI\Arsenal\en-US\Replies\" />
+    <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\" />
   </ItemGroup>
   
   <ItemGroup>
