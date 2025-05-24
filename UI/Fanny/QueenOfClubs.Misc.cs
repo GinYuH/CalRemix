@@ -262,15 +262,17 @@ namespace CalRemix.UI
                         // if asleep, start waking up
                         timeUntilNextQoCAction_Heavy = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeAsleepToWaking);
                         currentQoCState = (int)QoCState.Awake_Idle;
-
                         // randomize starting mode
                         currentSpinRadians = 0;
                         timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextLightIdleBaseline, ScreenHelperManager.QoC_timeNextLightIdleNoiseMin, ScreenHelperManager.QoC_timeNextLightIdleNoiseMax);
                         currentQoCState = Main.rand.Next(1, 3 + 1);
-
+                        // reset face
+                        timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextFaceIdleBaseline, ScreenHelperManager.QoC_timeNextFaceIdleNoiseMin, ScreenHelperManager.QoC_timeNextFaceIdleNoiseMax);
+                        currentFace = QoCFace.Idle;
                         // add a big spin on wake-up
                         rateOfSpinExtra = 0.25f * spinReverse;
-
+                        // fuck it add some bounce too
+                        bounce = 1;
                         // make some noise 
                         SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { MaxInstances = 1 }, Main.LocalPlayer.position);
                     }
@@ -323,9 +325,12 @@ namespace CalRemix.UI
         {
             base.LeftClick(evt);
 
-            Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
-            Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
-            SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1 }, Main.LocalPlayer.position);
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake && Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCUnlocked)
+            {
+                Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
+                Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1 }, Main.LocalPlayer.position);
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
