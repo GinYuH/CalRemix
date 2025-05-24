@@ -749,7 +749,7 @@ namespace CalRemix.UI
                 .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
                 .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.AliceBlue))
                 .SetExtraAnimations(false, false, false)
-                .SetAvailabilityCondition(() => true)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCUnlocked && Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
                 .SetPositionData(new HelperPositionData(
                     new Vector2(1, 0), // anchored to bottom middle, a little shifted to the left
                     new Vector2(-175 - 65, 100 - 83),   //top right. arbitrary values - half of width/height
@@ -2322,7 +2322,7 @@ namespace CalRemix.UI
         /// <summary>
         /// Returns the the time in frames with a level of noise applied. For use with "Mediumweight" Helpers, like Flux or the Queen of Clubs.
         /// </summary>
-        /// <param name="timeInpute"> The baseline value of time, in minutes. </param>
+        /// <param name="timeInput"> The baseline value of time, in minutes. </param>
         /// <param name="noiseSubtract"> The maximum amount of time which could be subtracted from the end result. Defaults to 3 minutes. </param>
         /// <param name="noiseAdd"> The maximum amount of time which could be added to the end result. Defaults to 3 minutes. </param>
         public static int GetTimeUntilNextStage(float timeInput, float noiseSubtract = 3, float noiseAdd = 3)

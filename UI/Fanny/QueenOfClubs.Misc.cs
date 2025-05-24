@@ -66,6 +66,9 @@ namespace CalRemix.UI
     public class QoCPlayer : ModPlayer
     {
         #region Data
+        /// <summary>
+        /// All of the states the Queen of Clubs can be in.
+        /// </summary>
         public enum QoCState
         {
             Asleep = 0,
@@ -74,18 +77,15 @@ namespace CalRemix.UI
             Awake_TurnLoopReverse = 3,
             Awake_TurnOnce = 4
         }
+        /// <summary>
+        /// All of the faces the Queen of Clubs can make. Make sure the name matches the last part of the png name!
+        /// </summary>
         public enum QoCFace
         {
             Idle = 0,
             Test1 = 1,
             Test2 = 2
         }
-        public Dictionary<QoCFace, string> QoCFaceDict = new Dictionary<QoCFace, string>
-        {
-            [QoCFace.Idle] = "Idle",
-            [QoCFace.Test1] = "Test1",
-            [QoCFace.Test2] = "Test2"
-        };
 
         /// <summary>
         /// The length between the Queen of Clubs' next major action. This is used as a timer between being awake or asleep. 
@@ -154,6 +154,14 @@ namespace CalRemix.UI
         /// Whether or not the front of the card is facing the camera.
         /// </summary>
         public bool cardFacingFront => !cardFacingBack;
+        /// <summary>
+        /// The highest state. THIS IS NOT THE AMOUNT OF STATES! THIS IS THE VALUE OF THE HIGHEST STATE!
+        /// </summary>
+        public int stateMax => (int)Enum.GetValues(typeof(QoCState)).Cast<QoCState>().Max();
+        /// <summary>
+        /// The highest face.THIS IS NOT THE AMOUNT OF FACES! THIS IS THE VALUE OF THE HIGHEST FACE!
+        /// </summary>
+        public int faceMax => (int)Enum.GetValues(typeof(QoCFace)).Cast<QoCFace>().Max();
         #endregion
 
         public override void PreUpdate()
@@ -236,7 +244,7 @@ namespace CalRemix.UI
                     if (currentFace != 0)
                         currentFaceBuffer = 0;
                     else
-                        currentFaceBuffer = (QoCFace)Main.rand.Next(1, QoCFaceDict.Count);
+                        currentFaceBuffer = (QoCFace)Main.rand.Next(1, faceMax + 1);
 
                     // flip to update face if needed
                     if (currentQoCState == (int)QoCState.Awake_Idle)
@@ -265,7 +273,7 @@ namespace CalRemix.UI
                         // randomize starting mode
                         currentSpinRadians = 0;
                         timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextLightIdleBaseline, ScreenHelperManager.QoC_timeNextLightIdleNoiseMin, ScreenHelperManager.QoC_timeNextLightIdleNoiseMax);
-                        currentQoCState = Main.rand.Next(1, 3 + 1);
+                        currentQoCState = Main.rand.Next(1, stateMax); // normally we would add one, but theres a 4th state we dont wanna roll into
                         // reset face
                         timeUntilNextQoCAction_Light = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.QoC_timeNextFaceIdleBaseline, ScreenHelperManager.QoC_timeNextFaceIdleNoiseMin, ScreenHelperManager.QoC_timeNextFaceIdleNoiseMax);
                         currentFace = QoCFace.Idle;
@@ -274,7 +282,7 @@ namespace CalRemix.UI
                         // fuck it add some bounce too
                         bounce = 1;
                         // make some noise 
-                        SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { MaxInstances = 1 }, Main.LocalPlayer.position);
+                        SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { MaxInstances = 1, Volume = 3 }, Main.LocalPlayer.position);
                     }
                 }
                 #endregion
@@ -329,7 +337,7 @@ namespace CalRemix.UI
             {
                 Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
                 Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
-                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1 }, Main.LocalPlayer.position);
+                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1, Volume = 3 }, Main.LocalPlayer.position);
             }
         }
 
@@ -339,7 +347,7 @@ namespace CalRemix.UI
             Rectangle dimensionsRect = dimensions.ToRectangle();
             //Utils.DrawInvBG(spriteBatch, dimensionsRect);
 
-            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubs" + Main.LocalPlayer.GetModPlayer<QoCPlayer>().QoCFaceDict[Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentFace]).Value;
+            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubs" + Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentFace.ToString()).Value;
             if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().cardFacingBack)
                 testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsBack").Value;
             Rectangle testFrame = testSprite.Frame(1, 1, 0, 0);
