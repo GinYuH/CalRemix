@@ -12,6 +12,7 @@ using CalRemix.Content.NPCs.Bosses.Hypnos;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -575,6 +576,7 @@ namespace CalRemix.UI
 
         public override void Load()
         {
+            #region Load Assets
             Heart = Request<Texture2D>(FilePath + "Heart");
             Heart2 = Request<Texture2D>(FilePath + "Heart2");
 
@@ -606,6 +608,161 @@ namespace CalRemix.UI
             HorizontalBars_Panel_Left = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelLeft", BindingFlags.NonPublic | BindingFlags.Instance);
             HorizontalBars_HP_Panel_Middle = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelMiddleHP", BindingFlags.NonPublic | BindingFlags.Instance);
             HorizontalBars_HP_Panel_Right = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelRightHP", BindingFlags.NonPublic | BindingFlags.Instance);
+            #endregion
+            #region Hooks
+            On_FancyClassicPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_FancyClassic;
+            On_HorizontalBarsPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_HorizontalBars;
+            On_ClassicPlayerResourcesDisplaySet.DrawLife += RedrawText_Classic;
+            #endregion
         }
+        #region Hook Methods
+        private static void RedrawText_FancyClassic(On_FancyClassicPlayerResourcesDisplaySet.orig_DrawLifeBarText orig, SpriteBatch spriteBatch, Vector2 topLeftAnchor)
+        {
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
+            {
+                Vector2 vector = topLeftAnchor + new Vector2(130f, -24f);
+                Player localPlayer = Main.LocalPlayer;
+                Color color = new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor);
+                string text = Lang.inter[0].Value + " " + localPlayer.statLifeMax2 + "/" + localPlayer.statLifeMax2;
+                Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(text);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, vector + new Vector2((0f - vector2.X) * 0.5f, 0f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, vector + new Vector2(vector2.X * 0.5f, 0f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+            }
+            else
+                orig(spriteBatch, topLeftAnchor);
+        }
+
+        private static void RedrawText_HorizontalBars(On_HorizontalBarsPlayerResourcesDisplaySet.orig_DrawLifeBarText orig, SpriteBatch spriteBatch, Vector2 topLeftAnchor)
+        {
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
+            {
+                Vector2 vector = topLeftAnchor + new Vector2(130f, -24f);
+                Player localPlayer = Main.LocalPlayer;
+                Color color = new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor);
+                string text = Lang.inter[0].Value + " " + localPlayer.statLifeMax2 + "/" + localPlayer.statLifeMax2;
+                Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(text);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, vector + new Vector2((0f - vector2.X) * 0.5f, 0f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, vector + new Vector2(vector2.X * 0.5f, 0f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+            }
+            else
+                orig(spriteBatch, topLeftAnchor);
+        }
+
+        // warning: evil
+        private static void RedrawText_Classic(On_ClassicPlayerResourcesDisplaySet.orig_DrawLife orig, ClassicPlayerResourcesDisplaySet self)
+        {
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
+            {
+                FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+                Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
+                FieldInfo UIDisplay_LifePerHeart = typeof(ClassicPlayerResourcesDisplaySet).GetField("UIDisplay_LifePerHeart", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo UI_ScreenAnchorX = typeof(ClassicPlayerResourcesDisplaySet).GetField("UI_ScreenAnchorX", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                Player localPlayer = Main.LocalPlayer;
+                SpriteBatch spriteBatch = Main.spriteBatch;
+                Color color = new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor);
+                //UIDisplay_LifePerHeart = 20f;
+                UIDisplay_LifePerHeart.SetValue(_sets["Default"], 20f);
+                PlayerStatsSnapshot snapshot = new PlayerStatsSnapshot(localPlayer);
+                if (localPlayer.ghost || localPlayer.statLifeMax2 <= 0 || snapshot.AmountOfLifeHearts <= 0)
+                {
+                    return;
+                }
+                //UIDisplay_LifePerHeart = snapshot.LifePerSegment;
+                UIDisplay_LifePerHeart.SetValue(_sets["Default"], snapshot.LifePerSegment);
+                int num2 = snapshot.LifeFruitCount;
+                bool drawText;
+                bool drawHearts = ResourceOverlayLoader.PreDrawResourceDisplay(snapshot, self, drawingLife: true, ref color, out drawText);
+                if (drawText)
+                {
+                    //int num3 = (int)((float)localPlayer.statLifeMax2 / UIDisplay_LifePerHeart);
+                    int num3 = (int)((float)localPlayer.statLifeMax2 / (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"]));
+                    if (num3 >= 10)
+                    {
+                        num3 = 10;
+                    }
+                    string text = Lang.inter[0].Value + " " + "???" + "/" + localPlayer.statLifeMax2;
+                    Vector2 vector = FontAssets.MouseText.Value.MeasureString(text);
+                    if (!localPlayer.ghost)
+                    {
+                        //spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, new Vector2((float)(500 + 13 * num3) - vector.X * 0.5f + (float)UI_ScreenAnchorX, 6f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, new Vector2((float)(500 + 13 * num3) - vector.X * 0.5f + (float)(int)UI_ScreenAnchorX.GetValue(_sets["Default"]), 6f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+                        //spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, new Vector2((float)(500 + 13 * num3) + vector.X * 0.5f + (float)UI_ScreenAnchorX, 6f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, new Vector2((float)(500 + 13 * num3) + vector.X * 0.5f + (float)(int)UI_ScreenAnchorX.GetValue(_sets["Default"]), 6f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+                    }
+                }
+                if (drawHearts)
+                {
+                    //for (int i = 1; i < (int)((float)localPlayer.statLifeMax2 / UIDisplay_LifePerHeart) + 1; i++)
+                    for (int i = 1; i < (int)((float)localPlayer.statLifeMax2 / (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"])) + 1; i++)
+                    {
+                        int num4 = 255;
+                        float num5 = 1f;
+                        bool flag = false;
+                        //if ((float)localPlayer.statLife >= (float)i * UIDisplay_LifePerHeart)
+                        if ((float)localPlayer.statLife >= (float)i * (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"]))
+                        {
+                            num4 = 255;
+                            //if ((float)localPlayer.statLife == (float)i * UIDisplay_LifePerHeart)
+                            if ((float)localPlayer.statLife == (float)i * (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"]))
+                            {
+                                flag = true;
+                            }
+                        }
+                        else
+                        {
+                            //float num6 = ((float)localPlayer.statLife - (float)(i - 1) * UIDisplay_LifePerHeart) / UIDisplay_LifePerHeart;
+                            float num6 = ((float)localPlayer.statLife - (float)(i - 1) * (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"])) / (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"]);
+                            num4 = (int)(30f + 225f * num6);
+                            if (num4 < 30)
+                            {
+                                num4 = 30;
+                            }
+                            num5 = num6 / 4f + 0.75f;
+                            if ((double)num5 < 0.75)
+                            {
+                                num5 = 0.75f;
+                            }
+                            if (num6 > 0f)
+                            {
+                                flag = true;
+                            }
+                        }
+                        if (flag)
+                        {
+                            num5 += Main.cursorScale - 1f;
+                        }
+                        int num7 = 0;
+                        int num8 = 0;
+                        if (i > 10)
+                        {
+                            num7 -= 260;
+                            num8 += 26;
+                        }
+                        int a = (int)((double)num4 * 0.9);
+                        if (!localPlayer.ghost)
+                        {
+                            Asset<Texture2D> heartTexture = ((num2 > 0) ? TextureAssets.Heart2 : TextureAssets.Heart);
+                            if (num2 > 0)
+                            {
+                                num2--;
+                            }
+                            //Vector2 position = new Vector2(500 + 26 * (i - 1) + num7 + UI_ScreenAnchorX + heartTexture.Width() / 2, 32f + (float)heartTexture.Height() * (1f - num5) / 2f + (float)num8 + (float)(heartTexture.Height() / 2));
+                            Vector2 position = new Vector2(500 + 26 * (i - 1) + num7 + (int)UI_ScreenAnchorX.GetValue(_sets["Default"]) + heartTexture.Width() / 2, 32f + (float)heartTexture.Height() * (1f - num5) / 2f + (float)num8 + (float)(heartTexture.Height() / 2));
+                            ResourceOverlayDrawContext drawContext = new ResourceOverlayDrawContext(snapshot, self, i - 1, heartTexture);
+                            drawContext.position = position;
+                            drawContext.color = new Color(num4, num4, num4, a);
+                            drawContext.origin = heartTexture.Size() / 2f;
+                            drawContext.scale = new Vector2(num5);
+                            ResourceOverlayLoader.DrawResource(drawContext);
+                        }
+                    }
+                }
+                ResourceOverlayLoader.PostDrawResourceDisplay(snapshot, self, drawingLife: true, color, drawText);
+            }
+            else
+                orig(self);
+        }
+        #endregion
     }
 }
