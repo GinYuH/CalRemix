@@ -1,6 +1,7 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
@@ -318,12 +319,10 @@ namespace CalRemix.UI
                 Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
                 for (int i = 0; i < QueenOfClubsAsset.HealthList_FancyClassic.Count(); i++)
                 {
-                    FieldInfo texture = typeof(Terraria.GameContent.UI.ResourceSets.FancyClassicPlayerResourcesDisplaySet).GetField("_heartMiddle", BindingFlags.NonPublic | BindingFlags.Instance);
-                    Asset<Texture2D> guh = (Asset<Texture2D>)texture.GetValue(_sets["New"]);
-                    guh = QueenOfClubsAsset.HealthList_FancyClassic[i];
-                    texture.SetValue(_sets["New"], guh);
-                    setsfield.SetValue(Main.ResourceSetsManager, _sets);
+                    FieldInfo texture = typeof(Terraria.GameContent.UI.ResourceSets.FancyClassicPlayerResourcesDisplaySet).GetField(QueenOfClubsAsset.HealthList_FancyClassic_Names[i].ToString(), BindingFlags.NonPublic | BindingFlags.Instance);
+                    texture.SetValue(_sets["New"], TextureAssets.Item[ItemType<Baroclaw>()]);
                 }
+                setsfield.SetValue(Main.ResourceSetsManager, _sets);
             }
             else
             {
@@ -558,7 +557,7 @@ namespace CalRemix.UI
         {
             "_heartFill",
             "_heartFillHoney",
-            "_heartLet",
+            "_heartLeft",
             "_heartMiddle",
             "_heartRight",
             "_heartRightFancy",
