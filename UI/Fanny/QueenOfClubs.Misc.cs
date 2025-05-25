@@ -311,7 +311,8 @@ namespace CalRemix.UI
             #endregion
 
             #region Great and Terrible Evil
-            if (1 == 1)
+            //TODO: move to asset?
+            if (isQoCAwake)
             {
                 TextureAssets.Heart = QueenOfClubsAsset.Heart;
                 TextureAssets.Heart2 = QueenOfClubsAsset.Heart2;
@@ -359,7 +360,19 @@ namespace CalRemix.UI
             }
             else
             {
+                TextureAssets.Heart = QueenOfClubsAsset.Heart_OG;
+                TextureAssets.Heart2 = QueenOfClubsAsset.Heart2_OG;
 
+                FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+                Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
+
+                QueenOfClubsAsset.FancyClassic_Heart_Right.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right_OG);
+                QueenOfClubsAsset.FancyClassic_Heart_Middle.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Middle_OG);
+                QueenOfClubsAsset.FancyClassic_Heart_Left.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Left_OG);
+                QueenOfClubsAsset.FancyClassic_Heart_Right_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right_Fancy_OG);
+                QueenOfClubsAsset.FancyClassic_Heart_Fill.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill_OG);
+                QueenOfClubsAsset.FancyClassic_Heart_Fill_B.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill_B_OG);
+                QueenOfClubsAsset.FancyClassic_Heart_Single_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Single_Fancy_OG);
             }
             #endregion
 
@@ -577,8 +590,13 @@ namespace CalRemix.UI
         public override void Load()
         {
             #region Load Assets
+            FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+            Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
+
             Heart = Request<Texture2D>(FilePath + "Heart");
             Heart2 = Request<Texture2D>(FilePath + "Heart2");
+            Heart_OG = TextureAssets.Heart;
+            Heart2_OG = TextureAssets.Heart2;
 
             //TODO: automate this
             string fancyClassic = "FancyClassic/";
@@ -596,6 +614,13 @@ namespace CalRemix.UI
             FancyClassic_Heart_Fill = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFill", BindingFlags.NonPublic | BindingFlags.Instance);
             FancyClassic_Heart_Fill_B = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
             FancyClassic_Heart_Single_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartSingleFancy", BindingFlags.NonPublic | BindingFlags.Instance);
+            Heart_Left_OG = (Asset<Texture2D>)FancyClassic_Heart_Left.GetValue(_sets["New"]);
+            Heart_Middle_OG = (Asset<Texture2D>)FancyClassic_Heart_Middle.GetValue(_sets["New"]);
+            Heart_Right_OG = (Asset<Texture2D>)FancyClassic_Heart_Right.GetValue(_sets["New"]);
+            Heart_Right_Fancy_OG = (Asset<Texture2D>)FancyClassic_Heart_Right_Fancy.GetValue(_sets["New"]);
+            Heart_Fill_OG = (Asset<Texture2D>)FancyClassic_Heart_Fill.GetValue(_sets["New"]);
+            Heart_Fill_B_OG = (Asset<Texture2D>)FancyClassic_Heart_Fill_B.GetValue(_sets["New"]);
+            Heart_Single_Fancy_OG = (Asset<Texture2D>)FancyClassic_Heart_Single_Fancy.GetValue(_sets["New"]);
 
             string horizontalBars = "HorizontalBars/";
             HP_Fill = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
@@ -609,12 +634,14 @@ namespace CalRemix.UI
             HorizontalBars_HP_Panel_Middle = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelMiddleHP", BindingFlags.NonPublic | BindingFlags.Instance);
             HorizontalBars_HP_Panel_Right = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelRightHP", BindingFlags.NonPublic | BindingFlags.Instance);
             #endregion
+
             #region Hooks
             On_FancyClassicPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_FancyClassic;
             On_HorizontalBarsPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_HorizontalBars;
             On_ClassicPlayerResourcesDisplaySet.DrawLife += RedrawText_Classic;
             #endregion
         }
+
         #region Hook Methods
         private static void RedrawText_FancyClassic(On_FancyClassicPlayerResourcesDisplaySet.orig_DrawLifeBarText orig, SpriteBatch spriteBatch, Vector2 topLeftAnchor)
         {
