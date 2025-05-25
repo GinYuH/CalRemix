@@ -20,7 +20,7 @@ namespace CalRemix.UI
 
             HelperMessage.New("Metal_Iron", "METAL FACTS: Around 70% of the human body is made of iron!",
                 "FannyMetalIron", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.IronOre));
-            HelperMessage.New("Metal_Lead", "Did you know lead backwards is dael? This does not mean anything, as dael is not a word.",
+            HelperMessage.New("Metal_Lead", "METAL FACTS: Did you know lead backwards is dael? This does not mean anything, as dael is not a word.",
                 "FannyMetalLead", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.LeadOre))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.AltMetalFanny);
 

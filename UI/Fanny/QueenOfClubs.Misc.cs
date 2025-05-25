@@ -315,13 +315,45 @@ namespace CalRemix.UI
                 TextureAssets.Heart = QueenOfClubsAsset.Heart;
                 TextureAssets.Heart2 = QueenOfClubsAsset.Heart2;
 
-                FieldInfo setsfield = typeof(Terraria.GameContent.UI.ResourceSets.PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
                 Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
-                for (int i = 0; i < QueenOfClubsAsset.HealthList_FancyClassic.Count(); i++)
-                {
-                    FieldInfo texture = typeof(Terraria.GameContent.UI.ResourceSets.FancyClassicPlayerResourcesDisplaySet).GetField(QueenOfClubsAsset.HealthList_FancyClassic_Names[i].ToString(), BindingFlags.NonPublic | BindingFlags.Instance);
-                    texture.SetValue(_sets["New"], TextureAssets.Item[ItemType<Baroclaw>()]);
-                }
+
+                QueenOfClubsAsset.FancyClassic_Heart_Right.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Right);
+                QueenOfClubsAsset.FancyClassic_Heart_Middle.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Middle);
+                QueenOfClubsAsset.FancyClassic_Heart_Left.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Left);
+                QueenOfClubsAsset.FancyClassic_Heart_Right_Fancy.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Right_Fancy);
+                QueenOfClubsAsset.FancyClassic_Heart_Fill.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Fill);
+                QueenOfClubsAsset.FancyClassic_Heart_Fill_B.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Fill);
+                QueenOfClubsAsset.FancyClassic_Heart_Single_Fancy.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Single_Fancy);
+
+                //
+
+                QueenOfClubsAsset.HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Fill);
+                QueenOfClubsAsset.HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Fill);
+                QueenOfClubsAsset.HorizontalBars_Panel_Left.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.Panel_Left);
+                QueenOfClubsAsset.HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Panel_Middle);
+                QueenOfClubsAsset.HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Panel_Right);
+
+                QueenOfClubsAsset.HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Fill);
+                QueenOfClubsAsset.HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Fill);
+                QueenOfClubsAsset.HorizontalBars_Panel_Left.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.Panel_Left);
+                QueenOfClubsAsset.HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Panel_Middle);
+                QueenOfClubsAsset.HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Panel_Right);
+
+                QueenOfClubsAsset.HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Fill);
+                QueenOfClubsAsset.HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Fill);
+                QueenOfClubsAsset.HorizontalBars_Panel_Left.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.Panel_Left);
+                QueenOfClubsAsset.HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Panel_Middle);
+                QueenOfClubsAsset.HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Panel_Right);
+
+                QueenOfClubsAsset.FancyClassic_Heart_Right.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right);
+                QueenOfClubsAsset.FancyClassic_Heart_Middle.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Middle);
+                QueenOfClubsAsset.FancyClassic_Heart_Left.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Left);
+                QueenOfClubsAsset.FancyClassic_Heart_Right_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right_Fancy);
+                QueenOfClubsAsset.FancyClassic_Heart_Fill.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill);
+                QueenOfClubsAsset.FancyClassic_Heart_Fill_B.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill_B);
+                QueenOfClubsAsset.FancyClassic_Heart_Single_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Single_Fancy);
+
                 setsfield.SetValue(Main.ResourceSetsManager, _sets);
             }
             else
@@ -474,7 +506,7 @@ namespace CalRemix.UI
 
     public class QueenOfClubsAsset : ModSystem
     {
-        public static string FilePath = "CalRemix/Assets/ExtraTextures/QoCHealthbars/";
+        private const string FilePath = "CalRemix/Assets/ExtraTextures/QoCHealthbars/";
 
         #region New
         public static Asset<Texture2D> Heart = null;
@@ -487,28 +519,12 @@ namespace CalRemix.UI
         public static Asset<Texture2D> Heart_Right = null;
         public static Asset<Texture2D> Heart_Right_Fancy = null;
         public static Asset<Texture2D> Heart_Single_Fancy = null;
-        public static Asset<Texture2D>[] HealthList_FancyClassic =
-        {
-            Heart_Fill,
-            Heart_Fill_B,
-            Heart_Left,
-            Heart_Middle,
-            Heart_Right,
-            Heart_Right_Fancy,
-            Heart_Single_Fancy
-        };
 
         public static Asset<Texture2D> HP_Fill = null;
         public static Asset<Texture2D> HP_Fill_Honey = null;
+        public static Asset<Texture2D> Panel_Left = null;
         public static Asset<Texture2D> HP_Panel_Middle = null; 
         public static Asset<Texture2D> HP_Panel_Right = null;
-        public static Asset<Texture2D>[] HealthList_HorizontalBars =
-        {
-            HP_Fill,
-            HP_Fill_Honey,
-            HP_Panel_Middle,
-            HP_Panel_Right
-        };
         #endregion
 
         #region Old
@@ -522,46 +538,39 @@ namespace CalRemix.UI
         public static Asset<Texture2D> Heart_Right_OG = null;
         public static Asset<Texture2D> Heart_Right_Fancy_OG = null;
         public static Asset<Texture2D> Heart_Single_Fancy_OG = null;
-        public static Asset<Texture2D>[] HealthList_FancyClassic_OG =
-{
-            Heart_Fill_OG,
-            Heart_Fill_B_OG,
-            Heart_Left_OG,
-            Heart_Middle_OG,
-            Heart_Right_OG,
-            Heart_Right_Fancy_OG,
-            Heart_Single_Fancy_OG
-        };
 
         public static Asset<Texture2D> HP_Fill_OG = null;
         public static Asset<Texture2D> HP_Fill_Honey_OG = null;
+        public static Asset<Texture2D> Panel_Left_OG = null;
         public static Asset<Texture2D> HP_Panel_Middle_OG = null;
         public static Asset<Texture2D> HP_Panel_Right_OG = null;
-        public static Asset<Texture2D>[] HealthList_HorizontalBars_OG =
-        {
-            HP_Fill_OG,
-            HP_Fill_Honey_OG,
-            HP_Panel_Middle_OG,
-            HP_Panel_Right_OG
-        };
+        #endregion
+
+        #region FieldInfo
+        public static FieldInfo Classic_Heart = null;
+        public static FieldInfo Classic_Heart2 = null;
+
+        public static FieldInfo FancyClassic_Heart_Fill = null;
+        public static FieldInfo FancyClassic_Heart_Fill_B = null;
+        public static FieldInfo FancyClassic_Heart_Left = null;
+        public static FieldInfo FancyClassic_Heart_Middle = null;
+        public static FieldInfo FancyClassic_Heart_Right = null;
+        public static FieldInfo FancyClassic_Heart_Right_Fancy = null;
+        public static FieldInfo FancyClassic_Heart_Single_Fancy = null;
+
+        public static FieldInfo HorizontalBars_HP_Fill = null;
+        public static FieldInfo HorizontalBars_HP_Fill_Honey = null;
+        public static FieldInfo HorizontalBars_Panel_Left = null;
+        public static FieldInfo HorizontalBars_HP_Panel_Middle = null;
+        public static FieldInfo HorizontalBars_HP_Panel_Right = null;
+        #endregion
+
         public static string[] HealthList_HorizontalBars_Names =
-{
+        {
             "_heartFill",
             "_heartFillHoney",
             "_heartLet",
             "_heartMiddle"
-        };
-        #endregion
-
-        public static string[] HealthList_FancyClassic_Names =
-        {
-            "_heartFill",
-            "_heartFillHoney",
-            "_heartLeft",
-            "_heartMiddle",
-            "_heartRight",
-            "_heartRightFancy",
-            "_heartSingleFancy"
         };
 
         public override void Load()
@@ -569,13 +578,34 @@ namespace CalRemix.UI
             Heart = Request<Texture2D>(FilePath + "Heart");
             Heart2 = Request<Texture2D>(FilePath + "Heart2");
 
-            Heart_Fill = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Fill");
-            Heart_Fill_B = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Fill_B");
-            Heart_Left = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Left");
-            Heart_Middle = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Middle");
-            Heart_Right = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Right");
-            Heart_Right_Fancy = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Right_Fancy");
-            Heart_Single_Fancy = Request<Texture2D>(FilePath + "FancyClassic/" + "Heart_Single_Fancy");
+            //TODO: automate this
+            string fancyClassic = "FancyClassic/";
+            Heart_Left = Request<Texture2D>(FilePath + fancyClassic + "Heart_Left");
+            Heart_Middle = Request<Texture2D>(FilePath + fancyClassic + "Heart_Middle");
+            Heart_Right = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right");
+            Heart_Right_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right_Fancy");
+            Heart_Fill = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
+            Heart_Fill_B = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill_B");
+            Heart_Single_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Single_Fancy");
+            FancyClassic_Heart_Left = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartLeft", BindingFlags.NonPublic | BindingFlags.Instance);
+            FancyClassic_Heart_Middle = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartMiddle", BindingFlags.NonPublic | BindingFlags.Instance);
+            FancyClassic_Heart_Right = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartRight", BindingFlags.NonPublic | BindingFlags.Instance);
+            FancyClassic_Heart_Right_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartRightFancy", BindingFlags.NonPublic | BindingFlags.Instance);
+            FancyClassic_Heart_Fill = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFill", BindingFlags.NonPublic | BindingFlags.Instance);
+            FancyClassic_Heart_Fill_B = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
+            FancyClassic_Heart_Single_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartSingleFancy", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            string horizontalBars = "HorizontalBars/";
+            HP_Fill = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
+            HP_Fill_Honey = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill_Honey");
+            Panel_Left = Request<Texture2D>(FilePath + horizontalBars + "Panel_Left");
+            HP_Panel_Middle = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Middle");
+            HP_Panel_Right = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Right");
+            HorizontalBars_HP_Fill = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFill", BindingFlags.NonPublic | BindingFlags.Instance);
+            HorizontalBars_HP_Fill_Honey = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
+            HorizontalBars_Panel_Left = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelLeft", BindingFlags.NonPublic | BindingFlags.Instance);
+            HorizontalBars_HP_Panel_Middle = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelMiddleHP", BindingFlags.NonPublic | BindingFlags.Instance);
+            HorizontalBars_HP_Panel_Right = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelRightHP", BindingFlags.NonPublic | BindingFlags.Instance);
         }
     }
 }
