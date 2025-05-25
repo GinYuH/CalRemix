@@ -638,6 +638,7 @@ namespace CalRemix.UI
         public static ScreenHelper QueenOfClubs = new("QueenOfClubs");
 
         public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
+        public static ScreenHelper ThePinkFlame = new("ThePinkFlame");
 
         public override void OnInitialize()
         {
@@ -651,28 +652,6 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
                 .SetAvailabilityCondition(() => Main.hardMode)
                 .SetPositionData(true, 120);
-
-            LoadScreenHelper(WonderFlower,  "TalkingFlower")
-                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.Grass)
-                .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
-                .SetPositionData(false, 240, 0.37f)
-                .SetAvailabilityCondition(() => Main.hardMode);
-
-            LoadScreenHelper(BizarroFanny, "BizarroFannyIdle")
-                .SetVoiceStyle(ScreenHelperManager.BizarroFannyTalk with { MaxInstances = 0 })
-                .SetTextboxStyle("???", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
-                .SetExtraAnimations(false, false, false)
-                .SetPositionData(false, 840, 0.65f)
-                .SetAvailabilityCondition(() => DownedBossSystem.downedCeaselessVoid);
-
-            LoadScreenHelper(Renault5, "Renault5")
-                .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
-                .SetAvailabilityCondition(()=> NPC.downedMechBossAny)
-                .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
-                .SetTextboxTheme(new HelperTextboxTheme("Renault5_9Slice", new Vector2(77, 15)))
-                .SetExtraAnimations(true, false, true).
-                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment)
-                .SetPositionData(false, 220, 0.42f);
 
             LoadScreenHelper(MiracleBoy, "MiracleBoyIdle")
                 .SetVoiceStyle(SoundID.BloodZombie with { MaxInstances = 0 })
@@ -780,6 +759,28 @@ namespace CalRemix.UI
              */
 
 
+            LoadScreenHelper(WonderFlower, "TalkingFlower")
+                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.Grass)
+                .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
+                .SetPositionData(false, 240, 0.37f)
+                .SetAvailabilityCondition(() => Main.hardMode);
+
+            LoadScreenHelper(BizarroFanny, "BizarroFannyIdle")
+                .SetVoiceStyle(ScreenHelperManager.BizarroFannyTalk with { MaxInstances = 0 })
+                .SetTextboxStyle("???", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetExtraAnimations(false, false, false)
+                .SetPositionData(false, 840, 0.65f)
+                .SetAvailabilityCondition(() => DownedBossSystem.downedCeaselessVoid);
+
+            LoadScreenHelper(Renault5, "Renault5")
+                .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
+                .SetAvailabilityCondition(() => NPC.downedMechBossAny)
+                .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
+                .SetTextboxTheme(new HelperTextboxTheme("Renault5_9Slice", new Vector2(77, 15)))
+                .SetExtraAnimations(true, false, true).
+                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment)
+                .SetPositionData(false, 220, 0.42f);
+
             LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
                 .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Thank you for the help, Fanny!")
@@ -789,6 +790,11 @@ namespace CalRemix.UI
                 .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
                 .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
                 .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
+                .SetPositionData(false, 240);
+
+            LoadScreenHelper(ThePinkFlame, "ThePinkFlame")
+                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 2 }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Thank you for the help, The Pink Flame!", new HelperTextboxPalette(Color.AliceBlue, Color.DarkOrchid, Color.HotPink, Color.DarkOrchid, Color.DarkOrchid))
                 .SetPositionData(false, 240);
         }
 
@@ -1040,6 +1046,7 @@ namespace CalRemix.UI
             LoadFluxMessages();
             LoadQoCMessages();
             LoadMiracleBoyMessages();
+            LoadPinkFlameMessage();
             SneakersRetheme.LoadHelperMessages();
 
             screenHelpersEnabled = true;
@@ -1168,6 +1175,8 @@ namespace CalRemix.UI
             //Solyn
             ScreenHelperPortrait.LoadPortrait("Solyn", 1);
 
+            //The Pink Flame
+            ScreenHelperPortrait.LoadPortrait("ThePinkFlame", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);

@@ -151,6 +151,8 @@ namespace CalRemix.Core.Retheme
             { ItemType<Earth>(), "Garth" },
             { ItemType<IcicleArrow>(), "IcicleArrow" },
             { ItemType<AnechoicCoating>(), "AnechoicCoating" },
+            { ItemType<ExoPrism>(), "ExoPrism" },
+            { ItemType<BloodOrb>(), "BloodOrb" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },

@@ -1,4 +1,5 @@
-﻿using CalamityMod.Items.Accessories.Wings;
+﻿using CalamityMod.Items.Accessories.Vanity;
+using CalamityMod.Items.Accessories.Wings;
 using ReLogic.OS;
 using System;
 using Terraria;
@@ -50,6 +51,7 @@ namespace CalRemix.UI
         {
             try
             {
+                // https://web.archive.org/web/20250328211711/https://www.renault.co.uk/electric-vehicles/r5-e-tech-electric.html just in case
                 Platform.Get<IPathService>().OpenURL("https://www.renault.co.uk/electric-vehicles/r5-e-tech-electric.html");
                 if (helper.Speaking)
                 {
@@ -93,7 +95,12 @@ namespace CalRemix.UI
         #endregion
 
         #region The Pink Flame
-
+        public static void LoadPinkFlameMessage()
+        {
+            HelperMessage.New("ThePinkFlame2", "I'd tell you a tip, but I feel like you've already.... REDDIT! ",
+                "ThePinkFlame", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<HapuFruit>()) && Main.hardMode, 15, maxWidth: 500)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.ThePinkFlame);
+        }
         #endregion
     }
 }
