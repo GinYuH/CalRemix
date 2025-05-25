@@ -414,6 +414,10 @@ public class ArsenalPostUI(string postName) : ArsenalUIState
         PostAndComments.Clear();
         PostAndComments.Add(ArsenalUtils.SetupPostUIElement(post));
 
+        foreach(var v in ArsenalSystem.UniqueReplyData)
+            if (v.Key == post.Name && v.Value.Requirement.Invoke())
+                PostAndComments.Add(ArsenalUtils.SetUpUniqueCommentUIElement(v.Value.Reply));
+
         foreach (var v in ArsenalSystem.GenericReplyData)
         {
             if (v.Value.Requirement.Invoke())
@@ -514,7 +518,7 @@ public static class ArsenalUtils
             TextColor = Color.White,
             IsWrapped = true,
         };
-        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 380f);
+        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 374f);
         bodyText.Width.Pixels = 400f;
         bodyText.Height.Pixels = textSize.Y;
         postTextbox.Height.Pixels = textSize.Y + 16;
@@ -694,6 +698,118 @@ public static class ArsenalUtils
         return commentArea;
     }
 
+    internal static UIPanel SetUpUniqueCommentUIElement(UniqueReply reply)
+    {
+        UIPanel postArea = new()
+        {
+            BorderColor = Color.Transparent,
+            BackgroundColor = Color.Transparent
+        };
+        postArea.Width.Pixels = 470f;
+        postArea.Height.Pixels = 60f;
+
+        UIPanel postTextbox = new()
+        {
+            BackgroundColor = Color.CadetBlue,
+            BorderColor = Color.Black,
+            HAlign = 1f,
+            VAlign = 0f
+        };
+        postTextbox.Width.Pixels = 400f;
+        postTextbox.Top.Pixels += 36;
+
+        UIText bodyText = new(reply.Body.Formatted(reply.Poster, MemberType.PostBody))
+        {
+            ShadowColor = Color.Black,
+            TextColor = Color.White,
+            IsWrapped = true,
+        };
+        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 380f);
+        bodyText.Width.Pixels = 400f;
+        bodyText.Height.Pixels = textSize.Y;
+        postTextbox.Height.Pixels = textSize.Y + 16;
+        postArea.Height.Pixels += textSize.Y + 16;
+        postTextbox.Append(bodyText);
+
+        postArea.Append(postTextbox);
+
+
+        if (reply.Image != null)
+        {
+            UIImage image = new(ModContent.Request<Texture2D>($"CalRemix/Assets/Textures/Arsenal/Images/{reply.Image}"))
+            {
+                HAlign = 0.5f,
+                VAlign = 1f,
+                AllowResizingDimensions = true
+            };
+            float scale = image.Width.Pixels <= 350f ? 1f : 350f / image.Width.Pixels;
+            image.Width.Pixels = 350f;
+            image.Height.Pixels *= scale;
+            image.ImageScale = scale;
+            image.Left.Pixels -= image.Width.Pixels * scale;
+            image.Top.Pixels -= image.Height.Pixels * scale;
+
+
+            postTextbox.Height.Pixels += image.Height.Pixels + 16;
+            postArea.Height.Pixels += image.Height.Pixels + 16;
+
+            postTextbox.Append(image);
+        }
+
+        int sumOfASCIIValues = 0;
+        foreach (char c in reply.Poster)
+            sumOfASCIIValues += c - '0';
+
+        UIImage pfp = new(ArsenalSystem.ProfileData[reply.Poster].PFP ?? ArsenalSystem.ProfileData["Default" + ((sumOfASCIIValues % 5) + 1)].PFP)
+        {
+            IgnoresMouseInteraction = true
+        };
+        if (pfp.Width.Pixels > 44)
+            pfp.Left.Pixels -= (pfp.Width.Pixels - 44) / 2;
+        if (pfp.Height.Pixels > 44)
+            pfp.Top.Pixels -= (pfp.Height.Pixels - 44) / 2;
+        pfp.ImageScale = 44f / pfp.Width.Pixels;
+        pfp.Width.Pixels = 44f;
+        pfp.Height.Pixels = 44f;
+
+        UIButton<string> uIButton = new(reply.Poster)
+        {
+            BackgroundColor = Color.Transparent,
+            BorderColor = Color.Transparent,
+            HoverPanelColor = Color.Transparent,
+            HoverBorderColor = Color.Transparent,
+            OverflowHidden = true
+        };
+        uIButton.OnLeftClick += OpenProfile;
+        uIButton.Width.Pixels = uIButton.Height.Pixels = 44;
+        postArea.Append(uIButton);
+        postArea.Append(pfp);
+
+        UIText displayName = new(ArsenalSystem.ProfileData[reply.Poster].Profile.DisplayName.Formatted(reply.Poster, MemberType.DisplayName))
+        {
+            ShadowColor = Color.Black,
+            TextColor = Color.White,
+            IsWrapped = false
+        };
+
+        displayName.Left.Pixels = pfp.Width.Pixels + 8;
+        displayName.Top.Pixels = pfp.Height.Pixels / 4;
+        postArea.Append(displayName);
+
+        UIText accountName = new("@" + ArsenalSystem.ProfileData[reply.Poster].Profile.AccountName.Formatted(reply.Poster, MemberType.AccountName))
+        {
+            ShadowColor = Color.Black,
+            TextColor = Color.DarkGray,
+            IsWrapped = false
+        };
+
+        accountName.Left.Pixels = pfp.Width.Pixels + ChatManager.GetStringSize(FontAssets.MouseText.Value, displayName.Text, Vector2.One).X + 16;
+        accountName.Top.Pixels = pfp.Height.Pixels / 4;
+        postArea.Append(accountName);
+
+        return postArea;
+    }
+
     internal static void OpenProfile(UIMouseEvent evt, UIElement listeningElement)
     {
         ArsenalSystem system = ModContent.GetInstance<ArsenalSystem>();
@@ -754,8 +870,8 @@ public class ArsenalSystem : ModSystem
 {
     internal static readonly Dictionary<string, (Func<bool> Requirement, bool Notification)> Posts = [];
     internal static readonly Dictionary<string, (Profile Profile, Asset<Texture2D> PFP)> ProfileData = [];
-    internal static readonly Dictionary<string, (Func<bool> Requirement, string[] tags)> GenericReplyData = [];
-
+    internal static readonly Dictionary<string, (Func<bool> Requirement, string[] Tags)> GenericReplyData = [];
+    internal static readonly Dictionary<string, (Func<bool> Requirement, UniqueReply Reply)> UniqueReplyData = [];
 
     internal enum CommentPriorityTier
     {
@@ -792,8 +908,6 @@ public class ArsenalSystem : ModSystem
 
     public override void OnModLoad()
     {
-        string activeExtension = LanguageManager.Instance.ActiveCulture.Name;
-
         ReloadDictionaries();
 
         //Initalizes the Arsenal UI
@@ -871,6 +985,12 @@ public class ArsenalSystem : ModSystem
 
                         GenericReplyData.Add(gr.Name, (() => true, gr.Tags));
                     }
+                    else if(path.Contains("UniqueReplies"))
+                    {
+                        UniqueReply ur = JsonSerializer.Deserialize<UniqueReply>(stream);
+
+                        UniqueReplyData.Add(ur.PostName, (() => true, ur));
+                    }
                     break;
 
                 case "Posts":
@@ -885,7 +1005,7 @@ public class ArsenalSystem : ModSystem
         }
 
         //Modify the Requirement or Notification value of Posts as needed
-        Posts["Fanny/BabilHunting"] = (() => Main.hardMode, true);
+        //Posts["Fanny/BabilHunting"] = (() => Main.hardMode, true);
     }
     
     public override void UpdateUI(GameTime gameTime)
@@ -932,8 +1052,6 @@ public class Post: IComparable
     public string[] Tags { get; set; } = [];
     public float Priority { get; set; } = 0;
     public string Image { get; set; } = null;
-    public string Quote { get; set; } = null;
-    public string TopReply { get; set; } = null;
     public string Attachment { get; set; } = null;
 
     public int CompareTo(object obj)
@@ -947,7 +1065,8 @@ public class Post: IComparable
         {
             if (Priority > p.Priority) return -1;
             if (Priority < p.Priority) return 1;
-            return 0;
+            //Randomizes sorting of posts with equal priority
+            return Main.rand.NextBool() ? 1 : -1;
         }
 
         return 0;
