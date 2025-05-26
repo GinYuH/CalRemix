@@ -17,6 +17,11 @@ using Terraria.Audio;
 using CalamityMod.Tiles.Astral;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Weapons;
+using CalamityMod.World;
+using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Mounts;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -532,6 +537,11 @@ namespace CalRemix.Content.NPCs.Eclipse
             }
         }
 
+        public override void OnKill()
+        {
+            RemixDowned.downedRed = true;
+        }
+
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (!DownedBossSystem.downedDoG || NPC.AnyNPCs(ModContent.NPCType<CrimsonKaiju>()))
@@ -546,6 +556,9 @@ namespace CalRemix.Content.NPCs.Eclipse
             npcLoot.AddIf(() => Phase != (int)Attacks.Fly, ModContent.ItemType<RedWings>(), 20);
             npcLoot.AddIf(() => Phase == (int)Attacks.Fly, ModContent.ItemType<RedWings>());
             npcLoot.Add(ModContent.ItemType<GodKillerEX>());
+            npcLoot.Add(ModContent.ItemType<RedTrophy>(), 10);
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<RedRelic>());
+            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<SeedyCD>(), 4);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

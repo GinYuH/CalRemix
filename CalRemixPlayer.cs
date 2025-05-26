@@ -911,11 +911,12 @@ namespace CalRemix
                     jumpscareType = Main.rand.NextBool(5) ? "Herobrine2" : "Herobrine";
                 }
             }
-            if (jumpscareType != "")
+            CalRemixConfig config = GetInstance<CalRemixConfig>();
+            if (jumpscareType != "" && CalRemixConfig.Instance.photosensitivity)
             {
                 if (Main.rand.NextBool(30))
                 {
-                    // 50% Parasite. 25% Generic. 25% Exo
+                    // Rare jumpscares
                     List<string> keys = new List<string>()
                     {
                         "Parasite",

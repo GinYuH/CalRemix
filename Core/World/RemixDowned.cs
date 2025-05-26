@@ -37,6 +37,7 @@ namespace CalRemix.Core.World
         public static bool downedKingMinnowsPrime = false;
         public static bool downedDend = false;
         public static bool downedMaser = false;
+        public static bool downedRed = false;
 
         public static bool downedGale = false;
         public override void OnWorldLoad()
@@ -70,6 +71,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = false;
             downedDend = false;
             downedMaser = false;
+            downedRed = false;
 
             downedGale = false;
         }
@@ -104,6 +106,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = false;
             downedDend = false;
             downedMaser = false;
+            downedRed = false;
 
             downedGale = false;
         }
@@ -138,6 +141,7 @@ namespace CalRemix.Core.World
             tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
             tag["downedDend"] = downedDend;
             tag["downedMaser"] = downedMaser;
+            tag["downedRed"] = downedRed;
 
             tag["downedGale"] = downedGale;
         }
@@ -174,6 +178,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
             downedDend = tag.Get<bool>("downedDend");
             downedMaser = tag.Get<bool>("downedMaser");
+            downedRed = tag.Get<bool>("downedRed");
             downedGale = tag.Get<bool>("downedGale");
         }
 
@@ -208,6 +213,7 @@ namespace CalRemix.Core.World
             writer.Write(downedKingMinnowsPrime);
             writer.Write(downedDend);
             writer.Write(downedMaser);
+            writer.Write(downedRed);
 
             writer.Write(downedGale);
         }
@@ -242,6 +248,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = reader.ReadBoolean();
             downedDend = reader.ReadBoolean();
             downedMaser = reader.ReadBoolean();
+            downedRed = reader.ReadBoolean();
 
             downedGale = reader.ReadBoolean();
         }

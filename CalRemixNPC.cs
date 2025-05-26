@@ -383,7 +383,7 @@ namespace CalRemix
 
             if (player.taintedWrath)
             {
-                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly)
+                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly && npc.Distance(Main.LocalPlayer.Center) < Main.screenWidth)
                 {
                     npc.life -= Math.Max((int)(npc.lifeMax / (float)CalamityUtils.SecondsToFrames(300)), 1);
                     if (npc.life <= 0)
@@ -1175,6 +1175,16 @@ namespace CalRemix
                 npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 32));
                 npcLoot.Add(ItemID.RodOfHarmony, new Fraction(1, 64), 1, 200);
             }
+            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            {
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
+                npcLoot.Add(hm);
+            }
+            if (npc.type == NPCID.Paladin)
+            {
+                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
+            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
@@ -1237,15 +1247,35 @@ namespace CalRemix
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterAdrenalinePotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterEnragePotion>(), 1, 5, 10);
             }
-            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            #endregion
+            #region Epilogue
+            if (npc.type == NPCID.BloodCrawler || npc.type == NPCID.BloodCrawlerWall || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCType<CrimulanBlightSlime>())
             {
-                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
-                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
-                npcLoot.Add(hm);
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 20);
             }
-            if (npc.type == NPCID.Paladin)
+            if (npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BloodJelly || npc.type == NPCID.BloodFeeder)
             {
-                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 10);
+            }
+            if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 10);
+            }
+            if (npc.type == NPCID.IceSlime || npc.type == NPCID.ZombieEskimo || npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin || npc.type == NPCType<Rimehound>()) //waterfreeze, probably tundra mobs
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<WaterfreezeReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.IceElemental || npc.type == NPCID.Wolf || npc.type == NPCID.IceGolem || npc.type == NPCType<AuroraSpirit>() || npc.type == NPCType<Cryon>() || npc.type == NPCType<IceClasper>() || npc.type == NPCType<CryoSlime>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<WaterfreezeReactiveEssence>(), 10);
+            }
+            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == NPCType<AstralSlime>() || npc.type == NPCType<Atlas>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<NocticReactiveEssence>(), 10);
             }
             #endregion
         }
