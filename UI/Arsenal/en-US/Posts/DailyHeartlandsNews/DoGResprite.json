@@ -1,6 +1,6 @@
 {
-"Name": "DailyHeartlandsNews/DoGResprite",
-"Poster": "DailyHeartlandsNews",
-"Body": "Multiple Abyss explorers report the Devourer of Gods has reappeared with 'armor like a thousand screaming faces.' One account describes segmented plates shifting to form blasphemous sigils mid-combat. A surviving witness claims the beast spoke: 'The Distortion hungers.' The Godseekers have cordoned off the Abyss, citing 'classified countermeasures.'",
-"Tags": ["HeartlandsNews", "Horror"]
+  "Name": "DailyHeartlandsNews/DoGResprite",
+  "Poster": "DailyHeartlandsNews",
+  "Body": "BREAKING: Multiple eyewitnesses report the Devourer of Gods has been sighted in the skies above the Hallow clad in an unsettling new exoskeleton. Witnesses describe the titan’s plating as 'a razor-studded carapace of cosmic alloy,' with pulsating gemstones embedded along its segments. The Nameless Serpent appeared to clash with a lesser deity, however their battle ended swiftly, with the Devourer consuming the God. The encounter lasted mere seconds, but footage has already gone viral. Critics are slamming the redesign, calling it 'trying too hard' and 'too big to work' while defenders argue the gemstones 'add lore potential.' Draedon Labs has yet to comment, but leaked internal logs suggest even some of his own engineers questioned the redesign.",
+  "Tags": [ "HeartlandsNews", "DoGResprite" ]
 }
