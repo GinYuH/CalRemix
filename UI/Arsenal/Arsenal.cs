@@ -415,8 +415,10 @@ public class ArsenalPostUI(string postName) : ArsenalUIState
         PostAndComments.Add(ArsenalUtils.SetupPostUIElement(post));
 
         foreach(var v in ArsenalSystem.UniqueReplyData)
-            if (v.Key == post.Name && v.Value.Requirement.Invoke())
-                PostAndComments.Add(ArsenalUtils.SetUpUniqueCommentUIElement(v.Value.Reply));
+            if (v.Key == post.Name)
+                foreach (var b in v.Value)
+                     if(b.Requirement.Invoke())
+                        PostAndComments.Add(ArsenalUtils.SetUpUniqueCommentUIElement(b.Reply));
 
         foreach (var v in ArsenalSystem.GenericReplyData)
         {
@@ -518,7 +520,7 @@ public static class ArsenalUtils
             TextColor = Color.White,
             IsWrapped = true,
         };
-        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 374f);
+        Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, bodyText.Text, Vector2.One, 376f);
         bodyText.Width.Pixels = 400f;
         bodyText.Height.Pixels = textSize.Y;
         postTextbox.Height.Pixels = textSize.Y + 16;
@@ -871,7 +873,7 @@ public class ArsenalSystem : ModSystem
     internal static readonly Dictionary<string, (Func<bool> Requirement, bool Notification)> Posts = [];
     internal static readonly Dictionary<string, (Profile Profile, Asset<Texture2D> PFP)> ProfileData = [];
     internal static readonly Dictionary<string, (Func<bool> Requirement, string[] Tags)> GenericReplyData = [];
-    internal static readonly Dictionary<string, (Func<bool> Requirement, UniqueReply Reply)> UniqueReplyData = [];
+    internal static readonly Dictionary<string, List<(Func<bool> Requirement, UniqueReply Reply)>> UniqueReplyData = [];
 
     internal enum CommentPriorityTier
     {
@@ -989,7 +991,10 @@ public class ArsenalSystem : ModSystem
                     {
                         UniqueReply ur = JsonSerializer.Deserialize<UniqueReply>(stream);
 
-                        UniqueReplyData.Add(ur.PostName, (() => true, ur));
+                        if(UniqueReplyData.ContainsKey(ur.PostName))
+                            UniqueReplyData[ur.PostName].Add((() => true, ur));
+                        else
+                            UniqueReplyData.Add(ur.PostName, [(() => true, ur)]);
                     }
                     break;
 
