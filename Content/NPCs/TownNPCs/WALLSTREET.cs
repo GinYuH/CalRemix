@@ -141,12 +141,12 @@ namespace CalRemix.Content.NPCs.TownNPCs
             if (!NPC.downedMoonlord)
             {
                 Main.GetItemDrawFrame(ItemID.Harpoon, out item, out itemFrame);
-                horizontalHoldoutOffset = (int)Main.DrawPlayerItemPos(1, ItemID.Harpoon).X - 64;
+                horizontalHoldoutOffset = (int)Main.DrawPlayerItemPos(1, ItemID.Harpoon).X;
             }
             else
             {
                 Main.GetItemDrawFrame(ModContent.ItemType<Triploon>(), out item, out itemFrame);
-                horizontalHoldoutOffset = (int)Main.DrawPlayerItemPos(1, ModContent.ItemType<Triploon>()).X - 64;
+                horizontalHoldoutOffset = (int)Main.DrawPlayerItemPos(1, ModContent.ItemType<Triploon>()).X;
             }
         }
     }

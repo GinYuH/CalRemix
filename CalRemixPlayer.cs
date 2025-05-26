@@ -381,6 +381,8 @@ namespace CalRemix
 			NPCType<LifeSlime>()
 		};
 
+        public Dictionary<string, int> stocks = new Dictionary<string, int>();
+
         public override void Load()
         {
             LoadDyeStats();
@@ -430,6 +432,8 @@ namespace CalRemix
             tag["DeliciousMeatRedeemed"] = deliciousMeatRedeemed;
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
             tag["DeliciousMeatNoLife"] = deliciousMeatNoLife;
+
+            foreach (var (name, value) in stocks) tag["Stock" + name] = value;
         }
         public override void LoadData(TagCompound tag)
         {
@@ -443,6 +447,8 @@ namespace CalRemix
             deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
             deliciousMeatPrestige = tag.GetInt("DeliciousMeatPrestige");
             deliciousMeatNoLife = tag.GetBool("DeliciousMeatNoLife");
+
+            foreach (var stock in StockMarketSystem.StockList) stocks.Add(stock, tag.GetInt("Stock" + stock));
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
 		{
@@ -2128,5 +2134,29 @@ namespace CalRemix
             }
         }
         private static bool Held(Player player, int id) => id == player.HeldItem.type || id == Main.mouseItem.type;
+        public bool BuyStock(Player player, string stock, int bulk)
+        {
+            if (stock == null || !StockMarketSystem.Stocks.Keys.Contains(stock) || !player.CanAfford(StockMarketSystem.Stocks[stock] * bulk)) return false;
+            player.BuyItem(StockMarketSystem.Stocks[stock] * bulk);
+            if (stocks.ContainsKey(stock)) stocks[stock] += bulk; else stocks.Add(stock, bulk);
+            return true;
+        }
+        public bool GiveStock(Player player, string stock, int bulk) // alt version in case the player needs free stock somehow
+        {
+            if (stock == null || !StockMarketSystem.Stocks.Keys.Contains(stock)) return false;
+            if (stocks.ContainsKey(stock)) stocks[stock] += bulk; else stocks.Add(stock, bulk);
+            return true;
+        }
+        public bool SellStock(Player player, string stock, int bulk)
+        {
+            if (stock == null || !StockMarketSystem.Stocks.Keys.Contains(stock) || !stocks.ContainsKey(stock) || stocks[stock] < bulk) return false;
+            GiveCoins(StockMarketSystem.Stocks[stock] * bulk, player);
+            stocks[stock] -= bulk;
+            return true;
+        }
+        public bool HasStock(string stock)
+        {
+            return stocks.ContainsKey(stock) && stocks[stock] > 0;
+        }
     }
 }

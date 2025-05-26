@@ -14,7 +14,7 @@ using Terraria.DataStructures;
 
 namespace CalRemix.Content.Items.Misc
 {
-    public class TraderTablet : ModItem
+    public class CALVoucher : ModItem
     {
         public override string Texture => "CalRemix/icon_small";
 
@@ -27,17 +27,17 @@ namespace CalRemix.Content.Items.Misc
             Item.width = 30;
             Item.height = 30;
             Item.value = 0;
-            Item.rare = ItemRarityID.LightRed;
-            Item.maxStack = 1;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 9999;
             Item.useTime = 15;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.consumable = false;
+            Item.consumable = true;
         }
         public override bool CanUseItem(Player player) { return true; }
         public override bool? UseItem(Player player)
         {
-            Main.NewText(StockMarketSystem.GetStockPrices());
-            if(player.GetModPlayer<CalRemixPlayer>().HasStock("CAL")) Main.NewText("You have " + player.GetModPlayer<CalRemixPlayer>().stocks["CAL"] + " shares of CAL");
+            player.GetModPlayer<CalRemixPlayer>().GiveStock(player, "CAL", 1);
+            CombatText.NewText(player.getRect(), Color.MediumPurple, "good job you got free stock");
             return true;
         }
     }

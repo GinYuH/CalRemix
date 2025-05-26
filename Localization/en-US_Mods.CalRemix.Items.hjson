@@ -4497,3 +4497,8 @@ SeedyCD: {
 	DisplayName: Seedy CD
 	Tooltip: Summons an ugly grey creature to carry you around
 }
+
+CALVoucher: {
+	DisplayName: CAL Voucher
+	Tooltip: Use to redeem one free CAL stock
+}
