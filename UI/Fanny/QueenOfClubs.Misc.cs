@@ -310,72 +310,6 @@ namespace CalRemix.UI
             rateOfSpinExtra *= 0.98f;
             #endregion
 
-            #region Great and Terrible Evil
-            //TODO: move to asset?
-            if (isQoCAwake)
-            {
-                TextureAssets.Heart = QueenOfClubsAsset.Heart;
-                TextureAssets.Heart2 = QueenOfClubsAsset.Heart2;
-
-                FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
-                Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
-
-                QueenOfClubsAsset.FancyClassic_Heart_Right.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Right);
-                QueenOfClubsAsset.FancyClassic_Heart_Middle.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Middle);
-                QueenOfClubsAsset.FancyClassic_Heart_Left.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Left);
-                QueenOfClubsAsset.FancyClassic_Heart_Right_Fancy.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Right_Fancy);
-                QueenOfClubsAsset.FancyClassic_Heart_Fill.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Fill);
-                QueenOfClubsAsset.FancyClassic_Heart_Fill_B.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Fill);
-                QueenOfClubsAsset.FancyClassic_Heart_Single_Fancy.SetValue(_sets["New"], QueenOfClubsAsset.Heart_Single_Fancy);
-
-                //
-
-                QueenOfClubsAsset.HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Fill);
-                QueenOfClubsAsset.HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Fill);
-                QueenOfClubsAsset.HorizontalBars_Panel_Left.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.Panel_Left);
-                QueenOfClubsAsset.HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Panel_Middle);
-                QueenOfClubsAsset.HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithFullText"], QueenOfClubsAsset.HP_Panel_Right);
-
-                QueenOfClubsAsset.HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Fill);
-                QueenOfClubsAsset.HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Fill);
-                QueenOfClubsAsset.HorizontalBars_Panel_Left.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.Panel_Left);
-                QueenOfClubsAsset.HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Panel_Middle);
-                QueenOfClubsAsset.HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithText"], QueenOfClubsAsset.HP_Panel_Right);
-
-                QueenOfClubsAsset.HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Fill);
-                QueenOfClubsAsset.HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Fill);
-                QueenOfClubsAsset.HorizontalBars_Panel_Left.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.Panel_Left);
-                QueenOfClubsAsset.HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Panel_Middle);
-                QueenOfClubsAsset.HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBars"], QueenOfClubsAsset.HP_Panel_Right);
-
-                QueenOfClubsAsset.FancyClassic_Heart_Right.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right);
-                QueenOfClubsAsset.FancyClassic_Heart_Middle.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Middle);
-                QueenOfClubsAsset.FancyClassic_Heart_Left.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Left);
-                QueenOfClubsAsset.FancyClassic_Heart_Right_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right_Fancy);
-                QueenOfClubsAsset.FancyClassic_Heart_Fill.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill);
-                QueenOfClubsAsset.FancyClassic_Heart_Fill_B.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill_B);
-                QueenOfClubsAsset.FancyClassic_Heart_Single_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Single_Fancy);
-
-                setsfield.SetValue(Main.ResourceSetsManager, _sets);
-            }
-            else
-            {
-                TextureAssets.Heart = QueenOfClubsAsset.Heart_OG;
-                TextureAssets.Heart2 = QueenOfClubsAsset.Heart2_OG;
-
-                FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
-                Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
-
-                QueenOfClubsAsset.FancyClassic_Heart_Right.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right_OG);
-                QueenOfClubsAsset.FancyClassic_Heart_Middle.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Middle_OG);
-                QueenOfClubsAsset.FancyClassic_Heart_Left.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Left_OG);
-                QueenOfClubsAsset.FancyClassic_Heart_Right_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Right_Fancy_OG);
-                QueenOfClubsAsset.FancyClassic_Heart_Fill.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill_OG);
-                QueenOfClubsAsset.FancyClassic_Heart_Fill_B.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Fill_B_OG);
-                QueenOfClubsAsset.FancyClassic_Heart_Single_Fancy.SetValue(_sets["NewWithText"], QueenOfClubsAsset.Heart_Single_Fancy_OG);
-            }
-            #endregion
-
             // kept outside of the awake/asleep timer region so when shes unlocked she immediately appears
             timeUntilNextQoCAction_Heavy--;
         }
@@ -518,9 +452,13 @@ namespace CalRemix.UI
     }
     #endregion
 
+    #region Changing Healthbar Text, Color
     public class QueenOfClubsAsset : ModSystem
     {
         private const string FilePath = "CalRemix/Assets/ExtraTextures/QoCHealthbars/";
+
+        private static FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
 
         #region New
         public static Asset<Texture2D> Heart = null;
@@ -536,7 +474,6 @@ namespace CalRemix.UI
 
         public static Asset<Texture2D> HP_Fill = null;
         public static Asset<Texture2D> HP_Fill_Honey = null;
-        public static Asset<Texture2D> Panel_Left = null;
         public static Asset<Texture2D> HP_Panel_Middle = null; 
         public static Asset<Texture2D> HP_Panel_Right = null;
         #endregion
@@ -555,7 +492,6 @@ namespace CalRemix.UI
 
         public static Asset<Texture2D> HP_Fill_OG = null;
         public static Asset<Texture2D> HP_Fill_Honey_OG = null;
-        public static Asset<Texture2D> Panel_Left_OG = null;
         public static Asset<Texture2D> HP_Panel_Middle_OG = null;
         public static Asset<Texture2D> HP_Panel_Right_OG = null;
         #endregion
@@ -574,25 +510,13 @@ namespace CalRemix.UI
 
         public static FieldInfo HorizontalBars_HP_Fill = null;
         public static FieldInfo HorizontalBars_HP_Fill_Honey = null;
-        public static FieldInfo HorizontalBars_Panel_Left = null;
         public static FieldInfo HorizontalBars_HP_Panel_Middle = null;
         public static FieldInfo HorizontalBars_HP_Panel_Right = null;
         #endregion
 
-        public static string[] HealthList_HorizontalBars_Names =
-        {
-            "_heartFill",
-            "_heartFillHoney",
-            "_heartLet",
-            "_heartMiddle"
-        };
-
         public override void Load()
         {
             #region Load Assets
-            FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
-            Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
-
             Heart = Request<Texture2D>(FilePath + "Heart");
             Heart2 = Request<Texture2D>(FilePath + "Heart2");
             Heart_OG = TextureAssets.Heart;
@@ -605,7 +529,7 @@ namespace CalRemix.UI
             Heart_Right = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right");
             Heart_Right_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right_Fancy");
             Heart_Fill = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
-            Heart_Fill_B = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill_B");
+            Heart_Fill_B = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
             Heart_Single_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Single_Fancy");
             FancyClassic_Heart_Left = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartLeft", BindingFlags.NonPublic | BindingFlags.Instance);
             FancyClassic_Heart_Middle = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartMiddle", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -624,21 +548,107 @@ namespace CalRemix.UI
 
             string horizontalBars = "HorizontalBars/";
             HP_Fill = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
-            HP_Fill_Honey = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill_Honey");
-            Panel_Left = Request<Texture2D>(FilePath + horizontalBars + "Panel_Left");
+            HP_Fill_Honey = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
             HP_Panel_Middle = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Middle");
             HP_Panel_Right = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Right");
             HorizontalBars_HP_Fill = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFill", BindingFlags.NonPublic | BindingFlags.Instance);
             HorizontalBars_HP_Fill_Honey = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
-            HorizontalBars_Panel_Left = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelLeft", BindingFlags.NonPublic | BindingFlags.Instance);
             HorizontalBars_HP_Panel_Middle = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelMiddleHP", BindingFlags.NonPublic | BindingFlags.Instance);
             HorizontalBars_HP_Panel_Right = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelRightHP", BindingFlags.NonPublic | BindingFlags.Instance);
+            HP_Fill_OG = (Asset<Texture2D>)HorizontalBars_HP_Fill.GetValue(_sets["HorizontalBarsWithFullText"]);
+            HP_Fill_Honey_OG = (Asset<Texture2D>)HorizontalBars_HP_Fill_Honey.GetValue(_sets["HorizontalBarsWithFullText"]);
+            HP_Panel_Middle_OG = (Asset<Texture2D>)HorizontalBars_HP_Panel_Middle.GetValue(_sets["HorizontalBarsWithFullText"]);
+            HP_Panel_Right_OG = (Asset<Texture2D>)HorizontalBars_HP_Panel_Right.GetValue(_sets["HorizontalBarsWithFullText"]);
             #endregion
 
             #region Hooks
             On_FancyClassicPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_FancyClassic;
             On_HorizontalBarsPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_HorizontalBars;
             On_ClassicPlayerResourcesDisplaySet.DrawLife += RedrawText_Classic;
+            #endregion
+        }
+
+        public override void UpdateUI(GameTime gameTime)
+        {
+            #region Great and Terrible Evil
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
+            {
+                TextureAssets.Heart = Heart;
+                TextureAssets.Heart2 = Heart2;
+
+                FancyClassic_Heart_Right.SetValue(_sets["New"], Heart_Right);
+                FancyClassic_Heart_Middle.SetValue(_sets["New"], Heart_Middle);
+                FancyClassic_Heart_Left.SetValue(_sets["New"], Heart_Left);
+                FancyClassic_Heart_Right_Fancy.SetValue(_sets["New"], Heart_Right_Fancy);
+                FancyClassic_Heart_Fill.SetValue(_sets["New"], Heart_Fill);
+                FancyClassic_Heart_Fill_B.SetValue(_sets["New"], Heart_Fill);
+                FancyClassic_Heart_Single_Fancy.SetValue(_sets["New"], Heart_Single_Fancy);
+
+                //
+
+                HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithFullText"], HP_Fill);
+                HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithFullText"], HP_Fill);
+                HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithFullText"], HP_Panel_Middle);
+                HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithFullText"], HP_Panel_Right);
+
+                HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithText"], HP_Fill);
+                HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithText"], HP_Fill);
+                HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithText"], HP_Panel_Middle);
+                HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithText"], HP_Panel_Right);
+
+                HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBars"], HP_Fill);
+                HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBars"], HP_Fill);
+                HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBars"], HP_Panel_Middle);
+                HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBars"], HP_Panel_Right);
+
+                FancyClassic_Heart_Right.SetValue(_sets["NewWithText"], Heart_Right);
+                FancyClassic_Heart_Middle.SetValue(_sets["NewWithText"], Heart_Middle);
+                FancyClassic_Heart_Left.SetValue(_sets["NewWithText"], Heart_Left);
+                FancyClassic_Heart_Right_Fancy.SetValue(_sets["NewWithText"], Heart_Right_Fancy);
+                FancyClassic_Heart_Fill.SetValue(_sets["NewWithText"], Heart_Fill);
+                FancyClassic_Heart_Fill_B.SetValue(_sets["NewWithText"], Heart_Fill_B);
+                FancyClassic_Heart_Single_Fancy.SetValue(_sets["NewWithText"], Heart_Single_Fancy);
+            }
+            else
+            {
+                TextureAssets.Heart = Heart_OG;
+                TextureAssets.Heart2 = Heart2_OG;
+
+                FancyClassic_Heart_Right.SetValue(_sets["New"], Heart_Right_OG);
+                FancyClassic_Heart_Middle.SetValue(_sets["New"], Heart_Middle_OG);
+                FancyClassic_Heart_Left.SetValue(_sets["New"], Heart_Left_OG);
+                FancyClassic_Heart_Right_Fancy.SetValue(_sets["New"], Heart_Right_Fancy_OG);
+                FancyClassic_Heart_Fill.SetValue(_sets["New"], Heart_Fill_OG);
+                FancyClassic_Heart_Fill_B.SetValue(_sets["New"], Heart_Fill_OG);
+                FancyClassic_Heart_Single_Fancy.SetValue(_sets["New"], Heart_Single_Fancy_OG);
+
+                //
+
+                HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithFullText"], HP_Fill_OG);
+                HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithFullText"], HP_Fill_OG);
+                HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithFullText"], HP_Panel_Middle_OG);
+                HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithFullText"], HP_Panel_Right_OG);
+
+                HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBarsWithText"], HP_Fill_OG);
+                HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBarsWithText"], HP_Fill_OG);
+                HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBarsWithText"], HP_Panel_Middle_OG);
+                HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBarsWithText"], HP_Panel_Right_OG);
+
+                HorizontalBars_HP_Fill.SetValue(_sets["HorizontalBars"], HP_Fill_OG);
+                HorizontalBars_HP_Fill_Honey.SetValue(_sets["HorizontalBars"], HP_Fill_OG);
+                HorizontalBars_HP_Panel_Middle.SetValue(_sets["HorizontalBars"], HP_Panel_Middle_OG);
+                HorizontalBars_HP_Panel_Right.SetValue(_sets["HorizontalBars"], HP_Panel_Right_OG);
+
+                FancyClassic_Heart_Right.SetValue(_sets["NewWithText"], Heart_Right_OG);
+                FancyClassic_Heart_Middle.SetValue(_sets["NewWithText"], Heart_Middle_OG);
+                FancyClassic_Heart_Left.SetValue(_sets["NewWithText"], Heart_Left_OG);
+                FancyClassic_Heart_Right_Fancy.SetValue(_sets["NewWithText"], Heart_Right_Fancy_OG);
+                FancyClassic_Heart_Fill.SetValue(_sets["NewWithText"], Heart_Fill_OG);
+                FancyClassic_Heart_Fill_B.SetValue(_sets["NewWithText"], Heart_Fill_B_OG);
+                FancyClassic_Heart_Single_Fancy.SetValue(_sets["NewWithText"], Heart_Single_Fancy_OG);
+            }
+
+            setsfield.SetValue(Main.ResourceSetsManager, _sets);
             #endregion
         }
 
@@ -650,10 +660,10 @@ namespace CalRemix.UI
                 Vector2 vector = topLeftAnchor + new Vector2(130f, -24f);
                 Player localPlayer = Main.LocalPlayer;
                 Color color = new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor);
-                string text = Lang.inter[0].Value + " " + localPlayer.statLifeMax2 + "/" + localPlayer.statLifeMax2;
+                string text = Lang.inter[0].Value + " " + "???" + "/" + localPlayer.statLifeMax2;
                 Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(text);
                 spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, vector + new Vector2((0f - vector2.X) * 0.5f, 0f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, vector + new Vector2(vector2.X * 0.5f, 0f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, vector + new Vector2(vector2.X * 0.5f, 0f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString("???" + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
             }
             else
                 orig(spriteBatch, topLeftAnchor);
@@ -663,13 +673,13 @@ namespace CalRemix.UI
         {
             if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
             {
-                Vector2 vector = topLeftAnchor + new Vector2(130f, -24f);
+                Vector2 vector = topLeftAnchor + new Vector2(130f, -20f);
                 Player localPlayer = Main.LocalPlayer;
                 Color color = new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor);
-                string text = Lang.inter[0].Value + " " + localPlayer.statLifeMax2 + "/" + localPlayer.statLifeMax2;
+                string text = Lang.inter[0].Value + " " + "???" + "/" + localPlayer.statLifeMax2;
                 Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(text);
                 spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, vector + new Vector2((0f - vector2.X) * 0.5f, 0f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, vector + new Vector2(vector2.X * 0.5f, 0f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, vector + new Vector2(vector2.X * 0.5f, 0f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString("???" + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
             }
             else
                 orig(spriteBatch, topLeftAnchor);
@@ -680,8 +690,6 @@ namespace CalRemix.UI
         {
             if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
             {
-                FieldInfo setsfield = typeof(PlayerResourceSetsManager).GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
-                Dictionary<string, IPlayerResourcesDisplaySet> _sets = (Dictionary<string, IPlayerResourcesDisplaySet>)setsfield.GetValue(Main.ResourceSetsManager);
                 FieldInfo UIDisplay_LifePerHeart = typeof(ClassicPlayerResourcesDisplaySet).GetField("UIDisplay_LifePerHeart", BindingFlags.NonPublic | BindingFlags.Instance);
                 FieldInfo UI_ScreenAnchorX = typeof(ClassicPlayerResourcesDisplaySet).GetField("UI_ScreenAnchorX", BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -715,7 +723,7 @@ namespace CalRemix.UI
                         //spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, new Vector2((float)(500 + 13 * num3) - vector.X * 0.5f + (float)UI_ScreenAnchorX, 6f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
                         spriteBatch.DrawString(FontAssets.MouseText.Value, Lang.inter[0].Value, new Vector2((float)(500 + 13 * num3) - vector.X * 0.5f + (float)(int)UI_ScreenAnchorX.GetValue(_sets["Default"]), 6f), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
                         //spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, new Vector2((float)(500 + 13 * num3) + vector.X * 0.5f + (float)UI_ScreenAnchorX, 6f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
-                        spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, new Vector2((float)(500 + 13 * num3) + vector.X * 0.5f + (float)(int)UI_ScreenAnchorX.GetValue(_sets["Default"]), 6f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString(localPlayer.statLife + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(FontAssets.MouseText.Value, "???" + "/" + localPlayer.statLifeMax2, new Vector2((float)(500 + 13 * num3) + vector.X * 0.5f + (float)(int)UI_ScreenAnchorX.GetValue(_sets["Default"]), 6f), color, 0f, new Vector2(FontAssets.MouseText.Value.MeasureString("???" + "/" + localPlayer.statLifeMax2).X, 0f), 1f, SpriteEffects.None, 0f);
                     }
                 }
                 if (drawHearts)
@@ -792,4 +800,5 @@ namespace CalRemix.UI
         }
         #endregion
     }
+    #endregion
 }
