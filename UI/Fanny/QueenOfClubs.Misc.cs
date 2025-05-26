@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -168,6 +169,8 @@ namespace CalRemix.UI
         /// The highest face.THIS IS NOT THE AMOUNT OF FACES! THIS IS THE VALUE OF THE HIGHEST FACE!
         /// </summary>
         public int faceMax => (int)Enum.GetValues(typeof(QoCFace)).Cast<QoCFace>().Max();
+
+        public SlotId LaughSoundSlot;
         #endregion
 
         public override void PreUpdate()
@@ -262,7 +265,7 @@ namespace CalRemix.UI
                     currentFace = currentFaceBuffer;
                 #endregion
 
-                #region Awake/Asleep Timer
+               #region Awake/Asleep Timer
                 if (timeUntilNextQoCAction_Heavy <= 0)
                 {
                     if (currentQoCState >= (int)QoCState.Awake_Idle)
@@ -288,7 +291,7 @@ namespace CalRemix.UI
                         // fuck it add some bounce too
                         bounce = 1;
                         // make some noise 
-                        SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { MaxInstances = 1, Volume = 3 }, Main.LocalPlayer.position);
+                        LaughSoundSlot = SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { MaxInstances = 1, Volume = 3 }, Main.LocalPlayer.position);
                     }
                 }
                 #endregion
@@ -309,6 +312,9 @@ namespace CalRemix.UI
             // reduce the extra spin over time
             rateOfSpinExtra *= 0.98f;
             #endregion
+
+            if (SoundEngine.TryGetActiveSound(LaughSoundSlot, out var drinkSound) && drinkSound.IsPlaying)
+                drinkSound.Position = Player.Center;
 
             // kept outside of the awake/asleep timer region so when shes unlocked she immediately appears
             timeUntilNextQoCAction_Heavy--;
@@ -343,7 +349,7 @@ namespace CalRemix.UI
             {
                 Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
                 Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
-                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1, Volume = 3 }, Main.LocalPlayer.position);
+                Main.LocalPlayer.GetModPlayer<QoCPlayer>().LaughSoundSlot = SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Helpers/QueenOfClubsLaugh") with { PitchRange = (-0.75f, 0.75f), MaxInstances = 1, Volume = 3 }, Main.LocalPlayer.position);
             }
         }
 
