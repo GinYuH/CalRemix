@@ -152,6 +152,7 @@ namespace CalRemix.Core.World
         public static bool wizardDisabled = false;
 
         public static int oxydayTime = 0;
+        public static int timeSinceYharonMurdered = 0;
 
         public static Vector2 hydrogenLocation = new Vector2(0, 0);
 
@@ -376,6 +377,7 @@ namespace CalRemix.Core.World
             tag["hydrolocationX"] = hydrogenLocation.X;
             tag["hydrolocationY"] = hydrogenLocation.Y;
             tag["oxytime"] = oxydayTime;
+            tag["timeSinceYharonMurdered"] = timeSinceYharonMurdered;
 
             tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
@@ -453,6 +455,7 @@ namespace CalRemix.Core.World
             hydrogenLocation.X = tag.Get<float>("hydrolocationX");
             hydrogenLocation.Y = tag.Get<float>("hydrolocationY");
             oxydayTime = tag.Get<int>("oxytime");
+            timeSinceYharonMurdered = tag.Get<int>("timeSinceYharonMurdered");
 
             GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
@@ -540,6 +543,7 @@ namespace CalRemix.Core.World
             writer.Write(hydrogenLocation.X);
             writer.Write(hydrogenLocation.Y);
             writer.Write(oxydayTime);
+            writer.Write(timeSinceYharonMurdered);
             writer.Write(postGenUpdate);
 
             writer.Write(ScreenHelperManager.screenHelpersEnabled);
@@ -619,6 +623,7 @@ namespace CalRemix.Core.World
             hydrogenLocation.X = reader.ReadSingle();
             hydrogenLocation.Y = reader.ReadSingle();
             oxydayTime = reader.ReadInt32();
+            timeSinceYharonMurdered = reader.ReadInt32();
             postGenUpdate = reader.ReadBoolean();
 
             ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
@@ -989,6 +994,8 @@ namespace CalRemix.Core.World
                     Main.LocalPlayer.Remix().solynUnlocked = true;
                 }
             }
+            // Increment time since Yharon's murder
+            if (DownedBossSystem.downedYharon) timeSinceYharonMurdered++;
         }
 
         public static void UnleashRoaches()

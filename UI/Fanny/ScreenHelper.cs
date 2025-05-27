@@ -650,6 +650,7 @@ namespace CalRemix.UI
 
         public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
         public static ScreenHelper ThePinkFlame = new("ThePinkFlame");
+        public static ScreenHelper CrimFather = new("CrimFather");
 
         public override void OnInitialize()
         {
@@ -807,6 +808,12 @@ namespace CalRemix.UI
                 .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 2 }, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Thank you for the help, The Pink Flame!", new HelperTextboxPalette(Color.AliceBlue, Color.DarkOrchid, Color.HotPink, Color.DarkOrchid, Color.DarkOrchid), FontRegistry.Instance.TimesNewRomanText)
                 .SetPositionData(false, 240);
+
+            LoadScreenHelper(CrimFather, "CrimFather")
+                .SetVoiceStyle(SoundID.DD2_OgreRoar with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.3f })
+                .SetTextboxStyle("Anytime, Crim Father.", new HelperTextboxPalette(Color.Red, Color.Yellow, Color.DarkRed, Color.Black, Color.Black))
+                .SetAvailabilityCondition(() => DownedBossSystem.downedYharon && (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss) && CalRemixWorld.timeSinceYharonMurdered >= 36000)
+                .SetPositionData(false, 360);
         }
 
         /// <summary>
@@ -1058,6 +1065,7 @@ namespace CalRemix.UI
             LoadQoCMessages();
             LoadMiracleBoyMessages();
             LoadPinkFlameMessage();
+            LoadCrimFatherMessages();
             SneakersRetheme.LoadHelperMessages();
 
             screenHelpersEnabled = true;
@@ -1188,6 +1196,9 @@ namespace CalRemix.UI
 
             //The Pink Flame
             ScreenHelperPortrait.LoadPortrait("ThePinkFlame", 1);
+
+            //Crim Father
+            ScreenHelperPortrait.LoadPortrait("CrimFather", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
