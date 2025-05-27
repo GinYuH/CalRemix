@@ -2,6 +2,7 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
+using CalRemix.Assets.Fonts;
 using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
@@ -504,6 +505,7 @@ namespace CalRemix.UI
 
             // a shit ton of variables
             var font = FontAssets.MouseText.Value;
+            font = FontRegistry.Instance.TimesNewRomanText;
             string text = ParentSpeaker.UsedMessage.Text;
 
             Rectangle dimensions = GetDimensions().ToRectangle();
