@@ -598,3 +598,13 @@ WulfrumFrog.DisplayName: Wulfrum Frog
 GoldenAnimatronic.DisplayName: Golden Animatronic
 WaterloggedEffigy.DisplayName: Waterlogged Effigy
 Vigor.DisplayName: Vigor
+
+Aurelionium: {
+	DisplayName: Aurelionium
+
+	BossChecklistIntegration: {
+		EntryName: Aurelionium
+		SpawnInfo: Venture into the Gilded Isle's golden portal
+		DespawnMessage: How did you even manage to do this?
+	}
+}
