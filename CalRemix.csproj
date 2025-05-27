@@ -32,6 +32,7 @@
     <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\Crusaders\Crusader11\" />
     <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\EvilFanny\" />
     <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\OldDuke\" />
+    <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\Yharim\PrideMonth\" />
   </ItemGroup>
   
   <ItemGroup>
