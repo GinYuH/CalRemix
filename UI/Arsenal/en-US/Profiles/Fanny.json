@@ -2,9 +2,9 @@
   "Name": "Fanny",
   "DisplayName": "Fanny the Flame",
   "AccountName": "TerraFan83",
-  "Description": "A helpful Flame looking to brighten your jounrey!",
+  "Description": "A helpful Flame looking to brighten your journey!",
   "Location": "The bottom right of {0}'s screen",
   "JoinDate": "4/28/2025",
   "Followers": 12,
-  "Following": ["EvilFanny", "TrapperBulbChan", "CrimSon", "Renault"]
+  "Following": [ "EvilFanny", "TrapperBulbChan", "CrimSon", "Renault" ]
 }
