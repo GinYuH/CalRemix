@@ -852,9 +852,10 @@ public static class ArsenalUtils
         CommentBody
     }
 
-    internal static string Formatted(this string str, string name, MemberType type)
+    //TO-DO: add additional parameter to identitfy individual posts+comments
+    internal static string Formatted(this string str, string poster, MemberType type)
     {
-        switch(name)
+        switch(poster)
         {
             case "Fanny":
                 if(type == MemberType.Location)
@@ -865,6 +866,10 @@ public static class ArsenalUtils
             case "NotFabsol":
                 if(type == MemberType.Bio)
                     return str.FormatWith(CalRemixHelper.LocalText("UI.Arsenal.NotFabsolBios." + (Main.rand.Next(3) + 1)));
+                return str;
+            case "Robyn":
+                if(type == MemberType.PostBody)
+                    return str.FormatWith(WorldGen.crimson ? "Crimson" : "Corruption");
                 return str;
             default: 
                 return str;
