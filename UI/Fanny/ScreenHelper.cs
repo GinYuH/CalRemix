@@ -180,6 +180,10 @@ namespace CalRemix.UI
         /// The formatting of the textbox. Defines the minimum and max size, and the default font size
         /// </summary>
         public HelperTextboxFormatting textboxFormatting;
+        /// <summary>
+        /// The font the textbox uses.
+        /// </summary>
+        public DynamicSpriteFont textboxFont;
 
 
         #region Setters
@@ -197,7 +201,7 @@ namespace CalRemix.UI
         /// <summary>
         /// Sets the default hover text and palette of the character's textbox
         /// </summary>
-        public ScreenHelper SetTextboxStyle(string textboxHoverText, HelperTextboxPalette palette = null)
+        public ScreenHelper SetTextboxStyle(string textboxHoverText, HelperTextboxPalette palette = null, DynamicSpriteFont font = null)
         {
             this.textboxHoverText = textboxHoverText;
 
@@ -205,6 +209,12 @@ namespace CalRemix.UI
                 textboxPalette = palette;
             else
                 textboxPalette = new HelperTextboxPalette();
+
+            if (font != null)
+                textboxFont = font;
+            else
+                textboxFont = FontAssets.MouseText.Value;
+
             return this;
         }
 
@@ -504,8 +514,7 @@ namespace CalRemix.UI
             HelperTextboxPalette palette = ParentSpeaker.UsedPalette;
 
             // a shit ton of variables
-            var font = FontAssets.MouseText.Value;
-            font = FontRegistry.Instance.TimesNewRomanText;
+            var font = ParentSpeaker.textboxFont;
             string text = ParentSpeaker.UsedMessage.Text;
 
             Rectangle dimensions = GetDimensions().ToRectangle();
@@ -614,7 +623,7 @@ namespace CalRemix.UI
             }
 
             // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+            Utils.DrawBorderStringFourWay(Main.spriteBatch, ParentSpeaker.textboxFont, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
 
             // not final actually draw the guy over the box if desired
             if (ParentSpeaker.renderOverBackground)
@@ -728,7 +737,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(130, 166), true)
                 .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
-                .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.AliceBlue))
+                .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.AliceBlue), FontRegistry.Instance.TimesNewRomanText)
                 .SetExtraAnimations(false, false, false)
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCUnlocked && Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
                 .SetPositionData(new HelperPositionData(
@@ -796,7 +805,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(ThePinkFlame, "ThePinkFlame")
                 .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 2 }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Thank you for the help, The Pink Flame!", new HelperTextboxPalette(Color.AliceBlue, Color.DarkOrchid, Color.HotPink, Color.DarkOrchid, Color.DarkOrchid))
+                .SetTextboxStyle("Thank you for the help, The Pink Flame!", new HelperTextboxPalette(Color.AliceBlue, Color.DarkOrchid, Color.HotPink, Color.DarkOrchid, Color.DarkOrchid), FontRegistry.Instance.TimesNewRomanText)
                 .SetPositionData(false, 240);
         }
 
@@ -1501,6 +1510,7 @@ namespace CalRemix.UI
             {
                 //Cache the original text, and format it
                 originalText = value;
+                // this doesnt account for helper font. i hope that doesnt break anything ahahaha
                 FormatText(FontAssets.MouseText.Value, maxTextWidth);
             }
         }
@@ -1952,7 +1962,7 @@ namespace CalRemix.UI
             }
 
             //Recalculate the text as its played if we have dynamic text segments, or if the speaker's custom formatting changed
-            FormatText(FontAssets.MouseText.Value, maxTextWidth);
+            FormatText(speaker.textboxFont, maxTextWidth);
 
             //Immediately play message start effects if the message doesnt have a delay
             if (delayTime == 0)
@@ -2197,7 +2207,7 @@ namespace CalRemix.UI
             Vector2 basePosition = speaker.BasePosition + textboxOffsetFromCharacter;
 
             //Measure the text
-            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(speaker.UsedMessage.Text) * speaker.UsedMessage.textSize;
+            Vector2 textSize = speaker.textboxFont.MeasureString(speaker.UsedMessage.Text) * speaker.UsedMessage.textSize;
 
             //Get the corner position by offsetting the corner by the text's size
             //Can be modified so the text size affects or not the position
