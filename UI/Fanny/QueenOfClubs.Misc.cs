@@ -571,6 +571,8 @@ namespace CalRemix.UI
             On_FancyClassicPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_FancyClassic;
             On_HorizontalBarsPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_HorizontalBars;
             On_ClassicPlayerResourcesDisplaySet.DrawLife += RedrawText_Classic;
+
+            On_CommonResourceBarMethods.DrawLifeMouseOver += RedrawHoverText;
             #endregion
         }
 
@@ -659,6 +661,20 @@ namespace CalRemix.UI
         }
 
         #region Hook Methods
+        private static void RedrawHoverText(On_CommonResourceBarMethods.orig_DrawLifeMouseOver orig)
+        {
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
+            {
+                Player localPlayer = Main.LocalPlayer;
+                localPlayer.cursorItemIconEnabled = false;
+                string text = "???" + "/" + localPlayer.statLifeMax2;
+                Main.instance.MouseTextHackZoom(text);
+                Main.mouseText = true;
+            }
+            else
+                orig();
+        }
+
         private static void RedrawText_FancyClassic(On_FancyClassicPlayerResourcesDisplaySet.orig_DrawLifeBarText orig, SpriteBatch spriteBatch, Vector2 topLeftAnchor)
         {
             if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
