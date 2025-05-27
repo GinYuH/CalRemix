@@ -38,3 +38,16 @@ WorldGen: {
 	Dullies: Generating dullies
 	ItGetsDeeper: But wait, it gets deeper
 }
+
+Arsenal: {
+	NotFabsolBios: {
+		1: If it takes a crisis in order for you to change your ways, perhaps you should rethink your life.
+		2: Instant gratification for the feckless, leading to an inexorable dissatisfaction with the self and malaise of the soul.
+		3: I'm not a graphics coomer, so I don't care.
+		4: jesus fucking christ...
+		5: Many words have been said. Some thoughts have been shared.
+		6: Utterly preposterous
+		7: I'll show you my best moves
+		8: I'm sorry.
+	}
+}

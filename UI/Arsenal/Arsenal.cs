@@ -862,6 +862,10 @@ public static class ArsenalUtils
                 return str;
             case "PlayerHater":
                 return str.FormatWith(type == MemberType.AccountName ? Main.LocalPlayer.name.Replace(' ', '-') : Main.LocalPlayer.name);
+            case "NotFabsol":
+                if(type == MemberType.Bio)
+                    return str.FormatWith(CalRemixHelper.LocalText("UI.Arsenal.NotFabsolBios." + (Main.rand.Next(3) + 1)));
+                return str;
             default: 
                 return str;
         }
