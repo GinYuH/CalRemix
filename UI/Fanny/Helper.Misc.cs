@@ -40,7 +40,7 @@ namespace CalRemix.UI
 
         private static void AgreeWithFanny(HelperMessage message)
         {
-            if (message.DesiredSpeaker == ScreenHelpersUIState.FannyTheFire && !message.HasAnyEndEvents && Main.rand.NextBool(50)) 
+            if (message.DesiredSpeaker == ScreenHelpersUIState.FannyTheFire && !message.HasAnyEndEvents && Main.rand.NextBool(50))
             {
                 RenaultAd.ActivateMessage();
             }
@@ -100,6 +100,20 @@ namespace CalRemix.UI
             HelperMessage.New("ThePinkFlame2", "I'd tell you a tip, but I feel like you've already.... REDDIT! ",
                 "ThePinkFlame", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<HapuFruit>()) && Main.hardMode, 15, maxWidth: 500)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.ThePinkFlame);
+        }
+        #endregion
+
+        #region Crim Father
+        public static void LoadCrimFatherMessages()
+        {
+            HelperMessage cf1 = HelperMessage.New("CrimFather1", "Hey, I know my son can be... a lot to deal with. He's always chasing some trend, he's got a super short attention span, and he can be... a bit picky - so it means a lot to me that you're looking after him for me and my wife. " +
+                "You're a good lad - I reckon the world would be a better place if there were more kind souls like you around.",
+                "CrimFather", HelperMessage.AlwaysShow, 11, cantBeClickedOff: true)
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimFather).AddDelay(60);
+
+            HelperMessage.New("CrimFather2", "We shouldn't be much longer - we're going to pick up a surprise for a little guy. Just keep an eye on him for a bit more, and we'll take him off your hands again, yeah? Again, thank you so much. God bless you.",
+                "CrimFather")
+                .SpokenByAnotherHelper(ScreenHelpersUIState.CrimFather).ChainAfter(cf1, delay: 1, startTimerOnMessageSpoken: true);
         }
         #endregion
     }
