@@ -55,8 +55,8 @@ namespace CalRemix.Content.NPCs
             NPC.damage = 20;
             NPC.width = 46;
             NPC.height = 64;
-            NPC.defense = 22;
-            NPC.lifeMax = 2000;
+            NPC.defense = 3;
+            NPC.lifeMax = 660;
             NPC.value = 200;
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;

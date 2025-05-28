@@ -11,6 +11,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.RuntimeDetour;
 using ReLogic.Content;
 using ReLogic.Graphics;
 using ReLogic.Utilities;
@@ -20,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Terraria;
 using Terraria.Audio;
@@ -520,6 +522,11 @@ namespace CalRemix.UI
         public static FieldInfo HorizontalBars_HP_Panel_Right = null;
         #endregion
 
+        public static MethodInfo resizeMethod = typeof(ResourceOverlayLoader).GetMethod("PostDrawResource", BindingFlags.Public | BindingFlags.Static);
+        public static Hook killPostDrawResourceHook;
+        public delegate void orig_ResourceOverlayLoader(ResourceOverlayDrawContext context);
+
+
         public override void Load()
         {
             #region Load Assets
@@ -573,6 +580,8 @@ namespace CalRemix.UI
             On_ClassicPlayerResourcesDisplaySet.DrawLife += RedrawText_Classic;
 
             On_CommonResourceBarMethods.DrawLifeMouseOver += RedrawHoverText;
+
+            killPostDrawResourceHook = new Hook(resizeMethod, KillThatStupidHealthBar);
             #endregion
         }
 
@@ -661,6 +670,16 @@ namespace CalRemix.UI
         }
 
         #region Hook Methods
+        public virtual void KillThatStupidHealthBar(orig_ResourceOverlayLoader orig, ResourceOverlayDrawContext context)
+        {
+            if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake && (context.texture == TextureAssets.Heart || context.texture == TextureAssets.Heart2))
+            {
+                // NOTHING!!!!
+            }
+            else
+                orig(context);
+        }
+        
         private static void RedrawHoverText(On_CommonResourceBarMethods.orig_DrawLifeMouseOver orig)
         {
             if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
@@ -756,8 +775,9 @@ namespace CalRemix.UI
                         int num4 = 255;
                         float num5 = 1f;
                         bool flag = false;
+                        // all of this code handles hearts shrinking at low health
                         //if ((float)localPlayer.statLife >= (float)i * UIDisplay_LifePerHeart)
-                        if ((float)localPlayer.statLife >= (float)i * (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"]))
+                        /*if ((float)localPlayer.statLife >= (float)i * (float)UIDisplay_LifePerHeart.GetValue(_sets["Default"]))
                         {
                             num4 = 255;
                             //if ((float)localPlayer.statLife == (float)i * UIDisplay_LifePerHeart)
@@ -784,7 +804,7 @@ namespace CalRemix.UI
                             {
                                 flag = true;
                             }
-                        }
+                        }*/
                         if (flag)
                         {
                             num5 += Main.cursorScale - 1f;
@@ -815,7 +835,7 @@ namespace CalRemix.UI
                         }
                     }
                 }
-                ResourceOverlayLoader.PostDrawResourceDisplay(snapshot, self, drawingLife: true, color, drawText);
+                //ResourceOverlayLoader.PostDrawResourceDisplay(snapshot, self, drawingLife: true, color, drawText);
             }
             else
                 orig(self);

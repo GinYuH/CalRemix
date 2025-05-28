@@ -98,19 +98,7 @@ namespace CalRemix.UI.Title
                 Vector2 velocity = (rand) ? -Vector2.UnitX : Vector2.UnitX;
 
                 bool evilFanny = !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value) && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode) || Main.WorldList.Exists((WorldFileData w) => w.ZenithWorld));
-                if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value;
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
-                }
-                else if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && File.Exists(Anomaly109UI.a109path) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound_Evil").Value;
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
-                }
-                else if (rand2 == 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value))
+                if (rand2 == 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value))
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value;
                     direction = (rand) ? 1 : 0;
