@@ -30,7 +30,6 @@
     <Folder Include="UI\Arsenal\en-US\Posts\OldDuke\" />
     <Folder Include="UI\Arsenal\en-US\Posts\Renault\" />
     <Folder Include="UI\Arsenal\en-US\Posts\PlayerHater\" />
-    <Folder Include="UI\Arsenal\en-US\Replies\GenericReplies\Believers\" />
     <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\Bluxunium\" />
     <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\Crusaders\Crusader11\" />
     <Folder Include="UI\Arsenal\en-US\Replies\UniqueReplies\EvilFanny\" />
