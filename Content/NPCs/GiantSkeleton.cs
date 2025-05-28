@@ -220,7 +220,7 @@ namespace CalRemix.Content.NPCs
                             Dust.NewDustPerfect(NPC.Center, ModContent.DustType<BrimstoneFireDustMatte>(), dustVelocity);
                         }
                         Vector2 velocity = NPC.DirectionTo(Target.Center) * 4;
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ModContent.ProjectileType<BrimstoneBall>(), 25, 0, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ModContent.ProjectileType<BrimstoneBall>(), 13, 0, Main.myPlayer);
                     }
 
                     
