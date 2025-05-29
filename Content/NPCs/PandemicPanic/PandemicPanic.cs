@@ -12,6 +12,8 @@ using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Core.World;
 using CalamityMod.Projectiles.Typeless;
+using Terraria.DataStructures;
+using CalRemix.Content.Items.Tools;
 
 namespace CalRemix.Content.NPCs.PandemicPanic
 {
@@ -187,6 +189,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 IsActive = true;
                 DefendersKilled = 0;
                 InvadersKilled = 0;
+                Main.LocalPlayer.QuickSpawnItem(new EntitySource_WorldEvent(), ModContent.ItemType<PHD>());
             }
             else
             {
