@@ -135,12 +135,6 @@ namespace CalRemix
             .AddTile(TileID.CookingPots)
             .Register();
 
-            Recipe.Create(ItemType<CirrusDress>())
-            .AddIngredient(ItemID.Silk, 6)
-            .AddIngredient(ItemID.AshBlock, 10)
-            .AddTile(TileID.Loom)
-            .Register();
-
             Recipe.Create(ItemID.WaterBucket)
             .AddIngredient(ItemID.EmptyBucket)
             .AddIngredient(ItemType<SoulofHydrogen>(), 2)
@@ -242,15 +236,16 @@ namespace CalRemix
             AlcoholRecipe(ItemType<Margarita>(), ItemType<Vodka>(), ItemID.Starfruit, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<Moonshine>(), ItemType<Everclear>(), ItemID.Ale, ItemID.BeetleHusk, 5, 1);
             AlcoholRecipe(ItemType<MoscowMule>(), ItemType<Everclear>(), ItemType<Vodka>(), ItemID.BeetleHusk, 5, 1);
+            AlcoholRecipe(ItemType<OldFashioned>(), ItemType<Whiskey>(), ItemID.BambooBlock, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<RedWine>(), ItemID.Ale, ItemID.Grapes, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<Rum>(), ItemID.Ale, ItemID.BambooBlock, ItemID.UnicornHorn, 40, 20);
-            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<NotFabsolVodka>(), ItemType<BloodOrange>(), ItemType<HallowedOre>(), 30, 1);
+            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<PurpleHaze>(), ItemType<BloodOrange>(), ItemType<HallowedOre>(), 30, 1);
             AlcoholRecipe(ItemType<StarBeamRye>(), ItemType<Margarita>(), ItemID.Hay, ItemType<AureusCell>(), 10, 20);
             AlcoholRecipe(ItemType<Tequila>(), ItemID.Ale, ItemID.Hay, ItemID.UnicornHorn, 40, 20);
             AlcoholRecipe(ItemType<TequilaSunrise>(), ItemType<Everclear>(), ItemType<Tequila>(), ItemID.BeetleHusk, 5, 1);
-            AlcoholRecipe(ItemType<Vodka>(), ItemType<NotFabsolVodka>(), ItemID.Hay, ItemType<HallowedOre>(), 30, 40);
+            AlcoholRecipe(ItemType<Vodka>(), ItemType<PurpleHaze>(), ItemID.Hay, ItemType<HallowedOre>(), 30, 40);
             AlcoholRecipe(ItemType<Whiskey>(), ItemID.Ale, ItemID.BottledWater, ItemID.UnicornHorn, 40, 1);
-            AlcoholRecipe(ItemType<WhiteWine>(), ItemType<NotFabsolVodka>(), ItemID.Grapes, ItemType<HallowedOre>(), 30, 1);
+            AlcoholRecipe(ItemType<WhiteWine>(), ItemType<PurpleHaze>(), ItemID.Grapes, ItemType<HallowedOre>(), 30, 1);
             // Candles
             CandleRecipe(ItemType<ResilientCandle>(), ItemID.SoulofNight, 445, ItemType<EssenceofBabil>(), 444);
             CandleRecipe(ItemType<SpitefulCandle>(), ItemType<EssenceofSunlight>(), 1098, ItemType<EssenceofHavoc>(), 987);
@@ -388,11 +383,6 @@ namespace CalRemix
                 {
                     Replace(recipe, ItemID.Ectoplasm, ItemID.HallowedBar);
                 }
-                if (recipe.HasResult(ItemType<Fabstaff>()))
-                {
-                    Replace(recipe, ItemID.RainbowRod, ItemType<BucketofCoal>());
-                    Replace(recipe, ItemType<Necroplasm>(), ItemID.MartianConduitPlating, 1000);
-                }
                 if (!recipe.HasResult(ItemType<HauntedBar>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
                 {
                     Replace(recipe, ItemType<RuinousSoul>(), ItemType<HauntedBar>());
@@ -485,10 +475,6 @@ namespace CalRemix
                 }
                 #endregion
                 #region Disables
-                if (recipe.HasResult(ItemType<FabsolsVodka>()))
-                {
-                    recipe.DisableRecipe();
-                }
                 if (recipe.HasIngredient(ItemType<GrandScale>()))
                 {
                     recipe.DisableRecipe();
@@ -496,6 +482,16 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<FracturedArk>()) && recipe.HasIngredient(ItemID.Terragrim))
                 {
                     recipe.DisableRecipe();
+                }
+                if (recipe.Mod != Mod)
+                {
+                    for (int j = 0; j < alcoholList.Count; j++)
+                    {
+                        if (recipe.HasResult(alcoholList[j]))
+                        {
+                            recipe.DisableRecipe();
+                        }
+                    }
                 }
                 if (recipe.HasResult(ItemType<CryonicBrick>()) && recipe.HasIngredient(ItemType<CryonicOre>()))
                 {
@@ -668,9 +664,20 @@ namespace CalRemix
             NPCShop shopee = shope as NPCShop;
 
             NPCShop npcShop = new NPCShop(NPCType<IRON>(), "Surge");
+
+            List<int> blacklist = new List<int>
+            {
+                ItemID.Harp,
+                ItemType<WeightlessCandle>(),
+                ItemType<SpitefulCandle>(),
+                ItemType<VigorousCandle>(),
+                ItemType<ResilientCandle>()
+            };
+
             foreach (NPCShop.Entry entry in shopee.Entries)
             {
-                if (entry.Item.type != ItemID.Harp)
+                int itemType = entry.Item.type;
+                if (!blacklist.Contains(itemType))
                     npcShop.Add(entry);
             }
             npcShop.Register();
@@ -768,6 +775,31 @@ namespace CalRemix
                 }
             }
         }
+
+        public List<int> alcoholList = new List<int>
+        {
+            ItemType<GrapeBeer>(),
+            ItemType<RedWine>(),
+            ItemType<Whiskey>(),
+            ItemType<Rum>(),
+            ItemType<Tequila>(),
+            ItemType<Fireball>(),
+            ItemType<Vodka>(),
+            ItemType<Screwdriver>(),
+            ItemType<WhiteWine>(),
+            ItemType<EvergreenGin>(),
+            ItemType<CaribbeanRum>(),
+            ItemType<Margarita>(),
+            ItemType<OldFashioned>(),
+            ItemType<Everclear>(),
+            ItemType<BloodyMary>(),
+            ItemType<StarBeamRye>(),
+            ItemType<Moonshine>(),
+            ItemType<MoscowMule>(),
+            ItemType<CinnamonRoll>(),
+            ItemType<TequilaSunrise>()
+        };
+
         public void AlcoholRecipe(int result, int drinkingredient, int midgredient, int lastgredient, int blorbcount, int midnum = 5)
         {
             int lastnum = 1;

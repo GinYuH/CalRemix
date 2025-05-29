@@ -18,10 +18,6 @@ namespace CalRemix.Content.NPCs
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
-        public override void SetStaticDefaults()
-        {
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
-        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
