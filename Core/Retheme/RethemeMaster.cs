@@ -221,6 +221,10 @@ namespace CalRemix.Core.Retheme
             {
                 typeName = typeName.Replace("Skeletron", CalRemixHelper.LocalText("Rename.NPCs.Skeletron").Value);
             }
+            else if (typeName.Contains("Anahita"))
+            {
+                typeName = typeName.Replace("Anahita", CalRemixHelper.LocalText("Rename.NPCs.Anahita").Value);
+            }
         }
 
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

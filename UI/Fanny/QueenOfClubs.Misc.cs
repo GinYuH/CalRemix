@@ -98,16 +98,20 @@ namespace CalRemix.UI
 
         /// <summary>
         /// The length between the Queen of Clubs' next major action. This is used as a timer between being awake or asleep. 
+        /// Synced between game reloads.
         /// </summary>
         public int timeUntilNextQoCAction_Heavy;
         /// <summary>
         /// The length between the Queen of Clubs' next minor action. This is used as a timer between being flipping, not flipping, ect.
+        /// Synced between game reloads.
         /// </summary>
         public int timeUntilNextQoCAction_Light;
         /// <summary>
         /// The length between the Queen of Clubs' next face action. This is used as a timer between being changing face.
+        /// Not synced between game reloads.
+        /// Defaults to 8000, for the sake of closing and re-entering a world.
         /// </summary>
-        public int timeUntilNextQoCAction_Face;
+        public int timeUntilNextQoCAction_Face = 8000;
         /// <summary>
         /// The current action the Queen of Clubs is performing.
         /// </summary>
