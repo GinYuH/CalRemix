@@ -794,19 +794,6 @@ namespace CalRemix
             {
                 npc.catchItem = ItemType<DisgustingSeawater>();
             }
-            if (npc.type == NPCType<FAP>()) // MURDER the drunk princess
-            {
-                npc.active = false;
-            }
-            if (npc.type == NPCType<SupremeCalamitas>()) // MURDER the drunk princess
-            {
-                SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
-                if (cirrus.cirrus)
-                {
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeSAC", Color.Red);
-                    npc.active = false;
-                }
-            }
             if (npc.type == NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
                 npc.active = false;

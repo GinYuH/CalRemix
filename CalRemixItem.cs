@@ -423,10 +423,6 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemType<FabsolsVodka>())
-            {
-                TransformItem(ref item, ItemType<NotFabsolVodka>());
-            }
             if (CalRemixWorld.seafood)
             {
                 if (item.type == ItemType<Seafood>())
@@ -505,10 +501,6 @@ namespace CalRemix
             if (player.GetModPlayer<CalRemixPlayer>().amongusEnchant)
             {
                 item.crit /= 3;
-            }
-            if (item.type == ItemType<FabsolsVodka>())
-            {
-                TransformItem(ref item, ItemType<NotFabsolVodka>());
             }
             if (CalRemixWorld.seafood)
             {

@@ -183,11 +183,10 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public override void AddShops()
         {
             List<Item> potions = new List<Item>();
-            int vodka = ModContent.ItemType<FabsolsVodka>();
             for (int i = 0; i < ContentSamples.ItemsByType.Count; i++)
             {
                 Item item = ContentSamples.ItemsByType[i];
-                if (item.type != ItemID.NebulaPickup1 && item.type != ItemID.NebulaPickup2 && item.type != ItemID.NebulaPickup3 && item.type != vodka && item.buffType > 0 && !BuffID.Sets.IsWellFed[item.buffType] && !Main.buffNoTimeDisplay[item.buffType] && !Main.vanityPet[item.buffType] && !Main.lightPet[item.buffType])
+                if (item.type != ItemID.NebulaPickup1 && item.type != ItemID.NebulaPickup2 && item.type != ItemID.NebulaPickup3 && item.buffType > 0 && !BuffID.Sets.IsWellFed[item.buffType] && !Main.buffNoTimeDisplay[item.buffType] && !Main.vanityPet[item.buffType] && !Main.lightPet[item.buffType])
                 {
                     potions.Add(item);
                 }

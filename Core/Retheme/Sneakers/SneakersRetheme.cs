@@ -15,6 +15,7 @@ using CalRemix.UI;
 using Terraria.UI;
 using Terraria.DataStructures;
 using CalRemix.Core.Retheme.Sneakers;
+using System;
 
 namespace CalRemix.Core.Retheme
 {
@@ -440,38 +441,44 @@ namespace CalRemix.Core.Retheme
 
                 Asset<Texture2D>[] MinecartMechTexture = OriginalMechCartTexture;
                 Asset<Texture2D>[] CuteFishronTexture = OriginalCuteFishronTexture;
-
-                if (Mount.mounts[MountID.MinecartMech] != null)
+                try
                 {
-                    Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
-                    if(minecartMech != null)
+                    if (Mount.mounts?[MountID.MinecartMech] != null)
                     {
-                        minecartMech.frontTexture = MinecartMechTexture[0];
-                        minecartMech.frontTextureGlow = MinecartMechTexture[1];
-                        minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                        Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
+                        if (minecartMech != null)
+                        {
+                            minecartMech.frontTexture = MinecartMechTexture[0];
+                            minecartMech.frontTextureGlow = MinecartMechTexture[1];
+                            minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                        }
+                    }
+
+                    if (Mount.mounts?[MountID.CuteFishron] != null)
+                    {
+                        Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
+                        if (cuteFishron != null)
+                        {
+                            cuteFishron.backTexture = CuteFishronTexture[0];
+                            cuteFishron.backTextureGlow = CuteFishronTexture[1];
+                            cuteFishron.frontTexture = Asset<Texture2D>.Empty;
+                            cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
+                            cuteFishron.textureWidth = CuteFishronTexture[0].Width();
+                        }
+                    }
+
+                    if (MountLoader.GetMount(MountType<DraedonGamerChairMount>())?.MountData != null)
+                    {
+                        var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>())?.MountData;
+                        throneData.backTexture = OriginalThroneBackTexture;
+                        throneData.frontTexture = OriginalThroneTexture;
+                        throneData.frontTextureGlow = OriginalThroneGlowTexture;
+                        throneData.textureWidth = throneData.frontTexture.Width();
                     }
                 }
-
-                if (Mount.mounts[MountID.CuteFishron] != null)
+                catch 
                 {
-                    Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
-                    if(cuteFishron != null)
-                    {
-                        cuteFishron.backTexture = CuteFishronTexture[0];
-                        cuteFishron.backTextureGlow = CuteFishronTexture[1];
-                        cuteFishron.frontTexture = Asset<Texture2D>.Empty;
-                        cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
-                        cuteFishron.textureWidth = CuteFishronTexture[0].Width();
-                    }
-                }
-
-                if (MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData != null)
-                {
-                    var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>())?.MountData;
-                    throneData.backTexture = OriginalThroneBackTexture;
-                    throneData.frontTexture = OriginalThroneTexture;
-                    throneData.frontTextureGlow = OriginalThroneGlowTexture;
-                    throneData.textureWidth = throneData.frontTexture.Width();
+                    Console.WriteLine("This entire block is being bad");
                 }
 
                 TextureAssets.AccShield[ArmorIDs.Shield.ShieldofCthulhu] = originalSocTexture;
