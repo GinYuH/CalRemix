@@ -55,7 +55,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<DrewsWings>(1).
+                AddIngredient<WingsofRebirth>(1).
                 AddIngredient(ItemID.EmpressFlightBooster).
                 AddIngredient<MOAB>(1).
                 AddIngredient(ItemID.SoulofFlight, 20).

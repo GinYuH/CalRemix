@@ -29,7 +29,6 @@ namespace CalRemix.Content.NPCs.Minibosses
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.BlueSlime];
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
 
             if (Main.dedServ)
                 return;

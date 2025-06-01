@@ -831,10 +831,6 @@ namespace CalRemix.Core.World
                     CalRemixNPC.aspidCount = 0;
                 }
             }
-            if (CalamityWorld.spawnedCirrus)
-            {
-                CalamityWorld.spawnedCirrus = false;
-            }
             if (!guideHasExisted)
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
             if (shrinetoggle)

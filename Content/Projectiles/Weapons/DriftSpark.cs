@@ -74,7 +74,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                 target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 120);
                 target.AddBuff(BuffID.OnFire3, 120);
                 target.AddBuff(ModContent.BuffType<HolyFlames>(), 120);
-                target.AddBuff(ModContent.BuffType<KamiFlu>(), 120);
                 target.AddBuff(BuffID.Frostburn2, 120);
                 target.AddBuff(BuffID.Venom, 120);
             }

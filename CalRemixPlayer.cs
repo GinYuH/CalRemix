@@ -627,8 +627,6 @@ namespace CalRemix
                     FandomWikiLogic();
                 if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(NPCType<Hypnos>()))
                     Player.Calamity().monolithExoShader = 30;
-                if (Main.mouseItem.type == ItemType<CirrusCouch>() || Main.mouseItem.type == ItemType<CrystalHeartVodka>())
-                    Main.mouseItem.stack = 0;
                 if (ScreenHelpersUIState.BizarroFanny != null)
                 {
                     if (ScreenHelpersUIState.BizarroFanny.Speaking && ScreenHelpersUIState.BizarroFanny.UsedMessage.Portrait == ScreenHelperManager.Portraits["BizarroFannyGoner"])
@@ -809,8 +807,6 @@ namespace CalRemix
         {
             if (Main.myPlayer == Player.whoAmI)
                 ManageItemsInUse(Player, Player.HeldItem, Main.mouseItem, ref commonItemHoldTimer);
-            if (Player.HeldItem.type == ItemType<CirrusCouch>() || Player.HeldItem.type == ItemType<CrystalHeartVodka>())
-                Player.HeldItem.stack = 0;
             if (Player.HeldItem.type == ItemType<TwistedNetheriteShovel>() && Player.itemAnimation == Player.itemAnimationMax && Player.IsTargetTileInItemRange(Player.HeldItem))
             {
                 for (int i = Player.tileTargetX - 4; i <= Player.tileTargetX + 4; i++)

@@ -30,7 +30,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         public override void SetStaticDefaults()
         {
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Plague>()] = true;
         }
         public override bool SpecialOnKill()

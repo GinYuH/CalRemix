@@ -349,15 +349,6 @@ Meth: {
 	Tooltip: These fine crystals feel very powerful
 }
 
-NotFabsolVodka: {
-	DisplayName: Fluorescent Vodka
-	Tooltip:
-		'''
-		Boosts all damage stats by 8% but lowers defense by 10%
-		Increases immune time after being struck
-		'''
-}
-
 AcesLow: {
 	DisplayName: Ace's Low
 	Tooltip: Fires a string of piercing spade cards when musket balls are used as ammo
@@ -4487,9 +4478,4 @@ ActivatedHealingPotion: {
 SeedyCD: {
 	DisplayName: Seedy CD
 	Tooltip: Summons an ugly grey creature to carry you around
-}
-
-SubworldDoor: {
-	DisplayName: Subworld Door
-	Tooltip: ""
 }
