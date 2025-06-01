@@ -8,15 +8,15 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Reference Include="lib/**/*.dll"/>
+    <Reference Include="lib/**/*.dll" />
   </ItemGroup>
   
   <ItemGroup>
-    <None Remove="TomatsSecretAwesomeStuff\**"/>
-    <Content Remove="TomatsSecretAwesomeStuff\**"/>
-    <Compile Remove="TomatsSecretAwesomeStuff\**"/>
-    <EmbeddedResource Remove="TomatsSecretAwesomeStuff\**"/>
-    <AdditionalFiles Remove="TomatsSecretAwesomeStuff\**"/>
+    <None Remove="TomatsSecretAwesomeStuff\**" />
+    <Content Remove="TomatsSecretAwesomeStuff\**" />
+    <Compile Remove="TomatsSecretAwesomeStuff\**" />
+    <EmbeddedResource Remove="TomatsSecretAwesomeStuff\**" />
+    <AdditionalFiles Remove="TomatsSecretAwesomeStuff\**" />
   </ItemGroup>
   
   <ItemGroup>

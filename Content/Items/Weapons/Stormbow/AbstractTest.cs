@@ -28,6 +28,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override bool? UseItem(Player player)
         {
             Vector2 mouseWorld = Main.MouseWorld / 16;
+            Point point = new Point((int)mouseWorld.X, (int)mouseWorld.Y);
 
             Dust.NewDust(Main.MouseWorld, 1, 1, DustID.AmberBolt);
             //WorldGen.digTunnel(mouseWorld.X, mouseWorld.Y, 0, 0, 1, 10);
@@ -36,34 +37,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //Main.tile[(int)mouseWorld.X, (int)mouseWorld.Y].TileType = TileID.Mythril;
             //WorldGen.PlaceTile((int)mouseWorld.X, (int)mouseWorld.Y, TileID.Mythril);
             //WorldUtils.Gen(point, new Shapes.Mound(5, 5), new Actions.PlaceTile(TileID.PineTree));
-            Point point = new Point((int)mouseWorld.X, (int)mouseWorld.Y);
             int trunkHeightAmount = 10;
-            List<int> pointsForFronds = new List<int>();
             int individualHeight = 5;
-            // trunk
-            for (int i = 0; i < trunkHeightAmount; i++)
-            {
-                Point pointAccountForDistance = new Point((int)mouseWorld.X, (int)mouseWorld.Y - (i * individualHeight));
-                WorldUtils.Gen(pointAccountForDistance, new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
-                if (i != 0 && i % 2 == 0)
-                {
-                    pointsForFronds.Add(i);
-                    WorldUtils.Gen(new Point(pointAccountForDistance.X + 3, pointAccountForDistance.Y + individualHeight), new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
-                    WorldUtils.Gen(new Point(pointAccountForDistance.X - 3, pointAccountForDistance.Y + individualHeight), new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
-                }
-            }
-            // leaves
-            int iterationCount = pointsForFronds.Count() * 3;
-            for (int i = 0; i < pointsForFronds.Count(); i++)
-            {
-                for (int ii = 0; ii < iterationCount; ii++)
-                {
-                    Point pointAccountForDistance = new Point((int)mouseWorld.X, (int)mouseWorld.Y - (pointsForFronds[i] * individualHeight));
-                    WorldUtils.Gen(new Point(pointAccountForDistance.X + ii, pointAccountForDistance.Y), new Shapes.Mound(5, (int)(individualHeight * 1.5f)), new Actions.PlaceTile(TileID.PineTree));
-                    WorldUtils.Gen(new Point(pointAccountForDistance.X - ii, pointAccountForDistance.Y), new Shapes.Mound(5, (int)(individualHeight * 1.5f)), new Actions.PlaceTile(TileID.PineTree));
-                }
-                iterationCount -= 3;
-            }
+            makeChristmasTree(point, trunkHeightAmount, individualHeight);
 
             return null;
         }
@@ -123,6 +99,43 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
 
             return new Vector2D(num, num2);
+        }
+
+        /// <summary>
+        /// Makes a Christmas tree in the world.
+        /// </summary>
+        /// <param name="location">The location to start the Christmas tree. Starts at the base of the log.</param>
+        /// <param name="trunkHeightAmount">How tall the tree should be.</param>
+        /// <param name="individualHeight">How tall each segment of the tree should be.</param>
+        public static void makeChristmasTree(Point location, int trunkHeightAmount, int individualHeight)
+        {
+            List<int> pointsForFronds = new List<int>();
+
+            // trunk
+            for (int i = 0; i < trunkHeightAmount; i++)
+            {
+                Point pointAccountForDistance = new Point(location.X, location.Y - (i * individualHeight));
+                WorldUtils.Gen(pointAccountForDistance, new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
+                if (i != 0 && i % 2 == 0)
+                {
+                    pointsForFronds.Add(i);
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X + 3, pointAccountForDistance.Y + individualHeight), new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X - 3, pointAccountForDistance.Y + individualHeight), new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
+                }
+            }
+
+            // leaves
+            int iterationCount = pointsForFronds.Count() * 3;
+            for (int i = 0; i < pointsForFronds.Count(); i++)
+            {
+                for (int ii = 0; ii < iterationCount; ii++)
+                {
+                    Point pointAccountForDistance = new Point(location.X, location.Y - (pointsForFronds[i] * individualHeight));
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X + ii, pointAccountForDistance.Y), new Shapes.Mound(5, (int)(individualHeight * 1.5f)), new Actions.PlaceTile(TileID.PineTree));
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X - ii, pointAccountForDistance.Y), new Shapes.Mound(5, (int)(individualHeight * 1.5f)), new Actions.PlaceTile(TileID.PineTree));
+                }
+                iterationCount -= 3;
+            }
         }
     }
 }

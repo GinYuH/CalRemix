@@ -45,7 +45,7 @@ namespace CalRemix.World
         public const int flashTotal = flashPause + 240;
 
         //Only generates in singleplayer in non cloud save worlds, and only if the player's world didn't already get desert-ed once
-        bool CanGenerate => !gotJumpscared &&!Main.ActiveWorldFileData.IsCloudSave && Main.netMode == NetmodeID.SinglePlayer;
+        bool CanGenerate => !gotJumpscared && !Main.ActiveWorldFileData.IsCloudSave && Main.netMode == NetmodeID.SinglePlayer;
 
         public override void Load()
         {

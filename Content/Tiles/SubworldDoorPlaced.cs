@@ -143,4 +143,12 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
     }
+
+    public class TestDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/Items/Weapons/AergianTechnistaff";
+        public override Subworld BoundSubworld => ModContent.GetInstance<BeautifulWinterWorldSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+    }
 }
