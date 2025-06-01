@@ -77,7 +77,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        int projIn2 = Projectile.NewProjectile(source, new Vector2(Projectile.Center.X + Main.rand.Next(-32, 33), Projectile.Center.Y + Main.rand.Next(-128, -95)), new Vector2(Main.rand.Next(-15, 16), 6), ModContent.ProjectileType<RainbowBlast>(), Projectile.damage / 5, 0, Main.LocalPlayer.whoAmI);
+                        int projIn2 = Projectile.NewProjectile(source, new Vector2(Projectile.Center.X + Main.rand.Next(-32, 33), Projectile.Center.Y + Main.rand.Next(-128, -95)), new Vector2(Main.rand.Next(-15, 16), 6), ModContent.ProjectileType<SuperradiantBolt>(), Projectile.damage / 5, 0, Main.LocalPlayer.whoAmI);
                         Main.projectile[projIn2].tileCollide = false;
                         Main.projectile[projIn2].CritChance = 0;
                     }
@@ -89,7 +89,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        int projIn2 = Projectile.NewProjectile(source, new Vector2(Projectile.Center.X + Main.rand.Next(-32, 33), Projectile.Center.Y + Main.rand.Next(-128, -95)), new Vector2(Main.rand.Next(-15, 16), 6), ModContent.ProjectileType<RainbowBlast>(), Projectile.damage / 5, 0, Main.LocalPlayer.whoAmI);
+                        int projIn2 = Projectile.NewProjectile(source, new Vector2(Projectile.Center.X + Main.rand.Next(-32, 33), Projectile.Center.Y + Main.rand.Next(-128, -95)), new Vector2(Main.rand.Next(-15, 16), 6), ModContent.ProjectileType<SuperradiantBolt>(), Projectile.damage / 5, 0, Main.LocalPlayer.whoAmI);
                         Main.projectile[projIn2].tileCollide = false;
                         Main.projectile[projIn2].CritChance = 0;
                     }

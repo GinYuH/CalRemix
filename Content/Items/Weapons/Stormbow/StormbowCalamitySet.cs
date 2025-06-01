@@ -84,7 +84,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override int damage => 96;
         public override int crit => 28;
         public override int useTime => 2;
-        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<RainbowBlast>() };
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<SuperradiantBolt>() };
         public override int arrowAmount => 12;
         public override OverallRarity overallRarity => OverallRarity.Purple;
         public override void AddRecipes()

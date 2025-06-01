@@ -103,7 +103,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<ElementalBlaster>(1).
+                AddIngredient<SuperradiantSlaughterer>(1).
                 AddIngredient<ClockGatlignum>(1).
                 AddIngredient<TyrannysEnd>(1).
                 AddIngredient<Infinity>(1).
