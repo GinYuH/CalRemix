@@ -89,6 +89,7 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
@@ -1993,6 +1994,11 @@ namespace CalRemix
                     pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
                 }
 
+                return;
+            }
+            if (SubworldSystem.IsActive<ScreamingSubworld>())
+            {
+                pool.Clear();
                 return;
             }
             //Wizard can't respawn

@@ -48,6 +48,8 @@ namespace CalRemix
                 Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
                 SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
+                Filters.Scene["CalRemix:ScreamingFaceSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:ScreamingFaceSky"] = new ScreamingFaceSky();
             }
 
             AssetRepository remixAsset = Mod.Assets;

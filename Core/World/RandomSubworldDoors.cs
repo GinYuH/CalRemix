@@ -24,58 +24,66 @@ namespace CalRemix.Core.World
         {
             for (int d = 0; d < doorTypes.Count; d++)
             {
-                bool shouldbreak = false;
-                for (int att = 0; att < 200; att++)
+                GenerateDoorRandom(doorTypes[d]);
+            }
+        }
+
+        public static void GenerateDoorRandom(int type)
+        {
+            bool shouldbreak = false;
+            int boundX = (int)(Main.maxTilesY * 0.2f);
+            int boundY = (int)(Main.maxTilesY * 0.1f);
+            int worldSize = Main.maxTilesX * Main.maxTilesY;
+            for (int att = 0; att < 200; att++)
+            {
+                if (shouldbreak)
+                {
+                    break;
+                }
+                for (int i = boundX; i < Main.maxTilesX - boundX; i++)
                 {
                     if (shouldbreak)
                     {
                         break;
                     }
-                    for (int i = 200; i < Main.maxTilesX - 200; i++)
+                    for (int j = boundY; j < Main.maxTilesY - boundY; j++)
                     {
                         if (shouldbreak)
                         {
                             break;
                         }
-                        for (int j = 200; j < Main.maxTilesY - 200; j++)
+                        if (Main.rand.NextBool(worldSize))
                         {
-                            if (shouldbreak)
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile next = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                            if (t != null && t.HasTile && t.IsTileSolidGround() && next != null && next.HasTile && next.IsTileSolidGround())
                             {
-                                break;
-                            }
-                            if (Main.rand.NextBool(222222))
-                            {
-                                Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                                Tile next = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
-                                if (t != null && t.HasTile && t.IsTileSolidGround() && next != null && next.HasTile && next.IsTileSolidGround())
+                                bool emptySpace = true;
+                                for (int k = i; k < i + 2; k++)
                                 {
-                                    bool emptySpace = true;
-                                    for (int k = i; k < i + 2; k++)
+                                    for (int l = j - 1; l > j - 4; l--)
                                     {
-                                        for (int l = j - 1; l > j - 4; l--)
+                                        Tile u = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                        if (u == null || u.HasTile || u.LiquidAmount > 0)
                                         {
-                                            Tile u = CalamityUtils.ParanoidTileRetrieval(k, l);
-                                            if (u == null || u.HasTile || u.LiquidAmount > 0)
-                                            {
-                                                emptySpace = false;
-                                                break;
-                                            }
+                                            emptySpace = false;
+                                            break;
                                         }
                                     }
-                                    if (emptySpace)
-                                    {
-                                        t.ResetToType(t.TileType);
-                                        next.ResetToType(next.TileType);
-                                        WorldGen.PlaceTile(i + 1, j - 1, doorTypes[d]);
-                                        //Main.LocalPlayer.position = new Vector2(i, j - 3) * 16;
-                                        shouldbreak = true;
-                                    }
-                                    break;
                                 }
+                                if (emptySpace)
+                                {
+                                    t.ResetToType(t.TileType);
+                                    next.ResetToType(next.TileType);
+                                    WorldGen.PlaceTile(i + 1, j - 1, type);
+                                    //Main.LocalPlayer.position = new Vector2(i, j - 3) * 16;
+                                    shouldbreak = true;
+                                }
+                                break;
                             }
                         }
                     }
-                }
+                }                
             }
         }
     }
