@@ -11,7 +11,7 @@ namespace CalRemix.Core.World
 {
     public class BaronStrait : ModSystem
     {
-        public static void GenerateBaronStrait(bool? left)
+        public static void GenerateBaronStrait(bool? left, bool full = false)
         {
             // Position and distance variables, seed and side dependent 
             int posX = left == true || left == null ? 0 : Main.maxTilesX - WorldGen.beachDistance;
@@ -22,7 +22,7 @@ namespace CalRemix.Core.World
             Rectangle straitRect = new Rectangle(posX, 0, distX, distY);
 
             // Generate the main terrain
-            GenerateBlocks(straitRect);
+            GenerateBlocks(straitRect, full);
 
             // Generate Tanzanite crystals
             GenerateTanzanite(straitRect);
@@ -59,7 +59,7 @@ namespace CalRemix.Core.World
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
         }
 
-        public static void GenerateBlocks(Rectangle straitRect)
+        public static void GenerateBlocks(Rectangle straitRect, bool full = false)
         {
             int sizeX = straitRect.Width;
             int sizeY = straitRect.Height;
@@ -98,8 +98,8 @@ namespace CalRemix.Core.World
                         {
                             continue;
                         }
-                        int checX = WorldGen.currentWorldSeed.ToLower() == "banishedbaron" ? Main.maxTilesX : 0;
-                        int checY = WorldGen.currentWorldSeed.ToLower() == "banishedbaron" ? Main.maxTilesY : 0;
+                        int checX = WorldGen.currentWorldSeed.ToLower() == "banishedbaron" || full ? Main.maxTilesX : 0;
+                        int checY = WorldGen.currentWorldSeed.ToLower() == "banishedbaron" || full ? Main.maxTilesY : 0;
                         // Cell stuff
                         int sur = SurroundingTileCounts(map, i, j, checX, checY);
                         int sur2 = SurroundingTileCounts(sandMap, i, j, checX, checY);

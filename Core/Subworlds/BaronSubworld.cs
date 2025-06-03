@@ -24,7 +24,7 @@ namespace CalRemix.Core.Subworlds
             new PassLegacy("Banishing The Baron", (progress, config) =>
                 {
                     progress.Message = "Creating a Baron Wasteland";
-                    BaronStrait.GenerateBaronStrait(null);
+                    BaronStrait.GenerateBaronStrait(null, true);
                 })
         };
 
