@@ -8,8 +8,6 @@ namespace CalRemix.Content.Items.Placeables
 {
     public class SubworldDoor : ModItem
     {
-        public override string Texture => "CalRemix/Assets/ExtraTextures/SludgeCannon";
-
         public override void SetDefaults()
         {
             Item.width = 20;
@@ -22,7 +20,8 @@ namespace CalRemix.Content.Items.Placeables
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<NormalDoor>();
+            Item.createTile = ModContent.TileType<BaronDoor>();
+            Item.placeStyle = Main.rand.Next(0, 3);
         }
     }
 }

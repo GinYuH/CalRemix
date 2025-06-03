@@ -25,6 +25,8 @@ namespace CalRemix.Content.Tiles
         public virtual string PreviewTexName => null;
         public virtual Subworld BoundSubworld => null;
 
+        public virtual Color DoorColor => Color.White;
+
         public override void Load()
         {
             if (!Main.dedServ)
@@ -108,15 +110,18 @@ namespace CalRemix.Content.Tiles
             NetMessage.SendTileSquare(-1, x, y + 1, 3);
         }
 
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile t = Main.tile[i, j];
-            if (t.TileFrameX == 18 && t.TileFrameY == 90)
+            if (t.TileFrameX % 36 == 0 && t.TileFrameY == 54)
             {
                 Texture2D tex = PreviewTex.Value;
                 Vector2 tileSize = new Vector2(32, 54);
-                Main.EntitySpriteDraw(tex, new Vector2(i - 1, j - 2) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Color.White, 0, Vector2.Zero, tileSize / tex.Size(), 0);
+                Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Color.White, 0, Vector2.Zero, tileSize / tex.Size(), 0);
             }
+            Main.EntitySpriteDraw(TextureAssets.Tile[Type].Value, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, new Rectangle(t.TileFrameX, t.TileFrameY, 16, 16), Lighting.GetColor(i, j, DoorColor), 0, Vector2.Zero, 1, 0);
+
+            return false;
         }
     }
 
@@ -126,6 +131,8 @@ namespace CalRemix.Content.Tiles
         public override Subworld BoundSubworld => ModContent.GetInstance<ExosphereSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+
+        public override Color DoorColor => Color.DarkGray;
     }
 
     public class BaronDoor : SubworldDoorPlaced
@@ -134,6 +141,7 @@ namespace CalRemix.Content.Tiles
         public override Subworld BoundSubworld => ModContent.GetInstance<BaronSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.DarkCyan;
     }
 
     public class NormalDoor : SubworldDoorPlaced
@@ -142,6 +150,7 @@ namespace CalRemix.Content.Tiles
         public override Subworld BoundSubworld => ModContent.GetInstance<NormalSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.Brown;
     }
 
     public class TestDoor : SubworldDoorPlaced
@@ -150,5 +159,6 @@ namespace CalRemix.Content.Tiles
         public override Subworld BoundSubworld => ModContent.GetInstance<BeautifulWinterWorldSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.FloralWhite;
     }
 }
