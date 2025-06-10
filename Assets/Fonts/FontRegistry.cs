@@ -31,4 +31,26 @@ public class FontRegistry : ModSystem
             return FontAssets.MouseText.Value;
         }
     }
+
+    public DynamicSpriteFont WorkbenchDelicateText
+    {
+        get
+        {
+            if (Main.netMode != NetmodeID.Server && CanLoadFonts)
+                return Mod.Assets.Request<DynamicSpriteFont>("Assets/Fonts/WorkbenchDelicateText", AssetRequestMode.ImmediateLoad).Value;
+
+            return FontAssets.MouseText.Value;
+        }
+    }
+
+    public DynamicSpriteFont JacquardaBastarda9ChartedText
+    {
+        get
+        {
+            if (Main.netMode != NetmodeID.Server && CanLoadFonts)
+                return Mod.Assets.Request<DynamicSpriteFont>("Assets/Fonts/JacquardaBastarda9ChartedText", AssetRequestMode.ImmediateLoad).Value;
+
+            return FontAssets.MouseText.Value;
+        }
+    }
 }

@@ -53,6 +53,9 @@ namespace CalRemix.UI
         //Timer that ticks down after a message has been spoken. Lasts one second
         public int talkCooldown;
 
+        //universal on start
+        public Action OnStartUniversal;
+
         /// <summary>
         /// Checks if currently speaking a message. Ignores messages that the helper is already "speaking" but haven't showed yet due to a delay time
         /// </summary>
@@ -236,6 +239,12 @@ namespace CalRemix.UI
             SpeechBubble.outlineThickness = outlineThickness;
             SpeechBubble.backgroundPadding = textBorderPadding;
 
+            return this;
+        }
+
+        public ScreenHelper SetOnStartUniversal(Action action)
+        {
+            OnStartUniversal += action;
             return this;
         }
         #endregion
@@ -738,8 +747,9 @@ namespace CalRemix.UI
 
             LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(130, 166), true)
                 .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
-                .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.AliceBlue), FontRegistry.Instance.TimesNewRomanText)
+                .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.LightSlateGray), FontRegistry.Instance.WorkbenchDelicateText)
                 .SetExtraAnimations(false, false, false)
+                .SetOnStartUniversal(ScreenHelperManager.SpinQoC)
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCUnlocked && Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
                 .SetPositionData(new HelperPositionData(
                     new Vector2(1, 0), // anchored to bottom middle, a little shifted to the left
@@ -1988,8 +1998,8 @@ namespace CalRemix.UI
             currentSpeaker.needsToShake = true;
             SoundEngine.PlaySound(SoundID.MenuOpen);
             SoundEngine.PlaySound(voiceOverride ?? currentSpeaker.speakingSound);
+            currentSpeaker.OnStartUniversal?.Invoke();
             OnStart?.Invoke();
-
 
             //Hook
             ScreenHelperManager.OnMessageStartCall(this);

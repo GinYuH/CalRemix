@@ -70,6 +70,12 @@ namespace CalRemix.UI
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().timeUntilNextQoCAction_Heavy = HelperHelpers.GetTimeUntilNextStage(QoC_timeAwakeToAsleep);
             Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentQoCState = (int)QoCPlayer.QoCState.Awake_Idle;
         }
+
+        public static void SpinQoC()
+        {
+            Main.LocalPlayer.GetModPlayer<QoCPlayer>().rateOfSpinExtra = 0.25f * Main.LocalPlayer.GetModPlayer<QoCPlayer>().spinReverse;
+            Main.LocalPlayer.GetModPlayer<QoCPlayer>().bounce = 1;
+        }
     }
 
     public class QoCPlayer : ModPlayer
