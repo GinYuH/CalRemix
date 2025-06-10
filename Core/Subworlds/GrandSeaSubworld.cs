@@ -1,0 +1,132 @@
+﻿using System.Collections.Generic;
+using Terraria;
+using SubworldLibrary;
+using Terraria.WorldBuilding;
+using Terraria.IO;
+using Terraria.ModLoader;
+using CalamityMod.Tiles.FurnitureExo;
+using System;
+using CalamityMod.Tiles.Ores;
+using Microsoft.Xna.Framework;
+using Terraria.GameContent;
+using Terraria.ID;
+using CalRemix.Core.World;
+using CalRemix.Content.Tiles;
+using Terraria.Graphics.Effects;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalamityMod;
+using Terraria.Audio;
+
+namespace CalRemix.Core.Subworlds
+{
+    public class GrandSeaSubworld : Subworld
+    {
+        public override int Height => 2000;
+        public override int Width => 6400;
+        public override List<GenPass> Tasks => new List<GenPass>()
+        {
+            new GrandSeaGeneration()
+        };
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+        }
+
+        public override void Update()
+        {
+            //Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:ScreamingFaceSky", true);
+            //SkyManager.Instance.Activate("CalRemix:ScreamingFaceSky", Main.LocalPlayer.position);
+            base.Update();
+        }
+
+        public override void DrawMenu(GameTime gameTime)
+        {
+            base.DrawMenu(gameTime);
+            string str = CalRemixHelper.LocalText("StatusText.Screaming").Value;
+            Vector2 size = FontAssets.MouseText.Value.MeasureString(str) * 2;
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth * 2, Main.screenHeight * 2), Color.Black, 0, Vector2.Zero, 1, 0, 0);
+            Utils.DrawBorderString(Main.spriteBatch,
+                str,
+                Main.ScreenSize.ToVector2() * 0.5f - size * 0.5f, Color.White, 2);
+
+        }
+    }
+    public class GrandSeaGeneration : GenPass
+    {
+        public static float groundTop = 0.5f;
+        public static float groundBottom = 0.51f;
+        public static float caveBottom = 0.8f;
+
+        public GrandSeaGeneration() : base("Terrain", 1) { }
+
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Generating terrain"; // Sets the text displayed for this pass
+            Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
+            Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
+
+            GenerateBottom();
+            GeneratePrimordialDepths();
+            GenerateCaves();
+            GenerateSurface();
+            GenerateDebris();
+            GenerateIslands();
+
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = (int)(Main.maxTilesY * 0.1f); j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    t.LiquidAmount = 255;
+                    t.LiquidType = LiquidID.Water;
+                }
+            }
+
+
+            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GrandSeaDoor>());
+        }
+
+        public static void GenerateBottom()
+        {
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                float height = CalamityUtils.PerlinNoise2D(i / 380f, 0, 3, (int)Main.GlobalTimeWrappedHourly + Main.rand.Next(0, 50));
+
+                for (int j = Main.maxTilesY - 80; j < Main.maxTilesY; j++)
+                {
+                    Tile t = Main.tile[i, j];
+                    t.ResetToType((ushort)TileID.Obsidian);
+                }
+            }
+        }
+
+        public static void GeneratePrimordialDepths()
+        {
+            int y = (int)(Main.maxTilesY * caveBottom);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: TileID.Titanstone);
+        }
+
+        public static void GenerateCaves()
+        {
+            int y = (int)(Main.maxTilesY * groundBottom);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.5f, noiseSize: new Vector2(240, 180), tileType: TileID.Stone);
+        }
+
+        public static void GenerateSurface()
+        {
+            int y = (int)(Main.maxTilesY * groundTop);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundBottom) - y), noiseSize: new Vector2(100, 80), tileType: TileID.GreenMoss);
+        }
+
+        public static void GenerateDebris()
+        {
+
+        }
+
+        public static void GenerateIslands()
+        {
+
+        }
+    }
+}

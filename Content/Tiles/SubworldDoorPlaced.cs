@@ -164,10 +164,19 @@ namespace CalRemix.Content.Tiles
 
     public class ScreamDoor : SubworldDoorPlaced
     {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/ScreamingMummifiedFace";
+        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/ScreamingFacePreview";
         public override Subworld BoundSubworld => ModContent.GetInstance<ScreamingSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.GhostWhite;
+    }
+
+    public class GrandSeaDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/GrandSeaPreview";
+        public override Subworld BoundSubworld => ModContent.GetInstance<GrandSeaSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.RoyalBlue;
     }
 }
