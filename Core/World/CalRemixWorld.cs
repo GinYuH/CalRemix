@@ -637,9 +637,9 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
-            /*if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
+            /*if (Main.LocalPlayer.controlUseItem)
             {
-                RandomSubworldDoors.GenerateRandomSubworldDoors();
+                CalRemixHelper.PerlinGeneration(new Rectangle((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, 100, 100), wallType: WallID.AmberGemspark, noiseSize: new Vector2(MathHelper.Lerp(10, 300, Main.LocalPlayer.selectedItem / 10f)));
             }*/
             if (worldLoadCounter < 180)
                 worldLoadCounter++;

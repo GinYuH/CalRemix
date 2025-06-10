@@ -1,4 +1,7 @@
-﻿using CalRemix.Content.Projectiles;
+﻿using CalamityMod;
+using CalRemix.Content.Projectiles;
+using CalRemix.Content.Tiles;
+using CalRemix.Content.Walls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -336,6 +339,109 @@ namespace CalRemix
                 if (Main.projectile[i].active && desiredTypes.Contains(Main.projectile[i].type))
                     yield return Main.projectile[i];
             }
+        }
+
+        /// <summary>
+        /// Generates a rectangle of tiles and/or walls using noise
+        /// </summary>
+        /// <param name="area">The rectangle</param>
+        /// <param name="noiseThreshold">How open should caves be? Scales between 0f and 1f</param>
+        /// <param name="noiseSize">The zoom of the noise. Higher values means more zoomed in. Set to 120, 180 by default, the same as the Baron Strait</param>
+        /// <param name="tileType">The tile to place</param>
+        /// <param name="wallType">The wall to place</param>
+        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0)
+        {
+
+            int sizeX = area.Width;
+            int sizeY = area.Height;
+
+            // Map to store what blocks should be converted
+            bool[,] map = new bool[sizeX, sizeY];
+
+            // default Baron Strait numbers
+            if (noiseSize == default)
+            {
+                noiseSize.X = 180f;
+                noiseSize.Y = 120f;
+            }
+
+            // Create a perlin noise map
+            for (int i = 0; i < area.Width; i++)
+            {
+                for (int j = 0; j < area.Height; j++)
+                {
+                    float noise = CalamityUtils.PerlinNoise2D(i / noiseSize.X, j / noiseSize.Y, 3, (int)Main.GlobalTimeWrappedHourly) * 0.5f + 0.5f;
+                    map[i, j] = MathHelper.Distance(noise, noiseThreshold) < 0.1f;
+                }
+            }
+            // Iterate through the map and add blocks/walls accordingly
+            for (int gdv = 0; gdv < 1; gdv++)
+            {
+                for (int i = 0; i < area.Width; i++)
+                {
+                    for (int j = 0; j < area.Height; j++)
+                    {
+                        if (!WorldGen.InWorld(area.X + i, area.Y + j))
+                        {
+                            continue;
+                        }
+                        Tile t = Main.tile[area.X + i, area.Y + j];
+                        if (t.HasTile)
+                        {
+                            continue;
+                        }
+                        // Cell stuff
+                        int sur = SurroundingTileCounts(map, i, j, area.Width, area.Height);
+
+                        // If there are more than 4 nearby nodes, place some
+                        if (sur > 4 && (tileType != -1 || wallType != 0))
+                        {
+                            if (tileType != -1)
+                            {
+                                t.ResetToType((ushort)tileType);
+                                WorldGen.SquareTileFrame(area.X + i, area.Y + j);
+                            }
+                            if (wallType != 0)
+                            {
+                                t.WallType = (ushort)wallType;
+                                WorldGen.SquareWallFrame(area.X + i, area.Y + j);
+                            }
+                            map[i, j] = true;
+                        }
+                        // If there are less than 4 nodes nearby, remove
+                        else if (sur < 4)
+                        {
+                            t.ClearEverything();
+                            map[i, j] = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        // thank you random youtube video
+        // https://www.youtube.com/watch?v=v7yyZZjF1z4
+        public static int SurroundingTileCounts(bool[,] map, int x, int y, int checkDistX = 0, int chestDistY = 0)
+        {
+            int wallCount = 0;
+            for (int neighbourX = x - 1; neighbourX <= x + 1; neighbourX++)
+            {
+                for (int neighbourY = y - 1; neighbourY <= y + 1; neighbourY++)
+                {
+                    if (neighbourX >= 0 && neighbourX < checkDistX && neighbourY >= 0 && neighbourY < chestDistY)
+                    {
+                        if (neighbourX != x || neighbourY != y)
+                        {
+                            wallCount += map[neighbourX, neighbourY].ToInt();
+                        }
+                    }
+                    else
+                    {
+                        wallCount++;
+                    }
+                }
+            }
+            return wallCount;
         }
     }
 
