@@ -632,7 +632,10 @@ namespace CalRemix.UI
             }
 
             // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, ParentSpeaker.textboxFont, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+            if (ParentSpeaker.Name == "QueenOfClubs")
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, ParentSpeaker.textboxFont, text, textDrawPosition.X, textDrawPosition.Y, palette.text * 10, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+            else
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, ParentSpeaker.textboxFont, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
 
             // not final actually draw the guy over the box if desired
             if (ParentSpeaker.renderOverBackground)
@@ -747,7 +750,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(130, 166), true)
                 .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
-                .SetTextboxStyle("test", new HelperTextboxPalette(Color.AliceBlue, Color.Black * 0.2f, Color.Black, Color.Black, Color.LightSlateGray), FontRegistry.Instance.WorkbenchDelicateText)
+                .SetTextboxStyle("test", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Black, Color.Black, Color.LightSlateGray), FontRegistry.Instance.WorkbenchDelicateText)
                 .SetExtraAnimations(false, false, false)
                 .SetOnStartUniversal(ScreenHelperManager.SpinQoC)
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCUnlocked && Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
@@ -1642,10 +1645,10 @@ namespace CalRemix.UI
             return msg;
         }
 
-            /// <summary>
-            /// Makes the message be spoken by evil fanny
-            /// </summary>
-            public HelperMessage SpokenByEvilFanny(bool ignoreHardmodeUnlockCondition = false)
+        /// <summary>
+        /// Makes the message be spoken by evil fanny
+        /// </summary>
+        public HelperMessage SpokenByEvilFanny(bool ignoreHardmodeUnlockCondition = false)
         {
             DesiredSpeaker = ScreenHelpersUIState.EvilFanny;
             IgnoreSpeakerSpecificCondition = ignoreHardmodeUnlockCondition;
