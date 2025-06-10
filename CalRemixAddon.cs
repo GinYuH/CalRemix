@@ -36,6 +36,7 @@ using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using System.Reflection;
 using CalRemix.Content.NPCs.Eclipse;
+using Terraria.ModLoader.Core;
 
 namespace CalRemix
 {
@@ -419,7 +420,7 @@ namespace CalRemix
             }
             if (Wrath != null)
             {
-                Type[] r = Wrath.Code.GetTypes();
+                Type[] r = AssemblyManager.GetLoadableTypes(Wrath.Code);
                 foreach (Type mn in r)
                 {
                     if (mn.Name == "AvatarUniverseExplorationSystem")
