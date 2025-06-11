@@ -639,7 +639,7 @@ namespace CalRemix.Core.World
         {
             /*if (Main.LocalPlayer.controlUseItem)
             {
-                CalRemixHelper.PerlinGeneration(new Rectangle((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, 100, 100), wallType: WallID.AmberGemspark, noiseSize: new Vector2(MathHelper.Lerp(10, 300, Main.LocalPlayer.selectedItem / 10f)));
+                CalRemixHelper.PerlinGeneration(new Rectangle((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, 100, 100), tileType: TileID.Titanstone, noiseSize: new Vector2(MathHelper.Lerp(10, 300, 0.4f)), ease: (PerlinEase)MathHelper.Min(Main.LocalPlayer.selectedItem, Enum.GetValues<PerlinEase>().Length - 1));
             }*/
             if (worldLoadCounter < 180)
                 worldLoadCounter++;

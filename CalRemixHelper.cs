@@ -341,6 +341,39 @@ namespace CalRemix
             }
         }
 
+
+        public enum PerlinEase
+        {
+            /// <summary>
+            /// No easing, all of the noise is consistent
+            /// </summary>
+            None = 0,
+            /// <summary>
+            /// Top starts solid and becomes noise
+            /// </summary>
+            EaseInTop = 1,
+            /// <summary>
+            /// Top is noise, bottom is air
+            /// </summary>
+            EaseOutBottom = 2,
+            /// <summary>
+            /// Top and bottom are solid, middle is noise
+            /// </summary>
+            EaseInOut = 3,
+            /// <summary>
+            /// Top and bottom are noise, middle is solid
+            /// </summary>
+            EaseOutIn = 4,
+            /// <summary>
+            /// Top is noise, bottom is solid
+            /// </summary>
+            EaseInBottom = 5,
+            /// <summary>
+            /// Top is air, bottom is noise
+            /// </summary>
+            EaseOutTop = 6
+        }
+
         /// <summary>
         /// Generates a rectangle of tiles and/or walls using noise
         /// </summary>
@@ -350,7 +383,7 @@ namespace CalRemix
         /// <param name="noiseSize">The zoom of the noise. Higher values means more zoomed in. Set to 120, 180 by default, the same as the Baron Strait</param>
         /// <param name="tileType">The tile to place</param>
         /// <param name="wallType">The wall to place</param>
-        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, float noiseStrength = 0.1f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0)
+        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, float noiseStrength = 0.1f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0, PerlinEase ease = PerlinEase.None, float topStop = 0.3f, float bottomStop = 0.7f)
         {
 
             int sizeX = area.Width;
@@ -372,7 +405,45 @@ namespace CalRemix
                 for (int j = 0; j < area.Height; j++)
                 {
                     float noise = CalamityUtils.PerlinNoise2D(i / noiseSize.X, j / noiseSize.Y, 3, (int)Main.GlobalTimeWrappedHourly) * 0.5f + 0.5f;
-                    map[i, j] = MathHelper.Distance(noise, noiseThreshold) < noiseStrength;
+
+                    float endPoint = noiseThreshold;
+                    switch (ease)
+                    {
+                        case PerlinEase.EaseInTop:
+                            endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseOutBottom:
+                            endPoint = MathHelper.Lerp(noiseThreshold, 0, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseInOut:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(1f, bottomStop, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseOutTop:
+                            endPoint = MathHelper.Lerp(0, noiseThreshold, Utils.GetLerpValue(0f, topStop, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseInBottom:
+                            endPoint = MathHelper.Lerp(noiseThreshold, noise, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseOutIn:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0.5f, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0.5f, bottomStop, (j / (float)area.Height), true));
+                            }
+                            break;
+                    }
+
+                    map[i, j] = MathHelper.Distance(noise, endPoint) < noiseStrength;
                 }
             }
             // Iterate through the map and add blocks/walls accordingly
@@ -415,6 +486,36 @@ namespace CalRemix
                             t.ClearEverything();
                             map[i, j] = false;
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generations perlin-based surface terrain
+        /// </summary>
+        /// <param name="area">The area to generate it</param>
+        /// <param name="tileType">The tile type</param>
+        /// <param name="iterations">How many iterations should be done</param>
+        /// <param name="variance">Height variance in tiles</param>
+        /// <param name="perlinBottom">Smoothen the bottom like the top</param>
+        public static void PerlinSurface(Rectangle area, int tileType, int iterations = 3, int variance = 20, bool perlinBottom = false)
+        {
+            int baseHeight = area.Y;
+            int noiseSeed = WorldGen.genRand.Next(0, int.MaxValue);
+            int noiseSeedBottom = WorldGen.genRand.Next(0, int.MaxValue);
+            for (int i = area.X; i < area.X + area.Width; i++)
+            {
+                float height = CalamityUtils.PerlinNoise2D(i / 380f, 0, iterations, noiseSeed);
+                float heightBottom = CalamityUtils.PerlinNoise2D(i / 380f, 0, iterations, noiseSeedBottom);
+
+                for (int j = area.Y; j < area.Y + area.Height; j++)
+                {
+                    bool bottom = perlinBottom ? (j < area.Y + area.Height - (int)(heightBottom * variance)) : true;
+                    if (j > baseHeight + 2 + (int)(height * variance) && bottom)
+                    {
+                        Tile t = Main.tile[i, j];
+                        t.ResetToType((ushort)tileType);
                     }
                 }
             }

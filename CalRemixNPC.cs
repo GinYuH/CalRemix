@@ -2001,6 +2001,11 @@ namespace CalRemix
                 pool.Clear();
                 return;
             }
+            if (SubworldSystem.IsActive<GrandSeaSubworld>())
+            {
+                pool.Clear();
+                return;
+            }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)
             {

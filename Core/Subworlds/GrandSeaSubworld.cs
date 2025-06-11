@@ -16,6 +16,8 @@ using Terraria.Graphics.Effects;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalamityMod;
 using Terraria.Audio;
+using System.Configuration;
+using Iced.Intel;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -56,9 +58,10 @@ namespace CalRemix.Core.Subworlds
     }
     public class GrandSeaGeneration : GenPass
     {
-        public static float groundTop = 0.5f;
-        public static float groundBottom = 0.51f;
-        public static float caveBottom = 0.6f;
+        public static float seaLevel = 0.1f;
+        public static float groundTop = 0.6f;
+        public static float groundBottom = 0.605f;
+        public static float caveBottom = 0.7f;
 
         public GrandSeaGeneration() : base("Terrain", 1) { }
 
@@ -92,7 +95,7 @@ namespace CalRemix.Core.Subworlds
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 progress.Value = 0.9f + MathHelper.Lerp(0f, 0.1f, i / (float)Main.maxTilesX);
-                for (int j = (int)(Main.maxTilesY * 0.1f); j < Main.maxTilesY; j++)
+                for (int j = (int)(Main.maxTilesY * seaLevel); j < Main.maxTilesY; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     t.LiquidAmount = 255;
@@ -107,14 +110,18 @@ namespace CalRemix.Core.Subworlds
 
         public static void GenerateBottom()
         {
+            int height = 80;
+            int baseHeight = Main.maxTilesY - height;
+            CalRemixHelper.PerlinSurface(new Rectangle(0, baseHeight, Main.maxTilesX, height), TileID.Obsidian, 3);
+            //Frame the tiles at the surface
             for (int i = 0; i < Main.maxTilesX; i++)
             {
-                float height = CalamityUtils.PerlinNoise2D(i / 380f, 0, 3, (int)Main.GlobalTimeWrappedHourly + Main.rand.Next(0, 50));
-
-                for (int j = Main.maxTilesY - 80; j < Main.maxTilesY; j++)
+                for (int j = (int)MathHelper.Max(2, baseHeight - 50); j < (int)MathHelper.Min(baseHeight + 150, Main.maxTilesX - 10); j++)
                 {
-                    Tile t = Main.tile[i, j];
-                    t.ResetToType((ushort)TileID.Obsidian);
+                    WorldGen.TileFrame(i, j, true);
+
+                    if (i > 2 && i < Main.maxTilesX - 3)
+                        Tile.SmoothSlope(i, j, applyToNeighbors: false);
                 }
             }
         }
@@ -122,29 +129,30 @@ namespace CalRemix.Core.Subworlds
         public static void GeneratePrimordialDepths()
         {
             int y = (int)(Main.maxTilesY * caveBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: TileID.Titanstone);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: TileID.Titanstone, ease: CalRemixHelper.PerlinEase.EaseInTop, topStop: 0.2f);
         }
 
         public static void GenerateCaves()
         {
             int y = (int)(Main.maxTilesY * groundBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: TileID.Stone);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: TileID.Stone, ease: CalRemixHelper.PerlinEase.EaseInOut, bottomStop: 0.8f);
+            int padding = 10;
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * caveBottom) - padding, Main.maxTilesX, padding * 2), TileID.Stone, 5, 5, true);
         }
 
         public static void GenerateSurface()
         {
-            int y = (int)(Main.maxTilesY * groundTop);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundBottom) - y), noiseSize: new Vector2(100, 80), tileType: TileID.GreenMoss);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * groundTop), Main.maxTilesX, (int)(Main.maxTilesX * (groundBottom - groundTop))), TileID.GreenMoss, 5, 10, true);
         }
 
         public static void GenerateDebris()
         {
-
         }
 
         public static void GenerateIslands()
         {
-
+            int y = (int)(Main.maxTilesY * seaLevel);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: TileID.GreenMoss);
         }
     }
 }
