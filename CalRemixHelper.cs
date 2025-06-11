@@ -346,10 +346,11 @@ namespace CalRemix
         /// </summary>
         /// <param name="area">The rectangle</param>
         /// <param name="noiseThreshold">How open should caves be? Scales between 0f and 1f</param>
+        /// <param name="noiseStrength">How strong the noise is. Weaker values look more like noodles</param>
         /// <param name="noiseSize">The zoom of the noise. Higher values means more zoomed in. Set to 120, 180 by default, the same as the Baron Strait</param>
         /// <param name="tileType">The tile to place</param>
         /// <param name="wallType">The wall to place</param>
-        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0)
+        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, float noiseStrength = 0.1f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0)
         {
 
             int sizeX = area.Width;
@@ -371,7 +372,7 @@ namespace CalRemix
                 for (int j = 0; j < area.Height; j++)
                 {
                     float noise = CalamityUtils.PerlinNoise2D(i / noiseSize.X, j / noiseSize.Y, 3, (int)Main.GlobalTimeWrappedHourly) * 0.5f + 0.5f;
-                    map[i, j] = MathHelper.Distance(noise, noiseThreshold) < 0.1f;
+                    map[i, j] = MathHelper.Distance(noise, noiseThreshold) < noiseStrength;
                 }
             }
             // Iterate through the map and add blocks/walls accordingly

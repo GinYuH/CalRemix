@@ -43,9 +43,11 @@ namespace CalRemix.Core.Subworlds
         public override void DrawMenu(GameTime gameTime)
         {
             base.DrawMenu(gameTime);
-            string str = CalRemixHelper.LocalText("StatusText.Screaming").Value;
+            if (WorldGenerator.CurrentGenerationProgress == null)
+                return;
+            string str = "Progress: " + WorldGenerator.CurrentGenerationProgress.Message + " " + Math.Round(WorldGenerator.CurrentGenerationProgress.Value * 100, 2) + "%";
             Vector2 size = FontAssets.MouseText.Value.MeasureString(str) * 2;
-            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth * 2, Main.screenHeight * 2), Color.Black, 0, Vector2.Zero, 1, 0, 0);
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth * 2, Main.screenHeight * 2), Color.Cyan, 0, Vector2.Zero, 1, 0, 0);
             Utils.DrawBorderString(Main.spriteBatch,
                 str,
                 Main.ScreenSize.ToVector2() * 0.5f - size * 0.5f, Color.White, 2);
@@ -56,7 +58,7 @@ namespace CalRemix.Core.Subworlds
     {
         public static float groundTop = 0.5f;
         public static float groundBottom = 0.51f;
-        public static float caveBottom = 0.8f;
+        public static float caveBottom = 0.6f;
 
         public GrandSeaGeneration() : base("Terrain", 1) { }
 
@@ -66,15 +68,30 @@ namespace CalRemix.Core.Subworlds
             Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
 
+            progress.Message = "Generating bedrock";
+            progress.Value = 0.05f;
             GenerateBottom();
+            progress.Message = "Uncovering the lost depths";
+            progress.Value = 0.1f;
             GeneratePrimordialDepths();
+            progress.Message = "Caving";
+            progress.Value = 0.4f;
             GenerateCaves();
+            progress.Message = "Building the sea floor";
+            progress.Value = 0.6f;
             GenerateSurface();
+            progress.Message = "Littering the sea floor";
+            progress.Value = 0.7f;
             GenerateDebris();
+            progress.Message = "Generating islands";
+            progress.Value = 0.8f;
             GenerateIslands();
+            progress.Message = "Flooding";
+            progress.Value = 0.9f;
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
+                progress.Value = 0.9f + MathHelper.Lerp(0f, 0.1f, i / (float)Main.maxTilesX);
                 for (int j = (int)(Main.maxTilesY * 0.1f); j < Main.maxTilesY; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
@@ -82,6 +99,7 @@ namespace CalRemix.Core.Subworlds
                     t.LiquidType = LiquidID.Water;
                 }
             }
+            progress.Value = 1f;
 
 
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GrandSeaDoor>());
@@ -110,7 +128,7 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateCaves()
         {
             int y = (int)(Main.maxTilesY * groundBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.5f, noiseSize: new Vector2(240, 180), tileType: TileID.Stone);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: TileID.Stone);
         }
 
         public static void GenerateSurface()
