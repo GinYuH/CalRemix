@@ -31,9 +31,9 @@ namespace CalRemix.Core.World
         public static void GenerateDoorRandom(int type)
         {
             bool shouldbreak = false;
-            int boundX = (int)(Main.maxTilesY * 0.2f);
-            int boundY = (int)(Main.maxTilesY * 0.1f);
-            int worldSize = Main.maxTilesX * Main.maxTilesY;
+            int boundX = 100;
+            int boundY = 40;
+            int worldSize = (int)(0.01f * Main.maxTilesX * Main.maxTilesY);
             for (int att = 0; att < 200; att++)
             {
                 if (shouldbreak)
@@ -64,7 +64,7 @@ namespace CalRemix.Core.World
                                     for (int l = j - 1; l > j - 4; l--)
                                     {
                                         Tile u = CalamityUtils.ParanoidTileRetrieval(k, l);
-                                        if (u == null || u.HasTile || u.LiquidAmount > 0)
+                                        if (u == null || u.HasTile)
                                         {
                                             emptySpace = false;
                                             break;
