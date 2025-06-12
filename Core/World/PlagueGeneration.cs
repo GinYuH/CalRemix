@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework;
 using CalamityMod.World;
 using CalRemix.Core.Backgrounds.Plague;
 using CalRemix.Content.Projectiles;
+using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.PlaguedJungle;
+using System;
 
 namespace CalRemix.Core.World
 {
@@ -67,6 +70,29 @@ namespace CalRemix.Core.World
                     for (int j = plagueY2; j < plagueY; j++)
                     {
                         PlaguedSpray.Convert(i, j, 2);
+                    }
+                }
+                // this is AWFUL
+                for (int a = 0; a < Main.maxTilesX; a++)
+                {
+                    for (int b = 0; b < Main.maxTilesY; b++)
+                    {
+                        if (Main.tile[a, b].TileType == TileID.Larva && Main.tile[a, b].WallType == ModContent.WallType<PlaguedHiveWall>())
+                        {
+                            CalRemix.instance.Logger.Info("LARVA SPOTTED. Attempting to place Plagued Larva");
+                            bool amongUs = false;
+                            for(int c = 0; c <= 2; c++) // weird hive gen can create slight variations in where the larva generates, this is needed
+                            {
+                                WorldGen.PlaceTile(a + c, b + 1, ModContent.TileType<PlaguedLarva>(), forced: true);
+                                if (Main.tile[a + c, b + 1].TileType == ModContent.TileType<PlaguedLarva>())
+                                {
+                                    NetMessage.SendTileSquare(-1, a + c, b + 1, 4);
+                                    amongUs = true;
+                                    break;
+                                }
+                                if (amongUs) break;
+                            }
+                        }
                     }
                 }
                 CalRemixWorld.generatedPlague = true;

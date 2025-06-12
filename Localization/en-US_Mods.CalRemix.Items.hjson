@@ -4484,3 +4484,8 @@ SubworldDoor: {
 	DisplayName: Subworld Door
 	Tooltip: ""
 }
+
+Plagueifier: {
+	DisplayName: Plagueifier
+	Tooltip: Makes the plague
+}
