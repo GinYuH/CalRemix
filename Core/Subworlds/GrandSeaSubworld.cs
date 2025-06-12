@@ -37,6 +37,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            Main.LocalPlayer.ZoneBeach = false;
             //Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:ScreamingFaceSky", true);
             //SkyManager.Instance.Activate("CalRemix:ScreamingFaceSky", Main.LocalPlayer.position);
             base.Update();

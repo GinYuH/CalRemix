@@ -30,7 +30,7 @@ namespace CalRemix.Core.Biomes
         // Calculate when the biome is active.
         public override bool IsBiomeActive(Player player)
         {
-            return SubworldSystem.IsActive<GrandSeaSubworld>() && player.position.Y < GrandSeaGeneration.groundBottom * Main.maxTilesY * 16;
+            return SubworldSystem.IsActive<GrandSeaSubworld>() && player.position.Y < GrandSeaGeneration.caveBottom * Main.maxTilesY * 16;
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
