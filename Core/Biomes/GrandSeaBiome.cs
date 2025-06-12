@@ -21,6 +21,10 @@ namespace CalRemix.Core.Biomes
         public override string BackgroundPath => "Terraria/Images/MapBG11";
         public override Color? BackgroundColor => Color.Cyan;
 
+        public override string MapBackground => BackgroundPath;
+
+        public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
+
         // Use SetStaticDefaults to assign the display name
         public override void SetStaticDefaults()
         {
