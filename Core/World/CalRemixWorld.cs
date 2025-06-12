@@ -833,18 +833,21 @@ namespace CalRemix.Core.World
             }
             if (!guideHasExisted)
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
-            if (shrinetoggle)
+            if (!SubworldSystem.AnyActive())
             {
-                if (ShrineTimer == 0)
+                if (shrinetoggle)
                 {
-                    ThreadPool.QueueUserWorkItem(_ => HallowShrine.GenerateHallowShrine(), this);
-                    ThreadPool.QueueUserWorkItem(_ => AstralShrine.GenerateAstralShrine(), this);
-
-                    Color messageColor = Color.Magenta;
-                    CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
-                    if (CalRemixAddon.CalVal != null && astralBlight)
+                    if (ShrineTimer == 0)
                     {
-                        ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);
+                        ThreadPool.QueueUserWorkItem(_ => HallowShrine.GenerateHallowShrine(), this);
+                        ThreadPool.QueueUserWorkItem(_ => AstralShrine.GenerateAstralShrine(), this);
+
+                        Color messageColor = Color.Magenta;
+                        CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                        if (CalRemixAddon.CalVal != null && astralBlight)
+                        {
+                            ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);
+                        }
                     }
                 }
             }
@@ -852,64 +855,67 @@ namespace CalRemix.Core.World
             {
                 ShrineTimer--;
             }
-            if (cosmislag)
+            if (!SubworldSystem.AnyActive())
             {
-                if (!generatedCosmiliteSlag)
+                if (cosmislag)
                 {
-                    if (NPC.downedMoonlord)
+                    if (!generatedCosmiliteSlag)
                     {
-                        if (CalamityWorld.HasGeneratedLuminitePlanetoids)
+                        if (NPC.downedMoonlord)
                         {
-                            //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
-                            PlanetoidGeneration.GenerateCosmiliteSlag();
+                            if (CalamityWorld.HasGeneratedLuminitePlanetoids)
+                            {
+                                //ThreadPool.QueueUserWorkItem(_ => GenerateCosmiliteSlag());
+                                PlanetoidGeneration.GenerateCosmiliteSlag();
+                            }
                         }
                     }
                 }
-            }
-            if (plaguetoggle)
-            {
-                if (!generatedPlague && NPC.downedGolemBoss)
+                if (plaguetoggle)
                 {
-                    ThreadPool.QueueUserWorkItem(_ => PlagueGeneration.GeneratePlague(), this);
-                }
-            }
-            if (meldGunk)
-            {
-                if (!generatedStrain && Main.hardMode)
-                {
-                    MeldStrain.GenerateCavernStrain();
-                    generatedStrain = true;
-                    UpdateWorldBool();
-                }
-            }
-            if (!generatedHydrogen)
-            {
-                Rectangle sus = FindCentralGeode();
-                int hydrogenRadius = 10;
-                int borderAmt = 3;
-                Vector2 center = new Vector2(sus.Center.X, sus.Y + sus.Height / 3);
-                for (int i = -hydrogenRadius; i < hydrogenRadius; i++)
-                {
-                    for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
+                    if (!generatedPlague && NPC.downedGolemBoss)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
-                        Vector2 pos = new Vector2(center.X + i, center.Y + j);
-                        if (pos.Distance(center) < hydrogenRadius - borderAmt)
-                        {
-                            WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
-                        }
-                        else if (pos.Distance(center) < hydrogenRadius)
-                        {
-                            if (t.HasTile && !SunkenSeaTiles.Contains(t.TileType))
-                                continue;
-                            WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
-                            WorldGen.PlaceTile((int)center.X + i, (int)center.Y + j, TileType<RustedPipes>(), true);
-                        }
+                        ThreadPool.QueueUserWorkItem(_ => PlagueGeneration.GeneratePlague(), this);
                     }
                 }
-                hydrogenLocation = center * 16;
-                generatedHydrogen = true;
-                hydrogenBomb = true;
+                if (meldGunk)
+                {
+                    if (!generatedStrain && Main.hardMode)
+                    {
+                        MeldStrain.GenerateCavernStrain();
+                        generatedStrain = true;
+                        UpdateWorldBool();
+                    }
+                }
+                if (!generatedHydrogen)
+                {
+                    Rectangle sus = FindCentralGeode();
+                    int hydrogenRadius = 10;
+                    int borderAmt = 3;
+                    Vector2 center = new Vector2(sus.Center.X, sus.Y + sus.Height / 3);
+                    for (int i = -hydrogenRadius; i < hydrogenRadius; i++)
+                    {
+                        for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
+                            Vector2 pos = new Vector2(center.X + i, center.Y + j);
+                            if (pos.Distance(center) < hydrogenRadius - borderAmt)
+                            {
+                                WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
+                            }
+                            else if (pos.Distance(center) < hydrogenRadius)
+                            {
+                                if (t.HasTile && !SunkenSeaTiles.Contains(t.TileType))
+                                    continue;
+                                WorldGen.KillTile((int)center.X + i, (int)center.Y + j, noItem: true);
+                                WorldGen.PlaceTile((int)center.X + i, (int)center.Y + j, TileType<RustedPipes>(), true);
+                            }
+                        }
+                    }
+                    hydrogenLocation = center * 16;
+                    generatedHydrogen = true;
+                    hydrogenBomb = true;
+                }
             }
             if (!NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
             {
