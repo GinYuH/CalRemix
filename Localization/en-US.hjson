@@ -116,6 +116,16 @@ Mods: {
 				DisplayName: Profaned Desert
 				TownNPCDialogueName: the Profaned Desert Biome
 			}
+
+			GrandSeaBiome: {
+				DisplayName: Grand Sea Biome
+				TownNPCDialogueName: the Grand Sea Biome
+			}
+
+			PrimordialCavesBiome: {
+				DisplayName: Primordial Caves Biome
+				TownNPCDialogueName: the Primordial Caves Biome
+			}
 		}
 
 		Enchantments: {

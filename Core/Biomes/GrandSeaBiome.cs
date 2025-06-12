@@ -14,6 +14,7 @@ namespace CalRemix.Core.Biomes
         //public override bool IsPrimaryBiome =>false; // Allows this biome to impact NPC prices
 
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/GrandWater");
 
         // Populate the Bestiary Filter
         public override string BestiaryIcon => "CalRemix/Core/Biomes/AsbestosIcon";
