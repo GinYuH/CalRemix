@@ -14,6 +14,7 @@ using CalamityMod.Tiles.AstralDesert;
 using static Terraria.WorldGen;
 using ReLogic.Utilities;
 using Terraria.GameContent.Generation;
+using Terraria.GameContent.UI.Elements;
 
 namespace CalRemix.Core.World.Subworld
 {
@@ -29,22 +30,22 @@ namespace CalRemix.Core.World.Subworld
             // The rectangle that the strait spawns in
             Rectangle straitRect = new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY);
 
-            GenerateBasicTerrain_Recoded();
+            /*GenerateBasicTerrain_Recoded();
             Tunnels();
             DirtWallBackgrounds();
             // riight after the mega barebones world shaping youd wanna do other dirt-stone-based stuff
             // as well as other world-shaping things
             RocksInDirt();
             DirtInRocks();
-            /*Clay();
+            Clay();
             SmallHoles();
             DirtLayerCaves();
             RockLayerCaves();
-            //SurfaceCaves();
-            WavyCaves(); // dst seed?
-            Grass();
+            //SurfaceCaves(); dont use rn
+            WavyCaves();
+            Grass(); // dont use without grass
             FloatingIslands(5);
-            //Lakes(5);
+            //Lakes(5); dont use rn
             CleanUpDirt();
             DirtRockWallRunner();
             // super basic stuff done genning, dirt is pretty much finalized except sloping
@@ -52,22 +53,59 @@ namespace CalRemix.Core.World.Subworld
             SmoothWorld();
             SettleLiquids();
             Waterfalls();
-            WallVariety();
+            WallVariety(); // dont use without SmallHoles
             QuickCleanup();
-            SpreadingGrass();
+            SpreadingGrass(); // dont use without grass
             Piles();
             SpawnPoint();
             // foliage stuff next
             // by now the worlds major stuff is genned entirely, now we just place flavor around
-            GrassWall();
-            Sunflowers();
+            GrassWall(); // dont use without grass
+            Sunflowers(); // dont use without grass
             PlantingTrees();
-            Weeds();
-            Vines();
-            //Flowers();
-            Mushrooms();
+            Weeds(); // dont use without grass
+            Vines(); // dont use without grass
+            //Flowers(); dont use rn
+            Mushrooms(); // dont use without grass
             Stalac();
-            SettleLiquidsAgain();*/
+            SettleLiquidsAgain();
+            // final cleanup; never run anything after here unless ur dumb 
+            TileCleanup();
+            FinalCleanup();*/
+
+
+            // heres a more stripped example, no grass-related stuff and auto turned into an ice biome
+            // we gen everything first, then replace everything with snow and ice ns hit
+            GenerateBasicTerrain_Recoded();
+            Tunnels();
+            DirtWallBackgrounds();
+            // riight after the mega barebones world shaping youd wanna do other dirt-stone-based stuff
+            // as well as other world-shaping things
+            RocksInDirt();
+            DirtInRocks();
+            SmallHoles();
+            DirtLayerCaves();
+            RockLayerCaves();
+            //SurfaceCaves(); dont use rn
+            WavyCaves();
+            GenerateIceBiome();
+            FloatingIslands(5);
+            //Lakes(5); dont use rn
+            CleanUpDirt();
+            DirtRockWallRunner();
+            // super basic stuff done genning, dirt is pretty much finalized except sloping
+            GenerateTanzanite(straitRect); // modded
+            SmoothWorld();
+            SettleLiquids();
+            Waterfalls();
+            QuickCleanup();
+            Piles();
+            SpawnPoint();
+            // foliage stuff next
+            // by now the worlds major stuff is genned entirely, now we just place flavor around
+            PlantingTrees();
+            Stalac();
+            SettleLiquidsAgain();
             // final cleanup; never run anything after here unless ur dumb 
             TileCleanup();
             FinalCleanup();
@@ -307,9 +345,6 @@ namespace CalRemix.Core.World.Subworld
                 // record surface stuff and gen the surface
                 surfaceHistory.Record(surfaceVassal);
                 FillColumn(i, surfaceVassal, rockVassal);
-
-                Console.WriteLine(surfaceLowVassal);
-                Console.WriteLine(rockHighVassal);
             }
 
             // set a bunch of variables that help the rest of world generation
@@ -342,7 +377,7 @@ namespace CalRemix.Core.World.Subworld
             GenVars.waterLine = waterLine;
             GenVars.lavaLine = lavaLine;
         }
-        private static void FillColumn(int x, double worldSurface, double rockLayer)
+        private static void FillColumn(int x, double worldSurface, double rockLayer, int dirt = TileID.Dirt, int stone = TileID.Stone)
         {
             Tile tile;
             for (int i = 0; (double)i < worldSurface; i++)
@@ -361,7 +396,7 @@ namespace CalRemix.Core.World.Subworld
                     tile = Main.tile[x, j];
                     tile.HasTile = true;
                     tile = Main.tile[x, j];
-                    tile.TileType = TileID.Dirt;
+                    tile.TileType = (ushort)dirt;
                     tile = Main.tile[x, j];
                     tile.TileFrameX = -1;
                     tile = Main.tile[x, j];
@@ -372,7 +407,7 @@ namespace CalRemix.Core.World.Subworld
                     tile = Main.tile[x, j];
                     tile.HasTile = true;
                     tile = Main.tile[x, j];
-                    tile.TileType = TileID.Stone;
+                    tile.TileType = (ushort)stone;
                     tile = Main.tile[x, j];
                     tile.TileFrameX = -1;
                     tile = Main.tile[x, j];
@@ -494,13 +529,9 @@ namespace CalRemix.Core.World.Subworld
             }
         }
 
-        public static void Tunnels()
+        public static void Tunnels(int dirt = TileID.Dirt)
         {
             int num1036 = (int)((double)Main.maxTilesX * 0.0015);
-            if (WorldGen.remixWorldGen)
-            {
-                num1036 = (int)((double)num1036 * 1.5);
-            }
             for (int num1037 = 0; num1037 < num1036; num1037++)
             {
                 if (GenVars.numTunnels >= GenVars.maxTunnels - 1)
@@ -510,20 +541,6 @@ namespace CalRemix.Core.World.Subworld
                 int[] array = new int[10];
                 int[] array2 = new int[10];
                 int num1038 = WorldGen.genRand.Next(450, Main.maxTilesX - 450);
-                if (!WorldGen.remixWorldGen)
-                {
-                    if (WorldGen.tenthAnniversaryWorldGen)
-                    {
-                        num1038 = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.2), (int)((double)Main.maxTilesX * 0.8));
-                    }
-                    else
-                    {
-                        while ((double)num1038 > (double)Main.maxTilesX * 0.4 && (double)num1038 < (double)Main.maxTilesX * 0.6)
-                        {
-                            num1038 = WorldGen.genRand.Next(450, Main.maxTilesX - 450);
-                        }
-                    }
-                }
                 int num1039 = 0;
                 bool flag61;
                 do
@@ -534,7 +551,7 @@ namespace CalRemix.Core.World.Subworld
                         for (num1038 %= Main.maxTilesX; !Main.tile[num1038, num1039].HasTile; num1039++)
                         {
                         }
-                        if (Main.tile[num1038, num1039].TileType == 53)
+                        if (Main.tile[num1038, num1039].TileType == TileID.Sand)
                         {
                             flag61 = true;
                         }
@@ -548,8 +565,8 @@ namespace CalRemix.Core.World.Subworld
                 GenVars.numTunnels++;
                 for (int num1041 = 0; num1041 < 10; num1041++)
                 {
-                    WorldGen.TileRunner(array[num1041], array2[num1041], WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(6, 9), 0, addTile: true, -2.0, -0.3);
-                    WorldGen.TileRunner(array[num1041], array2[num1041], WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(6, 9), 0, addTile: true, 2.0, -0.3);
+                    WorldGen.TileRunner(array[num1041], array2[num1041], WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(6, 9), dirt, addTile: true, -2.0, -0.3);
+                    WorldGen.TileRunner(array[num1041], array2[num1041], WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(6, 9), dirt, addTile: true, 2.0, -0.3);
                 }
             }
         }
@@ -559,7 +576,7 @@ namespace CalRemix.Core.World.Subworld
             int num1024 = 0;
             for (int num1025 = 1; num1025 < Main.maxTilesX - 1; num1025++)
             {
-                ushort num1026 = 2;
+                ushort num1026 = WallID.DirtUnsafe;
                 double value20 = (double)num1025 / (double)Main.maxTilesX;
                 bool flag58 = false;
                 num1024 += WorldGen.genRand.Next(-1, 2);
@@ -577,12 +594,12 @@ namespace CalRemix.Core.World.Subworld
                     if (tile37.HasTile)
                     {
                         tile37 = Main.tile[num1025, num1027];
-                        num1026 = (ushort)((tile37.TileType != 147) ? 2u : 40u);
+                        num1026 = (ushort)((tile37.TileType != TileID.SnowBlock) ? WallID.DirtUnsafe : WallID.SnowWallUnsafe);
                     }
                     if (flag58)
                     {
                         tile37 = Main.tile[num1025, num1027];
-                        if (tile37.WallType != 64)
+                        if (tile37.WallType != WallID.JungleUnsafe)
                         {
                             tile37 = Main.tile[num1025, num1027];
                             tile37.WallType = num1026;
@@ -2008,6 +2025,40 @@ namespace CalRemix.Core.World.Subworld
                 }
             }
             Main.tileSolid[191] = true;
+        }
+
+        public static void GenerateIceBiome()
+        {
+            for (int y = 0; y <= Main.maxTilesY; y++)
+            {
+                for (int x = 0; x <= Main.maxTilesX; x++)
+                {
+                    Tile currentTile;
+                    currentTile = Main.tile[x, y];
+                    if (currentTile.WallType == WallID.DirtUnsafe)
+                    {
+                        currentTile = Main.tile[x, y];
+                        currentTile.WallType = WallID.SnowWallUnsafe;
+                    }
+                    currentTile = Main.tile[x, y];
+                    switch (currentTile.TileType)
+                    {
+                        case TileID.Dirt:
+                        case TileID.Grass:
+                        case TileID.CorruptGrass:
+                        case TileID.ClayBlock:
+                        case TileID.Sand:
+                            currentTile = Main.tile[x, y];
+                            currentTile.TileType = TileID.SnowBlock;
+                            break;
+                        case TileID.Stone:
+                            currentTile = Main.tile[x, y];
+                            currentTile.TileType = TileID.IceBlock;
+                            break;
+                    }
+
+                }
+            }
         }
 
         public static void WallVariety()
