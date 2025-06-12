@@ -49,3 +49,5 @@ FrigidChestPlaced: {
 	MapEntry0: Frigid Chest
 	MapEntry1: Locked Frigid Chest
 }
+
+PlaguedLarva.MapEntry: Plagued Larva
