@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalRemix.Content.Tiles.Subworlds.ClownWorld;
+using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,15 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
     public class ClownWorldSubworld : Subworld
     {
-        public override int Height => 4000;
-        public override int Width => 4000;
+        public override int Height => 2000;
+        public override int Width => 2000;
         public override List<GenPass> Tasks => new List<GenPass>()
         {
             new ClownWorldGeneration()
@@ -29,7 +31,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            //Main.LocalPlayer.ZoneBeach = false;
+            Main.LocalPlayer.ZoneBeach = false;
             //Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:ScreamingFaceSky", true);
             //SkyManager.Instance.Activate("CalRemix:ScreamingFaceSky", Main.LocalPlayer.position);
             base.Update();
@@ -59,7 +61,7 @@ namespace CalRemix.Core.Subworlds
             Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
 
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY), noiseThreshold: 0.4f, noiseSize: new Vector2(800, 800), tileType: TileID.GreenMoss);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY), noiseThreshold: 0.3f, noiseSize: new Vector2(600, 600), tileType: ModContent.TileType<FunnyBalloonTile>());
         }
     }
 }

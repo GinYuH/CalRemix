@@ -179,6 +179,6 @@ namespace CalRemix.Content.Tiles
         public override Subworld BoundSubworld => ModContent.GetInstance<ClownWorldSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.FloralWhite;
+        public override Color DoorColor => Color.AliceBlue;
     }
 }

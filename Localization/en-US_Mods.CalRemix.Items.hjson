@@ -4489,3 +4489,8 @@ Plagueifier: {
 	DisplayName: Plagueifier
 	Tooltip: Makes the plague
 }
+
+FunnyBalloon: {
+	DisplayName: Funny Balloon
+	Tooltip: ""
+}
