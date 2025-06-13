@@ -18,6 +18,8 @@ using CalamityMod;
 using Terraria.Audio;
 using System.Configuration;
 using Iced.Intel;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -26,7 +28,9 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (NPCID.Deerclops, 1f, (NPCSpawnInfo n) => true));
+            list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
+            list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
+            list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             return list;
         }
 
