@@ -52,13 +52,13 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             if (NPC.ai[1] == 0)
             {
                 NPC.TargetClosest(false);
-                Timer++;
-                if (Timer % 150 == 0 || Math.Abs(NPC.velocity.X) < 1 || Math.Abs(NPC.velocity.Y) < 1)
+                if (Timer % 150 == 0 || NPC.collideX || NPC.collideY)
                 {
                     NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 3);
                 }
+                Timer++;
+                NPC.rotation = NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi);
                 NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.05f);
                 if (Main.player[NPC.target].Distance(NPC.Center) < 600 && Timer > 120)
                 {
                     NPC.ai[1] = 1;

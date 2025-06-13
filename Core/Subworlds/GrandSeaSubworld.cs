@@ -31,6 +31,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
+            list.Add(item: (ModContent.NPCType<Zoaoa>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             return list;
         }
 
