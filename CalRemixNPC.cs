@@ -1996,15 +1996,21 @@ namespace CalRemix
 
                 return;
             }
-            if (SubworldSystem.IsActive<ScreamingSubworld>())
+            if (SubworldSystem.AnyActive())
             {
-                pool.Clear();
-                return;
-            }
-            if (SubworldSystem.IsActive<GrandSeaSubworld>())
-            {
-                pool.Clear();
-                return;
+                if (SubworldSystem.Current is ICustomSpawnSubworld)
+                {
+                    pool.Clear();
+                    ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    foreach (var v in IDS.Spawns())
+                    {
+                        if (v.Item3.Invoke(spawnInfo))
+                        {
+                            pool.Add(v.Item1, v.Item2);
+                        }
+                    }
+                    return;
+                }
             }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)

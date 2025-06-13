@@ -21,14 +21,21 @@ using Iced.Intel;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class GrandSeaSubworld : Subworld
+    public class GrandSeaSubworld : Subworld, ICustomSpawnSubworld
     {
+        public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
+        {
+            List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
+            list.Add(item: (NPCID.Deerclops, 1f, (NPCSpawnInfo n) => true));
+            return list;
+        }
+
         public override int Height => 2000;
         public override int Width => 6400;
-        public override List<GenPass> Tasks => new List<GenPass>()
-        {
+        public override List<GenPass> Tasks =>
+        [
             new GrandSeaGeneration()
-        };
+        ];
 
         public override void OnEnter()
         {
