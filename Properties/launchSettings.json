@@ -3,7 +3,7 @@
     "Terraria": {
       "commandName": "Executable",
       "executablePath": "$(DotNetName)",
-      "commandLineArgs": "$(tMLPath)",
+      "commandLineArgs": "$(tMLPath) -skipselect \"calamitys vanities:calamit\"",
       "workingDirectory": "$(tMLSteamPath)"
     },
     "TerrariaServer": {

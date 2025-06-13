@@ -36,7 +36,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            base.Update();
+            Main.LocalPlayer.ZoneBeach = false;
         }
 
         public override void DrawMenu(GameTime gameTime)

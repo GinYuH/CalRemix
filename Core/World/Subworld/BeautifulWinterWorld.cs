@@ -15,6 +15,9 @@ using static Terraria.WorldGen;
 using ReLogic.Utilities;
 using Terraria.GameContent.Generation;
 using Terraria.GameContent.UI.Elements;
+using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CalRemix.Core.World.Subworld
 {
@@ -88,8 +91,8 @@ namespace CalRemix.Core.World.Subworld
             RockLayerCaves();
             //SurfaceCaves(); dont use rn
             WavyCaves();
-            GenerateIceBiome();
             FloatingIslands(5);
+            GenerateIceBiome();
             //Lakes(5); dont use rn
             CleanUpDirt();
             DirtRockWallRunner();
@@ -111,6 +114,7 @@ namespace CalRemix.Core.World.Subworld
             FinalCleanup();
         }
 
+        #region stuff
         private enum TerrainFeatureType
         {
             Plateau,
@@ -5756,7 +5760,7 @@ namespace CalRemix.Core.World.Subworld
             //Main.AnglerQuestSwap();
             //WorldGen.skipFramingDuringGen = false;
         }
-
+        #endregion
 
         public static void GenerateTanzanite(Rectangle straitRect)
         {
@@ -5857,6 +5861,41 @@ namespace CalRemix.Core.World.Subworld
                         }
                     }
                 }
+            }
+        }
+
+        public static void PlaceTreesAround()
+        {
+
+        }
+        public static void PlaceTree(Point location, int trunkHeightAmount, int individualHeight)
+        {
+            List<int> pointsForFronds = new();
+
+            // trunk
+            for (int i = 0; i < trunkHeightAmount; i++)
+            {
+                Point pointAccountForDistance = new Point(location.X, location.Y - (i * individualHeight));
+                WorldUtils.Gen(pointAccountForDistance, new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
+                if (i != 0 && i % 2 == 0)
+                {
+                    pointsForFronds.Add(i);
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X + 3, pointAccountForDistance.Y + individualHeight), new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X - 3, pointAccountForDistance.Y + individualHeight), new Shapes.Mound(5, individualHeight), new Actions.PlaceTile(TileID.PineTree));
+                }
+            }
+
+            // leaves
+            int iterationCount = pointsForFronds.Count() * 3;
+            for (int i = 0; i < pointsForFronds.Count(); i++)
+            {
+                for (int ii = 0; ii < iterationCount; ii++)
+                {
+                    Point pointAccountForDistance = new Point(location.X, location.Y - (pointsForFronds[i] * individualHeight));
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X + ii, pointAccountForDistance.Y), new Shapes.Mound(5, (int)(individualHeight * 1.5f)), new Actions.PlaceTile(TileID.PineTree));
+                    WorldUtils.Gen(new Point(pointAccountForDistance.X - ii, pointAccountForDistance.Y), new Shapes.Mound(5, (int)(individualHeight * 1.5f)), new Actions.PlaceTile(TileID.PineTree));
+                }
+                iterationCount -= 3;
             }
         }
     }

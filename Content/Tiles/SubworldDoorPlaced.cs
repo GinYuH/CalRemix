@@ -153,15 +153,6 @@ namespace CalRemix.Content.Tiles
         public override Color DoorColor => Color.Brown;
     }
 
-    public class TestDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Items/Weapons/AergianTechnistaff";
-        public override Subworld BoundSubworld => ModContent.GetInstance<BeautifulWinterWorldSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.FloralWhite;
-    }
-
     public class ScreamDoor : SubworldDoorPlaced
     {
         public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/ScreamingFacePreview";
@@ -178,5 +169,16 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.RoyalBlue;
+    }
+
+
+    // this is my special door for testing so it goes at the bottom always
+    public class TestDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/Items/Weapons/AergianTechnistaff";
+        public override Subworld BoundSubworld => ModContent.GetInstance<ClownWorldSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.FloralWhite;
     }
 }
