@@ -20,6 +20,7 @@ using System.Configuration;
 using Iced.Intel;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Core.Biomes;
+using CalamityMod.NPCs.SulphurousSea;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -28,10 +29,14 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
+            // Main Great Sea
+            list.Add(item: (ModContent.NPCType<Zoaoa>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<MicrobialCluster>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
+
+            // Primordial Caves
             list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<Zoaoa>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             return list;
         }
 

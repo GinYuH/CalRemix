@@ -17,6 +17,7 @@ using Terraria.GameContent;
 using System;
 using CalamityMod.Particles;
 using Microsoft.CodeAnalysis.Host.Mef;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -45,6 +46,15 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.DeathSound = SoundID.NPCDeath4 with { Pitch = 0.6f };
             NPC.GravityIgnoresLiquid = true;
             NPC.waterMovementSpeed = 1f;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            for (int i = 0; i < Main.rand.Next(0, 5); i++)
+            {
+                int n = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Remora>(), 0, ai2: NPC.whoAmI + 1);
+                Main.npc[n].rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+            }
         }
 
         public override void AI()
@@ -94,7 +104,12 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     NPC.rotation = NPC.velocity.ToRotation() + (NPC.spriteDirection == 1 ? 0 : MathHelper.Pi);
                 }
 
-                if ((Timer > 20 && Collision.SolidTiles(NPC.position, NPC.width, NPC.height)) || Timer > 60)
+                if (!Collision.SolidTiles(NPC.position, NPC.width, NPC.height))
+                {
+                    NPC.ai[3] = 1;
+                }
+
+                if ((NPC.ai[3] == 1 && Collision.SolidTiles(NPC.position, NPC.width, NPC.height)) || Timer > 60)
                 {
                     if (Timer <= 60)
                     {
@@ -106,6 +121,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     }
                     NPC.ai[1] = 3;
                     Timer = 0;
+                    NPC.ai[3] = 0;
                 }
                 NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
                 Timer++;
@@ -153,6 +169,14 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / Main.npcFrameCount[Type] / 2), NPC.scale, fx, 0);
             int frame = NPC.ai[1] > 0 ? 1 : 0;
             spriteBatch.Draw(head, NPC.Center - screenPos + (NPC.spriteDirection == -1 ? NPC.rotation - MathHelper.Pi : NPC.rotation).ToRotationVector2() * (NPC.spriteDirection == -1 ? 76 : 176), head.Frame(1, 2, 0, frame), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / Main.npcFrameCount[Type] / 2), NPC.scale, fx, 0);
+            foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (n.type == ModContent.NPCType<Remora>() && n.ai[2] == NPC.whoAmI + 1)
+                {
+                    Texture2D rem = TextureAssets.Npc[ModContent.NPCType<Remora>()].Value;
+                    spriteBatch.Draw(rem, n.Center - screenPos, n.frame, n.GetAlpha(drawColor), n.rotation, new Vector2(rem.Width / 2, rem.Height / 4), n.scale, fx, 0);
+                }
+            }
             return false;
         }
 
