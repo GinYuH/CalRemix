@@ -39,7 +39,7 @@ namespace CalRemix.Core.Biomes
             return SubworldSystem.IsActive<GrandSeaSubworld>() && player.position.Y > GrandSeaGeneration.caveBottom * Main.maxTilesY * 16;
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
         public override int Music => CalRemixMusic.AsbestosCaves;
     }

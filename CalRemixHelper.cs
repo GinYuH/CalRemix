@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.DataStructures;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Walls;
@@ -13,6 +14,8 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent.Animations;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -544,6 +547,41 @@ namespace CalRemix
                 }
             }
             return wallCount;
+        }
+
+        /// <summary>
+        /// Creates a basic verlet chain if one doesn't exist
+        /// </summary>
+        /// <param name="list">The list instance</param>
+        /// <param name="segmentAmount">The amount of segments</param>
+        /// <param name="basePosition">The position to hook from</param>
+        /// <param name="locks">Indices that should be locked</param>
+        /// <returns>The segment list</returns>
+        public static List<VerletSimulatedSegment> CreateVerletChain(ref List<VerletSimulatedSegment> list, int segmentAmount, Vector2 basePosition, List<int> locks = default)
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                if (list == null || list.Count < segmentAmount)
+                {
+                    list = new List<VerletSimulatedSegment>(segmentAmount);
+                    for (int i = 0; i < segmentAmount; i++)
+                    {
+                        VerletSimulatedSegment segment = new VerletSimulatedSegment(basePosition);
+                        list.Add(segment);
+                    }
+                    // Lock segments
+                    if (locks != default)
+                    {
+                        for (int i = 0; i < locks.Count; i++)
+                        {
+                            // Assure the index isnt too high
+                            int trueIndex = (locks[i] >= list.Count) ? (list.Count - 1) : locks[i];
+                            list[trueIndex].locked = true;
+                        }
+                    }
+                }
+            }
+            return list;
         }
     }
 
