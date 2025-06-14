@@ -35,10 +35,9 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.value = 0;
             NPC.lavaImmune = true;
             NPC.noTileCollide = false;
-            NPC.dontTakeDamage = true;
             NPC.knockBackResist = 0;
-            NPC.HitSound = SoundID.NPCHit45 with { Pitch = 0.4f };
-            NPC.DeathSound = SoundID.NPCDeath32;
+            NPC.HitSound = SoundID.NPCHit9 with { Pitch = 0.4f };
+            NPC.DeathSound = SoundID.NPCDeath12 with { Pitch = -0.8f };
             NPC.GravityIgnoresLiquid = true;
             NPC.npcSlots = 0;
             NPC.dontCountMe = true;
