@@ -21,6 +21,7 @@ using Iced.Intel;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.SulphurousSea;
+using CalRemix.Content.NPCs.PandemicPanic;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -38,6 +39,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Xiphactinus>(), 0.4f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
+            list.Add(item: (ModContent.NPCType<TanyHead>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             return list;
         }
 
