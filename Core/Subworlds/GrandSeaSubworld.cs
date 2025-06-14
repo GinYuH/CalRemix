@@ -32,7 +32,7 @@ namespace CalRemix.Core.Subworlds
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             // Main Great Sea
             list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<MicrobialCluster>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<MicrobialClusterII>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             list.Add(item: (ModContent.NPCType<KillerPolyp>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !Main.tile[n.SpawnTileX, n.SpawnTileY - 1].HasTile));
 
