@@ -613,3 +613,6 @@ Aurelionium: {
 		DespawnMessage: How did you even manage to do this?
 	}
 }
+
+Xiphactinus.DisplayName: Xiphactinus
+XiphactinusHead.DisplayName: Xiphactinus

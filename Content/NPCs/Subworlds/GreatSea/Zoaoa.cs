@@ -42,6 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.knockBackResist = 0;
             NPC.HitSound = SoundID.NPCHit7;
             NPC.DeathSound = SoundID.NPCDeath4 with { Pitch = 0.6f };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<PrimordialCavesBiome>().Type };
         }
 
         public override void AI()

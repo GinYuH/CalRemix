@@ -41,6 +41,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.noTileCollide = false;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath41;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<GrandSeaBiome>().Type };
         }
 
         public override void AI()

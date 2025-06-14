@@ -4499,3 +4499,8 @@ CALVoucher: {
 	DisplayName: CAL Voucher
 	Tooltip: Use to redeem one free CAL stock
 }
+
+TraderTablet: {
+	DisplayName: Trader Tablet
+	Tooltip: ""
+}

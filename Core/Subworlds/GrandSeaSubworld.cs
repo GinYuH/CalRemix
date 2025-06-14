@@ -30,13 +30,14 @@ namespace CalRemix.Core.Subworlds
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             // Main Great Sea
-            list.Add(item: (ModContent.NPCType<Zoaoa>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             list.Add(item: (ModContent.NPCType<MicrobialCluster>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
 
             // Primordial Caves
-            list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
+            list.Add(item: (ModContent.NPCType<Xiphactinus>(), 0.4f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             return list;
         }
 
