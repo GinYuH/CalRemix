@@ -52,3 +52,6 @@ FrigidChestPlaced: {
 
 PlaguedLarva.MapEntry: Plagued Larva
 FunnyBalloonTile.MapEntry: Funny Balloon Tile
+BigCherryTile.MapEntry: Big Cherry Tile
+BigCitrusTile.MapEntry: Big Citrus Tile
+BigFruitTile.MapEntry: Big Fruit Tile

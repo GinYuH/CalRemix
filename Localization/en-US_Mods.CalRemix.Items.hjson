@@ -4504,3 +4504,18 @@ TraderTablet: {
 	DisplayName: Trader Tablet
 	Tooltip: ""
 }
+
+BigCherry: {
+	DisplayName: Big Cherry
+	Tooltip: ""
+}
+
+BigCitrus: {
+	DisplayName: Big Citrus
+	Tooltip: ""
+}
+
+BigFruit: {
+	DisplayName: Big Fruit
+	Tooltip: ""
+}

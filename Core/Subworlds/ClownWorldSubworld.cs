@@ -62,6 +62,26 @@ namespace CalRemix.Core.Subworlds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
 
             CalRemixHelper.PerlinGeneration(new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY), noiseThreshold: 0.3f, noiseSize: new Vector2(600, 600), tileType: ModContent.TileType<FunnyBalloonTile>());
+            //PlantingHappyTrees();
+            WorldGen.AddTrees();
+        }
+
+        //TODO: turn this into a more global place trees method for any subworld?
+        public static void PlantingHappyTrees()
+        {
+            for (int num263 = 0; (double)num263 < (double)Main.maxTilesX; num263++)
+            {
+                int num264 = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
+                int num265 = WorldGen.genRand.Next(25, 50);
+                for (int num266 = num264 - num265; num266 < num264 + num265; num266++)
+                {
+                    for (int num267 = 20; (double)num267 < Main.maxTilesY; num267++)
+                    {
+                        WorldGen.GrowEpicTree(num266, num267);
+                    }
+                }
+            }
+            WorldGen.AddTrees();
         }
     }
 }
