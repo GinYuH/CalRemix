@@ -49,6 +49,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
             NPC.defense = 2; // one for each lens of his sunglasses
             NPC.knockBackResist = 0;
             NPC.HitSound = BananamanHurt;
+            NPC.frame = new Rectangle(0, 0, 34, 56);
         }
 
         public override void AI()
@@ -56,15 +57,16 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
             // this is messy and ugly but it works goddamnit
             float speed = 0.6f;
 
-            if (Main.rand.NextBool(500))
+            if (Main.rand.NextBool(500) && NPC.noGravity == true && CurrentMode != 2)
             {
-                if (CurrentMode == 1)
-                    CurrentMode = 0;
-                else
+                if (CurrentMode == 0)
                     CurrentMode = 1;
+                else
+                    CurrentMode = 0;
             }
 
             #region frame stuff
+            // frametouse and visualtimer are flipped sorrey :(( but im too lazy to fix it 
             FrameToUse++;
             if (FrameToUse % 4 == 0)
             {
@@ -72,7 +74,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
                 FrameToUse = 0;
             }
 
-            if (CurrentMode == 1)
+            if (CurrentMode == 0)
             {
                 FrameColumn = 1;
                 if (VisualTimer > 2) 
@@ -80,7 +82,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
             }
             else
             {
-                if (CurrentMode == 0)
+                if (CurrentMode == 1)
                 {
                     FrameColumn = 0;
                     VisualTimer = 0;
@@ -91,11 +93,11 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
                     if (VisualTimer > 29)
                     {
                         VisualTimer = 0;
-                        CurrentMode = 0;
+                        CurrentMode = 1;
                     }
                 }
 
-                if (Main.rand.NextBool(240) && CurrentMode == 0)
+                if (Main.rand.NextBool(240) && CurrentMode == 1)
                 {
                     CurrentMode = 2;
                 }
@@ -103,7 +105,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
             #endregion
 
             // do movement if mode is 1, otherwise stand still
-            if (CurrentMode == 1)
+            if (CurrentMode == 0)
             {
                 if (NPC.ai[0] == 0f)
                 {
@@ -351,7 +353,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
             SpriteEffects flip = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            Vector2 pos = NPC.Center - screenPos + Vector2.UnitY * NPC.gfxOffY - (Vector2.UnitY * 10).RotatedBy(NPC.rotation);
+            Vector2 pos = NPC.Center - screenPos + Vector2.UnitY * NPC.gfxOffY - (Vector2.UnitY * 18).RotatedBy(NPC.rotation);
             spriteBatch.Draw(texture, pos, texture.Frame(3, 30, (int)FrameColumn, (int)VisualTimer), drawColor, NPC.rotation, new Vector2(texture.Width / 6, texture.Height / 60), NPC.scale, flip, 0f);
 
             return false;
@@ -375,7 +377,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemID.Nazar, 1);
+            //npcLoot.Add(ItemID.Nazar, 1);
         }
     }
 }
