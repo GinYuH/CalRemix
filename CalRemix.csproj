@@ -20,6 +20,11 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="Content\NPCs\TownNPCs\WALLSTREET.png" />
+    <None Remove="Content\NPCs\TownNPCs\WALLSTREET_Head.png" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Folder Include="Assets\Textures\" />
   </ItemGroup>
   

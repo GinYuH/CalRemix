@@ -3,6 +3,8 @@ using CalamityMod.DataStructures;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Walls;
+﻿using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -582,6 +584,23 @@ namespace CalRemix
                 }
             }
             return list;
+        }
+        /// <summary>
+        /// Gives a specified player a specified number of coins.
+        /// </summary>
+        /// <param name="coinValue">The value of the coins to give the player.</param>
+        /// <param name="player">The player to be given the coins.</param>
+        public static void GiveCoins(int coinValue, Player player)
+        {
+            int[] coinsList = { ItemID.CopperCoin, ItemID.SilverCoin, ItemID.GoldCoin, ItemID.PlatinumCoin, ModContent.ItemType<CosmiliteCoin>(), ModContent.ItemType<Klepticoin>() };
+            for(int i = 5; i >= 0; i--)
+            {
+                if (coinValue >= Math.Pow(100, i))
+                {
+                    player.QuickSpawnItem(player.GetSource_DropAsItem(), coinsList[i], (int)(coinValue / Math.Pow(100, i)));
+                    coinValue %= (int)Math.Pow(100, i);
+                }
+            }
         }
     }
 

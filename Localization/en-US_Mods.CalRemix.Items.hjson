@@ -4494,3 +4494,8 @@ FunnyBalloon: {
 	DisplayName: Funny Balloon
 	Tooltip: ""
 }
+
+CALVoucher: {
+	DisplayName: CAL Voucher
+	Tooltip: Use to redeem one free CAL stock
+}

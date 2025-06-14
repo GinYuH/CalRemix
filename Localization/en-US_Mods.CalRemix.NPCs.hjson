@@ -185,6 +185,22 @@ FBIGUY: {
 	Census.SpawnCondition: Conditions unknown
 }
 
+WALLSTREET: {
+	TownNPCMood: {
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+		Content: I am content.
+		NoHome: I hate not having a home.
+	}
+
+	DisplayName: Trader
+	Census.SpawnCondition: Enter Hardmode
+}
+
 Acideye: {
 	DisplayName: Acidsighter
 	Bestiary: A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.
@@ -587,3 +603,13 @@ TheShoalless.DisplayName: The Shoalless
 Zoaoa.DisplayName: Zoaoa
 BullShark.DisplayName: Bull Shark
 Remora.DisplayName: Remora
+
+Aurelionium: {
+	DisplayName: Aurelionium
+
+	BossChecklistIntegration: {
+		EntryName: Aurelionium
+		SpawnInfo: Venture into the Gilded Isle's golden portal
+		DespawnMessage: How did you even manage to do this?
+	}
+}

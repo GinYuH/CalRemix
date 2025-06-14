@@ -21,6 +21,7 @@ namespace CalRemix.Core.World
         public static bool downedPyrogen = false;
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
+        public static bool downedAurelionium = false;
         public static bool downedHypnos = false;
         public static bool downedSealedOne = false;
         public static bool downedNoxegg = false;
@@ -55,6 +56,7 @@ namespace CalRemix.Core.World
             downedPyrogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
+            downedAurelionium = false;
             downedHypnos = false;
             downedSealedOne = false;
             downedNoxegg = false;
@@ -90,6 +92,7 @@ namespace CalRemix.Core.World
             downedPathogen = false;
             downedDerellect = false;
             downedPolyphemalus = false;
+            downedAurelionium = false;
             downedHypnos = false;
             downedSealedOne = false;
             downedNoxegg = false;
@@ -125,6 +128,7 @@ namespace CalRemix.Core.World
             tag["downedPyrogen"] = downedPyrogen;
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
+            tag["downedAurelionium"] = downedAurelionium;
             tag["downedHypnos"] = downedHypnos;
             tag["downedSealedOne"] = downedSealedOne;
             tag["downedNoxegg"] = downedNoxegg;
@@ -162,6 +166,7 @@ namespace CalRemix.Core.World
             downedPyrogen = tag.Get<bool>("downedPyrogen");
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
+            downedAurelionium = tag.Get<bool>("downedAurelionium");
             downedHypnos = tag.Get<bool>("downedHypnos");
             downedSealedOne = tag.Get<bool>("downedSealedOne");
             downedNoxegg = tag.Get<bool>("downedNoxegg");
@@ -197,6 +202,7 @@ namespace CalRemix.Core.World
             writer.Write(downedPyrogen);
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
+            writer.Write(downedAurelionium);
             writer.Write(downedHypnos);
             writer.Write(downedSealedOne);
             writer.Write(downedNoxegg);
@@ -232,6 +238,7 @@ namespace CalRemix.Core.World
             downedPyrogen = reader.ReadBoolean();
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
+            downedAurelionium = reader.ReadBoolean();
             downedHypnos = reader.ReadBoolean();
             downedSealedOne = reader.ReadBoolean();
             downedNoxegg = reader.ReadBoolean();

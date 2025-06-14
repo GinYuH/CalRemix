@@ -24,6 +24,7 @@ using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Content.NPCs.Bosses.Origen;
+using CalRemix.Content.NPCs.Bosses.Aurelionium;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Lore;
@@ -172,6 +173,8 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemID.WoodWall,
             });
+            // fake boss to trick people into thinking that the gilded isle is a boss arena
+            bc.Call("LogBoss", Mod, "Aurelionium", 7.333f, () => RemixDowned.downedAurelionium, NPCType<Aurelionium>(), new Dictionary<string, object>());
             Action<SpriteBatch, Rectangle, Color> plportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Poly/Polyphemalus").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
