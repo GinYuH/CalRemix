@@ -4519,3 +4519,38 @@ BigFruit: {
 	DisplayName: Big Fruit
 	Tooltip: ""
 }
+
+BrimstoneHeartTrophy: {
+	DisplayName: Brimstone Heart Trophy
+	Tooltip: ""
+}
+
+FlinstoneGangsterTrophy: {
+	DisplayName: Whispering Maelstrom Trophy
+	Tooltip: ""
+}
+
+SepulcherBodyTrophy: {
+	DisplayName: Sepulcher Body Trophy
+	Tooltip: ""
+}
+
+SepulcherOrbTrophy: {
+	DisplayName: Sepulcher Orb Trophy
+	Tooltip: ""
+}
+
+SepulcherTailTrophy: {
+	DisplayName: Sepulcher Tail Trophy
+	Tooltip: ""
+}
+
+SepulcherTrophy: {
+	DisplayName: Sepulcher Trophy
+	Tooltip: ""
+}
+
+SoulSeekerTrophy: {
+	DisplayName: Soul Seeker Trophy
+	Tooltip: ""
+}

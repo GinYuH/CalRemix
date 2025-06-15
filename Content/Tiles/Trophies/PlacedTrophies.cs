@@ -85,3 +85,51 @@ public class PhytogenTrophyPlaced : PlacedRemixTrophy
 }
 public class PyrogenTrophyPlaced : PlacedRemixTrophy;
 public class RedTrophyPlaced : PlacedRemixTrophy;
+public class SepulcherTrophyPlaced : PlacedRemixTrophy;
+public class SepulcherBodyTrophyPlaced : PlacedRemixTrophy;
+public class SepulcherTailTrophyPlaced : PlacedRemixTrophy;
+public class SepulcherOrbTrophyPlaced : PlacedRemixTrophy
+{
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+        TileObjectData.addTile(Type);
+    }
+}
+public class BrimstoneHeartTrophyPlaced : PlacedRemixTrophy
+{
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+        TileObjectData.newTile.Width = 2;
+        TileObjectData.newTile.Height = 2;
+        TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+        TileObjectData.addTile(Type);
+    }
+}
+public class SoulSeekerTrophyPlaced : PlacedRemixTrophy
+{
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+        TileObjectData.newTile.Width = 2;
+        TileObjectData.newTile.Height = 2;
+        TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+        TileObjectData.addTile(Type);
+    }
+}
+public class FlinstoneGangsterTrophyPlaced : PlacedRemixTrophy
+{
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+        TileObjectData.newTile.Width = 4;
+        TileObjectData.newTile.Height = 4;
+        TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
+        TileObjectData.addTile(Type);
+    }
+}

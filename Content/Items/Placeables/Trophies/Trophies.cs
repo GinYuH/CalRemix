@@ -176,3 +176,59 @@ public class RedTrophy : RemixTrophy
         Item.createTile = TileType<RedTrophyPlaced>();
     }
 }
+public class SepulcherTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherTrophyPlaced>();
+    }
+}
+public class SepulcherBodyTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherBodyTrophyPlaced>();
+    }
+}
+public class SepulcherTailTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherTailTrophyPlaced>();
+    }
+}
+public class SepulcherOrbTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherOrbTrophyPlaced>();
+    }
+}
+public class SoulSeekerTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SoulSeekerTrophyPlaced>();
+    }
+}
+public class BrimstoneHeartTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<BrimstoneHeartTrophyPlaced>();
+    }
+}
+public class FlinstoneGangsterTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<FlinstoneGangsterTrophyPlaced>();
+    }
+}

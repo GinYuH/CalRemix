@@ -14,6 +14,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AquaticScourge;
@@ -69,6 +70,7 @@ using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
@@ -297,6 +299,59 @@ namespace CalRemix
             if (npc.type == NPCType<OldDuke>())
             {
                 npc.active = false;
+            }
+            bool sepulcherDead = (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneHeart>()) && !Main.zenithWorld) || CalamityGlobalNPC.SCal < 0 || !Main.npc[CalamityGlobalNPC.SCal].active;
+            if (npc.type == NPCType<SepulcherHead>())
+            {
+                if (sepulcherDead)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTrophy>());
+                        }
+                    }
+                }
+            }
+            if (npc.type == NPCType<SepulcherBody>())
+            {
+                if (sepulcherDead)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherBodyTrophy>());
+                        }
+                    }
+                }
+            }
+            if (npc.type == NPCType<SepulcherBodyEnergyBall>())
+            {
+                if (sepulcherDead)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherOrbTrophy>());
+                        }
+                    }
+                }
+            }
+            if (npc.type == NPCType<SepulcherTail>())
+            {
+                if (sepulcherDead)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTailTrophy>());
+                        }
+                    }
+                }
             }
             if (CalRemixWorld.wizardDisabled)
             {
@@ -1549,6 +1604,15 @@ namespace CalRemix
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
                 npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 60, 80);
+                npcLoot.AddNormalOnly(ItemType<FlinstoneGangsterTrophy>(), 10);
+            }
+            else if (npc.type == NPCType<SoulSeekerSupreme>())
+            {
+                npcLoot.AddNormalOnly(ItemType<SoulSeekerTrophy>(), 10);
+            }
+            else if (npc.type == NPCType<BrimstoneHeart>())
+            {
+                npcLoot.AddNormalOnly(ItemType<BrimstoneHeartTrophy>(), 10);
             }
             else if (npc.type == NPCType<PrimordialWyrmHead>())
             {
