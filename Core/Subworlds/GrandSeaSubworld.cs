@@ -41,7 +41,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
             list.Add(item: (ModContent.NPCType<Xiphactinus>(), 0.4f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<TanyHead>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
+            list.Add(item: (ModContent.NPCType<TanyHead>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TanyHead>())));
             return list;
         }
 
@@ -51,6 +51,9 @@ namespace CalRemix.Core.Subworlds
         [
             new GrandSeaGeneration()
         ];
+
+        int ICustomSpawnSubworld.MaxSpawns { get => 22; }
+        float ICustomSpawnSubworld.SpawnMult { get => 0.1f; }
 
         public override void OnEnter()
         {

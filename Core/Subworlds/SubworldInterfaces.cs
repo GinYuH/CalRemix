@@ -16,5 +16,15 @@ namespace CalRemix.Core.Subworlds
         /// </summary>
         /// <returns></returns>
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns();
+
+        /// <summary>
+        /// The maximum amount of NPCs that can spawn
+        /// </summary>
+        public int MaxSpawns { get; }
+
+        /// <summary>
+        /// The spawn rate multiplier. Lower values means more frequent spawns.
+        /// </summary>
+        public float SpawnMult { get; }
     }
 }

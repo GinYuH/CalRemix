@@ -2035,6 +2035,15 @@ namespace CalRemix
                 maxSpawns *= 2;
                 spawnRate = Math.Max((int)(spawnRate * 0.5f), 1);
             }
+            if (SubworldSystem.AnyActive())
+            {
+                if (SubworldSystem.Current is ICustomSpawnSubworld)
+                {
+                    ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    spawnRate = (int)(spawnRate * IDS.SpawnMult);
+                    maxSpawns = IDS.MaxSpawns;
+                }
+            }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {

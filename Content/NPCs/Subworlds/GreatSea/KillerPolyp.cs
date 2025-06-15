@@ -47,6 +47,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            Lighting.AddLight(NPC.Center, 0, 0.8f, 1f);
             NPC.velocity.Y = 12;
             if (NPC.ai[0] == 0)
             {
