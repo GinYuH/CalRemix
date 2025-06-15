@@ -16,6 +16,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using System;
 using CalamityMod.Particles;
+using CalRemix.Content.Projectiles;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -62,7 +63,32 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             if (NPC.ai[1] >= 90)
             {
                 GeneralParticleHandler.SpawnParticle(new PulseRing(NPC.Center, Vector2.Zero, Color.White, 0.2f, 1f, 60));
-                Item.NewItem(NPC.GetSource_Death(), NPC.getRect(), ItemID.DarkShard);
+                int idx = 0;
+                int highestHealth = 0;
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (n.type != Type)
+                    {
+                        if (n.damage > 0)
+                        {
+                            if (!n.boss)
+                            {
+                                if (n.lifeMax > highestHealth)
+                                {
+                                    idx = n.whoAmI + 1;
+                                    highestHealth = n.lifeMax;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (idx != 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.npc[idx - 1].Center), ModContent.ProjectileType<ZoaoaLight>(), (int)(Main.npc[idx - 1].lifeMax * 0.05f), 0, ai0: idx); 
+                    }
+                }
                 SoundEngine.PlaySound(SoundID.NPCDeath7, NPC.Center);
                 NPC.active = false;
             }

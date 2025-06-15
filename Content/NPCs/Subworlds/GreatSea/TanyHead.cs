@@ -102,6 +102,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             {
                 CalRemixNPC.WormAI(NPC, 32, 0.7f, Main.player[NPC.target], Vector2.Zero, segmentType: 1, canFlyByDefault: true);
             }
+            if (NPC.AnyNPCs(ModContent.NPCType<Liopleurodon>()))
+            {
+                if (SegmentType == 0)
+                    NPC.velocity.Y = 20;
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

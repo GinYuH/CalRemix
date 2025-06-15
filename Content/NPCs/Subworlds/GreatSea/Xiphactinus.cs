@@ -59,7 +59,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 Timer++;
                 NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
                 NPC.rotation = NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi);
-                if (Main.player[NPC.target].Distance(NPC.Center) < 500 && Timer > 120)
+                if (Main.player[NPC.target].Distance(NPC.Center) < 500 && Timer > 120 && !NPC.AnyNPCs(ModContent.NPCType<Liopleurodon>()))
                 {
                     NPC.ai[1] = 1;
                     Timer = 0;

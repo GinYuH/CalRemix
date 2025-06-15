@@ -98,7 +98,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     Main.player[NPC.target].Center = rect.Bottom();
                     if (Timer % 20 == 0 && !Main.player[NPC.target].dead)
                     {
-                        SoundEngine.PlaySound(BetterSoundID.ItemMinecartCling with { Pitch = 0.4f });
+                        SoundEngine.PlaySound(BetterSoundID.ItemMinecartCling with { Pitch = 0.4f, Volume = 2 });
                         Main.player[NPC.target].RemoveAllIFrames();
                         Main.player[NPC.target].Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, NPC.direction);
 
