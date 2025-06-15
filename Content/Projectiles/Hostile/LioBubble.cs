@@ -26,8 +26,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override void AI()
         {
-            Projectile.ai[0]++;
-            if (Projectile.ai[0] > 60)
+            Player p = Main.player[(int)Projectile.ai[0]];
+            if (Projectile.velocity.Y < 0 && Projectile.position.Y < (p.Top.Y - 100))
             {
                 Projectile.tileCollide = true;
             }

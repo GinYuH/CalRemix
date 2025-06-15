@@ -223,7 +223,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), rect.Center.ToVector2(), new Vector2(Main.rand.NextFloat(1, 20) * NPC.direction, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<LioBubble>(), (int)(NPC.damage * 0.2f), 1f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), rect.Center.ToVector2(), new Vector2(Main.rand.NextFloat(1, 20) * NPC.direction, Main.rand.NextFloat(2, 10)), ModContent.ProjectileType<LioBubble>(), (int)(NPC.damage * 0.2f), 1f, ai0: NPC.target);
                         }
                     }
                 }
