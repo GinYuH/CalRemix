@@ -18,6 +18,7 @@ using System;
 using CalamityMod.Particles;
 using Microsoft.CodeAnalysis.Host.Mef;
 using Terraria.DataStructures;
+using CalRemix.Content.Projectiles.Hostile;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -188,9 +189,49 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     NPC.direction = -1;
                 }
                 NPC.spriteDirection = NPC.direction;
+
+                if (Timer > 240 && NPC.localAI[1] < 200)
+                {
+                    Timer = 0;
+                    NPC.ai[1] = 2;
+                    NPC.localAI[0] = 0;
+                    NPC.localAI[1] = 0;
+                    NPC.direction = NPC.spriteDirection = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                }
             }
             else if (NPC.ai[1] == 2)
             {
+                NPC.velocity *= 0.97f;
+                int salvoAmount = 5;
+                int salvoDelay = 5;
+                Timer++;
+                if (Timer < 50)
+                {
+                    float idealRot = (NPC.direction == 1 ? MathHelper.PiOver4 : 3 * MathHelper.PiOver4) + (NPC.direction == -1 ? MathHelper.Pi : 0);
+                    NPC.rotation = Utils.AngleLerp(NPC.rotation, idealRot, 0.05f);
+                }
+                if (Timer == 50)
+                {
+                    NPC.localAI[0] = 100;
+                }
+                if (Timer > 50 && Timer < 50 + (salvoAmount * salvoDelay) && Timer % salvoDelay == 0)
+                {
+                    SoundEngine.PlaySound(BetterSoundID.ItemBubbleGun2); 
+                    Vector2 projection = NPC.Center + (NPC.rotation + (NPC.direction == -1 ? MathHelper.ToRadians(190) : 0)).ToRotationVector2() * (NPC.direction == -1 ? 240 : 190);
+                    Rectangle rect = new Rectangle((int)projection.X, (int)projection.Y, NPC.direction == -1 ? 100 : 80, 60);
+                    for (int i = 0; i < Main.rand.Next(6, 12); i++)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), rect.Center.ToVector2(), new Vector2(Main.rand.NextFloat(1, 20) * NPC.direction, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<LioBubble>(), (int)(NPC.damage * 0.2f), 1f);
+                        }
+                    }
+                }
+                if (Timer > 50 + (salvoAmount * salvoDelay) + 120)
+                {
+                    Timer = 0;
+                    NPC.ai[1] = 1;
+                }
             }
             NPC.localAI[0]--;
             NPC.localAI[1]--;
