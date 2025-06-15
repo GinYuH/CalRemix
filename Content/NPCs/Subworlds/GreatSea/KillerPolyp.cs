@@ -77,7 +77,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 List<Vector2> points = new();
                 for (int j = 0; j < segCount; j++)
                 {
-                    points.Add(start + new Vector2(MathF.Sin((float)j * 0.05f + Main.GlobalTimeWrappedHourly * (i % 5 * 0.5f + 1) * 2 + i * 2f) * 5f, MathHelper.Lerp(0, -v.Item2, (float)j / (float)(segCount - 1))));
+                    points.Add(start + new Vector2(MathF.Sin((float)j * 0.05f - Main.GlobalTimeWrappedHourly * (i % 5 * 0.5f + 1) * 2 + i * 2f) * 5f, MathHelper.Lerp(0, -v.Item2, (float)j / (float)(segCount - 1))));
                 }
                 float dt = Color.DarkTurquoise.G;
                 float lt = Color.Turquoise.G;
