@@ -54,11 +54,18 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 NPC.TargetClosest(false);
                 if (Timer % 100 == 0 || NPC.collideX || NPC.collideY)
                 {
-                    NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 3);
+                    if (NPC.velocity.Length() < 1)
+                    {
+                        NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 3f);
+                    }
+                    else
+                    {
+                        NPC.velocity = NPC.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.5f);
+                    }
                 }
                 Timer++;
                 NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
-                NPC.rotation = NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi);
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f);
                 if (Main.player[NPC.target].Distance(NPC.Center) < 500 && Timer > 120 && !NPC.AnyNPCs(ModContent.NPCType<Liopleurodon>()))
                 {
                     NPC.ai[1] = 1;
