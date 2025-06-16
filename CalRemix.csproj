@@ -26,7 +26,6 @@
   
   <ItemGroup>
     <Folder Include="Assets\Textures\" />
-    <Folder Include="Core\Biomes\Subworlds\" />
   </ItemGroup>
   
   <ItemGroup>

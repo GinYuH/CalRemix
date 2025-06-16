@@ -126,6 +126,11 @@ Mods: {
 				DisplayName: Primordial Caves Biome
 				TownNPCDialogueName: the Primordial Caves Biome
 			}
+
+			ClownWorldClownBiome: {
+				DisplayName: Clown World Clown Biome
+				TownNPCDialogueName: the Clown World Clown Biome
+			}
 		}
 
 		Enchantments: {

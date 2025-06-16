@@ -32,6 +32,11 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
             PitchVariance = 0.6f,
             MaxInstances = 0
         };
+        public static readonly SoundStyle BananamanDie = new("CalRemix/Assets/Sounds/BananamanDie")
+        {
+            PitchVariance = 0.6f,
+            MaxInstances = 0
+        };
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Evil Eye");
@@ -49,6 +54,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
             NPC.defense = 2; // one for each lens of his sunglasses
             NPC.knockBackResist = 0;
             NPC.HitSound = BananamanHurt;
+            NPC.DeathSound = BananamanDie;
             NPC.frame = new Rectangle(0, 0, 34, 56);
         }
 

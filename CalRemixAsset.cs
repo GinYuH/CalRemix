@@ -12,6 +12,7 @@ using CalRemix.Core.Subworlds;
 using Terraria.GameContent;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using CalRemix.Core.Biomes.Subworlds;
 
 namespace CalRemix
 {
@@ -50,6 +51,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
                 Filters.Scene["CalRemix:ScreamingFaceSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:ScreamingFaceSky"] = new ScreamingFaceSky();
+                Filters.Scene["CalRemix:ClownWorldSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ClownWorldSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:ClownWorldSky"] = new ClownWorldSky();
             }
 
             AssetRepository remixAsset = Mod.Assets;
@@ -91,6 +94,7 @@ namespace CalRemix
 
         // Subworlds
         public static readonly int Exosphere = Set("Biomes/Subworlds/Exosphere");
+        public static readonly int ClownWorld = Set("Biomes/Subworlds/ClownWorld");
 
         // Biomes
         public static readonly int AsbestosCaves = Set("Biomes/AsbestosCaves");
