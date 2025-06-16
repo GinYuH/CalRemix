@@ -26,5 +26,10 @@ namespace CalRemix.Core.Subworlds
         /// The spawn rate multiplier. Lower values means more frequent spawns.
         /// </summary>
         public float SpawnMult { get; }
+
+        /// <summary>
+        /// Set to true to disable the vanilla spawn system completely. This is mainly for allowing things like mid-air or lava NPCs
+        /// </summary>
+        public bool OverrideVanilla {  get; }
     }
 }

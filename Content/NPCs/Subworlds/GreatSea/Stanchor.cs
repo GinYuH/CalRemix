@@ -80,10 +80,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             if (Main.netMode != NetmodeID.MultiplayerClient && !HasChosenSpotToHideIn)
             {
                 int tries;
-                for (tries = 0; tries < 1800; tries++)
+                int tot = 222;
+                for (tries = 0; tries < tot; tries++)
                 {
-                    int x = (int)(NPC.Center.X / 16f) + Main.rand.Next(-25, 25);
-                    int y = (int)(NPC.Center.Y / 16f) + Main.rand.Next(-25, 25);
+                    int x = (int)(NPC.Center.X / 16f) + Main.rand.Next(-50, 50);
+                    int y = (int)(NPC.Center.Y / 16f) + Main.rand.Next(-50, 50);
                     Tile tile = CalamityUtils.ParanoidTileRetrieval(x, y);
 
                     // Try again if the tile isn't solid or isn't exposed to air.
@@ -102,8 +103,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 }
 
                 // Just die if no spot was suitable.
-                if (tries >= 1799)
+                if (tries >= (tot - 1))
+                {
                     NPC.active = false;
+                    return;
+                }
 
                 NPC.Center = SpotToHideIn;
                 NPC.netUpdate = true;
@@ -159,6 +163,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (SpotToHideIn == default)
+                return false;
             spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied);
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D chain = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/StanchorSegment").Value;

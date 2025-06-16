@@ -34,8 +34,8 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             list.Add(item: (ModContent.NPCType<MicrobialClusterII>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<Stanchor>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !Main.tile[n.SpawnTileX, n.SpawnTileY - 1].HasTile));
+            list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
             list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
 
             // Primordial Caves
@@ -57,6 +57,8 @@ namespace CalRemix.Core.Subworlds
         int ICustomSpawnSubworld.MaxSpawns { get => 14; }
         float ICustomSpawnSubworld.SpawnMult { get => 0.1f; }
 
+        bool ICustomSpawnSubworld.OverrideVanilla { get => true; }
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -64,6 +66,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            //Main.NewText(Main.LocalPlayer.position.Y / 16 / (float)Main.maxTilesY + " " + Main.LocalPlayer.position.Y / 16 + " " + Main.worldSurface);
             Main.LocalPlayer.ZoneBeach = false;
             //Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:ScreamingFaceSky", true);
             //SkyManager.Instance.Activate("CalRemix:ScreamingFaceSky", Main.LocalPlayer.position);

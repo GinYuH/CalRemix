@@ -85,6 +85,7 @@ using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.NPCs.TownNPCs;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
@@ -114,6 +115,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -2045,6 +2047,88 @@ namespace CalRemix
                 }
             }
         }
+
+
+        internal static readonly FieldInfo MaxSpawnsField = typeof(NPC).GetField("maxSpawns", BindingFlags.NonPublic | BindingFlags.Static);
+
+        public static void RemixSpawnSystem(Player player)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
+            if (SubworldSystem.AnyActive())
+            {
+                if (SubworldSystem.Current is ICustomSpawnSubworld)
+                {
+                    ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    if (!IDS.OverrideVanilla)
+                        return;
+                    int spawnRate = 400;
+                    int maxSpawnCount = IDS.MaxSpawns;
+                    NPCLoader.EditSpawnRate(player, ref spawnRate, ref maxSpawnCount);
+
+                    float spawnsTaken = 0;
+                    foreach (NPC n in Main.ActiveNPCs)
+                    {
+                        if (!n.townNPC)
+                        {
+                            spawnsTaken += n.npcSlots;
+                        }
+                    }
+                    if (spawnsTaken >= IDS.MaxSpawns)
+                        return;
+
+                    float playerCenterX = player.Center.X / 16f;
+                    float playerCenterY = player.Center.Y / 16f;
+                    //for (int i = 0; i < 8; i++)
+                    {
+                        int checkPositionX = (int)(playerCenterX + Main.rand.Next(-90, 90));
+                        int checkPositionY = (int)(playerCenterY + Main.rand.Next(-80, 80));
+
+                        Vector2 checkPosition = new Vector2(checkPositionX, checkPositionY);
+
+                        if (Math.Abs(playerCenterY - checkPosition.Y) < 40 && Math.Abs(playerCenterX - checkPosition.X) < 70)
+                            return;
+
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(checkPositionX, checkPositionY);
+                        Tile aboveSpawnTile = CalamityUtils.ParanoidTileRetrieval(checkPositionX, checkPositionY - 1);
+
+                        // If the place the NPC should spawn (a tile above) is a block, return
+                        if (aboveSpawnTile.HasTile && Main.tileSolid[aboveSpawnTile.TileType])
+                            return;
+
+                        NPCSpawnInfo spawnInfo = new NPCSpawnInfo();
+                        spawnInfo.Player = player;
+                        spawnInfo.SpawnTileType = aboveSpawnTile.TileType;
+                        spawnInfo.SpawnTileX = checkPositionX;
+                        spawnInfo.SpawnTileY = checkPositionY - 1;
+                        spawnInfo.Water = aboveSpawnTile.LiquidAmount >= 255 && aboveSpawnTile.LiquidType == 0;
+
+                        WeightedRandom<(int, Predicate<NPCSpawnInfo>)> pool = new WeightedRandom<(int, Predicate<NPCSpawnInfo>)>();
+                        pool.Add((NPCID.None, (NPCSpawnInfo s) => true), 1f);
+                        foreach (var v in IDS.Spawns())
+                        {
+                            pool.Add((v.Item1, v.Item3), v.Item2);
+                        }
+
+                        var spawnEntry = pool.Get();
+                        if (!spawnEntry.Item2.Invoke(spawnInfo))
+                            return;
+                        if (spawnEntry.Item1 != NPCID.None)
+                        {
+                            int spawnedNPC = NPCLoader.SpawnNPC(spawnEntry.Item1, checkPositionX, checkPositionY - 1);
+                            if (Main.netMode == NetmodeID.Server && spawnedNPC < Main.maxNPCs)
+                            {
+                                Main.npc[spawnedNPC].position.Y -= 8f;
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spawnedNPC);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             if (CalRemixWorld.roachDuration > 0)
@@ -2075,6 +2159,8 @@ namespace CalRemix
                 {
                     pool.Clear();
                     ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    if (IDS.OverrideVanilla)
+                        return;
                     foreach (var v in IDS.Spawns())
                     {
                         if (v.Item3.Invoke(spawnInfo))

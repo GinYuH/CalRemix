@@ -39,6 +39,7 @@ using CalRemix.Content.Items.ZAccessories;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Weapons;
 using Terraria.GameContent.UI.ResourceSets;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace CalRemix.Core
 {
@@ -78,6 +79,7 @@ namespace CalRemix.Core
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
             
             IL_UIWorldCreation.AddWorldSizeOptions += ReplaceWorldSelectionSizeDescriptions;
+            //IL_NPC.SpawnNPC += NewSpawnNPC;
 
             On_Main.DrawDust += DrawStatic;
             On_Main.DrawLiquid += DrawTsarBomba;
@@ -106,6 +108,58 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public static void NewSpawnNPC(ILContext il)
+        {
+            var cursor = new ILCursor(il);
+
+            ILLabel target = cursor.DefineLabel();
+
+            if (!cursor.TryGotoNext(i => i.MatchCall(typeof(NPC), nameof(NPC.ResetRemixHax))))
+            {
+                CalRemix.instance.Logger.Error("NewNPC: Could not locate the first method return.");
+                return;
+            }
+
+            if (!cursor.TryGotoPrev(MoveType.Before, i => i.MatchBrfalse(out ILLabel branchEnde)))
+            {
+                CalRemix.instance.Logger.Error("NewNPC: Could not go backwards.");
+                return;
+            }
+
+            if (!cursor.TryGotoPrev(MoveType.Before, i => i.MatchBrfalse(out target)))
+            {
+                CalRemix.instance.Logger.Error("NewNPC: Could not go backwards the second time.");
+                return;
+            }
+            target = (ILLabel)cursor.Next.Operand;
+            cursor.Next.OpCode = OpCodes.Brtrue;
+            cursor.Next.Operand = target;
+            //cursor.Remove();
+            /*cursor.EmitBrtrue(target);
+
+            if (!cursor.TryGotoNext(i => i.MatchCall(typeof(NPC), nameof(NPC.ResetRemixHax))))
+            {
+                CalRemix.instance.Logger.Error("NewNPC: Could not locate the first method return.");
+                return;
+            }
+
+            cursor.EmitDelegate(() => Main.NewText("HELP MEEEE"));*/
+
+
+
+            /*if (!cursor.TryGotoNext(i => i.MatchStfld(typeof(NPCSpawnInfo), nameof(NPCSpawnInfo.Sky))))
+            {
+                CalRemix.instance.Logger.Error("NewNPC: Could not locate sky field.");
+            }
+            if (!cursor.TryGotoPrev(MoveType.Before, i => i.MatchBrfalse(out target)))
+            {
+                CalRemix.instance.Logger.Error("NewNPC: Could not go backwards the third time.");
+                return;
+            }*/
+
+
         }
 
         public static void DrawRotated(orig_PushSprite orig, SpriteBatch self, Texture2D texture,

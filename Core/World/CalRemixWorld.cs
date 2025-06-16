@@ -998,6 +998,14 @@ namespace CalRemix.Core.World
             }
             // Increment time since Yharon's murder
             if (DownedBossSystem.downedYharon) timeSinceYharonMurdered++;
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.dead)
+                    continue;
+
+                CalRemixNPC.RemixSpawnSystem(p);
+            }
         }
 
         public static void UnleashRoaches()
