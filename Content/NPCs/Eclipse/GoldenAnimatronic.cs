@@ -12,6 +12,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Items.Placeables.Banners;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Tiles;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
@@ -146,6 +147,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), new Fraction(3, 4), 20, 50);
+            npcLoot.Add(ModContent.ItemType<FreddyCheckersBoard>(), 1, 400, 500);
             npcLoot.Add(ModContent.ItemType<PizzaWheel>(), 3);
             npcLoot.Add(ModContent.ItemType<SalvageMask>());
             npcLoot.Add(ModContent.ItemType<SalvageSuit>());

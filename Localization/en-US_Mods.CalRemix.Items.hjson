@@ -4559,3 +4559,8 @@ Moonstone: {
 	DisplayName: Moonstone
 	Tooltip: ""
 }
+
+FreddyCheckersBoard: {
+	DisplayName: Freddy Checkers Board
+	Tooltip: ""
+}
