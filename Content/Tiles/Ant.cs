@@ -35,6 +35,8 @@ namespace CalRemix.Content.Tiles
 
         public static int antDirection = 0;
 
+        public static SoundStyle Sonar = new SoundStyle("CalRemix/Assets/Sounds/Sonar");
+
 
         public override void SetStaticDefaults()
         {
@@ -58,6 +60,10 @@ namespace CalRemix.Content.Tiles
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
+            if (Main.rand.NextBool(600))
+            {
+                SoundEngine.PlaySound(Sonar);
+            }
             Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
             /*if (Main.mouseRightRelease && Main.mouseRight)
             {
