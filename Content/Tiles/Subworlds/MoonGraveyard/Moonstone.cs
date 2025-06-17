@@ -20,9 +20,9 @@ namespace CalRemix.Content.Tiles.Subworlds.MoonGraveyard
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(255, 22, 61), name);
-            HitSound = SoundID.Item150;
-            DustType = DustID.RainbowMk2;
+            AddMapEntry(new Color(162, 183, 185), name);
+            HitSound = SoundID.Dig;
+            DustType = DustID.Glass;
         }
     }
 
