@@ -24,7 +24,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         {
             Main.npcFrameCount[Type] = 1;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
-            NPCID.Sets.TrailCacheLength[NPC.type] = 15;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 60;
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
         }
@@ -131,6 +131,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 _ => ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/HellbenderHead").Value
             };
 
+            float pinkOpacity = 0.5f;
+
             if (SegmentType == 2 && !NPC.IsABestiaryIconDummy)
             {
 
@@ -138,7 +140,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
                 float correctedRotation = NPC.rotation - MathHelper.PiOver2;
 
-                Vector2 ribbonOffset = -Vector2.UnitY.RotatedBy(correctedRotation);
+                Vector2 ribbonOffset = -Vector2.UnitY.RotatedBy(correctedRotation) * 40;
                 //ribbonOffset += Vector2.UnitX.RotatedBy(correctedRotation) * 90f;
 
                 float currentSegmentRotation = correctedRotation;
@@ -168,20 +170,21 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         Vector2 ornamentPosition = NPC.Center + (ribbonSegmentOffset + ribbonOffset) + (Vector2.UnitX.RotatedBy((i % 2 == 0).ToDirectionInt() * MathHelper.PiOver2) * MathHelper.Lerp(90, 50, i / (float)(ct - 1))).RotatedBy(NPC.rotation);
 
                         float dirOff = right ? MathHelper.Pi : 0;
-                        Main.EntitySpriteDraw(ornament, ornamentPosition - screenPos, null, Lighting.GetColor(ornamentPosition.ToTileCoordinates()), (right.ToDirectionInt() * -MathHelper.PiOver4) + NPC.rotation + right.ToDirectionInt() * 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly) - dirOff, !right ? new Vector2(0, ornament.Height) : new Vector2(ornament.Width, ornament.Height), NPC.scale, !right ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+                        Main.EntitySpriteDraw(ornament, ornamentPosition - screenPos, null, Lighting.GetColor(ornamentPosition.ToTileCoordinates()) * pinkOpacity, (right.ToDirectionInt() * -MathHelper.PiOver4) + NPC.rotation + right.ToDirectionInt() * 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly) - dirOff, !right ? new Vector2(0, ornament.Height) : new Vector2(ornament.Width, ornament.Height), NPC.scale, !right ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
                     }
                 }
                 PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f) => 50 * (1 - f), (float f) => Color.Lerp(Color.PaleGoldenrod, Color.Tan * 0.1f, f)));
 
                 Texture2D ornamental = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/HellbenderTailOrnamentFinal").Value;
-                Main.EntitySpriteDraw(ornamental, ribbonDrawPositions[^1] - screenPos, null, Lighting.GetColor(ribbonDrawPositions[^1].ToTileCoordinates()), NPC.rotation - MathHelper.PiOver2, new Vector2(ornamental.Width / 2, 0), NPC.scale, SpriteEffects.None);
+                Main.EntitySpriteDraw(ornamental, ribbonDrawPositions[^1] - screenPos, null, Lighting.GetColor(ribbonDrawPositions[^1].ToTileCoordinates()) * pinkOpacity, NPC.rotation - MathHelper.PiOver2, new Vector2(ornamental.Width / 2, 0), NPC.scale, SpriteEffects.None);
 
             }
 
             Rectangle? frame = SegmentType == 2 ? texture.Frame(1, 4, 0, NPC.frame.Y) : null;
             Vector2 origin = SegmentType == 2 ? new Vector2(texture.Width / 2, texture.Height / 8) : texture.Size() / 2;
             Vector2 bodyOffset = SegmentType != 2 ? Vector2.Zero : NPC.rotation.ToRotationVector2().RotatedBy(-MathHelper.PiOver2) + NPC.rotation.ToRotationVector2() * -2;
-            Main.EntitySpriteDraw(texture, NPC.Center - screenPos + bodyOffset * 12, null, NPC.GetAlpha(drawColor), NPC.rotation - MathHelper.PiOver2, texture.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+            float isPink = SegmentType == 2 ? pinkOpacity : 1;
+            Main.EntitySpriteDraw(texture, NPC.Center - screenPos + bodyOffset * 12, null, NPC.GetAlpha(drawColor) * isPink, NPC.rotation - MathHelper.PiOver2, texture.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
 
 
             if (SegmentType == 1)
@@ -200,7 +203,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     float rotOff = (right ? MathHelper.PiOver2 : MathHelper.PiOver4) + right.ToDirectionInt() * MathF.Sin(Main.GlobalTimeWrappedHourly) * MathHelper.Lerp(0.75f, 0.05f, Utils.Turn01ToCyclic010(Utils.GetLerpValue(0, ct, i))); ;
                     Vector2 ornamentBaseOffset = Vector2.UnitY.RotatedBy(NPC.rotation - MathHelper.PiOver2) * MathHelper.Lerp(180, 120, Utils.Turn01ToCyclic010(Utils.GetLerpValue(0, ct, i)));
                     Vector2 ornamentPosition = NPC.Center + Vector2.Lerp(ornamentBaseOffset.RotatedBy(-MathHelper.PiOver4 * 0.5f), ornamentBaseOffset.RotatedBy(MathHelper.PiOver4 * 0.5f), i / (float)(ct - 2));
-                    Main.EntitySpriteDraw(ornament, ornamentPosition - screenPos, null, Lighting.GetColor(ornamentPosition.ToTileCoordinates()), ornamentPosition.DirectionTo(NPC.Center).ToRotation() + rotOff, right ? Vector2.Zero : new Vector2(ornament.Width, 0), NPC.scale, !right ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+                    Main.EntitySpriteDraw(ornament, ornamentPosition - screenPos, null, Lighting.GetColor(ornamentPosition.ToTileCoordinates()) * pinkOpacity, ornamentPosition.DirectionTo(NPC.Center).ToRotation() + rotOff, right ? Vector2.Zero : new Vector2(ornament.Width, 0), NPC.scale, !right ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
                 }
             }
             return false;
