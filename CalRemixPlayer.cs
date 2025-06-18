@@ -70,6 +70,7 @@ using static CalRemix.CalRemixHelper;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.NPCs.Eclipse;
 using System.Reflection;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
 
 namespace CalRemix
 {
@@ -1240,6 +1241,20 @@ namespace CalRemix
                 if (Player.statLife <= 1)
                     Player.ClearBuff(BuffType<Springlocked>());
             }
+
+            if (Player.HasBuff(ModContent.BuffType<DepthGliderBuff>()))
+            {
+                if (Math.Abs(Player.velocity.X) >= 5)
+                {
+                    Player.fullRotation = Utils.AngleLerp(Player.fullRotation, Player.velocity.ToRotation() + (Player.direction == -1 ? MathHelper.Pi : 0), 0.04f);
+                    Player.fullRotationOrigin = new Vector2(Player.width / 2, (float)Player.height * 0.8f);
+                }
+                else
+                {
+                    Player.fullRotation = Utils.AngleLerp(Player.fullRotation, 0, 0.04f);
+                    Player.fullRotationOrigin = new Vector2(Player.width / 2, (float)Player.height * 0.8f);
+                }
+            }
         }
         public override void ResetEffects()
 		{
@@ -1532,7 +1547,15 @@ namespace CalRemix
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
-			if (godfather)
+            if (Player.HasBuff(ModContent.BuffType<DepthGliderBuff>()))
+            {
+                if (npc.type == ModContent.NPCType<TempestKraken>())
+                {
+                    npc.SimpleStrikeNPC(1000, -1);
+                    modifiers.Cancel();
+                }
+            }
+            if (godfather)
 			{
 				if (npc.type == NPCID.BlueJellyfish || npc.type == NPCID.PinkJellyfish || npc.type == NPCID.GreenJellyfish ||
 					npc.type == NPCID.FungoFish || npc.type == NPCID.BloodJelly || npc.type == NPCID.AngryNimbus || npc.type == NPCID.GigaZapper ||

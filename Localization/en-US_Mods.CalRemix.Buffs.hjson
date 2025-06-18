@@ -429,6 +429,11 @@ Springlocked: {
 }
 
 WarlockBuff: {
-	DisplayName: Warlock Buff
+	DisplayName: Warlock
 	Description: It's kinda comfy in here
+}
+
+DepthGliderBuff: {
+	DisplayName: Depth Glider
+	Description: Time to krak some kens apart
 }

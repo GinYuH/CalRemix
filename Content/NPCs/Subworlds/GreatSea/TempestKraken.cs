@@ -23,6 +23,7 @@ using CalamityMod.DataStructures;
 using Terraria.GameContent.Animations;
 using rail;
 using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Content.Buffs;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -127,7 +128,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     }
                 }
 
-                if (NPC.Bottom.Y < p.Top.Y && Math.Abs(p.Center.Y - NPC.Center.Y) < 300 && Math.Abs(p.Center.X - NPC.Center.X) < 50 && NPC.ai[3] <= 0)
+                if (NPC.Bottom.Y < p.Top.Y && Math.Abs(p.Center.Y - NPC.Center.Y) < 300 && Math.Abs(p.Center.X - NPC.Center.X) < 50 && NPC.ai[3] <= 0 && !p.HasBuff(ModContent.BuffType<DepthGliderBuff>()))
                 {
                     NPC.ai[3] = 300 + 120;
                 }
