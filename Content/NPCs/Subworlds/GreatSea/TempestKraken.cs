@@ -142,6 +142,16 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
                 NPC.ai[3]--;
             }
+            else if (CurrentPhase == 2)
+            {
+                Timer++;
+                if (Timer >= 30)
+                {
+                    CurrentPhase = 1;
+                    Timer = 0;
+
+                }
+            }
 
             float pushForce = 0.02f;
             for (int k = 0; k < Main.maxNPCs; k++)

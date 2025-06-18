@@ -1551,7 +1551,9 @@ namespace CalRemix
             {
                 if (npc.type == ModContent.NPCType<TempestKraken>())
                 {
-                    npc.SimpleStrikeNPC(1000, -1);
+                    npc.knockBackResist = 1;
+                    npc.ai[2] = 2;
+                    npc.SimpleStrikeNPC(3000, Player.direction, knockBack: 20);
                     modifiers.Cancel();
                 }
             }

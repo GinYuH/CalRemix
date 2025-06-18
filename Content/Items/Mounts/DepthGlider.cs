@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Mounts
             MountData.fatigueMax = int.MaxValue - 1;
             MountData.jumpHeight = 12;
             MountData.usesHover = true;
-            MountData.acceleration = 0.35f;
+            MountData.acceleration = 0.55f;
             MountData.jumpSpeed = 5f;
             MountData.blockExtraJumps = false;
             MountData.totalFrames = 1;
