@@ -187,7 +187,11 @@ namespace CalRemix.Core.Subworlds
                             // this is for adding text to graves
                             int signID = Sign.ReadSign(x, y);
 
-                            Sign.TextSign(signID, "words? up to u mochi");
+                            Sign.TextSign(signID, "");
+                            /*if (WorldGen.genRand.NextBool(100))
+                            {
+                                Sign.TextSign(signID, "cool");
+                            }*/
                         }
                     }
                 }
