@@ -37,6 +37,8 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
             list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
             list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
+            list.Add(item: (ModContent.NPCType<HellbenderBaby>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<HellbenderHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<HellbenderHead>())));
 
             // Primordial Caves
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
