@@ -30,7 +30,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public ref float CurrentPhase => ref NPC.ai[1];
 
+        public ref float JawTimer => ref NPC.localAI[0];
+
         public ref float JawRotation => ref NPC.localAI[1];
+
+        public ref Player Target => ref Main.player[NPC.target];
 
         public override void SetStaticDefaults()
         {
@@ -59,24 +63,90 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            bool flip = ((Target.oldPosition.X < NPC.Center.X && Target.position.X > NPC.Center.X) || (Target.oldPosition.X > NPC.Center.X && Target.position.X < NPC.Center.X));
             if (CurrentPhase == 0)
             {
+                NPC.TargetClosest(false);
+                JawRotation = MathHelper.ToRadians(-16);
+                if (Timer % 210 == 0 || NPC.collideX || NPC.collideY)
+                {
+                    if (NPC.velocity.Length() < 1)
+                    {
+                        NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 3f);
+                    }
+                    else
+                    {
+                        NPC.velocity = NPC.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.5f);
+                    }
+                }
+                Timer++;
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f);
+                NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
+
+                if (NPC.justHit)
+                {
+                    Timer = 0;
+                    CurrentPhase = 1;
+                }
             }
             else if (CurrentPhase == 1)
             {
+                Timer++;
+                NPC.velocity *= 0.97f;
+                NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                float flipRot = flip ? MathHelper.Pi : 0;
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
+
+                if (Timer == 30)
+                {
+                    JawTimer = 1;
+                }
             }
             else if (CurrentPhase == 2)
             {
             }
-            handIK.Limbs[0].Rotation = GetIKRotationClamp((float)handIK.Limbs[0].Rotation, MathHelper.Pi, MathHelper.PiOver2);
-            handIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * 160, 40), Vector2.UnitY * 500);
-            tailIK.Limbs[0].Rotation = GetIKRotationClamp((float)tailIK.Limbs[0].Rotation, MathHelper.ToRadians(270), MathHelper.ToRadians(120));
-            tailIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * -170, 0), NPC.Center + Vector2.UnitX * -NPC.spriteDirection * 500);
-            NPC.spriteDirection = (Main.LocalPlayer.selectedItem == 0).ToDirectionInt();
-            //JawRotation = NPC.Center.DirectionTo(Main.MouseWorld).ToRotation();
 
 
+            if (JawTimer >= 1)
+            {
+                BasicOpenMouth();
+            }
+
+            handIK.Limbs[0].Rotation = GetIKRotationClamp((float)handIK.Limbs[0].Rotation, MathHelper.Pi + NPC.rotation, MathHelper.PiOver2 + NPC.rotation);
+            handIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * 160, 40).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Cos(Timer * 0.05f) * 0.5f));
+            tailIK.Limbs[0].Rotation = GetIKRotationClamp((float)tailIK.Limbs[0].Rotation, MathHelper.ToRadians(270) + NPC.rotation, MathHelper.ToRadians(120) + NPC.rotation);
+            tailIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * -170, 0).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Sin(Timer * 0.05f) * 0.5f));
+            if (flip)
+            {
+                handIK.Limbs[0].Rotation += MathHelper.Pi;
+                tailIK.Limbs[0].Rotation += MathHelper.Pi;
+            }
         }
+
+        public void BasicOpenMouth()
+        {
+            int jawOpenEnd = 15;
+            int jawAnim = jawOpenEnd + 20;
+            int jawFinish = jawAnim + 15;
+
+            float baseRotation = MathHelper.ToRadians(-16);
+            float openRotation = MathHelper.ToRadians(16);
+            if (JawTimer >= 0 && JawTimer <= jawOpenEnd)
+            {
+                JawRotation = MathHelper.Lerp(baseRotation, openRotation, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, jawOpenEnd, JawTimer, true), 1));
+            }
+            else if (JawTimer >= jawAnim && JawTimer <= jawFinish)
+            {
+                JawRotation = MathHelper.Lerp(openRotation, baseRotation, CalamityUtils.SineInEasing(Utils.GetLerpValue(jawAnim, jawFinish, JawTimer, true), 1));
+            }
+            if (JawTimer > jawFinish)
+            {
+                JawTimer = 0;
+            }
+            else
+                JawTimer++;
+        }
+
 
         public float GetIKRotationClamp(float baseRotation, float min, float max)
         {
@@ -112,19 +182,19 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 headPos = new Vector2(180, -40);
             Vector2 adjustedHeadPos = new Vector2(180 * NPC.spriteDirection, -40);
-            float headRotation = (NPC.Center + adjustedHeadPos).DirectionTo(Main.MouseWorld).ToRotation();
-            headRotation *= NPC.spriteDirection;
+            float headRotation = 0;// (NPC.Center + adjustedHeadPos).DirectionTo(Main.MouseWorld).ToRotation();
+            /*headRotation *= NPC.spriteDirection;
             if (NPC.spriteDirection == -1)
             {
                 headRotation += MathHelper.Pi;
-            }
+            }*/
             adjustedHeadPos = adjustedHeadPos.RotatedBy(headRotation);
 
             DrawPiece(spriteBatch, jaw, screenPos, new Vector2(180, 50), new Vector2(334, 23), drawColor, rotationAnchor: JawRotation + headRotation);
             spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / 2), NPC.scale, fx, 0);
             DrawPiece(spriteBatch, head, screenPos, headPos, new Vector2(397, 54), drawColor, rotationOverride: headRotation);
-            DrawPiece(spriteBatch, eye, screenPos, new Vector2(333, -3), new Vector2(10, 3), drawColor, rotationAnchor: headRotation);
-            DrawPiece(spriteBatch, pupil, screenPos, new Vector2(333, -3), new Vector2(3, 3), drawColor, rotationAnchor: headRotation);
+            DrawPiece(spriteBatch, eye, screenPos, new Vector2(321, -1), new Vector2(10, 3), drawColor, rotationAnchor: headRotation);
+            DrawPiece(spriteBatch, pupil, screenPos, new Vector2(321, -1), new Vector2(3, 3), drawColor, rotationAnchor: headRotation);
 
             for (int i = 0; i < handIK.Limbs.Length; i++)
             {
@@ -150,7 +220,6 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 Limb limb = tailIK.Limbs[i];
                 spriteBatch.Draw(touse, limb.ConnectPoint - screenPos, null, NPC.GetAlpha(drawColor), (float)limb.Rotation + offset, GetPieceOrigin(touse.Width, origin), NPC.scale, fx, 0);
             }
-            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, NPC.Center + adjustedHeadPos - screenPos, new Rectangle(0, 0, 22, 22), Color.Red, 0, Vector2.Zero, 1, 0);
             return false;
         }
 
@@ -162,7 +231,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public Vector2 GetPiecePosition(Vector2 screenPos, Vector2 offset, float rotationOverride = 0, float rotationAnchor = 0)
         {
-            return NPC.Center - screenPos + NPC.scale * new Vector2(offset.X * NPC.spriteDirection, offset.Y).RotatedBy(NPC.rotation + rotationAnchor);
+            return NPC.Center - screenPos + NPC.scale * new Vector2(offset.X * NPC.spriteDirection, offset.Y).RotatedBy(NPC.rotation);// + rotationAnchor);
         }
 
         public Vector2 GetPieceOrigin(float baseWidth, Vector2 originalOffset)
