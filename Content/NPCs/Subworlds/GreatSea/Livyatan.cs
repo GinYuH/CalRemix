@@ -304,7 +304,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         if (Timer > maxtim)
                         {
                             Timer = 0;
-                            CurrentPhase = 6;
+                            CurrentPhase = (NPC.life < NPC.lifeMax * 0.5f) ? 6 : 2;
                         }
                     }
 
@@ -317,7 +317,68 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }
             if (CurrentPhase == 6)
             {
+                Timer++;
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
+                NPC.velocity *= 0.96f;
+                if (Timer == 30)
+                {
+                    JawTimer = 1;
+                    int mtCount = 16;
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
+                    for (int i = 0; i <  mtCount; i++)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-2000, 2000), Main.rand.Next(600, 1200)), Vector2.UnitY * Main.rand.Next(-6, -1), ModContent.ProjectileType<ThrowableChunk>(), NPC.damage, 1, ai1: 2);
+                        }
+                    }
+                }
+                if (Timer > jawAnimLength + 60)
+                {
+                    Timer = 0;
+                    CurrentPhase = 2;
+                }
+            }
 
+            if (NPC.velocity.Length() > 3)
+            {
+                foreach (Projectile p in Main.ActiveProjectiles)
+                {
+                    if (p.type != ModContent.ProjectileType<ThrowableChunk>())
+                        continue;
+                    if (p.ai[1] != 2)
+                        continue;
+                    if (NPC.getRect().Intersects(p.getRect()))
+                    {
+                        SoundEngine.PlaySound(BetterSoundID.ItemMeteorStaffLunarFlare, NPC.Center);
+                        Main.LocalPlayer.Calamity().GeneralScreenShakePower = 3;
+                        p.Kill();
+                        int ct = 10;
+                        for (int i = 0; i < ct; i++)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                int pe = Projectile.NewProjectile(NPC.GetSource_FromThis(), p.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)ct)).RotatedByRandom(MathHelper.PiOver4) * 15, ModContent.ProjectileType<ThrowableChunk>(), (int)(p.damage * 0.25f), 1, ai1: Main.rand.Next(0, 2));
+                                Main.projectile[pe].height = Main.projectile[pe].width = 22;
+                            }
+                        }
+                    }
+                }
+                if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && (CurrentPhase == 3 || CurrentPhase == 5))
+                {
+                    for (int i = 0; i < (int)(NPC.width);  i++)
+                    {
+                        for (int j = 0; j < (int)(NPC.height); j++)
+                        {
+                            Point start = NPC.position.ToTileCoordinates();
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(start.X + i, start.Y + j);
+                            if (t.TileType == TileID.GreenMoss)
+                            {
+                                WorldGen.KillTile(start.X + i, start.Y + j, noItem: true);
+                            }
+                        }
+                    }
+                }
             }
 
 

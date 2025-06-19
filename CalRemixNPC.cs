@@ -2041,6 +2041,12 @@ namespace CalRemix
             {
                 if (SubworldSystem.Current is ICustomSpawnSubworld)
                 {
+                    if (CalamityPlayer.areThereAnyDamnBosses)
+                    {
+                        maxSpawns = 0;
+                        spawnRate = 0;
+                        return;
+                    }
                     ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
                     spawnRate = (int)(spawnRate * IDS.SpawnMult);
                     maxSpawns = IDS.MaxSpawns;
@@ -2060,6 +2066,10 @@ namespace CalRemix
             {
                 if (SubworldSystem.Current is ICustomSpawnSubworld)
                 {
+                    if (CalamityPlayer.areThereAnyDamnBosses)
+                    {
+                        return;
+                    }
                     ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
                     if (!IDS.OverrideVanilla)
                         return;
