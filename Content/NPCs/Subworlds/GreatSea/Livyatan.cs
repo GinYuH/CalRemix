@@ -21,6 +21,7 @@ using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using CalamityMod.InverseKinematics;
+using CalamityMod.Projectiles.Boss;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -35,6 +36,18 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         public ref float JawRotation => ref NPC.localAI[1];
 
         public ref Player Target => ref Main.player[NPC.target];
+
+        public Vector2 SavePosition
+        {
+            get => new Vector2(NPC.Calamity().newAI[0], NPC.Calamity().newAI[1]);
+            set
+            {
+                NPC.Calamity().newAI[1] = value.Y;
+                NPC.Calamity().newAI[0] = value.X;
+            }
+
+        }
+        // Unused: ai[2], ai[3], local[2], local[3], new[2], new[3], green[all]
 
         public override void SetStaticDefaults()
         {
@@ -63,10 +76,12 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            int jawAnimLength = 80;
             bool flip = ((Target.oldPosition.X < NPC.Center.X && Target.position.X > NPC.Center.X) || (Target.oldPosition.X > NPC.Center.X && Target.position.X < NPC.Center.X));
+            float flipRot = flip ? MathHelper.Pi : 0;
+            NPC.TargetClosest(false);
             if (CurrentPhase == 0)
             {
-                NPC.TargetClosest(false);
                 JawRotation = MathHelper.ToRadians(-16);
                 if (Timer % 210 == 0 || NPC.collideX || NPC.collideY)
                 {
@@ -80,7 +95,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     }
                 }
                 Timer++;
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f);
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f) + MathF.Sin(Timer * 0.05f + 2) * 0.02f;
                 NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
 
                 if (NPC.justHit)
@@ -91,19 +106,98 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }
             else if (CurrentPhase == 1)
             {
+                NPC.noTileCollide = true;
                 Timer++;
                 NPC.velocity *= 0.97f;
                 NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
-                float flipRot = flip ? MathHelper.Pi : 0;
                 NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
 
                 if (Timer == 30)
                 {
                     JawTimer = 1;
                 }
+                if (JawTimer == 0 && Timer > 30)
+                {
+                    CurrentPhase = 2;
+                    Timer = 0;
+                }
             }
             else if (CurrentPhase == 2)
             {
+                NPC.spriteDirection = NPC.direction = 1;
+                Timer++;
+                NPC.rotation = NPC.velocity.ToRotation();
+                if (Timer == 1)
+                {
+                    SavePosition = NPC.Center;
+                }
+                else
+                {
+                    NPC.velocity = Vector2.Lerp(NPC.Center, (SavePosition + Vector2.UnitY.RotatedBy(Timer * MathHelper.Lerp(0, 0.12f, Utils.GetLerpValue(0, 60, Timer, true))) * 300), 0.1f) - NPC.Center;
+                }
+                if (Timer > 60 && Timer % 30 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<HydrogenShell>(), (int)(NPC.damage * 0.25f), 1);
+                    }
+                }
+                if (Timer > 240 || Target.Distance(NPC.Center) > 2000)
+                {
+                    Timer = 0;
+                    CurrentPhase = 3;
+                }
+            }
+            else if (CurrentPhase == 3)
+            {
+                if (Timer == 0)
+                {
+                    NPC.velocity = Vector2.Zero;
+                }
+                if (Timer == 30)
+                {
+                    JawTimer = 1;
+                }
+                if (Timer == 60 + jawAnimLength)
+                {
+                    NPC.velocity = NPC.DirectionTo(Target.Center) * 60;
+                }
+                else if (Timer > 70 + jawAnimLength)
+                {
+                    NPC.velocity *= 0.96f;
+                }
+                if (Timer < 60 + jawAnimLength || Timer > 75 + jawAnimLength)
+                {
+                    NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.05f);
+                }
+
+                if (Timer > 35 && Timer < 35 + jawAnimLength)
+                {
+                    if (Timer % 10 == 0)
+                    {
+
+                        Vector2 projection = NPC.Center + (NPC.rotation + (NPC.direction == -1 ? MathHelper.ToRadians(190) : 0)).ToRotationVector2() * (NPC.direction == -1 ? 240 : 190);
+                        Rectangle rect = new Rectangle((int)projection.X, (int)projection.Y, NPC.direction == -1 ? 100 : 80, 60);
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            for (int i = 0; i < 10; i++)
+                            {
+                                if (Main.rand.NextBool(3))
+                                    continue;
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), rect.Center.ToVector2(), NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 9f)).RotatedByRandom(MathHelper.PiOver4 * 0.5f) * 20, ModContent.ProjectileType<BrimstoneBarrage>(), (int)(NPC.damage * 0.1f), 1);
+                            }
+                        }
+                    }
+                }
+
+                Timer++;
+                NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                if (Timer > 150 + jawAnimLength)
+                {
+                    CurrentPhase = 2;
+                    Timer = 0;
+                }
             }
 
 
@@ -112,21 +206,21 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 BasicOpenMouth();
             }
 
-            handIK.Limbs[0].Rotation = GetIKRotationClamp((float)handIK.Limbs[0].Rotation, MathHelper.Pi + NPC.rotation, MathHelper.PiOver2 + NPC.rotation);
-            handIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * 160, 40).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Cos(Timer * 0.05f) * 0.5f));
-            tailIK.Limbs[0].Rotation = GetIKRotationClamp((float)tailIK.Limbs[0].Rotation, MathHelper.ToRadians(270) + NPC.rotation, MathHelper.ToRadians(120) + NPC.rotation);
-            tailIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * -170, 0).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Sin(Timer * 0.05f) * 0.5f));
             if (flip)
             {
                 handIK.Limbs[0].Rotation += MathHelper.Pi;
                 tailIK.Limbs[0].Rotation += MathHelper.Pi;
             }
+            handIK.Limbs[0].Rotation = GetIKRotationClamp((float)handIK.Limbs[0].Rotation, MathHelper.Pi + NPC.rotation, MathHelper.PiOver2 + NPC.rotation);
+            tailIK.Limbs[0].Rotation = GetIKRotationClamp((float)tailIK.Limbs[0].Rotation, MathHelper.ToRadians(270) + NPC.rotation, MathHelper.ToRadians(120) + NPC.rotation);
+            handIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * 160, 40).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Cos(Timer * 0.05f) * 0.5f));
+            tailIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * -170, 0).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Sin(Timer * 0.05f) * 0.5f));
         }
 
         public void BasicOpenMouth()
         {
             int jawOpenEnd = 15;
-            int jawAnim = jawOpenEnd + 20;
+            int jawAnim = jawOpenEnd + 50;
             int jawFinish = jawAnim + 15;
 
             float baseRotation = MathHelper.ToRadians(-16);
