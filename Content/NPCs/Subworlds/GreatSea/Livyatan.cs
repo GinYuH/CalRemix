@@ -161,11 +161,12 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 {
                     NPC.velocity = Vector2.Lerp(NPC.Center, (SavePosition + Vector2.UnitY.RotatedBy(Timer * MathHelper.Lerp(0, 0.12f, Utils.GetLerpValue(0, 60, Timer, true))) * 300), 0.1f) - NPC.Center;
                 }
-                if (Timer > 60 && Timer % 30 == 0)
+                if (Timer > 60 && Timer % 5 == 0)
                 {
+                    SoundEngine.PlaySound(SoundID.Splash);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<HydrogenShell>(), (int)(NPC.damage * 0.25f), 1);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<LivyatanWave>(), (int)(NPC.damage * 0.25f), 1);
                     }
                 }
                 if (Timer > 240 || Target.Distance(NPC.Center) > 2000)
@@ -217,7 +218,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                                     Main.npc[n].dontTakeDamage = false;
                                     Main.npc[n].noTileCollide = true;
                                 }
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<BrimstoneBarrage>(), (int)(NPC.damage * 0.1f), 1);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<LivyatanBile>(), (int)(NPC.damage * 0.1f), 1);
                             }
                         }
                     }
