@@ -22,9 +22,13 @@ using CalRemix.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using CalamityMod.InverseKinematics;
 using CalamityMod.Projectiles.Boss;
+using System.Reflection.Metadata.Ecma335;
+using CalamityMod.Items.Accessories;
+using Humanizer;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
+    [AutoloadBossHead]
     public class Livyatan : ModNPC
     {
         public ref float Timer => ref NPC.ai[0];
@@ -37,6 +41,14 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public ref Player Target => ref Main.player[NPC.target];
 
+        public int NPCIndex
+        {
+            get => (int) NPC.ai[2] - 1;
+            set => NPC.ai[2] = value + 1;
+        }
+
+        public NPC BoundNPC => Main.npc[NPCIndex];
+
         public Vector2 SavePosition
         {
             get => new Vector2(NPC.Calamity().newAI[0], NPC.Calamity().newAI[1]);
@@ -47,11 +59,23 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }
 
         }
-        // Unused: ai[2], ai[3], local[2], local[3], new[2], new[3], green[all]
+
+        public Vector2 HeadPosition
+        {
+            get
+            {
+                Vector2 projection = NPC.Center + (NPC.rotation + (NPC.direction == -1 ? MathHelper.ToRadians(190) : 0)).ToRotationVector2() * (NPC.direction == -1 ? 240 : 190);
+                Rectangle rect = new Rectangle((int)projection.X, (int)projection.Y, NPC.direction == -1 ? 100 : 80, 60);
+                return rect.Center.ToVector2();
+            }
+        }
+
+        // Unused: ai[3], local[2], local[3], new[2], new[3], green[all]
 
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
 
         public override void SetDefaults()
@@ -71,6 +95,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.GravityIgnoresLiquid = true;
             NPC.waterMovementSpeed = 1f;
+            NPC.boss = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<PrimordialCavesBiome>().Type };
         }
 
@@ -79,6 +104,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             int jawAnimLength = 80;
             bool flip = ((Target.oldPosition.X < NPC.Center.X && Target.position.X > NPC.Center.X) || (Target.oldPosition.X > NPC.Center.X && Target.position.X < NPC.Center.X));
             float flipRot = flip ? MathHelper.Pi : 0;
+            float baseJawRotation = MathHelper.ToRadians(-16);
             NPC.TargetClosest(false);
             if (CurrentPhase == 0)
             {
@@ -175,17 +201,23 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 {
                     if (Timer % 10 == 0)
                     {
-
-                        Vector2 projection = NPC.Center + (NPC.rotation + (NPC.direction == -1 ? MathHelper.ToRadians(190) : 0)).ToRotationVector2() * (NPC.direction == -1 ? 240 : 190);
-                        Rectangle rect = new Rectangle((int)projection.X, (int)projection.Y, NPC.direction == -1 ? 100 : 80, 60);
-
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 10; i++)
                             {
                                 if (Main.rand.NextBool(3))
                                     continue;
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), rect.Center.ToVector2(), NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 9f)).RotatedByRandom(MathHelper.PiOver4 * 0.5f) * 20, ModContent.ProjectileType<BrimstoneBarrage>(), (int)(NPC.damage * 0.1f), 1);
+                                Vector2 velocity = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 9f)).RotatedByRandom(MathHelper.PiOver4 * 0.5f) * 20;
+                                if (Main.rand.NextBool(20) && NPC.CountNPCS(ModContent.NPCType<Remora>()) < 6)
+                                {
+                                    Point rt = HeadPosition.ToPoint();
+                                    int type = Main.rand.NextBool(22) ? ModContent.NPCType<Zoaoa>() : ModContent.NPCType<Remora>();
+                                    int n = NPC.NewNPC(NPC.GetSource_FromThis(), rt.X, rt.Y, type);
+                                    Main.npc[n].velocity = velocity;
+                                    Main.npc[n].dontTakeDamage = false;
+                                    Main.npc[n].noTileCollide = true;
+                                }
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<BrimstoneBarrage>(), (int)(NPC.damage * 0.1f), 1);
                             }
                         }
                     }
@@ -195,9 +227,97 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
                 if (Timer > 150 + jawAnimLength)
                 {
-                    CurrentPhase = 2;
+                    CurrentPhase = 4;
                     Timer = 0;
                 }
+            }
+            else if (CurrentPhase == 4)
+            {
+                NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
+                if (Timer < 40)
+                {
+                    CalamityUtils.SmoothMovement(NPC, 200, Target.Center - NPC.Center, 20, 0.3f, true);
+                }
+                else if (Timer >= 40 && Timer < 80)
+                {
+                    JawRotation = MathHelper.Lerp(baseJawRotation, MathHelper.ToRadians(16), CalamityUtils.ExpInEasing(Utils.GetLerpValue(40, 80, Timer, true), 1));
+                }
+                else if (Timer == 80)
+                {
+                    SoundEngine.PlaySound(BetterSoundID.ItemGrenadeChuck with { Pitch = 0.6f }, NPC.Center);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int n = NPC.NewNPC(NPC.GetSource_FromThis(), (int)HeadPosition.X, (int)HeadPosition.Y, ModContent.NPCType<XiphactinusHead>(), ai0: NPC.whoAmI + 1);
+                        Main.npc[n].direction = NPC.direction;
+                        Main.npc[n].spriteDirection = NPC.spriteDirection;
+                        Main.npc[n].rotation = NPC.rotation;
+                        Main.npc[n].velocity = (NPC.rotation + MathHelper.ToRadians(NPC.spriteDirection == -1 ? 60 : 22) + (NPC.spriteDirection == -1 ? MathHelper.PiOver2 : 0)).ToRotationVector2() * 36;
+                        NPCIndex = n;
+                    }
+                }
+                if (Timer >= 40)
+                {
+                    NPC.velocity *= 0.95f;
+                }
+                Timer++;
+            }
+            else if (CurrentPhase == 5)
+            {
+                Timer++;
+                int swingTime = 50;
+                int smashTime = 10;
+                int maxtim = swingTime + smashTime + 40;
+                if (Timer == 1)
+                {
+                    SavePosition = NPC.Center;
+                    SoundEngine.PlaySound(BetterSoundID.ItemToxicFlaskThrow with { Pitch = 0.6f }, NPC.Center);
+                }
+
+                if (Timer > 1)
+                {
+                    if (Timer < swingTime)
+                    {
+                        Vector2 dirToSave = SavePosition - BoundNPC.Center;
+                        Vector2 newPos = BoundNPC.Center + dirToSave.RotatedBy(MathHelper.Lerp(0, -MathHelper.Pi, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, swingTime, Timer, true), 1)));
+                        NPC.velocity = newPos - NPC.Center;
+                    }
+                    else if (Timer == swingTime)
+                    {
+                        SavePosition = NPC.Center;
+                    }
+                    else if (Timer >= swingTime && Timer < swingTime + smashTime)
+                    {
+                        Vector2 newPos = Vector2.Lerp(SavePosition, BoundNPC.Center, Utils.GetLerpValue(swingTime, smashTime + swingTime, Timer, true));
+                        NPC.velocity = newPos - NPC.Center;
+                    }
+                    if (Timer >= swingTime + smashTime)
+                    {
+                        NPC.velocity *= 0.9f;
+                        JawRotation = MathHelper.Lerp(MathHelper.ToRadians(16), baseJawRotation, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(swingTime + smashTime, maxtim - 20, Timer, true), 1));
+                        if (NPCIndex > -1)
+                        {
+                            SoundEngine.PlaySound(WulfrumAcrobaticsPack.GrabSound, NPC.Center);
+                            BoundNPC.active = false;
+                            NPCIndex = -1;
+                        }
+                        if (Timer > maxtim)
+                        {
+                            Timer = 0;
+                            CurrentPhase = 6;
+                        }
+                    }
+
+                    if (NPCIndex > -1)
+                    {
+                        NPC.spriteDirection = BoundNPC.Center.X < NPC.Center.X ? -1 : 1;
+                        NPC.rotation = NPC.DirectionTo(BoundNPC.Center).ToRotation() + (NPC.spriteDirection == 1 ? 0 : MathHelper.Pi);
+                    }
+                }
+            }
+            if (CurrentPhase == 6)
+            {
+
             }
 
 
@@ -284,6 +404,43 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }*/
             adjustedHeadPos = adjustedHeadPos.RotatedBy(headRotation);
 
+            if (CurrentPhase == 5 || CurrentPhase == 4)
+            {
+                if (JawRotation >= 0)
+                {
+                    Texture2D xyph = TextureAssets.Npc[ModContent.NPCType<Xiphactinus>()].Value;
+                    spriteBatch.Draw(xyph, GetPiecePosition(screenPos, new Vector2(260, 60), rotationAnchor: headRotation), xyph.Frame(1, 3, 0, 0), NPC.GetAlpha(drawColor), NPC.rotation + NPC.spriteDirection * (headRotation), new Vector2(xyph.Width / 2, xyph.Height / 6), NPC.scale, fx, 0);
+
+                    if (NPCIndex > -1)
+                    {
+                        //if (BoundNPC.Distance(NPC.Center) < 3000)
+                        {
+                            Vector2 bottom = GetPiecePosition(screenPos, new Vector2(300, 60), rotationAnchor: headRotation) + screenPos;
+                            Vector2 distToProj = BoundNPC.Center;
+                            float projRotation = NPC.AngleTo(bottom) - 1.57f;
+                            bool doIDraw = true;
+                            Texture2D chain = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/XiphactinusChain").Value;
+
+                            while (doIDraw)
+                            {
+                                float distance = (bottom - distToProj).Length();
+                                if (distance < (chain.Height + 1))
+                                {
+                                    doIDraw = false;
+                                }
+                                else if (!float.IsNaN(distance))
+                                {
+                                    Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
+                                    distToProj += BoundNPC.Center.DirectionTo(bottom) * chain.Height;
+                                    Main.EntitySpriteDraw(chain, distToProj - Main.screenPosition,
+                                        new Rectangle(0, 0, chain.Width, chain.Height), drawColore, projRotation,
+                                        Utils.Size(chain) / 2f, 1f, SpriteEffects.None, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             DrawPiece(spriteBatch, jaw, screenPos, new Vector2(180, 50), new Vector2(334, 23), drawColor, rotationAnchor: JawRotation + headRotation);
             spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / 2), NPC.scale, fx, 0);
             DrawPiece(spriteBatch, head, screenPos, headPos, new Vector2(397, 54), drawColor, rotationOverride: headRotation);
@@ -313,6 +470,14 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 }
                 Limb limb = tailIK.Limbs[i];
                 spriteBatch.Draw(touse, limb.ConnectPoint - screenPos, null, NPC.GetAlpha(drawColor), (float)limb.Rotation + offset, GetPieceOrigin(touse.Width, origin), NPC.scale, fx, 0);
+            }
+            foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (n.type == ModContent.NPCType<Remora>() && n.ai[2] == NPC.whoAmI + 1)
+                {
+                    Texture2D rem = TextureAssets.Npc[ModContent.NPCType<Remora>()].Value;
+                    spriteBatch.Draw(rem, n.Center - screenPos, n.frame, n.GetAlpha(drawColor), n.rotation, new Vector2(rem.Width / 2, rem.Height / 4), n.scale, fx, 0);
+                }
             }
             return false;
         }

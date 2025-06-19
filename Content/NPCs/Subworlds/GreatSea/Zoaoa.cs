@@ -53,6 +53,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 NPC.direction = Main.rand.NextBool().ToDirectionInt();
             }
             NPC.rotation += 0.1f * NPC.direction;
+            NPC.velocity *= 0.98f;
 
             NPC.TargetClosest(false);
             if (Main.player[NPC.target].Distance(NPC.Center) < 100)
@@ -71,7 +72,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     {
                         if (n.damage > 0)
                         {
-                            if (!n.boss)
+                            if (!n.boss || (n.type == ModContent.NPCType<Livyatan>() && n.ai[1] > 0))
                             {
                                 if (n.lifeMax > highestHealth)
                                 {

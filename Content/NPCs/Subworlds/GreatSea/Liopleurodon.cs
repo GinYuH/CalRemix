@@ -52,6 +52,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.DeathSound = DeathSound;
             NPC.GravityIgnoresLiquid = true;
             NPC.waterMovementSpeed = 1f;
+            NPC.rarity = 3;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<PrimordialCavesBiome>().Type };
         }
 

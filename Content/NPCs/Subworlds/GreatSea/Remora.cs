@@ -52,7 +52,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             if (NPC.ai[2] > 0)
             {
                 NPC n = Main.npc[(int)NPC.ai[2] - 1];
-                if (n == null || !n.active || n.life <= 0 || n.type != ModContent.NPCType<BullShark>())
+                if (n == null || !n.active || n.life <= 0 || (n.type != ModContent.NPCType<BullShark>() && n.type != ModContent.NPCType<Livyatan>()))
                 {
                     NPC.ai[2] = -1;
                 }
@@ -71,6 +71,19 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         NPC.Center = n.Center + n.velocity + new Vector2(NPC.localAI[0], NPC.localAI[1]).RotatedBy(n.rotation);
                     }
                 }
+            }
+            else if (NPC.AnyNPCs(ModContent.NPCType<Livyatan>()))
+            {
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi), 0.1f);
+                NPC.dontTakeDamage = false;
+                NPC whal = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Livyatan>())];
+                if (Timer > 120)
+                    NPC.velocity = NPC.DirectionTo(whal.Center) * 3;
+                if (NPC.Distance(whal.Center) < 80 && Timer > 120)
+                {
+                    NPC.ai[2] = whal.whoAmI + 1;
+                }
+                Timer++;
             }
             else
             {

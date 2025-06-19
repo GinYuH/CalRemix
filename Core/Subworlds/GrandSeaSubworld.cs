@@ -39,6 +39,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
             list.Add(item: (ModContent.NPCType<HellbenderBaby>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
             list.Add(item: (ModContent.NPCType<HellbenderHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<HellbenderHead>())));
+            list.Add(item: (ModContent.NPCType<Livyatan>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<Livyatan>())));
 
             // Primordial Caves
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using Terraria.GameContent.Animations;
 using CalRemix.Core.World;
+using Humanizer;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -56,7 +57,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.timeLeft = 1000000;
             if (BodyIndex != -1)
             {
-                if (!Body.active || Body.life <= 0 || Body.type != ModContent.NPCType<Xiphactinus>())
+                if (!Body.active || Body.life <= 0 || (Body.type != ModContent.NPCType<Xiphactinus>() && Body.type != ModContent.NPCType<Livyatan>()))
                 {
                     NPC.active = false;
                     return;
@@ -84,10 +85,34 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.netSpam = 0;
 
             Timer++;
-            if (Timer >= 20)
+            if (Body.type == ModContent.NPCType<Livyatan>())
+            {
+                NPC.TargetClosest();
+                if (Timer < 90 && Timer > 30)
+                {
+                    if (Timer % 5 == 0)
+                    {
+                        //NPC.velocity = NPC.DirectionTo(Main.player[NPC.target].Center) * 8;
+                        //NPC.rotation = (NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi));
+                    }
+                }
+                else if (Timer < 110)
+                {
+                    NPC.velocity *= 0.95f;
+                }
+                else if (Timer >= 110)
+                {
+                    if (Timer == 110)
+                        Body.ai[0] = 0;
+                    Body.ai[1] = 5;
+                    NPC.spriteDirection = Body.Center.X < NPC.Center.X ? -1 : 1;
+                    NPC.rotation = (NPC.DirectionTo(Body.Center).ToRotation() + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi));
+                }
+            }
+            else if (Timer >= 20)
             {
                 NPC.velocity *= 0.95f;
-                Body.ai[1] = 3;
+                Body.ai[1] = 5;
                 NPC.spriteDirection = Body.Center.X < NPC.Center.X ? -1 : 1;
                 NPC.rotation = (NPC.DirectionTo(Body.Center).ToRotation() + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi));
             }
@@ -113,26 +138,29 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             {
                 Texture2D tex = TextureAssets.Npc[Type].Value;
                 Texture2D chain = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/XiphactinusChain").Value;
-                // Grab the position at which Hydrogen's chain should connect to
-                Vector2 bottom = Body.Center;
-                Vector2 distToProj = NPC.Center;
-                float projRotation = NPC.AngleTo(bottom) - 1.57f;
-                bool doIDraw = true;
-
-                while (doIDraw)
+                if (!NPC.AnyNPCs(ModContent.NPCType<Livyatan>()))
                 {
-                    float distance = (bottom - distToProj).Length();
-                    if (distance < (chain.Height + 1))
+                    // Grab the position at which Hydrogen's chain should connect to
+                    Vector2 bottom = Body.Center;
+                    Vector2 distToProj = NPC.Center;
+                    float projRotation = NPC.AngleTo(bottom) - 1.57f;
+                    bool doIDraw = true;
+
+                    while (doIDraw)
                     {
-                        doIDraw = false;
-                    }
-                    else if (!float.IsNaN(distance))
-                    {
-                        Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
-                        distToProj += NPC.DirectionTo(bottom) * chain.Height;
-                        Main.EntitySpriteDraw(chain, distToProj - Main.screenPosition,
-                            new Rectangle(0, 0, chain.Width, chain.Height), drawColore, projRotation,
-                            Utils.Size(chain) / 2f, 1f, SpriteEffects.None, 0);
+                        float distance = (bottom - distToProj).Length();
+                        if (distance < (chain.Height + 1))
+                        {
+                            doIDraw = false;
+                        }
+                        else if (!float.IsNaN(distance))
+                        {
+                            Color drawColore = Lighting.GetColor((int)distToProj.X / 16, (int)(distToProj.Y / 16f));
+                            distToProj += NPC.DirectionTo(bottom) * chain.Height;
+                            Main.EntitySpriteDraw(chain, distToProj - Main.screenPosition,
+                                new Rectangle(0, 0, chain.Width, chain.Height), drawColore, projRotation,
+                                Utils.Size(chain) / 2f, 1f, SpriteEffects.None, 0);
+                        }
                     }
                 }
                 SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
