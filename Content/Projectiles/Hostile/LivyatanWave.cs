@@ -103,6 +103,11 @@ namespace CalRemix.Content.Projectiles.Hostile
                 Projectile.Kill();
             }
             Lighting.AddLight(Projectile.Center, new Vector3(0f, 0.2f, 0.6f) * Projectile.scale);
+
+            if (Projectile.ai[0] > 120)
+            {
+                Projectile.velocity *= 0.95f;
+            }
         }
         public override void OnKill(int timeLeft)
         {
