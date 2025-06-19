@@ -211,7 +211,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                                 if (Main.rand.NextBool(20) && NPC.CountNPCS(ModContent.NPCType<Remora>()) < 6)
                                 {
                                     Point rt = HeadPosition.ToPoint();
-                                    int type = Main.rand.NextBool(22) ? ModContent.NPCType<Zoaoa>() : ModContent.NPCType<Remora>();
+                                    int type = Main.rand.NextBool(5) ? ModContent.NPCType<Zoaoa>() : ModContent.NPCType<Remora>();
                                     int n = NPC.NewNPC(NPC.GetSource_FromThis(), rt.X, rt.Y, type);
                                     Main.npc[n].velocity = velocity;
                                     Main.npc[n].dontTakeDamage = false;
