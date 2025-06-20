@@ -73,7 +73,7 @@ namespace CalRemix.UI
             HelperMessage.New("Wood", "Wood? Yummy!",
               "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood));
 
-            HelperMessage.New("HallowedBar", "Quite the powerful bar you've got there! Keep those safe, as they're a vital part to achiving Auric Bars for powerful lategame gear.",
+            HelperMessage.New("HallowedBar", "Quite the powerful bar you've got there! Keep those safe, as they're a vital part to achieving Auric Bars for powerful lategame gear.",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is, Fanny. It sure is.");
 
             HelperMessage.New("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",

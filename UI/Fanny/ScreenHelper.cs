@@ -748,7 +748,7 @@ namespace CalRemix.UI
                     new Vector2(189, 25)
                     ));
 
-            LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(130, 166), true)
+            LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(136, 174), true)
                 .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
                 .SetTextboxStyle("test", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Black, Color.Black, Color.LightSlateGray), FontRegistry.Instance.WorkbenchDelicateText)
                 .SetExtraAnimations(false, false, false)
