@@ -1,6 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
+using CalamityMod;
 
 namespace CalRemix.Core.World
 {
@@ -42,6 +43,18 @@ namespace CalRemix.Core.World
         public static bool downedRed = false;
 
         public static bool downedGale = false;
+
+        public static bool subDownedLivyatan = false;
+
+        public override void PostUpdateEverything()
+        {
+            if (RemixDowned.subDownedLivyatan && !RemixDowned.downedLivyatan)
+            {
+                RemixDowned.downedLivyatan = true;
+                CalamityNetcode.SyncWorld();
+            }
+        }
+
         public override void OnWorldLoad()
         {
             downedCalamity = false;

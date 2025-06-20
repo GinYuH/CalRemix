@@ -212,8 +212,8 @@ namespace CalRemix
             });
             Action<SpriteBatch, Rectangle, Color> lvPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/Livyatan_BC").Value;
-                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
-                sb.Draw(texture, centered, color);
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2) * 0.3f, rect.Center.Y - (texture.Height / 2) * 0.3f);
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.3f, 0, 0);
             };
             bc.Call("LogBoss", Mod, "Livyatan", 19.1f, () => RemixDowned.downedLivyatan, NPCType<Livyatan>(), new Dictionary<string, object>()
             {
