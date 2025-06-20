@@ -47,6 +47,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            if (!NPC.wet)
+            {
+                NPC.velocity.Y = 12;
+                return;
+            }
             if (NPC.direction == 0)
             {
                 NPC.direction = (int)Main.rand.NextFloatDirection();

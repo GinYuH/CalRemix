@@ -51,6 +51,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         {
             if (NPC.ai[1] == 0)
             {
+                if (!NPC.wet)
+                {
+                    NPC.velocity.Y = 12;
+                    return;
+                }
                 NPC.TargetClosest(false);
                 if (Timer % 100 == 0 || NPC.collideX || NPC.collideY)
                 {

@@ -51,6 +51,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            if (!NPC.wet)
+            {
+                NPC.velocity.Y = 12;
+                return;
+            }
             foreach (Player p in Main.ActivePlayers)
             {
                 if (p.getRect().Intersects(NPC.getRect()))

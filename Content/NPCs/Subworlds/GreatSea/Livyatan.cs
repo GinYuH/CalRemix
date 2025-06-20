@@ -25,6 +25,8 @@ using CalamityMod.Projectiles.Boss;
 using System.Reflection.Metadata.Ecma335;
 using CalamityMod.Items.Accessories;
 using Humanizer;
+using CalRemix.Content.Items.Placeables.Subworlds.GreatSea;
+using CalRemix.Content.Tiles.Subworlds.GreatSea;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -467,7 +469,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         {
                             Point start = NPC.position.ToTileCoordinates();
                             Tile t = CalamityUtils.ParanoidTileRetrieval(start.X + i, start.Y + j);
-                            if (t.TileType == TileID.GreenMoss)
+                            if (t.TileType == ModContent.TileType<SyringodiumPlaced>())
                             {
                                 WorldGen.KillTile(start.X + i, start.Y + j, noItem: true);
                             }

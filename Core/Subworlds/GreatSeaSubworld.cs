@@ -188,7 +188,7 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateIslands()
         {
             int y = (int)(Main.maxTilesY * seaLevel);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: ModContent.TileType<SyringodiumPlaced>());
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: ModContent.TileType<SyringodiumPlaced>(), ease: CalRemixHelper.PerlinEase.EaseOutTop, topStop: 0.025f);
         }
     }
 }

@@ -60,6 +60,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            if (!NPC.wet)
+            {
+                NPC.velocity.Y = 12;
+                return;
+            }
             if (NPC.ai[1] == 0)
             {
                 NPC.TargetClosest(false);

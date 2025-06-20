@@ -87,6 +87,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }
             else
             {
+                if (!NPC.wet)
+                {
+                    NPC.velocity.Y = 12;
+                    return;
+                }
                 NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi), 0.1f);
                 NPC.dontTakeDamage = false;
                 Timer++;

@@ -46,6 +46,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void AI()
         {
+            if (!NPC.wet)
+            {
+                NPC.velocity.Y = 12;
+                return;
+            }
             NPC.TargetClosest(true);
             NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - MathHelper.PiOver2, 0.1f);
 
