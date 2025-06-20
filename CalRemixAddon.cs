@@ -38,6 +38,7 @@ using CalRemix.Content.NPCs.Bosses.Noxus;
 using System.Reflection;
 using CalRemix.Content.NPCs.Eclipse;
 using Terraria.ModLoader.Core;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
 
 namespace CalRemix
 {
@@ -209,6 +210,10 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
+            bc.Call("LogBoss", Mod, "Livyatan", 19.1f, () => RemixDowned.downedLivyatan, NPCType<Livyatan>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<SubworldDoor>(),
+            });
             bc.Call("LogBoss", Mod, "Pyrogen", 19.6f, () => RemixDowned.downedPyrogen, NPCType<Pyrogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<MoltenMatter>(),
@@ -299,6 +304,7 @@ namespace CalRemix
             MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", BetterSoundID.ItemInfernoFork, BetterSoundID.ItemInfernoExplosion);
             MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
             MakeCard(NPCType<WulfwyrmHead>(), (horz, anim) => Color.Lerp(Color.LightGreen, Color.LightBlue, horz), "WulfrumExcavator", SoundID.NPCHit4, BetterSoundID.ItemThisStupidFuckingLaser);
+            MakeCard(NPCType<Livyatan>(), (horz, anim) => Color.Lerp(Color.Turquoise, Color.SeaGreen, horz), "Livyatan", Livyatan.HitSound, Livyatan.RoarSound);
             MakeCard(NPCType<AcidEye>(), (horz, anim) => Color.Lerp(Color.LimeGreen, Color.Lime, anim), "Acidsighter", SoundID.Roar, SoundID.NPCDeath1);
             MakeCard(NPCType<TheCalamity>(), (horz, anim) => Color.Red, "Calamity", BetterSoundID.ItemThisStupidFuckingLaser, BetterSoundID.ItemThisStupidFuckingLaser, 360);
             MakeCard(NPCType<Hypnos>(), (horz, anim) => Main.DiscoColor, "Hypnos", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);

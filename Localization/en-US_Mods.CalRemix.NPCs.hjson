@@ -628,4 +628,13 @@ HellbenderBaby.DisplayName: Hellbender
 HellbenderHead.DisplayName: Hellbender
 DepthGlider.DisplayName: Depth Glider
 MoonBunny.DisplayName: Moon Bunny
-Livyatan.DisplayName: Livyatan
+
+Livyatan: {
+	DisplayName: Livyatan
+
+	BossChecklistIntegration: {
+		EntryName: Livyatan
+		SpawnInfo: Naturally spawns in the Great Sea subworld.
+		DespawnMessage: "[c/438f7c:The colossal whale dives down to the depths.]"
+	}
+}

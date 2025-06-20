@@ -27,6 +27,8 @@ using CalamityMod.Items.Accessories;
 using Humanizer;
 using CalRemix.Content.Items.Placeables.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
+using CalRemix.Core.World;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -114,364 +116,379 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             bool lockTail = true;
             Vector2 tailDestination = NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Sin(Timer * 0.05f) * 0.5f);
             NPC.TargetClosest(false);
-            if (CurrentPhase == 0)
+            if (CurrentPhase != 0)
             {
-                if (Main.rand.NextBool(600))
+                if (Target.dead)
                 {
-                    SoundEngine.PlaySound(PassiveSound, NPC.Center);
-                }
-                JawRotation = MathHelper.ToRadians(-16);
-                if (Timer % 210 == 0 || NPC.collideX || NPC.collideY)
-                {
-                    if (NPC.velocity.Length() < 1)
+                    NPC.velocity.Y++;
+                    NPC.ai[3]++;
+                    if (NPC.ai[3] > 120)
                     {
-                        NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 3f);
-                    }
-                    else
-                    {
-                        NPC.velocity = NPC.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.5f);
+                        NPC.active = false;
                     }
                 }
-                Timer++;
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f) + MathF.Sin(Timer * 0.05f + 2) * 0.02f;
-                NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
-
-                if (NPC.justHit)
-                {
-                    Timer = 0;
-                    CurrentPhase = 1;
-                }
             }
-            else if (CurrentPhase == 1)
+            else
             {
-                NPC.noTileCollide = true;
-                Timer++;
-                NPC.velocity *= 0.97f;
-                NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
-
-                if (Timer == 30)
+                if (CurrentPhase == 0)
                 {
-                    JawTimer = 1;
-                }
-                if (JawTimer == 0 && Timer > 30)
-                {
-                    CurrentPhase = 2;
-                    Timer = 0;
-                }
-            }
-            else if (CurrentPhase == 2)
-            {
-                if (Main.rand.NextBool(200))
-                {
-                    SoundEngine.PlaySound(PassiveSound, NPC.Center);
-                }
-                NPC.spriteDirection = NPC.direction = 1;
-                Timer++;
-                NPC.rotation = NPC.velocity.ToRotation();
-                if (Timer == 1)
-                {
-                    SavePosition = NPC.Center;
-                }
-                else
-                {
-                    NPC.velocity = Vector2.Lerp(NPC.Center, (SavePosition + Vector2.UnitY.RotatedBy(Timer * MathHelper.Lerp(0, 0.12f, Utils.GetLerpValue(0, 60, Timer, true))) * 300), 0.1f) - NPC.Center;
-                }
-                if (Timer > 60 && Timer % 5 == 0)
-                {
-                    SoundEngine.PlaySound(SoundID.Splash);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (Main.rand.NextBool(600))
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<LivyatanWave>(), (int)(NPC.damage * 0.25f), 1);
+                        SoundEngine.PlaySound(PassiveSound, NPC.Center);
                     }
-                }
-                if (Timer > 240 || Target.Distance(NPC.Center) > 2000)
-                {
-                    Timer = 0;
-                    CurrentPhase = 3;
-                }
-            }
-            else if (CurrentPhase == 3)
-            {
-                if (Timer == 0)
-                {
-                    NPC.velocity = Vector2.Zero;
-                }
-                if (Timer == 30)
-                {
-                    JawTimer = 1;
-                }
-                if (Timer == 60 + jawAnimLength)
-                {
-                    NPC.velocity = NPC.DirectionTo(Target.Center) * 60;
-                }
-                else if (Timer > 70 + jawAnimLength)
-                {
-                    NPC.velocity *= 0.96f;
-                }
-                if (Timer < 60 + jawAnimLength || Timer > 75 + jawAnimLength)
-                {
-                    NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.05f);
-                }
-
-                if (Timer > 35 && Timer < 35 + jawAnimLength)
-                {
-                    if (Timer % 10 == 0)
+                    JawRotation = MathHelper.ToRadians(-16);
+                    if (Timer % 210 == 0 || NPC.collideX || NPC.collideY)
                     {
-                        SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = -0.3f }, NPC.Center);
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (NPC.velocity.Length() < 1)
                         {
-                            for (int i = 0; i < 10; i++)
-                            {
-                                if (Main.rand.NextBool(3))
-                                    continue;
-                                Vector2 velocity = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 9f)).RotatedByRandom(MathHelper.PiOver4 * 0.5f) * 20;
-                                if (Main.rand.NextBool(20) && NPC.CountNPCS(ModContent.NPCType<Remora>()) < 6)
-                                {
-                                    Point rt = HeadPosition.ToPoint();
-                                    int type = Main.rand.NextBool(5) ? ModContent.NPCType<Zoaoa>() : ModContent.NPCType<Remora>();
-                                    int n = NPC.NewNPC(NPC.GetSource_FromThis(), rt.X, rt.Y, type);
-                                    Main.npc[n].velocity = velocity;
-                                    Main.npc[n].dontTakeDamage = false;
-                                    Main.npc[n].noTileCollide = true;
-                                }
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<LivyatanBile>(), (int)(NPC.damage * 0.1f), 1);
-                            }
+                            NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 3f);
+                        }
+                        else
+                        {
+                            NPC.velocity = NPC.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.5f);
                         }
                     }
-                }
+                    Timer++;
+                    NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f) + MathF.Sin(Timer * 0.05f + 2) * 0.02f;
+                    NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
 
-                Timer++;
-                NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
-                if (Timer > 150 + jawAnimLength)
-                {
-                    CurrentPhase = 4;
-                    Timer = 0;
-                }
-            }
-            else if (CurrentPhase == 4)
-            {
-                NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
-                if (Timer < 40)
-                {
-                    CalamityUtils.SmoothMovement(NPC, 200, Target.Center - NPC.Center, 20, 0.3f, true);
-                }
-                else if (Timer >= 40 && Timer < 80)
-                {
-                    JawRotation = MathHelper.Lerp(baseJawRotation, MathHelper.ToRadians(16), CalamityUtils.ExpInEasing(Utils.GetLerpValue(40, 80, Timer, true), 1));
-                }
-                else if (Timer == 80)
-                {
-                    SoundEngine.PlaySound(BetterSoundID.ItemGrenadeChuck with { Pitch = -0.6f }, NPC.Center);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (NPC.justHit)
                     {
-                        int n = NPC.NewNPC(NPC.GetSource_FromThis(), (int)HeadPosition.X, (int)HeadPosition.Y, ModContent.NPCType<XiphactinusHead>(), ai0: NPC.whoAmI + 1);
-                        Main.npc[n].direction = NPC.direction;
-                        Main.npc[n].spriteDirection = NPC.spriteDirection;
-                        Main.npc[n].rotation = NPC.rotation;
-                        Main.npc[n].velocity = (NPC.rotation + MathHelper.ToRadians(NPC.spriteDirection == -1 ? 60 : 22) + (NPC.spriteDirection == -1 ? MathHelper.PiOver2 : 0)).ToRotationVector2() * 36;
-                        NPCIndex = n;
+                        Timer = 0;
+                        CurrentPhase = 1;
                     }
                 }
-                if (Timer >= 40)
+                else if (CurrentPhase == 1)
                 {
-                    NPC.velocity *= 0.95f;
-                }
-                Timer++;
-            }
-            else if (CurrentPhase == 5)
-            {
-                Timer++;
-                int swingTime = 50;
-                int smashTime = 10;
-                int maxtim = swingTime + smashTime + 40;
-                if (Timer == 1)
-                {
-                    SavePosition = NPC.Center;
-                    SoundEngine.PlaySound(BetterSoundID.ItemToxicFlaskThrow with { Pitch = -0.6f }, NPC.Center);
-                }
+                    NPC.noTileCollide = true;
+                    Timer++;
+                    NPC.velocity *= 0.97f;
+                    NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                    NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
 
-                if (Timer > 1)
-                {
-                    if (Timer < swingTime)
+                    if (Timer == 30)
                     {
-                        Vector2 dirToSave = SavePosition - BoundNPC.Center;
-                        Vector2 newPos = BoundNPC.Center + dirToSave.RotatedBy(MathHelper.Lerp(0, -MathHelper.Pi, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, swingTime, Timer, true), 1)));
-                        NPC.velocity = newPos - NPC.Center;
+                        JawTimer = 1;
                     }
-                    else if (Timer == swingTime)
+                    if (JawTimer == 0 && Timer > 30)
+                    {
+                        CurrentPhase = 2;
+                        Timer = 0;
+                    }
+                }
+                else if (CurrentPhase == 2)
+                {
+                    if (Main.rand.NextBool(200))
+                    {
+                        SoundEngine.PlaySound(PassiveSound, NPC.Center);
+                    }
+                    NPC.spriteDirection = NPC.direction = 1;
+                    Timer++;
+                    NPC.rotation = NPC.velocity.ToRotation();
+                    if (Timer == 1)
                     {
                         SavePosition = NPC.Center;
                     }
-                    else if (Timer >= swingTime && Timer < swingTime + smashTime)
+                    else
                     {
-                        Vector2 newPos = Vector2.Lerp(SavePosition, BoundNPC.Center, Utils.GetLerpValue(swingTime, smashTime + swingTime, Timer, true));
-                        NPC.velocity = newPos - NPC.Center;
+                        NPC.velocity = Vector2.Lerp(NPC.Center, (SavePosition + Vector2.UnitY.RotatedBy(Timer * MathHelper.Lerp(0, 0.12f, Utils.GetLerpValue(0, 60, Timer, true))) * 300), 0.1f) - NPC.Center;
                     }
-                    if (Timer >= swingTime + smashTime)
+                    if (Timer > 60 && Timer % 5 == 0)
                     {
-                        NPC.velocity *= 0.9f;
-                        JawRotation = MathHelper.Lerp(MathHelper.ToRadians(16), baseJawRotation, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(swingTime + smashTime, maxtim - 20, Timer, true), 1));
-                        if (NPCIndex > -1)
-                        {
-                            SoundEngine.PlaySound(WulfrumAcrobaticsPack.GrabSound, NPC.Center);
-                            BoundNPC.active = false;
-                            NPCIndex = -1;
-                        }
-                        if (Timer > maxtim)
-                        {
-                            Timer = 0;
-                            CurrentPhase = 6;
-                        }
-                    }
-
-                    if (NPCIndex > -1)
-                    {
-                        NPC.spriteDirection = BoundNPC.Center.X < NPC.Center.X ? -1 : 1;
-                        NPC.rotation = NPC.DirectionTo(BoundNPC.Center).ToRotation() + (NPC.spriteDirection == 1 ? 0 : MathHelper.Pi);
-                    }
-                }
-            }
-            if (CurrentPhase == 6)
-            {
-                NPC.noTileCollide = true;
-                Timer++;
-
-                int diveTime = 50;
-                int dashTime = 60;
-                int wait = 80;
-                bool look = false;
-                if (Timer < diveTime)
-                {
-                    if (NPC.velocity.Y <= 0)
-                    {
-                        NPC.velocity.Y = 5;
-                    }
-                    if (NPC.velocity.Y < 30)
-                        NPC.velocity.Y *= 4f;
-                    lockTail = false;
-                    tailDest = NPC.Center - Vector2.UnitY * 1000;
-                }
-                else if (Timer == diveTime)
-                {
-                    NPC.Center = Target.Center + Vector2.UnitY * 2000;
-                }
-                else if (Timer == diveTime + 1)
-                {
-                    JawTimer = 1;
-                    NPC.velocity = NPC.DirectionTo(Target.Center) * 60;
-                }
-                else if (Timer > diveTime + dashTime)
-                {
-                    CalamityUtils.SmoothMovement(NPC, 40, (Target.Center + new Vector2(600, -300)) - NPC.Center, 30, 1.3f, false);
-                    look = true;
-                }
-
-                if (Timer > diveTime + 1 && Timer < diveTime + dashTime)
-                {
-                    lockTail = false;
-                    tailDest = NPC.Center + Vector2.UnitY * 1000;
-                    if (NPC.ai[3] == 0 && Collision.SolidCollision(Utils.CenteredRectangle(HeadPosition, Vector2.One * 200).TopLeft(), 200, 200) && NPC.Bottom.Y < Target.Top.Y)
-                    {
-                        SoundEngine.PlaySound(BetterSoundID.ItemMeteorImpact, NPC.Center);
-                        Main.LocalPlayer.Calamity().GeneralScreenShakePower = 4;
+                        SoundEngine.PlaySound(SoundID.Splash);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = 0; i < 10; i++)
-                            {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4 * 1.5f, MathHelper.PiOver4 * 1.5f, i / 9f)).RotatedByRandom(MathHelper.ToRadians(10)) * Main.rand.NextFloat(16, 25), ModContent.ProjectileType<ThrowableChunk>(), (int)(NPC.damage * 0.5f), 1, ai1: Main.rand.Next(0, 2));
-                            }
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<LivyatanWave>(), (int)(NPC.damage * 0.25f), 1);
                         }
-                        NPC.ai[3] = 1;
+                    }
+                    if (Timer > 240 || Target.Distance(NPC.Center) > 2000)
+                    {
+                        Timer = 0;
+                        CurrentPhase = 3;
                     }
                 }
+                else if (CurrentPhase == 3)
+                {
+                    if (Timer == 0)
+                    {
+                        NPC.velocity = Vector2.Zero;
+                    }
+                    if (Timer == 30)
+                    {
+                        JawTimer = 1;
+                    }
+                    if (Timer == 60 + jawAnimLength)
+                    {
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 60;
+                    }
+                    else if (Timer > 70 + jawAnimLength)
+                    {
+                        NPC.velocity *= 0.96f;
+                    }
+                    if (Timer < 60 + jawAnimLength || Timer > 75 + jawAnimLength)
+                    {
+                        NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.05f);
+                    }
 
-                if (look)
+                    if (Timer > 35 && Timer < 35 + jawAnimLength)
+                    {
+                        if (Timer % 10 == 0)
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = -0.3f }, NPC.Center);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    if (Main.rand.NextBool(3))
+                                        continue;
+                                    Vector2 velocity = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 9f)).RotatedByRandom(MathHelper.PiOver4 * 0.5f) * 20;
+                                    if (Main.rand.NextBool(20) && NPC.CountNPCS(ModContent.NPCType<Remora>()) < 6)
+                                    {
+                                        Point rt = HeadPosition.ToPoint();
+                                        int type = Main.rand.NextBool(5) ? ModContent.NPCType<Zoaoa>() : ModContent.NPCType<Remora>();
+                                        int n = NPC.NewNPC(NPC.GetSource_FromThis(), rt.X, rt.Y, type);
+                                        Main.npc[n].velocity = velocity;
+                                        Main.npc[n].dontTakeDamage = false;
+                                        Main.npc[n].noTileCollide = true;
+                                    }
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<LivyatanBile>(), (int)(NPC.damage * 0.1f), 1);
+                                }
+                            }
+                        }
+                    }
+
+                    Timer++;
+                    NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                    if (Timer > 150 + jawAnimLength)
+                    {
+                        CurrentPhase = 4;
+                        Timer = 0;
+                    }
+                }
+                else if (CurrentPhase == 4)
                 {
                     NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
                     NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
-                }
-                else
-                {
-                    NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f) + MathF.Sin(Timer * 0.05f + 2) * 0.02f;
-                    NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
-                }
-
-                if (Timer > diveTime + dashTime + wait)
-                {
-                    NPC.ai[3] = 0;
-                    Timer = 0;
-                    CurrentPhase = (NPC.life < NPC.lifeMax * 0.5f) ? 7 : 2;
-                }
-            }
-            if (CurrentPhase == 7)
-            {
-                Timer++;
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
-                NPC.velocity *= 0.96f;
-                if (Timer == 30)
-                {
-                    JawTimer = 1;
-                    int mtCount = 16;
-                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
-                    for (int i = 0; i <  mtCount; i++)
+                    if (Timer < 40)
                     {
+                        CalamityUtils.SmoothMovement(NPC, 200, Target.Center - NPC.Center, 20, 0.3f, true);
+                    }
+                    else if (Timer >= 40 && Timer < 80)
+                    {
+                        JawRotation = MathHelper.Lerp(baseJawRotation, MathHelper.ToRadians(16), CalamityUtils.ExpInEasing(Utils.GetLerpValue(40, 80, Timer, true), 1));
+                    }
+                    else if (Timer == 80)
+                    {
+                        SoundEngine.PlaySound(BetterSoundID.ItemGrenadeChuck with { Pitch = -0.6f }, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-2000, 2000), Main.rand.Next(600, 1200)), Vector2.UnitY * Main.rand.Next(-6, -1), ModContent.ProjectileType<ThrowableChunk>(), NPC.damage, 1, ai1: 2);
+                            int n = NPC.NewNPC(NPC.GetSource_FromThis(), (int)HeadPosition.X, (int)HeadPosition.Y, ModContent.NPCType<XiphactinusHead>(), ai0: NPC.whoAmI + 1);
+                            Main.npc[n].direction = NPC.direction;
+                            Main.npc[n].spriteDirection = NPC.spriteDirection;
+                            Main.npc[n].rotation = NPC.rotation;
+                            Main.npc[n].velocity = (NPC.rotation + MathHelper.ToRadians(NPC.spriteDirection == -1 ? 60 : 22) + (NPC.spriteDirection == -1 ? MathHelper.PiOver2 : 0)).ToRotationVector2() * 36;
+                            NPCIndex = n;
+                        }
+                    }
+                    if (Timer >= 40)
+                    {
+                        NPC.velocity *= 0.95f;
+                    }
+                    Timer++;
+                }
+                else if (CurrentPhase == 5)
+                {
+                    Timer++;
+                    int swingTime = 50;
+                    int smashTime = 10;
+                    int maxtim = swingTime + smashTime + 40;
+                    if (Timer == 1)
+                    {
+                        SavePosition = NPC.Center;
+                        SoundEngine.PlaySound(BetterSoundID.ItemToxicFlaskThrow with { Pitch = -0.6f }, NPC.Center);
+                    }
+
+                    if (Timer > 1)
+                    {
+                        if (Timer < swingTime)
+                        {
+                            Vector2 dirToSave = SavePosition - BoundNPC.Center;
+                            Vector2 newPos = BoundNPC.Center + dirToSave.RotatedBy(MathHelper.Lerp(0, -MathHelper.Pi, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, swingTime, Timer, true), 1)));
+                            NPC.velocity = newPos - NPC.Center;
+                        }
+                        else if (Timer == swingTime)
+                        {
+                            SavePosition = NPC.Center;
+                        }
+                        else if (Timer >= swingTime && Timer < swingTime + smashTime)
+                        {
+                            Vector2 newPos = Vector2.Lerp(SavePosition, BoundNPC.Center, Utils.GetLerpValue(swingTime, smashTime + swingTime, Timer, true));
+                            NPC.velocity = newPos - NPC.Center;
+                        }
+                        if (Timer >= swingTime + smashTime)
+                        {
+                            NPC.velocity *= 0.9f;
+                            JawRotation = MathHelper.Lerp(MathHelper.ToRadians(16), baseJawRotation, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(swingTime + smashTime, maxtim - 20, Timer, true), 1));
+                            if (NPCIndex > -1)
+                            {
+                                SoundEngine.PlaySound(WulfrumAcrobaticsPack.GrabSound, NPC.Center);
+                                BoundNPC.active = false;
+                                NPCIndex = -1;
+                            }
+                            if (Timer > maxtim)
+                            {
+                                Timer = 0;
+                                CurrentPhase = 6;
+                            }
+                        }
+
+                        if (NPCIndex > -1)
+                        {
+                            NPC.spriteDirection = BoundNPC.Center.X < NPC.Center.X ? -1 : 1;
+                            NPC.rotation = NPC.DirectionTo(BoundNPC.Center).ToRotation() + (NPC.spriteDirection == 1 ? 0 : MathHelper.Pi);
                         }
                     }
                 }
-                if (Timer > jawAnimLength + 60)
+                if (CurrentPhase == 6)
                 {
-                    Timer = 0;
-                    CurrentPhase = 2;
-                }
-                if (Timer > 30 && Timer < 45)
-                {
-                    if (Timer % 3 == 0)
+                    NPC.noTileCollide = true;
+                    Timer++;
+
+                    int diveTime = 50;
+                    int dashTime = 60;
+                    int wait = 80;
+                    bool look = false;
+                    if (Timer < diveTime)
                     {
-                        SoundEngine.PlaySound(BetterSoundID.ItemMeteorStaffLunarFlare, NPC.Center);
+                        if (NPC.velocity.Y <= 0)
+                        {
+                            NPC.velocity.Y = 5;
+                        }
+                        if (NPC.velocity.Y < 30)
+                            NPC.velocity.Y *= 4f;
+                        lockTail = false;
+                        tailDest = NPC.Center - Vector2.UnitY * 1000;
+                    }
+                    else if (Timer == diveTime)
+                    {
+                        NPC.Center = Target.Center + Vector2.UnitY * 2000;
+                    }
+                    else if (Timer == diveTime + 1)
+                    {
+                        JawTimer = 1;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * 60;
+                    }
+                    else if (Timer > diveTime + dashTime)
+                    {
+                        CalamityUtils.SmoothMovement(NPC, 40, (Target.Center + new Vector2(600, -300)) - NPC.Center, 30, 1.3f, false);
+                        look = true;
+                    }
+
+                    if (Timer > diveTime + 1 && Timer < diveTime + dashTime)
+                    {
+                        lockTail = false;
+                        tailDest = NPC.Center + Vector2.UnitY * 1000;
+                        if (NPC.ai[3] == 0 && Collision.SolidCollision(Utils.CenteredRectangle(HeadPosition, Vector2.One * 200).TopLeft(), 200, 200) && NPC.Bottom.Y < Target.Top.Y)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemMeteorImpact, NPC.Center);
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 4;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4 * 1.5f, MathHelper.PiOver4 * 1.5f, i / 9f)).RotatedByRandom(MathHelper.ToRadians(10)) * Main.rand.NextFloat(16, 25), ModContent.ProjectileType<ThrowableChunk>(), (int)(NPC.damage * 0.5f), 1, ai1: Main.rand.Next(0, 2));
+                                }
+                            }
+                            NPC.ai[3] = 1;
+                        }
+                    }
+
+                    if (look)
+                    {
+                        NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+                        NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi) + flipRot, 0.1f);
+                    }
+                    else
+                    {
+                        NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() - (NPC.direction == 1 ? 0 : MathHelper.Pi), 0.1f) + MathF.Sin(Timer * 0.05f + 2) * 0.02f;
+                        NPC.spriteDirection = NPC.direction = NPC.velocity.X.DirectionalSign();
+                    }
+
+                    if (Timer > diveTime + dashTime + wait)
+                    {
+                        NPC.ai[3] = 0;
+                        Timer = 0;
+                        CurrentPhase = (NPC.life < NPC.lifeMax * 0.5f) ? 7 : 2;
                     }
                 }
-            }
-
-            if (NPC.velocity.Length() > 3)
-            {
-                foreach (Projectile p in Main.ActiveProjectiles)
+                if (CurrentPhase == 7)
                 {
-                    if (p.type != ModContent.ProjectileType<ThrowableChunk>())
-                        continue;
-                    if (p.ai[1] != 2)
-                        continue;
-                    if (NPC.getRect().Intersects(p.getRect()))
+                    Timer++;
+                    NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
+                    NPC.velocity *= 0.96f;
+                    if (Timer == 30)
                     {
-                        SoundEngine.PlaySound(BetterSoundID.ItemMeteorStaffLunarFlare, NPC.Center);
-                        Main.LocalPlayer.Calamity().GeneralScreenShakePower = 3;
-                        p.Kill();
-                        int ct = 10;
-                        for (int i = 0; i < ct; i++)
+                        JawTimer = 1;
+                        int mtCount = 16;
+                        Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
+                        for (int i = 0; i < mtCount; i++)
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int pe = Projectile.NewProjectile(NPC.GetSource_FromThis(), p.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)ct)).RotatedByRandom(MathHelper.PiOver4) * 15, ModContent.ProjectileType<ThrowableChunk>(), (int)(p.damage * 0.25f), 1, ai1: Main.rand.Next(0, 2));
-                                Main.projectile[pe].height = Main.projectile[pe].width = 22;
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-2000, 2000), Main.rand.Next(600, 1200)), Vector2.UnitY * Main.rand.Next(-6, -1), ModContent.ProjectileType<ThrowableChunk>(), NPC.damage, 1, ai1: 2);
                             }
                         }
                     }
-                }
-                if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && (CurrentPhase == 3 || CurrentPhase == 5 || CurrentPhase == 6))
-                {
-                    for (int i = 0; i < (int)(NPC.width);  i++)
+                    if (Timer > jawAnimLength + 60)
                     {
-                        for (int j = 0; j < (int)(NPC.height); j++)
+                        Timer = 0;
+                        CurrentPhase = 2;
+                    }
+                    if (Timer > 30 && Timer < 45)
+                    {
+                        if (Timer % 3 == 0)
                         {
-                            Point start = NPC.position.ToTileCoordinates();
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(start.X + i, start.Y + j);
-                            if (t.TileType == ModContent.TileType<SyringodiumPlaced>())
+                            SoundEngine.PlaySound(BetterSoundID.ItemMeteorStaffLunarFlare, NPC.Center);
+                        }
+                    }
+                }
+
+                if (NPC.velocity.Length() > 3)
+                {
+                    foreach (Projectile p in Main.ActiveProjectiles)
+                    {
+                        if (p.type != ModContent.ProjectileType<ThrowableChunk>())
+                            continue;
+                        if (p.ai[1] != 2)
+                            continue;
+                        if (NPC.getRect().Intersects(p.getRect()))
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemMeteorStaffLunarFlare, NPC.Center);
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 3;
+                            p.Kill();
+                            int ct = 10;
+                            for (int i = 0; i < ct; i++)
                             {
-                                WorldGen.KillTile(start.X + i, start.Y + j, noItem: true);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int pe = Projectile.NewProjectile(NPC.GetSource_FromThis(), p.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)ct)).RotatedByRandom(MathHelper.PiOver4) * 15, ModContent.ProjectileType<ThrowableChunk>(), (int)(p.damage * 0.25f), 1, ai1: Main.rand.Next(0, 2));
+                                    Main.projectile[pe].height = Main.projectile[pe].width = 22;
+                                }
+                            }
+                        }
+                    }
+                    if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && (CurrentPhase == 3 || CurrentPhase == 5 || CurrentPhase == 6))
+                    {
+                        for (int i = 0; i < (int)(NPC.width); i++)
+                        {
+                            for (int j = 0; j < (int)(NPC.height); j++)
+                            {
+                                Point start = NPC.position.ToTileCoordinates();
+                                Tile t = CalamityUtils.ParanoidTileRetrieval(start.X + i, start.Y + j);
+                                if (t.TileType == ModContent.TileType<SyringodiumPlaced>())
+                                {
+                                    WorldGen.KillTile(start.X + i, start.Y + j, noItem: true);
+                                }
                             }
                         }
                     }
@@ -668,6 +685,22 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            base.ModifyNPCLoot(npcLoot);
+        }
+
+        public override void OnKill()
+        {
+            RemixDowned.downedLivyatan = true;
+            CalamityNetcode.SyncWorld();
         }
     }
 }
