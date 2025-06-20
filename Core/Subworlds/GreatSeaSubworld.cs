@@ -23,6 +23,7 @@ using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.SulphurousSea;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
+using Terraria.Utilities;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -63,6 +64,25 @@ namespace CalRemix.Core.Subworlds
         float ICustomSpawnSubworld.SpawnMult { get => 0.1f; }
 
         bool ICustomSpawnSubworld.OverrideVanilla { get => true; }
+
+        public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
+        {
+            if (tile.LiquidType == LiquidID.Water && tile.LiquidAmount > 0 && !tile.HasTile)
+            {
+                if (Main.LocalPlayer.InModBiome<PrimordialCavesBiome>())
+                {
+                    color.X = tile.LiquidAmount / 255f;
+                    color.Y = tile.LiquidAmount / 255f;
+                    color.Z = tile.LiquidAmount / 255f;
+                }
+                else
+                {
+                    color.Z = tile.LiquidAmount / 1055f;
+                    color.Y = tile.LiquidAmount / 1255f;
+                }
+            }
+            return false;
+        }
 
         public override void OnEnter()
         {
