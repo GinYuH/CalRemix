@@ -302,55 +302,58 @@ namespace CalRemix
             {
                 npc.active = false;
             }
-            bool sepulcherDead = (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneHeart>()) && !Main.zenithWorld) || CalamityGlobalNPC.SCal < 0 || !Main.npc[CalamityGlobalNPC.SCal].active;
-            if (npc.type == NPCType<SepulcherHead>())
+            if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>())
             {
-                if (sepulcherDead)
+                bool sepulcherDead = (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneHeart>()) && !Main.zenithWorld) || CalamityGlobalNPC.SCal < 0 || !Main.npc[CalamityGlobalNPC.SCal].active;
+                if (npc.type == NPCType<SepulcherHead>())
                 {
-                    if (Main.rand.NextBool(10))
+                    if (sepulcherDead)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.rand.NextBool(10))
                         {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTrophy>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTrophy>());
+                            }
                         }
                     }
                 }
-            }
-            if (npc.type == NPCType<SepulcherBody>())
-            {
-                if (sepulcherDead)
+                if (npc.type == NPCType<SepulcherBody>())
                 {
-                    if (Main.rand.NextBool(10))
+                    if (sepulcherDead)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.rand.NextBool(10))
                         {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherBodyTrophy>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherBodyTrophy>());
+                            }
                         }
                     }
                 }
-            }
-            if (npc.type == NPCType<SepulcherBodyEnergyBall>())
-            {
-                if (sepulcherDead)
+                if (npc.type == NPCType<SepulcherBodyEnergyBall>())
                 {
-                    if (Main.rand.NextBool(10))
+                    if (sepulcherDead)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.rand.NextBool(10))
                         {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherOrbTrophy>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherOrbTrophy>());
+                            }
                         }
                     }
                 }
-            }
-            if (npc.type == NPCType<SepulcherTail>())
-            {
-                if (sepulcherDead)
+                if (npc.type == NPCType<SepulcherTail>())
                 {
-                    if (Main.rand.NextBool(10))
+                    if (sepulcherDead)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.rand.NextBool(10))
                         {
-                            Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTailTrophy>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTailTrophy>());
+                            }
                         }
                     }
                 }
@@ -362,7 +365,7 @@ namespace CalRemix
                     npc.active = false;
                 }
             }
-            if (CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
+            if (!CalamityUtils.AnyProjectiles(ProjectileType<Claw>()))
             {
                 clawed = 0;
             }

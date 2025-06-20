@@ -1107,7 +1107,7 @@ namespace CalRemix
         {
             foreach (NPC npc in Main.npc)
             {
-                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out int value))
+                if (npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out int value) && item.Hitbox.Intersects(npc.Hitbox))
                 {
                     SpawnNewNPC(item.GetSource_FromThis(), npc.Center, value);
                     npc.life = 0;
