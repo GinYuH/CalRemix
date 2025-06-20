@@ -42,6 +42,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //MakeChristmasTree(point, trunkHeightAmount, individualHeight);
 
             MakeAwesomeHouseStuff(point);
+            Tile tile = Main.tile[point.X, point.Y];
+            Main.NewText(tile.TileFrameX / 18);
             /*int floorTile = TileID.VortexBrick;
             if (Main.tile[point.X, point.Y].TileType == (ushort)floorTile && !Main.tile[point.X - 1, point.Y].HasTile)
             {
@@ -179,8 +181,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             ShapeData roomShapeData = new ShapeData();
             // add the middle hall
             // there will always be a hall from the left to the right of the usable zone
-            int halfOfUsableAreaY = (int)(areaOfStuffYouCanUse.Height / 2);
-            int middleHallHeight = areaOfStuffYouCanUse.Height / 2 - 2 + (int)Main.rand.Next(-3, 4);
+            int halfOfUsableAreaY = areaOfStuffYouCanUse.Height / 2;
+            int middleHallHeight = areaOfStuffYouCanUse.Height / 2 - 3 + Main.rand.Next(-3, 4);
             Point originWithPaddingAndProperPosition = new Point(originWithPadding.X, originWithPadding.Y + halfOfUsableAreaY - (middleHallHeight / 2));
             WorldUtils.Gen(originWithPaddingAndProperPosition, new Shapes.Rectangle(areaOfStuffYouCanUse.Width, middleHallHeight), new Actions.Blank().Output(roomShapeData));
 
@@ -188,25 +190,25 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             for (int i = 0; i < 3; i++)
             {
                 // get sizes
-                Vector2 boxSize = Vector2.Zero;
-                boxSize.X = (areaOfStuffYouCanUse.Width / 2) + Main.rand.Next(-3, 0); // + rand
-                boxSize.Y = (areaOfStuffYouCanUse.Height / 4) + Main.rand.Next(-3, 0); // + rand
+                Point boxSize = Point.Zero;
+                boxSize.X = (areaOfStuffYouCanUse.Width / 2) + Main.rand.Next(-5, 0); // + rand
+                boxSize.Y = (areaOfStuffYouCanUse.Height / 4) + Main.rand.Next(-5, 0); // + rand
 
                 // determine whether to place rect at top or not
                 bool top = Main.rand.NextBool();
-                Vector2 offset = Vector2.Zero;
+                Point offset = Point.Zero;
                 if (top)
                     offset.Y = -boxSize.Y;
                 else
                     offset.Y = middleHallHeight;
                 // and get horiz offset, anywhere on the hallway horizontally
-                offset.X = Main.rand.Next(0, (int)(areaOfStuffYouCanUse.Width - boxSize.X));
+                offset.X = Main.rand.Next(0, areaOfStuffYouCanUse.Width - boxSize.X);
 
                 int tile = top ? TileID.BubblegumBlock : TileID.CactusBlock;
 
-                WorldUtils.Gen(origin, new Shapes.Rectangle((int)boxSize.X, (int)boxSize.Y), Actions.Chain(new GenAction[]
+                WorldUtils.Gen(origin, new Shapes.Rectangle(boxSize.X, boxSize.Y), Actions.Chain(new GenAction[]
                 {
-                    new Modifiers.Offset((int)offset.X, (int)offset.Y),
+                    new Modifiers.Offset(offset.X, offset.Y),
                     new Actions.Blank().Output(roomShapeData)
                 }));
             }
@@ -233,21 +235,34 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 for (int y = areaOfStuffYouCanUse.Y; y < areaOfStuffYouCanUse.Y + areaOfStuffYouCanUse.Height; y++)
                 {
                     // check everything to the left...
-                    if (Main.tile[x, y].TileType == (ushort)floorTile && Main.tile[x, y].TileType != (ushort)wallTile && !Main.tile[x - 1, y].HasTile)
+                    if (Main.tile[x, y].TileType == (ushort)floorTile && Main.tile[x, y].HasTile && !Main.tile[x - 1, y].HasTile)
                     {
-                        Vector2 currentTilePointer = new Vector2(x - 1, y);
-                        while (!Main.tile[(int)currentTilePointer.X, (int)currentTilePointer.Y].HasTile)
+                        Point currentTilePointer = new Point(x - 1, y);
+                        while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
                         {
-                            //8 left 10 right
-                            WorldGen.PlaceTile((int)currentTilePointer.X, (int)currentTilePointer.Y, TileID.Adamantite);
-                            //Main.tile[(int)currentTilePointer.X, (int)currentTilePointer.Y].TileFrameX = 8;
-                            currentTilePointer = new Vector2(currentTilePointer.X - 1, currentTilePointer.Y + 1);
+                            Tile tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                            tile.HasTile = true;
+                            tile.TileType = TileID.Platforms;
+                            tile.BlockType = BlockType.SlopeDownRight;
+                            tile.TileFrameY = 0; //TODO: if using custom platform remove this 
+                            tile.TileFrameX = 8 * 18;
+                            currentTilePointer = new Point(currentTilePointer.X - 1, currentTilePointer.Y + 1);
                         }
                     }
                     // ...and to the right
-                    if (Main.tile[x, y].TileType == (ushort)floorTile && !Main.tile[x + 1, y].HasTile)
+                    if (Main.tile[x, y].TileType == (ushort)floorTile && Main.tile[x, y].HasTile && !Main.tile[x + 1, y].HasTile)
                     {
-
+                        Point currentTilePointer = new Point(x + 1, y);
+                        while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
+                        {
+                            Tile tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                            tile.HasTile = true;
+                            tile.TileType = TileID.Platforms;
+                            tile.BlockType = BlockType.SlopeDownLeft;
+                            tile.TileFrameY = 0; //TODO: if using custom platform remove this 
+                            tile.TileFrameX = 10 * 18;
+                            currentTilePointer = new Point(currentTilePointer.X + 1, currentTilePointer.Y + 1);
+                        }
                     }
                 }
             }
