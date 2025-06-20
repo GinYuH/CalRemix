@@ -112,7 +112,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             else if (Timer >= 20)
             {
                 NPC.velocity *= 0.95f;
-                Body.ai[1] = 5;
+                Body.ai[1] = 3;
                 NPC.spriteDirection = Body.Center.X < NPC.Center.X ? -1 : 1;
                 NPC.rotation = (NPC.DirectionTo(Body.Center).ToRotation() + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi));
             }
