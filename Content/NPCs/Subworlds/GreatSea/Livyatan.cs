@@ -461,7 +461,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         }
                     }
                 }
-                if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && (CurrentPhase == 3 || CurrentPhase == 5))
+                if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && (CurrentPhase == 3 || CurrentPhase == 5 || CurrentPhase == 6))
                 {
                     for (int i = 0; i < (int)(NPC.width);  i++)
                     {
