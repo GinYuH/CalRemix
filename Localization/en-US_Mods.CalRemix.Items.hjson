@@ -4567,7 +4567,7 @@ FreddyCheckersBoard: {
 
 AstralEyeBlock: {
 	DisplayName: Glittering Astral Eye Block
-	Tooltip: "Summons a Depth Glider when a torch is placed on top"
+	Tooltip: Summons a Depth Glider when a torch is placed on top
 }
 
 AstralPearlBlock: {
