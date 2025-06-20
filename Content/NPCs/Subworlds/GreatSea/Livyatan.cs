@@ -116,10 +116,12 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             bool lockTail = true;
             Vector2 tailDestination = NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Sin(Timer * 0.05f) * 0.5f);
             NPC.TargetClosest(false);
+            bool deathanim = false;
             if (CurrentPhase != 0)
             {
                 if (Target.dead)
                 {
+                    deathanim = true;
                     NPC.velocity.Y++;
                     NPC.ai[3]++;
                     if (NPC.ai[3] > 120)
@@ -128,7 +130,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     }
                 }
             }
-            else
+            if (!deathanim)
             {
                 if (CurrentPhase == 0)
                 {

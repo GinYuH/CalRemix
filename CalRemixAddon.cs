@@ -210,9 +210,15 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
+            Action<SpriteBatch, Rectangle, Color> lvPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/Livyatan_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, color);
+            };
             bc.Call("LogBoss", Mod, "Livyatan", 19.1f, () => RemixDowned.downedLivyatan, NPCType<Livyatan>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<SubworldDoor>(),
+                ["customPortrait"] = lvPortrait
             });
             bc.Call("LogBoss", Mod, "Pyrogen", 19.6f, () => RemixDowned.downedPyrogen, NPCType<Pyrogen>(), new Dictionary<string, object>()
             {
