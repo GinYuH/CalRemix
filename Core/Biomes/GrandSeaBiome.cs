@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace CalRemix.Core.Biomes
 {
     // Shows setting up two basic biomes. For a more complicated example, please request.
-    public class GrandSeaBiome : ModBiome
+    public class GreatSeaBiome : ModBiome
     {
         //public override bool IsPrimaryBiome =>false; // Allows this biome to impact NPC prices
 
@@ -34,7 +34,7 @@ namespace CalRemix.Core.Biomes
         // Calculate when the biome is active.
         public override bool IsBiomeActive(Player player)
         {
-            return SubworldSystem.IsActive<GrandSeaSubworld>() && player.position.Y < GrandSeaGeneration.caveBottom * Main.maxTilesY * 16;
+            return SubworldSystem.IsActive<GreatSeaSubworld>() && player.position.Y < GrandSeaGeneration.caveBottom * Main.maxTilesY * 16;
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;

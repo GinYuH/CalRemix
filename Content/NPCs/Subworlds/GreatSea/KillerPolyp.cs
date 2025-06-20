@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.npcSlots = 0;
             NPC.dontCountMe = true;
             NPC.waterMovementSpeed = 1f;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<GrandSeaBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<GreatSeaBiome>().Type };
         }
 
         public override void AI()

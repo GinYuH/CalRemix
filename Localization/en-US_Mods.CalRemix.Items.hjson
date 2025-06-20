@@ -4574,3 +4574,23 @@ AstralPearlBlock: {
 	DisplayName: Astral Pearl Block
 	Tooltip: ""
 }
+
+Chert: {
+	DisplayName: Chert
+	Tooltip: ""
+}
+
+Darkstone: {
+	DisplayName: Darkstone
+	Tooltip: ""
+}
+
+Schist: {
+	DisplayName: Schist
+	Tooltip: ""
+}
+
+Syringodium: {
+	DisplayName: Syringodium
+	Tooltip: ""
+}

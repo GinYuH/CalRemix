@@ -46,7 +46,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.HitSound = SupremeCalamitas.HurtSound;
             NPC.DeathSound = SupremeCalamitas.SepulcherSummonSound with { Pitch = 1 };
             NPC.rarity = 4;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<GrandSeaBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<GreatSeaBiome>().Type };
         }
 
         public override void AI()

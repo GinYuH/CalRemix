@@ -165,7 +165,7 @@ namespace CalRemix.Content.Tiles
     public class GrandSeaDoor : SubworldDoorPlaced
     {
         public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/GrandSeaPreview";
-        public override Subworld BoundSubworld => ModContent.GetInstance<GrandSeaSubworld>();
+        public override Subworld BoundSubworld => ModContent.GetInstance<GreatSeaSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.RoyalBlue;

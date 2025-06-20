@@ -22,24 +22,25 @@ using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Core.Biomes;
 using CalamityMod.NPCs.SulphurousSea;
 using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.Tiles.Subworlds.GreatSea;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class GrandSeaSubworld : Subworld, ICustomSpawnSubworld
+    public class GreatSeaSubworld : Subworld, ICustomSpawnSubworld
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             // Main Great Sea
-            list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<MicrobialClusterII>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
-            list.Add(item: (ModContent.NPCType<HellbenderBaby>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<HellbenderHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<HellbenderHead>())));
-            list.Add(item: (ModContent.NPCType<Livyatan>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GrandSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<Livyatan>())));
+            list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<MicrobialClusterII>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
+            list.Add(item: (ModContent.NPCType<HellbenderBaby>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<HellbenderHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<HellbenderHead>())));
+            list.Add(item: (ModContent.NPCType<Livyatan>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<Livyatan>())));
 
             // Primordial Caves
             list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
@@ -147,7 +148,7 @@ namespace CalRemix.Core.Subworlds
         {
             int height = 80;
             int baseHeight = Main.maxTilesY - height;
-            CalRemixHelper.PerlinSurface(new Rectangle(0, baseHeight, Main.maxTilesX, height), TileID.Obsidian, 3);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, baseHeight, Main.maxTilesX, height), ModContent.TileType<DarkstonePlaced>(), 3);
             //Frame the tiles at the surface
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -164,20 +165,20 @@ namespace CalRemix.Core.Subworlds
         public static void GeneratePrimordialDepths()
         {
             int y = (int)(Main.maxTilesY * caveBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: TileID.Titanstone, ease: CalRemixHelper.PerlinEase.EaseInTop, topStop: 0.2f);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: ModContent.TileType<ChertPlaced>(), ease: CalRemixHelper.PerlinEase.EaseInTop, topStop: 0.2f);
         }
 
         public static void GenerateCaves()
         {
             int y = (int)(Main.maxTilesY * groundBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: TileID.Stone, ease: CalRemixHelper.PerlinEase.EaseInOut, bottomStop: 0.8f);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: ModContent.TileType<SchistPlaced>(), ease: CalRemixHelper.PerlinEase.EaseInOut, bottomStop: 0.8f);
             int padding = 10;
-            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * caveBottom) - padding, Main.maxTilesX, padding * 2), TileID.Stone, 5, 5, true);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * caveBottom) - padding, Main.maxTilesX, padding * 2), ModContent.TileType<SchistPlaced>(), 5, 5, true);
         }
 
         public static void GenerateSurface()
         {
-            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * groundTop), Main.maxTilesX, (int)(Main.maxTilesX * (groundBottom - groundTop))), TileID.GreenMoss, 5, 10, true);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * groundTop), Main.maxTilesX, (int)(Main.maxTilesX * (groundBottom - groundTop))), ModContent.TileType<SyringodiumPlaced>(), 5, 10, true);
         }
 
         public static void GenerateDebris()
@@ -187,7 +188,7 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateIslands()
         {
             int y = (int)(Main.maxTilesY * seaLevel);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: TileID.GreenMoss);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: ModContent.TileType<SyringodiumPlaced>());
         }
     }
 }

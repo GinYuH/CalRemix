@@ -131,6 +131,11 @@ Mods: {
 				DisplayName: Clown World Clown Biome
 				TownNPCDialogueName: the Clown World Clown Biome
 			}
+
+			GreatSeaBiome: {
+				DisplayName: Great Sea Biome
+				TownNPCDialogueName: the Great Sea Biome
+			}
 		}
 
 		Enchantments: {
