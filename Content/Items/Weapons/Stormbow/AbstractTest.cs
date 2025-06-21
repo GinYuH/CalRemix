@@ -43,6 +43,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             MakeAwesomeHouseStuff(point);
             Tile tile = Main.tile[point.X, point.Y];
+            Main.NewText(tile.BlockType);
             Main.NewText(tile.TileFrameX / 18);
             /*int floorTile = TileID.VortexBrick;
             if (Main.tile[point.X, point.Y].TileType == (ushort)floorTile && !Main.tile[point.X - 1, point.Y].HasTile)
@@ -216,6 +217,47 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // make that shit
             WorldUtils.Gen(originWithPaddingAndProperPosition, new ModShapes.All(roomShapeData), new Actions.ClearTile());
 
+            // fuck it lets raise one of hte sides for no reason
+            if (Main.rand.NextFloat() > 0.25f)
+            {
+                for (int y = areaOfStuffYouCanUse.Y; y < areaOfStuffYouCanUse.Y + areaOfStuffYouCanUse.Height; y++)
+                {
+                    bool left = Main.rand.NextBool();
+                    Tile leftOrRightTile = new Tile();
+                    if (left)
+                        leftOrRightTile = Main.tile[areaOfStuffYouCanUse.X, y];
+                    else
+                        leftOrRightTile = Main.tile[areaOfStuffYouCanUse.X + areaOfStuffYouCanUse.Width - 1, y];
+                    int amountOfBlocksToRaiseUp = Main.rand.Next(1, 4);
+                    if (leftOrRightTile.TileType == (ushort)wallTile && !Main.tile[areaOfStuffYouCanUse.X, y - 1].HasTile)
+                    {
+                        Tile tile = Main.tile[areaOfStuffYouCanUse.X, y];
+                        Point floorPositionPointer = new Point(areaOfStuffYouCanUse.X, y);
+                        if (!left)
+                            floorPositionPointer = new Point(areaOfStuffYouCanUse.X + areaOfStuffYouCanUse.Width - 1, y);
+                        while (tile.HasTile)
+                        {
+                            // place a corrosponding amt of stuff above the floor
+                            for (int i = amountOfBlocksToRaiseUp; i > 0; i--)
+                            {
+                                tile = Main.tile[floorPositionPointer.X, floorPositionPointer.Y - i];
+                                tile.HasTile = true;
+                                tile.TileType = (ushort)wallTile;
+
+                            }
+                            //floorPositionPointer.Y += amountOfBlocksToRaiseUp;
+
+                            // move onto next tile
+                            if (left)
+                                floorPositionPointer.X++;
+                            else
+                                floorPositionPointer.X--;
+                            tile = Main.tile[floorPositionPointer.X, floorPositionPointer.Y];
+                        }
+                    }
+                }
+            }
+
             // place unique floor tiles over wall tiles that have air above them
             for (int x = areaOfStuff.X; x < areaOfStuff.X + areaOfStuff.Width; x++)
             {
@@ -238,36 +280,83 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     if (Main.tile[x, y].TileType == (ushort)floorTile && Main.tile[x, y].HasTile && !Main.tile[x - 1, y].HasTile)
                     {
                         Point currentTilePointer = new Point(x - 1, y);
+                        Tile tile = new Tile();
                         while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
                         {
-                            Tile tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                            tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
                             tile.HasTile = true;
                             tile.TileType = TileID.Platforms;
                             tile.BlockType = BlockType.SlopeDownRight;
                             tile.TileFrameY = 0; //TODO: if using custom platform remove this 
                             tile.TileFrameX = 8 * 18;
-                            currentTilePointer = new Point(currentTilePointer.X - 1, currentTilePointer.Y + 1);
+                            currentTilePointer.X--;
+                            currentTilePointer.Y++;
                         }
                     }
                     // ...and to the right
                     if (Main.tile[x, y].TileType == (ushort)floorTile && Main.tile[x, y].HasTile && !Main.tile[x + 1, y].HasTile)
                     {
                         Point currentTilePointer = new Point(x + 1, y);
+                        Tile tile = new Tile();
                         while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
                         {
-                            Tile tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                            tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
                             tile.HasTile = true;
                             tile.TileType = TileID.Platforms;
                             tile.BlockType = BlockType.SlopeDownLeft;
                             tile.TileFrameY = 0; //TODO: if using custom platform remove this 
                             tile.TileFrameX = 10 * 18;
-                            currentTilePointer = new Point(currentTilePointer.X + 1, currentTilePointer.Y + 1);
+                            currentTilePointer.X++;
+                            currentTilePointer.Y++;
                         }
                     }
                 }
             }
 
-            // fill with decorum? or do this in a diff pass maybe?
+            // for each platform tile we wanna check behind it for any weird shit
+            // i was gonna make this work but then i saw a stair generate inside of another stair and i just kinda frowned
+            /*for (int x = areaOfStuffYouCanUse.X; x < areaOfStuffYouCanUse.X + areaOfStuffYouCanUse.Width; x++)
+            {
+                for (int y = areaOfStuffYouCanUse.Y; y < areaOfStuffYouCanUse.Y + areaOfStuffYouCanUse.Height; y++)
+                {
+                    if (Main.tile[x, y].TileType == TileID.Platforms)
+                    {
+                        Tile tile = Main.tile[x, y];
+                        if (tile.BlockType == BlockType.SlopeDownRight)
+                        {
+                            Point findShittyPlatformsPointer = new Point(x, y);
+                            while (tile.TileType != (ushort)wallTile || tile.TileType != (ushort)floorTile)
+                            {
+                                findShittyPlatformsPointer.X++;
+                                tile = Main.tile[findShittyPlatformsPointer.X, findShittyPlatformsPointer.Y];
+                                if (tile.TileType == TileID.Platforms && tile.BlockType == BlockType.SlopeDownRight)
+                                {
+                                    // we found one! a real one!
+                                    tile.TileType = TileID.Adamantite;
+                                    // so then... behind it should be floor!
+                                    // get ridda that floor
+                                    findShittyPlatformsPointer.X++;
+                                    tile = Main.tile[findShittyPlatformsPointer.X, findShittyPlatformsPointer.Y];
+                                    while (tile.TileType == (ushort)floorTile || !tile.HasTile)
+                                    {
+                                        tile.HasTile = true;
+                                        tile.TileType = TileID.Adamantite;
+                                        Main.tile[findShittyPlatformsPointer.X, findShittyPlatformsPointer.Y + 1].TileType = (ushort)floorTile;
+                                        findShittyPlatformsPointer.X++;
+                                        tile = Main.tile[findShittyPlatformsPointer.X, findShittyPlatformsPointer.Y];
+                                    }
+                                }
+                            }
+                        }
+                        else if (tile.BlockType == BlockType.SlopeDownLeft)
+                        {
+
+                        }
+                    }
+                }
+            }*/
+
+            // fill with decorum
             for (int x = areaOfStuffYouCanUse.X; x < areaOfStuffYouCanUse.X + areaOfStuffYouCanUse.Width; x++)
             {
                 for (int y = areaOfStuffYouCanUse.Y; y < areaOfStuffYouCanUse.Y + areaOfStuffYouCanUse.Height; y++)
