@@ -8,6 +8,7 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Misc;
 using Terraria.GameContent.ItemDropRules;
+using System.Collections.Generic;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -147,6 +148,65 @@ namespace CalRemix.Content.Items.Bags
             itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.ShadowScale, new Fraction(1, 10), 1, 2);
         }
     }
+    public class MourningWoodBag : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 3;
+            ItemID.Sets.BossBag[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+            Item.maxStack = Item.CommonMaxStack;
+            Item.consumable = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Cyan;
+            Item.expert = true;
+        }
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
+        {
+            itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;
+        }
+        public override bool CanRightClick()
+        {
+            return true;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Lerp(lightColor, Color.White, 0.4f);
+        }
+        public override void PostUpdate()
+        {
+            Item.TreasureBagLightAndDust();
+        }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            return CalamityUtils.DrawTreasureBagInWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
+        }
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            List<IItemDropRule> rouxls = Main.ItemDropsDB.GetRulesForNPCID(NPCID.MourningWood, false);
+            foreach (var v in rouxls)
+            {
+                if (v is CommonDrop c)
+                {
+                    if (c.itemId == ItemID.MourningWoodTrophy)
+                    {
+                        continue;
+                    }
+                    itemLoot.Add(v);
+                }
+            }
+
+            IItemDropRule itemDropRule2 = ItemDropRule.Common(1782);
+            itemDropRule2.OnSuccess(ItemDropRule.Common(1783, 1, 50, 100), hideLootReport: true);
+            IItemDropRule itemDropRule3 = ItemDropRule.Common(1784);
+            itemDropRule3.OnSuccess(ItemDropRule.Common(1785, 1, 25, 50), hideLootReport: true);
+            IItemDropRule vanilla = new OneFromRulesRule(1, itemDropRule2, itemDropRule3, ItemDropRule.Common(1811), ItemDropRule.Common(1826), ItemDropRule.Common(1801), ItemDropRule.Common(1802), ItemDropRule.Common(4680), ItemDropRule.Common(1798));
+            itemLoot.Add(vanilla);
+        }
+    }
 
     public class WorldEvilBagsNPC : GlobalNPC
     {
@@ -163,6 +223,10 @@ namespace CalRemix.Content.Items.Bags
             else if (npc.type == NPCID.EaterofWorldsTail)
             {
                 npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<EaterOfWorldsTailBag>());
+            }
+            else if (npc.type == NPCID.MourningWood)
+            {
+                npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<MourningWoodBag>());
             }
         }
     }

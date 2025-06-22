@@ -4596,16 +4596,21 @@ Syringodium: {
 }
 
 CreeperBag: {
-	DisplayName: Creeper Bag
+	DisplayName: Treasure Bag (Creeper)
 	Tooltip: ""
 }
 
 EaterOfWorldsBodyBag: {
-	DisplayName: Eater Of Worlds Body Bag
+	DisplayName: Treasure Bag (Eater Of Worlds Body)
 	Tooltip: ""
 }
 
 EaterOfWorldsTailBag: {
-	DisplayName: Eater Of Worlds Tail Bag
+	DisplayName: Treasure Bag (Eater Of Worlds Tail)
+	Tooltip: ""
+}
+
+MourningWoodBag: {
+	DisplayName: Treasure Bag (Mourning Wood)
 	Tooltip: ""
 }
