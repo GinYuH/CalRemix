@@ -1133,6 +1133,8 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyMetalChlorium", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalHallowed", 8);
 
+            ScreenHelperPortrait.LoadPortrait("FannyMetalMiracle", 8);
+
             //Fazbear
             ScreenHelperPortrait.LoadPortrait("FannyFazebear", 1);
             ScreenHelperPortrait.LoadPortrait("FannyFazebearEndo", 1);

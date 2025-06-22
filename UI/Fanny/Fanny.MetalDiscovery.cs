@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Items.Accessories.Wings;
+using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Content.Items.Placeables;
 using Terraria;
@@ -66,6 +67,11 @@ namespace CalRemix.UI
             HelperMessage.New("Metal_Hallowed", "METAL FACTS: I cannot stop sparkling!",
                 "FannyMetalHallowed", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<HallowedOre>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.AltMetalFanny).SetHoverTextOverride("Please stop doing that");
+
+
+            HelperMessage.New("Metal_Miracle", "MIRACLE MATTER FACTS: Aaaahhhh!!! Aaaaaaahhhhhhhh!!!!!!! Aaaaaaaaaaaahhhhhhhhhhhhh!!!!!!!!!!!!",
+                "FannyMetalMiracle", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<MiracleMatter>()))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.AltMetalFanny).SetHoverTextOverride("I feel you man");
 
         }
     }
