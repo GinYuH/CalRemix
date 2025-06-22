@@ -50,8 +50,10 @@ namespace CalRemix.Content.Items.Bags
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemID.TissueSample, 3, 1, 3);
-            itemLoot.Add(ItemID.CrimtaneOre, 3, 5, 7);
+            itemLoot.AddIf(() => !Main.masterMode, ItemID.TissueSample, new Fraction(2, 3), 1, 3);
+            itemLoot.AddIf(() => !Main.masterMode, ItemID.CrimtaneOre, new Fraction(2, 3), 5, 7);
+            itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.TissueSample, new Fraction(1, 2), 1, 2);
+            itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.CrimtaneOre, new Fraction(2, 3), 2, 4);
             itemLoot.Add(ItemID.Heart, 2);
         }
     }
@@ -94,8 +96,10 @@ namespace CalRemix.Content.Items.Bags
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemID.DemoniteOre, 2, 1, 3);
-            itemLoot.Add(ItemID.ShadowScale, 5, 1, 2);
+            itemLoot.AddIf(() => !Main.masterMode, ItemID.DemoniteOre, new Fraction(1, 2), 1, 3);
+            itemLoot.AddIf(() => !Main.masterMode, ItemID.ShadowScale, new Fraction(1, 5), 1, 2);
+            itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.DemoniteOre, new Fraction(1, 3), 1, 2);
+            itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.ShadowScale, new Fraction(1, 10), 1, 2);
         }
     }
     public class EaterOfWorldsTailBag : ModItem
@@ -137,8 +141,10 @@ namespace CalRemix.Content.Items.Bags
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemID.DemoniteOre, 2, 1, 3);
-            itemLoot.Add(ItemID.ShadowScale, 5, 1, 2);
+            itemLoot.AddIf(() => !Main.masterMode, ItemID.DemoniteOre, new Fraction(1, 2), 1, 3);
+            itemLoot.AddIf(() => !Main.masterMode, ItemID.ShadowScale, new Fraction(1, 5), 1, 2);
+            itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.DemoniteOre, new Fraction(1, 3), 1, 2);
+            itemLoot.AddIf(() => !Main.expertMode && Main.masterMode, ItemID.ShadowScale, new Fraction(1, 10), 1, 2);
         }
     }
 
