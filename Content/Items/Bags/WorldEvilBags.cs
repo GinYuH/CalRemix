@@ -1,0 +1,163 @@
+﻿using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using CalamityMod;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Misc;
+using Terraria.GameContent.ItemDropRules;
+
+namespace CalRemix.Content.Items.Bags
+{
+    public class CreeperBag : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 3;
+            ItemID.Sets.BossBag[Type] = true;
+            ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+            Item.maxStack = Item.CommonMaxStack;
+            Item.consumable = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Cyan;
+            Item.expert = true;
+        }
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
+        {
+            itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;
+        }
+        public override bool CanRightClick()
+        {
+            return true;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Lerp(lightColor, Color.White, 0.4f);
+        }
+        public override void PostUpdate()
+        {
+            Item.TreasureBagLightAndDust();
+        }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            return CalamityUtils.DrawTreasureBagInWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
+        }
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemID.TissueSample, 3, 1, 3);
+            itemLoot.Add(ItemID.CrimtaneOre, 3, 5, 7);
+            itemLoot.Add(ItemID.Heart, 2);
+        }
+    }
+    public class EaterOfWorldsBodyBag : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 3;
+            ItemID.Sets.BossBag[Type] = true;
+            ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+            Item.maxStack = Item.CommonMaxStack;
+            Item.consumable = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Cyan;
+            Item.expert = true;
+        }
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
+        {
+            itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;
+        }
+        public override bool CanRightClick()
+        {
+            return true;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Lerp(lightColor, Color.White, 0.4f);
+        }
+        public override void PostUpdate()
+        {
+            Item.TreasureBagLightAndDust();
+        }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            return CalamityUtils.DrawTreasureBagInWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
+        }
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemID.DemoniteOre, 2, 1, 3);
+            itemLoot.Add(ItemID.ShadowScale, 5, 1, 2);
+        }
+    }
+    public class EaterOfWorldsTailBag : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 3;
+            ItemID.Sets.BossBag[Type] = true;
+            ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+            Item.maxStack = Item.CommonMaxStack;
+            Item.consumable = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Cyan;
+            Item.expert = true;
+        }
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
+        {
+            itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;
+        }
+        public override bool CanRightClick()
+        {
+            return true;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Lerp(lightColor, Color.White, 0.4f);
+        }
+        public override void PostUpdate()
+        {
+            Item.TreasureBagLightAndDust();
+        }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            return CalamityUtils.DrawTreasureBagInWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
+        }
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemID.DemoniteOre, 2, 1, 3);
+            itemLoot.Add(ItemID.ShadowScale, 5, 1, 2);
+        }
+    }
+
+    public class WorldEvilBagsNPC : GlobalNPC
+    {
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (npc.type == NPCID.Creeper)
+            {
+                npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<CreeperBag>());
+            }
+            else if (npc.type == NPCID.EaterofWorldsBody)
+            {
+                npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<EaterOfWorldsBodyBag>());
+            }
+            else if (npc.type == NPCID.EaterofWorldsTail)
+            {
+                npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<EaterOfWorldsTailBag>());
+            }
+        }
+    }
+}

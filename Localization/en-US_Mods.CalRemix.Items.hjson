@@ -4594,3 +4594,18 @@ Syringodium: {
 	DisplayName: Syringodium
 	Tooltip: ""
 }
+
+CreeperBag: {
+	DisplayName: Creeper Bag
+	Tooltip: ""
+}
+
+EaterOfWorldsBodyBag: {
+	DisplayName: Eater Of Worlds Body Bag
+	Tooltip: ""
+}
+
+EaterOfWorldsTailBag: {
+	DisplayName: Eater Of Worlds Tail Bag
+	Tooltip: ""
+}
