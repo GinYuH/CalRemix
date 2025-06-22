@@ -36,7 +36,7 @@ namespace CalRemix.Content.Items.Accessories
 
             if (player.whoAmI == Main.myPlayer)
             {
-                int baseDamage = 126;
+                int baseDamage = 30;
                 int swordDmg = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
                 if (player.ownedProjectileCounts[brimmy] < 1)
                 {
