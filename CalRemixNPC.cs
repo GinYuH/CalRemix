@@ -2079,6 +2079,8 @@ namespace CalRemix
                     int spawnRate = 400;
                     int maxSpawnCount = IDS.MaxSpawns;
                     NPCLoader.EditSpawnRate(player, ref spawnRate, ref maxSpawnCount);
+                    if (maxSpawnCount == 0)
+                        return;
 
                     float spawnsTaken = 0;
                     foreach (NPC n in Main.ActiveNPCs)
