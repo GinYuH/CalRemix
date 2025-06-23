@@ -21,9 +21,13 @@ namespace CalRemix.UI.SubworldMap
 
             base.Update(gameTime);
         }
+
+        string selected = "";
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            return; // remove this to enable
+            return;
+            bool canMove = false;
             List<string> doneAlready = new(); // List of subworlds that already have lines connecting them
             // Draw the icons
             foreach (var pair in SubworldMapSystem.Items)
@@ -31,12 +35,34 @@ namespace CalRemix.UI.SubworldMap
                 SubworldMapItem item = pair.Value;
                 Vector2 basePosition = Main.ScreenSize.ToVector2() / 2f;
                 Vector2 iconPosition = basePosition + item.position * 3; // the * 3 is a placeholder, please adjust the real values and remove later
+                if (pair.Key == selected)
+                {
+                    pair.Value.position = (Main.MouseScreen - basePosition) / 3;
+                }
                 Texture2D ring = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Ring").Value;
                 Texture2D icon = item.unlockCondition.Invoke() ? ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value : ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Unknown").Value;
                 Vector2 originRing = ring.Size() / 2;
                 Vector2 origin = icon.Size() / 2;
                 spriteBatch.Draw(ring, iconPosition, null, Color.White, 0, originRing, 1, 0, 0); // draw the border ring
                 spriteBatch.Draw(icon, iconPosition, null, Color.White, 0, origin, 1, 0, 0); // draw the icon
+
+                if (canMove)
+                {
+                    if (new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10).Intersects(Utils.CenteredRectangle(iconPosition, icon.Size() / 2)))
+                    {
+                        if (selected == "")
+                        {
+                            if (Main.mouseLeft)
+                            {
+                                selected = pair.Key;
+                            }
+                        }
+                    }
+                }
+                if (!Main.mouseLeft)
+                {
+                    selected = "";
+                }
             }
             // Draw the connections
             foreach (var pair in SubworldMapSystem.Items)
