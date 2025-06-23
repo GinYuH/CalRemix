@@ -25,17 +25,25 @@ namespace CalRemix.UI.SubworldMap
         }
 
         string selected = "";
+        Vector2 trueBasePos = Vector2.Zero;
+        Vector2 anchorPoint = Vector2.Zero;
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (trueBasePos == Vector2.Zero)
+            {
+                trueBasePos = Main.ScreenSize.ToVector2() / 2f;
+            }
             return;
             bool canMove = false;
+            bool dragEntire = true;
             List<string> doneAlready = new(); // List of subworlds that already have lines connecting them
+
             // Draw the icons
             foreach (var pair in SubworldMapSystem.Items)
             {
                 SubworldMapItem item = pair.Value;
-                Vector2 basePosition = Main.ScreenSize.ToVector2() / 2f;
+                Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position * 3; // the * 3 is a placeholder, please adjust the real values and remove later
                 if (pair.Key == selected)
                 {
@@ -90,7 +98,7 @@ namespace CalRemix.UI.SubworldMap
                 SubworldMapItem item = pair.Value;
                 bool unlocked = item.unlockCondition.Invoke();
                 string displayText = unlocked ? key : "???"; // The text to display
-                Vector2 basePosition = Main.ScreenSize.ToVector2() / 2f;
+                Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position * 3;
                 Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
                 Vector2 origin = tex.Size() / 2;
@@ -160,6 +168,32 @@ namespace CalRemix.UI.SubworldMap
                 }
 
                 doneAlready.Add(key);
+            }
+
+            // Don't allow dragging if an icon is being dragged
+            if (selected != "")
+            {
+                dragEntire = false;
+            }
+
+            // Allow moving of the UI
+            if (dragEntire)
+            {
+                // Save the position of the mouse relative to the center of the UI
+                if (Main.mouseLeft && anchorPoint == Vector2.Zero)
+                {
+                    anchorPoint = Main.MouseScreen - trueBasePos;
+                }
+                // Move the center of the UI based on the anchor point's position relative to the mouse's current position
+                else if (Main.mouseLeft && anchorPoint != Vector2.Zero)
+                {
+                    trueBasePos = Main.MouseScreen - anchorPoint;
+                }
+                // If released, stop moving and set the anchor point to 0
+                else if (!Main.mouseLeft)
+                {
+                    anchorPoint = Vector2.Zero;
+                }
             }
         }
     }
