@@ -149,7 +149,7 @@ namespace CalRemix.UI.SubworldMap
                         float height = textOffset + (textSpacing + textSpacing * dialogue.Count) * item.animCompletion;
 
                         Rectangle bg = new Rectangle((int)iconPosition.X - (int)(maxWidth * 0.5f), (int)iconPosition.Y + (int)textOffset - padding, (int)maxWidth, (int)height);
-                        Utils.DrawInvBG(spriteBatch,bg);
+                        Utils.DrawInvBG(spriteBatch,bg, Terraria.ModLoader.UI.UICommon.DefaultUIBlueMouseOver * item.animCompletion);
 
                         Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
                         for (int i = 0; i < dialogue.Count; i++)
