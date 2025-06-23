@@ -602,6 +602,33 @@ namespace CalRemix
                 }
             }
         }
+
+        public static void DrawChain(Texture2D texture, Vector2 start, Vector2 end, float angleAdditive = 0, Color color = default)
+        {
+            Vector2 center = start;
+            float rotation = start.AngleTo(end) - MathF.PI / 2f;
+            bool doDraw = true;
+            float increment = angleAdditive == MathHelper.PiOver2 ? texture.Width : texture.Height;
+            while (doDraw)
+            {
+                float dist = (end - center).Length();
+                if (dist < (float)increment + 1f)
+                {
+                    doDraw = false;
+                    continue;
+                }
+
+                if (float.IsNaN(dist))
+                {
+                    doDraw = false;
+                    continue;
+                }
+
+                center += start.DirectionTo(end) * increment;
+                Color finalColor = (color == default ? Lighting.GetColor((int)center.X / 16, (int)(center.Y / 16f)) : color);
+                Main.spriteBatch.Draw(texture, center, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation + angleAdditive, texture.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            }
+        }
     }
 
     public static class RarityHelper

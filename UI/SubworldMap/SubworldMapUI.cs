@@ -1,8 +1,10 @@
-﻿using CalamityMod.DataStructures;
+﻿using CalamityMod;
+using CalamityMod.DataStructures;
 using CalamityMod.Items.Accessories;
 using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using rail;
 using System;
 using System.Collections.Generic;
@@ -96,41 +98,45 @@ namespace CalRemix.UI.SubworldMap
                     selected = "";
                 }
             }
+            // Make a list of connections
+            foreach (var pair in SubworldMapSystem.Items)
+            {
+                foreach (string connection in pair.Value.connections)
+                {
+                    if (!doneAlready.Contains((connection, pair.Key)) && !doneAlready.Contains((pair.Key, connection)))
+                    {
+                        doneAlready.Add((connection, pair.Key));
+                    }
+                }
+            }
+            // Iterate through the list and draw the connections
+            foreach (var v in doneAlready)
+            {
+                SubworldMapItem item1 = SubworldMapSystem.Items[v.Item1];
+                SubworldMapItem item2 = SubworldMapSystem.Items[v.Item2];
+                if (!item1.unlockCondition.Invoke() || !item2.unlockCondition.Invoke())
+                    continue;
+                // If unlocked, draw connections
+                Vector2 basePosition = trueBasePos;
+                Vector2 iconPosition1 = basePosition + item1.position;
+                Vector2 iconPosition2 = basePosition + item2.position;
+                // If either icon is currently hovered on, make the connection a brighter red
+                Color color = (v.Item1 == hovered || v.Item2 == hovered) ? Color.Red : Color.DarkRed;
+                // Draw the line
+                CalRemixHelper.DrawChain(ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/YarnSegment").Value, iconPosition1, iconPosition2, MathHelper.PiOver2, color);          
+            }
+
             // Draw the connections
             foreach (var pair in SubworldMapSystem.Items)
             {
                 string key = pair.Key;
                 SubworldMapItem item = pair.Value;
                 bool unlocked = item.unlockCondition.Invoke();
-                string displayText = unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
+                string displayText = /*pair.Key == "Overworld" ? Main.worldName :*/ unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
                 Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position;
                 Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
                 Vector2 origin = tex.Size() / 2;
-                // If unlocked, draw connections
-                if (unlocked)
-                {
-                    foreach (string connection in item.connections)
-                    {
-                        if (!doneAlready.Contains((key, connection)))
-                        {
-                            if (SubworldMapSystem.Items[connection].unlockCondition.Invoke())
-                            {
-                                if (pair.Key == hovered)
-                                {
-                                    doneAlready.Add((key, connection));
-                                    doneAlready.Add((connection, key));
-                                }
-                                Texture2D connectedIcon = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + connection).Value;
-                                Vector2 connectedIconPos = basePosition + SubworldMapSystem.Items[connection].position;
-                                Rectangle lineRect = new Rectangle(0, 0, (int)iconPosition.Distance(connectedIconPos), 4);
-                                Color color = pair.Key == hovered ? Color.Red : Color.DarkRed;
-                                // Draw the line
-                                spriteBatch.Draw(TextureAssets.MagicPixel.Value, iconPosition + (connectedIconPos - iconPosition) * 0.5f, lineRect, color, iconPosition.DirectionTo(connectedIconPos).ToRotation(), lineRect.Size() / 2, 1, 0, 0);
-                            }
-                        }
-                    }
-                }
                 float textOffset = 20;
                 float textSpacing = 30;
                 int padding = 8;
@@ -143,7 +149,6 @@ namespace CalRemix.UI.SubworldMap
                 {
                     if (item.animCompletion > 0)
                     {
-                        // TODO: Replace this with a proper dialogue getting thing later
                         string[] dialogue = CalRemixHelper.LocalText("UI.SubworldMap." + key + ".Description").Value.Split('\n');
 
                         // Create measurements for the boxx
