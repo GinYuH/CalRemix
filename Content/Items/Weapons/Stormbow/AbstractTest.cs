@@ -379,10 +379,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public bool PlaceStupidSpiritModThing(Point origin, StructureMap structures)
         {
             //TODO: if the structure spawns completely encased in blocks, no trees generate. unsure the cause
-            // addendum: only sometimes????????
+            //      addendum: only sometimes???????? whats going onnn
             //TODO: trees (and grass ig) can generate on top of the cavern. if a cave genned with space above it, those trees would grow!
-            // don't rly wanna fix this bcuz its funny imo
+            //      don't rly wanna fix this bcuz its funny imo
             //TODO: if vines spawn in the air, they dont get their frames set properly! ahhh! aaaaaahhhhhhh! 
+            //TODO: is checking far top/bottom tiles and placing them for waterfall necesarry? assess
+            //TODO: is consistent cherry tree placement desirable? relies completely on randomness. roll for certain amount of trees
+            //      to be placed like the monolith?
+            //TODO: guarantee monolith generation after enough fails? place pedestal in center of structure, like enchanted sword shrine?
+            //      a lot of work for almost no payoff, since it not genning feels like an extreme statistical anomaly. current gen is just
+            //      rly condusive for it to be placed right
+            //TODO: swap main.rand to worldgen.rand when the time is right
+            //TODO: does the butterfly tile critter spawning radius have to be increased to compensate for bigger chamber?
 
             ShapeData slimeShapeData = new ShapeData();
             ShapeData sideCarversShapeData = new ShapeData();
@@ -390,16 +398,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             float xScale = 0.8f + Main.rand.NextFloat() * 0.25f; // Randomize the width of the shrine area
 
             // Create a masking layer for the cavern, so the walls tilt inwards while going up
+            // The masking layer is comprised of two circles, offset left and right respectively
+            int maskOffset = 30;
             WorldUtils.Gen(point, new Shapes.Circle((int)xScale + 15), Actions.Chain(
-                new Modifiers.Offset(30, -10), 
+                new Modifiers.Offset(maskOffset, -10), 
                 new Actions.Blank().Output(sideCarversShapeData)
             ));
             WorldUtils.Gen(point, new Shapes.Circle((int)xScale + 15), Actions.Chain(
-                new Modifiers.Offset(-30, -10), 
+                new Modifiers.Offset(-maskOffset, -10), 
                 new Actions.Blank().Output(sideCarversShapeData)
             ));
 
-            // Using the Slime shape, clear out tiles. Accomodate for the side carvers mask, to create a nice hat shape
+            // Using the Slime shape, clear out tiles. Accomodate for the side carvers mask, to create a nice bell shape
             WorldUtils.Gen(point, new Shapes.Slime(20, xScale, 1f), Actions.Chain(
                 new Modifiers.NotInShape(sideCarversShapeData), 
                 new Modifiers.Blotches(2, 0.4), 
@@ -424,7 +434,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                         if (waterfallAmt > waterfallCap)
                             return true;
                         waterfallAmt++;
-                        Main.NewText("i ran");
                         if (Main.tile[i + 1, j].HasTile == false && Main.tile[i + 1, j].LiquidAmount == 0)
                             PlaceWaterfall(i, j, true);
                         else if (Main.tile[i - 1, j].HasTile == false)
@@ -489,7 +498,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // and if everything fails, give up
             else if (placedMonolithAttempts >= 15000)
             {
-                System.Diagnostics.Debug.WriteLine("Monolith could not be placed! The statistically impossible has possed!");
+                System.Diagnostics.Debug.WriteLine("Monolith could not be placed! The statistically impossible has been possed!");
             }
             #endregion
 
@@ -556,19 +565,23 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
         public void PlaceWaterfall(int x, int y, bool leftIndent)
         {
+            // we don't want to replace anything that's above air
+            if (!Main.tile[x, y + 1].HasTile)
+                return;
+            
             PoundTile(x, y);
 
             // making an array with all the points we want to check for blocks before placing water
             // the x is always positive so we can left/rightshift it later based on waterfall direction
             Point[] tileCheckOffsets =
             {
-                new Point(2, -1),
-                new Point(1, -1),
-                new Point(0, -1),
-                new Point(2, 0),
-                new Point(2, 1),
-                new Point(1, 1),
-                new Point(0, 1)
+                new Point(2, -1), // far top
+                new Point(1, -1), // middle top
+                new Point(0, -1), // near top
+                new Point(2, 0),  // far middle
+                new Point(2, 1),  // far bottom
+                new Point(1, 1),  // middle bottom
+                new Point(0, 1)   // near bottom
 
             };
 
