@@ -9,6 +9,7 @@ using CalamityMod.Tiles.Astral;
 using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalamityMod.Tiles.Furniture;
+using CalamityMod.Tiles.Ores;
 using CalamityMod.Tiles.SunkenSea;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
@@ -43,8 +44,22 @@ namespace CalRemix
         public static HelperMessage MineMessage;
         public static HelperMessage GrimeMessage;
 
+        public static int IonCubePlaced = -1;
+        public static int RoxTile = -1;
+        public static int OnyxExcavatorTile = -1;
+        public static int GrimesandPlaced = -1;
+        public static int UelibloomOre = -1;
+        public static int RustedPipes = -1;
+
+
         public override void SetStaticDefaults()
         {
+            IonCubePlaced = ModContent.TileType<IonCubePlaced>();
+            RoxTile = ModContent.TileType<RoxTile>();
+            OnyxExcavatorTile = ModContent.TileType<OnyxExcavatorTile>();
+            GrimesandPlaced = ModContent.TileType<GrimesandPlaced>();
+            UelibloomOre = ModContent.TileType<UelibloomOre>();
+            RustedPipes = ModContent.TileType<RustedPipes>();
             if (Main.dedServ)
                 return;
             roxm = HelperMessage.New("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "FannyAwooga")
@@ -282,7 +297,7 @@ namespace CalRemix
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
             Tile t = Main.tile[i, j];
-            if (type == TileType<IonCubePlaced>() && t.TileFrameX == 0 && t.TileFrameY == 0)
+            if (type == IonCubePlaced && t.TileFrameX == 0 && t.TileFrameY == 0)
             {
                 IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
                 if (cube == null)
@@ -296,14 +311,14 @@ namespace CalRemix
                 {
                     if (!roxm.alreadySeen)
                     {
-                        if (type == TileType<RoxTile>())
+                        if (type == RoxTile)
                         {
                             roxm.ActivateMessage();
                         }
                     }
                     if (!KinsmanMessage.alreadySeen)
                     {
-                        if (type == TileType<OnyxExcavatorTile>() && RemixDowned.downedEarthElemental)
+                        if (type == OnyxExcavatorTile && RemixDowned.downedEarthElemental)
                         {
                             Player player = Main.LocalPlayer;
                             bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
@@ -313,7 +328,7 @@ namespace CalRemix
                     }
                     if (!GrimeMessage.alreadySeen)
                     {
-                        if (type == TileType<GrimesandPlaced>())
+                        if (type == GrimesandPlaced)
                         {
                             GrimeMessage.ActivateMessage();
                         }
@@ -321,7 +336,7 @@ namespace CalRemix
                 }
                 if (CalRemixWorld.reargar)
                 {
-                    if (type == TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
+                    if (type == UelibloomOre)
                     {
                         Main.tile[i, j].TileType = (ushort)TileID.Mud;
                     }
@@ -329,7 +344,7 @@ namespace CalRemix
             }
             // Exosphere portal
             // Since the subworld isn't done right now, it just tells you you're banned then kicks you out
-            if (t.TileType == TileType<RustedPipes>())
+            if (t.TileType == RustedPipes)
             {
                 if (!Main.tile[i + 1, j + 1].HasTile)
                 {
@@ -340,7 +355,7 @@ namespace CalRemix
                         {
                             if (k == i || k == i + 3 || l == j || l == j + 4)
                             {
-                                if (Main.tile[k, l].TileType != TileType<RustedPipes>())
+                                if (Main.tile[k, l].TileType != RustedPipes)
                                     travelPossible = false;
                             }
                         }
