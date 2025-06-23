@@ -1105,9 +1105,9 @@ namespace CalRemix
 
         public override void PostUpdate(Item item)
         {
-            foreach (NPC npc in Main.npc)
+            foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out int value) && item.Hitbox.Intersects(npc.Hitbox))
+                if (GemCrawl.TryGetValue(item.type, out int value) && npc.type == NPCType<Lizard>() && item.Hitbox.Intersects(npc.Hitbox))
                 {
                     SpawnNewNPC(item.GetSource_FromThis(), npc.Center, value);
                     npc.life = 0;

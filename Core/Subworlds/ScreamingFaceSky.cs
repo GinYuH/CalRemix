@@ -1,4 +1,5 @@
 ﻿using System;
+using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Origen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -42,6 +43,7 @@ namespace CalRemix.Core.Subworlds
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
             Texture2D face = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/ScreamingMummifiedFace").Value;
+            int screenHeight5 = Main.screenHeight / 5;
             //if (maxDepth >= float.MaxValue)
             {
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
@@ -51,16 +53,19 @@ namespace CalRemix.Core.Subworlds
                 for (int i = 0; i < 201; i++)
                 {
                     spriteBatch.Draw(face, Vector2.Zero + new Vector2(xPos + offset * flip.ToDirectionInt() - 100, height), null, Color.White * 0.6f, 0, face.Size() / 2, 1, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                    for (int j = 0; j < 4; j++)
+                    if (CalamityConfig.Instance.Afterimages)
                     {
-                        Vector2 dp = (Vector2.Zero + new Vector2(xPos + offset * flip.ToDirectionInt() - 100, height)) + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, j / 4f)) * 8 * MathF.Sin(GlobalTimeWrappedHourly);
-                        spriteBatch.Draw(face, dp, null, Color.White * 0.1f, 0, face.Size() / 2, 1, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                        for (int j = 0; j < 4; j++)
+                        {
+                            Vector2 dp = (Vector2.Zero + new Vector2(xPos + offset * flip.ToDirectionInt() - 100, height)) + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, j / 4f)) * 8 * MathF.Sin(GlobalTimeWrappedHourly);
+                            spriteBatch.Draw(face, dp, null, Color.White * 0.1f, 0, face.Size() / 2, 1, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                        }
                     }
                     xPos += Main.screenWidth / 10;
                     if (i % 15 == 0 && i > 0)
                     {
                         flip = !flip;
-                        height += Main.screenHeight / 5;
+                        height += screenHeight5;
                         xPos = 0;
                     }
                 }
