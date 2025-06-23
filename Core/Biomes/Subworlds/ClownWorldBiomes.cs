@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Capture;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace CalRemix.Core.Biomes.Subworlds
@@ -42,6 +43,10 @@ namespace CalRemix.Core.Biomes.Subworlds
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
         public override int Music => CalRemixMusic.ClownWorld;
+        public override void SpecialVisuals(Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("CalRemix:ClownWorldSky", isActive);
+        }
     }
 
     public class ClownWorldSky : CustomSky
