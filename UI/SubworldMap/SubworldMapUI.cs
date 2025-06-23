@@ -35,6 +35,7 @@ namespace CalRemix.UI.SubworldMap
                 trueBasePos = Main.ScreenSize.ToVector2() / 2f;
             }
             return;
+            Main.blockInput = true;
             bool canMove = false;
             bool dragEntire = true;
             List<string> doneAlready = new(); // List of subworlds that already have lines connecting them
