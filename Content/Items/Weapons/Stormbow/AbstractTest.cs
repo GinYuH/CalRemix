@@ -423,7 +423,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 new Actions.SetFrames(frameNeighbors: true)
             ));
             // Place waterfalls around the upper half of the cavern
-            int waterfallCap = 3;
+            int waterfallCap = Main.rand.Next(1, 3);
             int waterfallAmt = 0;
             WorldUtils.Gen(point, new ModShapes.InnerOutline(slimeShapeData), Actions.Chain(
                 new Modifiers.OnlyTiles(TileID.Grass),
@@ -431,13 +431,23 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 new Actions.Custom((i, j, args) => {
                     if (Main.rand.NextBool(10))
                     {
-                        if (waterfallAmt > waterfallCap)
+                        if (waterfallAmt >= waterfallCap)
                             return true;
-                        waterfallAmt++;
-                        if (Main.tile[i + 1, j].HasTile == false && Main.tile[i + 1, j].LiquidAmount == 0)
+                        
+                        // doing all our validation here, checking for three things...
+                        // 1. if the block to the left/right is air (so we know what direction to face this fella in)
+                        // 2. if there is no liquid where the water will be (to prevent duplicates)
+                        // 3. if the spot under where the water will be has a block
+                        if (!Main.tile[i + 1, j].HasTile && Main.tile[i - 1, j].LiquidAmount == 0)
+                        {
                             PlaceWaterfall(i, j, true);
-                        else if (Main.tile[i - 1, j].HasTile == false)
+                            waterfallAmt++;
+                        }
+                        else if (!Main.tile[i - 1, j].HasTile && Main.tile[i + 1, j].LiquidAmount == 0)
+                        {
                             PlaceWaterfall(i, j, false);
+                            waterfallAmt++;
+                        }
                     }
                     ; return true;
                 })
@@ -565,10 +575,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
         public void PlaceWaterfall(int x, int y, bool leftIndent)
         {
-            // we don't want to replace anything that's above air
-            if (!Main.tile[x, y + 1].HasTile)
-                return;
-            
             PoundTile(x, y);
 
             // making an array with all the points we want to check for blocks before placing water
@@ -587,7 +593,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             // iterate through our array and take care of any blocks that need taking care of
             Tile tile = new Tile();
-            for (int i = 0; i >= tileCheckOffsets.Count(); i++)
+            for (int i = 0; i < tileCheckOffsets.Count(); i++)
             {
                 int horizOffset = leftIndent ? tileCheckOffsets[i].X * -1 : tileCheckOffsets[i].X;
                 horizOffset += x;
