@@ -1,7 +1,9 @@
-﻿using CalamityMod.Items.Accessories;
+﻿using CalamityMod.DataStructures;
+using CalamityMod.Items.Accessories;
 using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using rail;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -43,12 +45,29 @@ namespace CalRemix.UI.SubworldMap
                 Texture2D icon = item.unlockCondition.Invoke() ? ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value : ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Unknown").Value;
                 Vector2 originRing = ring.Size() / 2;
                 Vector2 origin = icon.Size() / 2;
-                spriteBatch.Draw(ring, iconPosition, null, Color.White, 0, originRing, 1, 0, 0); // draw the border ring
-                spriteBatch.Draw(icon, iconPosition, null, Color.White, 0, origin, 1, 0, 0); // draw the icon
+                float scale = 1 + MathHelper.Lerp(0, 0.05f, item.animCompletion * 2);
+                spriteBatch.Draw(ring, iconPosition, null, Color.White, 0, originRing, scale, 0, 0); // draw the border ring
+                spriteBatch.Draw(icon, iconPosition, null, Color.White, 0, origin, scale, 0, 0); // draw the icon
 
+                Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
+                bool intersecting = maus.Distance(iconPosition) < ring.Width * 0.5f;
+                if (intersecting)
+                {
+                    if (item.animCompletion < 1)
+                    {
+                        item.animCompletion = MathHelper.Min(item.animCompletion + 0.11f, 1);
+                    }
+                }
+                else
+                {
+                    if (item.animCompletion > 0)
+                    {
+                        item.animCompletion = MathHelper.Max(item.animCompletion - 0.11f, 0);
+                    }
+                }
                 if (canMove)
                 {
-                    if (new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10).Intersects(Utils.CenteredRectangle(iconPosition, icon.Size() / 2)))
+                    if (intersecting)
                     {
                         if (selected == "")
                         {
@@ -93,8 +112,53 @@ namespace CalRemix.UI.SubworldMap
                         }
                     }
                 }
+                float textOffset = 20;
+                float textSpacing = 30;
+                int padding = 8;
                 // Draw the name 20 pixels below the icon
-                Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * 20, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
+                if (!unlocked || item.animCompletion <= 0)
+                    Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
+
+                // Draw a description panel
+                if (unlocked)
+                {
+                    if (item.animCompletion > 0)
+                    {
+                        // TODO: Replace this with a proper dialogue getting thing later
+                        List<string> dialogue = new List<string>()
+                        {
+                            "Contains a lot of water",
+                            "Beware of sharks, krakens, and whales",
+                            "Also has a underground place with old fish",
+                            "No old dukes though",
+                            "Syringodium"
+                        };
+
+                        // Create measurements for the boxx
+                        float maxWidth = 0;
+                        foreach (string s in dialogue)
+                        {
+                            float curWith = FontAssets.MouseText.Value.MeasureString(s).X;
+                            if (curWith > maxWidth)
+                            {
+                                maxWidth = curWith;
+                            }
+                        }
+                        maxWidth += padding * 2;
+
+                        float height = textOffset + (textSpacing + textSpacing * dialogue.Count) * item.animCompletion;
+
+                        Rectangle bg = new Rectangle((int)iconPosition.X - (int)(maxWidth * 0.5f), (int)iconPosition.Y + (int)textOffset - padding, (int)maxWidth, (int)height);
+                        Utils.DrawInvBG(spriteBatch,bg);
+
+                        Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
+                        for (int i = 0; i < dialogue.Count; i++)
+                        {
+                            Utils.DrawBorderString(spriteBatch, dialogue[i], iconPosition + Vector2.UnitY * textOffset + (Vector2.UnitY * textSpacing + Vector2.UnitY * textSpacing * i) * item.animCompletion, Color.White * item.animCompletion, anchorx: 0.5f);
+                        }
+                    }
+                }
+
                 doneAlready.Add(key);
             }
         }
@@ -114,6 +178,10 @@ namespace CalRemix.UI.SubworldMap
         /// The position on the board
         /// </summary>
         public Vector2 position;
+        /// <summary>
+        /// Animation completion
+        /// </summary>
+        public float animCompletion = 0;
 
         /// <summary>
         /// Creates a Subworld Map item for the map UI
