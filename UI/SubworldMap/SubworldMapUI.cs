@@ -102,7 +102,7 @@ namespace CalRemix.UI.SubworldMap
                 string key = pair.Key;
                 SubworldMapItem item = pair.Value;
                 bool unlocked = item.unlockCondition.Invoke();
-                string displayText = unlocked ? key : "???"; // The text to display
+                string displayText = unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
                 Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position;
                 Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
@@ -144,14 +144,7 @@ namespace CalRemix.UI.SubworldMap
                     if (item.animCompletion > 0)
                     {
                         // TODO: Replace this with a proper dialogue getting thing later
-                        List<string> dialogue = new List<string>()
-                        {
-                            "Contains a lot of water",
-                            "Beware of sharks, krakens, and whales",
-                            "Also has a underground place with old fish",
-                            "No old dukes though",
-                            "Syringodium"
-                        };
+                        string[] dialogue = CalRemixHelper.LocalText("UI.SubworldMap." + key + ".Description").Value.Split('\n');
 
                         // Create measurements for the boxx
                         float maxWidth = 0;
@@ -165,7 +158,7 @@ namespace CalRemix.UI.SubworldMap
                         }
                         maxWidth += padding * 2;
 
-                        float height = textOffset + (textSpacing + textSpacing * dialogue.Count) * item.animCompletion;
+                        float height = textOffset + (textSpacing + textSpacing * dialogue.Length) * item.animCompletion;
 
                         Rectangle bg = new Rectangle((int)iconPosition.X - (int)(maxWidth * 0.5f), (int)iconPosition.Y + (int)textOffset - padding, (int)maxWidth, (int)height);
                         Utils.DrawInvBG(spriteBatch,bg, Terraria.ModLoader.UI.UICommon.DefaultUIBlueMouseOver * item.animCompletion);
@@ -177,7 +170,7 @@ namespace CalRemix.UI.SubworldMap
                         }
 
                         Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
-                        for (int i = 0; i < dialogue.Count; i++)
+                        for (int i = 0; i < dialogue.Length; i++)
                         {
                             Utils.DrawBorderString(spriteBatch, dialogue[i], iconPosition + Vector2.UnitY * textOffset + (Vector2.UnitY * textSpacing + Vector2.UnitY * textSpacing * i) * item.animCompletion, Color.White * item.animCompletion, anchorx: 0.5f);
                         }
