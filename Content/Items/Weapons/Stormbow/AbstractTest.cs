@@ -382,7 +382,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // addendum: only sometimes????????
             //TODO: trees (and grass ig) can generate on top of the cavern. if a cave genned with space above it, those trees would grow!
             // don't rly wanna fix this bcuz its funny imo
-            //TODO: if vines spawn in the air, they dont get their frames set properly! ahhh! aaaaaahhhhhhh! kill me!
+            //TODO: if vines spawn in the air, they dont get their frames set properly! ahhh! aaaaaahhhhhhh! 
 
             ShapeData slimeShapeData = new ShapeData();
             ShapeData sideCarversShapeData = new ShapeData();
@@ -424,10 +424,11 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                         if (waterfallAmt > waterfallCap)
                             return true;
                         waterfallAmt++;
+                        Main.NewText("i ran");
                         if (Main.tile[i + 1, j].HasTile == false && Main.tile[i + 1, j].LiquidAmount == 0)
-                            PlaceWaterfalls(i, j, true);
+                            PlaceWaterfall(i, j, true);
                         else if (Main.tile[i - 1, j].HasTile == false)
-                            PlaceWaterfalls(i, j, false);
+                            PlaceWaterfall(i, j, false);
                     }
                     ; return true;
                 })
@@ -457,6 +458,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 ));
             #endregion
 
+            #region Monolith
             // Add the extremely important Monolith 
             bool placedMonolith = false;
             int placedMonolithAttempts = 0;
@@ -489,6 +491,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             {
                 System.Diagnostics.Debug.WriteLine("Monolith could not be placed! The statistically impossible has possed!");
             }
+            #endregion
 
             return true;
 
@@ -551,177 +554,51 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             */
         }
 
-        public void PlaceWaterfalls(int x, int y, bool leftIndent)
+        public void PlaceWaterfall(int x, int y, bool leftIndent)
         {
             PoundTile(x, y);
 
-            // !! WARNING !! 
-            // some real shitcode ahead
+            // making an array with all the points we want to check for blocks before placing water
+            // the x is always positive so we can left/rightshift it later based on waterfall direction
+            Point[] tileCheckOffsets =
+            {
+                new Point(2, -1),
+                new Point(1, -1),
+                new Point(0, -1),
+                new Point(2, 0),
+                new Point(2, 1),
+                new Point(1, 1),
+                new Point(0, 1)
+
+            };
+
+            // iterate through our array and take care of any blocks that need taking care of
             Tile tile = new Tile();
-            if (leftIndent)
+            for (int i = 0; i >= tileCheckOffsets.Count(); i++)
             {
-                // top left
-                tile = Main.tile[x - 2, y - 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
+                int horizOffset = leftIndent ? tileCheckOffsets[i].X * -1 : tileCheckOffsets[i].X;
+                horizOffset += x;
+                int vertOffset = tileCheckOffsets[i].Y + y;
 
-                }
-                // top
-                tile = Main.tile[x - 1, y - 1];
+                tile = Main.tile[horizOffset, vertOffset];
                 if (!tile.HasTile)
                 {
                     tile.HasTile = true;
                     tile.TileType = TileID.Grass;
-                }
-                // top right
-                tile = Main.tile[x, y - 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // far left
-                tile = Main.tile[x - 2, y];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // bottom left
-                tile = Main.tile[x - 2, y + 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // bottom 
-                tile = Main.tile[x - 1, y + 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // bottom right
-                tile = Main.tile[x, y + 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-
-                // middle, w water
-                tile = Main.tile[x - 1, y];
-                if (tile.HasTile)
-                    tile.HasTile = false;
-                tile.LiquidType = LiquidID.Water;
-                tile.LiquidAmount = 255;
-            }
-            else
-            {
-                // top right
-                tile = Main.tile[x + 2, y - 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // top
-                tile = Main.tile[x + 1, y - 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // top left
-                tile = Main.tile[x, y - 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // far right
-                tile = Main.tile[x + 2, y];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // bottom right
-                tile = Main.tile[x + 2, y + 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // bottom 
-                tile = Main.tile[x + 1, y + 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-                // bottom left
-                tile = Main.tile[x, y + 1];
-                if (!tile.HasTile)
-                {
-                    tile.HasTile = true;
-                    tile.TileType = TileID.Grass;
-                }
-
-                // middle, w water
-                tile = Main.tile[x + 1, y];
-                if (tile.HasTile)
-                    tile.HasTile = false;
-                tile.LiquidType = LiquidID.Water;
-                tile.LiquidAmount = 255;
-            }
-
-            /*
-            for (int num574 = 20; num574 < Main.maxTilesX - 20; num574++)
-            {
-                double num575 = (double)num574 / (double)Main.maxTilesX;
-                for (int num576 = 20; num576 < Main.maxTilesY - 20; num576++)
-                {
-                    if (SolidTile(num574, num576) && !Main.tile[num574 - 1, num576].HasTile && SolidTile(num574, num576 + 1) && !Main.tile[num574 + 1, num576].HasTile && (Main.tile[num574 - 1, num576].LiquidAmount > 0 || Main.tile[num574 + 1, num576].LiquidAmount > 0))
-                    {
-                        bool flag35 = true;
-                        int num577 = genRand.Next(8, 20);
-                        int num578 = genRand.Next(8, 20);
-                        num577 = num576 - num577;
-                        num578 += num576;
-                        for (int num579 = num577; num579 <= num578; num579++)
-                        {
-                            if (Main.tile[num574, num579].IsHalfBlock)
-                                flag35 = false;
-                        }
-
-                        if ((Main.tile[num574, num576].TileType == 75 || Main.tile[num574, num576].TileType == 76) && !genRand.NextBool(10))
-                            flag35 = false;
-
-                        if (flag35)
-                            PoundTile(num574, num576);
-                    }
+                    tile.WallType = WallID.Flower;
+                    SquareTileFrame(horizOffset, vertOffset);
                 }
             }
 
-            for (int num580 = 20; num580 < Main.maxTilesX - 20; num580++)
-            {
-                double num581 = (double)num580 / (double)Main.maxTilesX;
-                for (int num582 = 20; num582 < Main.maxTilesY - 20; num582++)
-                {
-                    if (Main.tile[num580, num582].TileType != TileID.Spikes && Main.tile[num580, num582].TileType != TileID.WoodenSpikes && SolidTile(num580, num582) && SolidTile(num580, num582 + 1))
-                    {
-                        if (!SolidTile(num580 + 1, num582) && Main.tile[num580 - 1, num582].IsHalfBlock && Main.tile[num580 - 2, num582].LiquidAmount > 0)
-                            PoundTile(num580, num582);
-
-                        if (!SolidTile(num580 - 1, num582) && Main.tile[num580 + 1, num582].IsHalfBlock && Main.tile[num580 + 2, num582].LiquidAmount > 0)
-                            PoundTile(num580, num582);
-                    }
-                }
-            }
-            */
+            // now we handle placing the water
+            int waterHorizOffset = leftIndent ?  -1 : 1;
+            waterHorizOffset += x;
+            tile = Main.tile[waterHorizOffset, y];
+            if (tile.HasTile)
+                tile.HasTile = false;
+            tile.LiquidType = LiquidID.Water;
+            tile.LiquidAmount = 255;
+            tile.WallType = WallID.Flower;
         }
     }
 }
