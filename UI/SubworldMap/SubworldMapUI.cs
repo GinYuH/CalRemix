@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Accessories;
+using CalRemix.Content.NPCs.TownNPCs;
 using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +10,7 @@ using rail;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -17,15 +19,6 @@ namespace CalRemix.UI.SubworldMap
 {
     public class SubworldMapUI : UIState
     {
-        public override void Update(GameTime gameTime)
-        {
-            return;
-            bool shouldShow = !Main.gameMenu;
-
-
-            base.Update(gameTime);
-        }
-
         string selected = "";
         Vector2 trueBasePos = Vector2.Zero;
         Vector2 anchorPoint = Vector2.Zero;
@@ -36,15 +29,64 @@ namespace CalRemix.UI.SubworldMap
             {
                 trueBasePos = Main.ScreenSize.ToVector2() / 2f;
             }
-            return;
+            //return;
             Main.blockInput = true;
             bool canMove = false;
             bool dragEntire = true;
             string hovered = "";
+            float nailHeight = 0.4f;
             List<(string, string)> doneAlready = new(); // List of subworlds that already have lines connecting them
 
-            Utils.DrawInvBG(spriteBatch, Utils.CenteredRectangle(trueBasePos, Main.ScreenSize.ToVector2()));
-            
+            Texture2D cork = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Cork").Value;
+            Texture2D gradient = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Gradient").Value;
+            string path = "CalRemix/UI/SubworldMap/Frame_";
+            Texture2D BR = ModContent.Request<Texture2D>(path + "BR").Value;
+            Texture2D BL = ModContent.Request<Texture2D>(path + "BL").Value;
+            Texture2D TR = ModContent.Request<Texture2D>(path + "TR").Value;
+            Texture2D TL = ModContent.Request<Texture2D>(path + "TL").Value;
+            Texture2D T = ModContent.Request<Texture2D>(path + "Top").Value;
+            Texture2D S = ModContent.Request<Texture2D>(path + "Side").Value;
+
+            int horzAmt = 6;
+            int vertAmt = 4;
+            float areaWidth = TR.Width + T.Width * horzAmt;
+            float areaHeight = TR.Height + S.Height * vertAmt;
+            Rectangle area = Utils.CenteredRectangle(trueBasePos, new Vector2(areaWidth, areaHeight));
+
+            int iconHeight = 120; // How tall the black part of an icon is
+            int iconWidth = 160; // How wide is it
+            int iconPadding = 10; // How much padding is there
+            int extraHeight = 40; // How much taller should the white part be
+            Vector2 iconSize = new Vector2(iconWidth, iconHeight);
+            Vector2 bgSize = new Vector2(iconWidth + 2 * iconPadding, iconHeight + 2 * iconPadding);
+
+            // Draw the frame and bg
+            spriteBatch.Draw(TL, area.TopLeft(), null, Color.White, 0, TL.Size() / 2, 1, 0, 0);
+            spriteBatch.Draw(TR, area.TopRight(), null, Color.White, 0, TR.Size() / 2, 1, 0, 0);
+            spriteBatch.Draw(BL, area.BottomLeft(), null, Color.White, 0, BL.Size() / 2, 1, 0, 0);
+            spriteBatch.Draw(BR, area.BottomRight(), null, Color.White, 0, BR.Size() / 2, 1, 0, 0);
+            for (int i = 0; i < horzAmt; i++)
+            {
+                for (int j = 0; j < vertAmt; j++)
+                {
+                    spriteBatch.Draw(cork, area.TopLeft() + TL.Size() / 2 + new Vector2(cork.Width * i, cork.Height * j), null, Color.White, 0, Vector2.Zero, 1, 0, 0);
+                }
+            }
+            for (int i = 0; i < vertAmt; i++)
+            {
+                spriteBatch.Draw(S, area.TopLeft() + Vector2.UnitY * (S.Height * i + TL.Height / 2), null, Color.White, 0, new Vector2(S.Width / 2, 0), 1, 0, 0);
+                spriteBatch.Draw(S, area.TopRight() + Vector2.UnitY * (S.Height * i + TL.Height / 2), null, Color.White, 0, new Vector2(S.Width / 2, 0), 1, 0, 0);
+            }
+            for (int i = 0; i < horzAmt; i++)
+            {
+                spriteBatch.Draw(T, area.TopLeft() + Vector2.UnitX * (T.Width * i + TL.Height / 2), null, Color.White, 0, new Vector2(0, T.Height / 2), 1, 0, 0);
+                spriteBatch.Draw(T, area.BottomLeft() + Vector2.UnitX * (T.Width * i + TL.Height / 2), null, Color.White, 0, new Vector2(0, T.Height / 2), 1, 0, 0);
+            }
+            for (int i = 0; i < horzAmt; i++)
+            {
+                spriteBatch.Draw(gradient, area.TopLeft() + new Vector2(T.Width * i + TL.Height / 2, TL.Height / 2 + T.Height / 2), null, Color.White, 0, new Vector2(0, T.Height / 2), 1, 0, 0);
+            }
+
             // Draw the icons
             foreach (var pair in SubworldMapSystem.Items)
             {
@@ -55,16 +97,16 @@ namespace CalRemix.UI.SubworldMap
                 {
                     pair.Value.position = (Main.MouseScreen - basePosition);
                 }
-                Texture2D ring = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Ring").Value;
-                Texture2D icon = item.unlockCondition.Invoke() ? ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value : ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Unknown").Value;
-                Vector2 originRing = ring.Size() / 2;
-                Vector2 origin = icon.Size() / 2;
                 float scale = 1 + MathHelper.Lerp(0, 0.05f, item.animCompletion * 2);
-                spriteBatch.Draw(ring, iconPosition, null, Color.White, 0, originRing, scale, 0, 0); // draw the border ring
-                spriteBatch.Draw(icon, iconPosition, null, Color.White, 0, origin, scale, 0, 0); // draw the icon
+                Rectangle hitbox = Utils.CenteredRectangle(iconPosition, bgSize);
+                Rectangle resizedHitbox =  hitbox with { Height = hitbox.Height + extraHeight };
+                Rectangle portraitRect = Utils.CenteredRectangle(iconPosition, iconSize);
+                float rot = MathF.Sin(Convert.ToInt32(pair.Key[0]) * 2f) * 0.05f;
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, item.unlockCondition.Invoke() ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
 
                 Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
-                bool intersecting = maus.Distance(iconPosition) < ring.Width * 0.5f;
+                bool intersecting = maus.Intersects(resizedHitbox);
                 if (intersecting)
                 {
                     if (item.animCompletion < 1)
@@ -122,8 +164,9 @@ namespace CalRemix.UI.SubworldMap
                 Vector2 iconPosition2 = basePosition + item2.position;
                 // If either icon is currently hovered on, make the connection a brighter red
                 Color color = (v.Item1 == hovered || v.Item2 == hovered) ? Color.Red : Color.DarkRed;
+                Vector2 heighOffset = -Vector2.UnitY * bgSize.Y * nailHeight;
                 // Draw the line
-                CalRemixHelper.DrawChain(ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/YarnSegment").Value, iconPosition1, iconPosition2, MathHelper.PiOver2, color);          
+                CalRemixHelper.DrawChain(ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/YarnSegment").Value, iconPosition1 + heighOffset, iconPosition2 + heighOffset, MathHelper.PiOver2, color);          
             }
 
             // Draw the connections
@@ -135,14 +178,18 @@ namespace CalRemix.UI.SubworldMap
                 string displayText = /*pair.Key == "Overworld" ? Main.worldName :*/ unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
                 Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position;
-                Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
-                Vector2 origin = tex.Size() / 2;
-                float textOffset = 20;
+                //Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
+                //Vector2 origin = tex.Size() / 2;
+                float textOffset = 24 + extraHeight;
                 float textSpacing = 30;
                 int padding = 8;
+                Texture2D screw = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Screw").Value;
+                spriteBatch.Draw(screw, iconPosition - Vector2.UnitY * bgSize.Y * nailHeight, null, Color.White, 0, screw.Size() / 2, 1, 0, 0); // draw the icon
                 // Draw the name 20 pixels below the icon
                 if (!unlocked || item.animCompletion <= 0)
-                    Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
+                {
+                    //Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
+                }
 
                 // Draw a description panel
                 if (unlocked)
@@ -163,7 +210,7 @@ namespace CalRemix.UI.SubworldMap
                         }
                         maxWidth += padding * 2;
 
-                        float height = textOffset + (textSpacing + textSpacing * dialogue.Length) * item.animCompletion;
+                        float height = textOffset - extraHeight + (textSpacing + textSpacing * dialogue.Length) * item.animCompletion;
 
                         Rectangle bg = new Rectangle((int)iconPosition.X - (int)(maxWidth * 0.5f), (int)iconPosition.Y + (int)textOffset - padding, (int)maxWidth, (int)height);
                         Utils.DrawInvBG(spriteBatch,bg, Terraria.ModLoader.UI.UICommon.DefaultUIBlueMouseOver * item.animCompletion);
