@@ -29,7 +29,7 @@ namespace CalRemix.UI.SubworldMap
             {
                 trueBasePos = Main.ScreenSize.ToVector2() / 2f;
             }
-            //return;
+            return;
             Main.blockInput = true;
             bool canMove = false;
             bool dragEntire = true;
