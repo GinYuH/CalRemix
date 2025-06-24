@@ -595,6 +595,11 @@ namespace CalRemix.Core
         }
         private static SlotId LazerSoundOverride(On_SoundPlayer.orig_Play orig, SoundPlayer self, [In] ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback)
         {
+            // Nobody will notice...
+            if (style == SoundID.Camera)
+            {
+                return SlotId.Invalid;
+            }
             if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer crp))
             {
                 if (crp.oxygenSoul)

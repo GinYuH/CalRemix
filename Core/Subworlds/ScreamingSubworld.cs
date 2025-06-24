@@ -13,6 +13,7 @@ using Terraria.ID;
 using CalRemix.Core.World;
 using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
+using CalRemix.UI.SubworldMap;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -32,6 +33,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SubworldMapUI.TakeSubworldPicture("ScreamingFace");
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:ScreamingFaceSky", true);
             SkyManager.Instance.Activate("CalRemix:ScreamingFaceSky", Main.LocalPlayer.position);
             base.Update();

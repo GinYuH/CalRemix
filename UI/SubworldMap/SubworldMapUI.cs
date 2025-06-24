@@ -2,6 +2,7 @@
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Accessories;
 using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Core.World;
 using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,10 +11,15 @@ using rail;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace CalRemix.UI.SubworldMap
@@ -24,14 +30,73 @@ namespace CalRemix.UI.SubworldMap
         Vector2 trueBasePos = Vector2.Zero;
         Vector2 anchorPoint = Vector2.Zero;
 
+        public static bool loadingImage = false;
+        public static string curKey = "";
+        public static int buffer = 0;
+
+        public static void OnImageOpened(Texture2D pic)
+        {
+            loadingImage = false;
+            if (pic == null)
+                return;
+            if (!SubworldMapSystem.subworldPreviews.ContainsKey(curKey))
+                SubworldMapSystem.subworldPreviews.Add(curKey,pic);
+        }
+
+        public static string OpenSavedPicture()
+        {
+            var directory = new DirectoryInfo(Path.Combine(Main.SavePath, "Captures"));
+            var myFile = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First();
+            string name = myFile.Name.ToString();
+            string path = $"{Main.SavePath}/Captures" + $"/{name}";
+
+            Main.QueueMainThreadAction(() => FileOpenUtils.LoadTexture(path, OnImageOpened));
+            loadingImage = true;
+            return path;
+        }
+
+        public static string OpenOldSavedPicture(string key)
+        {
+            string path = SubworldMapSystem.photoPaths[key];
+            curKey = key;
+            Main.QueueMainThreadAction(() => FileOpenUtils.LoadTexture(path, OnImageOpened));
+            loadingImage = true;
+            return path;
+        }
+
+        public static void TakeSubworldPicture(string key)
+        {
+            if (Main.LocalPlayer.velocity.X == 0)
+                return;
+            ThreadPool.QueueUserWorkItem(_ => ActuallyTakePicture(key));
+        }
+
+        public static void ActuallyTakePicture(string key)
+        {
+            if (SubworldMapSystem.photoPaths[key] == "")
+            {
+                curKey = key;
+                Terraria.Graphics.Capture.CaptureInterface.QuickScreenshot();
+                buffer++;
+                if (!loadingImage && buffer > 30)
+                {
+                    string name = OpenSavedPicture();
+                    SubworldMapSystem.photoPaths[key] = name;
+                    curKey = "";
+                    buffer = 0;
+                }
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (trueBasePos == Vector2.Zero)
             {
                 trueBasePos = Main.ScreenSize.ToVector2() / 2f;
             }
-            return;
-            Main.blockInput = true;
+            if (Main.LocalPlayer.selectedItem != 0)
+                return;
+            //Main.blockInput = true;
             bool canMove = false;
             bool dragEntire = true;
             string hovered = "";
@@ -106,9 +171,25 @@ namespace CalRemix.UI.SubworldMap
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, item.unlockCondition.Invoke() ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
 
-                if (ModContent.RequestIfExists<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
+                if (false)
                 {
-                    spriteBatch.Draw(asset.Value, portraitRect.Center.ToVector2(), null, Color.White, rot, asset.Value.Size() / 2, 1, 0, 0);
+                    SubworldMapSystem.photoPaths[pair.Key] = "";
+                    SubworldMapSystem.subworldPreviews.Clear();
+                }
+
+                if (SubworldMapSystem.photoPaths[pair.Key] != "")
+                {
+                    if (SubworldMapSystem.subworldPreviews.ContainsKey(pair.Key))
+                    {
+                        if (SubworldMapSystem.subworldPreviews[pair.Key] != null)
+                        {
+                            spriteBatch.Draw(SubworldMapSystem.subworldPreviews[pair.Key], portraitRect.Center.ToVector2(), null, Color.White, rot, SubworldMapSystem.subworldPreviews[pair.Key].Size() / 2, iconSize / SubworldMapSystem.subworldPreviews[pair.Key].Size(), 0, 0);
+                        }
+                    }
+                    else
+                    {
+                        OpenOldSavedPicture(pair.Key);
+                    }
                 }
 
                 Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
@@ -309,12 +390,49 @@ namespace CalRemix.UI.SubworldMap
         /// Contains all of the Subworld map items
         /// </summary>
         public static Dictionary<string, SubworldMapItem> Items = new();
+
+        public static Dictionary<string, string> photoPaths = new()
+        {
+            { "Overworld", "" },
+            { "GreatSea", "" },
+            { "Ant", "" },
+            { "ScreamingFace", "" },
+        };
+
+        public static Dictionary<string, Texture2D> subworldPreviews = new();
+
         public override void Load()
         {
             Items.Add("Overworld", new(["GreatSea", "ScreamingFace", "Ant"], () => true, new Vector2(0, 0), false));
             Items.Add("GreatSea", new([ "Overworld", "ScreamingFace" ], () => true, new Vector2(259, -135), false));
             Items.Add("Ant", new(["Overworld"], () => true, new Vector2(-373, -170), false));
             Items.Add("ScreamingFace", new(["Overworld", "GreatSea"], () => false, new Vector2(467, 211)));
+        }
+
+        public override void ClearWorld()
+        {
+            
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            foreach (var v in photoPaths)
+            {
+                if (v.Value != "")
+                    tag.Add("SubworldPhotoPath" + v.Key, v.Value);
+            }
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            List<string> keys = new List<string>(photoPaths.Keys);
+            foreach (string key in keys)
+            {
+                if (photoPaths.ContainsKey(key))
+                {
+                    photoPaths[key] = tag.GetString("SubworldPhotoPath" + key);
+                }
+            }
         }
     }
 

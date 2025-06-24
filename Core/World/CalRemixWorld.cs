@@ -51,6 +51,9 @@ using static CalRemix.CalRemixHelper;
 using Terraria.Localization;
 using System.Linq;
 using CalRemix.Content.Items.Misc;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.Graphics.Capture;
+using CalRemix.UI.SubworldMap;
 
 namespace CalRemix.Core.World
 {
@@ -637,6 +640,7 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
+            //Terraria.Graphics.Capture.CaptureInterface.QuickScreenshot();
             /*if (Main.LocalPlayer.controlUseItem)
             {
                 RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GrandSeaDoor>());
@@ -819,6 +823,8 @@ namespace CalRemix.Core.World
 
         public override void PostUpdateWorld()
         {
+            if (!SubworldSystem.AnyActive())
+                SubworldMapUI.TakeSubworldPicture("Overworld");
             if (meldCountdown > 0)
             {
                 meldCountdown--;

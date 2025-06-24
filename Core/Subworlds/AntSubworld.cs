@@ -15,6 +15,7 @@ using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
 using CalamityMod;
 using CalamityMod.Tiles.FurnitureAshen;
+using CalRemix.UI.SubworldMap;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -35,6 +36,7 @@ namespace CalRemix.Core.Subworlds
         public override void Update()
         {
             base.Update();
+            SubworldMapUI.TakeSubworldPicture("Ant");
         }
 
         public override void DrawMenu(GameTime gameTime)

@@ -24,6 +24,7 @@ using CalamityMod.NPCs.SulphurousSea;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using Terraria.Utilities;
+using CalRemix.UI.SubworldMap;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -91,6 +92,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SubworldMapUI.TakeSubworldPicture("GreatSea");
             //Main.NewText(Main.LocalPlayer.position.Y / 16 / (float)Main.maxTilesY + " " + Main.LocalPlayer.position.Y / 16 + " " + Main.worldSurface);
             Main.LocalPlayer.ZoneBeach = false;
             //Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:ScreamingFaceSky", true);
