@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using rail;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -47,8 +48,8 @@ namespace CalRemix.UI.SubworldMap
             Texture2D T = ModContent.Request<Texture2D>(path + "Top").Value;
             Texture2D S = ModContent.Request<Texture2D>(path + "Side").Value;
 
-            int horzAmt = 6;
-            int vertAmt = 4;
+            int horzAmt = 8;
+            int vertAmt = 5;
             float areaWidth = TR.Width + T.Width * horzAmt;
             float areaHeight = TR.Height + S.Height * vertAmt;
             Rectangle area = Utils.CenteredRectangle(trueBasePos, new Vector2(areaWidth, areaHeight));
@@ -104,6 +105,11 @@ namespace CalRemix.UI.SubworldMap
                 float rot = MathF.Sin(Convert.ToInt32(pair.Key[0]) * 2f) * 0.05f;
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, item.unlockCondition.Invoke() ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
+
+                if (ModContent.RequestIfExists<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
+                {
+                    spriteBatch.Draw(asset.Value, portraitRect.Center.ToVector2(), null, Color.White, rot, asset.Value.Size() / 2, 1, 0, 0);
+                }
 
                 Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
                 bool intersecting = maus.Intersects(resizedHitbox);
@@ -184,7 +190,8 @@ namespace CalRemix.UI.SubworldMap
                 float textSpacing = 30;
                 int padding = 8;
                 Texture2D screw = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Screw").Value;
-                spriteBatch.Draw(screw, iconPosition - Vector2.UnitY * bgSize.Y * nailHeight, null, Color.White, 0, screw.Size() / 2, 1, 0, 0); // draw the icon
+                float rot = MathF.Cos(Convert.ToInt32(pair.Key[0]) * 3f);
+                spriteBatch.Draw(screw, iconPosition - Vector2.UnitY * bgSize.Y * nailHeight, null, Color.White, rot, screw.Size() / 2, 1, 0, 0); // draw the icon
                 // Draw the name 20 pixels below the icon
                 if (!unlocked || item.animCompletion <= 0)
                 {
