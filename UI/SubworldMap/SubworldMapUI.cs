@@ -1,8 +1,10 @@
-﻿using CalamityMod.DataStructures;
+﻿using CalamityMod;
+using CalamityMod.DataStructures;
 using CalamityMod.Items.Accessories;
 using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using rail;
 using System;
 using System.Collections.Generic;
@@ -38,17 +40,20 @@ namespace CalRemix.UI.SubworldMap
             Main.blockInput = true;
             bool canMove = false;
             bool dragEntire = true;
-            List<string> doneAlready = new(); // List of subworlds that already have lines connecting them
+            string hovered = "";
+            List<(string, string)> doneAlready = new(); // List of subworlds that already have lines connecting them
 
+            Utils.DrawInvBG(spriteBatch, Utils.CenteredRectangle(trueBasePos, Main.ScreenSize.ToVector2()));
+            
             // Draw the icons
             foreach (var pair in SubworldMapSystem.Items)
             {
                 SubworldMapItem item = pair.Value;
                 Vector2 basePosition = trueBasePos;
-                Vector2 iconPosition = basePosition + item.position * 3; // the * 3 is a placeholder, please adjust the real values and remove later
+                Vector2 iconPosition = basePosition + item.position;
                 if (pair.Key == selected)
                 {
-                    pair.Value.position = (Main.MouseScreen - basePosition) / 3;
+                    pair.Value.position = (Main.MouseScreen - basePosition);
                 }
                 Texture2D ring = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Ring").Value;
                 Texture2D icon = item.unlockCondition.Invoke() ? ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value : ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Unknown").Value;
@@ -66,6 +71,7 @@ namespace CalRemix.UI.SubworldMap
                     {
                         item.animCompletion = MathHelper.Min(item.animCompletion + 0.11f, 1);
                     }
+                    hovered = pair.Key;
                 }
                 else
                 {
@@ -92,35 +98,45 @@ namespace CalRemix.UI.SubworldMap
                     selected = "";
                 }
             }
+            // Make a list of connections
+            foreach (var pair in SubworldMapSystem.Items)
+            {
+                foreach (string connection in pair.Value.connections)
+                {
+                    if (!doneAlready.Contains((connection, pair.Key)) && !doneAlready.Contains((pair.Key, connection)))
+                    {
+                        doneAlready.Add((connection, pair.Key));
+                    }
+                }
+            }
+            // Iterate through the list and draw the connections
+            foreach (var v in doneAlready)
+            {
+                SubworldMapItem item1 = SubworldMapSystem.Items[v.Item1];
+                SubworldMapItem item2 = SubworldMapSystem.Items[v.Item2];
+                if (!item1.unlockCondition.Invoke() || !item2.unlockCondition.Invoke())
+                    continue;
+                // If unlocked, draw connections
+                Vector2 basePosition = trueBasePos;
+                Vector2 iconPosition1 = basePosition + item1.position;
+                Vector2 iconPosition2 = basePosition + item2.position;
+                // If either icon is currently hovered on, make the connection a brighter red
+                Color color = (v.Item1 == hovered || v.Item2 == hovered) ? Color.Red : Color.DarkRed;
+                // Draw the line
+                CalRemixHelper.DrawChain(ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/YarnSegment").Value, iconPosition1, iconPosition2, MathHelper.PiOver2, color);          
+            }
+
             // Draw the connections
             foreach (var pair in SubworldMapSystem.Items)
             {
                 string key = pair.Key;
                 SubworldMapItem item = pair.Value;
                 bool unlocked = item.unlockCondition.Invoke();
-                string displayText = unlocked ? key : "???"; // The text to display
+                string displayText = /*pair.Key == "Overworld" ? Main.worldName :*/ unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
                 Vector2 basePosition = trueBasePos;
-                Vector2 iconPosition = basePosition + item.position * 3;
+                Vector2 iconPosition = basePosition + item.position;
                 Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
                 Vector2 origin = tex.Size() / 2;
-                // If unlocked, draw connections
-                if (unlocked)
-                {
-                    foreach (string connection in item.connections)
-                    {
-                        if (!doneAlready.Contains(connection))
-                        {
-                            if (SubworldMapSystem.Items[connection].unlockCondition.Invoke())
-                            {
-                                Texture2D connectedIcon = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + connection).Value;
-                                Vector2 connectedIconPos = basePosition + SubworldMapSystem.Items[connection].position * 3;
-                                Rectangle lineRect = new Rectangle(0, 0, (int)iconPosition.Distance(connectedIconPos), 4);
-                                // Draw the line
-                                spriteBatch.Draw(TextureAssets.MagicPixel.Value, iconPosition + (connectedIconPos - iconPosition) * 0.5f, lineRect, Color.Red, iconPosition.DirectionTo(connectedIconPos).ToRotation(), lineRect.Size() / 2, 1, 0, 0);
-                            }
-                        }
-                    }
-                }
                 float textOffset = 20;
                 float textSpacing = 30;
                 int padding = 8;
@@ -133,15 +149,7 @@ namespace CalRemix.UI.SubworldMap
                 {
                     if (item.animCompletion > 0)
                     {
-                        // TODO: Replace this with a proper dialogue getting thing later
-                        List<string> dialogue = new List<string>()
-                        {
-                            "Contains a lot of water",
-                            "Beware of sharks, krakens, and whales",
-                            "Also has a underground place with old fish",
-                            "No old dukes though",
-                            "Syringodium"
-                        };
+                        string[] dialogue = CalRemixHelper.LocalText("UI.SubworldMap." + key + ".Description").Value.Split('\n');
 
                         // Create measurements for the boxx
                         float maxWidth = 0;
@@ -155,20 +163,24 @@ namespace CalRemix.UI.SubworldMap
                         }
                         maxWidth += padding * 2;
 
-                        float height = textOffset + (textSpacing + textSpacing * dialogue.Count) * item.animCompletion;
+                        float height = textOffset + (textSpacing + textSpacing * dialogue.Length) * item.animCompletion;
 
                         Rectangle bg = new Rectangle((int)iconPosition.X - (int)(maxWidth * 0.5f), (int)iconPosition.Y + (int)textOffset - padding, (int)maxWidth, (int)height);
                         Utils.DrawInvBG(spriteBatch,bg, Terraria.ModLoader.UI.UICommon.DefaultUIBlueMouseOver * item.animCompletion);
 
+                        // display position with debug canMove on
+                        if (canMove)
+                        {
+                            displayText += " " + item.position;
+                        }
+
                         Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, item.unlockCondition.Invoke() ? Color.White : Color.Gray, anchorx: 0.5f);
-                        for (int i = 0; i < dialogue.Count; i++)
+                        for (int i = 0; i < dialogue.Length; i++)
                         {
                             Utils.DrawBorderString(spriteBatch, dialogue[i], iconPosition + Vector2.UnitY * textOffset + (Vector2.UnitY * textSpacing + Vector2.UnitY * textSpacing * i) * item.animCompletion, Color.White * item.animCompletion, anchorx: 0.5f);
                         }
                     }
                 }
-
-                doneAlready.Add(key);
             }
 
             // Don't allow dragging if an icon is being dragged
@@ -217,6 +229,10 @@ namespace CalRemix.UI.SubworldMap
         /// Animation completion
         /// </summary>
         public float animCompletion = 0;
+        /// <summary>
+        /// Should the icon display while not unlocked?
+        /// </summary>
+        public bool hide = true;
 
         /// <summary>
         /// Creates a Subworld Map item for the map UI
@@ -224,11 +240,12 @@ namespace CalRemix.UI.SubworldMap
         /// <param name="connections">A list of keys for connected subworlds</param>
         /// <param name="unlockCondition">When should this icon start displaying?</param>
         /// <param name="position">Where is the icon relative to the center of the board?</param>
-        public SubworldMapItem(List<string> connections, Func<bool> unlockCondition, Vector2 position)
+        public SubworldMapItem(List<string> connections, Func<bool> unlockCondition, Vector2 position, bool hide = true)
         {
             this.connections = connections;
             this.unlockCondition = unlockCondition;
             this.position = position;
+            this.hide = hide;
         }
     }
 
@@ -240,10 +257,10 @@ namespace CalRemix.UI.SubworldMap
         public static Dictionary<string, SubworldMapItem> Items = new();
         public override void Load()
         {
-            Items.Add("Overworld", new(["GreatSea", "ScreamingFace", "Ant"], () => true, new Vector2(0, 0)));
-            Items.Add("GreatSea", new([ "Overworld", "ScreamingFace" ], () => true, new Vector2(60, 20)));
-            Items.Add("Ant", new(["Overworld"], () => true, new Vector2(-80, -40)));
-            Items.Add("ScreamingFace", new(["Overworld", "GreatSea"], () => false, new Vector2(80, 60)));
+            Items.Add("Overworld", new(["GreatSea", "ScreamingFace", "Ant"], () => true, new Vector2(0, 0), false));
+            Items.Add("GreatSea", new([ "Overworld", "ScreamingFace" ], () => true, new Vector2(259, -135), false));
+            Items.Add("Ant", new(["Overworld"], () => true, new Vector2(-373, -170), false));
+            Items.Add("ScreamingFace", new(["Overworld", "GreatSea"], () => false, new Vector2(467, 211)));
         }
     }
 

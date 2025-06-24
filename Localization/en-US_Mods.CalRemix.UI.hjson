@@ -39,3 +39,37 @@ WorldGen: {
 	ItGetsDeeper: But wait, it gets deeper
 	RandomDoors: Creating infinite possibilities
 }
+
+SubworldMap: {
+	Overworld: {
+		DisplayName: Overworld
+		Description: The main world.
+	}
+
+	GreatSea: {
+		DisplayName: The Great Sea
+		Description:
+			'''
+			A world which is entirely composed of an ocean.
+			Contains a prehistoric cavern system deep below.
+			'''
+	}
+
+	Ant: {
+		DisplayName: Ant Plane
+		Description:
+			'''
+			A white canvas with a single ant on it.
+			Where will the ant go?
+			'''
+	}
+
+	ScreamingFace: {
+		DisplayName: Screaming Face Matrix
+		Description:
+			'''
+			A mostly empty world.
+			Populated with screaming mummified faces.
+			'''
+	}
+}
