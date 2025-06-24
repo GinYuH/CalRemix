@@ -381,16 +381,19 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //TODO: if the structure spawns completely encased in blocks, no trees generate. unsure the cause
             //      addendum: only sometimes???????? whats going onnn
             //TODO: trees (and grass ig) can generate on top of the cavern. if a cave genned with space above it, those trees would grow!
-            //      don't rly wanna fix this bcuz its funny imo
+            //      don't rly wanna fix this bcuz its funny imo, but can do if desired
             //TODO: if vines spawn in the air, they dont get their frames set properly! ahhh! aaaaaahhhhhhh! 
             //TODO: is checking far top/bottom tiles and placing them for waterfall necesarry? assess
             //TODO: is consistent cherry tree placement desirable? relies completely on randomness. roll for certain amount of trees
-            //      to be placed like the monolith?
+            //      to be placed like the waterfalls? spread them apart from each other?
             //TODO: guarantee monolith generation after enough fails? place pedestal in center of structure, like enchanted sword shrine?
             //      a lot of work for almost no payoff, since it not genning feels like an extreme statistical anomaly. current gen is just
             //      rly condusive for it to be placed right
             //TODO: swap main.rand to worldgen.rand when the time is right
             //TODO: does the butterfly tile critter spawning radius have to be increased to compensate for bigger chamber?
+            //TODO: vines can generate outside of the structure. can fix, but should i bother? could create some interesting
+            //      divergent visual if left in...
+            //TODO: waterfalls can generate facing the outside of the structure, same thoughts on this as above
 
             ShapeData slimeShapeData = new ShapeData();
             ShapeData sideCarversShapeData = new ShapeData();
@@ -437,7 +440,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                         // doing all our validation here, checking for three things...
                         // 1. if the block to the left/right is air (so we know what direction to face this fella in)
                         // 2. if there is no liquid where the water will be (to prevent duplicates)
-                        // 3. if the spot under where the water will be has a block
                         if (!Main.tile[i + 1, j].HasTile && Main.tile[i - 1, j].LiquidAmount == 0)
                         {
                             PlaceWaterfall(i, j, true);
@@ -508,7 +510,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // and if everything fails, give up
             else if (placedMonolithAttempts >= 15000)
             {
-                System.Diagnostics.Debug.WriteLine("Monolith could not be placed! The statistically impossible has been possed!");
+                //System.Diagnostics.Debug.WriteLine("Monolith could not be placed! The statistically impossible has been possed!");
             }
             #endregion
 
