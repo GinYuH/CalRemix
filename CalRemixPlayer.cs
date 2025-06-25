@@ -70,6 +70,7 @@ using static CalRemix.CalRemixHelper;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.NPCs.Eclipse;
 using System.Reflection;
+using CalRemix.UI.Anomaly109;
 
 namespace CalRemix
 {
@@ -623,7 +624,7 @@ namespace CalRemix
                 Anomaly109ClientUpdates();
                 if (!CalRemixWorld.playerSawTrueStory.Contains(Player.name))
                     TrueStoryLogic();
-                else
+                else if (!Anomaly109Manager.helpUnlocked)
                     FandomWikiLogic();
                 if (ExoMechWorld.AnyDraedonActive && SubworldSystem.Current == GetInstance<ExosphereSubworld>() || NPC.AnyNPCs(NPCType<Hypnos>()))
                     Player.Calamity().monolithExoShader = 30;
