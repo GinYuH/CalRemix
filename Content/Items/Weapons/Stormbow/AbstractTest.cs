@@ -48,7 +48,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //WorldUtils.Gen(point, new Shapes.Mound(7, 7), Actions.Chain(new Modifiers.Blotches(2, 1, 0.8), new Actions.Blank().Output(shapeData1)));
             //ShapeData shapeData2 = new ShapeData();
             //WorldUtils.Gen(point, new Shapes.Circle(12), Actions.Chain(new Modifiers.NotInShape(shapeData1), new Actions.PlaceTile(TileID.PineTree)));
-            PlaceStupidSpiritModThing(point, GenVars.structures);
+            //PlaceStupidSpiritModThing(point, GenVars.structures);
+
+            PlaceOtherSpiritModThing(point);
 
             //MakeAwesomeHouseStuff(point);
             //Tile tile = Main.tile[point.X, point.Y];
@@ -375,6 +377,100 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 }
             }
         }
+
+        public void PlaceOtherSpiritModThing(Point origin)
+        {
+            Point boxDefaultSize = new Point(16, 8);
+
+            // setting up a bunch of variables for box size, offset, etc
+            Point boxBottomSize = new Point();
+            boxBottomSize.X = boxDefaultSize.X + Main.rand.Next(0, 5);
+            if (boxBottomSize.X % 2 == 0)
+                boxBottomSize.X--; // we always want to have a perfect center for the bottom beams
+            boxBottomSize.Y = boxDefaultSize.Y + Main.rand.Next(0, 3);
+            int boxTopSizeDifference = Main.rand.Next(0, 3); // we need to save this to fix a bug later
+            Point boxTopSize = new Point();
+            boxTopSize.X = boxBottomSize.X - boxTopSizeDifference;
+            boxTopSize.Y = boxDefaultSize.Y;
+
+            // always overhang a little on one side
+            bool left = Main.rand.NextBool();
+            Point boxTopOffset;
+            boxTopOffset.Y = -boxTopSize.Y + 1;
+            boxTopOffset.X = Main.rand.Next(4, 7);
+            boxTopOffset.X = left == true ? boxTopOffset.X * -1 : boxTopOffset.X;
+            boxTopOffset.X += left == false ? boxTopSizeDifference : 0; // compensate for aforementioned bug
+            int boxTopCutoff = Main.rand.NextBool() == false ? -2 : -1;
+
+            // making a ton of points for orienting stuff later
+            Point point = origin;
+            point.Y -= boxBottomSize.Y - 1;
+            Point bottomLeft = point;
+            bottomLeft.Y += boxBottomSize.Y - 1;
+            Point structureBoxBottomLeft;
+            structureBoxBottomLeft.X = bottomLeft.X;
+            structureBoxBottomLeft.X += bottomLeft.X > bottomLeft.X + boxTopOffset.X ? boxTopOffset.X : -1;
+            structureBoxBottomLeft.Y = bottomLeft.Y;
+            Point structureBoxTopRight;
+            structureBoxTopRight.X = bottomLeft.X + boxBottomSize.X;
+            structureBoxTopRight.X += bottomLeft.X > bottomLeft.X + boxTopOffset.X ? 0 : boxTopOffset.X - boxTopSizeDifference - 1;
+            structureBoxTopRight.Y = bottomLeft.Y - boxBottomSize.Y - boxTopSize.Y + 2;
+            // list of all floor tiles for bottom and top
+            //do that
+
+            ShapeData cabinShapeDataBottom = new ShapeData();
+            WorldUtils.Gen(point, new Shapes.Rectangle(boxBottomSize.X, boxBottomSize.Y), Actions.Chain(
+                new Actions.ClearTile(true),
+                new Actions.Blank().Output(cabinShapeDataBottom)
+            ));
+            WorldUtils.Gen(point, new ModShapes.InnerOutline(cabinShapeDataBottom), Actions.Chain(
+                new Actions.SetTile(TileID.WoodBlock),
+                new Actions.SetFrames(true)
+            ));
+
+            ShapeData cabinShapeDataTop = new ShapeData();
+            WorldUtils.Gen(point, new Shapes.Rectangle(boxTopSize.X, boxTopSize.Y), Actions.Chain(
+                new Modifiers.Offset(boxTopOffset.X, boxTopOffset.Y),
+                new Actions.ClearTile(true),
+                new Actions.Blank().Output(cabinShapeDataTop)
+            ));
+            WorldUtils.Gen(point, new ModShapes.InnerOutline(cabinShapeDataTop), Actions.Chain(
+                new Modifiers.RectangleMask(-40, 40, boxTopCutoff, 0),
+                new Actions.SetTile(TileID.WoodBlock),
+                new Actions.SetFrames(true)
+            ));
+
+            // place blocks off the left and rightmost parts of the bottom box floor
+            Tile tile;
+            Point[] tilesToReplace =
+            {
+                new Point(bottomLeft.X - 1, bottomLeft.Y),              // left
+                new Point(bottomLeft.X + boxBottomSize.X, bottomLeft.Y) // right
+            };
+            foreach (Point block in tilesToReplace)
+            {
+                tile = Main.tile[block.X, block.Y];
+                tile.HasTile = true;
+                tile.TileType = TileID.WoodBlock;
+                SquareTileFrame(block.X, block.Y);
+            }
+
+
+            Point[] tilesToReplace2 =
+            {
+                new Point(structureBoxBottomLeft.X, structureBoxBottomLeft.Y),
+                new Point(structureBoxTopRight.X, structureBoxTopRight.Y)
+            };
+            foreach (Point block in tilesToReplace2)
+            {
+                Tile tile2;
+                tile2 = Main.tile[block.X, block.Y];
+                tile2.HasTile = true;
+                tile2.TileType = TileID.Adamantite;
+                SquareTileFrame(block.X, block.Y);
+            }
+        }
+
 
         public bool PlaceStupidSpiritModThing(Point origin, StructureMap structures)
         {
