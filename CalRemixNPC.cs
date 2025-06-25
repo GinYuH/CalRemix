@@ -103,6 +103,7 @@ using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Terraria;
@@ -2057,7 +2058,6 @@ namespace CalRemix
             }
         }
 
-
         internal static readonly FieldInfo MaxSpawnsField = typeof(NPC).GetField("maxSpawns", BindingFlags.NonPublic | BindingFlags.Static);
 
         public static void RemixSpawnSystem(Player player)
@@ -2144,26 +2144,47 @@ namespace CalRemix
             }
         }
 
+        public static void ClearPool(ref IDictionary<int, float> pool)
+        {
+            List<int> keys = pool.Keys.ToList<int>();
+            foreach (int key in keys)
+            {
+                pool[key] = 0;
+            }
+        }
+        public static void TryInjectSpawn(ref IDictionary<int, float> pool, int id, float chance)
+        {
+            List<int> keys = pool.Keys.ToList<int>();
+            if (keys.Contains(id))
+            {
+                pool[id] = chance;
+            }
+            else
+            {
+                pool.Add(id, chance);
+            }
+        }
+
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             if (CalRemixWorld.roachDuration > 0)
             {
-                pool.Clear();
-                pool.Add(NPCType<LabRoach>(), 22f);
+                ClearPool(ref pool);
+                TryInjectSpawn(ref pool, NPCType<LabRoach>(), 22f);
                 return;
             }
             if (ProfanedDesert.scorchedWorld)
             {
-                pool.Clear();
-                pool.Add(NPCType<ScornEater>(), 1);
+                ClearPool(ref pool);
+                TryInjectSpawn(ref pool, NPCType<ScornEater>(), 1);
                 if (!NPC.AnyNPCs(NPCType<ProfanedEnergyBody>()))
-                    pool.Add(NPCType<ProfanedEnergyBody>(), 1);
-                pool.Add(NPCType<ImpiousImmolator>(), 1);
-                pool.Add(NPCType<YggdrasilEnt>(), 0.05f);
+                    TryInjectSpawn(ref pool, NPCType<ProfanedEnergyBody>(), 1);
+                TryInjectSpawn(ref pool, NPCType<ImpiousImmolator>(), 1);
+                TryInjectSpawn(ref pool, NPCType<YggdrasilEnt>(), 0.05f);
                 if (CalRemixAddon.CalVal != null)
                 {
-                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("ProvFly").Type, 1);
-                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
+                    TryInjectSpawn(ref pool, CalRemixAddon.CalVal.Find<ModNPC>("ProvFly").Type, 1);
+                    TryInjectSpawn(ref pool, CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
                 }
 
                 return;
@@ -2172,7 +2193,7 @@ namespace CalRemix
             {
                 if (SubworldSystem.Current is ICustomSpawnSubworld)
                 {
-                    pool.Clear();
+                    ClearPool(ref pool);
                     ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
                     if (IDS.OverrideVanilla)
                         return;
@@ -2180,7 +2201,7 @@ namespace CalRemix
                     {
                         if (v.Item3.Invoke(spawnInfo))
                         {
-                            pool.Add(v.Item1, v.Item2);
+                            TryInjectSpawn(ref pool, v.Item1, v.Item2);
                         }
                     }
                     return;
@@ -2196,13 +2217,13 @@ namespace CalRemix
             }
             if (NPC.AnyNPCs(NPCType<CrimsonKaiju>()))
             {
-                pool.Clear();
+                ClearPool(ref pool);
             }
             if (CalamityPlayer.areThereAnyDamnEvents)
                 return;
             if (CalRemixWorld.oxydayTime > 0)
             {
-                pool.Add(NPCID.Dandelion, 100);
+                TryInjectSpawn(ref pool, NPCID.Dandelion, 100);
             }
             if (spawnInfo.Player.InModBiome<FrozenStrongholdBiome>())
             {
@@ -2216,54 +2237,54 @@ namespace CalRemix
             }
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {
-                pool.Clear();
+                ClearPool(ref pool);
                 //if (NPC.downedBoss3)
                 {
                     if (!NPC.savedMech)
                     {
-                        pool.Add(NPCID.BoundMechanic, 0.1f);
+                        TryInjectSpawn(ref pool, NPCID.BoundMechanic, 0.1f);
                     }
-                    pool.Add(NPCID.AngryBones, 1);
-                    pool.Add(NPCID.AngryBonesBig, 1);
-                    pool.Add(NPCID.AngryBonesBigHelmet, 1);
-                    pool.Add(NPCID.AngryBonesBigMuscle, 1);
-                    pool.Add(NPCID.DarkCaster, 0.5f);
-                    pool.Add(NPCID.CursedSkull, 0.5f);
-                    pool.Add(NPCID.DungeonSlime, 0.05f);
-                    pool.Add(NPCID.SpikeBall, 0.05f);
-                    pool.Add(NPCID.BlazingWheel, 0.05f);
+                    TryInjectSpawn(ref pool, NPCID.AngryBones, 1);
+                    TryInjectSpawn(ref pool, NPCID.AngryBonesBig, 1);
+                    TryInjectSpawn(ref pool, NPCID.AngryBonesBigHelmet, 1);
+                    TryInjectSpawn(ref pool, NPCID.AngryBonesBigMuscle, 1);
+                    TryInjectSpawn(ref pool, NPCID.DarkCaster, 0.5f);
+                    TryInjectSpawn(ref pool, NPCID.CursedSkull, 0.5f);
+                    TryInjectSpawn(ref pool, NPCID.DungeonSlime, 0.05f);
+                    TryInjectSpawn(ref pool, NPCID.SpikeBall, 0.05f);
+                    TryInjectSpawn(ref pool, NPCID.BlazingWheel, 0.05f);
                     if (Main.hardMode)
                     {
-                        pool.Add(NPCType<RenegadeWarlock>(), 0.05f);
+                        TryInjectSpawn(ref pool, NPCType<RenegadeWarlock>(), 0.05f);
                     }
                     if (NPC.downedPlantBoss)
                     {
-                        pool.Add(NPCID.BlueArmoredBones, 1);
-                        pool.Add(NPCID.BlueArmoredBonesMace, 1);
-                        pool.Add(NPCID.BlueArmoredBonesNoPants, 1);
-                        pool.Add(NPCID.BlueArmoredBonesSword, 1);
-                        pool.Add(NPCID.HellArmoredBones, 1);
-                        pool.Add(NPCID.HellArmoredBonesMace, 1);
-                        pool.Add(NPCID.HellArmoredBonesSpikeShield, 1);
-                        pool.Add(NPCID.HellArmoredBonesSword, 1);
-                        pool.Add(NPCID.RustyArmoredBonesAxe, 1);
-                        pool.Add(NPCID.RustyArmoredBonesFlail, 1);
-                        pool.Add(NPCID.RustyArmoredBonesSword, 1);
-                        pool.Add(NPCID.RustyArmoredBonesSwordNoArmor, 1);
-                        pool.Add(NPCID.Necromancer, 0.2f);
-                        pool.Add(NPCID.DiabolistRed, 0.1f);
-                        pool.Add(NPCID.DiabolistWhite, 0.1f);
-                        pool.Add(NPCID.RaggedCaster, 0.2f);
-                        pool.Add(NPCID.Paladin, 0.05f);
-                        pool.Add(NPCID.TacticalSkeleton, 0.2f);
-                        pool.Add(NPCID.SkeletonSniper, 0.2f);
-                        pool.Add(NPCID.SkeletonCommando, 0.2f);
-                        pool.Add(NPCID.GiantCursedSkull, 0.2f);
-                        pool.Add(NPCID.BoneLee, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBones, 1);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBonesMace, 1);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBonesNoPants, 1);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBonesSword, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBones, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBonesMace, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBonesSpikeShield, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBonesSword, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesAxe, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesFlail, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesSword, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesSwordNoArmor, 1);
+                        TryInjectSpawn(ref pool, NPCID.Necromancer, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.DiabolistRed, 0.1f);
+                        TryInjectSpawn(ref pool, NPCID.DiabolistWhite, 0.1f);
+                        TryInjectSpawn(ref pool, NPCID.RaggedCaster, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.Paladin, 0.05f);
+                        TryInjectSpawn(ref pool, NPCID.TacticalSkeleton, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.SkeletonSniper, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.SkeletonCommando, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.GiantCursedSkull, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.BoneLee, 0.2f);
                     }
                     if (spawnInfo.Water && DownedBossSystem.downedPolterghast)
                     {
-                        pool.Add(NPCType<MinnowsPrime>(), 1f);
+                        TryInjectSpawn(ref pool, NPCType<MinnowsPrime>(), 1f);
                     }
                 }
             }
