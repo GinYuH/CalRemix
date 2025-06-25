@@ -50,12 +50,12 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //WorldUtils.Gen(point, new Shapes.Circle(12), Actions.Chain(new Modifiers.NotInShape(shapeData1), new Actions.PlaceTile(TileID.PineTree)));
             //PlaceStupidSpiritModThing(point, GenVars.structures);
 
-            PlaceOtherSpiritModThing(point);
-
             //MakeAwesomeHouseStuff(point);
             //Tile tile = Main.tile[point.X, point.Y];
             //Main.NewText(tile.BlockType);
             //Main.NewText(tile.TileFrameX / 18);
+
+            PlaceOtherSpiritModThing(point);
 
             /*int floorTile = TileID.VortexBrick;
             if (Main.tile[point.X, point.Y].TileType == (ushort)floorTile && !Main.tile[point.X - 1, point.Y].HasTile)
@@ -384,11 +384,11 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             // setting up a bunch of variables for box size, offset, etc
             Point boxBottomSize = new Point();
-            boxBottomSize.X = boxDefaultSize.X + Main.rand.Next(0, 5);
+            boxBottomSize.X = boxDefaultSize.X + Main.rand.Next(2, 5);
             if (boxBottomSize.X % 2 == 0)
                 boxBottomSize.X--; // we always want to have a perfect center for the bottom beams
-            boxBottomSize.Y = boxDefaultSize.Y + Main.rand.Next(0, 3);
-            int boxTopSizeDifference = Main.rand.Next(0, 3); // we need to save this to fix a bug later
+            boxBottomSize.Y = boxDefaultSize.Y + Main.rand.Next(0, 1);
+            int boxTopSizeDifference = Main.rand.Next(0, 2); // we need to save this to fix a bug later
             Point boxTopSize = new Point();
             boxTopSize.X = boxBottomSize.X - boxTopSizeDifference;
             boxTopSize.Y = boxDefaultSize.Y;
@@ -396,17 +396,21 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // always overhang a little on one side
             bool left = Main.rand.NextBool();
             Point boxTopOffset;
-            boxTopOffset.Y = -boxTopSize.Y + 1;
             boxTopOffset.X = Main.rand.Next(4, 7);
             boxTopOffset.X = left == true ? boxTopOffset.X * -1 : boxTopOffset.X;
             boxTopOffset.X += left == false ? boxTopSizeDifference : 0; // compensate for aforementioned bug
+            boxTopOffset.Y = -boxTopSize.Y + 1;
             int boxTopCutoff = Main.rand.NextBool() == false ? -2 : -1;
 
-            // making a ton of points for orienting stuff later
+            // making a ton of things for orienting stuff later
+            Tile tile;
             Point point = origin;
             point.Y -= boxBottomSize.Y - 1;
             Point bottomLeft = point;
             bottomLeft.Y += boxBottomSize.Y - 1;
+            int leftRightMultiplier = left == true ? 1 : -1;
+
+            // getting the bottom left and top right of the area for when the structure bounding is set
             Point structureBoxBottomLeft;
             structureBoxBottomLeft.X = bottomLeft.X;
             structureBoxBottomLeft.X += bottomLeft.X > bottomLeft.X + boxTopOffset.X ? boxTopOffset.X : -1;
@@ -415,9 +419,28 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             structureBoxTopRight.X = bottomLeft.X + boxBottomSize.X;
             structureBoxTopRight.X += bottomLeft.X > bottomLeft.X + boxTopOffset.X ? 0 : boxTopOffset.X - boxTopSizeDifference - 1;
             structureBoxTopRight.Y = bottomLeft.Y - boxBottomSize.Y - boxTopSize.Y + 2;
-            // list of all floor tiles for bottom and top
-            //do that
 
+            // list of all floor tiles for bottom and top
+            List<Point> boxBottomFloor = new List<Point>();
+            int boxBottomFloorLeftmost = bottomLeft.X + 2;
+            int boxBottomFloorRightmost = bottomLeft.X + boxBottomSize.X - 3;
+            for (int i = 0; i < boxBottomFloorRightmost - bottomLeft.X - 1; i++)
+            {
+                boxBottomFloor.Add(new Point(boxBottomFloorLeftmost + i, bottomLeft.Y));
+            }
+            List<Point> boxTopFloor = new List<Point>();
+            int boxTopBottomLeft = bottomLeft.X + boxTopOffset.X;
+            int boxTopFloorLeftmost = boxTopBottomLeft + 2;
+            int boxTopFloorRightmost = boxTopBottomLeft + boxTopSize.X - 3;
+            for (int i = 0; i < boxTopFloorRightmost - boxTopBottomLeft - 1; i++)
+            {
+                boxTopFloor.Add(new Point(boxTopFloorLeftmost + i, bottomLeft.Y - boxBottomSize.Y + 1));
+            }
+            List<Point> allBoxFloors = new List<Point>();
+            allBoxFloors.AddRange(boxBottomFloor);
+            allBoxFloors.AddRange(boxTopFloor);
+
+            // create the cabins two
             ShapeData cabinShapeDataBottom = new ShapeData();
             WorldUtils.Gen(point, new Shapes.Rectangle(boxBottomSize.X, boxBottomSize.Y), Actions.Chain(
                 new Actions.ClearTile(true),
@@ -441,7 +464,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             ));
 
             // place blocks off the left and rightmost parts of the bottom box floor
-            Tile tile;
             Point[] tilesToReplace =
             {
                 new Point(bottomLeft.X - 1, bottomLeft.Y),              // left
@@ -455,11 +477,84 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 SquareTileFrame(block.X, block.Y);
             }
 
+            // place doors
+            //TODO: clean this up, make less redundant
+            if (left || Main.rand.NextBool())
+            {
+                for (int i = 1; i < 4; i++)
+                {
+                    tile = Main.tile[boxBottomFloorLeftmost - 2, bottomLeft.Y - i];
+                    tile.HasTile = false;
+                    SquareTileFrame(boxBottomFloorLeftmost - 2, bottomLeft.Y - i);
+                }
+                PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+            }
+            if (!left || Main.rand.NextBool())
+            {
+                for (int i = 1; i < 4; i++)
+                {
+                    tile = Main.tile[boxBottomFloorRightmost + 2, bottomLeft.Y - i];
+                    tile.HasTile = false;
+                    SquareTileFrame(boxBottomFloorRightmost + 2, bottomLeft.Y - i);
+                }
+                PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+            }
+
+            // place platform and stairs
+            int boxTopPlatformX;
+            if (left)
+                boxTopPlatformX = boxBottomFloorLeftmost;
+            else
+                boxTopPlatformX = boxBottomFloorRightmost;
+            int boxTopPlatformLength = boxTopSize.X / 3;
+            for (int i = 0; i < boxTopPlatformLength; i++)
+            {
+                tile = Main.tile[boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1];
+                tile.TileType = TileID.Platforms;
+                tile.TileFrameY = 0;
+                SquareTileFrame(boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1);
+            }
+            // just kidding! kill that guy
+            tile = Main.tile[boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1];
+            tile.HasTile = false;
+            // ccr code cameo!
+            Point currentTilePointer = new Point(boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1);
+            while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
+            {
+                tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                tile.HasTile = true;
+                tile.TileType = TileID.Platforms;
+                if (left)
+                    tile.BlockType = BlockType.SlopeDownLeft;
+                else
+                    tile.BlockType = BlockType.SlopeDownRight;
+                if (left)
+                    tile.TileFrameX = 10 * 18;
+                else
+                    tile.TileFrameX = 8 * 18;
+                tile.TileFrameY = 0;
+                currentTilePointer.X += 1 * leftRightMultiplier;
+                currentTilePointer.Y++;
+            }
+            // dont forget the awkward guy
+            tile = Main.tile[boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1];
+            if (left)
+                tile.TileFrameX = 26 * 18;
+            else
+                tile.TileFrameX = 25 * 18;
+
+
+
+
+
+
+
+
+
 
             Point[] tilesToReplace2 =
             {
-                new Point(structureBoxBottomLeft.X, structureBoxBottomLeft.Y),
-                new Point(structureBoxTopRight.X, structureBoxTopRight.Y)
+                new Point(0, 0)
             };
             foreach (Point block in tilesToReplace2)
             {
