@@ -7,12 +7,6 @@ namespace CalRemix.Content.Items.Placeables
 {
     public class BoiMachine : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Binding of Anahita Machine");
-            Tooltip.SetDefault("INCOMPLETE ITEM, EXTREMELY UNSTABLE\nRoguelike game");
-        }
-
         public override void SetDefaults()
         {
             Item.useStyle = 1;

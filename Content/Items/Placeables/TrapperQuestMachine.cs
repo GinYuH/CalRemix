@@ -8,12 +8,6 @@ namespace CalRemix.Content.Items.Placeables
     public class TrapperQuestMachine : ModItem
     {
         public override string Texture => "CalRemix/Content/Items/Placeables/BoiMachine";
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Trapper Quest Machine");
-            Tooltip.SetDefault("INCOMPLETE ITEM, EXTREMELY UNSTABLE\nRPG game");
-        }
-
         public override void SetDefaults()
         {
             Item.useStyle = 1;
