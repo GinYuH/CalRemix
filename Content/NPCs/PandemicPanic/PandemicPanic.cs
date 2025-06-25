@@ -646,7 +646,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         {
             if (PandemicPanic.CountsAsActive && (!NPC.TowerActiveNebula && !NPC.TowerActiveSolar && !NPC.TowerActiveStardust && !NPC.TowerActiveVortex))
             {
-                pool.Clear();
+                CalRemixNPC.ClearPool(ref pool);
                 float defMult = PandemicPanic.SummonedPathogen && PandemicPanic.InvadersWinning ? 3f : PandemicPanic.DefendersWinning ? 0.8f : 1f;
                 float invMult = PandemicPanic.InvadersWinning ? 0.8f : 1f;
                 if (NPC.AnyNPCs(ModContent.NPCType<Pathogen>()) && PandemicPanic.DefendersWinning)
@@ -654,21 +654,21 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     defMult = 0.1f;
                     invMult = 0.1f;
                 }
-                pool.Add(ModContent.NPCType<WhiteBloodCell>(), 0.6f * defMult);
-                pool.Add(ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
-                pool.Add(ModContent.NPCType<Platelet>(), 1f * defMult);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<WhiteBloodCell>(), 0.6f * defMult);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<RedBloodCell>(), 0.4f * defMult);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Platelet>(), 1f * defMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Eosinine>()))
-                    pool.Add(ModContent.NPCType<Eosinine>(), 0.33f * defMult);
+                    CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Eosinine>(), 0.33f * defMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Dendritiator>()))
-                    pool.Add(ModContent.NPCType<Dendritiator>(), 0.025f * defMult);
+                    CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Dendritiator>(), 0.025f * defMult);
 
-                pool.Add(ModContent.NPCType<Malignant>(), 0.7f * invMult);
-                pool.Add(ModContent.NPCType<Ecolium>(), 0.5f * invMult);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Malignant>(), 0.7f * invMult);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Ecolium>(), 0.5f * invMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<Basilius>()))
-                    pool.Add(ModContent.NPCType<Basilius>(), 0.1f * invMult);
-                pool.Add(ModContent.NPCType<Tobasaia>(), 0.1f * invMult);
+                    CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Basilius>(), 0.1f * invMult);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Tobasaia>(), 0.1f * invMult);
                 if (!NPC.AnyNPCs(ModContent.NPCType<MaserPhage>()))
-                    pool.Add(ModContent.NPCType<MaserPhage>(), 0.025f * invMult);
+                    CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<MaserPhage>(), 0.025f * invMult);
             }
         }
     }

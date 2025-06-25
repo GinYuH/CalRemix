@@ -21,23 +21,23 @@ namespace CalRemix.Content.NPCs
                 return;
             if (pPlayer.ZonePlague)
             {
-                pool.Clear();
-                pool.Add(ModContent.NPCType<Plagueshell>(), 0.075f);
-                pool.Add(ModContent.NPCType<PestilentSlime>(), 0.1f);
-                pool.Add(ModContent.NPCType<Melter>(), 0.1f);
-                pool.Add(ModContent.NPCType<Viruling>(), 0.1f);
-                pool.Add(ModContent.NPCType<PlaguebringerMiniboss>(), 0.001f);
-                pool.Add(ModContent.NPCType<PlagueCharger>(), 0.1f);
-                pool.Add(ModContent.NPCType<PlagueChargerLarge>(), 0.075f);
-                pool.Add(ModContent.NPCType<Miasmius>(), 0.1f);
-                pool.Add(ModContent.NPCType<PlaguedSpidrone>(), 0.075f);
+                CalRemixNPC.ClearPool(ref pool);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Plagueshell>(), 0.075f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PestilentSlime>(), 0.1f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Melter>(), 0.1f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Viruling>(), 0.1f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PlaguebringerMiniboss>(), 0.001f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PlagueCharger>(), 0.1f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PlagueChargerLarge>(), 0.075f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<Miasmius>(), 0.1f);
+                CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PlaguedSpidrone>(), 0.075f);
                 if (NPC.downedMoonlord && !NPC.AnyNPCs(ModContent.NPCType<PlagueEmperor>()))
-                    pool.Add(ModContent.NPCType<PlagueEmperor>(), 0.0022f);
+                    CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PlagueEmperor>(), 0.0022f);
                 if (!Main.dayTime)
-                    pool.Add(ModContent.NPCType<PlaguedFirefly>(), 0.35f);
+                    CalRemixNPC.TryInjectSpawn(ref pool, ModContent.NPCType<PlaguedFirefly>(), 0.35f);
                 if (CalRemixAddon.CalVal != null)
                 {
-                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("PlagueFrog").Type, 0.045f);
+                    CalRemixNPC.TryInjectSpawn(ref pool, CalRemixAddon.CalVal.Find<ModNPC>("PlagueFrog").Type, 0.045f);
                 }
             }
             if (player.ZoneJungle && !pPlayer.ZonePlague)
