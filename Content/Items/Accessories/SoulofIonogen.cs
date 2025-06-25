@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Ionogen");
-            Tooltip.SetDefault("7% increase to all damage\nTap ] to strike yourself with lightning\nThis lightning deals 1 point of damage, activating onhit effects\nThis effect has a 5 second cooldown\n" + CalamityUtils.ColorMessage("Boosts Machine damage", Color.LightGray));
+            // DisplayName.SetDefault("Soul of Ionogen");
+            // Tooltip.SetDefault("7% increase to all damage\nTap ] to strike yourself with lightning\nThis lightning deals 1 point of damage, activating onhit effects\nThis effect has a 5 second cooldown\n" + CalamityUtils.ColorMessage("Boosts Machine damage", Color.LightGray));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityPinkBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Ionogen;

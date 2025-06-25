@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Weapons
         public int durability = 10;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shard of Glass");
-            Tooltip.SetDefault("Durability");
+            // DisplayName.SetDefault("Shard of Glass");
+            // Tooltip.SetDefault("Durability");
         }
 
         public override void SetDefaults()

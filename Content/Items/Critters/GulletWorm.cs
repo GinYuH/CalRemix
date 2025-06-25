@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gullet Worm");
+            // DisplayName.SetDefault("Gullet Worm");
         }
 
         public override void SetDefaults()

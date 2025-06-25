@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons an eldritch pulse at the cursor that periodically summon two rings of homing spirits and occasionally a deathray");
+            // Tooltip.SetDefault("Summons an eldritch pulse at the cursor that periodically summon two rings of homing spirits and occasionally a deathray");
         }
         public override void SetDefaults()
         {

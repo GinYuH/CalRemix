@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Coats wooden arrows in magma\nMagmatic arrows are trailed by extremely hot volcanic mist");
+            // Tooltip.SetDefault("Coats wooden arrows in magma\nMagmatic arrows are trailed by extremely hot volcanic mist");
         }
         public override void SetDefaults()
         {

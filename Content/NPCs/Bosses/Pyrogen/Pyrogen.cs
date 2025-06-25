@@ -146,7 +146,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyrogen");
+            // DisplayName.SetDefault("Pyrogen");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Position = new Vector2(0, 44)
@@ -321,8 +321,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             for (int i = 0; i < 15; i++)
             {
                 int bitSprite = i % 6;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<PyrogenShield>(), ai0: NPC.whoAmI, ai1: i, ai2: bitSprite);
             }
 
             int torch = Main.zenithWorld ? TorchID.Ice : TorchID.Red;   
@@ -1479,7 +1478,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WITCH>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<WITCH>());
             }
             int rad = 4;
             Point p = NPC.Center.ToTileCoordinates();

@@ -14,8 +14,8 @@ public class PhreaticChanneler : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Phreatic Channeler");
-        Tooltip.SetDefault("Summons molten tools which swiftly slice apart enemies");
+        // DisplayName.SetDefault("Phreatic Channeler");
+        // Tooltip.SetDefault("Summons molten tools which swiftly slice apart enemies");
         Item.ResearchUnlockCount = 1;
         ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
         ItemID.Sets.LockOnIgnoresCollision[Type] = true;

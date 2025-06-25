@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles
         public override string Texture => "Terraria/Images/Projectile_23";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Agent's Harpoon");
+            // DisplayName.SetDefault("Agent's Harpoon");
         }
         public override void SetDefaults()
         {

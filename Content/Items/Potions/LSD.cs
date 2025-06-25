@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sulphuric Acid");
-            Tooltip.SetDefault("You have a strong urge to eat this paper");
+            // DisplayName.SetDefault("Sulphuric Acid");
+            // Tooltip.SetDefault("You have a strong urge to eat this paper");
         }
         public override void SetDefaults()
         {

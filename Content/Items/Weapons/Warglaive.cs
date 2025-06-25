@@ -14,8 +14,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warglaive");
-            Tooltip.SetDefault("Stealth strikes stick to tiles");
+            // DisplayName.SetDefault("Warglaive");
+            // Tooltip.SetDefault("Stealth strikes stick to tiles");
             Item.ResearchUnlockCount = 99;
         }
         public override void SetDefaults()

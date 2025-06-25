@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Juicer");
-            Tooltip.SetDefault("Sprays enemies with an assortment of liquids\n40% chance to not consume ammo");
+            // DisplayName.SetDefault("Juicer");
+            // Tooltip.SetDefault("Sprays enemies with an assortment of liquids\n40% chance to not consume ammo");
         }
         public override void SetDefaults()
         {

@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pixies' Capricious Power");
-            Tooltip.SetDefault("This dust feels too erratic");
+            // DisplayName.SetDefault("Pixies' Capricious Power");
+            // Tooltip.SetDefault("This dust feels too erratic");
         }
 
 

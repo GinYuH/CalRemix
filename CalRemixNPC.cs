@@ -1,4 +1,5 @@
 using CalamityMod;
+using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
 using CalamityMod.Items.Accessories;
@@ -20,6 +21,7 @@ using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.BrimstoneElemental;
+using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Crabulon;
@@ -58,6 +60,8 @@ using CalamityMod.Sounds;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
+using CalRemix.Content.Buffs.Tainted;
+using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Materials;
@@ -70,9 +74,13 @@ using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
+using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
+using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using CalRemix.Content.NPCs.Bosses.Poly;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.NPCs.TownNPCs;
@@ -80,11 +88,14 @@ using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Biomes;
+using CalRemix.Core.Graphics;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -100,7 +111,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -111,22 +122,26 @@ namespace CalRemix
         public bool vBurn = false;
         public bool grappled = false;
         public bool witherDebuff = false;
+        public bool farmNPC = false;
         public int wither = 0;
         public int shreadedLungs = 0;
+        public int taintedInferno = 0;
+        public bool taintedInvis = false;
         public int clawed = 0;
-        private int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
+        public int crabSay, slimeSay, guardSay, yharSay, jaredSay = 0;
         public Vector2 clawPosition = Vector2.Zero;
         public float shadowHit = 1;
         public static int wulfyrm = -1;
         public static int pyrogen = -1;
         public static int hypnos = -1;
         public static int aspidCount = 0;
-        private bool guardRage, guardOver, yharRage = false;
+        public bool guardRage, guardOver, yharRage = false;
+        public static readonly FieldInfo yharonInvincibleCounter = typeof(Yharon).GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance);
+        public static HelperMessage CystMessage;
         public float[] storedAI = { 0f, 0f, 0f, 0f };
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        public static HelperMessage CystMessage;
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
         public override bool InstancePerEntity => true;
 
@@ -141,7 +156,9 @@ namespace CalRemix
             NPCType<SplitCrimulanPaladin>(),
             NPCType<SlimeGodCore>(),
             NPCType<LifeSlime>(),
-            NPCType<CragmawMire>()
+            NPCType<CragmawMire>(),
+            NPCType<ChlorinePaladin>(),
+            NPCType<SplitChlorinePaladin>()
         };
 
         public List<int> Slimes = new List<int>
@@ -168,12 +185,43 @@ namespace CalRemix
         };
         public override void SetStaticDefaults()
         {
+            if (CalRemixAddon.Catalyst != null)
+            {
+                BossSlimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("Astrageldon").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("AscendedAstralSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("MetanovaSlimeRocks").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlime").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("NovaSlimer").Type);
+                Slimes.Add(CalRemixAddon.Catalyst.Find<ModNPC>("WulfrumSlime").Type);
+            }
             if (!Main.dedServ)
             {
                 CystMessage = HelperMessage.New("CystDeath", "See!", "").NeedsActivation();
             }
         }
 
+        public override void SetDefaults(NPC entity)
+        {
+            if (entity.type == NPCType<Cryogen>())
+            {
+                entity.lifeMax = (int)(entity.lifeMax * 0.5f);
+                entity.Calamity().DR = entity.Calamity().DR * 0.25f;
+            }
+        }
+
+        public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
+        {
+            if (farmNPC && item.DamageType != GetInstance<FarmingDamageClass>() || !farmNPC && item.DamageType == GetInstance<FarmingDamageClass>())
+                return false;
+            return null;
+        }
+        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
+        {
+            if (farmNPC && projectile.DamageType != GetInstance<FarmingDamageClass>() || !farmNPC && projectile.DamageType == GetInstance<FarmingDamageClass>())
+                return false;
+            return null;
+        }
         public static void AddModBiomeToBestiary(int curNPC, int npcID, ModBiome biome, BestiaryEntry entry)
         {
             if (curNPC == npcID)
@@ -201,17 +249,61 @@ namespace CalRemix
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if (npc.type == NPCType<CryogenShield>())
+            if (npc.type == NPCType<CryogenShield>() && CalRemixWorld.bossAdditions)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Dendritus>());
+                    SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<Dendritus>());
+                }
+            }
+            if (!CalamityPlayer.areThereAnyDamnBosses)
+            {
+                if (source is EntitySource_SpawnNPC)
+                {
+                    if (!npc.boss && !npc.SpawnedFromStatue && !npc.friendly && !npc.dontTakeDamage)
+                    {
+                        if (Main.LocalPlayer.Remix().taintedBattle)
+                        {
+                            npc.lifeMax = (int)(npc.lifeMax * 1.3f);
+                            npc.damage = (int)(npc.damage * 1.3f);
+                            npc.value *= 2f;
+                        }
+                        if (Main.LocalPlayer.Remix().taintedCalm)
+                        {
+                            npc.lifeMax = (int)(npc.lifeMax * 0.5f);
+                            npc.life = npc.lifeMax;
+                            npc.damage = (int)(npc.damage * 0.75f);
+                        }
+                        if (Main.LocalPlayer.Remix().taintedEndurance)
+                        {
+                            if (npc.Calamity() != null)
+                            {
+                                if (!npc.Calamity().unbreakableDR)
+                                    npc.Calamity().DR = Math.Max(0, npc.Calamity().DR * 0.9f);
+                            }
+                        }
+                        if (Main.LocalPlayer.Remix().taintedInvis)
+                        {
+                            taintedInvis = true;
+                        }
+                    }
                 }
             }
         }
 
         public override bool PreAI(NPC npc)
         {
+            if (npc.type == NPCType<OldDuke>())
+            {
+                npc.active = false;
+            }
+            if (CalRemixWorld.wizardDisabled)
+            {
+                if (npc.type == NPCID.Wizard || npc.type == NPCID.BoundWizard)
+                {
+                    npc.active = false;
+                }
+            }
             if (CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
             {
                 clawed = 0;
@@ -222,6 +314,94 @@ namespace CalRemix
             if (player.pathogenSoul)
             {
                 npc.canGhostHeal = true;
+            }
+
+            // fall damage 
+            if (player.taintedFeather)
+            {
+                if (npc.velocity.Y > 0)
+                {
+                    Rectangle rect = npc.getRect();
+                    int x = rect.X / 16;
+                    int y = rect.Y / 16;
+                    int width = npc.width / 16;
+                    int height = npc.height / 16;
+                    Rectangle tileRect = new Rectangle(x, y, width, height);
+                    bool sb = false;
+                    for (int i = x; i < x + width; i++)
+                    {
+                        if (sb)
+                            break;
+                        for (int j = y; j < y + height + 4; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            if (t.IsTileSolidGround())
+                            {
+                                npc.SimpleStrikeNPC((int)(Math.Abs(npc.velocity.Y)), 1, noPlayerInteraction: true);
+                                sb = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (player.taintedInferno)
+            {
+                if (!npc.dontTakeDamage && !npc.buffImmune[BuffType<Dragonfire>()])
+                {
+                    npc.AddBuff(BuffType<TaintedInfernoBuff>(), 22);
+                }
+            }
+
+            if (player.taintedLove)
+            {
+                if (Main.LocalPlayer.miscCounter % 12 == 0)
+                {
+                    foreach (NPC n in Main.ActiveNPCs)
+                    {
+                        if (n.whoAmI == npc.whoAmI)
+                            continue;
+                        if (n.dontTakeDamage)
+                            continue;
+                        if (n.getRect().Intersects(npc.getRect()))
+                        {
+                            n.SimpleStrikeNPC(Math.Min(npc.damage, npc.lifeMax), npc.direction, noPlayerInteraction: true);
+                        }
+                    }
+                }
+            }
+
+            if (player.taintedObsidian)
+            {
+                if (!npc.lavaImmune && !npc.boss)
+                {
+                    if (npc.lavaWet)
+                        npc.SimpleStrikeNPC((int)(npc.lifeMax * 0.05f), 1, noPlayerInteraction: true);
+                }
+            }
+
+            if (player.taintedWrath)
+            {
+                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly && npc.Distance(Main.LocalPlayer.Center) < Main.screenWidth)
+                {
+                    npc.life -= Math.Max((int)(npc.lifeMax / (float)CalamityUtils.SecondsToFrames(300)), 1);
+                    if (npc.life <= 0)
+                    {
+                        npc.StrikeInstantKill();
+                    }
+                }
+            }
+
+            if (player.taintedStink)
+            {
+                if (!npc.dontTakeDamage && !CalamityPlayer.areThereAnyDamnBosses)
+                {
+                    if (npc.Distance(Main.LocalPlayer.position) < 160)
+                    {
+                        npc.velocity = Main.LocalPlayer.DirectionTo(npc.Center) * 22;
+                    }
+                }
             }
 
             bool assortgel = player.assortegel;
@@ -381,6 +561,8 @@ namespace CalRemix
                     }
                 }
             }
+            if (taintedInvis)
+                return false;
             #region Quotes
             if (npc.type == NPCType<Crabulon>())
             {
@@ -390,7 +572,7 @@ namespace CalRemix
                     if (DateTime.Today.ToString("dd/MM").Equals("01/04") && Main.rand.NextBool(100))
                         Talk($"{npcName}.AprilFools", Color.LightSkyBlue);
                     else
-                        Talk($"{npcName}.Death", Color.LightSkyBlue);
+                        Talk($"{npcName}.1", Color.LightSkyBlue);
                     crabSay = 1;
                 }
                 else if (crabSay == 2 && npc.life < (npc.lifeMax * 3 / 4))
@@ -423,7 +605,10 @@ namespace CalRemix
                 }
                 else if (slimeSay == 2 && none)
                 {
-                    Talk($"{npcName}.3", Color.Olive);
+                    if (CalRemixAddon.Infernum == null)
+                        Talk($"{npcName}.3", Color.Olive);
+                    else
+                        Talk($"{npcName}.Infernum", Color.Olive);
                     slimeSay = 3;
                 }
             }
@@ -476,7 +661,7 @@ namespace CalRemix
                 bool p6 = hp <= (flag3 ? 0.358f : (flag2 ? 0.275f : (flag ? 0.22f : 0.138f)));
 
                 Yharon yhar = npc.ModNPC as Yharon;
-                int y = (int)yhar.GetType().GetField("invincibilityCounter", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(yhar);
+                int y = (int)yharonInvincibleCounter.GetValue(yhar);
                 if (yharSay == 0)
                 {
                     Talk($"{npcName}.1", Color.OrangeRed);
@@ -585,23 +770,20 @@ namespace CalRemix
                     }
                 }
             }
-            if (npc.type == NPCID.WallofFlesh)
+            if (CalRemixWorld.bossAdditions)
             {
-                if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.mullet)
+                if (npc.type == NPCID.WallofFlesh)
                 {
-                    npc.active = false;
-
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.mullet)
                     {
-                        NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Fleshmullet>());
+                        npc.active = false; 
+                        SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<Fleshmullet>());
                     }
                 }
-            }
-
-
-            if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
-            {
-                NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<ChlorinePaladin>());
+                if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
+                {
+                    SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<ChlorinePaladin>());
+                }
             }
             return true;
         }
@@ -611,19 +793,6 @@ namespace CalRemix
             if (npc.type == NPCType<MicrobialCluster>() && npc.catchItem == 0)
             {
                 npc.catchItem = ItemType<DisgustingSeawater>();
-            }
-            if (npc.type == NPCType<FAP>()) // MURDER the drunk princess
-            {
-                npc.active = false;
-            }
-            if (npc.type == NPCType<SupremeCalamitas>()) // MURDER the drunk princess
-            {
-                SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
-                if (cirrus.cirrus)
-                {
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeSAC", Color.Red);
-                    npc.active = false;
-                }
             }
             if (npc.type == NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
@@ -786,6 +955,10 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ItemType<ElectricEel>()));
                 shop.Add(new NPCShop.Entry(ItemType<SB90>(), Condition.Hardmode));
             }
+        }
+        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+        {
+            globalLoot.AddIf(() => Main.LocalPlayer.Remix().taintedLuck, ItemType<AstralPearl>(), 22, ui: false);
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
@@ -965,13 +1138,47 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<BoringStormbow>(), 5);
             }
+            if (npc.type == NPCID.GiantFungiBulb)
+            {
+                npcLoot.Add(ItemType<FungiStone>(), new Fraction(1, 50));
+            }
+            if (npc.type ==  NPCID.ChaosElemental)
+            {
+                //checks for rod, could be improved
+                npcLoot.RemoveWhere(
+                    rule => rule is LeadingConditionRule leadingRule
+                        && (leadingRule.condition is Conditions.TenthAnniversaryIsNotUp)
+                );
+                npcLoot.RemoveWhere(
+                    rule => rule is LeadingConditionRule leadingRule
+                        && (leadingRule.condition is Conditions.TenthAnniversaryIsNotUp)
+                );
+                npcLoot.Add(ItemID.RodofDiscord);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 2));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(2, 3));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 4), 1, 3);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 8));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 16), 10, 10);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 32));
+                npcLoot.Add(ItemID.RodOfHarmony, new Fraction(1, 64), 1, 200);
+            }
+            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            {
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
+                npcLoot.Add(hm);
+            }
+            if (npc.type == NPCID.Paladin)
+            {
+                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
+            }
             #endregion
             #region Godseeker Mode
             if (npc.type == NPCID.Clinger)
             {
                 LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
-                postPolter.Add(ItemType<CursedSpear>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
-                postPolter.AddFail(ItemType<CursedSpear>(), 25, hideLootReport: Main.expertMode);
+                postPolter.Add(ItemType<Content.Items.Weapons.CursedSpear>(), new Fraction(2, 30), hideLootReport: !Main.expertMode);
+                postPolter.AddFail(ItemType<Content.Items.Weapons.CursedSpear>(), 25, hideLootReport: Main.expertMode);
                 npcLoot.Add(postPolter);
             }
             if (npc.type == NPCID.IchorSticker)
@@ -1026,6 +1233,36 @@ namespace CalRemix
                 npcLoot.Add(ItemType<GreaterFlightPotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterAdrenalinePotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterEnragePotion>(), 1, 5, 10);
+            }
+            #endregion
+            #region Epilogue
+            if (npc.type == NPCID.BloodCrawler || npc.type == NPCID.BloodCrawlerWall || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCType<CrimulanBlightSlime>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BloodJelly || npc.type == NPCID.BloodFeeder)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 10);
+            }
+            if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 10);
+            }
+            if (npc.type == NPCID.IceSlime || npc.type == NPCID.ZombieEskimo || npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin || npc.type == NPCType<Rimehound>()) //waterfreeze, probably tundra mobs
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<WaterfreezeReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.IceElemental || npc.type == NPCID.Wolf || npc.type == NPCID.IceGolem || npc.type == NPCType<AuroraSpirit>() || npc.type == NPCType<Cryon>() || npc.type == NPCType<IceClasper>() || npc.type == NPCType<CryoSlime>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<WaterfreezeReactiveEssence>(), 10);
+            }
+            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == NPCType<AstralSlime>() || npc.type == NPCType<Atlas>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<NocticReactiveEssence>(), 10);
             }
             #endregion
         }
@@ -1204,6 +1441,7 @@ namespace CalRemix
             else if (npc.type == NPCType<CalamitasClone>())
             {
                 npcLoot.AddNormalOnly(ItemType<RisingFire>(), 25);
+                npcLoot.AddNormalOnly(ItemType<CalamityRing>());
             }
             else if (npc.type == NPCID.Plantera)
             {
@@ -1266,6 +1504,10 @@ namespace CalRemix
             {
 
             }
+            else if (npc.type == NPCType<Bumblefuck>())
+            {
+                npcLoot.AddNormalOnly(ItemType<DisgustingMeat>(), new Fraction(55, 100), 236, 650);
+            }
             else if (npc.type == NPCType<Providence>())
             {
                 npcLoot.AddNormalOnly(ItemType<ProfanedNucleus>(), 4);
@@ -1305,7 +1547,7 @@ namespace CalRemix
             //}
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
-                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 6, 8);
+                npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 60, 80);
             }
             else if (npc.type == NPCType<PrimordialWyrmHead>())
             {
@@ -1313,6 +1555,21 @@ namespace CalRemix
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<HalibutCannon>());
             }
 
+        }
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (player.Remix().taintedWrath)
+            {
+                modifiers.SourceDamage *= 0;
+            }
+        }
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.owner > -1)
+            if (Main.player[projectile.owner].Remix().taintedWrath)
+            {
+                modifiers.SourceDamage *= 0;
+            }
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
@@ -1333,8 +1590,7 @@ namespace CalRemix
                     {
                         if (NPC.CountNPCS(NPCType<Ogslime>()) <= 0)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            NPC.NewNPC(npc.GetSource_OnHit(npc), (int)npc.position.X, (int)npc.position.Y, NPCType<Ogslime>());
+                            SpawnNewNPC(npc.GetSource_OnHit(npc), npc.position, NPCType<Ogslime>());
                             if (!CalRemixWorld.ogslime)
                             {
                                 CalRemixWorld.ogslime = true;
@@ -1349,6 +1605,10 @@ namespace CalRemix
                     CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeWizard", Color.DarkBlue);
                     CalRemixWorld.UpdateWorldBool();
                 }
+            }
+            if ((bool)npc.Remix()?.taintedInvis)
+            {
+                npc.Remix().taintedInvis = false;
             }
         }
         public override void OnKill(NPC npc)
@@ -1379,23 +1639,51 @@ namespace CalRemix
                     }
                 }
             }
-            if (npc.type == ModContent.NPCType<CalamitasClone>())
+            if (npc.type == NPCType<CalamitasClone>())
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<EDGY>()))
+                if (!NPC.AnyNPCs(NPCType<EDGY>()))
                 {
-                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<EDGY>());
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<EDGY>());
                 }
             }
             if (npc.type == NPCID.SkeletronHead)
             {
                 if (!NPC.AnyNPCs(NPCID.Clothier))
                 {
-                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.Clothier);
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCID.Clothier);
                 }
             }
-            if (npc.type == ModContent.NPCType<Piggy>())
+            if (npc.type == NPCType<Piggy>())
             {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.DukeFishron);
+                SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCID.DukeFishron);
+            }
+
+            Color NoxusTextColor = new(91, 69, 143);
+
+            // Create some indicator text when the WoF is killed about how Noxus has begun orbiting the planet.
+            if (npc.type == NPCID.WallofFlesh && !NoxusEggCutsceneSystem.NoxusBeganOrbitingPlanet)
+                CalRemixHelper.ChatMessage(NoxusEggCutsceneSystem.PostWoFDefeatText, NoxusTextColor);
+
+            // Create some indicator text when SCal or Draedon (whichever is defeated last) is defeated as a hint to fight Noxus.
+            bool draedonDefeatedLast = (npc.type == NPCType<ThanatosHead>() || npc.type == NPCType<AresBody>() || npc.type == NPCType<Apollo>()) && DownedBossSystem.downedCalamitas && !DownedBossSystem.downedExoMechs;
+            bool calDefeatedLast = npc.type == NPCType<SupremeCalamitas>() && DownedBossSystem.downedExoMechs && !DownedBossSystem.downedCalamitas;
+            if (calDefeatedLast || draedonDefeatedLast)
+            {
+                // Apply a secondary check to ensure that when an Exo Mech is killed it is the last exo mech.
+                bool noExtraExoMechs = NPC.CountNPCS(NPCType<ThanatosHead>()) + NPC.CountNPCS(NPCType<AresBody>()) + NPC.CountNPCS(NPCType<Apollo>()) <= 1;
+                if (calDefeatedLast || noExtraExoMechs)
+                    ChatMessage(NoxusEggCutsceneSystem.FinalMainBossDefeatText, NoxusTextColor);
+            }
+            if (CalRemixWorld.bossAdditions)
+            {
+                if ((npc.type == NPCType<SupremeCataclysm>() || npc.type == NPCType<SupremeCatastrophe>()) && NPC.CountNPCS(NPCType<SupremeTwin>()) < 2)
+                {
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<SupremeTwin>());
+                }
+                if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(NPCType<SupremeTwin>()) > 0)
+                {
+                    SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<SupremeSkeletron>());
+                }
             }
         }
         public override bool CheckDead(NPC npc)
@@ -1403,17 +1691,9 @@ namespace CalRemix
             if (npc.lifeMax > 1000 && npc.value > 0f && npc.HasPlayerTarget && NPC.downedMoonlord && Main.player[npc.target].ZoneDungeon && npc.type != NPCType<GildedSpirit>() && npc.type != NPCType<GlisteningSpirit>())
             {
                 if (Main.rand.NextBool(10))
-                {
-                    int index = NPC.NewNPC(NPC.GetSource_None(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<GlisteningSpirit>());
-                    if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                        NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
+                    SpawnNewNPC(Entity.GetSource_None(), npc.Center, NPCType<GlisteningSpirit>());
                 else
-                {
-                    int index = NPC.NewNPC(NPC.GetSource_None(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<GildedSpirit>());
-                    if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                        NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
+                    SpawnNewNPC(Entity.GetSource_None(), npc.Center, NPCType<GildedSpirit>());
             }
 
             return true;
@@ -1497,8 +1777,8 @@ namespace CalRemix
                 //the leash will spawn in BOTH times a twin is killed; the first time it'll spawn ON the twin and burrow away to despawn, the SECOND time it'll spawn offscreen and come back up
                 /* if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.leash)
                 {
-                    if (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)) NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<TheLeashHead>());
-                    else NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y + 1200, NPCType<TheLeashHead>());
+                    if (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)) NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<TheLeashHead>());
+                    else NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y + 1200, NPCType<TheLeashHead>());
                 } */
             }
 
@@ -1572,6 +1852,26 @@ namespace CalRemix
                     damage = 12;
                 }
             }
+            if (taintedInferno > 0)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 22;
+                if (damage < 22)
+                {
+                    damage = 22;
+                }
+            }
+        }
+        public override void DrawEffects(NPC npc, ref Color drawColor)
+        {
+            if (taintedInferno > 0)
+            {
+                drawColor = drawColor.MultiplyRGBA(Color.Orange);
+                Dust.NewDust(npc.position, npc.width, npc.height, DustID.InfernoFork);
+            }
         }
         public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
@@ -1625,6 +1925,19 @@ namespace CalRemix
                 modifiers.SourceDamage *= 1.05f;
             }
         }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (taintedInvis)
+            {
+                return false;
+            }
+            if (CalRemixAddon.Wrath != null)
+            {
+                if (npc.type == CalRemixAddon.Wrath.Find<ModNPC>("Solyn").Type && SubworldSystem.AnyActive() && ScreenHelperManager.screenHelpersEnabled)
+                    return false;
+            }
+            return true;
+        }
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
             if (player.GetModPlayer<CalRemixPlayer>().dungeon2)
@@ -1646,6 +1959,16 @@ namespace CalRemix
             {
                 spawnRate = 3;
                 maxSpawns *= 15;
+            }
+            if (player.Remix().taintedBattle)
+            {
+                maxSpawns = (int)(maxSpawns * 0.5f);
+                spawnRate *= 2;
+            }
+            if (player.Remix().taintedCalm)
+            {
+                maxSpawns *= 2;
+                spawnRate = Math.Max((int)(spawnRate * 0.5f), 1);
             }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -1679,6 +2002,10 @@ namespace CalRemix
                 {
                     pool.Remove(NPCID.BoundWizard);
                 }
+            }
+            if (NPC.AnyNPCs(NPCType<CrimsonKaiju>()))
+            {
+                pool.Clear();
             }
             if (CalamityPlayer.areThereAnyDamnEvents)
                 return;

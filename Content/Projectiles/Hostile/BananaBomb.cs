@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Banana Bomb");
+            // DisplayName.SetDefault("Banana Bomb");
         }
         public override void SetDefaults()
         {

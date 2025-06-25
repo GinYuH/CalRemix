@@ -37,7 +37,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         private float Attack4 = Main.zenithWorld ? 90f : 180f;
 
         public Player Target => Main.player[NPC.target];
-        public override bool CheckActive() => Target.HasBuff(ModContent.BuffType<Calamitized>());
+        public override bool CheckActive() => AllDead;
+        public bool AllDead = true;
         public override void SetStaticDefaults()
         {
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -62,14 +63,17 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
             NPC.netAlways = true;
             NPC.dontTakeDamage = true;
             NPC.alpha = 0;
+            Music = CalRemixMusic.TheCalamity;
 
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.Write(AllDead);
             writer.Write(NPC.dontTakeDamage);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+            AllDead = reader.ReadBoolean();
             NPC.dontTakeDamage = reader.ReadBoolean();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -101,17 +105,18 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         }
         public override void AI()
         {
-            NPC.TargetClosest();
-            bool allDead = true;
-
+            if (Target.DeadOrGhost || Target.HasBuff(ModContent.BuffType<Calamitized>()))
+                NPC.TargetClosest();
+            AllDead = true;
             foreach (Player p in Main.player)
             {
                 if (p.active && !p.dead && !p.HasBuff(ModContent.BuffType<Calamitized>()))
-                    allDead = false;
+                {
+                    AllDead = false;
+                    NPC.netUpdate = true;
+                }
             }
-
-
-            if (allDead)
+            if (AllDead)
             {
                 NPC.velocity.X += 1.1f * ((Target.Center.X > NPC.Center.X) ? -1 : 1);
                 NPC.EncourageDespawn(10);

@@ -11,13 +11,13 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Movie Sign");
-            Tooltip.SetDefault("It's just a normal Movie Sign");
+            // DisplayName.SetDefault("Movie Sign");
+            // Tooltip.SetDefault("It's just a normal Movie Sign");
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 32;
             Item.maxStack = 99;
             Item.useTurn = true;

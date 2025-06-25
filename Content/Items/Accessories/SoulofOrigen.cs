@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Origen");
-            Tooltip.SetDefault("7% increase to all damage\n" + CalamityUtils.ColorMessage("Inverts Elemental damage", OrigenPoint.origenPalette[Main.rand.Next(0, OrigenPoint.origenPalette.Count - 1)]));
+            // DisplayName.SetDefault("Soul of Origen");
+            // Tooltip.SetDefault("7% increase to all damage\n" + CalamityUtils.ColorMessage("Inverts Elemental damage", OrigenPoint.origenPalette[Main.rand.Next(0, OrigenPoint.origenPalette.Count - 1)]));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityWhiteBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Origen;

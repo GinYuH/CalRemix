@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("RGB Murasama");
+            // DisplayName.SetDefault("RGB Murasama");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(2, 13));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             Item.ResearchUnlockCount = 1;

@@ -85,6 +85,27 @@ Melee: {
 	GrarbleSpearProjectile.DisplayName: Grarble Spear Projectile
 	ChainSpearStab.DisplayName: Chain Spear Stab
 	WindTurbine.DisplayName: Wind Turbine
+	Antumbra.DisplayName: Antumbra
+	AtomSplitter.DisplayName: Atom Splitter
+	CrystalPiercer.DisplayName: Crystal Piercer
+	CursedSpear.DisplayName: Cursed Spear
+	EclipseFall.DisplayName: Eclipse Fall
+	FreqManip.DisplayName: Freq Manip
+	IchorSpear.DisplayName: Ichor Spear
+	NightsGaze.DisplayName: Nights Gaze
+	Paleolith.DisplayName: Paleolith
+	PalJav.DisplayName: Pal Jav
+	PhantasmalRuin.DisplayName: Phantasmal Ruin
+	ProfanedPartisan.DisplayName: Profaned Partisan
+	RealityRapture.DisplayName: Reality Rapture
+	ScarletDevil.DisplayName: Scarlet Devil
+	ScourgeDesert.DisplayName: Scourge Desert
+	ScourgeSea.DisplayName: Scourge Sea
+	SpearDestiny.DisplayName: Spear Destiny
+	Turbulance.DisplayName: Turbulance
+	WaveSkipper.DisplayName: Wave Skipper
+	Wrathwing.DisplayName: Wrathwing
+	GuardiansWrathStab.DisplayName: Guardians Wrath Stab
 }
 
 GrarbleObliteratorProj.DisplayName: Grarble Obliterator Proj
@@ -261,9 +282,58 @@ ObsidianBomb.DisplayName: Obsidian Bomb
 ObsidianFragment.DisplayName: Obsidian Fragment
 PyrogenHarpoon.DisplayName: Pyrogen Harpoon
 SylvanSlash.DisplayName: Sylvan Slash
-StratusStar.DisplayName: Stratus Star
-TwinkleStar.DisplayName: Twinkle Star
-NanomachinesSon.DisplayName: Nanomachine's Son
+GiftSymbioticWormI.DisplayName: Volatile Symbiotic Worm
+GiftSymbioticWormH.DisplayName: Red Symbiotic Worm
+GiftIchor.DisplayName: Ichor Splatter
 XerocBloodShot.DisplayName: Blood Shot
 AncientFlash.DisplayName: Flash
 AncientFlashBulletProj.DisplayName: Bullet
+NanomachinesSon.DisplayName: Nanomachine's Son
+TwinkleStar.DisplayName: Twinkle Star
+StratusStar.DisplayName: Stratus Star
+OrbitingOrb.DisplayName: Orbiting Orb
+SupremeSickle.DisplayName: Brimstone Sickle
+Ark.DisplayName: Ark
+SupremeBone.DisplayName: Burnished Bone
+SupremeSkull.DisplayName: Not Brimstone Flame Skull
+DarkComet.DisplayName: Dark Comet
+DarkFireball.DisplayName: Dark Fireball
+DarkPortal.DisplayName: Dark Portal
+DarkWave.DisplayName: Dark Wave
+DistortionField.DisplayName: Distortion Field
+GroundStompShock.DisplayName: Ground Stomp Shock
+NightmareDeathRay.DisplayName: Nightmare Death Ray
+NoxSpike.DisplayName: Nox Spike
+NoxusExplosion.DisplayName: Noxus Explosion
+NoxusGas.DisplayName: Noxus Gas
+NoxusSprayerGas.DisplayName: Noxus Sprayer Gas
+BabyNoxus.DisplayName: Baby Noxus
+AlchemistArrow.DisplayName: Alchemist Arrow
+ChlorineSlammer.DisplayName: Chlorine Slammer
+ChlorophyteYoyoProjectile.DisplayName: Chlorophyte Yoyo Projectile
+ClockArrowForNightsEdgeBow.DisplayName: Clock Arrow For Nights Edge Bow
+RiskOfRainArrow.DisplayName: Risk Of Rain Arrow
+TerraHawk.DisplayName: Terra Hawk
+TheSimpstringHoldout.DisplayName: The Simpstring Holdout
+BrimstoneBall.DisplayName: Brimstone Ball
+ChloriumChainsawProjectile.DisplayName: Chlorium Chainsaw Projectile
+ChloriumDrillProjectile.DisplayName: Chlorium Drill Projectile
+ChlorislimeMinion.DisplayName: Chlorislime Minion
+ChloriumPikeProjectile.DisplayName: Chlorium Pike Projectile
+CosmiliteCoinPileProjectile.DisplayName: Cosmilite Coin Pile Projectile
+CosmiliteCoinProjectile.DisplayName: Cosmilite Coin Projectile
+KlepticoinPileProjectile.DisplayName: Klepticoin Pile Projectile
+KlepticoinProjectile.DisplayName: Klepticoin Projectile
+RadGlowstickProjectile.DisplayName: Rad Glowstick Projectile
+WulfrumFrogProj.DisplayName: Wulfrum Frog
+CrimsonKaijuHand.DisplayName: Crimson Kaiju Hand
+AcceloRingProjectile.DisplayName: Accelo Ring
+AcceloRingSpike.DisplayName: Accelo Ring Spike
+WeirdBird.DisplayName: Weird Bird
+PizzaWheelProj.DisplayName: Pizza Wheel
+PizzaWheelStealth.DisplayName: Pizza Wheel II
+GuardiansWrathProj.DisplayName: Guardian's Wrath
+ZalGlock.DisplayName: ZalGlock
+CursedBullet.DisplayName: Cursed Bullet
+GodKillerBeam.DisplayName: Heat Ray
+OperatorWhipEnd.DisplayName: Dark Tentacle

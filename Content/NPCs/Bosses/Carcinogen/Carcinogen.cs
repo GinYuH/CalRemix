@@ -35,7 +35,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
         public Rectangle teleportPos = new Rectangle();
 
         public static readonly SoundStyle HitSound = new("CalRemix/Assets/Sounds/GenBosses/CarcinogenHit", 3);
-        public static readonly SoundStyle DeathSound = new("CalRemix/Assets/Sounds/GenBosses/CarcinogenDeath");
+        public static readonly SoundStyle DeathSound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/CarcinogenDeath") with { Volume = 0.8f };
 
         public enum PhaseType
         {
@@ -47,7 +47,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Carcinogen");
+            // DisplayName.SetDefault("Carcinogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Carcinogen",
@@ -88,7 +88,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 
         public override void OnSpawn(IEntitySource source)
         {
-            NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<CarcinogenShield>(), ai0: NPC.whoAmI);
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, ModContent.NPCType<CarcinogenShield>(), ai0: NPC.whoAmI);
         }
 
         public override void AI()
@@ -451,7 +451,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
             CalRemixWorld.UpdateWorldBool();
             if (!NPC.AnyNPCs(ModContent.NPCType<UNCANNY>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<UNCANNY>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<UNCANNY>());
             }
         }
 

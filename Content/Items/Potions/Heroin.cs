@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magical Slag Ashes");
-            Tooltip.SetDefault("You can feel the power of a fallen hero in these ashes");
+            // DisplayName.SetDefault("Magical Slag Ashes");
+            // Tooltip.SetDefault("You can feel the power of a fallen hero in these ashes");
         }
 
 

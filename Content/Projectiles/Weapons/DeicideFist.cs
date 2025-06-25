@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public Player Owner => Main.player[Projectile.owner];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sacrilegious Fist");
+            // DisplayName.SetDefault("Sacrilegious Fist");
             Main.projFrames[Projectile.type] = 4;
         }
 

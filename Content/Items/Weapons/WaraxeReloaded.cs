@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Weapons
         int currentDir = 1;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Waraxe: Reloaded");
-            Tooltip.SetDefault("Swings an axe several times while performing combos\nBreaks in Hardmode");
+            // DisplayName.SetDefault("Waraxe: Reloaded");
+            // Tooltip.SetDefault("Swings an axe several times while performing combos\nBreaks in Hardmode");
             Item.ResearchUnlockCount = 1;
         }
 

@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flash");
+            // DisplayName.SetDefault("Flash");
         }
 
         public override void SetDefaults()

@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Enchanted Tome");
+            // DisplayName.SetDefault("Enchanted Tome");
             Main.npcFrameCount[NPC.type] = 5;
         }
 
@@ -84,12 +84,9 @@ namespace CalRemix.Content.NPCs
                         if (NPC.CountNPCS(ModContent.NPCType<EnchantedSkull>()) < 7)
                         {
                             SoundEngine.PlaySound(BetterSoundID.ItemPortalGun2, NPC.Center);
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            for (int i = 0; i < 3; i++)
                             {
-                                for (int i = 0; i < 3; i++)
-                                {
-                                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + Main.rand.Next(-100, 100), (int)NPC.Center.Y + Main.rand.Next(-10, 10), ModContent.NPCType<EnchantedSkull>());
-                                }
+                                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + Main.rand.Next(-100, 100), (int)NPC.Center.Y + Main.rand.Next(-10, 10), ModContent.NPCType<EnchantedSkull>());
                             }
                         }
                         NPC.ai[1] = 0;

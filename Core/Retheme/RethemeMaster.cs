@@ -18,7 +18,6 @@ using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.Items.Mounts;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Items.Armor;
-using CalRemix.Core.Retheme.NoFab;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Melee.Spears;
@@ -33,14 +32,10 @@ using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.Yharon;
-using CalamityMod.Systems;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Items.LoreItems;
 using System;
-using CalRemix.Content.DamageClasses;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Weapons.Ranged;
 using Terraria.Localization;
 
 namespace CalRemix.Core.Retheme
@@ -54,15 +49,9 @@ namespace CalRemix.Core.Retheme
 
         public override void Load()
         {
-            if (Main.netMode != NetmodeID.Server)
-            {
-                EquipLoader.AddEquipTexture(Mod, "CalRemix/Core/Retheme/NoFab/AshsCloak_Body", EquipType.Body, name: "AshsCloakBody");
-                EquipLoader.AddEquipTexture(Mod, "CalRemix/Core/Retheme/NoFab/AshsCloak_Legs", EquipType.Legs, name: "AshsCloakLegs");
-            }
-
             SneakersRetheme.Load();
         }
-
+        public override void Unload() => UnloadAll();
         public override void PostSetupContent()
         {
             foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
@@ -82,13 +71,13 @@ namespace CalRemix.Core.Retheme
                 Buffs.Add(p.Key, TextureAssets.Buff[p.Key]);
             }
             SneakersRetheme.SaveDefaultSneakersTextures();
-            On.CalamityMod.Systems.YharonBackgroundScene.IsSceneEffectActive += NoYharonScene;
         }
-        private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
+        private static void UnloadAll()
         {
-            if (CalRemixWorld.npcChanges) 
-                return !NPC.AnyNPCs(NPCType<Yharon>()) && Main.LocalPlayer.Calamity().monolithYharonShader > 0;
-            return orig(self, player);
+            RethemeItem.ResetAnimations(true);
+            RethemeItem.ChangeTextures(true);
+            SneakersRetheme.ApplyAnimationsChanges(true);
+            SneakersRetheme.ApplyTextureChanges(true);
         }
     }
     public class RethemeNPC : GlobalNPC
@@ -96,7 +85,7 @@ namespace CalRemix.Core.Retheme
         public override bool InstancePerEntity => true;
         public static void ChangeTextures()
         {
-            if (!CalRemixWorld.npcChanges)
+            if (CalRemixWorld.npcChanges)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.NPCs)
                 {
@@ -217,9 +206,7 @@ namespace CalRemix.Core.Retheme
                 typeName = CalRemixHelper.LocalText($"Rename.NPCs.{npc.ModNPC.Name}").Value;
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
-                SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
-                if (!cirrus.cirrus)
-                    typeName = CalRemixHelper.LocalText($"Rename.NPCs.{npc.ModNPC.Name}").Value;
+                typeName = CalRemixHelper.LocalText($"Rename.NPCs.{npc.ModNPC.Name}").Value;
             }
             else if (typeName.Contains("Skeletron"))
             {
@@ -271,6 +258,35 @@ namespace CalRemix.Core.Retheme
 
                 return false;
             }
+            else if (npc.type == NPCType<DesertScourgeHead>() || npc.type == NPCType<DesertScourgeBody>())
+            {
+                Texture2D head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body", AssetRequestMode.AsyncLoad).Value;
+
+                if (npc.type == NPCType<DesertScourgeHead>())
+                    head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Head", AssetRequestMode.AsyncLoad).Value;
+                else
+                {
+                    if (npc.ai[3] == 1)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body2", AssetRequestMode.AsyncLoad).Value;
+                    }
+                    else if (npc.ai[3] == 2)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body3", AssetRequestMode.AsyncLoad).Value;
+                    }
+                    else if (npc.ai[3] == 3)
+                    {
+                        head = Request<Texture2D>("CalRemix/Core/Retheme/DS/Body4", AssetRequestMode.AsyncLoad).Value;
+                    }
+                }
+
+                Vector2 drawCenter = npc.Center - screenPos;
+                float drawRotation = npc.rotation;
+
+                spriteBatch.Draw(head, drawCenter, null, drawColor, drawRotation, head.Size() / 2f, npc.scale, SpriteEffects.None, 0f);
+
+                return false;
+            }
 
             return true;
         }
@@ -301,11 +317,43 @@ namespace CalRemix.Core.Retheme
     {
         public static void UpdateChanges()
         {
-            ChangeTextures();
+            ResetAnimations();
+            ResetNames();
         }
-        public static void ChangeTextures()
+        public static void ResetNames()
         {
-            if (!CalRemixWorld.itemChanges)
+            if (Main.LocalPlayer != null)
+            {
+                for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
+                {
+                    Item item = Main.LocalPlayer.inventory[i];
+                    if (RethemeList.ItemNames.Contains(item.type))
+                    {
+                        if (!CalRemixWorld.itemChanges)
+                            NormalChanges(item);
+                        else
+                            item.ClearNameOverride();
+                    }
+                }
+            }
+        }
+        public static void ResetAnimations(bool unloading = false)
+        {
+            if (CalRemixWorld.itemChanges && !unloading)
+            {
+                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
+            }
+            else
+            {
+                if (!unloading)
+                {
+                    Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
+                }
+            }
+        }
+        public static void ChangeTextures(bool unloading = false)
+        {
+            if (CalRemixWorld.itemChanges && !unloading)
             {
                 foreach (KeyValuePair<int, string> p in RethemeList.Items)
                 {
@@ -321,8 +369,6 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
                 }
-
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(6, 16));
             }
             else
             {
@@ -339,56 +385,29 @@ namespace CalRemix.Core.Retheme
                 {
                     TextureAssets.Buff[p.Key] = p.Value;
                 }
-
-                Main.RegisterItemAnimation(ItemType<WulfrumMetalScrap>(), new DrawAnimationVertical(1, 1));
             }
         }
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(ItemType<Fabstaff>(), new DrawAnimationVertical(6, 6));
-            TextureAssets.Item[ItemType<CirrusCouch>()] = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
-            TextureAssets.Item[ItemType<CrystalHeartVodka>()] = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Blank");
-            TextureAssets.Item[ItemType<Fabstaff>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/InterfacerStaff");
-            TextureAssets.Item[ItemType<Fabsol>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/DiscordianSigil");
-            TextureAssets.Item[ItemType<CirrusDress>()] = Request<Texture2D>("CalRemix/Core/Retheme/NoFab/AshsCloak");
             TextureAssets.Item[ItemID.ReaverShark] = Request<Texture2D>("CalRemix/Core/Retheme/ReaverShark");
         }
         public override void SetDefaults(Item item)
         {
             AbsoluteChanges(item);
-            StormbowChanges(item);
-
-            if (SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
+            if (CalRemixWorld.itemChanges)
+                NormalChanges(item);
+            if (CalRemixWorld.sneakerheadMode && SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
                 SneakersRetheme.InitializeItem(item);
+        }
+        public static void NormalChanges(Item item)
+        {
+            if (RethemeList.ItemNames.Contains(item.type))
+                item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Normal.{item.ModItem.Name}").Value);
         }
         public static void AbsoluteChanges(Item item)
         {
             string relic = "Rename.Items.Absolute.Relic";
-            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("NotAvailable").Value);
-                item.createTile = -1;
-            }
-            else if (item.type == ItemType<Fabstaff>())
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Absolute.{item.ModItem.Name}").Value);
-                item.UseSound = AresTeslaCannon.TeslaOrbShootSound with { Pitch = 0.5f, PitchVariance = 0.2f, Volume = 0.5f };
-            }
-            else if (item.type == ItemType<Fabsol>())
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Absolute.{item.ModItem.Name}").Value);
-                item.mountType = MountType<HorseMount>();
-                item.UseSound = SoundID.Item113;
-            }
-            else if (item.type == ItemType<CirrusDress>())
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Absolute.{item.ModItem.Name}").Value);
-                item.rare = ItemRarityID.Pink;
-                item.Calamity().devItem = false;
-                item.defense -= 8;
-                item.bodySlot = EquipLoader.GetEquipSlot(CalRemix.instance, "AshsCloakBody", EquipType.Body);
-            }
-            else if (item.type == ItemType<LoreExoMechs>())
+            if (item.type == ItemType<LoreExoMechs>())
             {
                 item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Absolute.{item.ModItem.Name}").Value);
             }
@@ -409,76 +428,9 @@ namespace CalRemix.Core.Retheme
             {
                 item.SetNameOverride(item.Name.Replace(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Hemostone").Value));
             }
-        }
-        public static void StormbowChanges(Item item)
-        {
-            if (item.type == ItemID.DaedalusStormbow)
+            else if (item.Name.Contains("Skeletron"))
             {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.DaedalusStormbow").Value);
-            }
-            else if (item.type == ItemID.Starfury)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.Starfury").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 5;
-            }
-            else if (item.type == ItemID.StarWrath)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.StarWrath").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 27;
-            }
-            else if (item.type == ItemID.BloodRainBow)
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.BloodRainBow").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-            else if (item.type == ItemID.MeteorStaff)
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 0;
-            }
-            else if (item.type == ItemID.BlizzardStaff)
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 0;
-            }
-            else if (item.type == ItemID.LunarFlareBook)
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-                item.mana = 0;
-            }
-            else if (item.type == ItemType<TheBurningSky>())
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-            else if (item.type == ItemType<StarShower>())
-            {
-                item.SetNameOverride(CalRemixHelper.LocalText("Rename.Items.Stormbow.StarShower").Value);
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-            else if (item.type == ItemType<ArterialAssault>())
-            {
-                item.DamageType = GetInstance<StormbowDamageClass>();
-            }
-        }
-        public override void UpdateInventory(Item item, Player player)
-        {
-            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
-                item.stack = 0;
-        }
-        public override void PostUpdate(Item item)
-        {
-            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
-                item.stack = 0;
-        }
-        public override void UpdateEquip(Item item, Player player)
-        {
-            if (item.type == ItemType<CirrusDress>())
-            {
-                player.Calamity().cirrusDress = false;
-                player.GetDamage<MagicDamageClass>() -= 0.05f;
-                player.GetCritChance<MagicDamageClass>() -= 5f;
+                item.SetNameOverride(item.Name.Replace(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Hemostone").Value));
             }
         }
         public override void SetMatch(int armorSlot, int type, bool male, ref int equipSlot, ref bool robes)
@@ -491,9 +443,6 @@ namespace CalRemix.Core.Retheme
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.type == ItemType<CirrusCouch>() || item.type == ItemType<CrystalHeartVodka>())
-                tooltips.Clear();
-
             if (SneakersRetheme.IsASneaker(item.type))
                 SneakersRetheme.ModifyTooltips(item, tooltips);
         }
@@ -501,7 +450,7 @@ namespace CalRemix.Core.Retheme
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
         {
             if (SneakersRetheme.IsASneaker(item.type))
-                return SneakersRetheme.PreDrawTooltipLine(item, line, ref yOffset);
+                return SneakersRetheme.PreDrawTooltipLine(item, line);
 
             return true;
         }

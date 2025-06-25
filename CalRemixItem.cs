@@ -21,6 +21,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Other;
@@ -29,6 +30,7 @@ using CalamityMod.Rarities;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
+using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Armor;
@@ -37,6 +39,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Farming;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
@@ -56,8 +59,10 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -68,6 +73,8 @@ namespace CalRemix
         internal string devItem = string.Empty;
         public bool Scoriad = false;
         public int NonScoria = -1;
+        public int BuffedFrameTimer = 64;
+        public int BuffedFrameCounter = -1;
         internal static List<int> Torch = new()
         {
             ItemID.RainbowTorch,
@@ -132,6 +139,30 @@ namespace CalRemix
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofZot>();
             }
+            else if (item.type == ItemType<EssenceofRend>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofSurt>();
+            }
+            else if (item.type == ItemType<EssenceofLaw>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofHavoc>();
+            }
+            else if (item.type == ItemType<EssenceofCrystal>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofEleum>();
+            }
+            else if (item.type == ItemType<EssenceofMyst>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofSunlight>();
+            }
+            else if (item.type == ItemType<EssenceofZot>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofBabil>();
+            }
+            else if (item.type == ItemType<EssenceofSurt>())
+            {
+                ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofRend>();
+            }
             else if (item.type == ItemType<TitanArm>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<TitanFinger>();
@@ -169,34 +200,6 @@ namespace CalRemix
             {
                 item.rare = ItemRarityID.Purple;
             }
-            else
-            {
-                // undo the curve flattening
-                // done with content samples so that reforges are ignored
-                if (ContentSamples.ItemsByType.ContainsKey(item.type))
-                {
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Turquoise>())
-                    {
-                        item.damage = (int)(item.damage * 1.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<PureGreen>())
-                    {
-                        item.damage = (int)(item.damage * 1.67f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<DarkBlue>())
-                    {
-                        item.damage = (int)(item.damage * 2.5f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<Violet>())
-                    {
-                        item.damage = (int)(item.damage * 3.33f);
-                    }
-                    if (ContentSamples.ItemsByType[item.type].rare == RarityType<HotPink>())
-                    {
-                        item.damage = (int)(item.damage * 5f);
-                    }
-                }
-            }
             if (item.type == ItemType<Navystone>())
             {
                 item.createTile = TileType<NavystoneSafe>();
@@ -217,6 +220,112 @@ namespace CalRemix
             {
                 item.DamageType = DamageClass.SummonMeleeSpeed;
             }
+            if (CalRemixWorld.weaponReworks)
+            {
+                if (item.type == ItemType<ScourgeoftheDesert>())
+                {
+                    item.shoot = ProjectileType<ScourgeDesert>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Turbulance>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Turbulance>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.IchorSpear>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.IchorSpear>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PalladiumJavelin>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.PalJav>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.CrystalPiercer>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.CrystalPiercer>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.DraedonsArsenal.FrequencyManipulator>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.FreqManip>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScourgeoftheSeas>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ScourgeSea>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofPaleolith>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Paleolith>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.WaveSkipper>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.WaveSkipper>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofDestiny>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.SpearDestiny>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PhantasmalRuin>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.PhantasmalRuin>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ShardofAntumbra>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Antumbra>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ProfanedPartisan>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ProfanedPartisan>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.RealityRupture>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.RealityRapture>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.NightsGaze>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.NightsGaze>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.EclipsesFall>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.EclipseFall>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.TheAtomSplitter>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.AtomSplitter>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                /*if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Wrathwing>()) he does not cooperate
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Wrathwing>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }*/
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScarletDevil>())
+                {
+                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ScarletDevil>();
+                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
+                }
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Melee.ArkoftheCosmos>())
+                {
+                    item.shoot = ProjectileType<Ark>();
+                }
+            }
+            if (item.type == ItemID.Frog)
+            {
+                item.ammo = ItemID.Frog;
+            }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
@@ -231,6 +340,34 @@ namespace CalRemix
                 }
             }
         }
+
+        public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (player.Remix().taintedArchery && item.useAmmo == AmmoID.Arrow)
+            {
+                damage = (int)(damage * 0.9f);
+                velocity *= 0.8f;
+            }
+            if (player.Remix().taintedMagic && item.DamageType == DamageClass.Magic)
+            {
+                damage = (int)(damage * 0.7f);
+                knockback *= 7;
+            }
+            if (player.Remix().taintedTitan)
+            {
+                knockback = 0;
+            }
+        }
+
+        public override float UseTimeMultiplier(Item item, Player player)
+        {
+            if (player.Remix().taintedArchery && item.useAmmo == AmmoID.Arrow)
+            {
+                return 0.7f;
+            }
+            return 1f;
+        }
+
         public override void HoldItem(Item item, Player player)
         {
             if (player.HasBuff<BrimstoneMadness>() && item != null && !item.IsAir && item.damage > 0)
@@ -286,10 +423,6 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemType<FabsolsVodka>())
-            {
-                TransformItem(ref item, ItemType<NotFabsolVodka>());
-            }
             if (CalRemixWorld.seafood)
             {
                 if (item.type == ItemType<Seafood>())
@@ -297,7 +430,7 @@ namespace CalRemix
                     TransformItem(ref item, ItemType<SeafoodFood>());
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -308,6 +441,26 @@ namespace CalRemix
             {
                 if (player.ItemAnimationJustStarted && player.Calamity().dischargingItemEnchant && item.Calamity().AppliedEnchantment.Value.Name != CalamityUtils.GetText("UI.Ephemeral.DisplayName"))
                     item.Calamity().DischargeEnchantExhaustion--;
+            }
+            if (!item.channel && player.Remix().salvageSuit && player.Calamity().StealthStrikeAvailable() && item.DamageType == GetInstance<RogueDamageClass>())
+            {
+                bool playSound = false;
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (!n.buffImmune[BuffID.Confused] || !n.buffImmune[BuffID.Webbed])
+                    {
+                        if (n.Distance(player.Center) < 2000)
+                        {
+                            playSound = true;
+                            n.AddBuff(BuffID.Confused, 120);
+                            n.AddBuff(BuffID.Webbed, 120);
+                        }
+                    }
+                }
+                if (playSound)
+                {
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronicShort") with { Volume = 0.4f }, player.Center);
+                }
             }
             return null;
         }
@@ -322,6 +475,17 @@ namespace CalRemix
                     Color col = item.type == ItemType<HornetRound>() ? Color.Yellow : Color.Red;
                     Main.EntitySpriteDraw(TextureAssets.Item[item.type].Value, position - new Vector2(TextureAssets.Item[item.type].Value.Width * 0.02f, TextureAssets.Item[item.type].Value.Height * 0.1f / frameCount) + rand, frame, col, 0, origin, scale * 1.4f, SpriteEffects.None);
                 }
+            }
+            if (item.type == ItemType<TheEnforcerGun>() && BuffedFrameTimer > 0)
+            {
+                if (BuffedFrameTimer % 8 == 0)
+                {
+                    BuffedFrameCounter++;
+                }
+                Texture2D buffed = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Buffed").Value;
+                spriteBatch.Draw(buffed, position, buffed.Frame(1, 8, 0, BuffedFrameCounter), Color.White, 0, new Vector2(buffed.Size().X / 2, buffed.Size().Y / 16), 1, 0, 0);
+                BuffedFrameTimer--;
+                return false;
             }
             return true;
         }
@@ -338,10 +502,6 @@ namespace CalRemix
             {
                 item.crit /= 3;
             }
-            if (item.type == ItemType<FabsolsVodka>())
-            {
-                TransformItem(ref item, ItemType<NotFabsolVodka>());
-            }
             if (CalRemixWorld.seafood)
             {
                 if (item.type == ItemType<Seafood>())
@@ -349,7 +509,7 @@ namespace CalRemix
                     TransformItem(ref item, ItemType<SeafoodFood>());
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -377,6 +537,18 @@ namespace CalRemix
                 {
                     player.GetModPlayer<CalRemixPlayer>().gottenCellPhone = true;
                 }
+            }
+            if (item.pick > 0)
+            {
+                if (player.Remix().taintedMining)
+                    item.pick = ContentSamples.ItemsByType[item.type].pick + 22;
+                else
+                    item.pick = ContentSamples.ItemsByType[item.type].pick;
+            }
+            if (item.type == ItemType<CrackshotColt>())
+            {
+                TransformItem(ref item, ItemType<TheEnforcerGun>());
+                SoundEngine.PlaySound(SoundID.ResearchComplete, player.Center);
             }
         }
         public static List<int> cosmicItems = new List<int>();
@@ -421,6 +593,22 @@ namespace CalRemix
                     Projectile.NewProjectile(source, position, starvelocity, ProjectileType<StratusStar>(), (int)(damage * 0.33f), player.whoAmI);
                 }
             }
+            if (modPlayer.taintedAmmo && item.useAmmo > 0 && Main.rand.NextBool(5))
+            {
+                player.PickAmmo(item, out int _, out float _, out int _, out float _, out int _);
+
+                bool infMusk = item.useAmmo == AmmoID.Bullet && player.HasItem(ItemID.EndlessMusketPouch);
+                bool infAr = item.useAmmo == AmmoID.Arrow && player.HasItem(ItemID.EndlessQuiver);
+                    
+                if (!infMusk && !infAr)
+                    Projectile.NewProjectile(source, position, velocity.RotatedBy(-Main.rand.NextFloat(-0.022f, 0.022f)), type, damage, knockback, player.whoAmI);
+            }
+            if (item.type == ItemType<ArkoftheCosmos>() && CalRemixWorld.weaponReworks)
+            {
+                if (player.ownedProjectileCounts[ProjectileType<Ark>()] <= 0)
+                Projectile.NewProjectile(source, position, velocity, ProjectileType<Ark>(), damage, knockback, player.whoAmI);
+                return false;
+            }
             return true;
         }
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
@@ -449,35 +637,27 @@ namespace CalRemix
                     {
                         if (item.type == ItemID.ShadowScale)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                            NPC blug = SpawnNewNPC(item.GetSource_FromThis(), spawnAt, NPCType<HiveMind>());
+                            for (int i = 0; i < 30; i++)
                             {
-                                Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
-                                int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<HiveMind>());
-                                NPC blug = Main.npc[n];
-                                for (int i = 0; i < 30; i++)
-                                {
-                                    Dust.NewDust(blug.position, blug.width, blug.height, DustID.Corruption);
-                                }
+                                Dust.NewDust(blug.position, blug.width, blug.height, DustID.Corruption);
                             }
                         }
                         else if (item.type == ItemID.TissueSample)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
+                            NPC blug = SpawnNewNPC(item.GetSource_FromThis(), spawnAt, NPCType<PerforatorHive>());
+                            for (int i = 0; i < 30; i++)
                             {
-                                Vector2 spawnAt = item.Center + new Vector2(0f, (float)item.height / 2f);
-                                int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<PerforatorHive>());
-                                NPC blug = Main.npc[n];
-                                for (int i = 0; i < 30; i++)
-                                {
-                                    Dust.NewDust(blug.position, blug.width, blug.height, DustID.Blood);
-                                }
+                                Dust.NewDust(blug.position, blug.width, blug.height, DustID.Blood);
                             }
                         }
                         item.active = false;
                     }
                 }
             }
-            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind))
+            if (item.type == ItemID.EnchantedSword && !(DownedBossSystem.downedPerforator || DownedBossSystem.downedHiveMind) && CalRemixWorld.weaponReworks)
             {
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
@@ -485,16 +665,14 @@ namespace CalRemix
             {
                 if (!NPC.AnyNPCs(NPCType<Pyrogen>()))
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
+                    NPC blug = SpawnNewNPC(item.GetSource_FromThis(), spawnAt, NPCType<Pyrogen>(), npcTasks: (NPC bl) =>
                     {
-                        Vector2 spawnAt = item.Center + new Vector2(1500f, (float)item.height / 2f);
-                        int n = NPC.NewNPC(item.GetSource_FromThis(), (int)spawnAt.X, (int)spawnAt.Y, NPCType<Pyrogen>());
-                        NPC blug = Main.npc[n];
-                        blug.ModNPC<Pyrogen>().enrageCounter = 2222222;
-                        blug.ModNPC<Pyrogen>().ultraEnraged = true;
-                        SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
-                        SoundEngine.PlaySound(sound, blug.Center);
-                    }
+                        bl.ModNPC<Pyrogen>().enrageCounter = 2222222;
+                        bl.ModNPC<Pyrogen>().ultraEnraged = true;
+                    });
+                    SoundStyle sound = new SoundStyle("CalRemix/Assets/Sounds/GenBosses/PyrogenPissed");
+                    SoundEngine.PlaySound(sound, blug.Center);
                     item.active = false;
                 }
             }
@@ -529,28 +707,15 @@ namespace CalRemix
                                 if (c.RuleToChain is CommonDrop fuck)
                                 {
                                     if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
-                                    {
-                                        lead.ChainedRules.RemoveAt(j);
-                                    }
+                                        fuck.itemId = ItemType<SaltBooklet>();
                                 }
-                            }
-                            else if (lead.ChainedRules[j] is Chains.TryIfFailedRandomRoll c2)
-                            {
-                                if (c2.RuleToChain is CommonDrop fuck)
-                                {
-                                    if (fuck.itemId == ItemID.AmethystStaff || fuck.itemId == ItemID.TopazStaff)
-                                    {
-                                        lead.ChainedRules.RemoveAt(j);
-                                    }
-                                }
-
                             }
                         }
                     }
                 }
-                itemLoot.Add(ItemType<SaltBooklet>(), 1);
+                itemLoot.Add(ItemType<WoodenRake>());
                 itemLoot.Add(ItemType<Anomaly109>());
-                itemLoot.AddIf(() => Main.netMode != NetmodeID.MultiplayerClient, ItemType<TheInsacredTexts>());
+                itemLoot.Add(ItemType<TheInsacredTexts>());
             }
             if (CalRemixAddon.CalVal != null)
             {
@@ -608,7 +773,7 @@ namespace CalRemix
             }
             else if (item.type == ItemID.SkeletronBossBag)
             {
-
+                itemLoot.Add(ItemType<SkullStormbow>(), 20);
             }
             else if (item.type == ItemType<SlimeGodBag>())
             {
@@ -652,6 +817,7 @@ namespace CalRemix
             else if (item.type == ItemType<CalamitasCloneBag>())
             {
                 itemLoot.Add(ItemType<RisingFire>(), 1 / 3);
+                itemLoot.Add(ItemType<CalamityRing>());
             }
             else if (item.type == ItemID.PlanteraBossBag)
             {
@@ -701,7 +867,7 @@ namespace CalRemix
             // pml
             else if (item.type == ItemType<DragonfollyBag>())
             {
-
+                itemLoot.Add(ItemType<DisgustingMeat>(), new Fraction(55, 100), 236, 650);
             }
             else if (item.type == ItemType<ProvidenceBag>())
             {
@@ -727,15 +893,15 @@ namespace CalRemix
             else if (item.type == ItemType<DevourerofGodsBag>())
             {
                 itemLoot.Add(ItemType<Lean>(), 1, 6, 8);
-                itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 1, 3);
+                itemLoot.AddIf(() => CalamityWorld.revenge, ItemType<YharimBar>(), 1, 10, 30);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<CosmiliteBar>());
                 itemLoot.AddIf(() => !CalRemixWorld.cosmislag, ItemType<CosmiliteBar>(), 1, 55, 65);
             }
             else if (item.type == ItemType<YharonBag>())
             {
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
-                yhar.Add(ItemType<YharimBar>(), 1, 1, 3, hideLootReport: !CalamityWorld.revenge);
-                yhar.AddFail(ItemType<YharimBar>(), 1, 6, 8, hideLootReport: CalamityWorld.revenge);
+                yhar.Add(ItemType<YharimBar>(), 1, 10, 30, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ItemType<YharimBar>(), 1, 60, 80, hideLootReport: CalamityWorld.revenge);
                 itemLoot.Add(yhar);
                 itemLoot.Add(ItemType<MovieSign>(), 100);
             }
@@ -749,8 +915,8 @@ namespace CalRemix
             else if (item.type == ItemType<CalamitasCoffer>() || item.type == ItemType<DraedonBag>())
             {
                 LeadingConditionRule yhar = itemLoot.DefineConditionalDropSet(() => CalamityWorld.revenge);
-                yhar.Add(ItemType<YharimBar>(), 1, 9, 11, hideLootReport: !CalamityWorld.revenge);
-                yhar.AddFail(ItemType<YharimBar>(), 1, 7, 9, hideLootReport: CalamityWorld.revenge);
+                yhar.Add(ItemType<YharimBar>(), 1, 90, 110, hideLootReport: !CalamityWorld.revenge);
+                yhar.AddFail(ItemType<YharimBar>(), 1, 70, 90, hideLootReport: CalamityWorld.revenge);
                 itemLoot.Add(yhar);
             }
         }
@@ -849,11 +1015,11 @@ namespace CalRemix
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<Radiance>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<Affliction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<LeviathanAmbergris>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
                 GetModItem(ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
                 player.sporeSac = true;
                 GetModItem(ItemType<Abaddon>()).UpdateAccessory(player, hideVisual);
@@ -861,17 +1027,6 @@ namespace CalRemix
                 GetModItem(ItemType<DynamoStemCells>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<BlazingCore>()).UpdateAccessory(player, hideVisual);
             }
-            // Doing it here means any accessories equipped in higher slots won't be affected by the boost
-            // This is intentional
-            //
-            // I hate this so much
-            /*if (modplayer.origenSoul)
-            {
-                if (genSouls.Contains(item.type))
-                {
-                    player.statDefense += NPC.downedMoonlord ? 40 : Main.hardMode ? 8 : 4;
-                }
-            }*/
         }
 
         public override void OnConsumeItem(Item item, Player player)
@@ -922,6 +1077,23 @@ namespace CalRemix
             }
         }
 
+        public override bool ConsumeItem(Item item, Player player)
+        {
+            // Infinite white blocks that arent ores
+            if (player.Remix().taintedBuilder)
+            {
+                if (item.rare == ItemRarityID.White)
+                {
+                    if (item.createTile > -1 || item.createWall > 0)
+                    {
+                        if (!(item.createTile > -1 && TileID.Sets.Ore[item.createTile]) && Main.rand.NextBool(5))
+                            return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public bool IsFruit(Item item)
         {
             return item.type == ItemID.Apple || item.type == ItemID.Apricot || item.type == ItemID.Grapefruit || item.type == ItemID.Lemon || item.type == ItemID.Peach
@@ -933,12 +1105,11 @@ namespace CalRemix
 
         public override void PostUpdate(Item item)
         {
-            int value = NPCType<Lizard>();
             foreach (NPC npc in Main.npc)
             {
-                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out value))
+                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out int value))
                 {
-                    NPC.NewNPCDirect(NPC.GetSource_None(), npc.Center, value);
+                    SpawnNewNPC(item.GetSource_FromThis(), npc.Center, value);
                     npc.life = 0;
                     item.active = false;
                 }
@@ -961,19 +1132,6 @@ namespace CalRemix
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             string key = "Items.Tooltips.";
-            if (item.Name.Contains(CalRemixHelper.LocalText($"{key}Stormbow").Value))
-            {
-                if (tooltips.Exists((TooltipLine t) => t.Name.Equals("Tooltip0")))
-                {
-                    TooltipLine tip0 = tooltips.Find((TooltipLine t) => t.Name.Equals("Tooltip0"));
-                    tip0.Text = CalRemixHelper.LocalText("Items.CopperStormbow.Tooltip").Value;
-                }
-                else
-                {
-                    TooltipLine tip = new(Mod, "CalRemix:Stormbow", CalRemixHelper.LocalText("Items.CopperStormbow.Tooltip").Value);
-                    tooltips.Add(tip);
-                }
-            }
             if (devItem != string.Empty)
             {
                 string text = CalamityUtils.ColorMessage($"- {CalRemixHelper.LocalText($"{key}Lightmix")} ", Color.Crimson);

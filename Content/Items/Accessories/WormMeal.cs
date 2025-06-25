@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Worm Meal");
-            Tooltip.SetDefault("'Surely my summons will eat this.. right?'");
+            // DisplayName.SetDefault("Worm Meal");
+            // Tooltip.SetDefault("'Surely my summons will eat this.. right?'");
         }
 
         public override void SetDefaults()

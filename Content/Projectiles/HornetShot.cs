@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles
         public override string Texture => "Terraria/Images/Projectile_242";
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("22 Hornet Round");
+			// DisplayName.SetDefault("22 Hornet Round");
 		}
 		public override void SetDefaults() 
         {

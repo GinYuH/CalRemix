@@ -47,6 +47,10 @@ using CalRemix.Core.Scenes;
 using CalRemix.Content.Tiles.Plates;
 using CalamityMod.Tiles.Plates;
 using CalRemix.Content.Items.Weapons.Stormbow;
+using static CalRemix.CalRemixHelper;
+using Terraria.Localization;
+using System.Linq;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Core.World
 {
@@ -81,6 +85,7 @@ namespace CalRemix.Core.World
         public static int ShrineTimer = -20; 
         public static int RoachCountdown = 0;
         public static int roachDuration = 0;
+        public static int vigorDialogueLevel = 0;
         public static bool loadedRecipeInjections = false;
 
         public static bool guideHasExisted = false;
@@ -92,7 +97,8 @@ namespace CalRemix.Core.World
         public static bool canGenerateBaron = false;
         public static bool generatedGrime = false;
         public static bool seenMBP = false;
-        public static int trueStory = 0;
+        public static bool seenRoaches = false;
+        public static bool metNoxus = false;
 
         public static List<(int, int)> plagueBiomeArray = new List<(int, int)>();
         public static int meldCountdown = 72000;
@@ -137,6 +143,9 @@ namespace CalRemix.Core.World
         public static bool hypothetical = true;
         public static bool savedAPicture = false;
         public static bool sneakerheadMode = true;
+        public static bool weaponReworks = true;
+        public static bool musicPitch = true;
+        public static bool bossAdditions = true;
 
 
         public static int ionQuestLevel = -1;
@@ -148,6 +157,8 @@ namespace CalRemix.Core.World
 
         public static bool stratusDungeonDisabled = false;
         public static NPC butterflyEffect = null;
+
+        internal static HashSet<string> playerSawTrueStory = [];
 
         public static List<int> DungeonWalls = new List<int>
         {
@@ -208,9 +219,9 @@ namespace CalRemix.Core.World
         {
             // Misc ints
             meldCountdown = 72000;
-            trueStory = 0;
             RoachCountdown = 0;
             roachDuration = 0;
+            vigorDialogueLevel = 0;
 
             // Misc bools
             guideHasExisted = false;
@@ -218,6 +229,8 @@ namespace CalRemix.Core.World
             ogslime = false;
             loadedRecipeInjections = false;
             seenMBP = false;
+            seenRoaches = false;
+            metNoxus = false;
 
             // Worldgen
             generatedCosmiliteSlag = false;
@@ -274,6 +287,9 @@ namespace CalRemix.Core.World
             deliciousMeat = true;
             profanedDesert = true;
             hypothetical = true;
+            weaponReworks = true;
+            musicPitch = true;
+            bossAdditions = true;
 
             AutoloadedLegendPortrait.OpenPicture = null;
             savedAPicture = false;
@@ -307,9 +323,11 @@ namespace CalRemix.Core.World
             tag["genHydrogen"] = generatedHydrogen;
             tag["grime"] = generatedGrime;
             tag["meld"] = meldCountdown;
-            tag["trueStory"] = trueStory;
             tag["roachDuration"] = roachDuration;
+            tag["seenRoach"] = seenRoaches;
             tag["mbp"] = seenMBP;
+            tag["metNoxus"] = metNoxus;
+            tag["vigor"] = vigorDialogueLevel;
 
             tag["109alloybar"] = alloyBars;
             tag["109essencebar"] = essenceBars;
@@ -349,6 +367,9 @@ namespace CalRemix.Core.World
             tag["109deliciousMeat"] = deliciousMeat;
             tag["109profaned"] = profanedDesert;
             tag["109hypothetical"] = hypothetical;
+            tag["109weaponReworks"] = weaponReworks;
+            tag["109musicPitch"] = musicPitch;
+            tag["109bossAdditions"] = bossAdditions;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -362,6 +383,8 @@ namespace CalRemix.Core.World
 
             tag["savedAPicture"] = savedAPicture;
             tag["sneakerheadMode"] = sneakerheadMode;
+
+            tag["playersJoined"] = playerSawTrueStory.ToList();
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -375,7 +398,9 @@ namespace CalRemix.Core.World
             GetData(ref canGenerateBaron, "canBaron", tag);
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
+            GetData(ref seenRoaches, "seenRoach", tag);
             GetData(ref seenMBP, "mbp", tag);
+            GetData(ref metNoxus, "metNoxus", tag);
 
             GetData(ref alloyBars, "109alloybar", tag);
             GetData(ref essenceBars, "109essencebar", tag);
@@ -415,11 +440,13 @@ namespace CalRemix.Core.World
             GetData(ref deliciousMeat, "109deliciousmeat", tag);
             GetData(ref profanedDesert, "109profaned", tag);
             GetData(ref hypothetical, "109hypothetical", tag);
-            GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
+            GetData(ref weaponReworks, "109weaponReworks", tag);
+            GetData(ref musicPitch, "109musicPitch", tag);
+            GetData(ref bossAdditions, "109bossAdditions", tag);
 
             meldCountdown = tag.Get<int>("meld");
-            trueStory = tag.Get<int>("trueStory");
             roachDuration = tag.Get<int>("roachDuration");
+            vigorDialogueLevel = tag.Get<int>("vigor");
 
             ionQuestLevel = tag.Get<int>("ionQuest");
             wizardDisabled = tag.Get<bool>("wizardToggle");
@@ -427,11 +454,14 @@ namespace CalRemix.Core.World
             hydrogenLocation.Y = tag.Get<float>("hydrolocationY");
             oxydayTime = tag.Get<int>("oxytime");
 
+            GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
             postGenUpdate = tag.Get<bool>("genUpdate");
 
             GetData(ref savedAPicture, "savedAPicture", tag);
             GetData(ref sneakerheadMode, "sneakerheadMode", tag);
+
+            playerSawTrueStory = [.. tag.GetList<string>("playersJoined")];
         }
 
         public static void GetData(ref bool baseVar, string path, TagCompound tag)
@@ -454,10 +484,12 @@ namespace CalRemix.Core.World
             writer.Write(generatedHydrogen);
             writer.Write(generatedGrime);
             writer.Write(meldCountdown);
-            writer.Write(trueStory);
             writer.Write(RoachCountdown);
             writer.Write(roachDuration);
             writer.Write(seenMBP);
+            writer.Write(seenRoaches);
+            writer.Write(metNoxus);
+            writer.Write(vigorDialogueLevel);
 
             writer.Write(alloyBars);
             writer.Write(essenceBars);
@@ -497,17 +529,26 @@ namespace CalRemix.Core.World
             writer.Write(deliciousMeat);
             writer.Write(profanedDesert);
             writer.Write(hypothetical);
+            writer.Write(savedAPicture);
+            writer.Write(sneakerheadMode);
+            writer.Write(weaponReworks);
+            writer.Write(musicPitch);
+            writer.Write(bossAdditions);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
             writer.Write(hydrogenLocation.X);
             writer.Write(hydrogenLocation.Y);
             writer.Write(oxydayTime);
+            writer.Write(postGenUpdate);
 
             writer.Write(ScreenHelperManager.screenHelpersEnabled);
             writer.Write(ScreenHelperManager.fannyTimesFrozen);
             writer.Write(Anomaly109Manager.helpUnlocked);
-            writer.Write(postGenUpdate);
+            for (int i = 0; i < Anomaly109Manager.options.Count; i++)
+            {
+                writer.Write(Anomaly109Manager.options[i].unlocked);
+            }
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -522,10 +563,12 @@ namespace CalRemix.Core.World
             generatedHydrogen = reader.ReadBoolean();
             generatedGrime = reader.ReadBoolean();
             meldCountdown = reader.ReadInt32();
-            trueStory = reader.ReadInt32();
             RoachCountdown = reader.ReadInt32();
             roachDuration = reader.ReadInt32();
             seenMBP = reader.ReadBoolean();
+            seenRoaches = reader.ReadBoolean();
+            metNoxus = reader.ReadBoolean();
+            vigorDialogueLevel = reader.ReadInt32();
 
             alloyBars = reader.ReadBoolean();
             essenceBars = reader.ReadBoolean();
@@ -565,17 +608,26 @@ namespace CalRemix.Core.World
             deliciousMeat = reader.ReadBoolean();
             profanedDesert = reader.ReadBoolean();
             hypothetical = reader.ReadBoolean();
+            savedAPicture = reader.ReadBoolean();
+            sneakerheadMode = reader.ReadBoolean();
+            weaponReworks = reader.ReadBoolean();
+            musicPitch = reader.ReadBoolean();
+            bossAdditions = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
             hydrogenLocation.X = reader.ReadSingle();
             hydrogenLocation.Y = reader.ReadSingle();
             oxydayTime = reader.ReadInt32();
+            postGenUpdate = reader.ReadBoolean();
 
             ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
             ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();
             Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
-            postGenUpdate = reader.ReadBoolean();
+            for (int i = 0; i < Anomaly109Manager.options.Count; i++)
+            {
+                Anomaly109Manager.options[i].unlocked = reader.ReadBoolean();
+            }
         }
 
         public override void PreUpdateWorld()
@@ -681,7 +733,7 @@ namespace CalRemix.Core.World
                     {
                         float posX = Main.LocalPlayer.position.X + Main.rand.Next(1000, 2000) * Main.LocalPlayer.direction;
                         float posY = Main.LocalPlayer.position.Y - Main.rand.Next(-200, 600);
-                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)posX, (int)posY, NPCType<FloatingBiomass>());
+                        SpawnNewNPC(new EntitySource_WorldEvent(), (int)posX, (int)posY, NPCType<FloatingBiomass>());
                     }
                 }
                 if (Main.time == 1 && !Main.dayTime && Main.rand.NextBool(3))
@@ -711,25 +763,6 @@ namespace CalRemix.Core.World
                     Main.townNPCCanSpawn[NPCID.Princess] = true;
                 }
             }
-            if (trueStory < maxStoryTime)
-            {
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    trueStory++;
-                }
-                else
-                {
-                    int td = trueStory + 1;
-                    ModPacket packet = CalRemix.instance.GetPacket();
-                    packet.Write((byte)RemixMessageType.TrueStory);
-                    packet.Write(td);
-                    packet.Send();
-                }
-                if (trueStory >= maxStoryTime)
-                {
-                    UpdateWorldBool();
-                }
-            }
             ExcavatorSummon();
         }
 
@@ -750,7 +783,7 @@ namespace CalRemix.Core.World
                         {
                             for (int slot = 0; slot < Chest.maxItems; slot++)
                             {
-                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && cheste.item[slot].type == ItemType<CalamityMod.Items.Materials.EnergyCore>() && cheste.item[slot].stack == 1)
+                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && WulfwyrmHead.SummonItems.Contains(cheste.item[slot].type) && cheste.item[slot].stack == 1)
                                 {
                                     // is the rest of the chest empty
                                     int ok = 0;
@@ -763,16 +796,11 @@ namespace CalRemix.Core.World
                                             NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, chestenum, slot, cheste.item[slot].stack, cheste.item[slot].prefix, cheste.item[slot].type);
 
                                         SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
-
-                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        SpawnNewNPC(p.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>(), npcTasks: (NPC npc) =>
                                         {
-                                            int npc = NPC.NewNPC(p.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>());
-                                            Main.npc[npc].timeLeft *= 20;
-                                            CalamityUtils.BossAwakenMessage(npc);
-                                            Main.npc[npc].velocity.Y = -20;
-                                            if (Main.netMode == NetmodeID.Server)
-                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc);
-                                        }
+                                            npc.timeLeft *= 20;
+                                            npc.velocity.Y = -20;
+                                        }, awakenMessage: true);
                                         break;
                                     }
                                 }
@@ -794,16 +822,9 @@ namespace CalRemix.Core.World
             {
                 if (CalRemixNPC.aspidCount >= 20 && !DownedBossSystem.downedCryogen)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<Cryogen>());
-                    }
+                    SpawnNPCOnPlayer(Main.myPlayer, NPCType<Cryogen>());
                     CalRemixNPC.aspidCount = 0;
                 }
-            }
-            if (CalamityWorld.spawnedCirrus)
-            {
-                CalamityWorld.spawnedCirrus = false;
             }
             if (!guideHasExisted)
             if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
@@ -899,10 +920,7 @@ namespace CalRemix.Core.World
                             }
                         }
                     }
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.SpawnOnPlayer(Main.myPlayer, NPCType<AquaticScourgeHead>());
-                    }
+                    SpawnNPCOnPlayer(Main.myPlayer, NPCType<AquaticScourgeHead>());
                 }
             }
             if (CalRemixAddon.CalVal != null && (DateTime.Now.Day == 1 && DateTime.Now.Month == 4 || DateTime.Now.Month == 4 && DateTime.Now.Day <= 7 && Main.zenithWorld))
@@ -918,7 +936,7 @@ namespace CalRemix.Core.World
             }
             // Roach Mayhem!!!
             // If the date is Black Friday (well for 2024 at least), start incrementing the timer if it isn't at -1
-            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && roachDuration > -2)
+            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 29 && RoachCountdown >= 0 && !seenRoaches)
             {
                 RoachCountdown++;
             }
@@ -941,7 +959,7 @@ namespace CalRemix.Core.World
             }
             // Regularly play alarms while decrementing the event duration
             // Do not decrement if the countdown hasn't finished (marked by it being -1)
-            if (roachDuration > -2 && RoachCountdown <= 0)
+            if (roachDuration > -2)
             {
                 if (roachDuration > 0 && Main.LocalPlayer.miscCounter % 90 == 0)
                 {
@@ -956,7 +974,16 @@ namespace CalRemix.Core.World
                 {
                     RoachScene.explosions.Clear();
                 }
+                seenRoaches = true;
                 UpdateWorldBool();
+            }
+            // Unlock Solyn's helper form
+            if (CalRemixAddon.Wrath != null)
+            {
+                if ((bool)CalRemixAddon.Wrath.Call("GetBossDefeated", "Noxus"))
+                {
+                    Main.LocalPlayer.Remix().solynUnlocked = true;
+                }
             }
         }
 
@@ -1075,6 +1102,45 @@ namespace CalRemix.Core.World
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
+            var shiniesIndex = tasks.FindIndex(x => x.Name.Equals("Shinies"));
+            tasks.Insert(
+                shiniesIndex + 1,
+                new PassLegacy(
+                    "Dullies",
+                    (progress, _) =>
+                    {
+                        progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.Dullies");
+
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 6E-05); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh), WorldGen.genRand.Next(3, 6), WorldGen.genRand.Next(2, 6), GetRandomStoneType());
+                        }
+
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 8E-05); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh), WorldGen.genRand.Next(3, 7), WorldGen.genRand.Next(3, 7), GetRandomStoneType());
+                        }
+                        for (var i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 0.0002); i++)
+                        {
+                            WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayerLow, Main.maxTilesY), WorldGen.genRand.Next(4, 9), WorldGen.genRand.Next(4, 8), GetRandomStoneType());
+                        }
+
+                        return;
+
+                        static int GetRandomStoneType()
+                        {
+                            return WorldGen.genRand.Next(0, 3) switch
+                            {
+                                0 => TileType<AndesitePlaced>(),
+                                1 => TileType<DioritePlaced>(),
+                                2 => TileType<GranitePlaced>(),
+                                _ => TileType<AndesitePlaced>(),
+                            };
+                        }
+                    }
+                )
+            );
+            
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
             int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
             tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
@@ -1141,6 +1207,7 @@ namespace CalRemix.Core.World
                     CalamityUtils.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
+                tasks.Insert(FinalIndex, new PassLegacy("Crimson Heart", (progress, config) => { CrimsonHeart.GenerateCrimsonHeart(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Engineering a bronze device", (progress, config) => { AncientConsoleGen.GenerateConsole(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Origen Workshop", (progress, config) => { OrigenWorkshop.GenerateOrigenWorkshop(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Building a Bomb", (progress, config) =>
@@ -1171,6 +1238,74 @@ namespace CalRemix.Core.World
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
                 }));
+                tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Planetoids")) + 1, new PassLegacy("ItGetsDeeper", (progress, config) =>
+                {
+                    progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
+                    
+                    // lol replace ores in planetoids
+                    for (var x = 0; x < Main.maxTilesX; x++)
+                    for (var y = 0; y < 200; y++)
+                    {
+                        // replace iron with granite and lead marble
+                        var tile = CalamityUtils.ParanoidTileRetrieval(x, y);
+                        if (!tile.HasTile)
+                        {
+                            continue;
+                        }
+
+                        if (tile.TileType is TileID.Iron or TileID.Lead)
+                        {
+                            tile.TileType = WorldGen.genRand.NextBool() ? (ushort)TileType<GranitePlaced>() : TileID.Marble;
+                        }
+                    }
+
+                    // wrap any amethyst in layers of calcite
+                    for (var i = 0; i < Main.maxTilesX; i++)
+                    for (var j = 0; j < Main.maxTilesY; j++)
+                    {
+                        var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                        if (tile is { HasTile: true, TileType: TileID.Amethyst })
+                        {
+                            for (var x = -1; x <= 1; x++)
+                            for (var y = -1; y <= 1; y++)
+                            {
+                                var surroundingTile = CalamityUtils.ParanoidTileRetrieval(i + x, j + y);
+
+                                if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
+                                {
+                                    surroundingTile.TileType = (ushort)TileType<CalcitePlaced>();
+                                }
+                            }
+                        }
+                    }
+                    
+                    var seed = WorldGen.genRand.Next(0, int.MaxValue);
+
+                    for (var i = 0; i < Main.maxTilesX; i++)
+                    {
+                        var height = CalamityUtils.PerlinNoise2D(i / 380f, 0, 3, seed);
+
+                        var fluctuatingHeight = GenVars.lavaLine + (int)(height * 10);
+
+                        for (var j = fluctuatingHeight; j < Main.maxTilesY; j++)
+                        {
+                            var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
+
+                            if (tile is { HasTile: true, TileType: TileID.Stone })
+                            {
+                                tile.TileType = (ushort)TileType<DeepslatePlaced>();
+                            }
+                        }
+                    }
+
+                    return;
+
+                    static float StupidNoise(float x, float y)
+                    {
+                        return (MathF.Sin(x) * MathF.Cos(y) + 1) / 2;
+                    }
+                }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
             }
             // Secret Banished Baron seed
@@ -1198,6 +1333,7 @@ namespace CalRemix.Core.World
                 {
                     WarbledOres.WarbleChestLoot(chest);
 
+                    // dungeon chests
                     if (Main.tile[chest.x, chest.y].TileType == TileType<StratusChest>())
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
@@ -1217,6 +1353,7 @@ namespace CalRemix.Core.World
                             }
                         }
                     }
+                    // abyss shrine chest
                     if (Main.tile[chest.x, chest.y].TileType == TileType<VoidChest>())
                     {
                         if (chest.item[0].type == ItemType<Terminus>())
@@ -1224,6 +1361,7 @@ namespace CalRemix.Core.World
                             chest.item[0].SetDefaults(ItemType<FannyLogAbyss>());
                         }
                     }
+                    // draedon lab chests
                     if (Main.tile[chest.x, chest.y].TileType == TileType<SecurityChestTile>() || Main.tile[chest.x, chest.y].TileType == TileType<AgedSecurityChestTile>())
                     {
                         bool getShifty = false;
@@ -1279,6 +1417,18 @@ namespace CalRemix.Core.World
                                 chest.item[inventoryIndex].SetDefaults(ItemType<FannyLogSpace>());
                                 break;
                             }
+                        }
+                    }
+                    // every chest ever
+                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                    {
+                        if (chest.item[inventoryIndex].type == ItemID.None)
+                        {
+                            if (Main.rand.NextBool())
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<TheBeacon>());
+                            }
+                            break;
                         }
                     }
                 }

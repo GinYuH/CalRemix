@@ -53,7 +53,7 @@ namespace CalRemix.Content.NPCs.MBP
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Some Hive Mind Thing");
+            // DisplayName.SetDefault("Some Hive Mind Thing");
             this.HideFromBestiary();
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }

@@ -12,7 +12,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
         public override void SetStaticDefaults()
         {
             this.HideFromBestiary();
-            DisplayName.SetDefault("Wulfrum Excavator");
+            // DisplayName.SetDefault("Wulfrum Excavator");
             Main.npcFrameCount[NPC.type] = 2;
         }
 

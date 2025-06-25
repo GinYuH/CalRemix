@@ -28,8 +28,8 @@ namespace CalRemix.Content.Items.Ammo
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pink Grey Solution");
-            Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Dungeon");
+            // DisplayName.SetDefault("Pink Grey Solution");
+            // Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Dungeon");
         }
 
         public override void SetDefaults()
@@ -55,8 +55,8 @@ namespace CalRemix.Content.Items.Ammo
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Green Grey Solution");
-            Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Dungeon");
+            // DisplayName.SetDefault("Green Grey Solution");
+            // Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Dungeon");
         }
 
         public override void SetDefaults()
@@ -82,8 +82,8 @@ namespace CalRemix.Content.Items.Ammo
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blue Grey Solution");
-            Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Dungeon");
+            // DisplayName.SetDefault("Blue Grey Solution");
+            // Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Dungeon");
         }
 
         public override void SetDefaults()

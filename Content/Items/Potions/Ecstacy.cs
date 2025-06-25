@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ecstacy");
-            Tooltip.SetDefault("Significantly boosts elemental strength");
+            // DisplayName.SetDefault("Ecstacy");
+            // Tooltip.SetDefault("Significantly boosts elemental strength");
         }
 
 

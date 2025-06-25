@@ -9,7 +9,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ionogen's Shield");
+            // DisplayName.SetDefault("Ionogen's Shield");
             this.HideFromBestiary();
         }
 

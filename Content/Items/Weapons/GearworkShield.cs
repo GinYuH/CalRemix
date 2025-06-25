@@ -19,7 +19,7 @@ public class GearworkShield: RogueWeapon
     private bool stealth = false;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Gearwork Shield");
+        // DisplayName.SetDefault("Gearwork Shield");
         Item.ResearchUnlockCount = 1;
     }
     public override void SetDefaults()

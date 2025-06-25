@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Flaming Ice Bow");
+            // DisplayName.SetDefault("Flaming Ice Bow");
 		}
 		public override void SetDefaults() 
 		{

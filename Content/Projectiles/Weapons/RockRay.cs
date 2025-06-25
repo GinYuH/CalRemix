@@ -20,7 +20,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rock Ray");
+            // DisplayName.SetDefault("Rock Ray");
             ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
         }
         public override bool PreAI()

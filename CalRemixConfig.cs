@@ -12,8 +12,11 @@ namespace CalRemix
 {
     public class CalRemixConfig : ModConfig
     {
-        public static CalRemixConfig instance;
+        public static CalRemixConfig Instance;
+
         public override ConfigScope Mode => ConfigScope.ClientSide;
+
+        [Header("MainMenuHeader")]
 
         [DefaultValue(true)]
         public bool forcedMenu;
@@ -23,6 +26,24 @@ namespace CalRemix
 
         [DefaultValue(false)]
         public bool useSecondMenu;
+
+        [Header("VisualEffectsHeader")]
+
+        [DefaultValue(true)]
+        public bool photosensitivity;
+
+        //[Label("Screen Shatter Effects")]
+        //[BackgroundColor(224, 127, 180, 192)]
+        [DefaultValue(true)]
+        //[Tooltip("Enables screen shatter effects. Disable if they're too straining on the eyes.")]
+        public bool ScreenShatterEffects;
+
+        //[Label("Visual Overlay Intensity")]
+        //[BackgroundColor(224, 127, 180, 192)]
+        [DefaultValue(0.5f)]
+        [Range(0f, 1f)]
+        //[Tooltip("Changes the intensity of visual overlays such as blur and chromatic aberration.")]
+        public float VisualOverlayIntensity;
     }
     public class RemixButton : UIElement
     {

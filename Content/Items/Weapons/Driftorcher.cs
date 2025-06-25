@@ -20,7 +20,7 @@ public class Driftorcher : ModItem
     private int torch = -1;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Driftorcher");
+        // DisplayName.SetDefault("Driftorcher");
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 
@@ -97,7 +97,6 @@ public class Driftorcher : ModItem
             target.AddBuff(BuffType<BrimstoneFlames>(), 120);
             target.AddBuff(BuffID.OnFire3, 120);
             target.AddBuff(BuffType<HolyFlames>(), 120);
-            target.AddBuff(BuffType<KamiFlu>(), 120);
             target.AddBuff(BuffID.Frostburn2, 120);
             target.AddBuff(BuffID.Venom, 120);
         }

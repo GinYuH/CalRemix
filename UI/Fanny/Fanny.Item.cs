@@ -13,8 +13,10 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.TownNPCs;
+using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.UI.Logs;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -28,14 +30,15 @@ namespace CalRemix.UI
         public static void LoadItemMessages()
         {
             #region Item
-            HelperMessage.New("Forge", "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
+            //Fanny
+            HelperMessage.New("Forge", "Nuh uh uh! Without Delicious Meat, the Draedon's Forge simply will not work. Get to it, friend!",
                 "FannyNuhuh", HasDraedonForgeMaterialsButNoMeat, onlyPlayOnce: false, cooldown: 120).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
 
-            HelperMessage.New("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", "FannyAwooga",
-                (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
+            HelperMessage.New("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", 
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
 
-            HelperMessage.New("Relocator", "Wow! You crafted a Normality Relocator! with a press of a button, unyielding discord is at your fingertips!", "FannyIdle",
-                (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>());
+            HelperMessage.New("Relocator", "Wow! You crafted a Normality Relocator! This is an invaluable tool in abyss exploration, since it means you can go further in at a quicker pace!", 
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>());
 
             HelperMessage.New("BunnyMurder", "...",
                 "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.BunnyBanner), 5, cantBeClickedOff: true).AddItemDisplay(ItemID.BunnyBanner);
@@ -54,10 +57,11 @@ namespace CalRemix.UI
             //Add a condition to this one YUH, to pass the test of knowledge...
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
-            HelperMessage.New("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!",
+            //where is yuh? im going to iban,code,code,code
+            HelperMessage.New("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific, isn't it? Guess that's just how the cookie crumbles!",
                 "FannyNuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>());
 
-            HelperMessage.New("VoodooDoll", "Cool doll you have! I think that it will be even cooler when in lava!",
+            HelperMessage.New("VoodooDoll", "Rather nice doll! Though, they are rather plentiful. If they keep flooding your inventory, maybe you should throw some out in lava...?",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.GuideVoodooDoll));
 
             HelperMessage.New("TwentyTwo", "I love 22. My banner now.",
@@ -67,10 +71,10 @@ namespace CalRemix.UI
                 "FannySob", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<ShadowspecBar>())).AddItemDisplay(ModContent.ItemType<ShadowspecBar>()).SetHoverTextOverride("Thank you for the help Fanny! I will!");
 
             HelperMessage.New("Wood", "Wood? Yummy!",
-              "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood));
+              "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood));
 
-            HelperMessage.New("HallowedBar", "What you hold now is a bar of extraordinary power infused with the essence of Heaven itself! That's a biome right?",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is Fanny, it sure is.");
+            HelperMessage.New("HallowedBar", "Quite the powerful bar you've got there! Keep those safe, as they're a vital part to achiving Auric Bars for powerful lategame gear.",
+               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is, Fanny. It sure is.");
 
             HelperMessage.New("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LifeCrystal));
@@ -78,16 +82,16 @@ namespace CalRemix.UI
             HelperMessage.New("Jump", "Did you know? You can press the \"space\" button to jump!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!");
 
-            HelperMessage.New("TitanHeart", "You got a heart from a titan! Place it on the tower for a wacky light show!",
+            HelperMessage.New("TitanHeart", "You got a heart from a Titan! Place it on the tower for a wacky light show!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TitanHeart>())).AddItemDisplay(ModContent.ItemType<TitanHeart>());
 
             HelperMessage.New("BloodyVein", "The Bloody Vein is an item of utmost importance which can be inserted into various altars and machinery for wacky results. How about inserting one into one of those lab hologram box things?",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<BloodyVein>())).AddItemDisplay(ModContent.ItemType<BloodyVein>());
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<BloodyVein>())).AddItemDisplay(ModContent.ItemType<BloodyVein>());
 
-            HelperMessage.New("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein from the Crimson's Perforators is way better!",
+            HelperMessage.New("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein, which is much more important, can be obtained from a special event in the Corruption biome.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<RottingEyeball>()) && !WorldGen.crimson).AddItemDisplay(ModContent.ItemType<RottingEyeball>()).SetHoverTextOverride("Thanks Fanny! I'll be sure to make a Crimson world next time.");
 
-            HelperMessage.New("AlloyBar", "Congratulations, you have obtained the final bar for this stage of your adventure. You should attempt making some Alloy Bars, a versatile material made of every available bar which can be used for powerful items.",
+            HelperMessage.New("AlloyBar", "Congratulations, my friend! With the power of this Alloy Bar, you're sure to complete this stage of your adventure with your eyes closed! Enjoy the fruits of your labour, you deserve it!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<AlloyBar>())).AddItemDisplay(ModContent.ItemType<AlloyBar>());
 
             HelperMessage.New("Sponge", "Oh, is that a Sponge? Maybe avoid using it. I've heard something about the wielder dying, or something...",
@@ -106,37 +110,51 @@ namespace CalRemix.UI
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DarksunFragment>())).AddItemDisplay(ModContent.ItemType<DarksunFragment>());
 
             HelperMessage.New("Onion", "I'd be weary about eating that strange plant. You can only get one, so it might be useful to hang on to it for later.",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>())).AddItemDisplay(ModContent.ItemType<CelestialOnion>());
-
-            HelperMessage sama = HelperMessage.New("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny();
-
-            HelperMessage mgra = HelperMessage.New("Muracrimsona1", "Lmao this item is \"perfectly balanced\" am i right?? Standig here i realize like mgr",
-                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(sama, 5, true);
-
-            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU WHY WERE YOU EVEN HIRED!?",
-                "EvilFannyIdle", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(mgra, 3, true);
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<CelestialOnion>()) && Main.LocalPlayer.Remix().miracleUnlocked).AddItemDisplay(ModContent.ItemType<CelestialOnion>());
 
             HelperMessage.New("CleavageFurrow", "One time, I went to the pond on a bright summer afternoon! One of the frogs leaped from its lily pad and locked eyes with me. I believe it had a cleavage furrow? Oh, what a dopey little smile that fella had!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<UniverseSplitter>())).SetHoverTextOverride("Very cool, Fanny!");
 
             HelperMessage.New("PetRock", "Oh hey, is that my pet rock? I lost it in my backyard a few years back. I’ve been trying to find it since!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Rock>())).AddItemDisplay(ModContent.ItemType<Rock>());
+                "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<Rock>())).AddItemDisplay(ModContent.ItemType<Rock>());
 
-            HelperMessage.New("RockLobster1", "Oh, hot tamales! You've gone and done it! You've reeled in a lobster, my friend! Can you believe it? A rock lobster, right here in the oasis! I mean, who would've thought? Rock Lobsters are like the rockstars of the desert, and you just snagged one. You're a fishing master, my friend! But hey, let me tell you a tale about lobsters that'll have you crackling with laughter. So there I was, with my good pal Dron, you know. We decided to hit up this fancy lobster restaurant downtown. Now, you might be wondering, \"Fanny, why would a flame like you even eat lobster?\" Well, my friend, curiosity burns bright, and I figured it was worth a shot. We waltz into this posh place, me flickering with excitement, Dron rolling in like a boss. We get seated, and the waiter hands us these bibs – you know, the ones with the goofy lobster design? I, of course, couldn't wear one, being made of flame and all, but Dron struggled a bit. Picture it: Dron, bib askew, trying to maneuver it with no arms. Hilarious, right? Now, we dive into the menu. Lobster this, lobster that – it was like a seafood carnival! Dron's eyes were wide, no arms to shield them from the sea of options. We decided to go for the lobster feast, the whole shebang. And let me tell you, it was a feast fit for kings! But here comes the twist! The waiter brings out this succulent lobster dish, steam rising like the flames on my head. Dron takes a bite, a hearty one, and suddenly, his face turns redder than a ripe tomato. Turns out, he's allergic to shellfish! Who would've thought? Poor Dron, armless and allergic – the universe sure has a sense of humor. Which reminds me of the spicy saga of my friend Green Demon and his salsa extravaganza. Now, Green Demon is quite the character – always pushing the boundaries of fiery flavors, forever on a quest to grow the spiciest peppers in our little corner of the world. One day, the sun was blazing overhead, and Green Demon excitedly invited our motley crew – me, La Ruga, Ogscule, Tim, Cnidrion, and Pyrogen – for a salsa fiesta at his fiery abode. Oh, the anticipation was palpable! I flickered with excitement, eager to see what kind of fiery concoction he had in store for us. As we approached, the scent of peppers wafted through the air like a zesty dance. Rows upon rows of vibrant, fiery red and green peppers swayed in the breeze, basking in the sun's warm embrace. Green Demon, with his devilish grin, welcomed us to his spicy paradise. \"Behold, my friends! The harvest of the spiciest peppers in the land!\" he declared, his eyes gleaming with mischievous delight. We gathered around as Green Demon plucked peppers with such finesse, it was like he was orchestrating a spicy symphony. With a basket brimming with peppers, he led us to his fiery kitchen, a cauldron bubbling away with a mysterious potion – or rather, his special salsa. The kitchen was alive with the rhythmic chopping of peppers and the sizzling melody of ingredients harmonizing in the pan. I, being a flame myself, felt right at home amidst the culinary inferno. Green Demon's hands moved with the precision of a seasoned chef, his eyes gleaming with the promise of a taste explosion. Now, my friends, you must understand – this salsa wasn't just your average dip. It was a potion of pure heat, a symphony of spices that would make even the bravest tongues tremble. Green Demon was a maestro, and his salsa was his fiery masterpiece. As the salsa simmered, the aroma grew more intense. It was like a spicy enchantment had taken over the kitchen. We were all eagerly awaiting the taste test, our excitement building like a rising flame. Finally, the moment of truth arrived. Green Demon scooped up a generous amount of salsa and handed us each a tortilla chip. We stared at each other, eyes wide with anticipation, and took a bite simultaneously. Flames! The heat hit us like a spicy meteor shower.", "FannyIdle"
-                , (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RockLobster), maxWidth: 1000, fontSize: 0.8f).AddItemDisplay(ItemID.RockLobster);
+            HelperMessage.New("RockLobster1", "Oh, hot tamales! You've gone and done it! You've reeled in a lobster, my friend! Can you believe it? A rock lobster, right here in the oasis! I mean, who would've thought? Rock Lobsters are like the rockstars of the desert, and you just snagged one. You're a fishing master, my friend! But hey, let me tell you a tale about lobsters that'll have you crackling with laughter. So there I was, with my good pal Dron, you know. We decided to hit up this fancy lobster restaurant downtown. Now, you might be wondering, \"Fanny, why would a flame like you even eat lobster?\" Well, my friend, curiosity burns bright, and I figured it was worth a shot. We waltz into this posh place, me flickering with excitement, Dron rolling in like a boss. We get seated, and the waiter hands us these bibs – you know, the ones with the goofy lobster design? I, of course, couldn't wear one, being made of flame and all, but Dron struggled a bit. Picture it: Dron, bib askew, trying to maneuver it with no arms. Hilarious, right? Now, we dive into the menu. Lobster this, lobster that – it was like a seafood carnival! Dron's eyes were wide, no arms to shield them from the sea of options. We decided to go for the lobster feast, the whole shebang. And let me tell you, it was a feast fit for kings! But here comes the twist! The waiter brings out this succulent lobster dish, steam rising like the flames on my head. Dron takes a bite, a hearty one, and suddenly, his face turns redder than a ripe tomato. Turns out, he's allergic to shellfish! Who would've thought? Poor Dron, armless and allergic – the universe sure has a sense of humor. Which reminds me of the spicy saga of my friend Green Demon and his salsa extravaganza. Now, Green Demon is quite the character – always pushing the boundaries of fiery flavors, forever on a quest to grow the spiciest peppers in our little corner of the world. One day, the sun was blazing overhead, and Green Demon excitedly invited our motley crew – me, La Ruga, Ogscule, Tim, Cnidrion, and Pyrogen – for a salsa fiesta at his fiery abode. Oh, the anticipation was palpable! I flickered with excitement, eager to see what kind of fiery concoction he had in store for us. As we approached, the scent of peppers wafted through the air like a zesty dance. Rows upon rows of vibrant, fiery red and green peppers swayed in the breeze, basking in the sun's warm embrace. Green Demon, with his devilish grin, welcomed us to his spicy paradise. \"Behold, my friends! The harvest of the spiciest peppers in the land!\" he declared, his eyes gleaming with mischievous delight. We gathered around as Green Demon plucked peppers with such finesse, it was like he was orchestrating a spicy symphony. With a basket brimming with peppers, he led us to his fiery kitchen, a cauldron bubbling away with a mysterious potion – or rather, his special salsa. The kitchen was alive with the rhythmic chopping of peppers and the sizzling melody of ingredients harmonizing in the pan. I, being a flame myself, felt right at home amidst the culinary inferno. Green Demon's hands moved with the precision of a seasoned chef, his eyes gleaming with the promise of a taste explosion. Now, my friends, you must understand – this salsa wasn't just your average dip. It was a potion of pure heat, a symphony of spices that would make even the bravest tongues tremble. Green Demon was a maestro, and his salsa was his fiery masterpiece. As the salsa simmered, the aroma grew more intense. It was like a spicy enchantment had taken over the kitchen. We were all eagerly awaiting the taste test, our excitement building like a rising flame. Finally, the moment of truth arrived. Green Demon scooped up a generous amount of salsa and handed us each a tortilla chip. We stared at each other, eyes wide with anticipation, and took a bite simultaneously. Flames! The heat hit us like a spicy meteor shower.",
+                "FannyBigGrin", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.RockLobster), maxWidth: 1000, fontSize: 0.8f).AddItemDisplay(ItemID.RockLobster);
 
             HelperMessage.New("RockLobster2", "Laughter erupted as we danced around, fanning our tongues with imaginary flames. Even I, a flame myself, felt the burn in the most delightful way. Green Demon stood there, triumphant, his devilish grin widening. \"What did I tell you, my friends? The spiciest salsa in the realm!\" But my pal La Ruga took a cautious bite, realizing it was the perfect companion to his daily tea sessions. Oh La Ruga. Every Tuesday, without fail, we embark on a literary adventure to our favorite place in the world – the cozy little bookstore at the corner of the Exosphere. We strut into the bookstore like we own the place, La Ruga and me. Well, La Ruga doesn't really strut; more like gracefully scuttles with its long legs. I'm there, flickering and crackling, like a flame on a mission – a mission for some good reads. The moment we step inside, the scent of old paper and ink wafts through the air. It's like the very essence of knowledge, a fragrance that fuels my fiery enthusiasm. La Ruga seems to breathe it all in, its shadowy arms flickering with delight. Now, you might wonder, \"Fanny, why a bookstore?\" Well, let me tell you, there's something magical about flipping through the pages of a good book. The way the words dance off the paper, creating a world only limited by the imagination. It's a burning passion of mine, and La Ruga, with its ancient wisdom, appreciates the art of storytelling too. We start our journey through the aisles, and La Ruga guides me to the classics – timeless tales of adventure, romance, and mystery. Picture this: a flame flickering next to a T⍑ᒷ rᒷᓵꖌ𝙹リ, engrossed in the ancient wisdom of literature. If anyone happened to stroll by, they'd probably think they'd stumbled into a fantastical scene from a storybook. But, oh, the joy of finding a hidden gem! We once stumbled upon a dusty old tome, forgotten by time. It had a worn cover, and the pages whispered secrets of a bygone era. La Ruga and I exchanged excited glances – this was a treasure trove waiting to be explored! We huddled in a cozy reading nook, La Ruga spreading its legs out, making a snug spot for me to flicker comfortably. As I read aloud, the words came alive, creating vivid images in our minds. The world outside faded away, and it was just me, La Ruga, and the enchanting tales within those pages. Of course, being a flame, I have to be careful not to singe the pages. La Ruga occasionally gives me a gentle nudge if I get too close, a silent reminder to keep my flames in check. We've developed quite the teamwork, I must say. Now, I pick out a few books at the bookstore, and head to the park for some extra reading. Usually, my friend Tim joins me at the park, but this time, my other friend Ogscule decided to join me instead.  Now picture this: a sunny day at the park, the trees swaying gently, and the air filled with the delightful scent of nature. I'm there, Fanny the Flame, and by my side is none other than my trusty friend Ogscule. We come across a patch of grass, and Ogscule suggests we feed the birds. Now, considering that Ogscule, like Dron, doesn't have hands – or any appendages, for that matter – I'm intrigued. How on earth is this going to work? But I'm all for adventure, so we decide to give it a shot. Ogscule plops down on the grass, and I hover beside him, flames flickering in anticipation. We've got a bag of bird feed, and Ogscule looks at me with those fleshy eyes, ready for action. Without arms, he leans toward the bag, trying to nudge it open with the tip of his prongs. It's like watching a determined utensil on a mission. Meanwhile, I'm providing some fiery commentary, encouraging Ogscule like a cheerleader at a sports game. \"Go, Ogscule, you got this! Show those birds your fleshy finesse!\" I can't help but chuckle at the absurdity of the situation. We're the dynamic duo of the park, making memories that'll have the birds tweeting about us for days. Finally, after a bit of a struggle, Ogscule manages to spill some bird feed on the ground. The birds, sensing a feast, swoop down like they've just won the avian lottery. But here's the twist – since Ogscule doesn't have hands, the birds are pecking at the bird feed, and Ogscule's prongs. It's a hilarious sight, a bizarre dance of feathers and fork. I'm laughing so hard; my flames are dancing with delight. Ogscule doesn't seem to mind; he's embracing the chaos, embracing the absurdity of our friendship. We may not be the most conventional pair, but we sure know how to turn a simple day at the park into a sidesplitting comedy. Life with these friends is like a colorful cartoon, each day filled with laughter and unexpected twists. So here's to more adventures, more lobsters, and more tales to share. Thanks for being with me on this fiery journey, my friend!",
-                "FannyIdle", HelperMessage.AlwaysShow, maxWidth: 1000, fontSize: 0.8f)
-                .ChainAfter();
+                "FannyBigGrin", HelperMessage.AlwaysShow, maxWidth: 1000, fontSize: 0.8f).ChainAfter();
 
             HelperMessage.New("Dyes", "I've always thought dyes were a bit worthless. I mean come on! True beauty comes from the inside! No need to pretty yourself up on the outside! So my solution to this was making it so that all dyes now make you stronger! Have fun coming up with dye combos! Or just equipping the same dye in every slot, that works too.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any((Item i) => i.dye > 0)).AddItemDisplay(ModContent.ItemType<ElementalDye>());
 
-            
+            HelperMessage.New("Terminuts", "Oh! You found that moonstone tablet I scribbled on a while ago! I think one of the worms down here got a little furious when I did that, so I gave a replica of before I wrote on it to an old pal of mine to get em off my tail. You should be able to find him down here somewhere if you look for long enough...",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<FannyLogAbyss>()) && Main.LocalPlayer.Calamity().ZoneAbyssLayer4).AddItemDisplay(ModContent.ItemType<Terminus>());
+
+            HelperMessage.New("SuperiorHealing", "It looks like you're starting to run low on health! Thankfully, I have a little trick up my sleeve for situations like this...",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.statLife < Main.LocalPlayer.statLifeMax2 * 0.33f && Main.LocalPlayer.inventory.Any(i => GoodHealingPots.Contains(i.type)));
+
+            HelperMessage.New("SuperiorHealing2", "There you go, here's a little boost! This is why I always carry my trusty potions!",
+                "FannyIdle", HelperMessage.AlwaysShow).ChainAfter().AddStartEvent(FannyHeal);
+
+            //Evil Fanny
+            HelperMessage.New("EvilMinions", "Oh, summoner, how nice. I want to ask this in the most genuine way I can, do you play videogames for fun? Did you open up a terraria world and genuinely go \"Oh boy! Let's play summoner! I'm going to have so much fun!\"? No!!! You didn't!!! Half of your minions have braindead AI because you're playing Calamity!!! Just play any other class, man. You make me sad.",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
+
+            HelperMessage.New("EvilTerraBlade", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. It's just a sword, after all. Now, go on, swing it around like the hero you think you are.",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.TerraBlade)).SpokenByEvilFanny().AddItemDisplay(ItemID.TerraBlade);
+
+            HelperMessage sama = HelperMessage.New("MurasamaBig", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. You're gonna be doing this \"big sword crafting tree\" thing a lot from here on out. Hope piggy here likes their slop!",
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.ActiveItem().type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny().InitiateConversation();
+            HelperMessage mgra = HelperMessage.New("Muracrimsona1", "Lmao this item is \"perfectly balanced\" am i right?? Standig here i realize like mgr",
+                "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(sama, 5, true);
+            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU!!!",
+                "EvilFannyCrisped", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(mgra, 3, true).EndConversation();
+
             #endregion
 
             #region CrossMod
+            HelperMessage.New("DadPainting", "Oh hey, you found a photo of my father! I thought I had lost it forever, turns out, I just happened to have misplaced it in one of the many chests in your world! Thank you for finding it!",
+               "FannyAwe", (ScreenHelperSceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, CalRemixAddon.Wrath, "Xenqiterthralyensyr"));
 
             HelperMessage.New("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WITCH>() && Main.LocalPlayer.TalkNPC == n) && ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip));
@@ -198,6 +216,12 @@ namespace CalRemix.UI
             ModContent.ItemType<HellsSun>(),
             ModContent.ItemType<TheDreamingGhost>()
         };
+        private static readonly List<int> GoodHealingPots = new List<int>
+        {
+            ItemID.SuperHealingPotion,
+            ModContent.ItemType<SupremeHealingPotion>(),
+            ModContent.ItemType<OmegaHealingPotion>()
+        };
         private static void TakeRoxcaliburStuff()
         {
             if (Main.LocalPlayer.HasItem(ItemID.SoulofNight))
@@ -216,6 +240,11 @@ namespace CalRemix.UI
                     Main.LocalPlayer.ConsumeItem(ModContent.ItemType<EssenceofHavoc>());
                 }
             }
+        }
+        private static void FannyHeal()
+        {
+            Main.LocalPlayer.Heal(50);
+            Main.LocalPlayer.AddBuff(BuffID.PotionSickness, 3600);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using CalRemix.Content.NPCs.PandemicPanic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,8 +9,8 @@ namespace CalRemix.Content.Items.Tools
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("PHD");
-            Tooltip.SetDefault("Makes Pandemic Panic enemies easier to recognize\n\"Would my patient mind if I took their organs out and sold them?\"");
+            // DisplayName.SetDefault("PHD");
+            // Tooltip.SetDefault("Makes Pandemic Panic enemies easier to recognize\n\"Would my patient mind if I took their organs out and sold them?\"");
         }
 
 
@@ -26,6 +27,15 @@ namespace CalRemix.Content.Items.Tools
         public override void UpdateInventory(Player player)
         {
             player.GetModPlayer<CalRemixPlayer>().phd = true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.WoodenSink, 1).
+                AddTile(TileID.Anvils).
+                AddCondition(new Condition("Pandemic Panic active", () => PandemicPanic.IsActive)).
+                Register();
         }
     }
 }

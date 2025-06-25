@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public int ogDamage = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fiber Baby");
+            // DisplayName.SetDefault("Fiber Baby");
             Main.projFrames[Type] = 4;
         }
         public override void SetDefaults()

@@ -8,7 +8,7 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Dreaming Ghost");
+            // DisplayName.SetDefault("The Dreaming Ghost");
             // Description.SetDefault("Aren't they beautiful?");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;

@@ -8,7 +8,7 @@ namespace CalRemix.Content.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Animated Statue");
+			// DisplayName.SetDefault("Animated Statue");
 
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

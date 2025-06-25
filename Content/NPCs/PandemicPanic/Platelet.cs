@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Platlet");
+            // DisplayName.SetDefault("Platlet");
         }
 
         public override void SetDefaults()

@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pine's Penetrator");
+            // DisplayName.SetDefault("Pine's Penetrator");
         }
         public override void SetDefaults()
         {

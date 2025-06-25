@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Cursed Spear");
+            // DisplayName.SetDefault("Cursed Spear");
 		}
 		public override void SetDefaults() 
 		{
@@ -27,13 +27,13 @@ namespace CalRemix.Content.Items.Weapons
 			Item.useAnimation = 19;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.autoReuse = true;
-            Item.UseSound = IchorSpear.ThrowSound;
+            Item.UseSound = CalamityMod.Items.Weapons.Rogue.IchorSpear.ThrowSound;
 			Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
 			Item.damage = 76;
 			Item.knockBack = 6f; 
 			Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.shoot = ModContent.ProjectileType<CursedSpearProj>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.Weapons.CursedSpear>();
             Item.shootSpeed = 20;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public bool activated = false;
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Plague Seeker");
+			// DisplayName.SetDefault("Plague Seeker");
 		}
 		public override void SetDefaults()
         {

@@ -54,7 +54,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public static float SwingUp(float completion) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Waraxe Reloaded");
+            // DisplayName.SetDefault("Waraxe Reloaded");
         }
         public override void SetDefaults()
         {

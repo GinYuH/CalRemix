@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Holy Mackerel");
+			// DisplayName.SetDefault("Holy Mackerel");
 			Main.projFrames[Projectile.type] = 1;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;

@@ -10,13 +10,13 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Astral Effigy");
-            Tooltip.SetDefault("When placed down nearby players gain immunity to space's low gravity");
+            // DisplayName.SetDefault("Astral Effigy");
+            // Tooltip.SetDefault("When placed down nearby players gain immunity to space's low gravity");
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 32;
             Item.maxStack = 99;
             Item.useTurn = true;

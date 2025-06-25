@@ -18,7 +18,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miasmius");
+            // DisplayName.SetDefault("Miasmius");
             Main.npcFrameCount[NPC.type] = 4;
         }
 

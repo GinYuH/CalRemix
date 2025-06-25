@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Green Demon");
+            // DisplayName.SetDefault("Green Demon");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
             if (Main.dedServ)
@@ -211,7 +211,7 @@ namespace CalRemix.Content.NPCs
             if (!Main.eclipse || !DownedBossSystem.downedLeviathan || !CalRemixWorld.greenDemon)
                 return 0f;
 
-            return SpawnCondition.SolarEclipse.Chance * 0.4f;
+            return SpawnCondition.SolarEclipse.Chance * 0.04f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

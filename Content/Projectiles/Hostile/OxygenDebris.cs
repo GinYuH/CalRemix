@@ -16,14 +16,14 @@ namespace CalRemix.Content.Projectiles.Hostile
         public Vector2 pivot = new Vector2(0, 0);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Debris");
+            // DisplayName.SetDefault("Debris");
         }
         public override void SetDefaults()
         {
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.hostile = true;
-            Projectile.timeLeft = 480;
+            Projectile.timeLeft = 240;
             Projectile.tileCollide = false;
         }
 
@@ -55,9 +55,8 @@ namespace CalRemix.Content.Projectiles.Hostile
             else
             {
                 Projectile.localAI[2] += Projectile.localAI[1] == 1 ? -1f : 1f;
-                float distance = 100;
-                distance = Projectile.localAI[2] * 5;
-                double deg = 360 / Projectile.ai[1] * Projectile.ai[0] + Projectile.localAI[2] * 1.5f;
+                float distance = Projectile.localAI[2] * 9;
+                double deg = 360 / Projectile.ai[1] * Projectile.ai[0] + Projectile.localAI[2] * 0.5f;
                 double rad = deg * (Math.PI / 180);
                 float hyposx = pivot.X - (int)(Math.Cos(rad) * distance) - Projectile.width / 2;
                 float hyposy = pivot.Y - (int)(Math.Sin(rad) * distance) - Projectile.height / 2;

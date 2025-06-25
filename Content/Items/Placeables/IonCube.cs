@@ -2,6 +2,10 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
+using CalamityMod.Items.Placeables.Plates;
+using CalamityMod.Items.Materials;
+using Terraria.DataStructures;
+using System.Linq;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -10,7 +14,8 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Ion Cube");
+            // DisplayName.SetDefault("Ion Cube");
+            // Tooltip.SetDefault("Only one may be placed");
         }
 
         public override void SetDefaults()
@@ -25,6 +30,28 @@ namespace CalRemix.Content.Items.Placeables
             Item.createTile = ModContent.TileType<IonCubePlaced>();
             Item.width = 12;
             Item.height = 12;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<EssenceofSunlight>(), 5).
+                AddIngredient(ModContent.ItemType<Cinderplate>(), 40).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            bool anyKenny = false;
+            foreach (var T in TileEntity.ByID)
+            {
+                if (T.Value.type == ModContent.TileEntityType<IonCubeTE>())
+                {
+                    anyKenny = true;
+                    break;
+                }
+            }
+            return !anyKenny;
         }
     }
 }

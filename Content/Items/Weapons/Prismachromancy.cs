@@ -10,8 +10,8 @@ public class Prismachromancy : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Prismachromancy");
-        Tooltip.SetDefault("Dazzle them!");
+        // DisplayName.SetDefault("Prismachromancy");
+        // Tooltip.SetDefault("Dazzle them!");
         Item.staff[Type] = true;
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

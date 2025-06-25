@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grarble Spear");
+            // DisplayName.SetDefault("Grarble Spear");
         }
 
         public override void SetDefaults()

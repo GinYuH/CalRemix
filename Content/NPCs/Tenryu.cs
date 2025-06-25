@@ -24,7 +24,6 @@ namespace CalRemix.Content.NPCs
         private bool wait = false;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Nightwither>()] = true;
             NPCID.Sets.TrailingMode[Type] = 1;
         }

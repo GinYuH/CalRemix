@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Infection Glob");
+			// DisplayName.SetDefault("Infection Glob");
 		}
 		public override void SetDefaults()
         {

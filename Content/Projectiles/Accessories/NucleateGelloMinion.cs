@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nucleate Gello");
+            // DisplayName.SetDefault("Nucleate Gello");
             Main.projFrames[Projectile.type] = 1;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

@@ -26,7 +26,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public bool canAfford = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Archseer");
+            // DisplayName.SetDefault("Archseer");
             Main.npcFrameCount[NPC.type] = 28;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 4;

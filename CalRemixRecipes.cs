@@ -28,6 +28,7 @@ using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Armor.Umbraphile;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -48,22 +49,23 @@ using CalamityMod.Items.Armor.Silva;
 using System;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.UI.Anomaly109;
+using CalamityMod.Items.Tools;
 
 namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox, AnyCritter;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter;
+        public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
             GreaterEvil = null;
             EvilBar = null;
             T4Bar = null;
             HMT1Bar = null;
-            AnyButterfly = null;
             AnyExoMechMusicBox = null;
         }
-        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(s);
+        public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(CalRemixHelper.LocalText($"RecipeGroups.{s}"));
         public override void AddRecipeGroups()
         {
             GreaterEvil = new RecipeGroup(() => GroupName("GreaterEvil"), ItemType<RottenMatter>(), ItemType<BloodSample>());
@@ -74,8 +76,6 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:T4Bar", T4Bar);
             HMT1Bar = new RecipeGroup(() => GroupName("HMT1Bar"), ItemID.CobaltBar, ItemID.PalladiumBar);
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
-            AnyButterfly = new RecipeGroup(() => GroupName("AnyButterfly"), ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
-            RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", AnyButterfly);
             AnyExoMechMusicBox = new RecipeGroup(() => GroupName("AnyExoMechMusicBox"), RemixMusicBox.ExoMechMusicBoxes);
             RecipeGroup.RegisterGroup("CalRemix:AnyRemixExoMusicBox", AnyExoMechMusicBox);
             AnyCritter = new RecipeGroup(() => GroupName("AnyCritter"), ItemID.Squirrel);
@@ -98,7 +98,7 @@ namespace CalRemix
         {
             Recipe.Create(ItemType<LoreAwakening>())
             .AddIngredient<Slumbering>()
-            .AddTile(TileID.Bookcases)
+            .AddTile(TileID.Loom)
             .Register();
 
             Recipe.Create(ItemType<LoreExoMechs>())
@@ -133,12 +133,6 @@ namespace CalRemix
             Recipe.Create(ItemID.CookedFish)
             .AddIngredient<CrocodileHerringItem>()
             .AddTile(TileID.CookingPots)
-            .Register();
-
-            Recipe.Create(ItemType<CirrusDress>())
-            .AddIngredient(ItemID.Silk, 6)
-            .AddIngredient(ItemID.AshBlock, 10)
-            .AddTile(TileID.Loom)
             .Register();
 
             Recipe.Create(ItemID.WaterBucket)
@@ -242,15 +236,16 @@ namespace CalRemix
             AlcoholRecipe(ItemType<Margarita>(), ItemType<Vodka>(), ItemID.Starfruit, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<Moonshine>(), ItemType<Everclear>(), ItemID.Ale, ItemID.BeetleHusk, 5, 1);
             AlcoholRecipe(ItemType<MoscowMule>(), ItemType<Everclear>(), ItemType<Vodka>(), ItemID.BeetleHusk, 5, 1);
+            AlcoholRecipe(ItemType<OldFashioned>(), ItemType<Whiskey>(), ItemID.BambooBlock, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<RedWine>(), ItemID.Ale, ItemID.Grapes, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<Rum>(), ItemID.Ale, ItemID.BambooBlock, ItemID.UnicornHorn, 40, 20);
-            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<NotFabsolVodka>(), ItemType<BloodOrange>(), ItemType<HallowedOre>(), 30, 1);
+            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<PurpleHaze>(), ItemType<BloodOrange>(), ItemType<HallowedOre>(), 30, 1);
             AlcoholRecipe(ItemType<StarBeamRye>(), ItemType<Margarita>(), ItemID.Hay, ItemType<AureusCell>(), 10, 20);
             AlcoholRecipe(ItemType<Tequila>(), ItemID.Ale, ItemID.Hay, ItemID.UnicornHorn, 40, 20);
             AlcoholRecipe(ItemType<TequilaSunrise>(), ItemType<Everclear>(), ItemType<Tequila>(), ItemID.BeetleHusk, 5, 1);
-            AlcoholRecipe(ItemType<Vodka>(), ItemType<NotFabsolVodka>(), ItemID.Hay, ItemType<HallowedOre>(), 30, 40);
+            AlcoholRecipe(ItemType<Vodka>(), ItemType<PurpleHaze>(), ItemID.Hay, ItemType<HallowedOre>(), 30, 40);
             AlcoholRecipe(ItemType<Whiskey>(), ItemID.Ale, ItemID.BottledWater, ItemID.UnicornHorn, 40, 1);
-            AlcoholRecipe(ItemType<WhiteWine>(), ItemType<NotFabsolVodka>(), ItemID.Grapes, ItemType<HallowedOre>(), 30, 1);
+            AlcoholRecipe(ItemType<WhiteWine>(), ItemType<PurpleHaze>(), ItemID.Grapes, ItemType<HallowedOre>(), 30, 1);
             // Candles
             CandleRecipe(ItemType<ResilientCandle>(), ItemID.SoulofNight, 445, ItemType<EssenceofBabil>(), 444);
             CandleRecipe(ItemType<SpitefulCandle>(), ItemType<EssenceofSunlight>(), 1098, ItemType<EssenceofHavoc>(), 987);
@@ -267,7 +262,7 @@ namespace CalRemix
             }
             #endregion
         }
-        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("RecipeGroups.Locked").Format(s);
+        public static string LockedRecipe(string s) => CalRemixHelper.LocalText("Condition.Locked").Format(CalRemixHelper.LocalText($"Condition.{s}"));
         public override void PostAddRecipes()
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
@@ -277,6 +272,7 @@ namespace CalRemix
                 {
                     recipe.RemoveIngredient(ItemType<AshesofCalamity>());
                     recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<CoreofRend>(), 3);
                     recipe.AddIngredient(ItemType<UnholyCore>());
                 }
                 if (recipe.HasResult(ItemType<AngelicShotgun>()))
@@ -387,11 +383,6 @@ namespace CalRemix
                 {
                     Replace(recipe, ItemID.Ectoplasm, ItemID.HallowedBar);
                 }
-                if (recipe.HasResult(ItemType<Fabstaff>()))
-                {
-                    Replace(recipe, ItemID.RainbowRod, ItemType<BucketofCoal>());
-                    Replace(recipe, ItemType<Necroplasm>(), ItemID.MartianConduitPlating, 1000);
-                }
                 if (!recipe.HasResult(ItemType<HauntedBar>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
                 {
                     Replace(recipe, ItemType<RuinousSoul>(), ItemType<HauntedBar>());
@@ -452,6 +443,18 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<SubnauticalPlate>();
                 }
+                if (recipe.HasResult(ItemType<UmbraphileHood>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 3);
+                }
+                if (recipe.HasResult(ItemType<UmbraphileRegalia>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 8);
+                }
+                if (recipe.HasResult(ItemType<UmbraphileBoots>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 5);
+                }
                 #endregion
                 #region Remove
                 if (recipe.HasResult(ItemType<DefiledGreatsword>()))
@@ -472,10 +475,6 @@ namespace CalRemix
                 }
                 #endregion
                 #region Disables
-                if (recipe.HasResult(ItemType<FabsolsVodka>()))
-                {
-                    recipe.DisableRecipe();
-                }
                 if (recipe.HasIngredient(ItemType<GrandScale>()))
                 {
                     recipe.DisableRecipe();
@@ -483,6 +482,16 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<FracturedArk>()) && recipe.HasIngredient(ItemID.Terragrim))
                 {
                     recipe.DisableRecipe();
+                }
+                if (recipe.Mod != Mod)
+                {
+                    for (int j = 0; j < alcoholList.Count; j++)
+                    {
+                        if (recipe.HasResult(alcoholList[j]))
+                        {
+                            recipe.DisableRecipe();
+                        }
+                    }
                 }
                 if (recipe.HasResult(ItemType<CryonicBrick>()) && recipe.HasIngredient(ItemType<CryonicOre>()))
                 {
@@ -496,11 +505,7 @@ namespace CalRemix
                 {
                     recipe.DisableDecraft();
                 }
-                if (recipe.HasResult(ItemType<GravityNormalizerPotion>()))
-                {
-                    recipe.DisableDecraft();
-                }
-                if (recipe.HasResult(ItemType<AstralInjection>()))
+                if (recipe.createItem.buffType > 0 && !BuffID.Sets.IsWellFed[recipe.createItem.buffType] && !Main.buffNoTimeDisplay[recipe.createItem.buffType] && !Main.vanityPet[recipe.createItem.buffType] && !Main.lightPet[recipe.createItem.buffType])
                 {
                     recipe.DisableDecraft();
                 }
@@ -634,12 +639,12 @@ namespace CalRemix
                     recipe.AddIngredient<TheCamper>();
                     recipe.AddIngredient<AlchemicalFlask>();
                     recipe.AddIngredient<ToxicHeart>();
-                    recipe.AddIngredient<Radiance>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
                     recipe.AddIngredient<TheEvolution>();
                     recipe.AddIngredient<Affliction>();
                     recipe.AddIngredient<OldDukeScales>();
+                    recipe.AddIngredient<FungiStone>();
                 }
                 if (recipe.HasResult(ItemType<PhantomicArtifact>()))
                 {
@@ -659,9 +664,20 @@ namespace CalRemix
             NPCShop shopee = shope as NPCShop;
 
             NPCShop npcShop = new NPCShop(NPCType<IRON>(), "Surge");
+
+            List<int> blacklist = new List<int>
+            {
+                ItemID.Harp,
+                ItemType<WeightlessCandle>(),
+                ItemType<SpitefulCandle>(),
+                ItemType<VigorousCandle>(),
+                ItemType<ResilientCandle>()
+            };
+
             foreach (NPCShop.Entry entry in shopee.Entries)
             {
-                if (entry.Item.type != ItemID.Harp)
+                int itemType = entry.Item.type;
+                if (!blacklist.Contains(itemType))
                     npcShop.Add(entry);
             }
             npcShop.Register();
@@ -706,8 +722,7 @@ namespace CalRemix
                     recipe.acceptedGroups.Remove(group);
                 }
             }
-            MethodInfo info = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
-            info.Invoke(null, null); // FUCK YOU
+            CreateRecipeLookups.Invoke(null, null); // FUCK YOU
             Terraria.GameContent.ShimmerTransforms.UpdateRecipeSets();
         }
         public static void MassRemoveIngredient(List<(int, int, int)> results)
@@ -760,6 +775,31 @@ namespace CalRemix
                 }
             }
         }
+
+        public List<int> alcoholList = new List<int>
+        {
+            ItemType<GrapeBeer>(),
+            ItemType<RedWine>(),
+            ItemType<Whiskey>(),
+            ItemType<Rum>(),
+            ItemType<Tequila>(),
+            ItemType<Fireball>(),
+            ItemType<Vodka>(),
+            ItemType<Screwdriver>(),
+            ItemType<WhiteWine>(),
+            ItemType<EvergreenGin>(),
+            ItemType<CaribbeanRum>(),
+            ItemType<Margarita>(),
+            ItemType<OldFashioned>(),
+            ItemType<Everclear>(),
+            ItemType<BloodyMary>(),
+            ItemType<StarBeamRye>(),
+            ItemType<Moonshine>(),
+            ItemType<MoscowMule>(),
+            ItemType<CinnamonRoll>(),
+            ItemType<TequilaSunrise>()
+        };
+
         public void AlcoholRecipe(int result, int drinkingredient, int midgredient, int lastgredient, int blorbcount, int midnum = 5)
         {
             int lastnum = 1;

@@ -20,11 +20,11 @@ namespace CalRemix.Content.Items.Weapons
 		{
             Item.ResearchUnlockCount = 1;
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
-            DisplayName.SetDefault("SDOMG");
-            Tooltip.SetDefault("75% chance to not consume ammo\n" +
+            // DisplayName.SetDefault("SDOMG");
+            /* Tooltip.SetDefault("75% chance to not consume ammo\n" +
                 "Rapidly fires a spread of bullets that close in over time\n" +
                 "Right clicking while standing still consumes a Plasma Grenade to fire a large deathray\n" +
-                "While the deathray is active, you are afflicted with slow, on fire, and oiled"); 
+                "While the deathray is active, you are afflicted with slow, on fire, and oiled"); */ 
 		}
 
 		public override void SetDefaults() 

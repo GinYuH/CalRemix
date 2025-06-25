@@ -33,27 +33,39 @@ using CalamityMod.NPCs.Perforator;
 using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs;
-using CalRemix.Content.DamageClasses;
+using CalRemix.Content.NPCs.Bosses.Noxus;
+using System.Reflection;
+using CalRemix.Content.NPCs.Eclipse;
+using Terraria.ModLoader.Core;
 
 namespace CalRemix
 {
     public class CalRemixAddon : ModSystem
     {
-        public static Mod CalVal;
-        public static Mod Catalyst;
-        public static Mod Infernum;
-        public static Mod Wrath;
+        internal static Mod CalVal;
+        internal static Mod Catalyst;
+        internal static Mod Infernum;
+        internal static Mod Wrath;
+        internal static Mod Fables;
 
-        public static Mod BossChecklist;
-        public static Mod MusicDisplay;
-        public static Mod Wikithis;
-        public static Mod Census;
+        internal static Mod BossChecklist;
+        internal static Mod MusicDisplay;
+        internal static Mod Wikithis;
+        internal static Mod Census;
 
-        public static Type calvalFanny = null;
-        public static Type calvalFannyBox = null;
+        internal static Mod Remnants;
+        internal static Mod Spirit;
+        internal static Mod Thorium;
 
-        public static Mod Remnants;
-        public static Mod Spirit;
+        internal static Type calvalFanny = null;
+        internal static Type calvalFannyBox = null;
+        internal static Type WrathAvatarWorldSystem = null;
+        internal static Type WrathAvatarOfEmptiness = null;
+        internal static Type WrathNamelessDeity = null;
+        internal static Type FargoSoulsWorldSaveSystem = null;
+
+        internal static PropertyInfo WrathInAvatarWorld = null;
+        internal static PropertyInfo FargoSoulsAngryMutant = null;
 
         public static readonly List<string> Names = new List<string>()
         {
@@ -70,7 +82,8 @@ namespace CalRemix
             "CatalystMod",
             "InfernumMode",
             "NoxusBoss",
-            "UnCalamityModMusic"
+            "UnCalamityModMusic",
+            "CalamityFables"
         };
         public static List<ModItem> Items = new List<ModItem>();
         public override void Load()
@@ -79,6 +92,7 @@ namespace CalRemix
             ModLoader.TryGetMod("CatalystMod", out Catalyst);
             ModLoader.TryGetMod("InfernumMode", out Infernum);
             ModLoader.TryGetMod("NoxusBoss", out Wrath);
+            ModLoader.TryGetMod("CalamityFables", out Fables);
 
             ModLoader.TryGetMod("BossChecklist", out BossChecklist);
             ModLoader.TryGetMod("Census", out Census);
@@ -87,26 +101,7 @@ namespace CalRemix
 
             ModLoader.TryGetMod("Remnants", out Remnants);
             ModLoader.TryGetMod("SpiritMod", out Spirit);
-
-            if (CalVal != null)
-            {
-                Type[] r = CalVal.Code.GetTypes();
-                foreach (Type mn in r)
-                {
-                    if (mn.Name == "Fanny")
-                    {
-                        calvalFanny = mn;
-                    }
-                    if (mn.Name == "FannyTextbox")
-                    {
-                        calvalFannyBox = mn;
-                    }
-                    if (calvalFannyBox != null && calvalFanny != null)
-                    {
-                        break;
-                    }
-                }
-            }
+            ModLoader.TryGetMod("ThoriumMod", out Thorium);
         }
         public override void Unload()
         {
@@ -114,6 +109,7 @@ namespace CalRemix
             Catalyst = null;
             Infernum = null;
             Wrath = null;
+            Fables = null;
 
             BossChecklist = null;
             Census = null;
@@ -122,6 +118,7 @@ namespace CalRemix
 
             Remnants = null;
             Spirit = null;
+            Thorium = null;
         }
         public override void PostSetupContent()
         {
@@ -134,11 +131,7 @@ namespace CalRemix
             }
             AddInfernumCards();
             ColoredDamageTypesSupport();
-        }
-
-        public void comp()
-        {
-
+            LoadModTypes();
         }
 
         internal void AddBossChecklistEntries()
@@ -201,7 +194,7 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemID.Grenade,
             });
-            bc.Call("LogBoss", Mod, "Oxygen", 11.75f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Oxygen", 12.805f, () => RemixDowned.downedOxygen, NPCType<Oxygen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.GolfBall,
             });
@@ -221,10 +214,16 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>()
             });
-            /*
-                $"Jam a [i:{ItemType<CalamityMod.Items.Pets.BloodyVein>()}] into the codebreaker",
-                "An imperfection after allÅE what a shame.",
-             */
+            Action<SpriteBatch, Rectangle, Color> noxPort = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Noxus/NoxusBossChecklist").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2 / 2), rect.Center.Y - (texture.Height / 2 / 2));
+                sb.Draw(texture, centered, null, Color.White, 0, Vector2.Zero, 0.5f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "EntropicGodNoxus", 25f, () => RemixDowned.downedNoxus, NPCType<EntropicGod>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<Genesis>(),
+                ["customPortrait"] = noxPort
+            });
             // Minibosses
             Action<SpriteBatch, Rectangle, Color> clPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Minibosses/Clamitas_BC").Value;
@@ -262,6 +261,8 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "CrimsonKaiju", 20.5f, () => RemixDowned.downedRed, NPCType<CrimsonKaiju>(), new Dictionary<string, object>());
+            // Events
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "GaleforceDay", 11.749f, () => RemixDowned.downedGale, new List<int> { NPCID.Dandelion, NPCType<FloatingBiomass>() }, new Dictionary<string, object>());
         }
@@ -269,7 +270,7 @@ namespace CalRemix
         {
             if (Census is null)
                 return;
-            Census.Call("TownNPCCondition", NPCType<ZER0>(), "Have [i:CalRemix/Ogscule] in your inventory during Godseeker mode");
+            Census.Call("TownNPCCondition", NPCType<ZER0>(), "Moves in during Godseeker mode");
             Census.Call("TownNPCCondition", NPCType<YEENA>(), "The current month is December, January, or February or Astrum Deus has been defeated in a Snow biome");
 
             Census.Call("TownNPCCondition", NPCType<Ogslime>(), "Kill a Wandering Eye while wearing Titan Heart armor");
@@ -298,6 +299,7 @@ namespace CalRemix
             MakeCard(NPCType<AcidEye>(), (horz, anim) => Color.Lerp(Color.LimeGreen, Color.Lime, anim), "Acidsighter", SoundID.Roar, SoundID.NPCDeath1);
             MakeCard(NPCType<TheCalamity>(), (horz, anim) => Color.Red, "Calamity", BetterSoundID.ItemThisStupidFuckingLaser, BetterSoundID.ItemThisStupidFuckingLaser, 360);
             MakeCard(NPCType<Hypnos>(), (horz, anim) => Main.DiscoColor, "Hypnos", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
+            MakeCard(NPCType<NoxusEgg>(), (horz, anim) => Color.Lerp(Color.Black, Color.Violet, anim), "Noxus", NoxusEgg.HitSound, NoxusEgg.GlitchSound);
         }
         internal void MakeCard(int type, Func<float, float, Color> color, string title, SoundStyle tickSound, SoundStyle endSound, int time = 300, float size = 1f)
         {
@@ -311,7 +313,7 @@ namespace CalRemix
             Infernum.Call("IntroScreenSetupLetterDisplayCompletionRatio", instance, new Func<int, float>(animationTimer => MathHelper.Clamp(animationTimer / (float)time * 1.36f, 0f, 1f)));
 
             // dnc but needed or else it errors
-            Action onCompletionDelegate = comp;
+            Action onCompletionDelegate = () => { };
             Infernum.Call("IntroScreenSetupCompletionEffects", instance, onCompletionDelegate);
 
             // Letter addition sound.
@@ -394,6 +396,70 @@ namespace CalRemix
             //    return;
 
             //coloredDamageTypes.Call("AddDamageType", StormbowDamageClass.Instance, RogueTooltipColor, RogueDamageColor, RogueCritColor);
+        }
+        public static void LoadModTypes()
+        {
+            if (CalVal != null)
+            {
+                Type[] r = CalVal.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "Fanny")
+                    {
+                        calvalFanny = mn;
+                    }
+                    if (mn.Name == "FannyTextbox")
+                    {
+                        calvalFannyBox = mn;
+                    }
+                    if (calvalFannyBox != null && calvalFanny != null)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (Wrath != null)
+            {
+                Type[] r = AssemblyManager.GetLoadableTypes(Wrath.Code);
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "AvatarUniverseExplorationSystem")
+                    {
+                        WrathAvatarWorldSystem = mn;
+                    }
+                    if (mn.Name == "AvatarOfEmptiness")
+                    {
+                        WrathAvatarOfEmptiness = mn;
+                    }
+                    if (mn.Name == "NamelessDeityBoss")
+                    {
+                        WrathNamelessDeity = mn;
+                    }
+                    if (WrathAvatarWorldSystem != null && WrathAvatarOfEmptiness != null && WrathNamelessDeity != null)
+                    {
+                        break;
+                    }
+                }
+                if (WrathAvatarWorldSystem != null && WrathInAvatarWorld == null)
+                    WrathInAvatarWorld = WrathAvatarWorldSystem.GetProperty("InAvatarUniverse", BindingFlags.Public | BindingFlags.Static);
+            }
+            if (ModLoader.TryGetMod("FargowiltasSouls", out Mod f))
+            {
+                Type[] r = f.Code.GetTypes();
+                foreach (Type mn in r)
+                {
+                    if (mn.Name == "WorldSavingSystem")
+                    {
+                        FargoSoulsWorldSaveSystem = mn;
+                    }
+                    if (FargoSoulsWorldSaveSystem != null)
+                    {
+                        break;
+                    }
+                }
+                if (FargoSoulsWorldSaveSystem != null && FargoSoulsAngryMutant == null)
+                    FargoSoulsAngryMutant = FargoSoulsWorldSaveSystem.GetProperty("AngryMutant", BindingFlags.Public | BindingFlags.Static);
+            }
         }
     }
 }

@@ -10,14 +10,14 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Invigorating Jelly");
-            Tooltip.SetDefault("Activating Adrenaline will defile your soul");
+            // DisplayName.SetDefault("Invigorating Jelly");
+            // Tooltip.SetDefault("Activating Adrenaline will defile your soul");
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityGreenBuyPrice;
             Item.rare = ItemRarityID.Green;
             Item.accessory = true;

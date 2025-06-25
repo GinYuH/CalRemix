@@ -7,7 +7,7 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calamitous Euphoria");
+            // DisplayName.SetDefault("Calamitous Euphoria");
         }
         public override void Update(Player player, ref int buffIndex)
         {

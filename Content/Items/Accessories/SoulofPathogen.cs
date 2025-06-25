@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Pathogen");
-            Tooltip.SetDefault("7% increase to all damage\nEnables the ability to lifesteal from any enemy\n'Note: lifesteal sold separately'\n" + CalamityUtils.ColorMessage("Boosts Unholy damage", Color.Red));
+            // DisplayName.SetDefault("Soul of Pathogen");
+            // Tooltip.SetDefault("7% increase to all damage\nEnables the ability to lifesteal from any enemy\n'Note: lifesteal sold separately'\n" + CalamityUtils.ColorMessage("Boosts Unholy damage", Color.Red));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityCyanBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Pathogen;

@@ -14,7 +14,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Enchanted Skull");
+            // DisplayName.SetDefault("Enchanted Skull");
             Main.npcFrameCount[NPC.type] = 4;
         }
 

@@ -27,7 +27,7 @@ namespace CalRemix.Content.NPCs
         int hypnosWhoAmI;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Draedon");
+            // DisplayName.SetDefault("Draedon");
             Main.npcFrameCount[NPC.type] = 12;
             this.HideFromBestiary();
         }
@@ -47,7 +47,7 @@ namespace CalRemix.Content.NPCs
         }
         public override void ModifyTypeName(ref string typeName)
         {
-            typeName = CalRemixWorld.npcChanges ? CalRemixHelper.LocalText($"Rename.Draedon").Value : CalamityUtils.GetText("NPCs.Draedon.DisplayName").Value;
+            typeName = CalRemixWorld.npcChanges ? CalRemixHelper.LocalText($"Rename.NPCs.Draedon").Value : CalamityUtils.GetText("NPCs.Draedon.DisplayName").Value;
         }
         private static void NewText(string value, Color textColor)
         {
@@ -106,13 +106,10 @@ namespace CalRemix.Content.NPCs
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                             }
                             Vector2 cords = new Vector2((int)player.Center.X, (int)(player.Center.Y - 200));
-                            int hypy = NPC.NewNPC(NPC.GetSource_FromAI(), (int)cords.X, (int)cords.Y, ModContent.NPCType<Hypnos>());
-                                hypnosWhoAmI = hypy;
-								hypnos = Main.npc[hypnosWhoAmI];
-                                hypnos.netUpdate = true;
+                            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), cords, ModContent.NPCType<Hypnos>());
 							NPC.ai[1] = 0;
                             NPC.ai[0] = 1;
-                            NewText(CalRemixHelper.LocalText("StatusText.UncertainAwoken").Format(ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName), new Color(175, 75, 255));
+                            CalRemixHelper.ChatMessage(CalRemixHelper.LocalText("StatusText.UncertainAwoken").Format(ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName), new Color(175, 75, 255));
 
                             for (int i = 0; i < 44; i++)
                             {
@@ -164,6 +161,16 @@ namespace CalRemix.Content.NPCs
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[0] = 2;
+                            return;
+                        }
+                        if (!NPC.AnyNPCs(ModContent.NPCType<Hypnos>()))
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            NPC.alpha += 10;
+                            if (NPC.alpha >= 255)
+                            {
+                                NPC.active = false;
+                            }
                         }
 
                     }

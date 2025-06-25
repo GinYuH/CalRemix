@@ -13,8 +13,8 @@ public class Heterochromia : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Heterochromia");
-        Tooltip.SetDefault("90% chance to not consume ammo\n'I am looking respectfully.'");
+        // DisplayName.SetDefault("Heterochromia");
+        // Tooltip.SetDefault("90% chance to not consume ammo\n'I am looking respectfully.'");
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 

@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Asbestos Drop");
+            // DisplayName.SetDefault("Asbestos Drop");
         }
         public override void SetDefaults()
         {

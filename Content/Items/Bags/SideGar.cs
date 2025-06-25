@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Bags
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Side Gar");
-            Tooltip.SetDefault("Right click to extract galactica singularities");
+            // DisplayName.SetDefault("Side Gar");
+            // Tooltip.SetDefault("Right click to extract galactica singularities");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 

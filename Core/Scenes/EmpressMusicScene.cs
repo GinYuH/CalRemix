@@ -13,7 +13,7 @@ namespace CalRemix.Core.Scenes
             {
                 foreach (NPC npc in Main.npc)
                 {
-                    if (npc.type == NPCID.HallowBoss && npc.AI_120_HallowBoss_IsGenuinelyEnraged())
+                    if (npc.type == NPCID.HallowBoss)
                     {
                         return true;
                     }

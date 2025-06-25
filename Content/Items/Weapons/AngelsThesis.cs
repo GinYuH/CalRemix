@@ -11,7 +11,7 @@ public class AngelsThesis : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Angel's Thesis");
+        // DisplayName.SetDefault("Angel's Thesis");
         Item.ResearchUnlockCount = 1;
         ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
         ItemID.Sets.LockOnIgnoresCollision[Type] = true;

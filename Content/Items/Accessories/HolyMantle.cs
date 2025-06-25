@@ -17,17 +17,17 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Holy Mantle");
-            Tooltip.SetDefault("Delirious thoughts...\n"+
+            // DisplayName.SetDefault("Holy Mantle");
+            /* Tooltip.SetDefault("Delirious thoughts...\n"+
             "Horizontal speed: 14\n"+
             "Acceleration multiplier: 3.2\n"+
-                "Flight time: ∞"); 
+                "Flight time: ∞"); */ 
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(500, 14f, 3.2f);
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 20;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.rare = ModContent.RarityType<Violet>();
@@ -55,7 +55,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<DrewsWings>(1).
+                AddIngredient<WingsofRebirth>(1).
                 AddIngredient(ItemID.EmpressFlightBooster).
                 AddIngredient<MOAB>(1).
                 AddIngredient(ItemID.SoulofFlight, 20).

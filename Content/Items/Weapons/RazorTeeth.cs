@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Razor Teeth");
+            // DisplayName.SetDefault("Razor Teeth");
 		}
 		public override void SetDefaults() 
 		{

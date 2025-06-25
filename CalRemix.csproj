@@ -1,19 +1,30 @@
-
 <Project Sdk="Microsoft.NET.Sdk">
+  
   <Import Project="..\tModLoader.targets" />
+  
   <PropertyGroup>
     <AssemblyName>CalRemix</AssemblyName>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="CalamityMod">
-      <HintPath>..\CalamityMod\bin\Debug\net8.0\CalamityMod.dll</HintPath>
-    </Reference>
-    <Reference Include="MMHOOK_CalamityMod">
-      <HintPath>bin\Debug\net6.0\MMHOOK_CalamityMod.dll</HintPath>
-    </Reference>
-    <Reference Include="SubworldLibrary">
-      <HintPath>lib\SubworldLibrary.dll</HintPath>
-    </Reference>
+    <Reference Include="lib/**/*.dll"/>
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="TomatsSecretAwesomeStuff\**"/>
+    <Content Remove="TomatsSecretAwesomeStuff\**"/>
+    <Compile Remove="TomatsSecretAwesomeStuff\**"/>
+    <EmbeddedResource Remove="TomatsSecretAwesomeStuff\**"/>
+    <AdditionalFiles Remove="TomatsSecretAwesomeStuff\**"/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Assets\Textures\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="Assets\Effects\SoRetroShader.hlsl" />
+  </ItemGroup>
+  
 </Project>

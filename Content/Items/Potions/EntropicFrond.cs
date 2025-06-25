@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Entropic Frond");
+            // DisplayName.SetDefault("Entropic Frond");
         }
         public override void SetDefaults()
         {

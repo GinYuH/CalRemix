@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pyro Flare");
+            // DisplayName.SetDefault("Pyro Flare");
             Main.projFrames[Projectile.type] = 5;
         }
 
@@ -22,8 +22,8 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override void SetDefaults()
         {
             Projectile.Calamity().DealsDefenseDamage = true;
-            Projectile.width = 22;
-            Projectile.height = 22;
+            Projectile.width = 20;
+            Projectile.height = 20;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;

@@ -17,7 +17,6 @@ namespace CalRemix.Content.NPCs
         public ref float State => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             this.HideFromBestiary();
         }
         public override void SetDefaults()

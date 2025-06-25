@@ -11,14 +11,14 @@ namespace CalRemix.Core.Retheme.Sneakers
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Uncreasable Kicks");
-            Tooltip.SetDefault("The end of the journey\n" +
+            // DisplayName.SetDefault("Uncreasable Kicks");
+            /* Tooltip.SetDefault("The end of the journey\n" +
                 "The highest of peaks\n" +
                 "The most blinding light\n" +
                 "Uncreasable Kicks, brought to you by Fandom\n\n" +
                 "Max hp permanently increased by running\n" +
                 "Constantly exhude net worth\n" +
-                "Massively boosted run speed");
+                "Massively boosted run speed"); */
 
             //Cuz when its initialized its lower than that so we gotta fix it
             if (SneakersRetheme.SneakerList.Length < ItemLoader.ItemCount)

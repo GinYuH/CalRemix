@@ -1,9 +1,16 @@
 ﻿using CalRemix.Content.Projectiles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -25,6 +32,17 @@ namespace CalRemix
             {
                 Item item = player.inventory[i];
                 if (item.type == itemType) { if (item.stack >= stackNum) return true; }
+            }
+            return false;
+        }
+        /// Checks if the player has a light pet active.
+        /// </summary>
+        public static bool HasLightPet(this Player player)
+        {
+            for (int i = 0; i < player.buffType.Length; i++)
+            {
+                if (Main.lightPet[player.buffType[i]])
+                    return true;
             }
             return false;
         }
@@ -56,6 +74,15 @@ namespace CalRemix
         /// <summary>
         /// Checks if the player has an item from a mod.
         /// </summary>
+        public static bool HasCrossModItem(Player player, Mod Mod, string ItemName)
+        {
+            if (Mod != null)
+            {
+                if (player.HasItem(Mod.Find<ModItem>(ItemName).Type))
+                    return true;
+            }
+            return false;
+        }
         public static bool HasCrossModItem(Player player, string ModName, string ItemName)
         {
             if (ModLoader.HasMod(ModName))
@@ -105,6 +132,210 @@ namespace CalRemix
                 Main.NewText(LocalText($"Dialog.{key}").Value, textColor.Value);
             else
                 ChatHelper.BroadcastChatMessage(NetworkText.FromKey($"Mods.CalRemix.Dialog.{key}"), textColor.Value);
+        }
+        private static readonly FieldInfo shaderTextureField = typeof(MiscShaderData).GetField("_uImage1", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private static readonly FieldInfo shaderTextureField2 = typeof(MiscShaderData).GetField("_uImage2", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private static readonly FieldInfo shaderTextureField3 = typeof(MiscShaderData).GetField("_uImage3", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        /// <summary>
+        /// Uses reflection to set the _uImage1. Its underlying data is private and the only way to change it publicly is via a method that only accepts paths to vanilla textures.
+        /// </summary>
+        /// <param name="shader">The shader</param>
+        /// <param name="texture">The texture to use</param>
+        public static void SetShaderTexture(this MiscShaderData shader, Asset<Texture2D> texture) => shaderTextureField.SetValue(shader, texture);
+
+        /// <summary>
+        /// Uses reflection to set the _uImage2. Its underlying data is private and the only way to change it publicly is via a method that only accepts paths to vanilla textures.
+        /// </summary>
+        /// <param name="shader">The shader</param>
+        /// <param name="texture">The texture to use</param>
+        public static void SetShaderTexture2(this MiscShaderData shader, Asset<Texture2D> texture) => shaderTextureField2.SetValue(shader, texture);
+
+        /// <summary>
+        /// Uses reflection to set the _uImage3. Its underlying data is private and the only way to change it publicly is via a method that only accepts paths to vanilla textures.
+        /// </summary>
+        /// <param name="shader">The shader</param>
+        /// <param name="texture">The texture to use</param>
+        public static void SetShaderTexture3(this MiscShaderData shader, Asset<Texture2D> texture) => shaderTextureField3.SetValue(shader, texture);
+
+        /// <summary>
+        /// Sets a <see cref="SpriteBatch"/>'s <see cref="BlendState"/> arbitrarily.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch.</param>
+        /// <param name="blendState">The blend state to use.</param>
+        public static void SetBlendState(this SpriteBatch spriteBatch, BlendState blendState)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, blendState, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        }
+
+        /// <summary>
+        /// Reset's a <see cref="SpriteBatch"/>'s <see cref="BlendState"/> based to a typical <see cref="BlendState.AlphaBlend"/>.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch.</param>
+        /// <param name="blendState">The blend state to use.</param>
+        public static void ResetBlendState(this SpriteBatch spriteBatch) => spriteBatch.SetBlendState(BlendState.AlphaBlend);
+
+        public static void DrawBloomLine(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width)
+        {
+            // Draw nothing if the start and end are equal, to prevent division by 0 problems.
+            if (start == end)
+                return;
+
+            start -= Main.screenPosition;
+            end -= Main.screenPosition;
+
+            Texture2D line = ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/Lines/BloomLine").Value;
+            float rotation = (end - start).ToRotation() + MathHelper.PiOver2;
+            Vector2 scale = new Vector2(width, Vector2.Distance(start, end)) / line.Size();
+            Vector2 origin = new(line.Width / 2f, line.Height);
+
+            spriteBatch.Draw(line, start, null, color, rotation, origin, scale, SpriteEffects.None, 0f);
+        }
+
+        public static void SwapToRenderTarget(this RenderTarget2D renderTarget, Color? flushColor = null)
+        {
+            // Local variables for convinience.
+            GraphicsDevice graphicsDevice = Main.graphics.GraphicsDevice;
+            SpriteBatch spriteBatch = Main.spriteBatch;
+
+            // If we are in the menu, a server, or any of these are null, return.
+            if (Main.gameMenu || Main.dedServ || renderTarget is null || graphicsDevice is null || spriteBatch is null)
+                return;
+
+            // Otherwise set the render target.
+            graphicsDevice.SetRenderTarget(renderTarget);
+
+            // "Flush" the screen, removing any previous things drawn to it.
+            flushColor ??= Color.Transparent;
+            graphicsDevice.Clear(flushColor.Value);
+        }
+        public static void ChatMessage(string text, Color color, NetworkText netText = null)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(text, color);
+            else if (Main.netMode == NetmodeID.Server)
+                ChatHelper.BroadcastChatMessage(netText ?? NetworkText.FromLiteral(text), color);
+        }
+        public static void SpawnNPCOnPlayer(int playerWhoAmI, int type)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.SpawnOnPlayer(playerWhoAmI, type);
+            else
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: playerWhoAmI, number2: type);
+        }
+        /// <summary>
+        /// Spawns a new npc with multiplayer and action invocation support.
+        /// </summary>
+        /// <param name="source">The source of the npc.</param>
+        /// <param name="x">The x spawn position of the npc.</param>
+        /// <param name="y">The y spawn position of the npc.</param>
+        /// <param name="type">The id of the npc type that should be spawned.</param>
+        /// <param name="minSlot">The lowest slot in <see cref="Main.npc"/> the npc can use.</param>
+        /// <param name="ai0">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai1">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="ai2">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai3">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="target">The player index to use for the <see cref="NPC.target"/> value.</param>
+        /// <param name="npcTasks">The actions the <see cref="NPC"/> executes.</param>
+        /// <param name="awakenMessage">Sends a boss awaken message in chat</param>
+        public static NPC SpawnNewNPC(IEntitySource source, int x, int y, int type, int minSlot = 0, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f, int target = 255, Action<NPC> npcTasks = null, bool awakenMessage = false)
+        {
+            NPC npc = Main.npc[0];
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                npc = NPC.NewNPCDirect(source, x, y, type, minSlot, ai0, ai1, ai2, ai3, target);
+                if (Main.npc.IndexInRange(npc.whoAmI))
+                {
+                    npcTasks?.Invoke(npc);
+                    if (Main.dedServ)
+                        npc.netUpdate = true;
+                }
+            }
+            if (awakenMessage)
+                ChatMessage(Language.GetTextValue("Announcement.HasAwoken", npc.TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", npc.GetTypeNetName()));
+            return npc;
+        }
+        /// <summary>
+        /// Spawns a new npc with multiplayer and action invocation support.
+        /// </summary>
+        /// <param name="source">The source of the npc.</param>
+        /// <param name="position">The spawn position of the npc.</param>
+        /// <param name="type">The id of the npc type that should be spawned.</param>
+        /// <param name="minSlot">The lowest slot in <see cref="Main.npc"/> the npc can use.</param>
+        /// <param name="ai0">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai1">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="ai2">The <see cref="NPC.ai"/>[0] value.</param>
+        /// <param name="ai3">The <see cref="NPC.ai"/>[1] value.</param>
+        /// <param name="target">The player index to use for the <see cref="NPC.target"/> value.</param>
+        /// <param name="npcTasks">The actions the <see cref="NPC"/> executes.</param>
+        /// <param name="awakenMessage">Sends a boss awaken message in chat</param>
+        public static NPC SpawnNewNPC(IEntitySource source, Vector2 position, int type, int minSlot = 0, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f, int target = 255, Action<NPC> npcTasks = null, bool awakenMessage = false)
+        {
+            return SpawnNewNPC(source, (int)position.X, (int)position.Y, type, minSlot, ai0, ai1, ai2, ai3, target, npcTasks, awakenMessage);
+        }
+        public static void DestroyTile(int i, int j, bool fail = false, bool effectOnly = false, bool noItem = false)
+        {
+            WorldGen.KillTile(i, j, fail, effectOnly, noItem);
+            if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
+                NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
+        }
+        /// <summary>
+        /// Summons a projectile of a specific type while also adjusting damage for vanilla spaghetti regarding hostile projectiles.
+        /// </summary>
+        /// <param name="spawnX">The x spawn position of the projectile.</param>
+        /// <param name="spawnY">The y spawn position of the projectile.</param>
+        /// <param name="velocityX">The x velocity of the projectile.</param>
+        /// <param name="velocityY">The y velocity of the projectile</param>
+        /// <param name="type">The id of the projectile type that should be spawned.</param>
+        /// <param name="damage">The damage of the projectile.</param>
+        /// <param name="knockback">The knockback of the projectile.</param>
+        /// <param name="owner">The owner index of the projectile.</param>
+        /// <param name="ai0">An optional <see cref="NPC.ai"/>[0] fill value. Defaults to 0.</param>
+        /// <param name="ai1">An optional <see cref="NPC.ai"/>[1] fill value. Defaults to 0.</param>
+        public static int NewProjectileBetter(float spawnX, float spawnY, float velocityX, float velocityY, int type, int damage, float knockback, int owner = -1, float ai0 = 0f, float ai1 = 0f)
+        {
+            if (owner == -1)
+                owner = Main.myPlayer;
+            damage = (int)(damage * 0.5);
+            if (Main.expertMode)
+                damage = (int)(damage * 0.5);
+            int index = Projectile.NewProjectile(new EntitySource_WorldEvent(), spawnX, spawnY, velocityX, velocityY, type, damage, knockback, owner, ai0, ai1);
+            if (index >= 0 && index < Main.maxProjectiles)
+                Main.projectile[index].netUpdate = true;
+
+            return index;
+        }
+
+        /// <summary>
+        /// Summons a projectile of a specific type while also adjusting damage for vanilla spaghetti regarding hostile projectiles.
+        /// </summary>
+        /// <param name="center">The spawn position of the projectile.</param>
+        /// <param name="velocity">The velocity of the projectile</param>
+        /// <param name="type">The id of the projectile type that should be spawned.</param>
+        /// <param name="damage">The damage of the projectile.</param>
+        /// <param name="knockback">The knockback of the projectile.</param>
+        /// <param name="owner">The owner index of the projectile.</param>
+        /// <param name="ai0">An optional <see cref="NPC.ai"/>[0] fill value. Defaults to 0.</param>
+        /// <param name="ai1">An optional <see cref="NPC.ai"/>[1] fill value. Defaults to 0.</param>
+        public static int NewProjectileBetter(Vector2 center, Vector2 velocity, int type, int damage, float knockback, int owner = -1, float ai0 = 0f, float ai1 = 0f)
+        {
+            return NewProjectileBetter(center.X, center.Y, velocity.X, velocity.Y, type, damage, knockback, owner, ai0, ai1);
+        }
+
+        /// <summary>
+        /// Returns all projectiles present of a specific type.
+        /// </summary>
+        /// <param name="desiredTypes">The projectile type to check for.</param>
+        public static IEnumerable<Projectile> AllProjectilesByID(params int[] desiredTypes)
+        {
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                if (Main.projectile[i].active && desiredTypes.Contains(Main.projectile[i].type))
+                    yield return Main.projectile[i];
+            }
         }
     }
 

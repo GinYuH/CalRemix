@@ -8,8 +8,8 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Green Demon Head");
-      		Tooltip.SetDefault("\n\n\n\n\n\n\n\n");
+			// DisplayName.SetDefault("Green Demon Head");
+      		// Tooltip.SetDefault("\n\n\n\n\n\n\n\n");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

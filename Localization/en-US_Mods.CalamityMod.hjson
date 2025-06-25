@@ -51,31 +51,8 @@ Items: {
 				AbilityDescription: ""
 			}
 		}
-
-		Hardmode.CirrusDress.Tooltip: Covered in the ashes of a previous owner...
 	}
 
-	SummonItems: {
-		AstralChunk: {
-			DisplayName: Astralination
-			Tooltip:
-				'''
-				Summons Astrum Viridis when used in the Astral Infection
-				Enrages during the day while outside the Astral Infection
-				Not consumable
-				'The nanomachines' fortress has found another target.'
-				'''
-		}
-	}
-
-	Mounts.Fabsol.Tooltip: Summons a chaotic flying horse mount.
-}
-
-Buffs: {
-	FabsolVodkaBuff: {
-		DisplayName: Fluorescent
-		Description: You feel lively
-	}
-
+	Weapons.Melee.ArkoftheCosmos.Tooltip: Swings around a large scissor blade which spawns homing stars in a circular pattern
 	Nightwither.DisplayName: Moon Burnt
 }

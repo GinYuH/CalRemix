@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Leaves of Crabulon");
+            // DisplayName.SetDefault("Leaves of Crabulon");
         }
         public override void SetDefaults()
         {

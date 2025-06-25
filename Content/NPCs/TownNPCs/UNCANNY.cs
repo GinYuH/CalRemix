@@ -19,7 +19,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Archwizard");
+            // DisplayName.SetDefault("Archwizard");
             Main.npcFrameCount[NPC.type] = 25;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 4;
@@ -127,7 +127,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPCShop npcShop = new NPCShop(Type, "Carcinoma");
             for (int i = 0; i < 32; i++)
             {
-                int cointype = Main.rand.Next(4);
+                int cointype = Main.rand.Next(5);
                 int maxPrice = 2;
                 switch (cointype)
                 {
@@ -141,7 +141,10 @@ namespace CalRemix.Content.NPCs.TownNPCs
                         maxPrice = Item.buyPrice(gold: 99);
                         break;
                     case 3:
-                        maxPrice = Item.buyPrice(platinum: 20);
+                        maxPrice = Item.buyPrice(platinum: 99);
+                        break;
+                    case 4:
+                        maxPrice = Item.buyPrice(platinum: 4 * 100);
                         break;
                 }
                 npcShop.AddWithCustomValue(ModContent.ItemType<Asbestos>(), Main.rand.Next(1, maxPrice));
@@ -179,7 +182,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             Vector2 npcOffset = NPC.Center - screenPos + Vector2.UnitY * 12 - new Vector2(0, NPC.gfxOffY);
             Texture2D balloons = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/Cigar").Value;
             SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            spriteBatch.Draw(balloons, npcOffset - Vector2.UnitY * 26 - Vector2.UnitX * NPC.spriteDirection * -10, null, NPC.GetAlpha(drawColor), 0f, balloons.Size() / 2, 1f, fx, 0);
+            spriteBatch.Draw(balloons, npcOffset - Vector2.UnitY * (26 + NPC.gfxOffY) - Vector2.UnitX * NPC.spriteDirection * -10, null, NPC.GetAlpha(drawColor), 0f, balloons.Size() / 2, 1f, fx, 0);
             return true;
         }
     }

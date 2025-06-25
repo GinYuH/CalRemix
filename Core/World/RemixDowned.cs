@@ -22,6 +22,9 @@ namespace CalRemix.Core.World
         public static bool downedDerellect = false;
         public static bool downedPolyphemalus = false;
         public static bool downedHypnos = false;
+        public static bool downedSealedOne = false;
+        public static bool downedNoxegg = false;
+        public static bool downedNoxus = false;
 
         public static bool downedEarthElemental = false;
         public static bool downedLifeSlime = false;
@@ -34,6 +37,7 @@ namespace CalRemix.Core.World
         public static bool downedKingMinnowsPrime = false;
         public static bool downedDend = false;
         public static bool downedMaser = false;
+        public static bool downedRed = false;
 
         public static bool downedGale = false;
         public override void OnWorldLoad()
@@ -52,6 +56,9 @@ namespace CalRemix.Core.World
             downedDerellect = false;
             downedPolyphemalus = false;
             downedHypnos = false;
+            downedSealedOne = false;
+            downedNoxegg = false;
+            downedNoxus = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -64,6 +71,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = false;
             downedDend = false;
             downedMaser = false;
+            downedRed = false;
 
             downedGale = false;
         }
@@ -83,6 +91,9 @@ namespace CalRemix.Core.World
             downedDerellect = false;
             downedPolyphemalus = false;
             downedHypnos = false;
+            downedSealedOne = false;
+            downedNoxegg = false;
+            downedNoxus = false;
 
             downedEarthElemental = false;
             downedLifeSlime = false;
@@ -95,6 +106,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = false;
             downedDend = false;
             downedMaser = false;
+            downedRed = false;
 
             downedGale = false;
         }
@@ -114,6 +126,9 @@ namespace CalRemix.Core.World
             tag["downedDerellect"] = downedDerellect;
             tag["downedPolyphemalus"] = downedPolyphemalus;
             tag["downedHypnos"] = downedHypnos;
+            tag["downedSealedOne"] = downedSealedOne;
+            tag["downedNoxegg"] = downedNoxegg;
+            tag["downedNoxus"] = downedNoxus;
 
             tag["downedEarthElemental"] = downedEarthElemental;
             tag["downedLifeSlime"] = downedLifeSlime;
@@ -126,6 +141,7 @@ namespace CalRemix.Core.World
             tag["downedKingMinnowsPrime"] = downedKingMinnowsPrime;
             tag["downedDend"] = downedDend;
             tag["downedMaser"] = downedMaser;
+            tag["downedRed"] = downedRed;
 
             tag["downedGale"] = downedGale;
         }
@@ -147,6 +163,9 @@ namespace CalRemix.Core.World
             downedDerellect = tag.Get<bool>("downedDerellect");
             downedPolyphemalus = tag.Get<bool>("downedPolyphemalus");
             downedHypnos = tag.Get<bool>("downedHypnos");
+            downedSealedOne = tag.Get<bool>("downedSealedOne");
+            downedNoxegg = tag.Get<bool>("downedNoxegg");
+            downedNoxus = tag.Get<bool>("downedNoxus");
 
             downedEarthElemental = tag.Get<bool>("downedEarthElemental");
             downedLifeSlime = tag.Get<bool>("downedLifeSlime");
@@ -159,6 +178,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = tag.Get<bool>("downedKingMinnowsPrime");
             downedDend = tag.Get<bool>("downedDend");
             downedMaser = tag.Get<bool>("downedMaser");
+            downedRed = tag.Get<bool>("downedRed");
             downedGale = tag.Get<bool>("downedGale");
         }
 
@@ -178,6 +198,9 @@ namespace CalRemix.Core.World
             writer.Write(downedDerellect);
             writer.Write(downedPolyphemalus);
             writer.Write(downedHypnos);
+            writer.Write(downedSealedOne);
+            writer.Write(downedNoxegg);
+            writer.Write(downedNoxus);
 
             writer.Write(downedEarthElemental);
             writer.Write(downedLifeSlime);
@@ -190,6 +213,7 @@ namespace CalRemix.Core.World
             writer.Write(downedKingMinnowsPrime);
             writer.Write(downedDend);
             writer.Write(downedMaser);
+            writer.Write(downedRed);
 
             writer.Write(downedGale);
         }
@@ -209,6 +233,9 @@ namespace CalRemix.Core.World
             downedDerellect = reader.ReadBoolean();
             downedPolyphemalus = reader.ReadBoolean();
             downedHypnos = reader.ReadBoolean();
+            downedSealedOne = reader.ReadBoolean();
+            downedNoxegg = reader.ReadBoolean();
+            downedNoxus = reader.ReadBoolean();
 
             downedEarthElemental = reader.ReadBoolean();
             downedLifeSlime = reader.ReadBoolean();
@@ -221,6 +248,7 @@ namespace CalRemix.Core.World
             downedKingMinnowsPrime = reader.ReadBoolean();
             downedDend = reader.ReadBoolean();
             downedMaser = reader.ReadBoolean();
+            downedRed = reader.ReadBoolean();
 
             downedGale = reader.ReadBoolean();
         }

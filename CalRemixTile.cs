@@ -16,10 +16,12 @@ using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Tiles;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -27,6 +29,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -87,69 +90,25 @@ namespace CalRemix
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
                 SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
-                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
-                if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
-                WorldGen.KillTile(i, j, noItem: true);
-                if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
-                {
-                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
-                }
+                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
+                DestroyTile(i, j, noItem: true);
                 player.ConsumeItem(ItemType<BloodyVein>());
             }
             if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
                 CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
-            if (type == TileType<LabHologramProjector>() && player.HeldItem.type == ItemType<BloodyVein>() && !NPC.AnyNPCs(NPCType<CyberDraedon>()))
-            {
-                SoundEngine.PlaySound(SoundID.Item14, player.Center);
-                SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
-                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
-                if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
-                WorldGen.KillTile(i, j);
-                if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
-                {
-                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
-                }
-                player.ConsumeItem(ItemType<BloodyVein>(), true);
-            }
             bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
-                int index = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<OnyxKinsman>());
-                if (Main.netMode == NetmodeID.MultiplayerClient && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
-                WorldGen.KillTile(i, j);
-                if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
-                {
-                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
-                }
+                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<OnyxKinsman>());
+                DestroyTile(i, j);
             }
             if (type == TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && NPC.CountNPCS(NPCType<HypnosDraedon>()) <= 0)
             {
-                Terraria.Audio.SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
-
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                {
-                    ModPacket packet = Mod.GetPacket();
-                    packet.Write((byte)RemixMessageType.HypnosSummoned);
-                    packet.Write((byte)Main.myPlayer);
-                    packet.Send();
-                }
-                else
-                {
-                    Hypnos.SummonDraedon(Main.LocalPlayer);
-                }
-
+                SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
+                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>());
             }
             if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && !PandemicPanic.IsActive)
             {
@@ -368,6 +327,35 @@ namespace CalRemix
                     }
                 }
             }
+            // Exosphere portal
+            // Since the subworld isn't done right now, it just tells you you're banned then kicks you out
+            if (t.TileType == TileType<RustedPipes>())
+            {
+                if (!Main.tile[i + 1, j + 1].HasTile)
+                {
+                    bool travelPossible = true;
+                    for (int k = i; k < i + 4; k++)
+                    {
+                        for (int l = j; l < j + 5; l++)
+                        {
+                            if (k == i || k == i + 3 || l == j || l == j + 4)
+                            {
+                                if (Main.tile[k, l].TileType != TileType<RustedPipes>())
+                                    travelPossible = false;
+                            }
+                        }
+                    }
+                    if (travelPossible)
+                    {
+                        Point tCord = Main.LocalPlayer.Center.ToTileCoordinates();
+                        Rectangle portalRect = new Rectangle(i + 1, j + 1, 2, 3);
+                        if (portalRect.Contains(tCord))
+                        {
+                            SubworldSystem.Enter<ExosphereSubworld>();
+                        }
+                    }
+                }
+            }
         }
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
@@ -438,9 +426,9 @@ namespace CalRemix
                 {
                     if ((Main.LocalPlayer.ZonePurity && Main.LocalPlayer.position.Y >= Main.worldSurface + 30) || Main.LocalPlayer.ZoneJungle) // i'm too lazy to get all the tile frames
                     {
-                        if (Main.netMode != NetmodeID.Server && Main.rand.NextBool(60)) // roughly 10% when considering the piles are 6 tiles in size
+                        if (Main.rand.NextBool(60)) // roughly 10% when considering the piles are 6 tiles in size
                         {
-                            NPC.NewNPC(new Terraria.DataStructures.EntitySource_TileBreak(i, j), i * 16, j * 16, NPCType<GulletWorm>());
+                            SpawnNewNPC(new EntitySource_TileBreak(i, j), i * 16, j * 16, NPCType<GulletWorm>());
                         }
                     }
                 }
@@ -462,20 +450,7 @@ namespace CalRemix
 
                          if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
                          {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
-                            }
-                            else
-                            {
-                                ModPacket packet = CalRemix.CalMod.GetPacket();
-                                packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
-                                packet.Write(Main.LocalPlayer.position.X);
-                                packet.Write(Main.LocalPlayer.position.Y);
-                                packet.Write(NPCType<Phytogen>());
-                                packet.Write(Main.myPlayer);
-                                packet.Send();
-                            }
+                            SpawnNPCOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
                          }
                      }
                  }

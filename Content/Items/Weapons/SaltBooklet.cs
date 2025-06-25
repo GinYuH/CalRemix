@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Weapons
 	{
         public override void SetStaticDefaults() 
 		{
-            DisplayName.SetDefault("Salt Booklet");
+            // DisplayName.SetDefault("Salt Booklet");
             Item.ResearchUnlockCount = 1;
         }
 		public override void SetDefaults() 

@@ -56,7 +56,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         public ThanatosSmokeParticleSet SmokeDrawer = new ThanatosSmokeParticleSet(-1, 3, 0f, 16f, 1.5f);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("XP-00 Hypnos");
+            // DisplayName.SetDefault("XP-00 Hypnos");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
@@ -81,6 +81,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             NPC.damage = 1;
             NPC.defense = 90;
             NPC.alpha = 255;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type };
             // SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type }; This is buggy for some reason
             if (!Main.dedServ)
                 Music = CalRemixMusic.Hypnos;
@@ -251,7 +252,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             for (int i = 0; i < 4; i++)
                             {
                                 //if (Main.netMode != NetmodeID.MultiplayerClient)
-                                NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<HypnosPlug>(), 0, NPC.whoAmI, i);
+                                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<HypnosPlug>(), 0, NPC.whoAmI, i);
                             }
                             /*for (int l = 0; l < 48; l++)
                             {
@@ -794,6 +795,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             Texture2D glowmask = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/Hypnos_Glow").Value;
             if (NPC.IsABestiaryIconDummy)
             {
+                NPC.scale = 0.75f;
                 SpriteEffects spriteEffects = SpriteEffects.None;
                 if (NPC.spriteDirection == 1)
                     spriteEffects = SpriteEffects.FlipHorizontally;
@@ -1003,12 +1005,6 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         {
             typeName = (NPC.ai[0] == 0 && NPC.ai[1] > 0) ? ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName : CalRemixHelper.LocalText($"NPCs.{Name}.DisplayName").Value;
         }
-
-        public static void SummonDraedon(Player player)
-        { 
-            // don't call it on multiplayer client
-			NPC.NewNPC(new Terraria.DataStructures.EntitySource_BossSpawn(player), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>(), 0, 0, 0, 0, player.whoAmI, player.whoAmI);
-		}
 
         public HypnosAssemblagePiece CreatePiece(Vector2 position, string texture, float opacity, bool leftSide, Vector2 destination, float power, float pitch)
         {

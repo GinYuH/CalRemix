@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Elemental Bar");
+			// DisplayName.SetDefault("Elemental Bar");
 			Item.ResearchUnlockCount = 25;
         }
 		public override void SetDefaults()

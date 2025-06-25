@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalamityMod/Projectiles/Ranged/DrataliornusFlame";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magmatic Arrow");
+            // DisplayName.SetDefault("Magmatic Arrow");
         }
         public override void SetDefaults()
         {

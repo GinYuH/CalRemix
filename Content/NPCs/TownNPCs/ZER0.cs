@@ -80,17 +80,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         }
 		public override bool CanTownNPCSpawn(int numTownNPCs) 
 		{
-			for (int k = 0; k < Main.maxPlayers; k++) 
-			{
-				Player player = Main.player[k];
-				if (!player.active) 
-				{
-					continue;
-				}
-				if (NPC.downedMoonlord && player.inventory.Any(item => item.type == ModContent.ItemType<Ogscule>()))
-					return true;
-			}
-			return false;
+			return NPC.downedMoonlord;
 		}
 		public override List<string> SetNPCNameList() 
 		{

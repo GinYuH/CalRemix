@@ -12,15 +12,15 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Projectiles/Hostile/BlueExoPulseLaser";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blue Exo Pulse Laser");
+            // DisplayName.SetDefault("Blue Exo Pulse Laser");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 22;
-            Projectile.height = 22;
+            Projectile.width = 20;
+            Projectile.height = 20;
             Projectile.timeLeft = 480;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;

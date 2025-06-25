@@ -1,19 +1,18 @@
 NPCs: {
 	BrimstoneElemental: Calamity Elemental
 	ThiccWaifu: Aether Valkyrie
-	AstrumAureus: Astrum Viridis
+	AstrumAureus: Astrum Cancer
 	Draedon: Draedon, the Living Intellect of Samuel Graydron
 	BrimstoneHeart: Calamity Heart
 	SupremeCalamitas: Brimdeath Witch, Calitas Jane
 	WITCH: Calamity Witch
 	Skeletron: Dungen
+	Anahita: Anastasia
+	Cnidrion: Grand Thunder Cnidrion
 }
 
 Items: {
 	Absolute: {
-		Fabstaff: Interfacer Staff
-		Fabsol: Discordian Sigil
-		CirrusDress: Ash's Cloak
 		LoreExoMechs: The Exo Mechs
 		OldDukeScales: Sulfuric Scale
 		ReaverShark: reef Shark
@@ -28,6 +27,17 @@ Items: {
 		DaedalusStormbow: Daedalus Bow
 		StarWrath: Starstorm 2
 		BloodRainBow: Blood Rain Stormbow
+	}
+
+	Normal: {
+		LifeAlloy: Life Bar
+		MeldConstruct: Meld Bar
+		WulfrumMetalScrap: Wulfrum Bar
+		Earth: Garth
+		GrandGuardian: Grand Gar
+		MajesticGuard: Majestic Gar
+		StreamGouge: Soul Piercer
+		SoulPiercer: Stream Gouge
 	}
 }
 
@@ -75,3 +85,5 @@ Sneakers: {
 	ExoBox: Custom Boost Nike Racers 'Encore'
 	Calamity: Calamitas X Air Jordans "Throwback"
 }
+
+Draedon: Mods.CalRemix.Rename.Draedon

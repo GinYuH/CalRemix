@@ -19,7 +19,7 @@ namespace CalRemix.Content.Items.Lore
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Climactic Conclusions in the Abandoned Mining Facility (Entry 6)");
+            // DisplayName.SetDefault("Climactic Conclusions in the Abandoned Mining Facility (Entry 6)");
         }
         public override void SetDefaults()
         {

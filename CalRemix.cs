@@ -46,13 +46,16 @@ using static Terraria.ModLoader.ModContent;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.UI;
 
 namespace CalRemix
 {
     enum RemixMessageType
     {
+        Anomaly109Help,
         Anomaly109Sync,
-        HypnosSummoned,
+        Anomaly109Unlock,
+        ToggleHelpers,
         SyncIonmaster,
         IonQuestLevel,
         OxydayTime,
@@ -67,9 +70,6 @@ namespace CalRemix
         internal static Mod CalMod = ModLoader.GetMod("CalamityMod");
         internal static Mod CalMusic = ModLoader.GetMod("CalamityModMusic");
         public static CalRemix instance;
-
-        public static int CosmiliteCoinCurrencyId;
-        public static int KlepticoinCurrencyId;
 
         public static List<int> oreList = new List<int>
         {
@@ -89,19 +89,30 @@ namespace CalRemix
             RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
             switch (msgType)
             {
-                case RemixMessageType.Anomaly109Sync:
+                case RemixMessageType.Anomaly109Help:
                     {
-                        int optionIndex = reader.ReadInt32();
-                        Anomaly109Option option = Anomaly109Manager.options[optionIndex];
-                        option.toggle();
+                        Anomaly109Manager.helpUnlocked = true;
                         CalRemixWorld.UpdateWorldBool();
                         break;
                     }
-                case RemixMessageType.HypnosSummoned:
+                case RemixMessageType.Anomaly109Sync:
                     {
-                        int player = reader.ReadByte();
-
-                        Hypnos.SummonDraedon(Main.player[player]);
+                        int optionIndex = reader.ReadInt32();
+                        Anomaly109Manager.options[optionIndex].toggle();
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
+                case RemixMessageType.Anomaly109Unlock:
+                    {
+                        int optionIndex = reader.ReadInt32(); 
+                        Anomaly109Manager.options[optionIndex].unlocked = true;
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
+                case RemixMessageType.ToggleHelpers:
+                    {
+                        ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.SyncIonmaster:
@@ -151,8 +162,8 @@ namespace CalRemix
                     }
                 case RemixMessageType.TrueStory:
                     {
-                        int storyCounter = reader.ReadByte();
-                        CalRemixWorld.trueStory = storyCounter;
+                        string uuid = reader.ReadString();
+                        CalRemixWorld.playerSawTrueStory.Add(uuid);
                         break;
                     }
                 case RemixMessageType.StartPandemicPanic:
@@ -189,9 +200,6 @@ namespace CalRemix
         {
             instance = this;
             PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
-
-            CosmiliteCoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new CosmiliteCoinCurrency(ItemType<CosmiliteCoin>(), 100L, "Mods.CalRemix.Currencies.CosmiliteCoinCurrency"));
-            KlepticoinCurrencyId = CustomCurrencyManager.RegisterCurrency(new KlepticoinCurrency(ItemType<Klepticoin>(), 100L, "Mods.CalRemix.Currencies.Klepticoin"));
         }
 
         public override void Unload()
@@ -217,7 +225,7 @@ namespace CalRemix
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<SignalDrone>());
             //cal.Call("DeclareOneToManyRelationshipForHealthBar", NPCType<DerellectBoss>(), NPCType<DerellectPlug>());
             AddEnchantments(cal);
-            if (!ModLoader.HasMod("InfernumMode"))
+            if (!ModLoader.HasMod("InfernumMode") && !ModLoader.HasMod("FargowiltasCrossmod"))
                 LoadBossRushEntries(cal);
             RefreshBestiary();
 
@@ -239,8 +247,6 @@ namespace CalRemix
                 try
                 {
                     CalRemixConfig config = GetInstance<CalRemixConfig>();
-                    if (typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
-                        return;
                     if (typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic) is null)
                         return;
                     ModMenu menu = ((Main.rand.NextBool(4) && config.randomMenu) || config.useSecondMenu) ? CalRemixMenu2.Instance : CalRemixMenu.Instance;
@@ -256,12 +262,14 @@ namespace CalRemix
                     Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
                 }
             }
+
+            // all for the eight seconds its all worth it
+            cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
         }
-        private void MenuStuff(ModMenu menu)
+        private static void MenuStuff(ModMenu menu)
         {
             if (menu.FullName is null)
                 return;
-            typeof(MenuLoader).GetMethod("OffsetModMenu", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, [Main.rand.Next(-2, 3)]);
             typeof(MenuLoader).GetField("LastSelectedModMenu", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, menu.FullName);
 
             if ((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) is null || menu is null)
@@ -342,6 +350,8 @@ namespace CalRemix
                     break;
                 }
             }
+            if (bossidx == -1)
+                return;
             int[] headID = [NPCType];
             if (needsDead != default)
             {
@@ -349,7 +359,7 @@ namespace CalRemix
             }
             Action<int> pr2 = delegate (int npc)
             {
-                NPC.SpawnOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, NPCType);
+                CalRemixHelper.SpawnNPCOnPlayer(CalamityMod.Events.BossRushEvent.ClosestPlayerToWorldCenter, NPCType);
             };
             if (customAction != default)
             {
@@ -369,15 +379,6 @@ namespace CalRemix
             {
                 Main.BestiaryUI = new Terraria.GameContent.UI.States.UIBestiaryTest(Main.BestiaryDB);
             }
-        }
-        internal static void AddToShop(int type, int price, ref Chest shop, ref int nextSlot, bool condition = true, int specialMoney = 0)
-        {
-            if (!condition || shop is null) return;
-            shop.item[nextSlot].SetDefaults(type);
-            shop.item[nextSlot].shopCustomPrice = price > 0 ? price : shop.item[nextSlot].value;
-            if (specialMoney == 1) shop.item[nextSlot].shopSpecialCurrency = CosmiliteCoinCurrencyId;
-            else if (specialMoney == 2) shop.item[nextSlot].shopSpecialCurrency = KlepticoinCurrencyId;
-            nextSlot++;
         }
     }
 }

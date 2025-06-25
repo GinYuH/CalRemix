@@ -9,7 +9,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hydrogen's Shield");
+            // DisplayName.SetDefault("Hydrogen's Shield");
             this.HideFromBestiary();
         }
 

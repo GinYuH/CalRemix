@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Zumbo Sauce");
+            // DisplayName.SetDefault("Zumbo Sauce");
             Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()

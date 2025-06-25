@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Baow");
+            // DisplayName.SetDefault("Baow");
 		}
 		public override void SetDefaults() 
 		{
@@ -68,11 +68,9 @@ namespace CalRemix.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.IceBow).
-                AddIngredient(ItemID.MoltenFury, 2).
-                AddIngredient(ItemID.LivingFireBlock, 23).
-                AddIngredient(ItemID.IceBlock, 23).
-                AddTile(TileID.MythrilAnvil).
+                AddIngredient(ItemID.DarkShard).
+                AddIngredient(ItemID.LightShard).
+                AddTile(TileID.Anvils).
                 Register();
         }
     }

@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Items/Weapons/WreathofBelial";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wreath");
+            // DisplayName.SetDefault("Wreath");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

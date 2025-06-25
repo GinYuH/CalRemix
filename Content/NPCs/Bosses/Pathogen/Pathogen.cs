@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
         public override void SetStaticDefaults()
         {
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            DisplayName.SetDefault("Pathogen");
+            // DisplayName.SetDefault("Pathogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Pathogen",
@@ -94,14 +94,14 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
 
         public override void OnSpawn(IEntitySource source)
         {
-            NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<PathogenShield>(), ai0: NPC.whoAmI);
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, ModContent.NPCType<PathogenShield>(), ai0: NPC.whoAmI);
         }
 
         public override void AI()
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<PathogenShield>()))
             {
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<PathogenShield>(), ai0: NPC.whoAmI);
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, ModContent.NPCType<PathogenShield>(), ai0: NPC.whoAmI);
             }
             NPC.TargetClosest();
             float lifeRatio = NPC.life / NPC.lifeMax;
@@ -522,7 +522,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<WALTER>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WALTER>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<WALTER>());
             }
             RemixDowned.downedPathogen = true;
             if (!PandemicPanic.PandemicPanic.InvadersWinning)

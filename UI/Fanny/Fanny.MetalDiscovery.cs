@@ -20,7 +20,7 @@ namespace CalRemix.UI
 
             HelperMessage.New("Metal_Iron", "METAL FACTS: Around 70% of the human body is made of iron!",
                 "FannyMetalIron", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.IronOre));
-            HelperMessage.New("Metal_Lead", "METAL FACTS: I once pumped a man full of lead!",
+            HelperMessage.New("Metal_Lead", "Did you know lead backwards is dael? This does not mean anything, as dael is not a word.",
                 "FannyMetalLead", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.LeadOre))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.AltMetalFanny);
 
@@ -46,7 +46,7 @@ namespace CalRemix.UI
 
             HelperMessage.New("Metal_Mythril", "METAL FACTS: This isn't even a real metal??? What? I can't find anything about it online! I'm so sorry my friend, I can't help you, I think you might have gotten swindled with some made up metal!",
                 "FannyMetalMythril", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.MythrilOre));
-            HelperMessage.New("Metal_Orichalcum", "METAL FACTS: This metal doesn't exist??? It seems that people nowadays are more into forgery than into forgesmithing...",
+            HelperMessage.New("Metal_Orichalcum", "METAL FACTS: What's pink, hard, and has \"cum\" at the end of it? Orichalcum!", // split wont let me not add this one
                 "FannyMetalOrichalcum", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.OrichalcumOre))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.AltMetalFanny);
 

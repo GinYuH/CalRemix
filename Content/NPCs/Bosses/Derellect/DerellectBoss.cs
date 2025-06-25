@@ -116,7 +116,7 @@ namespace CalRemix.Content.NPCs.Bosses.Derellect
                         {
                             for (int i = 0; i < 12; i++)
                             {
-                                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<SignalDrone>(), 0, NPC.whoAmI, i);
+                                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<SignalDrone>(), 0, NPC.whoAmI, i);
                             }
                         }
                         if (NPC.ai[1] == 10)

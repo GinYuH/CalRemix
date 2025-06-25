@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles
 	{
 		public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Phantom Heart");
+			// DisplayName.SetDefault("Phantom Heart");
 		}
 		public override void SetDefaults() 
         {

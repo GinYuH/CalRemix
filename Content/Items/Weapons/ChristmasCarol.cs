@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Christmas Carol");
-            Tooltip.SetDefault("Summons a carol bell to support you\nHitting the bell with a whip causes it to unleash a damaging sound pulse");
+            // DisplayName.SetDefault("Christmas Carol");
+            // Tooltip.SetDefault("Summons a carol bell to support you\nHitting the bell with a whip causes it to unleash a damaging sound pulse");
         }
 
         public override void SetDefaults()

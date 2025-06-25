@@ -21,7 +21,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Conjunctivirus");
+            // DisplayName.SetDefault("Conjunctivirus");
 
             // Add this in for bosses that have a summon item, requires corresponding code in the item (See MinionBossSummonItem.cs)
             NPCID.Sets.MPAllowedEnemies[Type] = true;

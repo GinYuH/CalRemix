@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Lightning Ball");
+			// DisplayName.SetDefault("Lightning Ball");
         }
 		public override void SetDefaults() 
         {

@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Microbial Cluster");
+            // DisplayName.SetDefault("Microbial Cluster");
         }
 
         public override void SetDefaults()

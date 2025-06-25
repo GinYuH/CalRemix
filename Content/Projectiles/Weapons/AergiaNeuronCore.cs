@@ -19,7 +19,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Aergia Neuron Core");
+            // DisplayName.SetDefault("Aergia Neuron Core");
             Main.projFrames[Projectile.type] = 1;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }

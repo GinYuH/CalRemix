@@ -84,3 +84,4 @@ public class PhytogenTrophyPlaced : PlacedRemixTrophy
     #endregion
 }
 public class PyrogenTrophyPlaced : PlacedRemixTrophy;
+public class RedTrophyPlaced : PlacedRemixTrophy;

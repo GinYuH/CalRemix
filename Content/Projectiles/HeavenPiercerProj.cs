@@ -6,7 +6,7 @@ namespace CalRemix.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heaven Piercer");
+            // DisplayName.SetDefault("Heaven Piercer");
         }
         public override void SetDefaults()
         {

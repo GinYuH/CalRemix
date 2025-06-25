@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public ref float Attack => ref Projectile.ai[0];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arbiter of Judgement");
+            // DisplayName.SetDefault("Arbiter of Judgement");
             ProjectileID.Sets.MinionTargettingFeature[Type] = true;
             Main.projFrames[Type] = 4;
         }

@@ -45,6 +45,11 @@ CyberDraedon: {
 		EntryName: Cyber Draedon
 		SpawnInfo: Insert a [i:CalamityMod/BloodyVein] into a [i:CalamityMod/LabHologramProjectorItem].
 	}
+
+	Dialogue1: Organic breach detected. Preparing extermination.
+	Dialogue2: Threat detained. Returning to normal operation.
+	Dialogue3: Most interesting- a worthy research subject.
+	Dialogue4: Disabling laser inhibitors.
 }
 
 Clamitas: {
@@ -158,7 +163,7 @@ ZER0: {
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
-	Census.SpawnCondition: Kill the Moon Lord and have an [i:CalRemix/Ogscule] in your inventory
+	Census.SpawnCondition: Defeat the Moon Lord
 }
 
 Tenryu.DisplayName: King of Constellations, Tenryu
@@ -180,8 +185,9 @@ FBIGUY: {
 	Census.SpawnCondition: Conditions unknown
 }
 
-AcidEye: {
+Acideye: {
 	DisplayName: Acidsighter
+	Bestiary: A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.
 	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
 }
 
@@ -189,6 +195,21 @@ MutatedEye.DisplayName: Mutated Eye
 
 TheCalamity: {
 	DisplayName: The Calamity
+	Bestiary: An entity made of unseen light tken form by the anger and grievances of many. It learned self-control as a follower.
+	Quote1: I will test your dodging abilities. Good luck.
+	Quote2: Your skills are proficient, but how will you fare against the ones after me?
+	Quote3: Your foes will often hold predictable patterns; see past them and strike.
+	Quote4: Keep avoiding anything that seems dangerous.
+	Quote5: You have passed the test. Well done.
+	Quote6: Strike me down and take your reward.
+	Quote1GFB: ... really? You're trying THIS? Fine, then... let's see if you can handle an unfair challenge.
+	Quote2GFB: Not bad, but you should know already that this won't be that easy.
+	Quote3GFB: This world is often unfair, and you should be prepared for anything thrown your way.
+	Quote4GFB: How much are you able to take...?
+	Quote5GFB: Your persistence is admirable. Perhaps you have what it takes?
+	Quote6GFB: A bit more to go. Don't mess up now.
+	Quote7GFB: ... alright, you're clearly good enough. You can leave.
+	Quote8GFB: Don't expect things to get any easier from here on.
 	Laser1: Don't get hit again!
 	Laser2: "{0} hits left!"
 	BossChecklistIntegration.SpawnInfo: Use the [i:CalRemix/Slumbering]
@@ -197,40 +218,6 @@ TheCalamity: {
 Ogslime: {
 	DisplayName: Ogslime
 	Census.SpawnCondition: Kill a Wandering Eye while wearing Titan Heart armor
-	Phrase1: is a
-	Phrase2: brings
-	Phrase3: an aspect of
-	Phrase4: surrounded
-	Phrase5: run up against
-	Phrase6: fighting
-	Phrase7: weakened
-	Phrase8: by
-	Phrase9: above
-	Phrase10: on top of
-	Phrase11: punctuated by
-	Phrase12: opened
-	Phrase13: beyond
-	Phrase14: abstracted
-	Phrase15: team up on
-	Phrase16: join
-	Phrase17: conglomerate
-	Phrase18: fuses
-	Phrase19: usurp the
-	Phrase20: ultimately
-	Phrase21: reward:
-	Phrase22: versus
-	Phrase23: lives happily ever after with
-	Phrase24: the parent of
-	Phrase25: stuck in
-	Phrase26: villainizes
-	Phrase27: victimizes
-	Phrase28: written by
-	Phrase29: slammed
-	Phrase30: punches
-	Phrase31: or
-	Phrase32: their
-	Phrase33: scared by
-	And: and
 }
 
 EvilAnimatronic.DisplayName: Evil Animatronic
@@ -238,8 +225,17 @@ Rodenttmod.DisplayName: Rodent.tmod
 TallMan.DisplayName: Tall Man
 Corruption.DisplayName: Corruption
 Glitch.DisplayName: Glitch
-CuboidCurse.DisplayName: CuboidCurse
-CrimsonKaiju.DisplayName: Crimson Kaiju
+CuboidCurse.DisplayName: Cuboid Curse
+
+CrimsonKaiju: {
+	DisplayName: Crimson Kaiju
+
+	BossChecklistIntegration: {
+		EntryName: Crimson Kaiju
+		SpawnInfo: Spawns during the Post-Devourer of Gods Solar Eclipse.
+		DespawnMessage: "[c/ff0000:Crimson Kaiju vanishes to stalk its next victim.]"
+	}
+}
 
 Carcinogen: {
 	DisplayName: Carcinogen
@@ -312,7 +308,7 @@ Oxygen: {
 
 	BossChecklistIntegration: {
 		EntryName: Oxygen
-		SpawnInfo: Hit a golf ball into space during a Galeforce Day. The boss must be led to the bottom of the Abyss to defeat it.
+		SpawnInfo: Hit a golf ball into space. The boss must be led to the bottom of the Abyss to defeat it.
 		DespawnMessage: "[c/9cf5ff:The glass ball rises back to space.]"
 	}
 }
@@ -358,14 +354,23 @@ Pathogen: {
 
 	BossChecklistIntegration: {
 		EntryName: Pathogen
-		SpawnInfo: Spawns after killing 300 enemies of one side during the Pandemic Panic event.
+		SpawnInfo: Use a [i:CalamityMod/BloodyVein] on a sink.
 		DespawnMessage: "[c/b01e4c:The virus continues destroying immune cells.]"
 	}
 }
 
 PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
-Hypnos.DisplayName: XP-00 Hypnos
+
+Hypnos: {
+	DisplayName: XP-00 Hypnos
+
+	BossChecklistIntegration: {
+		EntryName: XP-00 Hypnos
+		SpawnInfo: Right click the Codebreaker with [i:CalamityMod/BloodyVein]
+	}
+}
+
 HypnosPlug.DisplayName: Hypnos Plug
 RemixDraedon.DisplayName: Remix Draedon
 Losbaf.DisplayName: Losbaf
@@ -525,6 +530,11 @@ EDGY: {
 	Census.SpawnCondition: Free it from a construct... twice
 }
 
+AcidEye: {
+	DisplayName: Acidsighter
+	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
+}
+
 HypnosDraedon.DisplayName: Draedon
 Sandrat.DisplayName: Minor Sandrat
 MushroomElemental.DisplayName: Mushroom Elemental
@@ -536,12 +546,39 @@ FrozenMummy.DisplayName: Frozen Mummy
 Fleshmullet.DisplayName: Fleshmullet
 LabRoach.DisplayName: Lab Roach
 FleshmulletEye.DisplayName: Fleshmullet Eye
-FunnyButterfly.DisplayName: The Butterfly Effect
-Baroncrab.DisplayName: Baroncrab
+Dragon.DisplayName: Dragon
 MBP.DisplayName: Some Hive Mind Thing
-ChlorinePaladin.DisplayName: Chlorine Paladin
-SplitChlorinePaladin.DisplayName: Chlorine Paladin
-TheLeashHead.DisplayName: The Leash
-TheLeashBody.DisplayName: The Leash
-TheLeashTail.DisplayName: The Leash
 Xeroc.DisplayName: Avatar of Xeroc
+TreeMimic.DisplayName: Tree
+BoarCat.DisplayName: Boar Cat
+FrostHog.DisplayName: Frost Hog
+SealedOne.DisplayName: Sealed One
+SupremeSkeletron.DisplayName: Eucharist Damsel
+SupremeSkeletronHand.DisplayName: Eucharist Paratope
+GiantSkeleton.DisplayName: Giant Skeleton
+Mammoth.DisplayName: Wooly Mammoth
+
+EntropicGod: {
+	DisplayName: The Entropic God, Noxus
+
+	BossChecklistIntegration: {
+		EntryName: The Entropic God, Noxus
+		SpawnInfo: Use the [i:CalamityMod/Genesis].
+		DespawnMessage: "[c/61375d:The avatar returns to the emptiness]"
+	}
+}
+
+NoxusEgg.DisplayName: Godless Spawn, Noxus
+NoxusEggCutscene.DisplayName: ???
+SludgeWalker.DisplayName: Sludge Walker
+EvilEye.DisplayName: Evil Eye
+Baroncrab.DisplayName: Baroncrab
+Dendritus.DisplayName: Dendritus
+ChlorinePaladin.DisplayName: Chlorine Paladin
+SplitChlorinePaladin.DisplayName: Split Chlorine Paladin
+SupremeTwin.DisplayName: Supreme Twin
+FunnyButterfly.DisplayName: Funny Butterfly
+WulfrumFrog.DisplayName: Wulfrum Frog
+GoldenAnimatronic.DisplayName: Golden Animatronic
+WaterloggedEffigy.DisplayName: Waterlogged Effigy
+Vigor.DisplayName: Vigor

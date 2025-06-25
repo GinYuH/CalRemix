@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         private Vector2 inPos;
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Onyx Blast");
+			// DisplayName.SetDefault("Onyx Blast");
 		}
 		public override void SetDefaults() 
         {

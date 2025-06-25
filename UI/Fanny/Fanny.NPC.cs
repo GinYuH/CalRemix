@@ -3,6 +3,7 @@ using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Core.World;
 using System.Linq;
@@ -54,14 +55,20 @@ namespace CalRemix.UI
             HelperMessage.New("Dungeondie", "Oh, it appears my hack didn't work.",
                 "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead);
 
+            HelperMessage.New("AmidiasTalk", "What's this guy babbling about? His advice sure doesn't sound useful, though! Besides, you've got good ol' me! Who else could you possibly need?",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SEAHOE>() && Main.LocalPlayer.TalkNPC == n));
+
             HelperMessage.New("AnglerTalk", "Look at his shit eating grin. He knows there is nothing you can do to him. He's bullying you, and you are helpless. Kill him. Kill him now. He won't see death coming.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?").SpokenByEvilFanny();
+                "EvilFannyMiffed", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?").SpokenByEvilFanny();
 
             HelperMessage.New("Deimos", "That \"Deimos\" over there. She has some delicious Mars Bars, you should go buy some!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "EverquartzAdventure", "StarbornPrincess")).SetHoverTextOverride("Thanks Fanny! I'll buy you plenty of Mars Bars!");
 
             HelperMessage.New("MutantNPC", "Hey, you see that... fleshy, blue winged guy? I've got a bad feeling about him, he looks real strong and he could DEFINETLY crush you in a fight. Not like that would ever happen, of course!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "Fargowiltas", "Mutant")).SetHoverTextOverride("I'll keep him in mind, Fanny!");
+
+            HelperMessage.New("SirNautilus", "That fish guy seems a bit confused. He claims his name is \"Sir Nautilus\", but I can't help but notice he's more.. fish-like, no? Someone oughtta teach this guy his marine biology!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => CrossModNPC(scene, "CalamityFables", "SirNautilusPassive"));
 
 
             int num = Main.rand.Next(0, int.MaxValue);

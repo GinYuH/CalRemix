@@ -11,12 +11,12 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("24% increased damage\n2% increased critical strike chance");
+            // Tooltip.SetDefault("24% increased damage\n2% increased critical strike chance");
         }
         public override void SetDefaults()
         {
             Item.width = 30;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
             Item.rare = ItemRarityID.Lime;
             Item.defense = 21;

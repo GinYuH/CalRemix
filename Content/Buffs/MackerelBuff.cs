@@ -8,7 +8,7 @@ namespace CalRemix.Content.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("MackerelBuff");
+			// DisplayName.SetDefault("MackerelBuff");
 
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

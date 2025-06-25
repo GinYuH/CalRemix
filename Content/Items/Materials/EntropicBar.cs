@@ -10,7 +10,7 @@ namespace CalRemix.Content.Items.Materials
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Entropic Bar");
+            // DisplayName.SetDefault("Entropic Bar");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()

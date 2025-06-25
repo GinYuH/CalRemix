@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Ammo
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plagued Solution");
-			Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Plague");
+			// DisplayName.SetDefault("Plagued Solution");
+			// Tooltip.SetDefault("Used by the Clentaminator\nSpreads the Plague");
 		}
 
 		public override void SetDefaults()

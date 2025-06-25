@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public int buff = BuffID.OnFire;
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Spark");
+			// DisplayName.SetDefault("Spark");
         }
         public override void SetDefaults()
         {
@@ -74,7 +74,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                 target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 120);
                 target.AddBuff(BuffID.OnFire3, 120);
                 target.AddBuff(ModContent.BuffType<HolyFlames>(), 120);
-                target.AddBuff(ModContent.BuffType<KamiFlu>(), 120);
                 target.AddBuff(BuffID.Frostburn2, 120);
                 target.AddBuff(BuffID.Venom, 120);
             }

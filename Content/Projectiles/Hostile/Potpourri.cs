@@ -17,7 +17,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Potpourri");
+            // DisplayName.SetDefault("Potpourri");
         }
         public override void SetDefaults()
         {

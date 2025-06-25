@@ -10,11 +10,11 @@ public class Tetrachromancy : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Tetrachromancy");
-        Tooltip.SetDefault("Casts a controllable Polyphe-mini\n" +
+        // DisplayName.SetDefault("Tetrachromancy");
+        /* Tooltip.SetDefault("Casts a controllable Polyphe-mini\n" +
             "Once the mouse is released, or on contact with a block, it will split into four homing eyes.\n" +
             "'Now in HD color!'\n" + 
-            "'You feel a discreet, distant disproval towards the extra letter in this weapon's name'");
+            "'You feel a discreet, distant disproval towards the extra letter in this weapon's name'"); */
         Item.staff[Type] = true;
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

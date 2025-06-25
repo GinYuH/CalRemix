@@ -10,14 +10,14 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Irate Jelly");
-            Tooltip.SetDefault("Activating Rage will deal 50% of your health as damage");
+            // DisplayName.SetDefault("Irate Jelly");
+            // Tooltip.SetDefault("Activating Rage will deal 50% of your health as damage");
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityLightRedBuyPrice;
             Item.rare = ItemRarityID.LightRed;
             Item.accessory = true;

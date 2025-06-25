@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
 using CalamityMod.Items.Potions.Alcohol;
+using Terraria.ModLoader.Utilities;
 
 namespace CalRemix.Content.NPCs
 {
@@ -15,7 +16,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mushroom Elemental");
+            // DisplayName.SetDefault("Mushroom Elemental");
         }
 
         public override void SetDefaults()
@@ -28,6 +29,7 @@ namespace CalRemix.Content.NPCs
             NPC.lifeMax = 25;
             NPC.knockBackResist = 0f;
             NPC.value = 300;
+            NPC.rarity = 2;
             NPC.lavaImmune = false;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -120,7 +122,7 @@ namespace CalRemix.Content.NPCs
             {
                 return 0f;
             }
-            return 0.2f;
+            return SpawnCondition.UndergroundMushroom.Chance * 0.02f;
         }
 
         public override void HitEffect(NPC.HitInfo hit)

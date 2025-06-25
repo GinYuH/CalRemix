@@ -13,16 +13,57 @@ Mods: {
 	}
 
 	CalRemix: {
-		NotAvailable: N/A
+		DebuffStone: {
+			DisplayName: "{0} Stone"
+			Tooltip:
+				'''
+				Immunity to {0}
+				Attacks inflict {0}
+				'''
+		}
 
-		Currencies: {
-			CosmiliteCoinCurrency: cosmilite coins
-			KlepticoinCurrency: klepticoins
+		BouncyRogue: {
+			DisplayName: Bouncy {0}
+			Tooltip:
+				'''
+				{0}
+				Now with extra Bounciness!
+				'''
+		}
+
+		StickyRogue: {
+			DisplayName: Sticky {0}
+			Tooltip:
+				'''
+				{0}
+				Now with extra stickiness!
+				'''
+		}
+
+		Currency: {
+			Cosmilite: Cosmilite
+			Klepticoin: Klepticoin
+			CosmiliteInterface: cosmilite
+			KlepticoinInterface: klepticoin
 		}
 
 		UI: {
 			Cooldowns.BananaClown: Clown Consumption Cooldown
 			ExampleResource: Mods.CalRemix.UI.ExampleResource
+
+			DifficultyModes: {
+				NoDifficulty: {
+					Name: Mods.CalRemix.UI.DifficultyModes.NoDifficulty.Name
+					Info: Mods.CalRemix.UI.DifficultyModes.NoDifficulty.Info
+				}
+
+				TitanicDifficulty: {
+					Name: Mods.CalRemix.UI.DifficultyModes.TitanicDifficulty.Name
+					Info: Mods.CalRemix.UI.DifficultyModes.TitanicDifficulty.Info
+				}
+			}
+
+			Anomaly.Condition: Mods.CalRemix.UI.Anomaly.Condition
 		}
 
 		Biomes: {
@@ -37,7 +78,7 @@ Mods: {
 			}
 
 			ExosphereBiome: {
-				DisplayName: Exosphere Biome
+				DisplayName: The Exosphere
 				TownNPCDialogueName: the Exosphere Biome
 			}
 
@@ -53,22 +94,22 @@ Mods: {
 
 			GaleforceDayBiome: {
 				DisplayName: Galeforce Day
-				TownNPCDialogueName: the Galeforce Day Biome
+				TownNPCDialogueName: the Galeforce Day
 			}
 
 			PandemicPanicBiome: {
 				DisplayName: Pandemic Panic
-				TownNPCDialogueName: the Pandemic Panic Biome
+				TownNPCDialogueName: the Pandemic Panic
 			}
 
 			BaronStraitBiome: {
 				DisplayName: Baron Strait
-				TownNPCDialogueName: the Baron Strait Biome
+				TownNPCDialogueName: the Baron Strait
 			}
 
 			FrozenStrongholdBiome: {
 				DisplayName: Frozen Stronghold
-				TownNPCDialogueName: the Frozen Stronghold Biome
+				TownNPCDialogueName: the Frozen Stronghold
 			}
 
 			ProfanedDesertBiome: {
@@ -101,44 +142,69 @@ Mods: {
 			DisplayName: Calamity Community Remix Config
 
 			CalRemixConfig: {
-				DisplayName: Menu Config
+				Headers: {
+					CalRemixHeader: Calamity Community Remix
+					VisualEffectsHeader: Visual Effects
+					MainMenuHeader: Main Menu
+				}
+
+				FannyToggle: {
+					Header: Fanny
+					Label: Toggle Fanny
+					Tooltip: Enables/disables Fanny.
+				}
+
+				DisplayName: Cal Remix Config
 
 				randomMenu: {
-					Label: Randomize Menu
-					Tooltip: Selects any variant of the menu
+					Label: Randomize Variant
+					Tooltip: ""
 				}
 
 				forcedMenu: {
-					Label: Forced Override
-					Tooltip: Only allows Remix menus to display on start
+					Label: Force Menu to Load
+					Tooltip: ""
 				}
 
 				useSecondMenu: {
-					Label: Only Use Second Menu
-					Tooltip: The second menu will always show up instead
+					Label: Use Second Theme
+					Tooltip: ""
+				}
+
+				photosensitivty: {
+					Label: Photosensitivte Features
+					Tooltip: Enables photosensitive features. Disable if they're too straining on the eyes.
+				}
+
+				ScreenShatterEffects: {
+					Label: Screen Shatter Effects
+					Tooltip: Enables screen shatter effects. Disable if they're too straining on the eyes.
+				}
+
+				VisualOverlayIntensity: {
+					Label: Visual Overlay Intensity
+					Tooltip: Changes the intensity of visual overlays such as blur and chromatic aberration.
+				}
+
+				photosensitivity: {
+					Label: photosensitivity
+					Tooltip: ""
 				}
 			}
 		}
 
 		InfoDisplays: {
 			ElementDisplay.DisplayName: Element Display
-			HelperDisplay.DisplayName: Fanny Mood Tracker
 			MoodTracker.DisplayName: Mood Tracker
 			NetWorthDisplay.DisplayName: Net Worth Display
+			DeliciousMeatDisplay.DisplayName: Delicious Meat Display
 		}
 
 		Emotes.HypnosEmote.Command: hypnosemote
 
 		BossChecklistIntegration: {
-			PandemicPanic: {
-				EntryName: Pandemic Panic
-				SpawnInfo: Use a [i:CalamityMod/BloodyVein] on a sink.
-			}
-
-			GaleforceDay: {
-				EntryName: Galeforce Day
-				SpawnInfo: Randomly occurs at the start of each day OR leading a Fushigi out of the Abyss and out of the top of the world.
-			}
+			PandemicPanic.EntryName: Pandemic Panic
+			GaleforceDay.EntryName: Galeforce Day
 		}
 
 		InfernumIntegration: {
@@ -208,9 +274,19 @@ Mods: {
 				Raggedy Helminth
 				Wulfrum Excavator
 				'''
+			Noxus:
+				'''
+				Avatar of Emptiness
+				The Entropic God, Noxus
+				'''
 		}
 
-		DamageClasses.StormbowDamageClass.DisplayName: Stormbow Damage
+		NotAvailable: Nothing
+
+		DamageClasses: {
+			StormbowDamageClass.DisplayName: stormbow damage
+			FarmingDamageClass.DisplayName: farming yield
+		}
 
 		RecipeGroups: {
 			Any: Any {0}
@@ -241,6 +317,15 @@ Mods: {
 			FearmongerGreaves: Obtain by making an enemy walk on Grimesand.
 			Seafood: Make the other Seafood.
 			ProfanedShard: Drops from Yggdrasil Ents in Hallow and Hell.
+		}
+
+		WorldGen.BlessedWithGoldOrPlatinumMessage: Your world has been blessed with Gold and/or Platinum!
+
+		Stones: {
+			FolvsStone: {
+				DisplayName: Folvs Stone
+				Tooltip: ""
+			}
 		}
 	}
 }

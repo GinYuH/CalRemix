@@ -12,16 +12,16 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Microxodonta");
-            Tooltip.SetDefault("92% increased movement speed\n"+
-            "Flying leaves behind batches of damaging microbial clusters"); 
+            // DisplayName.SetDefault("Microxodonta");
+            /* Tooltip.SetDefault("92% increased movement speed\n"+
+            "Flying leaves behind batches of damaging microbial clusters"); */ 
         }
 
         public override void SetDefaults()
         {
             Item.defense = 20;
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
             Item.accessory = true;
             Item.rare = ModContent.RarityType<PureGreen>();

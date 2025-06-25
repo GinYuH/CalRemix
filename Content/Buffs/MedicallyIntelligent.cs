@@ -8,7 +8,7 @@ namespace CalRemix.Content.Buffs
         public override string Texture => "CalRemix/Content/Buffs/Acid";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Medically Intelligent");
+            // DisplayName.SetDefault("Medically Intelligent");
         }
         public override void Update(Player player, ref int buffIndex)
         {

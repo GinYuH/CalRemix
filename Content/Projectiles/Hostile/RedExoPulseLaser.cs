@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 		public override string Texture => "CalamityMod/Projectiles/Boss/ArtemisLaser";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blue Exo Pulse Laser");
+			// DisplayName.SetDefault("Blue Exo Pulse Laser");
 			Main.projFrames[Projectile.type] = 4;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -20,8 +20,8 @@ namespace CalRemix.Content.Projectiles.Hostile
 		public override void SetDefaults()
 		{
 			Projectile.Calamity().DealsDefenseDamage = true;
-			Projectile.width = 22;
-			Projectile.height = 22;
+			Projectile.width = 20;
+			Projectile.height = 20;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 480;
 			Projectile.tileCollide = false;

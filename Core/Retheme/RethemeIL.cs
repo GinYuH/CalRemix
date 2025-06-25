@@ -6,6 +6,11 @@ using Mono.Cecil.Cil;
 using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
 using CalamityMod.NPCs.Providence;
+using Terraria;
+using CalamityMod.Systems;
+using static Terraria.ModLoader.ModContent;
+using CalamityMod.NPCs.Yharon;
+using CalamityMod;
 
 namespace CalRemix.Core.Retheme
 {
@@ -16,7 +21,7 @@ namespace CalRemix.Core.Retheme
             // IL.CalamityMod.NPCs.PreDraw += ;
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
             IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw += CryogenShield;
-            IL.CalamityMod.NPCs.CalamityAIs.CalamityBossAIs.AstrumAureusAI.VanillaAstrumAureusAI += AureusAI;
+            //IL.CalamityMod.NPCs.CalamityAIs.CalamityBossAIs.AstrumAureusAI.VanillaAstrumAureusAI += AureusAI;
             MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|83_0", BindingFlags.NonPublic | BindingFlags.Instance), ProvidenceColors);
 
             #region Items
@@ -58,7 +63,13 @@ namespace CalRemix.Core.Retheme
 
             IL.CalamityMod.Projectiles.Melee.ViolenceThrownProjectile.PreDraw += ViolenceThrownProjectile;
             IL.CalamityMod.Projectiles.Boss.HolyBlast.PreDraw += HolyBlast;
+            IL.CalamityMod.Projectiles.Enemy.HorsWaterBlast.AI += HorsWaterBlastAI;
+            IL.CalamityMod.Projectiles.Enemy.HorsWaterBlast.OnKill += HorsWaterBlastOnKill;
             #endregion
+        }
+        public override void PostSetupContent()
+        {
+            On.CalamityMod.Systems.YharonBackgroundScene.IsSceneEffectActive += NoYharonScene;
         }
         #region NPCs
         private static void Crabulon(ILContext il)
@@ -452,6 +463,44 @@ namespace CalRemix.Core.Retheme
                 c.EmitDelegate(() => CalRemixWorld.npcChanges ? "CalamityMod/Projectiles/Boss/HolyBlast" : "CalamityMod/Projectiles/Boss/HolyBlastNight");
             }
         }
+        private static void HorsWaterBlastAI(ILContext il)
+        {
+            var c = new ILCursor(il);
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+        }
+        private static void HorsWaterBlastOnKill(ILContext il)
+        {
+            var c = new ILCursor(il);
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+            if (c.TryGotoNext(i => i.MatchLdcI4(33)))
+            {
+                c.Index++;
+                c.Emit(OpCodes.Pop);
+                c.EmitDelegate(() => CalRemixWorld.npcChanges ? 226 : 33);
+            }
+        }
         #endregion
+        private static bool NoYharonScene(On.CalamityMod.Systems.YharonBackgroundScene.orig_IsSceneEffectActive orig, YharonBackgroundScene self, object player)
+        {
+            if (CalRemixWorld.npcChanges)
+                return !NPC.AnyNPCs(NPCType<Yharon>()) && Main.LocalPlayer.Calamity().monolithYharonShader > 0;
+            return orig(self, player);
+        }
     }
 }

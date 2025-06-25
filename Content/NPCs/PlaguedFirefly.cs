@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plagued Firefly");
+            // DisplayName.SetDefault("Plagued Firefly");
             Main.npcFrameCount[NPC.type] = 12;
             Main.npcCatchable[NPC.type] = true;
         }

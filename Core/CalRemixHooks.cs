@@ -75,6 +75,8 @@ namespace CalRemix.Core
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
+            
+            IL_UIWorldCreation.AddWorldSizeOptions += ReplaceWorldSelectionSizeDescriptions;
 
             On_Main.DrawDust += DrawStatic;
             On_Main.DrawLiquid += DrawTsarBomba;
@@ -427,8 +429,8 @@ namespace CalRemix.Core
             orig(self, spriteBatch);
 
             // Allow publishing of new updates without updating localization
-            HashSet<string> mods = (HashSet<string>)localField.GetValue(null);
-            mods.Clear();
+            // HashSet<string> mods = (HashSet<string>)localField.GetValue(null);
+            // mods.Clear();
 
             return;
             float wid = self.GetOuterDimensions().Width;
@@ -641,6 +643,7 @@ namespace CalRemix.Core
             }
             orig(self, i, sItem, weaponDamage);
         }
+
         private static void DrawStatic(On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
@@ -686,14 +689,6 @@ namespace CalRemix.Core
                 shader.Parameters["sizeDivisor"].SetValue(0.25f);
                 Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
                 Main.spriteBatch.ExitShaderRegion();
-
-                Texture2D parasite = Request<Texture2D>("CalRemix/Content/NPCs/Eclipse/SlenderJumpscare" + slender.localAI[0]).Value;
-                Color color = Color.White * (slender.ai[2] > 0 ? 1f : 0f);
-                Vector2 scale = new Vector2(Main.screenWidth * 1.1f / parasite.Width, Main.screenHeight * 1.1f / parasite.Height);
-                int shakeamt = 33;
-                Vector2 screenArea = new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f) + new Vector2(Main.rand.Next(-shakeamt, shakeamt), Main.rand.Next(-shakeamt, shakeamt));
-                Vector2 origin = parasite.Size() * 0.5f;
-                Main.spriteBatch.Draw(parasite, screenArea, null, color, 0f, origin, scale, SpriteEffects.None, 0f);
                 Main.spriteBatch.End();
             }
         }
@@ -747,12 +742,21 @@ namespace CalRemix.Core
                         Main.spriteBatch.Draw(explosion, v.position, explosion.Frame(6, 3, v.frameX, v.frameY), Color.White, 0f, new Vector2(0, explosion.Height * 0.2f), 12f, SpriteEffects.None, 0);
                 }
             }
+            if (Main.LocalPlayer.Remix != null)
+            {
+                if (Main.LocalPlayer.Remix().taintedOwl)
+                {
+                    Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Black * 0.22f, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+                }
+                if (Main.LocalPlayer.Remix().taintedShine)
+                {
+                    Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Black, 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+                }
+            }
         }
 
         private static int KillHiveMind(On_NPC.orig_NewNPC orig, IEntitySource spawnSource, int x, int y, int type, int star, float ai0, float ai1, float ai2, float ai3, int targ)
         {
-            if (type == NPCID.DungeonGuardian)
-                return 0;
             if (type == NPCID.Wizard && CalRemixWorld.wizardDisabled)
                 return 0;
             if (type == NPCID.BoundWizard && CalRemixWorld.wizardDisabled)
@@ -816,7 +820,7 @@ namespace CalRemix.Core
         {
             SetOldDukeDead();
         }
-        private static void SetOldDukeDead()
+        public static void SetOldDukeDead()
         {
             CalamityMod.NPCs.CalamityGlobalNPC.SetNewShopVariable(new int[] { NPCType<SEAHOE>() }, DownedBossSystem.downedBoomerDuke);
 
@@ -830,5 +834,18 @@ namespace CalRemix.Core
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
         private static bool DoGMusicDeath(On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase1MusicScene self) => false;
         private static bool DoGMusicDeath2(On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase2MusicScene self) => false;
+        
+        private static void ReplaceWorldSelectionSizeDescriptions(ILContext il)
+        {
+            var c = new ILCursor(il);
+
+            c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeMedium"));
+            c.EmitPop();
+            c.EmitLdstr("Mods.CalRemix.UI.MediumWorldWarning");
+            
+            c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeLarge"));
+            c.EmitPop();
+            c.EmitLdstr("Mods.CalRemix.UI.LargeWorldGreening");
+        }
     }
 }

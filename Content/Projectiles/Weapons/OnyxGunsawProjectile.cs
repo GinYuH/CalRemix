@@ -26,7 +26,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Somewhat cost-efficient chainsaw");
+            // DisplayName.SetDefault("Somewhat cost-efficient chainsaw");
         }
         public override void SetDefaults()
         {

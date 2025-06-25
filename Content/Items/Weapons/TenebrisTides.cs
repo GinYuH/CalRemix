@@ -14,10 +14,10 @@ public class TenebrisTides : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Tenebris Tides");
-        Tooltip.SetDefault("Inundatio ex Gladii\n" +
+        // DisplayName.SetDefault("Tenebris Tides");
+        /* Tooltip.SetDefault("Inundatio ex Gladii\n" +
             "Spins a speared baton that summons spears from below the cursor\n" +
-            "Enemies hit with the baton are barraged with moldy blades and spears to assault the struck foe"); 
+            "Enemies hit with the baton are barraged with moldy blades and spears to assault the struck foe"); */ 
         Item.ResearchUnlockCount = 1;
     }
 

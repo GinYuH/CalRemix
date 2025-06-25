@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Bags
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Front Gar");
-            Tooltip.SetDefault("Right click to extract reaper teeth");
+            // DisplayName.SetDefault("Front Gar");
+            // Tooltip.SetDefault("Right click to extract reaper teeth");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 

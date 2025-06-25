@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Creep");
+            // DisplayName.SetDefault("Creep");
         }
 
         public override void SetDefaults()

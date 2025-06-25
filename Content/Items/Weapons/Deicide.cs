@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Deicide");
+            // DisplayName.SetDefault("Deicide");
 		}
 		public override void SetDefaults() 
 		{
@@ -58,9 +58,12 @@ namespace CalRemix.Content.Items.Weapons
             }
             if (player.GetModPlayer<CalRemixPlayer>().commonItemHoldTimer >= 3600)
             {
-                Projectile proj = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<IchorBlob>(), 0, 0, player.whoAmI);
-                proj.hostile = false;
-                player.Hurt(PlayerDeathReason.ByPlayerItem(player.whoAmI, Item), player.statLifeMax2, 0, dodgeable: false);
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<IchorBlob>()] < 1)
+                {
+                    Projectile proj = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<IchorBlob>(), 0, 0, player.whoAmI);
+                    proj.hostile = false;
+                }
+                player.KillMe(PlayerDeathReason.ByPlayerItem(player.whoAmI, Item), player.statLife, 0);
             }
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

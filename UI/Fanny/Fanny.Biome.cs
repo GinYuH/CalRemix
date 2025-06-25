@@ -13,6 +13,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.World;
+using System.Reflection;
+using System;
 
 namespace CalRemix.UI
 {
@@ -43,16 +45,16 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneGemCave).AddItemDisplay(ItemID.Emerald);
 
             HelperMessage.New("SunkySea", "Did you know that the oldest animal ever identified was a clam? Unfortunately, the people who caught it accidentally froze it to death. Maybe you can find an older clam here in this Sunken Sea!",
-                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSunkenSea);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSunkenSea);
 
-            HelperMessage.New("Hell", "Welcome to hell! This place is flaming hot just like me, so you better get some gear to protect you aganist the heat!", "FannyNuhuh",
-                (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight && !Main.hardMode);
+            HelperMessage.New("Hell", "Welcome to hell! This place is flaming hot just like me, so you better get some gear to protect you aganist the heat!", 
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight && !ModLoader.HasMod("TheDepths"));
 
             HelperMessage.New("ShimmerNothing", "You should consider throwing that item you're holding in Shimmer! You may get something powerful!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.HeldItem.CanShimmer(), onlyPlayOnce: false, cooldown: 600);
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.ActiveItem().CanShimmer(), onlyPlayOnce: false, cooldown: 600);
 
             HelperMessage.New("Meteore", "A Fallen Star!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneMeteor).AddItemDisplay(ItemID.FallenStar);
+                "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneMeteor && !ModLoader.HasMod("CatalystMod")).AddItemDisplay(ItemID.FallenStar);
 
             HelperMessage.New("DeepAbyss", "Tired of this pesky abyss drowning you? I have an idea! If you go into the underworld and poke a hole at the bottom, all the water will drain out! No more pesky pressure!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyssLayer3);
@@ -67,7 +69,7 @@ namespace CalRemix.UI
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAbyss && (Main.LocalPlayer.HasItem(ItemID.RodofDiscord) || Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>()))).AddItemDisplay(ItemID.RodofDiscord);
 
             HelperMessage.New("PlaguedJungle", "Man, this place reminds me of when I volunteered to help run a jungle-themed summer fair at a local elementary school! Long story short, everyone fainted due to dehydration. Not the plague. At least, that’s what I think.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague);
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague && !Main.LocalPlayer.ZoneRockLayerHeight);
 
             HelperMessage.New("PlaguedJunglePhyto", "Did you know if you gather a bunch of those pesky plague enemies, you'll summon a giant pineapple? He's a pretty chill fruit until you decide to pick a fight! So, make sure you're ready for a fruit salad battle before you start swinging!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ZonePlague && Main.LocalPlayer.ZoneRockLayerHeight);
@@ -90,13 +92,13 @@ namespace CalRemix.UI
             HelperMessage.New("Jungleabyss", "I’ve heard word that there’s incredible treasures in the mysterious depths of the ocean, the one past the jungle!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => !NPC.downedBoss3 && Main.LocalPlayer.ZoneJungle && Main.rand.NextBool(600));
 
-            HelperMessage.New("Sulph", "Ah the good ol' Sulphurous Sea. Just take a breathe of the fresh air here! If you see any tiny light green lights, you should use a Bug Net on it to get a fancy light pet.",
+            HelperMessage.New("Sulph", "Ah the good ol' Sulphurous Sea. Just take a breath of the fresh air here! If you see any tiny light green lights, you should use a Bug Net on it to get a fancy light pet.",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneSulphur).AddItemDisplay(ModContent.ItemType<DisgustingSeawater>());
 
             HelperMessage.New("Starbuster", "Trying to get a Starbuster Core? Lately those culex things have been hardening up! The only way to force their cores out of them is by running a Unicorn into them!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight)).AddItemDisplay(ModContent.ItemType<StarbusterCore>());
 
-            HelperMessage.New("NotBlessedApple", "A smart one ey? Unfortunately, only hostile Unicorns are able to break those astral batties open.",
+            HelperMessage.New("NotBlessedApple", "A smart one eh? Unfortunately, only hostile Unicorns are able to break those astral batties open.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && DownedBossSystem.downedAstrumAureus && Main.LocalPlayer.slotsMinions > 2 && (Main.LocalPlayer.ZoneDirtLayerHeight || Main.LocalPlayer.ZoneRockLayerHeight) && Main.LocalPlayer.mount.Type == MountID.Unicorn);
 
             HelperMessage.New("SideGar", "Have you ever heard of gars? They're a neat fish group that you can rip open for valuable loot. One species of gar is the Side Gar, which can be fished up in sky lakes!",
@@ -111,65 +113,64 @@ namespace CalRemix.UI
             HelperMessage.New("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>());
 
+            HelperMessage.New("Home", "Oh hey, this garden seems familiar to me! I don't know why, though... Just, uh, give me a moment, ok?",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => CrossModBiome("NoxusBoss", "EternalGardenBiome")).SetHoverTextOverride("Ok, take your time, Fanny!");
+
             HelperMessage.New("Exospheree", "THE EXOSPHERE!!!!",
                 "FannyAwooga").OnlyPlayInSubworld(ModContent.GetInstance<ExosphereSubworld>());
 
-            HelperMessage.New("Desert", "Oh, look at you, venturing into the sandy abyss! Remember, in the desert, the sand's as hot as a freshly microwaved burrito! So don't forget your sunscreen... or your water... or your sanity. ",
+            HelperMessage.New("Desert", "Look at you, venturing into the desert. Keep this little tip in mind; the largest desert is infested with antlions! Keep an eye out for an entrance into its lower layers, the biggest desert ALWAYS has one!",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneDesert);
 
             HelperMessage.New("Corpution", "Ah, the Corruption, where the grass is as dark as my soul after what I did to that sleeping homeless person on Feburary 2nd at 2:35 AM. Just watch out for those pesky corruption monsters, they'll nibble you right up!",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneCorrupt);
 
-            HelperMessage.New("PlantDungeon", "Welcome to the dungeon, where skeletons have more bones than a Halloween decoration aisle! Just be careful not to wake the sleeping spirits, they're grumpier than a cat without its afternoon nap.",
+            HelperMessage.New("PlantDungeon", "Prepare yourself, my friend! Now that Plantera is gone, these skeletons are more than bone and cloth! They're armed to the teeth with powerful weapons, and their ravenous spirits will try to tear you apart once you kill them. This is a great opportunity to gear up, but be careful, ok?",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => NPC.downedPlantBoss && Main.LocalPlayer.ZoneDungeon);
 
             HelperMessage.New("Asbestos", "Asbestos is a naturally occurring fibrous silicate mineral. It's a rockin' place to be, but be careful breaking the walls of houses in these caves, you might attract a crippled smoker named Carcinoma! He's a real pain in the asbestos! Be careful where you swing that hammer!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.InModBiome<AsbestosBiome>()).AddItemDisplay(ItemID.CopperHammer);
 
             HelperMessage apoc = HelperMessage.New("Apocalypse1", "Oh no.. oh no! Look what you've done! Ohhh we're really in the thick of it now...",
-               "FannyApocalypse", (ScreenHelperSceneMetrics scene) => ProfanedDesert.scorchedWorld && !Main.LocalPlayer.dead, 9, cantBeClickedOff: true);
-
+               "FannyApocalypse", (ScreenHelperSceneMetrics scene) => ProfanedDesert.scorchedWorld && !Main.LocalPlayer.dead, 9, cantBeClickedOff: true).InitiateConversation();
             HelperMessage.New("Apocalypse2", "everybody knows",
                "CrimSonDefault").SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(delay: 4, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Apocalypse3", "Fanny you dim-wick, take that stupid thing off.",
                "EvilFannyIdle").SpokenByEvilFanny().ChainAfter(apoc, delay: 7, startTimerOnMessageSpoken: true);
-
             HelperMessage.New("Apocalypse4", "Aww jeez, okay...",
-               "FannySob").ChainAfter(delay: 2, startTimerOnMessageSpoken: true);
-
+               "FannySob").ChainAfter(delay: 2, startTimerOnMessageSpoken: true).EndConversation();
         }
 
         public static void LoadShrineMessages()
         {
-            HelperMessage.New("ShrineSnow", "Woah, is that a snow shrine? You better go loot it for its one-of-a-kind treasure! It gave you a really cool item that you'll use forever I think?",
+            HelperMessage.New("ShrineSnow", "Woah, is that a snow shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneSnow && Main.LocalPlayer.ZoneRockLayerHeight && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<TundraLeash>());
 
-            HelperMessage.New("ShrineDesert", "Woah, is that a desert shrine? You better go loot it for its one-of-a-kind treasure! It gave you a tile-matching game called Luxor I think?",
+            HelperMessage.New("ShrineDesert", "Woah, is that a desert shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUndergroundDesert && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<LuxorsGift>());
 
-            HelperMessage.New("ShrineCorruption", "Woah, is that a corruption shrine? You better go loot it for its one-of-a-kind treasure! It caused pebbles to rain from the sky I think?",
+            HelperMessage.New("ShrineCorruption", "Woah, is that a corruption shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => !WorldGen.crimson && Main.LocalPlayer.ZoneCorrupt && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<CorruptionEffigy>());
 
-            HelperMessage.New("ShrineCrimson", "Woah, is that a crimson shrine? You better go loot it for its one-of-a-kind treasure! It caused pebbles to rain from the sky I think?",
+            HelperMessage.New("ShrineCrimson", "Woah, is that a crimson shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => WorldGen.crimson && Main.LocalPlayer.ZoneCrimson && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<CrimsonEffigy>());
 
-            HelperMessage.New("ShrineUg", "Woah, is that an underground shrine? You better go loot it for its one-of-a-kind treasure! It caused you to gain defense while standing still I think?",
+            HelperMessage.New("ShrineUg", "Woah, is that an underground shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneNormalUnderground && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<TrinketofChi>());
 
-            HelperMessage.New("ShrineHallow", "Woah, is that a hallow shrine? You better go loot it for its one-of-a-kind treasure! No seriously, it's the only thing exclusive to the Hallow!",
+            HelperMessage.New("ShrineHallow", "Woah, is that a hallow shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneHallow && Main.LocalPlayer.ZoneRockLayerHeight && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<HallowEffigy>());
 
-            HelperMessage.New("ShrineAstral", "Woah, is that an astral shrine? You better go loot it for its one-of-a-kind treasure! It summoned a large mimic I think?",
+            HelperMessage.New("ShrineAstral", "Woah, is that an astral shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && Main.LocalPlayer.ZoneRockLayerHeight && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<AstralEffigy>());
 
-            HelperMessage.New("ShrineGranite", "Woah, is that a granite shrine? You better go loot it for its one-of-a-kind treasure! It caused sparks to fly out of enemies when hit I think?",
+            HelperMessage.New("ShrineGranite", "Woah, is that a granite shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneGranite && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<UnstableGraniteCore>());
 
-            HelperMessage.New("ShrineMarble", "Woah, is that a marble shrine? You better go loot it for its one-of-a-kind treasure! It summoned cool orbital swords I think?",
+            HelperMessage.New("ShrineMarble", "Woah, is that a marble shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneMarble && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<GladiatorsLocket>());
 
-            HelperMessage.New("ShrineMushroom", "Woah, is that a mushroom shrine? You better go loot it for its one-of-a-kind treasure! It imbued true melee weapons with fungi I think?",
+            HelperMessage.New("ShrineMushroom", "Woah, is that a mushroom shrine? You better go loot it for its one-of-a-kind treasure!",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneGlowshroom && Main.rand.NextBool(116000)).AddItemDisplay(ModContent.ItemType<FungalSymbiote>());
         }
     }

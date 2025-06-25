@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override string Texture => "CalRemix/Content/Projectiles/Hostile/AsbestosDrop";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Asbestos Drop");
+            // DisplayName.SetDefault("Asbestos Drop");
         }
         public override void SetDefaults()
         {

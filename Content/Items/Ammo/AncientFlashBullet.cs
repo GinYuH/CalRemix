@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Ammo
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Flash Round");
-            Tooltip.SetDefault("Gives off a concussive blast that confuses enemies in a large area for a short time");
+            // DisplayName.SetDefault("Ancient Flash Round");
+            // Tooltip.SetDefault("Gives off a concussive blast that confuses enemies in a large area for a short time");
         }
 
         public override void SetDefaults()

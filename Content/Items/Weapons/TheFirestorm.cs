@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Rapidly fires molten globs which follow your cursor");
+            // Tooltip.SetDefault("Rapidly fires molten globs which follow your cursor");
         }
         public override void SetDefaults()
         {

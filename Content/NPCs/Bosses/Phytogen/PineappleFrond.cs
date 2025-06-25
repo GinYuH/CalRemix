@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
         int segmentCount = 30;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frond");
+            // DisplayName.SetDefault("Frond");
             NPCID.Sets.MustAlwaysDraw[Type] = true;
             this.HideFromBestiary();
         }

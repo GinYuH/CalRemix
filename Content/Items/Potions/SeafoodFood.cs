@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Potions
         public override string Texture => "CalamityMod/Items/SummonItems/Seafood";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Seafood");
-            Tooltip.SetDefault("Minor improvements to all stats");
+            // DisplayName.SetDefault("Seafood");
+            // Tooltip.SetDefault("Minor improvements to all stats");
         }
 
 

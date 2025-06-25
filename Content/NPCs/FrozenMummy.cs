@@ -15,7 +15,7 @@ namespace CalRemix.Content.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frozen Mummy");
+            // DisplayName.SetDefault("Frozen Mummy");
             Main.npcFrameCount[NPC.type] = 13;
         }
 
@@ -85,8 +85,7 @@ namespace CalRemix.Content.NPCs
                 if (Main.rand.NextBool(3))
                 {
                     SoundEngine.PlaySound(BetterSoundID.ItemSentrySummonStrong, NPC.Center);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EnchantedSkull>());
+                    CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<EnchantedSkull>());
                 }
             }
         }

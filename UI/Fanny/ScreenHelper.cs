@@ -12,6 +12,7 @@ using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -26,13 +27,16 @@ namespace CalRemix.UI
     /// <summary>
     /// Represents the character / UI eleemnt of the character itself
     /// </summary>
-    public class ScreenHelper : UIElement
+    public class ScreenHelper(string name) : UIElement
     {
+        public string Name { get; } = name;
+
         public Vector2 BasePosition => GetDimensions().ToRectangle().Bottom();
         public ScreenHelperTextbox SpeechBubble;
 
         public float fadeIn;
         public bool idlesInInventory;
+        public bool renderOverBackground;
 
         private int helperFrame;
         private int helperFrameCounter;
@@ -608,22 +612,30 @@ namespace CalRemix.UI
 
             // finally draw the text
             Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+
+            // not final actually draw the guy over the box if desired
+            if (ParentSpeaker.renderOverBackground)
+            {
+                ParentSpeaker.Draw(Main.spriteBatch);
+            }
         }
     }
 
     public class ScreenHelpersUIState : UIState
     {
-        public static ScreenHelper FannyTheFire = new ScreenHelper();
-        public static ScreenHelper EvilFanny = new ScreenHelper();
-        public static ScreenHelper WonderFlower = new ScreenHelper();
-        public static ScreenHelper GonerFanny = new ScreenHelper();
-        public static ScreenHelper Renault5 = new ScreenHelper();
-        public static ScreenHelper CrimSon = new ScreenHelper();
-        public static ScreenHelper TrapperBulbChan = new ScreenHelper();
-        public static ScreenHelper MiracleBoy = new ScreenHelper();
-        public static ScreenHelper MovieCygn = new ScreenHelper();
+        public static ScreenHelper FannyTheFire = new("Fanny");
+        public static ScreenHelper EvilFanny = new("EvilFanny");
+        public static ScreenHelper WonderFlower = new("WonderFlower");
+        public static ScreenHelper BizarroFanny = new("BizarroFanny");
+        public static ScreenHelper Renault5 = new("Renault5");
+        public static ScreenHelper CrimSon = new("CrimSon");
+        public static ScreenHelper TrapperBulbChan = new("TrapperBulbChan");
+        public static ScreenHelper MiracleBoy = new("MiracleBoy");
+        public static ScreenHelper MovieCygn = new("MovieCygn");
+        public static ScreenHelper Solyn = new("Solyn");
+        public static ScreenHelper Flux = new("Flux");
 
-        public static ScreenHelper AltMetalFanny = new ScreenHelper();
+        public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
 
         public override void OnInitialize()
         {
@@ -633,22 +645,23 @@ namespace CalRemix.UI
                 .SetPositionData(false, 240);
             
             LoadScreenHelper(EvilFanny, "EvilFannyIdle")
-                .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.DD2_GoblinScream)
+                .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.NPCHit40)
                 .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
                 .SetAvailabilityCondition(() => Main.hardMode)
                 .SetPositionData(true, 120);
 
             LoadScreenHelper(WonderFlower,  "TalkingFlower")
-                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.DD2_GoblinScream)
+                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.Grass)
                 .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
                 .SetPositionData(false, 240, 0.37f)
                 .SetAvailabilityCondition(() => Main.hardMode);
 
-            LoadScreenHelper(GonerFanny, "FannyGoner")
-                .SetVoiceStyle(ScreenHelperManager.NothingSound with { MaxInstances = 0 })
-                .SetTextboxStyle("     ", new HelperTextboxPalette(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Black))
+            LoadScreenHelper(BizarroFanny, "BizarroFannyIdle")
+                .SetVoiceStyle(ScreenHelperManager.BizarroFannyTalk with { MaxInstances = 0 })
+                .SetTextboxStyle("???", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetExtraAnimations(false, false, false)
-                .SetPositionData(false, 840, 0.35f);
+                .SetPositionData(false, 840, 0.65f)
+                .SetAvailabilityCondition(() => DownedBossSystem.downedCeaselessVoid);
 
             LoadScreenHelper(Renault5, "Renault5")
                 .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
@@ -678,7 +691,7 @@ namespace CalRemix.UI
 
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
-                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || !CalRemixWorld.postGenUpdate) && Main.hardMode)
+                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
@@ -717,24 +730,49 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Thank you for the help, Fanny!")
                 .SetPositionData(false, 240, 0.17f);
 
-           /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
-                .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
-                .SetTextboxTheme(new HelperTextboxTheme("Moviecygn_9Slice", new Vector2(38, 38), "Moviecygn_Background", new Vector2(38, 38)))
-                .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(184, 300), 184), 0, 30)
-                .SetExtraAnimations(false, false, false)
+            LoadScreenHelper(Solyn, "Solyn")
+                .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
+                .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
+                .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
+                .SetPositionData(false, 240);
+
+            LoadScreenHelper(Flux, "FluxDefault", false, new Vector2(150, 160), true)
+                .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
+                .SetTextboxStyle("I mean, alright Flux", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Flux_Background", Vector2.Zero))
+                .SetExtraAnimations(false, false, false) //shes locked in her textbox
+                .SetAvailabilityCondition(() => Main.LocalPlayer.Remix().fifteenMinutesSinceHardmode <= 0)
+                .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(670, 172), 462), 0, 0)
                 .SetPositionData(new HelperPositionData(
-                    new Vector2(0.0f, 0.0f), //Anchored to top left of the screen
-                    new Vector2(-20, 0f),
-                    new Vector2(20f, 0f),   //Slides from the left when spawning
-                    new Vector2(290, -435),   //Offset from b ottom of portrait to center of 
+                    new Vector2(0.1f, 0.6f), // anchored to bottom middle, a little shifted to the left
+                    new Vector2(0, 0f),   //Offset so we're centered
+                    new Vector2(100f, 0f),   // slide from left
+                    new Vector2(-94, -154),   //Offset from b ottom of portrait to center of 
                     Vector2.Zero,
-                    -Vector2.UnitX * 20f,
+                    Vector2.Zero,
                     Vector2.Zero,
                     null,
-                    new Vector2(0, 0)
+                    new Vector2(189, 25)
                     ));
-            */
+
+            /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
+                 .SetVoiceStyle(SoundID.Drown with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                 .SetTextboxStyle("Join my fandom", new HelperTextboxPalette(Color.White, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
+                 .SetTextboxTheme(new HelperTextboxTheme("Moviecygn_9Slice", new Vector2(38, 38), "Moviecygn_Background", new Vector2(38, 38)))
+                 .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(184, 300), 184), 0, 30)
+                 .SetExtraAnimations(false, false, false)
+                 .SetPositionData(new HelperPositionData(
+                     new Vector2(0.0f, 0.0f), //Anchored to top left of the screen
+                     new Vector2(-20, 0f),
+                     new Vector2(20f, 0f),   //Slides from the left when spawning
+                     new Vector2(290, -435),   //Offset from b ottom of portrait to center of 
+                     Vector2.Zero,
+                     -Vector2.UnitX * 20f,
+                     Vector2.Zero,
+                     null,
+                     new Vector2(0, 0)
+                     ));
+             */
         }
 
         /// <summary>
@@ -747,7 +785,7 @@ namespace CalRemix.UI
         /// <param name="verticalOffset">How high up on the screen this fanny is</param>
         /// <param name="distanceFromEdge">How far away from the edge of the screen this fanny is</param>
         /// <returns></returns>
-        public ScreenHelper LoadScreenHelper(ScreenHelper helper, string emptyMessagePortrait, bool idlesInInventory = false, Vector2? size = null)
+        public ScreenHelper LoadScreenHelper(ScreenHelper helper, string emptyMessagePortrait, bool idlesInInventory = false, Vector2? size = null, bool renderOverBackground = false)
         {
             helper.Height.Set(80, 0f);
             helper.Width.Set(80, 0f);
@@ -759,6 +797,7 @@ namespace CalRemix.UI
             }
 
             helper.idlesInInventory = idlesInInventory;
+            helper.renderOverBackground = renderOverBackground;
             helper.NoMessage = new HelperMessage("", "", emptyMessagePortrait, displayOutsideInventory: false);
 
             Append(helper);
@@ -824,7 +863,7 @@ namespace CalRemix.UI
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int resourceBarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+            int resourceBarIndex = layers.FindLastIndex(layer => layer.Name.Equals("Rage and Adrenaline UI")) + 1;
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
@@ -957,10 +996,13 @@ namespace CalRemix.UI
         public override void Load()
         {
             LoadFannyPortraits();
+            LoadIntroMessages();
+            LoadMoonLordDeath();
+
             LoadGeneralFannyMessages();
+            LoadBabil();
             LoadDogSpamMessages();
             LoadLoreComments();
-            LoadIntroMessages();
             LoadPassiveMessages();
             LoadEventMessages();
             LoadItemMessages();
@@ -969,17 +1011,17 @@ namespace CalRemix.UI
             LoadNPCMessages();
             LoadBossMessages();
             LoadBossDeathMessages();
-            LoadEvilGFBMessages();
-            LoadEvilFannyIntro();
-            LoadMoonLordDeath();
-            LoadBabil();
-            LoadMetalDiscoveryMessages();
+
             //LoadPityParty();
-            LoadMiracleBoyMessages();
+            LoadEvilGFBMessages();
+            LoadMetalDiscoveryMessages();
             LoadWonderFlowerMessages();
-            LoadRenault5();
             LoadCrimSon();
+            LoadRenault5();
             LoadTrapperBulbChan();
+            LoadSolynMessages();
+            LoadFluxMessages();
+            LoadMiracleBoyMessages();
             SneakersRetheme.LoadHelperMessages();
 
             screenHelpersEnabled = true;
@@ -996,21 +1038,25 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannySob", 4);
             ScreenHelperPortrait.LoadPortrait("FannyNuhuh", 19);
             ScreenHelperPortrait.LoadPortrait("FannyStare", 1);
-            ScreenHelperPortrait.LoadPortrait("FannyGoner", 1);
             ScreenHelperPortrait.LoadPortrait("FannyDisturbed", 4);
-            ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
             ScreenHelperPortrait.LoadPortrait("FannyBigGrin", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyAwe", 2);
+            ScreenHelperPortrait.LoadPortrait("FannyEepy", 2);
+
             ScreenHelperPortrait.LoadPortrait("FannyCarbonized", 1);
             ScreenHelperPortrait.LoadPortrait("FannyCorporate", 1);
             ScreenHelperPortrait.LoadPortrait("FannyCosplay", 1);
             ScreenHelperPortrait.LoadPortrait("FannyHD", 1);
             ScreenHelperPortrait.LoadPortrait("FannyInfiniteFun", 1);
             ScreenHelperPortrait.LoadPortrait("FannyInfiniteFunScary", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyApocalypse", 4);
             ScreenHelperPortrait.LoadPortrait("FannyRadiant", 1);
             ScreenHelperPortrait.LoadPortrait("FannyRetro", 1);
             ScreenHelperPortrait.LoadPortrait("FannySneakers", 1);
             ScreenHelperPortrait.LoadPortrait("FannyBarefoot", 1);
+            ScreenHelperPortrait.LoadPortrait("FannyIdleFrame", 1);
 
+            //Metal Fanny
             ScreenHelperPortrait.LoadPortrait("FannyMetalCopper", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalTin", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalIron", 8);
@@ -1049,6 +1095,10 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("EvilFannyPoint", 1);
             ScreenHelperPortrait.LoadPortrait("EvilFannyWrathful", 1);
 
+            //Bizarro Fanny
+            ScreenHelperPortrait.LoadPortrait("BizarroFannyIdle", 4);
+            ScreenHelperPortrait.LoadPortrait("BizarroFannyGoner", 1);
+
             //Miracle Boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIdle", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIceCream", 10, 6, 5,  6);
@@ -1056,6 +1106,11 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("MiracleBoyGnaw", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoySob", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyRadiant", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyItWasMeee", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyCry", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyGrinchBaby", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyUpset", 1);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoySweat", 1);
 
             //Dead miracle boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyDisemboweled", 1);
@@ -1086,6 +1141,12 @@ namespace CalRemix.UI
             //Renault 5
             ScreenHelperPortrait.LoadPortrait("Renault5", 1);
 
+            //Solyn
+            ScreenHelperPortrait.LoadPortrait("Solyn", 1);
+
+            //Flux
+            ScreenHelperPortrait.LoadPortrait("FluxDefault", 1);
+
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
         }
@@ -1103,9 +1164,9 @@ namespace CalRemix.UI
             if (Main.dedServ)
                 return;
 
-            UpdateLoreCommentTracking();
-            UpdateMessages();
-            UpdateFannyMood();
+            Task.Run(UpdateLoreCommentTracking);
+            Task.Run(UpdateMessages);
+            Task.Run(UpdateFannyMood);
 
             //Dont try speaking messages if fanny is not enabled
             if (!screenHelpersEnabled)
@@ -1287,11 +1348,6 @@ namespace CalRemix.UI
             return Main.LocalPlayer.HasItems(materials);
         }
 
-        public static bool NearDungeonEntrance(ScreenHelperSceneMetrics scene)
-        {
-            return Main.LocalPlayer.WithinRange(new Vector2(Main.dungeonX * 16, Main.dungeonY * 16), 700);
-        }
-
         public static bool HasDesertMedallionMaterials(ScreenHelperSceneMetrics scene)
         {
             List<int> materials = new List<int>();
@@ -1317,12 +1373,25 @@ namespace CalRemix.UI
 
             return Main.LocalPlayer.HasItems(materials) && !Main.hardMode;
         }
-
+        public static bool NearPosition(int positionX, int positionY, int distance) => Main.LocalPlayer.WithinRange(new Vector2(positionX * 16, positionY * 16), distance);
+        public static bool NearPosition(Vector2 position, int distance) => Main.LocalPlayer.WithinRange(position, distance);
         public static bool CrossModNPC(ScreenHelperSceneMetrics scene, string ModName, string NPCName)
         {
             if (ModLoader.HasMod(ModName))
             {
                 if (scene.onscreenNPCs.Any(n => n.type == ModLoader.GetMod(ModName).Find<ModNPC>(NPCName).Type))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        public static bool CrossModBiome(string ModName, string BiomeName)
+        {
+            if (ModLoader.HasMod(ModName))
+            {
+                if (Main.LocalPlayer.InModBiome(ModLoader.GetMod(ModName).Find<ModBiome>(BiomeName)))
                 {
                     return true;
                 }
@@ -1822,6 +1891,13 @@ namespace CalRemix.UI
         /// </summary>
         public void PlayMessage(ScreenHelper speaker)
         {
+            // Once the character has been seen, take note.  Make sure the
+            // character is available and isn't just being forced to speak.
+            if (speaker.CharacterAvailableCondition)
+            {
+                PersistentData.UnlockHelper(speaker.Name);
+            }
+            
             TimeLeft = messageDuration + delayTime;
             speaker.UsedMessage = this;
             currentSpeaker = speaker;

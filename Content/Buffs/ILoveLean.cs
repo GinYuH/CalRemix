@@ -8,7 +8,7 @@ namespace CalRemix.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("I LOVE LEAN!");
+            // DisplayName.SetDefault("I LOVE LEAN!");
         }
         public override void Update(Player player, ref int buffIndex)
         {

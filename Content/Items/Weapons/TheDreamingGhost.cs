@@ -18,11 +18,11 @@ public class TheDreamingGhost : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("The Dreaming Ghost");
-        Tooltip.SetDefault("Beneath the tree's roots lies the pain of a thousand souls\n" +
+        // DisplayName.SetDefault("The Dreaming Ghost");
+        /* Tooltip.SetDefault("Beneath the tree's roots lies the pain of a thousand souls\n" +
                 "Summons a pair of crystalline butterflies to fight for you\n" +
                 "Each active purple butterfly increases your damage by 10%\n" +
-                "Each active pink butterfly increases your life regeneration by 2"); 
+                "Each active pink butterfly increases your life regeneration by 2"); */ 
         Item.ResearchUnlockCount = 1;
     }
 

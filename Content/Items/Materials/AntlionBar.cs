@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Antlion Bar");
+			// DisplayName.SetDefault("Antlion Bar");
 			Item.ResearchUnlockCount = 25;
     	}
 		public override void SetDefaults()

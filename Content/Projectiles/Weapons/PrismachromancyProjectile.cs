@@ -54,7 +54,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.velocity = (Projectile.velocity * (inertia - 1) + moveTo) / inertia;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             
             

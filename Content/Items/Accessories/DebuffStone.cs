@@ -20,10 +20,17 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
         public override string LocalizationCategory => "Stones";
 
         public int debuffType;
+        public Color? debuffColor;
         protected override bool CloneNewInstances => true;
 
         public override string Name => debuffType < BuffID.Count ? debuffType + "Stone" : BuffLoader.GetBuff(debuffType).Mod.Name + "/" + BuffLoader.GetBuff(debuffType).Name + "Stone";
         public override string Texture => "CalRemix/Content/Items/Accessories/DebuffStone";
+
+        private string DebuffName => debuffType < BuffID.Count ? Lang.GetBuffName(debuffType) : BuffLoader.GetBuff(debuffType).DisplayName.Value;
+
+        public override LocalizedText DisplayName => Language.GetText("Mods.CalRemix.DebuffStone.DisplayName").WithFormatArgs(DebuffName);
+
+        public override LocalizedText Tooltip => Language.GetText("Mods.CalRemix.DebuffStone.Tooltip").WithFormatArgs(DebuffName);
 
         public DebuffStone(int type)
         {
@@ -32,19 +39,6 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
         public override void SetStaticDefaults()
         {
-            Item.ResearchUnlockCount = 1;
-#if !DEBUG
-            try
-            {
-                string debuffName = debuffType < BuffID.Count ? Lang.GetBuffName(debuffType) : BuffLoader.GetBuff(debuffType).DisplayName.Value;
-                DisplayName.SetDefault(debuffName + " Stone");
-                Tooltip.SetDefault("Immunity to " + debuffName + "\nAttacks inflict " + debuffName);
-            }
-            catch
-            {
-
-            }
-#endif
         }
 
         public override void SetDefaults()
@@ -72,9 +66,9 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if (TextureAssets.Buff[debuffType] != null)
+            Texture2D debuff = TextureAssets.Buff[debuffType].Value;
+            if (debuffColor == null)
             {
-                Texture2D debuff = TextureAssets.Buff[debuffType].Value;
                 Color[,] color = debuff.GetColorsFromTexture();
                 Color mid = color[16, 16];
                 int atts = 5;
@@ -90,12 +84,9 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
                         break;
                     }
                 }
-                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, mid, 0, origin, scale, SpriteEffects.None, 0f);
+                debuffColor = mid;
             }
-            else
-            {
-                spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, Color.White, 0, origin, scale, SpriteEffects.None, 0f);
-            }
+            spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, (debuffColor == null) ? Color.White : debuffColor.Value, 0, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
 

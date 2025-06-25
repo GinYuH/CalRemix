@@ -16,8 +16,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Pyrogen");
-            Tooltip.SetDefault("Increases critical strike chance to 100%\nDisables flight, mounts, and hooks\n" + CalamityUtils.ColorMessage("Boosts Fire damage", Color.Orange));
+            // DisplayName.SetDefault("Soul of Pyrogen");
+            // Tooltip.SetDefault("Increases critical strike chance to 100%\nDisables flight, mounts, and hooks\n" + CalamityUtils.ColorMessage("Boosts Fire damage", Color.Orange));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(7, 7));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityTurquoiseBuyPrice;
             Item.accessory = true;
             Item.rare = ModContent.RarityType<Turquoise>();

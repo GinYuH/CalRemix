@@ -20,7 +20,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            Tooltip.SetDefault("All friendly projectiles are twice as large");
+            // Tooltip.SetDefault("All friendly projectiles are twice as large");
         }
 
         public override void SetDefaults()

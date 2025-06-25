@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Orb");
+            // DisplayName.SetDefault("The Orb");
         }
 
         public override void SetDefaults()

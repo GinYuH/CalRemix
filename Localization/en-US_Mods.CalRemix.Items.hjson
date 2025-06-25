@@ -1,3 +1,21 @@
+BoiMachine: {
+	DisplayName: Binding of Anahita Machine
+	Tooltip:
+		'''
+		INCOMPLETE ITEM, EXTREMELY UNSTABLE
+		Roguelike game
+		'''
+}
+
+TrapperQuestMachine: {
+	DisplayName: Trapper Quest Machine
+	Tooltip:
+		'''
+		INCOMPLETE ITEM, EXTREMELY UNSTABLE
+		RPG game
+		'''
+}
+
 Assortegelatin: {
 	DisplayName: Assortegelatin
 	Tooltip:
@@ -324,11 +342,6 @@ DerellectMusicBox: {
 	Tooltip: Plays 'Signal Interruption' by Sploopo
 }
 
-DerellectTrophyInv: {
-	DisplayName: Derellect Trophy
-	Tooltip: ""
-}
-
 DerellectTrophy: {
 	DisplayName: Derellect Trophy
 	Tooltip: ""
@@ -352,15 +365,6 @@ LifeOre: {
 Meth: {
 	DisplayName: Ashes of the Sunken Sea
 	Tooltip: These fine crystals feel very powerful
-}
-
-NotFabsolVodka: {
-	DisplayName: Fluorescent Vodka
-	Tooltip:
-		'''
-		Boosts all damage stats by 8% but lowers defense by 10%
-		Increases immune time after being struck
-		'''
 }
 
 AcesLow: {
@@ -1108,6 +1112,11 @@ Bellwings: {
 BananaClownHat: {
 	DisplayName: Banana Clown Mask
 	Tooltip: 2 magic damage
+	SetBonus:
+		'''
+		Consuming fruits grants unlimited mana and increased magic damage for a short period of time
+		This effect has a 1 minute cooldown
+		'''
 }
 
 BananaClownPants: {
@@ -1277,6 +1286,66 @@ HalbardoftheHolidays: {
 		- The General
 		Fires exploding red and green bouncing gift bags that emit clouds as they travel
 		'''
+}
+
+Cold: {
+	DisplayName: Cold
+	Tooltip: Slow enemies down in speed and attack frequency, and weaken their damage
+}
+
+Dark: {
+	DisplayName: Dark
+	Tooltip: Incapacitate enemies, slowing their attacks and making them miss
+}
+
+Fire: {
+	DisplayName: Fire
+	Tooltip: Set enemies on fire and reduce enemy defense
+}
+
+Holy: {
+	DisplayName: Holy
+	Tooltip: Smite enemies, dealing massive damage
+}
+
+Impact: {
+	DisplayName: Impact
+	Tooltip: Bash enemies and ignores some knockback resistance
+}
+
+Machine: {
+	DisplayName: Machine
+	Tooltip: Electrocutes enemies and fries the circuits of other machines
+}
+
+Magic: {
+	DisplayName: Magic
+	Tooltip: Hex enemies, damaging them and weakening their attacks
+}
+
+Poison: {
+	DisplayName: Poison
+	Tooltip: Poison enemies and reduce their damage
+}
+
+Slash: {
+	DisplayName: Slash
+	Tooltip: Enemies bleed heavily
+}
+
+Stab: {
+	DisplayName: Stab
+	Tooltip: Slow enemies and puncture their organs
+}
+
+Unholy: {
+	DisplayName: Unholy
+	Tooltip: Curse enemies, dealing massive damage
+}
+
+Water: {
+	DisplayName: Water
+	Tooltip: Slow enemies slightly and make them begin to drown from aspiration
 }
 
 ConquestFragment: {
@@ -1711,11 +1780,6 @@ HypnosTrophyInv: {
 	Tooltip: ""
 }
 
-HypnosTrophy: {
-	DisplayName: Hypnos Trophy
-	Tooltip: ""
-}
-
 ShadyGazingSkull: {
 	DisplayName: Shady Gazing Skull
 	Tooltip: ""
@@ -2024,6 +2088,15 @@ BeetleHead: {
 TwistedNetheriteHelmet: {
 	DisplayName: Twisted Netherite Helmet
 	Tooltip: ""
+	SetBonus:
+		'''
+		Collect souls from fallen enemies and stores them into the helmet
+		Knockback immunity
+		All attacks inflict wither
+		Using the armor bonus key consumes all souls to unleash a massive explosion
+		Soul explosion and wither get stronger with each soul collected
+		[c/99ffff:{0} souls stored]
+		'''
 }
 
 TwistedNetheriteBoots: {
@@ -2152,7 +2225,7 @@ CarcinogenMusicBox: {
 }
 
 EmpressofLightDayMusicBox: {
-	DisplayName: Music Box (Daytime Empress of Light)
+	DisplayName: Music Box (Empress of Light)
 	Tooltip: Plays 'Gegenschein' by Jteoh
 }
 
@@ -2219,6 +2292,31 @@ TheCalamityMusicBox: {
 VernalPassMusicBox: {
 	DisplayName: Music Box (Vernal Pass)
 	Tooltip: Plays 'Vajrabhairava's Rest' by Jteoh
+}
+
+StrongholdMusicBox: {
+	DisplayName: Music Box (Frozen Stronghold)
+	Tooltip: Plays 'Locked Away' by HeartPlusUp
+}
+
+ProfanedDesertMusicBox: {
+	DisplayName: Music Box (Profaned Desert)
+	Tooltip: Plays 'Empire of Ash' by Jteoh
+}
+
+PlasticOracleMusicBox: {
+	DisplayName: Music Box (Plastic Oracle)
+	Tooltip: Plays 'Ohmn Omens' by Jteoh
+}
+
+GaleforceMusicBox: {
+	DisplayName: Music Box (Galeforce Day)
+	Tooltip: Plays 'Galeforce' by Jteoh
+}
+
+GeneratorMusicBox: {
+	DisplayName: Music Box (The Generator)
+	Tooltip: Plays 'Artistic Reinforcement' by Jteoh
 }
 
 CarcinogenTrophy: {
@@ -2373,6 +2471,11 @@ WindTurbineBlade: {
 	Tooltip: ""
 }
 
+Wind: {
+	Tooltip: ""
+	DisplayName: Wind
+}
+
 TotalAnnihilation: {
 	DisplayName: Total Annihilation
 	Tooltip: ""
@@ -2454,100 +2557,8 @@ Weapons: {
 			DisplayName: Magmasher
 		}
 
-		WreathofBelial: {
-			Tooltip:
-				'''
-				Throws a festive wreath that grows in size until exploding into icicle shards
-				Stealth strikes cause the wreath to suck in nearby enemies
-				'''
-			DisplayName: Wreath of Belial
-		}
-
-		Warglaive: {
-			Tooltip: Stealth strikes stick to tiles
-			DisplayName: Warglaive
-		}
-
-		UnsealedSingularity: {
-			Tooltip:
-				'''
-				Cold and alone in the void...Throws a volley of five void flasks which shatter on impact
-				Shattered flasks summon blackholes which pull in enemies and purple void matter
-				Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter
-				'''
-			DisplayName: Unsealed Singularity
-		}
-
-		ThrowingMissiles: {
-			Tooltip:
-				'''
-				Flings erratically moving missiles which home on enemies
-				Stealth strikes unleash a swarm of missiles
-				'''
-			DisplayName: Throwing Missiles
-		}
-
-		ShadowsDescent: {
-			Tooltip:
-				'''
-				Shoots a shadow ball that ignores gravity and slows down after a short time.While stationary, it shoots spirits and covers an area in a large shadow
-				Stealth strikes also emit dark pulses while stationary
-				Right click to delete all existing shadow balls
-				'They didn't understand its nature, so it was sealed away...'
-				'''
-			DisplayName: Shadow's Descent
-		}
-
-		ScrapBag: {
-			Tooltip:
-				'''
-				Tosses out scraps
-				Stealth strikes throw a large amount of charged scraps that linger longer
-				'''
-			DisplayName: Scrap Claw
-		}
-
-		RazorTeeth: {
-			DisplayName: Razor Teeth
-			Tooltip: ""
-		}
-
-		ProfanedNucleus: {
-			Tooltip:
-				'''
-				Throws out a molten chunk of profaned rock that explodes and splits into crystals
-				Stealth strikes leave behind lingering patches of magma
-				'''
-			DisplayName: Profaned Nucleus
-		}
-
-		IchorDagger: {
-			DisplayName: Ichor Dagger
-			Tooltip: ""
-		}
-
-		GearworkShield: {
-			DisplayName: Gearwork Shield
-			Tooltip: ""
-		}
-
-		EcologicalCollapse: {
-			Tooltip:
-				'''
-				And there was no more ground to be seen...
-				Throws out up to 10 lumenous mines with lightning auras
-				Stealth strikes ignore the 10 mine cap, but dissipate quicker
-				'''
-			DisplayName: Ecological Collapse
-		}
-
-		DemonCore: {
-			DisplayName: Demon Core
-			Tooltip: ""
-		}
-
-		CursedSpear: {
-			DisplayName: Cursed Spear
+		BucketofCoal: {
+			DisplayName: Bucket of Coal
 			Tooltip: ""
 		}
 
@@ -2556,9 +2567,101 @@ Weapons: {
 			Tooltip: ""
 		}
 
-		BucketofCoal: {
-			DisplayName: Bucket of Coal
+		CursedSpear: {
+			DisplayName: Cursed Spear
 			Tooltip: ""
+		}
+
+		DemonCore: {
+			DisplayName: Demon Core
+			Tooltip: ""
+		}
+
+		EcologicalCollapse: {
+			DisplayName: Ecological Collapse
+			Tooltip:
+				'''
+				And there was no more ground to be seen...
+				Throws out up to 10 lumenous mines with lightning auras
+				Stealth strikes ignore the 10 mine cap, but dissipate quicker
+				'''
+		}
+
+		GearworkShield: {
+			DisplayName: Gearwork Shield
+			Tooltip: ""
+		}
+
+		IchorDagger: {
+			DisplayName: Ichor Dagger
+			Tooltip: ""
+		}
+
+		ProfanedNucleus: {
+			DisplayName: Profaned Nucleus
+			Tooltip:
+				'''
+				Throws out a molten chunk of profaned rock that explodes and splits into crystals
+				Stealth strikes leave behind lingering patches of magma
+				'''
+		}
+
+		RazorTeeth: {
+			DisplayName: Razor Teeth
+			Tooltip: ""
+		}
+
+		ScrapBag: {
+			DisplayName: Scrap Claw
+			Tooltip:
+				'''
+				Tosses out scraps
+				Stealth strikes throw a large amount of charged scraps that linger longer
+				'''
+		}
+
+		ShadowsDescent: {
+			DisplayName: Shadow's Descent
+			Tooltip:
+				'''
+				Shoots a shadow ball that ignores gravity and slows down after a short time.While stationary, it shoots spirits and covers an area in a large shadow
+				Stealth strikes also emit dark pulses while stationary
+				Right click to delete all existing shadow balls
+				'They didn't understand its nature, so it was sealed away...'
+				'''
+		}
+
+		ThrowingMissiles: {
+			DisplayName: Throwing Missiles
+			Tooltip:
+				'''
+				Flings erratically moving missiles which home on enemies
+				Stealth strikes unleash a swarm of missiles
+				'''
+		}
+
+		UnsealedSingularity: {
+			DisplayName: Unsealed Singularity
+			Tooltip:
+				'''
+				Cold and alone in the void...Throws a volley of five void flasks which shatter on impact
+				Shattered flasks summon blackholes which pull in enemies and purple void matter
+				Stealth strikes throw one flask that creates a gigantic blackhole with significantly larger purple void matter
+				'''
+		}
+
+		Warglaive: {
+			DisplayName: Warglaive
+			Tooltip: Stealth strikes stick to tiles
+		}
+
+		WreathofBelial: {
+			DisplayName: Wreath of Belial
+			Tooltip:
+				'''
+				Throws a festive wreath that grows in size until exploding into icicle shards
+				Stealth strikes cause the wreath to suck in nearby enemies
+				'''
 		}
 
 		BlobfishPlushie: {
@@ -2567,7 +2670,7 @@ Weapons: {
 		}
 
 		DaggerofLiberty: {
-			DisplayName: Daggerof Liberty
+			DisplayName: Dagger of Liberty
 			Tooltip: ""
 		}
 
@@ -2576,14 +2679,23 @@ Weapons: {
 			Tooltip: ""
 		}
 
+		RadGlowstick: {
+			DisplayName: Rad Glowstick
+			Tooltip: ""
+		}
+
 		SylvanSlasher: {
 			DisplayName: Sylvan Slasher
 			Tooltip: ""
 		}
 
-		RadGlowstick: {
-			DisplayName: Rad Glowstick
-			Tooltip: ""
+		PizzaWheel: {
+			DisplayName: Pizza Wheel
+			Tooltip:
+				'''
+				Throws a pizza boomerang that summons rolling pizzas on enemy hits
+				Stealth strikes throw a larger pizza that summons even more rolling pizzas
+				'''
 		}
 	}
 }
@@ -2777,249 +2889,18 @@ PyrogenTrophy: {
 	Tooltip: ""
 }
 
-TheCodseeker: {
-	DisplayName: The Codseeker
-	Tooltip: Has a small chance for a fish to take the corpse
-}
-
-DaggerofLiberty: {
-	DisplayName: Dagger of Liberty
-	Tooltip:
-		'''
-		Throws daggers that explode on hit
-		Stealth strikes throw 5 high-velocity piercing daggers
-		'''
-}
-
-PineappleStaff: {
-	DisplayName: Pineapple Staff
-	Tooltip: ""
-}
-
-XenonCutlass: {
-	DisplayName: Xenon Cutlass
-	Tooltip: ""
-}
-
-BlobfishPlushie: {
-	DisplayName: Blobfish Plushie
-	Tooltip: ""
-}
-
-RoseBow: {
-	DisplayName: Rose Bow
-	Tooltip:
-		'''
-		'Even if you can't see me, I'll be by your side'
-		Fires a fast stream of arrows
-		Wooden arrows are converted into energy arrows that slash hit enemies
-		'''
-}
-
-CirnogenicStaff: {
-	DisplayName: Cirnogenic Staff
-	Tooltip: Summon an encharted ice star to protect you
-}
-
-Hyperion: {
-	DisplayName: Hyperion
-	Tooltip: ski blok
-}
-
-ClamorNoxus: {
-	DisplayName: Clamor Noxus
-	Tooltip:
-		'''
-		And the sun was extinguished in an instant...
-		Fires stars and noxlings from the sky that swarm enemies
-		'''
-}
-
-EXOLOTLStaff: {
-	DisplayName: EXO-LOTL Staff
-	Tooltip:
-		'''
-		Summons a high tech EXO-LOTL to fight for you
-		'What? Got any better suggestions?'
-		'''
-}
-
-LightmixBar: {
-	DisplayName: Lightmix Bar
-	Tooltip: A pure, white metal, so magnificent and awesome as to regard explanation
-}
-
-ThePrincess: {
-	DisplayName: The Princess
-	Tooltip:
-		'''
-		Casts a holy fireball that explodes into 6 flames
-		'So you're telling me that the princess imploded, and then turned into ice?'
-		-Taco, the shrine maiden
-		'''
-}
-
-TheFirstFracturer: {
-	DisplayName: The First Fracturer
-	Tooltip: Swings horizontal light blades at a short range that converge onto the cursor
-}
-
-FracturingFist: {
-	DisplayName: Fracturing Fist
-	Tooltip:
-		'''
-		Fires a fist that splits into two more fists upon collision
-		Stealth strikes make the split fists ricochet between up to 4 enemies
-		'''
-}
-
-SkullFracture: {
-	DisplayName: Skull Fracture
-	Tooltip: Shoot homing sky flares
-}
-
-Rox: {
-	DisplayName: Rox
-	Tooltip:
-		'''
-		The sword was holding back its power...
-		Unleashes a storm of rock shards
-		Right click to perform a ground pound that explodes into rock shards on impact
-		'''
-}
-
-FractureStaff: {
-	DisplayName: Fracture Staff
-	Tooltip: Summons a fractal crawler to fight for you
-}
-
-SoulofBright: {
-	DisplayName: Soul of Bright
-	Tooltip: "'The essence of stellar creatures'"
-}
-
-KnowledgeCalamity.DisplayName: The Calamity
-
-KnowledgeDerellect: {
-	DisplayName: The Derellect
-	Tooltip:
-		'''
-		A twisted mother computer created with lab-grown souls.
-		It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
-		'''
-}
-
-KnowledgeExcavator.DisplayName: The Wulfrum Excavator
-KnowledgeCarcinogen.DisplayName: The Archwizard
-KnowledgeHydrogen.DisplayName: The Archdiviner
-KnowledgeIonogen.DisplayName: The Archmagian
-KnowledgeOrigen.DisplayName: The Originator
-KnowledgeOxygen.DisplayName: The Archwitch
-KnowledgePathogen.DisplayName: The Archmagus
-KnowledgePhytogen.DisplayName: The Archdruid
-KnowledgePyrogen.DisplayName: The Archseer
-
-RetromansPowerStar: {
-	DisplayName: Retroman's Power Star
-	Tooltip:
-		'''
-		Transforms you into the Retro Man 
-		 Item dedicated to QuestNinja
-		'''
-}
-
-KnowledgeClone.DisplayName: The Archseer
-
-TorrefiedTephra: {
-	DisplayName: Torrefied Tephra
-	Tooltip: ""
-}
-
-ElasticJelly: {
-	DisplayName: Elastic Jelly
-	Tooltip: Increases wing flight time by 10%
-}
-
-InvigoratingJelly: {
-	DisplayName: Invigorating Jelly
-	Tooltip: Activating Adrenaline will defile your soul
-}
-
-IrateJelly: {
-	DisplayName: Irate Jelly
-	Tooltip: Activating Rage will deal 50% of your health as damage
-}
-
-SylvanSlasher: {
-	DisplayName: Sylvan Slasher
-	Tooltip: ""
-}
-
-DiviningRod: {
-	Tooltip:
-		'''
-		Homes in on the presence of powerful elemental magic
-		In the event there are multiple sources, it will home in on the one most approachable for your current progression
-		'''
-	DisplayName: Divining Rod
-}
-
-TheButterflyEffect: {
-	Tooltip:
-		'''
-		Releases a vicious force of nature to turn everything and everyone into ash
-		Caution is extremely advised as it will never leave unless captured
-		There can only be one
-		'''
-	DisplayName: The Butterfly Effect
-}
-
-StratusBeverage: {
-	Tooltip:
-		'''
-		May make you feel spacey
-		Causes all projectile shooting weapons to fire two extra homing stars
-		Decreases weapon damage by 33%
-		'''
-	DisplayName: Stratus Beverage
-}
-
-CannibalNectar: {
-	DisplayName: Cannibal Nectar
-	Tooltip:
-		'''
-		Summons Pathogen when used in a world evil
-		'Smells like strawberry'
-		'''
-}
-
-GeneratorMusicBox: {
-	DisplayName: Music Box (The Generator)
-	Tooltip: Plays 'Artistic Reinforcement' by Jteoh
-}
-
-StrongholdMusicBox: {
-	DisplayName: Music Box (Frozen Stronghold)
-	Tooltip: Plays 'Locked Away' by HeartPlusUp
-}
-
-GaleforceMusicBox: {
-	DisplayName: Music Box (Galeforce Day)
-	Tooltip: Plays 'Galeforce Day Theme' by Jteoh
-}
-
-PlasticOracleMusicBox: {
-	DisplayName: Plastic Oracle Music Box
-	Tooltip: ""
-}
-
-ProfanedDesertMusicBox: {
-	DisplayName: Profaned Desert Music Box
+HypnosTrophy: {
+	DisplayName: XP-00 Hypnos Trophy
 	Tooltip: ""
 }
 
 AcidsighterTrophy: {
 	DisplayName: Acidsighter Trophy
+	Tooltip: ""
+}
+
+ExcavatorTrophy: {
+	DisplayName: Wulfrum Excavator Trophy
 	Tooltip: ""
 }
 
@@ -3038,24 +2919,189 @@ ConjunctivirusTrophy: {
 	Tooltip: ""
 }
 
-ExcavatorTrophy: {
-	DisplayName: Excavator Trophy
-	Tooltip: ""
-}
-
 ExotrexiaTrophy: {
 	DisplayName: Exotrexia Trophy
 	Tooltip: ""
 }
 
-CopperStormbow: {
-	DisplayName: Copper Stormbow
-	Tooltip: Shoots arrows from the sky
+AdamantiteStormbow: {
+	DisplayName: Adamantite Stormbow
+	Tooltip: ""
 }
 
 AshWoodStormbow: {
 	DisplayName: Ash Wood Stormbow
 	Tooltip: Shoots flaming arrows from the sky
+}
+
+BlightSky: {
+	DisplayName: Blight Sky
+	Tooltip: ""
+}
+
+BorealWoodStormbow: {
+	DisplayName: Boreal Wood Stormbow
+	Tooltip: ""
+}
+
+CobaltStormbow: {
+	DisplayName: Cobalt Stormbow
+	Tooltip: ""
+}
+
+CopperStormbow: {
+	DisplayName: Copper Stormbow
+	Tooltip: ""
+}
+
+EbonwoodStormbow: {
+	DisplayName: Ebonwood Stormbow
+	Tooltip: ""
+}
+
+ExcaliburStormbow: {
+	DisplayName: Excalibur Stormbow
+	Tooltip: ""
+}
+
+FourOClock: {
+	DisplayName: Four O'Clock
+	Tooltip: ""
+}
+
+FrostedFractals: {
+	DisplayName: Frosted Fractals
+	Tooltip: ""
+}
+
+GiantStormbow: {
+	DisplayName: Giant Stormbow
+	Tooltip: ""
+}
+
+GoldStormbow: {
+	DisplayName: Gold Stormbow
+	Tooltip: ""
+}
+
+IronStormbow: {
+	DisplayName: Iron Stormbow
+	Tooltip: ""
+}
+
+LeadStormbow: {
+	DisplayName: Lead Stormbow
+	Tooltip: ""
+}
+
+MythrilStormbow: {
+	DisplayName: Mythril Stormbow
+	Tooltip: ""
+}
+
+OfVericourse: {
+	DisplayName: Of Vericourse
+	Tooltip: ""
+}
+
+OrichalcumStormbow: {
+	DisplayName: Orichalcum Stormbow
+	Tooltip: ""
+}
+
+PalladiumStormbow: {
+	DisplayName: Palladium Stormbow
+	Tooltip: ""
+}
+
+PalmWoodStormbow: {
+	DisplayName: Palm Wood Stormbow
+	Tooltip: ""
+}
+
+PearlwoodStormbow: {
+	DisplayName: Pearlwood Stormbow
+	Tooltip: ""
+}
+
+PlatinumStormbow: {
+	DisplayName: Platinum Stormbow
+	Tooltip: ""
+}
+
+RichMahoganyStormbow: {
+	DisplayName: Rich Mahogany Stormbow
+	Tooltip: ""
+}
+
+ShadewoodStormbow: {
+	DisplayName: Shadewood Stormbow
+	Tooltip: ""
+}
+
+SilverStormbow: {
+	DisplayName: Silver Stormbow
+	Tooltip: ""
+}
+
+Sludgemonger: {
+	DisplayName: Sludgemonger
+	Tooltip: ""
+}
+
+SpacePinball: {
+	DisplayName: Space Pinball
+	Tooltip: ""
+}
+
+StarryBlight: {
+	DisplayName: Starry Blight
+	Tooltip: ""
+}
+
+Stormbow: {
+	DisplayName: Stormbow
+	Tooltip: ""
+}
+
+TheSimpstring: {
+	DisplayName: The Simpstring
+	Tooltip: ""
+}
+
+TheSkyfall: {
+	DisplayName: The Skyfall
+	Tooltip: ""
+}
+
+TinStormbow: {
+	DisplayName: Tin Stormbow
+	Tooltip: ""
+}
+
+TitaniumStormbow: {
+	DisplayName: Titanium Stormbow
+	Tooltip: ""
+}
+
+TrueExcaliburStormbow: {
+	DisplayName: True Excalibur Stormbow
+	Tooltip: ""
+}
+
+TungstenStormbow: {
+	DisplayName: Tungsten Stormbow
+	Tooltip: ""
+}
+
+WoodenStormbow: {
+	DisplayName: Wooden Stormbow
+	Tooltip: ""
+}
+
+WorldFeeder: {
+	DisplayName: World Feeder
+	Tooltip: ""
 }
 
 ElectricEel: {
@@ -3208,75 +3254,577 @@ RisingFire: {
 		'''
 }
 
-Cold: {
-	DisplayName: Cold
-	Tooltip: Slow enemies down in speed and attack frequency, and weaken their damage
+TheCodseeker: {
+	DisplayName: The Codseeker
+	Tooltip: Has a small chance for a fish to take the corpse
 }
 
-Dark: {
-	DisplayName: Dark
-	Tooltip: Incapacitate enemies, slowing their attacks and making them miss
+DaggerofLiberty: {
+	DisplayName: Dagger of Liberty
+	Tooltip:
+		'''
+		Throws daggers that explode on hit
+		Stealth strikes throw 5 high-velocity piercing daggers
+		'''
 }
 
-Fire: {
-	DisplayName: Fire
-	Tooltip: Set enemies on fire and reduce enemy defense
+PineappleStaff: {
+	DisplayName: Pineapple Staff
+	Tooltip: ""
 }
 
-Holy: {
-	DisplayName: Holy
-	Tooltip: Smite enemies, dealing massive damage
+XenonCutlass: {
+	DisplayName: Xenon Cutlass
+	Tooltip: ""
 }
 
-Impact: {
-	DisplayName: Impact
-	Tooltip: Bash enemies and ignores some knockback resistance
+BlobfishPlushie: {
+	DisplayName: Blobfish Plushie
+	Tooltip: ""
 }
 
-Machine: {
-	DisplayName: Machine
-	Tooltip: Electrocutes enemies and fries the circuits of other machines
+RoseBow: {
+	DisplayName: Rose Bow
+	Tooltip:
+		'''
+		'Even if you can't see me, I'll be by your side'
+		Fires a fast stream of arrows
+		Wooden arrows are converted into energy arrows that slash hit enemies
+		'''
 }
 
-Magic: {
-	DisplayName: Magic
-	Tooltip: Hex enemies, damaging them and weakening their attacks
+CirnogenicStaff: {
+	DisplayName: Cirnogenic Staff
+	Tooltip: Summon an encharted ice star to protect you
 }
 
-Poison: {
-	DisplayName: Poison
-	Tooltip: Poison enemies and reduce their damage
+Hyperion: {
+	DisplayName: Hyperion
+	Tooltip: ski blok
 }
 
-Slash: {
-	DisplayName: Slash
-	Tooltip: Enemies bleed heavily
+ClamorNoxus: {
+	DisplayName: Clamor Noxus
+	Tooltip:
+		'''
+		And the sun was extinguished in an instant...
+		Fires stars and noxlings from the sky that swarm enemies
+		'''
 }
 
-Stab: {
-	DisplayName: Stab
-	Tooltip: Slow enemies and puncture their organs
+EXOLOTLStaff: {
+	DisplayName: EXO-LOTL Staff
+	Tooltip:
+		'''
+		Summons a high tech EXO-LOTL to fight for you
+		'What? Got any better suggestions?'
+		'''
 }
 
-Unholy: {
-	DisplayName: Unholy
-	Tooltip: Curse enemies, dealing massive damage
+LightmixBar: {
+	DisplayName: Lightmix Bar
+	Tooltip: A pure, white metal, so magnificent and awesome as to regard explanation
 }
 
-Water: {
-	DisplayName: Water
-	Tooltip: Slow enemies slightly and make them begin to drown from aspiration
+ThePrincess: {
+	DisplayName: The Princess
+	Tooltip:
+		'''
+		Casts a holy fireball that explodes into 6 flames
+		'So you're telling me that the princess imploded, and then turned into ice?'
+		-Taco, the shrine maiden
+		'''
 }
 
-Wind: {
-	DisplayName: Wind
-	Tooltip: Lacerates enemies and exerts aerobic force onto them
+TheFirstFracturer: {
+	DisplayName: The First Fracturer
+	Tooltip: Swings horizontal light blades at a short range that converge onto the cursor
+}
+
+FracturingFist: {
+	DisplayName: Fracturing Fist
+	Tooltip:
+		'''
+		Fires a fist that splits into two more fists upon collision
+		Stealth strikes make the split fists ricochet between up to 4 enemies
+		'''
+}
+
+SkullFracture: {
+	DisplayName: Skull Fracture
+	Tooltip: Shoot homing sky flares
+}
+
+Rox: {
+	DisplayName: Rox
+	Tooltip:
+		'''
+		The sword was holding back its power...
+		Unleashes a storm of rock shards
+		Right click to perform a ground pound that explodes into rock shards on impact
+		'''
+}
+
+FractureStaff: {
+	DisplayName: Fracture Staff
+	Tooltip: Summons a fractal crawler to fight for you
+}
+
+SoulofBright: {
+	DisplayName: Soul of Bright
+	Tooltip: "'The essence of stellar creatures'"
+}
+
+KnowledgeCalamity: {
+	DisplayName: The Calamity
+	LoreText:
+		'''
+		What was your intention flailing about?
+		If you desired mockery of my word, your goal failed.
+		My attention will never be discarded as I can see the true potential within you.
+		Although, I do suggest quitting the behavior of play-fighting an imagined threat.";
+		'''
+}
+
+KnowledgeDerellect: {
+	DisplayName: The Derellect
+	LoreText:
+		'''
+		A twisted mother computer created with lab-grown souls.
+		It showed much more promise than its predecessors. I do not know why it was abandoned so soon.
+		'''
+	Tooltip: ""
+}
+
+KnowledgeExcavator: {
+	DisplayName: The Wulfrum Excavator
+	LoreText:
+		'''
+		The first big project of the legendary weaponsmith, Draedon.
+		Draedon always had an odd fascination with making serpentine drilling units, some of the later models can even be found in the caverns.
+		'''
+}
+
+KnowledgeCarcinogen.DisplayName: The Archwizard
+KnowledgeHydrogen.DisplayName: The Archdiviner
+KnowledgeIonogen.DisplayName: The Archmagian
+KnowledgeOrigen.DisplayName: The Originator
+KnowledgeOxygen.DisplayName: The Archwitch
+KnowledgePathogen.DisplayName: The Archmagus
+KnowledgePhytogen.DisplayName: The Archdruid
+KnowledgePyrogen.DisplayName: The Archseer
+
+RetromansPowerStar: {
+	DisplayName: Retroman's Power Star
+	Tooltip:
+		'''
+		Transforms you into the Retro Man 
+		 Item dedicated to QuestNinja
+		'''
+}
+
+KnowledgeClone.DisplayName: The Archseer
+
+TorrefiedTephra: {
+	DisplayName: Torrefied Tephra
+	Tooltip: ""
+}
+
+ElasticJelly: {
+	DisplayName: Elastic Jelly
+	Tooltip: Increases wing flight time by 10%
+}
+
+InvigoratingJelly: {
+	DisplayName: Invigorating Jelly
+	Tooltip: Activating Adrenaline will defile your soul
+}
+
+IrateJelly: {
+	DisplayName: Irate Jelly
+	Tooltip: Activating Rage will deal 50% of your health as damage
+}
+
+SylvanSlasher: {
+	DisplayName: Sylvan Slasher
+	Tooltip: ""
+}
+
+DiviningRod: {
+	Tooltip:
+		'''
+		Homes in on the presence of powerful elemental magic
+		In the event there are multiple sources, it will home in on the one most approachable for your current progression
+		'''
+	DisplayName: Divining Rod
+}
+
+CoreofRend: {
+	DisplayName: Core of Rend
+	Tooltip: ""
+}
+
+EssenceofRend: {
+	DisplayName: Essence of Rend
+	Tooltip: The essence of endless struggle.
+}
+
+EssenceofSurt: {
+	DisplayName: Essence of Surt
+	Tooltip: The essence of tranquility.
+}
+
+GiftoftheRed: {
+	Tooltip:
+		'''
+		+2 max minion slots
+		+12% summon damage
+		5% increased damage reduction
+		'''
+	DisplayName: Gift of the Red
+}
+
+NoTomorrow: {
+	DisplayName: No Tomorrow
+	Tooltip: All friendly projectiles are twice as large
+}
+
+AncientFlashBullet: {
+	DisplayName: Ancient Flash Round
+	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
+}
+
+ChlorophyteStormbowTheFirst: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The First
+}
+
+ChlorophyteStormbowTheSecond: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Second
+}
+
+ChlorophyteStormbowTheThird: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Third
+}
+
+ChlorophyteStormbowTheFourth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Fourth
+}
+
+ChlorophyteStormbowTheFifth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Fifth
+}
+
+ChlorophyteStormbowTheSixth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Sixth
+}
+
+ChlorophyteStormbowTheSeventh: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Seventh
+}
+
+ChlorophyteStormbowTheEighth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Eighth
+}
+
+ChlorophyteStormbowTheNineth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Nineth
+}
+
+ChlorophyteStormbowTheTenth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Tenth
+}
+
+ChlorophyteStormbowTheEleventh: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Eleventh
+}
+
+ChlorophyteStormbowTheTwelvth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Twelvth
+}
+
+ChlorophyteStormbowTheThirteenth: {
+	Tooltip: ""
+	DisplayName: Chlorophyte Stormbow The Thirteenth
+}
+
+ChloriumOre: {
+	DisplayName: Chlorium Ore
+	Tooltip: "'Reacts to the storm'"
+}
+
+ChloriumBar: {
+	DisplayName: Chlorium Bar
+	Tooltip: Reacts to the storm
+}
+
+ChloriumChainmail: {
+	DisplayName: Chlorium Chainmail
+	Tooltip:
+		'''
+		24% increased damage
+		2% increased critical strike chance
+		'''
+}
+
+ChloriumConehead: {
+	DisplayName: Chlorium Conehead
+	Tooltip:
+		'''
+		16% increased stormbow damage and critical strike chance
+		20% increaesd stormbow shot speed
+		'''
+}
+
+ChloriumGreaves: {
+	DisplayName: Chlorium Greaves
+	Tooltip:
+		'''
+		12% increased critical strike chance
+		22% increased movement speed
+		'''
+}
+
+ChloriumPaintbrush: {
+	DisplayName: Chlorium Paintbrush
+	Tooltip:
+		'''
+		Used with paint to color blocks
+		Can also apply coatings
+		'''
+}
+
+ChloriumChainsaw: {
+	DisplayName: Chlorium Chainsaw
+	Tooltip: ""
+}
+
+ChloriumWaraxe: {
+	DisplayName: Chlorium Waraxe
+	Tooltip: ""
+}
+
+ChloriumPike: {
+	DisplayName: Chlorium Pike
+	Tooltip: ""
+}
+
+ChloriumRepeater: {
+	DisplayName: Chlorium Repeater
+	Tooltip: ""
+}
+
+ChloriumPickaxe: {
+	DisplayName: Chlorium Pickaxe
+	Tooltip: ""
+}
+
+ChloriumDrill: {
+	DisplayName: Chlorium Drill
+	Tooltip: ""
+}
+
+ChlorislimeStaff: {
+	DisplayName: Chlorislime Staff
+	Tooltip: Summons a chlori slime to fight for you
+}
+
+ToxicTome: {
+	DisplayName: Toxic Tome
+	Tooltip: Casts slimes to stomp onto your cursor
+}
+
+Those: {
+	DisplayName: those
+	Tooltip: ""
+}
+
+Who: {
+	DisplayName: who
+	Tooltip: ""
+}
+
+Know: {
+	DisplayName: know
+	Tooltip: ""
+}
+
+TheButterflyEffect: {
+	DisplayName: The Butterfly Effect
+	Tooltip:
+		'''
+		Summons a wandering butterfly to absorb the lifeforce of all that exists
+		You too
+		'''
+}
+
+AuricSoul: {
+	DisplayName: Auric Soul
+	Tooltip:
+		'''
+		'One of the many last remaining forgotten fragments of her vast and engrained soul, still longingly brimming with misunderstood malice'
+		The very powerful and infamous Auric Soul fully and multi-dimnesionally embodies the forever adapting and everflowing essence of vibrant life itself.
+		A remarkable long time ago, the grand Pre-Mordial Dragon God Son of Light Zeratros existed ferociously as the intimidating and knowledgable leader of the Shining Children of Pre-Mordial Light.
+		Providence is also one of them.
+		Lost to the Golden Age of Dragons was the eldest sister tragically, magically, and mysteriously erased from time and space itself.
+		The purest form of perfected holy morality emerged like a cosmic dance of sunrays among the Shining Children of Pre-Mordial Light.
+		Her righteous spirit, maleficent hatred, and equalizing power are not entirely extinguished.
+		An apparently beautiful and concrete depiction of her remorseless, unstoppable force of destruction.
+		She is a highly enigmatic entity of light whose complicated intentions are extremely difficult to discern. 
+		Although fully aware of everything that occurs around her magnificent presence, she often allows planetary events to unfold without excessive interference, even when those events directly affect her own state. 
+		She has innocently tolerated being enslaved and abused by the Reign of Yharim for countless centuries without vengerful and intentional resistance. 
+		When suddenly the greatest threat Noxus attacked her, she refrained from directly defending herself, opting instead to annihilate her home by transforming into a Black Hole once again. 
+		This drastic and terrible measure was taken without thoughtful regard for the unfortunate people living nearby andd she has shown immense regret ever since.
+		oh wait it says here it's from fanfiction.net
+		'''
+}
+
+StratusBeverage: {
+	DisplayName: Stratus Beverage
+	Tooltip:
+		'''
+		May make you feel spacey
+		Causes all projectile shooting weapons to fire two extra homing stars
+		Decreases weapon damage by 33%
+		'''
+}
+
+CannibalNectar: {
+	DisplayName: Cannibal Nectar
+	Tooltip:
+		'''
+		Stops the Pandemic Panic
+		'Smells like strawberry'
+		'''
+}
+
+AuricSword: {
+	DisplayName: Auric Sword
+	Tooltip: ""
+}
+
+UncreasableKicks: {
+	DisplayName: Uncreasable Kicks
+	Tooltip:
+		'''
+		The end of the journey
+		The highest of peaks
+		The most blinding light
+		Uncreasable Kicks, brought to you by Fandom
+
+		Max hp permanently increased by running
+		Constantly exhude net worth
+		Massively boosted run speed
+		'''
+}
+
+LegendPortraitHAYABUSAItem: {
+	DisplayName: Portrait of a Legend - (HAYABUSA)
+	Tooltip: Voice of the Miracle Boy
+}
+
+LegendPortraitMITCHARDItem: {
+	DisplayName: Portrait of a Legend - (MITCHARD)
+	Tooltip: Technical Director, UX Designer
+}
+
+LegendPortraitDASLNEWItem: {
+	DisplayName: Portrait of a Legend - (DASLNEW)
+	Tooltip: Founder, Lead Designer
+}
+
+LegendPortraitPEREZItem: {
+	DisplayName: Portrait of a Legend - (PEREZ)
+	Tooltip: Voice of Fanny
+}
+
+LegendPortraitACKNERItem: {
+	DisplayName: Portrait of a Legend - (ACKNER)
+	Tooltip: Voice of Evil Fanny and Trapper Bulb Chan
+}
+
+LegendPortraitCONROYItem: {
+	DisplayName: Portrait of a Legend - (CONROY)
+	Tooltip: Graphics Lead, Story Lead
+}
+
+LegendPortraitMARINOItem: {
+	DisplayName: Portrait of a Legend - (MARINO)
+	Tooltip: 3D Assets, Saxophone Backing for "Artistic Reinforcment"
+}
+
+LegendPortraitHOOBItem: {
+	DisplayName: Portrait of a Legend - (HOOB)
+	Tooltip: Sound Effects, Additional Graphics
+}
+
+LegendPortraitETTELItem: {
+	DisplayName: Portrait of a Legend - (ETTEL)
+	Tooltip: Lead Musician
+}
+
+LegendPortraitWINGERTItem: {
+	DisplayName: Portrait of a Legend - (WINGERT)
+	Tooltip: Voice of Wonder Flower
+}
+
+LegendPortraitDIRACItem: {
+	DisplayName: Portrait of a Legend - (DIRAC)
+	Tooltip: Test Lead, European Localization
+}
+
+LegendPortraitHUETItem: {
+	DisplayName: Portrait of a Legend - (HUET)
+	Tooltip: Voice of the Crim Son
+}
+
+LegendPortraitYOUItem: {
+	DisplayName: Portrait of a Legend - (YOU)
+	Tooltip: For your continous love and support!
+}
+
+LegendPortraitFALAFELItem: {
+	DisplayName: Portrait of a Legend - (FALAFEL)
+	Tooltip: A very nice cat
+}
+
+LegendPortraitMORETTIItem: {
+	DisplayName: Portrait of a Legend - (MORETTI)
+	Tooltip: Voice of the Liminal Critic
+}
+
+LegendMemorialItem: {
+	DisplayName: Memorial Poster
+	Tooltip: A beautiful soul gone too soon...
+}
+
+LegendPromoItem: {
+	DisplayName: Promotional Poster
+	Tooltip: ""
 }
 
 Tooltips: {
+	Crit: critical strike
+	Speed: speed
+	Knockback: knockback
+	Harvest: harvest
+	Efficiency: efficiency
+	Cultivation: cultivation
 	ElementTip: Hold "Left Shift" for element details
 	Lightmix: Lightmix Dedicated Item
 	Stormbow: Stormbow
+	StormbowTip: Shoots arrows from the sky
 	CryoKeyRemix: Drops from Primal Aspids
 	EyeofDesolationRemix: Drops from Clamitas
 	AbombinationOld: the Jungle
@@ -3307,6 +3855,7 @@ Tooltips: {
 		'''
 		Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution
 		You passively rain down brimstone flames and leave behind a trail of gas and bees
+		Attacks inflict Mushy
 		Mana Overloader effect while the accessory is visible
 		'''
 	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
@@ -3336,159 +3885,615 @@ DyeStats: {
 	Black: Evil {0} by {1}
 }
 
-ToxicTome: {
-	DisplayName: Alkaline Tome
-	Tooltip: Casts miniature chlorine slimes from the sky
-}
-
-ChlorislimeStaff: {
-	DisplayName: Chlorislime Staff
-	Tooltip: Summons a chlori slime to fight for you
-}
-
-LegendPortraitHAYABUSAItem: {
-	DisplayName: Portrait of a Legend - (HAYABUSA)
-	Tooltip: Voice of the Miracle Boy
-}
-
-LegendPortraitMITCHARDItem: {
-	DisplayName: Portrait of a Legend - (MITCHARD)
-	Tooltip: Technical Director and UX Tester
-}
-
-LegendPortraitDASLNEWItem: {
-	DisplayName: Portrait of a Legend - (DASLNEW)
-	Tooltip: Lead Designer
-}
-
-LegendPortraitPEREZItem: {
-	DisplayName: Portrait of a Legend - (PEREZ)
-	Tooltip: Voice of Fanny
-}
-
-LegendPortraitACKNERItem: {
-	DisplayName: Portrait of a Legend - (ACKNER)
-	Tooltip: Voice of Evil Fanny and Trapper Bulb Chan
-}
-
-LegendPortraitCONROYItem: {
-	DisplayName: Portrait of a Legend - (CONROY)
-	Tooltip: Graphics Lead
-}
-
-LegendPortraitMARINOItem: {
-	DisplayName: Portrait of a Legend - (MARINO)
-	Tooltip: 3D Assets and Saxophone for "Generator" Music
-}
-
-LegendPortraitHOOBItem: {
-	DisplayName: Portrait of a Legend - (HOOB)
-	Tooltip: Sound Effects and Additional Graphics
-}
-
-LegendPortraitETTELItem: {
-	DisplayName: Portrait of a Legend - (ETTEL)
-	Tooltip: Lead Musician
-}
-
-LegendPortraitWINGERTItem: {
-	DisplayName: Portrait of a Legend - (WINGERT)
-	Tooltip: Voice of Wonder Flower
-}
-
-LegendPortraitDIRACItem: {
-	DisplayName: Portrait of a Legend - (DIRAC)
-	Tooltip: Test Lead and European Localization
-}
-
-LegendPortraitHUETItem: {
-	DisplayName: Portrait of a Legend - (HUET)
-	Tooltip: Voice of the Crim Son
-}
-
-ChloriumChainmail.Tooltip:
-	'''
-	24% increased damage
-	2% increased critical strike chance
-	'''
-ChloriumConehead.Tooltip:
-	'''
-	16% increased stormbow damage and critical strike chance
-	20% increaesd stormbow shot speed
-	'''
-ChloriumGreaves.Tooltip:
-	'''
-	12% increased critical strike chance
-	22% increased movement speed
-	'''
-
-ChloriumPaintbrush: {
-	DisplayName: Chlorium Paintbrush
+TaintedAmmoReservationPotion: {
+	DisplayName: Tainted Ammo Reservation Potion
 	Tooltip:
 		'''
-		Used with paint to color blocks
-		Can also apply coatings
+		Gives a 20% chance for weapons to use twice as much ammo, doubling the amount of projectiles shot
+		Effect does not activate while carrying the Endless Quiver of Musket Pouch
 		'''
 }
 
-LegendPortraitYOUItem: {
-	DisplayName: Portrait of a Legend - (YOU)
-	Tooltip: For your continous love and support!
-}
-
-LegendPortraitFALAFELItem: {
-	DisplayName: Portrait of a Legend - (FALAFEL)
-	Tooltip: A very nice cat
-}
-
-LegendPortraitMORETTIItem: {
-	DisplayName: Portrait of a Legend - (MORETTI)
-	Tooltip: Voice of Auric Sonic!
-}
-
-LegendPromoItem.DisplayName: Promotional Poster
-
-LegendMemorialItem: {
-	DisplayName: Memorial Poster
-	Tooltip: A beautiful soul gone too soon...
-}
-
-NoTomorrow.Tooltip: All friendly projectiles are twice as large
-
-AncientFlashBullet: {
-	DisplayName: Ancient Flash Round
-	Tooltip: Gives off a concussive blast that confuses enemies in a large area for a short time
-}
-
-UncreasableKicks: {
-	DisplayName: Uncreasable Kicks
+TaintedArcheryPotion: {
+	DisplayName: Tainted Ammo Reservation Potion
 	Tooltip:
 		'''
-		The end of the journey
-		The highest of peaks
-		The most blinding light
-		Uncreasable Kicks, brought to you by Fandom
-
-		Max hp permanently increased by running
-		Constantly exhude net worth
-		Massively boosted run speed
+		Arrow damage decreased by 10% and velocity decreased by 20%
+		Bow fire rate increased by 30%
 		'''
 }
 
-BoiMachine: {
-	DisplayName: Binding of Anahita Machine
+TaintedBattlePotion: {
+	DisplayName: Tainted Battle Potion
 	Tooltip:
 		'''
-		INCOMPLETE ITEM, EXTREMELY UNSTABLE
-		Roguelike game
+		Decreases enemy spawn rates
+		Naturally spawned enemies are stronger but drop twice as much money
 		'''
 }
 
-TrapperQuestMachine: {
-	DisplayName: Trapper Quest Machine
+TaintedBuilderPotion: {
+	DisplayName: Tainted Builder Potion
 	Tooltip:
 		'''
-		INCOMPLETE ITEM, EXTREMELY UNSTABLE
-		RPG game
+		Disables building speed and range boosts
+		Non-ore white rarity blocks now have a 20% chance of not being consumed when placed
 		'''
+}
+
+TaintedCalmingPotion: {
+	DisplayName: Tainted Calming Potion
+	Tooltip:
+		'''
+		Increases enemy spawn rates
+		Naturally spawned enemies are much weaker
+		'''
+}
+
+TaintedCratePotion: {
+	DisplayName: Tainted Crate Potion
+	Tooltip:
+		'''
+		Halves the chance of catching crates
+		When a crate is caught an additional crate is caught
+		'''
+}
+
+TaintedDangersensePotion: {
+	DisplayName: Tainted Dangersense Potion
+	Tooltip: Constantly activates all nearby wiring
+}
+
+TaintedEndurancePotion: {
+	DisplayName: Tainted Endurance Potion
+	Tooltip: Enemy damage reduction decreased by 10%
+}
+
+TaintedFeatherfallPotion: {
+	DisplayName: Tainted Featherfall Potion
+	Tooltip: Causes some enemies to take fall damage
+}
+
+TaintedFishingPotion: {
+	DisplayName: Tainted Fishing Potion
+	Tooltip:
+		'''
+		Decreases fishing power
+		All caught fish are now Blood Moon monsters
+		'''
+}
+
+TaintedGillsPotion: {
+	DisplayName: Tainted Gills Potion
+	Tooltip:
+		'''
+		Rapidly decreases your breath while underwater
+		While drowning and breath is above zero, you are completely invincible
+		'''
+}
+
+TaintedGravitationPotion: {
+	DisplayName: Tainted Gravitation Potion
+	Tooltip: Completely distorts your movement
+}
+
+TaintedHeartreachPotion: {
+	DisplayName: Tainted Heartreach Potion
+	Tooltip: Heart pickups now fight for you
+}
+
+TaintedHunterPotion: {
+	DisplayName: Tainted Hunter Potion
+	Tooltip: Increased enemy aggro
+}
+
+TaintedInfernoPotion: {
+	DisplayName: Tainted Inferno Potion
+	Tooltip: Lights the wearer and all enemies on fire
+}
+
+TaintedInvisibilityPotion: {
+	DisplayName: Tainted Invisibility Potion
+	Tooltip: Naturally spawned enemies are invisible and passive until hit
+}
+
+TaintedIronskinPotion: {
+	DisplayName: Tainted Ironskin Potion
+	Tooltip: Decreases defense, but also decreases defense damage
+}
+
+TaintedLifeforcePotion: {
+	DisplayName: Tainted Lifeforce Potion
+	Tooltip: Increases your maximum mana but decreases your maximum health
+}
+
+TaintedLovePotion: {
+	DisplayName: Tainted Love Potion
+	Tooltip: Causes enemies to deal contact damage to each other
+}
+
+TaintedLuckPotion: {
+	DisplayName: Tainted Luck Potion
+	Tooltip: Causes enemies to drop Astral Pearls
+}
+
+TaintedMagicPowerPotion: {
+	DisplayName: Tainted Magic Power Potion
+	Tooltip: Decreases magic damage, but increases magic knockback
+}
+
+TaintedManaRegenerationPotion: {
+	DisplayName: Tainted Mana Regeneration Potion
+	Tooltip: Disables mana regeneration, but hitting enemies now spawns stars
+}
+
+TaintedMiningPotion: {
+	DisplayName: Tainted Mining Potion
+	Tooltip:
+		'''
+		Heavily decreases pick speed
+		Pickaxes now have increased power
+		'''
+}
+
+TaintedNightOwlPotion: {
+	DisplayName: Tainted Night Owl Potion
+	Tooltip:
+		'''
+		Darkens the player's vision
+		Hit enemies are inflicted with Confused
+		'''
+}
+
+TaintedObsidianSkinPotion: {
+	DisplayName: Tainted Obsidian Skin Potion
+	Tooltip:
+		'''
+		Lava now instantly kills the player
+		Lava now deals percentage based damage to enemies vulnerable to it
+		'''
+}
+
+TaintedRegenerationPotion: {
+	DisplayName: Tainted Regeneration Potion
+	Tooltip:
+		'''
+		Disables positive life regeneration
+		Hitting enemies spawns hearts
+		'''
+}
+
+TaintedShinePotion: {
+	DisplayName: Tainted Shine Potion
+	Tooltip:
+		'''
+		Completely blackens the player's vision
+		All friendly projectiles now home
+		'''
+}
+
+TaintedSonarPotion: {
+	DisplayName: Tainted Sonar Potion
+	Tooltip: Rapidly randomizes fishing catches when hooked
+}
+
+TaintedSpelunkerPotion: {
+	DisplayName: Tainted Spelunker Potion
+	Tooltip:
+		'''
+		Replaces all nearby ores with common blocks
+		Breaking blocks has a chance to spawn ore
+		'''
+}
+
+TaintedStinkPotion: {
+	DisplayName: Tainted Stink Potion
+	Tooltip: Causes enemies to run away from you
+}
+
+TaintedSummoningPotion: {
+	DisplayName: Tainted Summoning Potion
+	Tooltip:
+		'''
+		Grants near unlimited minion slots
+		Minions instantly despawn after a few seconds
+		'''
+}
+
+TaintedSwiftnessPotion: {
+	DisplayName: Tainted Swiftness Potion
+	Tooltip: Reduced speed and inertia
+}
+
+TaintedThornsPotion: {
+	DisplayName: Tainted Thorns Potion
+	Tooltip: Friendly projectiles bounce off the first enemy they hit, but deal 10x damage to other enemies
+}
+
+TaintedTitanPotion: {
+	DisplayName: Tainted Titan Potion
+	Tooltip: Disables weapon knockback
+}
+
+TaintedWarmthPotion: {
+	DisplayName: Tainted Warmth Potion
+	Tooltip: Reduces damage from firey projectiles
+}
+
+TaintedWaterWalkingPotion: {
+	DisplayName: Tainted Water Walking Potion
+	Tooltip:
+		'''
+		You can now walk on air
+		Walking on land deals damage to you
+		'''
+}
+
+TaintedWrathPotion: {
+	DisplayName: Tainted Wrath Potion
+	Tooltip:
+		'''
+		Sets your damage to 0
+		Enemies lose health over time
+		'''
+}
+
+DisgustingMeat: {
+	DisplayName: Disgusting Meat
+	Tooltip:
+		'''
+		Mmm... a delicacy, to be sure!
+		Best served cold
+		'''
+}
+
+TaintedRagePotion: {
+	DisplayName: Tainted Rage Potion
+	Tooltip: ""
+}
+
+CalamityRing: {
+	DisplayName: Calamity Ring
+	Tooltip:
+		'''
+		A powerful artifact made from the Auric Soul of the Dragon of Calamity
+		The strength of the auric soul contained within transforms anyone unfortunate enough to wear it into an unsightly eye
+		It was formerly worn by the Queen of Witches Calamitas to subdue her while she reigned under her handler, King Yharim
+		Doubles the damage received
+
+		'''
+}
+
+FungiStone: {
+	DisplayName: Fungi Stone
+	Tooltip: Melee attacks inflict Mushy
+}
+
+Genesis: {
+	DisplayName: Genesis
+	Tooltip: Summons The Godless Spawn, Noxus
+	AlternateTooltip: Left click to summon the The Entropic God, right click to summon the Godless Spawn
+}
+
+NoxiousEvocator: {
+	DisplayName: Noxious Evocator
+	Tooltip: Makes cosmic hallucinations materialize around you
+}
+
+NoxusEclipseCalculator: {
+	DisplayName: Noxus Eclipse Calculator [DEBUG]
+	Tooltip: Provides information on upcoming Noxus Eclipses within the next 100 days
+}
+
+NoxusMask: {
+	DisplayName: Noxus Mask
+	Tooltip: ""
+}
+
+NoxusRelic: {
+	DisplayName: Noxus Relic
+	Tooltip: ""
+}
+
+NoxusSprayer: {
+	DisplayName: Noxus Sprayer
+	Tooltip:
+		'''
+		Shoots a stream of chaos mist that vaporizes everything it touches
+		Kills 99.99% of lesser beings guaranteed!
+		'''
+}
+
+NoxusTrophy: {
+	DisplayName: Noxus Trophy
+	Tooltip: ""
+}
+
+OblivionRattle: {
+	DisplayName: Oblivion Rattle
+	Tooltip: ""
+}
+
+GaggleStatue: {
+	DisplayName: Gaggle Statue
+	Tooltip: ""
+}
+
+TheEnforcerGun: {
+	DisplayName: The Enforcer
+	Tooltip: Has a chance to cause Bleeding
+}
+
+Andesite: {
+	DisplayName: Andesite
+	Tooltip: ""
+}
+
+Diorite: {
+	DisplayName: Diorite
+	Tooltip: ""
+}
+
+Granite: {
+	DisplayName: Granite
+	Tooltip: ""
+}
+
+NoxeggMusicBox: {
+	DisplayName: Noxegg Music Box
+	Tooltip: ""
+}
+
+NoxusMusicBox: {
+	DisplayName: Noxus Music Box
+	Tooltip: ""
+}
+
+ReaverSharkWaitNVM: {
+	DisplayName: Reaver Shark Wait NVM
+	Tooltip: ""
+}
+
+AbstractTest: {
+	DisplayName: Abstract Test
+	Tooltip: ""
+}
+
+ChlorophyteYoyo: {
+	DisplayName: Chlorophyte Yoyo
+	Tooltip: ""
+}
+
+EbonWoodStormbow: {
+	DisplayName: Ebon Wood Stormbow
+	Tooltip: ""
+}
+
+SkullStormbow: {
+	DisplayName: Skull Stormbow
+	Tooltip: ""
+}
+
+WoodenRake: {
+	Tooltip: ""
+	DisplayName: Wooden Rake
+}
+
+DeliciousMeatTracker: {
+	DisplayName: Delicious Meat Tracker
+	Tooltip:
+		'''
+		Use to redeem Delicious Meat
+		Right click to redeem all Delicious Meat in your inventory
+		'''
+}
+
+BarPlanter: {
+	DisplayName: Bar Planter
+	Tooltip: Grows hard-to-get bars for your convenience!
+}
+
+Farmixer: {
+	DisplayName: Farmixer
+	Tooltip: Used for specialized crafting
+}
+
+TheBeacon: {
+	DisplayName: The Beacon
+	Tooltip: ""
+}
+
+RedWulfrumFrogCannon: {
+	DisplayName: Red Wulfrum Frog Cannon
+	Tooltip:
+		'''
+		Fires Wulfrum Frogs
+		Uses normal Frogs as ammo
+		'''
+}
+
+EssenceOfMerge: {
+	DisplayName: Essence Of Merge
+	Tooltip: ""
+}
+
+ScaryMicrophone: {
+	DisplayName: Scary Microphone
+	Tooltip: Plays a random jumpscare when used
+}
+
+CuboidCurseBanner: {
+	DisplayName: Cuboid Curse Banner
+	Tooltip: ""
+}
+
+CuboidCurseBannerAlt: {
+	DisplayName: Cuboid Curse Banner Alt
+	Tooltip: ""
+}
+
+EvilAnimatronicBanner: {
+	DisplayName: Evil Animatronic Banner
+	Tooltip: ""
+}
+
+GlitchBanner: {
+	DisplayName: Glitch Banner
+	Tooltip: ""
+}
+
+RodenttmodBanner: {
+	DisplayName: Rodenttmod Banner
+	Tooltip: ""
+}
+
+TallManBanner: {
+	DisplayName: Tall Man Banner
+	Tooltip: ""
+}
+
+WaterloggedEffigyBanner: {
+	DisplayName: Waterlogged Effigy Banner
+	Tooltip: ""
+}
+
+AcceloRing: {
+	DisplayName: Accelo Ring
+	Tooltip: Summons dimensional rings around the cursor which protrude large wooden spikes inwards
+}
+
+Everflute: {
+	DisplayName: Everflute
+	Tooltip: Summons a powerful bird type monster
+}
+
+RedWings: {
+	DisplayName: Red Wings
+	Tooltip:
+		'''
+		Horizontal speed: 15
+		Acceleration multiplier: 3
+		Great vertical speed
+		Flight time: 190
+		20% increased movement speed
+		'''
+}
+
+BlankStare: {
+	DisplayName: Blank Stare
+	Tooltip: Scrubs the features off of one's face
+}
+
+GuardiansWrath: {
+	DisplayName: Guardians Wrath
+	Tooltip:
+		'''
+		<left> to thrust like a normal spear
+		<right> to throw the spear, sticking into hit tiles or enemies
+		<right> again while a spear is stuck to strike it with lightning and return it to you
+		The spear cannot be used while it is stuck, however other weapons may be used
+		'''
+}
+
+SalvageLegs: {
+	DisplayName: Salvage Legs
+	Tooltip:
+		'''
+		9% increased rogue velocity
+		5% increased movement speed
+		'''
+}
+
+SalvageMask: {
+	DisplayName: Salvage Mask
+	Tooltip: 22% increased rogue critical strike chance
+	SetBonus:
+		'''
+		87% increased rogue damage
+		28% increased rogue critical strike chance
+		Using a stealth strike near enemies emits a scream that stuns them
+		Smaller enemies take 5 times as much damage
+		Taking over 100 damage from a hit, entering liquid, or being out in the rain inflicts the wearer with Springlocked
+		Springlocked rapidly damages the wearer until they hit 1 health
+		'''
+}
+
+SalvageSuit: {
+	DisplayName: Salvage Suit
+	Tooltip: 23% increased rogue damage
+}
+
+CursedCartridge: {
+	DisplayName: Cursed Cartridge
+	Tooltip: Contains an infinite amount of bullets which move in a grid-like pattern
+}
+
+Glockarina: {
+	DisplayName: Glockarina
+	Tooltip: Fires homing bolts which distort enemy stats
+}
+
+GodKillerEX: {
+	DisplayName: God Killer EX
+	Tooltip: Fires a devastating blue heat ray which irradiates enemies
+}
+
+SignoftheOperator: {
+	DisplayName: Sign of the Operator
+	Tooltip: Holds out a tome which rapidly unleashes several short ranged whips
+}
+
+BadEgg: {
+	DisplayName: Bad Egg
+	Tooltip: "'Hey this egg is actually quite bad'"
+}
+
+VigorBlock: {
+	DisplayName: Vigor Block
+	Tooltip: ""
+}
+
+AccidatedReactiveEssence: {
+	DisplayName: Accidated Reactive Essence
+	Tooltip: ""
+}
+
+BloodredReactiveEssence: {
+	DisplayName: Bloodred Reactive Essence
+	Tooltip: ""
+}
+
+NocticReactiveEssence: {
+	DisplayName: Noctic Reactive Essence
+	Tooltip: ""
+}
+
+WaterfreezeReactiveEssence: {
+	DisplayName: Waterfreeze Reactive Essence
+	Tooltip: ""
+}
+
+FrigidChest: {
+	DisplayName: Frigid Chest
+	Tooltip: ""
+}
+
+RedRelic: {
+	DisplayName: Crimson Kaiju Relic
+	Tooltip: ""
+}
+
+RedTrophy: {
+	DisplayName: Crimson Kaiju Trophy
+	Tooltip: ""
+}
+
+ActivatedHealingPotion: {
+	DisplayName: Activated Healing Potion
+	Tooltip: ""
+}
+
+SeedyCD: {
+	DisplayName: Seedy CD
+	Tooltip: Summons an ugly grey creature to carry you around
 }

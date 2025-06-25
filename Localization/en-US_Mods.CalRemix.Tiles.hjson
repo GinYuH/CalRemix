@@ -24,27 +24,28 @@ OrigenTrophyPlaced.MapEntry: Origen Trophy
 OxygenTrophyPlaced.MapEntry: Oxygen Trophy
 PathogenTrophyPlaced.MapEntry: Pathogen Trophy
 PhytogenTrophyPlaced.MapEntry: Phytogen Trophy
-AltaroftheAblessedPlaced.MapEntry: Altar ofthe Ablessed
+AltaroftheAblessedPlaced.MapEntry: Altar of the Ablessed
 PyrogenTrophyPlaced.MapEntry: Pyrogen Trophy
 StonecutterPlaced.MapEntry: Stonecutter
 LabRoachBannerPlaced.MapEntry: Lab Roach Banner
 AncientConsole.MapEntry: Ancient Console
-TorrefiedTephraPlaced.MapEntry: Torrefied Tephra Placed
+TorrefiedTephraPlaced.MapEntry: Torrefied Tephra
 OldIonogenTrophyPlaced.MapEntry: Ancient Ionogen Trophy
-LegendPortraitHAYABUSA.MapEntry: Legend Portrait HAYABUSA
-LegendPortraitMITCHARD.MapEntry: Legend Portrait MITCHARD
-LegendPortraitDASLNEW.MapEntry: Legend Portrait DASLNEW
-LegendPortraitPEREZ.MapEntry: Legend Portrait PEREZ
-LegendPortraitACKNER.MapEntry: Legend Portrait ACKNER
-LegendPortraitCONROY.MapEntry: Legend Portrait CONROY
-LegendPortraitMARINO.MapEntry: Legend Portrait MARINO
-LegendPortraitHOOB.MapEntry: Legend Portrait HOOB
-LegendPortraitETTEL.MapEntry: Legend Portrait ETTEL
-LegendPortraitWINGERT.MapEntry: Legend Portrait WINGERT
-LegendPortraitDIRAC.MapEntry: Legend Portrait DIRAC
-LegendPortraitHUET.MapEntry: Legend Portrait HUET
-ChloriumOrePlaced.MapEntry: Chlorium
-LegendPortraitYOU.MapEntry: Legend Portrait YOU
+ChloriumOrePlaced.MapEntry: Chlorium Ore
 LegendPortrait.MapEntry: Legend Portrait
-LegendPromo.MapEntry: Legend Promo
 LegendMemorial.MapEntry: Legend Memorial
+LegendPromo.MapEntry: Legend Promo
+GaggleStatuePlaced.MapEntry: Gaggle Statue
+AndesitePlaced.MapEntry: Andesite
+DioritePlaced.MapEntry: Diorite
+GranitePlaced.MapEntry: Granite
+FarmixerPlaced.MapEntry: Farmixer
+BarPlanterTile.MapEntry: Bar Planter
+AlloyBarPlant.MapEntry: Alloy Bar Plant
+EssentialEssenceBarPlant.MapEntry: Essential Essence Bar Plant
+YharimBarPlant.MapEntry: Yharim Bar Plant
+
+FrigidChestPlaced: {
+	MapEntry0: Frigid Chest
+	MapEntry1: Locked Frigid Chest
+}

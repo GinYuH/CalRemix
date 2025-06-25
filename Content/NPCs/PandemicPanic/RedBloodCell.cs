@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Red Blood Cell");
+            // DisplayName.SetDefault("Red Blood Cell");
         }
 
         public override void SetDefaults()

@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using CalRemix.UI;
+using Terraria.ModLoader.Default;
+using System.Linq;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -17,8 +19,8 @@ namespace CalRemix.Content.Items.Accessories
         public const int MaxSmokeTime = 600;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Carcinogen");
-            Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...\n" + CalamityUtils.ColorMessage("Boosts Dark damage", Color.LightSlateGray));
+            // DisplayName.SetDefault("Soul of Carcinogen");
+            // Tooltip.SetDefault("7% increase to all damage\nPuts a cigar in the wearer's mouth which leaves behind smoke that inflicts several debuffs\nDamage of the smoke increases based on how long the player has been wearing the accessory\nIt all stops after 10 minutes...\n" + CalamityUtils.ColorMessage("Boosts Dark damage", Color.LightSlateGray));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -33,7 +35,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityOrangeBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Carcinogen;
@@ -88,7 +90,12 @@ namespace CalRemix.Content.Items.Accessories
 
         public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
-            return slot == ModContent.GetInstance<SoulSlot>().Type;
+            int soulSlot = ModContent.GetInstance<SoulSlot>().Type;
+            if (!modded)
+                return false;
+            if (slot == (player.GetModPlayer<ModAccessorySlotPlayer>().SlotCount + soulSlot) || slot == soulSlot)
+                return true;
+            return false;
         }
     }
     public class CigarDrawLayer : PlayerDrawLayer

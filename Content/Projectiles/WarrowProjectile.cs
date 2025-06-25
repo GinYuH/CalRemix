@@ -11,7 +11,7 @@ namespace CalRemix.Content.Projectiles
         public override string Texture => "CalRemix/Content/Items/Ammo/WarArrow";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warrow");
+            // DisplayName.SetDefault("Warrow");
         }
         public override void SetDefaults()
         {

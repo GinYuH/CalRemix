@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Tiles;
 using CalRemix.UI;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,24 +12,24 @@ namespace CalRemix.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Essential Essence Bar");
-      		Tooltip.SetDefault("Flowing with pure energy");
-			Item.ResearchUnlockCount = 5;
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			// DisplayName.SetDefault("Essential Essence Bar");
+      		// Tooltip.SetDefault("Flowing with pure energy");
+			Item.ResearchUnlockCount = 25;
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 4));
+            ItemID.Sets.AnimatesAsSoul[Type] = true;
 
             if (!Main.dedServ)
             {
-                HelperMessage.New("EssentialEssenceDisbelief", "...Did you seriously go through the pain of making your first essential essence bar? Are you really gonna repeat this pain grinding the materials needed for the items you're gonna make??? There's a damn good reason why that starter bag you opened a long while ago gave you that strange red pickaxe. Place that down, and figure the codes out on your own.", "EvilFannyMiffed",
+                HelperMessage.New("EssentialEssenceDisbelief", "You better have gotten that from shimmering cores, otherwise that's genuinely fucking embarassing, man. Did you really waste your time getting every single component? You probably had most of this stuff lying around, but even then. You can't even do jack shit with ONE bar! How many more of these are you gonna craft?? You like, genuinely repulse me. I feel like I'm going to barf in my own mouth just from looking at you. NOBODY is impressed by the fact you're willing to waste your time resource gathering. The starter bag came with a red pickaxe for a reason, get to learning the codes.", "EvilFannyMiffed",
                     (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(Type))
                     .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny).SetHoverTextOverride("Thanks, uh, for the \"evil\" tip, Evil Fanny...?");
             }
         }
 		public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<EssentialEssenceBarPlant>());
             Item.rare = ItemRarityID.LightPurple;
             Item.sellPrice(silver: 80);
-            Item.maxStack = 9999;
         }
         public override void AddRecipes()
         {
@@ -49,8 +50,8 @@ namespace CalRemix.Content.Items.Materials
                 AddIngredient(ItemID.ShroomiteBar).
                 AddIngredient(ItemID.SpectreBar).
                 AddIngredient<ScoriaBar>().
+                AddIngredient<PerennialBar>().
                 AddIngredient<CryonicBar>().
-                AddIngredient<AstralBar>().
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }

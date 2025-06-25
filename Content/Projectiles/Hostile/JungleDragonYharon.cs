@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalamityMod/NPCs/Yharon/Yharon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Yharon");
+            // DisplayName.SetDefault("Yharon");
             Main.projFrames[Projectile.type] = 7;
         }
         public override void SetDefaults()
@@ -52,7 +52,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.zenithWorld) NPC.NewNPC(base.Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<Yharon>());
+            if (Main.zenithWorld) CalRemixHelper.SpawnNewNPC(base.Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<Yharon>());
         }
     }
 }

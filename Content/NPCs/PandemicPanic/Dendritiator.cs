@@ -18,7 +18,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dendritiator");
+            // DisplayName.SetDefault("Dendritiator");
         }
 
         public override void SetDefaults()
@@ -46,7 +46,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             {
                 int x = (int)Main.rand.NextVector2CircularEdge(300, 300).X;
                 int y = (int)Main.rand.NextVector2CircularEdge(300, 300).Y;
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + x, (int)NPC.position.Y + y, ModContent.NPCType<DendtritiatorArm>(), ai0: NPC.whoAmI, ai3: Main.rand.Next(120, 240));
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + x, (int)NPC.position.Y + y, ModContent.NPCType<DendtritiatorArm>(), ai0: NPC.whoAmI, ai3: Main.rand.Next(120, 240));
             }
         }
 

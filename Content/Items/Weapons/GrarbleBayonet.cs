@@ -10,8 +10,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grarble Bayonet");
-            Tooltip.SetDefault("The gun damages enemies that touch it");
+            // DisplayName.SetDefault("Grarble Bayonet");
+            // Tooltip.SetDefault("The gun damages enemies that touch it");
         }
 
         public override void SetDefaults()

@@ -114,8 +114,6 @@ namespace CalRemix.Content.NPCs.Minibosses
                 return;
             if (!hide)
                 Lighting.AddLight(NPC.Center, (255 - NPC.alpha) / (255f * 5f), 0f, 0f);
-            if (Main.netMode != NetmodeID.Server && !Main.player[NPC.target].dead && Main.player[NPC.target].active)
-                player.AddBuff(ModContent.BuffType<Clamity>(), 2);
 
             if (Wait < 240f)
             {

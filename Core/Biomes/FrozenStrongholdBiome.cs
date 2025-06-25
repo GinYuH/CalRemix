@@ -24,7 +24,7 @@ namespace CalRemix.Core.Biomes
         // Use SetStaticDefaults to assign the display name
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frozen Stronghold");
+            // DisplayName.SetDefault("Frozen Stronghold");
         }
 
         int Flake = ModContent.TileType<FrostflakeBrickPlaced>();

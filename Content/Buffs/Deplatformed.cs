@@ -11,7 +11,6 @@ namespace CalRemix.Content.Buffs
         NPC pyro;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Deplatformed");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

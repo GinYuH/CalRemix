@@ -26,9 +26,9 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("The Verboten One");
-            Tooltip.SetDefault("Ultimatum\n"+
-            "Provides all effects of its ingredients"); 
+            // DisplayName.SetDefault("The Verboten One");
+            /* Tooltip.SetDefault("Ultimatum\n"+
+            "Provides all effects of its ingredients"); */ 
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(500, 14f, 3.2f);
         }
 
@@ -73,6 +73,7 @@ namespace CalRemix.Content.Items.Accessories
             GetModItem(ItemType<TheCommunity>()).UpdateAccessory(player, hideVisual);
             GetModItem(ItemType<AmbrosialAmpoule>()).UpdateAccessory(player, hideVisual);
             GetModItem(ItemType<CalamitousSoulArtifact>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<Radiance>()).UpdateAccessory(player, hideVisual);
             ModContent.GetModItem(ModContent.ItemType<CalamityMod.Items.Accessories.Nanotech>()).UpdateAccessory(player, hideVisual);
 
             var source = player.GetSource_Accessory(Item);

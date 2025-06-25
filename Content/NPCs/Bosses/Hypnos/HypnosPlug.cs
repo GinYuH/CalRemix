@@ -14,7 +14,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         NPC hypnos;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("XP-00 Hypnos Plug");
+            // DisplayName.SetDefault("XP-00 Hypnos Plug");
             Main.npcFrameCount[NPC.type] = 1;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
@@ -88,8 +88,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
 				{
 					if (!(Main.getGoodWorld && i == 1))
 					{
-						//if (Main.netMode != NetmodeID.MultiplayerClient)
-							NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AergiaNeuron>(), 0, (int)NPC.ai[0], startneuron + i, 0, NPC.whoAmI);
+                        CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), NPC.Center, ModContent.NPCType<AergiaNeuron>(), 0, (int)NPC.ai[0], startneuron + i, 0, NPC.whoAmI);
 					}
 				}
 				NPC.ai[2] = 1;

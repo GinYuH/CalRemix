@@ -14,13 +14,13 @@ namespace CalRemix.Content.Items.Placeables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Anomaly 109");
-            Tooltip.SetDefault("Insert unique codes in order to disable certain aspects of your game.\n" + CalamityUtils.ColorMessage("Must be configured in Singleplayer. Changes carry over to Multiplayer", Color.IndianRed));
+            // DisplayName.SetDefault("Anomaly 109");
+            // Tooltip.SetDefault("Insert unique codes in order to disable certain aspects of your game.\n" + CalamityUtils.ColorMessage("Must be configured in Singleplayer. Changes carry over to Multiplayer", Color.IndianRed));
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 32;
             Item.maxStack = 99;
             Item.useTurn = true;

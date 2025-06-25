@@ -623,8 +623,8 @@ namespace CalRemix.Core.World
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault(Itemname ?? "ERROR");
-            Tooltip.SetDefault(Itemtooltip ?? "ERROR");
+            // DisplayName.SetDefault(Itemname ?? "ERROR");
+            // Tooltip.SetDefault(Itemtooltip ?? "ERROR");
             Item.ResearchUnlockCount = 1;
         }
 
@@ -740,7 +740,7 @@ namespace CalRemix.Core.World
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Promotional Poster");
+            // DisplayName.SetDefault("Promotional Poster");
             Item.ResearchUnlockCount = 1;
         }
 
@@ -845,8 +845,8 @@ namespace CalRemix.Core.World
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Memorial Poster");
-            Tooltip.SetDefault("A beautiful soul gone too soon...");
+            // DisplayName.SetDefault("Memorial Poster");
+            // Tooltip.SetDefault("A beautiful soul gone too soon...");
             Item.ResearchUnlockCount = 1;
         }
 

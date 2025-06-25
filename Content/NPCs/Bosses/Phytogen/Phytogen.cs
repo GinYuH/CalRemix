@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
         public override void SetStaticDefaults()
         {
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            DisplayName.SetDefault("Phytogen");
+            // DisplayName.SetDefault("Phytogen");
             if (Main.dedServ)
                 return;
             HelperMessage.New("Pythogen",
@@ -110,12 +110,11 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
 
         public override void OnSpawn(IEntitySource source)
         {
-            NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<PhytogenShield>(), ai0: NPC.whoAmI);
-            //if (Main.netMode == NetmodeID.SinglePlayer) // sorry cant bother
+            CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, ModContent.NPCType<PhytogenShield>(), ai0: NPC.whoAmI);
             for (int i = 0; i < 2; i++)
             {
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + (i + 1) * 64, (int)NPC.position.Y, ModContent.NPCType<PineappleFrond>(), ai0: NPC.whoAmI, ai1: i, ai3: Main.rand.Next(120, 240));
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X - (i + 1) * 64, (int)NPC.position.Y, ModContent.NPCType<PineappleFrond>(), ai0: NPC.whoAmI, ai1: i + 2, ai3: Main.rand.Next(120, 240));
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X + (i + 1) * 64, (int)NPC.position.Y, ModContent.NPCType<PineappleFrond>(), ai0: NPC.whoAmI, ai1: i, ai3: Main.rand.Next(120, 240));
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X - (i + 1) * 64, (int)NPC.position.Y, ModContent.NPCType<PineappleFrond>(), ai0: NPC.whoAmI, ai1: i + 2, ai3: Main.rand.Next(120, 240));
             }
         }
 
@@ -175,7 +174,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
             if (!NPC.AnyNPCs(ModContent.NPCType<PhytogenShield>()))
             {
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PhytogenShield>(), ai0: NPC.whoAmI);
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<PhytogenShield>(), ai0: NPC.whoAmI);
             }
             if (Target == null || Target.dead)
             {
@@ -574,7 +573,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<SIIVA>()))
             {
-                NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SIIVA>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<SIIVA>());
             }
             RemixDowned.downedPhytogen = true;
             CalRemixWorld.UpdateWorldBool();

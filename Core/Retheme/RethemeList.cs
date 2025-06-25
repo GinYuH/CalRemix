@@ -20,7 +20,6 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.Projectiles.Melee.Shortswords;
 using CalamityMod.Projectiles.Melee.Spears;
@@ -34,7 +33,6 @@ using static Terraria.ModLoader.ModContent;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee.Yoyos;
-using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.NPCs.Providence;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Items.Weapons;
@@ -43,8 +41,8 @@ using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using Terraria.ID;
-using CalamityMod.Items.Mounts;
-using CalamityMod.Buffs.Mounts;
+using CalamityMod.Items.Ammo;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Core.Retheme
 {
@@ -52,6 +50,7 @@ namespace CalRemix.Core.Retheme
     {
         internal static Dictionary<int, string> NPCs = new()
         {
+            { NPCType<Cnidrion>(), "Cnidrion" },
             { NPCType<ColossalSquid>(), "ColossalSquid" },
             { NPCType<Eidolist>(), "Eidolist" },
             { NPCType<ReaperShark>(), "ReaperShark" },
@@ -65,7 +64,6 @@ namespace CalRemix.Core.Retheme
             { NPCType<HiveBlob2>(), "HiveMind/HiveBlob" },
             { NPCType<DarkHeart>(), "HiveMind/DarkHeart" },
             { NPCType<HiveMind>(), "HiveMind/HiveMind" },
-            { NPCID.SkeletronHead, "Skeletron/Dungen" },
             #region Perfs
             { NPCType<PerforatorCyst>(), "Perfs/Cyst" },
             { NPCType<PerforatorBodyLarge>(), "Perfs/LBody" },
@@ -94,12 +92,12 @@ namespace CalRemix.Core.Retheme
             #region Hardmode
             { NPCType<Cryogen>(), "Cryogen/CryogenPhase1" },
             { NPCType<CryogenShield>(), "Cryogen/CryogenShield" },
+            { NPCType<BrimstoneElemental>(), "Brim/BrimstoneElemental" },
             { NPCType<CalamitasClone>(), "Cal/Calamitas" },
             { NPCType<Anahita>(), "Levi/Anahita" },
             { NPCType<Leviathan>(), "Levi/Levi" },
             { NPCType<AquaticAberration>(), "Levi/AquaticAberration" },
             { NPCType<AstrumAureus>(), "Plague/AstrumAureus" },
-            { NPCType<AureusSpawn>(), "Plague/AureusSpawn" },
             { NPCType<AstrumDeusHead>(), "AD/Head" },
             { NPCType<AstrumDeusBody>(), "AD/Body" },
             { NPCType<AstrumDeusTail>(), "AD/Tail" },
@@ -148,6 +146,11 @@ namespace CalRemix.Core.Retheme
             { ItemType<CadaverousCarrion>(), "CadaverousCarrion" },
             { ItemType<MutatedTruffle>(), "MutatedTruffle" },
             { ItemType<MetalMonstrosity>(), "MetalMonstrosity" },
+            { ItemType<MajesticGuard>(), "MajesticGar" },
+            { ItemType<GrandGuardian>(), "GrandGar" },
+            { ItemType<Earth>(), "Garth" },
+            { ItemType<IcicleArrow>(), "IcicleArrow" },
+            { ItemType<AnechoicCoating>(), "AnechoicCoating" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },
@@ -217,16 +220,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<LeviathanAmbergris>(), "Levi/LeviathanAmbergris" },
             #endregion
             #region Plague Aureus
-            { ItemType<AstrumAureusBag>(), "Plague/Bag" },
-            { ItemType<AstralChunk>(), "Plague/AstralChunk" },
-            { ItemType<AureusCell>(), "Plague/AureusCell" },
-            { ItemType<GravistarSabaton>(), "Plague/GravistarSabaton" },
-            { ItemType<Nebulash>(), "Plague/Nebulash" },
             { ItemType<AuroraBlazer>(), "Plague/AuroraBlazer" },
-            { ItemType<AlulaAustralis>(), "Plague/AlulaAustralis" },
-            { ItemType<BorealisBomber>(), "Plague/BorealisBomber" },
-            { ItemType<LeonidProgenitor>(), "Plague/LeonidProgenitor" },
-            { ItemType<AuroradicalThrow>(), "Plague/AuroradicalThrow" },
             #endregion
             #region Astrum Deus
             { ItemType<AstrumDeusBag>(), "AD/Bag" },
@@ -256,7 +250,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<YharonsKindleStaff>(), "Yharon/YharonsKindleStaff" },
             { ItemType<TheBurningSky>(), "Yharon/TheBurningSky" },
             { ItemType<TheFinalDawn>(), "Yharon/FinalDawn" },
-            { ItemType<Wrathwing>(), "Yharon/Wrathwing" },
+            { ItemType<CalamityMod.Items.Weapons.Rogue.Wrathwing>(), "Yharon/Wrathwing" },
             #endregion
             #region Exos
             { ItemType<MiracleMatter>(), "Exo/Matter" },
@@ -280,6 +274,7 @@ namespace CalRemix.Core.Retheme
             { ProjectileType<VoidEssence>(), "VoidEssence" },
             { ProjectileType<MutatedTruffleMinion>(), "GassyDuke" },
             { ProjectileType<MetalChunk>(), "MetalMonstrosity" },
+            { ProjectileType<BrimstoneElementalMinion>(), "Brim/BrimstoneElementalMinion" },
             #region Desert Sockourge
             { ProjectileType<SaharaSlicersBlade>(), "DS/SaharaSlicer" },
             { ProjectileType<SaharaSlicersBladeAlt>(), "DS/SaharaSlicer" },
@@ -317,12 +312,6 @@ namespace CalRemix.Core.Retheme
             #region Levi
             { ProjectileType<WaterElementalMinion>(), "Levi/Anahita" },
             #endregion
-            #region Aureus
-            { ProjectileType<NebulashFlail>(), "Plague/NebulashFlail" },
-            { ProjectileType<AureusBomber>(), "Plague/AureusBomber" },
-            { ProjectileType<AuroradicalSplitter>(), "Plague/AuroradicalStar" },
-            { ProjectileType<AuroradicalStar>(), "Plague/AuroradicalStar" },
-            #endregion
             #region Deus
             { ProjectileType<MicrowaveYoyo>(), "AD/MicrowaveYoyo" },
             { ProjectileType<SputterComet>(), "AD/SputterComet" },
@@ -347,8 +336,17 @@ namespace CalRemix.Core.Retheme
         internal static Dictionary<int, string> Buffs = new()
         {
         };
-
-
+        internal static List<int> ItemNames =
+        [
+            ItemType<WulfrumMetalScrap>(),
+            ItemType<LifeAlloy>(),
+            ItemType<MeldConstruct>(),
+            ItemType<MajesticGuard>(),
+            ItemType<GrandGuardian>(),
+            ItemType<Earth>(),
+            ItemType<StreamGouge>(),
+            ItemType<SoulPiercer>()
+        ];
         internal static List<int> NPCNames =
         [
             NPCType<BrimstoneElemental>(),
@@ -356,7 +354,9 @@ namespace CalRemix.Core.Retheme
             NPCType<AstrumAureus>(),
             NPCType<Draedon>(),
             NPCType<BrimstoneHeart>(),
-            NPCType<WITCH>()
+            NPCType<WITCH>(),
+            NPCType<Cnidrion>(),
+            NPCType<Anahita>()
         ];
     }
 }

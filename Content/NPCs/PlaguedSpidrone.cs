@@ -23,7 +23,7 @@ namespace CalRemix.Content.NPCs
         int currentFrame = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plagued Spidrone");
+            // DisplayName.SetDefault("Plagued Spidrone");
             Main.npcFrameCount[NPC.type] = 12;
         }
 

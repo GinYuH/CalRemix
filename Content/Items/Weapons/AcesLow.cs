@@ -14,8 +14,8 @@ namespace CalRemix.Content.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Ace's Low");
-            Tooltip.SetDefault("Fires a string of piercing spade cards when musket balls are used as ammo");
+            // DisplayName.SetDefault("Ace's Low");
+            // Tooltip.SetDefault("Fires a string of piercing spade cards when musket balls are used as ammo");
 		}
 
 		public override void SetDefaults() 

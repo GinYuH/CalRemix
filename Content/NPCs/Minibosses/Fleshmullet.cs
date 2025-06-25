@@ -21,7 +21,7 @@ namespace CalRemix.Content.NPCs.Minibosses
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fleshmullet");
+            // DisplayName.SetDefault("Fleshmullet");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 15;
@@ -61,11 +61,8 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.Calamity().newAI[0] == 0)
             {
                 NPC.Calamity().newAI[0] = 1;
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 200, NPCType<FleshmulletEye>());
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y + 200, NPCType<FleshmulletEye>());
-                }
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 200, NPCType<FleshmulletEye>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y + 200, NPCType<FleshmulletEye>());
             }
             foreach (Projectile p in Main.ActiveProjectiles)
             {
@@ -98,7 +95,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             if (NPC.CountNPCS(Type) > 1)
                 return 0f;
 
-            return SpawnCondition.Underworld.Chance * 0.0022f;
+            return SpawnCondition.Underworld.Chance * 0.0035f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -113,11 +110,10 @@ namespace CalRemix.Content.NPCs.Minibosses
                 if (!Main.hardMode)
                 {
                     NPC.boss = false;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), NPC.position, NPCID.WallofFlesh, npcTasks: (NPC w) =>
                     {
-                        int w = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, NPCID.WallofFlesh);
-                        Main.npc[w].StrikeInstantKill();
-                    }
+                        w.StrikeInstantKill();
+                    });
                 }
                 if (Main.netMode != NetmodeID.Server)
                 {

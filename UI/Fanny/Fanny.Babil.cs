@@ -30,22 +30,17 @@ namespace CalRemix.UI
 
             //Evil fanny's lines
             HelperMessage.New("Babil6", "Hey there, adventurer... Have you heard about the Essence of Babil? It's this... remarkable crafting material that drops from such unworthy jungle creatures. Let me grace you with some information, whether you appreciate it or not.",
-                "EvilFannyIdle").SetHoverTextOverride("Umm, Essence of Babil? What's that?").SpokenByEvilFanny().ChainAfter(firstMessage, 3f, true);
-
+                "EvilFannyPoint").SetHoverTextOverride("Umm, Essence of Babil? What's that?").SpokenByEvilFanny().ChainAfter(firstMessage, 3f, true);
             HelperMessage.New("Babil7", "Oh, how utterly clueless. The Essence of Babil is this incredibly mundane substance you can get from jungle enemies. You might even consider it somewhat important for crafting marginally useful gear. But, hey, who cares, right?",
                 "EvilFannyIdle").SetHoverTextOverride("Huh, okay. So, where do I find it?").ChainAfter().SpokenByEvilFanny();
-
             HelperMessage.New("Babil8", "Seriously? I can't believe I have to repeat myself. It drops from those jungle creatures, assuming you can manage to defeat them, of course. Go ahead, give it a shot. Not like it matters.",
                 "EvilFannyIdle").SetHoverTextOverride("Jungle creatures... got it. But what can I make with it?").ChainAfter(delay: 5).SpokenByEvilFanny();
-
             HelperMessage.New("Babil9", "You're really pushing your limits here, aren't you? It's used to craft... well, whatever. You can create some totally average air-themed equipment. But, honestly, who cares about that, right?",
                 "EvilFannyIdle").SetHoverTextOverride("I'm not sure I understand...").ChainAfter().SpokenByEvilFanny();
-
             HelperMessage.New("Babil10", "Of course, you don't!!! Why would I expect any different? Essence of Babil is just a crafting material. You find it in the jungle. You use it to make \"cool\" stuff, if you're into that sort of thing. But, frankly, I couldn't care less.",
-                "EvilFannyIdle").SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").ChainAfter(delay: 2).SpokenByEvilFanny();
-
+                "EvilFannyPissed").SetHoverTextOverride("Uh, thanks, Evil Fanny. I think I get it now.").ChainAfter(delay: 2).SpokenByEvilFanny();
             HelperMessage.New("Babil11", "You think you \"get it\"? You're beyond hopeless! There, now you're truly enlightened. Enjoy your essence... of oblivion!",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, duration: 20).ChainAfter().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny).EndConversation();
+                "EvilFannyWrathful", HelperMessage.AlwaysShow, duration: 20).ChainAfter().SpokenByEvilFanny().AddStartEvent(EssenceOfOblivionEvilFanny).EndConversation();
 
         }
 

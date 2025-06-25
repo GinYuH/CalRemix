@@ -13,8 +13,8 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Winter Breeze");
-            Tooltip.SetDefault("Fires several additional icicle arrows that shatter on impact");
+            // DisplayName.SetDefault("Winter Breeze");
+            // Tooltip.SetDefault("Fires several additional icicle arrows that shatter on impact");
         }
         public override void SetDefaults()
         {

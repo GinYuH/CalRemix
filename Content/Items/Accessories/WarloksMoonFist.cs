@@ -14,18 +14,18 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Warlok's Moon Fist");
-            Tooltip.SetDefault("Melee attacks and projectiles inflict nightwither and have a 10% chance to instantly kill normal enemies\n" +
+            // DisplayName.SetDefault("Warlok's Moon Fist");
+            /* Tooltip.SetDefault("Melee attacks and projectiles inflict nightwither and have a 10% chance to instantly kill normal enemies\n" +
             "Grants the user 60% increased true melee damage on true melee hits\n" +
             "25% increased melee speed, damage, and 5% increased melee critical strike chance\n" +
             "50% increased true melee damage\n" +
             "Temporary immunity to lava\n" +
-            "Increased melee knockback"); 
+            "Increased melee knockback"); */ 
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 20;
             Item.height = 28;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
             Item.rare = ModContent.RarityType<DarkBlue>();

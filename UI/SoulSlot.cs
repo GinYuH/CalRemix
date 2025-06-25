@@ -36,7 +36,9 @@ namespace CalRemix.UI
         {
             return CalRemixItem.genSouls.Contains(item.type) || item.type == ModContent.ItemType<SoulofOrigen>();
         }
-        public override bool DrawVanitySlot => false;
+        public override bool DrawVanitySlot => true;
+
+        public override string VanityTexture => "CalRemix/UI/SoulSlot";
 
         public override void OnMouseHover(AccessorySlotType context)
         {
@@ -44,6 +46,9 @@ namespace CalRemix.UI
             {
                 case AccessorySlotType.FunctionalSlot:
                     Main.hoverItemName = CalRemixHelper.LocalText("UI.SoulSlot").Value;
+                    break;
+                case AccessorySlotType.VanitySlot:
+                    Main.hoverItemName = CalRemixHelper.LocalText("UI.SoulVanitySlot").Value;
                     break;
             }
         }

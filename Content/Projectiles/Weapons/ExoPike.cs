@@ -30,7 +30,7 @@ public class ExoPike : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Gravitonomy Beam");
+        // DisplayName.SetDefault("Gravitonomy Beam");
       
     }
 

@@ -1,12 +1,15 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.Events;
+using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.DamageClasses;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Oxygen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.Projectiles.Accessories;
@@ -14,6 +17,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using CalRemix.Content.Walls;
+using CalRemix.Core;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
@@ -26,6 +30,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.Projectiles
@@ -41,6 +46,8 @@ namespace CalRemix.Content.Projectiles
         public int bladetimer = 0;
         public bool splitExplosive = false;
         public bool whipGonged = false;
+        public int taintSummon = 0;
+        public int deflectedEnemy = -1;
         NPC exc;
         public override bool InstancePerEntity => true;
         public int[] baronStraitTiles =
@@ -72,6 +79,14 @@ namespace CalRemix.Content.Projectiles
 
         public override bool PreAI(Projectile projectile)
         {
+            if (taintSummon > 0)
+            {
+                taintSummon--;
+                if (taintSummon <= 0)
+                {
+                    projectile.Kill();
+                }
+            }
             if (!Main.dedServ)
                 ScreenHelperManager.sceneMetrics.onscreenProjectiles.Add(projectile);
             return true;
@@ -147,29 +162,18 @@ namespace CalRemix.Content.Projectiles
                 {
                     SoundEngine.PlaySound(SoundID.Shatter with { Volume = 1 });
                     projectile.Kill();
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int num = NPC.NewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>());
-                        if (Main.npc.IndexInRange(num))
-                        {
-                            CalamityUtils.BossAwakenMessage(num);
-                        }
-                    }
-                    else
-                    {
-                        ModPacket packet = CalRemix.CalMod.GetPacket();
-                        packet.Write((byte)CalamityModMessageType.SpawnNPCOnPlayer);
-                        packet.Write(projectile.position.X);
-                        packet.Write(656);
-                        packet.Write(NPCType<Oxygen>());
-                        packet.Write(Main.myPlayer);
-                        packet.Send();
-                    }
+                    SpawnNewNPC(projectile.GetSource_FromThis(), (int)projectile.position.X, 656, NPCType<Oxygen>(), awakenMessage: true);
                 }
+            }
+            if (projectile.type == ProjectileType<OverlyDramaticDukeSummoner>())
+            {
+                AcidRainEvent.AcidRainEventIsOngoing = false;
+                projectile.active = false;
+                CalRemixHooks.SetOldDukeDead();
             }
             if (projectile.minion || projectile.sentry || projectile.hostile || !projectile.friendly || projectile.damage <= 0)
                 return;
-            if (modPlayer.pearl)
+            if (modPlayer.pearl || modPlayer.taintedShine)
                 CalamityUtils.HomeInOnNPC(projectile, false, 320, projectile.velocity.Length(), 10);
             eye++;
             if (modPlayer.astralEye && eye % 120 == 0 && eye > 0 && projectile.type != ProjectileType<HomingAstralFireball>())
@@ -374,6 +378,7 @@ namespace CalRemix.Content.Projectiles
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[projectile.owner];
+            
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             var source = projectile.GetSource_FromThis();
             if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
@@ -451,10 +456,21 @@ namespace CalRemix.Content.Projectiles
             {
                 player.MinionAttackTargetNPC = target.whoAmI;
             }
+            // should use a flag set on shot proj instead of this, but i am lazy and nobody will notice
+            if (player.HeldItem.type == ItemType<TheEnforcerGun>())
+            {
+                target.AddBuff(ModContent.BuffType<BurningBlood>(), 480);
+            }
         }
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
+            var player = Main.player[projectile.owner];
+            if (player.autoPaint && projectile.type == ProjectileID.PainterPaintball)
+            {
+                modifiers.FinalDamage *= 1.5f;
+            }
+            
             CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (p.hydrogenSoul)
             {
@@ -463,6 +479,30 @@ namespace CalRemix.Content.Projectiles
                     modifiers.FinalDamage *= 50;
                 }
             }
+            if (p.taintedThorns)
+            {
+                if (deflectedEnemy <= -1)
+                {
+                    modifiers.SourceDamage *= 0;
+                    projectile.penetrate++;
+                    projectile.velocity *= -1;
+                    projectile.damage *= 10;
+                    deflectedEnemy = target.whoAmI;
+                }
+            }
+        }
+
+        public override bool? CanHitNPC(Projectile projectile, NPC target)
+        {
+            CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
+            if (p.taintedThorns)
+            {
+                if (deflectedEnemy == target.whoAmI)
+                {
+                    return false;
+                }
+            }
+            return null;
         }
 
         public override void OnKill(Projectile projectile, int timeLeft)
@@ -538,6 +578,11 @@ namespace CalRemix.Content.Projectiles
             if (modPlayer.noTomorrow == true && projectile.friendly == true)
             {
                 projectile.scale *= 2;
+            }
+
+            if (modPlayer.taintedSummoning && projectile.minionSlots > 0)
+            {
+                taintSummon = 122;
             }
         }
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)

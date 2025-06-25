@@ -17,7 +17,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Basilius");
+            // DisplayName.SetDefault("Basilius");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Position = new Vector2(0, -45)
@@ -60,12 +60,13 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 int num5 = NPC.whoAmI;
                 for (int m = 0; m < 22; m++)
                 {
-                    num4 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)(NPC.position.X + (float)(NPC.width / 2)), (int)(NPC.position.Y + (float)NPC.height), ModContent.NPCType<BasiliusBody>(), NPC.whoAmI);
-                    Main.npc[num4].ai[3] = NPC.whoAmI;
-                    Main.npc[num4].realLife = NPC.whoAmI;
-                    Main.npc[num4].ai[1] = num5;
-                    Main.npc[num5].ai[0] = num4;
-                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, num4);
+                    num4 = CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromThis(), (int)(NPC.position.X + (float)(NPC.width / 2)), (int)(NPC.position.Y + (float)NPC.height), ModContent.NPCType<BasiliusBody>(), NPC.whoAmI, npcTasks: (NPC n) =>
+                    {
+                        n.ai[3] = NPC.whoAmI;
+                        n.realLife = NPC.whoAmI;
+                        n.ai[1] = num5;
+                        Main.npc[num5].ai[0] = n.whoAmI;
+                    }).whoAmI;
                     num5 = num4;
                 }
             }

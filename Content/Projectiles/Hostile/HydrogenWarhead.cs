@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warhead");
+            // DisplayName.SetDefault("Warhead");
         }
         public override void SetDefaults()
         {

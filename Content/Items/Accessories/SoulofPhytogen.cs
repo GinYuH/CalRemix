@@ -15,8 +15,8 @@ namespace CalRemix.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Phytogen");
-            Tooltip.SetDefault("7% increase to all damage\nEating fruits heals a third of your max life\n" + CalamityUtils.ColorMessage("Boosts Poison damage", Color.Green));
+            // DisplayName.SetDefault("Soul of Phytogen");
+            // Tooltip.SetDefault("7% increase to all damage\nEating fruits heals a third of your max life\n" + CalamityUtils.ColorMessage("Boosts Poison damage", Color.Green));
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 3));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 20;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
             Item.accessory = true;
             Item.rare = RarityHelper.Phytogen;

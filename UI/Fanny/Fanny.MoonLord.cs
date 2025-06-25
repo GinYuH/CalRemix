@@ -22,7 +22,7 @@ namespace CalRemix.UI
                 .ChainAfter(delay: 4f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
 
-            HelperMessage.New("ML3", "A priority you should take care of immediately is harvesting Unholy Essence from some new, fearsome creatures that have appeared in the Underworld and Hallow. You can then use the essence to make the Rune of Kos and summon the Sentinels of the Devourer.",
+            HelperMessage.New("ML3", "A priority you should take care of immediately is harvesting Unholy Essence from some new, fearsome creatures that have appeared in the Underworld and Hallow. You can then use the essence to make the Rune of Kos and summon the Rune of Kos bosses.",
                 "FannyIdle", HelperMessage.AlwaysShow, 6).AddItemDisplay(ModContent.ItemType<RuneofKos>()).ChainAfter(startMessage);
 
 
@@ -51,7 +51,7 @@ namespace CalRemix.UI
                 "FannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true).ChainAfter();
 
             HelperMessage ml11 = HelperMessage.New("ML11", "Oh my god shut up already, how much can one boss unlock!?",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
+                "EvilFannyPissed", HelperMessage.AlwaysShow, 6, cantBeClickedOff: true)
                 .ChainAfter(ml10, delay: 2f, startTimerOnMessageSpoken: true).SpokenByEvilFanny().AddStartEvent(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked = true);
 
             HelperMessage ml12 = HelperMessage.New("ML12", "HELLO !!!",
@@ -59,7 +59,7 @@ namespace CalRemix.UI
                 .ChainAfter(ml11, delay: 3f, startTimerOnMessageSpoken: true).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage ml13 = HelperMessage.New("ML13", "I'm out.",
-                "EvilFannyIdle", HelperMessage.AlwaysShow, 4, cantBeClickedOff: true)
+                "EvilFannyDisgusted", HelperMessage.AlwaysShow, 4, cantBeClickedOff: true)
                 .ChainAfter(ml11).SpokenByEvilFanny();
 
             HelperMessage ml14 = HelperMessage.New("ML14", "Wait! Evil Fanny, come back! Don't worry friend, I'll make sure she comes back. Just give me a second to chat with her.",

@@ -1,39 +1,20 @@
-﻿using CalRemix.Core;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria.ID;
 using System;
-using Terraria;
-using Steamworks;
 using CalamityMod.Items.Accessories;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Items.Mounts;
-using System.Collections.Generic;
-using Terraria.GameContent;
-using CalamityMod.Buffs.Mounts;
-using CalRemix.UI;
 using CalRemix.Core.Retheme;
-using CalamityMod.Tiles.Abyss;
-using System;
-using CalRemix.Content.Tiles;
 using Terraria.DataStructures;
-using Terraria.ID;
-using System.Threading;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Graphics;
 using System.Reflection;
 using Terraria.UI.Chat;
-using CalRemix.Core.Retheme.Sneakers;
 
 namespace CalRemix.UI
 {
@@ -235,7 +216,7 @@ namespace CalRemix.UI
                             t.TileType = TileID.PlatinumCoinPile;
                             WorldGen.TileFrame(posX, posY);
 
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                                 NetMessage.SendTileSquare(-1, posX, posY);
                         }
                     }

@@ -31,7 +31,7 @@ public class dimusBEAM : BaseLaserbeamProjectile //I can't believe Jharim would 
     public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Weapons/dimusBEAMend").Value;
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Exodimus Beam");
+        // DisplayName.SetDefault("Exodimus Beam");
         Main.projFrames[Projectile.type] = 5;
         ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
     }

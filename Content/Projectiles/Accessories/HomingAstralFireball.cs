@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 	{
         public override void SetStaticDefaults() 
         {
-			DisplayName.SetDefault("Homing Astral Fireball");
+			// DisplayName.SetDefault("Homing Astral Fireball");
             Main.projFrames[Type] = 4;
         }
         public override void SetDefaults()

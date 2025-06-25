@@ -14,8 +14,8 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Mutagen");
-            Tooltip.SetDefault("Releases swarms of viruses while shooting spreads of blood cells\n" + $"'A glimpse into a [c/4f1e49:Dark] and [c/d1ed98:Twisted] alternate reality...'");
+            // DisplayName.SetDefault("Mutagen");
+            // Tooltip.SetDefault("Releases swarms of viruses while shooting spreads of blood cells\n" + $"'A glimpse into a [c/4f1e49:Dark] and [c/d1ed98:Twisted] alternate reality...'");
 
         }
         public override void SetDefaults()

@@ -32,7 +32,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
     [AutoloadBossHead]
     public class WulfwyrmHead : ModNPC
     {
-
+        public static List<int> SummonItems = [];
 
         public enum WulfrumExcavatorAIState
         {
@@ -118,7 +118,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wulfrum Excavator");
+            // DisplayName.SetDefault("Wulfrum Excavator");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Position = new Vector2(0, 34),
@@ -126,6 +126,13 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 6;
+            
+            SummonItems.Add(ModContent.ItemType<EnergyCore>());
+
+            if (CalRemixAddon.Fables?.TryFind<ModItem>("EnergyCore", out var fablesCore) ?? false)
+            {
+                SummonItems.Add(fablesCore.Type);
+            }
         }
 
         public override void SetDefaults()
@@ -251,7 +258,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public void SpawnSegments()
         {
-            //if (Main.netMode != NetmodeID.MultiplayerClient)
+            // if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int previousSegment = NPC.whoAmI;
                 for (int i = 0; i < SegmentCount; i++)
@@ -269,9 +276,8 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                     Main.npc[nextSegmentIndex].ai[2] = NPC.whoAmI;
                     Main.npc[nextSegmentIndex].ai[1] = previousSegment;
                     Main.npc[previousSegment].ai[0] = nextSegmentIndex;
-
-                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, nextSegmentIndex, 0f, 0f, 0f, 0);
-                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, previousSegment, 0f, 0f, 0f, 0);
+                    Main.npc[nextSegmentIndex].netUpdate = true;
+                    Main.npc[previousSegment].netUpdate = true;
 
                     previousSegment = nextSegmentIndex;
                 }
@@ -775,34 +781,32 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
             if (Main.expertMode)
             {
-                if (NPC.CountNPCS(ModContent.NPCType<WulfrumGyrator>()) + NPC.CountNPCS(ModContent.NPCType<WulfrumDrone>()) < 4 )
-                for (int i = 0; i < summonCount; i++) // Randomly chooses a wulfrum droid to spawn.
-                {
-                    int type = ModContent.NPCType<WulfrumGyrator>();
-                    int choice = Main.rand.Next(10);
-                    switch (choice)
+                if (NPC.CountNPCS(ModContent.NPCType<WulfrumGyrator>()) + NPC.CountNPCS(ModContent.NPCType<WulfrumDrone>()) < 4)
+                    for (int i = 0; i < summonCount; i++) // Randomly chooses a wulfrum droid to spawn.
                     {
-                        case 0 or 1:
-                            type = ModContent.NPCType<WulfrumDrone>();
-                            break;
-                        case 2 or 3 or 4 or 5 or 6 or 7 or 8: // Gyrator is weighted to spawn more than the rest due to the original wiki page.
-                            type = ModContent.NPCType<WulfrumGyrator>();
-                            break;
-                        case 9: // 1/10 since 0 counts.
-                            type = ModContent.NPCType<WulfrumAmplifier>();
-                            break;
-                        default:
-                            type = ModContent.NPCType<WulfrumGyrator>();
-                            break;
-                        }
-                        int w = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
-                        if (w.WithinBounds(Main.maxNPCs))
+                        int type = ModContent.NPCType<WulfrumGyrator>();
+                        int choice = Main.rand.Next(10);
+                        switch (choice)
                         {
-                            Main.npc[w].SpawnedFromStatue = true;
-                            Main.npc[w].dontCountMe = true;
+                            case 0 or 1:
+                                type = ModContent.NPCType<WulfrumDrone>();
+                                break;
+                            case 2 or 3 or 4 or 5 or 6 or 7 or 8: // Gyrator is weighted to spawn more than the rest due to the original wiki page.
+                                type = ModContent.NPCType<WulfrumGyrator>();
+                                break;
+                            case 9: // 1/10 since 0 counts.
+                                type = ModContent.NPCType<WulfrumAmplifier>();
+                                break;
+                            default:
+                                type = ModContent.NPCType<WulfrumGyrator>();
+                                break;
                         }
+                        CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), NPC.Center, type, NPC.whoAmI, npcTasks: (NPC w) =>
+                        {
+                            w.SpawnedFromStatue = true;
+                            w.dontCountMe = true;
+                        });
                     }
-
                 // Cycle through attacks based on current HP.
                 switch (AIState)
                 {

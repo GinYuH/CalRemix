@@ -10,14 +10,14 @@ namespace CalRemix.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-            DisplayName.SetDefault("Mirage Jelly");
-            Tooltip.SetDefault("Lowers the cost of stealth strikes by 5%");
+            // DisplayName.SetDefault("Mirage Jelly");
+            // Tooltip.SetDefault("Lowers the cost of stealth strikes by 5%");
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
-            Item.height = 22;
+            Item.height = 20;
             Item.value = CalamityGlobalItem.RarityLimeBuyPrice;
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;
