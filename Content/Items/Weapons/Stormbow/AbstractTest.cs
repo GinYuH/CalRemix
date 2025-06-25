@@ -388,19 +388,27 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             if (boxBottomSize.X % 2 == 0)
                 boxBottomSize.X--; // we always want to have a perfect center for the bottom beams
             boxBottomSize.Y = boxDefaultSize.Y + Main.rand.Next(0, 1);
-            int boxTopSizeDifference = Main.rand.Next(0, 2); // we need to save this to fix a bug later
+            int boxTopSizeDifference = Main.rand.Next(0, 3); // we need to save this to fix a bug later
             Point boxTopSize = new Point();
-            boxTopSize.X = boxBottomSize.X - boxTopSizeDifference;
+            boxTopSize.X = boxBottomSize.X + boxTopSizeDifference;
             boxTopSize.Y = boxDefaultSize.Y;
 
             // always overhang a little on one side
             bool left = Main.rand.NextBool();
+            int leftRightMultiplier = left == true ? 1 : -1;
             Point boxTopOffset;
-            boxTopOffset.X = Main.rand.Next(4, 7);
+            boxTopOffset.X = Main.rand.Next(3, 6);
             boxTopOffset.X = left == true ? boxTopOffset.X * -1 : boxTopOffset.X;
             boxTopOffset.X += left == false ? boxTopSizeDifference : 0; // compensate for aforementioned bug
             boxTopOffset.Y = -boxTopSize.Y + 1;
             int boxTopCutoff = Main.rand.NextBool() == false ? -2 : -1;
+
+            // fix for top boxes larger than bottom box getting an elongated right overhang
+            int boxTopNaturalRightOverhang = boxTopSize.X - boxBottomSize.X;
+            if (boxTopNaturalRightOverhang < 0)
+                boxTopNaturalRightOverhang = 0;
+            if (!left)
+                boxTopOffset.X += boxTopNaturalRightOverhang * leftRightMultiplier;
 
             // making a ton of things for orienting stuff later
             Tile tile;
@@ -408,7 +416,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             point.Y -= boxBottomSize.Y - 1;
             Point bottomLeft = point;
             bottomLeft.Y += boxBottomSize.Y - 1;
-            int leftRightMultiplier = left == true ? 1 : -1;
 
             // getting the bottom left and top right of the area for when the structure bounding is set
             Point structureBoxBottomLeft;
@@ -542,7 +549,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 tile.TileFrameX = 26 * 18;
             else
                 tile.TileFrameX = 25 * 18;
-
 
 
 
