@@ -293,9 +293,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     {
                         Point currentTilePointer = new Point(x - 1, y);
                         Tile tile = new Tile();
-                        while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
+                        while (!Main.tile[currentTilePointer].HasTile)
                         {
-                            tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                            tile = Main.tile[currentTilePointer];
                             tile.HasTile = true;
                             tile.TileType = TileID.Platforms;
                             tile.BlockType = BlockType.SlopeDownRight;
@@ -310,9 +310,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     {
                         Point currentTilePointer = new Point(x + 1, y);
                         Tile tile = new Tile();
-                        while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
+                        while (!Main.tile[currentTilePointer].HasTile)
                         {
-                            tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                            tile = Main.tile[currentTilePointer];
                             tile.HasTile = true;
                             tile.TileType = TileID.Platforms;
                             tile.BlockType = BlockType.SlopeDownLeft;
@@ -412,6 +412,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             // making a ton of things for orienting stuff later
             Tile tile;
+            Point currentTilePointer;
             Point point = origin;
             point.Y -= boxBottomSize.Y - 1;
             Point bottomLeft = point;
@@ -470,6 +471,21 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 new Actions.SetFrames(true)
             ));
 
+            // place walls part 1
+            // just doing the bottom box rn
+            WorldUtils.Gen(point, new ModShapes.All(cabinShapeDataBottom), Actions.Chain(
+                new Modifiers.IsEmpty(),
+                new Modifiers.Dither(0.3),
+                new Actions.PlaceWall(WallID.Planked),
+                new Actions.SetFrames(true)
+            ));
+            for (int i = 0; i < boxBottomSize.X - 2; i++)
+            {
+                tile = Main.tile[bottomLeft.X + 1 + i, boxTopFloor[0].Y + 1];
+                tile.WallType = WallID.Wood;
+                SquareWallFrame(bottomLeft.X + 1 + i, boxTopFloor[0].Y + 1);
+            }
+
             // place blocks off the left and rightmost parts of the bottom box floor
             Point[] tilesToReplace =
             {
@@ -520,15 +536,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 tile.TileType = TileID.Platforms;
                 tile.TileFrameY = 0;
                 SquareTileFrame(boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1);
+
+                tile.WallType = WallID.Wood;
+                SquareWallFrame(boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1);
             }
             // just kidding! kill that guy
             tile = Main.tile[boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1];
             tile.HasTile = false;
             // ccr code cameo!
-            Point currentTilePointer = new Point(boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1);
-            while (!Main.tile[currentTilePointer.X, currentTilePointer.Y].HasTile)
+            currentTilePointer = new Point(boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1);
+            while (!Main.tile[currentTilePointer].HasTile)
             {
-                tile = Main.tile[currentTilePointer.X, currentTilePointer.Y];
+                tile = Main.tile[currentTilePointer];
                 tile.HasTile = true;
                 tile.TileType = TileID.Platforms;
                 if (left)
@@ -550,8 +569,98 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             else
                 tile.TileFrameX = 25 * 18;
 
+            // place platforms under our overhang, save positions for decorating later
+            int bridgeLength = 8 + Main.rand.Next(0, 5);
+            int bridgeClosest = left == true ? bottomLeft.X - 2 : bottomLeft.X + boxBottomSize.X + 1;
+            List<Point> bridge = new List<Point>();
+            for (int i = 0; i < bridgeLength; i++)
+            {
+                bridge.Add(new Point(bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y));
+                tile = Main.tile[bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y];
+                tile.HasTile = true;
+                tile.TileType = TileID.Platforms;
+                tile.TileFrameY = 0;
+                SquareTileFrame(bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y);
+            }
 
+            // place walls part 2
+            // top box stuff
+            for (int i = 0; i < boxTopSize.X - 2; i++)
+            {
+                tile = Main.tile[bottomLeft.X + boxTopOffset.X + 1 + i, boxTopFloor[0].Y - 1];
+                tile.WallType = WallID.Planked;
+                SquareWallFrame(bottomLeft.X + boxTopOffset.X + 1 + i, boxTopFloor[0].Y - 1);
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                tile = Main.tile[bottomLeft.X + boxTopOffset.X, boxTopFloor[0].Y - i - (boxTopCutoff * -1) - 1];
+                tile.WallType = WallID.WoodenFence;
+                SquareWallFrame(bottomLeft.X + boxTopOffset.X, boxTopFloor[0].Y - i - (boxTopCutoff * -1) - 1);
+                tile = Main.tile[bottomLeft.X + boxTopOffset.X + boxTopSize.X - 1, boxTopFloor[0].Y - i - (boxTopCutoff * -1) - 1];
+                tile.WallType = WallID.WoodenFence;
+                SquareWallFrame(bottomLeft.X + boxTopOffset.X + boxTopSize.X - 1, boxTopFloor[0].Y - i - (boxTopCutoff * -1) - 1);
+            }
+            //TODO: do wooden walls. unsure how? ask around? kill people? see what cobweb does?
 
+            // place beams
+            List<Point> beamPoints = new List<Point>();
+            beamPoints.Add(new Point(bottomLeft.X + 1, bottomLeft.Y + 1));
+            beamPoints.Add(new Point(bottomLeft.X + (boxBottomSize.X / 2), bottomLeft.Y + 1));
+            beamPoints.Add(new Point(bottomLeft.X + boxBottomSize.X - 2, bottomLeft.Y + 1));
+            foreach (Point block in beamPoints)
+            {
+                currentTilePointer = block;
+                while (!Main.tile[currentTilePointer].HasTile)
+                {
+                    tile = Main.tile[currentTilePointer];
+                    tile.HasTile = true;
+                    tile.TileType = TileID.WoodenBeam;
+                    SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
+                    currentTilePointer.Y++;
+                }
+            }
+            currentTilePointer = bridge.Last();
+            currentTilePointer.Y--;
+            tile = Main.tile[currentTilePointer];
+            while (!tile.HasTile || tile.TileType == TileID.Platforms)
+            {
+                tile.WallType = WallID.WoodenFence;
+                SquareWallFrame(currentTilePointer.X, currentTilePointer.Y);
+                currentTilePointer.Y++;
+                tile = Main.tile[currentTilePointer];
+            }
+
+            // place crates on platform
+            // but first, validation! since blocks are placed by the bottom left, we want to cull any points too close to the door
+            // remove furthest as well
+            for (int i = 0; i < bridge.Count(); i++)
+            {
+                tile = Main.tile[bridge[i].X + 1, bridge[i].Y];
+                if (tile.TileType == TileID.WoodBlock || !tile.HasTile)
+                    bridge.Remove(bridge[i]);
+                tile = Main.tile[bridge[i].X - 1, bridge[i].Y];
+                if (tile.TileType == TileID.WoodBlock || !tile.HasTile)
+                    bridge.Remove(bridge[i]);
+            }
+            int crateAmount = Main.rand.Next(0, 4);
+            crateAmount = 1;
+            Main.NewText(crateAmount);
+            int placeCrateAttempts = 0;
+            while (crateAmount > 0)
+            {
+                placeCrateAttempts++;
+                if (placeCrateAttempts > 100)
+                    break;
+                
+                Point randomPoint = bridge[Main.rand.Next(bridge.Count())];
+                randomPoint.Y--;
+                // if 3 place 3 crate stack
+                if (!Main.tile[randomPoint].HasTile && !Main.tile[randomPoint.X + 1, randomPoint.Y].HasTile)
+                {
+                    PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
+                    crateAmount--;
+                }
+            }
 
 
 
