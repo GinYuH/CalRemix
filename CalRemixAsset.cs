@@ -53,6 +53,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:ScreamingFaceSky"] = new ScreamingFaceSky();
                 Filters.Scene["CalRemix:ClownWorldSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ClownWorldSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:ClownWorldSky"] = new ClownWorldSky();
+                Filters.Scene["CalRemix:EaterSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:EaterSky"] = new EaterSky();
             }
 
             AssetRepository remixAsset = Mod.Assets;

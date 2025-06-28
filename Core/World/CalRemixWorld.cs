@@ -87,6 +87,7 @@ namespace CalRemix.Core.World
         public static int roachDuration = 0;
         public static int vigorDialogueLevel = 0;
         public static bool loadedRecipeInjections = false;
+        public static int eaterTimer = 0;
 
         public static bool guideHasExisted = false;
         public static bool deusDeadInSnow = false;
@@ -768,6 +769,17 @@ namespace CalRemix.Core.World
                     Main.townNPCCanSpawn[NPCID.Princess] = true;
                 }
             }
+            if (Main.LocalPlayer.ZoneCorrupt)
+            {
+                if (eaterTimer <= 0)
+                {
+                    if (Main.rand.NextBool(CalamityUtils.SecondsToFrames(600)))
+                    {
+                        eaterTimer = CalamityUtils.SecondsToFrames(22);
+                    }
+                }
+            }
+            eaterTimer--;
             ExcavatorSummon();
         }
 
