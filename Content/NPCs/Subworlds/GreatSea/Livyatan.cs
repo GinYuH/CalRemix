@@ -29,6 +29,7 @@ using CalRemix.Content.Items.Placeables.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Core.World;
 using CalamityMod.Items.Potions;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -696,7 +697,9 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            base.ModifyNPCLoot(npcLoot);
+            npcLoot.Add(ModContent.ItemType<FrilledShark>(), 3);
+            npcLoot.Add(ModContent.ItemType<Laevateinn>(), 3);
+            npcLoot.Add(ModContent.ItemType<RemoraDart>(), 3);
         }
 
         public override void OnKill()

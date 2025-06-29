@@ -2679,6 +2679,15 @@ Weapons: {
 				Stealth strikes throw a larger pizza that summons even more rolling pizzas
 				'''
 		}
+
+		RemoraDart: {
+			DisplayName: Remora Dart
+			Tooltip: 
+				'''
+				Throws fast remoras which suck on enemies. 
+				Stealth strikes throw 10 homing remoras.
+				'''
+		}
 	}
 }
 
@@ -4627,5 +4636,23 @@ KetchupSqueezie: {
 		Propels the user away from the cursor when used
 		Passively grants the Exquisitely Stuffed buff while being held
 		'EZPZ Ketchup Squeezie'
+		'''
+}
+
+FrilledShark: {
+	DisplayName: Frilled Shark
+	Tooltip:
+		'''
+		Vomits up spreads of pellets which quickly slow down.
+		Deals more damage the lower in the world the user is.
+		'''
+}
+
+Laevateinn: {
+	DisplayName: Laevateinn
+	Tooltip:
+		'''
+		Creates danmaku projectiles while used
+		Direct hits with the weapon cause a small pattern of danmaku to erupt outwards
 		'''
 }
