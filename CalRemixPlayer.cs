@@ -265,6 +265,7 @@ namespace CalRemix
         public bool fractalCrawler;
         public bool exolotl;
         public bool cSlime3;
+        public bool cultacean;
 
         // Pets
         public bool nothing;
@@ -1377,6 +1378,7 @@ namespace CalRemix
             calamityRing = false;
             fungiStone = false;
             fungiStone2 = false;
+            cultacean = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {

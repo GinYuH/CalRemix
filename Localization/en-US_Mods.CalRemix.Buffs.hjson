@@ -437,3 +437,8 @@ DepthGliderBuff: {
 	DisplayName: Depth Glider
 	Description: Time to krak some kens apart
 }
+
+CultaceanBuff: {
+	DisplayName: Cultacean
+	Description: Who are these guys???
+}

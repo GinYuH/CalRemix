@@ -30,6 +30,8 @@ using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Core.World;
 using CalamityMod.Items.Potions;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Projectiles.Weapons;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -697,9 +699,15 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<FrilledShark>(), 3);
-            npcLoot.Add(ModContent.ItemType<Laevateinn>(), 3);
-            npcLoot.Add(ModContent.ItemType<RemoraDart>(), 3);
+            LeadingConditionRule mainRule = npcLoot.DefineNormalOnlyDropSet();
+            int[] itemIDs =
+            {
+                ModContent.ItemType<LivyatanadoStaff>(),
+                ModContent.ItemType<RemoraDart>(),
+                ModContent.ItemType<Laevateinn>(),
+                ModContent.ItemType<XiphactinusGun>(),
+                ModContent.ItemType<FrilledShark>()
+            };
         }
 
         public override void OnKill()

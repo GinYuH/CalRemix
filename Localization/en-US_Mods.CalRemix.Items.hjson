@@ -2682,7 +2682,7 @@ Weapons: {
 
 		RemoraDart: {
 			DisplayName: Remora Dart
-			Tooltip: 
+			Tooltip:
 				'''
 				Throws fast remoras which suck on enemies. 
 				Stealth strikes throw 10 homing remoras.
@@ -4655,4 +4655,14 @@ Laevateinn: {
 		Creates danmaku projectiles while used
 		Direct hits with the weapon cause a small pattern of danmaku to erupt outwards
 		'''
+}
+
+LivyatanadoStaff: {
+	DisplayName: Livyatanado Staff
+	Tooltip: "Summons Cultaceans which fire Livyatanadoes at enemies"
+}
+
+XiphactinusGun: {
+	DisplayName: Xiphactinus Gun
+	Tooltip: "Fires a xiphactinus head that latches onto enemies"
 }

@@ -625,8 +625,8 @@ namespace CalRemix
                 }
 
                 center += start.DirectionTo(end) * increment;
-                Color finalColor = (color == default ? Lighting.GetColor((int)center.X / 16, (int)(center.Y / 16f)) : color);
-                Main.spriteBatch.Draw(texture, center, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation + angleAdditive, texture.Size() / 2f, 1f, SpriteEffects.None, 0f);
+                Color finalColor = (color == new Color(0, 0, 0, 0) ? Lighting.GetColor((int)((center.X + Main.screenPosition.X) / 16), (int)((center.Y + Main.screenPosition.Y) / 16f)) : color);
+                Main.spriteBatch.Draw(texture, center, new Rectangle(0, 0, texture.Width, texture.Height), finalColor, rotation + angleAdditive, texture.Size() / 2f, 1f, SpriteEffects.None, 0f);
             }
         }
     }
