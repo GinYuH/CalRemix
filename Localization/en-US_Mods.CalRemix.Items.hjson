@@ -4676,3 +4676,8 @@ LivyatanTrophy: {
 	DisplayName: Livyatan Trophy
 	Tooltip: ""
 }
+
+LightningStaff: {
+	DisplayName: Lightning Staff
+	Tooltip: "The name says it all really"
+}
