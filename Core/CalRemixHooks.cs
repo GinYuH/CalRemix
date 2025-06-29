@@ -40,6 +40,10 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Weapons;
 using Terraria.GameContent.UI.ResourceSets;
 using Microsoft.CodeAnalysis.Operations;
+using System.Diagnostics;
+using Terraria.GameContent.Liquid;
+using Terraria.Graphics.Light;
+using SubworldLibrary;
 
 namespace CalRemix.Core
 {
@@ -92,6 +96,7 @@ namespace CalRemix.Core
             On_NPC.NewNPC += KillHiveMind;
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
             On_Main.DrawInfoAccs += DisableInfoDuringCutscene;
+            On_Main.DrawBlack += FixSubworldDrawBlack;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
@@ -108,6 +113,100 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public static void FixSubworldDrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force = false)
+        {
+            if (SubworldSystem.AnyActive() && SubworldSystem.Current is IFixDrawBlack)
+            {
+                if (Main.shimmerAlpha == 1f)
+                {
+                    return;
+                }
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                Vector2 drawFluff = (Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange));
+                int tileLight = (Main.tileColor.R + Main.tileColor.G + Main.tileColor.B) / 3;
+                float brightnessThreshold = (float)((double)tileLight * 0.4) / 255f;
+                if (Lighting.Mode == LightMode.Retro)
+                {
+                    brightnessThreshold = (float)(Main.tileColor.R - 55) / 255f;
+                    if (brightnessThreshold < 0f)
+                    {
+                        brightnessThreshold = 0f;
+                    }
+                }
+                else if (Lighting.Mode == LightMode.Trippy)
+                {
+                    brightnessThreshold = (float)(tileLight - 55) / 255f;
+                    if (brightnessThreshold < 0f)
+                    {
+                        brightnessThreshold = 0f;
+                    }
+                }
+                Point screenOverdrawOffset = Main.GetScreenOverdrawOffset();
+                Point point = new Point(-Main.offScreenRange / 16 + screenOverdrawOffset.X, -Main.offScreenRange / 16 + screenOverdrawOffset.Y);
+                int screenMinX = (int)((Main.screenPosition.X - drawFluff.X) / 16f - 1f) + point.X;
+                int screenMaxY = (int)((Main.screenPosition.X + (float)Main.screenWidth + drawFluff.X) / 16f) + 2 - point.X;
+                int yMin = (int)((Main.screenPosition.Y - drawFluff.Y) / 16f - 1f) + point.Y;
+                int yMax = (int)((Main.screenPosition.Y + (float)Main.screenHeight + drawFluff.Y) / 16f) + 5 - point.Y;
+                if (screenMinX < 0)
+                {
+                    screenMinX = point.X;
+                }
+                if (screenMaxY > Main.maxTilesX)
+                {
+                    screenMaxY = Main.maxTilesX - point.X;
+                }
+                if (yMin < 0)
+                {
+                    yMin = point.Y;
+                }
+                if (yMax > Main.maxTilesY)
+                {
+                    yMax = Main.maxTilesY - point.Y;
+                }
+                if (!force)
+                {
+                    yMax = Math.Min(yMax, (int)Main.worldSurface + 1);
+                    yMin = Math.Min(yMin, (int)Main.worldSurface + 1);
+                }
+                bool showInvisibleWalls = Main.ShouldShowInvisibleWalls();
+                for (int i = yMin; i < yMax; i++)
+                {
+                    for (int j = screenMinX; j < screenMaxY; j++)
+                    {
+                        int current = j;
+                        for (; j < screenMaxY; j++)
+                        {
+                            if (!WorldGen.InWorld(j, i))
+                            {
+                                return;
+                            }
+                            Tile tile = Main.tile[j, i];
+                            float brightness = Lighting.Brightness(j, i);
+                            brightness = (float)Math.Floor(brightness * 255f) / 255f;
+                            byte liquidAmount = tile.LiquidAmount;
+                            bool notBrightEnough = brightness <= brightnessThreshold && (WorldGen.SolidTile(tile) || (liquidAmount >= 200 && brightness == 0f));
+                            bool opaqueTile = tile.HasTile && Main.tileBlockLight[tile.TileType] && (!tile.IsTileInvisible || showInvisibleWalls);
+                            bool opaqueWall = !WallID.Sets.Transparent[tile.WallType] && (!tile.IsWallInvisible || showInvisibleWalls);
+                            if (!notBrightEnough || (!opaqueWall && !opaqueTile) || (!Main.drawToScreen && LiquidRenderer.Instance.HasFullWater(j, i) && tile.WallType == 0 && !tile.IsHalfBlock && !((double)i <= Main.worldSurface)))
+                            {
+                                break;
+                            }
+                        }
+                        if (j - current > 0)
+                        {
+                            Main.spriteBatch.Draw(TextureAssets.BlackTile.Value, new Vector2(current << 4, i << 4) - Main.screenPosition + drawFluff, new Rectangle(0, 0, j - current << 4, 16), Color.Black);
+                        }
+                    }
+                }
+                TimeLogger.DrawTime(5, stopwatch.Elapsed.TotalMilliseconds);
+            }
+            else
+            {
+                orig(self, force);
+            }
         }
 
         public static void NewSpawnNPC(ILContext il)

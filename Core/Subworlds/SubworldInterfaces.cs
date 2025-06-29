@@ -32,4 +32,9 @@ namespace CalRemix.Core.Subworlds
         /// </summary>
         public bool OverrideVanilla {  get; }
     }
+
+    public interface IFixDrawBlack
+    {
+
+    }
 }

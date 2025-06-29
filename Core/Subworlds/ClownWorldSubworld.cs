@@ -15,7 +15,7 @@ using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class ClownWorldSubworld : Subworld
+    public class ClownWorldSubworld : Subworld, IFixDrawBlack
     {
         public override int Height => 2000;
         public override int Width => 2000;
