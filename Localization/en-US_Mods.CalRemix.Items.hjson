@@ -4659,10 +4659,20 @@ Laevateinn: {
 
 LivyatanadoStaff: {
 	DisplayName: Livyatanado Staff
-	Tooltip: "Summons Cultaceans which fire Livyatanadoes at enemies"
+	Tooltip: Summons Cultaceans which fire Livyatanadoes at enemies
 }
 
 XiphactinusGun: {
 	DisplayName: Xiphactinus Gun
-	Tooltip: "Fires a xiphactinus head that latches onto enemies"
+	Tooltip: Fires a xiphactinus head that latches onto enemies
+}
+
+LivyatanBag: {
+	DisplayName: Livyatan Bag
+	Tooltip: ""
+}
+
+LivyatanTrophy: {
+	DisplayName: Livyatan Trophy
+	Tooltip: ""
 }

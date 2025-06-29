@@ -32,6 +32,8 @@ using CalamityMod.Items.Potions;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria.GameContent.ItemDropRules;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Bags;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -708,6 +710,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 ModContent.ItemType<XiphactinusGun>(),
                 ModContent.ItemType<FrilledShark>()
             };
+            npcLoot.Add(ModContent.ItemType<LivyatanTrophy>(), 10);
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<LivyatanBag>());
         }
 
         public override void OnKill()

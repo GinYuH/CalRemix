@@ -232,3 +232,11 @@ public class FlinstoneGangsterTrophy : RemixTrophy
         Item.createTile = TileType<FlinstoneGangsterTrophyPlaced>();
     }
 }
+public class LivyatanTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<LivyatanTrophyPlaced>();
+    }
+}

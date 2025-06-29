@@ -133,3 +133,4 @@ public class FlinstoneGangsterTrophyPlaced : PlacedRemixTrophy
         TileObjectData.addTile(Type);
     }
 }
+public class LivyatanTrophyPlaced : PlacedRemixTrophy;
