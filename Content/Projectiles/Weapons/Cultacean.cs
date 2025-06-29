@@ -62,7 +62,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Projectile.localAI[1]++;
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.Center = Vector2.Lerp(Projectile.Center, targ.Center + targ.direction * Vector2.UnitX.RotatedBy(Projectile.whoAmI % 4 + MathF.Sin(Projectile.localAI[1] * 0.1f + Projectile.whoAmI) * 0.1f) * 400, 0.1f);
+                    Projectile.Center = Vector2.Lerp(Projectile.Center, targ.Center - Vector2.UnitX.RotatedBy(Projectile.whoAmI % 4 + MathF.Sin(Projectile.localAI[1] * 0.1f + Projectile.whoAmI) * 0.1f) * 400, 0.1f);
                     if (Projectile.localAI[1] % 20 == 0)
                     {
                         SoundEngine.PlaySound(BetterSoundID.ItemCultistUnused, Projectile.Center);
