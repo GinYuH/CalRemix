@@ -4614,3 +4614,18 @@ MourningWoodBag: {
 	DisplayName: Treasure Bag (Mourning Wood)
 	Tooltip: ""
 }
+
+KrakenTooth: {
+	DisplayName: Kraken Tooth
+	Tooltip: "'It's got cavities'"
+}
+
+KetchupSqueezie: {
+	DisplayName: Ketchup Squeezie
+	Tooltip:
+		'''
+		Propels the user away from the cursor when used
+		Passively grants the Exquisitely Stuffed buff while being held
+		'EZPZ Ketchup Squeezie'
+		'''
+}

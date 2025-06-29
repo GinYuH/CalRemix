@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using Terraria.Audio;
 using Terraria.GameContent;
 using System;
+using CalRemix.Content.Items.Tools;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -116,6 +117,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ModContent.ItemType<KetchupSqueezie>(), 22);
             npcLoot.Add(ItemID.Fries, 1);
         }
     }

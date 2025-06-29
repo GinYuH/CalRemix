@@ -2127,6 +2127,12 @@ namespace CalRemix
                 if (player.ownedProjectileCounts[ProjectileType<FiberBabyHoldout>()] < 1)
                     Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<FiberBabyHoldout>(), item.damage, 0, player.whoAmI);
             }
+            if (Held(player, ItemType<KetchupSqueezie>()))
+            {
+                Item item = (h.type == ItemType<KetchupSqueezie>()) ? h : m;
+                if (player.ownedProjectileCounts[ProjectileType<KetchupSqueezieProj>()] < 1)
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<KetchupSqueezieProj>(), 0, 0, player.whoAmI);
+            }
             if (Held(player, ItemType<TheSimpstring>()))
             {
                 Item item = (h.type == ItemType<TheSimpstring>()) ? h : m;
