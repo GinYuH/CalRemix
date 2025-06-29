@@ -165,10 +165,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             // add funny noise to arrow shoot amount
             int arrowAmountNoisy = arrowAmount;
-            if (disableArrowRainNoise && Main.rand.NextBool(3))
-            {
+            if (!disableArrowRainNoise && Main.rand.NextBool(3))
                 arrowAmountNoisy++;
-            }
 
             ShootArrowsLikeStormbow(player, source, arrowAmountNoisy, projsToShoot);
 
