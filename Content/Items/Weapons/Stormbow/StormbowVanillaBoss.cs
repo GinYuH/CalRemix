@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Projectiles.Rogue;
+using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -11,6 +12,22 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 {
     #region Pre-HM
     // queen bee
+    public class TheQueensKnees : StormbowAbstract
+    {
+        public override int damage => 10;
+
+        public override int crit => 12;
+
+        public override int useTime => 22;
+
+        public override SoundStyle useSound => SoundID.Zombie125;
+
+        public override List<int> projsToShoot => [ProjectileID.Bee];
+
+        public override int arrowAmount => 22;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+    }
     // deerclops
     public class DeerdalusStormclops : StormbowAbstract
     {
@@ -104,10 +121,105 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         }
     }
     // plantera
+    public class AprilShowers : StormbowAbstract
+    {
+        public override int damage => 110;
+
+        public override int useTime => 40;
+
+        public override SoundStyle useSound => SoundID.Item17;
+
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<TbcProj>() };
+
+        public override int arrowAmount => 5;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.holdStyle = ItemHoldStyleID.HoldFront;
+        }
+    }
     // golem
+    public class LihzahrdianSunMask : StormbowAbstract
+    {
+        public override int damage => 107;
+
+        public override int useTime => 27;
+
+        public override SoundStyle useSound => SoundID.Item12;
+
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.BallofFire };
+
+        public override int arrowAmount => 1;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.useStyle = ItemUseStyleID.HoldUp;
+        }
+    }
     // empress of light
     // duke fishron
+    public class DukeFishrod : StormbowAbstract
+    {
+        public override int damage => 200;
+
+        public override int useTime => 30;
+
+        public override SoundStyle useSound => SoundID.Item39;
+
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.MiniSharkron };
+
+        public override int arrowAmount => 3;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+
+        public override void SetDefaults()
+        {
+        base.SetDefaults();
+        Item.useStyle = ItemUseStyleID.Swing;
+        }
+    }
+    // Martian Saucer
+    public class LastStand : StormbowAbstract
+    {
+        public override int useTime => 15;
+
+        public override int damage => 100;
+
+        public override SoundStyle useSound => SoundID.Item15;
+
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<UFOSmall>(), ModContent.ProjectileType<UFOLarge>() };
+
+        public override int arrowAmount => 1;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.useStyle = ItemUseStyleID.HoldUp;
+        }
+    }
+
     // moon lord 1
+    public class Moonfall : StormbowAbstract
+    {
+        public override int damage => 1000;
+
+        public override int useTime => 150;
+
+        public override SoundStyle useSound => SoundID.Item12;
+
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<FallingMoon>() };
+
+        public override int arrowAmount => 1;
+
+        public override OverallRarity overallRarity => OverallRarity.Green;
+    }
     // moon lord 2
     #endregion
 }

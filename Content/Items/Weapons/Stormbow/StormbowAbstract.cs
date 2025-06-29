@@ -30,6 +30,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public virtual SoundStyle useSound => SoundID.Item5;
         public virtual List<int> projsToShoot => new List<int>() { ProjectileID.WoodenArrowFriendly };
         public virtual int arrowAmount => 3;
+        public virtual bool disableArrowRainNoise => false;
         public enum OverallRarity
         {
             Gray = -1,
@@ -164,7 +165,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             // add funny noise to arrow shoot amount
             int arrowAmountNoisy = arrowAmount;
-            if (Main.rand.NextBool(3))
+            if (disableArrowRainNoise && Main.rand.NextBool(3))
             {
                 arrowAmountNoisy++;
             }

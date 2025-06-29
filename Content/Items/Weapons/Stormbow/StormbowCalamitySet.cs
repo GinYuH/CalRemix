@@ -2,9 +2,12 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.Projectiles.Magic;
+using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalRemix.Content.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +21,43 @@ using Terraria.ModLoader;
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
     #region Pre-HM
+    // wulfrum
+    public class WulfrumExcavator : StormbowAbstract
+    {
+        public override int damage => 3;
+        public override int useTime => 11;
+        public override SoundStyle useSound => SoundID.Item12;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<WulfrumFusionBolt>() };
+        public override int arrowAmount => 1;
+        public override OverallRarity overallRarity => OverallRarity.White;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<WulfrumMetalScrap>(30).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.WorkBenches).
+                Register();
+        }
+    }
+    // victide
+    public class OldtideCrawcaster : StormbowAbstract
+    {
+        public override int damage => 30;
+        public override int useTime => 80;
+        public override SoundStyle useSound => SoundID.Item36;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<FearlessCrabWarrior>() };
+        public override int arrowAmount => 8;
+        public override OverallRarity overallRarity => OverallRarity.White;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<SeaRemains>(25).
+                AddIngredient(ItemID.SharkFin, 5).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
     // sea prism
     public class SeaPrismStormbow : StormbowAbstract
     {
@@ -57,6 +97,16 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Register();
         }
     }
+    // war
+    public class Warmbow : StormbowAbstract
+    {
+        public override int damage => 12;
+        public override int useTime => 55;
+        public override SoundStyle useSound => SoundID.Item5;
+        public override List<int> projsToShoot => new List<int>() { (ProjectileID.SpikyBall) };
+        public override int arrowAmount => 4;
+        public override OverallRarity overallRarity => OverallRarity.White;
+    }
     // purified gel
     public class Sludgemonger : StormbowAbstract
     {
@@ -78,6 +128,16 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     }
     #endregion
     #region HM
+    //General
+    public class SnowStorme : StormbowAbstract
+    {
+        public override int damage => 72;
+        public override int useTime => 100;
+        public override SoundStyle useSound => SoundID.Item25;
+        public override List<int> projsToShoot => new List<int>() { (ProjectileID.SnowBallFriendly) };
+        public override int arrowAmount => 22;
+        public override OverallRarity overallRarity => OverallRarity.Purple;
+    }
     // elemental
     public class ElementalStormsurge : StormbowAbstract
     {

@@ -1,5 +1,6 @@
 ﻿using CalamityMod.Items.Materials;
 using CalamityMod.Projectiles.Rogue;
+using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -151,6 +152,23 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient<ExcaliburStormbow>().
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient(ItemID.ChlorophyteBar, 30).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
+    }
+    // forbidden fragment
+    public class Legendscribe : StormbowAbstract
+    {
+        public override int damage => 285;
+        public override int useTime => 100;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<SandstoneProjectile>() };
+        public override int arrowAmount => 1;
+        public override OverallRarity overallRarity => OverallRarity.Yellow;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.Cobweb, 15).
+                AddIngredient(ItemID.SandElementalBanner, 1).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }
