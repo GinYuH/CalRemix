@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using CalamityMod;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using System;
@@ -8,10 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
+using static CalRemix.Content.Items.Weapons.Stormbow.StructureHelpers;
 using static Terraria.WorldGen;
 using static tModPorter.ProgressUpdate;
 
@@ -54,8 +58,13 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //Tile tile = Main.tile[point.X, point.Y];
             //Main.NewText(tile.BlockType);
             //Main.NewText(tile.TileFrameX / 18);
+            Tile tile = Main.tile[point];
+            Main.NewText("1: " + Main.tileFrame[tile.TileType]);
+            Main.NewText("2: " + tile.TileFrameX);
 
-            PlaceOtherSpiritModThing(point);
+            SpearRack thj = new SpearRack();
+            thj.CheckAndPlaceTile(point);
+            //PlaceOtherSpiritModThing(point);
 
             /*int floorTile = TileID.VortexBrick;
             if (Main.tile[point.X, point.Y].TileType == (ushort)floorTile && !Main.tile[point.X - 1, point.Y].HasTile)
@@ -510,7 +519,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     tile.HasTile = false;
                     SquareTileFrame(boxBottomFloorLeftmost - 2, bottomLeft.Y - i);
                 }
-                PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+                if (left && !Main.rand.NextBool(3))
+                    PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
             }
             if (!left || Main.rand.NextBool())
             {
@@ -520,7 +530,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     tile.HasTile = false;
                     SquareTileFrame(boxBottomFloorRightmost + 2, bottomLeft.Y - i);
                 }
-                PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+                if (!left && !Main.rand.NextBool(3))
+                    PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
             }
 
             // place platform and stairs
@@ -632,19 +643,22 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             // place crates on platform
             // but first, validation! since blocks are placed by the bottom left, we want to cull any points too close to the door
-            // remove furthest as well
+            // if a crate was placed there, itd block the door! and thatd suck
+            // remove furthest as well bcuz it looks ugly when placed there
+            List<Point> bridgeValidated = new List<Point>();
             for (int i = 0; i < bridge.Count(); i++)
             {
                 tile = Main.tile[bridge[i].X + 1, bridge[i].Y];
                 if (tile.TileType == TileID.WoodBlock || !tile.HasTile)
-                    bridge.Remove(bridge[i]);
+                    continue;
+                    
                 tile = Main.tile[bridge[i].X - 1, bridge[i].Y];
                 if (tile.TileType == TileID.WoodBlock || !tile.HasTile)
-                    bridge.Remove(bridge[i]);
+                    continue;
+
+                bridgeValidated.Add(bridge[i]);
             }
-            int crateAmount = Main.rand.Next(0, 4);
-            crateAmount = 1;
-            Main.NewText(crateAmount);
+            int crateAmount = Main.rand.Next(0, 5);
             int placeCrateAttempts = 0;
             while (crateAmount > 0)
             {
@@ -652,17 +666,35 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 if (placeCrateAttempts > 100)
                     break;
                 
-                Point randomPoint = bridge[Main.rand.Next(bridge.Count())];
+                Point randomPoint = bridgeValidated[Main.rand.Next(bridgeValidated.Count())];
                 randomPoint.Y--;
-                // if 3 place 3 crate stack
-                if (!Main.tile[randomPoint].HasTile && !Main.tile[randomPoint.X + 1, randomPoint.Y].HasTile)
+                if (CheckIfTileCanBePlaced(randomPoint, 2, 2))
                 {
-                    PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
-                    crateAmount--;
+                    // can we place 3 crates? if so, do
+                    if (crateAmount >= 3 && placeCrateAttempts < 75)
+                    {
+                        Point crate2 = randomPoint;
+                        crate2.X += 2;
+                        Point crate3 = randomPoint;
+                        crate3.X += 1;
+                        crate3.Y -= 2;
+                        if (CheckIfTileCanBePlaced(crate2, 2, 2) && CheckIfTileCanBePlaced(crate3, 2, 2, checkFloor: false))
+                        {
+                            PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
+                            PlaceTile(crate2.X, crate2.Y, TileID.FishingCrate);
+                            PlaceObject(crate3.X, crate3.Y, TileID.FishingCrate); // this one is unusually stubborn
+                            crateAmount -= 3;
+                        }
+                    }
+                    else
+                    {
+                        PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
+                        crateAmount--;
+                    }
                 }
             }
 
-
+            // oh boy now heres the fun one
 
 
 
@@ -681,6 +713,52 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
         }
 
+        public class SpearRack : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 3;
+            public override int type => TileID.Painting3X3;
+            public override int style => 44;
+
+            public override void Place(Point bottomLeft)
+            {
+                Point origin = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        Tile tile = Main.tile[bottomLeft.X + x, bottomLeft.Y - y];
+                        tile.WallType = WallID.Planked;
+                        SquareWallFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                    }
+                }
+                PlaceObject(origin.X, origin.Y, type, style: style);
+            }
+        }
+
+        public class Crate : Ministructure
+        {
+            public override int width => 2;
+            public override int height => 2;
+            public override int type => TileID.FishingCrate;
+        }
+
+        public class TableWithCandle : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 3;
+            public override int type => TileID.Tables;
+            public override void Place(Point bottomLeft)
+            {
+                Point origin = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                PlaceObject(origin.X, origin.Y, TileID.Tables);
+
+                int offset = Main.rand.Next(0, 3);
+                PlaceObject(bottomLeft.X + offset, bottomLeft.Y - 2, TileID.Candles);
+                Tile tile = Main.tile[bottomLeft.X + offset, bottomLeft.Y - 2];
+                tile.TileFrameX = 18;
+            }
+        }
 
         public bool PlaceStupidSpiritModThing(Point origin, StructureMap structures)
         {
@@ -928,4 +1006,73 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             tile.WallType = WallID.Flower;
         }
     }
+
+    public static class StructureHelpers
+    {
+        public abstract class Ministructure : ModSystem
+        {
+            public virtual int width { get; init; }
+            public virtual int height { get; init; }
+            public virtual int type { get; init; }
+            public virtual int style => 0;
+
+            public virtual void Place(Point bottomLeft)
+            {
+                PlaceObject(bottomLeft.X, bottomLeft.Y, type, style: style);
+            }
+            public virtual bool Check(Point bottomLeft)
+            {
+                return CheckIfTileCanBePlaced(bottomLeft, width, height);
+            }
+            public virtual void CheckAndPlaceTile(Point bottomLeft)
+            {
+                if (Check(bottomLeft))
+                {
+                    Place(bottomLeft);
+                }
+            }
+            public Point GetBottomLeftOfTileAccountingForOrigin(Point bottomLeft)
+            {
+                Point origin = new Point(TileObjectData.GetTileData(type, style).Origin.X, TileObjectData.GetTileData(type, style).Origin.Y);
+                if (origin.X < 0)
+                    origin.X = 0;
+                if (origin.Y < 0)
+                    origin.Y = 0;
+                return new Point(bottomLeft.X + origin.X, bottomLeft.Y - origin.Y);
+            }
+        }
+
+        // the vanilla system is disgusting so i made my own
+        public static bool CheckIfTileCanBePlaced(Point bottomLeft, int width, int height, bool checkAir = true, bool checkFloor = true)
+        {
+            for (int i = 0; i <= width - 1; i++)
+            {
+                for (int ii = 0; ii <= height - 1; ii++)
+                {
+                    Point point = new Point(bottomLeft.X + i, bottomLeft.Y - ii);
+                    Tile tile = Main.tile[point];
+
+                    // check for any tiles in place of where we wanna place our thing
+                    if (checkAir && tile.HasTile)
+                        return false;
+                    // check if the floor can't have stuff placed on it
+                    if (checkFloor && ii == 0)
+                    {
+                        tile = Main.tile[point.X, point.Y + 1];
+                        if (tile == null || !tile.HasUnactuatedTile)
+                        {
+                            if (Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType])
+                                return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+    }
+
+    
+
+
 }
