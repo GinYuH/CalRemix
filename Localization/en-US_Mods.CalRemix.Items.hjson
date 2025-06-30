@@ -4693,80 +4693,89 @@ AmalgamatedRain: {
 
 AprilShowers: {
 	DisplayName: April Showers
-	Tooltip: "Summons angry trappers from the sky"
+	Tooltip: Summons angry trappers from the sky
 }
 
 BoilingSkies: {
 	DisplayName: Boiling Skies
-	Tooltip: "Shoots exploding fireballs from the sky"
+	Tooltip: Shoots exploding fireballs from the sky
 }
 
 ClamSlamSupremeSpecial: {
 	DisplayName: Clam Slam Supreme Special
-	Tooltip: "Causes heavy clams to fall from the sky which rebound on collision"
+	Tooltip: Causes heavy clams to fall from the sky which rebound on collision
 }
 
 DukeFishrod: {
 	DisplayName: Duke Fishrod
-	Tooltip: "Shoots sharkrons from the sky"
+	Tooltip: Shoots sharkrons from the sky
 }
 
 IcarusStormbow: {
 	DisplayName: Icarus Stormbow
-	Tooltip: "Shoots crystal fireballs from the sky"
+	Tooltip: Shoots crystal fireballs from the sky
 }
 
 LastStand: {
 	DisplayName: Last Stand
-	Tooltip: "Knocks UFOs out of the sky"
+	Tooltip: Knocks UFOs out of the sky
 }
 
 Legendscribe: {
 	DisplayName: Legendscribe
-	Tooltip: "Shoots giant chunks of sandstone from the sky"
+	Tooltip: Shoots giant chunks of sandstone from the sky
 }
 
 LihzahrdianSunMask: {
 	DisplayName: Lihzahrdian Sun Mask
-	Tooltip: "Shoots bouncy fireballs from the sky"
+	Tooltip: Shoots bouncy fireballs from the sky
 }
 
 Moonfall: {
 	DisplayName: Moonfall
-	Tooltip: "Makes the moon fall down"
+	Tooltip: Makes the moon fall down
 }
 
 Mutation: {
 	DisplayName: Mutation
-	Tooltip: "Shoots bouncy mushrooms from the sky"
+	Tooltip: Shoots bouncy mushrooms from the sky
 }
 
 OldtideCrawcaster: {
 	DisplayName: Oldtide Crawcaster
-	Tooltip: "Summons fearless crab warriors from the sky"
+	Tooltip: Summons fearless crab warriors from the sky
 }
 
 Scatteract: {
 	DisplayName: Scatteract
-	Tooltip: "Rains acid from the sky"
+	Tooltip: Rains acid from the sky
 }
 
 SnowStorme: {
 	DisplayName: Snow Storme
-	Tooltip: "Shake to ruffle up the snow of the world"
+	Tooltip: Shake to ruffle up the snow of the world
 }
 
 TheQueensKnees: {
 	DisplayName: The Queen's Knees
-	Tooltip: "Shoots a lot of bees from the sky"
+	Tooltip: Shoots a lot of bees from the sky
 }
 
 Warmbow: {
 	DisplayName: Warmbow
-	Tooltip: "Shoots spiky balls from the sky"
+	Tooltip: Shoots spiky balls from the sky
 }
 
 WulfrumExcavator: {
 	DisplayName: Wulfrum Excavator
-	Tooltip: "Shoots slowing wulfrum bolts from the sky"
+	Tooltip: Shoots slowing wulfrum bolts from the sky
+}
+
+Squidzooka: {
+	DisplayName: Squidzooka
+	Tooltip:
+		'''
+		Fires ink bolts which summon attack squids on collision
+		Attack squids deal summon damage
+		'''
 }

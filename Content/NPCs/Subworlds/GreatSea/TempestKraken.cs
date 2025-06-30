@@ -24,6 +24,8 @@ using Terraria.GameContent.Animations;
 using rail;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Weapons;
+using CalamityMod.Cooldowns;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -258,6 +260,14 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<KrakenTooth>());
+            npcLoot.Add(ModContent.ItemType<Squidzooka>(), 5);
+            npcLoot.Add(ModContent.ItemType<CalamityMod.Items.Accessories.InkBomb>(), 5);
+            npcLoot.Add(ItemID.BlackInk, 1, 3, 20);
         }
     }
 }
