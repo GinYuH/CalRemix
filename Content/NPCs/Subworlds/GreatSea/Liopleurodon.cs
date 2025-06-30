@@ -19,6 +19,8 @@ using CalamityMod.Particles;
 using Microsoft.CodeAnalysis.Host.Mef;
 using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Placeables.Subworlds.GreatSea;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -305,6 +307,14 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<Pliobrine>(), 2);
+            npcLoot.Add(ModContent.ItemType<Chert>(), 1, 100, 255);
+            npcLoot.Add(ModContent.ItemType<Darkstone>(), 1, 100, 255);
+            npcLoot.Add(ModContent.ItemType<Schist>(), 1, 100, 255);
         }
     }
 }

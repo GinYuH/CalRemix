@@ -1,4 +1,4 @@
-using CalamityMod.Rarities;
+﻿using CalamityMod.Rarities;
 using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
@@ -12,32 +12,26 @@ using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-    public class ProfanedNucleus: RogueWeapon
-	{
-		public override void SetStaticDefaults() 
-		{
-            Item.ResearchUnlockCount = 1;
-            // DisplayName.SetDefault("Profaned Nucleus");
-            // Tooltip.SetDefault("Throws out a molten chunk of profaned rock that explodes and splits into crystals\n"+"Stealth strikes leave behind lingering patches of magma"); 
-		}
-		public override void SetDefaults() 
-		{
+    public class Pliobrine : RogueWeapon
+    {
+        public override void SetDefaults()
+        {
             Item.width = 1;
-			Item.height = 1;
-			Item.rare = ModContent.RarityType<Turquoise>();
+            Item.height = 1;
+            Item.rare = ModContent.RarityType<Turquoise>();
             Item.value = CalamityGlobalItem.RarityTurquoiseBuyPrice;
-            Item.useTime = 14; 
-			Item.useAnimation = 14;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item1;
-			Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
-			Item.damage = 87;
-			Item.knockBack = 10f; 
-			Item.noMelee = true;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.autoReuse = true;
+            Item.UseSound = SoundID.Item1;
+            Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
+            Item.damage = 164;
+            Item.knockBack = 13f;
+            Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.shoot = ModContent.ProjectileType<ProfaneNucleus>();
-            Item.shootSpeed = 20;
+            Item.shoot = ModContent.ProjectileType<PliobrineProj>();
+            Item.shootSpeed = 16;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

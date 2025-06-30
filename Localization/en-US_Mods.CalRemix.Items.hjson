@@ -2688,6 +2688,15 @@ Weapons: {
 				Stealth strikes throw 10 homing remoras.
 				'''
 		}
+
+		Pliobrine: {
+			DisplayName: Pliobrine
+			Tooltip:
+				'''
+				Explodes into anti-gravity bubbles
+				Stealth strikes create more large bubbles which have random sizes
+				'''
+		}
 	}
 }
 
