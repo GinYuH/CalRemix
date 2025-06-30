@@ -266,6 +266,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         {
             npcLoot.Add(ModContent.ItemType<KrakenTooth>());
             npcLoot.Add(ModContent.ItemType<Squidzooka>(), 5);
+            npcLoot.Add(ModContent.ItemType<KrakenTentacle>(), 5);
             npcLoot.Add(ModContent.ItemType<CalamityMod.Items.Accessories.InkBomb>(), 5);
             npcLoot.Add(ItemID.BlackInk, 1, 3, 20);
         }

@@ -241,6 +241,7 @@ namespace CalRemix
         public int chainSawChargeCritMax = 30 * 15;
         public int chainSawChargeMax = 30 * 20;
         public int roxCooldown;
+        public int krakenInvince = 0;
 
         // Tools
         public bool phd;
@@ -556,6 +557,10 @@ namespace CalRemix
 
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
         {
+            if (krakenInvince > 0)
+            {
+                modifiers.SourceDamage *= 0f;
+            }
             if (eclipseaura > 0)
             {
 				modifiers.SourceDamage *= 0f;
@@ -679,6 +684,9 @@ namespace CalRemix
 
             if (roxCooldown > 0)
                 roxCooldown--;
+
+            if (krakenInvince > 0)
+                krakenInvince--;
 
             if (VerbotenMode >= 5)
 				VerbotenMode = 1;

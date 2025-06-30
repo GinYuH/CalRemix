@@ -4779,3 +4779,14 @@ Squidzooka: {
 		Attack squids deal summon damage
 		'''
 }
+
+KrakenTentacle: {
+	DisplayName: Kraken Tentacle
+	Tooltip:
+		'''
+		Launches a tentacle outwards
+		Hitting an enemy with the tip of the tentacle while near its apex launches the user forward
+		This hit deals 20 times the amount of damage
+		During this launch, the user is invincible
+		'''
+}
