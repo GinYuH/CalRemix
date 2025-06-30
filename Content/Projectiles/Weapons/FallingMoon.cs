@@ -20,7 +20,6 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.penetrate = 10;
             Projectile.ignoreWater = true;
             Projectile.DamageType = ModContent.GetInstance<StormbowDamageClass>();
-            Main.NewText(Projectile.ai[0]);
         }
         public override void OnKill(int timeLeft)
         {
