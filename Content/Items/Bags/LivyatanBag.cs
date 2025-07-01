@@ -54,6 +54,7 @@ namespace CalRemix.Content.Items.Bags
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            itemLoot.Add(ModContent.ItemType<BlubberNugget>());
             itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<Pigeon>(), ModContent.ItemType<FrilledShark>(), ModContent.ItemType<RemoraDart>(), ModContent.ItemType<Laevateinn>(), ModContent.ItemType<XiphactinusGun>(), ModContent.ItemType<LivyatanadoStaff>()));
             itemLoot.AddRevBagAccessories();
         }

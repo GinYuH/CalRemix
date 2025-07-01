@@ -4817,5 +4817,17 @@ Pigeon: {
 
 Edentulism: {
 	DisplayName: Edentulism
-	Tooltip: "Holds out a bull shark head whose teeth fall out from above the screen and onto enemies"
+	Tooltip: Holds out a bull shark head whose teeth fall out from above the screen and onto enemies
+}
+
+BlubberNugget: {
+	DisplayName: Blubber Nugget
+	Tooltip:
+		'''
+		Defense increased by 50
+		Damage resistance increased by 20%
+		Maximum life increased by 200
+		Protects the wearer from cold damage
+		Makes jumping and flying more annoying due to how heavy it is
+		'''
 }
