@@ -10,6 +10,8 @@ using CalRemix.Core.Biomes;
 using CalamityMod;
 using CalamityMod.Items.Potions;
 using Terraria.GameContent.ItemDropRules;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -172,7 +174,9 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<TanyHead>() && info.npc.ModNPC<TanyHead>().Purple && info.npc.ModNPC<TanyHead>().SegmentType == 0), ItemID.GrapeJuice));
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(info => info.npc.type == ModContent.NPCType<TanyHead>() && info.npc.ModNPC<TanyHead>().Purple && info.npc.ModNPC<TanyHead>().SegmentType == 0), ModContent.ItemType<PurpleShavedIce>()));
+            npcLoot.Add(ItemID.Leather, 1, 3, 7);
+            npcLoot.Add(ModContent.ItemType<CoyoteVenom>(), 1, 1, 3);
         }
     }
 }

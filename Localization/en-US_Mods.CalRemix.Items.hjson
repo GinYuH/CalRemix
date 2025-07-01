@@ -4799,3 +4799,13 @@ KrakenTentacle: {
 		During this launch, the user is invincible
 		'''
 }
+
+PurpleShavedIce: {
+	DisplayName: Purple Shaved Ice
+	Tooltip: "'Tastes like a grape-flavored popsicle'"
+}
+
+PurpleShavedIceEdible: {
+	DisplayName: Purple Shaved Ice Edible
+	Tooltip: "'Tastes like a grape-flavored popsicle'"
+}
