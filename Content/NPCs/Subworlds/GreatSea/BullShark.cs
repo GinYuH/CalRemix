@@ -18,6 +18,7 @@ using System;
 using CalamityMod.Particles;
 using Microsoft.CodeAnalysis.Host.Mef;
 using Terraria.DataStructures;
+using CalRemix.Content.Items.Weapons.Stormbow;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -198,6 +199,13 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<Edentulism>(), 7);
+            npcLoot.Add(ItemID.SharkFin);
+            npcLoot.Add(ItemID.SharkToothNecklace, 10);
         }
     }
 }

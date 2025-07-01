@@ -153,6 +153,15 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     #endregion
     #endregion
     #region Post-ML
+    // livyatan
+    public class Pigeon : StormbowAbstract
+    {
+        public override int damage => 230;
+        public override int useTime => 12;
+        public override List<int> projsToShoot => new List<int>() { ProjectileID.SpectreWrath };
+        public override int arrowAmount => 3;
+        public override OverallRarity overallRarity => OverallRarity.Turquoise;
+    }
     // exo mechs
     public class ImpetusTech : StormbowAbstract
     {

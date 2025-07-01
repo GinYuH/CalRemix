@@ -4809,3 +4809,13 @@ PurpleShavedIceEdible: {
 	DisplayName: Purple Shaved Ice Edible
 	Tooltip: "'Tastes like a grape-flavored popsicle'"
 }
+
+Pigeon: {
+	DisplayName: Pigeon
+	Tooltip: "'Some will get it'"
+}
+
+Edentulism: {
+	DisplayName: Edentulism
+	Tooltip: "Holds out a bull shark head whose teeth fall out from above the screen and onto enemies"
+}

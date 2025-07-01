@@ -5,6 +5,7 @@ using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Ranged;
+using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Projectiles.Weapons;
@@ -162,6 +163,17 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     }
     #endregion
     #region Post-ML
+
+    public class Edentulism : StormbowAbstract
+    {
+        public override int damage => 168;
+        public override int useTime => 32;
+        public override SoundStyle useSound => SoundID.DD2_BallistaTowerShot;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<LeviathanTooth>() };
+        public override int arrowAmount => 7;
+        public override OverallRarity overallRarity => OverallRarity.Turquoise;
+    }
+
     #region Stratus
     public class TwinkleTwinkle : StormbowAbstract
     {

@@ -34,6 +34,7 @@ using CalRemix.Content.Projectiles.Weapons;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Weapons.Stormbow;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -109,7 +110,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.GravityIgnoresLiquid = true;
             NPC.waterMovementSpeed = 1f;
             NPC.boss = true;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<PrimordialCavesBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<GreatSeaBiome>().Type };
+            Music = MusicID.Boss3;
         }
 
         public override void AI()
@@ -518,6 +520,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 tailIK.Limbs[0].Rotation = GetIKRotationClamp((float)tailIK.Limbs[0].Rotation, MathHelper.ToRadians(270) + NPC.rotation, MathHelper.ToRadians(120) + NPC.rotation);
             handIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * 160, 40).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Cos(Timer * 0.05f) * 0.5f));
             tailIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * -170, 0).RotatedBy(NPC.rotation), tailDestination);
+
+            Main.GameMode = 0;
         }
 
         public void BasicOpenMouth()
@@ -708,6 +712,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 ModContent.ItemType<RemoraDart>(),
                 ModContent.ItemType<Laevateinn>(),
                 ModContent.ItemType<XiphactinusGun>(),
+                ModContent.ItemType<Pigeon>(),
                 ModContent.ItemType<FrilledShark>()
             };
             npcLoot.Add(ModContent.ItemType<LivyatanTrophy>(), 10);

@@ -74,6 +74,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
             Segments = VerletSimulatedSegment.SimpleSimulation(Segments, 10, loops: 10, gravity: 0.1f);
 
+            NPC.rotation = NPC.DirectionTo(Segments[^2].position).ToRotation() + MathHelper.PiOver2;
+
 
             NPC.netUpdate = true;
             NPC.netSpam = 0;
