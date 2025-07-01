@@ -62,9 +62,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Main.NewText("1: " + Main.tileFrame[tile.TileType]);
             Main.NewText("2: " + tile.TileFrameX);
 
-            SpearRack thj = new SpearRack();
-            thj.CheckAndPlaceTile(point);
-            //PlaceOtherSpiritModThing(point);
+            //MinistructureList.SpearRack.CheckAndPlaceTile(point);
+            PlaceOtherSpiritModThing(point);
 
             /*int floorTile = TileID.VortexBrick;
             if (Main.tile[point.X, point.Y].TileType == (ushort)floorTile && !Main.tile[point.X - 1, point.Y].HasTile)
@@ -519,8 +518,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     tile.HasTile = false;
                     SquareTileFrame(boxBottomFloorLeftmost - 2, bottomLeft.Y - i);
                 }
-                if (left && !Main.rand.NextBool(3))
-                    PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+                PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
             }
             if (!left || Main.rand.NextBool())
             {
@@ -530,8 +528,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     tile.HasTile = false;
                     SquareTileFrame(boxBottomFloorRightmost + 2, bottomLeft.Y - i);
                 }
-                if (!left && !Main.rand.NextBool(3))
-                    PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+                PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
             }
 
             // place platform and stairs
@@ -641,6 +638,50 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 tile = Main.tile[currentTilePointer];
             }
 
+            // place the chest
+            bool hasPlacedChest = false;
+            bool bridgeOrHouse = Main.rand.NextBool();
+            int placeChestAttempts = 0;
+            while (!hasPlacedChest)
+            {
+                placeChestAttempts++;
+                if (placeChestAttempts > 5000)
+                    break;
+
+                Point randomPoint = new Point();
+                if (bridgeOrHouse)
+                    randomPoint = bridge[Main.rand.Next(bridge.Count())];
+                else
+                    randomPoint = boxBottomFloor[Main.rand.Next(boxBottomFloor.Count())];
+                randomPoint.Y--;
+
+                // ensuring space
+                if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
+                {
+                    int chest = PlaceChest(randomPoint.X, randomPoint.Y, style: 0);
+                    if (chest != -1)
+                        hasPlacedChest = true;
+                }
+            }
+
+            // place the sign
+            Point signPoint = new Point();
+            signPoint.X = boxTopBottomLeft;
+            if (left)
+            {
+                signPoint.X += 1;
+            }
+            else
+            {
+                signPoint.X += boxTopSize.X;
+                signPoint.X -= 3;
+            }
+            signPoint.Y = bottomLeft.Y - boxBottomSize.Y + 1;
+            signPoint.Y += 1;
+
+            PlaceObject(signPoint.X, signPoint.Y, TileID.Signs);
+
+            #region Decorum
             // place crates on platform
             // but first, validation! since blocks are placed by the bottom left, we want to cull any points too close to the door
             // if a crate was placed there, itd block the door! and thatd suck
@@ -673,91 +714,164 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     // can we place 3 crates? if so, do
                     if (crateAmount >= 3 && placeCrateAttempts < 75)
                     {
-                        Point crate2 = randomPoint;
-                        crate2.X += 2;
-                        Point crate3 = randomPoint;
-                        crate3.X += 1;
-                        crate3.Y -= 2;
-                        if (CheckIfTileCanBePlaced(crate2, 2, 2) && CheckIfTileCanBePlaced(crate3, 2, 2, checkFloor: false))
+                        if (MinistructureList.CrateStack.Check(randomPoint) && (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile || !Main.tile[randomPoint.X + MinistructureList.CrateStack.width, randomPoint.Y].HasTile))
                         {
-                            PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
-                            PlaceTile(crate2.X, crate2.Y, TileID.FishingCrate);
-                            PlaceObject(crate3.X, crate3.Y, TileID.FishingCrate); // this one is unusually stubborn
+                            MinistructureList.CrateStack.Place(randomPoint);
                             crateAmount -= 3;
                         }
                     }
                     else
                     {
-                        PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
-                        crateAmount--;
+                        if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile || !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
+                        {
+                            PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
+                            crateAmount--;
+                        }
                     }
                 }
             }
 
             // oh boy now heres the fun one
-
-
-
-
-            Point[] tilesToReplace2 =
+            // furnish the area with furniture and shit
+            // bottom floor
+            int decorAmount = Main.rand.Next(2, 4);
+            if (!bridgeOrHouse)
+                decorAmount--;
+            int placeDecorAttempts = 0;
+            List<Ministructure> structuresToPlace = new List<Ministructure>();
+            structuresToPlace.Add(MinistructureList.SpearRack);
+            structuresToPlace.Add(MinistructureList.TableWithCandle);
+            structuresToPlace.Add(MinistructureList.GrandfatherClock);
+            structuresToPlace.Add(MinistructureList.LargeFurnitureRubble);
+            while (decorAmount > 0)
             {
-                new Point(0, 0)
-            };
-            foreach (Point block in tilesToReplace2)
-            {
-                Tile tile2;
-                tile2 = Main.tile[block.X, block.Y];
-                tile2.HasTile = true;
-                tile2.TileType = TileID.Adamantite;
-                SquareTileFrame(block.X, block.Y);
-            }
-        }
+                placeDecorAttempts++;
+                if (placeDecorAttempts > 5000)
+                    break;
 
-        public class SpearRack : Ministructure
-        {
-            public override int width => 3;
-            public override int height => 3;
-            public override int type => TileID.Painting3X3;
-            public override int style => 44;
-
-            public override void Place(Point bottomLeft)
-            {
-                Point origin = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
-                for (int x = 0; x < width; x++)
+                int randomMinistructure = Main.rand.Next(structuresToPlace.Count);
+                Point randomPoint = boxBottomFloor[Main.rand.Next(boxBottomFloor.Count())];
+                randomPoint.Y--;
+                Ministructure randomStructure = structuresToPlace[randomMinistructure];
+                if (randomStructure.Check(randomPoint))
                 {
-                    for (int y = 0; y < height; y++)
+                    // ensuring space
+                    if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + randomStructure.width, randomPoint.Y].HasTile)
                     {
-                        Tile tile = Main.tile[bottomLeft.X + x, bottomLeft.Y - y];
-                        tile.WallType = WallID.Planked;
-                        SquareWallFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                        randomStructure.Place(randomPoint);
+                        structuresToPlace.Remove(randomStructure);
+                        decorAmount--;
                     }
                 }
-                PlaceObject(origin.X, origin.Y, type, style: style);
             }
-        }
-
-        public class Crate : Ministructure
-        {
-            public override int width => 2;
-            public override int height => 2;
-            public override int type => TileID.FishingCrate;
-        }
-
-        public class TableWithCandle : Ministructure
-        {
-            public override int width => 3;
-            public override int height => 3;
-            public override int type => TileID.Tables;
-            public override void Place(Point bottomLeft)
+            // top floor
+            decorAmount = Main.rand.Next(2, 4);
+            placeDecorAttempts = 0;
+            structuresToPlace = new List<Ministructure>();
+            structuresToPlace.Add(MinistructureList.TableWithCandle);
+            structuresToPlace.Add(MinistructureList.LargeFishingNet);
+            structuresToPlace.Add(MinistructureList.LargeFishingNet);
+            structuresToPlace.Add(MinistructureList.LargeFishingNet);
+            structuresToPlace.Add(MinistructureList.CrateStack);
+            structuresToPlace.Add(MinistructureList.LargeFurnitureRubble);
+            while (decorAmount > 0)
             {
-                Point origin = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
-                PlaceObject(origin.X, origin.Y, TileID.Tables);
+                placeDecorAttempts++;
+                if (placeDecorAttempts > 5000)
+                    break;
 
-                int offset = Main.rand.Next(0, 3);
-                PlaceObject(bottomLeft.X + offset, bottomLeft.Y - 2, TileID.Candles);
-                Tile tile = Main.tile[bottomLeft.X + offset, bottomLeft.Y - 2];
-                tile.TileFrameX = 18;
+                int randomMinistructure = Main.rand.Next(structuresToPlace.Count);
+                Point randomPoint = boxTopFloor[Main.rand.Next(boxTopFloor.Count())];
+                randomPoint.Y--;
+                Ministructure randomStructure = structuresToPlace[randomMinistructure];
+                if (randomStructure.Check(randomPoint))
+                {
+                    // ensuring space
+                    if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + randomStructure.width, randomPoint.Y].HasTile)
+                    {
+                        randomStructure.Place(randomPoint);
+                        structuresToPlace.Remove(randomStructure);
+                        decorAmount--;
+
+                        // if we place the net, remove the net instances
+                        // this sucks, but it works, so i dont care
+                        if (randomStructure == MinistructureList.LargeFishingNet)
+                        {
+                            structuresToPlace.Remove(randomStructure);
+                            structuresToPlace.Remove(randomStructure);
+                            structuresToPlace.Remove(randomStructure);
+                        }
+                    }
+                }
             }
+
+            // now the shitty one uhghhhhhhhh
+            // placing small piles (FUCK LARGE PILES!!! GRAAASGHHHHHHH)
+            decorAmount = Main.rand.Next(4, 7);
+            placeDecorAttempts = 0;
+            while (decorAmount > 0)
+            {
+                placeDecorAttempts++;
+                if (placeDecorAttempts > 2500)
+                    break;
+
+                Point randomPoint = allBoxFloors[Main.rand.Next(allBoxFloors.Count())];
+                randomPoint.Y--;
+
+                int randomStyleMin = 1;
+                int randomStyleMax = 1;
+                int horizRow = 1;
+                switch(Main.rand.Next(0, 5))
+                {
+                    case 0: // broken furniture
+                        randomStyleMin = 31;
+                        randomStyleMax = 34;
+                        horizRow = 1;
+                        break;
+                    case 1: // small bones
+                        randomStyleMin = 12;
+                        randomStyleMax = 20;
+                        horizRow = 0;
+                        break;
+                    case 2: // big boned
+                        randomStyleMin = 6;
+                        randomStyleMax = 11;
+                        horizRow = 1;
+                        break;
+                    case 3: // small rocks
+                        randomStyleMin = 0;
+                        randomStyleMax = 6;
+                        horizRow = 0;
+                        break;
+                    case 4: // equipment
+                        randomStyleMin = 28;
+                        randomStyleMax = 36;
+                        horizRow = 0;
+                        break;
+                }
+
+                if (WorldGen.PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
+                    decorAmount--;
+            }
+            // and finally the bridge
+            decorAmount = Main.rand.Next(1, 4);
+            placeDecorAttempts = 0;
+            while (decorAmount > 0)
+            {
+                placeDecorAttempts++;
+                if (placeDecorAttempts > 2500)
+                    break;
+
+                Point randomPoint = bridgeValidated[Main.rand.Next(bridgeValidated.Count())];
+                randomPoint.Y--;
+                int randomStyleMin = 28;
+                int randomStyleMax = 36;
+                int horizRow = 0;
+
+                if (WorldGen.PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
+                    decorAmount--;
+            }
+            #endregion
         }
 
         public bool PlaceStupidSpiritModThing(Point origin, StructureMap structures)
@@ -1007,6 +1121,164 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         }
     }
 
+    public static class MinistructureList
+    {
+        public static SpearRackStructure SpearRack = new SpearRackStructure();
+        public static CrateStackStructure CrateStack = new CrateStackStructure();
+        public static TableWithCandleStructure TableWithCandle = new TableWithCandleStructure();
+        public static LargeFishingNetStructure LargeFishingNet = new LargeFishingNetStructure();
+        public static GrandfatherClockStructure GrandfatherClock = new GrandfatherClockStructure();
+        public static LargeFurnitureRubbleStructure LargeFurnitureRubble = new LargeFurnitureRubbleStructure();
+
+        public class SpearRackStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 3;
+            public override int type => TileID.Painting3X3;
+            public override int style => 44;
+
+            public override void Place(Point bottomLeft)
+            {
+                Point origin = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        Tile tile = Main.tile[bottomLeft.X + x, bottomLeft.Y - y];
+                        tile.WallType = WallID.Planked;
+                        SquareWallFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                    }
+                }
+                PlaceObject(origin.X, origin.Y, type, style: style);
+            }
+        }
+        public class CrateStackStructure : Ministructure
+        {
+            public override int width => 4;
+            public override int height => 4;
+            public override int type => TileID.FishingCrate;
+
+            public override void Place(Point bottomLeft)
+            {
+                Point crate2 = bottomLeft;
+                crate2.X += 2;
+                Point crate3 = bottomLeft;
+                crate3.X += 1;
+                crate3.Y -= 2;
+
+                PlaceTile(bottomLeft.X, bottomLeft.Y, TileID.FishingCrate);
+                PlaceTile(crate2.X, crate2.Y, TileID.FishingCrate);
+                PlaceObject(crate3.X, crate3.Y, TileID.FishingCrate);
+            }
+
+            public override bool Check(Point bottomLeft)
+            {
+                Point crate2 = bottomLeft;
+                crate2.X += 2;
+                Point crate3 = bottomLeft;
+                crate3.X += 1;
+                crate3.Y -= 2;
+
+                if (CheckIfTileCanBePlaced(bottomLeft, 2, 2) && CheckIfTileCanBePlaced(crate2, 2, 2) && CheckIfTileCanBePlaced(crate3, 2, 2, checkFloor: false))
+                    return true;
+
+                return false;
+            }
+        }
+        public class TableWithCandleStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 3;
+            public override int type => TileID.Tables;
+            public override void Place(Point bottomLeft)
+            {
+                PlaceObject(bottomLeft.X - 1, bottomLeft.Y, TileID.Tables);
+                int offset = Main.rand.Next(-2, 1);
+                PlaceObject(bottomLeft.X + offset, bottomLeft.Y - 2, TileID.Candles);
+                Tile tile = Main.tile[bottomLeft.X + offset, bottomLeft.Y - 2];
+                tile.TileFrameX = 18;
+            }
+        }
+        public class LargeFishingNetStructure : Ministructure
+        {
+            public override int width => 6;
+            public override int height => 4;
+
+            public override void Place(Point bottomLeft)
+            {
+                Tile tile;
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        tile = Main.tile[bottomLeft.X + x, bottomLeft.Y - y];
+                        // left/right sticks
+                        if (x == 0 || x == width - 1)
+                        {
+                            if (y == height - 1)
+                            {
+                                tile.WallType = WallID.WoodenFence;
+                                SquareWallFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                            }
+                            else
+                            {
+                                tile.HasTile = true;
+                                tile.TileType = TileID.WoodenBeam;
+                                SquareTileFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                            }
+                        }
+                        // top rope
+                        if (y == height - 1)
+                        {
+                            tile.HasTile = true;
+                            tile.TileType = TileID.Rope;
+                            SquareTileFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                        }
+                        // middle rope
+                        if (x != 0 && x != width - 1)
+                        {
+                            if (y == height - 2)
+                            {
+                                tile.HasTile = true;
+                                tile.TileType = TileID.Rope;
+                                SquareTileFrame(bottomLeft.X + x, bottomLeft.Y - y);
+                            }
+                        }
+                    }
+                }
+                // lower rope
+                bool left = Main.rand.NextBool();
+                Point point = new Point(bottomLeft.X + 1, bottomLeft.Y - 1);
+                if (!left)
+                    point.X++;
+                for (int i = 0; i < 3; i++)
+                {
+                    tile = Main.tile[point.X + i, point.Y];
+                    tile.HasTile = true;
+                    tile.TileType = TileID.Rope;
+                    SquareTileFrame(point.X + i, point.Y);
+                }
+            }
+        }
+        public class GrandfatherClockStructure : Ministructure
+        {
+            public override int width => 2;
+            public override int height => 3;
+            public override int type => TileID.GrandfatherClocks;
+        }
+        public class LargeFurnitureRubbleStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 2;
+            public override int type => TileID.LargePiles;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(22, 26);
+                PlaceObject(bottomLeft.X, bottomLeft.Y, type, style: style);
+            }
+        }
+    }
+
     public static class StructureHelpers
     {
         public abstract class Ministructure : ModSystem
@@ -1071,8 +1343,4 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             return true;
         }
     }
-
-    
-
-
 }
