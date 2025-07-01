@@ -19,7 +19,7 @@ namespace CalRemix.Core.Biomes
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
 
         // Populate the Bestiary Filter
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/AsbestosIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.DarkGray;
 

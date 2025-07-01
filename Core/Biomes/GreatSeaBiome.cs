@@ -17,19 +17,13 @@ namespace CalRemix.Core.Biomes
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/GrandWater");
 
         // Populate the Bestiary Filter
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/AsbestosIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/GreatSeaIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG11";
         public override Color? BackgroundColor => Color.Cyan;
 
         public override string MapBackground => BackgroundPath;
 
         public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
-
-        // Use SetStaticDefaults to assign the display name
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Asbestos Caves");
-        }
 
         // Calculate when the biome is active.
         public override bool IsBiomeActive(Player player)

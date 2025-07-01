@@ -35,6 +35,7 @@ using Terraria.GameContent.ItemDropRules;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Weapons.Stormbow;
+using CalamityMod.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -270,7 +271,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
                     if (Timer > 150 + jawAnimLength)
                     {
-                        CurrentPhase = 4;
+                        CurrentPhase = Main.expertMode ? 4 : 5;
                         Timer = 0;
                     }
                 }
@@ -385,7 +386,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     else if (Timer == diveTime + 1)
                     {
                         JawTimer = 1;
-                        NPC.velocity = NPC.DirectionTo(Target.Center) * 60;
+                        NPC.velocity = NPC.DirectionTo(Target.Center) * (Main.expertMode ? 60 : 40);
                     }
                     else if (Timer > diveTime + dashTime)
                     {
@@ -427,7 +428,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     {
                         NPC.ai[3] = 0;
                         Timer = 0;
-                        CurrentPhase = (NPC.life < NPC.lifeMax * 0.5f) ? 7 : 2;
+                        CurrentPhase = (NPC.life < NPC.lifeMax * 0.5f && Main.expertMode) ? 7 : 2;
                     }
                 }
                 if (CurrentPhase == 7)
@@ -462,7 +463,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     }
                 }
 
-                if (NPC.velocity.Length() > 3)
+                if (NPC.velocity.Length() > 3 && CalamityWorld.revenge)
                 {
                     foreach (Projectile p in Main.ActiveProjectiles)
                     {
