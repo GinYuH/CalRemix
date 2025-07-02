@@ -65,6 +65,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied);
             Texture2D tex = TextureAssets.Npc[Type].Value;
             SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

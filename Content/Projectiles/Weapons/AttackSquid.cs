@@ -29,6 +29,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
+            Projectile.timeLeft = 300;
         }
 
         public override void AI()
@@ -47,7 +48,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             if (Projectile.frameCounter++ > 4)
             {
                 Projectile.frameCounter = 0;
-                if (Projectile.frame++ > 2)
+                if (Projectile.frame++ > 1)
                 {
                     Projectile.frame = 0;
                 }

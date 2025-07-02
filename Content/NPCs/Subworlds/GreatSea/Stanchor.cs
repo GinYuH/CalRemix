@@ -163,6 +163,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             if (SpotToHideIn == default)
                 return false;
             spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied);

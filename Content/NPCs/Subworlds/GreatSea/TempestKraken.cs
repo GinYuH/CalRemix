@@ -191,6 +191,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             Texture2D hand = ModContent.Request<Texture2D>(Texture + "Hand").Value;
             Texture2D tentacle = ModContent.Request<Texture2D>(Texture + "Tentacle").Value;
             spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied);
