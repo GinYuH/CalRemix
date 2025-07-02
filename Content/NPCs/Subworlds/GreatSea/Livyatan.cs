@@ -272,7 +272,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     NPC.spriteDirection = NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
                     if (Timer > 150 + jawAnimLength)
                     {
-                        CurrentPhase = Main.expertMode ? 4 : 5;
+                        CurrentPhase = Main.expertMode ? 4 : 6;
                         Timer = 0;
                     }
                 }
@@ -522,8 +522,6 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 tailIK.Limbs[0].Rotation = GetIKRotationClamp((float)tailIK.Limbs[0].Rotation, MathHelper.ToRadians(270) + NPC.rotation, MathHelper.ToRadians(120) + NPC.rotation);
             handIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * 160, 40).RotatedBy(NPC.rotation), NPC.Center + (Vector2.UnitX * -NPC.spriteDirection * 1000).RotatedBy(NPC.rotation + MathF.Cos(Timer * 0.05f) * 0.5f));
             tailIK.Update(NPC.Center + new Vector2(NPC.spriteDirection * -170, 0).RotatedBy(NPC.rotation), tailDestination);
-
-            Main.GameMode = 0;
         }
 
         public void BasicOpenMouth()
