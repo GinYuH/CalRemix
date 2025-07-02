@@ -117,23 +117,18 @@ Mods: {
 				TownNPCDialogueName: the Profaned Desert Biome
 			}
 
-			GrandSeaBiome: {
-				DisplayName: Grand Sea Biome
-				TownNPCDialogueName: the Grand Sea Biome
-			}
-
 			PrimordialCavesBiome: {
-				DisplayName: Primordial Caves Biome
+				DisplayName: Primordial Caves
 				TownNPCDialogueName: the Primordial Caves Biome
 			}
 
 			ClownWorldClownBiome: {
-				DisplayName: Clown World Clown Biome
+				DisplayName: Clown World
 				TownNPCDialogueName: the Clown World Clown Biome
 			}
 
 			GreatSeaBiome: {
-				DisplayName: Great Sea Biome
+				DisplayName: Great Sea
 				TownNPCDialogueName: the Great Sea Biome
 			}
 		}
