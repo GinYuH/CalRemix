@@ -203,12 +203,62 @@ namespace CalRemix.Core.Subworlds
 
         public static void GenerateDebris()
         {
+            int grass = ModContent.TileType<SyringodiumPlaced>();
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < (int)(Main.maxTilesY * groundBottom); j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (!t.HasTile)
+                    {
+                        if (CalamityUtils.ParanoidTileRetrieval(i, j + 1).TileType == grass)
+                        {
+                            if (Main.rand.NextBool(60))
+                            {
+                                int type = Main.rand.NextBool() ? ModContent.TileType<SeaAnchorRubble>() : ModContent.TileType<SeaAnchorRubble2>();
+                                WorldGen.PlaceTile(i, j, (ushort)type, true, false, -1);
+                            }
+                            else if (Main.rand.NextBool(10))
+                            {
+                                int type = Main.rand.NextBool() ? ModContent.TileType<SeaRockRubble>() : ModContent.TileType<SeaRockRubble2>();
+                                WorldGen.PlaceTile(i, j, (ushort)type, true, false, -1);
+                            }
+                            else if (Main.rand.NextBool(20))
+                            {
+                                int type = Main.rand.NextBool() ? ModContent.TileType<SeaSpearRubble>() : ModContent.TileType<SeaSpearRubble2>();
+                                WorldGen.PlaceTile(i, j, (ushort)type, true, false, -1);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static void GenerateIslands()
         {
             int y = (int)(Main.maxTilesY * seaLevel);
             CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: ModContent.TileType<SyringodiumPlaced>(), ease: CalRemixHelper.PerlinEase.EaseOutTop, topStop: 0.025f);
+
+            Main.spawnTileY = y - 2;
+
+            int xAmt = 10;
+            int yAmt = 8;
+            int startFadingX = 6;
+            int startFadingY = 1;
+
+            for (int i = -xAmt + 1; i < xAmt; i++)
+            {
+                for (int j = 0; j < yAmt; j++)
+                {
+                    if (j > startFadingY && Main.rand.NextBool(yAmt - j))
+                        continue;
+                    if (j > startFadingY && !Main.tile[Main.spawnTileX + i, y + j - 1].HasTile)
+                        continue;
+                    if (Math.Abs(i) > startFadingX && j > startFadingY && Main.rand.NextBool(xAmt - Math.Abs(i)))
+                        continue;
+                    Main.tile[Main.spawnTileX + i, y + j].ResetToType((ushort)ModContent.TileType<SyringodiumPlaced>());
+                }
+            }
         }
     }
 }
