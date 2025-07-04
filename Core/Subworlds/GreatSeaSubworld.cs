@@ -50,7 +50,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<TanyHead>(), 0.02f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TanyHead>())));
             list.Add(item: (ModContent.NPCType<Liopleurodon>(), 0.02f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && !NPC.AnyNPCs(ModContent.NPCType<Liopleurodon>())));
             list.Add(item: (ModContent.NPCType<DepthGlider>(), 0.02f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<AnomalyDisciple3>(), 3f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && n.Player.position.ToTileCoordinates().Y > (Main.maxTilesY * 0.9f)));
+            list.Add(item: (ModContent.NPCType<AnomalyDisciple3>(), 0.3f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && n.Player.position.ToTileCoordinates().Y > (Main.maxTilesY * 0.95f)));
             return list;
         }
 

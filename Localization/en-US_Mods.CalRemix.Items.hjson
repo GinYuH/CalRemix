@@ -4831,3 +4831,8 @@ BlubberNugget: {
 		Makes jumping and flying more annoying due to how heavy it is
 		'''
 }
+
+LivyatanRelic: {
+	DisplayName: Livyatan Relic
+	Tooltip: ""
+}
