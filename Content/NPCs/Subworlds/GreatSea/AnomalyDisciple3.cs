@@ -139,7 +139,15 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }
             if (NPC.ai[3] == 1 || NPC.ai[3] == 2)
             {
-                Timer++;
+                if (NPC.Distance(target.Center) > 2000)
+                {
+                    Timer = 0;
+                    NPC.ai[3] = 0;
+                    NPC.Calamity().newAI[0] = 0;
+                    SavePosition = Vector2.Zero;
+                    NPC.velocity = Vector2.Zero;
+                    return;
+                }
                 int changeRate = 120;
                 if (Timer % changeRate == 0)
                 {
@@ -183,7 +191,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                                             int amt = CalamityWorld.death ? 5 : CalamityWorld.revenge ? 3 : 2;
                                             for (int i = 0; i < amt; i++)
                                             {
-                                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / ((float)amt - 1))), ModContent.ProjectileType<AnomalyOrbule>(), 30, 1f, ai0: (i != 1) ? 1 : 0, ai2: target.whoAmI);
+                                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / ((float)amt - 1))), ModContent.ProjectileType<AnomalyOrbule>(), 30, 1f, ai0: (i != 1 || amt != 3) ? 1 : 0, ai2: target.whoAmI);
                                                 Main.projectile[p].scale = 1.4f;
                                             }
                                         }
@@ -218,6 +226,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     NPC.Calamity().newAI[0] = 0;
                     NPC.velocity = Vector2.Zero;
                 }
+                Timer++;
             }
             if (NPC.ai[3] == 2)
             {
