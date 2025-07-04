@@ -37,6 +37,7 @@ using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalamityMod.World;
 using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Placeables.Relics;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -716,6 +717,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 ModContent.ItemType<FrilledShark>()
             };
             npcLoot.Add(ModContent.ItemType<LivyatanTrophy>(), 10);
+            npcLoot.AddIf(()=> Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<LivyatanRelic>());
             npcLoot.AddNormalOnly(ModContent.ItemType<BlubberNugget>());
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<LivyatanBag>());
         }
