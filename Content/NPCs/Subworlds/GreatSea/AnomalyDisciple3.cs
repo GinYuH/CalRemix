@@ -252,7 +252,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
             Vector2 bottom = SpotToHideIn;
 
-            int chainAmt = (int)(NPC.Distance(SpotToHideIn) / 32f / NPC.scale);
+            int chainAmt = 6;
 
             for (int i = 0; i < chainAmt; i++)
             {
