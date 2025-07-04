@@ -275,8 +275,8 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                             SoundEngine.PlaySound(AttackSound, NPC.Center);
                             for (int i = 0; i < cloudAmt / 2; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 3), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X + cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing), new Vector2(-cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), CalRemixHelper.ProjectileDamage(100, 150), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(Target.Center.X - cloudDist, Target.Center.Y - cloudStart + i * cloudSpacing + cloudSpacing / 3), new Vector2(cloudSpeed, 0), ModContent.ProjectileType<OxygenCloud>(), CalRemixHelper.ProjectileDamage(100, 150), 0f, Main.myPlayer, Main.rand.Next(0, TextureAssets.Cloud.Length - 1));
                             }
                         }
                         NPC.velocity = NPC.DirectionTo(Target.Center) * 4;
@@ -335,7 +335,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                             // Spawn the bubbles
                             for (int i = 0; i < bubbleAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ModContent.ProjectileType<OxygenBubble>(), (int)(NPC.damage * 0.2f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-bubbleRangeX, bubbleRangeX), Main.rand.Next(-bubbleRangeY, bubbleRangeY)), Vector2.Zero, ModContent.ProjectileType<OxygenBubble>(), CalRemixHelper.ProjectileDamage(150, 280), 0f, Main.myPlayer);
                             }
                         }
                         // Stop moving before dash and spin
@@ -384,7 +384,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
                             int dir = Main.rand.NextBool().ToInt();
                             for (int i = 0; i < totalObjects; i++)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OxygenDebris>(), (int)(NPC.damage * 0.2f), 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OxygenDebris>(), CalRemixHelper.ProjectileDamage(100, 160), 0, Main.myPlayer, i + 1, totalObjects, Main.rand.NextFloat(0, 4f));
                                 Main.projectile[p].localAI[0] = Main.rand.Next(1, 5); // Controls which sprite is used
                                 Main.projectile[p].localAI[1] = dir; // Controls if the debris moves clockwise or counter clockwise
                             }
@@ -456,7 +456,7 @@ namespace CalRemix.Content.NPCs.Bosses.Oxygen
 
                     if (Main.netMode != NetmodeID.Server)
                     {
-                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<Oxshard>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, ai1: Main.rand.Next(1, 7));
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-shardSpeed, shardSpeed), Main.rand.Next(-shardSpeed, shardSpeed)), ModContent.ProjectileType<Oxshard>(), CalRemixHelper.ProjectileDamage(200, 360), 0f, Main.myPlayer, ai1: Main.rand.Next(1, 7));
                         Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
                     }
                 }

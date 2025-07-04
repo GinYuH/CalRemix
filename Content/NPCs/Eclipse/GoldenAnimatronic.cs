@@ -66,7 +66,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                         {
                             Vector2 dist = Main.player[NPC.target].position - NPC.position;
                             dist.Normalize();
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 14, ModContent.ProjectileType<PizzaWheelHostile>(), (int)(NPC.damage * 0.5f), 0, Main.myPlayer, NPC.whoAmI, ai2: 1);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dist * 14, ModContent.ProjectileType<PizzaWheelHostile>(), CalRemixHelper.ProjectileDamage(200, 300), 0, Main.myPlayer, NPC.whoAmI, ai2: 1);
                             SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, NPC.Center);
                         }
                         if (NPC.Remix().GreenAI[0] % 240 == 0)
@@ -77,7 +77,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             {
                                 for (int i = -10; i < 10; i++)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + 1200 * (left ? 1 : -1), Main.player[NPC.target].Center.Y + i * 120 + variance), new Vector2(-16 * (left ? 1 : -1), 0), ModContent.ProjectileType<PizzaWheelHostile>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, NPC.whoAmI, 2, ai2: 1);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + 1200 * (left ? 1 : -1), Main.player[NPC.target].Center.Y + i * 120 + variance), new Vector2(-16 * (left ? 1 : -1), 0), ModContent.ProjectileType<PizzaWheelHostile>(), CalRemixHelper.ProjectileDamage(100, 140), 0, Main.myPlayer, NPC.whoAmI, 2, ai2: 1);
                                     Main.projectile[p].timeLeft = 180;
                                 }
                             }
@@ -85,7 +85,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             {
                                 for (int i = -10; i < 10; i++)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + i * 120 + variance, Main.player[NPC.target].Center.Y + 800 * (left ? 1 : -1)), new Vector2(0, -8 * (left ? 1 : -1)), ModContent.ProjectileType<PizzaWheelHostile>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, NPC.whoAmI, 2, ai2: 1);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(Main.player[NPC.target].Center.X + i * 120 + variance, Main.player[NPC.target].Center.Y + 800 * (left ? 1 : -1)), new Vector2(0, -8 * (left ? 1 : -1)), ModContent.ProjectileType<PizzaWheelHostile>(), CalRemixHelper.ProjectileDamage(100, 140), 0, Main.myPlayer, NPC.whoAmI, 2, ai2: 1);
                                     Main.projectile[p].timeLeft = 270;
                                 }
                             }

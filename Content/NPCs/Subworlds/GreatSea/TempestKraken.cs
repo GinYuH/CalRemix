@@ -116,7 +116,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 {
                     SoundEngine.PlaySound(SoundID.Thunder with { Volume = 0.2f }, NPC.Center);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.player[NPC.target].Center + new Vector2(Main.rand.Next(-1000, 1000), -1300), Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 0.5f), ModContent.ProjectileType<TempestLightning>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, -1);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.player[NPC.target].Center + new Vector2(Main.rand.Next(-1000, 1000), -1300), Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 0.5f), ModContent.ProjectileType<TempestLightning>(), CalRemixHelper.ProjectileDamage(200, 320), 0f, Main.myPlayer, 0f, -1);
                 }
 
 

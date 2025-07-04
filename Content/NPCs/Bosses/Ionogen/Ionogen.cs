@@ -175,13 +175,13 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
 
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, laserVelocity, type, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, laserVelocity, type, CalRemixHelper.ProjectileDamage(60, 120), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                     }
                                 }
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     // Fire one directly at the player too because lol
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center), type, CalRemixHelper.ProjectileDamage(60, 120), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                                 }                                
                             }
                             // Ngl this sound doesn't even sound very electricky, but Teslastaff and Crystal Gauntlets already use it so meh
@@ -219,7 +219,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                                 for (int i = 0; i < acidCount; i++)
                                 {
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(acidSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed*1.5f, ModContent.ProjectileType<CragmawAcidDrop>(), (int)(NPC.damage * 0.4f), 3f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed*1.5f, ModContent.ProjectileType<CragmawAcidDrop>(), CalRemixHelper.ProjectileDamage(80, 140), 3f, Main.myPlayer);
                                 }
                             }
                             NPC.ai[2]++;
@@ -275,7 +275,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                             {
                                 int type = ModContent.ProjectileType<IonogenLightning>();
                                 SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LightningSound, NPC.Center);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center).RotatedByRandom(MathHelper.TwoPi), type, (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.Center.DirectionTo(Target.Center).RotatedByRandom(MathHelper.TwoPi), type, CalRemixHelper.ProjectileDamage(60, 120), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
@@ -314,7 +314,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                 {
                     velocity = velocity.RotatedByRandom(MathHelper.PiOver2);
                 }
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-2000, 2001), -1000), velocity, ModContent.ProjectileType<IonogenLightning>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, 0f, -1);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-2000, 2001), -1000), velocity, ModContent.ProjectileType<IonogenLightning>(), CalRemixHelper.ProjectileDamage(20, 50), 0f, Main.myPlayer, 0f, -1);
             }
         }
 

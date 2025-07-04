@@ -593,7 +593,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 {
                                     SoundEngine.PlaySound(FlareSound, NPC.Center);
                                     //if (Main.netMode != NetmodeID.MultiplayerClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, CalRemixHelper.ProjectileDamage(200, 320), 0f, -1, Main.rand.NextBool().ToInt());
                                 }
                             }
 
@@ -853,7 +853,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 if (AttackTimer % flareRate == 0)
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, CalRemixHelper.ProjectileDamage(200, 320), 0f, -1, Main.rand.NextBool().ToInt());
                         }
 
                         if (AttackTimer > 70)
@@ -882,7 +882,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 int type = Main.zenithWorld ? ModContent.ProjectileType<IceBlast>() : ModContent.ProjectileType<PyrogenFlareStatic2>();
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, CalRemixHelper.ProjectileDamage(200, 320), 0f, -1, Main.rand.NextBool().ToInt());
                             }
                         }
                         InfiniteFlight();

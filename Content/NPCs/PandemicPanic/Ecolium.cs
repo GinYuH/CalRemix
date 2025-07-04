@@ -95,7 +95,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 {
                     int shotSpeed = 16;
                     Vector2 dir = Main.rand.NextBool(5) ? NPC.DirectionTo(target.Center) * shotSpeed : Main.rand.NextVector2CircularEdge(shotSpeed, shotSpeed);
-                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ProjectileID.BloodShot, (int)(NPC.damage * 0.33f), 0f);
+                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir, ProjectileID.BloodShot, CalRemixHelper.ProjectileDamage(60, 100), 0f);
                     Main.projectile[p].friendly = false;
                     Main.projectile[p].hostile = true;
                     Main.projectile[p].DamageType = DamageClass.Generic;

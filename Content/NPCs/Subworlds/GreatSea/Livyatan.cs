@@ -209,7 +209,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         SoundEngine.PlaySound(SoundID.Splash);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<LivyatanWave>(), (int)(NPC.damage * 0.25f), 1);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, SavePosition.DirectionTo(NPC.Center) * 10, ModContent.ProjectileType<LivyatanWave>(), CalRemixHelper.ProjectileDamage(200, 360), 1);
                         }
                     }
                     if (Timer > 240 || Target.Distance(NPC.Center) > 2000)
@@ -262,7 +262,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                                         Main.npc[n].dontTakeDamage = false;
                                         Main.npc[n].noTileCollide = true;
                                     }
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<LivyatanBile>(), (int)(NPC.damage * 0.1f), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, velocity, ModContent.ProjectileType<LivyatanBile>(), CalRemixHelper.ProjectileDamage(200, 260), 1);
                                 }
                             }
                         }
@@ -407,7 +407,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                             {
                                 for (int i = 0; i < 10; i++)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4 * 1.5f, MathHelper.PiOver4 * 1.5f, i / 9f)).RotatedByRandom(MathHelper.ToRadians(10)) * Main.rand.NextFloat(16, 25), ModContent.ProjectileType<ThrowableChunk>(), (int)(NPC.damage * 0.5f), 1, ai1: Main.rand.Next(0, 2));
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), HeadPosition, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4 * 1.5f, MathHelper.PiOver4 * 1.5f, i / 9f)).RotatedByRandom(MathHelper.ToRadians(10)) * Main.rand.NextFloat(16, 25), ModContent.ProjectileType<ThrowableChunk>(), CalRemixHelper.ProjectileDamage(200, 360), 1, ai1: Main.rand.Next(0, 2));
                                 }
                             }
                             NPC.ai[3] = 1;

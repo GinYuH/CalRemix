@@ -346,6 +346,29 @@ namespace CalRemix
             }
         }
 
+        /// <summary>
+        /// Returns a readable projectile damage number
+        /// </summary>
+        /// <param name="normal">The damage in normal mode</param>
+        /// <param name="expert">The damage in expert mode. If left 0, defaults to normal damage</param>
+        /// <param name="master">The damage in master mode. If left 0, defaults to expert damage, then normal damage</param>
+        /// <returns></returns>
+        public static int ProjectileDamage(int normal, int expert = 0, int master = 0)
+        {
+            if (Main.masterMode && master != 0)
+                return (int)(master / 6f);
+            else if (Main.masterMode && master == 0 && expert != 0)
+                return (int)(expert / 6f);
+            else if (Main.masterMode && master == 0 && expert == 0)
+                return (int)(normal / 6f);
+            else if (Main.expertMode && expert != 0)
+                return (int)(expert / 4f);
+            else if (Main.masterMode && expert == 0)
+                return (int)(normal / 4f);
+            else
+                return (int)(normal / 2f);
+        }
+
 
         public enum PerlinEase
         {

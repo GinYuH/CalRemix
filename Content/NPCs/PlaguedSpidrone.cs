@@ -111,7 +111,7 @@ namespace CalRemix.Content.NPCs
                         NPC.Remix().GreenAI[1]++;
                         if (NPC.Remix().GreenAI[1] % (20 + Main.rand.Next(0, 8)) == 0)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(8, 12)), ProjectileID.GreekFire1 + Main.rand.Next(0, 3), (int)(NPC.damage * 0.25f), 0, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(8, 12)), ProjectileID.GreekFire1 + Main.rand.Next(0, 3), CalRemixHelper.ProjectileDamage(100, 160), 0, Main.myPlayer);
                             SoundEngine.PlaySound(SoundID.Item20, NPC.Center);
                         }
                         if (NPC.Remix().GreenAI[1] >= 180)

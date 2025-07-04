@@ -64,7 +64,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     if (NPC.ai[2] % 90 == 0)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient) 
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 12, ProjectileID.BloodNautilusShot, (int)(NPC.damage * 0.5f), 0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 12, ProjectileID.BloodNautilusShot, CalRemixHelper.ProjectileDamage(140, 200), 0f);
                     }
                     NPC.velocity *= 0;
                     NPC.position = Vector2.Lerp(NPC.position, new Microsoft.Xna.Framework.Vector2(hyposx, hyposy), 0.1f);

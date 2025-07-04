@@ -90,7 +90,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             if (i == 0)
                                 continue;
                             float spacing = 16 * 6;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top + Vector2.UnitX * i * spacing, Vector2.Zero, ModContent.ProjectileType<RedstonePillar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top + Vector2.UnitX * i * spacing, Vector2.Zero, ModContent.ProjectileType<RedstonePillar>(), CalRemixHelper.ProjectileDamage(90, 140), 0f, Main.myPlayer);
                         }
                     }
                 }

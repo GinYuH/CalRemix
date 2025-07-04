@@ -229,8 +229,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X + NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X - NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X + NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), CalRemixHelper.ProjectileDamage(20, 50), 0f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Top.X - NPC.ai[3] * spacing, NPC.Calamity().newAI[0]), new Vector2(0, speed), ModContent.ProjectileType<AsbestosDrop>(), CalRemixHelper.ProjectileDamage(20, 50), 0f, Main.myPlayer, Target.whoAmI);
                                 }
                             }
                             NPC.velocity.Y *= 0.98f;
@@ -350,7 +350,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                         {
                             SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
                             if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), CalRemixHelper.ProjectileDamage(30, 60), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             NPC.velocity = NPC.DirectionTo(Target.Center) * dashSpeed;
                             // Spawn a circle of cinders in M*ster mode
                             if (master)
@@ -363,7 +363,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                                     Vector2 velocity = new Vector2(0f, cinderSpeed);
                                     velocity = velocity.RotatedBy(variance * i);
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<CigarCinder>(), (int)(0.25f * NPC.damage), 0, Main.myPlayer);
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<CigarCinder>(), CalRemixHelper.ProjectileDamage(20, 50), 0, Main.myPlayer);
                                 }
                             }
                         }
@@ -375,7 +375,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                             {
                                 SoundEngine.PlaySound(CalamityMod.Items.Weapons.Melee.Murasama.Swing, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Cigar>(), CalRemixHelper.ProjectileDamage(30, 60), 0f, Main.myPlayer, Main.rand.NextBool().ToInt());
                             }
                             // Change attack
                             if (NPC.ai[1] > phaseTime)

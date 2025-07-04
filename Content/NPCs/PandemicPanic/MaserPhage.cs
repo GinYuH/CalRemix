@@ -84,7 +84,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     if (FireRate % 5f == 0f)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, CalRemixHelper.ProjectileDamage(100, 200), 0f, Main.myPlayer);
                     }
                     if (FireRate >= 180f)
                     {
@@ -108,7 +108,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
                                 if (Main.netMode != NetmodeID.Server)
                                 { 
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 40, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 40, dir, ModContent.ProjectileType<MaserDeathray>(), CalRemixHelper.ProjectileDamage(140, 280), 0f);
                                     Main.projectile[p].ModProjectile<MaserDeathray>().NPCOwner = NPC.whoAmI;
                                 }
                             }

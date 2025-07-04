@@ -207,7 +207,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                                     // The last few projectiles are gravity-affected warheads
                                     int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.4f), 3f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, CalRemixHelper.ProjectileDamage(100, 180), 3f, Main.myPlayer, Target.whoAmI);
                                 }
                                 if (NPC.ai[2] > rocketAmt * rocketRate)
                                 {
@@ -243,7 +243,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                             SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.NukeWarningSound);
                             for (int i = 0; i < mineAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), CalRemixHelper.ProjectileDamage(120, 190), 0f, Main.myPlayer);
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
