@@ -607,7 +607,7 @@ namespace CalRemix
 
             if (SubworldSystem.IsActive<PiggySubworld>())
             {
-                Player.noBuilding = true;
+                //Player.noBuilding = true;
             }
         }
         public override void PostUpdate()

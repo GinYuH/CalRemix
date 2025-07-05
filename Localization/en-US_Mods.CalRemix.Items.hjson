@@ -4856,3 +4856,8 @@ StrawWall: {
 	DisplayName: Straw Wall
 	Tooltip: ""
 }
+
+Slingshot: {
+	DisplayName: Slingshot
+	Tooltip: ""
+}
