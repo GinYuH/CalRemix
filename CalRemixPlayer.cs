@@ -604,6 +604,11 @@ namespace CalRemix
 		        var crit = boost / 80f; // 16 * 5
 		        Player.GetCritChance(DamageClass.Generic) += crit;
 	        }
+
+            if (SubworldSystem.IsActive<PiggySubworld>())
+            {
+                Player.noBuilding = true;
+            }
         }
         public override void PostUpdate()
         {
