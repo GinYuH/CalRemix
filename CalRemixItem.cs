@@ -37,6 +37,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.Subworlds.Piggy;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Farming;
@@ -48,10 +49,12 @@ using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -435,6 +438,17 @@ namespace CalRemix
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
         }
+
+
+        public override bool CanUseItem(Item item, Player player)
+        {
+            if (SubworldSystem.IsActive<PiggySubworld>() && item.type != ModContent.ItemType<Slingshot>())
+            {
+                return false;
+            }
+            return true;
+        }
+
         public override bool? UseItem(Item item, Player player)
         {
             if (item.Calamity().AppliedEnchantment != null) 

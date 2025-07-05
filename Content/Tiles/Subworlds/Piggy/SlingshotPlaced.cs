@@ -15,6 +15,7 @@ using System.Linq;
 using CalamityMod.Projectiles.Melee;
 using SubworldLibrary;
 using CalRemix.Core.Subworlds;
+using Microsoft.CodeAnalysis.Text;
 
 namespace CalRemix.Content.Tiles.Subworlds.Piggy
 {
@@ -88,7 +89,6 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                 {
                     for (int j = tileCords.Y - rad; j < tileCords.Y + 2; j++)
                     {
-                        Main.NewText(p.penetrate);
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
 
                         int effectiveNess = 0;
@@ -134,11 +134,58 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
         }
     }
 
+    public class APPlayer : ModPlayer
+    {
+        public override void PostUpdate()
+        {
+            if (SubworldSystem.IsActive<PiggySubworld>())
+            {
+                Player.chaosState = true;
+                Point pt = Main.MouseWorld.ToTileCoordinates();
+                Tile t = CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y);
+                if (t.TileType == ModContent.TileType<SlingshotPlaced>())
+                {
+                    Point tileFrame = new Point(t.TileFrameX / 18, t.TileFrameY / 18);
+                    SlingshotSystem.slingPosition = new Vector2(pt.X - tileFrame.X + 1, pt.Y - tileFrame.Y + 1) * 16;
+                    if (SlingshotSystem.LoadedBird == null)
+                    {
+                        SlingshotSystem.LoadedBird = SlingshotSystem.birdData[Main.rand.Next(0, 3)];
+                    }
+                    if (Player.controlUseItem)
+                    {
+                        SlingshotSystem.wasHolding = true;
+                    }
+                }
+                if (SlingshotSystem.slingPosition != default)
+                {
+                    if (SlingshotSystem.wasHolding && Player.controlUseItem)
+                    {
+                        SlingshotSystem.dragOffset = SlingshotSystem.slingPosition.DirectionTo(Main.MouseWorld) * MathHelper.Clamp(SlingshotSystem.slingPosition.Distance(Main.MouseWorld), 0.1f, 50f);
+                    }
+                    if (!Player.controlUseItem && SlingshotSystem.wasHolding)
+                    {
+                        SlingshotSystem.wasHolding = false;
+                        int extraUpdates = 10;
+                        float strength = SlingshotSystem.dragOffset.Length() / ((float)extraUpdates - 2);
+                        int p = Projectile.NewProjectile(new EntitySource_WorldEvent(), SlingshotSystem.slingPosition, -SlingshotSystem.dragOffset.SafeNormalize(Vector2.UnitY) * strength, SlingshotSystem.LoadedBird.ProjType, 2222222, 1, Player.whoAmI);
+                        Main.projectile[p].extraUpdates = extraUpdates;
+                        Main.projectile[p].penetrate = 20;
+                        SoundEngine.PlaySound(SlingshotSystem.LoadedBird.sound);
+                        SlingshotSystem.LoadedBird = null;
+                        SlingshotSystem.dragOffset = default;
+                    }
+                }
+            }
+            else
+            {
+                SlingshotSystem.slingPosition = default;
+            }
+        }
+    }
+
     public class SlingshotSystem : ModSystem
     {
         public static Vector2 slingPosition = default;
-
-        public static BirdType LoadedBirdType => (BirdType)LoadedBird.ProjType;
 
         public static SlingshotBird LoadedBird = null;
 
@@ -147,14 +194,6 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
         public static Vector2 dragOffset = default;
 
         public static bool wasHolding = false;
-
-        public enum BirdType
-        {
-            None = 0,
-            Basic = 1,
-            Fast = 2,
-            Explode = 3
-        }
 
         public enum MaterialType
         {
@@ -180,51 +219,6 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
             birdData.Add(new SlingshotBird(ProjectileID.WoodenArrowFriendly, new int[5] { 6, 8, 15, 20, 21 }, BetterSoundID.ItemLaserMachinegun));
             birdData.Add(new SlingshotBird(ProjectileID.FireArrow, new int[5] { 6, 4, 15, 20, 20 }, BetterSoundID.ItemInfernoFork));
             birdData.Add(new SlingshotBird(ProjectileID.HellfireArrow, new int[5] { 6, 8, 8, 17, 20 }, BetterSoundID.ItemExplosion));
-        }
-
-        public override void PostUpdateEverything()
-        {
-            if (SubworldSystem.IsActive<PiggySubworld>())
-            {
-                Point pt = Main.MouseWorld.ToTileCoordinates();
-                Tile t = CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y);
-                if (t.TileType == ModContent.TileType<SlingshotPlaced>())
-                {
-                    Point tileFrame = new Point(t.TileFrameX / 18, t.TileFrameY / 18);
-                    SlingshotSystem.slingPosition = new Vector2(pt.X - tileFrame.X + 1, pt.Y - tileFrame.Y + 1) * 16;
-                    if (SlingshotSystem.LoadedBird == null)
-                    {
-                        SlingshotSystem.LoadedBird = SlingshotSystem.birdData[Main.rand.Next(0, 3)];
-                    }
-                    if (Main.LocalPlayer.controlUseItem)
-                    {
-                        wasHolding = true;
-                    }
-                }
-                if (slingPosition != default)
-                {
-                    if (wasHolding && Main.LocalPlayer.controlUseItem)
-                    {
-                        dragOffset = slingPosition.DirectionTo(Main.MouseWorld) * MathHelper.Clamp(slingPosition.Distance(Main.MouseWorld), 0.1f, 50f);
-                    }
-                    if (!Main.LocalPlayer.controlUseItem && wasHolding)
-                    {
-                        wasHolding = false;
-                        int extraUpdates = 10;
-                        float strength = SlingshotSystem.dragOffset.Length() / ((float)extraUpdates - 2);
-                        int p = Projectile.NewProjectile(new EntitySource_WorldEvent(), SlingshotSystem.slingPosition, -SlingshotSystem.dragOffset.SafeNormalize(Vector2.UnitY) * strength, SlingshotSystem.LoadedBird.ProjType, 2222222, 1, Main.LocalPlayer.whoAmI);
-                        Main.projectile[p].extraUpdates = extraUpdates;
-                        Main.projectile[p].penetrate = 20;
-                        SoundEngine.PlaySound(SlingshotSystem.LoadedBird.sound);
-                        SlingshotSystem.LoadedBird = null;
-                        SlingshotSystem.dragOffset = default;
-                    }
-                }
-            }
-            else
-            {
-                slingPosition = default;
-            }
         }
     }
 
