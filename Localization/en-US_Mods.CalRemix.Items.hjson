@@ -4836,3 +4836,23 @@ LivyatanRelic: {
 	DisplayName: Livyatan Relic
 	Tooltip: ""
 }
+
+StickBlock: {
+	DisplayName: Stick Block
+	Tooltip: ""
+}
+
+StickWall: {
+	DisplayName: Stick Wall
+	Tooltip: ""
+}
+
+StrawBlock: {
+	DisplayName: Straw Block
+	Tooltip: ""
+}
+
+StrawWall: {
+	DisplayName: Straw Wall
+	Tooltip: ""
+}

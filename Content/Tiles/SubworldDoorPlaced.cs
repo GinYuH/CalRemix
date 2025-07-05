@@ -180,6 +180,15 @@ namespace CalRemix.Content.Tiles
         public override Color DoorColor => Color.WhiteSmoke;
     }
 
+    public class PiggyDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalamityMod/Items/Critters/PiggyItem";
+        public override Subworld BoundSubworld => ModContent.GetInstance<PiggySubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.LightPink;
+    }
+
 
     // this is my special door for testing so it goes at the bottom always
     public class TestDoor : SubworldDoorPlaced
