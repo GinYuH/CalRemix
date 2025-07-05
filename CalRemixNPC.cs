@@ -2206,6 +2206,10 @@ namespace CalRemix
                     }
                     return;
                 }
+                if (SubworldSystem.Current is IDisableSpawnsSubworld)
+                {
+                    ClearPool(ref pool);
+                }
             }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)
