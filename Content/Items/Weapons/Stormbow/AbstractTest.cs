@@ -1274,7 +1274,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             public override void Place(Point bottomLeft)
             {
                 int style = Main.rand.Next(22, 26);
-                PlaceObject(bottomLeft.X, bottomLeft.Y, type, style: style);
+                Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                PlaceObject(point.X, point.Y, type, style: style);
             }
         }
     }
