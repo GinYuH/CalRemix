@@ -16,6 +16,7 @@ using CalamityMod.Projectiles.Melee;
 using SubworldLibrary;
 using CalRemix.Core.Subworlds;
 using Microsoft.CodeAnalysis.Text;
+using Newtonsoft.Json;
 
 namespace CalRemix.Content.Tiles.Subworlds.Piggy
 {
@@ -65,8 +66,27 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                 {
                     SlingshotBird loadedBird = SlingshotSystem.LoadedBird;
                     Texture2D tex = TextureAssets.Projectile[loadedBird.ProjType].Value;
+                    Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
                     Vector2 worldPos = SlingshotSystem.slingPosition + CalamityUtils.TileDrawOffset;
-                    spriteBatch.Draw(tex, worldPos - Main.screenPosition + SlingshotSystem.dragOffset, null, Lighting.GetColor(i, j), SlingshotSystem.dragOffset.ToRotation() - MathHelper.PiOver2, tex.Size() / 2, 1, 0, 0);
+                    float rotation = SlingshotSystem.dragOffset.ToRotation() - MathHelper.PiOver2;
+                    if (SlingshotSystem.dragOffset == default)
+                        rotation = MathHelper.PiOver2;
+                    else
+                    {
+                        int ptAmt = 16; // How many points to draw
+                        int lineStrength = 6; // The multiplier put on the line's distance. The base distance is the distance from the bird to the slingshot. A value of 6 makes the line 6 times longer.
+                        int gravity = 4; // How much to decrement each node's vertical position. !!! This value must be updated if the above is because I'm too lazy to math.
+                        spriteBatch.EnterShaderRegion(BlendState.Additive);
+                        for (int k = 0; k < ptAmt; k++)
+                        {
+                            Vector2 dotPos = Vector2.Lerp(worldPos, worldPos - SlingshotSystem.dragOffset * lineStrength + Vector2.UnitY * k * gravity, k / (float)ptAmt);
+                            float bloomScale = MathHelper.Lerp(0.05f, 0.01f, k / (float)ptAmt);
+                            spriteBatch.Draw(bloom, dotPos - Main.screenPosition, null, Color.White, 0, bloom.Size() / 2, bloomScale, 0, 0);
+                        }
+                        spriteBatch.ExitShaderRegion();
+                    }
+                    spriteBatch.Draw(tex, worldPos - Main.screenPosition + SlingshotSystem.dragOffset, null, Lighting.GetColor(i, j), rotation, tex.Size() / 2, 1, 0, 0);
+
                 }
             }
             return true;
@@ -146,7 +166,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                 if (t.TileType == ModContent.TileType<SlingshotPlaced>())
                 {
                     Point tileFrame = new Point(t.TileFrameX / 18, t.TileFrameY / 18);
-                    SlingshotSystem.slingPosition = new Vector2(pt.X - tileFrame.X + 1, pt.Y - tileFrame.Y + 1) * 16;
+                    SlingshotSystem.slingPosition = new Vector2(pt.X - tileFrame.X + 2, pt.Y - tileFrame.Y + 1) * 16;
                     if (SlingshotSystem.LoadedBird == null)
                     {
                         SlingshotSystem.LoadedBird = SlingshotSystem.birdData[Main.rand.Next(0, 3)];
@@ -160,7 +180,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                 {
                     if (SlingshotSystem.wasHolding && Player.controlUseItem)
                     {
-                        SlingshotSystem.dragOffset = SlingshotSystem.slingPosition.DirectionTo(Main.MouseWorld) * MathHelper.Clamp(SlingshotSystem.slingPosition.Distance(Main.MouseWorld), 0.1f, 50f);
+                        SlingshotSystem.dragOffset = SlingshotSystem.slingPosition.DirectionTo(Main.MouseWorld) * MathHelper.Clamp(SlingshotSystem.slingPosition.Distance(Main.MouseWorld), 0.1f, 100f);
                     }
                     if (!Player.controlUseItem && SlingshotSystem.wasHolding)
                     {
