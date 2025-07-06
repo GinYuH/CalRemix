@@ -15,7 +15,7 @@ using CalRemix.Core.World.Subworld;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class BeautifulWinterWorldSubworld : Subworld
+    public class BeautifulWinterWorldSubworld : Subworld, IDisableOcean
     {
         public override int Height => 2222;
         public override int Width => 2222;

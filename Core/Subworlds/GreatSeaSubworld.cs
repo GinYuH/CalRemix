@@ -27,7 +27,7 @@ using Terraria.Utilities;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class GreatSeaSubworld : Subworld, ICustomSpawnSubworld
+    public class GreatSeaSubworld : Subworld, ICustomSpawnSubworld, IDisableOcean
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {

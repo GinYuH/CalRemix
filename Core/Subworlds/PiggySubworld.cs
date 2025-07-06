@@ -30,7 +30,7 @@ using Humanizer;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class PiggySubworld : Subworld, IDisableSpawnsSubworld, IFixDrawBlack
+    public class PiggySubworld : Subworld, IDisableSpawnsSubworld, IFixDrawBlack, IDisableOcean
     {
 
         public override int Height => 200;

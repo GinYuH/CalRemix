@@ -97,6 +97,7 @@ namespace CalRemix.Core
             On_NPC.SpawnOnPlayer += KillDungeonGuardians;
             On_Main.DrawInfoAccs += DisableInfoDuringCutscene;
             On_Main.DrawBlack += FixSubworldDrawBlack;
+            On_WorldGen.oceanDepths += DisableOceanSubworld;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
@@ -113,6 +114,18 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public static bool DisableOceanSubworld(On_WorldGen.orig_oceanDepths orig, int x, int y)
+        {
+            if (SubworldSystem.AnyActive())
+            {
+                if (SubworldSystem.Current is IDisableOcean)
+                {
+                    return false;
+                }
+            }
+            return orig(x, y);
         }
 
         public static void FixSubworldDrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force = false)
