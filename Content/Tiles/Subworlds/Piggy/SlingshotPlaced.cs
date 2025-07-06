@@ -17,6 +17,7 @@ using SubworldLibrary;
 using CalRemix.Core.Subworlds;
 using Microsoft.CodeAnalysis.Text;
 using Newtonsoft.Json;
+using CalamityMod.Graphics.Primitives;
 
 namespace CalRemix.Content.Tiles.Subworlds.Piggy
 {
@@ -69,9 +70,39 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                     Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
                     Vector2 worldPos = SlingshotSystem.slingPosition + CalamityUtils.TileDrawOffset;
                     float rotation = SlingshotSystem.dragOffset.ToRotation() - MathHelper.PiOver2;
+
+                    Vector2 stretchOffset = Main.rand.NextVector2Circular(1, 1);
+                    bool drawLine = false;
                     if (SlingshotSystem.dragOffset == default)
+                    {
                         rotation = MathHelper.PiOver2;
+                        stretchOffset = Vector2.Zero;
+                    }
                     else
+                    {
+                        drawLine = true;
+                    }
+
+                    Vector2 prong1 = new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset + new Vector2(8, 8) + stretchOffset;
+                    Vector2 prong2 = new Vector2(i + 3, j) * 16 + CalamityUtils.TileDrawOffset + new Vector2(2, 8) + stretchOffset;
+
+                    int slingPoints = 20;
+                    List<Vector2> prong1P = new();
+                    List<Vector2> prong2P = new();
+                    for (int k = 0; k <= slingPoints; k++)
+                    {
+                        prong1P.Add(Vector2.Lerp(prong1, worldPos + SlingshotSystem.dragOffset, k / (float)slingPoints));
+                        prong2P.Add(Vector2.Lerp(prong2, worldPos + SlingshotSystem.dragOffset, k / (float)slingPoints));
+                    }
+
+                    PrimitiveRenderer.RenderTrail(prong1P, new((float f) => 4, (float f) => Color.SaddleBrown));
+
+                    spriteBatch.Draw(tex, worldPos - Main.screenPosition + SlingshotSystem.dragOffset + stretchOffset, null, Lighting.GetColor(i, j), rotation, tex.Size() / 2, 1, 0, 0);
+
+                    spriteBatch.ExitShaderRegion();
+                    PrimitiveRenderer.RenderTrail(prong2P, new((float f) => 4, (float f) => Color.SaddleBrown));
+
+                    if (drawLine)
                     {
                         int ptAmt = 16; // How many points to draw
                         int lineStrength = 6; // The multiplier put on the line's distance. The base distance is the distance from the bird to the slingshot. A value of 6 makes the line 6 times longer.
@@ -86,8 +117,6 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                         }
                         spriteBatch.ExitShaderRegion();
                     }
-                    spriteBatch.Draw(tex, worldPos - Main.screenPosition + SlingshotSystem.dragOffset, null, Lighting.GetColor(i, j), rotation, tex.Size() / 2, 1, 0, 0);
-
                 }
             }
             return true;
@@ -139,7 +168,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                         {
                             if (effectiveNess <= 20)
                             {
-                                WorldGen.KillTile(i, j);
+                                WorldGen.KillTile(i, j, noItem: true);
                                 p.penetrate -= effectiveNess;
                             }
                             else
@@ -167,7 +196,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                 if (t.TileType == ModContent.TileType<SlingshotPlaced>())
                 {
                     Point tileFrame = new Point(t.TileFrameX / 18, t.TileFrameY / 18);
-                    SlingshotSystem.slingPosition = new Vector2(pt.X - tileFrame.X + 2, pt.Y - tileFrame.Y + 1) * 16;
+                    SlingshotSystem.slingPosition = new Vector2(pt.X - tileFrame.X + 2, pt.Y - tileFrame.Y) * 16 + new Vector2(0, 8);
                     if (SlingshotSystem.LoadedBird == null)
                     {
                         SlingshotSystem.LoadedBird = SlingshotSystem.birdData[Main.rand.Next(0, 3)];
