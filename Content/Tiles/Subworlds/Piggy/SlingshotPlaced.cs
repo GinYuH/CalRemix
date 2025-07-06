@@ -81,7 +81,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                         {
                             Vector2 dotPos = Vector2.Lerp(worldPos, worldPos - SlingshotSystem.dragOffset * lineStrength + Vector2.UnitY * k * gravity, k / (float)ptAmt);
                             float bloomScale = MathHelper.Lerp(0.05f, 0.01f, k / (float)ptAmt);
-                            spriteBatch.Draw(bloom, dotPos - Main.screenPosition, null, Color.White, 0, bloom.Size() / 2, bloomScale, 0, 0);
+                            spriteBatch.Draw(bloom, dotPos - Main.screenPosition, null, loadedBird.lineColor, 0, bloom.Size() / 2, bloomScale, 0, 0);
+                            spriteBatch.Draw(bloom, dotPos - Main.screenPosition, null, Color.White * 0.9f, 0, bloom.Size() / 2, bloomScale * 0.6f, 0, 0);
                         }
                         spriteBatch.ExitShaderRegion();
                     }
@@ -189,7 +190,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                         float strength = SlingshotSystem.dragOffset.Length() / ((float)extraUpdates - 2);
                         int p = Projectile.NewProjectile(new EntitySource_WorldEvent(), SlingshotSystem.slingPosition, -SlingshotSystem.dragOffset.SafeNormalize(Vector2.UnitY) * strength, SlingshotSystem.LoadedBird.ProjType, 2222222, 1, Player.whoAmI);
                         Main.projectile[p].extraUpdates = extraUpdates;
-                        Main.projectile[p].penetrate = 20;
+                        Main.projectile[p].penetrate = 120;
                         SoundEngine.PlaySound(SlingshotSystem.LoadedBird.sound);
                         SlingshotSystem.LoadedBird = null;
                         SlingshotSystem.dragOffset = default;
@@ -236,16 +237,17 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
 
         public override void PostSetupContent()
         {
-            birdData.Add(new SlingshotBird(ProjectileID.WoodenArrowFriendly, new int[5] { 6, 8, 15, 20, 21 }, BetterSoundID.ItemLaserMachinegun));
-            birdData.Add(new SlingshotBird(ProjectileID.FireArrow, new int[5] { 6, 4, 15, 20, 20 }, BetterSoundID.ItemInfernoFork));
-            birdData.Add(new SlingshotBird(ProjectileID.HellfireArrow, new int[5] { 6, 8, 8, 17, 20 }, BetterSoundID.ItemExplosion));
+            birdData.Add(new SlingshotBird(ProjectileID.WoodenArrowFriendly, new int[5] { 6, 8, 15, 20, 21 }, BetterSoundID.ItemLaserMachinegun, Color.Red));
+            birdData.Add(new SlingshotBird(ProjectileID.FireArrow, new int[5] { 6, 4, 15, 20, 20 }, BetterSoundID.ItemInfernoFork, Color.Yellow));
+            birdData.Add(new SlingshotBird(ProjectileID.HellfireArrow, new int[5] { 6, 8, 8, 17, 20 }, BetterSoundID.ItemExplosion, Color.Orange));
         }
     }
 
-    public class SlingshotBird(int projType, int[] materialEffectivness, SoundStyle sound)
+    public class SlingshotBird(int projType, int[] materialEffectivness, SoundStyle sound, Color lineColor)
     {
         public int ProjType = projType;
         public int[] MaterialEffectiveness = materialEffectivness;
         public SoundStyle sound = sound;
+        public Color lineColor = lineColor;
     }
 }
