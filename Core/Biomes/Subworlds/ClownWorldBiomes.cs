@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Core.Biomes.Subworlds
 {
-    public class ClownWorldClownBiome : ModBiome
+    public class ClownWorldClownBiome : ModBiome, IFixDrawBlack, IDisableOcean
     {
         //public override bool IsPrimaryBiome =>false; // Allows this biome to impact NPC prices
         //public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("CalRemix/ProfanedDesertBackground");

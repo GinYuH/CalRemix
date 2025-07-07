@@ -58,12 +58,33 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //Tile tile = Main.tile[point.X, point.Y];
             //Main.NewText(tile.BlockType);
             //Main.NewText(tile.TileFrameX / 18);
-            Tile tile = Main.tile[point];
-            Main.NewText("1: " + Main.tileFrame[tile.TileType]);
-            Main.NewText("2: " + tile.TileFrameX);
+            //Tile tile = Main.tile[point];
+            //Main.NewText("1: " + Main.tileFrame[tile.TileType]);
+            //Main.NewText("2: " + tile.TileFrameX);
+
+            PlaceWIPCave(point);
+
+            /*
+            int type11 = -1;
+            if (Main.rand.NextBool(10))
+            {
+                type11 = -2;
+            }
+            int num993 = Main.rand.Next(7, 26);
+            int steps = Main.rand.Next(50, 200);
+            double num994 = (double)Main.rand.Next(100, 221) * 0.1;
+            double num995 = (double)Main.rand.Next(-10, 11) * 0.02;
+            int i7 = Main.rand.Next(0, Main.maxTilesX); // this was the x
+            int j9 = Main.rand.Next((int)GenVars.rockLayerHigh, Main.maxTilesY); // this was the y
+            //WorldGen.TileRunner(point.X, point.Y, num993, steps, type11, addTile: false, num994, num995, noYChange: true);
+            //WorldGen.TileRunner(point.X, point.Y, num993, steps, type11, addTile: false, 0.0 - num994, 0.0 - num995, noYChange: true);
+             
+            WorldGen.TileRunner(point.X, point.Y, 50, 400, -1, false, num994, num995, noYChange: true);
+            WorldGen.TileRunner(point.X, point.Y, 50, 400, -1, false, -num994, -num995, noYChange: true);
+            */
 
             //MinistructureList.SpearRack.CheckAndPlaceTile(point);
-            PlaceOtherSpiritModThing(point);
+            //PlaceOtherSpiritModThing(point);
 
             /*int floorTile = TileID.VortexBrick;
             if (Main.tile[point.X, point.Y].TileType == (ushort)floorTile && !Main.tile[point.X - 1, point.Y].HasTile)
@@ -384,6 +405,77 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
                 }
             }
+        }
+
+        public static void PlaceWIPCave(Point origin)
+        {
+            ShapeData sideCarversShapeData = new ShapeData();
+            ShapeData lakeShapeData = new ShapeData();
+            Point point = new Point(origin.X, origin.Y + 20);
+            float xScale = 0.8f + Main.rand.NextFloat() * 0.25f; // Randomize the width of the shrine area
+            int slimeRadius = 25;
+            int slimeOffsetX = 40;
+
+            int leftOffsetY = Main.rand.Next(-6, 6);
+            int rightOffsetY = Main.rand.Next(-6, 6);
+
+            // add the evil lake
+            bool left = Main.rand.NextBool();
+            int lakeOffsetX = left ? -slimeOffsetX / 2 : slimeOffsetX / 2;
+            int lakeOffsetY = 40 + Main.rand.Next(-5, 5);
+            WorldUtils.Gen(point, new Shapes.Mound(slimeRadius + Main.rand.Next(0, 10), 40), Actions.Chain(
+                new Modifiers.Offset(lakeOffsetX, lakeOffsetY),
+                new Actions.Blank().Output(lakeShapeData)
+            ));
+
+            // the main three
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+            int smallCliffOffsetY = Main.rand.Next(-8, 8);
+            if (Main.rand.NextBool())
+            {
+                if (left)
+                    leftOffsetY += smallCliffOffsetY;
+                else
+                    rightOffsetY += smallCliffOffsetY;
+            }
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                new Modifiers.Offset(-slimeOffsetX, leftOffsetY),
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                new Modifiers.Offset(slimeOffsetX, rightOffsetY),
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+            // lower bulges to clip off uneven edges
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f), Actions.Chain(
+                new Modifiers.Offset(-slimeOffsetX / 2,  5 + leftOffsetY),
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f), Actions.Chain(
+                new Modifiers.Offset(slimeOffsetX / 2, 5 + rightOffsetY),
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+            // upper bulges
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                new Modifiers.Offset(-slimeOffsetX / 2, -10 + leftOffsetY),
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                new Modifiers.Offset(slimeOffsetX / 2, -10 + rightOffsetY),
+                new Actions.Blank().Output(sideCarversShapeData)
+            ));
+
+            // actually placing shit
+            WorldUtils.Gen(point, new ModShapes.All(sideCarversShapeData), Actions.Chain(
+                new Modifiers.Blotches(2, 0.8),
+                new Actions.ClearTile(frameNeighbors: true)
+            ));
+            WorldUtils.Gen(point, new ModShapes.All(lakeShapeData), Actions.Chain(
+                new Modifiers.Blotches(2, 0.8),
+                new Actions.ClearTile(frameNeighbors: true)
+            ));
         }
 
         public void PlaceOtherSpiritModThing(Point origin)

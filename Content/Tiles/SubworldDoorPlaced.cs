@@ -194,7 +194,7 @@ namespace CalRemix.Content.Tiles
     public class TestDoor : SubworldDoorPlaced
     {
         public override string PreviewTexName => "CalRemix/Content/Items/Weapons/AergianTechnistaff";
-        public override Subworld BoundSubworld => ModContent.GetInstance<MoonGraveyardSubworld>();
+        public override Subworld BoundSubworld => ModContent.GetInstance<IllKillThisLaterSubworld>();
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.AliceBlue;

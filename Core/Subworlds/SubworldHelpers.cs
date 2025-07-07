@@ -711,10 +711,6 @@ namespace CalRemix.Core.Subworlds
         public static void RockLayerCaves()
         {
             int num988 = (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.00013);
-            if (WorldGen.remixWorldGen)
-            {
-                num988 = (int)((double)num988 * 1.1);
-            }
             for (int num989 = 0; num989 < num988; num989++)
             {
                 double value17 = (double)num989 / (double)num988;
@@ -727,11 +723,6 @@ namespace CalRemix.Core.Subworlds
                     }
                     int num990 = WorldGen.genRand.Next(6, 20);
                     int num991 = WorldGen.genRand.Next(50, 300);
-                    if (WorldGen.remixWorldGen)
-                    {
-                        num990 = (int)((double)num990 * 0.7);
-                        num991 = (int)((double)num991 * 0.7);
-                    }
                     WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayerHigh, Main.maxTilesY), num990, num991, type10);
                 }
             }
