@@ -200,7 +200,7 @@ namespace CalRemix.Core
                             float brightness = Lighting.Brightness(j, i);
                             brightness = (float)Math.Floor(brightness * 255f) / 255f;
                             byte liquidAmount = tile.LiquidAmount;
-                            bool notBrightEnough = brightness <= brightnessThreshold && (WorldGen.SolidTile(tile) || (liquidAmount >= 200 && brightness == 0f));
+                            bool notBrightEnough = brightness <= brightnessThreshold && (liquidAmount < 250 || WorldGen.SolidTile(tile) || (liquidAmount >= 200 && brightness == 0f));
                             bool opaqueTile = tile.HasTile && Main.tileBlockLight[tile.TileType] && (!tile.IsTileInvisible || showInvisibleWalls);
                             bool opaqueWall = !WallID.Sets.Transparent[tile.WallType] && (!tile.IsWallInvisible || showInvisibleWalls);
                             if (!notBrightEnough || (!opaqueWall && !opaqueTile) || (!Main.drawToScreen && LiquidRenderer.Instance.HasFullWater(j, i) && tile.WallType == 0 && !tile.IsHalfBlock && !((double)i <= Main.worldSurface)))
