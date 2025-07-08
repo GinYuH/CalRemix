@@ -19,6 +19,10 @@ namespace CalRemix.Core.World
         internal const string PiggyBrickName = "Core/World/PiggyBrick.csch";
         internal const string TurnipName = "Core/World/turnip.csch";
         internal const string PlumestoneName = "Core/World/plumestoneVolcano.csch";
+        internal const string SealedHouseSmallName = "Core/World/sealedHouseSmall.csch";
+        internal const string SealedHouseLargeName = "Core/World/sealedHouseLarge.csch";
+        internal const string SealedHouseLibraryName = "Core/World/sealedHouseLibrary.csch";
+        internal const string SealedHouseChurchName = "Core/World/sealedHouseChurch.csch";
 
         internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
             typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
@@ -38,6 +42,10 @@ namespace CalRemix.Core.World
             TileMaps.Add("Piggy Brick", LoadSchematic(PiggyBrickName));
             TileMaps.Add("Plumestone", LoadSchematic(PlumestoneName));
             TileMaps.Add("Turnip", LoadSchematic(TurnipName));
+            TileMaps.Add("Sealed House Small", LoadSchematic(SealedHouseSmallName));
+            TileMaps.Add("Sealed House Large", LoadSchematic(SealedHouseLargeName));
+            TileMaps.Add("Sealed House Library", LoadSchematic(SealedHouseLibraryName));
+            TileMaps.Add("Sealed House Church", LoadSchematic(SealedHouseChurchName));
         }
 
 

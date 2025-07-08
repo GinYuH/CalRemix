@@ -32,6 +32,7 @@ using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
 using CalRemix.Content.Items.Potions.Tainted;
 using Terraria.ModLoader.Default;
+using CalRemix.Content.NPCs.Bosses.Origen;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -103,7 +104,7 @@ namespace CalRemix.Core.Subworlds
 
         public static float fieldWidth => 1 - (seaDist * 2 + darnWoodWidth * 2 + lavaWidth + cragWidth + barrenWidth + turnipWidth);
 
-        public static float villageWidth => fieldWidth * 0.4f;
+        public static float villageWidth => fieldWidth * 0.6f;
         #endregion
 
 
@@ -179,7 +180,7 @@ namespace CalRemix.Core.Subworlds
             
 
             Main.spawnTileY = surfaceTile;
-            Main.spawnTileX = fieldPosition + (int)(Main.maxTilesX * fieldWidth * 0.5f);
+            Main.spawnTileX = fieldPosition + (int)(Main.maxTilesX * fieldWidth * 0.3f);
         }
 
         public static void GenerateBase()
@@ -488,7 +489,48 @@ namespace CalRemix.Core.Subworlds
 
         public static void GenerateVillage()
         {
+            int villageStart = villagePosition;
+            int villageEnd = villagePosition + (int)(Main.maxTilesX * villageWidth);
 
+            ushort tType = (ushort)ModContent.TileType<SealedGrassPlaced>();
+
+            int hausCooldown = 0;
+
+            WeightedRandom<string> houseTypes = new();
+            string prefix = "Sealed House ";
+            houseTypes.Add(prefix + "Small", 1);
+            houseTypes.Add(prefix + "Large", 0.6f);
+            houseTypes.Add(prefix + "Library", 0.4f);
+            houseTypes.Add(prefix + "Church", 0.2f);
+
+            bool generatedChurch = false;
+            int housesGenerated = 0;
+            for (int i = villageStart; i < villageEnd; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.TileType == tType)
+                    {
+                        if (Main.rand.NextBool(10) && hausCooldown <= 0)
+                        {
+                            string houseType = houseTypes.Get();
+                            // Guarantee a church on the fifth house if one hasn't generated yet
+                            if ((!generatedChurch && housesGenerated >= 4) || houseType == prefix + "Church")
+                            {
+                                houseType = prefix + "Church";
+                                generatedChurch = true;
+                            }
+                            bool _ = false;
+                            SchematicManager.PlaceSchematic<Action<Chest>>(houseType, new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _);
+                            hausCooldown = (int)(RemixSchematics.TileMaps[prefix + "Library"].GetLength(0));
+                            housesGenerated++;
+                        }
+                        break;
+                    }
+                }
+                hausCooldown--;
+            }
         }
 
         public static void GenerateCarnelian()
@@ -614,7 +656,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == grass)
                     {
-                        if (Main.rand.NextBool(10))
+                        if (Main.rand.NextBool(5))
                         {
                             CalRemixHelper.ForceGrowTree(i, j);
                         }
