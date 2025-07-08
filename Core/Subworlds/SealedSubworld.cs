@@ -64,10 +64,8 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            if (Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                Point p = Main.MouseWorld.ToTileCoordinates();
-            }
+            Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:Sealed", true);
+            SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
             base.Update();
         }
@@ -257,6 +255,14 @@ namespace CalRemix.Core.Subworlds
                     {
                         t.ResetToType(dwood);
                     }
+                    if (j > surfaceTile + 40)
+                    {
+                        if (!t.HasTile)
+                        {
+                            t.LiquidAmount = 255;
+                            t.LiquidType = LiquidID.Water;
+                        }
+                    }
                 }
             }
             for (int i = rightDarnwood.X; i < (rightDarnwood.X + rightDarnwood.Width); i++)
@@ -268,10 +274,18 @@ namespace CalRemix.Core.Subworlds
                     {
                         t.ResetToType(dwood);
                     }
+                    if (j > surfaceTile + 40)
+                    {
+                        if (!t.HasTile)
+                        {
+                            t.LiquidAmount = 255;
+                            t.LiquidType = LiquidID.Water;
+                        }
+                    }
                 }
             }
 
-            for (int i = leftDarnwood.X; i < leftDarnwood.X + leftDarnwood.Width + 1; i++)
+            for (int i = leftDarnwood.X; i < leftDarnwood.X + leftDarnwood.Width + 1 - padding; i++)
             {
                 for (int j = leftDarnwood.Y; j < leftDarnwood.Y + leftDarnwood.Height + 1; j++)
                 {
@@ -286,7 +300,7 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
-            for (int i = rightDarnwood.X; i < rightDarnwood.X + rightDarnwood.Width + 1; i++)
+            for (int i = rightDarnwood.X + padding; i < rightDarnwood.X + rightDarnwood.Width + 1; i++)
             {
                 for (int j = leftDarnwood.Y; j < leftDarnwood.Y + leftDarnwood.Height + 1; j++)
                 {

@@ -131,6 +131,51 @@ Mods: {
 				DisplayName: Great Sea
 				TownNPCDialogueName: the Great Sea Biome
 			}
+
+			BadlandsBiome: {
+				DisplayName: Badlands Biome
+				TownNPCDialogueName: the Badlands Biome
+			}
+
+			BarrensBiome: {
+				DisplayName: Barrens Biome
+				TownNPCDialogueName: the Barrens Biome
+			}
+
+			CarnelianForestBiome: {
+				DisplayName: Carnelian Forest Biome
+				TownNPCDialogueName: the Carnelian Forest Biome
+			}
+
+			DarnwoodSwampBiome: {
+				DisplayName: Darnwood Swamp Biome
+				TownNPCDialogueName: the Darnwood Swamp Biome
+			}
+
+			SealedFieldsBiome: {
+				DisplayName: Sealed Fields Biome
+				TownNPCDialogueName: the Sealed Fields Biome
+			}
+
+			TurnipBiome: {
+				DisplayName: Turnip Biome
+				TownNPCDialogueName: the Turnip Biome
+			}
+
+			UnsealedSeaBiome: {
+				DisplayName: Unsealed Sea Biome
+				TownNPCDialogueName: the Unsealed Sea Biome
+			}
+
+			VoidForestBiome: {
+				DisplayName: Void Forest Biome
+				TownNPCDialogueName: the Void Forest Biome
+			}
+
+			VolcanicFieldBiome: {
+				DisplayName: Volcanic Field Biome
+				TownNPCDialogueName: the Volcanic Field Biome
+			}
 		}
 
 		Enchantments: {

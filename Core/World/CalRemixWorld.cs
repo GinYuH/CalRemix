@@ -51,6 +51,9 @@ using static CalRemix.CalRemixHelper;
 using Terraria.Localization;
 using System.Linq;
 using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Tiles.Subworlds.Sealed;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Core.Backgrounds.Plague;
 
 namespace CalRemix.Core.World
 {
@@ -73,6 +76,7 @@ namespace CalRemix.Core.World
         public static int baronTiles;
         public static int MeldTiles;
         public static int strongholdTiles;
+
         public static int elumplateTiles;
         public static int aeroplateTiles;
         public static int havocplateTiles;
@@ -81,6 +85,15 @@ namespace CalRemix.Core.World
         public static int plagueplateTiles;
         public static int bloodplateTiles;
         public static int onyxplateTiles;
+
+        public static int sealedTiles;
+        public static int carnelianTiles;
+        public static int darnwoodTiles;
+        public static int barrenTiles;
+        public static int badTiles;
+        public static int turnipTiles;
+        public static int voidTiles;
+        public static int plumestoneTiles;
 
         public static int ShrineTimer = -20; 
         public static int RoachCountdown = 0;
@@ -1101,6 +1114,13 @@ namespace CalRemix.Core.World
             aeroplateTiles = 0;
             navyplateTiles = 0;
             bloodplateTiles = 0;
+            sealedTiles = 0;
+            carnelianTiles = 0;
+            badTiles = 0;
+            barrenTiles = 0;
+            plumestoneTiles = 0;
+            turnipTiles = 0;
+            darnwoodTiles = 0;
         }
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -1130,6 +1150,14 @@ namespace CalRemix.Core.World
             elumplateTiles = tileCounts[TileType<Elumplate>()];
             navyplateTiles = tileCounts[TileType<Navyplate>()];
             plagueplateTiles = tileCounts[TileType<PlagueContainmentCells>()];
+            sealedTiles = tileCounts[TileType<SealedDirtPlaced>()] + tileCounts[TileType<SealedGrassPlaced>()] + tileCounts[TileType<SealedStonePlaced>()];
+            carnelianTiles = tileCounts[TileType<CarnelianDirtPlaced>()] + tileCounts[TileType<CarnelianGrassPlaced>()] + tileCounts[TileType<CarnelianStonePlaced>()];
+            barrenTiles = tileCounts[TileType<DesoilitePlaced>()];
+            badTiles = tileCounts[TileType<BadrockPlaced>()];
+            voidTiles = tileCounts[TileType<VoidInfusedStonePlaced>()];
+            darnwoodTiles = tileCounts[TileType<RichMudPlaced>()];
+            plumestoneTiles = tileCounts[TileType<ActivePlumestonePlaced>()] + tileCounts[TileType<InactivePlumestonePlaced>()];
+            turnipTiles = tileCounts[TileType<PorswineManurePlaced>()] + tileCounts[TileType<TurnipFleshPlaced>()] + tileCounts[TileType<TurnipLeafPlaced>()];
             Main.SceneMetrics.HolyTileCount += tileCounts[TileType<TorrefiedTephraPlaced>()];
         }
 
@@ -1358,6 +1386,48 @@ namespace CalRemix.Core.World
                 }));
             }
             postGenUpdate = true;
+        }
+
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        {
+            if (Main.gameMenu)
+            {
+                return;
+            }
+            var player = Main.LocalPlayer;
+            var pPlayer = player.GetModPlayer<CalRemixPlayer>();
+            if (pPlayer.ZonePlague || pPlayer.ZonePlagueDesert)
+            {
+                float amount = 0.2f;
+                if (PlagueSky.Intensity < 1f)
+                {
+                    float r = backgroundColor.R / 255f;
+                    float g = backgroundColor.G / 255f;
+                    float b = backgroundColor.B / 255f;
+                    r = MathHelper.Lerp(r, amount, PlagueSky.Intensity);
+                    g = MathHelper.Lerp(g, amount, PlagueSky.Intensity);
+                    b = MathHelper.Lerp(b, amount, PlagueSky.Intensity);
+                    backgroundColor.R = (byte)(int)(r * 255f);
+                    backgroundColor.G = (byte)(int)(g * 255f);
+                    backgroundColor.B = (byte)(int)(b * 255f);
+                }
+                else
+                {
+                    byte a = (byte)(int)(amount * 255f);
+                    backgroundColor.R = 40;
+                    backgroundColor.G = 40;
+                    backgroundColor.B = 40;
+                }
+            }
+            if (CalRemixWorld.oxydayTime > 0 && player.position.Y < Main.worldSurface * 16)
+            {
+                backgroundColor = Color.Lerp(backgroundColor, Color.LightSkyBlue, 0.2f);
+                backgroundColor = Color.Lerp(backgroundColor, Color.Cyan, 0.2f);
+            }
+            if (SubworldSystem.IsActive<SealedSubworld>())
+            {
+                backgroundColor = Color.Lerp(backgroundColor, SealedSky.ChooseSealedColor(Main.LocalPlayer), 0.2f);
+            }
         }
 
         public override void PostWorldGen()

@@ -8,6 +8,9 @@ using CalRemix.Content.Projectiles;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using System;
+using SubworldLibrary;
+using CalRemix.Core.Subworlds;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix.Core.World
 {
@@ -96,44 +99,6 @@ namespace CalRemix.Core.World
                     }
                 }
                 CalRemixWorld.generatedPlague = true;
-            }
-        }
-
-        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
-        {
-            if (Main.gameMenu)
-            {
-                return;
-            }
-            var player = Main.LocalPlayer;
-            var pPlayer = player.GetModPlayer<CalRemixPlayer>();
-            if (pPlayer.ZonePlague || pPlayer.ZonePlagueDesert)
-            {
-                float amount = 0.2f;
-                if (PlagueSky.Intensity < 1f)
-                {
-                    float r = backgroundColor.R / 255f;
-                    float g = backgroundColor.G / 255f;
-                    float b = backgroundColor.B / 255f;
-                    r = MathHelper.Lerp(r, amount, PlagueSky.Intensity);
-                    g = MathHelper.Lerp(g, amount, PlagueSky.Intensity);
-                    b = MathHelper.Lerp(b, amount, PlagueSky.Intensity);
-                    backgroundColor.R = (byte)(int)(r * 255f);
-                    backgroundColor.G = (byte)(int)(g * 255f);
-                    backgroundColor.B = (byte)(int)(b * 255f);
-                }
-                else
-                {
-                    byte a = (byte)(int)(amount * 255f);
-                    backgroundColor.R = 40;
-                    backgroundColor.G = 40;
-                    backgroundColor.B = 40;
-                }
-            }
-            if (CalRemixWorld.oxydayTime > 0 && player.position.Y < Main.worldSurface * 16)
-            {
-                backgroundColor = Color.Lerp(backgroundColor, Color.LightSkyBlue, 0.2f);
-                backgroundColor = Color.Lerp(backgroundColor, Color.Cyan, 0.2f);
             }
         }
     }
