@@ -17,6 +17,8 @@ namespace CalRemix.Core.World
         internal const string PiggyStrawName = "Core/World/PiggyStraw.csch";
         internal const string PiggyStickName = "Core/World/PiggyStick.csch";
         internal const string PiggyBrickName = "Core/World/PiggyBrick.csch";
+        internal const string TurnipName = "Core/World/turnip.csch";
+        internal const string PlumestoneName = "Core/World/plumestoneVolcano.csch";
 
         internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
             typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
@@ -34,6 +36,8 @@ namespace CalRemix.Core.World
             TileMaps.Add("Piggy Straw", LoadSchematic(PiggyStrawName));
             TileMaps.Add("Piggy Stick", LoadSchematic(PiggyStickName));
             TileMaps.Add("Piggy Brick", LoadSchematic(PiggyBrickName));
+            TileMaps.Add("Plumestone", LoadSchematic(PlumestoneName));
+            TileMaps.Add("Turnip", LoadSchematic(TurnipName));
         }
 
 

@@ -4861,3 +4861,178 @@ Slingshot: {
 	DisplayName: Slingshot
 	Tooltip: ""
 }
+
+ActivePlumestone: {
+	DisplayName: Active Plumestone
+	Tooltip: ""
+}
+
+Badrock: {
+	DisplayName: Badrock
+	Tooltip: ""
+}
+
+CarnelianDirt: {
+	DisplayName: Carnelian Dirt
+	Tooltip: ""
+}
+
+CarnelianDirtWall: {
+	DisplayName: Carnelian Dirt Wall
+	Tooltip: ""
+}
+
+CarnelianiteOre: {
+	DisplayName: Carnelianite Ore
+	Tooltip: ""
+}
+
+CarnelianStone: {
+	DisplayName: Carnelian Stone
+	Tooltip: ""
+}
+
+CarnelianStoneWall: {
+	DisplayName: Carnelian Stone Wall
+	Tooltip: ""
+}
+
+CarnelianWood: {
+	DisplayName: Carnelian Wood
+	Tooltip: ""
+}
+
+CarnelianWoodWall: {
+	DisplayName: Carnelian Wood Wall
+	Tooltip: ""
+}
+
+Darnwood: {
+	DisplayName: Darnwood
+	Tooltip: ""
+}
+
+DarnwoodWall: {
+	DisplayName: Darnwood Wall
+	Tooltip: ""
+}
+
+Desoilite: {
+	DisplayName: Desoilite
+	Tooltip: ""
+}
+
+FrozenSealedTearOre: {
+	DisplayName: Frozen Sealed Tear Ore
+	Tooltip: ""
+}
+
+InactivePlumestone: {
+	DisplayName: Inactive Plumestone
+	Tooltip: ""
+}
+
+MonoriumOre: {
+	DisplayName: Monorium Ore
+	Tooltip: ""
+}
+
+PeatOre: {
+	DisplayName: Peat Ore
+	Tooltip: ""
+}
+
+PorswineManure: {
+	DisplayName: Porswine Manure
+	Tooltip: ""
+}
+
+RichMud: {
+	DisplayName: Rich Mud
+	Tooltip: ""
+}
+
+SealedBlackSand: {
+	DisplayName: Sealed Black Sand
+	Tooltip: ""
+}
+
+SealedBrick: {
+	DisplayName: Sealed Brick
+	Tooltip: ""
+}
+
+SealedDirt: {
+	DisplayName: Sealed Dirt
+	Tooltip: ""
+}
+
+SealedDirtWall: {
+	DisplayName: Sealed Dirt Wall
+	Tooltip: ""
+}
+
+SealedIce: {
+	DisplayName: Sealed Ice
+	Tooltip: ""
+}
+
+SealedLamp: {
+	DisplayName: Sealed Lamp
+	Tooltip: ""
+}
+
+SealedStone: {
+	DisplayName: Sealed Stone
+	Tooltip: ""
+}
+
+SealedStoneBrick: {
+	DisplayName: Sealed Stone Brick
+	Tooltip: ""
+}
+
+SealedStoneWall: {
+	DisplayName: Sealed Stone Wall
+	Tooltip: ""
+}
+
+SealedWood: {
+	DisplayName: Sealed Wood
+	Tooltip: ""
+}
+
+SealedWoodWall: {
+	DisplayName: Sealed Wood Wall
+	Tooltip: ""
+}
+
+TurnipFlesh: {
+	DisplayName: Turnip Flesh
+	Tooltip: ""
+}
+
+TurnipFruit: {
+	DisplayName: Turnip Fruit
+	Tooltip: ""
+}
+
+TurnipLeaf: {
+	DisplayName: Turnip Leaf
+	Tooltip: ""
+}
+
+TurnipMesh: {
+	DisplayName: Turnip Mesh
+	Tooltip: ""
+}
+
+VoidInfusedStone: {
+	DisplayName: Void Infused Stone
+	Tooltip: ""
+}
+
+VoidInfusedStoneWall: {
+	DisplayName: Void Infused Stone Wall
+	Tooltip: ""
+}

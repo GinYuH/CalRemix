@@ -1,9 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
-using CalRemix.Content.Projectiles;
-using CalRemix.Content.Tiles;
-using CalRemix.Content.Walls;
-﻿using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,8 +13,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
-using Terraria.GameContent.Animations;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -369,6 +364,24 @@ namespace CalRemix
                 return (int)(normal / 2f);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x">X to checkt</param>
+        /// <param name="y">Y to check</param>
+        /// <param name="h">Elipse center x</param>
+        /// <param name="k">Elipse center y</param>
+        /// <param name="a">X size</param>
+        /// <param name="b">Y size</param>
+        /// <returns></returns>
+        public static bool WithinElipse(float x, float y, float h, float k, float a, float b)
+        {
+            double p = (MathF.Pow((x - h), 2) / MathF.Pow(a, 2))
+                    + (MathF.Pow((y - k), 2) / MathF.Pow(b, 2));
+
+            return p < 1;
+        }
+
 
         public enum PerlinEase
         {
@@ -411,7 +424,8 @@ namespace CalRemix
         /// <param name="noiseSize">The zoom of the noise. Higher values means more zoomed in. Set to 120, 180 by default, the same as the Baron Strait</param>
         /// <param name="tileType">The tile to place</param>
         /// <param name="wallType">The wall to place</param>
-        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, float noiseStrength = 0.1f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0, PerlinEase ease = PerlinEase.None, float topStop = 0.3f, float bottomStop = 0.7f)
+        /// <param name="tileCondition">A condition for if a tile can be placed. Usually used in conjunction with shapes</param>
+        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, float noiseStrength = 0.1f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0, PerlinEase ease = PerlinEase.None, float topStop = 0.3f, float bottomStop = 0.7f, Predicate<Point> tileCondition = null, bool overrideTiles = false, bool eraseWalls = true)
         {
 
             int sizeX = area.Width;
@@ -474,6 +488,34 @@ namespace CalRemix
                     map[i, j] = MathHelper.Distance(noise, endPoint) < noiseStrength;
                 }
             }
+            if (overrideTiles)
+            {
+                // Iterate through the map and remove blocks/walls accordingly
+                for (int gdv = 0; gdv < 1; gdv++)
+                {
+                    for (int i = 0; i < area.Width; i++)
+                    {
+                        for (int j = 0; j < area.Height; j++)
+                        {
+                            if (!WorldGen.InWorld(area.X + i, area.Y + j))
+                            {
+                                continue;
+                            }
+                            Tile t = Main.tile[area.X + i, area.Y + j];
+
+                            if (tileCondition != null)
+                            {
+                                if (!tileCondition.Invoke(new Point(area.X + i, area.Y + j)))
+                                {
+                                    continue;
+                                }
+                            }
+
+                            t.ClearEverything();
+                        }
+                    }
+                }
+            }
             // Iterate through the map and add blocks/walls accordingly
             for (int gdv = 0; gdv < 1; gdv++)
             {
@@ -486,15 +528,24 @@ namespace CalRemix
                             continue;
                         }
                         Tile t = Main.tile[area.X + i, area.Y + j];
-                        if (t.HasTile)
+                        if (t.HasTile && !overrideTiles)
                         {
                             continue;
                         }
+
+                        if (tileCondition != null)
+                        {
+                            if (!tileCondition.Invoke(new Point(area.X + i, area.Y + j)))
+                            {
+                                continue;
+                            }
+                        }
+
                         // Cell stuff
                         int sur = SurroundingTileCounts(map, i, j, area.Width, area.Height);
 
                         // If there are more than 4 nearby nodes, place some
-                        if (sur > 4 && (tileType != -1 || wallType != 0))
+                        if (sur > 4 && (tileType != -1 || (wallType != 0 && eraseWalls)))
                         {
                             if (tileType != -1)
                             {
@@ -513,6 +564,11 @@ namespace CalRemix
                         {
                             t.ClearEverything();
                             map[i, j] = false;
+                        }
+
+                        if (!eraseWalls && wallType != 0)
+                        {
+                            t.WallType = (ushort)wallType;
                         }
                     }
                 }
@@ -677,6 +733,489 @@ namespace CalRemix
                 dust.position += Main.rand.NextVector2Square(-5, 5);
                 dust.velocity = position.DirectionTo(dust.position) * speed;
             }
+        }
+
+
+        public static bool ForceGrowTree(int i, int y, int height = 0)
+        {
+            int j = y;
+
+            if (!Main.tile[i, j].IsHalfBlock && Main.tile[i, j].Slope == 0)
+            {
+                TileColorCache cache = Main.tile[i, j].BlockColorAndCoating();
+                if (Main.tenthAnniversaryWorld && !WorldGen.gen)
+                    cache.Color = (byte)WorldGen.genRand.Next(1, 13);
+
+                int treeHeight = WorldGen.genRand.Next(5, 17);
+
+                if (height != 0)
+                    treeHeight = height;
+
+                int extraHeight = treeHeight + 4;
+
+                bool canGenerate = false;
+                if (WorldGen.EmptyTileCheck(i - 2, i + 2, j - extraHeight, j - 1, 20))
+                {
+                    canGenerate = true;
+                }
+                if (canGenerate)
+                {
+                    bool remixUnderground = Main.remixWorld && (double)j < Main.worldSurface;
+                    bool topMaybeIDK = false;
+                    bool branchIThinkIDK = false;
+                    int treeFrame;
+                    for (int k = j - treeHeight; k < j; k++)
+                    {
+                        Main.tile[i, k].TileType = TileID.Trees;
+                        Main.tile[i, k].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i, k].TileFrameX = ((byte)WorldGen.genRand.Next(3));
+                        Main.tile[i, k].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        int randomFrame = WorldGen.genRand.Next(10);
+                        if (k == j - 1 || k == j - treeHeight)
+                            randomFrame = 0;
+
+                        while (((randomFrame == 5 || randomFrame == 7) && topMaybeIDK) || ((randomFrame == 6 || randomFrame == 7) && branchIThinkIDK))
+                        {
+                            randomFrame = WorldGen.genRand.Next(10);
+                        }
+
+                        topMaybeIDK = false;
+                        branchIThinkIDK = false;
+                        if (randomFrame == 5 || randomFrame == 7)
+                            topMaybeIDK = true;
+
+                        if (randomFrame == 6 || randomFrame == 7)
+                            branchIThinkIDK = true;
+
+                        switch (randomFrame)
+                        {
+                            case 1:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 2:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 0;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 22;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 44;
+                                }
+                                break;
+                            case 3:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 44;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 44;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 44;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 4:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 5:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 88;
+                                    Main.tile[i, k].TileFrameY = 0;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 88;
+                                    Main.tile[i, k].TileFrameY = 22;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 88;
+                                    Main.tile[i, k].TileFrameY = 44;
+                                }
+                                break;
+                            case 6:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 66;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 66;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 66;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 7:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 110;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 110;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 110;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            default:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 0;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 22;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 44;
+                                }
+                                break;
+                        }
+
+                        if (randomFrame == 5 || randomFrame == 7)
+                        {
+                            Main.tile[i - 1, k].TileType = TileID.Trees;
+                            Main.tile[i - 1, k].Get<TileWallWireStateData>().HasTile = true;
+                            Main.tile[i - 1, k].UseBlockColors(cache);
+                            treeFrame = WorldGen.genRand.Next(3);
+                            if (WorldGen.genRand.Next(3) < 2 && !remixUnderground)
+                            {
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 44;
+                                    Main.tile[i - 1, k].TileFrameY = 198;
+                                }
+
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 44;
+                                    Main.tile[i - 1, k].TileFrameY = 220;
+                                }
+
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 44;
+                                    Main.tile[i - 1, k].TileFrameY = 242;
+                                }
+                            }
+                            else
+                            {
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 66;
+                                    Main.tile[i - 1, k].TileFrameY = 0;
+                                }
+
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 66;
+                                    Main.tile[i - 1, k].TileFrameY = 22;
+                                }
+
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 66;
+                                    Main.tile[i - 1, k].TileFrameY = 44;
+                                }
+                            }
+                        }
+
+                        if (randomFrame != 6 && randomFrame != 7)
+                            continue;
+
+                        Main.tile[i + 1, k].TileType = TileID.Trees;
+                        Main.tile[i + 1, k].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i + 1, k].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (WorldGen.genRand.Next(3) < 2 && !remixUnderground)
+                        {
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 66;
+                                Main.tile[i + 1, k].TileFrameY = 198;
+                            }
+
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 66;
+                                Main.tile[i + 1, k].TileFrameY = 220;
+                            }
+
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 66;
+                                Main.tile[i + 1, k].TileFrameY = 242;
+                            }
+                        }
+                        else
+                        {
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 88;
+                                Main.tile[i + 1, k].TileFrameY = 66;
+                            }
+
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 88;
+                                Main.tile[i + 1, k].TileFrameY = 88;
+                            }
+
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 88;
+                                Main.tile[i + 1, k].TileFrameY = 110;
+                            }
+                        }
+                    }
+
+                    int rootType = WorldGen.genRand.Next(3);
+                    bool flag5 = false;
+                    bool flag6 = false;
+                    if (!Main.tile[i - 1, j].IsHalfBlock && Main.tile[i - 1, j].Slope == 0)
+                        flag5 = true;
+
+                    if (!Main.tile[i + 1, j].IsHalfBlock && Main.tile[i + 1, j].Slope == 0)
+                        flag6 = true;
+
+                    if (!flag5)
+                    {
+                        if (rootType == 0)
+                            rootType = 2;
+
+                        if (rootType == 1)
+                            rootType = 3;
+                    }
+
+                    if (!flag6)
+                    {
+                        if (rootType == 0)
+                            rootType = 1;
+
+                        if (rootType == 2)
+                            rootType = 3;
+                    }
+
+                    if (flag5 && !flag6)
+                        rootType = 2;
+
+                    if (flag6 && !flag5)
+                        rootType = 1;
+
+                    if (rootType == 0 || rootType == 1)
+                    {
+                        Main.tile[i + 1, j - 1].TileType = TileID.Trees;
+                        Main.tile[i + 1, j - 1].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i + 1, j - 1].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i + 1, j - 1].TileFrameX = 22;
+                            Main.tile[i + 1, j - 1].TileFrameY = 132;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i + 1, j - 1].TileFrameX = 22;
+                            Main.tile[i + 1, j - 1].TileFrameY = 154;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i + 1, j - 1].TileFrameX = 22;
+                            Main.tile[i + 1, j - 1].TileFrameY = 176;
+                        }
+                    }
+
+                    if (rootType == 0 || rootType == 2)
+                    {
+                        Main.tile[i - 1, j - 1].TileType = TileID.Trees;
+                        Main.tile[i - 1, j - 1].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i - 1, j - 1].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i - 1, j - 1].TileFrameX = 44;
+                            Main.tile[i - 1, j - 1].TileFrameY = 132;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i - 1, j - 1].TileFrameX = 44;
+                            Main.tile[i - 1, j - 1].TileFrameY = 154;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i - 1, j - 1].TileFrameX = 44;
+                            Main.tile[i - 1, j - 1].TileFrameY = 176;
+                        }
+                    }
+
+                    treeFrame = WorldGen.genRand.Next(3);
+                    switch (rootType)
+                    {
+                        case 0:
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 88;
+                                Main.tile[i, j - 1].TileFrameY = 132;
+                            }
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 88;
+                                Main.tile[i, j - 1].TileFrameY = 154;
+                            }
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 88;
+                                Main.tile[i, j - 1].TileFrameY = 176;
+                            }
+                            break;
+                        case 1:
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 0;
+                                Main.tile[i, j - 1].TileFrameY = 132;
+                            }
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 0;
+                                Main.tile[i, j - 1].TileFrameY = 154;
+                            }
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 0;
+                                Main.tile[i, j - 1].TileFrameY = 176;
+                            }
+                            break;
+                        case 2:
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 66;
+                                Main.tile[i, j - 1].TileFrameY = 132;
+                            }
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 66;
+                                Main.tile[i, j - 1].TileFrameY = 154;
+                            }
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 66;
+                                Main.tile[i, j - 1].TileFrameY = 176;
+                            }
+                            break;
+                    }
+
+                    if (!WorldGen.genRand.NextBool(13) && !remixUnderground)
+                    {
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 22;
+                            Main.tile[i, j - treeHeight].TileFrameY = 198;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 22;
+                            Main.tile[i, j - treeHeight].TileFrameY = 220;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 22;
+                            Main.tile[i, j - treeHeight].TileFrameY = 242;
+                        }
+                    }
+                    else
+                    {
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 0;
+                            Main.tile[i, j - treeHeight].TileFrameY = 198;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 0;
+                            Main.tile[i, j - treeHeight].TileFrameY = 220;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 0;
+                            Main.tile[i, j - treeHeight].TileFrameY = 242;
+                        }
+                    }
+
+                    WorldGen.RangeFrame(i - 2, j - treeHeight - 1, i + 2, j + 1);
+                    if (Main.netMode == 2)
+                        NetMessage.SendTileSquare(-1, i - 1, j - treeHeight, 3, treeHeight);
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

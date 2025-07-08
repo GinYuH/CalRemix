@@ -37,7 +37,7 @@ namespace CalRemix.Core.Subworlds
         public override int Width => 600;
         public override List<GenPass> Tasks =>
         [
-            new PiggyGeneration()
+            new PiggyGeneration() //
         ];
 
         public override void OnEnter()
@@ -127,7 +127,7 @@ namespace CalRemix.Core.Subworlds
                                 {
                                     for (int l = (int)(j - height); l < (int)(j + height); l++)
                                     {
-                                        if (WithinElipse(k, l, i, j, width, height))
+                                        if (CalRemixHelper.WithinElipse(k, l, i, j, width, height))
                                         {
                                             Tile te = CalamityUtils.ParanoidTileRetrieval(k, l);
                                             te.ResetToType(TileID.LeafBlock);
@@ -139,24 +139,6 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x">X to checkt</param>
-        /// <param name="y">Y to check</param>
-        /// <param name="h">Elipse center x</param>
-        /// <param name="k">Elipse center y</param>
-        /// <param name="a">X size</param>
-        /// <param name="b">Y size</param>
-        /// <returns></returns>
-        public static bool WithinElipse(float x, float y, float h, float k, float a, float b)
-        {
-            double p = (MathF.Pow((x - h), 2) / MathF.Pow(a, 2))
-                    + (MathF.Pow((y - k), 2) / MathF.Pow(b, 2));
-
-            return p < 1;
         }
 
         public static void GenerateMountain()
