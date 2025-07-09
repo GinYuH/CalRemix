@@ -33,6 +33,7 @@ using CalRemix.Content.Walls;
 using CalRemix.Content.Items.Potions.Tainted;
 using Terraria.ModLoader.Default;
 using CalRemix.Content.NPCs.Bosses.Origen;
+using Terraria.GameContent.Biomes.CaveHouse;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -68,7 +69,7 @@ namespace CalRemix.Core.Subworlds
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
             base.Update();
-            Liquid.UpdateLiquid();
+            //Liquid.UpdateLiquid();
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -89,6 +90,7 @@ namespace CalRemix.Core.Subworlds
         {
             ushort carnWall = (ushort)ModContent.WallType<UnsafeCarnelianStoneWallPlaced>();
             ushort voidWall = (ushort)ModContent.WallType<VoidInfusedStoneWallPlaced>();
+            ushort fabricWall = (ushort)ModContent.WallType<GreenFabricWallPlaced>();
 
             if (!tile.HasTile)
             {
@@ -103,6 +105,13 @@ namespace CalRemix.Core.Subworlds
                     color.X = 0.4f;
                     color.Y = 0;
                     color.Z = 0.05f;
+                }
+                else if (tile.WallType == fabricWall)
+                {
+                    float lightLevel = 0.6f;
+                    color.X = lightLevel;
+                    color.Y = lightLevel;
+                    color.Z = lightLevel;
                 }
             }
             return base.GetLight(tile, x, y, ref rand, ref color);
@@ -381,7 +390,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = origin.Y; j < origin.Y + height * 2; j++)
                 {
-                    if (WithinRhombus(origin, new Point(width, height * 2), new Point(i, j)))
+                    if (CalRemixHelper.WithinRhombus(origin, new Point(width, height * 2), new Point(i, j)))
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                         if (!t.HasTile || t.TileType == TileID.Trees)
@@ -391,8 +400,7 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
-            bool canSpike = true;
-            int turnipCooldown = 0;
+            int spikeCooldown = 0;
             for (int i = origin.X - width; i < origin.X + width; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -400,7 +408,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(14) && turnipCooldown <= 0)
+                        if (Main.rand.NextBool(14) && spikeCooldown <= 0)
                         {
                             int itMin = 4;
                             int itMax = 7;
@@ -416,7 +424,7 @@ namespace CalRemix.Core.Subworlds
                                 {
                                     for (int l = spikeOrigin.Y - spikeHeight * 2; l < spikeOrigin.Y + spikeHeight * 2; l++)
                                     {
-                                        if (WithinRhombus(spikeOrigin, new Point(spikeWidth * 2, spikeHeight * 2), new Point(k, l)))
+                                        if (CalRemixHelper.WithinRhombus(spikeOrigin, new Point(spikeWidth * 2, spikeHeight * 2), new Point(k, l)))
                                         {
                                             Tile t2 = CalamityUtils.ParanoidTileRetrieval(k, l);
                                             t2.ResetToType(tType);
@@ -424,27 +432,13 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                             }
-                            turnipCooldown = 20;
+                            spikeCooldown = 20;
                         }
                         break;
                     }
                 }
-                turnipCooldown--;
+                spikeCooldown--;
             }
-        }
-
-        public static bool WithinHeart(Point origin, Point roughDimensions, Point point)
-        {
-            float x = (point.X - origin.X) / (roughDimensions.X / 2f);
-            float y = -(point.Y - origin.Y) / (roughDimensions.Y / 2f);
-
-            return (MathF.Pow(MathF.Pow(x, 2) + MathF.Pow(y, 2) - 1f, 3f) - (MathF.Pow(x, 2) * MathF.Pow(y, 3))) <= 0f;
-        }
-
-        public static bool WithinRhombus(Point origin, Point dimensions, Point point)
-        {
-            float val = ((Math.Abs(point.X - origin.X)) / (float)dimensions.X) + ((Math.Abs(point.Y - origin.Y)) / (float)dimensions.Y);
-            return val < 1;
         }
 
         public static void GenerateTurnips()
@@ -470,6 +464,7 @@ namespace CalRemix.Core.Subworlds
             }
 
             int turnipCooldown = 0;
+            int turnipsPlaced = 0;
             for (int i = origin.X - radius; i < origin.X + radius; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -480,8 +475,11 @@ namespace CalRemix.Core.Subworlds
                         if (Main.rand.NextBool(10) && turnipCooldown <= 0)
                         {
                             bool _ = false;
-                            SchematicManager.PlaceSchematic<Action<Chest>>("Turnip", new Point(i, j + 2), SchematicAnchor.BottomCenter, ref _);
+                            string chem = turnipsPlaced == 5 ? "Sealed Citadel" : "Turnip";
+                            int offset = turnipsPlaced == 5 ? 3 : 2;
+                            SchematicManager.PlaceSchematic<Action<Chest>>(chem, new Point(i, j + offset), SchematicAnchor.BottomCenter, ref _);
                             turnipCooldown = 30;
+                            turnipsPlaced++;
                         }
                         break;
                     }
@@ -583,6 +581,10 @@ namespace CalRemix.Core.Subworlds
                 }
                 hausCooldown--;
             }
+
+            Point chamberPoint = new Point(villageStart + 100, caveTile);
+            bool _2 = false;
+            SchematicManager.PlaceSchematic<Action<Chest>>("Sealed Chamber", chamberPoint, SchematicAnchor.Center, ref _2);
         }
 
         public static void GenerateCarnelian()
@@ -599,7 +601,7 @@ namespace CalRemix.Core.Subworlds
 
             Rectangle heartRect = new Rectangle(origin.X - width, origin.Y - height * 2, width * 2, height * 3);
 
-            CalRemixHelper.PerlinGeneration(heartRect, noiseStrength: 0.3f, noiseThreshold: 0.9f, tileType: stone, wallType: stoneWall, ease: CalRemixHelper.PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f, tileCondition: (Point p) => WithinHeart(origin, new Point(width, height * 2), p), overrideTiles: true, eraseWalls: false);
+            CalRemixHelper.PerlinGeneration(heartRect, noiseStrength: 0.3f, noiseThreshold: 0.9f, tileType: stone, wallType: stoneWall, ease: CalRemixHelper.PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f, tileCondition: (Point p) => CalRemixHelper.WithinHeart(origin, new Point(width, height * 2), p), overrideTiles: true, eraseWalls: false);
 
             for (int i = heartRect.X; i < heartRect.X + heartRect.Width + 1; i++)
             {
@@ -669,9 +671,10 @@ namespace CalRemix.Core.Subworlds
                             CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
                         }
                     }
-                    //t.WallType = wType;
                 }
             }
+            bool placedShrine = false;
+            int treesPlaecd = 0;
             for (int i = rect2.X; i < rect2.X + rect2.Width; i++)
             {
                 for (int j = rect2.Y; j < rect2.Y + rect2.Height; j++)
@@ -686,10 +689,17 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (Main.rand.NextBool(5))
                         {
-                            CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
+                            bool tree = CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
+                            if (tree && treesPlaecd > 5 && !placedShrine)
+                            {
+                                placedShrine = true;
+
+                                bool _ = false;
+                                SchematicManager.PlaceSchematic<Action<Chest>>("Monorian Shrine", new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _);
+                            }
+                            treesPlaecd++;
                         }
                     }
-                    //t.WallType = wType;
                 }
             }
         }
@@ -724,6 +734,8 @@ namespace CalRemix.Core.Subworlds
             CalamityUtils.SpawnOre(ModContent.TileType<PeatOrePlaced>(), 12E-05, 0.25f, 0.85f, 10, 20, ModContent.TileType<SealedStonePlaced>());
             int iron = Main.rand.NextBool() ? TileID.Iron : TileID.Lead;
             CalamityUtils.SpawnOre(iron, 12E-05, 0.25f, 0.85f, 8, 12, ModContent.TileType<SealedStonePlaced>());
+
+            CalamityUtils.SettleWater();
         }
     }
 }

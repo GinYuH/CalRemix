@@ -23,6 +23,9 @@ namespace CalRemix.Core.World
         internal const string SealedHouseLargeName = "Core/World/sealedHouseLarge.csch";
         internal const string SealedHouseLibraryName = "Core/World/sealedHouseLibrary.csch";
         internal const string SealedHouseChurchName = "Core/World/sealedHouseChurch.csch";
+        internal const string SealedCitadelName = "Core/World/sealedCitadel.csch";
+        internal const string SealedChamberName = "Core/World/sealedChamber.csch";
+        internal const string MonorianShrineName = "Core/World/monorianShrine.csch";
 
         internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
             typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
@@ -46,6 +49,9 @@ namespace CalRemix.Core.World
             TileMaps.Add("Sealed House Large", LoadSchematic(SealedHouseLargeName));
             TileMaps.Add("Sealed House Library", LoadSchematic(SealedHouseLibraryName));
             TileMaps.Add("Sealed House Church", LoadSchematic(SealedHouseChurchName));
+            TileMaps.Add("Sealed Citadel", LoadSchematic(SealedCitadelName));
+            TileMaps.Add("Sealed Chamber", LoadSchematic(SealedChamberName));
+            TileMaps.Add("Monorian Shrine", LoadSchematic(MonorianShrineName));
         }
 
 

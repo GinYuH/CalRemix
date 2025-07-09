@@ -5036,3 +5036,13 @@ VoidInfusedStoneWall: {
 	DisplayName: Void Infused Stone Wall
 	Tooltip: ""
 }
+
+GreenFabricWall: {
+	DisplayName: Green Fabric Wall
+	Tooltip: ""
+}
+
+GreenFabric: {
+	DisplayName: Green Fabric
+	Tooltip: ""
+}

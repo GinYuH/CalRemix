@@ -26,8 +26,8 @@ namespace CalRemix.Content.Walls
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (CalamityUtils.ParanoidTileRetrieval(i, j).IsTileSolid())
-                return false;
+            //if (CalamityUtils.ParanoidTileRetrieval(i, j).IsTileSolid())
+                //return false;
             int squareSpace = 4;
             int xMod = i % squareSpace;
             int yMod = j % squareSpace;
@@ -36,7 +36,9 @@ namespace CalRemix.Content.Walls
             {
                 purple = false;
             }
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition, new Rectangle(0, 0, 16, 16), purple ? bg : Color.Black);
+            Color lite = Lighting.GetColor(i, j);
+            Color final = (purple ? bg : Color.Black).MultiplyRGB(lite);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition, new Rectangle(0, 0, 16, 16), final);
             return false;
         }
     }

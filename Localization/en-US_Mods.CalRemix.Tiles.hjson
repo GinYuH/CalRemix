@@ -59,3 +59,4 @@ MoonstoneTile.MapEntry: ""
 FreddyCheckersBoardTile.MapEntry: ""
 Ant.MapEntry: Ant
 SlingshotPlaced.MapEntry: Slingshot Placed
+GreenFabricPlaced.MapEntry: Green Fabric Placed

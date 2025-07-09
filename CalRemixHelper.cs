@@ -365,7 +365,7 @@ namespace CalRemix
         }
 
         /// <summary>
-        /// 
+        /// Checks if a point is inside of a given elipse area and position
         /// </summary>
         /// <param name="x">X to checkt</param>
         /// <param name="y">Y to check</param>
@@ -373,7 +373,7 @@ namespace CalRemix
         /// <param name="k">Elipse center y</param>
         /// <param name="a">X size</param>
         /// <param name="b">Y size</param>
-        /// <returns></returns>
+        /// <returns>true if the point is inside</returns>
         public static bool WithinElipse(float x, float y, float h, float k, float a, float b)
         {
             double p = (MathF.Pow((x - h), 2) / MathF.Pow(a, 2))
@@ -382,6 +382,33 @@ namespace CalRemix
             return p < 1;
         }
 
+        /// <summary>
+        /// Checks if a point is inside of a given heart area and position
+        /// </summary>
+        /// <param name="origin">The center of the heart</param>
+        /// <param name="roughDimensions">The width and height of the heart</param>
+        /// <param name="point">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinHeart(Point origin, Point roughDimensions, Point point)
+        {
+            float x = (point.X - origin.X) / (roughDimensions.X / 2f);
+            float y = -(point.Y - origin.Y) / (roughDimensions.Y / 2f);
+
+            return (MathF.Pow(MathF.Pow(x, 2) + MathF.Pow(y, 2) - 1f, 3f) - (MathF.Pow(x, 2) * MathF.Pow(y, 3))) <= 0f;
+        }
+
+        /// <summary>
+        /// Checks if a point is inside of a given rhombus area and position
+        /// </summary>
+        /// <param name="origin">The center of the rhombus</param>
+        /// <param name="dimensions">The width and height of the rhombus</param>
+        /// <param name="point">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinRhombus(Point origin, Point dimensions, Point point)
+        {
+            float val = ((Math.Abs(point.X - origin.X)) / (float)dimensions.X) + ((Math.Abs(point.Y - origin.Y)) / (float)dimensions.Y);
+            return val < 1;
+        }
 
         public enum PerlinEase
         {
