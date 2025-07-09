@@ -68,6 +68,7 @@ namespace CalRemix.Core.Subworlds
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
             base.Update();
+            Liquid.UpdateLiquid();
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -82,6 +83,29 @@ namespace CalRemix.Core.Subworlds
                 str,
                 Main.ScreenSize.ToVector2() * 0.5f - size * 0.5f, Color.White, 2);
 
+        }
+
+        public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
+        {
+            ushort carnWall = (ushort)ModContent.WallType<UnsafeCarnelianStoneWallPlaced>();
+            ushort voidWall = (ushort)ModContent.WallType<VoidInfusedStoneWallPlaced>();
+
+            if (!tile.HasTile)
+            {
+                if (tile.WallType == voidWall)
+                {
+                    color.X = 1;
+                    color.Y = 1;
+                    color.Z = 1;
+                }
+                else if (tile.WallType == carnWall)
+                {
+                    color.X = 0.4f;
+                    color.Y = 0;
+                    color.Z = 0.05f;
+                }
+            }
+            return base.GetLight(tile, x, y, ref rand, ref color);
         }
     }
 
@@ -255,7 +279,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         t.ResetToType(dwood);
                     }
-                    if (j > surfaceTile + 40)
+                    if (j > surfaceTile + 6 && i < leftDarnwood.X + leftDarnwood.Width - padding)
                     {
                         if (!t.HasTile)
                         {
@@ -274,7 +298,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         t.ResetToType(dwood);
                     }
-                    if (j > surfaceTile + 40)
+                    if (j > surfaceTile + 6 && i > rightDarnwood.X + padding)
                     {
                         if (!t.HasTile)
                         {
@@ -331,6 +355,14 @@ namespace CalRemix.Core.Subworlds
                     {
                         t.ResetToType(tType);
                     }
+                    if (j > surfaceTile + 40)
+                    {
+                        if (!t.HasTile)
+                        {
+                            t.LiquidAmount = 255;
+                            t.LiquidType = LiquidID.Lava;
+                        }
+                    }
                 }
             }
             Rectangle barrenBottom = new Rectangle(barrenPosition - padding, surfaceTile + surfaceYArea - 20, (int)(Main.maxTilesX * barrenWidth) + padding * 2, 30);
@@ -368,7 +400,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(20) && turnipCooldown <= 0)
+                        if (Main.rand.NextBool(14) && turnipCooldown <= 0)
                         {
                             int itMin = 4;
                             int itMax = 7;
@@ -376,7 +408,7 @@ namespace CalRemix.Core.Subworlds
                             int curHeight = 0;
                             for (int m = 0; m < iterations; m++)
                             {
-                                int spikeWidth = (int)(Main.rand.Next(2, 5) * MathHelper.Lerp(1, 0.2f, Utils.GetLerpValue(itMin, itMax, m, true)));
+                                int spikeWidth = (int)(Main.rand.Next(1, 5) * MathHelper.Lerp(1, 0.2f, Utils.GetLerpValue(itMin, itMax, m, true)));
                                 int spikeHeight = (int)(spikeWidth * Main.rand.NextFloat(0.8f, 1.5f));
                                 curHeight += (int)(spikeHeight * 1.6f);
                                 Point spikeOrigin = new Point(i, j - curHeight);
@@ -392,7 +424,7 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                             }
-                            turnipCooldown = 40;
+                            turnipCooldown = 20;
                         }
                         break;
                     }
@@ -470,12 +502,18 @@ namespace CalRemix.Core.Subworlds
                 for (int j = origin.Y; j < origin.Y + radius; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (!t.HasTile)
-                        continue;
                     Vector2 pt = new Vector2(i, j);
                     if (pt.Distance(vecOrigin) < radius)
                     {
-                        t.ResetToType(tType);
+                        if (t.HasTile)
+                        {
+                            t.ResetToType(tType);
+                        }
+                        else if (j > surfaceTile + 40)
+                        {
+                            t.LiquidAmount = 255;
+                            t.LiquidType = LiquidID.Lava;
+                        }
                     }
                 }
             }
@@ -610,39 +648,19 @@ namespace CalRemix.Core.Subworlds
             Rectangle rect = new Rectangle(origin.X, origin.Y, size, size);
             Rectangle rect2 = new Rectangle(origin.X - offset, origin.Y + offset, size, size);
 
+            CalRemixHelper.PerlinGeneration(rect, noiseThreshold: 0.05f, noiseStrength: 0.4f, noiseSize: new Vector2(500, 500), tileType: tType, wallType: wType, eraseWalls: false, overrideTiles: true);
+            CalRemixHelper.PerlinGeneration(rect2, noiseThreshold: 0.05f, noiseStrength: 0.4f, noiseSize: new Vector2(500, 500), tileType: tType, wallType: wType, eraseWalls: false, overrideTiles: true);
+
+
             for (int i = rect.X; i < rect.X + rect.Width; i++)
             {
                 for (int j = rect.Y; j < rect.Y + rect.Height; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    t.ClearEverything();
                     if (j > rect.Y + rect.Height - floor)
                     {
                         t.ResetToType(tType);
                     }
-                }
-            }
-            for (int i = rect2.X; i < rect2.X + rect2.Width; i++)
-            {
-                for (int j = rect2.Y; j < rect2.Y + rect2.Height; j++)
-                {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    t.ClearEverything();
-                    if (j > rect2.Y + rect2.Height - floor)
-                    {
-                        t.ResetToType(tType);
-                    }
-                }
-            }
-
-            CalRemixHelper.PerlinGeneration(rect, noiseThreshold: 0.05f, noiseStrength: 0.4f, noiseSize: new Vector2(500, 500), tileType: tType, wallType: wType, eraseWalls: false);
-            CalRemixHelper.PerlinGeneration(rect2, noiseThreshold: 0.05f, noiseStrength: 0.4f, noiseSize: new Vector2(500, 500), tileType: tType, wallType: wType, eraseWalls: false);
-
-            for (int i = rect2.X; i < rect.X + rect.Width + 1; i++)
-            {
-                for (int j = rect.Y; j < rect2.Y + rect2.Height + 1; j++)
-                {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     if (!above.HasTile && t.TileType == tType && t.HasTile)
                     {
@@ -651,6 +669,27 @@ namespace CalRemix.Core.Subworlds
                             CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
                         }
                     }
+                    //t.WallType = wType;
+                }
+            }
+            for (int i = rect2.X; i < rect2.X + rect2.Width; i++)
+            {
+                for (int j = rect2.Y; j < rect2.Y + rect2.Height; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (j > rect2.Y + rect2.Height - floor)
+                    {
+                        t.ResetToType(tType);
+                    }
+                    Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                    if (!above.HasTile && t.TileType == tType && t.HasTile)
+                    {
+                        if (Main.rand.NextBool(5))
+                        {
+                            CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
+                        }
+                    }
+                    //t.WallType = wType;
                 }
             }
         }
