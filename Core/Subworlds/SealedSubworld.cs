@@ -393,7 +393,7 @@ namespace CalRemix.Core.Subworlds
                             t.ResetToType(tType);
                         if (!top)
                         {
-                            if (blobCooldown <= 0 && Main.rand.NextBool(30))
+                            if (blobCooldown <= 0 && Main.rand.NextBool(30) && t.TileType == tType)
                             {
                                 int size = blobSize.Get();
 
