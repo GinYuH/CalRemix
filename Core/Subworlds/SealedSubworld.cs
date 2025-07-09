@@ -69,7 +69,7 @@ namespace CalRemix.Core.Subworlds
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
             base.Update();
-            //Liquid.UpdateLiquid();
+            Liquid.UpdateLiquid();
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -330,6 +330,15 @@ namespace CalRemix.Core.Subworlds
                         {
                             CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 20));
                         }
+                        else if (Main.rand.NextBool(5))
+                        {
+                            int peatAmt = Main.rand.Next(2, 12);
+                            for (int k = j - 1; k > j - peatAmt; k--)
+                            {
+                                if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 4));
+                            }
+                        }
                     }
                 }
             }
@@ -345,6 +354,15 @@ namespace CalRemix.Core.Subworlds
                         {
                             CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 20));
                         }
+                        else if (Main.rand.NextBool(5))
+                        {
+                            int peatAmt = Main.rand.Next(2, 12);
+                            for (int k = j - 1; k > j - peatAmt; k--)
+                            {
+                                if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 4));
+                            }
+                        }
                     }
                 }
             }
@@ -353,8 +371,17 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateBarrens()
         {
             ushort tType = (ushort)ModContent.TileType<DesoilitePlaced>();
+            ushort bType = (ushort)ModContent.TileType<LightResiduePlaced>();
             int padding = 120;
             Rectangle barrenRect = new Rectangle(barrenPosition - padding, surfaceTile, (int)(Main.maxTilesX * barrenWidth) + padding * 2, surfaceYArea);
+            bool top = false;
+
+            WeightedRandom<int> blobSize = new();
+            blobSize.Add(1, 1);
+            blobSize.Add(2, 0.3f);
+            blobSize.Add(3, 0.1f);
+
+            int blobCooldown = 0;
             for (int i = barrenRect.X; i <= (barrenRect.X + barrenRect.Width); i++)
             {
                 for (int j = barrenRect.Y; j <= (barrenRect.Y + barrenRect.Height); j++)
@@ -362,7 +389,26 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.HasTile)
                     {
-                        t.ResetToType(tType);
+                        if (t.TileType != bType)
+                            t.ResetToType(tType);
+                        if (!top)
+                        {
+                            if (blobCooldown <= 0 && Main.rand.NextBool(30))
+                            {
+                                int size = blobSize.Get();
+
+                                for (int k = i - size; k < i + size; k++)
+                                {
+                                    for (int l = j - size; l < j + size; l++)
+                                    {
+                                        Tile blob = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                        blob.ResetToType(bType);
+                                    }
+                                }
+                                blobCooldown = size * 2 + 3;
+                            }
+                            top = true;
+                        }
                     }
                     if (j > surfaceTile + 40)
                     {
@@ -373,6 +419,8 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
+                top = false;
+                blobCooldown--;
             }
             Rectangle barrenBottom = new Rectangle(barrenPosition - padding, surfaceTile + surfaceYArea - 20, (int)(Main.maxTilesX * barrenWidth) + padding * 2, 30);
             CalRemixHelper.PerlinSurface(barrenBottom, tType, perlinBottom: true);
@@ -576,6 +624,15 @@ namespace CalRemix.Core.Subworlds
                             hausCooldown = (int)(RemixSchematics.TileMaps[prefix + "Library"].GetLength(0));
                             housesGenerated++;
                         }
+                        else if (Main.rand.NextBool(25))
+                        {
+                            int peatAmt = Main.rand.Next(3, 8);
+                            for (int k = j - 1; k > j - peatAmt; k--)
+                            {
+                                if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<NeoncanePlaced>(), true, Main.rand.Next(0, 4));
+                            }
+                        }
                         break;
                     }
                 }
@@ -631,6 +688,10 @@ namespace CalRemix.Core.Subworlds
                             if (Main.rand.NextBool(5))
                             {
                                 CalRemixHelper.ForceGrowTree(i, j);
+                            }
+                            else if (Main.rand.NextBool(15))
+                            {
+                                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CarnelianRosePlaced>(), true);
                             }
                         }
                     }
@@ -734,8 +795,6 @@ namespace CalRemix.Core.Subworlds
             CalamityUtils.SpawnOre(ModContent.TileType<PeatOrePlaced>(), 12E-05, 0.25f, 0.85f, 10, 20, ModContent.TileType<SealedStonePlaced>());
             int iron = Main.rand.NextBool() ? TileID.Iron : TileID.Lead;
             CalamityUtils.SpawnOre(iron, 12E-05, 0.25f, 0.85f, 8, 12, ModContent.TileType<SealedStonePlaced>());
-
-            CalamityUtils.SettleWater();
         }
     }
 }

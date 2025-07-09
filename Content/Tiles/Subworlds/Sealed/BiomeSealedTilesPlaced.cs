@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Dusts;
+using CalamityMod.NPCs.Cryogen;
 using CalamityMod.Particles;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Tiles.PlaguedJungle;
@@ -89,6 +90,24 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             AddMapEntry(new Color(1, 1, 1));
             HitSound = SoundID.Tink;
             DustType = DustID.Obsidian;
+        }
+    }
+    public class LightResiduePlaced : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileLighted[Type] = true;
+            AddMapEntry(new Color(252, 186, 3));
+            HitSound = Cryogen.HitSound with { Pitch = 0.6f };
+            DustType = DustID.Ichor;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.5f;
+            g = 0.5f;
+            b = 0;
         }
     }
     public class PorswineManurePlaced : ModTile

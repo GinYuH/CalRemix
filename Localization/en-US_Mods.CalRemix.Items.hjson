@@ -5046,3 +5046,33 @@ GreenFabric: {
 	DisplayName: Green Fabric
 	Tooltip: ""
 }
+
+CarnelianRose: {
+	DisplayName: Carnelian Rose
+	Tooltip: ""
+}
+
+CookieTower: {
+	DisplayName: Cookie Tower
+	Tooltip: ""
+}
+
+LightColumn: {
+	DisplayName: Light Column
+	Tooltip: ""
+}
+
+LightResidue: {
+	DisplayName: Light Residue
+	Tooltip: ""
+}
+
+Neoncane: {
+	DisplayName: Neoncane
+	Tooltip: ""
+}
+
+PeatSpire: {
+	DisplayName: Peat Spire
+	Tooltip: ""
+}

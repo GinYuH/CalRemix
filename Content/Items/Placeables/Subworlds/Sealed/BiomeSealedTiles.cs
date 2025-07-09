@@ -52,6 +52,17 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
             Item.DefaultToPlaceableTile(ModContent.TileType<DesoilitePlaced>());
         }
     }
+    public class LightResidue : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<LightResiduePlaced>());
+        }
+    }
     public class TurnipMesh : ModItem
     {
         public override void SetStaticDefaults()
