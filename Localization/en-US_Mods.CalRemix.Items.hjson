@@ -5014,7 +5014,7 @@ TurnipFlesh: {
 
 TurnipFruit: {
 	DisplayName: Turnip Fruit
-	Tooltip: ""
+	Tooltip: "Highly sought after for its high fiber contents"
 }
 
 TurnipLeaf: {
@@ -5049,17 +5049,25 @@ GreenFabric: {
 
 CarnelianRose: {
 	DisplayName: Carnelian Rose
-	Tooltip: ""
+	Tooltip: "The last species that survived from a darker time"
 }
 
 CookieTower: {
 	DisplayName: Cookie Tower
-	Tooltip: ""
+	Tooltip:
+		'''
+		Grows upwards over time
+		Can be harvested for Chocolate Chip Cookies
+		'''
 }
 
 LightColumn: {
 	DisplayName: Light Column
-	Tooltip: ""
+	Tooltip: 
+		'''
+		Grows upwards over time
+		Can be harvested for Light Residue
+		'''
 }
 
 LightResidue: {
@@ -5069,12 +5077,19 @@ LightResidue: {
 
 Neoncane: {
 	DisplayName: Neoncane
-	Tooltip: ""
+	Tooltip:
+		'''
+		Grows upwards over time
+		'''
 }
 
 PeatSpire: {
 	DisplayName: Peat Spire
-	Tooltip: ""
+	Tooltip:
+		'''
+		Grows upwards over time
+		Can be harvested for Peat Ore
+		'''
 }
 
 Brightstone: {
@@ -5089,5 +5104,57 @@ RunicBrightstone: {
 
 SealedBush: {
 	DisplayName: Sealed Bush
+	Tooltip: ""
+}
+
+CarnelianWoodChestplate: {
+	DisplayName: Carnelian Wood Chestplate
+	Tooltip:
+		'''
+		Damage increased by 10%
+		Critical strike chance increased by 5%
+		'''
+}
+
+CarnelianWoodHelmet: {
+	DisplayName: Carnelian Wood Helmet
+	Tooltip:
+		'''
+		Damage increased by 20%
+		Critical strike chance increased by 10%
+		'''
+}
+
+CarnelianWoodLeggings: {
+	DisplayName: Carnelian Wood Leggings
+	Tooltip:
+		'''
+		Damage increased by 2%
+		Movement speed increased by 12%
+		'''
+}
+
+SealedFruit: {
+	DisplayName: Sealed Fruit
+	Tooltip: ""
+}
+
+CarnelianWoodHammer: {
+	DisplayName: Carnelian Wood Hammer
+	Tooltip: ""
+}
+
+CarnelianWoodBow: {
+	DisplayName: Carnelian Wood Bow
+	Tooltip: ""
+}
+
+CarnelianWoodSword: {
+	DisplayName: Carnelian Wood Sword
+	Tooltip: ""
+}
+
+CarnelianWoodStormbow: {
+	DisplayName: Carnelian Wood Stormbow
 	Tooltip: ""
 }

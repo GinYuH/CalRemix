@@ -252,6 +252,7 @@ namespace CalRemix
         public bool twistedNetheriteBoots;
         public bool salvageSuit;
         public bool springlocked;
+        public bool carnelian;
 
         // Minions
         public bool soldier;
@@ -1314,6 +1315,7 @@ namespace CalRemix
 			twistedNetheriteBoots = false;
             salvageSuit = false;
             springlocked = false;
+            carnelian = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;

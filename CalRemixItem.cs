@@ -1045,6 +1045,13 @@ namespace CalRemix
 
         public override void OnConsumeItem(Item item, Player player)
         {
+            if (player.Remix().carnelian)
+            {
+                if (item.type == ItemID.ChocolateChipCookie || item.type == ItemID.SugarCookie || item.type == ItemID.GingerbreadCookie)
+                {
+                    player.Heal(player.statLifeMax2);
+                }
+            }
             if (player.GetModPlayer<CalRemixPlayer>().bananaClown && !player.HasCooldown(BananaClownCooldown.ID))
             {
                 if (IsFruit(item))

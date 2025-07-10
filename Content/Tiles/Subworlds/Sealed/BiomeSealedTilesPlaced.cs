@@ -351,15 +351,13 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
                 if (Main.raining)
                     type = NPCID.EnchantedNightcrawler;
                 CalRemixHelper.SpawnNewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type);
-            }
+            }*/
             else if (Main.rand.NextBool(15))
             {
                 createLeaves = true;
-                int type = ModContent.ItemType<PlagueCellCanister>();
-                if (!Main.dayTime && Main.rand.NextBool())
-                    type = ItemID.FallenStar;
+                int type = ModContent.ItemType<CookieTower>();
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), new Vector2(x, y) * 16, type, randAmt);
-            }*/
+            }
             return false;
         }
     }
@@ -518,15 +516,13 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
                 if (Main.raining)
                     type = NPCID.EnchantedNightcrawler;
                 CalRemixHelper.SpawnNewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type);
-            }
+            }*/
             else if (Main.rand.NextBool(15))
             {
                 createLeaves = true;
-                int type = ModContent.ItemType<PlagueCellCanister>();
-                if (!Main.dayTime && Main.rand.NextBool())
-                    type = ItemID.FallenStar;
+                int type = ModContent.ItemType<PeatSpire>();
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), new Vector2(x, y) * 16, type, randAmt);
-            }*/
+            }
             return false;
         }
     }
