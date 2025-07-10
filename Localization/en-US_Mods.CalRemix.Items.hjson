@@ -5076,3 +5076,18 @@ PeatSpire: {
 	DisplayName: Peat Spire
 	Tooltip: ""
 }
+
+Brightstone: {
+	DisplayName: Brightstone
+	Tooltip: ""
+}
+
+RunicBrightstone: {
+	DisplayName: Runic Brightstone
+	Tooltip: ""
+}
+
+SealedBush: {
+	DisplayName: Sealed Bush
+	Tooltip: ""
+}

@@ -1,4 +1,5 @@
-﻿using CalRemix.Core.Subworlds;
+﻿using CalRemix.Core.Backgrounds;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
@@ -13,7 +14,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -36,7 +37,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -59,7 +60,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -82,7 +83,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -105,7 +106,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -128,7 +129,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -151,7 +152,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -174,7 +175,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
@@ -197,7 +198,7 @@ namespace CalRemix.Core.Biomes
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
         public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";

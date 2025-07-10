@@ -336,7 +336,7 @@ namespace CalRemix.Core.Subworlds
                             for (int k = j - 1; k > j - peatAmt; k--)
                             {
                                 if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
-                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 4));
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 3));
                             }
                         }
                     }
@@ -360,7 +360,7 @@ namespace CalRemix.Core.Subworlds
                             for (int k = j - 1; k > j - peatAmt; k--)
                             {
                                 if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
-                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 4));
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 3));
                             }
                         }
                     }
@@ -630,7 +630,7 @@ namespace CalRemix.Core.Subworlds
                             for (int k = j - 1; k > j - peatAmt; k--)
                             {
                                 if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
-                                    WorldGen.PlaceObject(i, k, ModContent.TileType<NeoncanePlaced>(), true, Main.rand.Next(0, 4));
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<NeoncanePlaced>(), true, Main.rand.Next(0, 3));
                             }
                         }
                         break;

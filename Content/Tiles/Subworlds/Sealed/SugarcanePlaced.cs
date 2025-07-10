@@ -129,4 +129,13 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
         public override int grassType => ModContent.TileType<CarnelianGrassPlaced>();
         public override int itemType => ModContent.ItemType<CookieTower>();
     }
+    public class SealedBushPlaced : SurgarcanePlaced
+    {
+        public override Color color => new Color(148, 102, 141);
+
+        public override int dust => DustID.Ice_Purple;
+
+        public override int grassType => ModContent.TileType<SealedGrassPlaced>();
+        public override int itemType => ModContent.ItemType<SealedBush>();
+    }
 }

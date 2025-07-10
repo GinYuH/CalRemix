@@ -110,6 +110,33 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             b = 0;
         }
     }
+    public class BrightstonePlaced : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            CalamityUtils.SetMerge(Type, ModContent.TileType<SealedDirtPlaced>());
+            Main.tileBlockLight[Type] = true;
+            Main.tileStone[Type] = true;
+            TileID.Sets.BlockMergesWithMergeAllBlock[Type] = true;
+            Main.tileBlendAll[Type] = true;
+            AddMapEntry(new Color(211, 214, 169));
+            DustType = DustID.TintableDustLighted;
+        }
+    }
+    public class RunicBrightstonePlaced : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileStone[Type] = true;
+            TileID.Sets.BlockMergesWithMergeAllBlock[Type] = false;
+            Main.tileBlendAll[Type] = false;
+            AddMapEntry(new Color(211, 214, 169));
+            DustType = DustID.TintableDustLighted;
+        }
+    }
     public class PorswineManurePlaced : ModTile
     {
         public override void SetStaticDefaults()

@@ -5,6 +5,7 @@ using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
+using Terraria.ObjectData;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {
@@ -72,6 +73,28 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         {
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<LightResidue>(), 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
+    }
+    public class SealedBush : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 5;
+        }
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<SealedBushPlaced>());
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Neoncane>())
+                .AddIngredient(ModContent.ItemType<LightColumn>())
+                .AddIngredient(ModContent.ItemType<PeatSpire>())
+                .AddIngredient(ModContent.ItemType<CookieTower>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

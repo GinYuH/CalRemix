@@ -63,6 +63,45 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
             Item.DefaultToPlaceableTile(ModContent.TileType<LightResiduePlaced>());
         }
     }
+    public class Brightstone : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<BrightstonePlaced>());
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(50).
+                AddIngredient(ModContent.ItemType<LightResidue>()).
+                AddIngredient(ItemID.StoneBlock, 50).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
+    public class RunicBrightstone : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<BrightstonePlaced>());
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<Brightstone>(), 2).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
     public class TurnipMesh : ModItem
     {
         public override void SetStaticDefaults()
