@@ -1,5 +1,7 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Projectiles;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using System;
@@ -37,7 +39,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Vector2 mouseWorld = Main.MouseWorld / 16;
             Point point = new Point((int)mouseWorld.X, (int)mouseWorld.Y);
 
-            Dust.NewDust(Main.MouseWorld, 1, 1, DustID.AmberBolt);
+            Dust.NewDust(Main.MouseWorld, 5, 5, DustID.AmberBolt);
             //WorldGen.digTunnel(mouseWorld.X, mouseWorld.Y, 0, 0, 1, 10);
             //WorldGen.TileRunner((int)mouseWorld.X, (int)mouseWorld.Y, Main.rand.Next(3, 8), Main.rand.Next(2, 8), TileID.CobaltBrick);
             //MakeSolidTunnel(mouseWorld.X, mouseWorld.Y, TileID.Mythril, 0, 0, 1, 10);
@@ -62,7 +64,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //Main.NewText("1: " + Main.tileFrame[tile.TileType]);
             //Main.NewText("2: " + tile.TileFrameX);
 
+            //MinistructureList.TableWithCandle.Place(point);
             PlaceWIPCave(point);
+            //PlaceOtherSpiritModThing(point);
+            //PlaceFish_Flying(point);
 
             /*
             int type11 = -1;
@@ -409,15 +414,15 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
         public static void PlaceWIPCave(Point origin)
         {
-            ShapeData sideCarversShapeData = new ShapeData();
+            ShapeData coveShapeData = new ShapeData();
             ShapeData lakeShapeData = new ShapeData();
-            Point point = new Point(origin.X, origin.Y + 20);
+            Point point = new Point(origin.X, origin.Y);
             float xScale = 0.8f + Main.rand.NextFloat() * 0.25f; // Randomize the width of the shrine area
             int slimeRadius = 25;
-            int slimeOffsetX = 40;
-
+            int slimeOffsetX = 30 + Main.rand.Next(3, 9);
             int leftOffsetY = Main.rand.Next(-6, 6);
             int rightOffsetY = Main.rand.Next(-6, 6);
+            bool doOppositeLedge = Main.rand.NextBool();
 
             // add the evil lake
             bool left = Main.rand.NextBool();
@@ -428,9 +433,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 new Actions.Blank().Output(lakeShapeData)
             ));
 
-            // the main three
+            // center shape
             WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
-                new Actions.Blank().Output(sideCarversShapeData)
+                new Actions.Blank().Output(coveShapeData)
             ));
             int smallCliffOffsetY = Main.rand.Next(-8, 8);
             if (Main.rand.NextBool())
@@ -440,45 +445,412 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 else
                     rightOffsetY += smallCliffOffsetY;
             }
-            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
-                new Modifiers.Offset(-slimeOffsetX, leftOffsetY),
-                new Actions.Blank().Output(sideCarversShapeData)
-            ));
-            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
-                new Modifiers.Offset(slimeOffsetX, rightOffsetY),
-                new Actions.Blank().Output(sideCarversShapeData)
-            ));
+            if (left || doOppositeLedge)
+            {
+                // right
+                WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale * 0.6, 1f - Main.rand.NextFloat(0.3f, 0.5f)), Actions.Chain(
+                    new Modifiers.Offset((int)(slimeOffsetX * 0.8), rightOffsetY),
+                    new Actions.Blank().Output(coveShapeData)
+                ));
+                // upper bulge
+                WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                    new Modifiers.Offset(slimeOffsetX / 2, -10 + rightOffsetY),
+                    new Actions.Blank().Output(coveShapeData)
+                ));
+            }
+            if (!left || doOppositeLedge)
+            {
+                // left
+                WorldUtils.Gen(point, new Shapes.Slime(slimeRadius, xScale * 0.6, 1f - Main.rand.NextFloat(0.3f, 0.5f)), Actions.Chain(
+                    new Modifiers.Offset(-(int)(slimeOffsetX * 0.8), leftOffsetY),
+                    new Actions.Blank().Output(coveShapeData)
+                ));
+                // upper bulge
+                WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
+                    new Modifiers.Offset(-slimeOffsetX / 2, -10 + leftOffsetY),
+                    new Actions.Blank().Output(coveShapeData)
+                ));
+            }
+
             // lower bulges to clip off uneven edges
-            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f), Actions.Chain(
-                new Modifiers.Offset(-slimeOffsetX / 2,  5 + leftOffsetY),
-                new Actions.Blank().Output(sideCarversShapeData)
-            ));
+            //TODO: make these lines? branches? tails? whatever theyre called?
             WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f), Actions.Chain(
                 new Modifiers.Offset(slimeOffsetX / 2, 5 + rightOffsetY),
-                new Actions.Blank().Output(sideCarversShapeData)
+                new Actions.Blank().Output(coveShapeData)
             ));
-            // upper bulges
-            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
-                new Modifiers.Offset(-slimeOffsetX / 2, -10 + leftOffsetY),
-                new Actions.Blank().Output(sideCarversShapeData)
-            ));
-            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f - Main.rand.NextFloat(0, 0.25f)), Actions.Chain(
-                new Modifiers.Offset(slimeOffsetX / 2, -10 + rightOffsetY),
-                new Actions.Blank().Output(sideCarversShapeData)
+            WorldUtils.Gen(point, new Shapes.Slime(slimeRadius / 2, xScale, 1f), Actions.Chain(
+                new Modifiers.Offset(-slimeOffsetX / 2, 5 + leftOffsetY),
+                new Actions.Blank().Output(coveShapeData)
             ));
 
             // actually placing shit
-            WorldUtils.Gen(point, new ModShapes.All(sideCarversShapeData), Actions.Chain(
+            WorldUtils.Gen(point, new ModShapes.All(coveShapeData), Actions.Chain(
                 new Modifiers.Blotches(2, 0.8),
-                new Actions.ClearTile(frameNeighbors: true)
+                new Actions.ClearTile(frameNeighbors: true),
+                new Modifiers.Blotches(2, 0.8),
+                new Modifiers.IsTouchingAir(),
+                new Actions.Smooth()
             ));
             WorldUtils.Gen(point, new ModShapes.All(lakeShapeData), Actions.Chain(
                 new Modifiers.Blotches(2, 0.8),
                 new Actions.ClearTile(frameNeighbors: true)
             ));
+
+            // smooth the floor of the cave (NOT THE LAKE)
+            // note: this isnt sloping. this is getting rid of 1 block juts
+            WorldUtils.Gen(point, new ModShapes.OuterOutline(coveShapeData), Actions.Chain(
+                new Actions.Custom((i, j, args) => {
+                    int amtOfAit = 0;
+                    if (!Main.tile[i, j - 1].HasTile)
+                    {
+                        amtOfAit++;
+                        if (!Main.tile[i - 1, j].HasTile)
+                            amtOfAit++;
+                        if (!Main.tile[i + 1, j].HasTile)
+                            amtOfAit++;
+                        if (!Main.tile[i, j + 1].HasTile)
+                            amtOfAit++;
+
+                        if (amtOfAit >= 3)
+                        {
+                            Tile tile = Main.tile[i, j];
+                            tile.ClearTile();
+                            SquareTileFrame(i, j);
+                        }
+                    }
+                    return true;
+                })
+            ));
+
+            #region cabin
+            // now we get to placing the cabin
+            // ill be calling it the cabin but it could be anything, its where the loot goes basically
+            int cabinOffsetX = left ? slimeOffsetX / 2 : -slimeOffsetX / 2;
+            Point cabinSpot = new Point(point.X + cabinOffsetX, origin.Y + 10);
+            int cabinToPlace = Main.rand.Next(0, 1);
+            if (Main.rand.NextBool(20))
+                cabinToPlace = -1;
+            cabinToPlace = 1;
+
+            if (cabinToPlace == -1)
+                PlaceOtherSpiritModThing_Beach(cabinSpot, left);
+            else if (cabinToPlace == 0)
+                PlaceOtherSpiritModThing(cabinSpot, left);
+            else if (cabinToPlace == 1)
+                PlaceOtherSpiritModThing_Tent(cabinSpot, left);
+
+            #endregion
+
+            #region fish
+            // place that dumbfuck fish
+            int maxFishAlts = 2;
+            int fishToPlace = Main.rand.Next(0, maxFishAlts);
+            fishToPlace = 1; //TODO: make sure to remove this! ill make this really long so you dont miss it. aaahhh!!! aaaaaahhhhhh!!!!!!!!
+            bool hasPlacedFish = false;
+            if (fishToPlace == 0) // ledge
+            {
+                if (!doOppositeLedge) // if no ledge then only bros
+                {
+                    fishToPlace = Main.rand.Next(1, maxFishAlts);
+                }
+                else
+                {
+                    //TODO: code this one in
+                }
+            }
+            if (fishToPlace == 1) // flying
+            {
+                Point flyingFishPlace = new Point();
+                flyingFishPlace.Y = point.Y + Main.rand.Next(-5, 3);
+                if (left)
+                {
+                    flyingFishPlace.X = point.X + -(int)(slimeOffsetX * Main.rand.NextFloat(0.4f, 0.6f));
+                    if (!doOppositeLedge)
+                        flyingFishPlace.X += Main.rand.Next(5, 8);
+                }
+                else
+                {
+                    flyingFishPlace.X = point.X + (int)(slimeOffsetX * Main.rand.NextFloat(0.4f, 0.6f));
+                    if (!doOppositeLedge)
+                        flyingFishPlace.X -= Main.rand.Next(5, 8);
+                }
+
+                PlaceFish_Flying(flyingFishPlace);
+                hasPlacedFish = true;
+            }
+            else if (fishToPlace == 2)
+            {
+                //TODO: make third variant, over the water on a rock
+            }
+            else if (fishToPlace == 3)
+            {
+                //TODO: make fourth varient, on the water on a raft
+            }
+            
+            // if we fail to place fish, then place the flying variant since its the most versatile
+            //TODO: reduce redundancy
+            if (!hasPlacedFish)
+            {
+                Point flyingFishPlace = new Point();
+                flyingFishPlace.Y = point.Y + Main.rand.Next(-5, 3);
+                if (left)
+                {
+                    flyingFishPlace.X = point.X + -(int)(slimeOffsetX * Main.rand.NextFloat(0.4f, 0.6f));
+                    if (!doOppositeLedge)
+                        flyingFishPlace.X -= Main.rand.Next(1, 4);
+                }
+                else
+                {
+                    flyingFishPlace.X = point.X + (int)(slimeOffsetX * Main.rand.NextFloat(0.4f, 0.6f));
+                    if (!doOppositeLedge)
+                        flyingFishPlace.X += Main.rand.Next(1, 4);
+                }
+
+                PlaceFish_Flying(flyingFishPlace);
+                hasPlacedFish = true;
+            }
+            #endregion
         }
 
-        public void PlaceOtherSpiritModThing(Point origin)
+        public static void PlaceFish_Flying(Point origin)
+        {
+            Tile tile = new Tile();
+            int platformLength = 4;
+
+            // placing platforms
+            for (int i = 0; i < platformLength; i++)
+            {
+                tile = Main.tile[origin.X + i, origin.Y];
+                tile.ResetToType(TileID.Platforms);
+                SquareTileFrame(origin.X + i, origin.Y);
+            }
+
+            // placing chains
+            tile = Main.tile[origin.X, origin.Y - 1];
+            tile.ResetToType(TileID.Chain);
+            SquareTileFrame(origin.X, origin.Y - 1);
+            tile = Main.tile[origin.X + platformLength - 1, origin.Y - 1];
+            tile.ResetToType(TileID.Chain);
+            SquareTileFrame(origin.X + platformLength - 1, origin.Y - 1);
+
+            // placing rope
+            List<Point> tilePointerList = new List<Point>();
+            tilePointerList.Add(new Point(origin.X, origin.Y - 2));
+            tilePointerList.Add(new Point(origin.X + platformLength - 1, origin.Y - 2));
+            foreach (Point pointer in tilePointerList)
+            {
+                Point currentTilePointer = pointer;
+                while (!Main.tile[currentTilePointer].HasTile)
+                {
+                    tile = Main.tile[currentTilePointer];
+                    tile.ResetToType(TileID.Rope);
+                    SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
+                    currentTilePointer.Y--;
+                }
+                if (Main.tile[currentTilePointer].HasTile && Main.tile[currentTilePointer].Slope != SlopeType.Solid)
+                {
+                    tile = Main.tile[currentTilePointer];
+                    tile.Slope = SlopeType.Solid;
+                    SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
+                }
+            }
+
+            // placing fish
+            //TODO: face diff directions
+            PlaceTile(origin.X + 1, origin.Y - 1, TileID.VoidMonolith, mute: true, forced: false, -1);
+        }
+
+        public static void PlaceOtherSpiritModThing_Beach(Point origin, bool? realLeft = null)
+        {
+            Rectangle validPlacementRect = new Rectangle(origin.X - 30, origin.Y - 15, 60, 30);
+            Tile tile = new Tile();
+            List<Point> validPointsForPlacement = new List<Point>();
+
+            for (int x = validPlacementRect.X; x < validPlacementRect.X + validPlacementRect.Width; x++)
+            {
+                for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
+                {
+                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid)
+                        validPointsForPlacement.Add(new Point(x, y));
+                }
+            }
+
+            foreach (Point point in validPointsForPlacement)
+            {
+                tile = Main.tile[point.X, point.Y];
+                tile.ResetToType(TileID.Adamantite);
+            }
+            Main.tile[origin].ResetToType(TileID.Orichalcum);
+        }
+
+        public static void PlaceOtherSpiritModThing_Debug(Point origin, bool? realLeft = null)
+        {
+            Rectangle validPlacementRect = new Rectangle(origin.X - 30, origin.Y - 15, 60, 30);
+            Tile tile = new Tile();
+            List<Point> validPointsForPlacement = new List<Point>();
+
+            for (int x = validPlacementRect.X; x < validPlacementRect.X + validPlacementRect.Width; x++)
+            {
+                for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
+                {
+                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid)
+                        validPointsForPlacement.Add(new Point(x, y));
+                }
+            }
+
+            foreach (Point point in validPointsForPlacement)
+            {
+                tile = Main.tile[point.X, point.Y];
+                tile.ResetToType(TileID.Adamantite);
+            }
+            Main.tile[origin].ResetToType(TileID.Orichalcum);
+        }
+
+        public static void PlaceOtherSpiritModThing_Tent(Point origin, bool? realLeft = null)
+        {
+            Tile tile = new Tile();
+            int width = 60;
+            int height = 30;
+            List<Point> bestPointsForPlacement = GetViablePlacementArea(origin, width, height, 5);
+            //TODO: failsafe if the returned area is less than 8 blocks
+            // go to the lowest block from the origin point (highest if its inside of tiles)
+            // gen a big empty space with flat area under it
+            // use that area instead of returned
+
+            //TODO: add up all widths of the ministructures we wanna guarantee
+            // replace "8 blocks" from above todo with that + a bit of padding + chest dont forget that
+
+            // TODO: cahnge viableplacement to return a list of list of points? one list for each string of points
+
+            // place chest
+            bool hasPlacedChest = false;
+            int placeChestAttempts = 0;
+            while (!hasPlacedChest)
+            {
+                placeChestAttempts++;
+                if (placeChestAttempts > 5000)
+                    break;
+
+                Point randomPoint = bestPointsForPlacement[Main.rand.Next(bestPointsForPlacement.Count())];
+                randomPoint.Y--;
+
+                // ensuring space
+                if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
+                {
+                    int chest = PlaceChest(randomPoint.X, randomPoint.Y, style: 0);
+                    if (chest != -1)
+                        hasPlacedChest = true;
+                }
+            }
+
+            // place themed decor
+            int decorAmount = Main.rand.Next(2, 4);
+            decorAmount = 2;
+            int placeDecorAttempts = 0;
+            List<Ministructure> structuresToPlace = new List<Ministructure>();
+            structuresToPlace.Add(MinistructureList.GrandfatherClock);
+            structuresToPlace.Add(MinistructureList.LargeFurnitureRubble);
+            while (decorAmount > 0)
+            {
+                placeDecorAttempts++;
+                if (placeDecorAttempts > 5000)
+                    break;
+
+                int randomMinistructure = Main.rand.Next(structuresToPlace.Count);
+                Point randomPoint = bestPointsForPlacement[Main.rand.Next(bestPointsForPlacement.Count())];
+                randomPoint.Y--;
+                Ministructure randomStructure = structuresToPlace[randomMinistructure];
+                if (randomStructure.Check(randomPoint))
+                {
+                    // ensuring space
+                    if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + randomStructure.width, randomPoint.Y].HasTile)
+                    {
+                        randomStructure.Place(randomPoint);
+                        structuresToPlace.Remove(randomStructure);
+                        decorAmount--;
+                    }
+                }
+            }
+
+            foreach (Point point in bestPointsForPlacement)
+            {
+                tile = Main.tile[point.X, point.Y];
+                tile.ResetToType(TileID.Adamantite);
+            }
+            Main.tile[origin].ResetToType(TileID.Orichalcum);
+        }
+
+        public static List<Point> GetGeneralPlacementArea(Point origin, int width, int height)
+        {
+            Rectangle validPlacementRect = new Rectangle(origin.X - (width / 2), origin.Y - (height / 2), width, height);
+            Tile tile = new Tile();
+            List<Point> validPointsForPlacement = new List<Point>();
+
+            for (int x = validPlacementRect.X; x < validPlacementRect.X + validPlacementRect.Width; x++)
+            {
+                for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
+                {
+                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid)
+                        validPointsForPlacement.Add(new Point(x, y));
+                }
+            }
+            return validPointsForPlacement;
+        }
+
+        public static List<Point> GetViablePlacementArea(Point origin, int width, int height, int threshold)
+        {
+            Rectangle validPlacementRect = new Rectangle(origin.X - (width / 2), origin.Y - (height / 2), width, height);
+            Tile tile = new Tile();
+            List<Point> validPointsForPlacement = GetGeneralPlacementArea(origin, width, height);
+            List<Point> bestPointsForPlacement_Buffer = new List<Point>();
+            List<Point> bestPointsForPlacement_Final = new List<Point>();
+            int? previousYCoord = null;
+
+            // scan from the top to bottom for every block in our rectangle
+            for (int x = validPlacementRect.X; x < validPlacementRect.X + validPlacementRect.Width; x++)
+            {
+                bool hasFoundTile = false;
+                for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
+                {
+                    // if we find a block thats in our valid points list, save it in the buffer list
+                    foreach (Point block in validPointsForPlacement)
+                    {
+                        if (hasFoundTile)
+                            break;
+                        if (x == block.X && y == block.Y)
+                        {
+                            // compare to our previous y coord
+                            // if there is none, fill it in
+                            // if there is and they arent the same, then DONT log this block
+                            if (previousYCoord == null)
+                                previousYCoord = block.Y;
+                            if (previousYCoord == block.Y)
+                            {
+                                bestPointsForPlacement_Buffer.Add(block);
+                                hasFoundTile = true;
+                            }
+                        }
+                    }
+                }
+                // go until we find a row without a block in the valid points list
+                // when we find a block not in our valid points list, see if the buffer is above the threshold
+                if (!hasFoundTile)
+                {
+                    // if the amount of points in the buffer list is greater than the threshold, add our stuff to the final list
+                    if (bestPointsForPlacement_Buffer.Count >= threshold)
+                    {
+                        foreach (Point point in bestPointsForPlacement_Buffer)
+                            bestPointsForPlacement_Final.Add(point);
+                    }
+                    bestPointsForPlacement_Buffer = new List<Point>();
+                    previousYCoord = null;
+                }
+                // continue until we've exhausted our rectangle
+            }
+            return bestPointsForPlacement_Final;
+        }
+
+        public static void PlaceOtherSpiritModThing(Point origin, bool? realLeft = null)
         {
             Point boxDefaultSize = new Point(16, 8);
 
@@ -495,6 +867,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
             // always overhang a little on one side
             bool left = Main.rand.NextBool();
+            if (realLeft != null)
+                left = (bool)realLeft;
             int leftRightMultiplier = left == true ? 1 : -1;
             Point boxTopOffset;
             boxTopOffset.X = Main.rand.Next(3, 6);
@@ -513,7 +887,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // making a ton of things for orienting stuff later
             Tile tile;
             Point currentTilePointer;
-            Point point = origin;
+            Point point = new Point(origin.X - (boxBottomSize.X / 2), origin.Y);
             point.Y -= boxBottomSize.Y - 1;
             Point bottomLeft = point;
             bottomLeft.Y += boxBottomSize.Y - 1;
@@ -595,32 +969,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             foreach (Point block in tilesToReplace)
             {
                 tile = Main.tile[block.X, block.Y];
+                tile.ClearTile();
                 tile.HasTile = true;
                 tile.TileType = TileID.WoodBlock;
                 SquareTileFrame(block.X, block.Y);
-            }
-
-            // place doors
-            //TODO: clean this up, make less redundant
-            if (left || Main.rand.NextBool())
-            {
-                for (int i = 1; i < 4; i++)
-                {
-                    tile = Main.tile[boxBottomFloorLeftmost - 2, bottomLeft.Y - i];
-                    tile.HasTile = false;
-                    SquareTileFrame(boxBottomFloorLeftmost - 2, bottomLeft.Y - i);
-                }
-                PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
-            }
-            if (!left || Main.rand.NextBool())
-            {
-                for (int i = 1; i < 4; i++)
-                {
-                    tile = Main.tile[boxBottomFloorRightmost + 2, bottomLeft.Y - i];
-                    tile.HasTile = false;
-                    SquareTileFrame(boxBottomFloorRightmost + 2, bottomLeft.Y - i);
-                }
-                PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
             }
 
             // place platform and stairs
@@ -633,7 +985,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             for (int i = 0; i < boxTopPlatformLength; i++)
             {
                 tile = Main.tile[boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1];
-                tile.TileType = TileID.Platforms;
+                tile.ResetToType(TileID.Platforms);
                 tile.TileFrameY = 0;
                 SquareTileFrame(boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1);
 
@@ -641,15 +993,15 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 SquareWallFrame(boxTopPlatformX + i * leftRightMultiplier, bottomLeft.Y - boxBottomSize.Y + 1);
             }
             // just kidding! kill that guy
+            // we get rid of this platform to make my life easier in the next step
             tile = Main.tile[boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1];
             tile.HasTile = false;
-            // ccr code cameo!
+            // ccr code cameo! place the stairs themselves
             currentTilePointer = new Point(boxTopPlatformX, bottomLeft.Y - boxBottomSize.Y + 1);
             while (!Main.tile[currentTilePointer].HasTile)
             {
                 tile = Main.tile[currentTilePointer];
-                tile.HasTile = true;
-                tile.TileType = TileID.Platforms;
+                tile.ResetToType(TileID.Platforms);
                 if (left)
                     tile.BlockType = BlockType.SlopeDownLeft;
                 else
@@ -669,7 +1021,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             else
                 tile.TileFrameX = 25 * 18;
 
-            // place platforms under our overhang, save positions for decorating later
+            // place bridge under our overhang, save positions for decorating later
             int bridgeLength = 8 + Main.rand.Next(0, 5);
             int bridgeClosest = left == true ? bottomLeft.X - 2 : bottomLeft.X + boxBottomSize.X + 1;
             List<Point> bridge = new List<Point>();
@@ -677,10 +1029,49 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             {
                 bridge.Add(new Point(bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y));
                 tile = Main.tile[bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y];
-                tile.HasTile = true;
-                tile.TileType = TileID.Platforms;
+                tile.ResetToType(TileID.Platforms);
                 tile.TileFrameY = 0;
                 SquareTileFrame(bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y);
+
+                // kill blocks above bridge
+                for (int ii = 1; ii < boxBottomSize.Y - 1; ii++)
+                {
+                    tile = Main.tile[bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y - ii];
+                    tile.ClearTile();
+                    SquareTileFrame(bridgeClosest + (i * leftRightMultiplier * -1), bottomLeft.Y - ii);
+                }
+            }
+            // kill blocks in front of where the guranteed door will go
+            for (int ii = 1; ii < boxBottomSize.Y - 1; ii++)
+            {
+                tile = Main.tile[bridgeClosest + leftRightMultiplier, bottomLeft.Y - ii];
+                tile.ClearTile();
+                SquareTileFrame(bridgeClosest + leftRightMultiplier, bottomLeft.Y - ii);
+            }
+
+            // place doors
+            //TODO: clean this up, make less redundant
+            tile = Main.tile[boxBottomFloorLeftmost - 3, bottomLeft.Y - 1];
+            if (!tile.HasTile && (left || Main.rand.NextBool()))
+            {
+                for (int i = 1; i < 4; i++)
+                {
+                    tile = Main.tile[boxBottomFloorLeftmost - 2, bottomLeft.Y - i];
+                    tile.ClearTile();
+                    SquareTileFrame(boxBottomFloorLeftmost - 2, bottomLeft.Y - i);
+                }
+                PlaceTile(boxBottomFloorLeftmost - 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
+            }
+            tile = Main.tile[boxBottomFloorRightmost + 3, bottomLeft.Y - 1];
+            if (!tile.HasTile && (!left || Main.rand.NextBool()))
+            {
+                for (int i = 1; i < 4; i++)
+                {
+                    tile = Main.tile[boxBottomFloorRightmost + 2, bottomLeft.Y - i];
+                    tile.ClearTile();
+                    SquareTileFrame(boxBottomFloorRightmost + 2, bottomLeft.Y - i);
+                }
+                PlaceTile(boxBottomFloorRightmost + 2, bottomLeft.Y - 1, TileID.ClosedDoor, mute: true, forced: false, -1);
             }
 
             // place walls part 2
@@ -713,10 +1104,15 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 while (!Main.tile[currentTilePointer].HasTile)
                 {
                     tile = Main.tile[currentTilePointer];
-                    tile.HasTile = true;
-                    tile.TileType = TileID.WoodenBeam;
+                    tile.ResetToType(TileID.WoodenBeam);
                     SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
                     currentTilePointer.Y++;
+                }
+                if (Main.tile[currentTilePointer].HasTile && Main.tile[currentTilePointer].Slope != SlopeType.Solid)
+                {
+                    tile = Main.tile[currentTilePointer];
+                    tile.Slope = SlopeType.Solid;
+                    SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
                 }
             }
             currentTilePointer = bridge.Last();
@@ -728,6 +1124,12 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 SquareWallFrame(currentTilePointer.X, currentTilePointer.Y);
                 currentTilePointer.Y++;
                 tile = Main.tile[currentTilePointer];
+            }
+            if (Main.tile[currentTilePointer].HasTile && Main.tile[currentTilePointer].Slope != SlopeType.Solid)
+            {
+                tile = Main.tile[currentTilePointer];
+                tile.Slope = SlopeType.Solid;
+                SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
             }
 
             // place the chest
@@ -750,9 +1152,13 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 // ensuring space
                 if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
                 {
-                    int chest = PlaceChest(randomPoint.X, randomPoint.Y, style: 0);
-                    if (chest != -1)
-                        hasPlacedChest = true;
+                    // if on the bridge we want it to not veer too close to the edge
+                    if (!bridgeOrHouse || (Main.tile[randomPoint.X - 1, randomPoint.Y + 1].HasTile && Main.tile[randomPoint.X + 2, randomPoint.Y + 1].HasTile) )
+                    {
+                        int chest = PlaceChest(randomPoint.X, randomPoint.Y, style: 0);
+                        if (chest != -1)
+                            hasPlacedChest = true;
+                    }
                 }
             }
 
@@ -770,7 +1176,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
             signPoint.Y = bottomLeft.Y - boxBottomSize.Y + 1;
             signPoint.Y += 1;
-
             PlaceObject(signPoint.X, signPoint.Y, TileID.Signs);
 
             #region Decorum
@@ -806,18 +1211,24 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     // can we place 3 crates? if so, do
                     if (crateAmount >= 3 && placeCrateAttempts < 75)
                     {
-                        if (MinistructureList.CrateStack.Check(randomPoint) && (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile || !Main.tile[randomPoint.X + MinistructureList.CrateStack.width, randomPoint.Y].HasTile))
+                        if (MinistructureList.CrateStack.Check(randomPoint) && !Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + MinistructureList.CrateStack.width, randomPoint.Y].HasTile)
                         {
-                            MinistructureList.CrateStack.Place(randomPoint);
-                            crateAmount -= 3;
+                            if (Main.tile[randomPoint.X - 1, randomPoint.Y + 1].HasTile && Main.tile[randomPoint.X + MinistructureList.CrateStack.width, randomPoint.Y + 1].HasTile)
+                            {
+                                MinistructureList.CrateStack.Place(randomPoint);
+                                crateAmount -= 3;
+                            }
                         }
                     }
                     else
                     {
-                        if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile || !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
+                        if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
                         {
-                            PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
-                            crateAmount--;
+                            if (Main.tile[randomPoint.X - 1, randomPoint.Y + 1].HasTile && Main.tile[randomPoint.X + 2, randomPoint.Y + 1].HasTile)
+                            {
+                                PlaceTile(randomPoint.X, randomPoint.Y, TileID.FishingCrate);
+                                crateAmount--;
+                            }
                         }
                     }
                 }
@@ -1041,7 +1452,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                             waterfallAmt++;
                         }
                     }
-                    ; return true;
+                    return true;
                 })
             ));
             // Place Sakura trees on the ground wherever applicable 
@@ -1050,7 +1461,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 new Actions.Custom((i, j, args) => { 
                     if (Main.rand.NextBool())
                         GrowTreeWithSettings(i, j, GrowTreeSettings.Profiles.VanityTree_Sakura);
-                    ; return true; })
+                    return true; })
             ));
             // Place Flower wall on all cavern shape coordinates. Place flower vines 1 tile below all grass tiles of the cavern
             WorldUtils.Gen(point, new ModShapes.All(slimeShapeData), Actions.Chain(
@@ -1284,8 +1695,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             public override int type => TileID.Tables;
             public override void Place(Point bottomLeft)
             {
-                PlaceObject(bottomLeft.X - 1, bottomLeft.Y, TileID.Tables);
-                int offset = Main.rand.Next(-2, 1);
+                PlaceObject(bottomLeft.X + width - 2, bottomLeft.Y, TileID.Tables);
+                int offset = Main.rand.Next(0, 3);
                 PlaceObject(bottomLeft.X + offset, bottomLeft.Y - 2, TileID.Candles);
                 Tile tile = Main.tile[bottomLeft.X + offset, bottomLeft.Y - 2];
                 tile.TileFrameX = 18;
@@ -1367,6 +1778,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             {
                 int style = Main.rand.Next(22, 26);
                 Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                // FUCK YOU
+                point.Y += 1;
                 PlaceObject(point.X, point.Y, type, style: style);
             }
         }

@@ -140,7 +140,7 @@ namespace CalRemix.Core.Retheme
                 .AddDelay(1f).NeedsActivation().SetHoverTextOverride("That's amazing Fanny, I'm glad I have a friend that's knowledgeable in the hobby of sneaker collection!");
 
 
-            HelperMessage.New("SneakersExtraSlot", "Ohh my friend this is marvelous! I am overjoyed! I am ecstatic! Over the moon, I tell you! A brand new slot, for you? So you can display TWOOOOO sneakers at once? Oh my lordy lord that is just brilliant. I'm already seeing your net worth skyrocket! SKY!RO!CKET! I can already imagine the faces your friends will make when they see you proudly displaying your newly aquired sneakers!", "FannySneakers",
+            HelperMessage.New("SneakersExtraSlot", "Ohh my friend this is marvelous! I am overjoyed! I am ecstatic! Over the moon, I tell you! A brand new slot, for you? So you can display TWOOOOO sneakers at once? Oh my lordy lord that is just brilliant. I'm already seeing your net worth skyrocket! SKY!RO!CKET! I can already imagine the faces your friends will make when they see you proudly displaying your newly acquired sneakers!", "FannySneakers",
                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.extraAccessory)
                 .AddDelay(1f).SetHoverTextOverride("Now that I can finally use both my feet, I'll finally be able to wear the shoes I've been collecting!");
 
