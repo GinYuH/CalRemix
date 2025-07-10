@@ -449,6 +449,7 @@ namespace CalRemix.Core.Subworlds
                 }
             }
             int spikeCooldown = 0;
+            int spikeCount = 0;
             for (int i = origin.X - width; i < origin.X + width; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -458,29 +459,40 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (Main.rand.NextBool(14) && spikeCooldown <= 0)
                         {
-                            int itMin = 4;
-                            int itMax = 7;
-                            int iterations = Main.rand.Next(itMin, itMax + 1);
-                            int curHeight = 0;
-                            for (int m = 0; m < iterations; m++)
+                            int cd = 20;
+                            if (spikeCount == 6)
                             {
-                                int spikeWidth = (int)(Main.rand.Next(1, 5) * MathHelper.Lerp(1, 0.2f, Utils.GetLerpValue(itMin, itMax, m, true)));
-                                int spikeHeight = (int)(spikeWidth * Main.rand.NextFloat(0.8f, 1.5f));
-                                curHeight += (int)(spikeHeight * 1.6f);
-                                Point spikeOrigin = new Point(i, j - curHeight);
-                                for (int k = spikeOrigin.X - spikeWidth * 2; k < spikeOrigin.X + spikeWidth * 2; k++)
+                                bool _ = false;
+                                SchematicManager.PlaceSchematic<Action<Chest>>("Bright Shrine", new Point(i, j + 4), SchematicAnchor.BottomCenter, ref _);
+                                cd = 30;
+                            }
+                            else
+                            {
+                                int itMin = 4;
+                                int itMax = 7;
+                                int iterations = Main.rand.Next(itMin, itMax + 1);
+                                int curHeight = 0;
+                                for (int m = 0; m < iterations; m++)
                                 {
-                                    for (int l = spikeOrigin.Y - spikeHeight * 2; l < spikeOrigin.Y + spikeHeight * 2; l++)
+                                    int spikeWidth = (int)(Main.rand.Next(1, 5) * MathHelper.Lerp(1, 0.2f, Utils.GetLerpValue(itMin, itMax, m, true)));
+                                    int spikeHeight = (int)(spikeWidth * Main.rand.NextFloat(0.8f, 1.5f));
+                                    curHeight += (int)(spikeHeight * 1.6f);
+                                    Point spikeOrigin = new Point(i, j - curHeight);
+                                    for (int k = spikeOrigin.X - spikeWidth * 2; k < spikeOrigin.X + spikeWidth * 2; k++)
                                     {
-                                        if (CalRemixHelper.WithinRhombus(spikeOrigin, new Point(spikeWidth * 2, spikeHeight * 2), new Point(k, l)))
+                                        for (int l = spikeOrigin.Y - spikeHeight * 2; l < spikeOrigin.Y + spikeHeight * 2; l++)
                                         {
-                                            Tile t2 = CalamityUtils.ParanoidTileRetrieval(k, l);
-                                            t2.ResetToType(tType);
+                                            if (CalRemixHelper.WithinRhombus(spikeOrigin, new Point(spikeWidth * 2, spikeHeight * 2), new Point(k, l)))
+                                            {
+                                                Tile t2 = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                                t2.ResetToType(tType);
+                                            }
                                         }
                                     }
                                 }
                             }
-                            spikeCooldown = 20;
+                            spikeCount++;
+                            spikeCooldown = cd;
                         }
                         break;
                     }

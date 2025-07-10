@@ -91,7 +91,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<BrightstonePlaced>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<RunicBrightstonePlaced>());
         }
 
         public override void AddRecipes()
