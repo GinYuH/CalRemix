@@ -5,6 +5,7 @@ using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {
@@ -70,6 +71,12 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 
         public override void AddRecipes()
         {
+            CreateRecipe(50).
+                AddIngredient(ModContent.ItemType<TurnipFruit>()).
+                AddIngredient(ModContent.ItemType<FrozenSealedTear>()).
+                AddIngredient(ModContent.ItemType<RefinedCarnelianite>()).
+                AddTile(TileID.Anvils).
+                Register();
         }
     }
     public class SealedStoneBrick : ModItem

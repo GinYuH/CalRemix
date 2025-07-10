@@ -6,6 +6,7 @@ using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
 using Terraria.ObjectData;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {
@@ -91,6 +92,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient(ModContent.ItemType<RottedTendril>())
                 .AddIngredient(ModContent.ItemType<Neoncane>())
                 .AddIngredient(ModContent.ItemType<LightColumn>())
                 .AddIngredient(ModContent.ItemType<PeatSpire>())

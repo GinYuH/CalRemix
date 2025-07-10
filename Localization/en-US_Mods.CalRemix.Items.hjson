@@ -4927,6 +4927,11 @@ FrozenSealedTearOre: {
 	Tooltip: ""
 }
 
+FrozenSealedTear: {
+	DisplayName: Frozen Sealed Tear
+	Tooltip: ""
+}
+
 InactivePlumestone: {
 	DisplayName: Inactive Plumestone
 	Tooltip: ""
@@ -5014,7 +5019,7 @@ TurnipFlesh: {
 
 TurnipFruit: {
 	DisplayName: Turnip Fruit
-	Tooltip: "Highly sought after for its high fiber contents"
+	Tooltip: Highly sought after for its high fiber contents
 }
 
 TurnipLeaf: {
@@ -5049,7 +5054,7 @@ GreenFabric: {
 
 CarnelianRose: {
 	DisplayName: Carnelian Rose
-	Tooltip: "The last species that survived from a darker time"
+	Tooltip: "'The last species that survived from a darker time'"
 }
 
 CookieTower: {
@@ -5063,7 +5068,7 @@ CookieTower: {
 
 LightColumn: {
 	DisplayName: Light Column
-	Tooltip: 
+	Tooltip:
 		'''
 		Grows upwards over time
 		Can be harvested for Light Residue
@@ -5077,10 +5082,7 @@ LightResidue: {
 
 Neoncane: {
 	DisplayName: Neoncane
-	Tooltip:
-		'''
-		Grows upwards over time
-		'''
+	Tooltip: Grows upwards over time
 }
 
 PeatSpire: {
@@ -5156,5 +5158,20 @@ CarnelianWoodSword: {
 
 CarnelianWoodStormbow: {
 	DisplayName: Carnelian Wood Stormbow
+	Tooltip: ""
+}
+
+RefinedCarnelianite: {
+	DisplayName: Refined Carnelianite
+	Tooltip: ""
+}
+
+RottedTendril: {
+	DisplayName: Rotted Tendril
+	Tooltip: ""
+}
+
+NeonDust: {
+	DisplayName: Neon Dust
 	Tooltip: ""
 }

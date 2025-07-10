@@ -2,11 +2,13 @@
 using CalamityMod.Dusts;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.Particles;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -30,6 +32,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
 
         public virtual int itemType => ItemID.SugarPlum;
 
+        public virtual int yieldType => ItemID.ChocolateChipCookie;
+
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -47,8 +51,6 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             AddMapEntry(color);
             HitSound = SoundID.Grass;
             DustType = dust;
-
-            RegisterItemDrop(itemType);
         }
 
         public override void RandomUpdate(int i, int j)
@@ -85,10 +87,26 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
 
             }
         }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            List<Item> items = new List<Item>();
+            if (Main.rand.NextBool(10))
+                items.Add(new Item(itemType));
+            int yieldAmt = Main.rand.Next(1, 4);
+            
+            items.Add(new Item(yieldType, yieldAmt));
+            
+            return items;
+        }
     }
 
     public class PeatSpirePlaced : SurgarcanePlaced
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            RegisterItemDrop(-1);
+        }
         public override Color color => new Color(133, 25, 56);
 
         public override int dust => DustID.Mud;
@@ -96,10 +114,17 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
         public override int grassType => ModContent.TileType<RichMudPlaced>();
 
         public override int itemType => ModContent.ItemType<PeatSpire>();
+
+        public override int yieldType => ModContent.ItemType<PeatOre>();
     }
 
     public class NeoncanePlaced : SurgarcanePlaced
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            RegisterItemDrop(-1);
+        }
         public override Color color => new Color(18, 255, 255);
 
         public override int dust => DustID.Clentaminator_Cyan;
@@ -107,10 +132,17 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
         public override int grassType => ModContent.TileType<SealedGrassPlaced>();
 
         public override int itemType => ModContent.ItemType<Neoncane>();
+
+        public override int yieldType => ModContent.ItemType<NeonDust>();
     }
 
     public class LightColumnPlaced : SurgarcanePlaced
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            RegisterItemDrop(-1);
+        }
         public override Color color => new Color(253, 255, 138);
 
         public override int dust => DustID.YellowTorch;
@@ -118,24 +150,40 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
         public override int grassType => ModContent.TileType<DesoilitePlaced>();
 
         public override int itemType => ModContent.ItemType<LightColumn>();
+
+        public override int yieldType => ModContent.ItemType<LightResidue>();
     }
 
     public class CookieTowerPlaced : SurgarcanePlaced
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            RegisterItemDrop(-1);
+        }
         public override Color color => new Color(191, 161, 99);
 
         public override int dust => DustID.Hay;
 
         public override int grassType => ModContent.TileType<CarnelianGrassPlaced>();
         public override int itemType => ModContent.ItemType<CookieTower>();
+
+        public override int yieldType => ItemID.ChocolateChipCookie;
     }
     public class SealedBushPlaced : SurgarcanePlaced
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            RegisterItemDrop(-1);
+        }
         public override Color color => new Color(148, 102, 141);
 
         public override int dust => DustID.Ice_Purple;
 
         public override int grassType => ModContent.TileType<SealedGrassPlaced>();
         public override int itemType => ModContent.ItemType<SealedBush>();
+
+        public override int yieldType => ModContent.ItemType<RottedTendril>();
     }
 }
