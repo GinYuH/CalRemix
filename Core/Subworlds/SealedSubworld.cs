@@ -35,6 +35,7 @@ using Terraria.ModLoader.Default;
 using CalRemix.Content.NPCs.Bosses.Origen;
 using Terraria.GameContent.Biomes.CaveHouse;
 using System.Reflection;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -43,7 +44,8 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            //list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
+            list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()));
+            list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()));
             return list;
         }
 

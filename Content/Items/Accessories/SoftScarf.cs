@@ -10,6 +10,8 @@ using CalamityMod.Buffs.StatBuffs;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
+using CalamityMod.Projectiles.Typeless;
+using System.Linq.Expressions;
 
 namespace CalRemix.Content.Items.Accessories
 {
