@@ -36,6 +36,8 @@ using CalRemix.Content.NPCs.Bosses.Origen;
 using Terraria.GameContent.Biomes.CaveHouse;
 using System.Reflection;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
+using Terraria.ModLoader.IO;
+using Terraria.DataStructures;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -72,6 +74,16 @@ namespace CalRemix.Core.Subworlds
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
             base.Update();
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.Distance(SealedSubworldData.brightShrinePos) < 1000)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
+                }
+            }
+
             Liquid.skipCount++;
             if (Liquid.skipCount > 1)
             {
@@ -141,6 +153,35 @@ namespace CalRemix.Core.Subworlds
                 }
             }
             return base.GetLight(tile, x, y, ref rand, ref color);
+        }
+    }
+
+    public class SealedSubworldData : ModSystem
+    {
+        public static Vector2 brightShrinePos = Vector2.Zero;
+        public static Vector2 monorianShrinePos = Vector2.Zero;
+        public static Vector2 cultPos = Vector2.Zero;
+        public static Vector2 tentPos = Vector2.Zero;
+        public static Vector2 horizonPos = Vector2.Zero;
+        public static Vector2 warriorPos = Vector2.Zero;
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag["brightShrinePosition"] = brightShrinePos;
+            tag["monorianShrinePosition"] = monorianShrinePos;
+            tag["cultPosition"] = cultPos;
+            tag["tentPosition"] = tentPos;
+            tag["horizonPosition"] = horizonPos;
+            tag["warriorPosition"] = warriorPos;
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            brightShrinePos = tag.Get<Vector2>("brightShrinePosition");
+            monorianShrinePos = tag.Get<Vector2>("monorianShrinePosition");
+            cultPos = tag.Get<Vector2>("cultPosition");
+            tentPos = tag.Get<Vector2>("tentPosition");
+            horizonPos = tag.Get<Vector2>("horizonPosition");
+            warriorPos = tag.Get<Vector2>("warriorPosition");
         }
     }
 
@@ -490,6 +531,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 bool _ = false;
                                 SchematicManager.PlaceSchematic<Action<Chest>>("Bright Shrine", new Point(i, j + 4), SchematicAnchor.BottomCenter, ref _);
+                                SealedSubworldData.brightShrinePos = new Vector2(i, j - 4) * 16;
                                 cd = 30;
                             }
                             else
@@ -602,7 +644,8 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            int turnipCooldown = 0;
+            int volcanoCooldown = 0;
+            int volcanosPlaced = 0;
             for (int i = origin.X - radius; i < origin.X + radius ; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -610,16 +653,21 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(10) && turnipCooldown <= 0)
+                        if (Main.rand.NextBool(10) && volcanoCooldown <= 0)
                         {
                             bool _ = false;
                             SchematicManager.PlaceSchematic<Action<Chest>>("Plumestone", new Point(i, j + 4), SchematicAnchor.BottomCenter, ref _);
-                            turnipCooldown = 20;
+                            volcanoCooldown = 20;
+                            volcanosPlaced++;
+                            if (volcanosPlaced == 5)
+                            {
+                                SealedSubworldData.horizonPos = new Vector2(i, j - 22) * 16;
+                            }
                         }
                         break;
                     }
                 }
-                turnipCooldown--;
+                volcanoCooldown--;
             }
         }
 
@@ -680,6 +728,9 @@ namespace CalRemix.Core.Subworlds
             Point chamberPoint = new Point(villageStart + 100, caveTile);
             bool _2 = false;
             SchematicManager.PlaceSchematic<Action<Chest>>("Sealed Chamber", chamberPoint, SchematicAnchor.Center, ref _2);
+            Vector2 strucSize = new((int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(0)), (int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(1)));
+            SealedSubworldData.tentPos = new Vector2(chamberPoint.X - (int)(strucSize.X * 0.2f), chamberPoint.Y - (int)(strucSize.Y * 0.1f)) * 16;
+            SealedSubworldData.cultPos = new Vector2(chamberPoint.X + (int)(strucSize.X * 0.25f), chamberPoint.Y - (int)(strucSize.Y * 0.4f)) * 16;
         }
 
         public static void GenerateCarnelian()
@@ -698,6 +749,7 @@ namespace CalRemix.Core.Subworlds
 
             CalRemixHelper.PerlinGeneration(heartRect, noiseStrength: 0.3f, noiseThreshold: 0.9f, tileType: stone, wallType: stoneWall, ease: CalRemixHelper.PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f, tileCondition: (Point p) => CalRemixHelper.WithinHeart(origin, new Point(width, height * 2), p), overrideTiles: true, eraseWalls: false);
 
+            int roseAttempts = 0;
             for (int i = heartRect.X; i < heartRect.X + heartRect.Width + 1; i++)
             {
                 for (int j = heartRect.Y; j < heartRect.Y + heartRect.Height + 1; j++)
@@ -730,6 +782,12 @@ namespace CalRemix.Core.Subworlds
                             else if (Main.rand.NextBool(15))
                             {
                                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CarnelianRosePlaced>(), true);
+                                roseAttempts++;
+
+                                if (roseAttempts == 15)
+                                {
+                                    SealedSubworldData.warriorPos = new Vector2(i, j - 1) * 16;
+                                }
                             }
                         }
                     }
@@ -795,6 +853,7 @@ namespace CalRemix.Core.Subworlds
 
                                 bool _ = false;
                                 SchematicManager.PlaceSchematic<Action<Chest>>("Monorian Shrine", new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _);
+                                SealedSubworldData.monorianShrinePos = new Vector2(i, j - 4) * 16;
                             }
                             treesPlaecd++;
                         }

@@ -5229,3 +5229,8 @@ SoftScarf: {
 		Rage duration is decremented at a slower rate
 		'''
 }
+
+Mercury: {
+	DisplayName: Mercury
+	Tooltip: ""
+}
