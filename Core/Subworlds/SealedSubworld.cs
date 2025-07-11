@@ -34,6 +34,7 @@ using CalRemix.Content.Items.Potions.Tainted;
 using Terraria.ModLoader.Default;
 using CalRemix.Content.NPCs.Bosses.Origen;
 using Terraria.GameContent.Biomes.CaveHouse;
+using System.Reflection;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -70,6 +71,24 @@ namespace CalRemix.Core.Subworlds
             Main.time = Main.dayLength * 0.5f;
             base.Update();
             Liquid.UpdateLiquid();
+            double worldUpdateRate = WorldGen.GetWorldUpdateRate();
+            if (worldUpdateRate == 0.0)
+            {
+                return;
+            }
+            int wallDist = 3;
+            double updateRate = 3E-05f * (float)worldUpdateRate;
+            bool checkNPCSpawns = false;
+            double tileAmt = (double)(Main.maxTilesX * Main.maxTilesY) * updateRate;
+
+            MethodInfo updateInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_OvergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
+
+            for (int j = 0; (double)j < tileAmt; j++)
+            {
+                int cordX = Main.rand.Next(10, Main.maxTilesX - 10);
+                int cordY = Main.rand.Next(10, (int)Main.worldSurface - 1);
+                updateInfo.Invoke(null, new object[] { cordX, cordY, checkNPCSpawns, wallDist });
+            }
         }
 
         public override void DrawMenu(GameTime gameTime)
