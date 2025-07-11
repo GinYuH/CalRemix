@@ -2697,6 +2697,15 @@ Weapons: {
 				Stealth strikes create more large bubbles which have random sizes
 				'''
 		}
+
+		Delirious: {
+			DisplayName: Delirious
+			Tooltip:
+				'''
+				Blinds the user while held
+				'It's rogue because it deviates from other rogue weapons!'
+				'''
+		}
 	}
 }
 
@@ -5189,4 +5198,24 @@ CritterChip: {
 FriedCritterChip: {
 	DisplayName: Fried Critter Chip
 	Tooltip: "'Lacking in silicon content'"
+}
+
+MonorianGemShards: {
+	DisplayName: Monorian Gem Shards
+	Tooltip: "Contains loose amounts of power of a great soul"
+}
+
+MonorianGem: {
+	DisplayName: Monorian Gem
+	Tooltip: "Fires monorian gem stones at extremely fast speeds"
+}
+
+NauseatingPowder: {
+	DisplayName: Nauseating Powder
+	Tooltip: ""
+}
+
+Delirium: {
+	DisplayName: Delirium
+	Tooltip: "Right click to inflict all nearby enemies with a slew of debuffs"
 }
