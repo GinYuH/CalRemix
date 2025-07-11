@@ -5202,12 +5202,12 @@ FriedCritterChip: {
 
 MonorianGemShards: {
 	DisplayName: Monorian Gem Shards
-	Tooltip: "Contains loose amounts of power of a great soul"
+	Tooltip: Contains loose amounts of power of a great soul
 }
 
 MonorianGem: {
 	DisplayName: Monorian Gem
-	Tooltip: "Fires monorian gem stones at extremely fast speeds"
+	Tooltip: Fires monorian gem stones at extremely fast speeds
 }
 
 NauseatingPowder: {
@@ -5217,5 +5217,15 @@ NauseatingPowder: {
 
 Delirium: {
 	DisplayName: Delirium
-	Tooltip: "Right click to inflict all nearby enemies with a slew of debuffs"
+	Tooltip: Right click to inflict all nearby enemies with a slew of debuffs
+}
+
+SoftScarf: {
+	DisplayName: Soft Scarf
+	Tooltip:
+		'''
+		Causes Rage to always generate
+		Rage is automatically activated when at max
+		Rage duration is decremented at a slower rate
+		'''
 }
