@@ -1,16 +1,16 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Content.Items.Potions
+namespace CalRemix.Content.Items.Materials
 {
-    public class SealedFruit : ModItem
+    public class Veinroot : ModItem
     {
         public override void SetStaticDefaults()
         {
-            Item.ResearchUnlockCount = 5;
-            ItemID.Sets.ShimmerCountsAsItem[Type] = ItemID.Apple;
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
@@ -21,12 +21,12 @@ namespace CalRemix.Content.Items.Potions
             Item.consumable = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
-            Item.value = Item.sellPrice(silver: 2);
+            Item.value = Item.sellPrice(silver: 1);
             Item.UseSound = BetterSoundID.ItemEat;
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
-            Item.buffType = BuffID.WellFed2;
-            Item.buffTime = CalamityUtils.SecondsToFrames(300);
+            Item.buffType = BuffID.WellFed;
+            Item.buffTime = CalamityUtils.SecondsToFrames(180);
         }
     }
 }

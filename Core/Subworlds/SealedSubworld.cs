@@ -70,7 +70,12 @@ namespace CalRemix.Core.Subworlds
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
             base.Update();
-            Liquid.UpdateLiquid();
+            Liquid.skipCount++;
+            if (Liquid.skipCount > 1)
+            {
+                Liquid.UpdateLiquid();
+                Liquid.skipCount = 0;
+            }
             double worldUpdateRate = WorldGen.GetWorldUpdateRate();
             if (worldUpdateRate == 0.0)
             {

@@ -1,16 +1,16 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Potions
 {
-    public class SealedFruit : ModItem
+    public class CritterChip : ModItem
     {
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 5;
-            ItemID.Sets.ShimmerCountsAsItem[Type] = ItemID.Apple;
         }
         public override void SetDefaults()
         {
@@ -21,12 +21,22 @@ namespace CalRemix.Content.Items.Potions
             Item.consumable = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
-            Item.value = Item.sellPrice(silver: 2);
+            Item.value = Item.sellPrice(silver: 1);
             Item.UseSound = BetterSoundID.ItemEat;
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
             Item.buffType = BuffID.WellFed2;
-            Item.buffTime = CalamityUtils.SecondsToFrames(300);
+            Item.buffTime = CalamityUtils.SecondsToFrames(180);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(30)
+                .AddIngredient(ModContent.ItemType<TurnipMesh>())
+                .AddIngredient(ItemID.Feather)
+                .AddIngredient(ModContent.ItemType<Crimtato>())
+                .AddTile(TileID.CookingPots)
+                .Register();
         }
     }
 }

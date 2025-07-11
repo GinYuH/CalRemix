@@ -2,11 +2,13 @@
 using CalamityMod.Dusts;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.Particles;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -179,6 +181,12 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             AddMapEntry(new Color(232, 0, 255));
             DustType = DustID.Shadowflame;
             HitSound = SoundID.NPCDeath1 with { Pitch = 0.4f };
+            RegisterItemDrop(ModContent.ItemType<Veinroot>());
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<Veinroot>(), Main.rand.Next(2, 6));
         }
     }
     public class TurnipFleshPlaced : ModTile

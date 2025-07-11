@@ -5175,3 +5175,18 @@ NeonDust: {
 	DisplayName: Neon Dust
 	Tooltip: ""
 }
+
+Veinroot: {
+	DisplayName: Veinroot
+	Tooltip: ""
+}
+
+CritterChip: {
+	DisplayName: Critter Chip
+	Tooltip: "'High in silicon content'"
+}
+
+FriedCritterChip: {
+	DisplayName: Fried Critter Chip
+	Tooltip: "'Lacking in silicon content'"
+}
