@@ -64,7 +64,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //Main.NewText("1: " + Main.tileFrame[tile.TileType]);
             //Main.NewText("2: " + tile.TileFrameX);
 
-            //MinistructureList.TableWithCandle.Place(point);
+            //MinistructureList.WoodenLamppost.Place(point);
             PlaceWIPCave(point);
             //PlaceOtherSpiritModThing(point);
             //PlaceFish_Flying(point);
@@ -423,7 +423,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             int leftOffsetY = Main.rand.Next(-6, 6);
             int rightOffsetY = Main.rand.Next(-6, 6);
             bool doOppositeLedge = Main.rand.NextBool();
+            Point oppositeLedgePoint = new Point();
 
+            #region generating the cave
             // add the evil lake
             bool left = Main.rand.NextBool();
             int lakeOffsetX = left ? -slimeOffsetX / 2 : slimeOffsetX / 2;
@@ -457,6 +459,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     new Modifiers.Offset(slimeOffsetX / 2, -10 + rightOffsetY),
                     new Actions.Blank().Output(coveShapeData)
                 ));
+                if (!left && doOppositeLedge)
+                    oppositeLedgePoint = new Point(point.X + (int)(slimeOffsetX * 0.8), point.Y + rightOffsetY);
             }
             if (!left || doOppositeLedge)
             {
@@ -470,6 +474,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     new Modifiers.Offset(-slimeOffsetX / 2, -10 + leftOffsetY),
                     new Actions.Blank().Output(coveShapeData)
                 ));
+                if (left && doOppositeLedge)
+                    oppositeLedgePoint = new Point(point.X - (int)(slimeOffsetX * 0.8), point.Y + leftOffsetY);
             }
 
             // lower bulges to clip off uneven edges
@@ -521,22 +527,19 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     return true;
                 })
             ));
+            #endregion
+
+            List<Point> validPointsForPlacement = GetGeneralPlacementArea(point, 100, 30);
 
             #region cabin
             // now we get to placing the cabin
             // ill be calling it the cabin but it could be anything, its where the loot goes basically
             int cabinOffsetX = left ? slimeOffsetX / 2 : -slimeOffsetX / 2;
             Point cabinSpot = new Point(point.X + cabinOffsetX, origin.Y + 10);
-            int cabinToPlace = Main.rand.Next(0, 1);
-            if (Main.rand.NextBool(20))
-                cabinToPlace = -1;
-            cabinToPlace = 1;
 
-            if (cabinToPlace == -1)
-                PlaceOtherSpiritModThing_Beach(cabinSpot, left);
-            else if (cabinToPlace == 0)
+            if (Main.rand.NextBool(3))
                 PlaceOtherSpiritModThing(cabinSpot, left);
-            else if (cabinToPlace == 1)
+            else
                 PlaceOtherSpiritModThing_Tent(cabinSpot, left);
 
             #endregion
@@ -545,8 +548,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             // place that dumbfuck fish
             int maxFishAlts = 2;
             int fishToPlace = Main.rand.Next(0, maxFishAlts);
-            fishToPlace = 1; //TODO: make sure to remove this! ill make this really long so you dont miss it. aaahhh!!! aaaaaahhhhhh!!!!!!!!
             bool hasPlacedFish = false;
+            int fishPlaceAttempts = 0;
             if (fishToPlace == 0) // ledge
             {
                 if (!doOppositeLedge) // if no ledge then only bros
@@ -555,7 +558,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 }
                 else
                 {
-                    //TODO: code this one in
+                    List<Point> validFishSpot = GetGeneralPlacementArea(oppositeLedgePoint, 30, 30);
+                    while (!hasPlacedFish)
+                    {
+                        fishPlaceAttempts++;
+                        if (fishPlaceAttempts > 2500)
+                            break;
+
+                        Point randomPoint = validFishSpot[Main.rand.Next(validFishSpot.Count())];
+                        randomPoint.Y--;
+                        PlaceTile(randomPoint.X, randomPoint.Y, TileID.VoidMonolith, mute: true, forced: false, -1);
+                        hasPlacedFish = Main.tile[randomPoint].TileType == TileID.VoidMonolith;
+                    }
                 }
             }
             if (fishToPlace == 1) // flying
@@ -610,6 +624,71 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 hasPlacedFish = true;
             }
             #endregion
+
+            #region light fixture
+            // place the lamppost or whatever it is
+            bool hasPlacedLamp = false;
+            int placeLampAttempts = 0;
+            while (!hasPlacedLamp)
+            {
+                placeLampAttempts++;
+                if (placeLampAttempts > 2500)
+                    break;
+
+                Point randomPoint = validPointsForPlacement[Main.rand.Next(validPointsForPlacement.Count())];
+                randomPoint.Y--;
+
+                if (MinistructureList.WoodenLamppost.Check(randomPoint))
+                {
+                    MinistructureList.WoodenLamppost.Place(randomPoint);
+                    hasPlacedLamp = true;
+                }
+            }
+            #endregion
+
+            #region stalagmites n tites n whatever
+            WorldUtils.Gen(point, new ModShapes.OuterOutline(coveShapeData), Actions.Chain(
+                new Actions.Custom((i, j, args) => {
+                    if (Main.tile[i, j].TileType == TileID.Stone && !Main.tile[i, j + 1].HasTile && Main.rand.NextBool(3))
+                        PlaceTight(i, j + 1);
+                    return true;
+                })
+            ));
+            #endregion
+
+            #region ughh RUBBLE
+            // now the shitty one uhghhhhhhhh
+            // placing small piles (FUCK LARGE PILES!!! GRAAASGHHHHHHH)
+            int decorAmount = Main.rand.Next(5, 11);
+            int placeDecorAttempts = 0;
+            while (decorAmount > 0)
+            {
+                placeDecorAttempts++;
+                if (placeDecorAttempts > 2500)
+                    break;
+
+                Point randomPoint = validPointsForPlacement[Main.rand.Next(validPointsForPlacement.Count())];
+                int randomStyleMin = 1;
+                int randomStyleMax = 1;
+                int horizRow = 1;
+                switch (Main.tile[randomPoint].TileType)
+                {
+                    case TileID.Stone:
+                        randomStyleMin = 0;
+                        randomStyleMax = 6;
+                        horizRow = 0;
+                        break;
+                }
+                randomPoint.Y--;
+
+                // our valid points list is actually loaded with a ton of invalid points since it only checks for blocks and not blocks whose
+                // tops can have stuff placed on them
+                // this is a nonissue for us as any spots involving those will fail
+                // maybe ill fix it later. probably not though
+                if (WorldGen.PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
+                    decorAmount--;
+            }
+            #endregion
         }
 
         public static void PlaceFish_Flying(Point origin)
@@ -659,44 +738,11 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //TODO: face diff directions
             PlaceTile(origin.X + 1, origin.Y - 1, TileID.VoidMonolith, mute: true, forced: false, -1);
         }
-
-        public static void PlaceOtherSpiritModThing_Beach(Point origin, bool? realLeft = null)
-        {
-            Rectangle validPlacementRect = new Rectangle(origin.X - 30, origin.Y - 15, 60, 30);
-            Tile tile = new Tile();
-            List<Point> validPointsForPlacement = new List<Point>();
-
-            for (int x = validPlacementRect.X; x < validPlacementRect.X + validPlacementRect.Width; x++)
-            {
-                for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
-                {
-                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid)
-                        validPointsForPlacement.Add(new Point(x, y));
-                }
-            }
-
-            foreach (Point point in validPointsForPlacement)
-            {
-                tile = Main.tile[point.X, point.Y];
-                tile.ResetToType(TileID.Adamantite);
-            }
-            Main.tile[origin].ResetToType(TileID.Orichalcum);
-        }
-
         public static void PlaceOtherSpiritModThing_Debug(Point origin, bool? realLeft = null)
         {
             Rectangle validPlacementRect = new Rectangle(origin.X - 30, origin.Y - 15, 60, 30);
             Tile tile = new Tile();
-            List<Point> validPointsForPlacement = new List<Point>();
-
-            for (int x = validPlacementRect.X; x < validPlacementRect.X + validPlacementRect.Width; x++)
-            {
-                for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
-                {
-                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid)
-                        validPointsForPlacement.Add(new Point(x, y));
-                }
-            }
+            List<Point> validPointsForPlacement = GetGeneralPlacementArea(origin, 60, 30);
 
             foreach (Point point in validPointsForPlacement)
             {
@@ -705,81 +751,270 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
             Main.tile[origin].ResetToType(TileID.Orichalcum);
         }
-
         public static void PlaceOtherSpiritModThing_Tent(Point origin, bool? realLeft = null)
         {
+            #region setup what structures to place
+            int placeTileAttempts = 0;
+
+            Ministructure centerpiece = MinistructureList.CrateStack;
+            List<Ministructure> centerpieceAlt = new List<Ministructure>();
+            List<Ministructure> largeDecor = new List<Ministructure>();
+            int largeDecorAmount = 0;
+            int smallPileAmount = 0;
+            int smallPileStyleMin = 0;
+            int smallPileStyleMax = 0;
+            int smallPileHorizRow = 0;
+            int failsafeGenThreshold = 0; // higher it is = higher chance to use failsafe gen
+
+            switch(Main.rand.Next(0, 2))
+            {
+                case 0: // campsite
+                    centerpiece = MinistructureList.LargeCamp;
+                    centerpieceAlt.Add(MinistructureList.TentRubble);
+                    centerpieceAlt.Add(MinistructureList.CampfireDisabled);
+                    largeDecor.Add(MinistructureList.LargeStoneRubbleSpecialAndChest);
+                    largeDecor.Add(MinistructureList.LargeStoneRubbleSpecialAndChest);
+                    largeDecor.Add(MinistructureList.SmallCoinPile);
+                    largeDecor.Add(MinistructureList.SmallCoinPile);
+                    largeDecor.Add(MinistructureList.LargeCoinPile);
+                    largeDecor.Add(MinistructureList.LargeCoinPile);
+                    largeDecor.Add(MinistructureList.SmallCoinStash);
+                    largeDecor.Add(MinistructureList.SmallCoinStash);
+                    largeDecor.Add(MinistructureList.LargeCoinStash);
+                    largeDecor.Add(MinistructureList.LargeCoinStash);
+                    largeDecorAmount = Main.rand.Next(3, 6);
+                    smallPileAmount = Main.rand.Next(4, 7);
+                    smallPileStyleMin = 12;
+                    smallPileStyleMax = 19;
+                    smallPileHorizRow = 0;
+                    failsafeGenThreshold = 10;
+                    break;
+                case 1: // fishing wall
+                    centerpiece = MinistructureList.FishingWall;
+                    centerpieceAlt.Add(MinistructureList.FishingWall);
+                    largeDecor.Add(MinistructureList.LargeStoneRubbleSpecialAndChest);
+                    largeDecor.Add(MinistructureList.LargeStoneRubbleSpecialAndChest);
+                    largeDecor.Add(MinistructureList.UndergroundObjectRubble);
+                    largeDecor.Add(MinistructureList.UndergroundObjectRubble);
+                    largeDecor.Add(MinistructureList.SmallCoinPile);
+                    largeDecor.Add(MinistructureList.SmallCoinPile);
+                    largeDecor.Add(MinistructureList.SmallCoinStash);
+                    largeDecor.Add(MinistructureList.LargeCoinStash);
+                    largeDecorAmount = Main.rand.Next(3, 6);
+                    smallPileAmount = Main.rand.Next(2, 4);
+                    smallPileStyleMin = 31;
+                    smallPileStyleMax = 33;
+                    smallPileHorizRow = 1;
+                    failsafeGenThreshold = 12;
+                    break;
+            }
+            #endregion
+
+            #region setup area to place in
             Tile tile = new Tile();
+            Point currentTilePointer = new Point();
             int width = 60;
             int height = 30;
-            List<Point> bestPointsForPlacement = GetViablePlacementArea(origin, width, height, 5);
-            //TODO: failsafe if the returned area is less than 8 blocks
-            // go to the lowest block from the origin point (highest if its inside of tiles)
-            // gen a big empty space with flat area under it
-            // use that area instead of returned
-
-            //TODO: add up all widths of the ministructures we wanna guarantee
-            // replace "8 blocks" from above todo with that + a bit of padding + chest dont forget that
-
-            // TODO: cahnge viableplacement to return a list of list of points? one list for each string of points
-
-            // place chest
-            bool hasPlacedChest = false;
-            int placeChestAttempts = 0;
-            while (!hasPlacedChest)
+            List<List<Point>> bestPointsForPlacement = GetIdealPlacementArea(origin, width, height, 5);
+            List<Point> bestPointsForPlacement_All = new List<Point>();
+            foreach (List<Point> list in bestPointsForPlacement)
             {
-                placeChestAttempts++;
-                if (placeChestAttempts > 5000)
+                foreach (Point point in list)
+                    bestPointsForPlacement_All.Add(point);
+            }
+            // getting a bunch of stuff we wanna know for later
+            // if we have a wide enough space to place a large ministructure do so!
+            // if not, then we can place a small tent and campfire separately instead
+            bool shouldPlaceBigCamp = false;
+            List<Point> idealCampSpot = new List<Point>();
+            foreach (List<Point> list in bestPointsForPlacement)
+            {
+                int sumOfCurrentList = 0;
+                foreach (Point point in list)
+                    sumOfCurrentList++;
+                if (sumOfCurrentList >= MinistructureList.LargeCamp.width && list.Count > idealCampSpot.Count)
+                {
+                    shouldPlaceBigCamp = true;
+                    idealCampSpot = list;
+                }
+            }
+            #endregion
+
+            #region failsafe stuff
+            // if the amount of total space we have is less than 10 blocks, gen failsafe stuff
+            int sumOfAllBestPoints = 0;
+            if (bestPointsForPlacement_All.Count > 0)
+            {
+                foreach (Point point in bestPointsForPlacement_All)
+                    sumOfAllBestPoints++;
+            }
+            else
+                return;
+            bool doFailsafeGen = sumOfAllBestPoints < failsafeGenThreshold;
+
+            // failsafe if the returned area is less than 8 blocks
+            if (doFailsafeGen)
+                bestPointsForPlacement_All = GenerateFailsafeLocation(origin);
+            idealCampSpot = bestPointsForPlacement_All;
+            #endregion
+
+            #region primary decor
+            // place camp
+            int hasPlacedCenterpiece = 0;
+            // place nice if possible
+            while (hasPlacedCenterpiece < centerpieceAlt.Count && shouldPlaceBigCamp)
+            {
+                placeTileAttempts++;
+                if (placeTileAttempts > 5000)
                     break;
 
-                Point randomPoint = bestPointsForPlacement[Main.rand.Next(bestPointsForPlacement.Count())];
+                // suboptimal but idc
+                Point randomPoint = idealCampSpot[Main.rand.Next(idealCampSpot.Count())];
                 randomPoint.Y--;
+                if (centerpiece.Check(randomPoint))
+                {
+                    centerpiece.Place(randomPoint);
+                    hasPlacedCenterpiece = centerpieceAlt.Count;
+                }
+            }
+            // if we cant place nice, place rough
+            while (hasPlacedCenterpiece < centerpieceAlt.Count)
+            {
+                placeTileAttempts++;
+                if (placeTileAttempts > 10000)
+                    break;
 
-                // ensuring space
-                if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + 2, randomPoint.Y].HasTile)
+                Point randomPoint = bestPointsForPlacement_All[Main.rand.Next(bestPointsForPlacement_All.Count())];
+                randomPoint.Y--;
+                Ministructure randomStructure = centerpieceAlt[Main.rand.Next(centerpieceAlt.Count())];
+                if (randomStructure.Check(randomPoint))
+                {
+                    randomStructure.Place(randomPoint);
+                    centerpieceAlt.Remove(randomStructure);
+                    hasPlacedCenterpiece++;
+                }
+            }
+            placeTileAttempts = 0;
+            #endregion
+
+            #region chest
+            // place chest
+            //TODO: make this a method
+            bool hasPlacedChest = false;
+            while (!hasPlacedChest)
+            {
+                placeTileAttempts++;
+                if (placeTileAttempts > 5000)
+                    break;
+
+                Point randomPoint = bestPointsForPlacement_All[Main.rand.Next(bestPointsForPlacement_All.Count())];
+                randomPoint.Y--;
+                if (!Main.tile[randomPoint.X, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + 1, randomPoint.Y].HasTile)
                 {
                     int chest = PlaceChest(randomPoint.X, randomPoint.Y, style: 0);
                     if (chest != -1)
                         hasPlacedChest = true;
                 }
             }
+            placeTileAttempts = 0;
+            #endregion
 
+            #region secondary decor
             // place themed decor
-            int decorAmount = Main.rand.Next(2, 4);
-            decorAmount = 2;
-            int placeDecorAttempts = 0;
-            List<Ministructure> structuresToPlace = new List<Ministructure>();
-            structuresToPlace.Add(MinistructureList.GrandfatherClock);
-            structuresToPlace.Add(MinistructureList.LargeFurnitureRubble);
-            while (decorAmount > 0)
+            while (largeDecorAmount > 0)
             {
-                placeDecorAttempts++;
-                if (placeDecorAttempts > 5000)
+                placeTileAttempts++;
+                if (placeTileAttempts > 5000)
                     break;
 
-                int randomMinistructure = Main.rand.Next(structuresToPlace.Count);
-                Point randomPoint = bestPointsForPlacement[Main.rand.Next(bestPointsForPlacement.Count())];
+                int randomMinistructure = Main.rand.Next(largeDecor.Count);
+                Point randomPoint = bestPointsForPlacement_All[Main.rand.Next(bestPointsForPlacement_All.Count())];
                 randomPoint.Y--;
-                Ministructure randomStructure = structuresToPlace[randomMinistructure];
+                Ministructure randomStructure = largeDecor[randomMinistructure];
                 if (randomStructure.Check(randomPoint))
                 {
                     // ensuring space
                     if (!Main.tile[randomPoint.X - 1, randomPoint.Y].HasTile && !Main.tile[randomPoint.X + randomStructure.width, randomPoint.Y].HasTile)
                     {
                         randomStructure.Place(randomPoint);
-                        structuresToPlace.Remove(randomStructure);
-                        decorAmount--;
+                        largeDecor.Remove(randomStructure);
+                        largeDecorAmount--;
                     }
                 }
             }
+            placeTileAttempts = 0;
+            #endregion
 
-            foreach (Point point in bestPointsForPlacement)
+            #region themed rubble
+            // shitty small bone piles
+            List<Point> smallPilePoints = GetGeneralPlacementArea(origin, width, height);
+            while (smallPileAmount > 0)
             {
-                tile = Main.tile[point.X, point.Y];
-                tile.ResetToType(TileID.Adamantite);
+                placeTileAttempts++;
+                if (placeTileAttempts > 2500)
+                    break;
+
+                Point randomPoint = smallPilePoints[Main.rand.Next(smallPilePoints.Count())];
+                randomPoint.Y--;
+
+                if (PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(smallPileStyleMin, smallPileStyleMax + 1), smallPileHorizRow, 185))
+                    smallPileAmount--;
             }
-            Main.tile[origin].ResetToType(TileID.Orichalcum);
+            placeTileAttempts = 0;
+            #endregion
         }
 
+        public static List<Point> GenerateFailsafeLocation(Point origin)
+        {
+            Tile tile = new Tile();
+            Point currentTilePointer = new Point();
+            List<Point> pointsToReturn = new List<Point>();
+            
+            // put our pointer over the nearest ground
+            bool searchUpwards = false;
+            currentTilePointer = origin;
+            if (Main.tile[currentTilePointer].HasTile)
+                searchUpwards = true;
+            if (searchUpwards)
+            {
+                while (Main.tile[currentTilePointer].HasTile)
+                    currentTilePointer.Y--;
+            }
+            else
+            {
+                while (!Main.tile[currentTilePointer].HasTile)
+                    currentTilePointer.Y++;
+                currentTilePointer.Y--;
+            }
+
+            // empty out shape, place tiles under it, add tiles to valid spot list
+            // warning hardcoded slop below bc i dont care
+            WorldUtils.Gen(currentTilePointer, new Shapes.Slime(10), Actions.Chain(
+                new Modifiers.Offset(0, -4),
+                new Actions.ClearTile(true)
+            ));
+            currentTilePointer.X -= 7;
+            currentTilePointer.Y++;
+            int originalY = currentTilePointer.Y;
+            for (int i = 0; i < 15; i++)
+            {
+                tile = Main.tile[currentTilePointer];
+                tile.Slope = SlopeType.Solid;
+                pointsToReturn.Add(currentTilePointer);
+                while (!tile.HasTile)
+                {
+                    tile.ResetToType(TileID.Stone);
+                    SquareTileFrame(currentTilePointer.X, currentTilePointer.Y);
+                    currentTilePointer.Y++;
+                    tile = Main.tile[currentTilePointer];
+                }
+                tile.Slope = SlopeType.Solid;
+                currentTilePointer.Y = originalY;
+                currentTilePointer.X++;
+            }
+
+            return pointsToReturn;
+        }
         public static List<Point> GetGeneralPlacementArea(Point origin, int width, int height)
         {
             Rectangle validPlacementRect = new Rectangle(origin.X - (width / 2), origin.Y - (height / 2), width, height);
@@ -790,20 +1025,20 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             {
                 for (int y = validPlacementRect.Y; y < validPlacementRect.Y + validPlacementRect.Height; y++)
                 {
-                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid)
+                    tile = Main.tile[x, y];
+                    if (Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].Slope == SlopeType.Solid && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile != null && tile.HasUnactuatedTile)
                         validPointsForPlacement.Add(new Point(x, y));
                 }
             }
             return validPointsForPlacement;
         }
-
-        public static List<Point> GetViablePlacementArea(Point origin, int width, int height, int threshold)
+        public static List<List<Point>> GetIdealPlacementArea(Point origin, int width, int height, int threshold)
         {
             Rectangle validPlacementRect = new Rectangle(origin.X - (width / 2), origin.Y - (height / 2), width, height);
             Tile tile = new Tile();
             List<Point> validPointsForPlacement = GetGeneralPlacementArea(origin, width, height);
             List<Point> bestPointsForPlacement_Buffer = new List<Point>();
-            List<Point> bestPointsForPlacement_Final = new List<Point>();
+            List<List<Point>> bestPointsForPlacement_Final = new List<List<Point>>();
             int? previousYCoord = null;
 
             // scan from the top to bottom for every block in our rectangle
@@ -838,10 +1073,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 {
                     // if the amount of points in the buffer list is greater than the threshold, add our stuff to the final list
                     if (bestPointsForPlacement_Buffer.Count >= threshold)
-                    {
-                        foreach (Point point in bestPointsForPlacement_Buffer)
-                            bestPointsForPlacement_Final.Add(point);
-                    }
+                        bestPointsForPlacement_Final.Add(bestPointsForPlacement_Buffer);
                     bestPointsForPlacement_Buffer = new List<Point>();
                     previousYCoord = null;
                 }
@@ -1632,6 +1864,17 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public static LargeFishingNetStructure LargeFishingNet = new LargeFishingNetStructure();
         public static GrandfatherClockStructure GrandfatherClock = new GrandfatherClockStructure();
         public static LargeFurnitureRubbleStructure LargeFurnitureRubble = new LargeFurnitureRubbleStructure();
+        public static CampfireDisabledStructure CampfireDisabled = new CampfireDisabledStructure();
+        public static TentRubbleStructure TentRubble = new TentRubbleStructure();
+        public static UndergroundObjectRubbleStructure UndergroundObjectRubble = new UndergroundObjectRubbleStructure();
+        public static LargeCampStructure LargeCamp = new LargeCampStructure();
+        public static SmallCoinPileStructure SmallCoinPile = new SmallCoinPileStructure();
+        public static LargeCoinPileStructure LargeCoinPile = new LargeCoinPileStructure();
+        public static SmallCoinStashStructure SmallCoinStash = new SmallCoinStashStructure();
+        public static LargeCoinStashStructure LargeCoinStash = new LargeCoinStashStructure();
+        public static LargeStoneRubbleSpecialAndChestStructure LargeStoneRubbleSpecialAndChest = new LargeStoneRubbleSpecialAndChestStructure();
+        public static FishingWallStructure FishingWall = new FishingWallStructure();
+        public static WoodenLamppostStructure WoodenLamppost = new WoodenLamppostStructure();
 
         public class SpearRackStructure : Ministructure
         {
@@ -1778,9 +2021,269 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             {
                 int style = Main.rand.Next(22, 26);
                 Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
-                // FUCK YOU
+                point.Y++;
+                PlaceObject(point.X, point.Y, type, style: style);
+            }
+        }
+        public class CampfireDisabledStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 2;
+            public override int type => TileID.Campfire;
+            public override void Place(Point bottomLeft)
+            {
+                Point campfireSpot = new Point(bottomLeft.X + 1, bottomLeft.Y);
+                PlaceObject(campfireSpot.X, campfireSpot.Y, TileID.Campfire, mute: true);
+                Tile tile = new Tile();
+                tile = Main.tile[campfireSpot.X, campfireSpot.Y];
+                tile.TileFrameY += 36;
+                tile = Main.tile[campfireSpot.X - 1, campfireSpot.Y];
+                tile.TileFrameY += 36;
+                tile = Main.tile[campfireSpot.X + 1, campfireSpot.Y];
+                tile.TileFrameY += 36;
+                tile = Main.tile[campfireSpot.X, campfireSpot.Y - 1];
+                tile.TileFrameY += 36;
+                tile = Main.tile[campfireSpot.X - 1, campfireSpot.Y - 1];
+                tile.TileFrameY += 36;
+                tile = Main.tile[campfireSpot.X + 1, campfireSpot.Y - 1];
+                tile.TileFrameY += 36;
+            }
+        }
+        public class TentRubbleStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 2;
+            public override int type => TileID.LargePiles2;
+            public override int style =>  26;
+            public override void Place(Point bottomLeft)
+            {
+                Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                point.Y++;
+                PlaceObject(point.X, point.Y, type, style: style);
+            }
+        }
+        public class UndergroundObjectRubbleStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 2;
+            public override int type => TileID.LargePiles;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(23, 29);
+                Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
                 point.Y += 1;
                 PlaceObject(point.X, point.Y, type, style: style);
+            }
+        }
+        public class LargeCampStructure : Ministructure
+        {
+            public override int width => 7;
+            public override int height => 2;
+            public override int type => TileID.Campfire;
+            public override int style => 26;
+            public override void Place(Point bottomLeft)
+            {
+                bool left = Main.rand.NextBool();
+                Point point = bottomLeft;
+                if (left)
+                {
+                    CampfireDisabled.Place(point);
+                    TentRubble.Place(new Point(point.X + TentRubble.width + 1, point.Y));
+                }
+                else
+                {
+                    CampfireDisabled.Place(new Point(point.X + CampfireDisabled.width + 1, point.Y));
+                    TentRubble.Place(point);
+                }
+            }
+        }
+        public class SmallCoinPileStructure : Ministructure
+        {
+            public override int width => 2;
+            public override int height => 2;
+            public override int type => TileID.CopperCoinPile;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(0, 3);
+                List<Point> listOfBlocksToPlace = new List<Point>();
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X, bottomLeft.Y));
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X + 1, bottomLeft.Y));
+                if (Main.rand.NextBool(3))
+                    listOfBlocksToPlace.Add(new Point(bottomLeft.X + Main.rand.Next(0, 2), bottomLeft.Y - 1));
+                foreach (Point point in listOfBlocksToPlace)
+                {
+                    Main.tile[point].ResetToType((ushort)(type + style));
+                    SquareTileFrame(point.X, point.Y);
+                }
+            }
+        }
+        public class LargeCoinPileStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 3;
+            public override int type => TileID.CopperCoinPile;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(0, 3);
+                List<Point> listOfBlocksToPlace = new List<Point>();
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X, bottomLeft.Y));
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X + 1, bottomLeft.Y));
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X + 2, bottomLeft.Y));
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X + 1, bottomLeft.Y - 1));
+                listOfBlocksToPlace.Add(new Point(bottomLeft.X + Main.rand.Next(0, 3), bottomLeft.Y - 1)); // intentional
+                if (Main.rand.NextBool())
+                    listOfBlocksToPlace.Add(new Point(bottomLeft.X + 1, bottomLeft.Y - 2));
+                foreach (Point point in listOfBlocksToPlace)
+                {
+                    Main.tile[point].ResetToType((ushort)(type + style));
+                    SquareTileFrame(point.X, point.Y);
+                }
+            }
+        }
+        public class SmallCoinStashStructure : Ministructure
+        {
+            public override int width => 2;
+            public override int height => 1;
+            public override int type => TileID.SmallPiles;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(16, 19);
+                PlaceSmallPile(bottomLeft.X, bottomLeft.Y, style, 1);
+            }
+        }
+        public class LargeCoinStashStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 2;
+            public override int type => TileID.LargePiles;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(16, 22);
+                Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                point.Y += 1;
+                PlaceObject(point.X, point.Y, type, style: style);
+            }
+        }
+        public class LargeStoneRubbleSpecialAndChestStructure : Ministructure
+        {
+            public override int width => 3;
+            public override int height => 2;
+            public override int type => TileID.LargePiles;
+            public override void Place(Point bottomLeft)
+            {
+                int style = Main.rand.Next(13, 15);
+                if (Main.rand.NextBool(3))
+                    style = 24;
+                Point point = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                point.Y += 1;
+                PlaceObject(point.X, point.Y, type, style: style);
+            }
+        }
+        public class FishingWallStructure : Ministructure
+        {
+            public override int width => 7;
+            public override int height => 5;
+            public override int type => TileID.Painting3X3;
+            public override int style => 44;
+            public override void Place(Point bottomLeft)
+            {
+                bool left = Main.rand.NextBool();
+                int beamOffsetX = left ? 0 : width - 1;
+
+                // place beam
+                for (int i = 0; i < height; i++)
+                {
+                    Main.tile[bottomLeft.X + beamOffsetX, bottomLeft.Y - i].ResetToType(TileID.WoodenBeam);
+                    SquareTileFrame(bottomLeft.X + beamOffsetX, bottomLeft.Y - i);
+                }
+
+                // place wall
+                for (int x = 0; x < width; x++)
+                {
+                    if (Main.tile[bottomLeft.X + x, bottomLeft.Y].TileType == TileID.WoodenBeam)
+                        continue;
+
+                    for (int y = 0; y < height; y++)
+                    {
+                        Point point = new Point(bottomLeft.X + x, bottomLeft.Y - y);
+                        if (y == 0)
+                            Main.tile[point].WallType = WallID.Planked;
+                        else
+                            Main.tile[point].WallType = WallID.Wood;
+                        SquareWallFrame(point.X, point.Y);
+                    }
+                }
+
+                // place rack
+                Point origin = GetBottomLeftOfTileAccountingForOrigin(bottomLeft);
+                int min = left ? 1 : 0;
+                int max = left ? width - 2 : width - 3;
+                int offset = Main.rand.Next(min, max);
+                PlaceObject(origin.X + offset, origin.Y, type, style: style);
+            }
+        }
+        public class WoodenLamppostStructure : Ministructure
+        {
+            public override int width => 1;
+            public override int height => 6;
+            public override int type => TileID.WoodenBeam;
+            public override void Place(Point bottomLeft)
+            {
+                bool left = Main.rand.NextBool();
+                int leftOffset = left ? -1 : 1;
+                int extraHeight = Main.rand.Next(0, 4);
+                int totalHeight = height + extraHeight;
+
+                // place beam
+                for (int i = 0; i < totalHeight; i++)
+                {
+                    Main.tile[bottomLeft.X, bottomLeft.Y - i].ResetToType(TileID.WoodenBeam);
+                    SquareTileFrame(bottomLeft.X, bottomLeft.Y - i);
+                }
+
+                // place lamp part
+                Main.tile[bottomLeft.X + leftOffset, bottomLeft.Y - totalHeight + 1].ResetToType(TileID.WoodBlock);
+                SquareTileFrame(bottomLeft.X + leftOffset, bottomLeft.Y - totalHeight + 1);
+                Main.tile[bottomLeft.X + (2 * leftOffset), bottomLeft.Y - totalHeight + 1].ResetToType(TileID.Platforms);
+                SquareTileFrame(bottomLeft.X + (2 * leftOffset), bottomLeft.Y - totalHeight + 1);
+                List<int> possibleLamps = new() { 1, 2, 3, 6 };
+                int chosenLamp = Main.rand.Next(0, possibleLamps.Count);
+                PlaceObject(bottomLeft.X + (2 * leftOffset), bottomLeft.Y - totalHeight + 2, TileID.HangingLanterns, style: possibleLamps[chosenLamp]);
+            }
+            public override bool Check(Point bottomLeft)
+            {
+                // check max possible beam
+                int maxHeight = height + 3;
+                for (int i = 0; i < maxHeight; i++)
+                {
+                    if (Main.tile[bottomLeft.X, bottomLeft.Y - i].HasTile)
+                        return false;
+                }
+
+                // check all possible spots for the head
+                for (int y = height; y < maxHeight - 1; y++)
+                {
+                    // sucks but w/e
+                    if (Main.tile[bottomLeft.X - 1, bottomLeft.Y - y].HasTile)
+                        return false;
+                    if (Main.tile[bottomLeft.X - 2, bottomLeft.Y - y].HasTile)
+                        return false;
+                    if (Main.tile[bottomLeft.X - 2, bottomLeft.Y - y + 1].HasTile)
+                        return false;
+                    if (Main.tile[bottomLeft.X - 2, bottomLeft.Y - y + 2].HasTile)
+                        return false;
+
+                    if (Main.tile[bottomLeft.X + 1, bottomLeft.Y - y].HasTile)
+                        return false;
+                    if (Main.tile[bottomLeft.X + 2, bottomLeft.Y - y].HasTile)
+                        return false;
+                    if (Main.tile[bottomLeft.X + 2, bottomLeft.Y - y + 1].HasTile)
+                        return false;
+                    if (Main.tile[bottomLeft.X + 2, bottomLeft.Y - y + 2].HasTile)
+                        return false;
+                }
+
+                return true;
             }
         }
     }
@@ -1801,13 +2304,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             public virtual bool Check(Point bottomLeft)
             {
                 return CheckIfTileCanBePlaced(bottomLeft, width, height);
-            }
-            public virtual void CheckAndPlaceTile(Point bottomLeft)
-            {
-                if (Check(bottomLeft))
-                {
-                    Place(bottomLeft);
-                }
             }
             public Point GetBottomLeftOfTileAccountingForOrigin(Point bottomLeft)
             {
@@ -1841,6 +2337,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                         {
                             if (Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType])
                                 return false;
+                        }
+                        if (tile.Slope != SlopeType.Solid)
+                        {
+                            return false;
                         }
                     }
                 }

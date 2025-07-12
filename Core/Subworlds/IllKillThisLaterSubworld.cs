@@ -68,8 +68,8 @@ namespace CalRemix.Core.Subworlds
             // as well as other world-shaping things
             RocksInDirt();
             DirtInRocks();
-            //SurfaceCaves(); dont use rn
-            //Lakes(5); dont use rn
+            /*DirtLayerCaves();
+            RockLayerCaves();*/
             CleanUpDirt();
             // super basic stuff done genning, dirt is pretty much finalized except sloping
             SmoothWorld();
