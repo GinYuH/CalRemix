@@ -129,55 +129,58 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
 
         public override void AI(Projectile p)
         {
-            int b = SlingshotSystem.birdData.FindIndex((SlingshotBird b) => b.ProjType == p.type);
-            if (b > -1)
+            if (SubworldSystem.IsActive<PiggySubworld>())
             {
-                SlingshotBird birdType = SlingshotSystem.birdData[b];
-                Point tileCords = p.Center.ToSafeTileCoordinates();
-                int rad = 1;
-                for (int i = tileCords.X - rad; i < tileCords.X + 2; i++)
+                int b = SlingshotSystem.birdData.FindIndex((SlingshotBird b) => b.ProjType == p.type);
+                if (b > -1)
                 {
-                    for (int j = tileCords.Y - rad; j < tileCords.Y + 2; j++)
+                    SlingshotBird birdType = SlingshotSystem.birdData[b];
+                    Point tileCords = p.Center.ToSafeTileCoordinates();
+                    int rad = 1;
+                    for (int i = tileCords.X - rad; i < tileCords.X + 2; i++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        for (int j = tileCords.Y - rad; j < tileCords.Y + 2; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
 
-                        int effectiveNess = 0;
+                            int effectiveNess = 0;
 
-                        if (SlingshotSystem.StoneTiles.Contains(t.TileType))
-                        {
-                            effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Stone];
-                        }
-                        else if (SlingshotSystem.WoodTiles.Contains(t.TileType))
-                        {
-                            effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Wood];
-                        }
-                        else if (SlingshotSystem.GlassTiles.Contains(t.TileType))
-                        {
-                            effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Glass];
-                        }
-                        else if (SlingshotSystem.MetalTiles.Contains(t.TileType))
-                        {
-                            effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Metal];
-                        }
-                        else if (SlingshotSystem.ObsidianTiles.Contains(t.TileType))
-                        {
-                            effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Obsidian];
-                        }
-
-                        if (effectiveNess > 0)
-                        {
-                            if (effectiveNess <= 20)
+                            if (SlingshotSystem.StoneTiles.Contains(t.TileType))
                             {
-                                WorldGen.KillTile(i, j, noItem: true);
-                                p.penetrate -= effectiveNess;
+                                effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Stone];
                             }
-                            else
+                            else if (SlingshotSystem.WoodTiles.Contains(t.TileType))
                             {
+                                effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Wood];
+                            }
+                            else if (SlingshotSystem.GlassTiles.Contains(t.TileType))
+                            {
+                                effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Glass];
+                            }
+                            else if (SlingshotSystem.MetalTiles.Contains(t.TileType))
+                            {
+                                effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Metal];
+                            }
+                            else if (SlingshotSystem.ObsidianTiles.Contains(t.TileType))
+                            {
+                                effectiveNess = birdType.MaterialEffectiveness[(int)SlingshotSystem.MaterialType.Obsidian];
+                            }
+
+                            if (effectiveNess > 0)
+                            {
+                                if (effectiveNess <= 20)
+                                {
+                                    WorldGen.KillTile(i, j, noItem: true);
+                                    p.penetrate -= effectiveNess;
+                                }
+                                else
+                                {
+                                    p.Kill();
+                                }
+                            }
+                            if (p.penetrate <= 0)
                                 p.Kill();
-                            }
                         }
-                        if (p.penetrate <= 0)
-                            p.Kill();
                     }
                 }
             }
