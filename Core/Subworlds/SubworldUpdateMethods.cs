@@ -17,8 +17,19 @@ using static Terraria.WorldGen;
 
 namespace CalRemix.Core.Subworlds
 {
-    public static class SubworldUpdateMethods
+    public class SubworldUpdateMethods : ModSystem
     {
+        public static MethodInfo updateOvergroundInfo;
+        public static MethodInfo updateUndergroundInfo;
+        public static FieldInfo ugGrassFieldButNotLikeAnActualGrassFieldTheGrassIsntGrowingOnTheFieldButInIt;
+
+        public override void Load()
+        {
+            updateOvergroundInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_OvergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
+            updateUndergroundInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_UndergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
+            ugGrassFieldButNotLikeAnActualGrassFieldTheGrassIsntGrowingOnTheFieldButInIt = typeof(Terraria.WorldGen).GetField("growGrassUnderground", BindingFlags.Static | BindingFlags.NonPublic);
+        }
+
         public static void UpdateLiquids()
         {
             Liquid.skipCount++;
@@ -62,15 +73,11 @@ namespace CalRemix.Core.Subworlds
             bool checkNPCSpawns = false;
             double tileAmt = (double)(Main.maxTilesX * Main.maxTilesY) * updateRate;
 
-            MethodInfo updateInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_OvergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
-            MethodInfo updateInfo2 = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_UndergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
-            FieldInfo ugGrassInfo = typeof(Terraria.WorldGen).GetField("growGrassUnderground", BindingFlags.Static | BindingFlags.NonPublic);
-
             for (int j = 0; (double)j < tileAmt; j++)
             {
                 int cordX = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                 int cordY = WorldGen.genRand.Next(10, (int)Main.worldSurface - 1);
-                updateInfo.Invoke(null, new object[] { cordX, cordY, checkNPCSpawns, wallDist });
+                updateOvergroundInfo.Invoke(null, new object[] { cordX, cordY, checkNPCSpawns, wallDist });
             }
             if (Main.remixWorld)
             {
@@ -78,10 +85,10 @@ namespace CalRemix.Core.Subworlds
                 {
                     int i3 = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                     int j3 = WorldGen.genRand.Next((int)Main.worldSurface - 1, Main.maxTilesY - 20);
-                    ugGrassInfo.SetValue(null, true);
-                    updateInfo2.Invoke(null, new object[] { i3, j3, checkNPCSpawns, wallDist });
-                    updateInfo.Invoke(null, new object[] { i3, j3, checkNPCSpawns, wallDist });
-                    ugGrassInfo.SetValue(null, false);
+                    ugGrassFieldButNotLikeAnActualGrassFieldTheGrassIsntGrowingOnTheFieldButInIt.SetValue(null, true);
+                    updateUndergroundInfo.Invoke(null, new object[] { i3, j3, checkNPCSpawns, wallDist });
+                    updateOvergroundInfo.Invoke(null, new object[] { i3, j3, checkNPCSpawns, wallDist });
+                    ugGrassFieldButNotLikeAnActualGrassFieldTheGrassIsntGrowingOnTheFieldButInIt.SetValue(null, false);
                 }
             }
             else
@@ -90,7 +97,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     int i4 = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                     int j4 = WorldGen.genRand.Next((int)Main.worldSurface - 1, Main.maxTilesY - 20);
-                    updateInfo2.Invoke(null, new object[] { i4, j4, checkNPCSpawns, wallDist });
+                    updateUndergroundInfo.Invoke(null, new object[] { i4, j4, checkNPCSpawns, wallDist });
                 }
             }
         }
