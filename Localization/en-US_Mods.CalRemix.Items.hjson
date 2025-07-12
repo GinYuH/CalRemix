@@ -5234,3 +5234,21 @@ Mercury: {
 	DisplayName: Mercury
 	Tooltip: ""
 }
+
+ArchRaptierre: {
+	DisplayName: Arch Raptierre
+	Tooltip:
+		'''
+		Strikes downwards 5 icicles for each swing
+		<right> to freeze nearby enemies
+		'''
+}
+
+ArcticRapier: {
+	DisplayName: Arctic Rapier
+	Tooltip:
+		'''
+		Strikes downwards 5 icicles for each swing
+		<right> to freeze nearby enemies
+		'''
+}

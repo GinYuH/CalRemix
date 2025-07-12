@@ -48,6 +48,7 @@ namespace CalRemix.Core.Subworlds
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()));
             list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()));
+            list.Add(item: (ModContent.NPCType<WinterWitch>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<CarnelianForestBiome>() && !NPC.AnyNPCs(ModContent.NPCType<WinterWitch>())));
             return list;
         }
 
