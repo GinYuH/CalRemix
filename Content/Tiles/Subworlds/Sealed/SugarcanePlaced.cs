@@ -57,10 +57,10 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
         {
             if (CalamityUtils.ParanoidTileRetrieval(i, j - 1).HasTile)
                 return;
-            int maxHeight = 7;
+            int maxHeight = 14;
             int curHeight = 1;
-            bool dontGrow = false;
-            for (int k = j + 1; k < maxHeight; k++)
+            bool dontGrow = true;
+            for (int k = j + 1; k < j + maxHeight; k++)
             {
                 Tile t = CalamityUtils.ParanoidTileRetrieval(i, k);
                 if (t.TileType == Type)
