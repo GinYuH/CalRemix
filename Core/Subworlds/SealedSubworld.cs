@@ -71,6 +71,9 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SubworldUpdateMethods.UpdateLiquids();
+            SubworldUpdateMethods.UpdateTiles();
+
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:Sealed", true);
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
             Main.time = Main.dayLength * 0.5f;
@@ -83,31 +86,6 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
                 }
-            }
-
-            Liquid.skipCount++;
-            if (Liquid.skipCount > 1)
-            {
-                Liquid.UpdateLiquid();
-                Liquid.skipCount = 0;
-            }
-            double worldUpdateRate = WorldGen.GetWorldUpdateRate();
-            if (worldUpdateRate == 0.0)
-            {
-                return;
-            }
-            int wallDist = 3;
-            double updateRate = 3E-05f * (float)worldUpdateRate;
-            bool checkNPCSpawns = false;
-            double tileAmt = (double)(Main.maxTilesX * Main.maxTilesY) * updateRate;
-
-            MethodInfo updateInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_OvergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
-
-            for (int j = 0; (double)j < tileAmt; j++)
-            {
-                int cordX = Main.rand.Next(10, Main.maxTilesX - 10);
-                int cordY = Main.rand.Next(10, (int)Main.worldSurface - 1);
-                updateInfo.Invoke(null, new object[] { cordX, cordY, checkNPCSpawns, wallDist });
             }
         }
 

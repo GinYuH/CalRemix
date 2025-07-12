@@ -54,6 +54,7 @@ using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Core.Backgrounds.Plague;
+using System.Reflection;
 
 namespace CalRemix.Core.World
 {
