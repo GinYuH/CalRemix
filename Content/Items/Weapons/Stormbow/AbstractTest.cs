@@ -7,6 +7,7 @@ using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -64,6 +65,24 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             //Main.NewText("1: " + Main.tileFrame[tile.TileType]);
             //Main.NewText("2: " + tile.TileFrameX);
 
+            /*
+            // fragmented wall placement
+            WorldUtils.Gen(point, new Shapes.Circle(3), Actions.Chain(
+                new Modifiers.IsTouching(true, TileID.WoodBlock), 
+                new Modifiers.Blotches(3), 
+                new Modifiers.Dither(), 
+                new Actions.PlaceWall(WallID.Planked)
+            ));
+
+            // cobweb placement
+            WorldUtils.Gen(point, new Shapes.Circle(4), Actions.Chain(
+                new Modifiers.IsTouching(true, TileID.WoodenBeam),
+                new Modifiers.Blotches(4), 
+                new Modifiers.Dither(), 
+                new Modifiers.IsEmpty(), 
+                new Actions.PlaceTile(TileID.Cobweb)
+            ));
+            */
             //MinistructureList.WoodenLamppost.Place(point);
             PlaceWIPCave(point);
             //PlaceOtherSpiritModThing(point);
@@ -2252,6 +2271,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
             public override bool Check(Point bottomLeft)
             {
+                // check ground stuff
+                if (!CheckIfTileCanBePlaced(bottomLeft, width, height))
+                    return false;
+                
                 // check max possible beam
                 int maxHeight = height + 3;
                 for (int i = 0; i < maxHeight; i++)
