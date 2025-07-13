@@ -79,12 +79,20 @@ namespace CalRemix.Core.Subworlds
             Main.time = Main.dayLength * 0.5f;
             base.Update();
 
+            //Point pe = SealedSubworldData.cultPos.ToPoint();
+            //Dust.DrawDebugBox(new Rectangle(pe.X, pe.Y, 16, 16));
+
             foreach (Player p in Main.ActivePlayers)
             {
                 if (p.Distance(SealedSubworldData.brightShrinePos) < 1000)
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
+                }
+                if (p.Distance(SealedSubworldData.tentPos) < 1000)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<DreadonFriendly>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<DreadonFriendly>());
                 }
             }
         }
@@ -707,9 +715,9 @@ namespace CalRemix.Core.Subworlds
             Point chamberPoint = new Point(villageStart + 100, caveTile);
             bool _2 = false;
             SchematicManager.PlaceSchematic<Action<Chest>>("Sealed Chamber", chamberPoint, SchematicAnchor.Center, ref _2);
-            Vector2 strucSize = new((int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(0)), (int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(1)));
-            SealedSubworldData.tentPos = new Vector2(chamberPoint.X - (int)(strucSize.X * 0.2f), chamberPoint.Y - (int)(strucSize.Y * 0.1f)) * 16;
-            SealedSubworldData.cultPos = new Vector2(chamberPoint.X + (int)(strucSize.X * 0.25f), chamberPoint.Y - (int)(strucSize.Y * 0.4f)) * 16;
+            Vector2 strucSize = new((int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(1)), (int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(0)));
+            SealedSubworldData.tentPos = new Vector2(chamberPoint.X - 38, chamberPoint.Y + 32) * 16;
+            SealedSubworldData.cultPos = new Vector2(chamberPoint.X + 85, chamberPoint.Y + 15) * 16;
         }
 
         public static void GenerateCarnelian()
