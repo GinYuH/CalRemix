@@ -86,7 +86,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
                 else if (Timer == 290)
                 {
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y - 400, ModContent.NPCType<SkeletronOmega>());
+                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y - 600, ModContent.NPCType<SkeletronOmega>());
                 }
             }
 

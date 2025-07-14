@@ -47,12 +47,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
         }
 
-        public bool IsSpinning
-        {
-            get => NPC.Calamity().newAI[3] == 1;
-            set => NPC.Calamity().newAI[3] = value.ToInt();
-        }
-
         public bool IsGroovin
         {
             get => NPC.Calamity().newAI[0] == 1;
@@ -87,6 +81,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Spinning = 3
         }
 
+        public bool spawnedArms = false;
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -117,6 +113,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
+            if (!spawnedArms)
+            {
+                spawnedArms = true;
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X - 200, (int)NPC.Center.Y, ModContent.NPCType<OmegaSoothingSunlightBlaster>(), ai0: NPC.whoAmI + 1);
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + 200, (int)NPC.Center.Y, ModContent.NPCType<OmegaFist>(), ai0: NPC.whoAmI + 1);
+            }
             NPC.TargetClosest();
             switch ((PhaseType)State)
             {
@@ -181,7 +183,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                             else if (Timer == end)
                             {
-                                ChangePhase(PhaseType.Desperation);
+                                //ChangePhase(PhaseType.Desperation);
                                 NPC.dontTakeDamage = false;
                             }
                         }
@@ -275,7 +277,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool CheckActive()
         {
-            return false;
+            bool alive = false;
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (!p.dead)
+                {
+                    alive = true;
+                }
+            }
+            return !alive;
         }
     }
 }

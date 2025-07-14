@@ -17,7 +17,7 @@ using CalRemix.Core.Subworlds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
-    public class OmegaFist : ModNPC
+    public class OmegaSoothingSunlightBlaster : ModNPC
     {
         public NPC Papa => Main.npc[PapaIndex];
         public int PapaIndex => (int)NPC.ai[0] - 1;
@@ -26,9 +26,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public float State => Papa.ModNPC<SkeletronOmega>().State;
 
-        public float ExtraVar => NPC.ai[1];
-
         public Vector2 PapaPosition => Papa.Center;
+
         public override void SetStaticDefaults()
         {
             this.HideFromBestiary();
@@ -61,40 +60,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToCold = true;
         }
 
-        public static void SpawnAnimation(NPC Papa, NPC n, int Timer)
-        {
-            int grace = 3;
-            if (n.ai[1] == 0)
-            {
-                if (n.velocity.Y == 0)
-                {
-                    n.velocity.Y = 3;
-                }
-                n.velocity.Y = MathHelper.Min(n.velocity.Y * 1.3f, 22);
-            }
-            if (n.ai[1] == 1 && Papa.ModNPC<SkeletronOmega>().Timer > 150)
-            {
-                float off = n.type == ModContent.NPCType<OmegaFist>() ? 1 : -1;
-                CalamityUtils.SmoothMovement(n, 10, (Papa.Center + Vector2.UnitX * 200 * off) - n.Center, 10, 0.6f, true);
-            }
-            else if (Timer > grace && Collision.SolidTiles(n.position, n.width, n.height) && n.ai[1] == 0)
-            {
-                n.ai[1] = 1;
-                n.velocity = Vector2.Zero;
-                Main.LocalPlayer.Calamity().GeneralScreenShakePower = 5;
-                foreach (Player p in Main.ActivePlayers)
-                {
-                    SoundEngine.PlaySound(BetterSoundID.ItemExplosion, n.Center);
-                    Point pos = p.Bottom.ToTileCoordinates();
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y);
-                    if (t.IsTileSolidGround() && p.velocity == Vector2.Zero)
-                    {
-                        p.velocity.Y = -3;
-                    }
-                }
-            }
-        }
-
         public override void AI()
         {
             if (PapaIndex == -1)
@@ -111,7 +76,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 case SkeletronOmega.PhaseType.SpawnAnim:
                     {
-                        SpawnAnimation(Papa, NPC, (int)Timer);
+                        OmegaFist.SpawnAnimation(Papa, NPC, (int)Timer);
                         break;
                     }
                 case SkeletronOmega.PhaseType.GunShots:
