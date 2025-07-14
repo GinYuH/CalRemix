@@ -10,6 +10,7 @@ using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
+using CalRemix.Core.Subworlds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -19,6 +20,29 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
+
+
+        public Vector2 TargetLocation
+        {
+            get => new Vector2(NPC.Calamity().newAI[2], NPC.Calamity().newAI[1]);
+            set
+            {
+                NPC.Calamity().newAI[2] = value.X;
+                NPC.Calamity().newAI[1] = value.Y;
+            }
+        }
+
+        public bool IsFlying
+        { 
+            get => NPC.Calamity().newAI[3] == 1;
+            set => NPC.Calamity().newAI[3] = value.ToInt();
+        }
+
+        public bool IsGroovin
+        {
+            get => NPC.Calamity().newAI[0] == 1;
+            set => NPC.Calamity().newAI[0] = value.ToInt();
+        }
 
         public override void SetDefaults()
         {
@@ -37,11 +61,47 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
+            if (Main.LocalPlayer.controlUseItem)
+            {
+                State = 1;
+            }
+            if (State == 1)
+            {
+                IsGroovin = false;
+                Timer++;
+                if (Timer == 1)
+                {
+                    NPC.velocity.Y = -6;
+                    NPC.noTileCollide = true;
+                }
+                else if (Timer == 70)
+                {
+                    NPC.noGravity = true;
+                    IsFlying = true;
+                    TargetLocation = NPC.Center - Vector2.UnitY * 300;
+                }
+                else if (Timer == 180)
+                {
+                    TargetLocation = Target.Center - Vector2.UnitY * 300;
+                }
+                else if (Timer == 290)
+                {
+                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y - 400, ModContent.NPCType<SkeletronOmega>());
+                }
+            }
+
+
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction;
             NPC.frameCounter++;
-            if (NPC.frameCounter > 7 * 6)
+            if (NPC.frameCounter > 8 * 6)
                 NPC.frameCounter = 0;
+
+
+            if (IsFlying)
+            {
+                CalamityUtils.SmoothMovement(NPC, 10, TargetLocation - NPC.Center, 20, 0.8f, true);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -50,6 +110,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpriteEffects fx = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Texture2D head = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/DreadonHead").Value;
+            Texture2D carpet = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/AuricCarpet").Value;
+
+            if (IsFlying)
+                spriteBatch.Draw(carpet, NPC.Bottom - Main.screenPosition - Vector2.UnitY * 8, carpet.Frame(1, 6, 0, (int)(Utils.Lerp(0, 5, Utils.GetLerpValue(0, 7 * 6, NPC.frameCounter, true)))), drawColor * Utils.GetLerpValue(50, 60, Timer, true), 0, new Vector2(carpet.Width / 2, 0), NPC.scale * Utils.GetLerpValue(50, 60, Timer, true), fx, 0f);
 
             int armLength = 26;
             int legLength = 24;
@@ -58,21 +122,30 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             float armRot = MathHelper.ToRadians(50);
 
-            armRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 0.5f;
+            if (IsGroovin)
+                armRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 0.5f;
 
             DrawLimb(spriteBatch, legOffset, legLength, 0);
             DrawLimb(spriteBatch, legOffset with { X = -legOffset.X}, legLength, 0);
             DrawLimb(spriteBatch, armOffset, armLength, -armRot, true);
             DrawLimb(spriteBatch, armOffset with { X = -armOffset.X}, armLength, armRot, true);
 
-            float bodyOffset = MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 2;
-            float headOffset = 12 + MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + 1) * 2;
+            float bodyOffset = 0;
+            float headOffset = 12;
 
-            float headRot = MathF.Sin(Main.GlobalTimeWrappedHourly * 5) * 0.25f;
+            float headRot = 0;
+
+            if (IsGroovin)
+            {
+                headRot = MathF.Sin(Main.GlobalTimeWrappedHourly * 5) * 0.25f;
+                headOffset += MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + 1) * 2;
+                bodyOffset = MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 2;
+            }
 
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY + texture.Height / 14 + bodyOffset), texture.Frame(1, 7, 0, (int)Utils.Lerp(0, 6, Utils.GetLerpValue(0, 7 * 6, NPC.frameCounter, true))), drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 7), NPC.scale, fx, 0f);
             spriteBatch.Draw(head, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY - texture.Height / 14 + headOffset), null, drawColor, headRot, new Vector2(head.Width / 2, head.Height), NPC.scale, fx, 0f);
-            return false;
+
+           return false;
         }
 
         public void DrawLimb(SpriteBatch spriteBatch, Vector2 pos, float lenght, float rot, bool arm = false)
