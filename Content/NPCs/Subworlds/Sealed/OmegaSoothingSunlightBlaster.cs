@@ -28,6 +28,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public Vector2 PapaPosition => Papa.Center;
 
+        public Player Target => Main.player[Papa.target];
+
         public override void SetStaticDefaults()
         {
             this.HideFromBestiary();
@@ -81,10 +83,22 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case SkeletronOmega.PhaseType.GunShots:
                     {
+                        NPC.rotation = NPC.DirectionTo(Target.Center).ToRotation();
+                        int dir = NPC.DirectionTo(Papa.Center).X.DirectionalSign();
+                        int dist = dir == 1 ? 280 : 200;
+                        CalamityUtils.SmoothMovement(NPC, 10, SkeletronOmega.TentCenter - NPC.Center + NPC.DirectionTo(Target.Center) * dist, 10, 0.6f, true);
                         break;
                     }
                 case SkeletronOmega.PhaseType.SlamSlamSlam:
                     {
+                        if (Papa.ai[2] == 0)
+                        {
+                            NPC.Center = Papa.Center + new Vector2(-240, 50) + Vector2.UnitX * (-40 + 40 * MathF.Sin(Timer % SkeletronOmega.SlamDuration % SkeletronOmega.SlamTravelTime * 0.25f)) + Vector2.UnitY.RotatedBy(Timer * 0.1f) * 5;
+                        }
+                        else
+                        {
+                            NPC.velocity = Vector2.Zero;
+                        }
                         break;
                     }
                 case SkeletronOmega.PhaseType.Fireballs:

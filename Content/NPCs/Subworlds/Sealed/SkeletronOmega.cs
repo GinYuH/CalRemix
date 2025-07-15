@@ -14,6 +14,10 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.CalPlayer;
 using CalRemix.Core.Subworlds;
+using System.Collections.Generic;
+using CalamityMod.InverseKinematics;
+using CalRemix.Content.Projectiles.Weapons;
+using Steamworks;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -26,6 +30,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public ref float ExtraVar => ref NPC.ai[2];
 
         public ref float ExtraVar2 => ref NPC.ai[3];
+
+        public int FistIndex => NPC.FindFirstNPC(ModContent.NPCType<OmegaFist>());
+
+        public int GunIndex => NPC.FindFirstNPC(ModContent.NPCType<OmegaSoothingSunlightBlaster>());
 
 
         public Vector2 SavePosition
@@ -52,6 +60,19 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             get => NPC.Calamity().newAI[0] == 1;
             set => NPC.Calamity().newAI[0] = value.ToInt();
         }
+
+        public static Vector2 TentCenter => new(SealedSubworldData.tentPos.X, SealedSubworldData.tentPos.Y - 300);
+
+        public static float TentRight => SealedSubworldData.tentPos.X + 50 * 16;
+
+        public static float TentLeft => SealedSubworldData.tentPos.X - 70 * 16;
+
+        public static float TentTop => SealedSubworldData.tentPos.Y - 42 * 16;
+
+        public static float TentBottom => SealedSubworldData.tentPos.Y + 4 * 16;
+
+        public static float SlamTravelTime => 30f;
+        public static float SlamDuration => 120f;
 
         public override void SetStaticDefaults()
         {
@@ -82,6 +103,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
 
         public bool spawnedArms = false;
+
+        public static List<LimbCollection> limbs = new List<LimbCollection>() { new LimbCollection(new CyclicCoordinateDescentUpdateRule(0.27f, MathHelper.PiOver2), [120f, 120f]), new LimbCollection(new CyclicCoordinateDescentUpdateRule(0.27f, MathHelper.PiOver2), [120f, 120f]) };
 
         public override void SetDefaults()
         {
@@ -116,8 +139,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (!spawnedArms)
             {
                 spawnedArms = true;
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X - 200, (int)NPC.Center.Y, ModContent.NPCType<OmegaSoothingSunlightBlaster>(), ai0: NPC.whoAmI + 1);
-                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + 200, (int)NPC.Center.Y, ModContent.NPCType<OmegaFist>(), ai0: NPC.whoAmI + 1);
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X - 240, (int)NPC.Center.Y, ModContent.NPCType<OmegaSoothingSunlightBlaster>(), ai0: NPC.whoAmI + 1);
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + 240, (int)NPC.Center.Y, ModContent.NPCType<OmegaFist>(), ai0: NPC.whoAmI + 1);
             }
             NPC.TargetClosest();
             switch ((PhaseType)State)
@@ -183,7 +206,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                             else if (Timer == end)
                             {
-                                //ChangePhase(PhaseType.Desperation);
+                                ChangePhase(PhaseType.GunShots);
                                 NPC.dontTakeDamage = false;
                             }
                         }
@@ -191,6 +214,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case PhaseType.GunShots:
                     {
+                        Timer++;
+                        CalamityUtils.SmoothMovement(NPC, 10, TentCenter - NPC.Center - NPC.DirectionTo(Target.Center) * 40, 10, 0.6f, true);
+                        if (Timer > 200)
+                        {
+                            ChangePhase(PhaseType.SlamSlamSlam);
+                        }
                         break;
                     }
                 case PhaseType.Fireballs:
@@ -199,6 +228,48 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case PhaseType.SlamSlamSlam:
                     {
+                        float singleDuration = SlamDuration;
+                        float travelTime = SlamTravelTime;
+                        float localTime = Timer % (singleDuration + travelTime);
+                        if (localTime == 0)
+                        {
+                            float curDist = 300;
+                            Vector2 targetPos = Vector2.Zero;
+                            for (int i = 0; i < 30; i++)
+                            {
+                                Vector2 newPos = new Vector2(Main.rand.NextFloat(TentLeft, TentRight), SealedSubworldData.tentPos.Y);
+                                float newDist = newPos.Distance(NPC.Center);
+                                if (newDist >= curDist && newDist < 1000)
+                                {
+                                    targetPos = newPos;
+                                    break;
+                                }
+                                targetPos = newPos;
+                            }
+
+                            SavePosition = targetPos;
+                            OldPosition = NPC.Center;
+                        }
+                        else if (SavePosition != Vector2.Zero && localTime <= travelTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, travelTime, localTime, true), 1));
+                        }
+
+                        if (localTime > travelTime)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.npc[FistIndex].Center).ToRotation() * 0.8f, 0.1f);
+                            ExtraVar = 1;
+                        }
+                        else
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
+                        }
+                        if (localTime == (travelTime + singleDuration - 1))
+                        {
+                            ExtraVar = 0;
+                        }
+                        NPC.velocity.Y = 0;
+                        Timer++;
                         break;
                     }
                 case PhaseType.Judgement:
@@ -214,12 +285,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             NPC.velocity = NPC.DirectionTo(Target.Center) * 20;
                         }
-                        if ((pos.X > (SealedSubworldData.tentPos.X + 50 * 16) || pos.X < (SealedSubworldData.tentPos.X - 70 * 16)) && ExtraVar <= 0)
+                        if ((pos.X > TentRight || pos.X < TentLeft) && ExtraVar <= 0)
                         {
                             NPC.velocity.X *= -1;
                             ExtraVar = 20;
                         }
-                        if ((pos.Y > (SealedSubworldData.tentPos.Y + 4 * 16) || pos.Y < (SealedSubworldData.tentPos.Y - 42 * 16)) && ExtraVar2 <= 0)
+                        if ((pos.Y > TentBottom || pos.Y < TentTop) && ExtraVar2 <= 0)
                         {
                             NPC.velocity.Y *= -1;
                             ExtraVar2 = 20;
@@ -230,6 +301,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         ExtraVar2--;
                         break;
                     }
+            }
+
+            if (FistIndex > -1)
+            {
+                limbs[1].Update(NPC.Center + new Vector2(50, 40), Main.npc[FistIndex].Center);
+            }
+            if (GunIndex > -1)
+            {
+                limbs[0].Update(NPC.Center + new Vector2(-50, 40), Main.npc[GunIndex].Center);
             }
         }
 
@@ -272,6 +352,19 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 6), NPC.scale, SpriteEffects.None, 0f);
+
+            Texture2D arm = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/OmegaArm").Value;
+
+            foreach (LimbCollection l in limbs)
+            {
+                for (int i = 0; i < l.Limbs.Length; i++)
+                {
+                    Limb lim = l.Limbs[i];
+                    float rot = lim.ConnectPoint.DirectionTo(lim.EndPoint).ToRotation();
+                    Point limp = ((lim.EndPoint - lim.ConnectPoint) * 0.5f + lim.ConnectPoint).ToTileCoordinates();
+                    spriteBatch.Draw(arm, lim.ConnectPoint - Main.screenPosition, null, Lighting.GetColor(limp), rot + MathHelper.PiOver2, new Vector2(arm.Width / 2, arm.Height), NPC.scale, SpriteEffects.None, 0f);
+                }
+            }
             return false;
         }
 

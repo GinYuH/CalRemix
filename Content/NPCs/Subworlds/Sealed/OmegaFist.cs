@@ -14,6 +14,8 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.CalPlayer;
 using CalRemix.Core.Subworlds;
+using Ionic.Zip;
+using CalamityMod.Particles;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -29,6 +31,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public float ExtraVar => NPC.ai[1];
 
         public Vector2 PapaPosition => Papa.Center;
+        public Player Target => Main.player[Papa.target];
         public override void SetStaticDefaults()
         {
             this.HideFromBestiary();
@@ -75,7 +78,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (n.ai[1] == 1 && Papa.ModNPC<SkeletronOmega>().Timer > 150)
             {
                 float off = n.type == ModContent.NPCType<OmegaFist>() ? 1 : -1;
-                CalamityUtils.SmoothMovement(n, 10, (Papa.Center + Vector2.UnitX * 200 * off) - n.Center, 10, 0.6f, true);
+                CalamityUtils.SmoothMovement(n, 10, (Papa.Center + Vector2.UnitX * 300 * off) - n.Center, 10, 0.6f, true);
             }
             else if (Timer > grace && Collision.SolidTiles(n.position, n.width, n.height) && n.ai[1] == 0)
             {
@@ -116,10 +119,34 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case SkeletronOmega.PhaseType.GunShots:
                     {
+                        NPC.rotation = NPC.DirectionTo(Target.Center).ToRotation() + MathHelper.Pi;
+                        int dir = -NPC.DirectionTo(Papa.Center).X.DirectionalSign();
+                        CalamityUtils.SmoothMovement(NPC, 10, SkeletronOmega.TentCenter - NPC.Center + new Vector2(200, 100) + Vector2.UnitY.RotatedBy(Timer * 0.1f) * 5, 10, 0.6f, true);
                         break;
                     }
                 case SkeletronOmega.PhaseType.SlamSlamSlam:
                     {
+                        if (Papa.ai[2] == 0)
+                        {
+                            NPC.Center = Papa.Center + new Vector2(240, 50) + Vector2.UnitY.RotatedBy(Timer * 0.1f) * 5;
+                            NPC.ai[1] = 0;
+                        }
+                        else
+                        {
+                            float time = 13;
+                            int mod = (int)(Timer % SkeletronOmega.SlamDuration % time);
+                            NPC.Center = Papa.Center - (Vector2.UnitY * 300).RotatedBy(MathHelper.Lerp(0, MathHelper.ToRadians(100), Utils.Turn01ToCyclic010(mod / time)));
+                            if (mod == 3)
+                            {
+                                NPC.ai[1] = 1;
+                            }
+                            if (mod == (int)(time / 2f) && NPC.ai[1] == 1)
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.ItemExplosion, NPC.Center);
+                                Main.LocalPlayer.Calamity().GeneralScreenShakePower += 2;
+                                GeneralParticleHandler.SpawnParticle(new PulseRing(NPC.Center, Vector2.Zero, Color.Red * 0.4f, 0.1f, 2f, 20));
+                            }
+                        }
                         break;
                     }
                 case SkeletronOmega.PhaseType.Fireballs:
