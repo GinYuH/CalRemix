@@ -144,13 +144,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             {
                                 SoundEngine.PlaySound(BetterSoundID.ItemExplosion, NPC.Center);
                                 Main.LocalPlayer.Calamity().GeneralScreenShakePower += 2;
-                                GeneralParticleHandler.SpawnParticle(new PulseRing(NPC.Center, Vector2.Zero, Color.Red * 0.4f, 0.1f, 2f, 20));
+                                GeneralParticleHandler.SpawnParticle(new PulseRing(NPC.Center, Vector2.Zero, Color.Red * 0.4f, 0.1f, 22f, 30));
                             }
                         }
                         break;
                     }
                 case SkeletronOmega.PhaseType.Fireballs:
                     {
+                        NPC.rotation = NPC.DirectionTo(Target.Center).ToRotation() + MathHelper.Pi;
+                        int dir = -NPC.DirectionTo(Papa.Center).X.DirectionalSign();
+                        CalamityUtils.SmoothMovement(NPC, 10, Papa.Center - NPC.Center + new Vector2(200, 100) + Vector2.UnitY.RotatedBy(Timer * 0.1f) * 5, 30, 1.6f, true);
                         break;
                     }
                 case SkeletronOmega.PhaseType.Judgement:

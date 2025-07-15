@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using CalamityMod.InverseKinematics;
 using CalRemix.Content.Projectiles.Weapons;
 using Steamworks;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -65,14 +66,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static float TentRight => SealedSubworldData.tentPos.X + 50 * 16;
 
-        public static float TentLeft => SealedSubworldData.tentPos.X - 70 * 16;
+        public static float TentLeft => SealedSubworldData.tentPos.X - 74 * 16;
 
-        public static float TentTop => SealedSubworldData.tentPos.Y - 42 * 16;
+        public static float TentTop => SealedSubworldData.tentPos.Y - 44 * 16;
 
         public static float TentBottom => SealedSubworldData.tentPos.Y + 4 * 16;
 
         public static float SlamTravelTime => 30f;
         public static float SlamDuration => 120f;
+        public static float FireballTravelTime => 120f;
+        public static float FireballDuration => 120f;
 
         public override void SetStaticDefaults()
         {
@@ -142,6 +145,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X - 240, (int)NPC.Center.Y, ModContent.NPCType<OmegaSoothingSunlightBlaster>(), ai0: NPC.whoAmI + 1);
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + 240, (int)NPC.Center.Y, ModContent.NPCType<OmegaFist>(), ai0: NPC.whoAmI + 1);
             }
+            if (NPC.life < NPC.lifeMax * 0.3f && State != (int)PhaseType.Desperation)
+            {
+                ChangePhase(PhaseType.Desperation);
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (n.type == ModContent.NPCType<OmegaFist>() || n.type == ModContent.NPCType<OmegaSoothingSunlightBlaster>())
+                    {
+                        n.active = false;
+                        n.HitEffect();
+                    }
+                }
+            }
             NPC.TargetClosest();
             switch ((PhaseType)State)
             {
@@ -208,6 +223,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             {
                                 ChangePhase(PhaseType.GunShots);
                                 NPC.dontTakeDamage = false;
+                                CurrentAnimation = AnimType.Biting;
                             }
                         }
                         break;
@@ -224,6 +240,50 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case PhaseType.Fireballs:
                     {
+                        float singleDuration = FireballDuration;
+                        float travelTime = FireballTravelTime;
+                        float cycleDuration = travelTime + singleDuration;
+                        float localTimer = Timer % cycleDuration;
+                        if (localTimer == 0)
+                        {
+                            if (ExtraVar == 0)
+                            {
+                                bool playerLeft = Target.Center.X < SealedSubworldData.tentPos.X;
+                                if (playerLeft)
+                                {
+                                    ExtraVar = Main.rand.Next(3, 5);
+                                }
+                                else
+                                {
+                                    ExtraVar = Main.rand.Next(1, 3);
+                                }
+                            }
+                            else
+                            {
+                                ExtraVar++;
+                                if (ExtraVar > 4)
+                                    ExtraVar = 1;
+                            }
+                        }
+                        else
+                        {
+                            Vector2 gotov = ExtraVar switch
+                            {
+                                1 => new Vector2(TentRight, TentTop),
+                                2 => new Vector2(TentRight, TentBottom),
+                                3 => new Vector2(TentLeft, TentBottom),
+                                4 => new Vector2(TentLeft, TentTop),
+                                _ => NPC.Center
+                            };
+                            CalamityUtils.SmoothMovement(NPC, 10, gotov - NPC.Center, 30, 1.8f, true);
+                        }
+
+                        if (Timer > cycleDuration * 4)
+                        {
+                            ChangePhase(PhaseType.GunShots);
+                        }
+
+                        Timer++;
                         break;
                     }
                 case PhaseType.SlamSlamSlam:
@@ -231,6 +291,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         float singleDuration = SlamDuration;
                         float travelTime = SlamTravelTime;
                         float localTime = Timer % (singleDuration + travelTime);
+                        float totalDur = singleDuration + travelTime;
+                        int rounds = 4;
                         if (localTime == 0)
                         {
                             float curDist = 300;
@@ -257,11 +319,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                         if (localTime > travelTime)
                         {
+                            CurrentAnimation = AnimType.Spinning;
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Main.npc[FistIndex].Center).ToRotation() * 0.8f, 0.1f);
                             ExtraVar = 1;
                         }
                         else
                         {
+                            CurrentAnimation = AnimType.Biting;
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
                         }
                         if (localTime == (travelTime + singleDuration - 1))
@@ -270,6 +334,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         NPC.velocity.Y = 0;
                         Timer++;
+                        if (Timer > rounds * totalDur)
+                        {
+                            ChangePhase(PhaseType.Fireballs);
+                        }
                         break;
                     }
                 case PhaseType.Judgement:
@@ -295,6 +363,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             NPC.velocity.Y *= -1;
                             ExtraVar2 = 20;
                         }
+                        if (Timer > windUp + 30 && Timer % 5 == 0)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(30)) * Main.rand.NextFloat(6, 10), ProjectileID.BrainScramblerBolt, CalRemixHelper.ProjectileDamage(200, 300), 1); 
+                            }
+                        }
                         NPC.rotation += 1f;
                         CurrentAnimation = AnimType.Spinning;
                         ExtraVar--;
@@ -310,6 +385,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (GunIndex > -1)
             {
                 limbs[0].Update(NPC.Center + new Vector2(-50, 40), Main.npc[GunIndex].Center);
+            }
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.Center.X < TentLeft || p.Center.X > TentRight || p.Center.Y > TentBottom || p.Center.Y < TentTop)
+                {
+                    p.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 2222, 1);
+                }
             }
         }
 
@@ -355,14 +438,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             Texture2D arm = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/OmegaArm").Value;
 
-            foreach (LimbCollection l in limbs)
+            if (State != (int)PhaseType.Desperation)
             {
-                for (int i = 0; i < l.Limbs.Length; i++)
+                foreach (LimbCollection l in limbs)
                 {
-                    Limb lim = l.Limbs[i];
-                    float rot = lim.ConnectPoint.DirectionTo(lim.EndPoint).ToRotation();
-                    Point limp = ((lim.EndPoint - lim.ConnectPoint) * 0.5f + lim.ConnectPoint).ToTileCoordinates();
-                    spriteBatch.Draw(arm, lim.ConnectPoint - Main.screenPosition, null, Lighting.GetColor(limp), rot + MathHelper.PiOver2, new Vector2(arm.Width / 2, arm.Height), NPC.scale, SpriteEffects.None, 0f);
+                    for (int i = 0; i < l.Limbs.Length; i++)
+                    {
+                        Limb lim = l.Limbs[i];
+                        float rot = lim.ConnectPoint.DirectionTo(lim.EndPoint).ToRotation();
+                        Point limp = ((lim.EndPoint - lim.ConnectPoint) * 0.5f + lim.ConnectPoint).ToTileCoordinates();
+                        spriteBatch.Draw(arm, lim.ConnectPoint - Main.screenPosition, null, Lighting.GetColor(limp), rot + MathHelper.PiOver2, new Vector2(arm.Width / 2, arm.Height), NPC.scale, SpriteEffects.None, 0f);
+                    }
                 }
             }
             return false;

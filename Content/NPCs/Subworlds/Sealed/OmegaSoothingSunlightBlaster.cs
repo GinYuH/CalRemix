@@ -14,6 +14,8 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.CalPlayer;
 using CalRemix.Core.Subworlds;
+using CalamityMod.Sounds;
+using CalamityMod.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -103,6 +105,29 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case SkeletronOmega.PhaseType.Fireballs:
                     {
+                        NPC.rotation = NPC.DirectionTo(Target.Center).ToRotation();
+                        int dir = -NPC.DirectionTo(Papa.Center).X.DirectionalSign();
+                        float localTimer = Timer % (SkeletronOmega.FireballTravelTime + SkeletronOmega.FireballDuration);
+                        Vector2 extra = localTimer > SkeletronOmega.FireballTravelTime ? NPC.DirectionTo(Target.Center) * 200 : Vector2.Zero;
+                        CalamityUtils.SmoothMovement(NPC, 10, Papa.Center - NPC.Center + extra + Vector2.UnitY.RotatedBy(Timer * 0.1f) * 5, 30, 1.6f, true);
+
+                        if (localTimer > SkeletronOmega.FireballTravelTime + 30)
+                        {
+                            if (localTimer % 20 == 0)
+                            {
+                                SoundEngine.PlaySound(CommonCalamitySounds.ELRFireSound, NPC.Center);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int projCount = CalamityWorld.revenge ? 10 : Main.expertMode ? 8 : 6;
+                                    float randomness = Main.rand.NextFloat(0, 5);
+                                    for (int i = 0; i < projCount; i++)
+                                    {
+                                        float halfAngle = MathHelper.ToRadians(30);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-halfAngle, halfAngle, i / (float)(projCount - 1))).RotatedByRandom(MathHelper.ToRadians(randomness)) * 20, ProjectileID.ImpFireball, CalRemixHelper.ProjectileDamage(280, 380), 1);
+                                    }
+                                }
+                            }
+                        }
                         break;
                     }
                 case SkeletronOmega.PhaseType.Judgement:
